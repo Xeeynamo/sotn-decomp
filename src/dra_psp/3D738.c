@@ -2016,7 +2016,211 @@ void EntitySubwpnAgunea(Entity* self) {
     prim->y1 = self->posY.i.hi;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", EntityAguneaHitEnemy);
+void EntityAguneaHitEnemy(Entity* self) {
+    Entity* sine;
+    Primitive* prim;
+    Primitive* temp_s3;
+    Primitive* var_a0;
+    s16 arctan;
+    s16 angle;
+    s16 xOffset;
+    s16 yOffset;
+    s16 temp_s2;
+    u8 var_s3;
+    s32 i;
+    s32 randy;
+
+    u8 var_s8;
+
+    sine = self->ext.et_801291C4.parent;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
+
+    if (self->ext.et_801291C4.parent->entityId != 0x11) {
+        switch (self->step) {
+        case 0:
+            DestroyEntity(self);
+            return;
+        case 1:
+        case 2:
+        case 4:
+            self->step = 3;
+        }
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0x28);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            break;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+
+        self->facingLeft = PLAYER.facingLeft;
+        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200);
+        
+        if(self->facingLeft){
+            // @bug: This should be assigned to something. As-is, does nothing.
+            self->ext.et_801291C4.unk84 + 0x800;
+        }
+        self->ext.et_801291C4.unk84 &= 0xFFF;
+        self->ext.et_801291C4.unk90 = (self->params >> 8) & 0xFF;
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.et_801291C4.prim1 = prim;
+        self->ext.et_801291C4.prim2 = prim;
+        
+        for (i = 0; prim != NULL;) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->u0 = prim->u1 = i * 0x10 + 0x90;
+            prim->u2 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v2 = 0xD0;
+            prim->v1 = prim->v3 = 0xC0;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->x2 = self->posX.i.hi;
+            prim->y2 = self->posX.i.hi;
+            prim->r0 = prim->g0 = prim->b0 = 0xF0;
+            
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            i += 1;
+            if (i > 5) {
+                i = 0;
+            }
+        }
+        prim = self->ext.et_801291C4.prim1;
+        prim->x0 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        prim->x1 = prim->x0;
+        prim->y1 = prim->y1 - 0x10;
+        prim->x2 = self->posX.i.hi;
+        prim->y2 = self->posY.i.hi;
+        prim->x3 = prim->x2;
+        prim->y3 = prim->y2 - 0x10;
+        self->ext.et_801291C4.prim2 = prim;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.et_801291C4.unk88 = 0;
+        self->step += 1;
+        break;
+    case 1:
+
+        for (i = 0; i < 2; i++) {
+            prim = self->ext.et_801291C4.prim2;
+            temp_s2 = self->ext.et_801291C4.unk84;
+            xOffset = sine->posX.i.hi - prim->x2;
+            yOffset = sine->posY.i.hi - prim->y2;
+            if ((abs(xOffset) < 8) && (abs(yOffset) < 8)) {
+                self->step++;
+                return;
+            }
+            if (abs(xOffset) < 0x40 && abs(yOffset) < 0x40) {
+                var_s3 = 1;
+            } else {
+                var_s3 = 0;
+            }
+            if (!self->ext.et_801291C4.unk88) {
+                self->ext.et_801291C4.unk88 = 4;
+                if (var_s3) {
+                    self->ext.et_801291C4.unk88 = 2;
+                }
+                arctan = ratan2(-yOffset, xOffset);
+                angle = arctan - temp_s2;
+                if (angle > 0x800) {
+                    angle = 0x1000 - angle;
+                }
+                if (angle < -0x800) {
+                    angle = 0x1000 + angle;
+                }
+                if (!var_s3) {
+                    angle /= 4;
+                } else {
+                    angle /= 2;
+                }
+                self->ext.et_801291C4.unk86 = angle;
+            }
+            temp_s2 += self->ext.et_801291C4.unk86;
+            if (!var_s3) {
+                temp_s2 += 0x180 - ((rand() & 3) << 8);;
+            }
+            temp_s2 &= 0xFFF;
+            temp_s3 = prim->next;
+            if (temp_s3 == NULL) {
+                self->step += 1;
+                return;
+            }
+            LOW(temp_s3->x0) = LOW(prim->x2);
+            LOW(temp_s3->x1) = LOW(prim->x3);
+            self->ext.et_801291C4.unk84 = temp_s2;
+            self->ext.et_801291C4.prim2 = temp_s3;
+            xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
+            yOffset = -((rsin(temp_s2) * 0xC) >> 0xC);
+            
+            temp_s3->x2 = temp_s3->x0 + xOffset;
+            temp_s3->y2 = temp_s3->y0 + yOffset;
+            angle = temp_s2 - 0x400;
+            var_s8 = 0x10 - (self->params * 4);
+            xOffset = (var_s8 * rcos(angle)) >> 0xC;
+            yOffset = -((var_s8 * rsin(angle)) >> 0xC);
+            temp_s3->x3 = temp_s3->x2 + xOffset;
+            temp_s3->y3 = temp_s3->y2 + yOffset;
+            temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
+            self->ext.et_801291C4.unk88--;
+        }
+        return;
+    case 2:
+        if (!self->step_s) {
+            prim = self->ext.et_801291C4.prim1;
+            while (prim != NULL) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            self->step_s += 1;
+            return;
+        }
+        prim = self->ext.et_801291C4.prim1;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x60;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim = prim->next;
+        }
+        self->step_s = 0;
+        self->step += 1;
+        break;
+    case 3:
+        var_s8 = 1;
+        prim = self->ext.et_801291C4.prim1;
+        while (prim != NULL) {
+            var_s8 &= !DraPrimDecreaseBrightness(prim, 4);
+            prim = prim->next;
+        }
+        if (var_s8) {
+            prim = self->ext.et_801291C4.prim1;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3D738", func_80129864);
 

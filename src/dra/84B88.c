@@ -2023,16 +2023,16 @@ void EntityAguneaHitEnemy(Entity* self) {
     Primitive* prim;
     Primitive* temp_s3;
     Primitive* var_a0;
-    s16 somethingY;
-    s16 somethingX;
+    s16 arctan;
     s16 angle;
     s16 xOffset;
     s16 yOffset;
-    u8 var_s2;
     s16 temp_s2;
     u8 var_s3;
     s32 i;
     s32 randy;
+
+    u8 var_s8;
 
     sine = self->ext.et_801291C4.parent;
     self->posX.i.hi = PLAYER.posX.i.hi;
@@ -2053,23 +2053,29 @@ void EntityAguneaHitEnemy(Entity* self) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, 0x28);
         if (self->primIndex == -1) {
-        block_71:
             DestroyEntity(self);
             break;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
 
         self->facingLeft = PLAYER.facingLeft;
-        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200) & 0xFFF;
+        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200);
+        
+        if(self->facingLeft){
+            // @bug: This should be assigned to something. As-is, does nothing.
+            self->ext.et_801291C4.unk84 + 0x800;
+        }
+        self->ext.et_801291C4.unk84 &= 0xFFF;
+        self->ext.et_801291C4.unk90 = (self->params >> 8) & 0xFF;
         prim = &g_PrimBuf[self->primIndex];
         self->ext.et_801291C4.prim1 = prim;
         self->ext.et_801291C4.prim2 = prim;
-        self->ext.et_801291C4.unk90 = (self->params >> 8);
+        
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
             prim->clut = 0x194;
-            prim->u0 = prim->u1 = i * 0x10 - 0x70;
-            prim->u2 = prim->u3 = i * 0x10 - 0x60;
+            prim->u0 = prim->u1 = i * 0x10 + 0x90;
+            prim->u2 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v2 = 0xD0;
             prim->v1 = prim->v3 = 0xC0;
             prim->x0 = self->posX.i.hi;
@@ -2077,14 +2083,15 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim->x2 = self->posX.i.hi;
             prim->y2 = self->posX.i.hi;
             prim->r0 = prim->g0 = prim->b0 = 0xF0;
-            i += 1;
+            
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            if (i >= 6) {
+            i += 1;
+            if (i > 5) {
                 i = 0;
             }
         }
@@ -2092,7 +2099,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
         prim->x1 = prim->x0;
-        prim->y1 -= 0x10;
+        prim->y1 = prim->y1 - 0x10;
         prim->x2 = self->posX.i.hi;
         prim->y2 = self->posY.i.hi;
         prim->x3 = prim->x2;
@@ -2116,67 +2123,68 @@ void EntityAguneaHitEnemy(Entity* self) {
         for (i = 0; i < 2; i++) {
             prim = self->ext.et_801291C4.prim2;
             temp_s2 = self->ext.et_801291C4.unk84;
-            somethingX = sine->posX.i.hi - prim->x2;
-            somethingY = sine->posY.i.hi - prim->y2;
-            var_s3 = 0;
-            if ((abs(somethingX) < 8) && (abs(somethingY) < 8)) {
+            xOffset = sine->posX.i.hi - prim->x2;
+            yOffset = sine->posY.i.hi - prim->y2;
+            if ((abs(xOffset) < 8) && (abs(yOffset) < 8)) {
                 self->step++;
-                break;
+                return;
             }
-            if (abs(somethingX) < 0x40) {
-                var_s3 = abs(somethingY) < 0x40;
+            if (abs(xOffset) < 0x40 && abs(yOffset) < 0x40) {
+                var_s3 = 1;
+            } else {
+                var_s3 = 0;
             }
-            if (self->ext.et_801291C4.unk88 == 0) {
+            if (!self->ext.et_801291C4.unk88) {
                 self->ext.et_801291C4.unk88 = 4;
-                if (var_s3 != 0) {
+                if (var_s3) {
                     self->ext.et_801291C4.unk88 = 2;
                 }
-                angle = ratan2(-somethingY, somethingX) - temp_s2;
-                if (angle >= 0x801) {
+                arctan = ratan2(-yOffset, xOffset);
+                angle = arctan - temp_s2;
+                if (angle > 0x800) {
                     angle = 0x1000 - angle;
                 }
                 if (angle < -0x800) {
-                    angle += 0x1000;
+                    angle = 0x1000 + angle;
                 }
-                if (var_s3 == 0) {
-                    angle = angle / 4;
+                if (!var_s3) {
+                    angle /= 4;
                 } else {
-                    angle = angle / 2;
+                    angle /= 2;
                 }
                 self->ext.et_801291C4.unk86 = angle;
             }
-            temp_s2 = temp_s2 + self->ext.et_801291C4.unk86;
-            if (var_s3 == 0) {
-                randy = rand();
-                temp_s2 += 0x180;
-                temp_s2 -= ((randy & 3) << 8);
+            temp_s2 += self->ext.et_801291C4.unk86;
+            if (!var_s3) {
+                temp_s2 += 0x180 - ((rand() & 3) << 8);;
             }
-            temp_s2 = temp_s2 & 0xFFF;
+            temp_s2 &= 0xFFF;
             temp_s3 = prim->next;
             if (temp_s3 == NULL) {
                 self->step += 1;
-                break;
+                return;
             }
             LOW(temp_s3->x0) = LOW(prim->x2);
             LOW(temp_s3->x1) = LOW(prim->x3);
             self->ext.et_801291C4.unk84 = temp_s2;
             self->ext.et_801291C4.prim2 = temp_s3;
             xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
-            yOffset = (rsin(temp_s2) * 0xC) >> 0xC;
-            temp_s2 = temp_s2 - 0x400;
-            temp_s3->x2 = xOffset + temp_s3->x0;
-            temp_s3->y2 = temp_s3->y0 - yOffset;
-            var_s2 = 0x10 - (self->params * 4);
-            xOffset = (var_s2 * rcos(temp_s2)) >> 0xC;
-            yOffset = (var_s2 * rsin(temp_s2)) >> 0xC;
-            temp_s3->x3 = xOffset + temp_s3->x2;
-            temp_s3->y3 = temp_s3->y2 - yOffset;
+            yOffset = -((rsin(temp_s2) * 0xC) >> 0xC);
+            
+            temp_s3->x2 = temp_s3->x0 + xOffset;
+            temp_s3->y2 = temp_s3->y0 + yOffset;
+            angle = temp_s2 - 0x400;
+            var_s8 = 0x10 - (self->params * 4);
+            xOffset = (var_s8 * rcos(angle)) >> 0xC;
+            yOffset = -((var_s8 * rsin(angle)) >> 0xC);
+            temp_s3->x3 = temp_s3->x2 + xOffset;
+            temp_s3->y3 = temp_s3->y2 + yOffset;
             temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
         return;
     case 2:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->clut = 0x15F;
@@ -2198,17 +2206,13 @@ void EntityAguneaHitEnemy(Entity* self) {
         self->step += 1;
         break;
     case 3:
+        var_s8 = 1;
         prim = self->ext.et_801291C4.prim1;
-        var_s2 = 1;
         while (prim != NULL) {
-            if (DraPrimDecreaseBrightness(prim, 4) & 0xFF) {
-                var_s2 = 0;
-            } else {
-                var_s2 &= 1;
-            }
+            var_s8 &= !DraPrimDecreaseBrightness(prim, 4);
             prim = prim->next;
         }
-        if (var_s2 != 0) {
+        if (var_s8) {
             prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
