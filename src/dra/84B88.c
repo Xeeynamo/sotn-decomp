@@ -783,11 +783,8 @@ void EntitySubwpnCrashCross(Entity* self) {
     Primitive* prim;
     s16 right;
     s16 left;
-    s32 var_v0;
-    u16 temp_three;
-    s8 temp_one;
-    u16 three = 3;
-    u32 one = 1;
+    s16 three = 3;
+    s16 one = 1;
 
     func_8010DFF0(1, 1);
     switch (self->step) {
@@ -804,8 +801,8 @@ void EntitySubwpnCrashCross(Entity* self) {
         func_8011A290(self);
         LoadImage(&D_800B0788, D_800B06C8);
         prim = &g_PrimBuf[self->primIndex];
-        prim->u0 = prim->u2 = 1;
         prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+        prim->u0 = prim->u2 = 1;
         prim->u1 = prim->u3 = 0x30;
         prim->b3 = 0x80;
         prim->tpage = 0x11C;
@@ -816,33 +813,33 @@ void EntitySubwpnCrashCross(Entity* self) {
         g_Player.timers[12] = 4;
         break;
     case 1:
-        self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
+        self->ext.crashcross.unk7E.val += three;
         self->ext.crashcross.unk82 += three * 2;
-        if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
+        if (self->ext.crashcross.unk7E.i.lo >= 0x70) {
             CreateEntFactoryFromEntity(self, 7, self->ext.factory.unkB2 << 9);
             CreateEntFactoryFromEntity(self, 8, 0);
             self->step += 1;
         }
         break;
     case 2:
-        if (g_Timer & 1) {
-            self->ext.crashcross.unk80 += one * 2;
-            self->ext.crashcross.unk7C = one + self->ext.crashcross.unk7C;
-            if (self->ext.crashcross.unk80 >= 0x2CU) {
-                self->ext.crashcross.unk84 = 0x80;
-                self->step += 1;
-            }
+        if (!(g_Timer & 1)) {
+            break;
+        }
+        self->ext.crashcross.unk7C += one;
+        self->ext.crashcross.unk80 += one * 2;
+        if (self->ext.crashcross.unk80 >= 0x2C) {
+            self->step += 1;
+            self->ext.crashcross.unk84 = 0x80;
         }
         break;
     case 3:
         if (--self->ext.crashcross.unk84 == 0) {
             left = self->posX.i.hi - self->ext.crashcross.unk7C;
-            ;
             if (left < 0) {
                 left = 0;
             }
             right = self->posX.i.hi + self->ext.crashcross.unk7C;
-            if (right >= 0x100) {
+            if (right > 0xFF) {
                 right = 0xFF;
             }
             self->step += 1;
@@ -850,15 +847,10 @@ void EntitySubwpnCrashCross(Entity* self) {
         }
         break;
     case 4:
-        // this is so stupid
-        temp_one = one;
-        temp_three = temp_one * 2;
-        temp_three |= temp_one;
-        var_v0 = self->posX.i.hi - 0x80;
-        self->ext.crashcross.unk7C =
-            (((temp_three) * ((s16)(var_v0 > 0 ? var_v0 : -var_v0) + 0x80)) /
-             112) +
-            self->ext.crashcross.unk7C;
+        one *= 3;
+        left = abs(self->posX.i.hi - 0x80);
+        one = one * (left + 0x80) / 112;
+        self->ext.crashcross.unk7C += one;
 
         left = self->posX.i.hi - self->ext.crashcross.unk7C;
         right = self->posX.i.hi + self->ext.crashcross.unk7C;
@@ -869,17 +861,17 @@ void EntitySubwpnCrashCross(Entity* self) {
         break;
     }
     self->hitboxOffY = 0;
-    self->hitboxHeight = self->ext.crashcross.unk7E;
+    self->hitboxHeight = self->ext.crashcross.unk7E.val;
     if (self->step == 4) {
         self->hitboxWidth = ((right - left) >> 1);
         self->hitboxOffX = ((left + right) >> 1) - self->posX.i.hi;
     } else {
-        self->hitboxOffX = 0;
         self->hitboxWidth = self->ext.crashcross.unk7C;
+        self->hitboxOffX = 0;
     }
     prim = &g_PrimBuf[self->primIndex];
     prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
-    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E.val;
     prim->x1 = prim->x3 = prim->x0 + self->ext.crashcross.unk80;
     prim->y2 = prim->y3 = prim->y0 + self->ext.crashcross.unk82;
 
@@ -894,7 +886,6 @@ void EntitySubwpnCrashCross(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     }
     prim->priority = self->zPriority;
-    return;
 }
 
 // rising blue particles from cross crash

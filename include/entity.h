@@ -1385,24 +1385,24 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-    u16 unk7C;
-    u16 unk7E;
-    u8 unk80;
-    byte pad81;
-    u8 unk82;
-    byte pad83;
-    s32 unk84;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 subweaponId;
+  s16 unk7C;
+  f16 unk7E;
+  u8 unk80;
+  byte pad81;
+  u8 unk82;
+  byte pad83;
+  s32 unk84;
+  s32 : 32;
+  struct Entity *parent;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s32 : 32;
+  s16 subweaponId;
 } ET_CrashCross;
 typedef struct {
     /* 0x7C */ s16 timer;

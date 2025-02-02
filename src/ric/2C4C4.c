@@ -354,9 +354,9 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     case 1:
         // FAKE, register reuse thing
         one = three * 2;
-        self->ext.crashcross.unk7E = three + self->ext.crashcross.unk7E;
+        self->ext.crashcross.unk7E.val += three;
         self->ext.crashcross.unk82 += one;
-        if ((u8)self->ext.crashcross.unk7E >= 0x70U) {
+        if (self->ext.crashcross.unk7E.i.lo >= 0x70U) {
             RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSSES_ONLY, 0);
             RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSS_PARTICLES, 0);
             self->step += 1;
@@ -413,7 +413,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         break;
     }
     self->hitboxOffY = 0;
-    self->hitboxHeight = self->ext.crashcross.unk7E;
+    self->hitboxHeight = self->ext.crashcross.unk7E.val;
     if (self->step == 4) {
         self->hitboxWidth = ((right - left) >> 1);
         self->hitboxOffX = ((left + right) >> 1) - self->posX.i.hi;
@@ -423,7 +423,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     }
     prim = &g_PrimBuf[self->primIndex];
     prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
-    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E.val;
     prim->x1 = prim->x3 = prim->x0 + self->ext.crashcross.unk80;
     prim->y2 = prim->y3 = prim->y0 + self->ext.crashcross.unk82;
     prim->u0 = prim->u2 = 1;

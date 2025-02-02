@@ -56,6 +56,14 @@ typedef union {
     } i;
 } f32;
 
+typedef union{
+    s16 val;
+    struct {
+    u8 lo;
+    u8 hi;
+    } i;
+} f16;
+
 typedef struct {
     /* 0x0 */ s16 x;
     /* 0x2 */ s16 y;
