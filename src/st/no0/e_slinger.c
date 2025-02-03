@@ -204,8 +204,7 @@ void EntitySlinger(Entity* self) {
 // This is a duplicate of EntitySkeletonPieces and EntityBoneScimitarParts
 void EntitySlingerPieces(Entity* self) {
     if (self->step) {
-        self->ext.skeleton.explosionTimer--;
-        if (self->ext.skeleton.explosionTimer & 0xFF) {
+        if (--self->ext.skeleton.explosionTimer) {
             self->rotZ += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();

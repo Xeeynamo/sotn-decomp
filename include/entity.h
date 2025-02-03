@@ -1768,7 +1768,7 @@ typedef struct {
     /* 0x81 */ s32 : 24;
     /* 0x84 */ u8 attackTimerIndex;
     /* 0x85 */ s32 : 24;
-    /* 0x88 */ s8 explosionTimer;
+    /* 0x88 */ u8 explosionTimer;
     /* 0x89 */ s32 : 24;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;

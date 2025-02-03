@@ -33,7 +33,10 @@ typedef enum EntityIDs {
     /* 0x22 */ E_ID_22,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
-    /* 0x3C */ E_CORPSEWEED_PROJECTILE
+    /* 0x3C */ E_CORPSEWEED_PROJECTILE,
+    /* 0x43 */ E_SKELETON = 0x43,
+    /* 0x44 */ E_SKELETON_THROWN_BONE,
+    /* 0x45 */ E_SKELETON_PIECES,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -42,3 +45,8 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit g_EInitParticle;
 extern EInit g_EInitObtainable;
+
+// Skeleton
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
