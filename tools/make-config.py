@@ -435,7 +435,6 @@ def get_splat_config(
             "section_order": section_order,
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
-            "include_macro_inc": False,
             "disassemble_all": True,
         }
     }
