@@ -28,7 +28,6 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
-  include_macro_inc: false
 sha1: 41ccd886308d5527684ae2c41164ecf6c554721f
 segments:
   - name: stno1
