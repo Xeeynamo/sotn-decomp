@@ -1,0 +1,44 @@
+options:
+  platform: psx
+  basename: stare
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/ARE/ARE.BIN
+  asm_path: asm/us/st/are
+  asset_path: assets/st/are
+  src_path: src/st/are
+  ld_script_path: build/us/stare.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stare.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stare.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stare.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+sha1: d1b52f3ee4c96055e22a327ca7c6992471e3e551
+segments:
+  - name: stare
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x352B0, .rodata, us]
+      - [0x35910, c, us]
+      - [0x554C4, sbss]
+  - [0x5617C]
