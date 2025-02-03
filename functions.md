@@ -431,7 +431,7 @@
 | dra    | func_psp_09142830                   |       50 |          9 |        |                                 |       |
 | dra    | func_psp_09144BD8                   |       50 |         12 |        |                                 |       |
 | dra    | func_psp_090F1DF0                   |       51 |          4 |        |                                 |       |
-| lib    | func_psp_0925EAF0                   |       51 |          4 |        |                                 |       |
+| lib    | func_psp_0925EAF0                   |       51 |          4 |        | https://decomp.me/scratch/uVDtw | 1.0   |
 | dra    | AddHearts                           |       51 |          5 |        |                                 |       |
 | dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
 | dra    | func_psp_090F4FC8                   |       51 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
@@ -554,7 +554,7 @@
 | dra    | PlaySfxVolPan                       |       71 |          7 |        |                                 |       |
 | lib    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
-| lib    | func_psp_09266028                   |       71 |          7 |        |                                 |       |
+| lib    | func_psp_09266028                   |       71 |          7 |        | https://decomp.me/scratch/JP0c0 | 0.999 |
 | st0    | GetNormalizedAngle                  |       71 |          7 |        |                                 |       |
 | wrp    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | wrp    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
@@ -940,7 +940,7 @@
 | dra    | DrawRichterHud                      |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra    | func_801028AC                       |      310 |         32 | Yes    |                                 |       |
 | dra    | func_psp_090DD688                   |      310 |         46 | Yes    |                                 |       |
-| dra    | EntityStopWatchExpandingCircle      |      312 |         24 |        |                                 |       |
+| dra    | EntityStopWatchExpandingCircle      |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
 | lib    | func_psp_09256018                   |      315 |         26 |        |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
@@ -1128,11 +1128,11 @@
 | dra    | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
 | dra    | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
-| lib    | func_psp_0925F068                   |     1588 |        176 | Yes    | https://decomp.me/scratch/vEgRa | 0.657 |
+| lib    | func_psp_0925F068                   |     1588 |        176 | Yes    | https://decomp.me/scratch/vEgRa | 0.995 |
 | lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | wrp    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    |                                 |       |
-| dra    | EntityStopWatch                     |     1738 |        127 | Yes    |                                 |       |
+| dra    | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_psp_09261718                   |     1891 |        203 | Yes    | https://decomp.me/scratch/CTxMF | 0.993 |
 | lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
