@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09255068);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09255D78);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_us_801BB8DC);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09256018);
 

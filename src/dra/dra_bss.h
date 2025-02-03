@@ -216,7 +216,6 @@ extern u8 g_CdSoundCommand16;
 extern s8 D_8013B690;
 extern s32 D_8013B694;
 extern s32 D_8013B69C;
-extern ServantDesc g_ServantDesc;
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
 extern ImgSrc* g_imgUnk8013C200;

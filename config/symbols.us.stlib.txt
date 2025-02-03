@@ -172,6 +172,7 @@ EntityThornweed = 0x801CDB6C;
 EntityCorpseweed = 0x801CDEDC;
 EntityCorpseweedProjectile = 0x801CEC0C;
 SkeletonAttackCheck = 0x801CF094;
+EntitySkeleton = 0x801CF12C;
 EntitySkeletonPieces = 0x801CF680;
 EntitySkeletonThrownBone = 0x801CF760;
 UnusedSkeletonEntity = 0x801CF864;

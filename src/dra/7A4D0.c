@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 #include "objects.h"
+#include "servant.h"
 #include "sfx.h"
 
 PfnEntityUpdate g_DraEntityTbl[] = {
