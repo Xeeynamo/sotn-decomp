@@ -1,6 +1,5 @@
 | Ovl    | Function                            |   Length |   Branches | Jtbl   | WIP                             | %     |
 |--------|-------------------------------------|----------|------------|--------|---------------------------------|-------|
-| wrp    | jtbl_psp_0924BB78                   |        7 |          0 | Yes    |                                 |       |
 | dra    | func_801027A4                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED9D8                   |        7 |          1 |        |                                 |       |
 | dra    | DebugUpdate                         |        7 |          1 |        |                                 |       |
@@ -25,6 +24,7 @@
 |        | unused_3C14                         |        7 |          1 |        |                                 |       |
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
+| wrp    | jtbl_psp_0924BB78                   |        9 |          0 | Yes    |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0                   |        9 |          1 |        |                                 |       |
