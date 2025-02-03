@@ -533,7 +533,7 @@
 | dra    | func_psp_09137358                   |       67 |          8 |        |                                 |       |
 | dra    | func_80134B48                       |       67 |          8 |        |                                 |       |
 | dra    | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
-| lib    | func_psp_0924E068                   |       67 |         10 |        | https://decomp.me/scratch/vofQU | 0.997 |
+| lib    | SkeletonAttackCheck                 |       67 |         10 |        |                                 |       |
 | dra    | SetRoomBackgroundLayer              |       68 |          2 |        |                                 |       |
 | dra    | func_psp_090ED570                   |       68 |          5 |        |                                 |       |
 | dra    | DecrementStatBuffTimers             |       68 |          6 | Yes    |                                 |       |
@@ -612,7 +612,7 @@
 | dra    | func_psp_090EBFA8                   |       80 |          3 |        |                                 |       |
 | dra    | func_80102D70                       |       81 |         11 | Yes    |                                 |       |
 | dra    | func_psp_090F76D0                   |       82 |          9 |        |                                 |       |
-| lib    | func_psp_0924E8D8                   |       82 |          9 |        |                                 |       |
+| lib    | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
 | dra    | func_psp_090FF298                   |       82 |         11 |        |                                 |       |
 | dra    | func_psp_09141C10                   |       82 |         15 |        |                                 |       |
 | dra    | func_80134D14                       |       83 |          4 |        |                                 |       |
@@ -651,7 +651,7 @@
 | lib    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | st0    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | wrp    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
-| lib    | func_psp_0924EA00                   |       92 |         13 |        |                                 |       |
+| lib    | EntitySkeletonThrownBone            |       92 |         13 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | dra    | UpdateGame                          |       92 |         21 | Yes    |                                 |       |
 | lib    | func_psp_0925EBA0                   |       93 |          1 |        |                                 |       |
 |        | CreateAdditionalBats                |       93 |          8 |        |                                 |       |
@@ -832,7 +832,7 @@
 | dra    | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | lib    | func_psp_0923DA30                   |      178 |         16 |        |                                 |       |
 | st0    | EntityDraculaGlass                  |      179 |         30 |        |                                 |       |
-| lib    | func_psp_09255D78                   |      181 |         19 |        |                                 |       |
+| lib    | func_us_801BB8DC                    |      181 |         19 |        |                                 |       |
 | dra    | PlayAnimation                       |      183 |         17 |        |                                 |       |
 | lib    | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | wrp    | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
@@ -1011,7 +1011,7 @@
 | dra    | func_psp_090EDE28                   |      517 |         73 |        |                                 |       |
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
-| lib    | func_psp_0924E150                   |      519 |         82 |        |                                 |       |
+| lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | lib    | func_psp_0923DCC8                   |      532 |         57 |        |                                 |       |
 | lib    | func_psp_0925D8D8                   |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
