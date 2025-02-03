@@ -727,7 +727,7 @@ void func_us_801B15C0(Entity* self) {
         case 1:
             if (!g_api.func_80131F68()) {
                 if (self->ext.et_801B15C0.unk80 != 4) {
-                    g_api.PlaySfx(NA_VO_LI_UNKNOWN_3A9);
+                    g_api.PlaySfx(NA_VO_AL_INTERESTED);
                 }
                 if (!self->ext.et_801B15C0.unk80 ||
                     self->ext.et_801B15C0.unk80 == 1) {
@@ -764,7 +764,7 @@ void func_us_801B15C0(Entity* self) {
 
         case 1:
             if (!g_api.func_80131F68()) {
-                g_api.PlaySfx(NA_VO_LI_UNKNOWN_3B2);
+                g_api.PlaySfx(NA_VO_LI_FAREWELL);
                 self->ext.et_801B15C0.unk7C = 0x20;
                 self->step_s++;
             }
