@@ -181,8 +181,8 @@ enum SfxModes {
 #define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
 #define NA_VO_AL_INTERESTED 0x3A9 // Alucard says "I'm interested in this"
-#define NA_VO_LI_THANKS 0x3AD     // Librarian says "Thank you"
-#define NA_VO_LI_FAREWELL 0x3B2   // Librarian says "Farewell for now"
+#define NA_VO_ML_THANKS 0x3AD     // Master Librarian says "Thank you"
+#define NA_VO_ML_FAREWELL 0x3B2   // Master Librarian says "Farewell for now"
 
 #if defined(VERSION_US)
 #define NA_VO_MA_IF_YOU_WEAR                                                   \

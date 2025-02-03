@@ -764,7 +764,7 @@ void func_us_801B15C0(Entity* self) {
 
         case 1:
             if (!g_api.func_80131F68()) {
-                g_api.PlaySfx(NA_VO_LI_FAREWELL);
+                g_api.PlaySfx(NA_VO_ML_FAREWELL);
                 self->ext.et_801B15C0.unk7C = 0x20;
                 self->step_s++;
             }
