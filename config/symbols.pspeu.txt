@@ -6,6 +6,7 @@ DrawSync = 0x0891B448;
 VSync = 0x0891B5BC;
 LoadImage = 0x0891BFE4;
 ClearImage = 0x0891CA60;
+MoveImage = 0x0891CAB0;
 LoadTPage = 0x0891CF3C;
 ClearOTag = 0x0891D0E0;
 SetDrawEnv = 0x0891D338;

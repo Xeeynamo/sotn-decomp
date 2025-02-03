@@ -5,7 +5,6 @@
 #include "disk.h"
 #include "game.h"
 #include "weapon.h"
-#include "servant.h"
 #include "items.h"
 
 #define DAMAGE_FLAG_NORMAL 0x0000
@@ -393,9 +392,9 @@ extern s8 D_800B0130[];
 extern AnimationFrame* D_800B01B8[];
 extern AnimationFrame* D_800B0594[];
 extern u8 D_800B0608[];
-extern u8 D_800B0628[][4];
+extern u8 D_800B0628[];
 extern s16 D_800B0658[4][6];
-extern Point32 D_800B0688[];
+extern s32 D_800B0688[];
 extern u32 D_800B06C8[24];
 extern u32 D_800B0728[24];
 extern RECT D_800B0788;
@@ -405,7 +404,7 @@ extern AnimationFrame D_800B07C8[];
 extern s32 D_800B0830[];
 extern s32 D_800B083C[];
 extern u8 D_800B0848[];
-extern u16 D_800B0858[];
+extern s16 D_800B0858[];
 extern s16 D_800B0860[];
 extern s16 D_800B0884[];
 extern s16 D_800B08A8[];
@@ -543,7 +542,6 @@ void func_80102CD8(s32);
 void func_80103EAC(void);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
-void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 startIndex);
 void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex);
 void func_80107250(Primitive* prim, s32 colorIntensity);
@@ -577,7 +575,7 @@ bool func_80111D24(void);
 void func_80115394(DamageParam* damage, s16 arg1, s16 arg2);
 void func_80115C50(void);
 void func_80118894(Entity*);
-
+Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
