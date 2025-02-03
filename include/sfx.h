@@ -180,7 +180,9 @@ enum SfxModes {
 #define NA_VO_DR_IT_WAS_NOT 0x359  // Dracula says "It was not by my hand ..."
 #define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
 
+#define NA_VO_LI_UNKNOWN_3A9 0x3A9
 #define NA_VO_LI_THANKS 0x3AD // Librarian says "Thank you"
+#define NA_VO_LI_UNKNOWN_3B2 0x3B2
 
 #if defined(VERSION_US)
 #define NA_VO_MA_IF_YOU_WEAR                                                   \

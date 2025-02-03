@@ -1025,6 +1025,7 @@ g_PrimBuf_0_drawMode = 0x8008701E;
 g_PlayerX = 0x800973F0;
 g_PlayerY = 0x800973F4;
 g_unkGraphicsStruct = 0x800973F8;
+g_unkGraphicsStruct_pauseEnemies = 0x80097400;
 g_unkGraphicsStruct_g_zEntityCenter = 0x80097408;
 g_entityDestroyed = 0x80097428;
 D_8009748A_x_i_hi = 0x8009748A;
