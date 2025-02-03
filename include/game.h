@@ -22,6 +22,14 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
+// PSP does & 7FFF for many calls to rand(), PS1 does not.
+// This works around that.
+#ifdef VERSION_PSP
+#define PSP_RANDMASK 0x7FFF
+#else
+#define PSP_RANDMASK 0xFFFFFFFF
+#endif
+
 #define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
@@ -350,7 +358,7 @@ typedef enum {
 
 #define PAL_OVL_FLAG 0x8000
 #define PAL_DRA(x) (x)
-#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -780,7 +788,8 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 velocityX;
     /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON) || defined(SERVANT)
+#if defined(STAGE) || defined(WEAPON) || defined(SERVANT) ||                   \
+    defined(VERSION_PSP)
     /* 0x10 */ s16 hitboxOffX;
 #else // hack to match in DRA and RIC
     /* 0x10 */ u16 hitboxOffX;

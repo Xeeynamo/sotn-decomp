@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include "servant.h"
 #include "sfx.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
