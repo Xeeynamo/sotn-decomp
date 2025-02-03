@@ -423,9 +423,9 @@ void func_us_801B15C0(Entity* self) {
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 = 0xC0;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 = 0x60;
                 if (i == 0) {
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x10;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x10;
+                    PRED(prim) = 0x40;
+                    PGRN(prim) = 0x10;
+                    PBLU(prim) = 0x10;
 #ifdef VERSION_PSP
                     prim->x0 = prim->x2 = 0x95;
                     prim->x1 = prim->x3 = 0xEC;
@@ -443,9 +443,9 @@ void func_us_801B15C0(Entity* self) {
                     prim->priority = 0xC1;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 5) {
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x40;
+                    PRED(prim) = 0;
+                    PGRN(prim) = 0;
+                    PBLU(prim) = 0x40;
                     prim->priority = 0xBF;
                     prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 } else if (i == 6) {
@@ -573,9 +573,11 @@ void func_us_801B15C0(Entity* self) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B15C0.unk80++;
             }
-        } else if ((pad & PAD_UP) && self->ext.et_801B15C0.unk80 > 0) {
-            g_api.PlaySfx(SFX_UI_MOVE);
-            self->ext.et_801B15C0.unk80--;
+        } else if (pad & PAD_UP) {
+            if (self->ext.et_801B15C0.unk80 > 0) {
+                g_api.PlaySfx(SFX_UI_MOVE);
+                self->ext.et_801B15C0.unk80--;
+            }
         }
         pad = g_pads[0].tapped;
 #ifdef VERSION_PSP
@@ -837,7 +839,7 @@ void func_us_801B15C0(Entity* self) {
                 } else {
                     prim->priority = 0xC1;
                 }
-            } else if (i != 0) {
+            } else if (i) {
                 prim->priority = 0xC1;
                 if (self->ext.et_801B15C0.unk7E >= 0xC00) {
                     prim->drawMode = DRAW_HIDE;
