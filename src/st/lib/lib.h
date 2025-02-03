@@ -31,6 +31,9 @@ typedef enum EntityIDs {
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
     /* 0x22 */ E_ID_22,
+    /* 0x3A */ E_THORNWEED = 0x3A,
+    /* 0x3B */ E_CORPSEWEED,
+    /* 0x3C */ E_CORPSEWEED_PROJECTILE
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
