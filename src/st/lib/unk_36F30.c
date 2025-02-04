@@ -153,7 +153,7 @@ void func_us_801B6F30(Entity* self) {
             SetStep(2);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
-            g_CastleFlags[400] |= 1;
+            g_CastleFlags[ENEMY_LIST_190] |= 1;
         }
         break;
 
@@ -243,7 +243,7 @@ void func_us_801B6F30(Entity* self) {
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
                 self->ext.et_801B6F30.unk84;
-            if (g_CastleFlags[(enemyMask >> 3) + 400] &
+            if (g_CastleFlags[(enemyMask >> 3) + ENEMY_LIST_190] &
                 (1 << (enemyMask & 7))) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 SetStep(4);
