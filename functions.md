@@ -1,5 +1,6 @@
 | Ovl    | Function                            |   Length |   Branches | Jtbl   | WIP                             | %     |
 |--------|-------------------------------------|----------|------------|--------|---------------------------------|-------|
+| wrp    | jtbl_psp_0924BB78                   |        7 |          0 | Yes    |                                 |       |
 | dra    | func_801027A4                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED9D8                   |        7 |          1 |        |                                 |       |
 | dra    | DebugUpdate                         |        7 |          1 |        |                                 |       |
@@ -24,7 +25,6 @@
 |        | unused_3C14                         |        7 |          1 |        |                                 |       |
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
-| wrp    | jtbl_psp_0924BB78                   |        9 |          0 | Yes    |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0                   |        9 |          1 |        |                                 |       |
@@ -877,7 +877,7 @@
 | dra    | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
 | lib    | func_psp_09256AC0                   |      225 |         18 |        |                                 |       |
-| lib    | func_psp_09252E70                   |      227 |         29 |        |                                 |       |
+| lib    | func_psp_09252E70                   |      227 |         29 |        | https://decomp.me/scratch/heQmR | 0.995 |
 | lib    | func_psp_0925ED00                   |      231 |         11 |        |                                 |       |
 | lib    | func_psp_0926DAA8                   |      231 |         33 |        |                                 |       |
 | dra    | func_psp_0910B768                   |      232 |         32 |        |                                 |       |
@@ -1117,7 +1117,7 @@
 | lib    | func_psp_0924B568                   |     1202 |        112 | Yes    |                                 |       |
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
-| lib    | func_psp_09268528                   |     1229 |        132 | Yes    |                                 |       |
+| lib    | func_psp_09268528                   |     1229 |        132 | Yes    | https://decomp.me/scratch/cjRtH | 0.996 |
 | lib    | LIB_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
 | st0    | ST0_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
 | wrp    | WRP_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
