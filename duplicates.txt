@@ -94,11 +94,11 @@
 | 1.00 | true     | D_800DC100                          | asm/us/dra/matchings/save_mgr/D_800DC100.s 
 | 1.00 | true     | D_800DC190                          | asm/us/dra/matchings/save_mgr/D_800DC190.s 
 | 1.00 | true     | D_us_801AD14C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD14C.s 
-| 1.00 | true     | D_us_801AD35C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD35C.s 
-| 1.00 | true     | D_us_801AD3B4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3B4.s 
-| 1.00 | true     | D_us_801AD44C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD44C.s 
-| 1.00 | true     | D_us_801AD470                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD470.s 
-| 1.00 | true     | D_us_801AD474                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD474.s 
+| 1.00 | true     | D_us_801AD35C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD35C.s 
+| 1.00 | true     | D_us_801AD3B4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3B4.s 
+| 1.00 | true     | D_us_801AD44C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD44C.s 
+| 1.00 | true     | D_us_801AD470                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD470.s 
+| 1.00 | true     | D_us_801AD474                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD474.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_8018AAC8                       | asm/us/boss/mar/matchings/e_collect/D_us_8018AAC8.s 
 | 1.00 | true     | D_us_8018AAD0                       | asm/us/boss/mar/matchings/e_collect/D_us_8018AAD0.s 
@@ -121,13 +121,13 @@
 | 1.00 | true     | D_us_801AD9FC                       | asm/us/st/lib/matchings/e_collect/D_us_801AD9FC.s 
 | 1.00 | true     | D_us_801ADA04                       | asm/us/st/lib/matchings/e_collect/D_us_801ADA04.s 
 | 1.00 | true     | D_us_801ADA0C                       | asm/us/st/lib/matchings/e_collect/D_us_801ADA0C.s 
-| 1.00 | true     | D_us_801AD36C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD36C.s 
-| 1.00 | true     | D_us_801AD374                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD374.s 
-| 1.00 | true     | D_us_801AD37C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD37C.s 
-| 1.00 | true     | D_us_801AD384                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD384.s 
-| 1.00 | true     | D_us_801AD38C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD38C.s 
-| 1.00 | true     | D_us_801AD394                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD394.s 
-| 1.00 | true     | D_us_801AD39C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD39C.s 
+| 1.00 | true     | D_us_801AD36C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD36C.s 
+| 1.00 | true     | D_us_801AD374                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD374.s 
+| 1.00 | true     | D_us_801AD37C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD37C.s 
+| 1.00 | true     | D_us_801AD384                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD384.s 
+| 1.00 | true     | D_us_801AD38C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD38C.s 
+| 1.00 | true     | D_us_801AD394                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD394.s 
+| 1.00 | true     | D_us_801AD39C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD39C.s 
 | 1.00 | true     | D_us_801C1394                       | asm/us/st/no0/matchings/e_collect/D_us_801C1394.s 
 | 1.00 | true     | D_us_801C139C                       | asm/us/st/no0/matchings/e_collect/D_us_801C139C.s 
 | 1.00 | true     | D_us_801C13A4                       | asm/us/st/no0/matchings/e_collect/D_us_801C13A4.s 
@@ -336,22 +336,22 @@
 | 1.00 | true     | D_800DC684                          | asm/us/dra/matchings/menu/D_800DC684.s 
 | 1.00 | true     | D_us_801ADA14                       | asm/us/st/lib/matchings/e_collect/D_us_801ADA14.s 
 | 1.00 | true     | D_us_801ADA1C                       | asm/us/st/lib/matchings/e_collect/D_us_801ADA1C.s 
-| 1.00 | true     | D_us_801AD348                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD348.s 
-| 1.00 | true     | D_us_801AD3A4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3A4.s 
-| 1.00 | true     | D_us_801AD3AC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3AC.s 
-| 1.00 | true     | D_us_801AD3CC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3CC.s 
-| 1.00 | true     | D_us_801AD3D4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3D4.s 
-| 1.00 | true     | D_us_801AD3DC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3DC.s 
-| 1.00 | true     | D_us_801AD3E4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3E4.s 
-| 1.00 | true     | D_us_801AD3EC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3EC.s 
-| 1.00 | true     | D_us_801AD3F4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3F4.s 
-| 1.00 | true     | D_us_801AD3FC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3FC.s 
-| 1.00 | true     | D_us_801AD404                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD404.s 
-| 1.00 | true     | D_us_801AD40C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD40C.s 
-| 1.00 | true     | D_us_801AD414                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD414.s 
-| 1.00 | true     | D_us_801AD41C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD41C.s 
-| 1.00 | true     | D_us_801AD450                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD450.s 
-| 1.00 | true     | D_us_801AD464                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD464.s 
+| 1.00 | true     | D_us_801AD348                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD348.s 
+| 1.00 | true     | D_us_801AD3A4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3A4.s 
+| 1.00 | true     | D_us_801AD3AC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3AC.s 
+| 1.00 | true     | D_us_801AD3CC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3CC.s 
+| 1.00 | true     | D_us_801AD3D4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3D4.s 
+| 1.00 | true     | D_us_801AD3DC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3DC.s 
+| 1.00 | true     | D_us_801AD3E4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3E4.s 
+| 1.00 | true     | D_us_801AD3EC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3EC.s 
+| 1.00 | true     | D_us_801AD3F4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3F4.s 
+| 1.00 | true     | D_us_801AD3FC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3FC.s 
+| 1.00 | true     | D_us_801AD404                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD404.s 
+| 1.00 | true     | D_us_801AD40C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD40C.s 
+| 1.00 | true     | D_us_801AD414                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD414.s 
+| 1.00 | true     | D_us_801AD41C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD41C.s 
+| 1.00 | true     | D_us_801AD450                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD450.s 
+| 1.00 | true     | D_us_801AD464                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD464.s 
 | 1.00 | true     | D_us_801C13CC                       | asm/us/st/no0/matchings/e_collect/D_us_801C13CC.s 
 | 1.00 | true     | D_us_801C13D4                       | asm/us/st/no0/matchings/e_collect/D_us_801C13D4.s 
 | 1.00 | true     | D_us_801B48E0                       | asm/us/st/no1/matchings/e_collect/D_us_801B48E0.s 
@@ -1922,7 +1922,7 @@
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/nz0/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk1.s 
-| 1.00 | false    | CutsceneUnk1                        | asm/us/st/lib/nonmatchings/unk_33EC8/CutsceneUnk1.s 
+| 1.00 | false    | CutsceneUnk1                        | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneUnk1.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk4.s 
@@ -1931,7 +1931,7 @@
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/nz0/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk4.s 
-| 1.00 | false    | CutsceneUnk4                        | asm/us/st/lib/nonmatchings/unk_33EC8/CutsceneUnk4.s 
+| 1.00 | false    | CutsceneUnk4                        | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneUnk4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/mar/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/cen/matchings/cutscene/DrawCutsceneActorName.s 
@@ -1940,7 +1940,7 @@
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/nz0/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/sel/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/st0/matchings/cutscene/DrawCutsceneActorName.s 
-| 1.00 | false    | DrawCutsceneActorName               | asm/us/st/lib/nonmatchings/unk_33EC8/DrawCutsceneActorName.s 
+| 1.00 | false    | DrawCutsceneActorName               | asm/us/st/lib/nonmatchings/unk_36F30/DrawCutsceneActorName.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/mar/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/cen/matchings/cutscene/ScaleCutsceneAvatar.s 
@@ -1949,7 +1949,7 @@
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/nz0/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 0.91 | true     | ScaleCutsceneAvatar                 | asm/us/st/sel/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/st0/matchings/cutscene/ScaleCutsceneAvatar.s 
-| 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/st/lib/nonmatchings/unk_33EC8/ScaleCutsceneAvatar.s 
+| 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/st/lib/nonmatchings/unk_36F30/ScaleCutsceneAvatar.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/boss/mar/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/cen/matchings/cutscene/SetCutsceneEnd.s 
@@ -1958,7 +1958,7 @@
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/nz0/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/sel/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/st0/matchings/cutscene/SetCutsceneEnd.s 
-| 1.00 | false    | SetCutsceneEnd                      | asm/us/st/lib/nonmatchings/unk_33EC8/SetCutsceneEnd.s 
+| 1.00 | false    | SetCutsceneEnd                      | asm/us/st/lib/nonmatchings/unk_36F30/SetCutsceneEnd.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/mar/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/cen/matchings/cutscene/SetCutsceneScript.s 
@@ -1967,7 +1967,7 @@
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/nz0/matchings/cutscene/SetCutsceneScript.s 
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
-| 1.00 | false    | SetCutsceneScript                   | asm/us/st/lib/nonmatchings/unk_33EC8/SetCutsceneScript.s 
+| 1.00 | false    | SetCutsceneScript                   | asm/us/st/lib/nonmatchings/unk_36F30/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/mar/matchings/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/boss/rbo3/matchings/e_breakable/EntityBreakable.s 
@@ -1994,7 +1994,7 @@
 | 1.00 | true     | D_800DBF8C                          | asm/us/dra/matchings/save_mgr/D_800DBF8C.s 
 | 1.00 | true     | D_us_801AD1A8                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD1A8.s 
 | 1.00 | true     | D_us_801AD1D0                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD1D0.s 
-| 1.00 | true     | D_us_801AD438                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD438.s 
+| 1.00 | true     | D_us_801AD438                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD438.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF44                          | asm/us/dra/matchings/save_mgr/D_800DBF44.s 
 | 1.00 | true     | D_800DBF4C                          | asm/us/dra/matchings/save_mgr/D_800DBF4C.s 
@@ -2011,7 +2011,7 @@
 | 1.00 | true     | CutsceneRun                         | asm/us/st/no3/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/nz0/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/st0/matchings/cutscene/CutsceneRun.s 
-| 1.00 | false    | CutsceneRun                         | asm/us/st/lib/nonmatchings/unk_33EC8/CutsceneRun.s 
+| 1.00 | false    | CutsceneRun                         | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneRun.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2197,7 +2197,7 @@
 | 1.00 | true     | D_800DBF64                          | asm/us/dra/matchings/save_mgr/D_800DBF64.s 
 | 1.00 | true     | D_us_801AD22C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD22C.s 
 | 1.00 | true     | D_us_801AD264                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD264.s 
-| 1.00 | true     | D_us_801AD424                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD424.s 
+| 1.00 | true     | D_us_801AD424                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD424.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCdPos                            | asm/us/dra/matchings/91EBC/SetCdPos.s 
 | 1.00 | true     | MemcardInit                         | asm/us/dra/matchings/save_mgr/MemcardInit.s 
@@ -2233,6 +2233,11 @@
 | 1.00 | true     | SetDQB                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetDQB.s 
 | 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
 | 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2305,7 +2310,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF6C                          | asm/us/dra/matchings/save_mgr/D_800DBF6C.s 
 | 1.00 | true     | D_800DC0EC                          | asm/us/dra/matchings/save_mgr/D_800DC0EC.s 
-| 1.00 | true     | D_us_801AD6D8                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD6D8.s 
+| 1.00 | true     | D_us_801AD6D8                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD6D8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CdLastCom                           | asm/us/main/matchings/psxsdk/libcd/sys/CdLastCom.s 
 | 1.00 | true     | CdMode                              | asm/us/main/matchings/psxsdk/libcd/sys/CdMode.s 
@@ -2319,10 +2324,6 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -2333,7 +2334,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80194F14                       | asm/us/st/dre/matchings/cutscene/func_80194F14.s 
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
-| 1.00 | false    | func_80194F14                       | asm/us/st/lib/nonmatchings/unk_33EC8/func_80194F14.s 
+| 1.00 | false    | func_80194F14                       | asm/us/st/lib/nonmatchings/unk_36F30/func_80194F14.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBloodSplatter                 | asm/us/st/lib/matchings/e_bloody_zombie/EntityBloodSplatter.s 
 | 1.00 | true     | EntityBloodSplatter                 | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodSplatter.s 
@@ -2347,13 +2348,13 @@
 | 1.00 | true     | func_801C53AC                       | asm/us/st/np3/matchings/e_bloody_zombie/func_801C53AC.s 
 | 1.00 | true     | func_801C53AC                       | asm/us/st/nz0/matchings/e_bloody_zombie/func_801C53AC.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | D_us_801AD324                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD324.s 
-| 1.00 | true     | D_us_801AD33C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD33C.s 
-| 1.00 | true     | D_us_801AD350                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD350.s 
+| 1.00 | true     | D_us_801AD324                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD324.s 
+| 1.00 | true     | D_us_801AD33C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD33C.s 
+| 1.00 | true     | D_us_801AD350                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD350.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | D_us_801AD4DC                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD4DC.s 
-| 1.00 | true     | D_us_801AD510                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD510.s 
-| 1.00 | true     | D_us_801AD714                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD714.s 
+| 1.00 | true     | D_us_801AD4DC                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD4DC.s 
+| 1.00 | true     | D_us_801AD510                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD510.s 
+| 1.00 | true     | D_us_801AD714                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD714.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801B0AA4                       | asm/us/st/no0/matchings/419EC/func_801B0AA4.s 
 | 0.98 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/30958/func_801B0AA4.s 
@@ -2680,9 +2681,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2795,7 +2793,7 @@
 | 1.00 | true     | D_us_801B47B0                       | asm/us/st/no1/matchings/unk_3B5E0/D_us_801B47B0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD144                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD144.s 
-| 1.00 | true     | D_us_801AD3C4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3C4.s 
+| 1.00 | true     | D_us_801AD3C4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3C4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD178                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD178.s 
 | 1.00 | true     | D_us_801AD254                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD254.s 
@@ -2804,13 +2802,13 @@
 | 1.00 | true     | D_us_801AD1F8                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD1F8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD26C                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD26C.s 
-| 1.00 | true     | D_us_801AD774                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD774.s 
+| 1.00 | true     | D_us_801AD774                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD774.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | D_us_801AD330                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD330.s 
-| 1.00 | true     | D_us_801AD3B8                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD3B8.s 
+| 1.00 | true     | D_us_801AD330                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD330.s 
+| 1.00 | true     | D_us_801AD3B8                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3B8.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | D_us_801AD5B8                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD5B8.s 
-| 1.00 | true     | D_us_801AD6B4                       | asm/us/st/lib/matchings/unk_33EC8/D_us_801AD6B4.s 
+| 1.00 | true     | D_us_801AD5B8                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD5B8.s 
+| 1.00 | true     | D_us_801AD6B4                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD6B4.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801AF280                    | asm/us/st/lib/nonmatchings/first_c_file/func_us_801AF280.s 
 | 0.91 | false    | func_us_801AF538                    | asm/us/st/lib/nonmatchings/first_c_file/func_us_801AF538.s 
