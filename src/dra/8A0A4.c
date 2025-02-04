@@ -81,14 +81,13 @@ void EntityStopWatchExpandingCircle(Entity* self) {
 
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 void EntityStopWatch(Entity* self) {
+    s32 var_s7;
+    s32 c; //s6
+    s32 d; //s5
+    s16 offsetX, offsetY; //s4, s3
+    s32 y; //s2
+    s32 x; //s1
     Primitive* prim;
-    s16 a;
-    s16 b;
-    s32 x;
-    s32 c;
-    s32 y;
-    s32 d;
-    s16 offsetX, offsetY;
 
     if (g_unkGraphicsStruct.pauseEnemies) {
         g_unkGraphicsStruct.D_800973FC = 0;
@@ -140,7 +139,8 @@ void EntityStopWatch(Entity* self) {
         CreateEntFactoryFromEntity(self, FACTORY(75, 0), 0);
         PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
-        goto label;
+        self->step++;
+        break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode &= ~DRAW_HIDE;
@@ -171,7 +171,8 @@ void EntityStopWatch(Entity* self) {
             }
         }
         if (self->ext.stopwatch.t < 5) {
-            prim = g_PrimBuf[self->primIndex].next;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
             if (self->ext.stopwatch.t >= 10) {
                 self->ext.stopwatch.unk8E = 1;
                 x = (self->ext.stopwatch.t / 10) * 8;
@@ -212,13 +213,13 @@ void EntityStopWatch(Entity* self) {
         break;
     case 5:
         self->ext.stopwatch.t += 1;
-        if (self->ext.stopwatch.t > 3) {
+        if (self->ext.stopwatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x15F;
             prim->drawMode |= DRAW_COLORS;
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
+            PRED(prim) = 0x40;
+            PGRN(prim) = 0x40;
+            PBLU(prim) = 0x60;
 
             PlaySfx(SFX_UI_TINK);
             self->step++;
@@ -228,7 +229,6 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t > 14) {
             CreateEntFactoryFromEntity(self, FACTORY(4, 14), 0);
-        label:
             self->step++;
         }
         break;
@@ -274,18 +274,18 @@ void EntityStopWatch(Entity* self) {
                 self->ext.stopwatch.unk80 += 0x80;
             }
 
-            a = (self->ext.stopwatch.unk82 * 8) / 100;
-            b = (self->ext.stopwatch.unk82 * 12) / 100;
+            offsetX = (self->ext.stopwatch.unk82 * 8) / 100;
+            offsetY = (self->ext.stopwatch.unk82 * 12) / 100;
             c = rsin(self->ext.stopwatch.unk80);
             d = rcos(self->ext.stopwatch.unk80);
-            prim->x0 = (x + (((d * -a) - (c * -b)) >> 0xC));
-            prim->y0 = (y + (((c * -a) + (d * -b)) >> 0xC));
-            prim->x1 = (x + (((d * a) - (c * -b)) >> 0xC));
-            prim->y1 = (y + (((c * a) + (d * -b)) >> 0xC));
-            prim->x2 = (x + (((d * -a) - (c * b)) >> 0xC));
-            prim->y2 = (y + (((c * -a) + (d * b)) >> 0xC));
-            prim->x3 = (x + (((d * a) - (c * b)) >> 0xC));
-            prim->y3 = (y + (((c * a) + (d * b)) >> 0xC));
+            prim->x0 = (x + (((d * -offsetX) - (c * -offsetY)) >> 0xC));
+            prim->y0 = (y + (((c * -offsetX) + (d * -offsetY)) >> 0xC));
+            prim->x1 = (x + (((d * offsetX) - (c * -offsetY)) >> 0xC));
+            prim->y1 = (y + (((c * offsetX) + (d * -offsetY)) >> 0xC));
+            prim->x2 = (x + (((d * -offsetX) - (c * offsetY)) >> 0xC));
+            prim->y2 = (y + (((c * -offsetX) + (d * offsetY)) >> 0xC));
+            prim->x3 = (x + (((d * offsetX) - (c * offsetY)) >> 0xC));
+            prim->y3 = (y + (((c * offsetX) + (d * offsetY)) >> 0xC));
         } else if (self->step < 5) {
             if (self->ext.stopwatch.unk84.val <= FIX(16)) {
                 if (self->ext.stopwatch.unk8C) {
@@ -336,7 +336,7 @@ void EntityStopWatch(Entity* self) {
         if (self->step < 4) {
             y = self->posY.i.hi - 14;
             if (self->ext.stopwatch.unk8E) {
-                x = (self->facingLeft ? -10 : 4) + self->posX.i.hi;
+                x = self->posX.i.hi - (self->facingLeft ? 10 : -4);
 
                 prim = prim->next;
                 if (self->ext.stopwatch.unk7E < 8) {
@@ -367,7 +367,7 @@ void EntityStopWatch(Entity* self) {
                     prim->y2 = prim->y3 = y + 8;
                 }
 
-                x = (self->facingLeft ? -4 : 10) + self->posX.i.hi;
+                x = self->posX.i.hi - (self->facingLeft ? 4 : -10);
                 prim = prim->next;
                 if (self->ext.stopwatch.unk7E < 0xC) {
                     offsetX = (self->ext.stopwatch.unk7E - 4) / 2;
@@ -403,7 +403,7 @@ void EntityStopWatch(Entity* self) {
                 return;
             }
 
-            x = (self->facingLeft ? -4 : 4) + self->posX.i.hi;
+            x = self->posX.i.hi - (self->facingLeft ? 4 : -4);
             prim = prim->next;
             if (self->ext.stopwatch.unk7E < 8) {
                 prim->x0 = prim->x2 = x - (self->ext.stopwatch.unk7E / 2);
