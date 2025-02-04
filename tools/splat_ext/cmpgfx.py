@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 from typing import List, Optional, Tuple
 import n64img
-from splat.segtypes.n64.segment import N64Segment
+from splat.segtypes.segment import Segment
 from splat.util import options, log
 
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
@@ -13,7 +13,7 @@ from cmp import SOTNDecompress
 from utils import log_fatal
 
 
-class PSXSegCmpgfx(N64Segment):
+class PSXSegCmpgfx(Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml

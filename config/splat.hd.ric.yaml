@@ -29,7 +29,6 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
-  include_macro_inc: false
 sha1: 1dcd6b881e2c0906854c3d53839dfb4ae0d359d6
 segments:
   - name: ric
