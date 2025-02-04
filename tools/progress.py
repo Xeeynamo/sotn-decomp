@@ -7,6 +7,7 @@ import os
 import requests
 import subprocess
 import sys
+import yaml
 from pathlib import Path
 from mapfile_parser import MapFile
 from mapfile_parser import ProgressStats
@@ -60,21 +61,7 @@ class DecompProgressStats:
     functions_prev: int
     data_prev: int
 
-    def get_asm_path(self, ovl_path) -> Path:
-        """
-        Returns one of the following valid paths:
-        `asm/us/st/wrp`
-        `asm/pspeu/st/wrp_psp`
-        """
-        asm_path = f"asm/{args.version}/{ovl_path}"
-        if os.path.exists(asm_path):
-            return Path(asm_path)
-        asm_path_psp = f"asm/{args.version}/{ovl_path}_psp"
-        if os.path.exists(asm_path_psp):
-            return Path(asm_path_psp)
-        exiterr(f"path '{asm_path}' or '{asm_path_psp}' not found")
-
-    def get_nonmatchings_path(self, asm_path: Path) -> Path:
+    def get_nonmatchings_path(self, asm_path: str, splat_options: dict) -> Path:
         """
         Returns one of the following valid paths:
         `asm/us/main/nonmatchings`
@@ -82,22 +69,16 @@ class DecompProgressStats:
         `asm/pspeu/dra_psp/psp/dra_psp`
         `asm/pspeu/st/wrp_psp/psp/wrp_psp`
         """
-        nonmatchings = f"{asm_path}/nonmatchings"
-        if not os.path.exists(nonmatchings):
-            nonmatchings_psp = f"{asm_path}/psp/{os.path.basename(asm_path)}"
-            if os.path.exists(nonmatchings_psp) and os.path.exists(
-                f"{asm_path}/matchings"
-            ):
-                nonmatchings = nonmatchings_psp
-            else:
-                print("unable to determine nonmatchings path")
-                exit(1)
-        # hack to return 'asm/us/main/nonmatchings' instead of 'asm/us/main/nonmatchings/main'
-        if nonmatchings.endswith("/main"):
-            nonmatchings = nonmatchings[:-5]
+        nonmatchings = (
+            f"{asm_path}/{splat_options.get("nonmatchings_path", "nonmatchings")}"
+        )
+        nonmatchings_psp = f"{nonmatchings}/{os.path.basename(asm_path)}"
+        if os.path.exists(nonmatchings_psp) and os.path.exists(f"{asm_path}/matchings"):
+            return Path(nonmatchings_psp)
+
         return Path(nonmatchings)
 
-    def __init__(self, module_name: str, path: str):
+    def __init__(self, module_name: str, path: str, src_dir: str = None):
         self.name = module_name
         self.data_imported = 0
         self.data_total = 0
@@ -106,7 +87,29 @@ class DecompProgressStats:
         self.functions_matching = 0
         self.functions_total = 0
 
-        map_path = Path(f"build/{args.version}/{module_name}.map")
+        if src_dir == None:
+            src_dir = path
+
+        splat_config_path = f"config/splat.{args.version}.{module_name}.yaml"
+        map_path = None
+        if os.path.exists(splat_config_path):
+            with open(
+                f"config/splat.{args.version}.{module_name}.yaml"
+            ) as config_yaml_ref:
+                config = yaml.safe_load(config_yaml_ref)
+            splat_options = config["options"]
+
+            map_path = Path(f"{splat_options["build_path"]}/{module_name}.map")
+        else:
+            printerr(f"Config yaml not found {splat_config_path}")
+            self.exists = False
+            return
+
+        # first check for path override
+        if map_path is None or not os.path.exists(map_path):
+            map_path = Path(f"build/{args.version}/{path}.map")
+
+        # then fall back to path check (really only for weapons)
         if not os.path.exists(map_path):
             printerr(f"file '{map_path}' not found")
             self.exists = False
@@ -116,9 +119,9 @@ class DecompProgressStats:
         map_file = mapfile_parser.MapFile()
         map_file.readMapFile(map_path)
 
-        asm_path = self.get_asm_path(path)
-        nonmatchings = self.get_nonmatchings_path(asm_path)
-        depth = 4 + path.count("/")
+        asm_path = Path(splat_options["asm_path"])
+        nonmatchings = self.get_nonmatchings_path(asm_path, splat_options)
+        depth = 4 + src_dir.count("/")
         self.calculate_progress(
             map_file.filterBySectionType(".text"), asm_path, nonmatchings, depth
         )
@@ -219,7 +222,7 @@ class DecompProgressWeaponStats:
         self.data_imported = 0
         self.data_total = 0
         for i in range(0, 59):
-            stats = DecompProgressStats(f"weapon/w0_{i:03d}", "weapon")
+            stats = DecompProgressStats("weapon", f"weapon/w0_{i:03d}", "weapon")
             if stats.exists:
                 self.code_matching += stats.code_matching
                 self.code_total += stats.code_total

@@ -1,11 +1,10 @@
 from pathlib import Path
 from typing import Optional
-from splat.segtypes.n64.segment import N64Segment
 from splat.segtypes.segment import Segment
 from splat.util import options, log
 
 
-class PSXSegCmp(N64Segment):
+class PSXSegCmp(Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(
             rom_start, rom_end, type, name, vram_start, args=args, yaml=yaml
