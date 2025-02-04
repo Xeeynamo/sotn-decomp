@@ -1114,7 +1114,7 @@
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        |                                 |       |
 | tt_000 | UpdateServantDefault                |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
-| lib    | func_psp_0924B568                   |     1202 |        112 | Yes    |                                 |       |
+| lib    | func_psp_0924B568                   |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
 | lib    | func_psp_09268528                   |     1229 |        132 | Yes    | https://decomp.me/scratch/cjRtH | 0.996 |
