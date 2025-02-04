@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern u32 D_91CE570;
 
+#ifdef VERSION_PSP
+#define NUM_PRIMS 183
+#else
+#define NUM_PRIMS 181
+#endif
+
 void EntityStageNamePopup(Entity* self) {
 #ifdef VERSION_HD
     u8 padding[0xD8];
@@ -30,11 +36,7 @@ void EntityStageNamePopup(Entity* self) {
 #endif
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
-#ifdef VERSION_PSP
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 183);
-#else
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 181);
-#endif
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_PRIMS);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
