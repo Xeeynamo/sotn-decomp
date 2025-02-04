@@ -1105,7 +1105,7 @@
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib    | func_psp_09267400                   |     1060 |        102 | Yes    |                                 |       |
-| lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    |                                 |       |
+| lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    | https://decomp.me/scratch/bUWNR | 0.996 |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    |                                 |       |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
