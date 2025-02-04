@@ -248,8 +248,11 @@ def get_progress(module_name: str, path: str) -> DecompProgressStats:
 def hydrate_previous_metrics(progresses: dict[str, DecompProgressStats], version: str):
     def fetch_metrics(category, callback):
         api_base_url = os.getenv("FROGRESS_API_BASE_URL")
-        r = requests.get(f"{api_base_url}/data/{slug}/{version}/{category}")
-        if r.status_code == 404:
+        if api_base_url:
+            r = requests.get(f"{api_base_url}/data/{slug}/{version}/{category}")
+        else:
+            print("Warning: api_base_url not set")
+        if api_base_url is None or r.status_code == 404:
             for ovl in progress:
                 callback(ovl, 0)
             return
