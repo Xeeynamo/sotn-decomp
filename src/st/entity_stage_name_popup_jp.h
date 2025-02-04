@@ -2,6 +2,9 @@
 extern u32 D_91CE570;
 
 void EntityStageNamePopup(Entity* self) {
+#ifdef VERSION_HD
+    u8 padding[0xD8];
+#endif
     Primitive* prim;
     s32 i;
     u8 var_s6;
@@ -27,7 +30,11 @@ void EntityStageNamePopup(Entity* self) {
 #endif
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
+#ifdef VERSION_PSP
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 183);
+#else
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 181);
+#endif
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -155,11 +162,13 @@ void EntityStageNamePopup(Entity* self) {
         prim->v2 = 0xFF;
         prim->v3 = prim->v2;
         prim->x2 = prim->x0 = 8;
+#ifdef VERSION_PSP
         prim->x3 = prim->x1 = 0xF8;
         prim->y1 = prim->y0 = 0x9B;
-#ifdef VERSION_PSP
         prim->y3 = prim->y2 = 0xBF;
 #else
+        prim->y1 = prim->y0 = 0x9B;
+        prim->x3 = prim->x1 = 0xF8;
         prim->y3 = prim->y2 = 0xC6;
 #endif
         prim->r0 = 0x10;
