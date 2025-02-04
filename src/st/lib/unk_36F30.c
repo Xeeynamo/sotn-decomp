@@ -225,7 +225,7 @@ void func_us_801B6F30(Entity* self) {
                 }
             }
         }
-        if (pads & (PAD_LEFT | PAD_RIGHT)) {
+        if (pads & (PAD_LEFT + PAD_RIGHT)) {
             if (self->ext.et_801B6F30.unk84) {
                 self->ext.et_801B6F30.unk84 = 0;
             } else {
