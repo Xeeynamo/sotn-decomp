@@ -101,6 +101,7 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
         Err(error) => {
             eprintln!("Unable to read directory: {}", error);
             println!("Directory path: {}", dir_path);
+            exit(1);
         }
     }
 }
