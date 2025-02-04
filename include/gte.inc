@@ -1,5 +1,3 @@
-.ifndef .L_GTE_INC
-.L_GTE_INC:
 # GTE macros
 
 .macro RTPS
@@ -89,5 +87,3 @@
 .macro GPL sf
 		.word	0x4BA0003E|\sf<<19
 .endm
-
-.endif

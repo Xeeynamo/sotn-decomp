@@ -14,7 +14,7 @@ import n64img.image
 
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from splat.util import options, log
-from splat.segtypes.segment import Segment
+from splat.segtypes.n64.segment import N64Segment
 import utils
 
 max_width = 256
@@ -226,7 +226,7 @@ def decode_spritesheet(out_path, data: bytearray, start: int, palette) -> list:
     return items
 
 
-class PSXSegSpritesheet(Segment):
+class PSXSegSpritesheet(N64Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(rom_start, rom_end, type, name, vram_start, args, yaml),
 
