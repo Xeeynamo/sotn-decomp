@@ -3,6 +3,7 @@
 
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
+#define CASTLE_FLAG_BANK 0x6F
 
 typedef enum EntityIDs {
     // /* 0x00 */ E_NONE,
@@ -31,13 +32,20 @@ typedef enum EntityIDs {
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
     /* 0x22 */ E_ID_22,
-    /* 0x2F */ E_ID_2F = 0x2F,
+    /* 0x27 */ E_ID_27 = 0x27,
+    /* 0x28 */ E_ID_28,
+    /* 0x29 */ E_ID_29,
+    /* 0x2A */ E_ID_2A,
+    /* 0x2D */ E_ID_2D = 0x2D,
+    /* 0x2E */ E_ID_2E,
+    /* 0x2F */ E_ID_2F,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
     /* 0x43 */ E_SKELETON = 0x43,
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
+    /* 0x48 */ E_ID_48 = 0x48,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
