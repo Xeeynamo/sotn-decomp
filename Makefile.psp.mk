@@ -100,7 +100,7 @@ $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/li
 ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles e_collect prim_helpers e_bg_vortex e_misc 2805C 2A8DC
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link_with_deadstrip,stst0,$@)
-ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity prim_helpers collision
+ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity prim_helpers collision e_stage_name
 $(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
 	$(call link_with_deadstrip,stwrp,$@)
 
