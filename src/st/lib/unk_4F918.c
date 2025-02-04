@@ -329,12 +329,12 @@ void func_us_801D064C(Entity* self) {
             prim = self->ext.et_801D064C.unk7C;
             if (self->ext.et_801D064C.unk80 < 0x10) {
                 if (self->facingLeft) {
-                    prim->x0--;
-                    prim->x1 += 0;
-                    prim->x2 += 0;
-                    prim->x3 += 0;
+                    prim->x0 -= 1;
+                    prim->x1 -= 0;
+                    prim->x2 -= 0;
+                    prim->x3 -= 0;
                 } else {
-                    prim->x0++;
+                    prim->x0 += 1;
                     prim->x1 += 0;
                     prim->x2 += 0;
                     prim->x3 += 0;
