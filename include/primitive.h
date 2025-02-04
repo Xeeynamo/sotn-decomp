@@ -119,6 +119,9 @@ typedef struct FakePrim {
 // it this for now. That one use is in RicEntityCrashHydroStorm.
 typedef struct PrimLineG2 {
     struct PrimLineG2* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
     /* 0x04 */ u8 r0;
     /* 0x05 */ u8 g0;
     /* 0x06 */ u8 b0;

@@ -1022,9 +1022,9 @@ typedef struct {
 } ET_8011E4BC;
 
 typedef struct {
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
+    s16 beamwidth;
+    s16 beamheight;
+    s16 timer;
 } ET_HellfireHandler;
 
 typedef struct {
@@ -1385,24 +1385,24 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-    u16 unk7C;
-    u16 unk7E;
+    s16 unk7C;
+    f16 unk7E;
     u8 unk80;
     byte pad81;
     u8 unk82;
     byte pad83;
     s32 unk84;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 subweaponId;
+    s32 : 32;
+    struct Entity* parent;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 subweaponId;
 } ET_CrashCross;
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -1433,38 +1433,19 @@ typedef struct {
     s16 unk84;
     s16 unk86;
     s16 unk88;
-    s8 unk8A;
-    u8 unk8B[12];
-    s32 unk98;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 subweaponId;
-} ET_SubwpnAxe;
-typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[3];
-#endif
-    s16 unk7C;
-    s16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
-    s8 unk8A;
-    u8 unk8B[12];
+    s16 unk8A;
+    u8 unk8C[4];
+    u8 unk90[4];
+    u8 unk94[4];
     s32 unk98;
     s32 unk9C;
     u16 unkA0;
     s16 unkA2;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 subweaponId;
-} ET_AxeCrash;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 subweaponId;
+} ET_SubwpnAxe;
 typedef struct {
     s16 timer;
     u16 unk7E;
@@ -1787,7 +1768,7 @@ typedef struct {
     /* 0x81 */ s32 : 24;
     /* 0x84 */ u8 attackTimerIndex;
     /* 0x85 */ s32 : 24;
-    /* 0x88 */ s8 explosionTimer;
+    /* 0x88 */ u8 explosionTimer;
     /* 0x89 */ s32 : 24;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
@@ -2758,6 +2739,24 @@ typedef struct {
     /* 0x84 */ s16 unk84;
 } ET_Marionette;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ u16 unk84;
+} ET_801B6F30;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ u16 unk86;
+    /* 0x88 */ u8 unk88[1]; // This is not the true size.
+} ET_801B15C0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2780,7 +2779,6 @@ typedef union { // offset=0x7C
     ET_HolyWater holywater;
     ET_CrashCross crashcross;
     ET_SubwpnAxe subwpnAxe;
-    ET_AxeCrash axeCrash;
     ET_VibhutiCrash vibhutiCrash;
     ET_VibhutiCrashCloud vibCrashCloud;
     ET_RicRevivalColumn ricColumn;
@@ -2998,6 +2996,8 @@ typedef union { // offset=0x7C
     ET_Fish fish;
     ET_Bird bird;
     ET_Marionette marionette;
+    ET_801B6F30 et_801B6F30;
+    ET_801B15C0 et_801B15C0;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
@@ -3050,7 +3050,6 @@ SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);
-SYNC_FIELD(ET_Subweapon, ET_AxeCrash, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_CrossBoomerang, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleSubwpn, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_BibleBeam, subweaponId);
