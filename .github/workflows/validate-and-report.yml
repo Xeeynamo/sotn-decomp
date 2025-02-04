@@ -35,8 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
-      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
-      FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
