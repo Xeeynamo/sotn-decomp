@@ -55,6 +55,7 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitCommon;
+extern EInit g_EInitInteractable;
 
 // Skeleton
 extern EInit g_EInitSkeleton;
