@@ -1097,8 +1097,8 @@
 | lib    | func_psp_09239650                   |      965 |        124 | Yes    |                                 |       |
 | lib    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
-| wrp    | EntityStageNamePopup                |      989 |         83 |        | https://decomp.me/scratch/U3Xj4 | 0.976 |
-| lib    | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/U3Xj4 | 0.976 |
+| wrp    | EntityStageNamePopup                |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
+| lib    | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | lib    | func_psp_0926AED0                   |     1018 |        104 | Yes    |                                 |       |
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        |                                 |       |
