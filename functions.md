@@ -1094,7 +1094,7 @@
 | dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    |                                 |       |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
-| lib    | func_psp_09239650                   |      965 |        124 | Yes    |                                 |       |
+| lib    | func_psp_09239650                   |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.888 |
 | lib    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityStageNamePopup                |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
