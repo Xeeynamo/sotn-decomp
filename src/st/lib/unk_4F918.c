@@ -33,7 +33,7 @@ void func_us_801D064C(Entity* self) {
         self->flags |= FLAG_DEAD;
     }
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
-        self->step = 0xA;
+        self->step = 10;
     }
     switch (self->step) {
     case 0:
