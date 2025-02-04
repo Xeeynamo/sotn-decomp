@@ -2757,6 +2757,22 @@ typedef struct {
     /* 0x88 */ u8 unk88[1]; // This is not the true size.
 } ET_801B15C0;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+} ET_801D064C;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2998,6 +3014,7 @@ typedef union { // offset=0x7C
     ET_Marionette marionette;
     ET_801B6F30 et_801B6F30;
     ET_801B15C0 et_801B15C0;
+    ET_801D064C et_801D064C;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
