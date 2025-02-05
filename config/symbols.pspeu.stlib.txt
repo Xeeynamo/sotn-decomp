@@ -109,6 +109,7 @@ LIB_RedDoorTiles = 0x09275F08;
 LIB_EntityUpdates = 0x09275F18;
 g_EInitObtainable = 0x09276058;
 g_EInitParticle = 0x09276068;
+g_EInitInteractable = 0x09276088;
 g_EInitUnkId13 = 0x09276098;
 g_EInitCommon = 0x092760B8;
 g_EInitDamageNum = 0x092760C8;

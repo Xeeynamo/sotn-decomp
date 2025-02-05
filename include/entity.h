@@ -2745,6 +2745,7 @@ typedef struct {
     /* 0x80 */ u16 unk80;
     /* 0x82 */ u16 unk82;
     /* 0x84 */ u16 unk84;
+    /* 0x86 */ u16 unk86;
 } ET_801B6F30;
 
 typedef struct {
