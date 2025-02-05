@@ -1,12 +1,12 @@
 from splat.util import options, log
 from splat.segtypes.n64.i4 import N64SegI4
 from splat.segtypes.n64.rgba16 import N64SegRgba16
-from splat.segtypes.n64.segment import N64Segment
+from splat.segtypes.segment import Segment
 from typing import Optional
 from pathlib import Path
 
 
-class PSXSegRaw(N64Segment):
+class PSXSegRaw(Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(rom_start, rom_end, type, name, vram_start, args, yaml),
 
