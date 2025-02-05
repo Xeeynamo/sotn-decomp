@@ -1250,7 +1250,7 @@
 | dra    | func_80129864                       |      809 |         78 |        | https://decomp.me/scratch/Ggtu5 | 0.999 |
 | dra    | func_psp_0910AA60                   |      815 |        149 |        |                                 |       |
 | dra    | HandlePlay                          |      816 |        115 | Yes    |                                 |       |
-| lib    | func_psp_09260748                   |      820 |         58 |        | https://decomp.me/scratch/XjkPy | 0.955 |
+| lib    | func_psp_09260748                   |      820 |         58 |        | https://decomp.me/scratch/XjkPy | 1.0   |
 | dra    | EntityPlayerOutline                 |      826 |         55 | Yes    |                                 |       |
 | no4    | func_psp_0923C460                   |      845 |        106 | Yes    |                                 |       |
 | lib    | func_psp_0923B440                   |      858 |         61 | Yes    |                                 |       |
