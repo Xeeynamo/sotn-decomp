@@ -749,11 +749,7 @@ void func_us_801B8A00(Entity* self) {
                 self->ext.et_801B6F30.unk82--;
             }
         }
-#ifdef VERSION_PSP
-        if (pads & 0x600) {
-#else
         if (pads & (PAD_R1 + PAD_R2)) {
-#endif
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 6;
@@ -764,11 +760,7 @@ void func_us_801B8A00(Entity* self) {
                     self->ext.et_801B6F30.unk82 = unkVal2;
                 }
             }
-#ifdef VERSION_PSP
-        } else if (pads & 0x102) {
-#else
         } else if (pads & (PAD_L1 + PAD_L2)) {
-#endif
             if (self->ext.et_801B6F30.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 0;
