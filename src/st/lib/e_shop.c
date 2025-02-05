@@ -394,11 +394,7 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk82--;
             }
-#ifdef VERSION_PSP
-        } else if (tempVar & 0x600) {
-#else
         } else if (tempVar & (PAD_R1 + PAD_R2)) {
-#endif
             if (self->ext.et_801B2BE4.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80 = 6;
@@ -410,11 +406,7 @@ void func_us_801B2BE4(Entity* self) {
                     self->ext.et_801B2BE4.unk82 = self->ext.et_801B2BE4.unk88;
                 }
             }
-#ifdef VERSION_PSP
-        } else if (tempVar & 0x102) {
-#else
         } else if (tempVar & (PAD_L1 + PAD_L2)) {
-#endif
             if (self->ext.et_801B2BE4.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B2BE4.unk80 = 0;
