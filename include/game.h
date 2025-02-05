@@ -159,6 +159,8 @@ typedef enum {
 #define PAD_LEFT 0x8000
 
 #else
+#define PAD_L2 0x0002
+#define PAD_R2 0x0400
 #define PAD_L1 0x0100
 #define PAD_R1 0x0200
 #define PAD_TRIANGLE 0x1000
