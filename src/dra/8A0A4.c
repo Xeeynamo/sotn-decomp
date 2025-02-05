@@ -435,12 +435,10 @@ void EntityStopWatch(Entity* self) {
 // Identical to RIC
 void EntitySubwpnBibleTrail(Entity* self) {
     Primitive* prim;
-    s32 ret;
 
     switch (self->step) {
     case 0:
-        ret = AllocPrimitives(PRIM_GT4, 1);
-        self->primIndex = ret;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -451,8 +449,8 @@ void EntitySubwpnBibleTrail(Entity* self) {
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
         prim->u0 = prim->u2 = 0x20;
-        prim->u1 = prim->u3 = 0x30;
         prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
         prim->v2 = prim->v3 = 0x10;
         prim->x0 = prim->x2 = self->posX.i.hi - 8;
         prim->x1 = prim->x3 = self->posX.i.hi + 8;
@@ -464,7 +462,8 @@ void EntitySubwpnBibleTrail(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (++self->ext.et_BibleSubwpn.unk7C > 5) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C > 5) {
             self->step++;
         }
         self->ext.et_BibleSubwpn.unk7E -= 8;

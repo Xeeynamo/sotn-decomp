@@ -429,6 +429,49 @@ void EntityStopWatch(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/45688", EntitySubwpnBibleTrail);
+// DRA entity #44. Comes from blueprint 79.
+// Identical to RIC
+void EntitySubwpnBibleTrail(Entity* self) {
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = self->posX.i.hi - 8;
+        prim->x1 = prim->x3 = self->posX.i.hi + 8;
+        prim->y0 = prim->y1 = self->posY.i.hi - 8;
+        prim->y2 = prim->y3 = self->posY.i.hi + 8;
+        prim->priority = self->zPriority;
+        prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->ext.et_BibleSubwpn.unk7E = 0x60;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C > 5) {
+            self->step++;
+        }
+        self->ext.et_BibleSubwpn.unk7E -= 8;
+        break;
+    case 2:
+        DestroyEntity(self);
+        return;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    PCOL(prim) = self->ext.et_BibleSubwpn.unk7E;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/45688", EntitySubwpnBible);
