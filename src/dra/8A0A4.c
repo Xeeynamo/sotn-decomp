@@ -479,26 +479,23 @@ void EntitySubwpnBibleTrail(Entity* self) {
 // book rotates around player
 void EntitySubwpnBible(Entity* self) {
     Primitive* prim;
-    s16 left;
-    s16 top;
-    s16 bottom;
-    s16 right;
-
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s16 selfX;
+    s16 selfY;
+    s32 var_s7;
+    s32 var_s6;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
     s32 sine;
     s32 cosine;
-    s32 cos_s2;
-    s32 sin_s3;
-    s32 cos_s3;
-    s32 sin_s2;
-
-    s32 temp_a3;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_a1;
-
-    s32 temp_v0;
-
-    s32 var_s4;
+    // This variable is uninitialized. It's an error for PSP compiler.
+    // Maybe they tossed this "= 0" line as a quick workaround.
+    #ifdef VERSION_PSP
+    var_s4 = 0;
+    #endif
 
     switch (self->step) {
     case 0:
@@ -518,7 +515,12 @@ void EntitySubwpnBible(Entity* self) {
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
-        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
+        if (self->facingLeft) {
+            sp44 = 32;
+        } else {
+            sp44 = -32;
+        }
+        self->ext.et_BibleSubwpn.unk84 = sp44;
         func_8011A290(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -532,14 +534,21 @@ void EntitySubwpnBible(Entity* self) {
         self->step++;
     case 2:
         self->ext.et_BibleSubwpn.unk7C++;
-        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
+        self->ext.et_BibleSubwpn.unk7E++;
+        if (self->ext.et_BibleSubwpn.unk7E >= 0x30) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
-            self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
+            if (self->facingLeft) {
+                sp40 = FIX(-12);
+            } else {
+                sp40 = FIX(12);
+            }
+            self->velocityX = sp40;
             self->velocityY = FIX(-12);
             PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
@@ -554,37 +563,31 @@ void EntitySubwpnBible(Entity* self) {
         // All this logic is a mess, could use a cleanup
         sine = rsin(self->ext.et_BibleSubwpn.unk80);
         cosine = rcos(self->ext.et_BibleSubwpn.unk80);
-        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        cos_s2 = cosine * temp_s2;
-        sin_s3 = sine * temp_s3;
-        cos_s3 = cosine * temp_s3;
-        temp_a1 = cos_s2 + sin_s3;
-        sin_s2 = sine * temp_s2;
-        temp_s2 = temp_a1 >> 0xC;
-        temp_s3 = (cos_s3 - sin_s2) >> 0xC;
+        var_s5 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        var_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        var_s7 = cosine * var_s5 + sine * var_s3;
+        sp48 = (cosine * var_s3 - sine * var_s5);
+        var_s5 = var_s7 >> 0xC;
+        var_s3 = sp48 >> 0xC;
         sine = rsin(self->ext.et_BibleSubwpn.unk82);
         cosine = rcos(self->ext.et_BibleSubwpn.unk82);
-        temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
-        temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
-        if (self->facingLeft != 0) {
-            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
+        var_s7 = ((cosine * var_s5) + (sine * var_s4)) >> 0xC;
+        var_s4 = var_s6 = ((cosine * var_s4) - (sine * var_s5)) >> 0xC;
+        if (self->facingLeft) {
+            var_s6 = ((cosine * var_s4) + (sine * var_s3)) >> 0xC;
         } else {
-            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
+            var_s6 = ((cosine * var_s4) - (sine * var_s3)) >> 0xC;
         }
 
         self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
         self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
         self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
         if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
-            // temp_v0 needed because otherwise unk84 gets loaded with lhu
-            // instead of lh
-            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
-            self->ext.et_BibleSubwpn.unk84 = temp_v0;
+            self->ext.et_BibleSubwpn.unk84 *= -1;
         }
-        self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
-        self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
-        self->zPriority = PLAYER.zPriority + (temp_s3 < 0 ? 2 : -2);
+        self->posX.i.hi = PLAYER.posX.i.hi + var_s7;
+        self->posY.i.hi = PLAYER.posY.i.hi + var_s6;
+        self->zPriority = PLAYER.zPriority + (var_s3 < 0 ? 2 : -2);
         break;
     case 2:
         self->posX.val += self->velocityX;
@@ -592,16 +595,14 @@ void EntitySubwpnBible(Entity* self) {
         self->velocityY += FIX(-2);
         break;
     }
-    if (self->ext.et_BibleSubwpn.unk86 != 0) {
+    if (self->ext.et_BibleSubwpn.unk86) {
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
         prim = &g_PrimBuf[self->primIndex];
-        left = self->posX.i.hi - 8;
-        right = self->posX.i.hi + 8;
-        top = self->posY.i.hi - 12;
-        bottom = self->posY.i.hi + 12;
-        prim->x0 = prim->x2 = left;
-        prim->x1 = prim->x3 = right;
-        prim->y0 = prim->y1 = top;
-        prim->y2 = prim->y3 = bottom;
+        prim->x0 = prim->x2 = selfX - 8;
+        prim->x1 = prim->x3 = selfX + 8;
+        prim->y0 = prim->y1 = selfY - 12;
+        prim->y2 = prim->y3 = selfY + 12;
         prim->priority = self->zPriority;
         CreateEntFactoryFromEntity(self, FACTORY(79, 0), 0);
         if (g_GameTimer % 10 == 0) {
