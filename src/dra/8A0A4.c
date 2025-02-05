@@ -82,11 +82,11 @@ void EntityStopWatchExpandingCircle(Entity* self) {
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 void EntityStopWatch(Entity* self) {
     s32 var_s7;
-    s32 c; //s6
-    s32 d; //s5
-    s16 offsetX, offsetY; //s4, s3
-    s32 y; //s2
-    s32 x; //s1
+    s32 c;
+    s32 d;
+    s16 offsetX, offsetY;
+    s32 y;
+    s32 x;
     Primitive* prim;
 
     if (g_unkGraphicsStruct.pauseEnemies) {
@@ -491,11 +491,11 @@ void EntitySubwpnBible(Entity* self) {
     s32 var_s3;
     s32 sine;
     s32 cosine;
-    // This variable is uninitialized. It's an error for PSP compiler.
-    // Maybe they tossed this "= 0" line as a quick workaround.
-    #ifdef VERSION_PSP
+// This variable is uninitialized. It's an error for PSP compiler.
+// Maybe they tossed this "= 0" line as a quick workaround.
+#ifdef VERSION_PSP
     var_s4 = 0;
-    #endif
+#endif
 
     switch (self->step) {
     case 0:
