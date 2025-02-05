@@ -92,11 +92,11 @@
 | dra    | 624DC.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 628AC.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 84B88.rodata                        |       18 |          0 | Yes    |                                 |       |
+| dra    | 8A0A4.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 11C50.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 160C0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 19AB0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 329F0.rodata                        |       18 |          0 | Yes    |                                 |       |
-| dra    | 45688.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 53DB0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 80.rodata                           |       18 |          0 | Yes    |                                 |       |
 | dra    | A710.rodata                         |       18 |          0 | Yes    |                                 |       |
@@ -1279,7 +1279,7 @@
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
-| lib    | func_psp_09267400                   |     1060 |        102 | Yes    |                                 |       |
+| lib    | func_psp_09267400                   |     1060 |        102 | Yes    | https://decomp.me/scratch/d5C0A | 0.825 |
 | lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    | https://decomp.me/scratch/bUWNR | 0.996 |
 | no4    | func_psp_09252B00                   |     1095 |        132 |        |                                 |       |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
