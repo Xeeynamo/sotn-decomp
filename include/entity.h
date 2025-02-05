@@ -2656,16 +2656,6 @@ typedef struct {
 } ET_Chair;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
-    /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u16 unk80;
-    /* 0x82 */ u16 unk82;
-    /* 0x84 */ u16 : 16;
-    /* 0x86 */ u16 : 16;
-    /* 0x88 */ u16 unk88;
-} ET_801B2BE4;
-
-typedef struct {
     /* 0x7C */ u16 : 16;
     /* 0x7E */ u16 : 16;
     /* 0x80 */ u16 unk80;
@@ -2746,6 +2736,7 @@ typedef struct {
     /* 0x82 */ u16 unk82;
     /* 0x84 */ u16 unk84;
     /* 0x86 */ u16 unk86;
+    /* 0x88 */ u16 unk88;
 } ET_801B6F30;
 
 typedef struct {
@@ -3003,7 +2994,6 @@ typedef union { // offset=0x7C
     ET_801BE2C8 et_801BE2C8;
     ET_801B9BE4 et_801B9BE4;
     ET_Chair chair;
-    ET_801B2BE4 et_801B2BE4;
     ET_801BDAE4 et_801BDAE4;
     ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
