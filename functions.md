@@ -1001,7 +1001,7 @@
 | dra    | func_800F0CD8                       |      473 |         40 |        |                                 |       |
 | lib    | func_psp_0926CF18                   |      473 |         53 |        |                                 |       |
 | dra    | StoreSaveData                       |      481 |         49 |        |                                 |       |
-| dra    | EntitySubwpnBible                   |      482 |         41 |        |                                 |       |
+| dra    | EntitySubwpnBible                   |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra    | func_psp_0910D1F0                   |      482 |         75 |        |                                 |       |
 | dra    | func_psp_090F06D8                   |      493 |         37 |        |                                 |       |
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
@@ -1094,7 +1094,7 @@
 | dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    |                                 |       |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
-| lib    | func_psp_09239650                   |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.888 |
+| lib    | func_psp_09239650                   |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
 | lib    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityStageNamePopup                |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
