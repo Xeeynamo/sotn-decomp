@@ -6,11 +6,12 @@
 // expanding circle effect when activating stopwatch
 void EntityStopWatchExpandingCircle(Entity* self) {
     Primitive* prim;
+    s16 angle;
     s32 sine;
     s32 cosine;
     s32 i;
-    u16 selfPosX;
-    u16 selfPosY;
+    s16 selfPosX;
+    s16 selfPosY;
     s16 minus20;
 
     switch (self->step) {
@@ -23,19 +24,20 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < 16; i++, prim = prim->next) {
+        for (i = 0; i < 16; prim = prim->next, i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x15F;
-            self->zPriority = 0xC2;
-            prim->priority = 0xC2;
+            prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
-            prim->u0 = ((rsin((s16)(i << 8)) << 5) >> 0xC) + 0x20;
-            prim->v0 = -((rcos((s16)(i << 8)) << 5) >> 0xC) - 0x21;
-            prim->u1 = ((rsin((s16)(i + 1 << 8)) << 5) >> 0xC) + 0x20;
-            prim->v1 = -((rcos((s16)(i + 1 << 8)) << 5) >> 0xC) - 0x21;
-            prim->v2 = prim->v3 = 0xE0;
+            angle = i << 8;
+            prim->u0 = ((rsin(angle) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos(angle) << 5) >> 0xC) + 0xDF;
+            angle = (i + 1 << 8);
+            prim->u1 = ((rsin(angle) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos(angle) << 5) >> 0xC) + 0xDF;
             prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
             prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
                 0x40;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
@@ -46,7 +48,8 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         break;
     case 1:
         self->ext.et_stopwatchCircle.size += 0x18;
-        if (++self->ext.et_stopwatchCircle.timer >= 0x1F) {
+        self->ext.et_stopwatchCircle.timer++;
+        if (self->ext.et_stopwatchCircle.timer > 30) {
             DestroyEntity(self);
             return;
         }
@@ -55,7 +58,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
     selfPosX = self->posX.i.hi;
     selfPosY = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 16; i++, prim = prim->next) {
+    for (i = 0; i < 16; prim = prim->next, i++) {
         sine = rsin(i << 8);
         cosine = rcos(i << 8);
         minus20 = self->ext.et_stopwatchCircle.size - 0x20;
@@ -78,14 +81,13 @@ void EntityStopWatchExpandingCircle(Entity* self) {
 
 // stopwatch subweapon effect. stops enemies (Dra Entity 0x2A)
 void EntityStopWatch(Entity* self) {
-    Primitive* prim;
-    s16 a;
-    s16 b;
-    s32 x;
+    s32 var_s7;
     s32 c;
-    s32 y;
     s32 d;
     s16 offsetX, offsetY;
+    s32 y;
+    s32 x;
+    Primitive* prim;
 
     if (g_unkGraphicsStruct.pauseEnemies) {
         g_unkGraphicsStruct.D_800973FC = 0;
@@ -137,7 +139,8 @@ void EntityStopWatch(Entity* self) {
         CreateEntFactoryFromEntity(self, FACTORY(75, 0), 0);
         PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
-        goto label;
+        self->step++;
+        break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode &= ~DRAW_HIDE;
@@ -168,7 +171,8 @@ void EntityStopWatch(Entity* self) {
             }
         }
         if (self->ext.stopwatch.t < 5) {
-            prim = g_PrimBuf[self->primIndex].next;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
             if (self->ext.stopwatch.t >= 10) {
                 self->ext.stopwatch.unk8E = 1;
                 x = (self->ext.stopwatch.t / 10) * 8;
@@ -209,13 +213,13 @@ void EntityStopWatch(Entity* self) {
         break;
     case 5:
         self->ext.stopwatch.t += 1;
-        if (self->ext.stopwatch.t > 3) {
+        if (self->ext.stopwatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x15F;
             prim->drawMode |= DRAW_COLORS;
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
+            PRED(prim) = 0x40;
+            PGRN(prim) = 0x40;
+            PBLU(prim) = 0x60;
 
             PlaySfx(SFX_UI_TINK);
             self->step++;
@@ -225,7 +229,6 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t > 14) {
             CreateEntFactoryFromEntity(self, FACTORY(4, 14), 0);
-        label:
             self->step++;
         }
         break;
@@ -271,18 +274,18 @@ void EntityStopWatch(Entity* self) {
                 self->ext.stopwatch.unk80 += 0x80;
             }
 
-            a = (self->ext.stopwatch.unk82 * 8) / 100;
-            b = (self->ext.stopwatch.unk82 * 12) / 100;
+            offsetX = (self->ext.stopwatch.unk82 * 8) / 100;
+            offsetY = (self->ext.stopwatch.unk82 * 12) / 100;
             c = rsin(self->ext.stopwatch.unk80);
             d = rcos(self->ext.stopwatch.unk80);
-            prim->x0 = (x + (((d * -a) - (c * -b)) >> 0xC));
-            prim->y0 = (y + (((c * -a) + (d * -b)) >> 0xC));
-            prim->x1 = (x + (((d * a) - (c * -b)) >> 0xC));
-            prim->y1 = (y + (((c * a) + (d * -b)) >> 0xC));
-            prim->x2 = (x + (((d * -a) - (c * b)) >> 0xC));
-            prim->y2 = (y + (((c * -a) + (d * b)) >> 0xC));
-            prim->x3 = (x + (((d * a) - (c * b)) >> 0xC));
-            prim->y3 = (y + (((c * a) + (d * b)) >> 0xC));
+            prim->x0 = (x + (((d * -offsetX) - (c * -offsetY)) >> 0xC));
+            prim->y0 = (y + (((c * -offsetX) + (d * -offsetY)) >> 0xC));
+            prim->x1 = (x + (((d * offsetX) - (c * -offsetY)) >> 0xC));
+            prim->y1 = (y + (((c * offsetX) + (d * -offsetY)) >> 0xC));
+            prim->x2 = (x + (((d * -offsetX) - (c * offsetY)) >> 0xC));
+            prim->y2 = (y + (((c * -offsetX) + (d * offsetY)) >> 0xC));
+            prim->x3 = (x + (((d * offsetX) - (c * offsetY)) >> 0xC));
+            prim->y3 = (y + (((c * offsetX) + (d * offsetY)) >> 0xC));
         } else if (self->step < 5) {
             if (self->ext.stopwatch.unk84.val <= FIX(16)) {
                 if (self->ext.stopwatch.unk8C) {
@@ -333,7 +336,7 @@ void EntityStopWatch(Entity* self) {
         if (self->step < 4) {
             y = self->posY.i.hi - 14;
             if (self->ext.stopwatch.unk8E) {
-                x = (self->facingLeft ? -10 : 4) + self->posX.i.hi;
+                x = self->posX.i.hi - (self->facingLeft ? 10 : -4);
 
                 prim = prim->next;
                 if (self->ext.stopwatch.unk7E < 8) {
@@ -364,7 +367,7 @@ void EntityStopWatch(Entity* self) {
                     prim->y2 = prim->y3 = y + 8;
                 }
 
-                x = (self->facingLeft ? -4 : 10) + self->posX.i.hi;
+                x = self->posX.i.hi - (self->facingLeft ? 4 : -10);
                 prim = prim->next;
                 if (self->ext.stopwatch.unk7E < 0xC) {
                     offsetX = (self->ext.stopwatch.unk7E - 4) / 2;
@@ -400,7 +403,7 @@ void EntityStopWatch(Entity* self) {
                 return;
             }
 
-            x = (self->facingLeft ? -4 : 4) + self->posX.i.hi;
+            x = self->posX.i.hi - (self->facingLeft ? 4 : -4);
             prim = prim->next;
             if (self->ext.stopwatch.unk7E < 8) {
                 prim->x0 = prim->x2 = x - (self->ext.stopwatch.unk7E / 2);
@@ -432,12 +435,10 @@ void EntityStopWatch(Entity* self) {
 // Identical to RIC
 void EntitySubwpnBibleTrail(Entity* self) {
     Primitive* prim;
-    s32 ret;
 
     switch (self->step) {
     case 0:
-        ret = AllocPrimitives(PRIM_GT4, 1);
-        self->primIndex = ret;
+        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -448,8 +449,8 @@ void EntitySubwpnBibleTrail(Entity* self) {
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
         prim->u0 = prim->u2 = 0x20;
-        prim->u1 = prim->u3 = 0x30;
         prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
         prim->v2 = prim->v3 = 0x10;
         prim->x0 = prim->x2 = self->posX.i.hi - 8;
         prim->x1 = prim->x3 = self->posX.i.hi + 8;
@@ -461,7 +462,8 @@ void EntitySubwpnBibleTrail(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (++self->ext.et_BibleSubwpn.unk7C > 5) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C > 5) {
             self->step++;
         }
         self->ext.et_BibleSubwpn.unk7E -= 8;
@@ -477,26 +479,23 @@ void EntitySubwpnBibleTrail(Entity* self) {
 // book rotates around player
 void EntitySubwpnBible(Entity* self) {
     Primitive* prim;
-    s16 left;
-    s16 top;
-    s16 bottom;
-    s16 right;
-
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s16 selfX;
+    s16 selfY;
+    s32 var_s7;
+    s32 var_s6;
+    s32 var_s5;
+    s32 var_s4;
+    s32 var_s3;
     s32 sine;
     s32 cosine;
-    s32 cos_s2;
-    s32 sin_s3;
-    s32 cos_s3;
-    s32 sin_s2;
-
-    s32 temp_a3;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_a1;
-
-    s32 temp_v0;
-
-    s32 var_s4;
+// This variable is uninitialized. It's an error for PSP compiler.
+// Maybe they tossed this "= 0" line as a quick workaround.
+#ifdef VERSION_PSP
+    var_s4 = 0;
+#endif
 
     switch (self->step) {
     case 0:
@@ -516,7 +515,12 @@ void EntitySubwpnBible(Entity* self) {
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
-        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
+        if (self->facingLeft) {
+            sp44 = 32;
+        } else {
+            sp44 = -32;
+        }
+        self->ext.et_BibleSubwpn.unk84 = sp44;
         func_8011A290(self);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -530,14 +534,21 @@ void EntitySubwpnBible(Entity* self) {
         self->step++;
     case 2:
         self->ext.et_BibleSubwpn.unk7C++;
-        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
+        self->ext.et_BibleSubwpn.unk7E++;
+        if (self->ext.et_BibleSubwpn.unk7E >= 0x30) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
-            self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
+            if (self->facingLeft) {
+                sp40 = FIX(-12);
+            } else {
+                sp40 = FIX(12);
+            }
+            self->velocityX = sp40;
             self->velocityY = FIX(-12);
             PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
@@ -552,37 +563,31 @@ void EntitySubwpnBible(Entity* self) {
         // All this logic is a mess, could use a cleanup
         sine = rsin(self->ext.et_BibleSubwpn.unk80);
         cosine = rcos(self->ext.et_BibleSubwpn.unk80);
-        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        cos_s2 = cosine * temp_s2;
-        sin_s3 = sine * temp_s3;
-        cos_s3 = cosine * temp_s3;
-        temp_a1 = cos_s2 + sin_s3;
-        sin_s2 = sine * temp_s2;
-        temp_s2 = temp_a1 >> 0xC;
-        temp_s3 = (cos_s3 - sin_s2) >> 0xC;
+        var_s5 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        var_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        var_s7 = cosine * var_s5 + sine * var_s3;
+        sp48 = (cosine * var_s3 - sine * var_s5);
+        var_s5 = var_s7 >> 0xC;
+        var_s3 = sp48 >> 0xC;
         sine = rsin(self->ext.et_BibleSubwpn.unk82);
         cosine = rcos(self->ext.et_BibleSubwpn.unk82);
-        temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
-        temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
-        if (self->facingLeft != 0) {
-            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
+        var_s7 = ((cosine * var_s5) + (sine * var_s4)) >> 0xC;
+        var_s4 = var_s6 = ((cosine * var_s4) - (sine * var_s5)) >> 0xC;
+        if (self->facingLeft) {
+            var_s6 = ((cosine * var_s4) + (sine * var_s3)) >> 0xC;
         } else {
-            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
+            var_s6 = ((cosine * var_s4) - (sine * var_s3)) >> 0xC;
         }
 
         self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
         self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
         self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
         if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
-            // temp_v0 needed because otherwise unk84 gets loaded with lhu
-            // instead of lh
-            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
-            self->ext.et_BibleSubwpn.unk84 = temp_v0;
+            self->ext.et_BibleSubwpn.unk84 *= -1;
         }
-        self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
-        self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
-        self->zPriority = PLAYER.zPriority + (temp_s3 < 0 ? 2 : -2);
+        self->posX.i.hi = PLAYER.posX.i.hi + var_s7;
+        self->posY.i.hi = PLAYER.posY.i.hi + var_s6;
+        self->zPriority = PLAYER.zPriority + (var_s3 < 0 ? 2 : -2);
         break;
     case 2:
         self->posX.val += self->velocityX;
@@ -590,16 +595,14 @@ void EntitySubwpnBible(Entity* self) {
         self->velocityY += FIX(-2);
         break;
     }
-    if (self->ext.et_BibleSubwpn.unk86 != 0) {
+    if (self->ext.et_BibleSubwpn.unk86) {
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
         prim = &g_PrimBuf[self->primIndex];
-        left = self->posX.i.hi - 8;
-        right = self->posX.i.hi + 8;
-        top = self->posY.i.hi - 12;
-        bottom = self->posY.i.hi + 12;
-        prim->x0 = prim->x2 = left;
-        prim->x1 = prim->x3 = right;
-        prim->y0 = prim->y1 = top;
-        prim->y2 = prim->y3 = bottom;
+        prim->x0 = prim->x2 = selfX - 8;
+        prim->x1 = prim->x3 = selfX + 8;
+        prim->y0 = prim->y1 = selfY - 12;
+        prim->y2 = prim->y3 = selfY + 12;
         prim->priority = self->zPriority;
         CreateEntFactoryFromEntity(self, FACTORY(79, 0), 0);
         if (g_GameTimer % 10 == 0) {
