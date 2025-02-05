@@ -1,0 +1,97 @@
+options:
+  platform: psp
+  basename: stno4
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no4.bin
+  asm_path: asm/pspeu/st/no4_psp
+  asset_path: assets/st/no4
+  src_path: src/st/no4_psp
+  ld_script_path: build/pspeu/stno4.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stno4.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stno4.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stno4.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+    .include "macro.inc"
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stno4
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_size: 0x980
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c]
+      - [0xE10, c]
+      - [0x4430, c]
+      - [0x4DE0, c]
+      - [0x5B00, c]
+      - [0x6360, c]
+      - [0x7010, c]
+      - [0x7D10, c]
+      - [0x81E0, c]
+      - [0x8CD0, c]
+      - [0x9650, c]
+      - [0x9D90, c]
+      - [0xAB80, c]
+      - [0xB2C0, c]
+      - [0xBBE0, c]
+      - [0xBC40, c]
+      - [0xBCA0, c]
+      - [0xC640, c]
+      - [0xC8D0, c]
+      - [0xCBE0, c]
+      - [0xCDB0, c]
+      - [0xCF10, c]
+      - [0xD330, c]
+      - [0x10C30, c]
+      - [0x10D20, c]
+      - [0x11710, c]
+      - [0x120E0, c]
+      - [0x12920, c]
+      - [0x14E10, c]
+      - [0x154A0, c]
+      - [0x16560, c]
+      - [0x16F50, c]
+      - [0x189D0, c]
+      - [0x18E10, c]
+      - [0x1B480, c]
+      - [0x1E320, c]
+      - [0x21290, c]
+      - [0x212E0, c]
+      - [0x22AF0, c]
+      - [0x233A0, c]
+      - [0x234C0, c]
+      - [0x236A0, c]
+      - [0x23AC0, c]
+      - [0x24080, c]
+      - [0x24190, c]
+      - [0x24370, c]
+      - [0x25290, c]
+      - [0x25360, c]
+      - [0x254B0, c]
+      - [0x25710, c]
+      - [0x26740, c]
+      - [0x267E0, c]
+      - [0x28700, data]
+      - {type: bss, vram: 0x92A0400}
+  - [0x68D00]
