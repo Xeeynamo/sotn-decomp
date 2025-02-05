@@ -75,6 +75,8 @@ stwrp_psp: $(BUILD_DIR)/wrp.bin
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
 	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/lib.bin: $(BUILD_DIR)/stlib.elf
+	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/no4.bin: $(BUILD_DIR)/stno4.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/st0.bin: $(BUILD_DIR)/stst0.elf
