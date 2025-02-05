@@ -145,7 +145,7 @@ def split_c_files(version_name, overlay_name, new_segments):
                 output_filename = dest_file
         output_buffer.append(
             line.replace(
-                "{nonmatchings_path}/{version_name}",
+                f"{nonmatchings_path}/{version_name}",
                 f"{nonmatchings_path}/{output_filename}",
             )
         )
