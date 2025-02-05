@@ -44,7 +44,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, wrp/create_entity]
-      - [0x1028, c, wrp_psp/e_stage_name]
+      - [0x1028, c, wrp/e_stage_name]
       - [0x1EA8, c, wrp/e_red_door]
       - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp_psp/e_particles_maria1]

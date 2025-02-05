@@ -3,6 +3,7 @@ LIB_pStObjLayoutVertical = 0x801805F4;
 LIB_EntityUpdates = 0x801806C8;
 g_EInitObtainable = 0x8018080C;
 g_EInitParticle = 0x80180818;
+g_EInitInteractable = 0x80180830;
 g_EInitUnkId13 = 0x8018083C;
 g_EInitCommon = 0x80180854;
 g_EInitDamageNum = 0x80180860;

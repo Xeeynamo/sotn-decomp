@@ -8,10 +8,10 @@ from pathlib import Path
 
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from splat.util import options
-from splat.segtypes.n64.segment import N64Segment
+from splat.segtypes.segment import Segment
 
 
-class PSXSegAnimset(N64Segment):
+class PSXSegAnimset(Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(rom_start, rom_end, type, name, vram_start, args, yaml),
 

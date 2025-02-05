@@ -101,7 +101,6 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
         Err(error) => {
             eprintln!("Unable to read directory: {}", error);
             println!("Directory path: {}", dir_path);
-            exit(1);
         }
     }
 }
@@ -355,6 +354,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             overlay_name: String::from("NO3"),
             include_asm: get_all_include_asm("../../src/st/no3/"),
             path_matcher: "st/no3".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/no4/matchings/"),
+            src_dir: String::from("../../src/st/no4/"),
+            overlay_name: String::from("NO4"),
+            include_asm: get_all_include_asm("../../src/st/no4/"),
+            path_matcher: "st/no4".to_string(),
         },
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/np3/matchings/"),

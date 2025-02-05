@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.append(f"{os.getcwd()}/tools/splat_ext")
 from splat.util import options, log
-from splat.segtypes.n64.segment import N64Segment
+from splat.segtypes.segment import Segment
 import utils
 
 
@@ -127,7 +127,7 @@ def serialize_asset(content: str, asset_config: str) -> bytearray:
     return asm_output
 
 
-class PSXSegAssets(N64Segment):
+class PSXSegAssets(Segment):
     def __init__(self, rom_start, rom_end, type, name, vram_start, args, yaml):
         super().__init__(rom_start, rom_end, type, name, vram_start, args, yaml),
 
