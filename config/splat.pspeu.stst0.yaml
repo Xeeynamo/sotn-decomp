@@ -28,7 +28,6 @@ options:
     - .bss
   ld_bss_is_noload: true
   disasm_unknown: true
-  include_macro_inc: false
   global_vram_start: 0x08000000
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
