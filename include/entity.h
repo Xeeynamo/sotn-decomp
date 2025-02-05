@@ -2774,6 +2774,32 @@ typedef struct {
     /* 0x9C */ struct Entity* unk9C;
 } ET_801D064C;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ u32 unk90;
+    /* 0x94 */ u8 unk94;
+    /* 0x95 */ u8 : 8;
+    /* 0x96 */ u8 : 8;
+    /* 0x97 */ u8 : 8;
+    /* 0x98 */ s16 : 16;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+} ET_801D2274;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3016,6 +3042,7 @@ typedef union { // offset=0x7C
     ET_801B6F30 et_801B6F30;
     ET_801B15C0 et_801B15C0;
     ET_801D064C et_801D064C;
+    ET_801D2274 et_801D2274;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
