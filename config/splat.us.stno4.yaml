@@ -1,0 +1,59 @@
+options:
+  platform: psx
+  basename: stno4
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NO4/NO4.BIN
+  asm_path: asm/us/st/no4
+  asset_path: assets/st/no4
+  src_path: src/st/no4
+  ld_script_path: build/us/stno4.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stno4.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno4.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stno4.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+sha1: bd0c8f0dd19fb736c483abc23254aefdeba7904f
+segments:
+  - name: stno4
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x40980, .rodata, first_c_file]
+      - [0x40B04, .rodata, collision]
+      - [0x40B1C, .rodata, st_common]
+      - [0x40BB4, .rodata, e_misc]
+      - [0x40BF0, .rodata, unk_53BC4]
+      - [0x40C24, .rodata, unk_55678]
+      - [0x40D3C, .rodata, prim_helpers]
+      - [0x40D44, c, first_c_file]
+      - [0x4A5F0, c, st_update]
+      - [0x4AA24, c, collision]
+      - [0x4DA08, c, st_common]
+      - [0x506D4, c, e_misc]
+      - [0x53BC4, c, unk_53BC4]
+      - [0x54A18, c, e_particles]
+      - [0x55348, c, popup]
+      - [0x55678, c, unk_55678]
+      - [0x5E2E0, c, prim_helpers]
+      - [0x5EB10, sbss]
+  - [0x5F85C]
