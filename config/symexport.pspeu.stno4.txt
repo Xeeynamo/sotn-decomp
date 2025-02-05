@@ -1,2 +1,2 @@
-EXTERN(_binary_assets_st_lib_mwo_header_bin_start);
+EXTERN(_binary_assets_st_no4_mwo_header_bin_start);
 EXTERN(func_psp_09237FB0);
