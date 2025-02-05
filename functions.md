@@ -1279,7 +1279,7 @@
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        |                                 |       |
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
-| lib    | func_psp_09267400                   |     1060 |        102 | Yes    | https://decomp.me/scratch/d5C0A | 0.825 |
+| lib    | func_psp_09267400                   |     1060 |        102 | Yes    | https://decomp.me/scratch/d5C0A | 0.861 |
 | lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    | https://decomp.me/scratch/bUWNR | 0.996 |
 | no4    | func_psp_09252B00                   |     1095 |        132 |        |                                 |       |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
