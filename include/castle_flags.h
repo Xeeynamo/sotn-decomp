@@ -82,7 +82,7 @@ typedef enum {
     /* 10000000 */ // LIBRARIAN_LIFE_VESSEL // Always on the first hit
     /* 01000000 */ // LIBRARIAN_RING_OF_ARCANA
     /* 00100000 */ // LIBRARIAN_AXE_LORD_ARMOR
-    /* 00010000 */ // LIBRARIAN_DRACULA_TUNIC // Only drops on cleared save file
+    /* 00010000 */ // LIBRARIAN_DRACULA_TUNIC
 
     /* 0x80 */ NZ0_STAGE_FLAG = 128,
     /* 0x81 */ NZ0_SECRET_WALL_OPEN = 129,
