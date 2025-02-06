@@ -174,7 +174,7 @@ SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
 SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
 
 DOSEMU						:= dosemu
-DOSEMU_FLAGS				:= -f ./dosemurc -K . -E
+DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
 DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
 SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
 CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
