@@ -187,7 +187,7 @@ void func_us_801B2BE4(Entity* self) {
     if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
         FntPrint("REV ");
     }
-    if (g_CastleFlags[CASTLE_FLAG_220]) {
+    if (g_CastleFlags[DEATH_FIGHT_CS]) {
         FntPrint("DET ");
     }
     if (g_api.TimeAttackController(

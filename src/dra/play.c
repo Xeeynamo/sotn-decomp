@@ -24,7 +24,7 @@ u8 g_StageSelectOrder[] = {
     STAGE_RBO8,       STAGE_TOP_ALT,  STAGE_ENDING,
 };
 
-// The effect of this array is unknown
+// This is used for NO1 Weather
 // 0: 25% of chance
 // 1: 62.5% of chance
 // 2: 12.5% of chance
@@ -94,7 +94,7 @@ void HandlePlay(void) {
                 g_CastleFlags[i] = 0;
             }
             g_CastleFlags[INTRO_VIDEO] = 1;
-            g_CastleFlags[ST0_BANNER] = 1;
+            g_CastleFlags[ST0_STAGE_FLAG] = 1;
             if (g_PlayableCharacter != 0) {
                 g_CastleFlags[IVE_BEEN_ROBBED] = 1;
                 g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH] = 1;
