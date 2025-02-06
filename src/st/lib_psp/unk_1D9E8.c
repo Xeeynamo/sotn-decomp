@@ -90,7 +90,7 @@ void EntityLibrarianChair(Entity* self) {
             // and moving upward, trigger a hit.
         } else if (self->step < 16 &&
                    ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
-                   (FIX_TO_I(player->velocityY) < 0)) {
+                   ((*((f32*)&player->velocityY)).i.hi < 0)) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
