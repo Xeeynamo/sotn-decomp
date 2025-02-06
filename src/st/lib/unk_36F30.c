@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, s32 arg3, u16 arg4,
+void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
 
 extern RECT D_us_801AD0F4;
