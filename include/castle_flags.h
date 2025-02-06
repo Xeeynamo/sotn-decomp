@@ -15,9 +15,9 @@ typedef enum {
 
     // Used for the weather in NO1. An option is randomly selected
     // from g_NO1WeatherOptions when changing overlays.
-    // A value of 0x80 is rain
-    // A value of 0x81 is clear
-    // A value of 0x82 is fog
+    // A value of 0x80 is rain, 25% chance
+    // A value of 0x81 is clear, 62.5% chance
+    // A value of 0x82 is fog, 12.5% chance
     /* 0x13 */ NO1_WEATHER = 19,
 
     // Used for the bird lifecycle under the bottom room of NO1.
