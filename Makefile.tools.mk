@@ -315,7 +315,7 @@ python-dependencies:
 	pip install -r $(TOOLS_DIR)/requirements-python.txt
 
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS) $(DOSEMU) python-dependencies
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS) python-dependencies
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 	rm $(SOTNDISK) && make $(SOTNDISK) || true

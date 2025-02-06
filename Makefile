@@ -108,6 +108,7 @@ ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
 SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 VENV_PATH       ?= .venv
 export PATH     := $(VENV_PATH)/bin:$(PATH)
 
@@ -176,7 +177,6 @@ DOSEMU_FLAGS				:= -f ./dosemurc -K . -E
 DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
 SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
 CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
-SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
 SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
@@ -266,3 +266,5 @@ include Makefile.psp.mk
 else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
+# This is not permanent, it is only a workaround for some oddities
+include Makefile.saturn.mk
