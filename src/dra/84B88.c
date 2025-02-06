@@ -1498,8 +1498,8 @@ void EntitySubwpnReboundStone(Entity* self) {
         currY = self->posY.val;
         if (!self->ext.reboundStone.unk84) {
             for (i = 0; i < 6; i++) {
-                collX = FIX_TO_I(currX);
-                collY = FIX_TO_I(currY + deltaY);
+                collX = currX >> 16;
+                collY = currY + deltaY >> 16;
                 CheckCollision(collX, collY, &collider, 0);
                 colliderFlags =
                     collider.effects &
@@ -1567,8 +1567,8 @@ void EntitySubwpnReboundStone(Entity* self) {
                         }
                     }
                 }
-                collY = FIX_TO_I(currY);
-                collX = FIX_TO_I(currX + deltaX);
+                collY = currY >> 16;
+                collX = (currX + deltaX) >> 16;
                 CheckCollision(collX, collY, &collider, 0);
                 colliderFlags =
                     collider.effects &

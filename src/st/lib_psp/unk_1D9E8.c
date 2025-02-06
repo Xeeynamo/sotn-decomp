@@ -72,13 +72,13 @@ extern u8 D_us_801812C8[];
 extern u8 D_us_801812D0[];
 extern u8* D_us_801812D8[];
 
-
 void EntityLibrarianChair(Entity* self) {
     Entity* newEnt;
     Entity* player = &PLAYER;
     Tilemap* tilemap = &g_Tilemap;
-    
-    if (self->step && (self->step < 11) && (D_us_801D51D4 != 0) && (D_us_801D5288 != 0)) {
+
+    if (self->step && (self->step < 11) && (D_us_801D51D4 != 0) &&
+        (D_us_801D5288 != 0)) {
         self->step = 11;
         self->animCurFrame = 2;
     }
@@ -86,8 +86,11 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0xC0;
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             GetPlayerCollisionWith(self, 16, 12, 2);
-        // If the chair is not in step 16, and the player is high enough, and moving upward, trigger a hit.
-        } else if (self->step < 16 && ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) && (FIX_TO_I(player->velocityY) < 0)) {
+            // If the chair is not in step 16, and the player is high enough,
+            // and moving upward, trigger a hit.
+        } else if (self->step < 16 &&
+                   ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
+                   (FIX_TO_I(player->velocityY) < 0)) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
@@ -100,7 +103,7 @@ void EntityLibrarianChair(Entity* self) {
             g_api.PlaySfx(SFX_QUICK_STUTTER_EXPLODE_B);
             self->ext.libraryChair.totalHits++;
             self->ext.libraryChair.consecutiveHits++;
-            
+
             // At first hit, give Life Max Up.
             if (!(g_CastleFlags[LIBRARIAN_DROPS] & 1)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -111,7 +114,8 @@ void EntityLibrarianChair(Entity* self) {
                 }
             }
             // Getting Axe Lord Armor requires hitting librarian 64 times.
-            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 2) && (self->ext.libraryChair.totalHits >= 64)) {
+            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 2) &&
+                (self->ext.libraryChair.totalHits >= 64)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
                     CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
@@ -120,7 +124,8 @@ void EntityLibrarianChair(Entity* self) {
                 }
             }
             // Ring of Arcana requires 16 hits, without touching ground
-            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 4) && (self->ext.libraryChair.consecutiveHits >= 16)) {
+            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 4) &&
+                (self->ext.libraryChair.consecutiveHits >= 16)) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
                     CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
@@ -128,8 +133,11 @@ void EntityLibrarianChair(Entity* self) {
                     g_CastleFlags[LIBRARIAN_DROPS] |= 4;
                 }
             }
-            // Dracula Tunic requires 24 hits, and inverted castle must be unlocked.
-            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 8) && (self->ext.libraryChair.consecutiveHits >= 24) && (g_CastleFlags[INVERTED_CASTLE_UNLOCKED])) {
+            // Dracula Tunic requires 24 hits, and inverted castle must be
+            // unlocked.
+            if (!(g_CastleFlags[LIBRARIAN_DROPS] & 8) &&
+                (self->ext.libraryChair.consecutiveHits >= 24) &&
+                (g_CastleFlags[INVERTED_CASTLE_UNLOCKED])) {
                 newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEnt != NULL) {
                     CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, newEnt);
@@ -155,7 +163,7 @@ void EntityLibrarianChair(Entity* self) {
         self->unk5A = 0x48;
         self->ext.libraryChair.debugAnimID = 0;
         self->ext.libraryChair.timer = 0x20;
-        self->flags &= ~0x80000000;
+        self->flags &= ~FLAG_DESTROY_IF_OUT_OF_CAMERA;
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             self->facingLeft = 1;
             self->posX.i.hi -= 8;
@@ -245,7 +253,7 @@ void EntityLibrarianChair(Entity* self) {
     case 16:
         AnimateEntity(&D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
-            self->velocityY += FIX(3.0/8);
+            self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {
                 self->velocityY = FIX(7);
             }
@@ -272,8 +280,7 @@ void EntityLibrarianChair(Entity* self) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
             }
-        }
-        else if (g_pads[0].tapped & PAD_DOWN) {
+        } else if (g_pads[0].tapped & PAD_DOWN) {
             if (self->ext.libraryChair.debugAnimID != 0x10) {
                 self->ext.libraryChair.debugAnimID++;
                 self->animFrameIdx = 0;

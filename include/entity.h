@@ -2758,7 +2758,7 @@ typedef struct {
     /* 0x88 */ u8 unk88[1]; // This is not the true size.
 } ET_801B15C0;
 
-typedef struct{
+typedef struct {
     u16 debugAnimID;
     u16 timer;
     u16 totalHits;
