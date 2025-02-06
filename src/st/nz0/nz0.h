@@ -4,8 +4,7 @@
 #define STAGE_IS_NZ0
 
 #define OVL_EXPORT(x) NZ0_##x
-
-#define CASTLE_FLAG_BANK 0x7E
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

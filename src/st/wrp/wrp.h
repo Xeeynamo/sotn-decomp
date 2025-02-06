@@ -3,8 +3,6 @@
 
 #define OVL_EXPORT(x) WRP_##x
 
-#define CASTLE_FLAG_BANK 0x00
-
 typedef enum EntityIDs {
     E_NONE,
     E_BREAKABLE,

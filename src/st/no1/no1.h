@@ -4,7 +4,7 @@
 #define STAGE_IS_NO1
 
 #define OVL_EXPORT(x) NO1_##x
-#define CASTLE_FLAG_BANK 0x13
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
