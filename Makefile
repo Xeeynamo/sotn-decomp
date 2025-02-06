@@ -168,7 +168,8 @@ ST_LIB_MERGE := $(file < $(LIB_MERGE_FILE))
 ST_ST0_MERGE := $(file < $(ST0_MERGE_FILE))
 ST_WRP_MERGE := $(file < $(WRP_MERGE_FILE))
 ST_NO4_MERGE := $(file < $(NO4_MERGE_FILE))
-else ifeq ($(VERSION),saturn)
+endif
+#else ifeq ($(VERSION),saturn) Workaround for github actions
 SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
 SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
 
@@ -183,7 +184,7 @@ SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_
 SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
 SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
 SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
-endif
+#endif
 
 # Functions
 define list_src_files
@@ -263,8 +264,7 @@ ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platfo
 include Makefile.psx.mk
 else ifeq ($(VERSION),pspeu)
 include Makefile.psp.mk
-else ifeq ($(VERSION),saturn)
-include Makefile.saturn.mk
 endif
-# This is not permanent, it is only a workaround for some oddities
+#else ifeq ($(VERSION),saturn)  Workaround for github actions
 include Makefile.saturn.mk
+#endif
