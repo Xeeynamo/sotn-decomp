@@ -1246,7 +1246,7 @@
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        |                                 |       |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
-| lib    | func_psp_0926A238                   |      803 |         77 | Yes    |                                 |       |
+| lib    | func_psp_0926A238                   |      803 |         77 | Yes    | https://decomp.me/scratch/bZIKE | 0.715 |
 | dra    | func_80129864                       |      809 |         78 |        | https://decomp.me/scratch/Ggtu5 | 0.999 |
 | dra    | func_psp_0910AA60                   |      815 |        149 |        |                                 |       |
 | dra    | HandlePlay                          |      816 |        115 | Yes    |                                 |       |
