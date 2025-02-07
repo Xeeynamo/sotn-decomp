@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
-#ifndef CASTLE_FLAG_BANK
-#define CASTLE_FLAG_BANK 0
+#ifndef STAGE_FLAG
+#define STAGE_FLAG NULL_STAGE_FLAG
 #endif
 
 s32 PrimDecreaseBrightness(Primitive* prim, u8 arg1);
@@ -68,7 +68,7 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_DemoMode != Demo_None || g_CastleFlags[CASTLE_FLAG_BANK + 2]) {
+        if (g_DemoMode != Demo_None || g_CastleFlags[STAGE_FLAG]) {
             DestroyEntity(self);
             return;
         }
@@ -314,7 +314,7 @@ void EntityStageNamePopup(Entity* self) {
             self->ext.stpopup.unk80 = 0x40;
             self->step = 2;
             self->step_s = 0;
-            g_CastleFlags[CASTLE_FLAG_BANK + 2] = 1;
+            g_CastleFlags[STAGE_FLAG] = 1;
             break;
         }
         break;

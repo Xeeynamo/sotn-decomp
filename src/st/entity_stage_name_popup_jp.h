@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern u32 D_91CE570;
 
+#ifndef STAGE_FLAG
+#define STAGE_FLAG NULL_STAGE_FLAG
+#endif
+
 #ifdef VERSION_PSP
 #define NUM_PRIMS 183
 #else
@@ -27,7 +31,7 @@ void EntityStageNamePopup(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_CastleFlags[CASTLE_FLAG_BANK + 2]) {
+        if (g_CastleFlags[STAGE_FLAG]) {
             DestroyEntity(self);
             return;
         }
@@ -449,7 +453,7 @@ void EntityStageNamePopup(Entity* self) {
         break;
     case 32:
         if (!--self->ext.stpopupj.unk80) {
-            g_CastleFlags[CASTLE_FLAG_BANK + 2] = 1;
+            g_CastleFlags[STAGE_FLAG] = 1;
             self->step_s = 0;
             self->step = 0x12;
         }
