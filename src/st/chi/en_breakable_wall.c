@@ -178,7 +178,7 @@ void EntityBreakableWall(Entity* self) {
 
         // Determine tile indices to use
         pSrcTile = BreakableWallTilesCollision;
-        if (g_CastleFlags[CHI_SECRET_WALL_BROKEN]) {
+        if (g_CastleFlags[CHI_SECRET_WALL_OPEN]) {
             pSrcTile += 0xC; // No collision
         }
 
@@ -190,7 +190,7 @@ void EntityBreakableWall(Entity* self) {
             }
         }
 
-        if (g_CastleFlags[CHI_SECRET_WALL_BROKEN]) {
+        if (g_CastleFlags[CHI_SECRET_WALL_OPEN]) {
             DestroyEntity(self);
             return;
         }
@@ -334,11 +334,11 @@ void EntityBreakableWall(Entity* self) {
         prim = self->ext.prim;
         prim->drawMode = DRAW_HIDE;
         self->hitboxState = 0;
-        g_CastleFlags[CHI_SECRET_WALL_BROKEN] = 1;
+        g_CastleFlags[CHI_SECRET_WALL_OPEN] = 1;
         // Update the map "explored" state
         // This is read from an array of data in DRA, and in
         // this case results in exploring the room to the left
-        g_api.func_800F1FC4(CHI_SECRET_WALL_BROKEN);
+        g_api.func_800F1FC4(CHI_SECRET_WALL_OPEN);
         DestroyEntity(self);
         return;
 

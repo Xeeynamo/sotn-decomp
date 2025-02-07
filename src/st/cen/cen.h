@@ -7,8 +7,6 @@
 
 #define OVL_EXPORT(x) CEN_##x
 
-#define CASTLE_FLAG_BANK 0x00
-
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,

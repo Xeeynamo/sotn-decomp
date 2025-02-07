@@ -60,6 +60,7 @@ g_UnkPrimHelperRot = 0x801ADDA4;
 ST0_EntityBackgroundBlock = 0x801ADED0;
 PlayerIsWithinHitbox = 0x801ADF98;
 func_801B0AA4 = 0x801AE01C;
+EntityLibrarianChair = 0x801B037C;
 CutsceneUnk1 = 0x801B95EC;
 SetCutsceneScript = 0x801B9640;
 CutsceneUnk4 = 0x801B9860;

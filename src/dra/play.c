@@ -24,11 +24,10 @@ u8 g_StageSelectOrder[] = {
     STAGE_RBO8,       STAGE_TOP_ALT,  STAGE_ENDING,
 };
 
-// The effect of this array is unknown
-// 0: 25% of chance
-// 1: 62.5% of chance
-// 2: 12.5% of chance
-u8 g_RandomizeCastleFlag13[] = {
+// A value is selected at random on every overlay change (including to/from
+// bosses) The selected value + 0x80 is then assigned to
+// g_CastleFlags[NO1_WEATHER]
+u8 g_NO1WeatherOptions[] = {
     0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,
 };
 
@@ -94,7 +93,7 @@ void HandlePlay(void) {
                 g_CastleFlags[i] = 0;
             }
             g_CastleFlags[INTRO_VIDEO] = 1;
-            g_CastleFlags[ST0_BANNER] = 1;
+            g_CastleFlags[ST0_STAGE_FLAG] = 1;
             if (g_PlayableCharacter != 0) {
                 g_CastleFlags[IVE_BEEN_ROBBED] = 1;
                 g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH] = 1;
@@ -181,7 +180,7 @@ void HandlePlay(void) {
         func_801024DC();
         if (g_CastleFlags[NO1_WEATHER] & 0x80) {
             g_CastleFlags[NO1_WEATHER] =
-                g_RandomizeCastleFlag13[rand() & 0xF] + 0x80;
+                g_NO1WeatherOptions[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;

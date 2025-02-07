@@ -2750,6 +2750,13 @@ typedef struct {
 } ET_801B15C0;
 
 typedef struct {
+    u16 debugAnimID;
+    u16 timer;
+    u16 totalHits;
+    u16 consecutiveHits;
+} ET_LibrarianChair;
+
+typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
@@ -3033,6 +3040,7 @@ typedef union { // offset=0x7C
     ET_801B15C0 et_801B15C0;
     ET_801D064C et_801D064C;
     ET_801D2274 et_801D2274;
+    ET_LibrarianChair libraryChair;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

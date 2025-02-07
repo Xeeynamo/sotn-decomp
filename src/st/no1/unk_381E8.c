@@ -740,7 +740,7 @@ void func_us_801BA034(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180A04);
-        if (g_CastleFlags[CASTLE_FLAG_17]) {
+        if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             self->posY.i.hi = 0xC3;
             self->step = 3;
         }
@@ -758,7 +758,7 @@ void func_us_801BA034(Entity* self) {
         }
         if (self->posY.i.hi > 0xC2) {
             g_api.func_80102CD8(1);
-            g_CastleFlags[CASTLE_FLAG_17] = 1;
+            g_CastleFlags[NO1_UNKNOWN_FLAG] = 1;
             self->step++;
         }
         if (g_Timer % 10 == 0) {

@@ -3,7 +3,7 @@
 
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
-#define CASTLE_FLAG_BANK 0x6F
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     // /* 0x00 */ E_NONE,
@@ -55,6 +55,12 @@ typedef enum EntityIDs {
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
+typedef struct {
+    /* 0x0 */ u16 category;
+    /* 0x2 */ u16 itemId;
+    /* 0x4 */ u32 price;
+} AvailableInventoryItem;
 
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
