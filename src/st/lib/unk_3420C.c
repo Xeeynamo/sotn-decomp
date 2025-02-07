@@ -334,7 +334,3 @@ INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD254);
 INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD264);
 
 INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD26C);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B6324);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B6E20);
