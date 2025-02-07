@@ -1122,7 +1122,7 @@ typedef struct {
 } MenuNavigation; /* size=0x4C */
 
 typedef struct {
-    /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
+    /* 0x000, 0x8003C9F8 */ s32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
     /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[TIMEATTACK_EVENT_END];
     /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];
