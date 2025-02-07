@@ -93,12 +93,6 @@ static InventoryItem D_us_8018134C[] = {
     // clang-format on
 };
 
-typedef struct {
-    /* 0x0 */ u16 category;
-    /* 0x2 */ u16 itemId;
-    /* 0x4 */ u32 price;
-} AvailableInventoryItem;
-
 /// relic index
 u16 D_us_801814D4[] = {16, 0};
 
@@ -148,7 +142,6 @@ extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
 extern s32 g_CutsceneFlags;
-extern u16 g_EInitCommon[];
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 
