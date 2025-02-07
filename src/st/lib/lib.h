@@ -56,6 +56,12 @@ extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
+typedef struct {
+    /* 0x0 */ u16 category;
+    /* 0x2 */ u16 itemId;
+    /* 0x4 */ u32 price;
+} AvailableInventoryItem;
+
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitCommon;
