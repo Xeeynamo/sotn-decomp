@@ -1234,7 +1234,7 @@
 | dra    | EntitySubwpnReboundStone            |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
 | dra    | EntityGiantSpinningCross            |      729 |         63 |        |                                 |       |
 | tt_000 | UpdateBatAttackMode                 |      730 |         65 |        |                                 |       |
-| lib    | func_psp_0925E018                   |      733 |        124 |        | https://decomp.me/scratch/A8zch | 0.991 |
+| lib    | EntityLibrarianChair                |      733 |        124 |        |                                 |       |
 | lib    | func_psp_092663F8                   |      739 |         81 | Yes    |                                 |       |
 | dra    | func_80109A44                       |      746 |         77 |        |                                 |       |
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
