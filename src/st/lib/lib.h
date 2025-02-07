@@ -3,7 +3,7 @@
 
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
-#define CASTLE_FLAG_BANK 0x6F
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     // /* 0x00 */ E_NONE,

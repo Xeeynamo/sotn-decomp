@@ -14,7 +14,7 @@
 
 #define OVL_EXPORT(x) CHI_##x
 
-#define CASTLE_FLAG_BANK 0x52
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum {
     /* 0x00 */ E_NONE,

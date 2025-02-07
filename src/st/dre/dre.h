@@ -3,8 +3,7 @@
 #define STAGE_IS_DRE
 
 #define OVL_EXPORT(x) DRE_##x
-
-#define CASTLE_FLAG_BANK 0xD3
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
