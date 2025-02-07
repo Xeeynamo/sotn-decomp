@@ -93,12 +93,6 @@ static InventoryItem D_us_8018134C[] = {
     // clang-format on
 };
 
-typedef struct {
-    /* 0x0 */ u16 category;
-    /* 0x2 */ u16 itemId;
-    /* 0x4 */ u32 price;
-} AvailableInventoryItem;
-
 /// relic index
 u16 D_us_801814D4[] = {16, 0};
 
@@ -148,13 +142,165 @@ extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
 extern s32 g_CutsceneFlags;
-extern u16 g_EInitCommon[];
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 
-void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, s32 arg3, u16 arg4,
-                      s32 arg5, s32 arg6);
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B245C);
+void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
+                      s32 arg5, s32 arg6) {
+    Primitive* prim;
+    s16 i;
+    s16 offset;
+
+    prim = arg0;
+    for (i = 0; i < 6; i++) {
+        arg0 = arg0->next;
+    }
+    for (i = 0; i < 2; i++) {
+        offset = (rsin(arg1) * arg3) / 0x1000;
+        if (i) {
+            arg0->x1 = arg0->x3 = arg0->x0 + offset;
+            if (arg5 & 1) {
+                arg0->r0 = arg0->r1 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->r0 = arg0->r1 = 0;
+            }
+            if (arg5 & 2) {
+                arg0->r2 = arg0->r3 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->r2 = arg0->r3 = 0;
+            }
+            if (arg5 & 4) {
+                arg0->g0 = arg0->g1 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->g0 = arg0->g1 = 0;
+            }
+            if (arg5 & 8) {
+                arg0->g2 = arg0->g3 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->g2 = arg0->g3 = 0;
+            }
+            if (arg5 & 0x10) {
+                arg0->b0 = arg0->b1 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->b0 = arg0->b1 = 0;
+            }
+            if (arg5 & 0x20) {
+                arg0->b2 = arg0->b3 = (arg2 / 2) + 0x30;
+            } else {
+                arg0->b2 = arg0->b3 = 0;
+            }
+        } else {
+            arg0->x0 = arg0->x2 = arg0->x1 - offset;
+            if (arg5 & 1) {
+                arg0->r0 = arg0->r1 = arg2 + 0x20;
+            } else {
+                arg0->r0 = arg0->r1 = 0;
+            }
+            if (arg5 & 2) {
+                arg0->r2 = arg0->r3 = arg2 + 0x20;
+            } else {
+                arg0->r2 = arg0->r3 = 0;
+            }
+            if (arg5 & 4) {
+                arg0->g0 = arg0->g1 = arg2 + 0x20;
+            } else {
+                arg0->g0 = arg0->g1 = 0;
+            }
+            if (arg5 & 8) {
+                arg0->g2 = arg0->g3 = arg2 + 0x20;
+            } else {
+                arg0->g2 = arg0->g3 = 0;
+            }
+            if (arg5 & 0x10) {
+                arg0->b0 = arg0->b1 = arg2 + 0x20;
+            } else {
+                arg0->b0 = arg0->b1 = 0;
+            }
+            if (arg5 & 0x20) {
+                arg0->b2 = arg0->b3 = arg2 + 0x20;
+            } else {
+                arg0->b2 = arg0->b3 = 0;
+            }
+        }
+        offset = (arg4 * rcos(g_CurrentEntity->ext.et_801B6F30.unk7E)) / 0x1000;
+        if (i) {
+            arg0->y1 = arg0->y0 - offset;
+            arg0->y3 = arg0->y2 + offset;
+            prim->x0 = arg0->x1;
+            prim->y0 = arg0->y1;
+            prim->x1 = arg0->x3;
+            prim->y1 = arg0->y3;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+        } else {
+            arg0->y0 = arg0->y1 - offset;
+            arg0->y2 = arg0->y3 + offset;
+            prim->x0 = arg0->x0;
+            prim->y0 = arg0->y0;
+            prim->x1 = arg0->x2;
+            prim->y1 = arg0->y2;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+        }
+        prim->x0 = arg0->x0;
+        prim->y0 = arg0->y0;
+        prim->x1 = arg0->x1;
+        prim->y1 = arg0->y1;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+
+        prim->x0 = arg0->x2;
+        prim->y0 = arg0->y2;
+        prim->x1 = arg0->x3;
+        prim->y1 = arg0->y3;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+
+        if (arg6) {
+            arg0->drawMode =
+                DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        } else {
+            arg0->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        }
+        arg0 = arg0->next;
+    }
+    for (i = 0; i < 2; i++) {
+        offset = (rsin(arg1) * (arg3 - 8)) / 0x1000;
+        if (i) {
+            arg0->x1 = arg0->x3 = arg0->x0 + offset;
+        } else {
+            arg0->x0 = arg0->x2 = arg0->x1 - offset;
+        }
+        offset = (arg4 * rcos(arg1) * 3) / 0x4000;
+        if (i) {
+            arg0->y1 = arg0->y0 - offset;
+            arg0->y3 = arg0->y2 + offset;
+            PRED(arg0) = arg2 + 0x60;
+            PGRN(arg0) = arg2 + 0x60;
+            PBLU(arg0) = arg2 + 0x60;
+        } else {
+            arg0->y0 = arg0->y1 - offset;
+            arg0->y2 = arg0->y3 + offset;
+            PRED(arg0) = (arg2 * 2) + 0x40;
+            PGRN(arg0) = (arg2 * 2) + 0x40;
+            PBLU(arg0) = (arg2 * 2) + 0x40;
+        }
+#ifdef VERSION_PSP
+        if (arg1 == 0x400) {
+            if (i) {
+                arg0->x1 = arg0->x3 = arg0->x0 + (arg0->u1 - arg0->u0);
+            } else {
+                arg0->x0 = arg0->x2 = arg0->x1 - (arg0->u1 - arg0->u0);
+            }
+            arg0->y2 = arg0->y3 = arg0->y0 + (arg0->v2 - arg0->v0);
+        }
+        arg0->drawMode = DRAW_DEFAULT;
+#else
+        arg0->drawMode = DRAW_COLORS;
+#endif
+        arg0 = arg0->next;
+    }
+}
 
 /// Determines which items are available to buy
 /// and returns the number of buyable items, that are
@@ -187,7 +333,7 @@ void func_us_801B2BE4(Entity* self) {
     if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
         FntPrint("REV ");
     }
-    if (g_CastleFlags[CASTLE_FLAG_220]) {
+    if (g_CastleFlags[DEATH_FIGHT_CS]) {
         FntPrint("DET ");
     }
     if (g_api.TimeAttackController(
@@ -275,7 +421,7 @@ void func_us_801B2BE4(Entity* self) {
                 ptr = D_us_801814D8;
             } else {
                 // if showing the buying menu
-                self->ext.et_801B2BE4.unk88 = func_us_801B29C4();
+                self->ext.et_801B6F30.unk88 = func_us_801B29C4();
                 ptr = D_us_801D4364;
             }
             for (i = 0; i < 64; i++) {
@@ -352,20 +498,20 @@ void func_us_801B2BE4(Entity* self) {
                 }
                 ptr++;
             }
-            self->ext.et_801B2BE4.unk7C = 0;
-            self->ext.et_801B2BE4.unk7E = 0;
-            self->ext.et_801B2BE4.unk80 = 0;
-            self->ext.et_801B2BE4.unk82 = 0;
+            self->ext.et_801B6F30.unk7C = 0;
+            self->ext.et_801B6F30.unk7E = 0;
+            self->ext.et_801B6F30.unk80 = 0;
+            self->ext.et_801B6F30.unk82 = 0;
         }
         break;
 
     case 2:
-        self->ext.et_801B2BE4.unk7C++;
-        self->ext.et_801B2BE4.unk7E += 0x40;
+        self->ext.et_801B6F30.unk7C++;
+        self->ext.et_801B6F30.unk7E += 0x40;
         prim = &g_PrimBuf[self->primIndex];
-        func_us_801B245C(prim, self->ext.et_801B2BE4.unk7E,
-                         self->ext.et_801B2BE4.unk7C * 2, 0x74, 0x20, 8, 1);
-        if (self->ext.et_801B2BE4.unk7C == 0x10) {
+        func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
+                         self->ext.et_801B6F30.unk7C * 2, 0x74, 0x20, 8, 1);
+        if (self->ext.et_801B6F30.unk7C == 0x10) {
             if (self->params) {
                 SetStep(5);
             } else {
@@ -376,50 +522,50 @@ void func_us_801B2BE4(Entity* self) {
 
     case 3:
         tempVar = g_pads[0].repeat;
-        FntPrint("kosuu %x\n", self->ext.et_801B2BE4.unk82);
+        FntPrint("kosuu %x\n", self->ext.et_801B6F30.unk82);
         if (tempVar & PAD_DOWN) {
-            if (self->ext.et_801B2BE4.unk80 < 6) {
+            if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80++;
+                self->ext.et_801B6F30.unk80++;
             } else if (
-                self->ext.et_801B2BE4.unk82 < self->ext.et_801B2BE4.unk88) {
+                self->ext.et_801B6F30.unk82 < self->ext.et_801B6F30.unk88) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk82++;
+                self->ext.et_801B6F30.unk82++;
             }
         } else if (tempVar & PAD_UP) {
-            if (self->ext.et_801B2BE4.unk80 > 0) {
+            if (self->ext.et_801B6F30.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80--;
-            } else if (self->ext.et_801B2BE4.unk82) {
+                self->ext.et_801B6F30.unk80--;
+            } else if (self->ext.et_801B6F30.unk82) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk82--;
+                self->ext.et_801B6F30.unk82--;
             }
         } else if (tempVar & (PAD_R1 + PAD_R2)) {
-            if (self->ext.et_801B2BE4.unk80 < 6) {
+            if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80 = 6;
+                self->ext.et_801B6F30.unk80 = 6;
             } else if (
-                self->ext.et_801B2BE4.unk82 < self->ext.et_801B2BE4.unk88) {
+                self->ext.et_801B6F30.unk82 < self->ext.et_801B6F30.unk88) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk82 += 7;
-                if (self->ext.et_801B2BE4.unk82 > self->ext.et_801B2BE4.unk88) {
-                    self->ext.et_801B2BE4.unk82 = self->ext.et_801B2BE4.unk88;
+                self->ext.et_801B6F30.unk82 += 7;
+                if (self->ext.et_801B6F30.unk82 > self->ext.et_801B6F30.unk88) {
+                    self->ext.et_801B6F30.unk82 = self->ext.et_801B6F30.unk88;
                 }
             }
         } else if (tempVar & (PAD_L1 + PAD_L2)) {
-            if (self->ext.et_801B2BE4.unk80 > 0) {
+            if (self->ext.et_801B6F30.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80 = 0;
-            } else if (self->ext.et_801B2BE4.unk82) {
+                self->ext.et_801B6F30.unk80 = 0;
+            } else if (self->ext.et_801B6F30.unk82) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                if (self->ext.et_801B2BE4.unk82 > 7) {
-                    self->ext.et_801B2BE4.unk82 -= 7;
+                if (self->ext.et_801B6F30.unk82 > 7) {
+                    self->ext.et_801B6F30.unk82 -= 7;
                 } else {
-                    self->ext.et_801B2BE4.unk82 = 0;
+                    self->ext.et_801B6F30.unk82 = 0;
                 }
             }
         }
-        itemId = self->ext.et_801B2BE4.unk82 + self->ext.et_801B2BE4.unk80;
+        itemId = self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80;
         if (tempVar & PAD_RIGHT) {
             if (D_us_801D415C[itemId] < D_us_801D425C[itemId]) {
                 g_api.PlaySfx(SFX_UI_MOVE);
@@ -503,19 +649,19 @@ void func_us_801B2BE4(Entity* self) {
         for (i = 0; i < 10; i++) {
             prim = prim->next;
         }
-        prim->y0 = prim->y1 = (self->ext.et_801B2BE4.unk80 * 0xC) + 0x1F;
+        prim->y0 = prim->y1 = (self->ext.et_801B6F30.unk80 * 0xC) + 0x1F;
         prim->y2 = prim->y3 = prim->y0 + 0xC;
         prim->drawMode = DRAW_COLORS;
 
         prim = prim->next;
-        if (self->ext.et_801B2BE4.unk82) {
+        if (self->ext.et_801B6F30.unk82) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
         }
 
         prim = prim->next;
-        if (self->ext.et_801B2BE4.unk82 < self->ext.et_801B2BE4.unk88) {
+        if (self->ext.et_801B6F30.unk82 < self->ext.et_801B6F30.unk88) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -546,23 +692,23 @@ void func_us_801B2BE4(Entity* self) {
     case 5:
         tempVar = g_pads[0].repeat;
         if (tempVar & PAD_DOWN) {
-            if (self->ext.et_801B2BE4.unk80 < 6) {
+            if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80++;
-            } else if (self->ext.et_801B2BE4.unk82 < 0) {
+                self->ext.et_801B6F30.unk80++;
+            } else if (self->ext.et_801B6F30.unk82 < 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk82++;
+                self->ext.et_801B6F30.unk82++;
             }
         } else if (tempVar & PAD_UP) {
-            if (self->ext.et_801B2BE4.unk80 > 0) {
+            if (self->ext.et_801B6F30.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk80--;
-            } else if (self->ext.et_801B2BE4.unk82) {
+                self->ext.et_801B6F30.unk80--;
+            } else if (self->ext.et_801B6F30.unk82) {
                 g_api.PlaySfx(SFX_UI_MOVE);
-                self->ext.et_801B2BE4.unk82--;
+                self->ext.et_801B6F30.unk82--;
             }
         }
-        itemId = self->ext.et_801B2BE4.unk82 + self->ext.et_801B2BE4.unk80;
+        itemId = self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80;
         if (tempVar & PAD_RIGHT) {
             if (D_us_801D415C[itemId] < D_us_801D425C[itemId]) {
                 g_api.PlaySfx(SFX_UI_MOVE);
@@ -606,19 +752,19 @@ void func_us_801B2BE4(Entity* self) {
         for (i = 0; i < 10; i++) {
             prim = prim->next;
         }
-        prim->y0 = prim->y1 = (self->ext.et_801B2BE4.unk80 * 0xC) + 0x1F;
+        prim->y0 = prim->y1 = (self->ext.et_801B6F30.unk80 * 0xC) + 0x1F;
         prim->y2 = prim->y3 = prim->y0 + 0xC;
         prim->drawMode = DRAW_COLORS;
 
         prim = prim->next;
-        if (self->ext.et_801B2BE4.unk82) {
+        if (self->ext.et_801B6F30.unk82) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
         }
 
         prim = prim->next;
-        if (self->ext.et_801B2BE4.unk82 < 0) {
+        if (self->ext.et_801B6F30.unk82 < 0) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -659,23 +805,23 @@ void func_us_801B2BE4(Entity* self) {
             prim = prim->next;
 
             prim->drawMode = DRAW_HIDE;
-            self->ext.et_801B2BE4.unk7E = 0x400;
-            self->ext.et_801B2BE4.unk7C = 0x10;
+            self->ext.et_801B6F30.unk7E = 0x400;
+            self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
             g_CutsceneFlags |= 0x200;
         }
         break;
 
     case 8:
-        self->ext.et_801B2BE4.unk7C--;
-        self->ext.et_801B2BE4.unk7E -= 0x40;
+        self->ext.et_801B6F30.unk7C--;
+        self->ext.et_801B6F30.unk7E -= 0x40;
         prim = &g_PrimBuf[self->primIndex];
-        func_us_801B245C(prim, self->ext.et_801B2BE4.unk7E,
-                         self->ext.et_801B2BE4.unk7C * 2, 0x74, 0x20, 8, 1);
-        if (self->ext.et_801B2BE4.unk7C == 1) {
+        func_us_801B245C(prim, self->ext.et_801B6F30.unk7E,
+                         self->ext.et_801B6F30.unk7C * 2, 0x74, 0x20, 8, 1);
+        if (self->ext.et_801B6F30.unk7C == 1) {
             g_CutsceneFlags &= ~0x400;
         }
-        if (!self->ext.et_801B2BE4.unk7C) {
+        if (!self->ext.et_801B6F30.unk7C) {
             DestroyEntity(self);
         }
         break;
