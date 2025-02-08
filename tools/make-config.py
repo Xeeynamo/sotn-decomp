@@ -1027,6 +1027,7 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
 
     spinner_start("disassembling matched functions")
     make("force_symbols")
+    git("clean", "-fdx", f"asm/{version}/", "-e", f"{get_asm_path(splat_config)}")
     # cross-reference only what makes sense to cross-reference
     if ovl_name == "dra":
         samples = ["dra"]
