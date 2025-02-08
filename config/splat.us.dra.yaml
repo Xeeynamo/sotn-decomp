@@ -208,8 +208,8 @@ segments:
       # - [0x41A00, .rodata, 75F54] # func_80116994
       # - [0x41A20, .rodata, 75F54] # func_80116B0C
       # - [0x41A38, .rodata, 75F54] # func_80117DEC
-      - [0x41A44, .rodata, 78D0C] # EntityNumberMovesToHpMeter
-      # - [0x41A74, .rodata, 78D0C] # EntityGuardText
+      - [0x41A44, .rodata, 7879C] # EntityNumberMovesToHpMeter
+      # - [0x41A74, .rodata, 7879C] # EntityGuardText
       - [0x41AA4, .rodata, 7A4D0] # func_8011A4D0
       # - [0x41AB4, .rodata, 7A4D0] # EntityEntFactory
       # - [0x41AF4, .rodata, 7A4D0] # EntityPlayerBlinkWhite
@@ -267,7 +267,6 @@ segments:
       - [0x72BB0, c, 72BB0]
       - [0x75F54, c, 75F54]
       - [0x7879C, c, 7879C]
-      - [0x78D0C, c, 78D0C]
       - [0x7A4D0, c, 7A4D0]
       - [0x7E4BC, c, 7E4BC]
       - [0x843B0, c, 843B0]
