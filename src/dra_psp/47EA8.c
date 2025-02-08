@@ -44,3 +44,21 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", CreateEntFactoryFromEntity);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityEntFactory);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnarmedAttack);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityDiveKickAttack);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B480);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B530);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B5A4);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnkId24);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091295F0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerBlinkWhite);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerOutline);
