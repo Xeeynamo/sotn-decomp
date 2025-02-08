@@ -26,3 +26,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntitySmallRisingHeart);
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119E78);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119F70);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A290);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A328);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127348);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A4C8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A4D0);
