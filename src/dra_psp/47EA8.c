@@ -20,3 +20,9 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityNumberMovesToHpMeter);
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09125DB8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGuardText);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntitySmallRisingHeart);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119E78);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119F70);
