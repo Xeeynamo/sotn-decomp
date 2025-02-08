@@ -1321,7 +1321,7 @@
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | func_psp_0925B470                   |     2173 |        195 | Yes    |                                 |       |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
-| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/oCnk1 | 0.684 |
+| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/lkatc | 0.702 |
 | no4    | func_psp_09256330                   |     2559 |        253 | Yes    |                                 |       |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/7l1WU | 0.795 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    |                                 |       |
