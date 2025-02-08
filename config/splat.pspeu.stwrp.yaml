@@ -62,73 +62,33 @@ segments:
       - [0xD1B8, c, wrp/e_breakable]
       - [0xD338, c, wrp/st_debug]
       - [0xD6A8, c, wrp/warp]
-      - [0xEA00, .data, wrp/e_red_door] # g_eRedDoorUV
-      - [0xEA18, .data, wrp/st_update] # UNK_Invincibility0
-      - [0xEA48, .data, wrp/e_particles] # g_ESoulStealOrb*
-      - [0xEAC8, .data, wrp_psp/e_collect] # g_SubweaponAnimPrizeDrop
-      - [0xECF0, .data, wrp_psp/e_collect] # g_MariaSubweaponAnimPrizeDrop
-      - [0xEDD8, .data, wrp_psp/e_collect] # g_goldCollectTexts
-      - [0xEE50, .data, wrp_psp/e_collect] # c_GoldPrizes
-      - [0xEE80, .data, wrp_psp/e_collect] # c_HeartPrizes
-      - [0xEE88, .data, wrp_psp/e_collect] # g_ExplosionYVelocities
-      - [0xEEA0, .data, wrp_psp/e_collect] # D_80180ED8
-      - [0xEEB8, .data, wrp_psp/e_collect] # g_bigRedFireballAnim
-      - [0xEED8, .data, wrp_psp/e_collect] # D_80180F08
-      - [0xEF08, .data, wrp_psp/e_collect] # D_80180F38
-      - [0xEF40, .data, wrp_psp/e_collect] # D_80180F6C
-      - [0xEF48, .data, wrp_psp/e_collect] # g_ExplosionAnimations
-      - [0xEF60, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1EY
-      - [0xEF70, .data, wrp_psp/e_collect] # g_RelicOrbTextBg1SY
-      - [0xEF80, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2SY
-      - [0xEF90, .data, wrp_psp/e_collect] # g_RelicOrbTextBg2EY
-      - [0xEFA0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleX
-      - [0xEFB0, .data, wrp_psp/e_collect] # g_RelicOrbSparkleY
-      - [0xEFC0, .data, wrp_psp/e_collect] # e_relic_orb obtained
-      - [0xF010, .data, wrp_psp/wrp_data_F010] # D_80180FF8
-      - [0xF020, .data, wrp_psp/wrp_data_F010] # D_80181008
-      - [0xF050, .data, wrp_psp/wrp_data_F010] # D_80181038
+      - [0xEA00, .data, wrp/e_red_door]
+      - [0xEA18, .data, wrp/st_update]
+      - [0xEA48, .data, wrp/e_particles]
+      - [0xEAC8, .data, wrp_psp/e_collect]
+      - [0xF010, .data, wrp_psp/e_misc]
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
-      - [0xF4D8, data]
-      - [0xF700, data] # D_psp_09246D80
-      - [0xF720, data] # D_psp_09246DA0
-      - [0xF740, .data, wrp_psp/wrp_data_F740] # D_psp_09246DC0
-      - [0xF790, .data, wrp_psp/wrp_data_F7B0] # WRP_RedDoorTiles
-      - [0xF7B0, .data, wrp_psp/wrp_data_F7B0] # D_psp_09246E30
-      - [0xF810, .data, wrp_psp/wrp_data_F810] # WRP_EInitBreakable
-      - [0xF820, .data, wrp_psp/wrp_data_F810] # g_EInitObtainable
-      - [0xF830, .data, wrp_psp/wrp_data_F810] # g_EInitParticle
-      - [0xF840, data] # D_psp_09246EC0
-      - [0xF850, data] # D_psp_09246ED0
-      - [0xF860, data] # D_80180488
-      - [0xF870, data] # g_EInitCommon
-      - [0xF880, data] # D_psp_09246F00
-      - [0xF890, data] # D_801804C4
-      - [0xF8A0, data] # D_psp_09246F20
-      - [0xF920, .data, wrp/e_breakable] # D_801805A8
-      - [0xF930, .data, wrp/e_breakable] # g_eBreakableAnimations
-      - [0xF950, .data, wrp/e_breakable] # g_eBreakableHitboxes
-      - [0xF970, data] # D_psp_09246FF0
+      - [0xF4D8, data] # WRP_spriteBanks
+      - [0xF5F8, data] # WRP_rooms_layers
+      - [0xF700, data] # WRP_cluts
+      - [0xF708, .data, wrp_psp/graphics_banks]
+      - [0xF790, .data, wrp_psp/e_init]
+      - [0xF8A0, data] # WRP_rooms
+      - [0xF920, .data, wrp/e_breakable]
+      - [0xF970, data] # [0xF970, cmpgfx, stage_title_jp, 128, 128, 4]
+      - [0xFCB8, data] # [0xFCB8, cmpgfx, stage_placeholder, 128, 128, 4]
       - [0x10260, data] # D_psp_092478E0
       - [0x102C0, data] # D_psp_09247940
       - [0x104C0, data] # D_psp_09247B40
       - [0x106C0, data] # D_psp_09247D40
       - [0x108C0, data] # D_psp_09247F40
-      - [0x10AC0, data] # D_psp_09248140
-      - [0x10CC0, data] # D_psp_09248340
-      - [0x10EC0, data] # D_psp_09248540
-      - [0x10FC0, data] # D_psp_09248640
-      - [0x110C0, data] # D_psp_09248740
-      - [0x111C0, data] # D_psp_09248840
-      - [0x112C0, data] # D_psp_09248940
-      - [0x112D0, data] # D_psp_09248950
-      - [0x122D0, data] # D_psp_09249950
-      - [0x132D0, data] # D_psp_0924A950
-      - [0x142D0, data] # D_psp_0924B950
-      - [0x142E0, .data, wrp_psp/wrp_data_142E0] # D_psp_0924B960
-      - [0x14320, data] # D_psp_0924B9A0
-      - [0x14360, .data, wrp/st_debug] # D_80180528, D_80180538
-      - [0x14430, .data, wrp/warp] # EntityWarpRoom FntPrint strings
+      - [0x10AC0, data] # tile data
+      - [0x10EC0, data] # tile definitions
+      - [0x142E0, .data, wrp_psp/header]
+      - [0x14320, .data, wrp_psp/st_debug_data]
+      - [0x14360, .data, wrp/st_debug]
+      - [0x14430, .data, wrp/warp]
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp_psp/e_collect]
       - [0x144F8, .rodata, wrp/warp]
