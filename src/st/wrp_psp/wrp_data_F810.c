@@ -1,6 +1,0 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../wrp/wrp.h"
-
-EInit OVL_EXPORT(EInitBreakable) = {0x8001, 0x0000, 0x0000, 0x0000, 0x0000};
-EInit g_EInitObtainable = {0x0003, 0x0000, 0x0000, 0x0000, 0x0001};
-EInit g_EInitParticle = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};

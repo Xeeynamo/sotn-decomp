@@ -22,6 +22,14 @@
 #include <psxsdk/libsnd.h>
 #include <psxsdk/romio.h>
 
+// PSP does & 7FFF for many calls to rand(), PS1 does not.
+// This works around that.
+#ifdef VERSION_PSP
+#define PSP_RANDMASK 0x7FFF
+#else
+#define PSP_RANDMASK 0xFFFFFFFF
+#endif
+
 #define SPAD(x) ((s32*)SP(x * sizeof(s32)))
 
 typedef long Event;
@@ -151,6 +159,8 @@ typedef enum {
 #define PAD_LEFT 0x8000
 
 #else
+#define PAD_L2 0x0002
+#define PAD_R2 0x0400
 #define PAD_L1 0x0100
 #define PAD_R1 0x0200
 #define PAD_TRIANGLE 0x1000
@@ -350,7 +360,7 @@ typedef enum {
 
 #define PAL_OVL_FLAG 0x8000
 #define PAL_DRA(x) (x)
-#define PAL_OVL(x) ((x) | ANIMSET_OVL_FLAG)
+#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
@@ -780,7 +790,8 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 velocityX;
     /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON) || defined(SERVANT)
+#if defined(STAGE) || defined(WEAPON) || defined(SERVANT) ||                   \
+    defined(VERSION_PSP)
     /* 0x10 */ s16 hitboxOffX;
 #else // hack to match in DRA and RIC
     /* 0x10 */ u16 hitboxOffX;
@@ -1111,7 +1122,7 @@ typedef struct {
 } MenuNavigation; /* size=0x4C */
 
 typedef struct {
-    /* 0x000, 0x8003C9F8 */ u32 buttonConfig[BUTTON_COUNT];
+    /* 0x000, 0x8003C9F8 */ s32 buttonConfig[BUTTON_COUNT];
     /* 0x020, 0x8003CA18 */ u16 buttonMask[BUTTON_COUNT];
     /* 0x030, 0x8003CA28 */ s32 timeAttackRecords[TIMEATTACK_EVENT_END];
     /* 0x0B0, 0x8003CAA8 */ s32 cloakColors[6];

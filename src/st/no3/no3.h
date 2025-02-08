@@ -4,8 +4,7 @@
 #define STAGE_IS_NO3
 
 #define OVL_EXPORT(x) NO3_##x
-
-#define CASTLE_FLAG_BANK 0x34
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 // NO3 Sound IDs
 #define SE_MERMAN_DEATH 0x71D

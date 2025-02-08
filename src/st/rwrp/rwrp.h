@@ -6,8 +6,7 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) RWRP_##x
-
-#define CASTLE_FLAG_BANK 0x1E0
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     E_NONE,

@@ -76,6 +76,8 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
+      - name: progress dry run
+        run: .venv/bin/python3 tools/progress.py --dry-run --version ${{ matrix.version }}
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder

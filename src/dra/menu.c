@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 #include "menu.h"
+#include "servant.h" // for InitializeMode enum
 #include "sfx.h"
 
 typedef struct EquipMenuHelper {
