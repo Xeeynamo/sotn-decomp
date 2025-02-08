@@ -42,3 +42,5 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091279A0);
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", CreateEntFactoryFromEntity);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityEntFactory);
