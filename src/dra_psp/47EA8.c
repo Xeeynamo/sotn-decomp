@@ -66,3 +66,5 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerOutline);
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011E0E4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGravityBootBeam);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityWingSmashTrail);
