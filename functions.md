@@ -834,7 +834,7 @@
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
 | dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
 | dra    | CreateEntFactoryFromEntity          |      114 |         12 |        |                                 |       |
-| dra    | func_80118894                       |      114 |         16 |        |                                 |       |
+| dra    | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
 | dra    | func_psp_090E8CA8                   |      115 |          6 |        |                                 |       |
 | dra    | func_psp_091374D0                   |      115 |         27 |        |                                 |       |
 | dra    | func_800FF494                       |      116 |         14 |        |                                 |       |
@@ -902,7 +902,7 @@
 | dra    | CheckBackForwardInput               |      152 |         23 |        |                                 |       |
 | dra    | CheckGravityBootsInput              |      152 |         28 |        |                                 |       |
 | no4    | func_psp_09242AD0                   |      153 |         23 |        |                                 |       |
-| dra    | func_80118970                       |      153 |         25 |        |                                 |       |
+| dra    | func_80118970                       |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
 | dra    | UnknownEntId49                      |      154 |         11 |        |                                 |       |
 | dra    | func_psp_09144810                   |      155 |         10 |        |                                 |       |
 | dra    | func_80123F78                       |      155 |         14 |        |                                 |       |
@@ -1246,7 +1246,7 @@
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        |                                 |       |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
-| lib    | func_psp_0926A238                   |      803 |         77 | Yes    | https://decomp.me/scratch/bZIKE | 0.715 |
+| lib    | func_psp_0926A238                   |      803 |         77 | Yes    | https://decomp.me/scratch/bZIKE | 0.88  |
 | dra    | func_80129864                       |      809 |         78 |        | https://decomp.me/scratch/Ggtu5 | 0.999 |
 | dra    | func_psp_0910AA60                   |      815 |        149 |        |                                 |       |
 | dra    | HandlePlay                          |      816 |        115 | Yes    |                                 |       |
