@@ -484,7 +484,43 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09125DB8);
+typedef struct {
+    u8 left;
+    u8 top;
+    u8 right;
+    u8 bottom;
+    u16 clut;
+    u16 mode;
+} GuardTextControl;
+extern s32 D_8B42058;
+extern GuardTextControl D_psp_091835F0[];
+extern u8 D_psp_09183698[][21][4];
+extern u8 D_psp_091837E8[][4];
+
+GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
+    GuardTextControl* temp_s1;
+    u8* temp_s0;
+
+    temp_s1 = &D_psp_091835F0[arg1];
+    arg0->clut = temp_s1->clut;
+    arg0->mode = temp_s1->mode;
+    if (D_8B42058 == 1) {
+        arg0->left = temp_s1->left;
+        arg0->top = temp_s1->top;
+        arg0->right = temp_s1->right;
+        arg0->bottom = temp_s1->bottom;
+    } else {
+        temp_s0 = &D_psp_09183698[D_8B42058 - 2][arg1][0];
+        arg0->left = temp_s0[0];
+        arg0->top = temp_s0[1];
+        arg0->right = temp_s0[0] + temp_s0[2];
+        arg0->bottom = temp_s0[1] + temp_s0[3];
+        if (arg1 == 6) {
+            arg0->right += D_psp_091837E8[D_8B42058 - 2][2] + 2;
+        }
+    }
+    return arg0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGuardText);
 
