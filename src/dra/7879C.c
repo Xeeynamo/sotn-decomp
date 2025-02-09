@@ -832,32 +832,32 @@ s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
 // No calls to FACTORY with 119 exist yet.
 // Corresponding RIC function is RicEntityHitByHoly
 extern Point16 D_8013804C[16]; // BSS
-void func_80119F70(Entity* entity) {
-    Primitive* prim;
-    s16 temp_xRand;
-    s32 temp_yRand;
+void func_80119F70(Entity* self) {
+    s32 shouldHide;
+    s16 xRand;
+    s16 yRand;
     s32 i;
-    s16 hitboxY;
     s16 hitboxX;
-    s32 temp;
+    s16 hitboxY;
+    Primitive* prim;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
-        if (entity->primIndex == -1) {
-            DestroyEntity(entity);
+        self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
             return;
         }
-        entity->flags =
+        self->flags =
             FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
-        prim = &g_PrimBuf[entity->primIndex];
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < LEN(D_8013804C); i++) {
-            temp_xRand = hitboxX + rand() % 24 - 12;
-            temp_yRand = rand();
-            D_8013804C[i].x = temp_xRand;
-            D_8013804C[i].y = hitboxY + temp_yRand % 48 - 24;
+            xRand = hitboxX + rand() % 24 - 12;
+            yRand = hitboxY + rand() % 48 - 24;
+            D_8013804C[i].x = xRand;
+            D_8013804C[i].y = yRand;
             prim->clut = 0x1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -875,30 +875,30 @@ void func_80119F70(Entity* entity) {
             }
             prim = prim->next;
         }
-        entity->step++;
+        self->step++;
         break;
 
     case 1:
         if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
-            DestroyEntity(entity);
+            DestroyEntity(self);
             return;
         }
     }
 
-    prim = &g_PrimBuf[entity->primIndex];
+    prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < LEN(D_8013804C); i++) {
         switch (prim->g0) {
         case 0:
-            if (!(--prim->g1 & 0xFF)) {
+            if (--prim->g1 == 0) {
                 prim->g0++;
             }
             break;
         case 1:
-            hitboxX = D_8013804C[i].y;
-            hitboxY = D_8013804C[i].x;
-            temp = func_80119E78(prim, hitboxY, hitboxX);
+            hitboxX = D_8013804C[i].x;
+            hitboxY = D_8013804C[i].y;
+            shouldHide = func_80119E78(prim, hitboxX, hitboxY);
             D_8013804C[i].y--;
-            if (temp < 0) {
+            if (shouldHide < 0) {
                 prim->drawMode |= DRAW_HIDE;
                 prim->g0++;
             } else {
@@ -908,7 +908,6 @@ void func_80119F70(Entity* entity) {
         }
         prim = prim->next;
     }
-    return;
 }
 
 void func_8011A290(Entity* entity) {
