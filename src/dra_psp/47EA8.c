@@ -769,7 +769,45 @@ void EntityGuardText(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntitySmallRisingHeart);
+// Small heart that rises and then flickers away.
+// Created by Factory 99 in AddHearts().
+// That call is in the Blood Cloak, Alucard Shield, and Herald Shield.
+void EntitySmallRisingHeart(Entity* self) {
+    s32 swayX;
+
+    switch (self->step) {
+    case 0:
+        self->posY.i.hi -= 16;
+        self->zPriority = PLAYER.zPriority - 2;
+        self->step++;
+        self->velocityY = FIX(-0.5);
+        self->ext.smallRisingHeart.swayAngle = 0;
+        self->ext.smallRisingHeart.swaySpeed = 0x40;
+        self->animCurFrame = 0xE;
+        self->animSet = ANIMSET_DRA(3);
+        self->ext.smallRisingHeart.timer = 0x80;
+        self->flags = FLAG_POS_CAMERA_LOCKED;
+        break;
+
+    case 1:
+        if (self->ext.smallRisingHeart.timer < 32) {
+            self->drawFlags = FLAG_BLINK;
+        }
+        self->posY.val += self->velocityY;
+        swayX = rcos(self->ext.smallRisingHeart.swayAngle) * 8;
+        self->ext.smallRisingHeart.swayAngle +=
+            self->ext.smallRisingHeart.swaySpeed;
+
+        if (!(g_GameTimer & 3)) {
+            self->ext.smallRisingHeart.swaySpeed--;
+        }
+        self->posX.val += swayX;
+        if (--self->ext.smallRisingHeart.timer == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119E78);
 

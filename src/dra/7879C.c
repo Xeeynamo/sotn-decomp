@@ -750,16 +750,15 @@ void EntityGuardText(Entity* self) {
 // Created by Factory 99 in AddHearts().
 // That call is in the Blood Cloak, Alucard Shield, and Herald Shield.
 void EntitySmallRisingHeart(Entity* self) {
-    s32 temp;
-    s32 cos;
+    s32 swayX;
 
     switch (self->step) {
     case 0:
         self->posY.i.hi -= 16;
         self->zPriority = PLAYER.zPriority - 2;
-        self->ext.smallRisingHeart.swayAngle = 0;
         self->step++;
         self->velocityY = FIX(-0.5);
+        self->ext.smallRisingHeart.swayAngle = 0;
         self->ext.smallRisingHeart.swaySpeed = 0x40;
         self->animCurFrame = 0xE;
         self->animSet = ANIMSET_DRA(3);
@@ -772,17 +771,15 @@ void EntitySmallRisingHeart(Entity* self) {
             self->drawFlags = FLAG_BLINK;
         }
         self->posY.val += self->velocityY;
-        cos = rcos(self->ext.smallRisingHeart.swayAngle);
+        swayX = rcos(self->ext.smallRisingHeart.swayAngle) * 8;
         self->ext.smallRisingHeart.swayAngle +=
             self->ext.smallRisingHeart.swaySpeed;
-        temp = cos * 8;
 
         if (!(g_GameTimer & 3)) {
             self->ext.smallRisingHeart.swaySpeed--;
         }
-        self->posX.val += temp;
-        self->ext.smallRisingHeart.timer--;
-        if (self->ext.smallRisingHeart.timer == 0) {
+        self->posX.val += swayX;
+        if (--self->ext.smallRisingHeart.timer == 0) {
             DestroyEntity(self);
         }
         break;
