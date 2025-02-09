@@ -196,10 +196,10 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
 
 void func_80118C28(s32 arg0) {
     // Break up the 4-byte struct D_800ACFB4[arg0] into individual bytes.
-    D_8013803C = ((u8*)&D_800ACFB4[arg0])[0];
-    D_80138040 = ((u8*)&D_800ACFB4[arg0])[1];
-    D_80138044 = ((u8*)&D_800ACFB4[arg0])[2];
-    D_80138048 = ((u8*)&D_800ACFB4[arg0])[3];
+    D_8013803C = D_800ACFB4[arg0].rawBytes[0];
+    D_80138040 = D_800ACFB4[arg0].rawBytes[1];
+    D_80138044 = D_800ACFB4[arg0].rawBytes[2];
+    D_80138048 = D_800ACFB4[arg0].rawBytes[3];
 }
 
 s32 CreateHPNumMove(s16 number, s16 type) {
@@ -786,6 +786,13 @@ void EntitySmallRisingHeart(Entity* self) {
         break;
     }
 }
+
+u8 D_800AD094[] = {0x0, 0x50, 0x10, 0x50, 0x0, 0x60, 0x10, 0x60, 
+                0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60, 
+                0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50, 
+                0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 
+                0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38, 
+                0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
 
 // Corresponding RIC function is func_8015FDB0
 s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
