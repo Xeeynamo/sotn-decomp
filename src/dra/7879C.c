@@ -787,34 +787,31 @@ void EntitySmallRisingHeart(Entity* self) {
 }
 
 // Corresponding RIC function is func_8015FDB0
-s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
-    s16 left;
-    s16 top;
+s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
-    s32 size;
+    s16 size;
     u8* idx;
     // 800AD094 is a read-only array of bytes in 8-byte groups.
     // These are sets of 4 pairs of u,v values.
     // the ->b0 value is very likely fake.
     idx = D_800AD094;
     idx += prim->b0 * 8;
-    size = 6;
-    if (prim->b0 >= 3U) {
+    if (prim->b0 >= 3) {
         size = 4;
+    } else {
+        size = 6;
     }
     if (prim->b0 == 6) {
         return -1;
     }
-    left = xCenter - size;
-    top = yCenter - size;
-    prim->y0 = top;            // a
-    prim->y1 = top;            // 16
-    prim->x0 = left;           // 8
-    prim->x1 = xCenter + size; // 14
-    prim->x2 = left;           // 20
-    prim->y2 = yCenter + size; // 22
-    prim->x3 = xCenter + size; // 2c
-    prim->y3 = yCenter + size; // 2e
+    prim->x0 = xCenter - size;
+    prim->y0 = yCenter - size;
+    prim->x1 = xCenter + size; 
+    prim->y1 = yCenter - size;
+    prim->x2 = xCenter - size;
+    prim->y2 = yCenter + size;
+    prim->x3 = xCenter + size;
+    prim->y3 = yCenter + size;
 
     prim->u0 = *idx++;
     prim->v0 = *idx++;
@@ -824,11 +821,13 @@ s32 func_80119E78(Primitive* prim, s32 xCenter, s32 yCenter) {
     prim->v2 = *idx++;
     prim->u3 = *idx++;
     prim->v3 = *idx;
-    if (!(++prim->b1 & 1)) {
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
         prim->b0++;
     }
     return 0;
 }
+
 // Entity ID 47. Created by blueprint 119.
 // No calls to FACTORY with 119 exist yet.
 // Corresponding RIC function is RicEntityHitByHoly

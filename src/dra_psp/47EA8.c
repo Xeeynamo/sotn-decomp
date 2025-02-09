@@ -809,7 +809,46 @@ void EntitySmallRisingHeart(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119E78);
+s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
+    s16 right;
+    s16 size;
+    u8* idx;
+    // 800AD094 is a read-only array of bytes in 8-byte groups.
+    // These are sets of 4 pairs of u,v values.
+    // the ->b0 value is very likely fake.
+    idx = D_800AD094;
+    idx += prim->b0 * 8;
+    if (prim->b0 >= 3) {
+        size = 4;
+    } else {
+        size = 6;
+    }
+    if (prim->b0 == 6) {
+        return -1;
+    }
+    prim->x0 = xCenter - size;
+    prim->y0 = yCenter - size;
+    prim->x1 = xCenter + size; 
+    prim->y1 = yCenter - size;
+    prim->x2 = xCenter - size;
+    prim->y2 = yCenter + size;
+    prim->x3 = xCenter + size;
+    prim->y3 = yCenter + size;
+
+    prim->u0 = *idx++;
+    prim->v0 = *idx++;
+    prim->u1 = *idx++;
+    prim->v1 = *idx++;
+    prim->u2 = *idx++;
+    prim->v2 = *idx++;
+    prim->u3 = *idx++;
+    prim->v3 = *idx;
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
+        prim->b0++;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80119F70);
 
