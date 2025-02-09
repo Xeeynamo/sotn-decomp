@@ -213,7 +213,276 @@ s32 CreateHPNumMove(s16 number, s16 type) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityNumberMovesToHpMeter);
+// number appears and moves to HP meter, probably for healing effects
+void EntityNumberMovesToHpMeter(Entity* self) {
+    const int PrimCountA = 4;
+    const int PrimCountB = 16;
+    const int DIGIT_WIDTH = 8;
+    Primitive* prim;
+    s16 x_to_meter;
+    s16 y_to_meter;
+    s16 s7;
+    s32 i;
+    s16 offset_x;
+    s16 offset_y;
+    u16 number;
+    s32 sp3C = -1;
+    u8 U_base;
+
+    switch (self->step) {
+    case 0:
+        number = self->ext.hpNumMove.number;
+        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->ext.hpNumMove.unk8C = 0;
+        self->ext.hpNumMove.unk8E = 2;
+        self->ext.hpNumMove.unk90 = 8;
+
+        self->ext.hpNumMove.digits[0] = number % 10;
+        number /= 10;
+        if (number) {
+            self->ext.hpNumMove.digits[1] = number % 10;
+            number /= 10;
+            self->ext.hpNumMove.nDigits++;
+            if (number) {
+                self->ext.hpNumMove.digits[2] = number % 10;
+                number /= 10;
+                self->ext.hpNumMove.nDigits++;
+                if(number){
+                    self->ext.hpNumMove.digits[3] = number % 10;
+                    self->ext.hpNumMove.nDigits++;
+                }
+            }
+        }
+
+        // iterate through all 0x14 prims created by AllocPrimitives in two
+        // batches
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCountA; i++) {
+            prim->clut = 0x1B2;
+            if (self->ext.hpNumMove.number == 0) {
+                prim->clut = 0x1B4;
+            }
+            if (self->ext.hpNumMove.type == 1) {
+                prim->clut = 0x1B8;
+            }
+            if (self->ext.hpNumMove.type == 2) {
+                prim->clut = 0x1B6;
+            }
+            prim->tpage = 0x1A;
+            prim->priority = 0x1B8;
+            prim->drawMode = DRAW_DEFAULT;
+            U_base = self->ext.hpNumMove.digits[i] * DIGIT_WIDTH;
+            if (self->ext.hpNumMove.digits[i]) {
+                // adjust zero-based indexing to one-based
+                U_base -= DIGIT_WIDTH;
+            } else {
+                // zero digit is at the end of the UV table
+                U_base += DIGIT_WIDTH * 9;
+            }
+            prim->u0 = U_base + 32;
+            prim->v0 = 64;
+            prim->u1 = U_base + 40;
+            prim->v1 = 64;
+            prim->u2 = U_base + 32;
+            prim->v2 = 73;
+            prim->u3 = U_base + 40;
+            prim->v3 = 73;
+            if (self->ext.hpNumMove.nDigits < i) {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim = prim->next;
+        }
+        for (i = 0; i < PrimCountB; i++) {
+            prim->type = PRIM_TILE;
+            prim->r0 = 0xFF;
+            prim->g0 = 0x40;
+            prim->b0 = 0x40;
+            if (self->ext.hpNumMove.number == 0) {
+                prim->r0 = 0x40;
+                prim->g0 = 0x40;
+                prim->b0 = 0xFF;
+            }
+            if (self->ext.hpNumMove.type == 1) {
+                prim->r0 = 0x40;
+                prim->g0 = 0xFF;
+                prim->b0 = 0x40;
+            }
+            if (self->ext.hpNumMove.type == 2) {
+                prim->r0 = 0xFF;
+                prim->g0 = 0x40;
+                prim->b0 = 0xFF;
+            }
+            prim->priority = 0x1B8;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
+            
+            prim->u0 = prim->v0 = 1;
+            prim = prim->next;
+        }
+
+        self->step++;
+        break;
+    case 1:
+        self->ext.hpNumMove.unk8C++;
+        self->ext.hpNumMove.unk8E++;
+        if (self->ext.hpNumMove.type != 2) {
+            self->posY.i.hi--;
+        }
+        if (--self->ext.hpNumMove.unk90 == 0) {
+            self->ext.hpNumMove.unk90 = 8;
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.hpNumMove.unk8C--;
+        self->ext.hpNumMove.unk8E--;
+        if (self->ext.hpNumMove.unk8C == 4) {
+            self->step++;
+            self->ext.hpNumMove.unk90 = 4;
+        }
+        break;
+    case 3:
+        self->ext.hpNumMove.unk8C++;
+        self->ext.hpNumMove.unk8E++;
+        if (self->ext.hpNumMove.type != 2) {
+            self->posY.i.hi--;
+        }
+        if (--self->ext.hpNumMove.unk90 == 0) {
+            self->ext.hpNumMove.unk90 = 3;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.hpNumMove.unk8C--;
+        self->ext.hpNumMove.unk8E--;
+        if (self->ext.hpNumMove.unk8C == 4) {
+            self->ext.hpNumMove.unk90 = 24;
+            self->step++;
+        }
+        break;
+    case 5:
+        if (--self->ext.hpNumMove.unk90 == 0) {
+            x_to_meter = self->posX.i.hi - 0xD;
+            y_to_meter = self->posY.i.hi - 0x46;
+            self->ext.hpNumMove.angleToMeter =
+                ratan2(-y_to_meter, x_to_meter) & 0xFFF;
+            self->ext.hpNumMove.distToMeter =
+                SquareRoot0(SQ(x_to_meter) + SQ(y_to_meter));
+            self->ext.hpNumMove.unk90 = 0x10;
+            self->ext.hpNumMove.unk98 = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        if (self->ext.hpNumMove.unk8C != 2) {
+            self->ext.hpNumMove.unk8C--;
+            self->ext.hpNumMove.unk8E--;
+        }
+        self->ext.hpNumMove.unk90--;
+        sp3C = self->ext.hpNumMove.unk90;
+        // Reuse of variables. X and Y are actually R and theta.
+        y_to_meter = self->ext.hpNumMove.angleToMeter;
+        x_to_meter = self->ext.hpNumMove.distToMeter * self->ext.hpNumMove.unk90 / 16;
+        self->posX.i.hi =
+            13 + (((rcos(y_to_meter) >> 4) * x_to_meter) >> 8);
+        self->posY.i.hi =
+            70 - (((rsin(y_to_meter) >> 4) * x_to_meter) >> 8);
+        self->ext.hpNumMove.unk98 += 0x100;
+        self->posX.i.hi += rcos(self->ext.hpNumMove.unk98) >> 9;
+        self->posY.i.hi -= rsin(self->ext.hpNumMove.unk98) >> 9;
+        if (self->ext.hpNumMove.unk90 == 0) {
+            if (self->ext.hpNumMove.type == 2) {
+                DestroyEntity(self);
+                return;
+            }
+                self->step++;
+        }
+        break;
+    case 7:
+    case 9:
+        self->ext.hpNumMove.unk8C++;
+        self->ext.hpNumMove.unk8E++;
+        if (self->ext.hpNumMove.unk8C == 7) {
+            self->step++;
+            self->ext.hpNumMove.unk90 = 0x18;
+        }
+        break;
+    case 8:
+        if (self->ext.hpNumMove.unk8C != 4) {
+            self->ext.hpNumMove.unk8C--;
+            self->ext.hpNumMove.unk8E--;
+        } else {
+            self->step++;
+        }
+        break;
+    case 10:
+        if (self->ext.hpNumMove.unk8C != 4) {
+            self->ext.hpNumMove.unk8C--;
+            self->ext.hpNumMove.unk8E--;
+        }
+        if (--self->ext.hpNumMove.unk90 == 0) {
+            self->step++;
+        }
+        break;
+    case 11:
+        self->ext.hpNumMove.unk92 += 2;
+        self->posX.i.hi -= 2;
+        if (!(--self->ext.hpNumMove.unk90 & 2)) {
+            self->ext.hpNumMove.unk8E--;
+        }
+        if (self->ext.hpNumMove.unk8E == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    offset_x = self->ext.hpNumMove.unk8C;
+    offset_y = self->ext.hpNumMove.unk8E;
+    if (self->step != 0xB) {
+        self->ext.hpNumMove.unk92 = self->posX.i.hi;
+    }
+    x_to_meter = self->posX.i.hi + (offset_x * self->ext.hpNumMove.nDigits);
+    s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.nDigits);
+    y_to_meter = self->posY.i.hi - 0x10;
+
+    // iterate through all 0x14 prims created by AllocPrimitives in two batches
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < PrimCountA; i++) {
+        prim->x0 = x_to_meter - offset_x;
+        prim->y0 = y_to_meter - offset_y;
+        prim->x1 = x_to_meter + offset_x;
+        prim->y1 = y_to_meter - offset_y;
+        prim->x2 = s7 - offset_x;
+        prim->y2 = y_to_meter + offset_y;
+        prim->x3 = s7 + offset_x;
+        prim->y3 = y_to_meter + offset_y;
+        x_to_meter -= (offset_x * 2) - 3;
+        s7 -= (offset_x * 2) - 3;
+        prim = prim->next;
+    }
+    for (i = 0; i < PrimCountB; i++) {
+        if (prim->r1) {
+            if (--prim->g1 == 0) {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim->y0++;
+        } else if (sp3C == i) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->r1++;
+            prim->g1 = 0xC;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09125DB8);
 

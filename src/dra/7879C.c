@@ -217,32 +217,24 @@ s32 CreateHPNumMove(s16 number, s16 type) {
 }
 
 // number appears and moves to HP meter, probably for healing effects
-/* PSP version: func_psp_09125048 */
 void EntityNumberMovesToHpMeter(Entity* self) {
     const int PrimCountA = 4;
     const int PrimCountB = 16;
+    const int DIGIT_WIDTH = 8;
     Primitive* prim;
     s16 x_to_meter;
     s16 y_to_meter;
-    s16 temp_v0_10;
-    s32 temp_s1_2;
-    u16 tens;
-    u16 hundreds;
-    u16 thousands;
-    s16 a0;
     s16 s7;
-    s16 s5;
     s32 i;
-    s32 var_v0;
     s16 offset_x;
-    u16 offset_y;
-    u16 temp_s0;
-    s32 temp;
+    s16 offset_y;
+    u16 number;
     s32 sp3C = -1;
+    u8 U_base;
 
     switch (self->step) {
     case 0:
-        temp_s0 = self->ext.hpNumMove.number;
+        number = self->ext.hpNumMove.number;
         self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -254,19 +246,19 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         self->ext.hpNumMove.unk8E = 2;
         self->ext.hpNumMove.unk90 = 8;
 
-        tens = temp_s0 / 10;
-        self->ext.hpNumMove.digits[0] = temp_s0 % 10;
-        if (tens > 0) {
-            self->ext.hpNumMove.unk84++;
-            hundreds = tens / 10;
-            self->ext.hpNumMove.digits[1] = tens % 10;
-            if (hundreds > 0) {
-                self->ext.hpNumMove.unk84++;
-                thousands = hundreds / 10;
-                self->ext.hpNumMove.digits[2] = hundreds % 10;
-                if (thousands > 0) {
-                    self->ext.hpNumMove.unk84++;
-                    self->ext.hpNumMove.digits[3] = thousands % 10;
+        self->ext.hpNumMove.digits[0] = number % 10;
+        number /= 10;
+        if (number) {
+            self->ext.hpNumMove.digits[1] = number % 10;
+            number /= 10;
+            self->ext.hpNumMove.nDigits++;
+            if (number) {
+                self->ext.hpNumMove.digits[2] = number % 10;
+                number /= 10;
+                self->ext.hpNumMove.nDigits++;
+                if(number){
+                    self->ext.hpNumMove.digits[3] = number % 10;
+                    self->ext.hpNumMove.nDigits++;
                 }
             }
         }
@@ -288,21 +280,23 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim->tpage = 0x1A;
             prim->priority = 0x1B8;
             prim->drawMode = DRAW_DEFAULT;
-            temp = self->ext.hpNumMove.digits[i] * 8;
+            U_base = self->ext.hpNumMove.digits[i] * DIGIT_WIDTH;
             if (self->ext.hpNumMove.digits[i]) {
-                var_v0 = temp - 8;
+                // adjust zero-based indexing to one-based
+                U_base -= DIGIT_WIDTH;
             } else {
-                var_v0 = temp + 72;
+                // zero digit is at the end of the UV table
+                U_base += DIGIT_WIDTH * 9;
             }
-            prim->u0 = var_v0 + 32;
+            prim->u0 = U_base + 32;
             prim->v0 = 64;
-            prim->u1 = var_v0 + 40;
+            prim->u1 = U_base + 40;
             prim->v1 = 64;
-            prim->u2 = var_v0 + 32;
+            prim->u2 = U_base + 32;
             prim->v2 = 73;
-            prim->u3 = var_v0 + 40;
+            prim->u3 = U_base + 40;
             prim->v3 = 73;
-            if (self->ext.hpNumMove.unk84 < i) {
+            if (self->ext.hpNumMove.nDigits < i) {
                 prim->drawMode = DRAW_HIDE;
             }
             prim = prim->next;
@@ -330,8 +324,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim->priority = 0x1B8;
             prim->drawMode = DRAW_HIDE | DRAW_UNK02;
 
-            prim->v0 = 1;
-            prim->u0 = 1;
+            
+            prim->u0 = prim->v0 = 1;
             prim = prim->next;
         }
 
@@ -352,8 +346,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         self->ext.hpNumMove.unk8C--;
         self->ext.hpNumMove.unk8E--;
         if (self->ext.hpNumMove.unk8C == 4) {
-            self->ext.hpNumMove.unk90 = 4;
             self->step++;
+            self->ext.hpNumMove.unk90 = 4;
         }
         break;
     case 3:
@@ -377,8 +371,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         break;
     case 5:
         if (--self->ext.hpNumMove.unk90 == 0) {
-            y_to_meter = self->posY.i.hi - 0x46;
             x_to_meter = self->posX.i.hi - 0xD;
+            y_to_meter = self->posY.i.hi - 0x46;
             self->ext.hpNumMove.angleToMeter =
                 ratan2(-y_to_meter, x_to_meter) & 0xFFF;
             self->ext.hpNumMove.distToMeter =
@@ -393,24 +387,24 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             self->ext.hpNumMove.unk8C--;
             self->ext.hpNumMove.unk8E--;
         }
-        sp3C = (--self->ext.hpNumMove.unk90);
-        temp_s0 = self->ext.hpNumMove.angleToMeter;
-        temp_s1_2 = self->ext.hpNumMove.distToMeter * sp3C / 16;
+        self->ext.hpNumMove.unk90--;
+        sp3C = self->ext.hpNumMove.unk90;
+        // Reuse of variables. X and Y are actually R and theta.
+        y_to_meter = self->ext.hpNumMove.angleToMeter;
+        x_to_meter = self->ext.hpNumMove.distToMeter * self->ext.hpNumMove.unk90 / 16;
         self->posX.i.hi =
-            13 + (((rcos((s16)temp_s0) >> 4) * (s16)temp_s1_2) >> 8);
+            13 + (((rcos(y_to_meter) >> 4) * x_to_meter) >> 8);
         self->posY.i.hi =
-            70 - (((rsin((s16)temp_s0) >> 4) * (s16)temp_s1_2) >> 8);
-        temp_v0_10 = self->ext.hpNumMove.unk98 + 0x100;
-        self->ext.hpNumMove.unk98 = temp_v0_10;
-        self->posX.i.hi += rcos(temp_v0_10) >> 9;
+            70 - (((rsin(y_to_meter) >> 4) * x_to_meter) >> 8);
+        self->ext.hpNumMove.unk98 += 0x100;
+        self->posX.i.hi += rcos(self->ext.hpNumMove.unk98) >> 9;
         self->posY.i.hi -= rsin(self->ext.hpNumMove.unk98) >> 9;
         if (self->ext.hpNumMove.unk90 == 0) {
-            if (self->ext.hpNumMove.type != 2) {
-                self->step++;
-                break;
+            if (self->ext.hpNumMove.type == 2) {
+                DestroyEntity(self);
+                return;
             }
-            DestroyEntity(self);
-            return;
+                self->step++;
         }
         break;
     case 7:
@@ -418,8 +412,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         self->ext.hpNumMove.unk8C++;
         self->ext.hpNumMove.unk8E++;
         if (self->ext.hpNumMove.unk8C == 7) {
-            self->ext.hpNumMove.unk90 = 0x18;
             self->step++;
+            self->ext.hpNumMove.unk90 = 0x18;
         }
         break;
     case 8:
@@ -457,22 +451,22 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     if (self->step != 0xB) {
         self->ext.hpNumMove.unk92 = self->posX.i.hi;
     }
-    s5 = self->posX.i.hi + (offset_x * self->ext.hpNumMove.unk84);
-    s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.unk84);
-    a0 = self->posY.i.hi - 0x10;
+    x_to_meter = self->posX.i.hi + (offset_x * self->ext.hpNumMove.nDigits);
+    s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.nDigits);
+    y_to_meter = self->posY.i.hi - 0x10;
 
     // iterate through all 0x14 prims created by AllocPrimitives in two batches
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCountA; i++) {
-        prim->x0 = s5 - offset_x;
-        prim->y0 = a0 - offset_y;
-        prim->x1 = s5 + offset_x;
-        prim->y1 = a0 - offset_y;
+        prim->x0 = x_to_meter - offset_x;
+        prim->y0 = y_to_meter - offset_y;
+        prim->x1 = x_to_meter + offset_x;
+        prim->y1 = y_to_meter - offset_y;
         prim->x2 = s7 - offset_x;
-        prim->y2 = a0 + offset_y;
+        prim->y2 = y_to_meter + offset_y;
         prim->x3 = s7 + offset_x;
-        prim->y3 = a0 + offset_y;
-        s5 -= (offset_x * 2) - 3;
+        prim->y3 = y_to_meter + offset_y;
+        x_to_meter -= (offset_x * 2) - 3;
         s7 -= (offset_x * 2) - 3;
         prim = prim->next;
     }
