@@ -138,7 +138,58 @@ Entity* func_80118970(void) {
     return NULL;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118B18);
+s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
+    s16 var_a1;
+    s16 posY;
+    s16 posX;
+    s16 temp;
+    s16 diffY;
+    s16 diffX;
+
+    if (ent2 != NULL) {
+        posX = ent2->posX.i.hi;
+        posY = ent2->posY.i.hi;
+    } else {
+        posY = 112;
+        if (facingLeft) {
+            posX = -32;
+        } else {
+            posX = 288;
+        }
+    }
+
+    diffX = posX - ent1->posX.i.hi;
+    diffY = posY - ent1->posY.i.hi;
+    temp = ratan2(-diffY, diffX) & 0xFFF;
+
+    var_a1 = 0;
+    if (ent2 != NULL) {
+        if (ent2->entityId == E_NONE) {
+            var_a1 = 0x1000;
+        }
+        if (ent2->hitboxState == 0) {
+            var_a1 = 0x2000;
+        }
+        if (ent2->flags & FLAG_UNK_00200000) {
+            var_a1 = 0x3000;
+        }
+    }
+    if (ent1->posX.i.hi > 288) {
+        var_a1 = 0x4000;
+    }
+
+    if (ent1->posX.i.hi < -32) {
+        var_a1 = 0x5000;
+    }
+    if (ent1->posY.i.hi > 240) {
+        var_a1 = 0x6000;
+    }
+
+    if (ent1->posY.i.hi < 0) {
+        var_a1 = 0x7000;
+    }
+    return temp - var_a1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118C28);
 
