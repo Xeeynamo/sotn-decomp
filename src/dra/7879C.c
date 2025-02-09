@@ -598,7 +598,7 @@ void EntityGuardText(Entity* self) {
         break;
     case 4:
         self->velocityX += FIX(1);
-        self->ext.guardText.str_x += self->velocityX;
+        self->ext.guardText.str_x += (u32)self->velocityX;
         if (self->ext.guardText.halfHeight > 1) {
             self->ext.guardText.halfHeight--;
         }
@@ -618,7 +618,7 @@ void EntityGuardText(Entity* self) {
             return;
         }
 
-        self->ext.guardText.str_x += self->velocityX;
+        self->ext.guardText.str_x += (u32)self->velocityX;
         self->ext.guardText.timer++;
 
         hider_ID = self->ext.guardText.timer & 0xF;
@@ -649,7 +649,7 @@ void EntityGuardText(Entity* self) {
         break;
     case 7:
         self->velocityX += FIX(-1);
-        self->ext.guardText.str_x += self->velocityX;
+        self->ext.guardText.str_x += (u32)self->velocityX;
         self->ext.guardText.timer++;
         hider_ID = self->ext.guardText.timer & 0xF;
         if (self->ext.guardText.halfHeight > 1) {
