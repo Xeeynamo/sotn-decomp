@@ -19,6 +19,7 @@ Entity* GetFreeEntity(s16 start, s16 end) {
     }
     return NULL;
 }
+
 // Like GetFreeEntity, but searches for an open spot
 // starting from the end and working backward
 Entity* GetFreeEntityReverse(s16 start, s16 end) {
@@ -40,9 +41,9 @@ void func_80118894(Entity* self) {
     if (self == &g_Entities[E_WEAPON]) {
         if (!(self->params & 0x8000)) {
             self->enemyId = 1;
-            return;
+        } else {
+            self->enemyId = 2;
         }
-        self->enemyId = 2;
         return;
     }
     // It appears we're looping over elements of the 8013800C array.
@@ -55,9 +56,8 @@ void func_80118894(Entity* self) {
     // D_8013800C looks to be keeping track of how many abilities/attacks are
     // targeting a specific enemy selecting the lowest targeted entity from 3-6
     // or 7-11
-    search_value = 0;
     if (self < &g_Entities[UNK_ENTITY_20]) {
-        while (1) {
+        for (search_value = 0; true; search_value++) {
             for (i = 3; i < 7; i++) {
                 if (D_8013800C[i] == search_value) {
                     D_8013800C[i]++;
@@ -65,10 +65,9 @@ void func_80118894(Entity* self) {
                     return;
                 }
             }
-            search_value++;
         }
     } else {
-        while (1) {
+        for (search_value = 0; true; search_value++) {
             for (i = 7; i < 11; i++) {
                 if (D_8013800C[i] == search_value) {
                     D_8013800C[i]++;
@@ -76,7 +75,6 @@ void func_80118894(Entity* self) {
                     return;
                 }
             }
-            search_value++;
         }
     }
 }
