@@ -8,7 +8,7 @@ PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 PSX_OVLS		:= dra ric weapon
 PSX_KSTAGES		:= cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp
 PSX_RSTAGES		:= rwrp
-PSX_BOSTAGES    := mar
+PSX_BOSTAGES    := mar bo4
 PSX_RBOSTAGES	:= rbo3
 PSX_ALLSTAGES	:= $(addprefix st,$(PSX_KSTAGES)) $(addprefix st,$(PSX_RSTAGES)) $(addprefix bo,$(PSX_BOSTAGES)) $(addprefix bo,$(PSX_RBOSTAGES))
 PSX_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
