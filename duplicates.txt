@@ -2165,13 +2165,6 @@
 | 0.92 | true     | VSyncCallbacks                      | asm/us/main/matchings/psxsdk/libetc/intr/VSyncCallbacks.s 
 | 1.00 | true     | GetODE                              | asm/us/main/matchings/psxsdk/libgpu/sys/GetODE.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetIR123                            | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR123.s 
-| 1.00 | true     | SetMAC123                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetMAC123.s 
-| 1.00 | true     | SetRii                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetRii.s 
-| 1.00 | true     | SetSXSYfifo                         | asm/us/main/matchings/psxsdk/libgte/reg03/SetSXSYfifo.s 
-| 1.00 | true     | SetSZfifo3                          | asm/us/main/matchings/psxsdk/libgte/reg03/SetSZfifo3.s 
-| 1.00 | false    | NormalClip                          | asm/us/main/nonmatchings/psxsdk/libgte/smp_05/NormalClip.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_000/matchings/bat/CreateEventEntity.s 
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_001/matchings/ghost/CreateEventEntity.s 
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_002/matchings/faerie/CreateEventEntity.s 
@@ -2349,10 +2342,10 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetDQA                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetDQA.s 
-| 1.00 | true     | SetDQB                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetDQB.s 
-| 1.00 | true     | SetData32                           | asm/us/main/matchings/psxsdk/libgte/reg03/SetData32.s 
-| 1.00 | true     | SetIR0                              | asm/us/main/matchings/psxsdk/libgte/reg03/SetIR0.s 
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2431,25 +2424,13 @@
 | 1.00 | true     | CdMode                              | asm/us/main/matchings/psxsdk/libcd/sys/CdMode.s 
 | 1.00 | true     | CdStatus                            | asm/us/main/matchings/psxsdk/libcd/sys/CdStatus.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetVertex0                          | asm/us/main/matchings/psxsdk/libgte/reg03/SetVertex0.s 
-| 1.00 | true     | SetVertex1                          | asm/us/main/matchings/psxsdk/libgte/reg03/SetVertex1.s 
-| 1.00 | true     | SetVertex2                          | asm/us/main/matchings/psxsdk/libgte/reg03/SetVertex2.s 
--------------------------------------------------------------------------------
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | SetRotMatrix                        | asm/us/main/nonmatchings/psxsdk/libgte/mtx_09/SetRotMatrix.s 
-| 1.00 | false    | SetLightMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_10/SetLightMatrix.s 
-| 1.00 | false    | SetColorMatrix                      | asm/us/main/nonmatchings/psxsdk/libgte/mtx_11/SetColorMatrix.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80194F14                       | asm/us/st/dre/matchings/cutscene/func_80194F14.s 
 | 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
@@ -2828,9 +2809,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -2863,27 +2841,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | SquareRoot0                         | asm/us/main/nonmatchings/psxsdk/libgte/msc01/SquareRoot0.s 
-| 0.90 | false    | SquareRoot12                        | asm/us/main/nonmatchings/psxsdk/libgte/msc09/SquareRoot12.s 
--------------------------------------------------------------------------------
-| 0.97 | false    | MulRotMatrix                        | asm/us/main/nonmatchings/psxsdk/libgte/mtx_00/MulRotMatrix.s 
-| 1.00 | false    | MulRotMatrix0                       | asm/us/main/nonmatchings/psxsdk/libgte/mtx_00/MulRotMatrix0.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | ReadLightMatrix                     | asm/us/main/nonmatchings/psxsdk/libgte/mtx_00/ReadLightMatrix.s 
-| 1.00 | false    | ReadRotMatrix                       | asm/us/main/nonmatchings/psxsdk/libgte/mtx_00/ReadRotMatrix.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | SetBackColor                        | asm/us/main/nonmatchings/psxsdk/libgte/reg10/SetBackColor.s 
-| 1.00 | false    | SetFarColor                         | asm/us/main/nonmatchings/psxsdk/libgte/reg11/SetFarColor.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | AverageSZ4                          | asm/us/main/nonmatchings/psxsdk/libgte/smp/AverageSZ4.s 
-| 1.00 | false    | NormalClipS                         | asm/us/main/nonmatchings/psxsdk/libgte/smp_06/NormalClipS.s 
--------------------------------------------------------------------------------
-| 0.90 | false    | ColorDpq                            | asm/us/main/nonmatchings/psxsdk/libgte/smp/ColorDpq.s 
-| 1.00 | false    | NormalColorDpq                      | asm/us/main/nonmatchings/psxsdk/libgte/smp/NormalColorDpq.s 
--------------------------------------------------------------------------------
-| 0.94 | false    | NormalColorCol3                     | asm/us/main/nonmatchings/psxsdk/libgte/smp/NormalColorCol3.s 
-| 1.00 | false    | NormalColorDpq3                     | asm/us/main/nonmatchings/psxsdk/libgte/smp/NormalColorDpq3.s 
 -------------------------------------------------------------------------------
 | 0.97 | false    | SetAutoPan                          | asm/us/main/nonmatchings/psxsdk/libsnd/vmanager/SetAutoPan.s 
 | 1.00 | false    | SetAutoVol                          | asm/us/main/nonmatchings/psxsdk/libsnd/vmanager/SetAutoVol.s 
