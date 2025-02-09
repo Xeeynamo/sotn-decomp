@@ -191,7 +191,12 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
     return temp - var_a1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118C28);
+void func_80118C28(s32 arg0) {
+    D_8013803C = D_800ACFB4[arg0][0];
+    D_80138040 = D_800ACFB4[arg0][1];
+    D_80138044 = D_800ACFB4[arg0][2];
+    D_80138048 = D_800ACFB4[arg0][3];
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09124FB8);
 
