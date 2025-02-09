@@ -375,7 +375,7 @@ void func_us_801C05DC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180A10);
-        if (g_CastleFlags[CASTLE_FLAG_17]) {
+        if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             max = 4;
             self->animCurFrame = 0;
             self->step = 3;
@@ -383,7 +383,7 @@ void func_us_801C05DC(Entity* self) {
         break;
 
     case 1:
-        if (g_CastleFlags[CASTLE_FLAG_17]) {
+        if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             self->zPriority -= 8;
             self->step++;
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
@@ -478,7 +478,7 @@ void func_us_801C05DC(Entity* self) {
         break;
 
     case 3:
-        if (g_CastleFlags[CASTLE_FLAG_17]) {
+        if (g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             max = 4;
         } else {
             max = 0;
@@ -506,7 +506,7 @@ void func_us_801C0A40(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180A10);
         self->animCurFrame = 0;
-        if (!g_CastleFlags[CASTLE_FLAG_17]) {
+        if (!g_CastleFlags[NO1_UNKNOWN_FLAG]) {
             self->step = 2;
             break;
         }

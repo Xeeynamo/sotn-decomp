@@ -65,18 +65,18 @@ void EntityDemonSwitch(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
 
-        if (g_CastleFlags[DEMON_SWITCH] != 0) {
+        if (g_CastleFlags[CHI_DEMON_SWITCH] != 0) {
             self->animCurFrame = 4;
         }
         // fallthrough
     case PRESS:
         if (self->hitParams == 7) {
             g_api.PlaySfx(SFX_ANIME_SWORD_B);
-            g_CastleFlags[DEMON_SWITCH] = 1;
+            g_CastleFlags[CHI_DEMON_SWITCH] = 1;
             // Update the map "explored" state
             // This is read from an array of data in DRA, and in
             // this case results in exploring the room to the right
-            g_api.func_800F1FC4(DEMON_SWITCH);
+            g_api.func_800F1FC4(CHI_DEMON_SWITCH);
             self->animCurFrame = 4;
             self->step++; // Inactive
         }
@@ -133,7 +133,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
         // Determine tilemap collision adjustments based on current map flags
         pSrcTile = WallTiles;
-        if (g_CastleFlags[DEMON_SWITCH]) {
+        if (g_CastleFlags[CHI_DEMON_SWITCH]) {
             pSrcTile += 0xC; // No collision (opened)
         }
 
@@ -146,14 +146,14 @@ void EntityDemonSwitchWall(Entity* self) {
         }
 
         // Update internal state
-        if (g_CastleFlags[DEMON_SWITCH]) {
+        if (g_CastleFlags[CHI_DEMON_SWITCH]) {
             self->animCurFrame = 0;
             self->step = IDLE_OPEN;
             break;
         }
         // Fallthrough
     case IDLE_CLOSED: // Never set directly
-        if (g_CastleFlags[DEMON_SWITCH]) {
+        if (g_CastleFlags[CHI_DEMON_SWITCH]) {
             self->step++; // PrepToOpen
         }
         break;

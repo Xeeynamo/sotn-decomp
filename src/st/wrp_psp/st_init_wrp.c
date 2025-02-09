@@ -3,14 +3,14 @@
 #include "../pfn_entity_update.h"
 
 // entity table to allocate new entities
-extern PfnEntityUpdate* D_08C6BC30;
+extern PfnEntityUpdate* PfnEntityUpdates;
 
 extern LayoutEntity* D_8D2DE7C;
 extern LayoutEntity* D_8D2DF50;
 
 // entity table to allocate new entities
-extern PfnEntityUpdate D_psp_09246E30[];
-extern Overlay g_StageOverlay;
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+extern Overlay OVL_EXPORT(Overlay);
 extern s32 D_psp_0924BC90;
 extern s32 D_psp_0924BC98;
 extern s32 D_psp_0924BCA0;
@@ -31,9 +31,9 @@ void func_psp_09244760(void) {
 
 void func_psp_092447C0(void) {
     func_psp_09244760();
-    D_08C6BC30 = (PfnEntityUpdate*)&D_psp_09246E30;
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = &D_8D2DE7C;
     g_pStObjLayoutVertical = &D_8D2DF50;
     func_892A018();
-    memcpy((u8*)&g_api, (u8*)&g_StageOverlay, sizeof(Overlay));
+    memcpy((u8*)&g_api, (u8*)&OVL_EXPORT(Overlay), sizeof(Overlay));
 }
