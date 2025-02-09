@@ -198,7 +198,20 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09124FB8);
+s32 CreateHPNumMove(s16 number, s16 type) {
+    Entity* entity = GetFreeEntity(0x38, 0x40);
+
+    if (entity == NULL) {
+        return -1;
+    }
+    DestroyEntity(entity);
+    entity->entityId = ENTITY_13;
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    entity->ext.hpNumMove.number = number;
+    entity->ext.hpNumMove.type = type;
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityNumberMovesToHpMeter);
 

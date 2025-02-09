@@ -217,6 +217,7 @@ func_80118894 = 0x09124988;
 func_80118970 = 0x09124B08;
 func_80118B18 = 0x09124D28;
 func_80118C28 = 0x09124F20;
+CreateHPNumMove = 0x09124FB8;
 EntityNumberMovesToHpMeter = 0x09125048;
 EntityGuardText = 0x09125F38;
 EntitySmallRisingHeart = 0x09126A60;

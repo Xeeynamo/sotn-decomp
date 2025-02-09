@@ -201,19 +201,19 @@ void func_80118C28(s32 arg0) {
     D_80138048 = D_800ACFB4[arg0][3];
 }
 
-s32 CreateHPNumMove(s32 arg0, s32 arg1) {
+s32 CreateHPNumMove(s16 number, s16 type) {
     Entity* entity = GetFreeEntity(0x38, 0x40);
 
-    if (entity != NULL) {
-        DestroyEntity(entity);
-        entity->entityId = ENTITY_13;
-        entity->posX.val = PLAYER.posX.val;
-        entity->posY.val = PLAYER.posY.val;
-        entity->ext.hpNumMove.number = arg0;
-        entity->ext.hpNumMove.type = arg1;
-        return 0;
+    if (entity == NULL) {
+        return -1;
     }
-    return -1;
+    DestroyEntity(entity);
+    entity->entityId = ENTITY_13;
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    entity->ext.hpNumMove.number = number;
+    entity->ext.hpNumMove.type = type;
+    return 0;
 }
 
 // number appears and moves to HP meter, probably for healing effects
