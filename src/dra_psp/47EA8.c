@@ -76,7 +76,67 @@ void func_80118894(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118970);
+extern s32 D_80138038; // BSS
+Entity* func_80118970(void) {
+    s32 big_arr[128];
+    Entity* ent;
+    s32 i;
+    s32 successes;
+    s32 index;
+
+    successes = 0;
+    // Hunt through these entities looking for ones that match all criteria.
+    // Call them a success and increment successes.
+    ent = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < 128; i++, ent++) {
+        big_arr[i] = 0;
+        if (!ent->entityId){
+            continue;
+        }
+        if (ent->hitboxState == 0){
+            continue;
+        }
+        if(ent->flags & FLAG_UNK_00200000){
+            continue;
+        }
+        if(ent->posX.i.hi < -0x10){
+            continue;
+        } 
+        if(ent->posX.i.hi > 0x110){
+            continue;
+        }
+        if(ent->posY.i.hi > 0xF0){
+            continue;
+        } 
+        if(ent->posY.i.hi < 0){
+            continue;
+        }
+        if (ent->hitPoints >= 0x7000) {
+            continue;
+        }
+        
+        if (ent->flags & FLAG_UNK_80000) {
+            successes++;
+            big_arr[i] = 1;
+        } else {
+            ent->flags |= FLAG_UNK_80000;
+            return ent;
+        }
+    }
+
+    if (successes != 0) {
+        index = D_80138038 % 128;
+        for (i = 0; i < 128; i++) {
+            if (big_arr[index] != 0) {
+                ent = &g_Entities[STAGE_ENTITY_START + index];
+                D_80138038 = (index + 1) % 128;
+                return ent;
+            }
+            index = (index + 1) % 128;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_80118B18);
 

@@ -85,8 +85,7 @@ Entity* func_80118970(void) {
     Entity* ent;
     s32 i;
     s32 successes;
-    s32 var_v1;
-    s32 temp_a0;
+    s32 index;
 
     successes = 0;
     // Hunt through these entities looking for ones that match all criteria.
@@ -94,33 +93,49 @@ Entity* func_80118970(void) {
     ent = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 128; i++, ent++) {
         big_arr[i] = 0;
-        if ((ent->entityId != 0) && (ent->hitboxState != 0) &&
-            !(ent->flags & FLAG_UNK_00200000) &&
-            ((LOH(ent->posX.i.hi) >= -16) && (ent->posX.i.hi < 273)) &&
-            ((LOH(ent->posY.i.hi) < 241) && (ent->posY.i.hi >= 0)) &&
-            (ent->hitPoints < 0x7000)) {
+        if (!ent->entityId){
+            continue;
+        }
+        if (ent->hitboxState == 0){
+            continue;
+        }
+        if(ent->flags & FLAG_UNK_00200000){
+            continue;
+        }
+        if(ent->posX.i.hi < -0x10){
+            continue;
+        } 
+        if(ent->posX.i.hi > 0x110){
+            continue;
+        }
+        if(ent->posY.i.hi > 0xF0){
+            continue;
+        } 
+        if(ent->posY.i.hi < 0){
+            continue;
+        }
+        if (ent->hitPoints >= 0x7000) {
+            continue;
+        }
+        
+        if (ent->flags & FLAG_UNK_80000) {
             successes++;
-            if (!(ent->flags & FLAG_UNK_80000)) {
-                ent->flags |= FLAG_UNK_80000;
-                return ent;
-            }
             big_arr[i] = 1;
+        } else {
+            ent->flags |= FLAG_UNK_80000;
+            return ent;
         }
     }
 
     if (successes != 0) {
-        temp_a0 = D_80138038;
-        var_v1 = temp_a0 / 128;
-        var_v1 = temp_a0 - var_v1 * 128;
+        index = D_80138038 % 128;
         for (i = 0; i < 128; i++) {
-            temp_a0 = var_v1 + 1;
-            if (big_arr[var_v1] != 0) {
-                ent = &g_Entities[STAGE_ENTITY_START + var_v1];
-                D_80138038 = temp_a0 - temp_a0 / 128 * 128;
+            if (big_arr[index] != 0) {
+                ent = &g_Entities[STAGE_ENTITY_START + index];
+                D_80138038 = (index + 1) % 128;
                 return ent;
             }
-            var_v1 = temp_a0 / 128;
-            var_v1 = temp_a0 - var_v1 * 128;
+            index = (index + 1) % 128;
         }
     }
     return NULL;
