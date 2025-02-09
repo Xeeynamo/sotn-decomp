@@ -929,9 +929,34 @@ void func_80119F70(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A290);
+void func_8011A290(Entity* entity) {
+    SubweaponDef subwpn;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A328);
+    func_800FE3C4(&subwpn, entity->ext.subweapon.subweaponId, 0);
+    entity->attack = subwpn.attack;
+    entity->attackElement = subwpn.attackElement;
+    entity->hitboxState = subwpn.hitboxState;
+    entity->nFramesInvincibility = subwpn.nFramesInvincibility;
+    entity->stunFrames = subwpn.stunFrames;
+    entity->hitEffect = subwpn.hitEffect;
+    entity->entityRoomIndex = subwpn.entityRoomIndex;
+    entity->ext.subweapon.unkB2 = subwpn.crashId;
+    func_80118894(entity);
+}
+
+void func_8011A328(Entity* entity, s32 arg1) {
+    SpellDef spell;
+
+    GetSpellDef(&spell, arg1);
+    entity->attack = spell.attack;
+    entity->attackElement = spell.attackElement;
+    entity->hitboxState = spell.hitboxState;
+    entity->nFramesInvincibility = spell.nFramesInvincibility;
+    entity->stunFrames = spell.stunFrames;
+    entity->hitEffect = spell.hitEffect;
+    entity->entityRoomIndex = spell.entityRoomIndex;
+    func_80118894(entity);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127348);
 
