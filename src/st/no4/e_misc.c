@@ -3,42 +3,46 @@
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityRelicOrb);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018ED9C);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityHeartDrop);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018EEC4);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityMessageBox);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", CheckColliderOffsets);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018F510);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityUnkId13);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityExplosionVariantsSpawner);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018F750);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityGreyPuffSpawner);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityExplosionVariants);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityGreyPuff);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018FA1C);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityOlroxDrool);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", UnkCollisionFunc5);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8018FD48);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", UnkCollisionFunc4);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityIntenseExplosion);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_801903C8);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", InitializeUnkEntity);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", MakeEntityFromId);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_8019055C);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", MakeExplosions);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", EntityBigRedFireball);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_801907EC);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", UnkRecursivePrimFunc1);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_80190DCC);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", UnkRecursivePrimFunc2);
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc", func_801914CC);
+INCLUDE_ASM("st/no4/nonmatchings/e_misc", ClutLerp);
 
 INCLUDE_ASM("st/no4/nonmatchings/e_misc", PlaySfxPositional);
+
+INCLUDE_RODATA("st/no4/nonmatchings/e_misc", D_us_801C0BF0);
+
+INCLUDE_RODATA("st/no4/nonmatchings/e_misc", D_us_801C0C00);
