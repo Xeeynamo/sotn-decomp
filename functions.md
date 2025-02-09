@@ -238,7 +238,6 @@
 | lib    | FindFirstUnkPrim                    |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | dra    | 13080.rodata                        |       30 |          0 | Yes    |                                 |       |
 | dra    | 1C030.rodata                        |       30 |          0 | Yes    |                                 |       |
-| dra    | 4B440.rodata                        |       30 |          0 | Yes    |                                 |       |
 | lib    | en_thornweed_corpseweed.rodata      |       30 |          0 | Yes    |                                 |       |
 | lib    | e_shop.rodata                       |       30 |          0 | Yes    |                                 |       |
 | st0    | prologue_scroll.rodata              |       30 |          0 | Yes    |                                 |       |
@@ -287,7 +286,6 @@
 | dra    | PerformSoulSteal                    |       33 |          6 |        |                                 |       |
 | dra    | func_psp_090F21F8                   |       33 |          6 |        |                                 |       |
 | dra    | func_800EAD0C                       |       33 |          8 |        |                                 |       |
-| dra    | 47F50.rodata                        |       34 |          0 | Yes    |                                 |       |
 | dra    | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0    | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0    | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
@@ -634,7 +632,7 @@
 | wrp    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
 | lib    | func_psp_0926ADD8                   |       73 |          8 |        |                                 |       |
 | dra    | CheckMoveDirection                  |       73 |         12 |        |                                 |       |
-| dra    | 50620.rodata                        |       74 |          0 | Yes    |                                 |       |
+| dra    | 507F0.rodata                        |       74 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E8658                   |       74 |          6 |        |                                 |       |
 | dra    | func_8010DFF0                       |       74 |          7 |        | https://decomp.me/scratch/fbTWl | 0.952 |
 | dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
@@ -884,7 +882,6 @@
 | dra    | EntityUnkId24                       |      140 |         10 |        |                                 |       |
 | lib    | func_psp_09239308                   |      140 |         13 |        |                                 |       |
 | dra    | func_80118B18                       |      141 |         14 |        |                                 |       |
-| dra    | 4BC00.rodata                        |      142 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F1418                   |      142 |         13 |        |                                 |       |
 | dra    | AddToInventory                      |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | dra    | GetStatusAilmentTimer               |      145 |         15 | Yes    |                                 |       |
@@ -957,6 +954,7 @@
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        |                                 |       |
 | no4    | func_psp_09249FA0                   |      193 |         24 |        |                                 |       |
+| dra    | 47EA8.rodata                        |      194 |          0 | Yes    |                                 |       |
 | dra    | func_800FE3C4                       |      194 |         20 |        |                                 |       |
 | dra    | func_8010D59C                       |      196 |         22 |        |                                 |       |
 | dra    | func_psp_091398F0                   |      196 |         35 | Yes    |                                 |       |
