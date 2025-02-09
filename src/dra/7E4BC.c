@@ -497,7 +497,7 @@ void func_8011E4BC(Entity* self) {
     }
 }
 
-void func_8011EDA0(Entity* entity) {}
+void func_8011EDA0() {}
 
 // RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {

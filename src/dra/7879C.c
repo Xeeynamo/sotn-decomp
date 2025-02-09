@@ -195,10 +195,11 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
 }
 
 void func_80118C28(s32 arg0) {
-    D_8013803C = D_800ACFB4[arg0][0];
-    D_80138040 = D_800ACFB4[arg0][1];
-    D_80138044 = D_800ACFB4[arg0][2];
-    D_80138048 = D_800ACFB4[arg0][3];
+    // Break up the 4-byte struct D_800ACFB4[arg0] into individual bytes.
+    D_8013803C = ((u8*)&D_800ACFB4[arg0])[0];
+    D_80138040 = ((u8*)&D_800ACFB4[arg0])[1];
+    D_80138044 = ((u8*)&D_800ACFB4[arg0])[2];
+    D_80138048 = ((u8*)&D_800ACFB4[arg0])[3];
 }
 
 s32 CreateHPNumMove(s16 number, s16 type) {
@@ -963,10 +964,10 @@ void GetServantStats(
     }
 }
 
-void func_8011A4C8(Entity* entity) {}
+void EntityNull(Entity* entity) {}
 
 PfnEntityUpdate g_DraEntityTbl[] = {
-    func_8011A4C8,
+    EntityNull,
     EntityEntFactory,
     func_8011B5A4,
     EntityGravityBootBeam,
@@ -1028,12 +1029,12 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     func_80130E94,
     func_8013136C,
     func_80129864,
-    func_8011A4C8,
+    EntityNull,
     EntitySummonSpirit,
     func_80123F78,
     EntityTeleport,
     EntityPlayerSleepZ,
-    func_8011A4C8};
+    EntityNull};
 
 // Corresponding RIC function is RicUpdatePlayerEntities
 void UpdatePlayerEntities(void) {
@@ -1127,7 +1128,7 @@ void UpdatePlayerEntities(void) {
 #if defined(VERSION_US)
         // Japanese for "without hit".
         FntPrint("atari nuki\n");
-#elif defined(VERSION_HD)
+#else
         FntPrint("dead player\n");
 #endif
         entity = &g_Entities[4];

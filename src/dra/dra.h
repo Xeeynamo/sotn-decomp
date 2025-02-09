@@ -349,8 +349,7 @@ extern s32 g_AlucardChairSleepTimer; // ...be an array
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
 extern s16 D_800ACF94[16];
-extern u8 D_800AD094[0x30];
-extern u8 D_800ACFB4[][4]; // TODO AnimationFrames*[]
+extern AnimationFrame D_800ACFB4[];
 extern s16* D_800CF324[];
 extern unkstr_800cfe48* D_800CFE48[18];
 extern PfnEntityUpdate D_800AD0C4[];
@@ -581,7 +580,7 @@ void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions
-void func_8011A4C8(Entity* self);
+void EntityNull(Entity* self);
 void EntityEntFactory(Entity* self);
 void func_8011B5A4(Entity* self);
 void EntityGravityBootBeam(Entity* self);
@@ -595,7 +594,7 @@ void EntitySubwpnThrownAxe(Entity* self);
 void EntityPlayerBlinkWhite(Entity* self);
 void EntitySubwpnThrownVibhuti(Entity* self);
 void func_8011E0E4(Entity* self);
-void func_8011EDA0(Entity* self);
+void func_8011EDA0();
 void EntityUnarmedAttack(Entity* self);
 void func_8011EDA8(Entity* self);
 void EntitySubwpnAgunea(Entity* self);
@@ -643,12 +642,10 @@ void func_801309B4(Entity* self);
 void func_80130E94(Entity* self);
 void func_8013136C(Entity* self);
 void func_80129864(Entity* self);
-void func_8011A4C8(Entity* self);
 void EntitySummonSpirit(Entity* self);
 void func_80123F78(Entity* self);
 void EntityTeleport(Entity* self);
 void EntityPlayerSleepZ(Entity* self);
-void func_8011A4C8(Entity* self);
 
 // commented as a requirement for UpdateCd to match
 // void func_80131EBC(const char* str, s16 arg1);

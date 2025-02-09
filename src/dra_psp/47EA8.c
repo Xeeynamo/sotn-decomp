@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
+#include "servant.h"
 
 // Given a range of start and end values, finds an unused entity
 // slot in g_Entities to fill in. Starts at start, and goes to
@@ -192,10 +193,11 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
 }
 
 void func_80118C28(s32 arg0) {
-    D_8013803C = D_800ACFB4[arg0][0];
-    D_80138040 = D_800ACFB4[arg0][1];
-    D_80138044 = D_800ACFB4[arg0][2];
-    D_80138048 = D_800ACFB4[arg0][3];
+    // Break up the 4-byte struct D_800ACFB4[arg0] into individual bytes.
+    D_8013803C = ((u8*)&D_800ACFB4[arg0])[0];
+    D_80138040 = ((u8*)&D_800ACFB4[arg0])[1];
+    D_80138044 = ((u8*)&D_800ACFB4[arg0])[2];
+    D_80138048 = ((u8*)&D_800ACFB4[arg0])[3];
 }
 
 s32 CreateHPNumMove(s16 number, s16 type) {
@@ -809,6 +811,13 @@ void EntitySmallRisingHeart(Entity* self) {
     }
 }
 
+u8 D_800AD094[] = {0x0, 0x50, 0x10, 0x50, 0x0, 0x60, 0x10, 0x60, 
+                0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60, 
+                0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50, 
+                0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 
+                0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38, 
+                0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
+
 s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
     s16 size;
@@ -958,11 +967,205 @@ void func_8011A328(Entity* entity, s32 arg1) {
     func_80118894(entity);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127348);
+/// @brief Fetches current FamiliarStats and
+/// @param servant Entity to update with spell or attack information
+/// @param spellId Spell/attack to execute
+/// @param fetchSpell Fndicates if spell information should be fetched
+/// @param out Fetched FamiliarStats set here
+void GetServantStats(
+    Entity* servant, s32 spellId, s32 fetchSpell, FamiliarStats* out) {
+    SpellDef spell;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A4C8);
+    *out = g_Status.statsFamiliars[g_Servant - 1];
+    if (fetchSpell) {
+        GetSpellDef(&spell, spellId);
+        servant->attack = spell.attack;
+        servant->attackElement = spell.attackElement;
+        servant->hitboxState = spell.hitboxState;
+        servant->nFramesInvincibility = spell.nFramesInvincibility;
+        servant->stunFrames = spell.stunFrames;
+        servant->hitEffect = spell.hitEffect;
+        servant->entityRoomIndex = spell.entityRoomIndex;
+        servant->attack = spell.attack * ((out->level * 4 / 95) + 1);
+        func_80118894(servant);
+    }
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011A4D0);
+void EntityNull(Entity* entity) {}
+
+PfnEntityUpdate g_DraEntityTbl[] = {
+    EntityNull,
+    EntityEntFactory,
+    func_8011B5A4,
+    EntityGravityBootBeam,
+    EntitySubwpnThrownDagger,
+    func_8011E4BC,
+    EntityDiveKickAttack,
+    EntityGiantSpinningCross,
+    EntitySubwpnCrashCross,
+    EntitySubwpnCrashCrossParticles,
+    EntitySubwpnThrownAxe,
+    EntityPlayerBlinkWhite,
+    EntitySubwpnThrownVibhuti,
+    func_8011E0E4,
+    func_8011EDA0,
+    EntityUnarmedAttack,
+    func_8011EDA8,
+    EntitySubwpnAgunea,
+    EntityAguneaHitEnemy,
+    EntityNumberMovesToHpMeter,
+    EntitySubwpnReboundStone,
+    EntityLevelUpAnimation,
+    EntityHolyWater,
+    EntityHolyWaterFlame,
+    EntityUnkId24,
+    EntityHellfireHandler,
+    EntityHellfireNormalFireball,
+    EntityHellfireBigFireball,
+    EntityExpandingCircle,
+    func_80127CC8,
+    EntityHitByLightning,
+    EntityPlayerOutline,
+    EntityPlayerDissolves,
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
+    func_8011B480,
+    EntityGuardText,
+    EntityTransparentWhiteCircle,
+    EntityPlayerPinkEffect,
+    EntityHolyWaterBreakGlass,
+    EntityStopWatch,
+    EntityStopWatchExpandingCircle,
+    EntitySubwpnBible,
+    EntitySubwpnBibleTrail,
+    EntityBatFireball,
+    func_80123B40,
+    func_80119F70,
+    UnknownEntId48,
+    UnknownEntId49,
+    func_80123A60,
+    EntitySmallRisingHeart,
+    EntityBatEcho,
+    func_8011B530,
+    func_8011F074,
+    func_80130264,
+    func_8012F894,
+    func_80130618,
+    func_801309B4,
+    func_80130E94,
+    func_8013136C,
+    func_80129864,
+    EntityNull,
+    EntitySummonSpirit,
+    func_80123F78,
+    EntityTeleport,
+    EntityPlayerSleepZ,
+    EntityNull};
+
+extern AnimationFrame* D_psp_09234DC8;
+
+void UpdatePlayerEntities(void) {
+    Entity* entity;
+    s32 temp_s2;
+    s32 i;
+    s32 i2;
+    s32 enemy;
+
+    temp_s2 = g_unkGraphicsStruct.unk20;
+    entity = g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 64; i++, g_CurrentEntity++, entity++) {
+        if (i == 16 && entity->entityId == E_NONE) {
+            g_Player.unk48 = 0;
+        }
+        if (entity->entityId == E_NONE) {
+            continue;
+        }
+        if (entity->step == 0) {
+            if (entity->entityId < SERVANT_ENTITY_START) {
+                // Objects 00-CF
+                entity->pfnUpdate = g_DraEntityTbl[entity->entityId];
+                // familiars
+            } else if (entity->entityId < 0xE0) {
+                /* Objects D0-DF
+                 * This is setting the update function for your current servant.
+                 * In the servant code, entityId is updated when the "mode" of
+                 * the servant is changed like when the bat goes from "seek"
+                 * mode to "attack" mode.  These update functions start at
+                 * entityId = 0xD1 entityId = 0xD0 would be the init code.
+                 */
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
+            } else if (entity->entityId == 0xEF || entity->entityId == 0xFF ||
+                       entity->entityId == 0xED || entity->entityId == 0xFD) {
+                entity->pfnUpdate = g_DraEntityTbl[1];
+            } else if (entity->entityId == 0xEE || entity->entityId == 0xFE) {
+                entity->pfnUpdate = g_DraEntityTbl[15];
+            } else if (entity->entityId >= 0xF0) {
+                // Objects F0-FC
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)&D_8017D000)[entity->entityId - 0xF0];
+            } else {
+                // Objects E0-EC
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)&D_8017A000)[entity->entityId - 0xE0];
+            }
+        }
+        if ((temp_s2 == 0) || (entity->flags & FLAG_UNK_10000)) {
+            entity->pfnUpdate(entity);
+            entity = g_CurrentEntity;
+            if (entity->entityId != 0) {
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
+                    (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                     entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                    DestroyEntity(g_CurrentEntity);
+                } else {
+                    if (entity->flags & FLAG_UNK_100000) {
+                        UpdateAnim(NULL, &D_psp_09234DC8);
+                    }
+                }
+            }
+        }
+    }
+    if (D_8013803C) {
+        D_8013803C--;
+        if (D_8013803C & 1) {
+            func_800EA5AC(1U, D_80138040, D_80138044, D_80138048);
+        }
+    }
+    D_8013800C[1] = D_8013800C[2] = 0;
+    if (g_Entities[16].enemyId == 1) {
+        D_8013800C[1] = 1;
+    } else if (g_Entities[16].enemyId == 2) {
+        D_8013800C[2] = 1;
+    }
+    for (i2 = 3; i2 < 11; i2++) {
+        D_8013800C[i2] = 0;
+    }
+    entity = &g_Entities[17];
+    for (i2 = 17; i2 < 48; entity++, i2++) {
+        enemy = entity->enemyId;
+        if (2 < enemy) {
+            D_8013800C[enemy]++;
+        }
+    }
+    // Appears to be a temporary debugging block that was left in.
+    if ((g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) ||
+        (PLAYER.step == Player_Teleport && PLAYER.step_s == 0)) {
+#if defined(VERSION_US)
+        // Japanese for "without hit".
+        FntPrint("atari nuki\n");
+#else
+        FntPrint("dead player\n");
+#endif
+        entity = &g_Entities[4];
+        // Disable all hitboxes!
+        for (i = 4; i < 64; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091279A0);
 
