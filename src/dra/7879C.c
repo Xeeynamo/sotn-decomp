@@ -1150,18 +1150,14 @@ void func_8011A870(void) {
     Entity* entity;
     s32 i;
 
-    entity = &g_Entities[UNK_ENTITY_4];
-    g_CurrentEntity = entity;
+    entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
     for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId == 0) {
             continue;
         }
 
         if (entity->step == 0) {
-            if(entity->entityId >= 0xE0){
-                continue;
-            }
-            if (entity->entityId < SERVANT_ENTITY_START) {
+            if(entity->entityId >= 0xE0 || entity->entityId < SERVANT_ENTITY_START) {
                 continue;
             }
                 entity->pfnUpdate =
