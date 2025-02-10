@@ -76,36 +76,30 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
 
-// PSX: func_800FD5BC
-// SAT: func_0606F2C0
-bool func_800FD5BC(Unkstruct_800FD5BC* arg0) {
-    s32 temp;
-
-    if (arg0->unk4 != 5) {
-        if (((u32)arg0->unk4) >= 0x10U) {
-            temp = g_Status.hpMax;
-            if (g_Status.hpMax < 0) {
-                temp += 7;
-            }
-            arg0->unk8 = temp >> 3;
-        } else if ((arg0->unk8 * 0x14) <= g_Status.hpMax) { // reversed on PSX
-            arg0->unk4 = 3;
+bool CalcPlayerDamageAgain(DamageParam* damage) {
+    if (damage->damageKind != DAMAGEKIND_5) {
+        if (damage->damageKind >= DAMAGEKIND_16) {
+            damage->damageTaken = g_Status.hpMax / 8;
+        } else if ((damage->damageTaken * 20) > g_Status.hpMax) {
+            damage->damageKind = DAMAGEKIND_2;
         } else {
-            arg0->unk4 = 2;
+            damage->damageKind = DAMAGEKIND_3;
         }
     }
-    if (g_Status.hp <= arg0->unk8) {
+    if (g_Status.hp <= damage->damageTaken) {
         g_Status.hp = 0;
         return true;
-    } else {
-        g_Status.hp -= arg0->unk8;
-        return false;
     }
+    g_Status.hp -= damage->damageTaken;
+    return false;
 }
 
 // SAT: func_0606F328
 s32 func_800FD664(s32 arg0) {
-    return g_StageId & STAGE_INVERTEDCASTLE_FLAG ? arg0 << 1 : arg0;
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        arg0 *= 2;
+    }
+    return arg0;
 }
 
 // SAT: func_0606F348
@@ -117,70 +111,137 @@ u8 GetEquipItemCategory(s32 equipId) {
 // a little different from PSX version
 s32 func_800FD6C4(s32 equipTypeFilter) {
     s32 itemCount;
-    s32 i;
     s32 equipType;
-    Unkstruct_800A7734* temp;
+    s32 i;
 
     switch (equipTypeFilter) {
-    case 0:
-        return 0xB0; // different
-    case 1:
-        equipType = 0;
+    case EQUIP_HAND:
+        return NUM_HAND_ITEMS;
+    case EQUIP_HEAD:
+        equipType = EQUIP_HEAD - 1;
         break;
-    case 2:
-        equipType = 1;
+    case EQUIP_ARMOR:
+        equipType = EQUIP_ARMOR - 1;
         break;
-    case 3:
-        equipType = 2;
+    case EQUIP_CAPE:
+        equipType = EQUIP_CAPE - 1;
         break;
-    case 4:
-        equipType = 3;
-    default:
+    case EQUIP_ACCESSORY:
+        equipType = EQUIP_ACCESSORY - 1;
         break;
     }
-    itemCount = 0;
-    i = 0;
-    temp = D_800A7734;
-    do {
-        // different offset accessed
-        if (D_800A7734[i].unk03 == equipType) {
+
+    for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
+        if (D_800A7734[i].equipType == equipType) {
             itemCount++;
         }
-        i += 1;
-    } while (i < 92); // changed from 90
-
+    }
     return itemCount;
 }
 
 // SAT: func_0606F3D8
-u8* GetEquipOrder(s32 equipTypeFilter) {
-    if (equipTypeFilter == 0) {
+u8* GetEquipOrder(EquipKind kind) {
+    switch (kind) {
+    case EQUIP_HAND:
         return g_Status.equipHandOrder;
     }
     return g_Status.equipBodyOrder;
 }
 
 // SAT: func_0606F3F8
-u8* GetEquipCount(s32 equipTypeFilter) {
-    if (equipTypeFilter == 0) {
+u8* GetEquipCount(EquipKind kind) {
+    switch (kind) {
+    case EQUIP_HAND:
         return g_Status.equipHandCount;
     }
     return g_Status.equipBodyCount;
 }
 
 // SAT: func_0606F418
-const char* GetEquipmentName(s32 equipTypeFilter, s32 equipId) {
-    if (!equipTypeFilter) {
+const char* GetEquipmentName(EquipKind kind, s32 equipId) {
+    switch (kind) {
+    case EQUIP_HAND:
         return g_EquipDefs[equipId].name;
-    } else {
-        return g_AccessoryDefs[equipId].name;
     }
+    // This can alternatively be made a Default case.
+    return g_AccessoryDefs[equipId].name;
 }
 
 // CheckEquipmentItemCount
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F4C4, func_0606F4C4);
+static inline u8* _GetEquipOrder(EquipKind kind) {
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandOrder;
+    }
+    return g_Status.equipBodyOrder;
+}
+static inline u8* _GetEquipCount(EquipKind kind) {
+    switch (kind) {
+    case EQUIP_HAND:
+        return g_Status.equipHandCount;
+    }
+    return g_Status.equipBodyCount;
+}
+void AddToInventory(u16 id, EquipKind kind) {
+    s32 i;
+    EquipKind found;
+    u8* order;
+    u8* count;
+    u8* pOrder;
+    s32 existingItemSlot;
+    s32 emptySlot;
+
+    order = _GetEquipOrder(kind);
+    count = _GetEquipCount(kind);
+    if (count[id] >= 99) {
+        return;
+    }
+    // Increment the count of the item.
+    count[id]++;
+    // If the amount we now have is not 1, then we already had one (or more).
+    // Done.
+    if (count[id] != 1) {
+        return;
+    }
+    // If the amount we now have IS 1, then change it back to 0 and do more
+    // processing.
+    count[id]--;
+    // If it's not a hand item, then figure out what equipType it is.
+    if (kind != EQUIP_HAND) {
+        found = g_AccessoryDefs[id].equipType;
+    }
+
+    pOrder = order;
+    // Odd way to write this loop, this is the only way that works on all
+    // systems.
+    for (i = 0; true;) {
+        if (*pOrder == id) {
+            existingItemSlot = i;
+            break;
+        }
+        i++;
+        pOrder++;
+    }
+
+    pOrder = order;
+    for (i = 0; true; i++, pOrder++) {
+        if (count[*pOrder]) {
+            continue;
+        }
+        if (kind == EQUIP_HAND || found == g_AccessoryDefs[*pOrder].equipType) {
+            emptySlot = i;
+            break;
+        }
+    }
+
+    count[id]++;
+    if (existingItemSlot > emptySlot) {
+        order[existingItemSlot] = order[emptySlot];
+        order[emptySlot] = id;
+    }
+}
 
 // SAT: func_0606F59C
 void GetSpellDef(SpellDef* spell, s32 id) {
