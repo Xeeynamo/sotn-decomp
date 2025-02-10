@@ -2099,6 +2099,15 @@
 | 1.00 | true     | EntityBreakable                     | asm/us/st/rwrp/matchings/rwrp/e_breakable/EntityBreakable.s 
 | 1.00 | true     | EntityBreakable                     | asm/us/st/wrp/matchings/e_breakable/EntityBreakable.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | asm/us/dra/matchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | asm/us/dra/matchings/save_mgr/D_800DBF74.s 
 | 1.00 | true     | D_800DBF7C                          | asm/us/dra/matchings/save_mgr/D_800DBF7C.s 
@@ -2132,14 +2141,6 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/first_c_file/CutsceneUnk3.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2270,7 +2271,7 @@
 | 1.00 | true     | EntityLifeUpSpawn                   | asm/us/boss/mar/matchings/e_life_up/EntityLifeUpSpawn.s 
 | 1.00 | true     | EntityLifeUpSpawn                   | asm/us/boss/rbo3/matchings/e_life_up/EntityLifeUpSpawn.s 
 | 0.99 | true     | EntityLifeUpSpawn                   | asm/us/st/nz0/matchings/e_life_up/EntityLifeUpSpawn.s 
-| 1.00 | false    | EntityLifeUpSpawn                   | asm/us/st/lib/nonmatchings/unk_51BCC/EntityLifeUpSpawn.s 
+| 1.00 | false    | EntityLifeUpSpawn                   | asm/us/st/lib/nonmatchings/e_life_up/EntityLifeUpSpawn.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetGPUBuffRGB                       | asm/us/dra/matchings/42398/SetGPUBuffRGB.s 
 | 1.00 | true     | SetGPUBuffRGBZero                   | asm/us/dra/matchings/42398/SetGPUBuffRGBZero.s 
@@ -2836,9 +2837,6 @@
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
 -------------------------------------------------------------------------------
@@ -2957,13 +2955,13 @@
 | 1.00 | true     | func_801C4550                       | asm/us/st/nz0/matchings/e_axe_knight/func_801C4550.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckFieldCollisionY                | asm/us/st/no0/matchings/e_flea_man/CheckFieldCollisionY.s 
-| 1.00 | false    | func_us_801D01C8                    | asm/us/st/lib/nonmatchings/unk_4F918/func_us_801D01C8.s 
+| 1.00 | false    | CheckFieldCollisionY                | asm/us/st/lib/nonmatchings/e_flea_man/CheckFieldCollisionY.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityFleaMan                       | asm/us/st/no0/matchings/e_flea_man/EntityFleaMan.s 
-| 0.96 | false    | func_us_801D0304                    | asm/us/st/lib/nonmatchings/unk_4F918/func_us_801D0304.s 
+| 0.96 | false    | EntityFleaMan                       | asm/us/st/lib/nonmatchings/e_flea_man/EntityFleaMan.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateFacingDirection               | asm/us/st/no0/matchings/e_flea_man/UpdateFacingDirection.s 
-| 1.00 | false    | func_us_801D02D0                    | asm/us/st/lib/nonmatchings/unk_4F918/func_us_801D02D0.s 
+| 1.00 | false    | UpdateFacingDirection               | asm/us/st/lib/nonmatchings/e_flea_man/UpdateFacingDirection.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityMagicallySealedDoor           | asm/us/st/no0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
 | 0.99 | true     | EntityMagicallySealedDoor           | asm/us/st/nz0/matchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
@@ -2972,10 +2970,10 @@
 | 1.00 | true     | func_801CD78C                       | asm/us/st/np3/matchings/4D540/func_801CD78C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D7D00                    | asm/us/st/no0/matchings/e_stone_rose/func_us_801D7D00.s 
-| 0.91 | false    | func_us_801CCED0                    | asm/us/st/lib/nonmatchings/unk_4C054/func_us_801CCED0.s 
+| 0.91 | false    | func_us_801CCED0                    | asm/us/st/lib/nonmatchings/unk_4C984/func_us_801CCED0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D7DAC                    | asm/us/st/no0/matchings/e_stone_rose/func_us_801D7DAC.s 
-| 0.96 | false    | func_us_801CCF6C                    | asm/us/st/lib/nonmatchings/unk_4C054/func_us_801CCF6C.s 
+| 0.96 | false    | func_us_801CCF6C                    | asm/us/st/lib/nonmatchings/unk_4C984/func_us_801CCF6C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBoneArcher                    | asm/us/st/no1/matchings/e_bone_archer/EntityBoneArcher.s 
 | 1.00 | false    | func_us_801DCA9C                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DCA9C.s 
@@ -2984,7 +2982,7 @@
 | 1.00 | false    | func_us_801DD410                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DD410.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityMistDoor                      | asm/us/st/no1/matchings/e_mist_door/EntityMistDoor.s 
-| 1.00 | false    | func_us_801CF918                    | asm/us/st/lib/nonmatchings/unk_4F918/func_us_801CF918.s 
+| 1.00 | false    | EntityMistDoor                      | asm/us/st/lib/nonmatchings/e_mist_door/EntityMistDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonApe                   | asm/us/st/no1/matchings/e_skeleton_ape/EntitySkeletonApe.s 
 | 1.00 | false    | func_us_801DD688                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DD688.s 
@@ -3143,7 +3141,7 @@
 | 1.00 | false    | func_us_801C5868                    | asm/us/st/no4/nonmatchings/first_c_file/func_us_801C5868.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CDC80                       | asm/us/st/np3/matchings/4D540/func_801CDC80.s 
-| 1.00 | false    | func_801CDC80                       | asm/us/st/lib/nonmatchings/unk_51BCC/func_801CDC80.s 
+| 1.00 | false    | func_801CDC80                       | asm/us/st/lib/nonmatchings/e_spellbook_magic_tome/func_801CDC80.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CE2CC                       | asm/us/st/np3/matchings/4D540/func_801CE2CC.s 
 | 0.95 | true     | func_801D0A00                       | asm/us/st/np3/matchings/blade/func_801D0A00.s 
