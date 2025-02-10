@@ -1,18 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801CF918);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801CFA00);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801D00C4);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801D01C8);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801D02D0);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801D0304);
-
 extern u16 D_us_801809E0[];
 extern s32 D_us_80181ACC;
 extern u8 D_us_80182E3C[];
@@ -21,6 +9,7 @@ extern s16 D_us_80182E70[];
 extern s16 D_us_80182E80[];
 extern s32 D_us_80182E88[][2];
 
+// Mudman
 void func_us_801D064C(Entity* self) {
     Entity* tempEntity;
     Entity* tempEntity2;
@@ -392,4 +381,5 @@ void func_us_801D064C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_4F918", func_us_801D1298);
+// Mudman related sub-entity
+INCLUDE_ASM("st/lib/nonmatchings/e_mudman", func_us_801D1298);
