@@ -9,14 +9,13 @@ u8 func_psp_0923C2F8(u8 arg0) {
     return arg0 * 0x10;
 }
 
-extern s32 D_91ED5F8;
 extern u8* D_psp_0924BC78;
 extern s32 D_psp_0924BC70;
 extern s32 D_psp_0924BC68;
 
 // PSP unique?
 void func_psp_0923C390(s32 arg0, s32 arg1) {
-    D_psp_0924BC78 = (u8*)&D_91ED5F8;
+    D_psp_0924BC78 = (u8*)&g_Pix;
     D_psp_0924BC70 = arg0;
     D_psp_0924BC68 = arg1;
 }
