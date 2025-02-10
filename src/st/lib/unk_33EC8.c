@@ -1,7 +1,41 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B3EC8);
+Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
+    s32 i;
+    s32 currentDigit;
+
+    bool hasADigit = false;
+    for (currentDigit = maxDigits - 1; currentDigit >= 0; currentDigit--) {
+        u32 digitValue = number;
+        for (i = 0; i < currentDigit; i++) {
+            digitValue /= 10;
+        }
+        if (digitValue != 0) {
+            if (digitValue < 10) {
+                prim->u0 = digitValue * 8;
+                prim->v0 = 8;
+            } else {
+                prim->u0 = 0x28;
+                prim->v0 = 0x10;
+            }
+            for (i = 0; i < currentDigit; i++) {
+                digitValue *= 10;
+            }
+            number -= digitValue;
+            hasADigit = true;
+            prim->drawMode = DRAW_DEFAULT;
+        } else if (hasADigit || currentDigit == 0) {
+            prim->u0 = 0;
+            prim->v0 = 8;
+            prim->drawMode = DRAW_DEFAULT;
+        } else {
+            prim->drawMode = DRAW_HIDE;
+        }
+        prim = prim->next;
+    }
+    return prim;
+}
 
 Primitive* func_us_801B3FB4(Primitive* prim, u8* uv, u16 count, s32 arg3) {
     u8 d;
