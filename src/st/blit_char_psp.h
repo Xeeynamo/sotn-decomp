@@ -9,6 +9,7 @@ u8 func_psp_0923C2F8(u8 arg0) {
     return arg0 * 0x10;
 }
 
+extern u8 g_Pix[4][128 * 128 / 2];
 extern u8* D_psp_0924BC78;
 extern s32 D_psp_0924BC70;
 extern s32 D_psp_0924BC68;
