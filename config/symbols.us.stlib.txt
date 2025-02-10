@@ -14,6 +14,7 @@ g_EInitCorpseweedProjectile = 0x801808F0;
 g_EInitSkeleton = 0x80180998;
 g_EInitSkeletonPieces = 0x801809A4;
 g_EInitSkeletonBone = 0x801809B0;
+g_EInitFleaMan = 0x801809D4;
 LIB_RedDoorTiles = 0x80180AC8;
 actor_names = 0x80181A60;
 LIB_PrizeDrops = 0x80181A90;
