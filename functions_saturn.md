@@ -501,7 +501,6 @@
 | game/f_nonmat/f60664E0.s     | func_060664E0   |      121 |         11 |                                 |       |
 | zero/f_nonmat/f6012474.s     | func_06012474   |      121 |         11 |                                 |       |
 | warp/f_nonmat/f60DCF5C.s     | func_060DCF5C   |      122 |          9 |                                 |       |
-| game/f_nonmat/f606F4C4.s     | func_0606F4C4   |      122 |         13 | https://decomp.me/scratch/PNN6V | 0.601 |
 | zero/f_nonmat/f600AB60.s     | func_0600AB60   |      123 |          2 |                                 |       |
 | stage_02/f_nonmat/f60E29A4.s | func_060E29A4   |      123 |          9 |                                 |       |
 | zero/f_nonmat/f6012E4C.s     | func_06012E4C   |      123 |         19 |                                 |       |
