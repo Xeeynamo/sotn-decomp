@@ -194,10 +194,10 @@ s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft) {
 
 void func_80118C28(s32 arg0) {
     // Break up the 4-byte struct D_800ACFB4[arg0] into individual bytes.
-    D_8013803C = ((u8*)&D_800ACFB4[arg0])[0];
-    D_80138040 = ((u8*)&D_800ACFB4[arg0])[1];
-    D_80138044 = ((u8*)&D_800ACFB4[arg0])[2];
-    D_80138048 = ((u8*)&D_800ACFB4[arg0])[3];
+    D_8013803C = D_800ACFB4[arg0].rawBytes[0];
+    D_80138040 = D_800ACFB4[arg0].rawBytes[1];
+    D_80138044 = D_800ACFB4[arg0].rawBytes[2];
+    D_80138048 = D_800ACFB4[arg0].rawBytes[3];
 }
 
 s32 CreateHPNumMove(s16 number, s16 type) {
@@ -1167,7 +1167,45 @@ void UpdatePlayerEntities(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091279A0);
+void func_8011A870(void) {
+    Entity* entity;
+    s32 i;
+
+    entity = &g_Entities[UNK_ENTITY_4];
+    g_CurrentEntity = entity;
+    for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId == 0) {
+            continue;
+        }
+
+        if (entity->step == 0) {
+            if(entity->entityId >= 0xE0){
+                continue;
+            }
+            if (entity->entityId < SERVANT_ENTITY_START) {
+                continue;
+            }
+                entity->pfnUpdate =
+                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                       SERVANT_ENTITY_START];
+        }
+
+        if (entity->pfnUpdate) {
+            entity->pfnUpdate(entity);
+            entity = g_CurrentEntity;
+            if (entity->entityId != 0) {
+
+            if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) && 
+                (entity->posX.i.hi > 0x120 || entity->posX.i.hi < -0x20 ||
+                     entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
+                    DestroyEntity(g_CurrentEntity);
+                } else if (entity->flags & FLAG_UNK_100000) {
+                    UpdateAnim(NULL, &D_psp_09234DC8);
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
 

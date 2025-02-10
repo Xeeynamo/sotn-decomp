@@ -1150,32 +1150,34 @@ void func_8011A870(void) {
     Entity* entity;
     s32 i;
 
-    g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
-    entity = g_CurrentEntity;
+    entity = &g_Entities[UNK_ENTITY_4];
+    g_CurrentEntity = entity;
     for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId == 0) {
             continue;
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= SERVANT_ENTITY_START &&
-                entity->entityId < 0xE0) {
+            if(entity->entityId >= 0xE0){
+                continue;
+            }
+            if (entity->entityId < SERVANT_ENTITY_START) {
+                continue;
+            }
                 entity->pfnUpdate =
                     ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
                                                        SERVANT_ENTITY_START];
-            } else {
-                continue;
-            }
         }
 
         if (entity->pfnUpdate) {
             entity->pfnUpdate(entity);
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
-                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
-                    (entity->posX.i.hi < -0x20 || entity->posX.i.hi > 0x120 ||
-                     entity->posY.i.hi < -0x10 || entity->posY.i.hi > 0x100)) {
-                    DestroyEntity(entity);
+
+            if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) && 
+                (entity->posX.i.hi > 0x120 || entity->posX.i.hi < -0x20 ||
+                     entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
+                    DestroyEntity(g_CurrentEntity);
                 } else if (entity->flags & FLAG_UNK_100000) {
                     UpdateAnim(NULL, D_800ACFB4);
                 }
