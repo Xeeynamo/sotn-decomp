@@ -1207,7 +1207,29 @@ void func_8011A870(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
+void func_8011A9D8(void) {
+    Entity* entity;
+    s32 i;
+
+    entity = &g_Entities[4];
+    g_CurrentEntity = entity;
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (!(entity->flags & FLAG_UNK_20000)) {
+            DestroyEntity(entity);
+        }
+#if defined(VERSION_US)
+        if (g_PlayableCharacter == PLAYER_ALUCARD && 0x36 < entity->entityId &&
+            entity->entityId < 0x3D && entity->step != 0) {
+            entity->pfnUpdate(entity);
+        }
+#endif
+        if (entity->flags & FLAG_UNK_02000000 && entity->step) {
+            entity->flags |= FLAG_UNK_00200000;  // set a flag
+            entity->pfnUpdate(entity);           // update
+            entity->flags &= ~FLAG_UNK_00200000; // unset that same flag
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", CreateEntFactoryFromEntity);
 

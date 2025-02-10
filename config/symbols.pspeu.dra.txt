@@ -229,6 +229,7 @@ GetServantStats = 0x09127348;
 EntityNull = 0x09127480;
 UpdatePlayerEntities = 0x09127490;
 func_8011A870 = 0x091279A0;
+func_8011A9D8 = 0x09127B50;
 CreateEntFactoryFromEntity = 0x09127C30;
 EntityEntFactory = 0x09127DC0;
 EntityUnarmedAttack = 0x09128580;

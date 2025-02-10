@@ -1191,7 +1191,7 @@ void func_8011A9D8(void) {
     s32 i;
 
     entity = &g_Entities[4];
-    g_CurrentEntity = &g_Entities[4];
+    g_CurrentEntity = entity;
     for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
         if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
@@ -1202,7 +1202,7 @@ void func_8011A9D8(void) {
             entity->pfnUpdate(entity);
         }
 #endif
-        if (entity->flags & FLAG_UNK_02000000 && entity->step != 0) {
+        if (entity->flags & FLAG_UNK_02000000 && entity->step) {
             entity->flags |= FLAG_UNK_00200000;  // set a flag
             entity->pfnUpdate(entity);           // update
             entity->flags &= ~FLAG_UNK_00200000; // unset that same flag
