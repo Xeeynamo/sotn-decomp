@@ -410,7 +410,7 @@
 | dra    | func_psp_090ED9E0                   |       43 |          4 |        |                                 |       |
 | no4    | func_psp_09238490                   |       43 |          4 |        |                                 |       |
 | dra    | func_psp_090FCE58                   |       43 |          5 |        |                                 |       |
-| dra    | func_psp_09124FB8                   |       43 |          5 |        |                                 |       |
+| dra    | func_psp_09124FB8                   |       43 |          5 |        | https://decomp.me/scratch/zssLQ | 1.0   |
 | dra    | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra    | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
 | dra    | func_8010DF70                       |       43 |          8 |        |                                 |       |
@@ -683,7 +683,7 @@
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
 | dra    | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
 | dra    | func_psp_09136BF8                   |       83 |         14 |        |                                 |       |
-| dra    | func_psp_09127348                   |       84 |          4 |        |                                 |       |
+| dra    | func_psp_09127348                   |       84 |          4 |        | https://decomp.me/scratch/R1Wqf | 0.344 |
 | lib    | EntityGreyPuffSpawner               |       84 |          5 |        |                                 |       |
 | dra    | func_psp_090EEE78                   |       84 |          7 |        |                                 |       |
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
@@ -765,7 +765,7 @@
 | dra    | func_psp_090EF780                   |      102 |          8 |        |                                 |       |
 | dra    | func_psp_090F1A08                   |      102 |         12 |        |                                 |       |
 | dra    | func_psp_09144038                   |      103 |          2 |        |                                 |       |
-| dra    | func_psp_09125DB8                   |      103 |          4 |        |                                 |       |
+| dra    | func_psp_09125DB8                   |      103 |          4 |        | https://decomp.me/scratch/ezh6e | 0.944 |
 | lib    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
 | no4    | func_psp_09250198                   |      103 |          8 |        |                                 |       |
 | st0    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
@@ -831,7 +831,7 @@
 | dra    | func_psp_090F0E48                   |      113 |         18 |        |                                 |       |
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
 | dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
-| dra    | CreateEntFactoryFromEntity          |      114 |         12 |        |                                 |       |
+| dra    | CreateEntFactoryFromEntity          |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra    | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
 | dra    | func_psp_090E8CA8                   |      115 |          6 |        |                                 |       |
 | dra    | func_psp_091374D0                   |      115 |         27 |        |                                 |       |
@@ -841,7 +841,7 @@
 | dra    | PlaySfx                             |      117 |         18 |        | https://decomp.me/scratch/qLAhD | 0.992 |
 |        | IsMovementAllowed                   |      117 |         23 |        |                                 |       |
 | dra    | EntitySmallRisingHeart              |      118 |         10 |        |                                 |       |
-| dra    | func_psp_091279A0                   |      119 |         19 |        |                                 |       |
+| dra    | func_psp_091279A0                   |      119 |         19 |        | https://decomp.me/scratch/gjiIs | 0.998 |
 | st0    | CollectSubweapon                    |      120 |          9 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra    | func_psp_090ED658                   |      120 |         11 |        |                                 |       |
 | dra    | GetEquipProperties                  |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
@@ -862,7 +862,7 @@
 | dra    | func_psp_090EDC48                   |      128 |         17 |        |                                 |       |
 | dra    | func_psp_090EC608                   |      129 |         11 |        | https://decomp.me/scratch/Tr9tx | 0.514 |
 | no4    | func_psp_09252930                   |      129 |         12 |        |                                 |       |
-| lib    | func_psp_0924B380                   |      132 |         14 |        |                                 |       |
+| lib    | func_psp_0924B380                   |      132 |         14 |        | https://decomp.me/scratch/y06Sj | 0.505 |
 | dra    | func_psp_09104AA0                   |      132 |         15 |        |                                 |       |
 | dra    | func_psp_091418D0                   |      132 |         16 |        |                                 |       |
 | st0    | EntityDraculaMegaFireball           |      133 |         18 |        |                                 |       |
@@ -905,7 +905,7 @@
 | dra    | func_80123F78                       |      155 |         14 |        |                                 |       |
 | dra    | func_psp_091396C8                   |      156 |         26 |        |                                 |       |
 | dra    | EntityHellfireNormalFireball        |      157 |         18 |        | https://decomp.me/scratch/Rzlhs | 0.996 |
-| dra    | func_80119E78                       |      158 |          6 |        |                                 |       |
+| dra    | func_80119E78                       |      158 |          6 |        | https://decomp.me/scratch/jxhNr | 0.979 |
 | dra    | func_psp_091411F8                   |      158 |         10 |        |                                 |       |
 | no4    | func_psp_092398B8                   |      159 |         18 |        |                                 |       |
 | dra    | func_psp_09137110                   |      159 |         21 |        |                                 |       |
@@ -1024,7 +1024,7 @@
 | dra    | func_psp_091107E8                   |      250 |         34 |        |                                 |       |
 | dra    | func_psp_09111648                   |      252 |         38 |        |                                 |       |
 | dra    | CheckWallRight                      |      254 |         34 |        |                                 |       |
-| dra    | func_80119F70                       |      255 |         29 |        |                                 |       |
+| dra    | func_80119F70                       |      255 |         29 |        | https://decomp.me/scratch/V0pmD | 0.995 |
 | dra    | func_psp_090EEA88                   |      256 |         24 | Yes    |                                 |       |
 | dra    | CheckWallLeft                       |      256 |         34 |        |                                 |       |
 |        | FindValidTarget                     |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
@@ -1209,7 +1209,7 @@
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.962 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra    | func_psp_090DCD28                   |      639 |        101 |        |                                 |       |
-| lib    | func_psp_092644E0                   |      642 |         61 | Yes    | https://decomp.me/scratch/6FuJt | 0.996 |
+| lib    | func_psp_092644E0                   |      642 |         61 | Yes    |                                 |       |
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
 | lib    | func_psp_0924D598                   |      655 |         98 |        |                                 |       |
@@ -1240,11 +1240,11 @@
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    |                                 |       |
-| dra    | EntityGuardText                     |      772 |         55 | Yes    |                                 |       |
+| dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        |                                 |       |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
-| lib    | func_psp_0926A238                   |      803 |         77 | Yes    | https://decomp.me/scratch/bZIKE | 0.88  |
+| lib    | func_psp_0926A238                   |      803 |         77 | Yes    |                                 |       |
 | dra    | func_80129864                       |      809 |         78 |        | https://decomp.me/scratch/Ggtu5 | 0.999 |
 | dra    | func_psp_0910AA60                   |      815 |        149 |        |                                 |       |
 | dra    | HandlePlay                          |      816 |        115 | Yes    |                                 |       |
@@ -1261,7 +1261,7 @@
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    |                                 |       |
 | st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/ZV6i6 | 0.966 |
-| dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    |                                 |       |
+| dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    | https://decomp.me/scratch/BBczf | 1.0   |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 | no4    | func_psp_0924CC60                   |      948 |        120 | Yes    |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
