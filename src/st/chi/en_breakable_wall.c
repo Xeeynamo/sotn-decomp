@@ -76,7 +76,7 @@ void EntityBreakableWallDebris(Entity* self) {
 
         self->velocityY += Gravity;
 
-        g_api_CheckCollision(
+        g_api.CheckCollision(
             self->posX.i.hi, (s16)(self->posY.i.hi + 6), &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
