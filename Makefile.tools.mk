@@ -308,7 +308,7 @@ python-dependencies: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 
 $(VENV_DIR): debian-dependencies
-	$(PYTHON) -m venv $(VENV_PATH)
+	$(PYTHON) -m venv $(VENV_DIR)
 
 update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
