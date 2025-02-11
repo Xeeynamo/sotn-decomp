@@ -40,6 +40,7 @@ typedef enum EntityIDs {
     /* 0x2E */ E_ID_2E,
     /* 0x2F */ E_ID_2F,
     /* 0x31 */ E_ID_31 = 0x31,
+    /* 0x34 */ E_ID_34 = 0x34,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
