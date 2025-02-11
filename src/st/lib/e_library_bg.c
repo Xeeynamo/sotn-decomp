@@ -199,7 +199,7 @@ void EntityBackgroundShadow(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.libraryShadow.prim = prim;
             while (prim != NULL) {
                 last = prim;
                 prim->u0 = 24;
@@ -210,7 +210,7 @@ void EntityBackgroundShadow(Entity* self) {
                 prim = prim->next;
             }
             prim = last;
-            self->ext.libraryShadow.prim = prim;
+            self->ext.libraryShadow.lastPrim = prim;
             prim->u0 = 255;
             prim->v0 = 48;
             prim->x0 = 0;
@@ -246,7 +246,7 @@ void EntityBackgroundShadow(Entity* self) {
             }
         }
 
-        prim = self->ext.prim;
+        prim = self->ext.libraryShadow.prim;
         while (prim != NULL) {
             prim->x0 = x;
             x += 56;
@@ -264,7 +264,7 @@ void EntityBackgroundShadow(Entity* self) {
             prim = prim->next;
         }
 
-        prim = self->ext.libraryShadow.prim;
+        prim = self->ext.libraryShadow.lastPrim;
         prim->u0 = 255;
         prim->v0 = 48;
         prim->x0 = 0;

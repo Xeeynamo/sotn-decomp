@@ -2799,8 +2799,8 @@ typedef struct {
 } ET_801D2274;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ Primitive* prim;
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ Primitive* lastPrim;
 } ET_LibraryShadow;
 
 typedef union { // offset=0x7C
