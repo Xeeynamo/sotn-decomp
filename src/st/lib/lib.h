@@ -17,10 +17,10 @@ typedef enum EntityIDs {
     // /* 0x08 */ E_ROOM_FOREGROUND,
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
-    // /* 0x0B */ E_RELIC_ORB,
+    /* 0x0B */ E_RELIC_ORB,
     // /* 0x0C */ E_HEART_DROP,
     // /* 0x0D */ E_ENEMY_BLOOD,
-    // /* 0x0E */ E_MESSAGE_BOX,
+    /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11,
@@ -71,3 +71,5 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
+
+extern EInit g_EInitFleaMan;

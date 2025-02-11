@@ -55,7 +55,12 @@ segments:
       - [0x2B80, .data, en_thornweed_corpseweed]
       - [0x2C38, data] # unused data?
       - [0x2C48, .data, e_skeleton]
-      - [0x2D38, data]
+      - [0x2D38, .data, e_mist_door]
+      - [0x2D78, data]
+      - [0x2DE4, .data, e_flea_man]
+      - [0x2E3C, data]
+      - [0x319C, .data, e_life_up]
+      - [0x31F0, data]
       - [0x2B938, .rodata, first_c_file]
       - [0x2B960, .rodata, unk_2FA80]
       - [0x2CE78, .rodata, e_shop]
