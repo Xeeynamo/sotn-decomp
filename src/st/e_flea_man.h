@@ -177,7 +177,7 @@ void EntityFleaMan(Entity* self) {
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step = 3;
         }
-        CheckFieldCollisionY(sensors_move_y, 3);
+        CheckFieldCollisionY(*sensors_move_y, 3);
         CheckFieldCollision(sensors_move_x, 2);
         break;
     }

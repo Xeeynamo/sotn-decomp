@@ -6,24 +6,28 @@ SVECTOR D_80182848 = {8, 8, 0};
 u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
+#ifdef VERSION_PSP
+SVECTOR D_8018287C; // bss
+#else
 SVECTOR D_8018287C = {0, 0, 0};
+#endif
 
 extern u16 g_EInitInteractable[];
 void EntityLifeUpSpawn(Entity* self) {
-    s32 count_low_x1;
+    s32 sp98; // weird stuff
+    s32 sp9C; // unused
     Collider collider;
     Point16 rotTransPersResult;
     SVECTOR rotation_axis;
     VECTOR trans;
     MATRIX m;
     SVECTOR vertex;
-    s32 sp98; // weird stuff
-    s32 sp9C; // unused
     Primitive* prim;
+    s32 count_low_x1;
     s32 params;
     s32 XY_var;
-    s16 primIndex;
-    s32 zCoord;
+    u32 primIndex;
+    s16 zCoord;
     s32 i;
     s32 j;
     s32 k;
@@ -73,7 +77,7 @@ void EntityLifeUpSpawn(Entity* self) {
                     prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0;
                     prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0;
                     prim->next->x2 = prim->next->y2 = 0x1000;
-                    prim->next->tpage = k << 9;
+                    LOH(prim->next->tpage) = (k << 9);
                     prim->next->x3 = 0;
                     prim->next->y3 = j * 0x540;
                     // Not clear what this prim is using u0 and r1 for.
@@ -100,15 +104,15 @@ void EntityLifeUpSpawn(Entity* self) {
             self->ext.lifeUpSpawn.unk88++;
         }
         self->ext.lifeUpSpawn.unk86--;
-        if (self->ext.lifeUpSpawn.unk88 >= 8) {
+        if (self->ext.lifeUpSpawn.unk88 > 7) {
             self->ext.lifeUpSpawn.unk88 = 7;
             self->step++;
         }
         /* fallthrough */
     case 2:
         SetGeomScreen(0x200);
-        count_low_x1 = 0;
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+        count_low_x1 = 0;
         prim = self->ext.lifeUpSpawn.prim1;
         for (j = 0; j < (self->ext.lifeUpSpawn.unk88 + 1); j++) {
             XY_var = prim->next->y1 + (prim->next->x1 << 0x10);
@@ -128,7 +132,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 for (k = 0; k < 24; k++) {
                     rotation_axis.vx = prim->next->x3;
                     rotation_axis.vy = prim->next->y3;
-                    rotation_axis.vz = prim->next->tpage;
+                    rotation_axis.vz = LOH(prim->next->tpage);
                     RotMatrix(&rotation_axis, &m);
                     trans.vx = 0;
                     trans.vy = 0;
@@ -139,12 +143,12 @@ void EntityLifeUpSpawn(Entity* self) {
                     vertex.vx = XY_var;
                     vertex.vy = 0;
                     vertex.vz = 0;
-                    zCoord = RotTransPers(
-                        &vertex, &rotTransPersResult, &sp98, &sp9C);
+                    zCoord = RotTransPers(&vertex, (long*)&rotTransPersResult,
+                                          (long*)&sp98, (long*)&sp9C);
                     RotMatrix(&D_8018287C, &m);
                     trans.vx = rotTransPersResult.x - self->posX.i.hi;
                     trans.vy = rotTransPersResult.y - self->posY.i.hi;
-                    trans.vz = (zCoord << 0x10) >> 0xE;
+                    trans.vz = zCoord * 4;
                     TransMatrix(&m, &trans);
                     trans.vx = prim->next->x2;
                     trans.vy = prim->next->y2;
@@ -154,10 +158,10 @@ void EntityLifeUpSpawn(Entity* self) {
                     SetTransMatrix(&m);
                     RotTransPers4(
                         &D_80182830, &D_80182838, &D_80182840, &D_80182848,
-                        (Point16*)&prim->x0, (Point16*)&prim->x1,
-                        (Point16*)&prim->x2, (Point16*)&prim->x3, &sp98, &sp9C);
+                        (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
+                        (long*)&prim->x3, (long*)&sp98, (long*)&sp9C);
                     prim->next->x2 = prim->next->y2 -= 0x10;
-                    prim->next->tpage += 8;
+                    LOH(prim->next->tpage) += 8;
                     prim->next->x3 += 0x10;
                     prim->next->y3 += 0x20;
                     // Note that we go to next here, but also in the for-loop,
@@ -178,10 +182,10 @@ void EntityLifeUpSpawn(Entity* self) {
         }
 
         prim->x0 = prim->x2 = XY_var - sp98;
-        prim->x1 = prim->x3 = sp98 + XY_var;
+        prim->x1 = prim->x3 = XY_var + sp98;
         XY_var = self->posY.i.hi;
         prim->y0 = prim->y1 = XY_var - sp98;
-        prim->y2 = prim->y3 = sp98 + XY_var;
+        prim->y2 = prim->y3 = XY_var + sp98;
         break;
     case 4:
         MoveEntity();
@@ -211,10 +215,10 @@ void EntityLifeUpSpawn(Entity* self) {
             sp98 = 0xE0;
         }
         prim->x0 = prim->x2 = XY_var - sp98;
-        prim->x1 = prim->x3 = sp98 + XY_var;
+        prim->x1 = prim->x3 = XY_var + sp98;
         XY_var = self->posY.i.hi;
         prim->y0 = prim->y1 = XY_var - sp98;
-        prim->y2 = prim->y3 = sp98 + XY_var;
+        prim->y2 = prim->y3 = XY_var + sp98;
         break;
     case 5:
         g_api.FreePrimitives(self->primIndex);
@@ -233,7 +237,7 @@ void EntityLifeUpSpawn(Entity* self) {
                     self->animFrameIdx = 0;
                 } else {
                     self->entityId = E_EQUIP_ITEM_DROP;
-                    self->pfnUpdate = EntityRelicOrb;
+                    self->pfnUpdate = EntityEquipItemDrop;
                     params -= 0x80;
                 }
                 self->params = params;
