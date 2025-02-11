@@ -206,3 +206,5 @@ INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC6B0);
 
 // Dhuron death
 INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC7BC);
+
+INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC984);
