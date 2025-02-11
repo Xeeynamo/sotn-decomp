@@ -20,7 +20,7 @@ void func_us_801CC054(Entity* self) {
     s32 i;
     s8* hitboxPtr;
 
-    if ((self->flags & 0x100) && self->step < 8) {
+    if ((self->flags & FLAG_DEAD) && self->step < 8) {
         SetStep(8);
     }
     switch (self->step) {
@@ -47,9 +47,9 @@ void func_us_801CC054(Entity* self) {
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (GetDistanceToPlayerX() < 0x50) {
-                self->ext.ILLEGAL.u8[0xC] = self->facingLeft ^ 1;
+                self->ext.dhuron.unk88 = self->facingLeft ^ 1;
             } else {
-                self->ext.ILLEGAL.u8[0xC] = self->facingLeft;
+                self->ext.dhuron.unk88 = self->facingLeft;
             }
             self->step_s++;
         }
@@ -59,23 +59,24 @@ void func_us_801CC054(Entity* self) {
         UnkCollisionFunc2(D_us_80182964);
         if (!AnimateEntity(D_us_8018296C, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.ILLEGAL.u8[0xC] = self->facingLeft;
+            self->ext.dhuron.unk88 = self->facingLeft;
             tempVar = GetDistanceToPlayerX();
-            if (!self->ext.ILLEGAL.u8[0xD] && self->posY.i.hi < 0x100 && tempVar > 0x50 && (Random() & 7) == 0) {
+            if (!self->ext.dhuron.unk89 && self->posY.i.hi < 0x100 &&
+                tempVar > 0x50 && (Random() & 7) == 0) {
                 SetStep(5);
                 break;
             }
             if (tempVar < 0x40) {
                 SetStep(4);
-                if (self->ext.ILLEGAL.u8[0xD]) {
+                if (self->ext.dhuron.unk89) {
                     SetStep(6);
                 }
             }
         }
-        if (self->ext.ILLEGAL.u8[0xC]) {
-            self->velocityX = 0x28000;
+        if (self->ext.dhuron.unk88) {
+            self->velocityX = FIX(2.5);
         } else {
-            self->velocityX = -0x28000;
+            self->velocityX = FIX(-2.5);
         }
         break;
 
@@ -91,13 +92,13 @@ void func_us_801CC054(Entity* self) {
         UnkCollisionFunc2(D_us_80182964);
         self->velocityX -= self->velocityX / 16;
         if (self->animFrameIdx == 5) {
-            if (self->ext.ILLEGAL.u8[0xC]) {
-                self->velocityX = 0x30000;
+            if (self->ext.dhuron.unk88) {
+                self->velocityX = FIX(3.0);
             } else {
-                self->velocityX = -0x30000;
+                self->velocityX = FIX(-3.0);
             }
             if (!self->animFrameDuration) {
-                PlaySfxPositional(0x66D);
+                PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
         }
         break;
@@ -106,20 +107,22 @@ void func_us_801CC054(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_801829C4, self)) {
-                self->ext.ILLEGAL.s16[4] = 8;
+                self->ext.dhuron.unk84 = 8;
                 SetSubStep(1);
             }
             break;
 
         case 1:
             if (!AnimateEntity(D_us_801829D4, self)) {
-                self->ext.ILLEGAL.s16[4]--;
-                if ((((GetSideToPlayer() & 1) == self->facingLeft)) || (GetDistanceToPlayerX() > 0x60) || !self->ext.ILLEGAL.s16[4]) {
+                self->ext.dhuron.unk84--;
+                if (((GetSideToPlayer() & 1) == self->facingLeft) ||
+                    (GetDistanceToPlayerX() > 0x60) ||
+                    !self->ext.dhuron.unk84) {
                     SetSubStep(2);
                 }
             }
             if (!self->animFrameDuration && self->animFrameIdx == 6) {
-                PlaySfxPositional(0x66D);
+                PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
             break;
 
@@ -135,26 +138,26 @@ void func_us_801CC054(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_801829A4, self)) {
-                self->ext.ILLEGAL.s16[4] = 0x20;
+                self->ext.dhuron.unk84 = 0x20;
                 self->step_s++;
             }
             if (self->animFrameIdx == 10 && !self->animFrameDuration) {
-                PlaySfxPositional(0x665);
+                PlaySfxPositional(SFX_THUNDER_B);
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(0x35U, self, tempEntity);
+                    CreateEntityFromEntity(E_ID_35, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     tempEntity->zPriority = self->zPriority - 1;
-                    tempEntity->ext.ILLEGAL.u32[8] = (u32) self;
+                    tempEntity->ext.dhuron.unk9C = self;
                 }
             }
             break;
 
         case 1:
-            if (!--self->ext.ILLEGAL.s16[4]) {
-                self->ext.ILLEGAL.u8[0xD] = 1;
-                (self + 1)->ext.ILLEGAL.u8[0xD] = 1;
-                self->drawMode |= 0x30;
+            if (!--self->ext.dhuron.unk84) {
+                self->ext.dhuron.unk89 = 1;
+                (self + 1)->ext.dhuron.unk89 = 1;
+                self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
                 SetStep(3);
             }
             break;
@@ -166,7 +169,7 @@ void func_us_801CC054(Entity* self) {
         for (i = 0; i < 7; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(0x36, self, tempEntity);
+                CreateEntityFromEntity(E_ID_36, self, tempEntity);
                 tempEntity->params = i;
                 tempEntity->facingLeft = self->facingLeft;
             } else {
@@ -175,14 +178,14 @@ void func_us_801CC054(Entity* self) {
         }
         tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (tempEntity != NULL) {
-            CreateEntityFromEntity(2, self, tempEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
             tempEntity->params = 3;
         }
-        PlaySfxPositional(0x629);
+        PlaySfxPositional(SFX_SKELETON_DEATH_A);
         DestroyEntity(self);
         return;
     }
-    if (self->ext.ILLEGAL.u8[0xD]) {
+    if (self->ext.dhuron.unk89) {
         if (g_Timer & 2) {
             self->palette = 0x201;
         } else {
