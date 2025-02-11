@@ -125,6 +125,7 @@ g_EInitCorpseweedProjectile = 0x09276158;
 g_EInitSkeleton = 0x09276228;
 g_EInitSkeletonPieces = 0x09276238;
 g_EInitSkeletonBone = 0x09276248;
+g_EInitFleaMan = 0x09276278;
 g_Rooms = 0x092762A8;
 LIB_PrizeDrops = 0x09298168;
 D_us_801811FC = 0x092A4520;
