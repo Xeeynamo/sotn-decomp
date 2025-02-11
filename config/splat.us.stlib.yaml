@@ -38,6 +38,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0xDC0, .data, e_library_bg]
+      - [0xDF0, data, unk_2FA80]
       - [0x134C, .data, e_shop]
       - [0x1528, data]
       - [0x1C7C, .data, st_update]
@@ -55,6 +57,7 @@ segments:
       - [0x2C48, .data, e_skeleton]
       - [0x2D38, data]
       - [0x2B938, .rodata, first_c_file]
+      - [0x2B960, .rodata, unk_2FA80]
       - [0x2CE78, .rodata, e_shop]
       - [0x2CF14, .rodata, unk_33EC8]
       - [0x2CF48, .rodata, unk_3420C]
@@ -79,6 +82,8 @@ segments:
       - [0x2DDAC, .rodata, e_spellbook_magic_tome]
       - [0x2DEB4, .rodata, e_life_up]
       - [0x2DED0, c, first_c_file]
+      - [0x2F280, c, e_library_bg]
+      - [0x2FA80, c, unk_2FA80]
       - [0x3245C, c, e_shop]
       - [0x33EC8, c, unk_33EC8]
       - [0x3420C, c, unk_3420C]
