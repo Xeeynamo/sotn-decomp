@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
+typedef struct {
+    s32 velocityX;
+    s32 velocityY;
+    s16 rotZ;
+    s16 unkA;
+} dhuronUnkStruct;
+
 extern u16 D_us_8018089C[];
+extern u16 D_us_801808A8[];
+extern u16 D_us_801808B4[];
 extern s16 D_us_80182954[];
 extern s16 D_us_80182964[];
 extern u8 D_us_8018296C[];
@@ -12,6 +21,9 @@ extern u8 D_us_801829D4[];
 extern u8 D_us_801829F0[];
 extern s8 D_us_801829FC[][4];
 extern u8 D_us_80182A14[];
+extern s8 D_us_80182A30[][4];
+extern u8 D_us_80182A48[];
+extern dhuronUnkStruct D_us_80182A64[];
 
 // Dhuron
 void func_us_801CC054(Entity* self) {
@@ -202,9 +214,89 @@ void func_us_801CC054(Entity* self) {
 }
 
 // Dhuron death parts
-INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC6B0);
+void func_us_801CC6B0(Entity* self) {
+    s8* hitboxPtr;
+    Entity* tempEntity;
+    s32 tempVar;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801808A8);
+        break;
+
+    case 1:
+        tempEntity = self - 1;
+        self->facingLeft = tempEntity->facingLeft;
+        self->posX.i.hi = tempEntity->posX.i.hi;
+        self->posY.i.hi = tempEntity->posY.i.hi;
+        hitboxPtr = D_us_80182A30[0];
+        tempVar = D_us_80182A48[tempEntity->animCurFrame];
+        hitboxPtr += tempVar * 4;
+        self->hitboxOffX = *hitboxPtr++;
+        self->hitboxOffY = *hitboxPtr++;
+        self->hitboxWidth = *hitboxPtr++;
+        self->hitboxHeight = *hitboxPtr++;
+        if (self->ext.dhuron.unk89) {
+            self->attackElement |= 0x4000;
+            self->attackElement &= 0xFFBF;
+            self->attack *= 2;
+            self->ext.dhuron.unk89 = 0;
+        }
+        if (tempEntity->entityId != E_ID_33) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 // Dhuron death
-INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC7BC);
+void func_us_801CC7BC(Entity* self) {
+    Collider collider;
+    dhuronUnkStruct* ptr;
+    s32 posX, posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801808B4);
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->animCurFrame = self->params + 0x1B;
+        self->zPriority += self->params;
+        ptr = &D_us_80182A64[self->params];
+        if (self->facingLeft) {
+            self->velocityX = ptr->velocityX;
+        } else {
+            self->velocityX = -ptr->velocityX;
+        }
+        self->velocityY = ptr->velocityY;
+        self->ext.dhuron.unk84 = ptr->unkA;
+        break;
+
+    case 1:
+        MoveEntity();
+        self->velocityY += FIX(2.5 / 16);
+        ptr = &D_us_80182A64[self->params];
+        self->rotZ += ptr->rotZ;
+        if (!--self->ext.dhuron.unk84) {
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->step = 0;
+            self->entityId = E_EXPLOSION;
+            self->pfnUpdate = EntityExplosion;
+            self->params = 0;
+            PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
+        }
+        if (self->params == 6) {
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi + 4;
+            g_api.CheckCollision(posX, posY, &collider, 0);
+            if (collider.effects != EFFECT_NONE) {
+                PlaySfxPositional(SFX_SKULL_KNOCK_A);
+                self->posY.i.hi += collider.unk18;
+                self->velocityY = -self->velocityY;
+                self->velocityY -= self->velocityY / 4;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/lib/nonmatchings/e_dhuron", func_us_801CC984);
