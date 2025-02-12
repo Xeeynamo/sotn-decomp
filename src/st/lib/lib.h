@@ -78,6 +78,6 @@ extern EInit g_EInitSkeletonBone;
 
 extern EInit g_EInitFleaMan;
 
-extern u16 D_us_8018089C[];
-extern u16 D_us_801808A8[];
-extern u16 D_us_801808B4[];
+extern EInit D_us_8018089C;
+extern EInit D_us_801808A8;
+extern EInit D_us_801808B4;
