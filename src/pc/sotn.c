@@ -72,7 +72,8 @@ void PlaySfx(s16 sfxId);
 void ResetClutAnimation(s32 arg0);
 void SetBackgroundColor(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 void func_801027C4(u32 arg0);
-void TransformPolygon(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
+void TransformPolygon(
+    s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
 DR_ENV* AllocateDrawEnvironment(Primitive* prim);
 u16* func_80106A28(u32 arg0, u16 kind);

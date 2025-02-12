@@ -1736,7 +1736,7 @@ s32 AllocatePrimitives(u8 primType, s32 count) {
     return (s16)primStartIdx;
 }
 
-//AllocatePrimitiveBuffers
+// AllocatePrimitiveBuffers
 s32 AllocPrimBuffers(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;

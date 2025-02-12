@@ -648,7 +648,8 @@ void func_us_801B7188(Entity* self) {
             InitializeEntity(D_us_8018095C);
             if (D_us_80180EEC == 0) {
                 g_api.PlaySfx(SFX_UNK_7AF);
-                self->primIndex = g_api.AllocatePrimitives(PRIM_LINE_G2_ALT, 0x80);
+                self->primIndex =
+                    g_api.AllocatePrimitives(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
                     return;

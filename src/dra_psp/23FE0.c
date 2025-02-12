@@ -390,7 +390,8 @@ bool IsRelicActive(RelicIds relicId) {
     return 0;
 }
 
-s32 GetSubweaponProperties(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+s32 GetSubweaponProperties(
+    SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {

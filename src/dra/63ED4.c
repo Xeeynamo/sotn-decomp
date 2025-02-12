@@ -1581,7 +1581,8 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     return true;
 }
 
-void SetPrimitiveColorIntensity(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
+void SetPrimitiveColorIntensity(
+    Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         prim->b0 = colorIntensity;
@@ -1606,16 +1607,21 @@ void SetPrimitiveColorIntensity(Primitive* prim, u32 colorIntensity, s32 vertexI
     }
 }
 
-void SetPrimitiveAllVerticesColorIntensity(Primitive* prim, s32 colorIntensity) {
+void SetPrimitiveAllVerticesColorIntensity(
+    Primitive* prim, s32 colorIntensity) {
     SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 0);
     SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 1);
     SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 2);
     SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 3);
 }
 
-void func_801072BC(POLY_GT4* poly) { SetPrimitiveAllVerticesColorIntensity(poly, 0); }
+void func_801072BC(POLY_GT4* poly) {
+    SetPrimitiveAllVerticesColorIntensity(poly, 0);
+}
 
-void SetPrimitiveDefaultColorIntensity(Primitive* prim) { SetPrimitiveAllVerticesColorIntensity(prim, 0x80); }
+void SetPrimitiveDefaultColorIntensity(Primitive* prim) {
+    SetPrimitiveAllVerticesColorIntensity(prim, 0x80);
+}
 
 void func_801072FC(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);

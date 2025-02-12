@@ -2280,7 +2280,7 @@ block_748:
         if (self->drawFlags &
             (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
             TransformPolygon(self->posX.i.hi, self->posY.i.hi, self,
-                          self->drawFlags, prim, self->facingLeft);
+                             self->drawFlags, prim, self->facingLeft);
         }
         if (sp44 == 0) {
             if (sp70 == 0x29) {
@@ -2588,8 +2588,8 @@ void EntityPlayerOutline(Entity* self) {
         }
         prim->v0 = prim->v1 = one;
         prim->v2 = prim->v3 = one + height;
-        TransformPolygon(self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
-                      prim, (u16)self->facingLeft);
+        TransformPolygon(self->posX.i.hi, self->posY.i.hi, self,
+                         self->drawFlags, prim, (u16)self->facingLeft);
         prim->r0 = prim->r1 = prim->r2 = prim->r3 =
             primData[0] * self->ext.playerOutline.brightness / 256;
         prim->g0 = prim->g1 = prim->g2 = prim->g3 =

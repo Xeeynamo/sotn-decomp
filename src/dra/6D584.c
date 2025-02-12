@@ -355,7 +355,9 @@ void ResetAfterImage(s32 resetAnims, s32 arg1) {
     }
 }
 
-void ResetAfterImageCounter(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
+void ResetAfterImageCounter(void) {
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
+}
 
 void ResetAfterImageFlags(void) {
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 = 0;

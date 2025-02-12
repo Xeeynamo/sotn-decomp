@@ -21,7 +21,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimBuffers(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+        self->primIndex =
+            AllocPrimBuffers(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
         if (self->primIndex == -1) {
             return;
         }

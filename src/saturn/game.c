@@ -297,7 +297,8 @@ bool IsRelicActive(s32 arg0) {
 }
 
 // SAT: func_0606FC80
-s32 GetSubweaponProperties(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+s32 GetSubweaponProperties(
+    SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {

@@ -5,9 +5,9 @@ static u8 SetCutsceneScript(u8* script) {
 
     firstPrimIndex = g_api.AllocPrimBuffers(PRIM_SPRT,
 #if defined(VERSION_PC)
-                                           8
+                                            8
 #else
-                                           7
+                                            7
 #endif
     );
     g_Dialogue.primIndex[2] = firstPrimIndex;

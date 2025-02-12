@@ -176,7 +176,7 @@ void ExecuteJump(bool clearUnk44bit) {
     }
 }
 
-//jump kick? needs leap stone + fast -Y velocity
+// jump kick? needs leap stone + fast -Y velocity
 void ExecuteJumpKick(void) {
     g_Player.unk44 |= (0x20 | 0x01);
     SetPlayerAnim(32);
@@ -837,7 +837,7 @@ block_45:
     return true;
 }
 
-//dropping subweapon?
+// dropping subweapon?
 void DestroyEquippedWeapon(void) {
     Entity* ent = &g_Entities[E_WEAPON];
     DestroyEntity(ent);

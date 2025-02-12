@@ -31,7 +31,8 @@ void DrawRichterHud(void) {
     g_PlayerHud.unk1C = g_PlayerHud.unk20 =
         g_PlayerHud.unk0C * 100 / g_PlayerHud.unk10;
     g_PlayerHud.unk24 = 0;
-    g_PlayerHud.primIndex1 = AllocatePrimitiveChain(PRIM_GT4, RIC_HUD_NUM_SPRITES);
+    g_PlayerHud.primIndex1 =
+        AllocatePrimitiveChain(PRIM_GT4, RIC_HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);

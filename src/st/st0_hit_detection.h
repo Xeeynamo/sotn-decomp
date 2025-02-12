@@ -439,7 +439,7 @@ void OVL_EXPORT(HitDetection)(void) {
                 }
                 PreventEntityFromRespawning(entFrom5C);
                 g_api.UpdatePlayerStats(g_api.enemyDefs[entFrom5C->enemyId].exp,
-                                    g_api.enemyDefs[miscVar1].level);
+                                        g_api.enemyDefs[miscVar1].level);
                 if ((entFrom5C->flags & FLAG_UNK_1000) &&
                     (g_Status.killCount < 999999)) {
                     g_Status.killCount++;
