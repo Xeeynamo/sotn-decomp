@@ -217,7 +217,7 @@ void func_80109594() {
         DestroyEntity(e);
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
-        e->palette = 0x8100;
+        e->palette = PAL_OVL(0x100);
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 

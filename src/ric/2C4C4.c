@@ -24,7 +24,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = 0x46;
-        self->palette = 0x812F;
+        self->palette = PAL_OVL(0x12F);
         self->posX.i.hi = self->posX.i.hi;
         self->posY.i.hi = self->posY.i.hi - 0x10;
         self->ext.holywater.angle = (rand() & 0x7F) + 0xDC0;
@@ -649,9 +649,9 @@ void RicEntitySubwpnCross(Entity* self) {
     }
     // Applies a flickering effect
     if (!((g_GameTimer >> 1) & 1)) {
-        self->palette = 0x81B1;
+        self->palette = PAL_OVL(0x1B1);
     } else {
-        self->palette = 0x81B0;
+        self->palette = PAL_OVL(0x1B0);
     }
     temp_a0 = self->ext.crossBoomerang.unk84;
     // This indexes into the unk84 array.
@@ -721,7 +721,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->animSet = ANIMSET_OVL(17);
         self->animCurFrame = D_80155E68[self->params];
         self->unk5A = 0x66;
-        self->palette = 0x81B0;
+        self->palette = PAL_OVL(0x1B0);
         self->drawMode = DRAW_TPAGE;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
@@ -2339,7 +2339,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
             RicSetSubweaponParams(entity);
             entity->unk5A = 0x79;
             entity->animSet = ANIMSET_DRA(14);
-            entity->palette = 0x819E;
+            entity->palette = PAL_OVL(0x19E);
             entity->anim = D_80155EA8;
             entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             entity->drawFlags = FLAG_DRAW_UNK8;

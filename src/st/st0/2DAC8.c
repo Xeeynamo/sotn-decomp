@@ -601,7 +601,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (--self->ext.dracFinalForm.timer == 0) {
                     self->animCurFrame = 0x5A;
                     self->unk5A = 0x5E;
-                    self->palette = 0x815F;
+                    self->palette = PAL_OVL(0x15F);
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->drawFlags =
                         FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
@@ -625,7 +625,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (D_801C2578 == 0) {
                     self->animCurFrame = 1;
                     self->unk5A = 0x50;
-                    self->palette = 0x815F;
+                    self->palette = PAL_OVL(0x15F);
                     self->drawFlags = FLAG_DRAW_UNK8;
                     self->unk6C = 0;
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;

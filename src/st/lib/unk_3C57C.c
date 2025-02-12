@@ -493,7 +493,7 @@ void func_us_801BDAE4(Entity* self) {
         break;
 
     case 15:
-        self->palette = 0x8160;
+        self->palette = PAL_OVL(0x160);
         if (g_Timer % 7 == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

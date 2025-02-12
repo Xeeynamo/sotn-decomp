@@ -449,7 +449,7 @@ void func_us_801CC984(Entity* self) {
         self->rotY = 0x180;
         self->unk6C = 0x80;
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-        self->palette = 0x815B;
+        self->palette = PAL_OVL(0x15B);
         self->unk5A = 0x4E;
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;

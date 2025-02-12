@@ -1272,7 +1272,7 @@ void func_8012F894(Entity* self) {
     f178_finish = false;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         f178_finish = true;
-        self->palette = PLAYER.palette = 0x810D;
+        self->palette = PLAYER.palette = PAL_OVL(0x10D);
     }
     prim = &g_PrimBuf[self->primIndex];
     func_8012F178(prim, f178_count, f178_finish);

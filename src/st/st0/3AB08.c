@@ -713,7 +713,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         InitializeEntity(g_EInit3DObject);
         entity->animSet = ANIMSET_OVL(7);
         entity->unk5A = 0x57;
-        entity->palette = 0x8285;
+        entity->palette = PAL_OVL(0x285);
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->unk6C = 0x40;
         entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
