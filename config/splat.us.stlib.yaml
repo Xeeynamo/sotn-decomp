@@ -52,6 +52,8 @@ segments:
       - [0x26B0, .data, e_misc_2]
       - [0x2714, .data, e_bloody_zombie]
       - [0x280C, data]
+      - [0x2954, .data, e_dhuron]
+      - [0x2AE0, data]
       - [0x2B80, .data, en_thornweed_corpseweed]
       - [0x2C38, data] # unused data?
       - [0x2C48, .data, e_skeleton]
