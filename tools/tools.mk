@@ -18,8 +18,9 @@ function-finder:
 
 duplicates-report:
 	$(MAKE) force_symbols
-	$(MAKE) force_extract
+	$(MAKE) -j extract
+	$(PYTHON) tools/function_finder/fix_matchings.py
 	cd tools/dups; \
 	    cargo run --release -- \
-            --threshold .90 \
+            --threshold .98 \
             --output-file ../../gh-duplicates/duplicates.txt
