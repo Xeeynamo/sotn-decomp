@@ -2,7 +2,7 @@
 pub struct Function {
     pub name: String,
     pub ops: Vec<Instruction>,
-    pub key: Vec<u8>,
+    pub key: Vec<u32>,
     pub dir: String,
     pub file: String,
     pub similarity: f64,
