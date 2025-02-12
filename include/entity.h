@@ -2804,11 +2804,10 @@ typedef struct {
 } ET_LibraryShadow;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ struct Primitive* unk80;
     /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 : 16;
+    /* 0x86 */ s16 unk86;
     /* 0x88 */ u8 unk88;
     /* 0x89 */ u8 unk89;
     /* 0x8A */ s16 : 16;
