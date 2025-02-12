@@ -685,7 +685,7 @@
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
 | dra    | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
 | dra    | func_psp_09136BF8                   |       83 |         14 |        |                                 |       |
-| dra    | func_psp_09127348                   |       84 |          4 |        | https://decomp.me/scratch/R1Wqf | 0.897 |
+| dra    | func_psp_09127348                   |       84 |          4 |        | https://decomp.me/scratch/R1Wqf | 0.974 |
 | lib    | EntityGreyPuffSpawner               |       84 |          5 |        |                                 |       |
 | dra    | func_psp_090EEE78                   |       84 |          7 |        |                                 |       |
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
@@ -1214,7 +1214,7 @@
 | lib    | func_psp_092644E0                   |      642 |         61 | Yes    |                                 |       |
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
-| lib    | func_psp_0924D598                   |      655 |         98 |        |                                 |       |
+| lib    | func_psp_0924D598                   |      655 |         98 |        | https://decomp.me/scratch/7MvPJ | 0.973 |
 | dra    | EntityHitByLightning                |      657 |         61 |        |                                 |       |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib    | UnkRecursivePrimFunc2               |      663 |         11 |        |                                 |       |
