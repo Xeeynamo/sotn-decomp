@@ -111,7 +111,7 @@ void func_us_801B84E4(Entity* self) {
             self->ext.et_801B84E4.unk7E = self->ext.et_801B84E4.unk7C + 0x20;
             self->velocityX = FIX(-1.375);
             self->posY.i.hi -= 0x16;
-            self->animSet = 0x8001;
+            self->animSet = ANIMSET_OVL(1);
             self->zPriority = PLAYER.zPriority;
             self->animFrameDuration = self->animFrameIdx = 0;
             self->anim = D_us_80181044;
@@ -637,7 +637,7 @@ void func_us_801B9BE4(Entity* self) {
             (self + 1)->posY.i.hi += 0x10;
             self->step = 3;
         } else {
-            self->palette = 0x8041;
+            self->palette = PAL_OVL(0x41);
             self->hitboxState = 3;
             self->hitboxWidth = 6;
             self->hitboxHeight = 0x12;

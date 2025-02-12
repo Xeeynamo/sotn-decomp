@@ -1528,7 +1528,7 @@ void func_8011B5A4(Entity* self) {
         self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->palette = 0x8195;
+        self->palette = PAL_OVL(0x195);
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
         self->drawMode = DRAW_TPAGE;
@@ -1660,12 +1660,12 @@ void EntityUnkId24(Entity* self) {
             self->posX.i.hi -= 32 - (rand() & 63);
             self->posY.i.hi -= 48 - (rand() & 63);
             self->drawMode = DRAW_TPAGE;
-            self->palette = 0x8195;
+            self->palette = PAL_OVL(0x195);
         } else {
             self->posY.i.hi -= 12 - rand() % 24;
             self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = self->rotY = 0x80;
-            self->palette = 0x8170;
+            self->palette = PAL_OVL(0x170);
         }
         self->step++;
         return;
@@ -2691,7 +2691,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotZ = PLAYER.rotZ;
         entity->facingLeft = PLAYER.facingLeft;
-        entity->palette = 0x8102;
+        entity->palette = PAL_OVL(0x102);
         entity->rotX = entity->rotY = 0x100;
         entity->step++;
         return;

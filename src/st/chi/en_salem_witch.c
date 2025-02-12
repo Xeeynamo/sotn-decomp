@@ -867,7 +867,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         return;
 
     case SPAWN_PROJECTILES:
-        self->animSet = -0x7FFA;
+        self->animSet = ANIMSET_OVL(6);
         self->unk5A = 0x4B;
         self->rotY = BurstStartRotation;
         self->rotX = BurstStartRotation;

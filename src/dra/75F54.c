@@ -262,7 +262,7 @@ bool BatFormFinished(void) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
         D_800AFDA4[1] = 6;
-        g_Entities->palette = 0x810D;
+        g_Entities->palette = PAL_OVL(0x10D);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);

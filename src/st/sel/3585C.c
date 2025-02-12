@@ -17,7 +17,7 @@ void func_801B585C(u16 arg0) {
         self->animCurFrame = 0;
         self->unk5A = 0;
         self->ext.unkSelEnts.unk80.val = 0;
-        self->palette = 0x8100;
+        self->palette = PAL_OVL(0x100);
         self->step++;
         break;
 
