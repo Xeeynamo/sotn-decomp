@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
+use std::io;
 use std::process::exit;
 
 mod levenshtein_hashmap;
@@ -51,11 +52,20 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
         }
     }
 
-    // use the 'op' part of the instruction to find duplicates
-    // (bits above the 26th)
-    let key: Vec<u8> = instructions
+    // mask any fields which may refer to global symbols. this will
+    // mask false positives, but keep most immediates and local vars.
+    let key: Vec<u32> = instructions
         .iter()
-        .map(|num| (num.op >> 26) as u8)
+        .map(|num|
+            match num.op >> 26 {
+                // r-type
+                0 => num.op,
+                // j-type
+                2 | 3 => num.op & 0xFC000000,
+                // i-type
+                _ => num.op & 0xFFFF0000
+            }
+        )
         .collect();
 
     Function {
@@ -133,6 +143,10 @@ struct Args {
     /// Directory to parse asm from (2 required)
     #[arg(short, long)]
     dir: Vec<String>,
+
+    /// Show progress
+    #[arg(short, long)]
+    progress: bool,
 
     /// File to write output to
     #[arg(short, long)]
@@ -222,7 +236,7 @@ struct SrcAsmPair {
     path_matcher: String,
 }
 
-fn do_dups_report(output_file: Option<String>, threshold: f64) {
+fn do_dups_report(output_file: Option<String>, threshold: f64, show_progress: bool) {
     // full dups report
     let mut hash_map = LevenshteinHashMap::new(threshold);
 
@@ -443,13 +457,26 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         }
     }
 
+    let mut n = 0;
     for file in &files {
+        let mut m = 0;
         for func in &file.funcs {
+            if show_progress {
+                print!("\x1B[2K\rfile {} of {}; func {} of {}", n, files.len(), m, file.funcs.len());
+                io::stdout().flush().expect("Unable to flush stdout");
+            }
             hash_map.insert(func.key.clone(), func.clone());
+            m += 1;
         }
+        n += 1;
     }
 
-    let mut entries: Vec<(&Vec<u8>, &Vec<Function>)> = hash_map.map.iter().collect();
+    if show_progress {
+        print!("\x1B[2K\r");
+        io::stdout().flush().expect("Unable to flush stdout");
+    }
+
+    let mut entries: Vec<(&Vec<u32>, &Vec<Function>)> = hash_map.map.iter().collect();
 
     // sort by filename
     entries.sort_by(|(_, functions1), (_, functions2)| functions1[0].file.cmp(&functions2[0].file));
@@ -555,6 +582,12 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
 
     for func_0 in &files[0].funcs {
         for func_1 in &files[1].funcs {
+            let size_diff = func_0.key.len().min(func_1.key.len()) as f64 /
+                func_0.key.len().max(func_1.key.len()) as f64;
+            if size_diff < threshold {
+                continue;
+            }
+
             let result = levenshtein_similarity(&func_0.key, &func_1.key);
 
             if result >= threshold {
@@ -613,11 +646,11 @@ fn main() {
     if num_dirs == 2 {
         do_ordered_compare(dirs, threshold);
     } else {
-        do_dups_report(output_file, threshold);
+        do_dups_report(output_file, threshold, args.progress);
     }
 }
 
-fn levenshtein_similarity(s1: &[u8], s2: &[u8]) -> f64 {
+fn levenshtein_similarity(s1: &[u32], s2: &[u32]) -> f64 {
     let len1 = s1.len();
     let len2 = s2.len();
     let mut dp = vec![vec![0; len2 + 1]; len1 + 1];
@@ -667,21 +700,25 @@ fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>) {
 mod tests {
     use super::*;
 
+    fn str_as_u32_vec(s: &str) -> Vec<u32> {
+        s.as_bytes().iter().map(|b| *b as u32).collect::<Vec<u32>>()
+    }
+
     // two equal strings
     #[test]
     fn test_levenshtein_similarity_1() {
-        let s1 = "hello".as_bytes();
-        let s2 = "hello".as_bytes();
-        let similarity = levenshtein_similarity(s1, s2);
+        let s1 = str_as_u32_vec("hello");
+        let s2 = str_as_u32_vec("hello");
+        let similarity = levenshtein_similarity(&s1, &s2);
         assert_eq!(similarity, 1.0);
     }
 
     // almost the same (swap)
     #[test]
     fn test_levenshtein_similarity_09() {
-        let s1 = "hello hello hello".as_bytes();
-        let s2 = "hello hello hellu".as_bytes();
-        let similarity = levenshtein_similarity(s1, s2);
+        let s1 = str_as_u32_vec("hello hello hello");
+        let s2 = str_as_u32_vec("hello hello hellu");
+        let similarity = levenshtein_similarity(&s1, &s2);
         assert!(similarity >= 0.9);
         assert!(similarity < 1.0);
     }
@@ -689,9 +726,9 @@ mod tests {
     // almost the same (insertion)
     #[test]
     fn test_levenshtein_similarity_09_2() {
-        let s1 = "hello hello hello".as_bytes();
-        let s2 = "hello hell o hello".as_bytes();
-        let similarity = levenshtein_similarity(s1, s2);
+        let s1 = str_as_u32_vec("hello hello hello");
+        let s2 = str_as_u32_vec("hello hell o hello");
+        let similarity = levenshtein_similarity(&s1, &s2);
         assert!(similarity >= 0.9);
         assert!(similarity < 1.0);
     }
@@ -699,9 +736,9 @@ mod tests {
     // totally different
     #[test]
     fn test_levenshtein_similarity_0() {
-        let s1 = "hello".as_bytes();
-        let s2 = "world".as_bytes();
-        let similarity = levenshtein_similarity(s1, s2);
+        let s1 = str_as_u32_vec("hello");
+        let s2 = str_as_u32_vec("world");
+        let similarity = levenshtein_similarity(&s1, &s2);
         assert_eq!(similarity, 0.2);
     }
 
