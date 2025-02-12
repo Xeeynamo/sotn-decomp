@@ -16,7 +16,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 16);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -102,7 +102,7 @@ void EntityStopWatch(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->primIndex = AllocPrimitives(PRIM_GT4, 3);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 3);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -438,7 +438,7 @@ void EntitySubwpnBibleTrail(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -499,7 +499,7 @@ void EntitySubwpnBible(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

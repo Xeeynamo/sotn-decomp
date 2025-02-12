@@ -43,7 +43,7 @@ void func_us_801D542C(Entity* self) {
         self->animCurFrame = 7;
         self->zPriority = 0xB4;
         self->drawFlags |= FLAG_DRAW_ROTZ;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xA);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xA);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

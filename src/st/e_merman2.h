@@ -55,9 +55,9 @@ void EntitySplashWater(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCommon);
         if (width && index2 != 7) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         } else {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         }
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -237,7 +237,7 @@ void EntitySurfacingWater(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -364,7 +364,7 @@ void EntitySideWaterSplash(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -446,7 +446,7 @@ void EntitySmallWaterDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -518,7 +518,7 @@ void EntityWaterDrop(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x21);
+        primIndex = g_api.AllocatePrimitives(PRIM_TILE_ALT, 0x21);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -726,7 +726,7 @@ void EntityMerman2(Entity* self) {
             self->velocityX = 0;
             self->velocityY = FIX(-8.5);
             self->step_s++;
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (primIndex != -1) {
                 u32 v0;
                 prim = &g_PrimBuf[primIndex];
@@ -1068,7 +1068,7 @@ void EntityMerman2(Entity* self) {
             }
             self->velocityY = FIX(-1);
             self->step_s++;
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
             if (primIndex != -1) {
                 u32 v0;
                 prim = &g_PrimBuf[primIndex];
@@ -1162,7 +1162,7 @@ void EntityExplosion2(Entity* self) {
         self->hitboxState = 0;
         self->zPriority += 4;
         if (self->params != 0) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -1253,7 +1253,7 @@ void EntityMermanWaterSplash(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimitives(PRIM_TILE, 4);
+        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 4);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

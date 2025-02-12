@@ -9,7 +9,7 @@ void EntityEnemyBlood(Entity* self) {
 
     switch (self->step) {
     case 0:
-        i = g_api.func_800EDB58(PRIM_TILE_ALT, NParticles);
+        i = g_api.AllocatePrimitives(PRIM_TILE_ALT, NParticles);
         if (i != -1) {
             InitializeEntity(g_EInitObtainable);
             facingLeft = self->params;

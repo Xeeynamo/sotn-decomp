@@ -55,7 +55,7 @@ void EntityWeaponAttack(Entity* self) {
         self->zPriority = PLAYER.zPriority - 6;
         self->flags = FLAG_POS_CAMERA_LOCKED;
         if (rand() & 7) {
-            self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x20);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 0x20);
             if (self->primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
             }

@@ -69,7 +69,7 @@ void EntityBloodSplatter(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -378,7 +378,7 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_DYING:
         if (self->step_s == 0) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x14);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -490,7 +490,7 @@ void EntityBloodDrips(Entity* self) { // BloodDrips
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;

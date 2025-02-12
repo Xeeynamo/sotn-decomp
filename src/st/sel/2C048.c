@@ -185,7 +185,7 @@ static void InitMainMenuUI(void) {
     s32 x;
 
     // Decoration at the top left for "Select Your Destiny"
-    D_801BAF18[GFX_UNK_0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_UNK_0][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     i = 0;
     y = 0;
     x = -0x20;
@@ -198,7 +198,7 @@ static void InitMainMenuUI(void) {
     prim->drawMode = DRAW_DEFAULT;
 
     for (; i < NUM_MENU_OPTIONS; i++) {
-        D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+        D_801BAF18[i + 1][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(
             prim, x, y, 127, 31, g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
@@ -215,7 +215,7 @@ static void InitMainMenuUI(void) {
         x += 64;
     }
 
-    D_801BAF18[6][0] = g_api.AllocPrimitives(PRIM_GT4, 4);
+    D_801BAF18[6][0] = g_api.AllocPrimBuffers(PRIM_GT4, 4);
     prim = &g_PrimBuf[D_801BAF18[6][0]];
     SetTexturedPrimRect(prim, 32, 176, 16, 16, 0xA0, 0x50);
     func_801B1D88(prim);
@@ -248,7 +248,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_801BAF18[7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[7][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[7][0]];
     SetTexturedPrimRect(prim, 112, 48, 160, 48, 0, 0x50);
     func_801B1D88(prim);
@@ -257,7 +257,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[8][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[8][0]];
     SetTexturedPrimRect(prim, 128, 72, 15, 15, 0xF0, 0xF0);
     func_801B1D88(prim);
@@ -266,7 +266,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[9][0] = g_api.AllocPrimitives(PRIM_SPRT, 3);
+    D_801BAF18[9][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 3);
     prim = &g_PrimBuf[D_801BAF18[9][0]];
     for (i = 0; i < 3; i++) {
         prim->x0 = 48 + i * 128;
@@ -287,7 +287,7 @@ static void InitMainMenuUI(void) {
         prim = prim->next;
     }
 
-    D_801BAF18[10][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[10][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[10][0]];
     SetTexturedPrimRect(prim, 64, 104, 32, 32, 0, 0x48);
     func_801B1D88(prim);
@@ -296,7 +296,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[11][0]];
     SetTexturedPrimRect(prim, 104, 88, 176, 80, 0, 0);
     func_801B1D88(prim);
@@ -305,10 +305,10 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[GFX_UNK_12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    D_801BAF18[GFX_UNK_12][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 8);
     func_801AC084(0xC, 0);
 
-    D_801BAF18[GFX_WND_CARD_1][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[GFX_WND_CARD_1][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[13][0]];
     prim->x0 = 24;
     prim->y0 = 56;
@@ -322,7 +322,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[GFX_WND_CARD_2][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[GFX_WND_CARD_2][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[14][0]];
     prim->x0 = 280;
     prim->y0 = 56;
@@ -336,7 +336,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[15][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[15][0]];
     prim->x0 = 148;
     prim->y0 = 16;
@@ -350,7 +350,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[16][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[16][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[16][0]];
     prim->x0 = 160;
     prim->y0 = 96;
@@ -364,7 +364,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x20;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[17][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[17][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[17][0]];
     prim->y0 = 192;
     prim->x0 = 96;
@@ -378,7 +378,7 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x20;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_801BAF18[18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
+    D_801BAF18[18][0] = g_api.AllocPrimBuffers(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_801BAF18[18][0]];
     SetTexturedPrimRect(prim, 104, 48, 176, 80, 0, 0);
     func_801B1D88(prim);
@@ -394,10 +394,10 @@ static void InitMainMenuUI(void) {
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[19][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    D_801BAF18[19][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 8);
     func_801AC084(0x13, -0x28);
 
-    D_801BAF18[20][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    D_801BAF18[20][0] = g_api.AllocPrimBuffers(PRIM_SPRT, 1);
     prim = &g_PrimBuf[D_801BAF18[20][0]];
     prim->x0 = 160;
     prim->y0 = 56;
@@ -433,7 +433,7 @@ static void InitMainMenuBackgroundAndFadeMask(void) {
     s32 i;
 
     // Seems to be the background on the main menu (dark blue/grey door thing?)
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+    primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
     prim = &g_PrimBuf[primIndex];
     D_801BAFC0 = primIndex;
     for (i = 0; i < 3; i++) {
@@ -448,7 +448,7 @@ static void InitMainMenuBackgroundAndFadeMask(void) {
     // When the main menu is loaded in, it is covered by a black mask that fades
     // away. This part creates the initial mask, then MainMenuFadeIn deals
     // with fading it out.
-    primIndex = g_api.AllocPrimitives(PRIM_TILE, 2);
+    primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 2);
     prim = &g_PrimBuf[primIndex];
     MainMenuMaskPrimIndex = primIndex;
     for (i = 0; prim != NULL; i++) {
@@ -1126,7 +1126,7 @@ void func_801AECA0(void) {
         x = xnext;
     }
 
-    g_api.func_800EA5E4(0x8004);
+    g_api.InitClutAnimation(0x8004);
 }
 
 void CheckIfMemcardsCanBeUsed(void) {
@@ -1272,12 +1272,12 @@ void SEL_Update(void) {
         g_GameTimer = 0;
         D_801BAF08 = 0;
         func_801B2D6C();
-        g_api.func_800EA5E4(0);
-        g_api.func_800EA5E4(0x8000);
-        g_api.func_800EA5E4(0x8001);
-        g_api.func_800EA5E4(0x8002);
-        g_api.func_800EA5E4(0x8003);
-        g_api.func_800EA5E4(0x8006);
+        g_api.InitClutAnimation(0);
+        g_api.InitClutAnimation(0x8000);
+        g_api.InitClutAnimation(0x8001);
+        g_api.InitClutAnimation(0x8002);
+        g_api.InitClutAnimation(0x8003);
+        g_api.InitClutAnimation(0x8006);
         SetupFileChoose();
         InitMainMenuBackgroundAndFadeMask();
         InitMainMenuUI();
@@ -1377,7 +1377,7 @@ void SEL_Update(void) {
             func_801B19F4();
             func_801B1DA8();
             func_801B2D1C();
-            g_api.func_800EA538(0);
+            g_api.ResetClutAnimation(0);
             if (g_PlayableCharacter == 0) {
                 SetGameState(Game_VideoPlayback);
             } else {

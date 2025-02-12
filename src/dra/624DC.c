@@ -11,7 +11,7 @@ void func_801024DC(void) {
     Primitive* prim;
     s32 x;
 
-    D_8013799C = AllocPrimitives(PRIM_TILE, 4);
+    D_8013799C = AllocPrimBuffers(PRIM_TILE, 4);
     prim = &g_PrimBuf[D_8013799C];
     for (x = 0; prim != NULL; x++) {
         prim->x0 = (x & 1) * 128;
@@ -25,7 +25,7 @@ void func_801024DC(void) {
     D_801379A4[1] = 0;
     D_801379A4[0] = 0;
 
-    D_801379A0 = AllocPrimitives(PRIM_GT4, 1);
+    D_801379A0 = AllocPrimBuffers(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801379A0];
     prim->u0 = 0;
     prim->v0 = 0;
@@ -81,7 +81,7 @@ void func_801026BC(s32 arg0) {
         prim->y2 = prim->y3 = -15;
     }
 
-    func_80107250(prim, arg0 * 2);
+    SetPrimitiveAllVerticesColorIntensity(prim, arg0 * 2);
 
     if (arg0 == 0x40) {
         prim->drawMode = DRAW_DEFAULT;

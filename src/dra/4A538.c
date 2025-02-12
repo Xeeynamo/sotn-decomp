@@ -8,7 +8,7 @@ extern u16 D_801374B8[ICON_SLOT_NUM];
 extern u16 D_801374F8[ICON_SLOT_NUM];
 extern u16 D_80137538[ICON_SLOT_NUM];
 
-void func_800EA538(s32 arg0) {
+void ResetClutAnimation(s32 arg0) {
     Unkstruct_8006C3C4* var_v0;
     s32 temp;
     s32 v1;
@@ -36,14 +36,14 @@ void func_800EA538(s32 arg0) {
     }
 }
 
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
+void SetBackgroundColor(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[3] = arg0;
     D_8003C0EC[0] = arg1;
     D_8003C0EC[1] = arg2;
     D_8003C0EC[2] = arg3;
 }
 
-s32 func_800EA5E4(u32 arg0) {
+s32 InitClutAnimation(u32 arg0) {
     u16 temp_v0;
     s32 i;
     s32 j;
@@ -115,7 +115,7 @@ s32 func_800EA5E4(u32 arg0) {
 
 // Takes a color "col" in RGB555 and increments/decrements each component
 // to bring it closer to the target by 1.
-u16 func_800EA720(u16 target, u16 col) {
+u16 BlendColorTowardsTarget(u16 target, u16 col) {
     if (GET_RED(target) > GET_RED(col)) {
         col = (col & UNRED_MASK) | (GET_RED(col) + 1);
     }
@@ -140,7 +140,7 @@ u16 func_800EA720(u16 target, u16 col) {
     return col;
 }
 
-void func_800EA7CC(void) {
+void UpdateClutAnimations(void) {
     // stores which palettes have been invalidated and need to be re-uploaded
     // to the VRAM
     u8 palettes[0x30];
@@ -215,7 +215,7 @@ void func_800EA7CC(void) {
             break;
         case 2: // blend to destination color?
             for (j = 0; j < count; j++) {
-                *clut = func_800EA720(*data++, *clut);
+                *clut = BlendColorTowardsTarget(*data++, *clut);
                 clut++;
             }
             for (j = 0; j < LEN(palettes); j++) {
@@ -238,7 +238,7 @@ void func_800EA7CC(void) {
             for (j = 0; j < count; j++) {
                 temp_a0_2 = *data++;
                 temp_s0_2 = *clut;
-                temp_v0_3 = func_800EA720(temp_a0_2, temp_s0_2);
+                temp_v0_3 = BlendColorTowardsTarget(temp_a0_2, temp_s0_2);
                 if (temp_s0_2 != temp_v0_3) {
                     isAnimNotDone = 1;
                 }
@@ -317,19 +317,19 @@ void func_800EA7CC(void) {
     }
 }
 
-s32 func_800EAD0C(void) { // the return type is needed for matching
-    func_800EA5E4(4);
-    func_800EA5E4(5);
-    func_800EA5E4(6);
-    func_800EA5E4(7);
-    func_800EA5E4(8);
+s32 InitStageClutAnimations(void) { // the return type is needed for matching
+    InitClutAnimation(4);
+    InitClutAnimation(5);
+    InitClutAnimation(6);
+    InitClutAnimation(7);
+    InitClutAnimation(8);
 
     if (g_PlayableCharacter == PLAYER_ALUCARD && g_StageId != STAGE_ST0) {
-        func_800EA5E4(0x17);
+        InitClutAnimation(0x17);
     }
 }
 
-void func_800EAD7C(void) {
+void InitializeClutIds(void) {
     s32 index = 0;
     s32 i;
     s32 j;
@@ -353,7 +353,7 @@ void func_800EAD7C(void) {
     }
 }
 
-void func_800EAEA4(void) {
+void ClearEquipIconBuffers(void) {
     u16* ptr;
     s32 i;
 
@@ -374,7 +374,7 @@ void ResetPendingGfxLoad(void) {
         gfxLoad->kind = GFX_BANK_NONE;
     }
 
-    func_800EAEA4();
+    ClearEquipIconBuffers();
 }
 
 void LoadGfxAsync(s32 gfxId) {
@@ -592,7 +592,7 @@ void LoadPendingGfx(void) {
     }
 }
 
-void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
+void LoadPixPattern(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
     LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
@@ -631,7 +631,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     D_80137538[index] = palette;
 }
 
-void func_800EB6B4(void) {
+void LoadAllEquipIcons(void) {
     s32 i;
 
     for (i = 0; i < 32; i++) {
@@ -639,7 +639,7 @@ void func_800EB6B4(void) {
     }
 }
 
-bool func_800EB720(void) {
+bool IsGfxLoadPending(void) {
     GfxLoad* temp = g_GfxLoad;
     s32 i;
 
@@ -652,7 +652,7 @@ bool func_800EB720(void) {
     return false;
 }
 
-void func_800EB758(
+void TransformPolygon(
     s16 pivotX, s16 pivotY, Entity* e, u8 flags, POLY_GT4* p, u8 flipX) {
     const int H_CENTER = FLT(STAGE_WIDTH / 2);
     s16 px, py;
@@ -942,7 +942,7 @@ void RenderEntities(void) {
                 poly->u3 = uvLeft;
                 poly->v3 = uvBottom;
             }
-            func_800EB758(r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
+            TransformPolygon(r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
             palette = entity->palette;
             if (palette & 0x8000) {
                 poly->clut = g_ClutIds[palette & 0x7FFF];
@@ -1069,7 +1069,7 @@ void RenderEntities(void) {
                         }
                     }
 #endif
-                    func_800EB758(
+                    TransformPolygon(
                         r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
                 palette = entity->palette;
@@ -1652,7 +1652,7 @@ void DestroyAllPrimitives(void) {
     }
 }
 
-s32 func_800EDAE4(void) {
+s32 ResetDrawEnvironments(void) {
     s32 i;
     DR_ENV* ptr = &D_800974AC[0];
 
@@ -1664,7 +1664,7 @@ s32 func_800EDAE4(void) {
 #endif
 }
 
-DR_ENV* func_800EDB08(Primitive* prim) {
+DR_ENV* AllocateDrawEnvironment(Primitive* prim) {
     s32 i;
     DR_ENV* dr = &D_800974AC[0];
 
@@ -1687,7 +1687,7 @@ s32 D_800A2438 = 0;
 
 // This function casts its return value as an s16, but at least one caller
 // (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
-s32 func_800EDB58(u8 primType, s32 count) {
+s32 AllocatePrimitives(u8 primType, s32 count) {
     Primitive* prim;
     Primitive* temp_v0;
     bool isLooping;
@@ -1736,7 +1736,8 @@ s32 func_800EDB58(u8 primType, s32 count) {
     return (s16)primStartIdx;
 }
 
-s32 AllocPrimitives(u8 primType, s32 count) {
+//AllocatePrimitiveBuffers
+s32 AllocPrimBuffers(u8 primType, s32 count) {
     s32 primIndex = 0;
     Primitive* prim = g_PrimBuf;
     u8* dstPrimType = &g_PrimBuf->type;
@@ -1753,7 +1754,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
                 }
             } else {
                 *dstPrimType = primType;
-                index = AllocPrimitives(primType, count - 1);
+                index = AllocPrimBuffers(primType, count - 1);
                 if (index == -1) {
                     *dstPrimType = 0;
                     return -1;
@@ -1773,7 +1774,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
     return -1;
 }
 
-s32 func_800EDD9C(u8 type, s32 count) {
+s32 AllocatePrimitiveChain(u8 type, s32 count) {
     Primitive* prim;
     s32 i;
     s16 foundPolyIndex;
@@ -1789,7 +1790,7 @@ s32 func_800EDD9C(u8 type, s32 count) {
                 prim->next = NULL;
             } else {
                 prim->type = type;
-                foundPolyIndex = func_800EDD9C(type, count - 1);
+                foundPolyIndex = AllocatePrimitiveChain(type, count - 1);
                 prim->next = &g_PrimBuf[foundPolyIndex];
             }
             foundPolyIndex = i;

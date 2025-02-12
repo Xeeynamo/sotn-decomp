@@ -134,7 +134,7 @@ s32 func_us_801CA51C(Entity* axeKnight) {
     case 0:
         clutBase = g_EInitAxeKnight[3];
         dataPtr = sprites_3[axeKnight->animCurFrame];
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {
             axeKnight->flags |= FLAG_HAS_PRIMS;
             axeKnight->primIndex = primIndex;
@@ -220,7 +220,7 @@ s32 func_us_801CA51C(Entity* axeKnight) {
         axeKnight->step_s++;
         break;
     case 17:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             axeKnight->flags |= FLAG_HAS_PRIMS;
             axeKnight->primIndex = primIndex;

@@ -253,7 +253,7 @@ void EntityStatueGear(Entity* self) {
             self->step_s++;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
         if (primIndex == -1) {
             return;
         }

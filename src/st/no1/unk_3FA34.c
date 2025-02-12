@@ -59,7 +59,7 @@ void func_us_801BFB40(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 6);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -272,7 +272,7 @@ void func_us_801C01F0(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -639,7 +639,7 @@ void func_us_801C10F4(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->ext.et_801C10F4.unk80 = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x20);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -648,7 +648,7 @@ void func_us_801C10F4(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         D_us_801D6380 = prim;
-        if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
+        if (g_api.AllocateDrawEnvironment((POLY_GT4*)prim) == NULL) {
             DestroyEntity(self);
             return;
         }
@@ -657,7 +657,7 @@ void func_us_801C10F4(Entity* self) {
         prim->drawMode = DRAW_HIDE;
 
         prim = prim->next;
-        if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
+        if (g_api.AllocateDrawEnvironment((POLY_GT4*)prim) == NULL) {
             DestroyEntity(self);
             return;
         }

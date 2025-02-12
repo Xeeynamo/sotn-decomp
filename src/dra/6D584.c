@@ -10,8 +10,8 @@ void SetPlayerStep(s16 step) {
 u8 g_D_800ACF18[] = {10, 8, 8, 6, 6, 4, 4,   4,   4, 4,
                      4,  4, 4, 4, 4, 4, 255, 255, 0, 0};
 
-// Same function in RIC is func_8015C4AC
-void func_8010D59C(void) {
+// Same function in RIC is RicUpdateAfterImage
+void UpdateAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -78,7 +78,7 @@ u8 g_D_800ACF3C[] = {8,  12, 16, 20, 24, 28, 32, 32,
                      32, 32, 32, 32, 32, 32, 32, 32};
 
 // Equivalent in RIC is func_8015C6D4
-void func_8010D800(void) {
+void UpdateAfterImageOpacity(void) {
     byte pad[0x28];
     PlayerDraw* plDraw;
     Primitive* prim;
@@ -144,7 +144,7 @@ void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->animFrameIdx = 0;
 }
 
-AnimationFrame* func_8010DA70(AnimationFrame** frames) {
+AnimationFrame* GetAnimationFrame(AnimationFrame** frames) {
     u16* anim;
     s32 idx;
     u16* subanim;
@@ -205,26 +205,26 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
 void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
-    animFrame = func_8010DA70(frames);
+    animFrame = GetAnimationFrame(frames);
     if (g_CurrentEntity->animFrameDuration != -1) {
         if (g_CurrentEntity->animFrameDuration == 0) {
             g_CurrentEntity->animFrameDuration = animFrame->duration;
         } else if (--g_CurrentEntity->animFrameDuration == 0) {
             g_CurrentEntity->animFrameIdx++;
-            animFrame = func_8010DA70(frames);
+            animFrame = GetAnimationFrame(frames);
             // Using a switch doesn't work
             if (animFrame->duration == 0x0) {
                 g_CurrentEntity->animFrameIdx = animFrame->unk2;
-                animFrame = func_8010DA70(frames);
+                animFrame = GetAnimationFrame(frames);
                 g_CurrentEntity->animFrameDuration = animFrame->duration;
             } else if (animFrame->duration == 0xFFFF) {
                 g_CurrentEntity->animFrameIdx--;
                 g_CurrentEntity->animFrameDuration = -1;
-                animFrame = func_8010DA70(frames);
+                animFrame = GetAnimationFrame(frames);
             } else if (animFrame->duration == 0xFFFE) {
                 g_CurrentEntity->ext.player.anim = animFrame->unk2 & 0xFF;
                 g_CurrentEntity->animFrameIdx = animFrame->unk2 >> 8;
-                animFrame = func_8010DA70(frames);
+                animFrame = GetAnimationFrame(frames);
                 g_CurrentEntity->animFrameDuration = animFrame->duration;
             } else {
                 g_CurrentEntity->animFrameDuration = animFrame->duration;
@@ -313,7 +313,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     return ret;
 }
 
-void func_8010DF70(void) {
+void PlayPlayerAnimation(void) {
     g_CurrentEntity = &PLAYER;
 
     switch (PLAYER.ext.player.anim) {
@@ -326,7 +326,7 @@ void func_8010DF70(void) {
     }
 }
 
-void func_8010DFF0(s32 resetAnims, s32 arg1) {
+void ResetAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
     s32 i;
 
@@ -355,14 +355,14 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 }
 
-void func_8010E0A8(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
+void ResetAfterImageCounter(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
 
-void func_8010E0B8(void) {
+void ResetAfterImageFlags(void) {
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-void func_8010E0D0(s32 arg0) {
+void CreateAfterImageEntities(s32 arg0) {
     Entity* entity;
     Entity* player;
 
@@ -381,10 +381,10 @@ void func_8010E0D0(s32 arg0) {
             entity->flags |= FLAG_UNK_10000;
         }
     }
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
 }
 
-void func_8010E168(s32 arg0, s16 arg1) {
+void SetPlayerBlinkTimer(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
@@ -456,7 +456,7 @@ s32 CheckMoveDirection(void) {
     return 0;
 }
 
-s32 func_8010E334(s32 xStart, s32 xEnd) {
+s32 IsPlayerInRange(s32 xStart, s32 xEnd) {
     g_Player.unk7A = 1;
     // Interesting - this could have been all && conditions, but if you try,
     // PS1 optimizes into loading PLAYER.step as a word, rather than doing
@@ -480,14 +480,14 @@ void SetSpeedX(s32 speed) {
 }
 
 // Updates the Player velocity in the X Axis
-void func_8010E3B8(s32 velocityX) {
+void UpdatePlayerVelocityX(s32 velocityX) {
     if (PLAYER.entityRoomIndex == 1) {
         velocityX = -velocityX;
     }
     PLAYER.velocityX = velocityX;
 }
 
-void func_8010E3E0(void) {
+void DestroyEntityIfFlagSet(void) {
     if (g_Player.unk48) {
         DestroyEntity(&g_Entities[16]);
         g_Player.unk48 = 0;

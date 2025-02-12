@@ -138,7 +138,7 @@ void func_us_801B6198(Entity* self) {
             return;
         }
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -266,12 +266,12 @@ void func_us_801B6490(Entity* self) {
         D_us_80180EEC = g_CastleFlags[NO1_WEATHER] & 0x7F;
         g_CastleFlags[NO1_WEATHER] |= 0x80;
         animParams = &D_us_80180EF8[D_us_80180EEC];
-        g_api.func_800EA5E4(animParams->animSet);
+        g_api.InitClutAnimation(animParams->animSet);
         self->anim = animParams->anim;
         for (i = 0; i < 0xE; i++) {
             D_us_801D6340[i] = (i << 0xC) / 7;
         }
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, animParams->count);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, animParams->count);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -648,7 +648,7 @@ void func_us_801B7188(Entity* self) {
             InitializeEntity(D_us_8018095C);
             if (D_us_80180EEC == 0) {
                 g_api.PlaySfx(SFX_UNK_7AF);
-                self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
+                self->primIndex = g_api.AllocatePrimitives(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
                     return;
@@ -687,7 +687,7 @@ void func_us_801B7188(Entity* self) {
                 }
             }
             if (D_us_80180EEC == 2) {
-                self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x24);
+                self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x24);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);
                     return;

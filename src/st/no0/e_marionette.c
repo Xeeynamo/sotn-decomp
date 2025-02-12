@@ -471,7 +471,7 @@ void EntityMarionette(Entity* self) {
             dataPtr = (s16*)g_EInitMarionette;
             clut = *(dataPtr + 11);
             dataPtr = D_us_801BA12C[self->animCurFrame];
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, *dataPtr * 2);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;

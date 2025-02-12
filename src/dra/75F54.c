@@ -12,7 +12,7 @@ extern s32 g_BatScreechDone;
 extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
 
-void func_80115F54(void) {
+void PlayerStepKillWater(void) {
     PlayerDraw* plDraw;
     bool var_s2;
 
@@ -76,7 +76,7 @@ void func_80115F54(void) {
     }
 }
 
-void func_80116208(void) {
+void PlayerStepBossGrab(void) {
     DamageParam damage;
     s32 temp_s0;
 
@@ -100,7 +100,7 @@ void func_80116208(void) {
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
-                func_80115394(&damage, Player_BossGrab, 1);
+                PlayerStepKill(&damage, Player_BossGrab, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
@@ -140,7 +140,7 @@ void PlayerStepHellfire(void) {
         // Make factory with blueprint #33. Factory makes entities with ID 25.
         // This is EntityHellfireHandler.
         if (CreateEntFactoryFromEntity(g_CurrentEntity, 33, 0) == NULL) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         SetPlayerAnim(1);
         PLAYER.step_s++;
@@ -198,13 +198,13 @@ void PlayerStepHellfire(void) {
     }
     // Not sure why this cast to u16 is needed but it is
     if (((u16)runFinishingBlock) || (g_Player.unk5C == 0xFFFF)) {
-        func_8010E570(0);
+        LandToTheGround(0);
         SetPlayerAnim(0x3D);
-        func_80111CC0();
+        CreatePlayerEffectEntities();
     }
 }
 
-void func_801166A4(void) {
+void PlayerStepUnk48(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_80113EE0();
@@ -221,7 +221,7 @@ void func_801166A4(void) {
     case 1:
         if (PLAYER.animFrameDuration < 0) {
             PlaySfx(SFX_VO_ALU_WHAT);
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         break;
 
@@ -230,15 +230,15 @@ void func_801166A4(void) {
     }
 }
 
-void func_8011678C(void) {
+void PlayerStepUnk49(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
-        func_8010E570(0);
+        LandToTheGround(0);
     }
 }
 
-void func_801167D0(void) {
+void PlayerStepUnk50(void) {
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
@@ -468,7 +468,7 @@ void ControlBatForm(void) {
                     return;
                 }
 #endif
-                func_8010FAF4();
+                DestroyEquippedWeapon();
                 g_Player.unk66++;
             }
             DecelerateX(0x480);
@@ -760,7 +760,7 @@ void ControlBatForm(void) {
     g_BatScreechDone = screechDone;
 }
 
-void func_801177A0(void) {
+void PlayerUnBat(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -823,7 +823,7 @@ void func_801177A0(void) {
         break;
     case 1:
         if (g_Player.unk66 == 3) {
-            func_8010E83C(0);
+            ExecuteJump(0);
             PLAYER.posY.i.hi -= 3;
             if (!(g_Player.pl_vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
@@ -835,12 +835,12 @@ void func_801177A0(void) {
             D_800ACEDC_hd = 0x18;
 #endif
             g_Player.unk44 |= 0x100;
-            func_80111CC0();
+            CreatePlayerEffectEntities();
         }
         break;
     case 2:
         if (g_Player.unk66 == 3) {
-            func_8010E4D0();
+            HandlePlayerStuck();
         }
         break;
     }
@@ -849,7 +849,7 @@ void func_801177A0(void) {
     }
 }
 
-void func_80117AC0(void) {
+void PlayerStepStuck(void) {
     Collider collider;
     s32 collisionCount;
 
@@ -869,7 +869,7 @@ void func_80117AC0(void) {
     PLAYER.rotZ = 0;
     CheckMoveDirection();
     if (collisionCount == 0) {
-        func_8010E7AC();
+        ExecuteFall();
         return;
     }
 
@@ -957,12 +957,12 @@ void ControlMistForm(void) {
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     switch (PLAYER.step_s) {
     case 0:
-        func_800EA5E4(0x1BU);
+        InitClutAnimation(0x1BU);
         CheckMoveDirection();
         g_Player.unk48 = 0;
         g_Player.unk46 = 0;
         g_Player.unk44 = 0;
-        func_8010FAF4();
+        DestroyEquippedWeapon();
         CreateEntFactoryFromEntity(g_CurrentEntity, 73, 0);
         if (PLAYER.velocityX > 0) {
             PLAYER.velocityX = xSpeedOrtho;
@@ -978,11 +978,11 @@ void ControlMistForm(void) {
         }
         SetPlayerAnim(0xCA);
         D_800AFDA4[1] = PLAYER.animCurFrame;
-        func_800EA538(8);
+        ResetClutAnimation(8);
         if (!IsRelicActive(RELIC_GAS_CLOUD)) {
-            func_800EA5E4(0x11CU);
+            InitClutAnimation(0x11CU);
         } else {
-            func_800EA5E4(0x11FU);
+            InitClutAnimation(0x11FU);
             CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
         // Note that this means Power of Mist doesn't make mist infinite!
@@ -1105,7 +1105,7 @@ void ControlMistForm(void) {
     }
 }
 
-void func_801182F8(void) {
+void PlayerUnMist(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -1166,13 +1166,13 @@ void func_801182F8(void) {
         }
         if (g_Entities[16].step == 5) {
             PLAYER.palette = 0x8100;
-            func_8010FAF4();
+            DestroyEquippedWeapon();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5b), 0);
             if (PLAYER.step_s != 0) {
-                func_8010E4D0();
+                HandlePlayerStuck();
                 return;
             }
-            func_8010E83C(0);
+            ExecuteJump(0);
             PLAYER.posY.i.hi -= 3;
             if (!(g_Player.pl_vram_flag & 0x8000)) {
                 PLAYER.velocityY = -0x10000;
@@ -1183,7 +1183,7 @@ void func_801182F8(void) {
             D_800ACEDC_hd = 0x18;
 #endif
             g_Player.unk44 |= 0x100;
-            func_80111CC0();
+            CreatePlayerEffectEntities();
         }
     }
     if (func_80111DE8(1) != 0) {
@@ -1191,30 +1191,30 @@ void func_801182F8(void) {
     }
 }
 
-void func_80118614(void) {
+void PlayerStepSpellDM(void) {
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E570(0);
+        LandToTheGround(0);
     }
 }
 
-void func_80118640(void) {
+void PlayerStepSpellSB(void) {
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E470(0, 0);
+        ExecuteCrouch(0, 0);
     }
 }
 
-void func_80118670(void) {
+void PlayerStepSoulSteal(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
         PlaySfx(SFX_UI_MP_FULL);
         CreateEntFactoryFromEntity(g_CurrentEntity, 112, 0);
     }
     if (PLAYER.animFrameDuration < 0) {
-        func_8010E570(0);
+        LandToTheGround(0);
     }
 }
 
-void func_801186EC(void) {
+void PlayerStepSwordWarp(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;
@@ -1223,6 +1223,6 @@ void func_801186EC(void) {
         }
     } else if (--D_80138008 == 0) {
         PLAYER.palette = 0x8100;
-        func_8010E570(0);
+        LandToTheGround(0);
     }
 }

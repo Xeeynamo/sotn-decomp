@@ -34,7 +34,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         self->posY.i.hi = 0;
         self->unk68 = 0x80;
         // Composed of 15 primitives
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 15);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 15);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -324,7 +324,7 @@ void BoxPuzzleFloorButton(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -392,7 +392,7 @@ void BoxPuzzleSpikes(Entity* self, s16 primIndex) {
         self->attack = 7;
         self->hitboxState = 1;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -466,7 +466,7 @@ void EntityMovableBox(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -554,7 +554,7 @@ void EntityCannonLever(Entity* self) {
         self->hitboxHeight = 20;
         self->hitboxState = 2;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -626,7 +626,7 @@ void EntityCannon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -797,7 +797,7 @@ void EntityBloodSkeleElevButton(Entity* self) {
         CreateEntityFromEntity(E_BLOOD_SKELETON, self, &self[-1]);
         self[-1].posY.i.hi = 344 - g_Tilemap.scrollY.i.hi;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -862,7 +862,7 @@ void EntityElevator2(Entity* self) {
         self->hitboxOffY = 68;
         g_CallElevator = false;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -944,7 +944,7 @@ void EntityFloorButton(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->ext.nz0311c0.unk80 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1039,7 +1039,7 @@ void EntityFloorSpikes(Entity* self) {
 
         g_Tilemap.fg[tilePos] = 0x102;
         g_Tilemap.fg[tilePos + 1] = 0x103;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

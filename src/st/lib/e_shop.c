@@ -345,7 +345,7 @@ void func_us_801B2BE4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 0xD);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 0xD);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -614,7 +614,7 @@ void func_us_801B2BE4(Entity* self) {
                     }
                 } else {
                     if (D_us_801D4364[itemId].category == INVENTORY_RELIC) {
-                        g_api.func_800FE044(
+                        g_api.UpdatePlayerStats(
                             D_us_801814D4[D_us_801D4364[itemId].itemId],
                             0x2000);
                     } else {

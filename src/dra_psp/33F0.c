@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-s32 func_800EA5E4(u32 arg0) {
+s32 InitClutAnimation(u32 arg0) {
     u16 temp_v0;
     s32 i;
     s32 j;
@@ -73,7 +73,7 @@ s32 func_800EA5E4(u32 arg0) {
 
 // Takes a color "col" in RGB555 and increments/decrements each component
 // to bring it closer to the target by 1.
-u16 func_800EA720(u16 target, u16 col) {
+u16 BlendColorTowardsTarget(u16 target, u16 col) {
     if (GET_RED(target) > GET_RED(col)) {
         col = (col & UNRED_MASK) | (GET_RED(col) + 1);
     }
@@ -100,19 +100,19 @@ u16 func_800EA720(u16 target, u16 col) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_psp_090DFFD0);
 
-s32 func_800EAD0C(void) { // the return type is needed for matching
-    func_800EA5E4(4);
-    func_800EA5E4(5);
-    func_800EA5E4(6);
-    func_800EA5E4(7);
-    func_800EA5E4(8);
+s32 InitStageClutAnimations(void) { // the return type is needed for matching
+    InitClutAnimation(4);
+    InitClutAnimation(5);
+    InitClutAnimation(6);
+    InitClutAnimation(7);
+    InitClutAnimation(8);
 
     if (g_PlayableCharacter == PLAYER_ALUCARD && g_StageId != STAGE_ST0) {
-        func_800EA5E4(0x17);
+        InitClutAnimation(0x17);
     }
 }
 
-void func_800EAD7C(void) {
+void InitializeClutIds(void) {
     s32 index = 0;
     s32 i;
     s32 j;
@@ -157,7 +157,7 @@ void DestroyAllPrimitives(void) {
     }
 }
 
-s32 func_800EDAE4(void) {
+s32 ResetDrawEnvironments(void) {
     s32 i;
     DR_ENV* ptr = &D_800974AC[0];
 
@@ -169,7 +169,7 @@ s32 func_800EDAE4(void) {
 #endif
 }
 
-DR_ENV* func_800EDB08(Primitive* prim) {
+DR_ENV* AllocateDrawEnvironment(Primitive* prim) {
     s32 i;
     DR_ENV* dr = &D_800974AC[0];
 
@@ -188,11 +188,11 @@ DR_ENV* func_800EDB08(Primitive* prim) {
     return NULL;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDB58);
+INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocatePrimitives);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocPrimitives);
+INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocPrimBuffers);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", func_800EDD9C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", AllocatePrimitiveChain);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/33F0", FreePrimitives);
 

@@ -21,7 +21,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, s32 isDone) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
         if (self->primIndex == -1) {
             return;
         }
@@ -511,12 +511,12 @@ void HandleVideoPlayback(void) {
         switch (g_GameStep) {
         case 0:
             if (!g_IsUsingCd) {
-                func_800EA538(0);
-                func_800EA5E4(0x1A);
+                ResetClutAnimation(0);
+                InitClutAnimation(0x1A);
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
+                D_8013640C = AllocPrimBuffers(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
@@ -525,7 +525,7 @@ void HandleVideoPlayback(void) {
                 prim->p1 = 0x40;
                 prim = prim->next;
                 SetTexturedPrimRect(prim, 60, 208, 192, 16, 0, 32);
-                func_801072DC(prim);
+                SetPrimitiveDefaultColorIntensity(prim);
                 prim->tpage = 0x1C;
                 prim->drawMode = DRAW_HIDE;
                 g_GameStep++;
@@ -544,7 +544,7 @@ void HandleVideoPlayback(void) {
         case 2:
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
-            func_80107250(prim, temp);
+            SetPrimitiveAllVerticesColorIntensity(prim, temp);
             if (temp == 96) {
                 prim2 = prim->next;
 #if defined(VERSION_US)
@@ -570,7 +570,7 @@ void HandleVideoPlayback(void) {
         case 4:
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 - 1;
-            func_80107250(prim, temp);
+            SetPrimitiveAllVerticesColorIntensity(prim, temp);
             if (temp == 64) {
                 prim2 = prim->next;
                 prim2->drawMode = DRAW_HIDE;
@@ -689,12 +689,12 @@ void HandleEnding(void) {
     switch (g_GameStep) {
     case 0:
         DestroyEntitiesFromIndex(0);
-        func_800EA538(0);
+        ResetClutAnimation(0);
         ResetPendingGfxLoad();
         DestroyAllPrimitives();
-        func_800EDAE4();
+        ResetDrawEnvironments();
         HideAllBackgroundLayers();
-        func_800EAD7C();
+        InitializeClutIds();
         ClearBackbuffer();
         SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;

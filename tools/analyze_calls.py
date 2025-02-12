@@ -72,7 +72,7 @@ def handle_jal_call(full_file, call_index):
             # Handle the first element of it, where the symbol gets truncated to just g_api
             if "g_api" == match.group(1):
                 return "g_api.o.Update"
-            # Handle functions such as AllocPrimitives that are referenced indirectly through g_api
+            # Handle functions such as AllocPrimBuffers that are referenced indirectly through g_api
             if match.group(1).replace("g_api_", "") in function_lookup:
                 return match.group(1).replace("g_api_", "")
             # Handle remaining symbols that are just straight in GameApi

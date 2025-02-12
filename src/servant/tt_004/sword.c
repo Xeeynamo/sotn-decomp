@@ -327,7 +327,7 @@ void func_us_80172940(Entity* self) {
         if ((self->entityId == SWORD_DEFAULT) ||
             (self->entityId == SWORD_UNK_D8)) {
             self->primIndex =
-                g_api.AllocPrimitives(PRIM_GT4, UNK_SWORD_PRIM_COUNT);
+                g_api.AllocPrimBuffers(PRIM_GT4, UNK_SWORD_PRIM_COUNT);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -1182,7 +1182,7 @@ void func_us_80176BF8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PRIM_COUNT);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PRIM_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

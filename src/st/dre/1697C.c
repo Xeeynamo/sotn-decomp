@@ -8,7 +8,7 @@ void EntityFadeToWhite1(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
         if (primIndex != -1) {
             InitializeEntity(D_8018047C);
             prim = &g_PrimBuf[primIndex];
@@ -84,7 +84,7 @@ void EntityFadeToWhite2(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 2);
         if (primIndex != -1) {
             InitializeEntity(D_8018047C);
             prim = &g_PrimBuf[primIndex];

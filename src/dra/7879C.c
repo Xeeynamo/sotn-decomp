@@ -230,7 +230,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     switch (self->step) {
     case 0:
         temp_s0 = self->ext.hpNumMove.number;
-        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCountA + PrimCountB);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, PrimCountA + PrimCountB);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -258,7 +258,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             }
         }
 
-        // iterate through all 0x14 prims created by AllocPrimitives in two
+        // iterate through all 0x14 prims created by AllocPrimBuffers in two
         // batches
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
@@ -448,7 +448,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     s7 = self->ext.hpNumMove.unk92 + (offset_x * self->ext.hpNumMove.unk84);
     a0 = self->posY.i.hi - 0x10;
 
-    // iterate through all 0x14 prims created by AllocPrimitives in two batches
+    // iterate through all 0x14 prims created by AllocPrimBuffers in two batches
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCountA; i++) {
         prim->x0 = s5 - offset_x;
@@ -549,7 +549,7 @@ void EntityGuardText(Entity* self) {
             self->ext.guardText.str_x += FIX(32);
             self->ext.guardText.unk98 = FIX(0xB0);
         }
-        self->primIndex = AllocPrimitives(PRIM_GT4, 18);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 18);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -840,7 +840,7 @@ void func_80119F70(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        entity->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013804C));
+        entity->primIndex = AllocPrimBuffers(PRIM_GT4, LEN(D_8013804C));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -911,7 +911,7 @@ void func_80119F70(Entity* entity) {
 void func_8011A290(Entity* entity) {
     SubweaponDef subwpn;
 
-    func_800FE3C4(&subwpn, entity->ext.subweapon.subweaponId, 0);
+    GetSubweaponProperties(&subwpn, entity->ext.subweapon.subweaponId, 0);
     entity->attack = subwpn.attack;
     entity->attackElement = subwpn.attackElement;
     entity->hitboxState = subwpn.hitboxState;
@@ -1100,7 +1100,7 @@ void UpdatePlayerEntities(void) {
     if (D_8013803C) {
         D_8013803C--;
         if (D_8013803C & 1) {
-            func_800EA5AC(1U, D_80138040, D_80138044, D_80138048);
+            SetBackgroundColor(1U, D_80138040, D_80138044, D_80138048);
         }
     }
     D_8013800C[1] = D_8013800C[2] = 0;
@@ -1858,7 +1858,7 @@ block_748:
         if (func_8011BD48(self) != 0) {
             goto block_231;
         }
-        self->primIndex = AllocPrimitives(PRIM_GT4, 8);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 8);
         if (self->primIndex == -1) {
 #ifdef VERSION_HD
             DestroyEntity(self);
@@ -2279,7 +2279,7 @@ block_748:
         }
         if (self->drawFlags &
             (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
-            func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
+            TransformPolygon(self->posX.i.hi, self->posY.i.hi, self,
                           self->drawFlags, prim, self->facingLeft);
         }
         if (sp44 == 0) {
@@ -2318,9 +2318,9 @@ block_748:
         }
         prim = prim->next;
     }
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
     if (((sp70 & 0x3F) == 0) || ((sp70 & 0x3F) == 7)) {
-        func_8010E168(1, 0xA);
+        SetPlayerBlinkTimer(1, 0xA);
     }
     return;
 
@@ -2394,7 +2394,7 @@ void EntityPlayerOutline(Entity* self) {
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
-        self->primIndex = AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2588,7 +2588,7 @@ void EntityPlayerOutline(Entity* self) {
         }
         prim->v0 = prim->v1 = one;
         prim->v2 = prim->v3 = one + height;
-        func_800EB758(self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
+        TransformPolygon(self->posX.i.hi, self->posY.i.hi, self, self->drawFlags,
                       prim, (u16)self->facingLeft);
         prim->r0 = prim->r1 = prim->r2 = prim->r3 =
             primData[0] * self->ext.playerOutline.brightness / 256;
@@ -2599,7 +2599,7 @@ void EntityPlayerOutline(Entity* self) {
         prim->priority = PLAYER.zPriority + 2;
         prim = prim->next;
     }
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
 }
 
 void func_8011E0E4(Entity* entity) {}
@@ -2614,7 +2614,7 @@ void EntityGravityBootBeam(Entity* self) {
     case 0:
         self->posY.i.hi = PLAYER.posY.i.hi + 37;
         self->ext.timer.t = 1536;
-        self->primIndex = func_800EDB58(PRIM_G4_ALT, 4);
+        self->primIndex = AllocatePrimitives(PRIM_G4_ALT, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

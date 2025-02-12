@@ -276,7 +276,7 @@ void func_us_801CF298(Entity* self) {
         InitializeEntity(D_us_80180AA0);
         self->hitboxOffY = -8;
         self->hitboxHeight = 1;
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

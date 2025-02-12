@@ -362,7 +362,7 @@ void EntityVenusWeed(Entity* self) {
         self->hitboxOffY = -7;
 
         // 3 Prims: 2x Leaves (left/right) + Stem
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 3);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (primIdx == -1) {
             DestroyEntity(self);
             return;
@@ -1298,7 +1298,7 @@ void EntityVenusWeedSpike(Entity* self) {
         self->hitboxState = 0;
         self->palette = PAL_OVL(0x224);
 
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, SpikeParts);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, SpikeParts);
         if (primIdx == -1) {
             DestroyEntity(self);
             break;

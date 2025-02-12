@@ -274,7 +274,7 @@ void func_us_80172EF8(Entity* self) {
     self->posY.val = self->ext.et_801737F0.parent->posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -360,7 +360,7 @@ void func_us_80173348(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -461,7 +461,7 @@ void func_us_801737F0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -582,7 +582,7 @@ void func_us_80173D14(Entity* self) {
     self->posY.val = self->ext.et_801737F0.parent->posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1596,7 +1596,7 @@ void func_us_80176814(Entity* self) {
             self->posY.val = D_us_8017867C;
         }
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xC);
 
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -1711,7 +1711,7 @@ void func_us_80176C1C(Entity* self) {
             self->posX.val = D_us_80178680;
             self->posY.val = D_us_80178684;
         }
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1840,7 +1840,7 @@ void func_us_801771B0(Entity* self) {
             self->posY.val = D_us_8017868C;
         }
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

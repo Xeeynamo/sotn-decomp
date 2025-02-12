@@ -292,7 +292,7 @@ s32 func_ptr_80170004(Entity* self) {
                 }
             }
         }
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

@@ -57,7 +57,7 @@ void EntitySubWeaponContainer(Entity* self) {
         newEntity->params = D_801825CC[self->params];
         newEntity->zPriority = self->zPriority - 2;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

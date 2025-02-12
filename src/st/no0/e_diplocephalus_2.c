@@ -33,7 +33,7 @@ void EntityDiplocephalusFireball(Entity* self) {
         self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->rotX = self->rotY = 0x60;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 20);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

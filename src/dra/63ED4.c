@@ -611,10 +611,10 @@ void func_801042C4(s32 arg0) {
 
     D_80137EE0 = arg0;
     D_80097C98 = 0;
-    func_800EA5E4(0x18);
+    InitClutAnimation(0x18);
     if (arg0 == 1) {
-        func_800EA5E4(0x19);
-        func_800EA5E4(0x401E);
+        InitClutAnimation(0x19);
+        InitClutAnimation(0x401E);
     }
     D_801379BC = 0;
     D_80137E54 = 0;
@@ -627,7 +627,7 @@ void func_801042C4(s32 arg0) {
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
-    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
+    D_80137E48 = AllocPrimBuffers(PRIM_TILE, PrimCount);
     prim = &g_PrimBuf[D_80137E48];
     i = 0;
 
@@ -672,7 +672,7 @@ void func_801042C4(s32 arg0) {
     }
 
     SetGeomScreen(0x100);
-    D_80137E40 = AllocPrimitives(5U, 0x18);
+    D_80137E40 = AllocPrimBuffers(5U, 0x18);
     prim = &g_PrimBuf[D_80137E40];
     if (prim != NULL) {
         do {
@@ -688,7 +688,7 @@ void func_801042C4(s32 arg0) {
             prim = prim->next;
         } while (prim != NULL);
     }
-    D_80137E44 = AllocPrimitives(2U, 0x12);
+    D_80137E44 = AllocPrimBuffers(2U, 0x12);
     prim = &g_PrimBuf[D_80137E44];
     if (prim != NULL) {
         do {
@@ -841,7 +841,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                 &sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &sp78, &sp7C, &sp80);
         }
-        func_801072DC(prim);
+        SetPrimitiveDefaultColorIntensity(prim);
         prim->type = PRIM_GT3;
         if (sp7C >= 0xF0) {
             continue;
@@ -1032,7 +1032,7 @@ void func_80105428(void) {
         func_80104790(0, timer_temp, 0);
         D_80137EE4 = timer_temp;
 
-        if (func_8010E334(0x60, 0xA0) != 0) {
+        if (IsPlayerInRange(0x60, 0xA0) != 0) {
             g_PauseAllowed = false;
             D_80137EF0 = D_80097924;
             D_80137EF4 = D_8006C378;
@@ -1236,7 +1236,7 @@ void func_80105428(void) {
             if ((D_801379C8.vy & 0x7FF) >= 0x7F0) {
                 D_801379C8.vy = 0;
                 func_80104790(1, D_80137EE4, 0);
-                func_800EA5E4(0x4020U);
+                InitClutAnimation(0x4020U);
                 if (D_80137EE0 == 0) {
                     func_80102EB8();
                 }
@@ -1581,7 +1581,7 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     return true;
 }
 
-void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
+void SetPrimitiveColorIntensity(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         prim->b0 = colorIntensity;
@@ -1606,16 +1606,16 @@ void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(Primitive* prim, s32 colorIntensity) {
-    func_801071CC(prim, (u8)colorIntensity, 0);
-    func_801071CC(prim, (u8)colorIntensity, 1);
-    func_801071CC(prim, (u8)colorIntensity, 2);
-    func_801071CC(prim, (u8)colorIntensity, 3);
+void SetPrimitiveAllVerticesColorIntensity(Primitive* prim, s32 colorIntensity) {
+    SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 0);
+    SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 1);
+    SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 2);
+    SetPrimitiveColorIntensity(prim, (u8)colorIntensity, 3);
 }
 
-void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
+void func_801072BC(POLY_GT4* poly) { SetPrimitiveAllVerticesColorIntensity(poly, 0); }
 
-void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
+void SetPrimitiveDefaultColorIntensity(Primitive* prim) { SetPrimitiveAllVerticesColorIntensity(prim, 0x80); }
 
 void func_801072FC(POLY_G4* poly) {
     setRGB0(poly, 0, 0, 0);

@@ -202,7 +202,7 @@ void DemoGameInit(s32 arg0) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-        func_800F53A4();
+        UpdatePlayerAttributes();
     }
 }
 

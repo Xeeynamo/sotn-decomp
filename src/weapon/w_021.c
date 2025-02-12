@@ -70,7 +70,7 @@ void func_97000_8017AB54(u8* str, u8 lowerLeft) {
     }
 
     g_unkGraphicsStruct.BottomCornerTextPrims =
-        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+        g_api.AllocPrimBuffers(PRIM_SPRT, charcount + 4);
     if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
         return;
     }

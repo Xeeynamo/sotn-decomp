@@ -47,7 +47,7 @@ void EntityCerberusGateDebug(Entity* self) {
         for (i = 0; i < 4; tileIdx += 0x20, i++) {
             g_Tilemap.fg[tileIdx] = 0x32E;
         }
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 16);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 16);
         if (primIdx == -1) {
             return;
         }

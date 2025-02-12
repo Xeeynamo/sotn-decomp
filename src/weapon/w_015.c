@@ -194,7 +194,7 @@ void func_ptr_8017000C(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 32);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 32);
 
         if (self->primIndex == -1) {
             self->flags &= ~FLAG_HAS_PRIMS;

@@ -64,7 +64,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/C0B0", IsAlucart);
 
 extern s32 g_StatBuffTimers[16];
 
-void func_800F4994(void) {
+void CalculatePlayerStats(void) {
     s32* statsPtr = &g_Status.statsEquip[0];
     s32 correctStonesEquipped;
     s32 hourOfDay;

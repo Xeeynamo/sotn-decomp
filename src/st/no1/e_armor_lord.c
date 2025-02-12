@@ -232,7 +232,7 @@ void EntityArmorLordFireWave(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->ext.armorLord.unk80 = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x1A);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x1A);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -290,7 +290,7 @@ void func_us_801D1A9C(void) {
 
     switch (g_CurrentEntity->step_s) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
@@ -377,7 +377,7 @@ s32 func_us_801D1DAC(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         g_CurrentEntity->ext.armorLord.unk8D = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xE);
         if (primIndex != -1) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
@@ -742,7 +742,7 @@ s32 func_us_801D1DAC(void) {
         if (!g_CurrentEntity->ext.armorLord.unk86) {
             primIndex = g_CurrentEntity->primIndex;
             g_api.FreePrimitives(primIndex);
-            primIndex = g_api.AllocPrimitives(PRIM_TILE, 0x14);
+            primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 0x14);
             if (primIndex != -1) {
                 g_CurrentEntity->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];

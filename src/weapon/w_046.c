@@ -205,7 +205,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -355,7 +355,7 @@ static s32 func_ptr_80170004(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_G4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

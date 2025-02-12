@@ -213,7 +213,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 80);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -312,7 +312,7 @@ void func_ptr_80170008(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -409,7 +409,7 @@ void func_ptr_8017000C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -505,7 +505,7 @@ s32 func_ptr_80170010(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

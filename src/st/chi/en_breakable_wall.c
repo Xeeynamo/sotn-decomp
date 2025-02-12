@@ -195,7 +195,7 @@ void EntityBreakableWall(Entity* self) {
             return;
         }
 
-        newPrimIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
+        newPrimIdx = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (newPrimIdx == -1) {
             DestroyEntity(self);
             return;

@@ -10,7 +10,7 @@ u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
 
-    g_Dialogue.primIndex[0] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    g_Dialogue.primIndex[0] = g_api.AllocPrimBuffers(PRIM_SPRT, 0x20);
     if (g_Dialogue.primIndex[0] != -1) {
         g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = script;

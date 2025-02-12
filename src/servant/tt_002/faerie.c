@@ -1859,7 +1859,7 @@ void UpdateSubEntityUseLifeApple(Entity* arg0) {
 
     switch (arg0->step) {
     case 0:
-        arg0->primIndex = g_api.AllocPrimitives(PRIM_G4, 10);
+        arg0->primIndex = g_api.AllocPrimBuffers(PRIM_G4, 10);
         if (arg0->primIndex == -1) {
             DestroyEntity(arg0);
             return;
@@ -2014,7 +2014,7 @@ void UpdateSubEntityUseItem(Entity* self) {
     switch (self->step) {
     case 0:
         self->primIndex =
-            g_api.func_800EDB58(PRIM_TILE_ALT, primitiveParams->count + 1);
+            g_api.AllocatePrimitives(PRIM_TILE_ALT, primitiveParams->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

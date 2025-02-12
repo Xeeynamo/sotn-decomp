@@ -542,7 +542,7 @@ void EntityBladeSword(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         self->drawFlags |= FLAG_DRAW_ROTZ;
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 6);
         if (primIndex == -1) {
             self->ext.et_801D1BB8.prim = NULL;
             break;

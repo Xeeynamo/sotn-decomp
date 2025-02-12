@@ -369,7 +369,7 @@ void SwitchModeInitialize(Entity* self) {
         self->ext.bat.doUpdateCloseAnimation = false;
         switch (self->entityId) {
         case ENTITY_ID_SEEK_MODE:
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -386,7 +386,7 @@ void SwitchModeInitialize(Entity* self) {
             self->step++;
             break;
         case ENTITY_ID_ATTACK_MODE:
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -964,7 +964,7 @@ void UpdateBatBlueTrailEntities(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, nPrim);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, nPrim);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

@@ -219,7 +219,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     if ((D_170000_8017ABBC != 0) && !(self->params & 0x7F00) &&
         (self->step == 1 || self->step == 2) && (self->hitFlags != 0)) {
-        g_api.func_8010E168(0, 0x60);
+        g_api.SetPlayerBlinkTimer(0, 0x60);
         if (g_Player.unk56 != 1) {
             g_Player.unk56 = 1;
             g_Player.unk58 = 8;
@@ -379,7 +379,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     var_s8 = 0;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 23);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 23);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -720,7 +720,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_UNK);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, NUM_UNK);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

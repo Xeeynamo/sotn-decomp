@@ -59,7 +59,7 @@ void UpdateCapePalette(void) {
     s32 clut;
     s32 i;
 
-    func_800EA538(6);
+    ResetClutAnimation(6);
 
     i = 0;
     while (1) {
@@ -79,9 +79,9 @@ void UpdateCapePalette(void) {
         clut++;
     }
 
-    func_800EA5E4(clut);
+    InitClutAnimation(clut);
     if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
-        func_800EA5E4(0x415);
+        InitClutAnimation(0x415);
     }
 }
 
@@ -91,7 +91,7 @@ void RefreshCapePalette(void) {
     }
 }
 
-void func_800FF708(s32 equipType, s32 arg1) {
+void EquipRandomAccessory(s32 equipType, s32 arg1) {
     s32 rnd;
 
     do {
@@ -115,7 +115,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     s32 i;
 
     if (D_8003C730 != 0) {
-        func_800F53A4();
+        UpdatePlayerAttributes();
         UpdateCapePalette();
         return;
     }
@@ -567,16 +567,16 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 } while (g_EquipDefs[equipId].itemCategory == 5);
 
                 g_Status.equipment[RIGHT_HAND_SLOT] = equipId;
-                func_800FF708(0, 0);
-                func_800FF708(1, 1);
-                func_800FF708(2, 2);
-                func_800FF708(3, 3);
-                func_800FF708(3, 4);
+                EquipRandomAccessory(0, 0);
+                EquipRandomAccessory(1, 1);
+                EquipRandomAccessory(2, 2);
+                EquipRandomAccessory(3, 3);
+                EquipRandomAccessory(3, 4);
 #endif
             }
         }
     }
-    func_800F53A4();
+    UpdatePlayerAttributes();
 }
 
 #ifdef VERSION_PSP
@@ -600,7 +600,7 @@ void DrawRichterHud(void) {
     g_PlayerHud.unk1C = g_PlayerHud.unk20 =
         g_PlayerHud.unk0C * 100 / g_PlayerHud.unk10;
     g_PlayerHud.unk24 = 0;
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, RIC_HUD_NUM_SPRITES);
+    g_PlayerHud.primIndex1 = AllocatePrimitiveChain(PRIM_GT4, RIC_HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
@@ -677,11 +677,11 @@ void DrawRichterHud(void) {
     prim->priority = 0x1EF;
     prim->drawMode = DRAW_ABSPOS;
 
-    g_PlayerHud.primIndex2 = func_800EDD9C(4, 16);
+    g_PlayerHud.primIndex2 = AllocatePrimitiveChain(4, 16);
     for (prim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0; prim != 0; i++,
         prim = prim->next) {
         SetTexturedPrimRect(prim, 216 + i * 2, 22, 2, 96, 32 + i * 2, 0);
-        func_801072DC(prim);
+        SetPrimitiveDefaultColorIntensity(prim);
         prim->tpage = 0x1B;
         prim->clut = 0x100;
         prim->priority = 0x1EE;
@@ -810,16 +810,16 @@ void DrawRichterHudSubweapon(void) {
             altPrim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
             if (altPrim->r2 >= 3) {
                 temp_s2 = altPrim->r2 - 3;
-                func_801071CC(altPrim, temp_s2, 2);
-                func_801071CC(altPrim, temp_s2, 3);
+                SetPrimitiveColorIntensity(altPrim, temp_s2, 2);
+                SetPrimitiveColorIntensity(altPrim, temp_s2, 3);
             }
             if (altPrim->y2 >= 0x100) {
                 altPrim->drawMode =
                     DRAW_ABSPOS | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 if (altPrim->r0) {
                     temp_s2 = altPrim->r0--;
-                    func_801071CC(altPrim, temp_s2, 0);
-                    func_801071CC(altPrim, temp_s2, 1);
+                    SetPrimitiveColorIntensity(altPrim, temp_s2, 0);
+                    SetPrimitiveColorIntensity(altPrim, temp_s2, 1);
                 }
                 if (altPrim->y2 >= 0x180) {
                     altPrim->drawMode =
@@ -971,7 +971,7 @@ void DrawRichterHudSubweapon(void) {
     }
 }
 
-bool func_8010183C(s32 arg0) {
+bool UpdatePlayerHud(s32 arg0) {
     if (arg0 == 0) {
         if (g_PlayerHud.unk24 == 0) {
             g_PlayerHud.unk24 = 1;
@@ -1001,7 +1001,7 @@ void DrawHud(void) {
         return;
     }
 
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
+    g_PlayerHud.primIndex1 = AllocatePrimitiveChain(PRIM_GT4, HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     for (i = 0; prim != NULL; i++, prim = prim->next) {
@@ -1046,7 +1046,7 @@ void DrawHudSubweapon() {
         DrawRichterHudSubweapon();
         return;
     }
-    func_800EB4F8(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
+    LoadPixPattern(D_800C52F8[g_Status.subWeapon], 0, 0x3C0, 0x120);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
     if (g_Status.subWeapon != 0) {
         prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
@@ -1163,11 +1163,11 @@ void DrawHudSubweapon() {
         D_8013B5E8--;
     }
     if (g_PlayerHud.displayHP == g_Status.hpMax) {
-        func_800EA5E4(2); // Likely related to HP showing bold when full
+        InitClutAnimation(2); // Likely related to HP showing bold when full
     } else if (g_PlayerHud.displayHP <= g_Status.hpMax >> 2) {
-        func_800EA5E4(3); // Show yellow if under 1/4 health
+        InitClutAnimation(3); // Show yellow if under 1/4 health
     } else {
-        func_800EA5E4(1); // Normal health display
+        InitClutAnimation(1); // Normal health display
     }
 
     if (g_PlayerHud.displayHP > 999) {
@@ -1252,7 +1252,7 @@ void DrawHudSubweapon() {
         }
     }
 
-    if (func_800FE3C4(&subwpn, 0, false)) {
+    if (GetSubweaponProperties(&subwpn, 0, false)) {
         // Enable flickering with g_Timer
         if (g_Timer & 2) {
             clut = 0x196;

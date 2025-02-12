@@ -303,7 +303,7 @@ typedef enum {
     FLAG_UNK_100000 = 0x100000,
     FLAG_UNK_00200000 = 0x00200000,
     FLAG_UNK_400000 = 0x400000,
-    // When an entity used AllocPrimitives and their primIndex set.
+    // When an entity used AllocPrimBuffers and their primIndex set.
     // At their destruction they need to free the prims with FreePrimitives.
     FLAG_HAS_PRIMS = 0x800000,
     FLAG_NOT_AN_ENEMY = 0x01000000,
@@ -1515,7 +1515,7 @@ typedef struct {
 typedef struct {
     /* 8003C774 */ Overlay o;
     /* 8003C7B4 */ void (*FreePrimitives)(s32);
-    /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
+    /* 8003C7B8 */ s16 (*AllocPrimBuffers)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
     /* 8003C7C4 */ void (*UpdateAnim)(
@@ -1524,19 +1524,19 @@ typedef struct {
     /* 8003C7CC */ Entity* (*GetFreeEntity)(s16 start, s16 end);
     /* 8003C7D0 */ void (*GetEquipProperties)(
         s32 handId, Equipment* res, s32 equipId);
-    /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
+    /* 8003C7D4 */ s32 (*InitClutAnimation)(u32);
     /* 8003C7D8 */ void (*LoadGfxAsync)(s32 gfxId);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
-    /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
-    /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
+    /* 8003C7E0 */ s16 (*AllocatePrimitives)(s32, s32);
+    /* 8003C7E4 */ void (*ResetClutAnimation)(s32 arg0);
     /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
     /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
-    /* 8003C7F0 */ void (*func_800EB758)(
+    /* 8003C7F0 */ void (*TransformPolygon)(
         s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
         Entity* self, u32 flags, s32 arg2);
     /* 8003C7F8 */ bool (*func_80131F68)(void);
-    /* 8003C7FC */ DR_ENV* (*func_800EDB08)(POLY_GT4* poly);
+    /* 8003C7FC */ DR_ENV* (*AllocateDrawEnvironment)(POLY_GT4* poly);
     /* 8003C800 */ u16* (*func_80106A28)(u32 arg0, u16 kind);
     /* 8003C804 */ void (*func_80118894)(Entity*);
     /* 8003C808 */ EnemyDef* enemyDefs;
@@ -1548,8 +1548,8 @@ typedef struct {
     /* 8003C814 */ s32 (*UpdateUnarmedAnim)(s8* frameProps, u16** frames);
     /* 8003C818 */ void (*PlayAnimation)(s8*, AnimationFrame** frames);
     /* 8003C81C */ void (*func_80118C28)(s32 arg0);
-    /* 8003C820 */ void (*func_8010E168)(s32 arg0, s16 arg1);
-    /* 8003C824 */ void (*func_8010DFF0)(s32 arg0, s32 arg1);
+    /* 8003C820 */ void (*SetPlayerBlinkTimer)(s32 arg0, s16 arg1);
+    /* 8003C824 */ void (*ResetAfterImage)(s32 arg0, s32 arg1);
     /* 8003C828 */ u16 (*DealDamage)(
         Entity* enemyEntity, Entity* attackerEntity);
     /* 8003C82C */ void (*LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
@@ -1559,27 +1559,27 @@ typedef struct {
     /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
-    /* 8003C844 */ void* (*func_8010E0A8)(void);
-    /* 8003C848 */ void (*func_800FE044)(s32, s32);
+    /* 8003C844 */ void* (*ResetAfterImageCounter)(void);
+    /* 8003C848 */ void (*UpdatePlayerStats)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicOrb* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s16 vol, s16 distance);
-    /* 8003C860 */ void (*func_800F53A4)(void);
+    /* 8003C860 */ void (*UpdatePlayerAttributes)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
-    /* 8003C878 */ s32 (*func_800FF460)(s32 arg0);
-    /* 8003C87C */ s32 (*func_800FF494)(EnemyDef* arg0);
+    /* 8003C878 */ s32 (*CalculateLuckAdjustedValue)(s32 arg0);
+    /* 8003C87C */ s32 (*DetermineItemDrop)(EnemyDef* arg0);
     /* 8003C880 */ bool (*CdSoundCommandQueueEmpty)(void);
     /* 8003C884 */ bool (*func_80133950)(void);
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*GetStatBuffTimer)(s32 arg0);
-    /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
+    /* 8003C890 */ s32 (*AdjustForInvertedCastle)(s32 arg0);
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
@@ -1609,7 +1609,7 @@ extern u8* g_PlOvlSpritesheet[];
 
 /**** Helper signatures ****/
 extern void (*g_api_FreePrimitives)(s32);
-extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
+extern s16 (*g_api_AllocPrimBuffers)(PrimitiveType type, s32 count);
 extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 extern void (*g_api_func_80102CD8)(s32 arg0);
 extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
@@ -1617,16 +1617,16 @@ extern void (*g_api_SetSpeedX)(s32 value);
 extern Entity* (*g_api_GetFreeEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
-extern s32 (*g_api_func_800EA5E4)(u32);
+extern s32 (*g_api_InitClutAnimation)(u32);
 extern void (*g_api_LoadGfxAsync)(s32);
 extern void (*g_api_PlaySfx)(s32 sfxId);
-extern s16 (*g_api_func_800EDB58)(s32, s32);
-extern void (*g_api_func_800EA538)(s32 arg0);
+extern s16 (*g_api_AllocatePrimitives)(s32, s32);
+extern void (*g_api_ResetClutAnimation)(s32 arg0);
 extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 extern Entity* (*g_api_CreateEntFactoryFromEntity)(
     Entity* self, u32 flags, s32 arg2);
 extern bool (*g_api_func_80131F68)(void);
-extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
+extern DR_ENV* (*g_api_AllocateDrawEnvironment)(POLY_GT4* poly);
 extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
@@ -1642,25 +1642,25 @@ extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
-extern void (*g_api_func_800FE044)(s32, s32);
+extern void (*g_api_UpdatePlayerStats)(s32, s32);
 extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, s16 distance);
-extern void (*g_api_func_800F53A4)(void);
+extern void (*g_api_UpdatePlayerAttributes)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
-extern s32 (*g_api_func_800FF460)(s32 arg0);
-extern s32 (*g_api_func_800FF494)(EnemyDef* arg0);
+extern s32 (*g_api_CalculateLuckAdjustedValue)(s32 arg0);
+extern s32 (*g_api_DetermineItemDrop)(EnemyDef* arg0);
 extern bool (*g_api_CdSoundCommandQueueEmpty)(void);
 extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
-extern s32 (*g_api_func_800FD664)(s32 arg0);
+extern s32 (*g_api_AdjustForInvertedCastle)(s32 arg0);
 extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_func_800E2438)(const char* str);

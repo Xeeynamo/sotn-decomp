@@ -29,7 +29,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
     return false;
 }
 
-s32 func_800FD664(s32 arg0) {
+s32 AdjustForInvertedCastle(s32 arg0) {
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
@@ -40,7 +40,7 @@ ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
 
-s32 func_800FD6C4(s32 equipTypeFilter) {
+s32 CountEquipItems(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
     s32 i;
@@ -252,7 +252,7 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-bool func_800FDD44(s32 itemType) {
+bool HandleConsumableItemUsage(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
@@ -262,7 +262,7 @@ bool func_800FDD44(s32 itemType) {
     if (isConsumable) {
         if (!g_Status.equipHandCount[equippedItem]) {
             g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
-            func_800F53A4();
+            UpdatePlayerAttributes();
             return true;
         }
         g_Status.equipHandCount[equippedItem]--;
@@ -270,7 +270,7 @@ bool func_800FDD44(s32 itemType) {
     return false;
 }
 
-void func_800FDE00(void) {
+void ResetLevelUpFlags(void) {
     D_80137960 = 0;
     D_80137964 = 0;
     D_80137968 = 0;
@@ -332,7 +332,7 @@ u32 CheckAndDoLevelUp(void) {
     return 0;
 }
 
-s32 func_800FE044(s32 amount, s32 type) {
+s32 UpdatePlayerStats(s32 amount, s32 type) {
     s32 oldHPMax; // unused
     s32 oldHeartMax;
     s32 activeFamiliar;
@@ -450,7 +450,7 @@ bool IsRelicActive(RelicIds relicId) {
     return 0;
 }
 
-s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+s32 GetSubweaponProperties(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
@@ -517,7 +517,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_800F4994();
+    CalculatePlayerStats();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
         return;
@@ -538,7 +538,7 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
     return true;
 }
 
-void func_800FE8F0(void) {
+void RestoreHpOnAbsorb(void) {
     if (D_8013B5E8 == 0) {
         D_8013B5E8 = 0x40;
     }
@@ -563,7 +563,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
 
-    func_800F53A4();
+    UpdatePlayerAttributes();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
     // Damage doubled, weakness
@@ -590,7 +590,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
         damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
-            func_800FE8F0();
+            RestoreHpOnAbsorb();
             g_Status.hp += damage->unkC;
             if (g_Status.hp > g_Status.hpMax) {
                 g_Status.hp = g_Status.hpMax;
@@ -609,7 +609,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
         damage->unkC = amount;
         if (g_Status.hp != g_Status.hpMax) {
-            func_800FE8F0();
+            RestoreHpOnAbsorb();
             g_Status.hp += damage->unkC;
             if (g_Status.hp > g_Status.hpMax) {
                 g_Status.hp = g_Status.hpMax;
@@ -707,7 +707,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         }
     } else {
         if (ret != 9) {
-            func_800FE8F0();
+            RestoreHpOnAbsorb();
         }
         // Here is where we actually take the damage away.
         g_Status.hp -= damage->damageTaken;
@@ -932,7 +932,7 @@ exit:
     return result;
 }
 
-s32 func_800FF460(u32 arg0) {
+s32 CalculateLuckAdjustedValue(u32 arg0) {
     s32 res;
     if (arg0 == 0) {
         return 0;
@@ -942,7 +942,7 @@ s32 func_800FF460(u32 arg0) {
 }
 
 // Determine what type of item to drop
-s32 func_800FF494(EnemyDef* arg0) {
+s32 DetermineItemDrop(EnemyDef* arg0) {
     /* Ring of Arcana is an item that increases
      * enemy item drop rates when equipped
      */

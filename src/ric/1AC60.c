@@ -152,7 +152,7 @@ void RicInit(s16 initParam) {
         e->palette = 0x8120;
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
-    primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 6);
 
     g_Entities[1].primIndex = primIndex;
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
@@ -719,7 +719,7 @@ void RicMain(void) {
     if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
-    func_8015C4AC();
+    RicUpdateAfterImage();
     if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;

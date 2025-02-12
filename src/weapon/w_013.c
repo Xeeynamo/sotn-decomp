@@ -355,7 +355,7 @@ static void func_ptr_80170008(Entity* self) {
             self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
             self->rotX = self->rotY = 0x100;
             self->palette = PAL_OVL(0x15F);
-            self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
             if (self->primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
                 prim = &g_PrimBuf[self->primIndex];

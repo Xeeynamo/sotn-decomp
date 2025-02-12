@@ -59,7 +59,7 @@ void EntityEquipItemDrop(Entity* self) {
                 1 << (index & 7);
         }
 #endif
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

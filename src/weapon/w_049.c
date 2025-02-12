@@ -226,7 +226,7 @@ void func_ptr_80170008(Entity* self) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 16);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 16);
         self->primIndex = primIndex;
         if (primIndex == -1) {
             DestroyEntity(self);

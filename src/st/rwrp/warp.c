@@ -99,7 +99,7 @@ void EntityRWarpRoom(Entity* self) {
         self->animCurFrame = 0x66;
         self->posX.i.hi = 0x80 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0xC0 - g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 24);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 24);
         if (primIndex == -1) {
             self->step = 0;
             return;
@@ -186,7 +186,7 @@ void EntityRWarpRoom(Entity* self) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 0x10;
         g_PauseAllowed = false;
-        g_api.func_8010DFF0(0, 1);
+        g_api.ResetAfterImage(0, 1);
         self->posY.i.hi--;
         moveY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (moveY < 0x91) {
@@ -301,7 +301,7 @@ void EntityRWarpRoom(Entity* self) {
         // lower alucard up to the room?
         self->posY.i.hi++;
         if (collision & 0x4) {
-            g_api.func_8010DFF0(0, 1);
+            g_api.ResetAfterImage(0, 1);
 
             PLAYER_posY_i_hi += 1;
             D_80097488.y.i.hi += 1;

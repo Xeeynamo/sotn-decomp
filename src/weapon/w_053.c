@@ -125,7 +125,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->posX.i.hi += self->ext.weapon.unk82;
         self->posY.i.hi += self->ext.weapon.unk80;
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
 
         if (self->primIndex != -1) {
             prim = &g_PrimBuf[self->primIndex];
@@ -354,7 +354,7 @@ void func_ptr_8017000C(Entity* self) {
             self->ext.weapon.unk80 = 0xB;
         }
         self->posY.i.hi = self->posY.i.hi + self->ext.weapon.unk80;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
 
         if (self->primIndex != -1) {
             prim = &g_PrimBuf[self->primIndex];

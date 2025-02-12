@@ -157,7 +157,7 @@ typedef struct {
 #endif
 
 // This P_TAG implementation should maybe look more like the O_TAG listed above.
-// In func_800EDB08, the setcode needs to write to offset 0xb.
+// In AllocateDrawEnvironment, the setcode needs to write to offset 0xb.
 #ifndef VERSION_PC
 typedef struct {
     unsigned addr : 24;

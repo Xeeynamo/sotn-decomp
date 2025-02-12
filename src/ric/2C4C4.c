@@ -190,7 +190,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
         randR = (rand() & 0x3F) + 0x2F;
         randG = (rand() & 0x3F) + 0x6F;
         randB = (rand() & 0x7F) + 0x6F;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -335,7 +335,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -448,7 +448,7 @@ void RicEntityRevivalColumn(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -672,7 +672,7 @@ void func_80169C10(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
@@ -772,7 +772,7 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
     u8 temps0copy;
 
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x20);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -891,7 +891,7 @@ void RicEntitySubwpnAxe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1113,7 +1113,7 @@ void RicEntityCrashAxe(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 5);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1317,7 +1317,7 @@ void RicEntitySubwpnDagger(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1550,7 +1550,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 16);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1824,7 +1824,7 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 13);
+        self->primIndex = g_api.AllocatePrimitives(PRIM_TILE_ALT, 13);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1993,7 +1993,7 @@ void RicEntitySubwpnAgunea(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2143,7 +2143,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x28);
         if (self->primIndex == -1) {
         block_71:
             DestroyEntity(self);
@@ -2325,7 +2325,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         entity->primIndex = primIndex;
         if (primIndex != -1) {
             entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
@@ -2377,7 +2377,7 @@ void RicEntityCrashVibhuti(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 9);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 9);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;

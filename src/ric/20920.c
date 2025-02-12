@@ -152,7 +152,7 @@ void RicSetCrouch(s32 kind, s32 velocityX) {
     }
 }
 
-// Corresponding DRA function is func_8010E570 (much more complex)
+// Corresponding DRA function is LandToTheGround (much more complex)
 void RicSetStand(s32 velocityX) {
     PLAYER.velocityX = velocityX;
     PLAYER.velocityY = 0;

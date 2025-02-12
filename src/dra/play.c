@@ -63,13 +63,13 @@ void func_800E4970(void) {
     g_GameStep = NowLoading_2;
     ClearBackbuffer();
     SetStageDisplayBuffer();
-    func_800EAD7C();
+    InitializeClutIds();
     DestroyEntitiesFromIndex(0);
     DestroyAllPrimitives();
-    func_800EA538(0);
+    ResetClutAnimation(0);
     HideAllBackgroundLayers();
     ResetPendingGfxLoad();
-    func_800EDAE4();
+    ResetDrawEnvironments();
     PlaySfx(SET_UNK_12);
     PlaySfx(SET_UNK_0B);
     MuteSound();
@@ -127,20 +127,20 @@ void HandlePlay(void) {
             }
         }
         func_800F2120();
-        func_800FDE00();
+        ResetLevelUpFlags();
         ClearStatBuffs();
         ApplyJosephsCloakPalette();
-        func_800EAD0C();
+        InitStageClutAnimations();
         g_GameStep++;
         break;
     case Play_Init:
         LoadGfxAsync(ANIMSET_DRA(1));
         LoadGfxAsync(ANIMSET_OVL(0));
-        func_800EA5E4(ANIMSET_OVL(0));
+        InitClutAnimation(ANIMSET_OVL(0));
         g_GameStep++;
         break;
     case Play_PrepareDemo:
-        if (func_800EB720()) {
+        if (IsGfxLoadPending()) {
             break;
         }
         if (g_DemoMode != Demo_None) {
@@ -172,11 +172,11 @@ void HandlePlay(void) {
         g_GpuBuffers[1].draw.isbg = 0;
         g_GpuBuffers[0].draw.isbg = 0;
         HideAllBackgroundLayers();
-        func_800EA538(1);
+        ResetClutAnimation(1);
         ResetPendingGfxLoad();
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
-        func_800EDAE4();
+        ResetDrawEnvironments();
         func_801024DC();
         if (g_CastleFlags[NO1_WEATHER] & 0x80) {
             g_CastleFlags[NO1_WEATHER] =
@@ -239,7 +239,7 @@ void HandlePlay(void) {
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
-        D_8013640C = AllocPrimitives(PRIM_GT4, 16);
+        D_8013640C = AllocPrimBuffers(PRIM_GT4, 16);
         D_80136410 = 0;
         prim = &g_PrimBuf[D_8013640C];
         for (i = 0; prim != NULL; i++) {
@@ -333,12 +333,12 @@ void HandlePlay(void) {
         }
         FreePrimitives(D_8013640C);
         if ((D_80097C98 > 3 && D_80097C98 < 6) || D_80097C98 == 6) {
-            func_800EA5AC(0xFFFF, 0xFF, 0xFF, 0xFF);
+            SetBackgroundColor(0xFFFF, 0xFF, 0xFF, 0xFF);
         }
         g_GameStep = 1;
         g_GameEngineStep = Engine_Init;
         D_8003C738 = 0;
-        func_800EAD7C();
+        InitializeClutIds();
         break;
     }
 }
@@ -410,12 +410,12 @@ void HandleGameOver(void) {
             g_GpuBuffers[0].draw.isbg = 0;
         }
         DestroyEntitiesFromIndex(0);
-        func_800EA538(0);
+        ResetClutAnimation(0);
         ResetPendingGfxLoad();
         DestroyAllPrimitives();
-        func_800EDAE4();
+        ResetDrawEnvironments();
         HideAllBackgroundLayers();
-        func_800EAD7C();
+        InitializeClutIds();
         g_GameStep++;
         break;
     case Gameover_AllocResources_Alt:
@@ -427,7 +427,7 @@ void HandleGameOver(void) {
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
-            D_8013640C = AllocPrimitives(PRIM_GT4, 259);
+            D_8013640C = AllocPrimBuffers(PRIM_GT4, 259);
             prim = &g_PrimBuf[D_8013640C];
 
             SetTexturedPrimRect(prim, 0, 96, 0xFF, 0x20, 0, 0);
@@ -439,14 +439,14 @@ void HandleGameOver(void) {
             prim = prim->next;
 
             SetTexturedPrimRect(prim, 0, 0, 128, 240, 0, 0);
-            func_801072DC(prim);
+            SetPrimitiveDefaultColorIntensity(prim);
             prim->tpage = 0x8A;
             prim->clut = 0x100;
             prim->drawMode = DRAW_COLORS;
             prim = prim->next;
 
             SetTexturedPrimRect(prim, 128, 0, 128, 240, 0, 0);
-            func_801072DC(prim);
+            SetPrimitiveDefaultColorIntensity(prim);
             prim->tpage = 0x8B;
             prim->clut = 0x100;
             prim->drawMode = DRAW_COLORS;
@@ -580,7 +580,7 @@ void HandleGameOver(void) {
             var_s0 = 0x80;
         }
 
-        func_80107250(prim, var_s0);
+        SetPrimitiveAllVerticesColorIntensity(prim, var_s0);
         if (var_s0 != 0x80) {
             break;
         }
@@ -637,11 +637,11 @@ void HandleGameOver(void) {
         }
         prim = &g_PrimBuf[D_8013640C];
         var_s0 = prim->r0 - 1;
-        func_80107250(prim, var_s0);
+        SetPrimitiveAllVerticesColorIntensity(prim, var_s0);
         prim = prim->next;
-        func_80107250(prim, var_s0);
+        SetPrimitiveAllVerticesColorIntensity(prim, var_s0);
         prim = prim->next;
-        func_80107250(prim, var_s0);
+        SetPrimitiveAllVerticesColorIntensity(prim, var_s0);
         if (var_s0) {
             break;
         }

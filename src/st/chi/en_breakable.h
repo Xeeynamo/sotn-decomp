@@ -141,7 +141,7 @@ void EntityBreakableDebris(Entity* self) {
 
         self->primIndex = 0;
         if (self->params == 0) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
             if (primIndex != -1) {
                 prim = &g_PrimBuf[primIndex];
                 self->primIndex = primIndex;

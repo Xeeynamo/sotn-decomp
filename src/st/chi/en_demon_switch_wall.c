@@ -158,7 +158,7 @@ void EntityDemonSwitchWall(Entity* self) {
         }
         break;
     case PREP_TO_OPEN: // Never set directly
-        primIdx = g_api.AllocPrimitives(PRIM_TILE, 16);
+        primIdx = g_api.AllocPrimBuffers(PRIM_TILE, 16);
         if (primIdx != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;

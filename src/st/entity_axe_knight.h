@@ -139,7 +139,7 @@ s32 func_801C4198(Entity* axeKnight) {
     case 0:
         clutBase = g_EInitAxeKnight[3];
         dataPtr = sprites_nz0_3[axeKnight->animCurFrame];
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, *dataPtr * 2);
         if (primIndex != -1) {
             axeKnight->flags |= FLAG_HAS_PRIMS;
             axeKnight->primIndex = primIndex;

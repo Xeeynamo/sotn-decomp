@@ -56,7 +56,7 @@ void PlayerStepJump(void) {
         }
         break;
     case 0x58:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (D_80139824 > 0) {
             D_80139824--;
         }
@@ -71,7 +71,7 @@ void PlayerStepJump(void) {
         break;
     case 0x57:
     case 0x5B:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         DecelerateX(FIX(1.0 / 16));
         if (PLAYER.ext.player.anim == 0x6C) {
             if (PLAYER.animFrameDuration < 0) {
@@ -82,7 +82,7 @@ void PlayerStepJump(void) {
                 }
                 PLAYER.step_s = D_800ACF7C[stepSlot];
                 SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
-                func_8010FAF4();
+                DestroyEquippedWeapon();
                 g_Player.unk44 = 1;
                 g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFE;
                 g_ButtonCombo[COMBO_BF].timer = 0x10;
@@ -117,10 +117,10 @@ void PlayerStepJump(void) {
     case 0x56:
     case 0x5A:
     case 0x5C:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
     case 0x59:
     case 0x40:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (g_Player.padPressed & PAD_LEFT) {
             PLAYER.velocityX = FIX(-1.5);
         }
@@ -135,14 +135,14 @@ void PlayerStepJump(void) {
             }
             PLAYER.step_s = D_800ACF7C[stepSlot];
             SetPlayerAnim((u8)D_800ACF7C[stepSlot + 1]);
-            func_8010FAF4();
+            DestroyEquippedWeapon();
         }
         break;
     // This case is when we're dive-kicking
     case 0x70:
         // This flag is set in EntityDiveKickAttack if it detects a hit
         if (g_Player.unk44 & 0x80) {
-            func_8010E83C(1);
+            ExecuteJump(1);
             // If cross is not pressed, we bounce up from the hit.
             // But note that the above function call includes the line:
             // PLAYER.velocityY = FIX(-4.875);
@@ -179,9 +179,9 @@ void PlayerStepJump(void) {
     }
 }
 
-void func_80113148(void) {
+void PlayerStepFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
-        func_8010E83C(1);
+        ExecuteJump(1);
     } else if (func_8010FDF8(0x9029) == 0) {
         DecelerateX(0x1000);
         if (CheckMoveDirection() != 0) {
@@ -190,7 +190,7 @@ void func_80113148(void) {
     }
 }
 
-void func_801131C4(void) {
+void PlayerStepCrouch(void) {
     s32 i;
     s32 x_offset;
     u16 local_flags;
@@ -213,7 +213,7 @@ void func_801131C4(void) {
             }
         }
         if (g_Player.unk72 == 0) {
-            func_8010E83C(1);
+            ExecuteJump(1);
             return;
         }
     }
@@ -274,7 +274,7 @@ void func_801131C4(void) {
         }
         break;
     case 0x5:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (g_Player.unk72 == PLAYER.animFrameIdx ||
             PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
@@ -282,7 +282,7 @@ void func_801131C4(void) {
         break;
     case 0x3:
     case 0x4:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
         }
@@ -290,11 +290,11 @@ void func_801131C4(void) {
     case 0x2:
         local_flags = 1;
         if (g_Player.padPressed & PAD_DOWN) {
-            func_8010E470(0, PLAYER.velocityX);
+            ExecuteCrouch(0, PLAYER.velocityX);
             break;
         }
         if (g_Player.unk72 != 0) {
-            func_8010DFF0(1, 1);
+            ResetAfterImage(1, 1);
             if (g_Player.unk72 == 1) {
                 PLAYER.animFrameIdx = 0;
                 PLAYER.animFrameDuration = 3;
@@ -320,13 +320,13 @@ void func_801131C4(void) {
             }
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
 
         break;
     case 0x40:
     case 0x59:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 2) {
                 CheckMoveDirection();
@@ -380,7 +380,7 @@ void func_801131C4(void) {
     case 0x5B:
     case 0x5C:
     case 0x5D:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 3) {
                 CheckMoveDirection();
@@ -401,7 +401,7 @@ void func_801131C4(void) {
         }
         break;
     case 0x51:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0x2E;
         }
@@ -409,7 +409,7 @@ void func_801131C4(void) {
     }
 
     if (local_flags & 0x20) {
-        func_8010E470(0, 0);
+        ExecuteCrouch(0, 0);
         local_flags |= 0x8000;
     }
     if (local_flags & 2) {
@@ -432,7 +432,7 @@ void func_801131C4(void) {
             case 0:
             case 3:
             case 4:
-                func_8010E6AC(0);
+                ExecuteWalk(0);
                 local_flags |= 0x8000;
                 break;
             case 1:
@@ -448,7 +448,7 @@ void func_801131C4(void) {
         }
     }
     if ((local_flags & 0x8000) && (local_flags & 8)) {
-        func_8010FAF4();
+        DestroyEquippedWeapon();
     }
 }
 
@@ -470,7 +470,7 @@ void func_801139CC(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
-void func_80113AAC(void) {
+void PlayerStepHighJump(void) {
     s32 var_s1 = 0;
     s32 temp;
 
@@ -562,7 +562,7 @@ s32 func_80113D7C(s16 damageAmount) {
 
     temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, damageAmount / 2, 1);
     CreateHPNumMove(damage.damageTaken, 0);
-    func_800FE8F0();
+    RestoreHpOnAbsorb();
     if (temp_s0 != 4) {
         g_Player.timers[2] = 4;
         g_Player.unk40 = 0x8166;
@@ -577,7 +577,7 @@ s32 func_80113D7C(s16 damageAmount) {
     damage.effects = EFFECT_NONE;
     damage.damageKind = DAMAGEKIND_0;
     SetPlayerStep(Player_Kill);
-    func_80115394(&damage, step, temp_s1);
+    PlayerStepKill(&damage, step, temp_s1);
     return -1;
 }
 
@@ -600,7 +600,7 @@ void func_80113EE0(void) {
     PLAYER.rotZ = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
-        func_8010FAF4();
+        DestroyEquippedWeapon();
     }
 }
 
@@ -645,7 +645,7 @@ block_13:
     PLAYER.entityRoomIndex = 1;
 }
 
-void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
+void PlayerHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     s32 randbit;
     u8 unkAC_offset;
     s32 i;
@@ -671,7 +671,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
             PLAYER.velocityY = FIX(-3);
-            func_8010E3B8(FIX(-1.25));
+            UpdatePlayerVelocityX(FIX(-1.25));
             PLAYER.step = Player_AxearmorHit;
             PLAYER.step_s = 0;
             PLAYER.ext.player.anim = 0xD1;
@@ -686,7 +686,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         // Unfortunate reuse of var_s0 here. case 4 and 5 treat it as a step_s
         // offset, while others treat it as a velocity.
         i = 0;
-        func_80111CC0();
+        CreatePlayerEffectEntities();
         sfxIndex = 0;
         switch (damage->damageKind) {
         case DAMAGEKIND_5:
@@ -695,7 +695,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         case DAMAGEKIND_4:
             PLAYER.posY.val -= 1;
             PLAYER.velocityY = FIX(-0.5);
-            func_8010E3B8(FIX(-8));
+            UpdatePlayerVelocityX(FIX(-8));
             PLAYER.step_s = i + 2;
             PLAYER.ext.player.anim = 0x2E;
             g_Player.timers[2] = 0x200;
@@ -718,7 +718,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 break;
             }
             PLAYER.velocityY = i + FIX(-4);
-            func_8010E3B8(FIX(-1.66666));
+            UpdatePlayerVelocityX(FIX(-1.66666));
             PLAYER.step_s = 1;
             if (func_80113E68() == 0) {
                 PLAYER.ext.player.anim = 0x40;
@@ -734,7 +734,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 0:
             default:
                 PLAYER.velocityY = i + FIX(-4);
-                func_8010E3B8(FIX(-1.66666));
+                UpdatePlayerVelocityX(FIX(-1.66666));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {
                     PLAYER.ext.player.anim = 0x40;
@@ -743,7 +743,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 2:
             case 6:
                 PLAYER.velocityY = 0;
-                func_8010E3B8(FIX(-2.5));
+                UpdatePlayerVelocityX(FIX(-2.5));
                 PLAYER.step_s = 7;
                 PLAYER.ext.player.anim = 0x23;
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
@@ -755,7 +755,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 0:
             case 1:
                 PLAYER.velocityY = 0;
-                func_8010E3B8(FIX(-2.5));
+                UpdatePlayerVelocityX(FIX(-2.5));
                 PLAYER.step_s = 6;
                 randbit = (rand() & 1);
                 // Weird test, I  think PLAYER.entityRoomIndex is a wrong name.
@@ -769,7 +769,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 2:
             case 6:
                 PLAYER.velocityY = 0;
-                func_8010E3B8(FIX(-2.5));
+                UpdatePlayerVelocityX(FIX(-2.5));
                 PLAYER.step_s = 7;
                 PLAYER.ext.player.anim = 0x23;
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
@@ -779,7 +779,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 5:
             default:
                 PLAYER.velocityY = FIX(-2);
-                func_8010E3B8(FIX(-1.25));
+                UpdatePlayerVelocityX(FIX(-1.25));
                 PLAYER.step_s = 1;
                 func_80113E68();
                 break;
@@ -919,7 +919,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             // conditionals.
             deepcond:
                 PLAYER.velocityY = FIX(-4);
-                func_8010E3B8(FIX(-1.25));
+                UpdatePlayerVelocityX(FIX(-1.25));
                 PLAYER.ext.player.anim = 0x2F;
                 i = -3;
                 if (PLAYER.velocityX != 0) {
@@ -1016,13 +1016,13 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 7:
         DecelerateX(FIX(1.0 / 8));
         if (!(g_Player.pl_vram_flag & 1)) {
-            func_8010E7AC();
+            ExecuteFall();
         }
         if (PLAYER.animFrameDuration < 0) {
             if (PLAYER.step_s == 6) {
-                func_8010E570(0);
+                LandToTheGround(0);
             } else {
-                func_8010E470(0, PLAYER.velocityX);
+                ExecuteCrouch(0, PLAYER.velocityX);
             }
         }
         break;
@@ -1032,7 +1032,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     }
 }
 
-void func_80114DF4(s32 arg0) {
+void PlayerStepPetrified(s32 arg0) {
     s16 animVariant;
     s32 newlyPetrified;
     s32 yShift;
@@ -1047,7 +1047,7 @@ void func_80114DF4(s32 arg0) {
         if (!(g_Player.pl_vram_flag & 1)) {
             PLAYER.velocityY = FIX(-2);
         }
-        func_8010E3B8(FIX(-1.25));
+        UpdatePlayerVelocityX(FIX(-1.25));
         func_80113E68();
         PLAYER.palette = 0x8161;
         PlaySfx(SFX_VO_ALU_SILENCE);
@@ -1056,11 +1056,11 @@ void func_80114DF4(s32 arg0) {
         g_Player.timers[1] = 0;
         g_Player.unk5E = GetStatusAilmentTimer(STATUS_AILMENT_PETRIFIED, 8);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(47, 3), 0);
-        func_8010E168(1, 4);
+        SetPlayerBlinkTimer(1, 4);
         PLAYER.step_s = 1;
         break;
     case 1:
-        func_8010E168(1, 4);
+        SetPlayerBlinkTimer(1, 4);
         PLAYER.palette = 0x8161;
         if (func_8010FDF8(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
@@ -1104,7 +1104,7 @@ void func_80114DF4(s32 arg0) {
             if (PLAYER.velocityY > FIX(7)) {
                 PLAYER.velocityY = FIX(7);
             }
-            func_8010E168(1, 4);
+            SetPlayerBlinkTimer(1, 4);
             break;
         }
 
@@ -1120,7 +1120,7 @@ void func_80114DF4(s32 arg0) {
                 PlaySfx(SFX_VO_ALU_DEATH);
                 PLAYER.step_s = 16;
             }
-            func_8010E168(1, 4);
+            SetPlayerBlinkTimer(1, 4);
             break;
         }
         // Handles wiggling out of being petrified.
@@ -1145,7 +1145,7 @@ void func_80114DF4(s32 arg0) {
                 PLAYER.palette = 0x8100;
                 break;
             }
-            func_8010E168(1, 0x1C);
+            SetPlayerBlinkTimer(1, 0x1C);
             PLAYER.step_s = 3;
             if (PLAYER.ext.player.anim != 0x3A) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(13, 3), 0);
@@ -1176,7 +1176,7 @@ void func_80114DF4(s32 arg0) {
         break;
     }
     if (PLAYER.ext.player.anim == 0x3A) {
-        func_8010E168(1, 4);
+        SetPlayerBlinkTimer(1, 4);
     }
     if (newlyPetrified && (g_Player.unk72 != 0)) {
         PLAYER.velocityY = 0;
@@ -1184,7 +1184,7 @@ void func_80114DF4(s32 arg0) {
 }
 
 // Somewhat weird args, worth more study. arg2 is unused.
-void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
+void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     s32 i;
     s32 j;
     Entity* ent;
@@ -1223,7 +1223,7 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-3.25);
-        func_8010E3B8(FIX(-1.25));
+        UpdatePlayerVelocityX(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
         PLAYER.rotZ = 0;
 
@@ -1373,7 +1373,7 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     }
 }
 
-void func_80115BB0(void) {
+void PlayerStepUnk17(void) {
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
@@ -1381,9 +1381,9 @@ void func_80115BB0(void) {
 
     if (g_unkGraphicsStruct.unk20 == 0) {
         if (g_Player.pl_vram_flag & 1) {
-            func_8010E570(0);
+            LandToTheGround(0);
         } else {
-            func_8010E7AC();
+            ExecuteFall();
         }
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x4a), 0);
         g_PlayerDraw->enableColorBlend = 0;
@@ -1415,7 +1415,7 @@ void func_80115C50(void) {
 }
 
 // Corresponding RIC function is func_8015BCD0
-void func_80115DA0(void) {
+void PlayerStepTeleport(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     g_Player.padSim = 0;
@@ -1428,7 +1428,7 @@ void func_80115DA0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         break;
 
@@ -1440,7 +1440,7 @@ void func_80115DA0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         break;
 
@@ -1452,7 +1452,7 @@ void func_80115DA0(void) {
             PLAYER.animFrameDuration = 2;
         }
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         break;
 
@@ -1460,10 +1460,10 @@ void func_80115DA0(void) {
     case 3:
     case 5:
         if (PLAYER.animFrameDuration < 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         if (g_Player.unk1C != 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
         break;
     }

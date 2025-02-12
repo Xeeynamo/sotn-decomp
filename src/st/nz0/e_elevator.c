@@ -21,7 +21,7 @@ void func_801B6DE4(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxState = 1;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -111,7 +111,7 @@ void EntityElevator(Entity* self) {
             elevator_target = self->params;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -177,7 +177,7 @@ void EntityElevator(Entity* self) {
             g_Tilemap.scrollY.i.hi;
         if (self->posY.i.hi >= y) {
             if (temp != 0) {
-                g_api.func_8010DFF0(0, 1);
+                g_api.ResetAfterImage(0, 1);
                 g_Entities[player].posY.i.hi--;
                 D_80097488.y.i.hi--;
             }
@@ -197,7 +197,7 @@ void EntityElevator(Entity* self) {
             break;
         }
         if (temp != 0) {
-            g_api.func_8010DFF0(0, 1);
+            g_api.ResetAfterImage(0, 1);
             g_Entities[player].posY.i.hi++;
             D_80097488.y.i.hi++;
         }

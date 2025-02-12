@@ -138,7 +138,7 @@ void func_us_80193050(Entity* self) {
     }
 
     InitializeEntity(g_EInitInteractable);
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+    primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 5);
 
     if (primIndex == -1) {
         DestroyEntity(self);

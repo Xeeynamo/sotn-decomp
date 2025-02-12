@@ -720,7 +720,7 @@ void EntityDraculaFinalForm(Entity* self) {
         case 5:
             CreateEntityFromCurrentEntity(E_DRACULA_UNK2C, self + 1);
             self->step_s++;
-            primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+            primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
             if (primIndex == -1) {
                 g_GameEngineStep = 0xA;
                 g_MenuStep = 0;
@@ -1001,7 +1001,7 @@ void func_801AF774(Entity* self) {
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x5C);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x5C);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
@@ -1034,7 +1034,7 @@ void func_801AF774(Entity* self) {
             prim->priority = 0xA8;
             prim = prim->next;
             self->ext.et_801AF774.prim4 = prim;
-            if (g_api.func_800EDB08(prim) == NULL) {
+            if (g_api.AllocateDrawEnvironment(prim) == NULL) {
                 g_api.FreePrimitives(primIndex);
                 self->step = 0;
                 self->flags &= ~FLAG_HAS_PRIMS;
@@ -1043,7 +1043,7 @@ void func_801AF774(Entity* self) {
             prim->type = PRIM_ENV;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            g_api.func_800EDB08(prim);
+            g_api.AllocateDrawEnvironment(prim);
             if (prim == NULL) {
                 g_api.FreePrimitives(primIndex);
                 self->step = 0;

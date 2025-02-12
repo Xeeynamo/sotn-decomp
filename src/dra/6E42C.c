@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void func_8010E42C(u32 substep) {
+void ExecuteTeleport(u32 substep) {
     PLAYER.step = Player_Teleport;
     PLAYER.step_s = substep;
 
@@ -15,7 +15,7 @@ void func_8010E42C(u32 substep) {
 
 u8 D_800ACF4C[] = {0x00, 0x11, 0x04, 0x15, 0x01, 0x10, 0x03, 0x23};
 
-void func_8010E470(s32 arg0, s32 arg1) {
+void ExecuteCrouch(s32 arg0, s32 arg1) {
     PLAYER.velocityX = arg1;
     PLAYER.velocityY = 0;
     PLAYER.step = Player_Crouch;
@@ -23,9 +23,8 @@ void func_8010E470(s32 arg0, s32 arg1) {
     SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
 }
 
-// This may be the function that turns Alucard into stone
-void func_8010E4D0(void) {
-    func_80111CC0();
+void HandlePlayerStuck(void) {
+    CreatePlayerEffectEntities();
 
     PLAYER.palette = PAL_OVL(0x100);
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
@@ -35,12 +34,12 @@ void func_8010E4D0(void) {
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
         SetPlayerStep(Player_AlucardStuck);
-        func_80111CC0();
+        CreatePlayerEffectEntities();
         PlaySfx(SFX_VO_ALU_WHAT);
         return;
     }
-    func_80111CC0();
-    func_8010E470(0, 0);
+    CreatePlayerEffectEntities();
+    ExecuteCrouch(0, 0);
 }
 
 u8 D_800ACF54[] = {
@@ -48,7 +47,7 @@ u8 D_800ACF54[] = {
 };
 
 // Corresponding RIC function is RicLandToTheGround (much simpler)
-void func_8010E570(s32 arg0) {
+void LandToTheGround(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
@@ -92,7 +91,7 @@ void func_8010E570(s32 arg0) {
     SetPlayerAnim(D_800ACF54[anim]);
 }
 
-void func_8010E6AC(bool forceAnim13) {
+void ExecuteWalk(bool forceAnim13) {
     bool atLedge;
 
     atLedge = 0;
@@ -127,7 +126,7 @@ void func_8010E6AC(bool forceAnim13) {
     }
 }
 
-void func_8010E7AC(void) {
+void ExecuteFall(void) {
     SetPlayerStep(Player_Fall);
 
     if (g_Player.prev_step != Player_Walk) {
@@ -147,9 +146,9 @@ void func_8010E7AC(void) {
     g_Player.unk44 = 16;
 }
 
-void func_8010E83C(bool clearUnk44bit) {
+void ExecuteJump(bool clearUnk44bit) {
     if (g_Player.unk72) {
-        func_8010E7AC();
+        ExecuteFall();
         return;
     } else if (CheckMoveDirection()) {
         SetPlayerAnim(26);
@@ -177,7 +176,8 @@ void func_8010E83C(bool clearUnk44bit) {
     }
 }
 
-void func_8010E940(void) {
+//jump kick? needs leap stone + fast -Y velocity
+void ExecuteJumpKick(void) {
     g_Player.unk44 |= (0x20 | 0x01);
     SetPlayerAnim(32);
     PLAYER.step_s = 0;
@@ -217,7 +217,7 @@ s16 g_SfxAttackGrunts[] = {
 
 s32 unused_padding = 0; // stripped on PSP. Could be anywhere in this file.
 
-void func_8010EA54(s32 arg0) {
+void PlayRandomAttackGrunt(s32 arg0) {
     s16 temp_hi;
 
     if (arg0 != 0) {
@@ -261,7 +261,7 @@ static s32 CheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
 // Attempts to use subweapon. Performs checks before activating.
 // If it succeeds, factory is called to spawn the subweapon, and return 0.
 // If it fails, return a number 1 through 4 indicating why.
-static s32 func_8010EB5C(void) {
+static s32 AttemptSubweaponUse(void) {
     SubweaponDef subWpn;
     s16 chainLimit;
     s16 subWpnId;
@@ -277,7 +277,7 @@ static s32 func_8010EB5C(void) {
     if (g_Player.pl_vram_flag & 0x20) {
         atLedge = 1;
     }
-    subWpnId = func_800FE3C4(&subWpn, 0, false);
+    subWpnId = GetSubweaponProperties(&subWpn, 0, false);
     // If we don't have a subweapon obtained
     if (subWpnId == 0) {
         return 1;
@@ -292,7 +292,7 @@ static s32 func_8010EB5C(void) {
         return 2;
     }
     // Should be if we don't have enough hearts?
-    subWpnId = func_800FE3C4(&subWpn, 0, true);
+    subWpnId = GetSubweaponProperties(&subWpn, 0, true);
     if (subWpnId == 0) {
         return 3;
     }
@@ -314,7 +314,7 @@ static s32 func_8010EB5C(void) {
     case Player_Jump:
         break;
     }
-    func_8010EA54(8);
+    PlayRandomAttackGrunt(8);
     return 0;
 }
 
@@ -358,7 +358,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
     return 0;
 }
 
-void func_8010ED54(u8 anim) {
+void ExecuteSwordWarp(u8 anim) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SwordWarp);
@@ -368,7 +368,7 @@ void func_8010ED54(u8 anim) {
     g_Player.unk48 = 0;
 }
 
-bool func_8010EDB8(void) {
+bool HandlePlayerAttack(void) {
     Entity* ent6C;
     bool var_s7; // Triggers on some kind of special move spell
     Equipment sp10;
@@ -391,7 +391,7 @@ bool func_8010EDB8(void) {
     }
     attBtnsPressed = g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE);
 
-    if (attBtnsPressed != 0 && func_8010EB5C() == 0) {
+    if (attBtnsPressed != 0 && AttemptSubweaponUse() == 0) {
         return true;
     }
     if (g_Player.unk48 == 0) {
@@ -502,8 +502,8 @@ block_45:
             if (equipped_item->unk14 == 20) { // Library card!
                 if (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
                     PLAYER.step == Player_Crouch) {
-                    func_8010E42C(0);
-                    func_800FDD44(hand);
+                    ExecuteTeleport(0);
+                    HandleConsumableItemUsage(hand);
                     return true;
                 }
                 return false;
@@ -547,9 +547,9 @@ block_45:
         return false;
     }
 
-    func_800FDD44(hand);
+    HandleConsumableItemUsage(hand);
     if (var_s7) {
-        func_800FDD44((hand + 1) & 1);
+        HandleConsumableItemUsage((hand + 1) & 1);
     }
     HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 1);
     // 95 is Estoc
@@ -680,7 +680,7 @@ block_45:
         goto block_98;
 
     block_1000:
-        func_8010EA54(8);
+        PlayRandomAttackGrunt(8);
 
     case 8:
     case 9: // Combat Knife
@@ -756,7 +756,7 @@ block_45:
         case 4:
             break;
         }
-        func_8010EA54(8);
+        PlayRandomAttackGrunt(8);
         break;
     case 128: // Shields
         var_s2 = equipped_item->playerAnim;
@@ -784,10 +784,10 @@ block_45:
         }
         break;
     case 134: // Holbein Dagger and Blue Knuckles
-        func_8010DFF0(1, 0x20);
+        ResetAfterImage(1, 0x20);
     case 129: // Consumable weapons (throwing stars, etc)
     case 130:
-        func_8010EA54(8);
+        PlayRandomAttackGrunt(8);
     case 132: // Food
         if (PLAYER.step_s < 0x40) {
             var_s2 = equipped_item->playerAnim;
@@ -831,13 +831,14 @@ block_45:
     case 135: // Unknown
         PlaySfx(SFX_VO_ALU_ATTACK_C);
         g_Player.timers[ALU_T_9] = 4;
-        func_8010ED54(equipped_item->playerAnim);
+        ExecuteSwordWarp(equipped_item->playerAnim);
         break;
     }
     return true;
 }
 
-void func_8010FAF4(void) {
+//dropping subweapon?
+void DestroyEquippedWeapon(void) {
     Entity* ent = &g_Entities[E_WEAPON];
     DestroyEntity(ent);
     g_Player.unk46 = 0;
@@ -847,15 +848,15 @@ void PerformHellfire(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellHellfire);
-    func_8010E168(1, 0x10);
-    func_8010E3E0();
+    SetPlayerBlinkTimer(1, 0x10);
+    DestroyEntityIfFlagSet();
 }
 
 void PerformDarkMetamorphosis(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellDarkMetamorphosis);
-    func_8010E3E0();
+    DestroyEntityIfFlagSet();
     SetPlayerAnim(0xBA);
     PlaySfx(SFX_VO_ALU_DARK_META);
     PlaySfx(SFX_UI_MP_FULL);
@@ -870,7 +871,7 @@ void PerformSoulSteal(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSoulSteal);
-    func_8010E3E0();
+    DestroyEntityIfFlagSet();
     SetPlayerAnim(0xDA);
     PlaySfx(SFX_VO_ALU_SOUL_STEAL);
     func_80118C28(0xC);
@@ -881,7 +882,7 @@ void PerformSummonSpirit(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
-    func_8010E3E0();
+    DestroyEntityIfFlagSet();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
@@ -892,7 +893,7 @@ void PerformTetraSpirit(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
-    func_8010E3E0();
+    DestroyEntityIfFlagSet();
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
     SetPlayerAnim(0xF1);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
@@ -903,7 +904,7 @@ void PerformSwordBrothers(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSwordBrothers);
-    func_8010E3E0();
+    DestroyEntityIfFlagSet();
     SetPlayerAnim(0xF1);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x17), 0);
     g_Player.timers[ALU_T_12] = 4;

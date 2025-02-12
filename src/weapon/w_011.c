@@ -184,7 +184,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         for (i = 0; i < 16; i++) {
             D_51000_8017ABF4[i] = (i << 9) * 2;
         }
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 10);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

@@ -80,7 +80,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             self->ext.magicallySealedDoor.unk86 = 4;
         }
         self->posX.i.hi += self->ext.magicallySealedDoor.unk86;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -275,8 +275,8 @@ void EntityMagicallySealedDoor(Entity* self) {
     }
 
     if (self->step != 1) {
-        g_api.func_8010E168(1, 0x20);
-        g_api.func_8010DFF0(1, 1);
+        g_api.SetPlayerBlinkTimer(1, 0x20);
+        g_api.ResetAfterImage(1, 1);
     }
 
     x = self->posX.i.hi - self->ext.magicallySealedDoor.unk86;

@@ -40,7 +40,7 @@ void EntityLifeUpSpawn(Entity* self) {
         self->animSet = 2;
         self->animCurFrame = 0;
         // We allocate 385 primitives for this entity!!!
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 385);
+        primIndex = g_api.AllocatePrimitives(PRIM_GT4, 385);
         if (primIndex == -1) {
             self->step = 6;
             return;

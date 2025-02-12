@@ -27,7 +27,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     }
 
     // Create chCount amount of sprites based on the actor name's letter count
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, chCount);
+    primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, chCount);
     if (primIndex == -1) {
         DestroyEntity(self);
         return;

@@ -455,7 +455,7 @@ void EntityDracula(Entity* self) {
         CreateEntityFromCurrentEntity(E_DRACULA_UNK1D, &self[1]);
         self[1].zPriority = self->zPriority + 1;
 
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 128);
+        primIndex = g_api.AllocatePrimitives(PRIM_GT4, 128);
         if (primIndex == -1) {
             self->step = 0;
             break;

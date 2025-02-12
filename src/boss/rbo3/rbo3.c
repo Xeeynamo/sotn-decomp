@@ -393,7 +393,7 @@ void func_us_80192020(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180498);
         self->hitboxHeight = 1;
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -529,7 +529,7 @@ void func_us_801923DC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801804A4);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

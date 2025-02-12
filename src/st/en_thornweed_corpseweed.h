@@ -300,7 +300,7 @@ void EntityCorpseweed(Entity* self) {
         self->ext.corpseweed.bobbingAngle = 8;
 
         // Setup primitives
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIdx == -1) {
             DestroyEntity(self);
             return;
@@ -801,7 +801,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         } else {
             self->velocityX = x * SpeedX;
         }
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIdx == -1) {
             DestroyEntity(self);
             return;

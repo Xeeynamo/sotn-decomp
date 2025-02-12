@@ -667,7 +667,7 @@ void EntitySalemWitchCurse(Entity* self) {
             self->velocityX = ProjectileSpeed;
         }
 
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 0x10);
         if (primIdx == -1) {
             DestroyEntity(self);
             return;

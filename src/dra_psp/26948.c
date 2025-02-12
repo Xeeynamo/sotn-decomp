@@ -14,7 +14,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadRoomLayer);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09103E68);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EAEA4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", ClearEquipIconBuffers);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", ResetPendingGfxLoad);
 
@@ -30,7 +30,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", DecompressData);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadPendingGfx);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB4F8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadPixPattern);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadEquipIcon);
 

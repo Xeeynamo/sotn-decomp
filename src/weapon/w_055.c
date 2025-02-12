@@ -100,7 +100,7 @@ s32 func_ptr_80170004(Entity* self) {
     y = self->posY.i.hi - 28;
 
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 64);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 64);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

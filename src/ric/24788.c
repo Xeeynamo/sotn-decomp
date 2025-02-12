@@ -469,7 +469,7 @@ void RicEntityHitByCutBlood(Entity* self) {
     switch (selfstep) {
     case 0:
         self->primIndex =
-            g_api.func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
+            g_api.AllocatePrimitives(PRIM_TILE_ALT, temp_s5->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -838,7 +838,7 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -915,7 +915,7 @@ void func_801623E0(Entity* self) {
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -964,7 +964,7 @@ void func_80162604(Entity* self) {
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1027,7 +1027,7 @@ void RicEntityMariaPowers(Entity* self) {
     params = self->params;
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

@@ -95,7 +95,7 @@ bool CalcPlayerDamageAgain(DamageParam* damage) {
 }
 
 // SAT: func_0606F328
-s32 func_800FD664(s32 arg0) {
+s32 AdjustForInvertedCastle(s32 arg0) {
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
@@ -109,7 +109,7 @@ u8 GetEquipItemCategory(s32 equipId) {
 
 // SAT: func_0606F378
 // a little different from PSX version
-s32 func_800FD6C4(s32 equipTypeFilter) {
+s32 CountEquipItems(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
     s32 i;
@@ -275,7 +275,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
 
 // SAT: func_0606F884
 // no return value on PSX?
-s32 func_800FDE00(void) {
+s32 ResetLevelUpFlags(void) {
     D_80137960 = 0;
     D_80137964 = 0;
     D_80137968 = 0;
@@ -297,7 +297,7 @@ bool IsRelicActive(s32 arg0) {
 }
 
 // SAT: func_0606FC80
-s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
+s32 GetSubweaponProperties(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
     u32 accessoryCount;
 
     if (subweaponId == 0) {
@@ -363,7 +363,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_800F4994();
+    CalculatePlayerStats();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
         res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
@@ -385,7 +385,7 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
 }
 
 // SAT: func_0606FFC8
-void func_800FE8F0(void) {
+void RestoreHpOnAbsorb(void) {
     if (D_8013B5E8 == 0) {
         D_8013B5E8 = 0x40;
     }
@@ -537,7 +537,7 @@ u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
 }
 
 // SAT: func_060707F0
-s32 func_800FF460(s32 arg0) {
+s32 CalculateLuckAdjustedValue(s32 arg0) {
     if (arg0 == 0) {
         return 0;
     }
@@ -546,7 +546,7 @@ s32 func_800FF460(s32 arg0) {
 
 // SAT: func_06070820
 // Determine what type of item to drop
-s32 func_800FF494(EnemyDef* arg0) {
+s32 DetermineItemDrop(EnemyDef* arg0) {
     // 0x4B is the item ID for Ring of Arcana
     // Ring of Arcana is an item that increases enemy item drop rates when
     // equipped

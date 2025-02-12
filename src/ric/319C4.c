@@ -17,7 +17,7 @@ void func_8016D9C4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 20);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 20);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -173,7 +173,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 0x10);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_G4, 0x10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -327,7 +327,7 @@ void RicEntityCrashBibleBeam(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, BIBLE_PAGE_COUNT);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_G4, BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -437,7 +437,7 @@ void RicEntityCrashBible(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1 + BIBLE_PAGE_COUNT);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1 + BIBLE_PAGE_COUNT);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
@@ -632,7 +632,7 @@ void func_8016F198(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
@@ -756,7 +756,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 20);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1197,7 +1197,7 @@ void RicEntityAguneaLightning(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xF);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xF);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1328,7 +1328,7 @@ void RicEntityAguneaCircle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             g_Player.unk4E = 1;
@@ -1479,7 +1479,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x10);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1571,7 +1571,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1974,7 +1974,7 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
 
     switch (entity->step) {
     case 0:
-        ret = g_api.AllocPrimitives(PRIM_GT4, 1);
+        ret = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         entity->primIndex = ret;
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
@@ -2038,7 +2038,7 @@ void RicEntitySubwpnBible(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

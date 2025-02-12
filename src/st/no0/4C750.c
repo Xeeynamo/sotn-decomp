@@ -15,7 +15,7 @@ void func_us_801CC750(Entity* self) {
     }
 
     InitializeEntity(D_us_80180A88);
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
+    primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 9);
     if (primIndex != -1) {
         prim = &g_PrimBuf[primIndex];
         i = -0x10;

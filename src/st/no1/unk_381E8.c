@@ -381,7 +381,7 @@ void func_us_801B9304(Entity* self) {
 #ifdef VERSION_PSP
         func_psp_0925F440();
 #endif
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xE);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xE);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -647,7 +647,7 @@ void func_us_801B9BE4(Entity* self) {
             self->animCurFrame = 0x1D;
             self->step = 1;
             if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
-                g_api.func_800EA5E4(0x8003);
+                g_api.InitClutAnimation(0x8003);
                 g_api.PlaySfxVolPan(0x7AA, 0, 0);
                 self->hitboxState = 0;
                 self->step = 2;
@@ -688,7 +688,7 @@ void func_us_801B9BE4(Entity* self) {
 #endif
                 }
                 g_api.func_80102CD8(1);
-                g_api.func_800EA5E4(0x8003);
+                g_api.InitClutAnimation(0x8003);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
                 g_CastleFlags[NO1_ELEVATOR_ACTIVATED] = 1;
@@ -818,8 +818,8 @@ void func_us_801BA290(Entity* self) {
     if (self->step > 1 && self->step < 7) {
         g_Player.padSim = 0;
         g_Player.D_80072EFC = 2;
-        g_api.func_8010DFF0(0, 1);
-        g_api.func_8010E168(1, 0x20);
+        g_api.ResetAfterImage(0, 1);
+        g_api.SetPlayerBlinkTimer(1, 0x20);
     }
     if (self->ext.et_801BA290.unkA4) {
         PLAYER.animCurFrame = 0;
@@ -858,13 +858,13 @@ void func_us_801BA290(Entity* self) {
         break;
 
     case 2:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x19);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x19);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.et_801BA290.unkAC = prim;
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 g_PauseAllowed = true;
                 DestroyEntity(self);
@@ -889,7 +889,7 @@ void func_us_801BA290(Entity* self) {
             prim->drawMode = DRAW_UNK_1000 | DRAW_HIDE;
             prim = prim->next;
 
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;

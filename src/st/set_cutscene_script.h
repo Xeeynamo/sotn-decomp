@@ -3,7 +3,7 @@ static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT,
+    firstPrimIndex = g_api.AllocPrimBuffers(PRIM_SPRT,
 #if defined(VERSION_PC)
                                            8
 #else

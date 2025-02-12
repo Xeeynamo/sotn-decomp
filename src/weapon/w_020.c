@@ -60,7 +60,7 @@ static void EntityWeaponAttack(Entity* self) {
     default:
         return;
     case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 0x1A);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_G4, 0x1A);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

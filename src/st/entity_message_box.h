@@ -37,7 +37,7 @@ void EntityMessageBox(Entity* self) {
             self->params = 96; // default to 96 frames, or 1.5 seconds
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (primIndex == -1) {
             self->step = 0;
             return;

@@ -60,7 +60,7 @@ void EntityClockRoomController(Entity* self) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
         if (primIndex == -1) {
             return;
         }

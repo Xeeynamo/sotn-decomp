@@ -56,7 +56,7 @@ void func_801BD8F0(Entity* self) {
         self->step++;
         return;
     case 2:
-        sp48 = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
+        sp48 = g_api.AllocatePrimitives(PRIM_GT4, 15 * 15);
         if (sp48 == -1) {
             SetStep(7);
             return;
@@ -89,7 +89,7 @@ void func_801BD8F0(Entity* self) {
         prim->priority = 0x69;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
-        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+        dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(7);
             return;
@@ -111,7 +111,7 @@ void func_801BD8F0(Entity* self) {
         prim->priority = 0x68;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
-        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+        dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(7);
             return;

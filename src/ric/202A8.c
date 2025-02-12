@@ -64,8 +64,8 @@ void RicHandleHighJump(void) {
     }
 }
 
-// Same function in DRA is func_8010D59C
-void func_8015C4AC(void) {
+// Same function in DRA is UpdateAfterImage
+void RicUpdateAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -117,7 +117,7 @@ void func_8015C4AC(void) {
     }
 }
 
-// Extremely similar to func_8010D800
+// Extremely similar to UpdateAfterImageOpacity
 void func_8015C6D4(void) {
     byte pad[0x28];
     PlayerDraw* plDraw;

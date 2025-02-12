@@ -237,7 +237,7 @@ void EntityPrizeDrop(Entity* self) {
                 self->params = 1;
             }
 #endif
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->primIndex = primIndex;
                 self->flags |= FLAG_HAS_PRIMS;

@@ -28,7 +28,7 @@ static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    firstPrimIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 8);
     g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
         g_Dialogue.primIndex[2] = 0;
@@ -457,7 +457,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_IsCutsceneDone = 1;
-            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x48);
+            primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 0x48);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;

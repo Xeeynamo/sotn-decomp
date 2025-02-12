@@ -912,7 +912,7 @@ void EntityExplosion3(Entity* entity) {
 
     params = entity->params;
     if (!entity->step) {
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex != -1) {
             InitializeEntity(D_80180B3C);
             entity->flags |= FLAG_UNK_2000;
@@ -1104,7 +1104,7 @@ void EntityFireWargWaveAttack(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 0;
 
-        primIdx = g_api.AllocPrimitives(PRIM_GT4, 6);
+        primIdx = g_api.AllocPrimBuffers(PRIM_GT4, 6);
 
         if (primIdx != -1) {
             prim = &g_PrimBuf[primIdx];
@@ -1297,7 +1297,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         temp_s1_u16 = (u16)temp_s1;
 
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
 
         if (primIndex == -1) {
             DestroyEntity(self);

@@ -1179,7 +1179,7 @@ void RicSetSubweaponParams(Entity* entity) {
     entity->stunFrames = subwpn->stunFrames;
     entity->hitEffect = subwpn->hitEffect;
     entity->entityRoomIndex = subwpn->entityRoomIndex;
-    entity->attack = g_api.func_800FD664(entity->attack);
+    entity->attack = g_api.AdjustForInvertedCastle(entity->attack);
     func_8015F9F0(entity);
 }
 
@@ -1276,7 +1276,7 @@ void RicEntityHitByHoly(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->primIndex =
-            (s16)g_api.AllocPrimitives(PRIM_GT4, LEN(D_80174FBC));
+            (s16)g_api.AllocPrimBuffers(PRIM_GT4, LEN(D_80174FBC));
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;

@@ -205,7 +205,7 @@ void EntityPlateLord(Entity* self) {
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0x14;
         self->hitboxOffY = 0x14;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 4);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1095,7 +1095,7 @@ void func_us_801D44A0(Entity* self) {
         self->hitboxHeight = 0xC;
         self->drawFlags |= FLAG_DRAW_ROTZ;
 
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

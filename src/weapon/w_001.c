@@ -44,7 +44,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -274,7 +274,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
 
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 16);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

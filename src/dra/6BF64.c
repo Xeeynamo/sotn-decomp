@@ -19,7 +19,7 @@ void GetPlayerSensor(Collider* col) {
     }
 }
 
-void func_8010BFFC(void) {
+void HandlePlayerCollision(void) {
     s16 x;
     s16 y;
     s32 i;

@@ -124,7 +124,7 @@ void func_us_801BB984(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180A1C);
         self->animCurFrame = 0x1F;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -263,12 +263,12 @@ void func_us_801BBD90(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x20);
+        primIndex = g_api.AllocatePrimitives(PRIM_GT4, 0x20);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
@@ -289,7 +289,7 @@ void func_us_801BBD90(Entity* self) {
             prim->priority = 0x11F;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
             if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;

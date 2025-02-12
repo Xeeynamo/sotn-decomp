@@ -78,7 +78,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             self->ext.redDoor.unk86 = 4;
         }
         self->posX.i.hi += self->ext.redDoor.unk86;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(g_eRedDoorUV));
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, LEN(g_eRedDoorUV));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -306,8 +306,8 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     }
 
     if (self->step != 1) {
-        g_api.func_8010E168(1, 0x20);
-        g_api.func_8010DFF0(1, 1);
+        g_api.SetPlayerBlinkTimer(1, 0x20);
+        g_api.ResetAfterImage(1, 1);
     }
 
     x = self->posX.i.hi - self->ext.redDoor.unk86;

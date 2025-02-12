@@ -23,7 +23,7 @@ void EntityTeleport(Entity* self) {
     upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, LEN(D_8013839C) + 4);
         if (self->primIndex == -1) {
             return;
         }

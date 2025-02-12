@@ -39,7 +39,7 @@ void func_us_801D2274(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180914);
         self->hitboxState = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0xC);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

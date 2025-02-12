@@ -35,7 +35,7 @@ bool CalcPlayerDamage(DamageParam* damage) {
     return false;
 }
 
-s32 func_800FD664(s32 arg0) {
+s32 AdjustForInvertedCastle(s32 arg0) {
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         arg0 *= 2;
     }
@@ -72,7 +72,7 @@ ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
 
-s32 func_800FD6C4(s32 equipTypeFilter) {
+s32 CountEquipItems(s32 equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
     s32 i;

@@ -457,7 +457,7 @@ void HitDetection(void) {
                 PreventEntityFromRespawning(entFrom5C);
                 sp3C = &g_api.enemyDefs[entFrom5C->enemyId];
                 if (!(entFrom5C->hitFlags & 0x80)) {
-                    g_api.func_800FE044(sp3C->exp, sp3C->level);
+                    g_api.UpdatePlayerStats(sp3C->exp, sp3C->level);
                     if ((entFrom5C->flags & FLAG_UNK_1000) &&
                         (g_Status.killCount < 999999)) {
                         g_Status.killCount++;

@@ -373,9 +373,9 @@ void func_801B60D4(void) {
         D_801BD030 = 0;
         ent = &g_Entities[8];
         ent->params = D_800978B4 - 1;
-        g_api.func_800EA5E4(ANIMSET_DRA(0x16));
-        g_api.func_800EA5E4(ANIMSET_DRA(0));
-        g_api.func_800EA5E4(ANIMSET_OVL(5));
+        g_api.InitClutAnimation(ANIMSET_DRA(0x16));
+        g_api.InitClutAnimation(ANIMSET_DRA(0));
+        g_api.InitClutAnimation(ANIMSET_OVL(5));
         g_api.LoadGfxAsync(ANIMSET_OVL(0));
         g_GameEngineStep++;
         break;
@@ -421,7 +421,7 @@ void func_801B60D4(void) {
         break;
 
     case 6:
-        g_api.func_800EA5E4(ANIMSET_DRA(0));
+        g_api.InitClutAnimation(ANIMSET_DRA(0));
         g_GameEngineStep++;
         break;
 

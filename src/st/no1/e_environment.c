@@ -155,7 +155,7 @@ void EntityEnvTile(Entity* self) {
             self->flags = ptr->flags;
         }
         if (self->params == 6) {
-            primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+            primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;

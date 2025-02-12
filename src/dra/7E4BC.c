@@ -228,7 +228,7 @@ void func_8011E4BC(Entity* self) {
     playerYpos = PLAYER.posY.i.hi;
     switch (self->step) {
     case 0:
-        self->primIndex = func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
+        self->primIndex = AllocatePrimitives(PRIM_TILE_ALT, temp_s5->count + 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -645,7 +645,7 @@ void EntityHitByLightning(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 6);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -786,7 +786,7 @@ void EntityHitByIce(Entity* self) {
     sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT3, 24);
+        self->primIndex = AllocPrimBuffers(PRIM_GT3, 24);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -965,10 +965,10 @@ void EntityTransparentWhiteCircle(Entity* self) {
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
     temp_s6 = (upperparams >> 8) & 0x40;
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 32);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 32);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1162,7 +1162,7 @@ void EntityPlayerPinkEffect(Entity* self) {
             PlaySfx(SFX_TRANSFORM);
         }
         if (data_idx->unk18 >= 128) {
-            func_8010E168(true, 64);
+            SetPlayerBlinkTimer(true, 64);
         } else {
             GiveStatBuff(data_idx->unk18);
         }
@@ -1310,7 +1310,7 @@ void EntityPlayerDissolves(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCount);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             return;
         }
@@ -1482,7 +1482,7 @@ void EntityPlayerDissolves(Entity* self) {
             prim = prim->next;
         }
     }
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
 }
 
 void EntityLevelUpAnimation(Entity* self) {
@@ -1500,7 +1500,7 @@ void EntityLevelUpAnimation(Entity* self) {
     unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(4U, 0xE);
+        self->primIndex = AllocPrimBuffers(4U, 0xE);
         if (self->primIndex == -1) {
             return;
         }
@@ -1799,7 +1799,7 @@ void EntityMist(Entity* self) {
         }
         FreePrimitives(self->primIndex);
         self->step = 0;
-        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             goto block_147;
         }
@@ -1889,7 +1889,7 @@ void EntityMist(Entity* self) {
         }
         if (self->ext.mist.timer == 0x4F) {
             self->step++;
-            func_800EA538(8);
+            ResetClutAnimation(8);
         }
         // Fallthrough!
     case 2:
@@ -1983,7 +1983,7 @@ void EntityMist(Entity* self) {
         self->ext.mist.yCurrent = yVar;
         self->ext.mist.timer = 0;
         self->step = 4;
-        self->primIndex = AllocPrimitives(PRIM_GT4, 80);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 80);
         if (self->primIndex == -1) {
             DestroyEntity(self);
         } else {
@@ -2033,8 +2033,8 @@ void EntityMist(Entity* self) {
         goto block_147;
     case 4:
         if (self->ext.mist.timer == 0xC) {
-            func_800EA538(8);
-            func_800EA5E4(0x11DU);
+            ResetClutAnimation(8);
+            InitClutAnimation(0x11DU);
         }
         j = 0;
         // These if-statements seem to allow for the mist to stretch and move

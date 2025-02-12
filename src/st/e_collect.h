@@ -159,7 +159,7 @@ void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 
 static void CollectLifeVessel(void) {
     g_api.PlaySfx(SFX_HEART_PICKUP);
-    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
+    g_api.UpdatePlayerStats(LIFE_VESSEL_INCREASE, 0x8000);
     DestroyEntity(g_CurrentEntity);
 }
 #endif

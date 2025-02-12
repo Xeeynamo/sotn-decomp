@@ -159,7 +159,7 @@ segments:
       # - [0x3BEF8, .rodata, save_mgr] # func_800E9880
       # - [0x3C160, .rodata, save_mgr] # func_800E9C14
       # - [0x3C194, .rodata, save_mgr] # func_800EA48C
-      - [0x3C1A8, .rodata, 4A538] # func_800EA7CC
+      - [0x3C1A8, .rodata, 4A538] # UpdateClutAnimations
       # - [0x3C1E8, .rodata, 4A538] # func_800EB098
       # - [0x3C228, .rodata, 4A538] # func_800EB314
       # - [0x3C238, .rodata, 4A538] # RenderPrimitives
@@ -175,7 +175,7 @@ segments:
       # - [0x3C6EC, .rodata, menu] # func_800F9F40
       # - [0x3C71C, .rodata, menu] # MenuHandleCursorInput
       # - [0x3C734, .rodata, menu] # MenuHandle
-      - [0x3CBAC, .rodata, 5D5BC] # func_800FD6C4
+      - [0x3CBAC, .rodata, 5D5BC] # CountEquipItems
       # - [0x3CBC4, .rodata, 5D5BC] # func_800FD7C0
       # - [0x3CBDC, .rodata, 5D5BC] # GetStatusAilmentTimer
       - [0x3CBF4, .rodata, 5F60C] # g_CheatCodes
@@ -189,7 +189,7 @@ segments:
       - [0x40D38, .rodata, cd] # func_801080DC
       # - [0x40D54, .rodata, cd] # func_80108448
       - [0x40E28, .rodata, 692E8] # EntityAlucard
-      - [0x4108C, .rodata, 6E42C] # func_8010EDB8
+      - [0x4108C, .rodata, 6E42C] # HandlePlayerAttack
       - [0x41308, .rodata, 704D0] # func_80110968
       # - [0x41320, .rodata, 704D0] # func_80110BC8
       # - [0x41334, .rodata, 704D0] # func_80110DF8
@@ -200,10 +200,10 @@ segments:
       # - [0x41400, .rodata, 71830] # func_801119C4
       - [0x41410, .rodata, 71830] # PlayerStepStand
       - [0x41588, .rodata, 72BB0] # PlayerStepJump
-      # - [0x41750, .rodata, 72BB0] # func_801131C4
-      # - [0x418E0, .rodata, 72BB0] # func_80113AAC
-      # - [0x418F4, .rodata, 72BB0] # AlucardHandleDamage
-      # - [0x419D0, .rodata, 72BB0] # func_80115DA0
+      # - [0x41750, .rodata, 72BB0] # PlayerStepCrouch
+      # - [0x418E0, .rodata, 72BB0] # PlayerStepHighJump
+      # - [0x418F4, .rodata, 72BB0] # PlayerHandleDamage
+      # - [0x419D0, .rodata, 72BB0] # PlayerStepTeleport
       - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
       # - [0x41A00, .rodata, 75F54] # func_80116994
       # - [0x41A20, .rodata, 75F54] # func_80116B0C
@@ -224,7 +224,7 @@ segments:
       # - [0x41E7C, .rodata, 84B88] # func_80128C2C
       - [0x41E90, .rodata, 8A0A4] # EntityStopWatch
       - [0x41EB0, .rodata, 8D3E8] # func_8012D3E8
-      # - [0x41EC8, .rodata, 8D3E8] # func_8012EF2C
+      # - [0x41EC8, .rodata, 8D3E8] # ControlWolfForm
       # - [0x41EF0, .rodata, 8D3E8] # func_8012F894
       - [0x41F30, .rodata, 8D3E8] # func_80130264
       # - [0x41F70, .rodata, 90264] # func_80130618

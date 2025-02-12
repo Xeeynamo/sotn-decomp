@@ -405,7 +405,7 @@ static u8 func_801CBF18(void) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         g_CurrentEntity->animCurFrame = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         // yes this has to be written this way
         if (primIndex != -1) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;

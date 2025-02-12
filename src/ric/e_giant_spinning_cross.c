@@ -132,7 +132,7 @@ void RicEntityCrashCrossBeam(Entity* self) {
     pos = D_80156C50;
     sp50 = D_80156C58;
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_8015635C));
+        self->primIndex = g_api.AllocatePrimitives(PRIM_GT4, LEN(D_8015635C));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

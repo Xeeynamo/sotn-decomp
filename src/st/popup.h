@@ -43,7 +43,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     }
 
     g_unkGraphicsStruct.BottomCornerTextPrims =
-        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+        g_api.AllocPrimBuffers(PRIM_SPRT, charcount + 4);
     if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
         return;
     }
@@ -202,7 +202,7 @@ void BottomCornerText(u8* str, u8 lower_left) {
     }
 
     g_unkGraphicsStruct.BottomCornerTextPrims =
-        g_api.AllocPrimitives(PRIM_SPRT, charcount + 4);
+        g_api.AllocPrimBuffers(PRIM_SPRT, charcount + 4);
     if (g_unkGraphicsStruct.BottomCornerTextPrims == -1) {
         return;
     }

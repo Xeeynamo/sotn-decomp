@@ -109,7 +109,7 @@ void func_us_801BDA0C(Entity* self) {
         } else {
             self->animCurFrame = 0x62;
         }
-        primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -251,7 +251,7 @@ void func_us_801BDF9C(Entity* self) {
         break;
 
     case 2:
-        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x30);
+        primIndex = g_api.AllocatePrimitives(PRIM_TILE_ALT, 0x30);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -378,7 +378,7 @@ void func_us_801BE2C8(Entity* self) {
 
     case 2:
         self->ext.et_801BE2C8.unk84 = 0;
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x180);
+        primIndex = g_api.AllocatePrimitives(PRIM_GT4, 0x180);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

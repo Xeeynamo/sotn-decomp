@@ -44,7 +44,7 @@ void func_us_801D064C(Entity* self) {
     case 1:
         if (UnkCollisionFunc3(D_us_80182E70) & 1) {
             self->step++;
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
@@ -265,7 +265,7 @@ void func_us_801D064C(Entity* self) {
 
     case 8:
         prim = self->ext.et_801D064C.unk7C;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

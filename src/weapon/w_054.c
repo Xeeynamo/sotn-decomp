@@ -59,7 +59,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
 
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0xC);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 0xC);
 
         self->primIndex = primIndex;
         if (primIndex != -1) {

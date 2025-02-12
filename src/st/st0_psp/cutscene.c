@@ -102,7 +102,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
         (u8*)GetLang(actor_name_len_en, actor_name_len_fr, actor_name_len_sp,
                      actor_name_len_ge, actor_name_len_it);
     ch = actorNameLength[arg3[actorIndex]];
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, ch);
+    primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, ch);
     if (primIndex == -1) {
         DestroyEntity(self);
         return;
@@ -169,7 +169,7 @@ static void CutsceneUnk1(void) {
 
 static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
-    g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT, 7);
+    g_Dialogue.primIndex[2] = g_api.AllocPrimBuffers(PRIM_SPRT, 7);
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
         g_Dialogue.unk3C = 0;

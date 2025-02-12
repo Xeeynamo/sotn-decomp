@@ -28,7 +28,7 @@ void EntityPushAlucard(Entity* entity) {
         }
         player->animCurFrame = 0;
         g_Player.D_80072EFC = 1;
-        g_api.func_8010E0A8();
+        g_api.ResetAfterImageCounter();
         break;
 
     case 2:
@@ -39,7 +39,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
-        g_api.func_8010E0A8();
+        g_api.ResetAfterImageCounter();
         break;
 
     case 3:
@@ -54,7 +54,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
-        g_api.func_8010E0A8();
+        g_api.ResetAfterImageCounter();
         break;
 
     case 4:
@@ -66,7 +66,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->step++;
         }
         g_Player.D_80072EFC = 1;
-        g_api.func_8010E0A8();
+        g_api.ResetAfterImageCounter();
         break;
 
     case 5:
@@ -77,7 +77,7 @@ void EntityPushAlucard(Entity* entity) {
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
-        g_api.func_8010E0A8();
+        g_api.ResetAfterImageCounter();
         g_Player.D_80072EFC = 1;
         player->posX.val += FIX(4.5);
     }
@@ -294,7 +294,7 @@ void EntityBackgroundPineTrees(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = selfUnk68;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 32);
         if (primIndex == 0) {
             DestroyEntity(self);
             return;
@@ -529,7 +529,7 @@ void EntityCastleBridge(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSpawner);
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, primCount);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, primCount);
 
         if (primIndex == 0) {
             DestroyEntity(self);
@@ -728,7 +728,7 @@ void EntityDistantBackgroundTrees(Entity* self) {
         switch (self->step) {
         case 0:
             InitializeEntity(g_EInitSpawner);
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 9);
             if (primIndex == 0) {
                 DestroyEntity(self);
                 return;

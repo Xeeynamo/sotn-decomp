@@ -38,7 +38,7 @@ void func_800E385C(OT_TYPE* ot);
 void UpdateGame(void);
 void VSyncHandler(void);
 void SetupEvents(void);
-void func_800EA7CC(void);
+void UpdateClutAnimations(void);
 void LoadPendingGfx(void);
 void RenderEntities(void);
 void InitRenderer(void);
@@ -842,12 +842,12 @@ loop_5:
     D_8003C73C = 0;
     SetStageDisplayBuffer();
     InitRenderer();
-    func_800EAD7C();
+    InitializeClutIds();
     HideAllBackgroundLayers();
     DestroyAllPrimitives();
-    func_800EDAE4();
+    ResetDrawEnvironments();
     DestroyEntitiesFromIndex(0);
-    func_800EA538(0);
+    ResetClutAnimation(0);
     ResetPendingGfxLoad();
     D_801362B4 = 0x20;
     g_DebugCurPal = 0x200;
@@ -953,7 +953,7 @@ loop_5:
         PutDrawEnv(&g_CurrentBuffer->draw);
         PutDispEnv(&g_CurrentBuffer->disp);
         DrawOTag(g_CurrentOT);
-        func_800EA7CC();
+        UpdateClutAnimations();
         func_801361F8();
         if (func_80131F28() > 900) {
             CdInit();
@@ -1039,7 +1039,7 @@ void func_800E414C(void) {
         return;
     }
 
-    func_8010DFF0(1, 1);
+    ResetAfterImage(1, 1);
     if (D_8003C708.unk2 != 0 &&
         !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi < 249)) {
         return;
@@ -1047,7 +1047,7 @@ void func_800E414C(void) {
 
     switch (D_8003C708.unk2) {
     case 0:
-        func_800EA538(1);
+        ResetClutAnimation(1);
         temp_a1 = &D_800A245C[D_8003C708.zPriority];
         temp_a0 = g_StageId & STAGE_INVERTEDCASTLE_FLAG;
         D_8003C710 = temp_a1->stageId;
@@ -1131,13 +1131,13 @@ void HandleTitle(void) {
     case 0:
         ClearBackbuffer();
         InitRenderer();
-        func_800EAD7C();
+        InitializeClutIds();
         HideAllBackgroundLayers();
         DestroyAllPrimitives();
-        func_800EDAE4();
+        ResetDrawEnvironments();
         ResetEntityArray();
         DestroyEntitiesFromIndex(0);
-        func_800EA538(0);
+        ResetClutAnimation(0);
         ResetPendingGfxLoad();
         SetStageDisplayBuffer();
         g_StageId = STAGE_SEL;

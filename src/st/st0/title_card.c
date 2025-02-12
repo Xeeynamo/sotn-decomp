@@ -29,7 +29,7 @@ void EntityStageTitleFadeout(Entity* self) {
             return;
         }
         InitializeEntity(g_EInit3DObject);
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 5);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 5);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -223,7 +223,7 @@ void EntityStageTitleCard(Entity* self) {
         func_91040A0(D_pspeu_09254E98);
         func_892667C(0x8210, D_pspeu_09253FB0);
 #endif
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
         if (primIndex == -1) {
             D_80180908 = 1;
             DestroyEntity(self);

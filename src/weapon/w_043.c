@@ -36,7 +36,7 @@ void EntityWeaponAttack(Entity* self) {
 
     flag = 0;
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 16);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 16);
         if (self->primIndex != -1) {
             prim = &g_PrimBuf[self->primIndex];
             while (prim != NULL) {

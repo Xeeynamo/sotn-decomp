@@ -24,7 +24,7 @@ void HandleTitleScreen(void) {
             g_LoadFile = 0x8003;
             g_LoadOvlIdx = 0xFF;
         }
-        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x11);
+        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x11);
         prim = &g_PrimBuf[primIndex];
 
         D_801BB010 = primIndex;
@@ -313,7 +313,7 @@ void func_801B4C68(void) {
         return;
     }
 
-    primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+    primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
     if (primIndex == -1) {
         return;
     }
@@ -358,7 +358,7 @@ void func_801B4DE0(void) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
@@ -409,7 +409,7 @@ void func_801B4FFC(void) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
@@ -458,7 +458,7 @@ void func_801B519C(void) {
     self = &g_Entities[1];
     switch (self->step) {
     case 0:
-        primBufIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+        primBufIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x18);
         if (primBufIndex == -1) {
             return;
         }

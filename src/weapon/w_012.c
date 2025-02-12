@@ -168,7 +168,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     if (self->step == 0) {
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

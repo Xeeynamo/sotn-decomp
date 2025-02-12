@@ -116,7 +116,7 @@ void EntityRelicOrb(Entity* self) {
             return;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, PrimCount);
         if (primIndex == -1) {
             self->step = 0;
             return;
@@ -185,7 +185,7 @@ void EntityRelicOrb(Entity* self) {
 #endif
     case 5:
 #if STAGE != STAGE_ST0
-        g_api.func_800FE044(relicId, 0x2000);
+        g_api.UpdatePlayerStats(relicId, 0x2000);
 #if !defined(VERSION_BETA)
         msg = g_api.relicDefs[relicId].name;
         if (relicId >= RELIC_SWORD_CARD && relicId < RELIC_FAERIE_CARD) {

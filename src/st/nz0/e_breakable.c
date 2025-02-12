@@ -66,7 +66,7 @@ void EntityBreakableNZ0(Entity* self) {
         if (breakableType == 2) {
             self->unk5A = 0x4B;
             self->palette = 0x219;
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (self->primIndex == -1) {
                 DestroyEntity(self);
                 return;

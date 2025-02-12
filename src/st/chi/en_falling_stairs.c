@@ -179,7 +179,7 @@ void EntityFallingStairs(Entity* self) {
             entity->params = 0x13;
             entity->params |= 0xC000;
         }
-        primIdx = g_api.func_800EDB58(PRIM_TILE_ALT, 96);
+        primIdx = g_api.AllocatePrimitives(PRIM_TILE_ALT, 96);
         if (primIdx != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;
@@ -432,7 +432,7 @@ void EntityFallingStep(Entity* self) {
         self->animCurFrame = 0x24;
         g_Tilemap.fg[TilePos] = 0;
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        primIdx = g_api.func_800EDB58(PRIM_TILE_ALT, 96);
+        primIdx = g_api.AllocatePrimitives(PRIM_TILE_ALT, 96);
         if (primIdx != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIdx;

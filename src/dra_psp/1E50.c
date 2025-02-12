@@ -13,6 +13,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_psp_090DFC68);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_psp_090DFC80);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_800EA538);
+INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", ResetClutAnimation);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_800EA5AC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", SetBackgroundColor);

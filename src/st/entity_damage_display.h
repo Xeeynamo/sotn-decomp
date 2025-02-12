@@ -113,7 +113,7 @@ void EntityDamageDisplay(Entity* self) {
             }
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, self->ext.ndmg.nPrims);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, self->ext.ndmg.nPrims);
         if (primIndex) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;

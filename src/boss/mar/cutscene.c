@@ -454,7 +454,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         switch (self->step_s) {
         case 0:
             D_us_8019AF2C = 1;
-            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, PrimCount);
+            primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, PrimCount);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;

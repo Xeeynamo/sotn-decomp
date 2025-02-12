@@ -206,7 +206,7 @@ void func_us_801BEE00(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -279,7 +279,7 @@ void func_us_801BF074(Entity* self) {
         break;
 
     case 1:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -447,7 +447,7 @@ void func_us_801BF3F4(Entity* self) {
         if (collision) {
             player->posY.i.hi++;
             D_80097488.y.i.hi += 1;
-            g_api.func_8010DFF0(0, 1);
+            g_api.ResetAfterImage(0, 1);
         }
         if (self->params) {
             posX = self->posX.i.hi;
@@ -474,7 +474,7 @@ void func_us_801BF3F4(Entity* self) {
 
     case 5:
         if (collision && GetDistanceToPlayerX() < 6) {
-            g_api.func_8010DFF0(0, 1);
+            g_api.ResetAfterImage(0, 1);
             g_Player.D_80072EFC = 2;
             g_Player.padSim = 0;
             player->posY.i.hi--;
@@ -498,7 +498,7 @@ void func_us_801BF3F4(Entity* self) {
         if (collision) {
             player->posY.i.hi--;
             D_80097488.y.i.hi -= 1;
-            g_api.func_8010DFF0(0, 1);
+            g_api.ResetAfterImage(0, 1);
         }
         posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (posY < 0xC7) {

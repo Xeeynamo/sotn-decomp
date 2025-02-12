@@ -122,7 +122,7 @@ void EntitySwordLord(Entity* self) {
         self->step = 6;
         self->zPriority -= 1;
         self->ext.et_801CF850.unk84 = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

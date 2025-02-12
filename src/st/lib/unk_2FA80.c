@@ -611,7 +611,7 @@ void func_us_801B15C0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        primIndex = g_api.AllocPrimitives(PRIM_G4, 7);
+        primIndex = g_api.AllocPrimBuffers(PRIM_G4, 7);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

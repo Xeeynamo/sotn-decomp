@@ -367,7 +367,7 @@ void EntityWarg(Entity* self) {
 
             self->palette = 0x15F;
             self->unk6C = 0x80;
-            primIndex = g_api.AllocPrimitives(4, 3);
+            primIndex = g_api.AllocPrimBuffers(4, 3);
             // That's weird, it should do == -1, right?
             if (!primIndex) {
                 DestroyEntity(self);
@@ -378,7 +378,7 @@ void EntityWarg(Entity* self) {
             self->primIndex = primIndex;
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
 
             if (dr_env != NULL) {
                 prim->type = PRIM_ENV;
@@ -402,7 +402,7 @@ void EntityWarg(Entity* self) {
                 return;
             }
             prim = prim->next;
-            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
             if (dr_env != NULL) {
                 prim->type = PRIM_ENV;
                 prim->priority = 0x41;

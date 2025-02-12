@@ -868,7 +868,7 @@ void RicHandleBossGrab(void) {
     }
 }
 
-// Compare to DRA func_80115394
+// Compare to DRA PlayerStepKill
 enum DeathKind {
     DEATH_GENERIC,
     DEATH_BY_FIRE,

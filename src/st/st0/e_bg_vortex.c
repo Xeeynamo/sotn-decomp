@@ -39,7 +39,7 @@ void EntityBackgroundVortex(Entity* self) {
         InitializeEntity(g_EInit3DObject);
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x1A0;
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x110);
+        primIndex = g_api.AllocatePrimitives(PRIM_GT4, 0x110);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -113,7 +113,7 @@ void EntityBackgroundVortex(Entity* self) {
         prim = self->ext.prim;
         draw_env = g_CurrentBuffer->draw;
 
-        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+        dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
         if (dr_env == NULL) {
             DestroyEntity(self);
             return;
@@ -135,7 +135,7 @@ void EntityBackgroundVortex(Entity* self) {
         prim->priority = 2;
         prim->drawMode = DRAW_UNK_1000;
         prim = prim->next;
-        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+        dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
         if (dr_env == NULL) {
             DestroyEntity(self);
             return;

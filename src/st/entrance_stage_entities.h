@@ -287,7 +287,7 @@ void EntityShuttingWindow(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -444,7 +444,7 @@ void EntityCastleDoor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -632,7 +632,7 @@ void EntityBackgroundBushes(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitStInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x48);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x48);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -741,7 +741,7 @@ void EntityBackgroundTrees(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitStInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 32);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -825,7 +825,7 @@ void EntityTransparentWater(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->ext.transparentWater.unk80 = 4;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 16);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1047,7 +1047,7 @@ void EntityCavernDoor(Entity* self) {
             self->animCurFrame = 0;
             tileLayoutPtr += 3;
         } else {
-            primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+            primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 64);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 return;
@@ -1228,7 +1228,7 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->animCurFrame = 8;
         self->zPriority = 0x5E;
         // All the prims below here are for the chain.
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1310,7 +1310,7 @@ void EntityPathBlockTallWeight(Entity* self) {
         self->zPriority = 0x5E;
 
         // All the prims below here are for the chain.
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 8);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -1797,7 +1797,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
             newEntity->posY.i.hi += 8;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 16);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2053,7 +2053,7 @@ void EntityDeathSkySwirl(Entity* self) {
             return;
         }
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 65);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 65);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -2196,7 +2196,7 @@ void EntityHeartRoomGoldDoor(Entity* self) {
             break;
         }
 
-        primIndex = g_api.AllocPrimitives(PRIM_TILE, 64);
+        primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 64);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

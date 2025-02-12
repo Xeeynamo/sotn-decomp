@@ -7,7 +7,7 @@ u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
     s16 firstPrimIndex;
 
-    firstPrimIndex = g_api.AllocPrimitives(PRIM_SPRT, 7);
+    firstPrimIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 7);
     g_Dialogue.primIndex[2] = firstPrimIndex;
     if (firstPrimIndex == -1) {
         g_Dialogue.primIndex[2] = 0;
@@ -509,7 +509,7 @@ u8 func_801B76F0(const char* msg) {
     Primitive* prim;
     s16 i;
 
-    g_Dialogue.primIndex[PRIM] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    g_Dialogue.primIndex[PRIM] = g_api.AllocPrimBuffers(PRIM_SPRT, 0x20);
     if (g_Dialogue.primIndex[PRIM] != -1) {
         g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = msg;

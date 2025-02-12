@@ -80,7 +80,7 @@ void func_801BC5C0(Entity* self) {
     case 0:
         InitializeEntity(g_EInit3DObject);
         self->zPriority = 0xC0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x34);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x34);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

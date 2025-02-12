@@ -380,7 +380,7 @@ void func_us_801D8150(Entity* self) {
             self->animSet = 0;
             posX = self->posX.i.hi;
             posY = self->posY.i.hi;
-            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+            self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 1);
             if (self->primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
                 prim = &g_PrimBuf[self->primIndex];

@@ -94,7 +94,7 @@ bool func_801119C4(void) {
     return true;
 }
 
-void func_80111CC0(void) {
+void CreatePlayerEffectEntities(void) {
     if (g_Player.timers[1]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x17), 0);
     }
@@ -329,7 +329,7 @@ void PlayerStepStand(void) {
         break;
     case 0x40:
     case 0x59:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
             local_flags = 0;
             if (PLAYER.animFrameIdx < 2U) {
@@ -371,7 +371,7 @@ void PlayerStepStand(void) {
     case 0x4F:
     case 0x50:
     case 0x5D:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
             local_flags = 0;
             if (PLAYER.animFrameIdx >= 3U) {
@@ -397,7 +397,7 @@ void PlayerStepStand(void) {
     case 0x55:
     case 0x56:
     case 0x5C:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         local_flags = 0;
         if (PLAYER.animFrameIdx == 0) {
             if (--D_80139824 == 0) {
@@ -417,7 +417,7 @@ void PlayerStepStand(void) {
         break;
     case 0x57:
     case 0x5B:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
             (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
@@ -439,7 +439,7 @@ void PlayerStepStand(void) {
         }
         break;
     case 0x58:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (D_80139824 > 0) {
             D_80139824--;
         }
@@ -460,7 +460,7 @@ void PlayerStepStand(void) {
         local_flags = 10;
         break;
     case 0x5A:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         if (D_80139824 > 0) {
             D_80139824--;
         }
@@ -482,14 +482,14 @@ void PlayerStepStand(void) {
         break;
     case 0x45:
     case 0x51:
-        func_8010DFF0(1, 1);
+        ResetAfterImage(1, 1);
         // Probably some way to do this besides bit shifts but I couldn't get it
         local_flags = (((u16)PLAYER.animFrameDuration << 0x10) >> 0x1F) & 0xF;
         break;
     }
 
     if (local_flags & 4) {
-        func_8010E570(0);
+        LandToTheGround(0);
         local_flags |= 0x8000;
     }
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
@@ -523,19 +523,19 @@ void PlayerStepStand(void) {
     }
 
     if ((local_flags & 1) && CheckMoveDirection()) {
-        func_8010E6AC(0);
+        ExecuteWalk(0);
         local_flags |= 0x8000;
     }
     if ((local_flags & 0x8000) && (local_flags & 8)) {
-        func_8010FAF4();
+        DestroyEquippedWeapon();
     }
 }
 
-void func_80112B64(void) {
+void PlayerStepWalk(void) {
     if (func_8010FDF8(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
-            func_8010E570(0);
+            LandToTheGround(0);
         }
     }
 }

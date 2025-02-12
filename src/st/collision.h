@@ -571,7 +571,7 @@ void HitDetection(void) {
                 PreventEntityFromRespawning(entFrom5C);
                 sp3C = &g_api.enemyDefs[entFrom5C->enemyId];
                 if (!(entFrom5C->hitFlags & 0x80)) {
-                    g_api.func_800FE044(sp3C->exp, sp3C->level);
+                    g_api.UpdatePlayerStats(sp3C->exp, sp3C->level);
                     if ((entFrom5C->flags & FLAG_UNK_1000) &&
                         (g_Status.killCount < 999999)) {
                         g_Status.killCount++;
@@ -580,7 +580,7 @@ void HitDetection(void) {
                 miscVar3 = entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400);
                 if (miscVar3) {
                     if ((rand() & 0xFF) <
-                        g_api.func_800FF460(
+                        g_api.CalculateLuckAdjustedValue(
                             g_testCollLuckCutoff[miscVar3 >> 0xA])) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -601,7 +601,7 @@ void HitDetection(void) {
                                 }
 
                             } else {
-                                miscVar3 = g_api.func_800FF494(sp3C);
+                                miscVar3 = g_api.DetermineItemDrop(sp3C);
                                 if (miscVar3 & 0x40) {
                                     miscVar3 = sp3C->rareItemId;
                                     // Paranthropus check: Drops turquoise if

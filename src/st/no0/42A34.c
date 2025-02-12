@@ -129,9 +129,9 @@ void func_us_801C2E7C(Entity* self) {
         self->zPriority = 0x9E;
 
         if (castleFlag1) {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         } else {
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+            primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 3);
         }
 
         if (primIndex == -1) {

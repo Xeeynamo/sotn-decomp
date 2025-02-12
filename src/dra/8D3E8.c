@@ -508,7 +508,7 @@ void func_8012E7A4(void) {
             NULL) {
             return;
         }
-        func_8010FAF4();
+        DestroyEquippedWeapon();
         g_Player.unk66++;
     }
 #endif
@@ -519,7 +519,7 @@ void func_8012E7A4(void) {
 
     D_801396EC = PLAYER.animCurFrame;
     D_801396E0 = PLAYER.animSet;
-    func_8010E168(1, 4);
+    SetPlayerBlinkTimer(1, 4);
     DestroyEntity(&g_Entities[17]);
     g_Entities[17].entityId = 0x38;
     DestroyEntity(&g_Entities[18]);
@@ -557,7 +557,7 @@ void func_8012E7A4(void) {
 #if defined(VERSION_HD)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x23), 0);
-        func_8010FAF4();
+        DestroyEquippedWeapon();
         g_Player.unk66++;
     }
 #endif
@@ -572,7 +572,7 @@ void func_8012E9C0(void) {
             g_SensorsFloor[i].y++;
         }
     }
-    func_8010E168(1, 4);
+    SetPlayerBlinkTimer(1, 4);
     PLAYER.animFrameDuration = 4;
     PLAYER.velocityY = 0;
     if (g_Entities[16].entityId == 0x22) {
@@ -588,7 +588,7 @@ void func_8012E9C0(void) {
     PLAYER.velocityY = FIX(-1.5);
 }
 
-void func_8012EAD0(void) {
+void PlayerUnWolf(void) {
     s32 i;
     s32 else_cycles;
 
@@ -631,7 +631,7 @@ void func_8012EAD0(void) {
         return;
     case 1:
         if (g_Player.unk66 == 3) {
-            func_8010E83C(0);
+            ExecuteJump(0);
             if (!(g_Player.pl_vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
@@ -643,7 +643,7 @@ void func_8012EAD0(void) {
 #endif
             g_Player.unk44 |= 0x100;
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
-            func_80111CC0();
+            CreatePlayerEffectEntities();
         }
         return;
     case 2:
@@ -652,7 +652,7 @@ void func_8012EAD0(void) {
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
 
-            func_8010E4D0();
+            HandlePlayerStuck();
         }
     }
 }
@@ -708,7 +708,7 @@ void func_8012ED30(void) {
     }
 }
 
-void func_8012EF2C(void) {
+void ControlWolfForm(void) {
     s16 var_v1;
     s32 i;
 
@@ -1009,7 +1009,7 @@ void func_8012F894(Entity* self) {
         D_800B0920 = D_800B0924[PLAYER.animFrameIdx];
     }
     if (self->step == 0) {
-        self->primIndex = AllocPrimitives(PRIM_GT4, 6);
+        self->primIndex = AllocPrimBuffers(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             return;
         }
@@ -2037,7 +2037,7 @@ void EntityGiantSpinningCross(Entity* self) {
     sp50 = D_800E202C;
 
     if (self->step == 0) {
-        self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_800B0CB4));
+        self->primIndex = g_api.AllocatePrimitives(PRIM_GT4, LEN(D_800B0CB4));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

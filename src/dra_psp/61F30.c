@@ -7,12 +7,12 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_80106A28);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", LoadMonsterLibrarianPreview);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_801071CC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", SetPrimitiveColorIntensity);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_80107250);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", SetPrimitiveAllVerticesColorIntensity);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_psp_0913F8C8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_801072DC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", SetPrimitiveDefaultColorIntensity);
 
 #include "../set_prim_rect.h"

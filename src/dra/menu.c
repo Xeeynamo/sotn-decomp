@@ -258,7 +258,7 @@ bool IsAlucart(void) {
     return false;
 }
 
-void func_800F4994(void) {
+void CalculatePlayerStats(void) {
     s32* statsPtr = &g_Status.statsEquip;
     s32 correctStonesEquipped;
     s32 statBonus;
@@ -406,7 +406,7 @@ s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     return totalAttack;
 }
 
-void func_800F4F48(void) {
+void CalculateAttackHands(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
@@ -502,9 +502,9 @@ void CalcDefense(void) {
     g_Status.defenseEquip = totalDefense;
 }
 
-void func_800F53A4(void) {
-    func_800F4994();
-    func_800F4F48();
+void UpdatePlayerAttributes(void) {
+    CalculatePlayerStats();
+    CalculateAttackHands();
     CalcDefense();
 }
 
@@ -741,11 +741,11 @@ void MenuDrawSprite(
     if (ScissorPolyGT4(poly, context) == false) {
         poly->tpage = tpage;
         poly->clut = g_ClutIds[clut];
-        func_80107250(poly, colorIntensity);
+        SetPrimitiveAllVerticesColorIntensity(poly, colorIntensity);
         if (fade == 1) {
             polyColorIntensity = (poly->y2 - poly->y0) * 4;
-            func_801071CC(poly, polyColorIntensity, 0);
-            func_801071CC(poly, polyColorIntensity, 1);
+            SetPrimitiveColorIntensity(poly, polyColorIntensity, 0);
+            SetPrimitiveColorIntensity(poly, polyColorIntensity, 1);
         }
         if (fade == 2) {
             temp_polyx0 = poly->x0;
@@ -1067,8 +1067,8 @@ void MenuDrawTime(s32 number, s32 x, s32 y, MenuContext* context, s32 digits) {
 }
 
 void func_800F6A48(void) {
-    func_800EA538(6);
-    func_800EA5E4(0x411);
+    ResetClutAnimation(6);
+    InitClutAnimation(0x411);
 }
 
 void MenuJosephsCloakDraw(MenuContext* context) {
@@ -1352,7 +1352,7 @@ void MenuDrawStats(s32 menuDialogue) {
     s32 phi_a0_5;
 
     ctx = &g_MenuData.menus[menuDialogue];
-    func_800F53A4();
+    UpdatePlayerAttributes();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
         MenuDrawStr(IsAlucart() ? g_MenuStr[42] : g_MenuStr[0], 128, 40, ctx);
@@ -1689,12 +1689,12 @@ void func_800F84CC(void) {
     s32 primIndex;
 
     for (i = 0; i < NUM_MENU; i++) {
-        D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
+        D_801377FC[i] = AllocatePrimitiveChain(PRIM_G4, 1);
         prim = &g_PrimBuf[D_801377FC[i]];
         prim->drawMode = DRAW_HIDE;
     }
 
-    D_8013783C = func_800EDD9C(PRIM_GT4, 1);
+    D_8013783C = AllocatePrimitiveChain(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_8013783C];
     SetPrimRect(prim, 20, 195, 42, 28);
     prim->u0 = 113;
@@ -1710,7 +1710,7 @@ void func_800F84CC(void) {
     prim->priority = 0x40;
     prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
-    D_80137840 = func_800EDD9C(PRIM_GT4, 2);
+    D_80137840 = AllocatePrimitiveChain(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_80137840];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;
@@ -1726,7 +1726,7 @@ void func_800F84CC(void) {
         }
         prim->y2 = prim->y3 = prim->y0 + 0x10;
         prim->u1 = prim->u3 = prim->u0 + 0x10;
-        func_80107250(prim, 64);
+        SetPrimitiveAllVerticesColorIntensity(prim, 64);
         prim->tpage = 0x1A;
         prim->priority = 0x40;
         prim->drawMode = DRAW_HIDE;
@@ -1834,7 +1834,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
     sp20 = GetEquipOrder(D_801375CC);
     equipsAmount = GetEquipCount(D_801375CC);
-    totalItemCount = func_800FD6C4(D_801375CC);
+    totalItemCount = CountEquipItems(D_801375CC);
     curX = 0;
     curY = 0;
     itemsPerPage = Cols + ctx->cursorH / Height * Cols;
@@ -2729,7 +2729,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
             &g_MenuNavigation.cursorEquipType[EQUIP_HEAD + D_801375D4];
     }
 
-    nItems = func_800FD6C4(D_801375CC);
+    nItems = CountEquipItems(D_801375CC);
     if (arg0 != 0) {
         if (g_pads[0].repeat & PAD_L1) {
             if (*cursorIndex >= ItemsPerPage) {
@@ -3016,7 +3016,7 @@ void func_800FAF44(s32 isAccessory) {
 }
 
 void func_800FB004(void) {
-    s32 temp_a1 = func_800FD6C4(D_801375CC);
+    s32 temp_a1 = CountEquipItems(D_801375CC);
     s32 temp_v0;
 
     if (((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h) / 12) != 0) {
@@ -3098,7 +3098,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     s32 temp_psp_a1;
     s32 temp_psp_a2;
 
-    nItems = func_800FD6C4(D_801375CC);
+    nItems = CountEquipItems(D_801375CC);
     prevCursor = nav->cursorMain;
     MenuHandleCursorInput(nav, nItems, 2);
     itemId = order[D_801375D8[nav->cursorMain]];
@@ -3124,7 +3124,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
         }
     }
     var_s6 = 0;
-    func_800F53A4();
+    UpdatePlayerAttributes();
 
     if ((g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
         (PLAYER.step == Player_UnmorphWolf) | (PLAYER.step == Player_BossGrab) |
@@ -3159,7 +3159,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     if (D_801375CC == EQUIP_HAND) {
         g_Status.equipment[1 - D_801375D0] = yetAnotherId;
     }
-    func_800F53A4();
+    UpdatePlayerAttributes();
     if (g_pads[0].tapped & PAD_MENU_SORT) {
         if (g_IsSelectingEquipment == 0) {
             if (func_800FB1EC(itemId) == false) {
@@ -3373,7 +3373,7 @@ block_4:
             break;
         }
         PlaySfx(SET_UNK_10);
-        func_800EA5E4(0);
+        InitClutAnimation(0);
         func_800FAC30();
         func_800FB9BC();
         g_PrevEquippedWeapons[LEFT_HAND_SLOT] =
@@ -3453,7 +3453,7 @@ block_4:
             func_80102628(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
-            func_800EB6B4();
+            LoadAllEquipIcons();
             g_MenuStep++;
         }
         break;
@@ -3463,7 +3463,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_6:
-        if (func_800EB720()) {
+        if (IsGfxLoadPending()) {
             break;
         }
         if (LoadWeaponPrg(LEFT_HAND_SLOT) == false) {
@@ -3561,7 +3561,7 @@ block_4:
             PlaySfx(SET_UNK_11);
         }
         CheckWeaponCombo();
-        func_800F53A4();
+        UpdatePlayerAttributes();
         D_800973EC = 0;
         func_800FAC30();
         func_800F86E4();
@@ -3628,8 +3628,8 @@ block_4:
         }
         break;
     case MENU_STEP_FAMILIAR_INIT:
-        func_800EA5E4(0x21);
-        func_800EAEA4();
+        InitClutAnimation(0x21);
+        ClearEquipIconBuffers();
         MenuShow(MENU_DG_FAMILIARS);
         g_MenuStep++;
         break;
@@ -3637,7 +3637,7 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
             MenuShow(MENU_DG_MAIN);
             MenuShow(MENU_DG_BG);
-            func_800EAEA4();
+            ClearEquipIconBuffers();
             MenuHide(MENU_DG_FAMILIARS);
             g_MenuStep = MENU_STEP_OPENED;
         }

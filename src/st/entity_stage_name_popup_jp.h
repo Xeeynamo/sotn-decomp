@@ -40,7 +40,7 @@ void EntityStageNamePopup(Entity* self) {
 #endif
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, NUM_PRIMS);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, NUM_PRIMS);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

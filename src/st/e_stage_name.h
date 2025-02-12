@@ -74,7 +74,7 @@ void EntityStageNamePopup(Entity* self) {
         }
 
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x57);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x57);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

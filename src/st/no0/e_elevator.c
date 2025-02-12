@@ -86,7 +86,7 @@ void func_us_801C2184(Entity* self) {
         CreateEntityFromCurrentEntity(0x29U, grandparent);
         grandparent->params = 2;
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 12);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -272,7 +272,7 @@ void func_us_801C27A4(Entity* self) {
         InitializeEntity(g_EInitElevator);
         self->animCurFrame = 3;
         self->zPriority = player->zPriority + 2;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 12);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 12);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;

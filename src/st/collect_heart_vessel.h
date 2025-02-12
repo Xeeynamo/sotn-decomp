@@ -16,7 +16,7 @@ void CollectHeartVessel(void) {
     } else {
         // Alucard's version
         g_api.PlaySfx(SFX_HEART_PICKUP);
-        g_api.func_800FE044(HEART_VESSEL_INCREASE, 0x4000);
+        g_api.UpdatePlayerStats(HEART_VESSEL_INCREASE, 0x4000);
     }
     DestroyEntity(g_CurrentEntity);
 }

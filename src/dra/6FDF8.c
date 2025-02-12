@@ -52,82 +52,82 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 1 && g_Player.pl_vram_flag & 1) {
             if (g_Player.unk46) {
                 if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
-                    func_8010E570(0);
-                    func_8010FAF4();
+                    LandToTheGround(0);
+                    DestroyEquippedWeapon();
                     PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
                     return 1;
                 }
 
                 if (PLAYER.velocityY > FIX(6.875)) {
-                    func_8010E470(1, 0);
+                    ExecuteCrouch(1, 0);
                     PlaySfxVolPan(SFX_STOMP_HARD_B);
                     CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
-                        func_8010E6AC(1);
+                        ExecuteWalk(1);
                     } else {
-                        func_8010E570(0);
+                        LandToTheGround(0);
                     }
                     PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
                 }
 
-                func_8010FAF4();
+                DestroyEquippedWeapon();
                 return 1;
             }
 
             if (PLAYER.velocityY > FIX(6.875)) {
                 if ((PLAYER.step_s == 112) || (PLAYER.step == 4)) {
-                    func_8010E470(3, PLAYER.velocityX / 2);
+                    ExecuteCrouch(3, PLAYER.velocityX / 2);
                 } else {
-                    func_8010E470(1, 0);
+                    ExecuteCrouch(1, 0);
                 }
                 PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             } else if (g_Player.unk44 & 0x10) {
-                func_8010E6AC(1);
+                ExecuteWalk(1);
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
             } else if (abs(PLAYER.velocityX) > FIX(2)) {
                 PlaySfx(SFX_STOMP_HARD_B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
-                func_8010E570(PLAYER.velocityX);
+                LandToTheGround(PLAYER.velocityX);
             } else {
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
-                func_8010E570(0);
+                LandToTheGround(0);
             }
             return 1;
         }
         if (branchFlags & 0x20000 && g_Player.pl_vram_flag & 1) {
-            func_8010E470(3, PLAYER.velocityX);
+            ExecuteCrouch(3, PLAYER.velocityX);
             PlaySfx(SFX_STOMP_HARD_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
             return 1;
         }
     }
     if (branchFlags & 4 && !(g_Player.pl_vram_flag & 1)) {
-        func_8010E7AC();
+        ExecuteFall();
         return 1;
     }
 
     if (branchFlags & 0x1000 &&
         g_Player.padPressed & (PAD_SQUARE | PAD_CIRCLE) &&
-        func_8010EDB8() != 0) {
+        HandlePlayerAttack() != 0) {
         return 1;
     }
 
     if (!(g_Player.unk46 & 0x8000)) {
         if (branchFlags & 0x10 && g_Player.padTapped & PAD_CROSS) {
-            func_8010E83C(1);
+            ExecuteJump(1);
             return 1;
         }
 
         if (branchFlags & 0x20 && IsRelicActive(RELIC_LEAP_STONE) &&
             g_Player.padTapped & PAD_CROSS && !(g_Player.unk44 & 1)) {
-            func_8010E940();
+            ExecuteJumpKick();
             return 1;
         }
 
         if (branchFlags & 0x2000 && g_Player.padPressed & PAD_DOWN) {
-            func_8010E470(2, 0);
+            ExecuteCrouch(2, 0);
             return 1;
         }
 

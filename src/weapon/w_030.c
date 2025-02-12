@@ -122,7 +122,7 @@ void func_ptr_80170004(Entity* self) {
             self->ext.weapon.unk90 = 6;
         }
 
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 11);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 11);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -462,7 +462,7 @@ void func_ptr_80170008(Entity* self) {
         }
 
         randRes = rand() & 1;
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 14);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 14);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

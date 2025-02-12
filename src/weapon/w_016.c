@@ -36,7 +36,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawFlags = FLAG_DRAW_ROTZ;
-        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
+        self->primIndex = g_api.AllocPrimBuffers(PRIM_TILE, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

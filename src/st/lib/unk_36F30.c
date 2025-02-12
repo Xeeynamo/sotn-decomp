@@ -27,7 +27,7 @@ void func_us_801B6324(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -91,7 +91,7 @@ void func_us_801B6324(Entity* self) {
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 13) {
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x10;
@@ -113,7 +113,7 @@ void func_us_801B6324(Entity* self) {
                         return;
                     }
                     prim = prim->next;
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x12;
@@ -348,7 +348,7 @@ void func_us_801B6F30(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -417,7 +417,7 @@ void func_us_801B6F30(Entity* self) {
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 13) {
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x10;
@@ -439,7 +439,7 @@ void func_us_801B6F30(Entity* self) {
                         return;
                     }
                     prim = prim->next;
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x13;
@@ -903,7 +903,7 @@ void func_us_801B8A00(Entity* self) {
     clipRect = D_us_801AD0F4;
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
+        primIndex = g_api.AllocPrimBuffers(PRIM_SPRT, 0x140);
         if (primIndex != -1) {
             InitializeEntity(g_EInitCommon);
             i = 0;
@@ -970,7 +970,7 @@ void func_us_801B8A00(Entity* self) {
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 13) {
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x10;
@@ -992,7 +992,7 @@ void func_us_801B8A00(Entity* self) {
                         return;
                     }
                     prim = prim->next;
-                    dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+                    dr_env = g_api.AllocateDrawEnvironment((POLY_GT4*)prim);
                     if (dr_env != NULL) {
                         prim->type = PRIM_ENV;
                         prim->priority = 0x13;

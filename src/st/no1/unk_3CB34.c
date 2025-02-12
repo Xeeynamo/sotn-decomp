@@ -199,7 +199,7 @@ void func_us_801BCB34(Entity* self) {
         self->ext.et_801BCB34.unk86 = 0;
         self->ext.et_801BCB34.unk87 = 0;
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 0x10;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 0x28);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -251,8 +251,8 @@ void func_us_801BCB34(Entity* self) {
                 PLAYER.velocityX = 0;
                 PLAYER.velocityY = 0;
 #endif
-                g_api.func_8010DFF0(0, 1);
-                g_api.func_8010E168(1, 0x20);
+                g_api.ResetAfterImage(0, 1);
+                g_api.SetPlayerBlinkTimer(1, 0x20);
                 self->ext.et_801BCB34.unk85 = dPad;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
@@ -273,8 +273,8 @@ void func_us_801BCB34(Entity* self) {
         break;
     case 3:
         if (!self->ext.et_801BCB34.unk94) {
-            g_api.func_8010DFF0(0, 1);
-            g_api.func_8010E168(1, 0x20);
+            g_api.ResetAfterImage(0, 1);
+            g_api.SetPlayerBlinkTimer(1, 0x20);
             g_Player.padSim = 0;
             g_Player.D_80072EFC = 0x40;
         }
@@ -307,8 +307,8 @@ void func_us_801BCB34(Entity* self) {
                 MoveEntity();
                 self->ext.et_801BCB34.unk88 -= 1;
             }
-            g_api.func_8010DFF0(0, 1);
-            g_api.func_8010E168(1, 0x20);
+            g_api.ResetAfterImage(0, 1);
+            g_api.SetPlayerBlinkTimer(1, 0x20);
             g_Player.padSim = 0x4000;
             g_Player.D_80072EFC = 2;
             g_Player.pl_vram_flag |= 0x41;
@@ -405,8 +405,8 @@ void func_us_801BCB34(Entity* self) {
                 MoveEntity();
                 self->ext.et_801BCB34.unk88 -= 1;
             }
-            g_api.func_8010DFF0(0, 1);
-            g_api.func_8010E168(1, 0x20);
+            g_api.ResetAfterImage(0, 1);
+            g_api.SetPlayerBlinkTimer(1, 0x20);
             g_Player.padSim = 0x4000;
             g_Player.D_80072EFC = 2;
         } else {
@@ -525,8 +525,8 @@ void func_us_801BCB34(Entity* self) {
 
         case 1:
             if (!self->ext.et_801BCB34.unk94) {
-                g_api.func_8010DFF0(0, 1);
-                g_api.func_8010E168(1, 0x20);
+                g_api.ResetAfterImage(0, 1);
+                g_api.SetPlayerBlinkTimer(1, 0x20);
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 2;
             }

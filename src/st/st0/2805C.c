@@ -134,7 +134,7 @@ void func_801A8328(Entity* self) {
 
         InitializeEntity(g_EInitParticle);
 
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimBuffers(PRIM_GT4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

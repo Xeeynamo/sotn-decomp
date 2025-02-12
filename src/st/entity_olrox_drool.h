@@ -16,7 +16,7 @@ void EntityOlroxDrool(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
-        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
+        primIndex = g_api.AllocPrimBuffers(PRIM_LINE_G2, 1);
         if (primIndex == -1) {
             return;
         }
