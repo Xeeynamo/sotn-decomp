@@ -488,7 +488,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, show_progress: bo
         let mut output_file = File::create(o_file).expect("Unable to create file");
         writeln!(
             output_file,
-            "| {:<4} | {:<8} | {:<35} | {:<2} ",
+            "| {:<4} | {:<8} | {:<35} | {:<2}",
             "%", "Decomp?", "Name", "Asm Path"
         )
         .expect("Error writing to file");
@@ -517,7 +517,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64, show_progress: bo
                     // Write function details to file
                     writeln!(
                         output_file,
-                        "| {:<4.2} | {:<8} | {:<35} | {:<2} ",
+                        "| {:<4.2} | {:<8} | {:<35} | {:<2}",
                         function.similarity,
                         function.decompiled,
                         function.name,

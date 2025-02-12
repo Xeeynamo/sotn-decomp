@@ -71,7 +71,7 @@ impl LevenshteinHashMap {
 
         for (k, _) in map.iter() {
             let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
-            if size_diff < self.threshold {
+            if size_diff < self.threshold || size_diff <= closest_similarity {
                 continue;
             }
 
@@ -96,7 +96,7 @@ impl LevenshteinHashMap {
 
         for k in self.map.keys() {
             let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
-            if size_diff < self.threshold {
+            if size_diff < self.threshold || size_diff <= closest_similarity {
                 continue;
             }
 
