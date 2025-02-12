@@ -77,3 +77,7 @@ extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 
 extern EInit g_EInitFleaMan;
+
+extern EInit D_us_8018089C;
+extern EInit D_us_801808A8;
+extern EInit D_us_801808B4;
