@@ -419,7 +419,7 @@ void RicEntityWhip(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->animSet = -0x7FEE;
+        self->animSet = ANIMSET_OVL(18);
         self->animCurFrame = 0x1E;
         self->palette = 0x8138;
         self->unk5A = 0x46;

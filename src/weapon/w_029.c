@@ -221,13 +221,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
         }
         SetSpriteBank1(g_Animset);
         if (g_HandId != 0) {
-            self->animSet = -0x7FEE;
+            self->animSet = ANIMSET_OVL(18);
             self->ext.weapon.childPalette = 0x128;
             self->unk5A = 0x66;
             self->ext.shield.unk7C = 0;
             self->ext.shield.unk7D = 0x80;
         } else {
-            self->animSet = -0x7FF0;
+            self->animSet = ANIMSET_OVL(16);
             self->ext.weapon.childPalette = 0x110;
             self->unk5A = 0x64;
             self->ext.shield.unk7C = 0x80;

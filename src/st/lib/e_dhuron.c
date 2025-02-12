@@ -451,7 +451,7 @@ void func_us_801CC984(Entity* self) {
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->palette = 0x815B;
         self->unk5A = 0x4E;
-        self->animSet = -0x7FFC;
+        self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->animFrameIdx = 0;
         self->animFrameDuration = 0;
