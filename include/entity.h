@@ -2803,6 +2803,26 @@ typedef struct {
     /* 0x80 */ Primitive* lastPrim;
 } ET_LibraryShadow;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 : 16;
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s16 : 16;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ struct Entity* unk9C;
+} ET_Dhuron;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3047,6 +3067,7 @@ typedef union { // offset=0x7C
     ET_801D2274 et_801D2274;
     ET_LibrarianChair libraryChair;
     ET_LibraryShadow libraryShadow;
+    ET_Dhuron dhuron;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
