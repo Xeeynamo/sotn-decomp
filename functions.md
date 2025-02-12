@@ -566,7 +566,7 @@
 |        | ServantUnk0                         |       63 |         12 |        |                                 |       |
 | dra    | func_psp_090F17D8                   |       64 |          5 |        |                                 |       |
 | dra    | func_801026BC                       |       64 |          7 |        |                                 |       |
-| dra    | func_psp_09127B50                   |       65 |          8 |        | https://decomp.me/scratch/9ZT5U | 0.962 |
+| dra    | func_psp_09127B50                   |       65 |          8 |        | https://decomp.me/scratch/9ZT5U | 1.0   |
 | lib    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | no4    | func_psp_092447C0                   |       65 |         11 |        |                                 |       |
 | st0    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -1214,7 +1214,7 @@
 | lib    | func_psp_092644E0                   |      642 |         61 | Yes    |                                 |       |
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
-| lib    | func_psp_0924D598                   |      655 |         98 |        | https://decomp.me/scratch/7MvPJ | 0.973 |
+| lib    | func_psp_0924D598                   |      655 |         98 |        | https://decomp.me/scratch/7MvPJ | 0.997 |
 | dra    | EntityHitByLightning                |      657 |         61 |        |                                 |       |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib    | UnkRecursivePrimFunc2               |      663 |         11 |        |                                 |       |
@@ -1257,7 +1257,7 @@
 | no4    | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
 | st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/1ovk5 | 0.96  |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
-| lib    | func_psp_09255068                   |      883 |         80 |        |                                 |       |
+| lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.831 |
 | lib    | func_psp_09263810                   |      884 |         74 | Yes    |                                 |       |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
