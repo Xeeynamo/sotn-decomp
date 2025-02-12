@@ -240,8 +240,8 @@ void func_us_801CC6B0(Entity* self) {
         self->hitboxWidth = *hitboxPtr++;
         self->hitboxHeight = *hitboxPtr++;
         if (self->ext.dhuron.unk89) {
-            self->attackElement |= 0x4000;
-            self->attackElement &= 0xFFBF;
+            self->attackElement |= ELEMENT_THUNDER;
+            self->attackElement &= ~ELEMENT_CUT;
             self->attack *= 2;
             self->ext.dhuron.unk89 = 0;
         }
