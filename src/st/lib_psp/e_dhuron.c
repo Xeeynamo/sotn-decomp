@@ -9,3 +9,5 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_dhuron", func_psp_0923D8A0);
 
 // Dhuron death
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_dhuron", func_psp_0923DA30);
+
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_dhuron", func_psp_0923DCC8);
