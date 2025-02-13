@@ -56,11 +56,6 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_0925D4D0);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_0925D8D8);
 
-extern s32 g_CutsceneFlags;
-
-extern s32 D_us_801D51D4;
-extern s32 D_us_801D5288;
-
 extern u8 D_us_801811FC[];
 extern u8 D_us_80181204[];
 extern u8 D_us_80181210[];
@@ -77,8 +72,8 @@ void EntityLibrarianChair(Entity* self) {
     Entity* player = &PLAYER;
     Tilemap* tilemap = &g_Tilemap;
 
-    if (self->step && (self->step < 11) && (D_us_801D51D4 != 0) &&
-        (D_us_801D5288 != 0)) {
+    if (self->step && (self->step < 11) && (g_SkipCutscene != 0) &&
+        (g_IsCutsceneDone != 0)) {
         self->step = 11;
         self->animCurFrame = 2;
     }
@@ -169,8 +164,8 @@ void EntityLibrarianChair(Entity* self) {
             self->posX.i.hi -= 8;
         }
         g_CutsceneFlags = 0;
-        D_us_801D5288 = 0;
-        D_us_801D51D4 = 0;
+        g_IsCutsceneDone = 0;
+        g_SkipCutscene = 0;
         break;
     case 1:
         if (g_CutsceneFlags & 2) {

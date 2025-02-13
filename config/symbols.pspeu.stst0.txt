@@ -165,6 +165,8 @@ eRoomForegroundInit = 0x092799B0;
 g_isSecretStairsButtonPressed = 0x09279D98;
 D_80180908 = 0x09279DA0;
 g_Dialogue = 0x0927BA58; // size = 0x44
+g_IsCutsceneDone = 0x0927BA98;
+g_SkipCutscene = 0x0927BAA0;
 g_CutsceneFlags = 0x0927BAA8;
 D_801BEE0C = 0x0927BAB0;
 D_801BEE08 = 0x0927BAB8;

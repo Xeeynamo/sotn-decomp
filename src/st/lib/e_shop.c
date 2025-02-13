@@ -141,7 +141,6 @@ static u8 D_us_8018151C[] = {
 extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
-extern s32 g_CutsceneFlags;
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 
