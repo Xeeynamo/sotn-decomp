@@ -9,7 +9,7 @@
 // 6------7------8
 
 // clang-format off
-static s16 g_QuadIndices[] = {
+static s16 g_QuadIndices2[] = {
     0, 1, 3, 4, //top left quad
     1, 2, 4, 5, //top right quad
     3, 4, 6, 7, //bottom left quad
@@ -105,7 +105,7 @@ Primitive* UnkRecursivePrimFunc2(
     points[4].y = ((points[3].y + points[5].y + 1) >> 1);
 
     *tempPrim = *srcPrim;
-    indices = g_QuadIndices;
+    indices = g_QuadIndices2;
     for (i = 0; i < 4; i++) {
         s32 idx1 = *indices++;
         s32 idx2 = *indices++;
