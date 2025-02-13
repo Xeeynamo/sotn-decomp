@@ -144,7 +144,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp rwrp mar bobo4 rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
+build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp rwrp mar bo4 rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
 build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -382,7 +382,7 @@ $(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
 $(BUILD_DIR)/F_MAR.BIN:
 	$(GFXSTAGE) e assets/boss/mar $@
 
-bo4: $(BUILD_DIR)/BIN.BIN $(BUILD_DIR)/F_BIN.BIN
+bo4: $(BUILD_DIR)/BO4.BIN $(BUILD_DIR)/F_BO4.BIN
 $(BUILD_DIR)/BO4.BIN: $(BUILD_DIR)/bobo4.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_BO4.BIN:
@@ -694,10 +694,13 @@ disks/sotn.%.bin disks/sotn.%.cue:
 
 include tools/tools.mk
 
-.PHONY: all, clean, patch, check, build, expected
-.PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, chi, dre, lib, mad, no0, no1, no3, no4, np3, nz0, st0, wrp, rwrp, bomar, bobo4 borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
+.PHONY: all clean patch check build expected
+.PHONY: format ff format-src format-tools format-symbols
+.PHONY: main dra ric weapon
+.PHONY: cen chi dre lib mad no0 no1 no3 no4 np3 nz0 st0 wrp rwrp
+.PHONY: mar bo4 rbo3
+.PHONY: tt_000 tt_001 tt_002 tt_003 tt_004
 .PHONY: %_dirs
-.PHONY: extract, extract_%
+.PHONY: extract extract_%
 .PHONY: update-dependencies python-dendencies
 .PHONY: dump_disk dump_disk_%

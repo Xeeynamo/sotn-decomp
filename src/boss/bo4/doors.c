@@ -7,6 +7,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B5040);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B55DC);
 
+// light effects
 INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B5774);
 
 INCLUDE_RODATA("boss/bo4/nonmatchings/doors", D_us_801B4168);
