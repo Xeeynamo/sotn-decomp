@@ -1,50 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no3.h"
+#include "lib.h"
 #include "../pfn_entity_update.h"
-#include <cutscene.h>
+#include "../cutscene.h"
 
-static const char* actor_names[] = {_S("Alucard"), _S("Death")};
+extern u8 D_us_80183F60;
+static u8 D_us_801819BC[] = {0x00, 0x40, 0x00, 0x00};
+static u8 D_us_801819C0[] = {0x00, 0x00, 0x00, 0x00};
+static u16 D_us_801819C4[] = {0x0220, 0x0228};
+static u16 D_us_801819C8[] = {0x0040, 0x0060};
+static u16 D_us_801819CC[] = {0x01A1, 0x01A1};
+static s16 D_us_801819D0[] = {
+    0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
+    0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
+    0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
+    0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
+    0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
+    0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
+    0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
+    0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
+static const char* actor_names[] = {_S("Alucard"), _S("Master Librarian")};
 
-// similar but not an exact duplicate
-static void CutsceneUnk1(void) {
-    g_Dialogue.nextLineX = 0x182; // Note that these two lines are "= 2"
-    g_Dialogue.nextCharX = 0x182; // for all other cutscenes (so far)!
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = 8;
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-}
+#include "../cutscene_unk1.h"
 
 #include "../set_cutscene_script.h"
 
-static void CutsceneUnk3(s16 yOffset) {
-    RECT rect;
+#include "../cutscene_unk3.h"
 
-    rect.x = 384;
-    rect.y = (yOffset * 12) + 256;
-    rect.w = 64;
-    rect.h = 12;
-    ClearImage(&rect, 0, 0, 0);
-}
-
-static void CutsceneUnk4(void) {
-    Primitive* prim;
-
-    CutsceneUnk3(g_Dialogue.nextCharY);
-    prim = g_Dialogue.prim[g_Dialogue.nextCharY];
-    prim->tpage = 0x16;
-    prim->clut = g_Dialogue.clutIndex;
-    prim->y0 = g_Dialogue.nextLineY;
-    prim->u0 = 0;
-    prim->x0 = g_Dialogue.startX;
-    prim->x0 = prim->x0 + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
-    prim->priority = 0x1FF;
-    prim->drawMode = DRAW_DEFAULT;
-}
+#include "../cutscene_unk4.h"
 
 #include "../cutscene_actor_name.h"
 
@@ -71,7 +53,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
-            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
+            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 8))) {
             CutsceneSkip(self);
         }
         if (self->step && g_Dialogue.unk3C) {
@@ -80,14 +62,11 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        CreateEntityFromCurrentEntity(E_BG_LIGHTNING, &g_Entities[192]);
-        if ((g_CastleFlags[IVE_BEEN_ROBBED]) ||
-            (g_PlayableCharacter != PLAYER_ALUCARD)) {
-            DestroyEntity(self);
-            g_Entities[192].params = 0;
-            return;
+        if (g_CastleFlags[MET_LIBRARIAN] != 0) {
+            D_us_80183F60 = 1;
+        } else {
+            D_us_80183F60 = 0;
         }
-        g_Entities[192].params = 0x100;
         if (SetCutsceneScript(OVL_EXPORT(cutscene_data))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             g_CutsceneFlags = 0;
@@ -165,10 +144,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 i = *g_Dialogue.scriptCur++;
                 nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
-                uCoord = D_80181A28[nextChar2 & 1];
-                vCoord = D_80181A2C[nextChar2 & 1];
-                prim->clut = D_80181A30[i];
-                prim->tpage = 0x94; // Weird, this is 0x90 in other cutscenes
+                uCoord = D_us_801819BC[nextChar2 & 1];
+                vCoord = D_us_801819C0[nextChar2 & 1];
+                prim->clut = D_us_801819C4[i];
+                prim->tpage = 0x91;
                 if (nextChar2 & 0x80) {
                     prim->u0 = prim->u2 = uCoord + 0x2F;
                     prim->u1 = prim->u3 = uCoord;
@@ -182,7 +161,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     g_Dialogue.startX - 0x1E;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                     g_Dialogue.startY + 0x24;
-                g_Dialogue.clutIndex = D_80181A38[i];
+                g_Dialogue.clutIndex = D_us_801819CC[i];
                 CutsceneUnk1();
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
@@ -279,8 +258,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
                 ptr |= (u_long)*g_Dialogue.scriptCur++;
-                ptr += (u16)0x100000;
-                g_Dialogue.scriptCur += *(u16*)ptr << 2;
+                ptr += 0x100000;
+                g_Dialogue.scriptCur += *(u8*)ptr << 2;
 
                 ptr = (u_long)*g_Dialogue.scriptCur++;
                 ptr <<= 4;
@@ -328,8 +307,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += 0x100000;
                     nextChar2 = g_Dialogue.scriptCur++[0];
-                    LoadTPage((u32*)ptr, 1, 0, D_80181A34[nextChar2], 0x100,
-                              0x30, 0x48);
+                    LoadTPage((u_long*)ptr, 1, 0, D_us_801819C8[nextChar2],
+                              0x100, 0x30, 0x48);
                 }
                 continue;
             case CSOP_SCRIPT_UNKNOWN_20:
@@ -372,7 +351,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         rect.w = 2;
         rect.h = 8;
         // Other cutscenes have + 0x180 here
-        vCoord = (g_Dialogue.nextCharY * 0xC) + 0x100;
+        vCoord = (g_Dialogue.nextCharY * 0xC) + 0x180;
         MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
         break;
@@ -389,6 +368,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
         prim->y2 = prim->y3 += 6;
+        if (prim->x1 >= (g_Dialogue.startX - 2)) {
+            prim->x1 = prim->x3 = g_Dialogue.startX - 3;
+        }
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
             self->step = 1;
@@ -404,9 +386,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
         prim->y2 = prim->y3 -= 6;
-        if (prim->x1 >= (g_Dialogue.startX - 2)) {
-            prim->x1 = prim->x3 = g_Dialogue.startX - 3;
-        }
+
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
             self->step = 1;
@@ -431,7 +411,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 prim->y0 = prim->y1 = g_Dialogue.startY + j;
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
-                prim->x2 = D_80181A3C[j];
+                prim->x2 = D_us_801819D0[j];
                 prim->x3 = 0xF70;
 
                 j++;
@@ -455,9 +435,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.primIndex[0] = -1;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
-                prim->blendMode = 0x11;
+                prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
-                prim->blendMode = 0x51;
+                prim->drawMode =
+                    DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 self->step_s++;
                 return;
             }
@@ -516,11 +497,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         break;
 
     case 7:
-        g_CastleFlags[IVE_BEEN_ROBBED] = 1;
-        g_api.TimeAttackController(
-            TIMEATTACK_EVENT_MEET_DEATH, TIMEATTACK_SET_RECORD);
         g_CutsceneHasControl = 0;
-        g_Settings.D_8003CB04 |= 4;
+        g_Settings.D_8003CB04 |= 8;
         DestroyEntity(self);
         break;
     }
