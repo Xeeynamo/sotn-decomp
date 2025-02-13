@@ -19,7 +19,6 @@ extern s32 D_us_80180D48[];
 extern MATRIX D_us_80180D88;
 extern s16 D_us_80180DA8[];
 extern s16 D_us_80180DB0[];
-extern u16 g_EInitInteractable[];
 
 void func_us_801AE8E8(Entity* self) {
     s32 primIndex;
