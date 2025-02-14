@@ -75,16 +75,16 @@ void func_us_801C9870(Entity* self) {
             }
             if (self->animCurFrame == 7) {
                 if (self->facingLeft) {
-                    self->velocityX -= 0x200;
+                    self->velocityX -= FIX(1.0 / 128);
                 } else {
-                    self->velocityX += 0x200;
+                    self->velocityX += FIX(1.0 / 128);
                 }
             }
             if (self->animCurFrame == 8) {
                 if (self->facingLeft) {
-                    self->velocityX += 0x200;
+                    self->velocityX += FIX(1.0 / 128);
                 } else {
-                    self->velocityX -= 0x200;
+                    self->velocityX -= FIX(1.0 / 128);
                 }
             }
             break;
@@ -197,16 +197,16 @@ void func_us_801C9870(Entity* self) {
             }
             if (self->animCurFrame == 1) {
                 if (self->facingLeft) {
-                    self->velocityX -= 0xA0;
+                    self->velocityX -= FIX(5.0 / 2048);
                 } else {
-                    self->velocityX += 0xA0;
+                    self->velocityX += FIX(5.0 / 2048);
                 }
             }
             if (self->animCurFrame == 2) {
                 if (self->facingLeft) {
-                    self->velocityX += 0xA0;
+                    self->velocityX += FIX(5.0 / 2048);
                 } else {
-                    self->velocityX -= 0xA0;
+                    self->velocityX -= FIX(5.0 / 2048);
                 }
             }
             if (!--self->ext.et_801C9870.unk7C) {
