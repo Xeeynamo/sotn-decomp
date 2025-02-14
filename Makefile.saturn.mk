@@ -101,4 +101,6 @@ $(SATURN_SPLITTER_APP):
 $(ASSETS_DIR)/saturn/SD/%.wav: disks/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
 	mkdir -p $(ASSETS_DIR)/saturn/SD
 	$(SATURN_ADPCM_EXTRACT_APP) $< $@
-	
+
+# Fixes build -j breaking due to dosemu
+.NOTPARALLEL: build_saturn

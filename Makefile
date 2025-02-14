@@ -156,7 +156,7 @@ MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
 MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
 MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
-else ifeq ($(VERSION),saturn) Workaround for github actions
+else ifeq ($(VERSION),saturn)
 SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
 SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
 
@@ -171,7 +171,7 @@ SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_
 SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
 SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
 SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
-#endif
+endif
 
 # Functions
 define list_src_files
@@ -251,7 +251,6 @@ ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platfo
 include Makefile.psx.mk
 else ifeq ($(VERSION),pspeu)
 include Makefile.psp.mk
-endif
-#else ifeq ($(VERSION),saturn)  Workaround for github actions
+else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
-#endif
+endif
