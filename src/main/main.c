@@ -7,6 +7,7 @@ extern CdlFILE main_cdlFile;
 extern u8 main_cdlMode[];
 extern s32 main_fd;
 
+// test
 void main(void) {
     ResetCallback();
     InitHeap((void*)0x801F0000, 0x7800);
