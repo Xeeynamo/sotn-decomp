@@ -171,6 +171,12 @@ $(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
 $(BUILD_DIR)/F_NO3.BIN:
 	$(GFXSTAGE) e assets/st/no3 $@
 
+no4: $(BUILD_DIR)/NO4.BIN $(BUILD_DIR)/F_NO4.BIN
+$(BUILD_DIR)/NO4.BIN: $(BUILD_DIR)/stno4.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_NO4.BIN:
+	$(GFXSTAGE) e assets/st/no4 $@
+
 np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
 $(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
 	$(OBJCOPY) -O binary $< $@
@@ -200,12 +206,6 @@ $(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_RWRP.BIN:
 	$(GFXSTAGE) e assets/st/rwrp $@
-
-no4: $(BUILD_DIR)/NO4.BIN $(BUILD_DIR)/F_NO4.BIN
-$(BUILD_DIR)/NO4.BIN: $(BUILD_DIR)/stno4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO4.BIN:
-	$(GFXSTAGE) e assets/st/no4 $@
 
 # Boss category structure
 mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN

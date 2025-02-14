@@ -156,20 +156,7 @@ MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
 MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
 MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
-
-DRA_MERGE_FILE := $(CONFIG_DIR)/merge.dra.txt
-LIB_MERGE_FILE := $(CONFIG_DIR)/merge.lib.txt
-ST0_MERGE_FILE := $(CONFIG_DIR)/merge.st0.txt
-WRP_MERGE_FILE := $(CONFIG_DIR)/merge.wrp.txt
-NO4_MERGE_FILE := $(CONFIG_DIR)/merge.no4.txt
-
-ST_DRA_MERGE := $(file < $(DRA_MERGE_FILE)) 
-ST_LIB_MERGE := $(file < $(LIB_MERGE_FILE))
-ST_ST0_MERGE := $(file < $(ST0_MERGE_FILE))
-ST_WRP_MERGE := $(file < $(WRP_MERGE_FILE))
-ST_NO4_MERGE := $(file < $(NO4_MERGE_FILE))
-endif
-#else ifeq ($(VERSION),saturn) Workaround for github actions
+else ifeq ($(VERSION),saturn) Workaround for github actions
 SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
 SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
 
