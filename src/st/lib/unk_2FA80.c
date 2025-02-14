@@ -525,7 +525,134 @@ void EntityLibrarianChair(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B0C40);
+void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
+    const u16 MINSCODE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
+
+    const int FontWidth = 12;
+    const int FontHeight = 16;
+    const int FontStride = FontWidth / 2;
+
+    s32 letterWidth;
+    s32 i, j;
+    s32 pos;
+    s32 s_8;
+    s32 s_6;
+    u16 ch;
+    u8* ptr;
+    u8* chPix;
+    u8 sp3f;
+
+    s_6 = 0;
+    ptr = pix;
+    for (i = 0; i < (size * FontHeight) * 2; i++) {
+        *ptr++ = 0;
+    }
+    while (true) {
+        pos = 0;
+        while (*str >= 8) {
+            s_8 = 0;
+#if VERSION_PSP
+            ch = g_api.func_ptr_91CF870((char*)str, &sp3f);
+#else
+            ch = *str;
+#endif
+            str++;
+            if (ch == '@') {
+                break;
+            }
+            if (ch >= 'a' && ch < '{') {
+                ch = ch + 0x8220;
+            } else if (ch >= 'A' && ch < '[') {
+                ch = ch + 0x821F;
+            } else if (ch == ' ') {
+                ch = MINSCODE;
+                s_8 = 2;
+            } else {
+#if VERSION_PSP
+                if (sp3f > 1) {
+                    str += sp3f - 1;
+                }
+            }
+#else
+                ch = *str++ | (ch << 8);
+                if (ch == MINSCODE) {
+                    s_8 = 2;
+                }
+            }
+            if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
+                str += 2;
+            }
+#endif
+            chPix = (u8*)g_api.func_80106A28(ch, 1);
+            while (true) {
+                if (ch == MINSCODE) {
+                    break;
+                }
+                for (i = 0; i < FontHeight; i++) {
+                    if (chPix[i * FontStride]) {
+                        break;
+                    }
+                }
+                if (i != 16) {
+                    break;
+                }
+                for (i = 0; i < FontHeight; i++) {
+                    ptr = &chPix[i * FontStride];
+                    for (j = 0; j < 5; j++) {
+                        *(ptr + 0) = *(ptr + 1);
+                        ptr += 1;
+                    }
+                    *ptr = 0;
+                }
+            }
+
+            for (i = 0, letterWidth = 0; i < FontHeight; i++) {
+                for (j = 0; j < FontStride; j++) {
+                    if (chPix[i * FontStride + j] && (letterWidth < j)) {
+                        letterWidth = j;
+                    }
+                }
+            }
+            for (i = 0; i < FontHeight; i++) {
+                if (chPix[letterWidth + i * FontStride] & 0xF0) {
+                    break;
+                }
+            }
+
+            if (i != 16) {
+                letterWidth++;
+            }
+            if (letterWidth < 6) {
+                letterWidth++;
+            }
+            for (i = 0; i < FontHeight; i++) {
+                ptr = &pix[pos + (i + (s_6 * FontHeight)) * size];
+                *ptr++ = *chPix++;
+                *ptr++ = *chPix++;
+                *ptr++ = *chPix++;
+                *ptr++ = *chPix++;
+                *ptr++ = *chPix++;
+                *ptr++ = *chPix++;
+            }
+            pos += letterWidth + s_8;
+            if (pos >= size - 5) {
+                break;
+            }
+        }
+        LoadTPage(
+            (u_long*)&pix[s_6 * FontHeight * size], 0, 0, x, y, size * 2, 0x10);
+        if (!*str) {
+            break;
+        }
+        s_6++;
+        y += 16;
+        if (*str < 8) {
+            str++;
+        }
+    }
+    return &pix[(size << 4) << 1];
+}
 
 void func_us_801B0FBC(u8* ptr, u16 x, u16 y) {
     RECT rect;
