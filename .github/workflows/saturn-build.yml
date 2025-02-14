@@ -17,7 +17,7 @@ jobs:
   build-and-test-saturn:
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the game's data repository
-    if: github.repository == 'Xeeynamo/sotn-decomp'
+    #if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo (PR)

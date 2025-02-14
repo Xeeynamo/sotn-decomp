@@ -31,7 +31,7 @@ jobs:
             version: pspeu
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
-    if: github.repository == 'Xeeynamo/sotn-decomp'
+    #if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
