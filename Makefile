@@ -1,5 +1,6 @@
 .SECONDEXPANSION:
 .SECONDARY:
+.DEFAULT_GOAL := all
 
 # Variables
 # User environment

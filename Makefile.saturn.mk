@@ -69,7 +69,6 @@ $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o config/saturn/zero_syms.txt config/saturn/g
 
 $(BUILD_DIR)/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(CC1_SATURN)
 	mkdir -p $(dir $@)
-	ls ./
 	cd $(BUILD_DIR) && $(DOSEMU_APP) "GCC.EXE -c -I./ -O0 -m2 -fsigned-char lib/$*.c -o lib/$*.o"
 $(BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(CC1_SATURN)
 	mkdir -p $(dir $@)
