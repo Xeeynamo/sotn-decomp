@@ -10,7 +10,7 @@ on:
       - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
-  pull_request:
+  pull_request_target:
     paths:
       - 'include/**'
       - 'src/**'
