@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../st0/st0.h"
-#include <cutscene.h>
+#include "../../st/lib/lib.h"
 
-extern Dialogue g_Dialogue;
 // clang-format off
 static u16 actor_names_en[] = {
     CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
@@ -70,27 +68,15 @@ static u16 actor_names_ge[] = {
 static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
 
-static u8 D_80180784[] = {0, 64, 0, 0};
-static u8 D_80180788[] = {0, 0, 0, 0};
-static u16 D_8018078C[] = {0x230, 0x248};
-static u16 D_80180790[] = {0, 32};
-static u16 D_80180794[] = {0x1A1, 0x1A1};
-static s16 D_80180798[] = {
-    0x8,  0x13, 0x11, 0x31, 0x4F, 0x26, 0x36, 0x1D, 0x1B, 0x33, 0x2C, 0x21,
-    0x19, 0xA,  0x33, 0x1F, 0x48, 0x2F, 0x13, 0x19, 0x4D, 0x4B, 0x17, 0x1D,
-    0x12, 0x2,  0x1B, 0x2A, 0x50, 0x45, 0x32, 0xD,  0x2A, 0x4D, 0x6,  0x27,
-    0x7,  0x48, 0x2F, 0x1B, 0x36, 0x22, 0x39, 0x14, 0x39, 0x1D, 0xA,  0x35,
-    0x10, 0x1B, 0x3D, 0x17, 0x2E, 0xB,  0x49, 0x42, 0x3D, 0x2A, 0x1,  0xC,
-    0x1B, 0x34, 0x41, 0x35, 0x8,  0xE,  0x4D, 0x11, 0x34, 0x41, 0x29, 0x48};
-s32 D_pspeu_09253F38[] = {0x100, 0};
-s32 D_pspeu_09253F40[] = {0x100, 0};
-
 #include "../cutscene_actor_name_psp.h"
 
+#define CUTSCENE_UNK3_RECT_X 64
 #include "../cutscene_unk3.h"
+
+#define CUTSCENE_UNK4_TPAGE 0x11
 #include "../cutscene_unk4.h"
 
-#define CUTSCENE_UNK1_NEXT_X 0
+#define CUTSCENE_UNK1_NEXT_X 0x40
 #define CUTSCENE_UNK1_UNK17 2
 #include "../cutscene_unk1.h"
 
@@ -100,4 +86,6 @@ s32 D_pspeu_09253F40[] = {0x100, 0};
 
 #include "../cutscene_run.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/cutscene", ST0_EntityCutscene);
+#include "../cutscene_skip.h"
+
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/cutscene", LIB_EntityCutscene);

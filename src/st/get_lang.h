@@ -2,20 +2,19 @@
 #include <game.h>
 
 extern s32 D_8B42058;
-u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
+
+u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
     switch (D_8B42058) {
     default:
     case LANG_EN:
-        return en + idx;
+        return en;
     case LANG_FR:
-        return fr + idx;
+        return fr;
     case LANG_SP:
-        return sp + idx;
+        return sp;
     case LANG_GE:
-        return ge + idx;
+        return ge;
     case LANG_IT:
-        return it + idx;
+        return it;
     }
 }
-
-#include "../get_lang.h"

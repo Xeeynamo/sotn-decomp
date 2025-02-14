@@ -164,6 +164,7 @@ g_eDamageDisplayClut = 0x09279978;
 eRoomForegroundInit = 0x092799B0;
 g_isSecretStairsButtonPressed = 0x09279D98;
 D_80180908 = 0x09279DA0;
+cutsceneUnk3Unknown = 0x0927B6A8;
 g_Dialogue = 0x0927BA58; // size = 0x44
 g_IsCutsceneDone = 0x0927BA98;
 g_SkipCutscene = 0x0927BAA0;
