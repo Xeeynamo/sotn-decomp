@@ -45,26 +45,13 @@ jobs:
           submodules: false
       - name: Install tools requirements
         run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
-        id: get-dependencies
-        with:
-          path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
       - name: Get dependencies (uncached)
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           repository: xeeynamo/sotn-decomp-dependencies
           ref: ${{ matrix.dependency }}
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
-      - name: Cache dependencies
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v3
-        with:
-          path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
         run: cat dependencies/* | tar -zxf -
@@ -113,11 +100,13 @@ jobs:
           submodules: false
       - name: Install requirements
         run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
+      - name: Get dependencies (uncached)
+        uses: actions/checkout@v4
         with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.dependency }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
         run: cat dependencies/* | tar -zxf -
@@ -152,11 +141,13 @@ jobs:
           submodules: false
       - name: Install requirements
         run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
+      - name: Get dependencies (uncached)
+        uses: actions/checkout@v4
         with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.dependency }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
         run: cat dependencies/* | tar -zxf -
@@ -222,11 +213,13 @@ jobs:
           submodules: false
       - name: Install requirements
         run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
+      - name: Get dependencies (uncached)
+        uses: actions/checkout@v4
         with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: ${{ matrix.dependency }}
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
       - name: Setting up dependencies
         working-directory: disks
         run: cat dependencies/* | tar -zxf -
