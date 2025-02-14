@@ -9,7 +9,7 @@ extern s32 main_fd;
 
 void main(void) {
     ResetCallback();
-    InitHeap((void*)0x801F0000, 0x7800);
+    InitHeap((void*)0x801F0000, 0x7800); // force build
     CdInit();
 
     g_GameState = Game_Boot;
