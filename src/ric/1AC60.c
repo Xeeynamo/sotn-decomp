@@ -2,7 +2,7 @@
 #include "ric.h"
 #include "player.h"
 
-#include "../destroy_entity.h" // hi
+#include "../destroy_entity.h"
 
 void RicHandleStand(void);
 void RicHandleWalk(void);

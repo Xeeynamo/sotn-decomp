@@ -45,14 +45,14 @@ jobs:
           submodules: false
       - name: Install tools requirements
         run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
-        id: get-dependencies
-        with:
-          path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
+      # - name: Get dependencies
+      #   uses: actions/cache@v4
+      #   id: get-dependencies
+      #   with:
+      #     path: 'disks/dependencies'
+      #     key: sotn-${{ matrix.dependency }}-deps
       - name: Get dependencies (uncached)
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
+      #  if: steps.get-dependencies.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           repository: xeeynamo/sotn-decomp-dependencies
@@ -60,7 +60,7 @@ jobs:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
           path: 'disks/dependencies'
       - name: Cache dependencies
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
+      #  if: steps.get-dependencies.outputs.cache-hit != 'true'
         uses: actions/cache/save@v3
         with:
           path: 'disks/dependencies'
