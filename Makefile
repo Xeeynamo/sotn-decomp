@@ -144,7 +144,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp rwrp mar rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
+build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp rwrp mar bo4 rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
 build_hd: dra cen wrp tt_000
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
@@ -226,6 +226,7 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
 	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
+	./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
 	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
 	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
@@ -381,6 +382,12 @@ $(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
 $(BUILD_DIR)/F_MAR.BIN:
 	$(GFXSTAGE) e assets/boss/mar $@
 
+bo4: $(BUILD_DIR)/BO4.BIN $(BUILD_DIR)/F_BO4.BIN
+$(BUILD_DIR)/BO4.BIN: $(BUILD_DIR)/bobo4.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_BO4.BIN:
+	$(GFXSTAGE) e assets/boss/bo4 $@
+
 rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
 $(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
 	$(OBJCOPY) -O binary $< $@
@@ -512,6 +519,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
@@ -562,6 +570,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
 	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
 	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
+	cp $(BUILD_DIR)/BO4.BIN $(DISK_DIR)/BOSS/BO4/BO4.BIN
+	cp $(BUILD_DIR)/F_BO4.BIN $(DISK_DIR)/BOSS/BO4/F_BO4.BIN
 	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
 	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
@@ -684,10 +694,13 @@ disks/sotn.%.bin disks/sotn.%.cue:
 
 include tools/tools.mk
 
-.PHONY: all, clean, patch, check, build, expected
-.PHONY: format, ff, format-src, format-tools, format-symbols
-.PHONY: main, dra, ric, cen, chi, dre, lib, mad, no0, no1, no3, no4, np3, nz0, st0, wrp, rwrp, bomar, borbo3, tt_000, tt_001, tt_002, tt_003, tt_004
+.PHONY: all clean patch check build expected
+.PHONY: format ff format-src format-tools format-symbols
+.PHONY: main dra ric weapon
+.PHONY: cen chi dre lib mad no0 no1 no3 no4 np3 nz0 st0 wrp rwrp
+.PHONY: mar bo4 rbo3
+.PHONY: tt_000 tt_001 tt_002 tt_003 tt_004
 .PHONY: %_dirs
-.PHONY: extract, extract_%
+.PHONY: extract extract_%
 .PHONY: update-dependencies python-dendencies
 .PHONY: dump_disk dump_disk_%
