@@ -1,0 +1,85 @@
+options:
+  platform: psx
+  basename: bobo4
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/BO4/BO4.BIN
+  asm_path: asm/us/boss/bo4
+  asset_path: assets/boss/bo4
+  src_path: src/boss/bo4
+  ld_script_path: build/us/bobo4.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.bobo4.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.bobo4.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.bobo4.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+sha1: b90a2a70ae9651ed107b306d4dcfba2311b523fc
+segments:
+  - name: bobo4
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x4BC, .data, st_debug]
+      - [0x53C, .data, e_breakable]
+      - [0x59C, data]
+      - [0x6B0, .data, st_update]
+      - [0x6DC, .data, collision]
+      - [0xA9C, .data, e_red_door]
+      - [0xAB4, .data, st_common]
+      - [0xCB4, .data, e_collect]
+      - [0xFA4, .data, e_misc]
+      - [0x10C0, .data, e_particles]
+      - [0x1140, .data, e_room_fg]
+      - [0x11CC, data]
+      - [0x4290, .data, e_life_up]
+      - [0x42E4, data]
+      - [0x34104, .rodata, doors]
+      - [0x341A8, .rodata, e_red_door]
+      - [0x341C0, .rodata, e_collect]
+      - [0x34248, .rodata, e_misc]
+      - [0x34294, .rodata, e_stage_name]
+      - [0x342C8, .rodata, doppleganger]
+      - [0x34814, .rodata, prim_helpers]
+      - [0x3481C, .rodata, e_life_up]
+      - [0x34838, c, st_debug]
+      - [0x34ABC, c, e_breakable]
+      - [0x34BF0, c, doors]
+      - [0x369BC, c, st_update]
+      - [0x36DF0, c, collision]
+      - [0x385AC, c, create_entity]
+      - [0x39124, c, e_red_door]
+      - [0x39DD4, c, st_common]
+      - [0x3B284, c, e_collect]
+      - [0x3C7F0, c, blit_char]
+      - [0x3CAA0, c, e_misc]
+      - [0x3FF84, c, e_stage_name]
+      - [0x40DD8, c, e_particles]
+      - [0x4161C, c, e_room_fg]
+      - [0x41708, c, popup]
+      - [0x41A38, c, doppleganger]
+      - [0x52020, c, prim_helpers]
+      - [0x52850, c, e_life_up]
+      - [0x53104, bss]
+      - [0x53110, .bss, create_entity]
+      - [0x53120, bss]
+      - [0x54DF8, .bss, e_collect]
+  - [0x54E38]
