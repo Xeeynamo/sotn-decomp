@@ -1,4 +1,5 @@
 abs = 0x08906AF0;
+labs = 0x08909194;
 memcpy = 0x08909F84;
 rand = 0x0890B954;
 psp_sprintf = 0x0890C6FC;
