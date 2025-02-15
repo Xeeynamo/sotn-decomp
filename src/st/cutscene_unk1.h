@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifdef STAGE_IS_LIB
-#define CUTSCENE_UNK1_NEXT_X 0x42
-#else
+#ifndef CUTSCENE_UNK1_NEXT_X
 #define CUTSCENE_UNK1_NEXT_X 2
 #endif
 
