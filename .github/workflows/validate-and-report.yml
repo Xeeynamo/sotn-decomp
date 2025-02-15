@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - '*.md'
       - '**/*.md'
-  pull_request:
+  pull_request_target:
     paths-ignore:
       - '*.md'
       - '**/*.md'
@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-test:
+  build-and-test: 
     strategy:
       matrix:
         version: ["us", "hd", "pspeu"]
@@ -38,7 +38,14 @@ jobs:
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
+      - name: Clone main repo (PR)
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          submodules: false
       - name: Clone main repo
+        if: github.event_name != 'pull_request_target'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
