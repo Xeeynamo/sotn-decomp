@@ -59,7 +59,7 @@ jobs:
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Build saturn binaries
-        run: make build_saturn
+        run: VERSION=saturn make build
       - name: Check saturn
         run: VERSION=saturn make check
 
