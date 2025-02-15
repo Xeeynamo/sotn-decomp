@@ -81,3 +81,8 @@ extern EInit g_EInitFleaMan;
 extern EInit D_us_8018089C;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
+
+extern s32 g_SkipCutscene;
+extern s32 g_IsCutsceneDone;
+extern u32 g_CutsceneFlags;
+extern Dialogue g_Dialogue;

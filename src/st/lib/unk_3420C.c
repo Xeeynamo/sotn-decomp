@@ -14,7 +14,6 @@ extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
 extern u8* D_psp_092A5F50;
-extern s32 g_CutsceneFlags;
 extern s32 D_91ED5F8;
 
 void func_us_801B4830(Entity* self) {
