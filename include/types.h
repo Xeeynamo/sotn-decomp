@@ -75,6 +75,11 @@ typedef struct {
 } Point32; // size = 0x8
 
 typedef struct {
+    u16 width;
+    u16 height;
+} Size16;
+
+typedef struct {
     u8 u;
     u8 v;
 } uvPair;

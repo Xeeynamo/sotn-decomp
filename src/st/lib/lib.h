@@ -52,7 +52,10 @@ typedef enum EntityIDs {
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
     /* 0x48 */ E_ID_48 = 0x48,
-    /* 0x4D */ E_ID_4D = 0x4D,
+    /* 0x4A */ E_ID_4A = 0x4A,
+    /* 0x4B */ E_ID_4B,
+    /* 0x4C */ E_ID_4C,
+    /* 0x4D */ E_ID_4D,
     /* 0x4E */ E_ID_4E,
 } EntityIDs;
 
