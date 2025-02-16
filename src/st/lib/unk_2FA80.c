@@ -561,9 +561,9 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             if (ch == '@') {
                 break;
             }
-            if (ch >= 'a' && ch < '{') {
+            if (ch >= 'a' && ch <= 'z') {
                 ch = ch + 0x8220;
-            } else if (ch >= 'A' && ch < '[') {
+            } else if (ch >= 'A' && ch <= 'Z') {
                 ch = ch + 0x821F;
             } else if (ch == ' ') {
                 ch = MINSCODE;
