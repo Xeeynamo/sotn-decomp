@@ -743,7 +743,7 @@
 | no4    | func_psp_09243320                   |       96 |         19 |        |                                 |       |
 | st0    | func_pspeu_092469A0                 |       97 |          1 |        |                                 |       |
 | dra    | UpdateUnarmedAnim                   |       97 |          6 |        | https://decomp.me/scratch/3r6LM | 0.998 |
-| lib    | func_psp_0924DF08                   |       97 |          7 |        |                                 |       |
+| lib    | func_us_801D00C4                    |       97 |          7 |        |                                 |       |
 | lib    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
 | no4    | func_psp_09250600                   |       97 |         12 |        |                                 |       |
 | wrp    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
@@ -1214,7 +1214,7 @@
 | lib    | func_psp_092644E0                   |      642 |         61 | Yes    |                                 |       |
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
-| lib    | func_psp_0924D598                   |      655 |         98 |        | https://decomp.me/scratch/7MvPJ | 0.997 |
+| lib    | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
 | dra    | EntityHitByLightning                |      657 |         61 |        |                                 |       |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib    | UnkRecursivePrimFunc2               |      663 |         11 |        |                                 |       |
