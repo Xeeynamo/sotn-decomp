@@ -436,8 +436,10 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 $(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
 	$(call link,stsel,$@)
+ifneq ($(VERSION),saturn)
 $(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
+endif
 $(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
 	$(call link,bo$*,$@)
 
