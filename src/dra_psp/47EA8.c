@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// CreateEntFactoryFromEntity has a mismatch between the args callers use,
+// and the args in the function itself. We use this along with a hack in the
+// header file to fix it.
+#define CREATE_FACTORY_FAKE_ARGS
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 #include "servant.h"
@@ -1231,7 +1236,50 @@ void func_8011A9D8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", CreateEntFactoryFromEntity);
+Entity* CreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s16 arg2) {
+    Entity* newFactory;
+
+
+    newFactory = GetFreeEntity(8, 16);
+    if (newFactory == NULL) {
+        return NULL;
+    }
+
+    DestroyEntity(newFactory);
+    newFactory->entityId = E_ENTITYFACTORY;
+    newFactory->ext.factory.parent = source;
+    newFactory->posX.val = source->posX.val;
+    newFactory->posY.val = source->posY.val;
+    newFactory->facingLeft = source->facingLeft;
+    newFactory->zPriority = source->zPriority;
+    newFactory->params = factoryParams & 0xFFF;
+    if (factoryParams & 0x5000) {
+        newFactory->ext.factory.unkA8 = 0xE0;
+    }
+    if (factoryParams & 0xA000) {
+        newFactory->ext.factory.unkA8 = 0xF0;
+    }
+    newFactory->ext.factory.unkA0 = (factoryParams & 0xFF0000) >> 8;
+    newFactory->ext.factory.unk92 = arg2;
+    if (source->flags & FLAG_UNK_10000) {
+        newFactory->flags |= FLAG_UNK_10000;
+    }
+    if (factoryParams & 0x1000) {
+        newFactory->entityId = 0xEF;
+    }
+    if (factoryParams & 0x2000) {
+        newFactory->entityId = 0xFF;
+    }
+    if (factoryParams & 0x4000) {
+        newFactory->entityId = 0xED;
+    }
+    if (factoryParams & 0x8000) {
+        newFactory->entityId = 0xFD;
+    }
+
+    return newFactory;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityEntFactory);
 
