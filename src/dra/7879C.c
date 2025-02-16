@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#define FAKE_CreateEntFactoryFromEntity_DECL
 #include "dra.h"
 #include "dra_bss.h"
 #include "objects.h"
@@ -1199,10 +1200,8 @@ void func_8011A9D8(void) {
 }
 
 Entity* CreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2_raw) {
+    Entity* source, u32 factoryParams, s16 arg2) {
     Entity* newFactory;
-    // Weird thing needed for callers to match
-    s16 arg2 = arg2_raw;
 
     newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {

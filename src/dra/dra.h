@@ -578,7 +578,9 @@ void func_80118894(Entity*);
 Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+#ifndef FAKE_CreateEntFactoryFromEntity_DECL
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
+#endif
 
 // Forward declarations for all the entity updating functions
 void func_8011A4C8(Entity* self);

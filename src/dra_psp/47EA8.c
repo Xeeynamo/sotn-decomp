@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#define FAKE_CreateEntFactoryFromEntity_DECL
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
@@ -42,15 +43,17 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091279A0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
 
-// Problem: Function clearly treats arg2 as s16 (see here: https://decomp.me/scratch/lK7y4)
-// If the function is written here as anything but s16, it fails.
-// But that's in conflict with the forward declaration in dra.h.
-// So we can try to change that declaration to use s16, but then the callers of this function no longer
-// match, because then they're doing `seh` on their variables before passing them to this function.
-// So okay, we can delete the forward declaration, so that the other functions don't know about arg2
-// being s16 and will assume it's an int. But then any function that does 
-// entity = CreateEntFactoryFromEntity(blah, blah, blah) will fail, because without the forward
-// declaration, we also assume the return type is int. And we can't implicitly cast int to Entity*.
+// Problem: Function clearly treats arg2 as s16 (see here:
+// https://decomp.me/scratch/lK7y4) If the function is written here as anything
+// but s16, it fails. But that's in conflict with the forward declaration in
+// dra.h. So we can try to change that declaration to use s16, but then the
+// callers of this function no longer match, because then they're doing `seh` on
+// their variables before passing them to this function. So okay, we can delete
+// the forward declaration, so that the other functions don't know about arg2
+// being s16 and will assume it's an int. But then any function that does
+// entity = CreateEntFactoryFromEntity(blah, blah, blah) will fail, because
+// without the forward declaration, we also assume the return type is int. And
+// we can't implicitly cast int to Entity*.
 
 // We need 3 things to all be true:
 // 1. Other functions must know this function returns an Entity*
@@ -59,9 +62,8 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_09127B50);
 // I do not know any way to make these all work at the same time.
 
 Entity* CreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2) {
+    Entity* source, u32 factoryParams, s16 arg2) {
     Entity* newFactory;
-
 
     newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {
