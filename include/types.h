@@ -75,15 +75,13 @@ typedef struct {
 } Point32; // size = 0x8
 
 typedef struct {
+    u16 width;
+    u16 height;
+} Size16;
+
+typedef struct {
     u8 u;
     u8 v;
 } uvPair;
-
-typedef struct {
-    u8 r;
-    u8 g;
-    u8 b;
-    u8 pad; // could be an A for RGBA but unused so unknown
-} rgb_set;
 
 #endif

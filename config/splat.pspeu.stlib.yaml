@@ -63,7 +63,7 @@ segments:
       - [0x15190, c, lib_psp/popup]
       - [0x15788, c, lib/e_flea_man]
       - [0x15E00, c, lib/e_room_fg]
-      - [0x15F18, c, lib_psp/e_flea_armor]
+      - [0x15F18, c, lib/e_flea_armor]
       - [0x169E8, c, lib/e_skeleton]
       - [0x174C8, c, lib/st_common]
       - [0x18EE0, c, lib/prim_helpers]

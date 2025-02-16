@@ -2829,6 +2829,32 @@ typedef struct {
     /* 0x81 */ u8 unk81;
 } ET_801C9870;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ struct Primitive* unk94;
+    /* 0x98 */ struct Primitive* unk98;
+} ET_801AE8E8;
+
+typedef struct {
+    /* 0x7C */ u8 counter;
+    /* 0x7D */ u8 counter2;
+    /* 0x7E */ u8 : 8;
+    /* 0x7F */ u8 : 8;
+    /* 0x80 */ u8 : 8;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ u8 flag;
+} ET_FleaArmor;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3075,6 +3101,8 @@ typedef union { // offset=0x7C
     ET_LibraryShadow libraryShadow;
     ET_Dhuron dhuron;
     ET_801C9870 et_801C9870;
+    ET_801AE8E8 et_801AE8E8;
+    ET_FleaArmor fleaArmor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -3,7 +3,6 @@
 
 extern AvailableInventoryItem D_us_8018173C[];
 extern RECT D_us_801AD0F4;
-extern s32 g_CutsceneFlags;
 
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
@@ -1228,38 +1227,3 @@ void func_us_801B8A00(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", CutsceneUnk1);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", SetCutsceneScript);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B9804);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", CutsceneUnk4);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", DrawCutsceneActorName);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", SetCutsceneEnd);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", CutsceneRun);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_80194F14);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", ScaleCutsceneAvatar);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD760);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD774);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", LIB_EntityCutscene);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801BAF60);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801BB200);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801BB53C);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801BB8DC);
-
-u8 func_us_801BBAB4(void);
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801BBAB4);
