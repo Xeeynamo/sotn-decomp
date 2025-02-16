@@ -27,7 +27,8 @@ typedef enum EntityIDs {
     // /* 0x13 */ E_UNK_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x1D */ E_BLOOD_DRIPS = 0x1D,
+    /* 0x1C */ E_ID_1C = 0x1C,
+    /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
@@ -52,7 +53,10 @@ typedef enum EntityIDs {
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
     /* 0x48 */ E_ID_48 = 0x48,
-    /* 0x4D */ E_ID_4D = 0x4D,
+    /* 0x4A */ E_ID_4A = 0x4A,
+    /* 0x4B */ E_ID_4B,
+    /* 0x4C */ E_ID_4C,
+    /* 0x4D */ E_ID_4D,
     /* 0x4E */ E_ID_4E,
 } EntityIDs;
 
@@ -78,6 +82,13 @@ extern EInit g_EInitSkeletonBone;
 
 extern EInit g_EInitFleaMan;
 
+extern EInit D_us_80180878;
+
 extern EInit D_us_8018089C;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
+
+extern s32 g_SkipCutscene;
+extern s32 g_IsCutsceneDone;
+extern u32 g_CutsceneFlags;
+extern Dialogue g_Dialogue;
