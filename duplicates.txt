@@ -2166,57 +2166,57 @@
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/mar/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/cen/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/dre/matchings/cutscene/ScaleCutsceneAvatar.s 
+| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/lib/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/no3/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/nz0/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 0.91 | true     | ScaleCutsceneAvatar                 | asm/us/st/sel/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/st0/matchings/cutscene/ScaleCutsceneAvatar.s 
-| 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/st/lib/nonmatchings/unk_36F30/ScaleCutsceneAvatar.s 
 | 1.00 | false    | ScaleCutsceneAvatar                 | asm/us/st/no4/nonmatchings/first_c_file/ScaleCutsceneAvatar.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk1.s 
+| 1.00 | true     | CutsceneUnk1                        | asm/us/st/lib/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/no3/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/nz0/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk1.s 
-| 1.00 | false    | CutsceneUnk1                        | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneUnk1.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk4.s 
+| 1.00 | true     | CutsceneUnk4                        | asm/us/st/lib/matchings/cutscene/CutsceneUnk4.s 
 | 0.98 | true     | CutsceneUnk4                        | asm/us/st/no3/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/nz0/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk4.s 
-| 1.00 | false    | CutsceneUnk4                        | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneUnk4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/mar/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/cen/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/dre/matchings/cutscene/DrawCutsceneActorName.s 
+| 1.00 | true     | DrawCutsceneActorName               | asm/us/st/lib/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/no3/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/nz0/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/sel/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/st0/matchings/cutscene/DrawCutsceneActorName.s 
-| 1.00 | false    | DrawCutsceneActorName               | asm/us/st/lib/nonmatchings/unk_36F30/DrawCutsceneActorName.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/boss/mar/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/cen/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/dre/matchings/cutscene/SetCutsceneEnd.s 
+| 1.00 | true     | SetCutsceneEnd                      | asm/us/st/lib/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/no3/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/nz0/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/sel/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/st0/matchings/cutscene/SetCutsceneEnd.s 
-| 1.00 | false    | SetCutsceneEnd                      | asm/us/st/lib/nonmatchings/unk_36F30/SetCutsceneEnd.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/mar/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/cen/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/dre/matchings/cutscene/SetCutsceneScript.s 
+| 1.00 | true     | SetCutsceneScript                   | asm/us/st/lib/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/no3/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/nz0/matchings/cutscene/SetCutsceneScript.s 
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
-| 1.00 | false    | SetCutsceneScript                   | asm/us/st/lib/nonmatchings/unk_36F30/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_800DBF3C                          | asm/us/dra/matchings/save_mgr/D_800DBF3C.s 
 | 1.00 | true     | D_800DBF74                          | asm/us/dra/matchings/save_mgr/D_800DBF74.s 
@@ -2239,10 +2239,10 @@
 | 1.00 | true     | CutsceneRun                         | asm/us/boss/mar/matchings/cutscene/CutsceneRun.s 
 | 0.93 | true     | CutsceneRun                         | asm/us/st/cen/matchings/cutscene/CutsceneRun.s 
 | 0.96 | true     | CutsceneRun                         | asm/us/st/dre/matchings/cutscene/CutsceneRun.s 
+| 1.00 | true     | CutsceneRun                         | asm/us/st/lib/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/no3/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/nz0/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/st0/matchings/cutscene/CutsceneRun.s 
-| 1.00 | false    | CutsceneRun                         | asm/us/st/lib/nonmatchings/unk_36F30/CutsceneRun.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk3                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk3.s 
@@ -2396,8 +2396,8 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | MAR_EntityCutscene                  | asm/us/boss/mar/matchings/cutscene/MAR_EntityCutscene.s 
 | 0.94 | true     | CEN_EntityCutscene                  | asm/us/st/cen/matchings/cutscene/CEN_EntityCutscene.s 
+| 0.91 | true     | LIB_EntityCutscene                  | asm/us/st/lib/matchings/cutscene/LIB_EntityCutscene.s 
 | 0.91 | true     | NO3_EntityCutscene                  | asm/us/st/no3/matchings/cutscene/NO3_EntityCutscene.s 
-| 0.91 | false    | LIB_EntityCutscene                  | asm/us/st/lib/nonmatchings/unk_36F30/LIB_EntityCutscene.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetGPUBuffRGB                       | asm/us/dra/matchings/42398/SetGPUBuffRGB.s 
 | 1.00 | true     | SetGPUBuffRGBZero                   | asm/us/dra/matchings/42398/SetGPUBuffRGBZero.s 
@@ -2463,6 +2463,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2609,17 +2614,13 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80194F14                       | asm/us/st/dre/matchings/cutscene/func_80194F14.s 
-| 1.00 | true     | func_801BECCC                       | asm/us/st/no3/matchings/cutscene/func_801BECCC.s 
-| 1.00 | false    | func_80194F14                       | asm/us/st/lib/nonmatchings/unk_36F30/func_80194F14.s 
+| 1.00 | true     | CutsceneSkip                        | asm/us/st/dre/matchings/cutscene/CutsceneSkip.s 
+| 1.00 | true     | CutsceneSkip                        | asm/us/st/lib/matchings/cutscene/CutsceneSkip.s 
+| 1.00 | true     | CutsceneSkip                        | asm/us/st/no3/matchings/cutscene/CutsceneSkip.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBloodSplatter                 | asm/us/st/lib/matchings/e_bloody_zombie/EntityBloodSplatter.s 
 | 1.00 | true     | EntityBloodSplatter                 | asm/us/st/np3/matchings/e_bloody_zombie/EntityBloodSplatter.s 
@@ -3042,9 +3043,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3168,8 +3166,8 @@
 | 1.00 | true     | D_us_801AD1C4                       | asm/us/st/lib/matchings/unk_3420C/D_us_801AD1C4.s 
 | 1.00 | true     | D_us_801AD1F8                       | asm/us/st/lib/matchings/unk_3420C/D_us_801AD1F8.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | D_us_801AD774                       | asm/us/st/lib/matchings/cutscene/D_us_801AD774.s 
 | 1.00 | true     | D_us_801AD26C                       | asm/us/st/lib/matchings/unk_3420C/D_us_801AD26C.s 
-| 1.00 | true     | D_us_801AD774                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD774.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD330                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD330.s 
 | 1.00 | true     | D_us_801AD3B8                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD3B8.s 
