@@ -1054,7 +1054,7 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
     spinner_start("finding duplicates across overlays")
     left_asm_path = os.path.join(get_asm_path(splat_config), "nonmatchings")
     sym_prefix = get_symbol_prefix(splat_config)
-    t = 0.9
+    t = 0.98
 
     dups = find_dups(t, left_asm_path, f"asm/us/{dup_paths[0]}/matchings")
     for dup_path in dup_paths[1:]:

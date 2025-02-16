@@ -193,11 +193,7 @@ jobs:
             find ./build -type f -name "*.ld" -delete
       - name: Generate duplicates report
         run: |
-          make force_symbols
-          make -j extract
-          .venv/bin/python3 tools/function_finder/fix_matchings.py
-          cd tools/dups
-          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
+          make duplicates-report
       - name: Generate function report
         run: |
             .venv/bin/python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md
