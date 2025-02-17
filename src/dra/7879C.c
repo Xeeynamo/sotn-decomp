@@ -1774,9 +1774,13 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 sp72;
     s16 var_s3;
     s16 var_s8;
+    s16* sp5c;
+    u8* sp58;
     s32 sp54;
     s32 sp50;
+    
     s16 sp70;
+
     s16* sp4c;
     s32 var_s1;
     s16 angle;
@@ -1788,8 +1792,6 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 sp64;
     s16 sp62;
     s16 sp60;
-    s16* sp5c;
-    u8* sp58;
 
     s32 sp48;
     s32 sp44;

@@ -1760,15 +1760,30 @@ bool func_8011BD48(Entity* entity) {
 // player turns white for some sort of status effect
 void EntityPlayerBlinkWhite(Entity* self) {
     Primitive* prim;
+    u8 var_s7;
+    u8 var_s6;
     u8 sp7f;
     u8 sp7e;
     s16 sp7c;
     s16 sp7a;
+    s16 var_s2;
+    s16 var_s5;
     s16 sp78;
     s16 sp76;
     s16 sp74;
     s16 sp72;
+    s16 var_s3;
+    s16 var_s8;
+    s16* sp5c;
+    u8* sp58;
+    s32 sp54;
+    s32 sp50;
+    
     s16 sp70;
+
+    s16* sp4c;
+    s32 var_s1;
+    s16 angle;
     s16 sp6e;
     s16 sp6c;
     s16 sp6a;
@@ -1777,25 +1792,12 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 sp64;
     s16 sp62;
     s16 sp60;
-    s16* sp5c;
-    u8* sp58;
-    s32 sp54;
-    s32 sp50;
-    s16* sp4c;
+
     s32 sp48;
     s32 sp44;
     s32 sp40;
     Entity* sp3C;
     s32 sp38;
-
-    s16 var_s8;
-    u8 var_s7;
-    u8 var_s6;
-    s16 var_s5;
-    s16 angle;
-    s16 var_s3;
-    s16 var_s2;
-    s32 var_s1;
 
     sp70 = (self->params & 0x7F00) >> 8;
     sp48 = 0;
