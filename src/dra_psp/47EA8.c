@@ -2669,8 +2669,83 @@ void EntityPlayerOutline(Entity* self) {
     func_8010DFF0(1, 1);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011E0E4);
+void func_8011E0E4(Entity* entity) {}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityGravityBootBeam);
+void EntityGravityBootBeam(Entity* self) {
+    Primitive* prim;
+    s16 halfWidth;
+    s32 i;
+    s16 yOffset = -12;
+
+    switch (self->step) {
+    case 0:
+        self->posY.i.hi = PLAYER.posY.i.hi + 37;
+        self->ext.timer.t = 1536;
+        self->primIndex = func_800EDB58(PRIM_G4_ALT, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL;
+             i++, prim = prim->next) {
+            halfWidth = (self->ext.timer.t >> 8) - i; //unused in this loop
+            prim->r0 = 0;
+            prim->g0 = 0;
+            prim->b0 = 0xC0;
+            prim->r1 = 0;
+            prim->g1 = 0;
+            prim->b1 = 0xC0;
+            prim->r2 = 0x40;
+            prim->g2 = 0x40;
+            prim->b2 = 0x40;
+            prim->r3 = 0x40;
+            prim->g3 = 0x40;
+            prim->b3 = 0x40;
+                
+            prim->priority = PLAYER.zPriority - 2;
+            prim->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        if (PLAYER.velocityY > FIX(-1.5)) {
+            self->step = 2;
+        }
+        // If transformed, timer drains faster
+        if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+            self->step = 3;
+        }
+        break;
+    case 3:
+        // note that with the fallthrough these decrements stack
+        self->ext.timer.t -= 160;
+    case 2:
+        self->ext.timer.t -= 96;
+        if (self->ext.timer.t < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    for (prim = &g_PrimBuf[self->primIndex], i=0; prim != NULL; i++,
+        prim = prim->next) {
+        // As timer counts down, beam gets narrower.
+        halfWidth = (self->ext.timer.t >> 8) - i;
+        if (halfWidth < 0) {
+            halfWidth = 0;
+        }
+        prim->x0 = self->posX.i.hi - halfWidth;
+        prim->x1 = self->posX.i.hi + halfWidth;
+        prim->x2 = PLAYER.posX.i.hi - halfWidth;
+        prim->x3 = PLAYER.posX.i.hi + halfWidth;
+        prim->y2 = prim->y3 = PLAYER.posY.i.hi - yOffset;
+        prim->y0 = prim->y1 = self->posY.i.hi;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityWingSmashTrail);

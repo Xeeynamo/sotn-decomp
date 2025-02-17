@@ -2630,7 +2630,7 @@ void EntityGravityBootBeam(Entity* self) {
     Primitive* prim;
     s16 halfWidth;
     s32 i;
-    s32 yOffset = -12;
+    s16 yOffset = -12;
 
     switch (self->step) {
     case 0:
@@ -2643,14 +2643,22 @@ void EntityGravityBootBeam(Entity* self) {
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
-             prim = prim->next) {
-            prim->g0 = prim->r0 = 0;
+        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL;
+             i++, prim = prim->next) {
+            halfWidth = (self->ext.timer.t >> 8) - i; //unused in this loop
+            prim->r0 = 0;
+            prim->g0 = 0;
             prim->b0 = 0xC0;
-            prim->g1 = prim->r1 = 0;
+            prim->r1 = 0;
+            prim->g1 = 0;
             prim->b1 = 0xC0;
-            prim->b3 = prim->g3 = prim->r3 = prim->b2 = prim->g2 = prim->r2 =
-                0x40;
+            prim->r2 = 0x40;
+            prim->g2 = 0x40;
+            prim->b2 = 0x40;
+            prim->r3 = 0x40;
+            prim->g3 = 0x40;
+            prim->b3 = 0x40;
+                
             prim->priority = PLAYER.zPriority - 2;
             prim->drawMode =
                 DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -2679,17 +2687,17 @@ void EntityGravityBootBeam(Entity* self) {
         }
         break;
     }
-    for (i = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; i++,
+    for (prim = &g_PrimBuf[self->primIndex], i=0; prim != NULL; i++,
         prim = prim->next) {
         // As timer counts down, beam gets narrower.
         halfWidth = (self->ext.timer.t >> 8) - i;
-        if (halfWidth << 16 < 0) {
+        if (halfWidth < 0) {
             halfWidth = 0;
         }
         prim->x0 = self->posX.i.hi - halfWidth;
-        prim->x1 = halfWidth + self->posX.i.hi;
+        prim->x1 = self->posX.i.hi + halfWidth;
         prim->x2 = PLAYER.posX.i.hi - halfWidth;
-        prim->x3 = halfWidth + PLAYER.posX.i.hi;
+        prim->x3 = PLAYER.posX.i.hi + halfWidth;
         prim->y2 = prim->y3 = PLAYER.posY.i.hi - yOffset;
         prim->y0 = prim->y1 = self->posY.i.hi;
     }
