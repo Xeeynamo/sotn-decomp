@@ -1691,7 +1691,43 @@ void func_8011B5A4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnkId24);
+void EntityUnkId24(Entity* self) {
+    s16 upperparams = self->params >> 8;
+    // Lower params are unused.
+    s16 lowerparams = self->params & 0xFF;
+    
+    if (self->step == 0) {
+        self->animSet = 2;
+        self->anim = D_800AD5FC;
+
+        // Weird thing here where we have to set flags to the same value twice
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
+
+        self->velocityY = FIX(-1);
+        if (upperparams == 0) {
+            self->posX.i.hi += (rand() & 63) - 32;
+            self->posY.i.hi += (rand() & 63) - 48;
+            self->drawMode = DRAW_TPAGE;
+            self->palette = PAL_OVL(0x195);
+        } 
+        // Silly, this should just be an "else"
+        if (upperparams) {
+            self->posY.i.hi += rand() % 24 - 12;
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = self->rotY = 0x80;
+            self->palette = PAL_OVL(0x170);
+        }
+        self->step++;
+        return;
+    }
+    if (self->animFrameDuration < 0) {
+        DestroyEntity(self);
+    }
+    self->posY.val += self->velocityY;
+    self->posX.val += self->velocityX;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091295F0);
 
