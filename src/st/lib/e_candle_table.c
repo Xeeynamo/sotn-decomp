@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
+// This is the definition for the EInit for this function
+// I've verified it for PSX, but PSP needs e_init.c
 // EInit D_us_801808FC = {ANIMSET_OVL(0x08), 0x00, 0x50, 0x256, 0x005};
+
 static u16 D_us_80181A68[] = {
     0x0103, 0x0203, 0x0303, 0x0403, 0x0503, 0x0603, 0x0703, 0x0000};
 
