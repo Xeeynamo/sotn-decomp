@@ -1192,7 +1192,8 @@ void func_8011A870(void) {
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= 0xE0 || entity->entityId < SERVANT_ENTITY_START) {
+            if (entity->entityId >= 0xE0 ||
+                entity->entityId < SERVANT_ENTITY_START) {
                 continue;
             }
             entity->pfnUpdate =
@@ -1778,7 +1779,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
     u8* sp58;
     s32 sp54;
     s32 sp50;
-    
+
     s16 sp70;
 
     s16* sp4c;
@@ -1864,19 +1865,19 @@ void EntityPlayerBlinkWhite(Entity* self) {
         } else {
             sp7c = 0x2C;
             if (PLAYER.facingLeft) {
-                #ifdef VERSION_PSP
+#ifdef VERSION_PSP
                 sp7c = 0x13;
-                #else
+#else
                 sp7c = 0x14;
-                #endif
+#endif
             }
             var_s7 = sp7c + D_8013AEBC[2];
             sp7f = sp7c + D_8013AEBC[0];
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             var_s6 = D_8013AEBC[3] + 24;
-            #else
+#else
             var_s6 = D_8013AEBC[3] - 40;
-            #endif
+#endif
             sp7e = D_8013AEBC[1] + 24;
             var_s2 = D_8013AEBC[0] - D_8013AEBC[2];
             var_s5 = D_8013AEBC[1] - D_8013AEBC[3];
@@ -2202,11 +2203,11 @@ block_748:
     prim = &g_PrimBuf[self->primIndex];
     for (var_s1 = 0; var_s1 < 8; var_s1++) {
         if (PLAYER.animSet == 0xF && sp48 == 0) {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             prim->tpage = 0x4118;
-            #else
+#else
             prim->tpage = 0x118;
-            #endif
+#endif
         } else {
             prim->tpage = 0x18;
         }
