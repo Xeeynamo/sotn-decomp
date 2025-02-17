@@ -1,60 +1,7 @@
-# Configuration
-BUILD_DIR       := build/pspeu
-PSP_EU_TARGETS  := dra stlib stno4 stst0 stwrp tt_000
+# PSP specific targets
+build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
 
-# Flags
-AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
-MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
-
-# Tools
-ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
-AS              := $(ALLEGREX_AS)
-WIBO            := $(BIN_DIR)/wibo
-MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
-CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
-
-MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
-MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
-
-MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
-MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
-MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
-
-SPLAT_PIP       := splat split
-
-# Helper Functions
-define list_src_files_psp
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
-endef
-
-define list_o_files_psp
-	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-# leverages MWCC ability to compile data and text as separate sections to allow
-# LD using --gc-sections and remove all the symbols that are unreferenced.
-# symexport.*.txt is used to enforce a specific symbol and all its dependencies
-# to be used. Refer to *.map to know which sections are being discarded by LD.
-# Use nm to retrieve the symbol name out of a object file such as the mwo_header.
-define link_with_deadstrip
-	$(LD) $(LD_FLAGS) -o $(2) \
-		--gc-sections \
-		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
-endef
-
-# Targets
-build_pspeu: $(addsuffix _psp,$(PSP_EU_TARGETS))
-
-extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_TARGETS)))
+extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_EXTRACT_TARGETS)))
 
 $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
@@ -69,9 +16,9 @@ $(MWCCGAP_APP):
 dra_psp: $(BUILD_DIR)/dra.bin
 stlib_psp: $(BUILD_DIR)/lib.bin
 stno4_psp: $(BUILD_DIR)/no4.bin
-tt_000_psp: $(BUILD_DIR)/tt_000.bin
 stst0_psp: $(BUILD_DIR)/st0.bin
 stwrp_psp: $(BUILD_DIR)/wrp.bin
+tt_000_psp: $(BUILD_DIR)/tt_000.bin
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
 	$(OBJCOPY) -O binary $< $@
@@ -84,12 +31,12 @@ $(BUILD_DIR)/st0.bin: $(BUILD_DIR)/stst0.elf
 $(BUILD_DIR)/wrp.bin: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
-	$(SPLAT_PIP) $<
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
-	$(SPLAT_PIP) $<
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(PSX_BASE_SYMS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
-	$(SPLAT_PIP) $<
+$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
+	$(SPLAT) $<
+$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
+	$(SPLAT) $<
+$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
+	$(SPLAT) $<
 
 ST_DRA_MERGE = 624DC 628AC 6BF64 6D584 6E42C 6FDF8 704D0 84B88 8A0A4
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
