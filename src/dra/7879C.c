@@ -2478,8 +2478,8 @@ void EntityPlayerOutline(Entity* self) {
     spriteY = one + spritesheetPtr[1];
     width = spriteX - four;
     height = spriteY - one;
-    xOffset = *animFramePtr++ + spritesheetPtr[2];
-    yOffset = *animFramePtr++ + spritesheetPtr[3];
+    xOffset = animFramePtr[0] + spritesheetPtr[2];
+    yOffset = animFramePtr[1] + spritesheetPtr[3];
     self->rotZ = PLAYER.rotZ;
     self->drawFlags |= (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
     primData = D_800AD9B8[upperparams];

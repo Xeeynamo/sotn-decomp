@@ -1854,7 +1854,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
 #endif
                     sp72 = *sp5c++;
                     sp72 &= 0x7FFF;
-                    sp58 = ((u8**)g_PlOvlSpritesheet)[sp72];
+                    sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
 #ifdef VERSION_PSP
                 } else {
                     sp58 = 0;
@@ -2471,7 +2471,7 @@ void EntityPlayerOutline(Entity* self) {
     spriteIdx &= 0x7FFF;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    spritesheetPtr = ((u8**)g_PlOvlSpritesheet)[spriteIdx];
+    spritesheetPtr = ((u8**)SPRITESHEET_PTR)[spriteIdx];
     four = 4;
     one = 1;
     spriteX = four + spritesheetPtr[0];
