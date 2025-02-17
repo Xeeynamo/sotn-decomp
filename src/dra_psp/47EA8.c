@@ -1746,7 +1746,656 @@ bool func_8011BD48(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerBlinkWhite);
+// player turns white for some sort of status effect
+void EntityPlayerBlinkWhite(Entity* self) {
+    Primitive* prim;
+    u8 sp7f;
+    u8 sp7e;
+    s16 sp7c;
+    s16 sp7a;
+    s16 sp78;
+    s16 sp76;
+    s16 sp74;
+    s16 sp72;
+    s16 sp70;
+    s16 sp6e;
+    s16 sp6c;
+    s16 sp6a;
+    s16 sp68;
+    s16 sp66;
+    s16 sp64;
+    s16 sp62;
+    s16 sp60;
+    s16* sp5c;
+    u8* sp58;
+    s32 sp54;
+    s32 sp50;
+    s16* sp4c;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    Entity* sp3C;
+    s32 sp38;
+
+    s16 var_s8;
+    u8 var_s7;
+    u8 var_s6;
+    s16 var_s5;
+    s16 angle;
+    s16 var_s3;
+    s16 var_s2;
+    s32 var_s1;
+
+
+    sp70 = (self->params & 0x7F00) >> 8;
+    sp48 = 0;
+    if ((PLAYER.animSet == 0xF) && (sp70 == 0x23) && g_Player.unk66 < 2) {
+        sp48 = 1;
+    }
+    if ((((sp70 & 0x3F) != 0x1D) &&
+         (g_Player.status & PLAYER_STATUS_MIST_FORM)) ||
+        (g_Player.status & PLAYER_STATUS_AXEARMOR)) {
+        goto block_229;
+    }
+    if ((g_Player.unk6C) && sp70 != 0x20 && sp70 != 0x21 &&
+        ((sp70 & 0x3F) != 0x1D)) {
+        g_Player.unk6E = 0;
+        goto block_231;
+    }
+    if ((g_Player.unk6E) && sp70 != 0x23 && sp70 != 0x24 &&
+        ((sp70 & 0x3F) != 0x1D)) {
+        g_Player.unk6C = 0;
+        goto block_231;
+    }
+    if (((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D)) ||
+        (!PLAYER.animSet) || !(PLAYER.animCurFrame & 0x7FFF)) {
+        goto block_229;
+    }
+    var_s8 = self->posY.i.hi = PLAYER.posY.i.hi;
+    var_s3 = self->posX.i.hi = PLAYER.posX.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (PLAYER.animSet == 1) {
+        sp5c = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
+    }
+    if (PLAYER.animSet == 0xD) {
+        sp5c = (s16*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+    }
+    if (PLAYER.animSet == 0xF) {
+        if (sp48 != 0) {
+            if (D_801396E0 == 0xD) {
+                sp5c = (s16*)D_800CFE48[D_801396EC & 0x7FFF];
+#ifdef VERSION_PSP
+                if (sp5c) {
+#endif
+                    sp72 = *sp5c++;
+                    sp72 &= 0x7FFF;
+                    sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
+#ifdef VERSION_PSP
+                } else {
+                    sp58 = 0;
+                }
+#endif
+            } else {
+                sp5c = D_800CF324[D_801396EC & 0x7FFF];
+#ifdef VERSION_PSP
+                if (sp5c) {
+#endif
+                    sp72 = *sp5c++;
+                    sp72 &= 0x7FFF;
+                    sp58 = ((u8**)g_PlOvlSpritesheet)[sp72];
+#ifdef VERSION_PSP
+                } else {
+                    sp58 = 0;
+                }
+#endif
+            }
+        } else {
+            sp7c = 0x2C;
+            if (PLAYER.facingLeft) {
+                sp7c = 0x13;
+            }
+            var_s7 = sp7c + D_8013AEBC[2];
+            sp7f = sp7c + D_8013AEBC[0];
+            var_s6 = D_8013AEBC[3] + 24;
+            sp7e = D_8013AEBC[1] + 24;
+            var_s2 = D_8013AEBC[0] - D_8013AEBC[2];
+            var_s5 = D_8013AEBC[1] - D_8013AEBC[3];
+            sp7c = D_8013AEBC[2];
+            sp7a = D_8013AEBC[3];
+            self->facingLeft = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+            goto block_748;
+        }
+    } else {
+        sp72 = *sp5c++;
+        sp72 &= 0x7FFF;
+        if (PLAYER.animSet == 1) {
+            sp58 = ((u8**)g_PlOvlSpritesheet)[sp72];
+        }
+        if (PLAYER.animSet == 0xD) {
+            sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
+        }
+    }
+#ifdef VERSION_PSP
+    if (sp58) {
+#endif
+        var_s7 = 4;
+        var_s6 = 1;
+        sp7f = var_s7 + sp58[0];
+        sp7e = var_s6 + sp58[1];
+        var_s2 = sp7f - var_s7;
+        var_s5 = sp7e - var_s6;
+        sp7c = sp5c[0] + sp58[2];
+        sp7a = sp5c[1] + sp58[3];
+#ifdef VERSION_PSP
+
+    } else {
+        var_s7 = 4;
+        var_s6 = 1;
+        sp7f = var_s7 + 0;
+        sp7e = var_s6 + 0;
+        var_s2 = sp7f - var_s7;
+        var_s5 = sp7e - var_s6;
+        sp7c = 0;
+        sp7a = 0;
+    }
+#endif
+
+    self->rotZ = PLAYER.rotZ;
+    self->drawFlags = PLAYER.drawFlags;
+    self->rotX = PLAYER.rotX;
+    self->rotY = PLAYER.rotY;
+    self->rotPivotY = PLAYER.rotPivotY;
+    self->rotPivotX = PLAYER.rotPivotX;
+block_748:
+    sp4c = D_800AD670[sp70 & 0x3F];
+    switch (self->step) {
+    case 0:
+        if (func_8011BD48(self) != 0) {
+            goto block_231;
+        }
+        self->primIndex = AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+#ifdef VERSION_HD
+            DestroyEntity(self);
+#endif
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (var_s1 = 0; var_s1 < 8; var_s1++) {
+            D_800AD630[var_s1] = var_s1 << 9;
+            prim->clut = sp4c[3];
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->priority = PLAYER.zPriority + 2;
+            if (sp70 == 0x20 || sp70 == 0x21 || sp70 == 0x23 || sp70 == 0x24) {
+                prim->priority = PLAYER.zPriority + 4;
+            }
+            prim->drawMode =
+                sp4c[8] + DRAW_UNK_200 + DRAW_UNK_100 + DRAW_COLORS;
+            prim = prim->next;
+        }
+        self->ext.playerBlink.unk8A = sp4c[9];
+        self->ext.playerBlink.unk90 = 0;
+        self->ext.playerBlink.unk98 = 0;
+        self->ext.playerBlink.unk9A = 0x100;
+        self->step += 1;
+        if (sp70 == 0x20) {
+            self->step = 8;
+        }
+        if (sp70 == 0x21) {
+            self->step = 0xA;
+        }
+        if (sp70 == 0x23) {
+            self->step = 0xC;
+        }
+        if (sp70 == 0x24) {
+            self->step = 0xE;
+        }
+        if (sp70 == 0x26) {
+            self->step = 0x10;
+        }
+        if (sp70 == 0x29) {
+            self->ext.playerBlink.unk90 = 0xFF;
+            self->step = 0x13;
+        }
+        break;
+    case 1:
+        if (sp4c[7] == 0x7008) {
+            self->ext.playerBlink.unk90 += 0x50;
+        } else {
+            self->ext.playerBlink.unk90 += 0xA;
+        }
+        if (self->ext.playerBlink.unk90 > 0x100) {
+            self->ext.playerBlink.unk90 = 0x100;
+            self->ext.playerBlink.unk80 = sp4c[7];
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (sp4c[7] >= 0x7000) {
+            self->ext.playerBlink.unk80 = 8;
+            switch ((u32)sp4c[7]) {
+            case 0x7000:
+                if (g_Player.timers[1] == 0) {
+                    self->step += 1;
+                }
+                break;
+            case 0x7001:
+            case 0x7007:
+                if (PLAYER.step != Player_Hit) {
+                    self->step += 1;
+                }
+                break;
+            case 0x7002:
+                sp40 = g_Player.timers[0];
+                if (sp40 == 0) {
+                    self->step += 1;
+                }
+                self->ext.playerBlink.unk90 = ((sp40 * 192) / 4095) + 0x10;
+                break;
+            case 0x7003:
+                sp38 = 0;
+                sp3C = &g_Entities[32];
+                for (var_s1 = 0; var_s1 < 16; var_s1++) {
+                    if (sp3C->entityId == 0x11) {
+                        sp38 += 1;
+                    }
+                    sp3C++;
+                }
+                if (sp38 == 0) {
+                    self->ext.playerBlink.unk80 = 0x14;
+                    self->step += 1;
+                }
+                break;
+            case 0x7004:
+                if (D_80097448[1] == 0 ||
+                    IsRelicActive(RELIC_HOLY_SYMBOL) != 0) {
+                    self->step += 1;
+                }
+                break;
+            case 0x7005:
+            case 0x7006:
+                if (PLAYER.ext.player.anim != 0xC0) {
+                    self->step += 1;
+                }
+                break;
+            case 0x7008:
+                if ((g_Player.status & PLAYER_STATUS_UNK400000) == 0) {
+                    self->step += 1;
+                }
+                break;
+            case 0x7009: // Hold this step until player is out of state (5,3)
+                // This state corresponds to wing smashing.
+                if (PLAYER.step_s != 3 || PLAYER.step != Player_MorphBat) {
+                    self->step += 1;
+                }
+                /* fallthrough */
+            case 0x700B:
+                if ((g_Player.status & PLAYER_STATUS_UNK40000000) == 0) {
+                    self->step += 1;
+                }
+                break;
+            }
+        }
+        if (--self->ext.playerBlink.unk80 == 0) {
+            self->step += 1;
+        }
+        break;
+    case 3:
+        self->ext.playerBlink.unk90 -= 10;
+        if (self->ext.playerBlink.unk90 < 0) {
+            goto block_231;
+        }
+        break;
+    case 8:
+        g_Player.unk6C = 1;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (PLAYER.animSet == 0xF) {
+            sp62 = 0x100;
+            sp60 = 0x10;
+        } else {
+            sp62 = 0x80;
+            sp60 = 8;
+        }
+        self->ext.playerBlink.unk98 += sp60;
+        if (self->ext.playerBlink.unk98 > sp62) {
+            self->ext.playerBlink.unk98 = sp62;
+            g_Player.unk66 = 2;
+            self->step += 1;
+        }
+        break;
+    case 9:
+    case 11:
+        self->ext.playerBlink.unk98 -= 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 < 0) {
+            g_Player.unk66 = 3;
+            self->params = 0x1B00;
+            self->step = 1;
+            prim = &g_PrimBuf[self->primIndex];
+            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            g_Player.unk6C = 0;
+            return;
+        }
+        break;
+    case 10:
+        g_Player.unk6C = 1;
+        self->ext.playerBlink.unk98 += 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 > 0x80) {
+            self->ext.playerBlink.unk98 = 0x80;
+        }
+        if (g_Player.unk66 == 1) {
+            self->step += 1;
+        }
+        break;
+    case 12:
+        g_Player.unk6E = 1;
+        self->ext.playerBlink.unk9C += 0x100;
+        self->ext.playerBlink.unk98 += 0x10;
+        if (self->ext.playerBlink.unk98 > 0x100) {
+            self->ext.playerBlink.unk98 = 0x100;
+            g_Player.unk66 = 2;
+            self->step += 1;
+        }
+        break;
+    case 13:
+        self->ext.playerBlink.unk98 -= 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 < 0) {
+            g_Player.unk66 = 3;
+            self->params = 0x2500;
+            self->step = 1;
+            g_Player.unk6E = 0;
+            return;
+        }
+        break;
+    case 14:
+        g_Player.unk6E = 1;
+        self->ext.playerBlink.unk98 += 0x10;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 > 0x100) {
+            self->ext.playerBlink.unk98 = 0x100;
+        }
+        if (g_Player.unk66 == 1) {
+            self->step += 1;
+        }
+        break;
+    case 15:
+        self->ext.playerBlink.unk98 -= 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 < 0) {
+            g_Player.unk66 = 3;
+            self->params = 0x1B00;
+            self->step = 1;
+            prim = &g_PrimBuf[self->primIndex];
+            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            g_Player.unk6E = 0;
+            return;
+        }
+        break;
+    case 17:
+        self->ext.playerBlink.unk98 += 4;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 > 0x60) {
+            self->step += 1;
+        }
+        break;
+    case 19:
+        self->ext.playerBlink.unk90 -= 2;
+        if (self->ext.playerBlink.unk90 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    sp44 = 0;
+    if (sp70 == 0x20 || sp70 == 0x21 || sp70 == 0x23 || sp70 == 0x24 ||
+        sp70 == 0x26) {
+        sp44 = 1;
+    }
+    sp78 = self->ext.playerBlink.unk9C;
+    sp76 = self->ext.playerBlink.unk98;
+    sp54 = 3;
+    sp50 = 6;
+    if (sp4c[7] == 0x700A) {
+        sp50 = 0;
+        sp54 = 0;
+    }
+    self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
+    if (self->facingLeft) {
+        var_s3 = var_s3 - sp7c;
+    } else {
+        var_s3 = var_s3 + sp7c;
+    }
+    var_s8 = var_s8 + sp7a;
+    prim = &g_PrimBuf[self->primIndex];
+    for (var_s1 = 0; var_s1 < 8; var_s1++) {
+        if (PLAYER.animSet == 0xF && sp48 == 0) {
+            prim->tpage = 0x4118;
+        } else {
+            prim->tpage = 0x18;
+        }
+        if (sp70 & 0x40) {
+            switch (var_s1) {
+            case 0:
+                if (self->facingLeft) {
+                    prim->x1 = var_s3 - var_s2 / 2;
+                } else {
+                    prim->x1 = var_s3 + var_s2 / 2;
+                }
+                prim->x0 = var_s3;
+                prim->u0 = var_s7;
+                prim->u1 = var_s7 + var_s2 / 2;
+                prim->y1 = var_s8;
+                prim->y0 = var_s8;
+                prim->v1 = var_s6;
+                prim->v0 = var_s6;
+                break;
+            case 1:
+                if (self->facingLeft) {
+                    prim->x0 = var_s3 - var_s2 / 2;
+                    prim->x1 = var_s3 - var_s2;
+                } else {
+                    prim->x0 = var_s3 + var_s2 / 2;
+                    prim->x1 = var_s3 + var_s2;
+                }
+                prim->u0 = var_s7 + var_s2 / 2;
+                prim->u1 = var_s7 + var_s2;
+                prim->y1 = var_s8;
+                prim->y0 = var_s8;
+                prim->v1 = var_s6;
+                prim->v0 = var_s6;
+                break;
+            case 2:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = var_s3 - var_s2;
+                } else {
+                    prim->x0 = prim->x1 = var_s3 + var_s2;
+                }
+                prim->u0 = prim->u1 = var_s7 + var_s2;
+                prim->y0 = var_s8;
+                prim->y1 = var_s8 + var_s5 / 2;
+                prim->v0 = var_s6;
+                prim->v1 = var_s6 + var_s5 / 2;
+                break;
+            case 3:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = var_s3 - var_s2;
+                } else {
+                    prim->x0 = prim->x1 = var_s3 + var_s2;
+                }
+
+                prim->u0 = prim->u1 = var_s7 + var_s2;
+                prim->y0 = var_s8 + var_s5 / 2;
+                prim->y1 = var_s8 + var_s5;
+                prim->v0 = var_s6 + var_s5 / 2;
+                prim->v1 = var_s6 + var_s5;
+                break;
+            case 4:
+                if (self->facingLeft) {
+                    prim->x0 = var_s3 - var_s2;
+                    prim->x1 = var_s3 - var_s2 / 2;
+                } else {
+                    prim->x0 = var_s3 + var_s2;
+                    prim->x1 = var_s3 + var_s2 / 2;
+                }
+                prim->u0 = var_s7 + var_s2;
+                prim->u1 = var_s7 + var_s2 / 2;
+                prim->y0 = prim->y1 = var_s8 + var_s5;
+                prim->v0 = prim->v1 = var_s6 + var_s5;
+                break;
+            case 5:
+                if (self->facingLeft) {
+                    prim->x0 = var_s3 - var_s2 / 2;
+                } else {
+                    prim->x0 = var_s3 + var_s2 / 2;
+                }
+                prim->x1 = var_s3;
+                prim->u0 = var_s7 + var_s2 / 2;
+                prim->u1 = var_s7;
+                prim->y0 = prim->y1 = var_s8 + var_s5;
+                prim->v0 = prim->v1 = var_s6 + var_s5;
+
+                break;
+            case 6:
+                prim->x1 = var_s3;
+                prim->x0 = var_s3;
+                prim->u1 = var_s7;
+                prim->u0 = var_s7;
+                prim->y0 = var_s8 + var_s5;
+                prim->y1 = var_s8 + var_s5 / 2;
+                prim->v0 = var_s6 + var_s5;
+                prim->v1 = var_s6 + var_s5 / 2;
+                break;
+            case 7:
+                prim->x1 = var_s3;
+                prim->x0 = var_s3;
+                prim->u1 = var_s7;
+                prim->u0 = var_s7;
+                prim->y0 = var_s8 + var_s5 / 2;
+                prim->y1 = var_s8;
+                prim->v0 = var_s6 + var_s5 / 2;
+                prim->v1 = var_s6;
+                break;
+            }
+            if (self->facingLeft) {
+                prim->x2 = prim->x3 =
+                    var_s3 - var_s2 / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
+            } else {
+                prim->x2 = prim->x3 =
+                    var_s3 + var_s2 / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
+            }
+            prim->y2 = prim->y3 =
+                (var_s8 + var_s5 / 2) -
+                ((rsin(self->ext.playerBlink.unk82) >> 4) * sp50 >> 8);
+            prim->u2 = prim->u3 = var_s7 + var_s2 / 2;
+            prim->v2 = prim->v3 = var_s6 + var_s5 / 2;
+        } else {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (var_s3 - var_s2) + 1;
+                prim->x1 = prim->x3 = var_s3 + 1;
+            } else {
+                prim->x0 = prim->x2 = var_s3;
+                prim->x1 = prim->x3 = var_s3 + var_s2;
+            }
+            if (sp44 != 0) {
+                sp74 = (rsin(sp78) >> 7) * sp76 / 256;
+                prim->x0 += sp74;
+                prim->x1 += sp74;
+                sp78 += 0x600;
+                sp74 = (rsin(sp78) >> 7) * sp76 / 256;
+                prim->x2 += sp74;
+                prim->x3 += sp74;
+            }
+            prim->y0 = prim->y1 = var_s8 + var_s5 * var_s1 / 8;
+            prim->y2 = prim->y3 = var_s8 + var_s5 * (var_s1 + 1) / 8;
+            if (self->facingLeft) {
+                prim->u0 = prim->u2 = sp7f - 1;
+                prim->u1 = prim->u3 = var_s7 - 1;
+            } else {
+                prim->u0 = prim->u2 = var_s7;
+                prim->u1 = prim->u3 = sp7f;
+            }
+            prim->v0 = prim->v1 = var_s6 + var_s5 * var_s1 / 8;
+            prim->v2 = prim->v3 = var_s6 + var_s5 * (var_s1 + 1) / 8;
+        }
+        if (self->drawFlags &
+            (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
+            func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
+                          self->drawFlags, prim, self->facingLeft);
+        }
+        if (sp44 == 0) {
+            if (sp70 == 0x29) {
+                prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 =
+                    prim->g1 = prim->r2 = prim->b2 = prim->g2 = prim->r3 =
+                        prim->b3 = prim->g3 = self->ext.playerBlink.unk90;
+            } else {
+                sp6e = sp4c[0];
+                sp6c = sp4c[2];
+                sp6a = sp4c[1];
+                sp68 = sp4c[4];
+                sp64 = sp4c[6];
+                sp66 = sp4c[5];
+                // clang-format off
+                if (sp70 & 0x40) {
+                    angle = D_800AD630[(var_s1 + sp6e) % 8];
+                    prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c) % 8];
+                    prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a) % 8];
+                    prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
+                    prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
+                    prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
+                    prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
+                    D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
+                } else {
+                    angle = D_800AD630[(var_s1 + sp6e) % 8];
+                    prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c) % 8];
+                    prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a) % 8];
+                    prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
+                    prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
+                    prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
+                    prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
+                }
+                // clang-format on
+            }
+        }
+        prim = prim->next;
+    }
+    func_8010DFF0(1, 1);
+    if (((sp70 & 0x3F) == 0) || ((sp70 & 0x3F) == 7)) {
+        func_8010E168(1, 0xA);
+    }
+    return;
+
+block_229:
+    g_Player.unk6C = g_Player.unk6E = 0;
+block_231:
+    DestroyEntity(self);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerOutline);
 
