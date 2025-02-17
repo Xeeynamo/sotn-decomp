@@ -349,7 +349,7 @@ extern s32 g_AlucardChairSleepTimer; // ...be an array
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
 extern s16 D_800ACF94[16];
-typedef union{
+typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
 } unionD_800ACFB4;

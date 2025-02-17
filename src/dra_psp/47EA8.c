@@ -96,31 +96,31 @@ Entity* func_80118970(void) {
     ent = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 128; i++, ent++) {
         big_arr[i] = 0;
-        if (!ent->entityId){
+        if (!ent->entityId) {
             continue;
         }
-        if (ent->hitboxState == 0){
+        if (ent->hitboxState == 0) {
             continue;
         }
-        if(ent->flags & FLAG_UNK_00200000){
+        if (ent->flags & FLAG_UNK_00200000) {
             continue;
         }
-        if(ent->posX.i.hi < -0x10){
-            continue;
-        } 
-        if(ent->posX.i.hi > 0x110){
+        if (ent->posX.i.hi < -0x10) {
             continue;
         }
-        if(ent->posY.i.hi > 0xF0){
+        if (ent->posX.i.hi > 0x110) {
             continue;
-        } 
-        if(ent->posY.i.hi < 0){
+        }
+        if (ent->posY.i.hi > 0xF0) {
+            continue;
+        }
+        if (ent->posY.i.hi < 0) {
             continue;
         }
         if (ent->hitPoints >= 0x7000) {
             continue;
         }
-        
+
         if (ent->flags & FLAG_UNK_80000) {
             successes++;
             big_arr[i] = 1;
@@ -260,7 +260,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
                 self->ext.hpNumMove.digits[2] = number % 10;
                 number /= 10;
                 self->ext.hpNumMove.nDigits++;
-                if(number){
+                if (number) {
                     self->ext.hpNumMove.digits[3] = number % 10;
                     self->ext.hpNumMove.nDigits++;
                 }
@@ -328,7 +328,6 @@ void EntityNumberMovesToHpMeter(Entity* self) {
             prim->priority = 0x1B8;
             prim->drawMode = DRAW_HIDE | DRAW_UNK02;
 
-            
             prim->u0 = prim->v0 = 1;
             prim = prim->next;
         }
@@ -395,11 +394,10 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         sp3C = self->ext.hpNumMove.unk90;
         // Reuse of variables. X and Y are actually R and theta.
         y_to_meter = self->ext.hpNumMove.angleToMeter;
-        x_to_meter = self->ext.hpNumMove.distToMeter * self->ext.hpNumMove.unk90 / 16;
-        self->posX.i.hi =
-            13 + (((rcos(y_to_meter) >> 4) * x_to_meter) >> 8);
-        self->posY.i.hi =
-            70 - (((rsin(y_to_meter) >> 4) * x_to_meter) >> 8);
+        x_to_meter =
+            self->ext.hpNumMove.distToMeter * self->ext.hpNumMove.unk90 / 16;
+        self->posX.i.hi = 13 + (((rcos(y_to_meter) >> 4) * x_to_meter) >> 8);
+        self->posY.i.hi = 70 - (((rsin(y_to_meter) >> 4) * x_to_meter) >> 8);
         self->ext.hpNumMove.unk98 += 0x100;
         self->posX.i.hi += rcos(self->ext.hpNumMove.unk98) >> 9;
         self->posY.i.hi -= rsin(self->ext.hpNumMove.unk98) >> 9;
@@ -408,7 +406,7 @@ void EntityNumberMovesToHpMeter(Entity* self) {
                 DestroyEntity(self);
                 return;
             }
-                self->step++;
+            self->step++;
         }
         break;
     case 7:
@@ -820,12 +818,11 @@ void EntitySmallRisingHeart(Entity* self) {
     }
 }
 
-u8 D_800AD094[] = {0x0, 0x50, 0x10, 0x50, 0x0, 0x60, 0x10, 0x60, 
-                0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60, 
-                0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50, 
-                0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 
-                0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38, 
-                0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
+u8 D_800AD094[] = {
+    0x0,  0x50, 0x10, 0x50, 0x0,  0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
+    0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
+    0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
+    0x78, 0x38, 0x80, 0x38, 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
 
 // Corresponding RIC function is func_8015FDB0
 s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
@@ -847,7 +844,7 @@ s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     }
     prim->x0 = xCenter - size;
     prim->y0 = yCenter - size;
-    prim->x1 = xCenter + size; 
+    prim->x1 = xCenter + size;
     prim->y1 = yCenter - size;
     prim->x2 = xCenter - size;
     prim->y2 = yCenter + size;
@@ -889,8 +886,7 @@ void func_80119F70(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags =
-            FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
         hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
         prim = &g_PrimBuf[self->primIndex];
@@ -1135,11 +1131,11 @@ void UpdatePlayerEntities(void) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
                     if (entity->flags & FLAG_UNK_100000) {
-                        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
                         UpdateAnim(NULL, &D_psp_09234DC8);
-                        #else
+#else
                         UpdateAnim(NULL, D_800ACFB4);
-                        #endif
+#endif
                     }
                 }
             }
@@ -1196,15 +1192,15 @@ void func_8011A870(void) {
         }
 
         if (entity->step == 0) {
-            if(entity->entityId >= 0xE0){
+            if (entity->entityId >= 0xE0) {
                 continue;
             }
             if (entity->entityId < SERVANT_ENTITY_START) {
                 continue;
             }
-                entity->pfnUpdate =
-                    ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
-                                                       SERVANT_ENTITY_START];
+            entity->pfnUpdate =
+                ((PfnEntityUpdate*)&g_ServantDesc)[entity->entityId -
+                                                   SERVANT_ENTITY_START];
         }
 
         if (entity->pfnUpdate) {
@@ -1212,8 +1208,8 @@ void func_8011A870(void) {
             entity = g_CurrentEntity;
             if (entity->entityId != 0) {
 
-            if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) && 
-                (entity->posX.i.hi > 0x120 || entity->posX.i.hi < -0x20 ||
+                if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
+                    (entity->posX.i.hi > 0x120 || entity->posX.i.hi < -0x20 ||
                      entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
                     DestroyEntity(g_CurrentEntity);
                 } else if (entity->flags & FLAG_UNK_100000) {
@@ -1251,7 +1247,6 @@ void func_8011A9D8(void) {
 Entity* CreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s16 arg2) {
     Entity* newFactory;
-
 
     newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {
@@ -1310,14 +1305,16 @@ void EntityEntFactory(Entity* self) {
     if (self->step == 0) {
         data_idx = (u8*)&g_FactoryBlueprints[self->params];
         self->ext.factory.childId = *data_idx++;
-        self->ext.factory.unk94 = *data_idx++;          // index 1
-        self->ext.factory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
-        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1;       // index 2, top bit
-        self->ext.factory.unkA2 = (s16)(*data_idx++ >> 6) & 1; // index 2, 2nd-top bit
-        self->ext.factory.unk98 = *data_idx++;          // index 3
-        self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
-        self->ext.factory.unkA4 = (s16)(*data_idx++ >> 4) & 0xF;     // index 4, upper 4 bits
-        self->ext.factory.unk9A = *data_idx;            // index 5
+        self->ext.factory.unk94 = *data_idx++;      // index 1
+        self->ext.factory.unk96 = *data_idx & 0x3F; // index 2, lower 6 bits
+        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1; // index 2, top bit
+        self->ext.factory.unkA2 =
+            (s16)(*data_idx++ >> 6) & 1;           // index 2, 2nd-top bit
+        self->ext.factory.unk98 = *data_idx++;     // index 3
+        self->ext.factory.unk9C = *data_idx & 0xF; // index 4, lower 4 bits
+        self->ext.factory.unkA4 =
+            (s16)(*data_idx++ >> 4) & 0xF;   // index 4, upper 4 bits
+        self->ext.factory.unk9A = *data_idx; // index 5
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
@@ -1458,22 +1455,21 @@ void EntityUnarmedAttack(Entity* self) {
     WeaponAnimation* anim;
     s16 animIndex;
     bool handId;
-    
+
     animIndex = (self->params & 0x7FFF) >> 8;
     self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
     anim = &D_800AD53C[animIndex];
 
-    if(self->params & 0x8000){
+    if (self->params & 0x8000) {
         handId = true;
     } else {
         handId = false;
     }
 
     if (PLAYER.ext.player.anim < anim->frameStart ||
-        PLAYER.ext.player.anim >= (anim->frameStart + 7)||
-        !g_Player.unk46) {
+        PLAYER.ext.player.anim >= (anim->frameStart + 7) || !g_Player.unk46) {
         DestroyEntity(self);
         return;
     }
@@ -1575,9 +1571,9 @@ void func_8011B5A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (g_Player.status & PLAYER_STATUS_UNK20000){
+        if (g_Player.status & PLAYER_STATUS_UNK20000) {
             paramsHi = self->params >> 8;
-            if(paramsHi != 9) {
+            if (paramsHi != 9) {
                 DestroyEntity(self);
                 return;
             }
@@ -1707,7 +1703,7 @@ void EntityUnkId24(Entity* self) {
     s16 upperparams = self->params >> 8;
     // Lower params are unused.
     s16 lowerparams = self->params & 0xFF;
-    
+
     if (self->step == 0) {
         self->animSet = 2;
         self->anim = D_800AD5FC;
@@ -1723,7 +1719,7 @@ void EntityUnkId24(Entity* self) {
             self->posY.i.hi += (rand() & 63) - 48;
             self->drawMode = DRAW_TPAGE;
             self->palette = PAL_OVL(0x195);
-        } 
+        }
         // Silly, this should just be an "else"
         if (upperparams) {
             self->posY.i.hi += rand() % 24 - 12;
@@ -1747,10 +1743,9 @@ bool func_8011BD48(Entity* entity) {
     s16 params = entity->params;
     Entity* e;
     s32 i;
-    
+
     for (e = &g_Entities[0x10], i = 0x10; i < 0x40; e++, i++) {
-        if (objId == e->entityId && params == e->params &&
-            e != entity) {
+        if (objId == e->entityId && params == e->params && e != entity) {
             return true;
         }
     }
@@ -1797,7 +1792,6 @@ void EntityPlayerBlinkWhite(Entity* self) {
     s16 var_s3;
     s16 var_s2;
     s32 var_s1;
-
 
     sp70 = (self->params & 0x7F00) >> 8;
     sp48 = 0;
@@ -2700,9 +2694,9 @@ void EntityGravityBootBeam(Entity* self) {
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL;
-             i++, prim = prim->next) {
-            halfWidth = (self->ext.timer.t >> 8) - i; //unused in this loop
+        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
+            prim = prim->next) {
+            halfWidth = (self->ext.timer.t >> 8) - i; // unused in this loop
             prim->r0 = 0;
             prim->g0 = 0;
             prim->b0 = 0xC0;
@@ -2715,7 +2709,7 @@ void EntityGravityBootBeam(Entity* self) {
             prim->r3 = 0x40;
             prim->g3 = 0x40;
             prim->b3 = 0x40;
-                
+
             prim->priority = PLAYER.zPriority - 2;
             prim->drawMode =
                 DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -2744,7 +2738,7 @@ void EntityGravityBootBeam(Entity* self) {
         }
         break;
     }
-    for (prim = &g_PrimBuf[self->primIndex], i=0; prim != NULL; i++,
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
         prim = prim->next) {
         // As timer counts down, beam gets narrower.
         halfWidth = (self->ext.timer.t >> 8) - i;
