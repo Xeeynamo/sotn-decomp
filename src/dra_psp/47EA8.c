@@ -2748,4 +2748,38 @@ void EntityGravityBootBeam(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityWingSmashTrail);
+// The blue outlines of the bat that show up when wing smashing
+void EntityWingSmashTrail(Entity* entity) {
+    // Make sure we are currently wing smashing.
+    if (!(PLAYER.step_s == 3 && PLAYER.step == Player_MorphBat)) {
+        DestroyEntity(entity);
+        return;
+    }
+    if (entity->step == 0) {
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
+        entity->animSet = PLAYER.animSet;
+        entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
+        entity->zPriority = PLAYER.zPriority - 2;
+        entity->drawFlags = PLAYER.drawFlags |
+                            (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+        entity->unk6C = 0x80; // a lifetime counter
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->rotZ = PLAYER.rotZ;
+        entity->facingLeft = PLAYER.facingLeft;
+        entity->palette = 0x8102;
+        entity->rotX = entity->rotY = 0x100;
+        entity->step++;
+        return;
+    }
+    // This actually makes the wing smashes shrink over time, not rotate.
+    entity->rotX -= 8;
+    entity->rotY -= 8;
+    entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
+    // Unclear why we count down by 5's instead of just making unk6C start
+    // smaller
+    if (entity->unk6C >= 5) {
+        entity->unk6C -= 5;
+    } else {
+        DestroyEntity(entity);
+    }
+}

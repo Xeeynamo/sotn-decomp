@@ -2706,7 +2706,7 @@ void EntityGravityBootBeam(Entity* self) {
 // The blue outlines of the bat that show up when wing smashing
 void EntityWingSmashTrail(Entity* entity) {
     // Make sure we are currently wing smashing.
-    if (!(PLAYER.step == Player_MorphBat && PLAYER.step_s == 3)) {
+    if (!(PLAYER.step_s == 3 && PLAYER.step == Player_MorphBat)) {
         DestroyEntity(entity);
         return;
     }
