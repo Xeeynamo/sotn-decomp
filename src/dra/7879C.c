@@ -1794,6 +1794,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
     Entity* sp3C;
     s32 sp38;
     s32 var_s1;
+    s16 angle;
 
     sp70 = (self->params & 0x7F00) >> 8;
     sp48 = 0;
@@ -1826,32 +1827,32 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp5c = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xD) {
-        sp5c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+        sp5c = (s16*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xF) {
         if (sp48 != 0) {
             if (D_801396E0 == 0xD) {
-                sp5c = D_800CFE48[D_801396EC & 0x7FFF];
-#ifdef VER_PSP
+                sp5c = (s16*)D_800CFE48[D_801396EC & 0x7FFF];
+#ifdef VERSION_PSP
                 if (sp5c) {
 #endif
                     sp72 = *sp5c++;
                     sp72 &= 0x7FFF;
                     sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
-#ifdef VER_PSP
+#ifdef VERSION_PSP
                 } else {
                     sp58 = 0;
                 }
 #endif
             } else {
                 sp5c = D_800CF324[D_801396EC & 0x7FFF];
-#ifdef VER_PSP
+#ifdef VERSION_PSP
                 if (sp5c) {
 #endif
                     sp72 = *sp5c++;
                     sp72 &= 0x7FFF;
                     sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
-#ifdef VER_PSP
+#ifdef VERSION_PSP
                 } else {
                     sp58 = 0;
                 }
@@ -1860,12 +1861,20 @@ void EntityPlayerBlinkWhite(Entity* self) {
         } else {
             sp7c = 0x2C;
             if (PLAYER.facingLeft) {
+                #ifdef VERSION_PSP
+                sp7c = 0x13;
+                #else
                 sp7c = 0x14;
+                #endif
             }
             var_s7 = sp7c + D_8013AEBC[2];
             sp7f = sp7c + D_8013AEBC[0];
+            #ifdef VERSION_PSP
+            var_s6 = D_8013AEBC[3] + 24;
+            #else
             var_s6 = D_8013AEBC[3] - 40;
-            sp7e = D_8013AEBC[3] + 24;
+            #endif
+            sp7e = D_8013AEBC[1] + 24;
             var_s2 = D_8013AEBC[0] - D_8013AEBC[2];
             var_s5 = D_8013AEBC[1] - D_8013AEBC[3];
             sp7c = D_8013AEBC[2];
@@ -1884,7 +1893,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
         }
     }
-#ifdef VER_PSP
+#ifdef VERSION_PSP
     if (sp58) {
 #endif
         var_s7 = 4;
@@ -1895,13 +1904,13 @@ void EntityPlayerBlinkWhite(Entity* self) {
         var_s5 = sp7e - var_s6;
         sp7c = sp5c[0] + sp58[2];
         sp7a = sp5c[1] + sp58[3];
-#ifdef VER_PSP
+#ifdef VERSION_PSP
 
     } else {
-        var_s7 = 4 & 0xFF;
-        var_s6 = 1 & 0xFF;
-        sp7f = var_s7 & 0xFF;
-        sp7e = var_s6 & 0xFF;
+        var_s7 = 4;
+        var_s6 = 1;
+        sp7f = var_s7 + 0;
+        sp7e = var_s6 + 0;
         var_s2 = sp7f - var_s7;
         var_s5 = sp7e - var_s6;
         sp7c = 0;
@@ -1977,7 +1986,7 @@ block_748:
         } else {
             self->ext.playerBlink.unk90 += 0xA;
         }
-        if (self->ext.playerBlink.unk90 >= 0x101) {
+        if (self->ext.playerBlink.unk90 > 0x100) {
             self->ext.playerBlink.unk90 = 0x100;
             self->ext.playerBlink.unk80 = sp4c[7];
             self->step += 1;
@@ -1988,7 +1997,7 @@ block_748:
             self->ext.playerBlink.unk80 = 8;
             switch ((u32)sp4c[7]) {
             case 0x7000:
-                if (!g_Player.timers[1]) {
+                if (g_Player.timers[1] == 0) {
                     self->step += 1;
                 }
                 break;
@@ -2190,7 +2199,11 @@ block_748:
     prim = &g_PrimBuf[self->primIndex];
     for (var_s1 = 0; var_s1 < 8; var_s1++) {
         if (PLAYER.animSet == 0xF && sp48 == 0) {
+            #ifdef VERSION_PSP
+            prim->tpage = 0x4118;
+            #else
             prim->tpage = 0x118;
+            #endif
         } else {
             prim->tpage = 0x18;
         }
@@ -2316,8 +2329,7 @@ block_748:
                 prim->x0 = prim->x2 = (var_s3 - var_s2) + 1;
                 prim->x1 = prim->x3 = var_s3 + 1;
             } else {
-                prim->x2 = var_s3;
-                prim->x0 = var_s3;
+                prim->x0 = prim->x2 = var_s3;
                 prim->x1 = prim->x3 = var_s3 + var_s2;
             }
             if (sp44 != 0) {
@@ -2360,21 +2372,33 @@ block_748:
                 sp66 = sp4c[5];
                 // clang-format off
                 if (sp70 & 0x40) {
-                    prim->r0 = (((rsin((s16)D_800AD630[(var_s1 + sp6e) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    prim->g0 = (((rsin((s16)D_800AD630[(var_s1 + sp6c) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    prim->b0 = (((rsin((s16)D_800AD630[(var_s1 + sp6a) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                    prim->r1 = (((rsin((s16)D_800AD630[(var_s1 + sp6e + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    prim->g1 = (((rsin((s16)D_800AD630[(var_s1 + sp6c + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    prim->b1 = (((rsin((s16)D_800AD630[(var_s1 + sp6a + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e) % 8];
+                    prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c) % 8];
+                    prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a) % 8];
+                    prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
+                    prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
+                    prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
+                    prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
                     D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
                 } else {
-                    prim->r0 = prim->r1 =(((rsin((s16)D_800AD630[(var_s1 + sp6e) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    prim->g0 = prim->g1 =(((rsin((s16)D_800AD630[(var_s1 + sp6c) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    prim->b0 = prim->b1 =(((rsin((s16)D_800AD630[(var_s1 + sp6a) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                    prim->r2 = prim->r3 =(((rsin((s16)D_800AD630[(var_s1 + sp6e + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    prim->g2 = prim->g3 =(((rsin((s16)D_800AD630[(var_s1 + sp6c + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    prim->b2 = prim->b3 =(((rsin((s16)D_800AD630[(var_s1 + sp6a + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e) % 8];
+                    prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c) % 8];
+                    prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a) % 8];
+                    prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
+                    prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
+                    prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
+                    prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
                     D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
                 }
                 // clang-format on

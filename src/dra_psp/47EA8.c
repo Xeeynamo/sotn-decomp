@@ -1862,11 +1862,19 @@ void EntityPlayerBlinkWhite(Entity* self) {
         } else {
             sp7c = 0x2C;
             if (PLAYER.facingLeft) {
+                #ifdef VERSION_PSP
                 sp7c = 0x13;
+                #else
+                sp7c = 0x14;
+                #endif
             }
             var_s7 = sp7c + D_8013AEBC[2];
             sp7f = sp7c + D_8013AEBC[0];
+            #ifdef VERSION_PSP
             var_s6 = D_8013AEBC[3] + 24;
+            #else
+            var_s6 = D_8013AEBC[3] - 40;
+            #endif
             sp7e = D_8013AEBC[1] + 24;
             var_s2 = D_8013AEBC[0] - D_8013AEBC[2];
             var_s5 = D_8013AEBC[1] - D_8013AEBC[3];
@@ -1880,7 +1888,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp72 = *sp5c++;
         sp72 &= 0x7FFF;
         if (PLAYER.animSet == 1) {
-            sp58 = ((u8**)g_PlOvlSpritesheet)[sp72];
+            sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
         }
         if (PLAYER.animSet == 0xD) {
             sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
@@ -2192,7 +2200,11 @@ block_748:
     prim = &g_PrimBuf[self->primIndex];
     for (var_s1 = 0; var_s1 < 8; var_s1++) {
         if (PLAYER.animSet == 0xF && sp48 == 0) {
+            #ifdef VERSION_PSP
             prim->tpage = 0x4118;
+            #else
+            prim->tpage = 0x118;
+            #endif
         } else {
             prim->tpage = 0x18;
         }
