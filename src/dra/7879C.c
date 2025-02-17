@@ -1496,7 +1496,7 @@ void EntityDiveKickAttack(Entity* self) {
 }
 
 void func_8011B480(Entity* entity) {
-    if (PLAYER.step != 5 || PLAYER.step_s != 3) {
+    if (PLAYER.step_s != 3 || PLAYER.step != 5) {
         DestroyEntity(entity);
     } else {
         entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
@@ -1514,13 +1514,13 @@ void func_8011B480(Entity* entity) {
     }
 }
 
-void func_8011B530(Entity* entity) {
-    if (PLAYER.step != 0x25) {
-        DestroyEntity(entity);
-    } else if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        func_8011A328(entity, 5);
-        entity->step++;
+void func_8011B530(Entity* self) {
+    if (PLAYER.step != Player_SpellSoulSteal) {
+        DestroyEntity(self);
+    } else if (self->step == 0) {
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        func_8011A328(self, 5);
+        self->step++;
     }
 }
 

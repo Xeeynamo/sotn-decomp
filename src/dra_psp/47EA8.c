@@ -1489,11 +1489,69 @@ void EntityUnarmedAttack(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityDiveKickAttack);
+void EntityDiveKickAttack(Entity* self) {
+    Equipment equip;
+    s32 zero = 0; // needed for PSP
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B480);
+    if (PLAYER.step_s != 0x70) {
+        DestroyEntity(self);
+        return;
+    }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B530);
+    self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    g_Player.unk44 &= ~0x80;
+
+    if (self->step == 0) {
+        GetEquipProperties(zero, &equip, 0);
+        self->attack = equip.attack;
+        self->attackElement = equip.element;
+        self->hitboxState = equip.hitType;
+        self->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        self->stunFrames = equip.stunFrames;
+        self->hitEffect = equip.hitEffect;
+        self->entityRoomIndex = equip.criticalRate;
+        func_80118894(self);
+        self->hitboxOffX = 9;
+        self->hitboxOffY = 21;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 5;
+        self->step++;
+    } else if (self->hitFlags == 1) {
+        g_Player.unk44 |= 0x80;
+    }
+}
+
+void func_8011B480(Entity* entity) {
+    if (PLAYER.step_s != 3 || PLAYER.step != 5) {
+        DestroyEntity(entity);
+    } else {
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        entity->facingLeft = PLAYER.facingLeft;
+        entity->posY.i.hi = PLAYER.posY.i.hi;
+        entity->posX.i.hi = PLAYER.posX.i.hi;
+        if (entity->step == 0) {
+            func_8011A328(entity, 6);
+            entity->hitboxOffX = 4;
+            entity->hitboxOffY = 0;
+            entity->hitboxWidth = 12;
+            entity->hitboxHeight = 12;
+            entity->step++;
+        }
+    }
+}
+
+void func_8011B530(Entity* self) {
+    if (PLAYER.step != Player_SpellSoulSteal) {
+        DestroyEntity(self);
+    } else if (self->step == 0) {
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        func_8011A328(self, 5);
+        self->step++;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B5A4);
 
