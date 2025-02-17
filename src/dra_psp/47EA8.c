@@ -1281,9 +1281,213 @@ Entity* CreateEntFactoryFromEntity(
     return newFactory;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityEntFactory);
+// This is a complicated function with ongoing research.
+// This function is created with its self->params which defines
+// what blueprint to read in order to create an entity. Then, based on
+// that blueprint, it creates some number of child entities.
+// This entity has an ID of 1, but is not an "entity" of an independent
+// variety. It is only responsible for creating child entities.
+void EntityEntFactory(Entity* self) {
+    Entity* newEntity;
+    s16 n;
+    s16 i;
+    s16 endIndex;
+    s16 startIndex;
+    u8* data_idx;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnarmedAttack);
+    if (self->step == 0) {
+        data_idx = (u8*)&g_FactoryBlueprints[self->params];
+        self->ext.factory.childId = *data_idx++;
+        self->ext.factory.unk94 = *data_idx++;          // index 1
+        self->ext.factory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
+        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1;       // index 2, top bit
+        self->ext.factory.unkA2 = (s16)(*data_idx++ >> 6) & 1; // index 2, 2nd-top bit
+        self->ext.factory.unk98 = *data_idx++;          // index 3
+        self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
+        self->ext.factory.unkA4 = (s16)(*data_idx++ >> 4) & 0xF;     // index 4, upper 4 bits
+        self->ext.factory.unk9A = *data_idx;            // index 5
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
+
+        self->step++;
+        switch (self->ext.factory.unkA4) {
+        case 0:
+        case 6:
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            break;
+        case 4:
+        case 5:
+            self->flags |= FLAG_UNK_20000;
+        case 2:
+        case 7:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            break;
+        }
+    } else {
+        switch (self->ext.factory.unkA4) {
+        case 0:
+        case 1:
+        case 3:
+        case 6:
+            break;
+        case 2:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            break;
+        case 4:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            if (PLAYER.step != Player_Walk) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        case 5:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            if (PLAYER.step_s != 0x70) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        case 7:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            if (PLAYER.step != Player_Hit) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        }
+    }
+    if (self->ext.factory.unk9A) {
+        if (--self->ext.factory.unk9A) {
+            return;
+        }
+        self->ext.factory.unk9A = self->ext.factory.unk98;
+    }
+    // Save this value so we don't have to re-fetch on every for-loop cycle
+    n = self->ext.factory.unk96;
+    for (i = 0; i < n; i++) {
+
+        // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
+        // instead of doing &D_800AD4B8 followed by +=
+        data_idx = &D_800AD4B8[0];
+        data_idx += self->ext.factory.unk9C * 2;
+
+        startIndex = *data_idx++;
+        endIndex = *data_idx;
+
+        if (self->ext.factory.unk9C == 3 || self->ext.factory.unk9C == 10 ||
+            self->ext.factory.unk9C == 11 || self->ext.factory.unk9C == 12 ||
+            self->ext.factory.unk9C == 13) {
+            DestroyEntity(&g_Entities[startIndex]);
+            newEntity = &g_Entities[startIndex];
+            g_Player.unk48 = 0;
+        } else if (self->ext.factory.unk9C == 0) {
+            newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
+        } else if (self->ext.factory.unk9C == 8) {
+            if ((self->ext.factory.unkA6 % 3) == 0) {
+                newEntity = GetFreeEntity(17, 32);
+            }
+            if ((self->ext.factory.unkA6 % 3) == 1) {
+                newEntity = GetFreeEntity(32, 48);
+            }
+            if ((self->ext.factory.unkA6 % 3) == 2) {
+                newEntity = GetFreeEntity(48, 64);
+            }
+        } else {
+            newEntity = GetFreeEntity(startIndex, endIndex + 1);
+        }
+
+        if (newEntity == NULL) {
+            if (self->ext.factory.unk9E == 1) {
+                self->entityId = 0;
+            } else {
+                self->ext.factory.unk9A = self->ext.factory.unk98;
+            }
+            return;
+        }
+        DestroyEntity(newEntity);
+        // unkA8 never gets set so is always zero
+        newEntity->entityId =
+            self->ext.factory.childId + self->ext.factory.unkA8;
+        newEntity->params = self->ext.factory.unkA0;
+        // The child  (newEntity) is not an ent factory, but because the factory
+        // creates many entities, we can't pick a particular extension. But
+        // we're not allowed to use generic, so i'll just reuse entFactory.
+        newEntity->ext.factory.parent = self->ext.factory.parent;
+        newEntity->posX.val = self->posX.val;
+        newEntity->posY.val = self->posY.val;
+        newEntity->facingLeft = self->facingLeft;
+        newEntity->zPriority = self->zPriority;
+        newEntity->ext.factory.unkAE = self->ext.factory.unk92 & 0x1FF;
+        newEntity->ext.factory.unkB0 = self->ext.factory.unk92 >> 9;
+        if (self->flags & FLAG_UNK_10000) {
+            newEntity->flags |= FLAG_UNK_10000;
+        }
+        if (self->ext.factory.unkA2) {
+            newEntity->params += self->ext.factory.unkA6;
+        } else {
+            newEntity->params += i;
+        }
+        self->ext.factory.unkA6++;
+        if (self->ext.factory.unkA6 == self->ext.factory.unk94) {
+            self->entityId = 0;
+            return;
+        }
+    }
+    self->ext.factory.unk9A = self->ext.factory.unk98;
+}
+
+extern WeaponAnimation D_800AD53C[];
+void EntityUnarmedAttack(Entity* self) {
+    Equipment equip;
+    WeaponAnimation* anim;
+    s16 animIndex;
+    bool handId;
+    
+    animIndex = (self->params & 0x7FFF) >> 8;
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    anim = &D_800AD53C[animIndex];
+
+    if(self->params & 0x8000){
+        handId = true;
+    } else {
+        handId = false;
+    }
+
+    if (PLAYER.ext.player.anim < anim->frameStart ||
+        PLAYER.ext.player.anim >= (anim->frameStart + 7)||
+        !g_Player.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        GetEquipProperties(handId, &equip, 0);
+        self->attack = equip.attack;
+        self->attackElement = equip.element;
+        self->hitboxState = equip.hitType;
+        self->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        self->stunFrames = equip.stunFrames;
+        self->hitEffect = equip.hitEffect;
+        self->entityRoomIndex = equip.criticalRate;
+        func_80118894(self);
+        self->step++;
+    }
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
+    if ((PLAYER.animFrameDuration == 1) &&
+        (PLAYER.animFrameIdx == anim->soundFrame)) {
+        PlaySfx(anim->soundId);
+    }
+    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityDiveKickAttack);
 

@@ -1262,20 +1262,20 @@ void EntityEntFactory(Entity* self) {
     Entity* newEntity;
     s16 n;
     s16 i;
-    u8 endIndex;
+    s16 endIndex;
     s16 startIndex;
     u8* data_idx;
 
     if (self->step == 0) {
-        data_idx = &g_FactoryBlueprints[self->params];
+        data_idx = (u8*)&g_FactoryBlueprints[self->params];
         self->ext.factory.childId = *data_idx++;
         self->ext.factory.unk94 = *data_idx++;          // index 1
         self->ext.factory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
-        self->ext.factory.unk9E = *data_idx >> 7;       // index 2, top bit
-        self->ext.factory.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
+        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1;       // index 2, top bit
+        self->ext.factory.unkA2 = (s16)(*data_idx++ >> 6) & 1; // index 2, 2nd-top bit
         self->ext.factory.unk98 = *data_idx++;          // index 3
         self->ext.factory.unk9C = *data_idx & 0xF;      // index 4, lower 4 bits
-        self->ext.factory.unkA4 = *data_idx++ >> 4;     // index 4, upper 4 bits
+        self->ext.factory.unkA4 = (s16)(*data_idx++ >> 4) & 0xF;     // index 4, upper 4 bits
         self->ext.factory.unk9A = *data_idx;            // index 5
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
@@ -1297,6 +1297,9 @@ void EntityEntFactory(Entity* self) {
     } else {
         switch (self->ext.factory.unkA4) {
         case 0:
+        case 1:
+        case 3:
+        case 6:
             break;
         case 2:
             self->posX.val = PLAYER.posX.val;
@@ -1322,16 +1325,14 @@ void EntityEntFactory(Entity* self) {
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Hit) {
-            setIdZeroAndReturn:
                 self->entityId = 0;
                 return;
             }
             break;
         }
     }
-    if (self->ext.factory.unk9A != 0) {
-        self->ext.factory.unk9A--;
-        if (self->ext.factory.unk9A != 0) {
+    if (self->ext.factory.unk9A) {
+        if (--self->ext.factory.unk9A) {
             return;
         }
         self->ext.factory.unk9A = self->ext.factory.unk98;
@@ -1345,8 +1346,8 @@ void EntityEntFactory(Entity* self) {
         data_idx = &D_800AD4B8[0];
         data_idx += self->ext.factory.unk9C * 2;
 
-        startIndex = *data_idx;
-        endIndex = *(data_idx + 1);
+        startIndex = *data_idx++;
+        endIndex = *data_idx;
 
         if (self->ext.factory.unk9C == 3 || self->ext.factory.unk9C == 10 ||
             self->ext.factory.unk9C == 11 || self->ext.factory.unk9C == 12 ||
@@ -1372,9 +1373,11 @@ void EntityEntFactory(Entity* self) {
 
         if (newEntity == NULL) {
             if (self->ext.factory.unk9E == 1) {
-                goto setIdZeroAndReturn;
+                self->entityId = 0;
+            } else {
+                self->ext.factory.unk9A = self->ext.factory.unk98;
             }
-            break;
+            return;
         }
         DestroyEntity(newEntity);
         // unkA8 never gets set so is always zero
@@ -1394,12 +1397,13 @@ void EntityEntFactory(Entity* self) {
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (self->ext.factory.unkA2 != 0) {
+        if (self->ext.factory.unkA2) {
             newEntity->params += self->ext.factory.unkA6;
         } else {
             newEntity->params += i;
         }
-        if (++self->ext.factory.unkA6 == self->ext.factory.unk94) {
+        self->ext.factory.unkA6++;
+        if (self->ext.factory.unkA6 == self->ext.factory.unk94) {
             self->entityId = 0;
             return;
         }
@@ -1408,47 +1412,51 @@ void EntityEntFactory(Entity* self) {
 }
 
 extern WeaponAnimation D_800AD53C[];
-void EntityUnarmedAttack(Entity* entity) {
+void EntityUnarmedAttack(Entity* self) {
     Equipment equip;
     WeaponAnimation* anim;
-    u16 handId;
-    s16 subType;
+    s16 animIndex;
+    bool handId;
+    
+    animIndex = (self->params & 0x7FFF) >> 8;
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->facingLeft = PLAYER.facingLeft;
+    anim = &D_800AD53C[animIndex];
 
-    entity->posX.val = PLAYER.posX.val;
-    entity->posY.val = PLAYER.posY.val;
-    entity->facingLeft = PLAYER.facingLeft;
-    handId = entity->params >> 0xF;
-    subType = entity->params & 0x7FFF;
-    subType >>= 8;
-    anim = &D_800AD53C[subType];
+    if(self->params & 0x8000){
+        handId = true;
+    } else {
+        handId = false;
+    }
 
     if (PLAYER.ext.player.anim < anim->frameStart ||
-        (anim->frameStart + 7) <= PLAYER.ext.player.anim ||
-        g_Player.unk46 == 0) {
-        DestroyEntity(entity);
+        PLAYER.ext.player.anim >= (anim->frameStart + 7)||
+        !g_Player.unk46) {
+        DestroyEntity(self);
         return;
     }
 
-    if (entity->step == 0) {
-        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+    if (self->step == 0) {
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         GetEquipProperties(handId, &equip, 0);
-        entity->attack = equip.attack;
-        entity->attackElement = equip.element;
-        entity->hitboxState = equip.hitType;
-        entity->nFramesInvincibility = equip.enemyInvincibilityFrames;
-        entity->stunFrames = equip.stunFrames;
-        entity->hitEffect = equip.hitEffect;
-        entity->entityRoomIndex = equip.criticalRate;
-        func_80118894(entity);
-        entity->step++;
+        self->attack = equip.attack;
+        self->attackElement = equip.element;
+        self->hitboxState = equip.hitType;
+        self->nFramesInvincibility = equip.enemyInvincibilityFrames;
+        self->stunFrames = equip.stunFrames;
+        self->hitEffect = equip.hitEffect;
+        self->entityRoomIndex = equip.criticalRate;
+        func_80118894(self);
+        self->step++;
     }
-    entity->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
+    self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
     if ((PLAYER.animFrameDuration == 1) &&
         (PLAYER.animFrameIdx == anim->soundFrame)) {
         PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 }
 
