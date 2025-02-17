@@ -498,7 +498,6 @@ typedef struct {
     u16 clut;
     u16 mode;
 } GuardTextControl;
-extern GuardTextControl D_800ACFEC[];
 
 #ifdef VERSION_PSP
 extern s32 D_8B42058;
@@ -532,6 +531,7 @@ GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
 }
 #endif
 
+extern GuardTextControl D_800ACFEC[];
 void EntityGuardText(Entity* self) {
     Primitive* firstPrim;
     Primitive* prim;
@@ -1073,6 +1073,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityPlayerSleepZ,
     EntityNull};
 
+extern AnimationFrame* D_psp_09234DC8;
 // Corresponding RIC function is RicUpdatePlayerEntities
 void UpdatePlayerEntities(void) {
     Entity* entity;
@@ -1131,7 +1132,11 @@ void UpdatePlayerEntities(void) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
                     if (entity->flags & FLAG_UNK_100000) {
+                        #ifdef VERSION_PSP
+                        UpdateAnim(NULL, &D_psp_09234DC8);
+                        #else
                         UpdateAnim(NULL, D_800ACFB4);
+                        #endif
                     }
                 }
             }

@@ -535,7 +535,6 @@ GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
 #endif
 
 extern GuardTextControl D_800ACFEC[];
-
 void EntityGuardText(Entity* self) {
     Primitive* firstPrim;
     Primitive* prim;
@@ -828,6 +827,7 @@ u8 D_800AD094[] = {0x0, 0x50, 0x10, 0x50, 0x0, 0x60, 0x10, 0x60,
                 0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38, 
                 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40};
 
+// Corresponding RIC function is func_8015FDB0
 s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
     s16 size;
@@ -869,6 +869,9 @@ s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     return 0;
 }
 
+// Entity ID 47. Created by blueprint 119.
+// No calls to FACTORY with 119 exist yet.
+// Corresponding RIC function is RicEntityHitByHoly
 extern Point16 D_8013804C[16]; // BSS
 void func_80119F70(Entity* self) {
     s32 shouldHide;
@@ -1074,7 +1077,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityNull};
 
 extern AnimationFrame* D_psp_09234DC8;
-
+// Corresponding RIC function is RicUpdatePlayerEntities
 void UpdatePlayerEntities(void) {
     Entity* entity;
     s32 temp_s2;
@@ -1132,7 +1135,11 @@ void UpdatePlayerEntities(void) {
                     DestroyEntity(g_CurrentEntity);
                 } else {
                     if (entity->flags & FLAG_UNK_100000) {
+                        #ifdef VERSION_PSP
                         UpdateAnim(NULL, &D_psp_09234DC8);
+                        #else
+                        UpdateAnim(NULL, D_800ACFB4);
+                        #endif
                     }
                 }
             }
@@ -1181,8 +1188,8 @@ void func_8011A870(void) {
     Entity* entity;
     s32 i;
 
-    entity = &g_Entities[UNK_ENTITY_4];
-    g_CurrentEntity = entity;
+    entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
+
     for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId == 0) {
             continue;
