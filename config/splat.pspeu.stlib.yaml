@@ -78,7 +78,8 @@ segments:
       - [0x25CD0, c, lib_psp/unk_25CD0]
       - [0x290C8, c, lib_psp/e_shop]
       - [0x2BC10, c, lib_psp/2BC10]
-      - [0x36780, data]
+      - [0x36428, c, lib/e_candle_table]
+      - [0x367C0, data]
       - [0x36800, .data, lib/e_bloody_zombie]
       - [0x36840, data]
       - [0x36AA0, .data, lib/e_life_up]
@@ -103,6 +104,7 @@ segments:
       - [0x60E50, .data, lib_psp/cutscene]
       - [0x61158, data, cutscene] # LIB_EntityCutscene data
       - [0x61218, data]
+      - [0x6D768, .data, lib/e_candle_table]
       - [0x6D800, .rodata, lib_psp/e_spellbook_magic_tome]
       - [0x6D858, .rodata, lib/e_life_up]
       - [0x6D878, .rodata, lib_psp/e_dhuron]
