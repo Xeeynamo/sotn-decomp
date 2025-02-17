@@ -1535,7 +1535,10 @@ void func_8011B5A4(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_Player.status & PLAYER_STATUS_UNK20000){
+            #ifdef VERSION_PSP
+            // Looks like US forgot to initialize this variable.
             paramsHi = self->params >> 8;
+            #endif
             if(paramsHi != 9) {
                 DestroyEntity(self);
                 return;
