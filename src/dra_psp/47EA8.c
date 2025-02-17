@@ -491,6 +491,8 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     }
 }
 
+// "Guard" text displays on screen
+
 typedef struct {
     u8 left;
     u8 top;
@@ -499,6 +501,8 @@ typedef struct {
     u16 clut;
     u16 mode;
 } GuardTextControl;
+
+#ifdef VERSION_PSP
 extern s32 D_8B42058;
 extern GuardTextControl D_psp_091835F0[];
 extern u8 D_psp_09183698[][21][4];
@@ -528,6 +532,7 @@ GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
     }
     return arg0;
 }
+#endif
 
 extern GuardTextControl D_800ACFEC[];
 
