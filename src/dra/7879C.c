@@ -1697,12 +1697,13 @@ void EntityUnkId24(Entity* self) {
 
 // same as RIC/func_80162E9C
 bool func_8011BD48(Entity* entity) {
-    s32 i = 0x10;
     s16 objId = entity->entityId;
     s16 params = entity->params;
-    Entity* e = &g_Entities[i];
-    for (; i < 0x40; i++, e++) {
-        if (objId == (s32)e->entityId && params == (s32)e->params &&
+    Entity* e;
+    s32 i;
+    
+    for (e = &g_Entities[0x10], i = 0x10; i < 0x40; e++, i++) {
+        if (objId == e->entityId && params == e->params &&
             e != entity) {
             return true;
         }

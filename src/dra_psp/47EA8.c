@@ -1729,7 +1729,22 @@ void EntityUnkId24(Entity* self) {
     self->posX.val += self->velocityX;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_psp_091295F0);
+// same as RIC/func_80162E9C
+bool func_8011BD48(Entity* entity) {
+    s16 objId = entity->entityId;
+    s16 params = entity->params;
+    Entity* e;
+    s32 i;
+    
+    for (e = &g_Entities[0x10], i = 0x10; i < 0x40; e++, i++) {
+        if (objId == e->entityId && params == e->params &&
+            e != entity) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityPlayerBlinkWhite);
 
