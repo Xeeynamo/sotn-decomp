@@ -1553,7 +1553,143 @@ void func_8011B530(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", func_8011B5A4);
+// Entity #2. Many blueprints. Matches RIC RicEntitySmokePuff
+void func_8011B5A4(Entity* self) {
+    byte stackpad[40];
+    s16 posX;
+    s32 i;
+    s16 paramsLo;
+    s16 paramsHi;
+
+    switch (self->step) {
+    case 0:
+        if (g_Player.status & PLAYER_STATUS_UNK20000){
+            paramsHi = self->params >> 8;
+            if(paramsHi != 9) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        paramsHi = self->params >> 8;
+        paramsLo = self->params & 0xFF;
+        self->animSet = 5;
+        self->anim = D_800AD57C;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
+        self->palette = PAL_OVL(0x195);
+        self->drawMode = DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+
+        posX = D_800AD54C[paramsLo];
+        if (paramsHi == 0) {
+            posX += 6;
+        }
+        if (paramsHi == 1) {
+            posX -= 8;
+        }
+        if ((paramsHi == 2) || (paramsHi == 0xA)) {
+            posX -= 2;
+        }
+        if (paramsHi == 5) {
+            posX = -6;
+        }
+        if (paramsHi == 6) {
+            posX = -24;
+        }
+        if (paramsHi == 3) {
+            posX = (rand() % 30) - 0xE;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= rand() % 4;
+        }
+        if (paramsHi == 7) {
+            posX = (rand() % 60) - 0x1E;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= rand() % 4;
+        }
+        if (paramsHi == 9) {
+            posX = rand() % 16 - 8;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= (20 + (rand() % 4));
+        }
+        if (paramsHi == 4) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5E0); i++) {
+                if (g_Player.colWall[D_800AD5E0[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(D_800AD5E0)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5E0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5E0[i]].y;
+            self->velocityY = FIX(-0.25);
+            self->rotX = D_800AD570[1] + 0x40;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 8) {
+            for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
+                if (g_Player.colWall[D_800AD5F0[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(D_800AD5F0)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5F0[i]].x;
+            self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5F0[i]].y;
+            self->velocityY = D_800AD558[paramsLo];
+            self->rotX = D_800AD570[paramsLo] + 0x20;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 1) {
+            if (g_Player.pl_vram_flag & 0x8000) {
+                posX /= 2;
+            }
+        }
+        if (paramsHi == 6) {
+            if (PLAYER.velocityX > 0) {
+                posX = -posX;
+            }
+        } else {
+            if (self->facingLeft) {
+                posX = -posX;
+            }
+        }
+        self->posX.i.hi += posX;
+        self->posY.i.hi += 0x18;
+        self->rotX = D_800AD570[paramsLo] + 0x40;
+        self->velocityY = D_800AD558[paramsLo];
+        if (paramsHi == 1) {
+            self->velocityY = FIX(-0.25);
+            SetSpeedX(-0x3000);
+            self->rotX = D_800AD570[1] + 0x40;
+        }
+        if (paramsHi == 5) {
+            self->velocityY = D_800AD558[4 - paramsLo * 2];
+        }
+        self->rotY = self->rotX;
+        if (paramsHi == 10) {
+            self->posY.i.hi -= 6;
+        }
+        self->step++;
+        break;
+    case 1:
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/47EA8", EntityUnkId24);
 

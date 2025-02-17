@@ -1534,19 +1534,20 @@ void func_8011B5A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        // Note that paramsHi is uninitialized here - possible bug?
-        if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
-            DestroyEntity(self);
-            return;
+        if (g_Player.status & PLAYER_STATUS_UNK20000){
+            paramsHi = self->params >> 8;
+            if(paramsHi != 9) {
+                DestroyEntity(self);
+                return;
+            }
         }
-
+        paramsHi = self->params >> 8;
+        paramsLo = self->params & 0xFF;
         self->animSet = 5;
         self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->palette = 0x8195;
-        paramsHi = self->params >> 8;
-        paramsLo = self->params & 0xFF;
+        self->palette = PAL_OVL(0x195);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
 
@@ -1595,11 +1596,12 @@ void func_8011B5A4(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5E0[i]].x;
             self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5E0[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotY = self->rotX = D_800AD570[1] + 0x40;
+            self->rotX = D_800AD570[1] + 0x40;
+            self->rotY = self->rotX;
             self->step++;
             return;
         }
-        if (paramsHi == 8) { /* switch 1 */
+        if (paramsHi == 8) {
             for (i = paramsLo * 2; i < LEN(D_800AD5F0); i++) {
                 if (g_Player.colWall[D_800AD5F0[i]].effects &
                     (EFFECT_UNK_0002 | EFFECT_SOLID)) {
@@ -1613,7 +1615,8 @@ void func_8011B5A4(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5F0[i]].x;
             self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5F0[i]].y;
             self->velocityY = D_800AD558[paramsLo];
-            self->rotY = self->rotX = D_800AD570[paramsLo] + 0x20;
+            self->rotX = D_800AD570[paramsLo] + 0x20;
+            self->rotY = self->rotX;
             self->step++;
             return;
         }
@@ -1648,13 +1651,12 @@ void func_8011B5A4(Entity* self) {
             self->posY.i.hi -= 6;
         }
         self->step++;
-        return;
+        break;
     case 1:
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if (self->animFrameDuration < 0) {
             DestroyEntity(self);
-            return;
         }
         break;
     }
