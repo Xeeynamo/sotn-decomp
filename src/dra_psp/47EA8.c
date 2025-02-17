@@ -1192,10 +1192,7 @@ void func_8011A870(void) {
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= 0xE0) {
-                continue;
-            }
-            if (entity->entityId < SERVANT_ENTITY_START) {
+            if (entity->entityId >= 0xE0 || entity->entityId < SERVANT_ENTITY_START) {
                 continue;
             }
             entity->pfnUpdate =
@@ -1213,7 +1210,11 @@ void func_8011A870(void) {
                      entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
                     DestroyEntity(g_CurrentEntity);
                 } else if (entity->flags & FLAG_UNK_100000) {
+#ifdef VERSION_PSP
                     UpdateAnim(NULL, &D_psp_09234DC8);
+#else
+                    UpdateAnim(NULL, D_800ACFB4);
+#endif
                 }
             }
         }
@@ -1572,7 +1573,10 @@ void func_8011B5A4(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_Player.status & PLAYER_STATUS_UNK20000) {
+#ifdef VERSION_PSP
+            // Looks like US forgot to initialize this variable.
             paramsHi = self->params >> 8;
+#endif
             if (paramsHi != 9) {
                 DestroyEntity(self);
                 return;

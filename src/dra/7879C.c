@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// CreateEntFactoryFromEntity has a mismatch between the args callers use,
+// and the args in the function itself. We use this along with a hack in the
+// header file to fix it.
+#define CREATE_FACTORY_FAKE_ARGS
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 #include "servant.h"
 
 // Given a range of start and end values, finds an unused entity
@@ -1182,14 +1185,14 @@ void func_8011A870(void) {
     s32 i;
 
     entity = g_CurrentEntity = &g_Entities[UNK_ENTITY_4];
+
     for (i = UNK_ENTITY_4; i < UNK_ENTITY_8; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId == 0) {
             continue;
         }
 
         if (entity->step == 0) {
-            if (entity->entityId >= 0xE0 ||
-                entity->entityId < SERVANT_ENTITY_START) {
+            if (entity->entityId >= 0xE0 || entity->entityId < SERVANT_ENTITY_START) {
                 continue;
             }
             entity->pfnUpdate =
@@ -1207,7 +1210,11 @@ void func_8011A870(void) {
                      entity->posY.i.hi > 0x100 || entity->posY.i.hi < -0x10)) {
                     DestroyEntity(g_CurrentEntity);
                 } else if (entity->flags & FLAG_UNK_100000) {
+#ifdef VERSION_PSP
+                    UpdateAnim(NULL, &D_psp_09234DC8);
+#else
                     UpdateAnim(NULL, D_800ACFB4);
+#endif
                 }
             }
         }
@@ -1239,10 +1246,8 @@ void func_8011A9D8(void) {
 }
 
 Entity* CreateEntFactoryFromEntity(
-    Entity* source, u32 factoryParams, s32 arg2_raw) {
+    Entity* source, u32 factoryParams, s16 arg2) {
     Entity* newFactory;
-    // Weird thing needed for callers to match
-    s16 arg2 = arg2_raw;
 
     newFactory = GetFreeEntity(8, 16);
     if (newFactory == NULL) {
@@ -1263,7 +1268,7 @@ Entity* CreateEntFactoryFromEntity(
     if (factoryParams & 0xA000) {
         newFactory->ext.factory.unkA8 = 0xF0;
     }
-    newFactory->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
+    newFactory->ext.factory.unkA0 = (factoryParams & 0xFF0000) >> 8;
     newFactory->ext.factory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
         newFactory->flags |= FLAG_UNK_10000;
@@ -1699,7 +1704,10 @@ void func_8011B5A4(Entity* self) {
 }
 
 void EntityUnkId24(Entity* self) {
-    u16 upperparams = self->params >> 8;
+    s16 upperparams = self->params >> 8;
+    // Lower params are unused.
+    s16 lowerparams = self->params & 0xFF;
+
     if (self->step == 0) {
         self->animSet = 2;
         self->anim = D_800AD5FC;
@@ -1711,15 +1719,17 @@ void EntityUnkId24(Entity* self) {
 
         self->velocityY = FIX(-1);
         if (upperparams == 0) {
-            self->posX.i.hi -= 32 - (rand() & 63);
-            self->posY.i.hi -= 48 - (rand() & 63);
+            self->posX.i.hi += (rand() & 63) - 32;
+            self->posY.i.hi += (rand() & 63) - 48;
             self->drawMode = DRAW_TPAGE;
-            self->palette = 0x8195;
-        } else {
-            self->posY.i.hi -= 12 - rand() % 24;
+            self->palette = PAL_OVL(0x195);
+        }
+        // Silly, this should just be an "else"
+        if (upperparams) {
+            self->posY.i.hi += rand() % 24 - 12;
             self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = self->rotY = 0x80;
-            self->palette = 0x8170;
+            self->palette = PAL_OVL(0x170);
         }
         self->step++;
         return;
