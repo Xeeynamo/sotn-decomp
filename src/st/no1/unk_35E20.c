@@ -1,15 +1,62 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-extern u8* D_us_80180DD8[];
-extern u8 D_us_80180E00[];
-extern u8 D_us_80180E0C[];
-extern u16 D_us_80180E18[];
-extern u16 D_us_80180E2C[];
-extern u16 D_us_80180E40[];
-extern u8 D_us_80180E54[];
-extern u16 D_us_80180E60[];
-extern s16 D_us_80180E78[];
+typedef struct {
+    s32 animSet;
+    AnimationFrame* anim;
+    s32 count;
+    CVECTOR color;
+} AnimParam;
+
+static u8 D_us_80180D7C[] = {4, 1, 4, 2, 0, 0, 0, 0};
+static u8 D_us_80180D84[] = {4, 0, 4, 0, 0, 0, 0, 0};
+static u8 D_us_80180D8C[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0, 0, 0};
+static u8 D_us_80180D98[] = {5, 5, 5, 6, 5, 7, 5, 8, 0, 0, 0, 0};
+static u8 D_us_80180DA4[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0, 0, 0};
+static u8 D_us_80180DB0[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0, 0, 0};
+static u8 D_us_80180DBC[] = {5, 17, 5, 18, 5, 19, 0, 0};
+static u8 D_us_80180DC4[] = {5, 23, 0, 0};
+static u8 D_us_80180DC8[] = {5, 22, 0, 0};
+static u8 D_us_80180DCC[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0, 0, 0};
+static u8* D_us_80180DD8[] = {
+    D_us_80180D7C, D_us_80180D84, D_us_80180D8C, D_us_80180D98, D_us_80180DA4,
+    D_us_80180DB0, D_us_80180DBC, D_us_80180DC4, D_us_80180DC8, D_us_80180DCC};
+static u8 D_us_80180E00[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
+static u8 D_us_80180E0C[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0};
+static u16 D_us_80180E18[] = {
+    0x000, 0x000, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D};
+static u16 D_us_80180E2C[] = {
+    ANIMSET_DRA(3),  ANIMSET_DRA(3),  ANIMSET_OVL(24), ANIMSET_OVL(24),
+    ANIMSET_OVL(24), ANIMSET_OVL(24), ANIMSET_OVL(24), ANIMSET_OVL(24),
+    ANIMSET_OVL(24), ANIMSET_OVL(24)};
+static u16 D_us_80180E40[] = {
+    0x7C, 0x7C, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
+static u8 D_us_80180E54[] = {48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 0, 0};
+static s16 D_us_80180E60[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
+static s16 D_us_80180E78[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
+static s16 D_us_80180E8C[] = {
+    0xBC0, 0xBB0, 0xBA0, 0xB90, 0xB80, 0xB70, 0xB60, 0xB50};
+static s16 D_us_80180E9C[] = {24, 28, 32, 40, 48, 56, 64, 72};
+static AnimationFrame D_us_80180EAC[] = {
+    4, 0x3C, 4, 0xF8, 4, 0xF9, 4, 0xF8, 0, 0x00};
+static AnimationFrame D_us_80180EC0[] = {
+    4, 0xFF, 4, 0xFA, 4, 0xFB, 4, 0xFA, 0, 0x00};
+static s16 D_us_80180ED4[] = {0x0110, 0x7000, 0x0210, 0x0108, 0x0210, 0x0108,
+                              0x0000, 0x7000, 0x0190, 0x00F8, 0x0100, 0x7000};
+static s32 D_us_80180EEC = 0;
+static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60, 0x00, 0x00, 0x00};
+static AnimParam D_us_80180EF8[] = {
+    {ANIMSET_OVL(1), D_us_80180EAC, 44, {.r = 8, .g = 8, .b = 24}},
+    {ANIMSET_OVL(2), D_us_80180EC0, 44, {.r = 16, .g = 8, .b = 72}},
+    {ANIMSET_OVL(2), D_us_80180EAC, 5, {.r = 8, .g = 8, .b = 24}}};
+static s16 D_us_80180F28[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 0, 0};
+
+// bss
+static s16 D_us_801D6328[6];
+static s16 D_us_801D6334[6];
+static s16 D_us_801D6340[14];
+static s16 D_us_801D635C[16];
+
 extern s32 D_psp_0929A590;
 
 void func_us_801B5E20(Entity* self) {
@@ -197,20 +244,6 @@ void func_us_801B6198(Entity* self) {
     }
 }
 
-typedef struct {
-    s32 animSet;
-    AnimationFrame* anim;
-    s32 count;
-    CVECTOR color;
-} AnimParam;
-
-extern s16 D_us_80180ED4[];
-extern s32 D_us_80180EEC;
-extern AnimParam D_us_80180EF8[];
-extern s16 D_us_80180F28[];
-extern s16 D_us_801D6340[];
-extern s16 D_us_801D635C[];
-
 void func_us_801B6490(Entity* self) {
     Primitive* prim;
     AnimParam* animParams;
@@ -220,7 +253,7 @@ void func_us_801B6490(Entity* self) {
     s32 i, j;
     s16 temp;
 
-    x0 = D_us_80180ED4[self->params * 2] - g_Tilemap.scrollX.i.hi;
+    x0 = D_us_80180ED4[self->params * 2 + 0] - g_Tilemap.scrollX.i.hi;
     x1 = D_us_80180ED4[self->params * 2 + 1] - g_Tilemap.scrollX.i.hi;
     if (self->params == 4) {
         if (g_Tilemap.scrollY.i.hi < 0x260) {
@@ -268,7 +301,7 @@ void func_us_801B6490(Entity* self) {
         animParams = &D_us_80180EF8[D_us_80180EEC];
         g_api.func_800EA5E4(animParams->animSet);
         self->anim = animParams->anim;
-        for (i = 0; i < 0xE; i++) {
+        for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] = (i << 0xC) / 7;
         }
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, animParams->count);
@@ -414,14 +447,15 @@ void func_us_801B6490(Entity* self) {
     }
     if (D_us_80180EEC == 1) {
         x0 = xMin;
-        if ((g_Tilemap.scrollX.i.hi > 0xC0) &&
-            (x0 = D_us_80180ED4[self->params * 2] - g_Tilemap.scrollX.i.hi,
-             (self->params == 4))) {
-            if (g_Tilemap.scrollY.i.hi < 0x260) {
-                x0 += 0x50;
-            }
-            if (g_Tilemap.scrollY.i.hi < 0x80) {
-                x0 += 0x10;
+        if (g_Tilemap.scrollX.i.hi > 0xC0) {
+            x0 = D_us_80180ED4[self->params * 2] - g_Tilemap.scrollX.i.hi;
+            if (self->params == 4) {
+                if (g_Tilemap.scrollY.i.hi < 0x260) {
+                    x0 += 0x50;
+                }
+                if (g_Tilemap.scrollY.i.hi < 0x80) {
+                    x0 += 0x10;
+                }
             }
         }
         if (xMax > 0xA0) {
@@ -452,14 +486,14 @@ void func_us_801B6490(Entity* self) {
     }
     prim = prim->next;
     if (D_us_80180EEC != 2) {
-        for (i = 0; i < 0xE; i++) {
+        for (i = 0; i < LEN(D_us_801D6340); i++) {
             D_us_801D6340[i] += 0x10;
             x0 = rsin(D_us_801D6340[i]) >> 10;
             x0 *= D_us_80180F28[i];
             D_us_801D635C[i] = x0 >> 3;
         }
         for (i = 0; i < 0x27; i++) {
-            if (i < 0xD) {
+            if (i < 13) {
                 xOffset = -0x10;
             } else if (i < 0x1A) {
                 xOffset = 0x6F;
@@ -571,13 +605,6 @@ void func_us_801B6490(Entity* self) {
     g_GpuBuffers[1].draw.g0 = animParams->color.g;
     g_GpuBuffers[1].draw.b0 = animParams->color.b;
 }
-
-extern s16 D_us_80180E8C[];
-extern s16 D_us_80180E9C[];
-extern s16 D_us_80180ED4[];
-extern s32 D_us_80180EEC;
-extern s16 D_us_801D6328[];
-extern s16 D_us_801D6334[];
 
 #define PrimLine(x) ((PrimLineG2*)(x))
 
