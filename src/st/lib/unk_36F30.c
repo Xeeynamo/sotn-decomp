@@ -815,71 +815,39 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B8234);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B8958);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD4CC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD4DC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD4F0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD500);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD510);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD524);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD538);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD548);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD55C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD570);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD584);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD598);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5AC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5B8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5C8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5E4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD5F8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD608);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD61C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD634);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD64C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD664);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD67C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD694);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6B4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6E0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD6F4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD708);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD714);
+const char D_us_801AD4CC[] = _S("I am the wind");
+const char D_us_801AD4DC[] = _S("Metamorphosis 3");
+const char D_us_801AD4F0[] = _S("Black Banquet");
+const char D_us_801AD500[] = _S("Finale Toccata");
+const char D_us_801AD510[] = _S("Metamorphosis 2");
+const char D_us_801AD524[] = _S("Blood Relations");
+const char D_us_801AD538[] = _S("Death Ballad");
+const char D_us_801AD548[] = _S("Heavenly Doorway");
+const char D_us_801AD55C[] = _S("Door to the Abyss");
+const char D_us_801AD570[] = _S("The Tragic Prince");
+const char D_us_801AD584[] = _S("Wandering Ghosts");
+const char D_us_801AD598[] = _S("Enchanted Banquet");
+const char D_us_801AD5AC[] = _S("Curse Zone");
+const char D_us_801AD5B8[] = _S("Dance of Pales");
+const char D_us_801AD5C8[] = _S("Lost Painting");
+const char D_us_801AD5D8[] = _S("Silence");
+const char D_us_801AD5E4[] = _S("Rainbow Cemetery");
+const char D_us_801AD5F8[] = _S("Abandoned Pit");
+const char D_us_801AD608[] = _S("Crystal Teardrop");
+const char D_us_801AD61C[] = _S("Requiem for the Gods");
+const char D_us_801AD634[] = _S("Land of Benediction");
+const char D_us_801AD64C[] = _S("Festival of Servants");
+const char D_us_801AD664[] = _S("Door of Holy Spirits");
+const char D_us_801AD67C[] = _S("Wood Carving Partita");
+const char D_us_801AD694[] = _S("Tower of Mist");
+const char D_us_801AD6A4[] = _S("Marble Gallery");
+const char D_us_801AD6B4[] = _S("Dance of Gold");
+const char D_us_801AD6C4[] = _S("Dracula's Castle");
+const char D_us_801AD6D8[] = _S("Prayer");
+const char D_us_801AD6E0[] = _S("Moonlight Nocturne");
+const char D_us_801AD6F4[] = _S("Dance of Illusions");
+const char D_us_801AD708[] = _S("Prologue");
+const char D_us_801AD714[] = _S("Metamorphosis 1");
 
 extern u16 D_us_80181978[];
 
