@@ -268,7 +268,7 @@ void func_us_801CA090(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180884);
         self->hitboxOffX = -4;
-        self->hitboxOffY = -0xE;
+        self->hitboxOffY = -14;
         self->ext.et_801C9870.unk80 = 0;
         break;
 
@@ -289,11 +289,11 @@ void func_us_801CA090(Entity* self) {
     case 3:
         self->hitboxState = 3;
         if (!self->step_s) {
-            self->velocityY = FIX(-0.8125);
+            self->velocityY = FIX(-13.0 / 16);
             self->step_s++;
         }
         MoveEntity();
-        self->velocityY += FIX(0.03125);
+        self->velocityY += FIX(0.5 / 16);
         if (!AnimateEntity(D_us_80182884, self)) {
             self->step_s = 0;
             self->step = 6;
@@ -308,8 +308,8 @@ void func_us_801CA090(Entity* self) {
             dy = self->posY.val - tempEntity->posY.val;
             angle = ratan2(dx, -dy);
             self->rotZ = angle;
-            self->velocityX = rsin(angle) * 0x28;
-            self->velocityY = rcos(angle) * -0x28;
+            self->velocityX = rsin(angle) * 40;
+            self->velocityY = rcos(angle) * -40;
             self->ext.et_801C9870.unk7C = 2;
             self->step_s++;
             break;
@@ -341,7 +341,7 @@ void func_us_801CA090(Entity* self) {
 
     case 6:
         MoveEntity();
-        self->velocityY += FIX(0.03125);
+        self->velocityY += FIX(0.5 / 16);
         if (self->velocityY > FIX(0.5)) {
             self->velocityY = 0;
             self->step = 7;
