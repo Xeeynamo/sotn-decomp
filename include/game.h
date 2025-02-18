@@ -1637,7 +1637,7 @@ extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
 extern u16 (*g_api_DealDamage)(Entity* enemyEntity, Entity* attackerEntity);
 extern void (*g_api_LoadEquipIcon)(s32 equipIcon, s32 palette, s32 index);
 extern Equipment* g_api_equipDefs;
-extern Accessory* g_api_g_AccessoryDefs;
+extern Accessory* g_api_accessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
