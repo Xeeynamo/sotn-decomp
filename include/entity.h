@@ -1732,6 +1732,13 @@ typedef struct {
 
 typedef struct {
     u16 unk7C;
+    u16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    u16 unk88;
+    u16 unk8A;
 } ET_LockCamera;
 
 typedef struct {

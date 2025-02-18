@@ -60,9 +60,3 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926AED0);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926BD98);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926BE68);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926CE18);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926CF18);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_0926D5E0);

@@ -88,6 +88,7 @@ extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitCommon;
 extern EInit g_EInitInteractable;
+extern EInit g_EInitLockCamera;
 
 // Skeleton
 extern EInit g_EInitSkeleton;
