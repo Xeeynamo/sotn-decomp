@@ -10,13 +10,14 @@ static u16 D_us_80181A68[] = {
 
 #ifdef VERSION_PSP
 static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
-                              0xF03,  0x1003, 0x0000, 0x0000, 0x0000, 0x0000};
-extern u32 D_psp_092A5590;
-extern s32 D_psp_08B42050;
+                              0x0F03, 0x1003, 0x0000, 0x0000, 0x0000, 0x0000};
 #else
 static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
-                              0xF03,  0x1003, 0x0000, 0x0000, 0x0003, 0x0000};
+                              0x0F03, 0x1003, 0x0000, 0x0000, 0x0003, 0x0000};
 #endif
+
+extern u32 D_psp_092A5590;
+extern s32 D_psp_08B42050;
 
 void EntityCandleTable(Entity* self) {
     Entity* newEntity;
