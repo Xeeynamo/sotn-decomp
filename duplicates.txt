@@ -399,31 +399,6 @@
 | 1.00 | true     | D_us_801C0B54                       | asm/us/st/no4/matchings/e_collect/D_us_801C0B54.s 
 | 1.00 | true     | D_us_801C0B5C                       | asm/us/st/no4/matchings/e_collect/D_us_801C0B5C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | DestroyEntity                       | asm/us/boss/bo4/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/boss/mar/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/boss/rbo3/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/ric/matchings/1AC60/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_000/matchings/bat/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_001/matchings/ghost/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_002/matchings/faerie/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_003/matchings/demon/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/servant/tt_004/matchings/servant_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/cen/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/chi/matchings/ut_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/dre/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/lib/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/mad/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/no0/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/no1/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/no3/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/np3/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/nz0/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/rwrp/matchings/wrp/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/sel/matchings/3410C/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/st0/matchings/st_common/DestroyEntity.s 
-| 1.00 | true     | DestroyEntity                       | asm/us/st/wrp/matchings/st_common/DestroyEntity.s 
-| 1.00 | false    | DestroyEntity                       | asm/us/st/no4/nonmatchings/st_common/DestroyEntity.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/bo4/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/mar/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/rbo3/matchings/e_misc/MakeExplosions.s 
@@ -510,27 +485,6 @@
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/st/wrp/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | false    | EntityOlroxDrool                    | asm/us/st/no4/nonmatchings/e_misc/EntityOlroxDrool.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/624DC/func_801027A4.s 
-| 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/63ED4/func_801072BC.s 
-| 1.00 | true     | StCdInterrupt2                      | asm/us/main/matchings/psxsdk/libcd/cdread2/StCdInterrupt2.s 
-| 1.00 | true     | CdDataSync                          | asm/us/main/matchings/psxsdk/libcd/sys/CdDataSync.s 
-| 1.00 | true     | CdFlush                             | asm/us/main/matchings/psxsdk/libcd/sys/CdFlush.s 
-| 1.00 | true     | CdReady                             | asm/us/main/matchings/psxsdk/libcd/sys/CdReady.s 
-| 1.00 | true     | CdSync                              | asm/us/main/matchings/psxsdk/libcd/sys/CdSync.s 
-| 1.00 | true     | PadStop                             | asm/us/main/matchings/psxsdk/libetc/pad/PadStop.s 
-| 1.00 | true     | SsQuit                              | asm/us/main/matchings/psxsdk/libsnd/ssquit/SsQuit.s 
-| 1.00 | true     | SsStart2                            | asm/us/main/matchings/psxsdk/libsnd/ssstart/SsStart2.s 
-| 1.00 | true     | SsUtReverbOff                       | asm/us/main/matchings/psxsdk/libsnd/ut_roff/SsUtReverbOff.s 
-| 1.00 | true     | SpuInit                             | asm/us/main/matchings/psxsdk/libspu/s_i/SpuInit.s 
-| 1.00 | true     | UpdateServantSfxPassthrough         | asm/us/servant/tt_002/matchings/faerie/UpdateServantSfxPassthrough.s 
-| 1.00 | true     | DestroyEntityPassthrough            | asm/us/servant/tt_003/matchings/demon/DestroyEntityPassthrough.s 
-| 1.00 | true     | UpdateServantSfxPassthrough         | asm/us/servant/tt_003/matchings/demon/UpdateServantSfxPassthrough.s 
-| 1.00 | true     | UpdateServantSfxPassthrough         | asm/us/servant/tt_004/matchings/sword/UpdateServantSfxPassthrough.s 
-| 1.00 | true     | func_801B1D68                       | asm/us/st/sel/matchings/2C048/func_801B1D68.s 
-| 1.00 | true     | DecDCTinSync                        | asm/us/st/sel/matchings/libpress/DecDCTinSync.s 
-| 1.00 | true     | DecDCTout                           | asm/us/st/sel/matchings/libpress/DecDCTout.s 
-| 1.00 | true     | DecDCToutSync                       | asm/us/st/sel/matchings/libpress/DecDCToutSync.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CollectDummy                        | asm/us/boss/bo4/matchings/e_collect/CollectDummy.s 
 | 1.00 | true     | CollectDummy                        | asm/us/boss/mar/matchings/e_collect/CollectDummy.s 
 | 1.00 | true     | CollectDummy                        | asm/us/boss/rbo3/matchings/e_collect/CollectDummy.s 
@@ -570,6 +524,26 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/st0/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/wrp/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | false    | EntityIsNearPlayer                  | asm/us/st/no4/nonmatchings/e_red_door/EntityIsNearPlayer.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | DestroyEntity                       | asm/us/boss/bo4/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/boss/mar/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/boss/rbo3/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/ric/matchings/1AC60/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/cen/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/chi/matchings/ut_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/dre/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/lib/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/mad/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/no0/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/no1/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/no3/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/np3/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/nz0/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/rwrp/matchings/wrp/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/sel/matchings/3410C/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/st0/matchings/st_common/DestroyEntity.s 
+| 1.00 | true     | DestroyEntity                       | asm/us/st/wrp/matchings/st_common/DestroyEntity.s 
+| 1.00 | false    | DestroyEntity                       | asm/us/st/no4/nonmatchings/st_common/DestroyEntity.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Ratan2                              | asm/us/boss/bo4/matchings/st_common/Ratan2.s 
 | 1.00 | true     | Ratan2                              | asm/us/boss/mar/matchings/st_common/Ratan2.s 
@@ -1967,6 +1941,23 @@
 | 1.00 | true     | UpdateStageEntities                 | asm/us/st/wrp/matchings/st_update/UpdateStageEntities.s 
 | 1.00 | false    | UpdateStageEntities                 | asm/us/st/no4/nonmatchings/st_update/UpdateStageEntities.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/624DC/func_801027A4.s 
+| 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/63ED4/func_801072BC.s 
+| 1.00 | true     | StCdInterrupt2                      | asm/us/main/matchings/psxsdk/libcd/cdread2/StCdInterrupt2.s 
+| 1.00 | true     | CdDataSync                          | asm/us/main/matchings/psxsdk/libcd/sys/CdDataSync.s 
+| 1.00 | true     | CdFlush                             | asm/us/main/matchings/psxsdk/libcd/sys/CdFlush.s 
+| 1.00 | true     | CdReady                             | asm/us/main/matchings/psxsdk/libcd/sys/CdReady.s 
+| 1.00 | true     | CdSync                              | asm/us/main/matchings/psxsdk/libcd/sys/CdSync.s 
+| 1.00 | true     | PadStop                             | asm/us/main/matchings/psxsdk/libetc/pad/PadStop.s 
+| 1.00 | true     | SsQuit                              | asm/us/main/matchings/psxsdk/libsnd/ssquit/SsQuit.s 
+| 1.00 | true     | SsStart2                            | asm/us/main/matchings/psxsdk/libsnd/ssstart/SsStart2.s 
+| 1.00 | true     | SsUtReverbOff                       | asm/us/main/matchings/psxsdk/libsnd/ut_roff/SsUtReverbOff.s 
+| 1.00 | true     | SpuInit                             | asm/us/main/matchings/psxsdk/libspu/s_i/SpuInit.s 
+| 1.00 | true     | func_801B1D68                       | asm/us/st/sel/matchings/2C048/func_801B1D68.s 
+| 1.00 | true     | DecDCTinSync                        | asm/us/st/sel/matchings/libpress/DecDCTinSync.s 
+| 1.00 | true     | DecDCTout                           | asm/us/st/sel/matchings/libpress/DecDCTout.s 
+| 1.00 | true     | DecDCToutSync                       | asm/us/st/sel/matchings/libpress/DecDCToutSync.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | BlitChar                            | asm/us/boss/bo4/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/boss/mar/matchings/blit_char/BlitChar.s 
 | 1.00 | true     | BlitChar                            | asm/us/boss/rbo3/matchings/blit_char/BlitChar.s 
@@ -2291,13 +2282,6 @@
 | 1.00 | false    | DecelerateX                         | asm/us/boss/bo4/nonmatchings/doppleganger/DecelerateX.s 
 | 1.00 | false    | DecelerateY                         | asm/us/boss/bo4/nonmatchings/doppleganger/DecelerateY.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_000/matchings/bat/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_001/matchings/ghost/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_002/matchings/faerie/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity_Local             | asm/us/servant/tt_002/matchings/faerie/CreateEventEntity_Local.s 
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_003/matchings/demon/CreateEventEntity.s 
-| 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_004/matchings/servant_common/CreateEventEntity.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntityLifeUpSpawn                   | asm/us/boss/bo4/matchings/e_life_up/EntityLifeUpSpawn.s 
 | 1.00 | true     | EntityLifeUpSpawn                   | asm/us/boss/mar/matchings/e_life_up/EntityLifeUpSpawn.s 
 | 1.00 | true     | EntityLifeUpSpawn                   | asm/us/boss/rbo3/matchings/e_life_up/EntityLifeUpSpawn.s 
@@ -2315,72 +2299,6 @@
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_002/matchings/faerie/AccumulateTowardZero.s 
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_003/matchings/demon/AccumulateTowardZero.s 
-| 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_004/matchings/servant_common/AccumulateTowardZero.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_000/matchings/bat/CalculateAngleToEntity.s 
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_001/matchings/ghost/CalculateAngleToEntity.s 
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_002/matchings/faerie/CalculateAngleToEntity.s 
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_003/matchings/demon/CalculateAngleToEntity.s 
-| 1.00 | true     | CalculateAngleToEntity              | asm/us/servant/tt_004/matchings/servant_common/CalculateAngleToEntity.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_000/matchings/bat/CalculateDistance.s 
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_001/matchings/ghost/CalculateDistance.s 
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_002/matchings/faerie/CalculateDistance.s 
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_003/matchings/demon/CalculateDistance.s 
-| 1.00 | true     | CalculateDistance                   | asm/us/servant/tt_004/matchings/servant_common/CalculateDistance.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_000/matchings/bat/CheckAllEntitiesValid.s 
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_001/matchings/ghost/CheckAllEntitiesValid.s 
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_002/matchings/faerie/CheckAllEntitiesValid.s 
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_003/matchings/demon/CheckAllEntitiesValid.s 
-| 1.00 | true     | CheckAllEntitiesValid               | asm/us/servant/tt_004/matchings/servant_common/CheckAllEntitiesValid.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_000/matchings/bat/GetTargetPositionWithDistanceBuffer.s 
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_001/matchings/ghost/GetTargetPositionWithDistanceBuffer.s 
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_002/matchings/faerie/GetTargetPositionWithDistanceBuffer.s 
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_003/matchings/demon/GetTargetPositionWithDistanceBuffer.s 
-| 1.00 | true     | GetTargetPositionWithDistanceBuffer | asm/us/servant/tt_004/matchings/servant_common/GetTargetPositionWithDistanceBuffer.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_000/matchings/bat/IsMovementAllowed.s 
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_001/matchings/ghost/IsMovementAllowed.s 
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_002/matchings/faerie/IsMovementAllowed.s 
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_003/matchings/demon/IsMovementAllowed.s 
-| 1.00 | true     | IsMovementAllowed                   | asm/us/servant/tt_004/matchings/servant_common/IsMovementAllowed.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_000/matchings/bat/ProcessEvent.s 
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_001/matchings/ghost/ProcessEvent.s 
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_002/matchings/faerie/ProcessEvent.s 
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_003/matchings/demon/ProcessEvent.s 
-| 1.00 | true     | ProcessEvent                        | asm/us/servant/tt_004/matchings/servant_common/ProcessEvent.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | ProcessSfxState                     | asm/us/servant/tt_000/matchings/bat/ProcessSfxState.s 
-| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_001/matchings/ghost/ProcessSfxState.s 
-| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_002/matchings/faerie/ProcessSfxState.s 
-| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_003/matchings/demon/ProcessSfxState.s 
-| 0.93 | true     | ProcessSfxState                     | asm/us/servant/tt_004/matchings/servant_common/ProcessSfxState.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_000/matchings/bat/SearchForEntityInRange.s 
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_001/matchings/ghost/SearchForEntityInRange.s 
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_002/matchings/faerie/SearchForEntityInRange.s 
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_003/matchings/demon/SearchForEntityInRange.s 
-| 1.00 | true     | SearchForEntityInRange              | asm/us/servant/tt_004/matchings/servant_common/SearchForEntityInRange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_000/matchings/bat/ServantUnk0.s 
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_001/matchings/ghost/ServantUnk0.s 
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_002/matchings/faerie/ServantUnk0.s 
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_003/matchings/demon/ServantUnk0.s 
-| 1.00 | true     | ServantUnk0                         | asm/us/servant/tt_004/matchings/servant_common/ServantUnk0.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_000/matchings/bat/ServantUpdateAnim.s 
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_001/matchings/ghost/ServantUpdateAnim.s 
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_002/matchings/faerie/ServantUpdateAnim.s 
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_003/matchings/demon/ServantUpdateAnim.s 
-| 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_004/matchings/servant_common/ServantUpdateAnim.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonPieces                | asm/us/st/lib/matchings/e_skeleton/EntitySkeletonPieces.s 
 | 1.00 | true     | EntitySkeletonPieces                | asm/us/st/no0/matchings/e_skeleton/EntitySkeletonPieces.s 
@@ -2464,10 +2382,10 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
-| 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
-| 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
-| 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_004/matchings/sword/CheckEntityValid.s 
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/lib/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
@@ -2608,10 +2526,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2868,9 +2782,6 @@
 | 1.00 | true     | EntityWingSmashTrail                | asm/us/dra/matchings/7879C/EntityWingSmashTrail.s 
 | 0.97 | false    | func_us_801CD048                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801CD048.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80118970                       | asm/us/dra/matchings/7879C/func_80118970.s 
-| 0.93 | true     | func_us_80173AA0                    | asm/us/servant/tt_004/matchings/sword/func_us_80173AA0.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_80119E78                       | asm/us/dra/matchings/7879C/func_80119E78.s 
 | 1.00 | false    | func_us_801C9BC0                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C9BC0.s 
 -------------------------------------------------------------------------------
@@ -3042,9 +2953,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3095,24 +3003,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2C4C4/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | DestroyServantEntity                | asm/us/servant/tt_000/matchings/bat/DestroyServantEntity.s 
-| 1.00 | true     | DestroyServantEntity                | asm/us/servant/tt_001/matchings/ghost/DestroyServantEntity.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | FindValidTarget                     | asm/us/servant/tt_000/matchings/bat/FindValidTarget.s 
-| 0.90 | true     | FindValidTarget                     | asm/us/servant/tt_003/matchings/demon/FindValidTarget.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SetEntityAnimation                  | asm/us/servant/tt_000/matchings/bat/SetEntityAnimation.s 
-| 1.00 | true     | SetEntityAnimation                  | asm/us/servant/tt_001/matchings/ghost/SetEntityAnimation.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SetAnimationFrame                   | asm/us/servant/tt_002/matchings/faerie/SetAnimationFrame.s 
-| 1.00 | true     | SetAnimationFrame                   | asm/us/servant/tt_003/matchings/demon/SetAnimationFrame.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | UpdateServantUseAntivenom           | asm/us/servant/tt_002/matchings/faerie/UpdateServantUseAntivenom.s 
-| 1.00 | true     | UpdateServantUseUncurse             | asm/us/servant/tt_002/matchings/faerie/UpdateServantUseUncurse.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | Max3                                | asm/us/servant/tt_004/matchings/sword/Max3.s 
-| 1.00 | true     | Min3                                | asm/us/servant/tt_004/matchings/sword/Min3.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UnusedCENEntity                     | asm/us/st/cen/matchings/DB18/UnusedCENEntity.s 
 | 1.00 | true     | EntityBreakableDebris               | asm/us/st/chi/matchings/en_breakable/EntityBreakableDebris.s 
