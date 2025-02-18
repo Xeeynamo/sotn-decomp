@@ -258,19 +258,13 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B4ED4);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B5068);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD088);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD098);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0A8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0B8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0C8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0E8);
+const char D_us_801AD088[] = _S("Jewel of Open");
+const char D_us_801AD098[] = _S("Magic scroll 5");
+const char D_us_801AD0A8[] = _S("Magic scroll 4");
+const char D_us_801AD0B8[] = _S("Magic scroll 3");
+const char D_us_801AD0C8[] = _S("Magic scroll 2");
+const char D_us_801AD0D8[] = _S("Magic scroll 1");
+const char D_us_801AD0E8[] = _S("Castle map");
 
 INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0F4);
 
@@ -284,52 +278,28 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B60C8);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B6124);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD134);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD144);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD14C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD150);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD15C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD16C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD178);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD188);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD198);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1A8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1B0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1D0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1EC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1F8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD204);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD210);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD21C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD22C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD234);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD248);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD254);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD264);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD26C);
+const char D_us_801AD134[] = _S("Lord Dracula");
+const char D_us_801AD144[] = _S("Shaft");
+const char D_us_801AD14C[] = {0x76, 0xFF, 0x00, 0x00};
+const char D_us_801AD150[] = _S("Galamoth");
+const char D_us_801AD15C[] = _S("Darkwing Bat");
+const char D_us_801AD16C[] = _S("Akmodan II");
+const char D_us_801AD178[] = _S("Doppleganger40");
+const char D_us_801AD188[] = _S("Lesser Demon");
+const char D_us_801AD198[] = _S("The Creature");
+const char D_us_801AD1A8[] = _S("Medusa");
+const char D_us_801AD1B0[] = _S("Richter Belmont");
+const char D_us_801AD1C4[] = _S("Cerberus");
+const char D_us_801AD1D0[] = _S("Death");
+const char D_us_801AD1D8[] = _S("Trevor&Grant&Sypha");
+const char D_us_801AD1EC[] = _S("Karasuman");
+const char D_us_801AD1F8[] = _S("Succubus");
+const char D_us_801AD204[] = _S("Beelzebub");
+const char D_us_801AD210[] = _S("Hippogryph");
+const char D_us_801AD21C[] = _S("Slogra&Gaibon");
+const char D_us_801AD22C[] = _S("Scylla");
+const char D_us_801AD234[] = _S("Minotaur&Werewolf");
+const char D_us_801AD248[] = _S("Granfaloon");
+const char D_us_801AD254[] = _S("Doppleganger10");
+const char D_us_801AD264[] = _S("Olrox");
+const char D_us_801AD26C[] = _S("Dracula");
