@@ -61,6 +61,7 @@ typedef enum EntityIDs {
     /* 0x4E */ E_ID_4E,
 } EntityIDs;
 
+extern void EntityBloodDrips(Entity*);
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
@@ -97,15 +98,15 @@ extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitFleaMan;
 
 extern EInit D_us_80180878;
-
+extern EInit D_us_80180884;
 extern EInit D_us_8018089C;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
+
+// Candle and table
+extern EInit D_us_801808FC;
 
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern Dialogue g_Dialogue;
-
-// Candle and table
-extern EInit D_us_801808FC;
