@@ -70,6 +70,19 @@ typedef struct {
     /* 0x4 */ u32 price;
 } AvailableInventoryItem;
 
+/// the first 5 inventory categories are the same as
+/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
+/// special and only used for inventory so far.
+typedef enum {
+    INVENTORY_HAND,
+    INVENTORY_HEAD,
+    INVENTORY_BODY,
+    INVENTORY_CAPE,
+    INVENTORY_ACCESSORY,
+    INVENTORY_RELIC,
+    INVENTORY_DOCUMENT,
+} InventoryCategory;
+
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitCommon;

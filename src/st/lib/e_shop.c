@@ -1,19 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// the first 5 inventory categories are the same as
-/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
-/// special and only used for inventory so far.
-typedef enum {
-    INVENTORY_HAND,
-    INVENTORY_HEAD,
-    INVENTORY_BODY,
-    INVENTORY_CAPE,
-    INVENTORY_ACCESSORY,
-    INVENTORY_RELIC,
-    INVENTORY_DOCUMENT,
-} InventoryCategory;
-
 /// "documents" in the shop have their own
 /// item index, separate from other items.
 typedef enum {

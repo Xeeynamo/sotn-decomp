@@ -385,23 +385,23 @@ void func_us_801B56E4(Entity* self) {
             }
             itemId = inventoryItem->itemId;
             switch (inventoryItem->category) {
-            case 0:
+            case INVENTORY_HAND:
                 name = g_api.equipDefs[itemId].name;
                 break;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
+            case INVENTORY_HEAD:
+            case INVENTORY_BODY:
+            case INVENTORY_CAPE:
+            case INVENTORY_ACCESSORY:
                 name = g_api.accessoryDefs[itemId].name;
                 break;
-            case 5:
+            case INVENTORY_RELIC:
 #ifdef VERSION_PSP
                 name = D_psp_092A5FB0[itemId];
 #else
                 name = D_us_801816AC[itemId];
 #endif
                 break;
-            case 6:
+            case INVENTORY_DOCUMENT:
 #ifdef VERSION_PSP
                 name = D_psp_092A5FA8[itemId];
 #else
