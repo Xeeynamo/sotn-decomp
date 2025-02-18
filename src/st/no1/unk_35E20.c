@@ -8,21 +8,21 @@ typedef struct {
     CVECTOR color;
 } AnimParam;
 
-static u8 D_us_80180D7C[] = {4, 1, 4, 2, 0, 0, 0, 0};
-static u8 D_us_80180D84[] = {4, 0, 4, 0, 0, 0, 0, 0};
-static u8 D_us_80180D8C[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0, 0, 0};
-static u8 D_us_80180D98[] = {5, 5, 5, 6, 5, 7, 5, 8, 0, 0, 0, 0};
-static u8 D_us_80180DA4[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0, 0, 0};
-static u8 D_us_80180DB0[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0, 0, 0};
+static u8 D_us_80180D7C[] = {4, 1, 4, 2, 0, 0};
+static u8 D_us_80180D84[] = {4, 0, 4, 0, 0, 0};
+static u8 D_us_80180D8C[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0};
+static u8 D_us_80180D98[] = {5, 5, 5, 6, 5, 7, 5, 8, 0, 0};
+static u8 D_us_80180DA4[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0};
+static u8 D_us_80180DB0[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0};
 static u8 D_us_80180DBC[] = {5, 17, 5, 18, 5, 19, 0, 0};
 static u8 D_us_80180DC4[] = {5, 23, 0, 0};
 static u8 D_us_80180DC8[] = {5, 22, 0, 0};
-static u8 D_us_80180DCC[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0, 0, 0};
+static u8 D_us_80180DCC[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0};
 static u8* D_us_80180DD8[] = {
     D_us_80180D7C, D_us_80180D84, D_us_80180D8C, D_us_80180D98, D_us_80180DA4,
     D_us_80180DB0, D_us_80180DBC, D_us_80180DC4, D_us_80180DC8, D_us_80180DCC};
 static u8 D_us_80180E00[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
-static u8 D_us_80180E0C[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0};
+static u8 D_us_80180E0C[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2};
 static u16 D_us_80180E18[] = {
     0x000, 0x000, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D, 0x22D};
 static u16 D_us_80180E2C[] = {
@@ -31,7 +31,7 @@ static u16 D_us_80180E2C[] = {
     ANIMSET_OVL(24), ANIMSET_OVL(24)};
 static u16 D_us_80180E40[] = {
     0x7C, 0x7C, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
-static u8 D_us_80180E54[] = {48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 0, 0};
+static u8 D_us_80180E54[] = {48, 48, 48, 48, 48, 48, 48, 48, 48, 48};
 static s16 D_us_80180E60[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 static s16 D_us_80180E78[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 static s16 D_us_80180E8C[] = {
@@ -44,12 +44,13 @@ static AnimationFrame D_us_80180EC0[] = {
 static s16 D_us_80180ED4[] = {0x0110, 0x7000, 0x0210, 0x0108, 0x0210, 0x0108,
                               0x0000, 0x7000, 0x0190, 0x00F8, 0x0100, 0x7000};
 static s32 D_us_80180EEC = 0;
-static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60, 0x00, 0x00, 0x00};
+static u8 D_us_80180EF0[] = {0x60, 0x80, 0xC0, 0x80, 0x60};
 static AnimParam D_us_80180EF8[] = {
     {ANIMSET_OVL(1), D_us_80180EAC, 44, {.r = 8, .g = 8, .b = 24}},
     {ANIMSET_OVL(2), D_us_80180EC0, 44, {.r = 16, .g = 8, .b = 72}},
     {ANIMSET_OVL(2), D_us_80180EAC, 5, {.r = 8, .g = 8, .b = 24}}};
-static s16 D_us_80180F28[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 0, 0};
+static s16 D_us_80180F28[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2};
+STATIC_PAD_DATA(1);
 
 // bss
 static s16 D_us_801D6328[6];
