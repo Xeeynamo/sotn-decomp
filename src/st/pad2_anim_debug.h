@@ -20,10 +20,8 @@ if (g_pads[1].pressed & PAD_SQUARE) {
 } else {
     self->params = 0;
 }
-#ifdef VERSION_PSP
-// I expect this symbol will change depending on the function that is including
-// pad2_anim_debug.h
-if (g_pads[1].pressed & BUTTON_SYMBOL) {
+#ifdef DEBUG_REWIND_BUTTON
+if (g_pads[1].pressed & DEBUG_REWIND_BUTTON) {
 #else
 if (g_pads[1].pressed & PAD_CIRCLE) {
 #endif

@@ -565,29 +565,10 @@ void func_us_801BDAE4(Entity* self) {
         break;
 
     case 32:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
 #ifdef VERSION_PSP
-        if (g_pads[1].pressed & D_psp_08B42050) {
-#else
-        if (g_pads[1].pressed & PAD_CIRCLE) {
+#define DEBUG_REWIND_BUTTON D_psp_08B42050
 #endif
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
     xOffset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
     yOffset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;

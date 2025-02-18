@@ -12,10 +12,7 @@ static u16 D_us_80181A68[] = {
 static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
                               0xF03,  0x1003, 0x0000, 0x0000, 0x0000, 0x0000};
 extern u32 D_psp_092A5590;
-extern s32 D_8B42050;
-// I expect this symbol will change depending on the function that is including
-// pad2_anim_debug.h
-#define BUTTON_SYMBOL D_8B42050
+extern s32 D_psp_08B42050;
 #else
 static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
                               0xF03,  0x1003, 0x0000, 0x0000, 0x0003, 0x0000};
@@ -88,6 +85,9 @@ void EntityCandleTable(Entity* self) {
     case 4:
         break;
     case 255:
+#ifdef VERSION_PSP
+#define DEBUG_REWIND_BUTTON D_psp_08B42050
+#endif
 #include "../pad2_anim_debug.h"
     }
 }
