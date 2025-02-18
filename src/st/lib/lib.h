@@ -18,7 +18,7 @@ typedef enum EntityIDs {
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
     /* 0x0B */ E_RELIC_ORB,
-    // /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_HEART_DROP,
     // /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
@@ -48,6 +48,7 @@ typedef enum EntityIDs {
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
+    /* 0x3D */ E_CANDLE_TABLE,
     /* 0x3E */ E_ID_3E = 0x3E,
     /* 0x43 */ E_SKELETON = 0x43,
     /* 0x44 */ E_SKELETON_THROWN_BONE,
@@ -69,6 +70,19 @@ typedef struct {
     /* 0x2 */ u16 itemId;
     /* 0x4 */ u32 price;
 } AvailableInventoryItem;
+
+/// the first 5 inventory categories are the same as
+/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
+/// special and only used for inventory so far.
+typedef enum {
+    INVENTORY_HAND,
+    INVENTORY_HEAD,
+    INVENTORY_BODY,
+    INVENTORY_CAPE,
+    INVENTORY_ACCESSORY,
+    INVENTORY_RELIC,
+    INVENTORY_DOCUMENT,
+} InventoryCategory;
 
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
@@ -92,3 +106,6 @@ extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern Dialogue g_Dialogue;
+
+// Candle and table
+extern EInit D_us_801808FC;

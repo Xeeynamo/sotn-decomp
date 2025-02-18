@@ -105,6 +105,7 @@ PLAYER_facingLeft = 0x091E1694;
 PLAYER_zPriority = 0x091E16A4;
 PLAYER_step = 0x91E16AC;
 PLAYER_step_s = 0x91E16AE;
+g_Pix = 0x091ED5F8;
 g_Clut = 0x091F5DF8;
 g_Clut_2800 = 0x091F85F8;
 g_Clut_2860 = 0x091F8658;
