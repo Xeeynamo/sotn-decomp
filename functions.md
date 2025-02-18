@@ -641,7 +641,7 @@
 | dra    | func_psp_090E8658                   |       74 |          6 |        |                                 |       |
 | dra    | func_8010DFF0                       |       74 |          7 |        | https://decomp.me/scratch/fbTWl | 0.952 |
 | dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
-| lib    | func_psp_092636F8                   |       75 |          1 |        |                                 |       |
+| lib    | func_psp_092636F8                   |       75 |          1 |        | https://decomp.me/scratch/OEQMp | 0.984 |
 | wrp    | EntityBackgroundBlock               |       75 |          6 |        |                                 |       |
 | dra    | func_psp_09108D40                   |       75 |         10 |        |                                 |       |
 | dra    | func_800FD6C4                       |       75 |         14 |        |                                 |       |
@@ -1078,7 +1078,7 @@
 | no4    | func_psp_0924ADF8                   |      307 |         26 |        |                                 |       |
 | st0    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
 | wrp    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
-| lib    | func_psp_09254288                   |      307 |         37 | Yes    | https://decomp.me/scratch/PKakS | 0.838 |
+| lib    | func_psp_09254288                   |      307 |         37 | Yes    | https://decomp.me/scratch/PKakS | 0.989 |
 | dra    | CheckTetraSpiritInput               |      309 |         43 | Yes    |                                 |       |
 | dra    | DrawRichterHud                      |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra    | func_801028AC                       |      310 |         32 | Yes    |                                 |       |
@@ -1113,7 +1113,7 @@
 | dra    | func_8011A4D0                       |      356 |         51 |        |                                 |       |
 | lib    | func_psp_09264E20                   |      357 |         45 |        | https://decomp.me/scratch/67tPj | 0.999 |
 | lib    | func_psp_092576C8                   |      359 |         33 |        |                                 |       |
-| lib    | func_psp_0926D5E0                   |      363 |         31 | Yes    | https://decomp.me/scratch/OAawr | 0.984 |
+| lib    | func_psp_0926D5E0                   |      363 |         31 | Yes    | https://decomp.me/scratch/OAawr | 0.995 |
 | lib    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | no4    | func_psp_0924B288                   |      364 |         33 |        |                                 |       |
 | st0    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
@@ -1263,7 +1263,7 @@
 | lib    | func_psp_09263810                   |      884 |         74 | Yes    |                                 |       |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
-| dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/BR5TS | 0.977 |
+| dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
 | st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/ZV6i6 | 0.966 |
 | dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    | https://decomp.me/scratch/BBczf | 1.0   |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
