@@ -55,7 +55,8 @@ static s16 D_us_80180F28[] = {4, 5, 6, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 0, 0};
 static s16 D_us_801D6328[6];
 static s16 D_us_801D6334[6];
 static s16 D_us_801D6340[14];
-static s16 D_us_801D635C[16];
+static s16 D_us_801D635C[14];
+STATIC_PAD_BSS(1);
 
 extern s32 D_psp_0929A590;
 
