@@ -80,14 +80,9 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B40F0);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4194);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF14);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF18);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF1C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF24);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF34);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_33EC8", D_us_801ACF40);
+const char D_us_801ACF14[] = "DEF";
+const char D_us_801ACF18[] = "ATT";
+const char D_us_801ACF1C[] = _S("うれるこすう");
+const char D_us_801ACF24[] = _S("Not equipped");
+const char D_us_801ACF34[] = _S("Equipped");
+const char D_us_801ACF40[] = _S("Number");
