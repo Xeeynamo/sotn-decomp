@@ -20,7 +20,13 @@ if (g_pads[1].pressed & PAD_SQUARE) {
 } else {
     self->params = 0;
 }
+#ifdef VERSION_PSP
+// I expect this symbol will change depending on the function that is including
+// pad2_anim_debug.h
+if (g_pads[1].pressed & BUTTON_SYMBOL) {
+#else
 if (g_pads[1].pressed & PAD_CIRCLE) {
+#endif
     if (!self->step_s) {
         self->animCurFrame--;
         self->step_s |= 1;
