@@ -548,7 +548,7 @@
 | dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
-| lib    | func_psp_0925D350                   |       62 |          5 |        |                                 |       |
+| lib    | func_psp_0925D350                   |       62 |          5 |        | https://decomp.me/scratch/CPHDm | 1.0   |
 | no4    | func_psp_0924C490                   |       62 |          5 |        |                                 |       |
 | no4    | func_psp_09238520                   |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -1195,7 +1195,7 @@
 | dra    | func_psp_0910A198                   |      565 |        106 |        | https://decomp.me/scratch/IXTZU | 0.986 |
 | dra    | RenderTilemap                       |      570 |         35 |        |                                 |       |
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
-| lib    | func_psp_09240860                   |      580 |         75 | Yes    |                                 |       |
+| lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
