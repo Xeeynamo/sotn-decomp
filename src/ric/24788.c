@@ -735,7 +735,7 @@ void func_80161C2C(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = anim_smoke_puff;
-                self->palette = 0x8170;
+                self->palette = PAL_OVL(0x170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;

@@ -1,19 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D1BCC);
+// Spellbook helper
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D1BCC);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D1F50);
+// Spellbook helper
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D1F50);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D2108);
+// Spellbook helper
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2108);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D2148);
+// Spellbook helper
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2148);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_801CDC80);
+// Spellbook helper
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_801CDC80);
 
 extern u16 D_us_80180914[];
 extern u8* D_us_801830DC[];
 
+// Spellbook entity
 void func_us_801D2274(Entity* self) {
     s32 dx, dy;
     RECT rect;
@@ -284,10 +290,11 @@ void func_us_801D2274(Entity* self) {
     self->hitboxOffY = self->ext.et_801D2274.unk86 / 2;
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D2CE0);
+// Possibly Magic Tome + Spellbook death spawner for letters
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2CE0);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D2DA8);
+// Magic Tome entity
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2DA8);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", func_us_801D35B8);
-
-INCLUDE_ASM("st/lib/nonmatchings/unk_51BCC", EntityLifeUpSpawn);
+// Unk related function for Magic Tome and Spellbook
+INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D35B8);

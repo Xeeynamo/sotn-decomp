@@ -18,7 +18,7 @@ void EntityPlayerSleepZ(Entity* self) {
         self->velocityY = FIX(-0.375);
         SetSpeedX(FIX(0.25));
         self->unk5A = 0x50;
-        self->palette = 0x819F;
+        self->palette = PAL_OVL(0x19F);
         self->anim = D_800AE294;
 
         self->posY.i.hi -= 16;

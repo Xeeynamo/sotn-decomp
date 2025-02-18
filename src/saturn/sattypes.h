@@ -252,7 +252,8 @@ typedef struct {
     /* 14 */ u32 unk14;
     /* 18 */ u16 icon;
     /* 1A */ u16 palette;
-    /* 1C */ u32 unk1C;
+    /* 1C */ u16 equipType;
+    /* 1E */ u16 unk1E;
 } Accessory; /* size=0x20 */
 
 typedef struct {
@@ -296,7 +297,7 @@ typedef struct {
 typedef struct Unkstruct_800A7734 {
     /* 0x00 */ u16 unk00;
     /* 0x02 */ char pad_02[0x1A];
-    /* 0x1C */ u16 unk03;
+    /* 0x1C */ u16 equipType;
     /* 0x1E */ char pad_1E[0x2];
 } Unkstruct_800A7734; // size = 0x20
 

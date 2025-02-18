@@ -329,7 +329,7 @@ void RicEntityWhip(Entity* self) {
         self->step = 1;
         self->velocityX = 0;
         self->velocityY = 0;
-        self->palette = 0x8148;
+        self->palette = PAL_OVL(0x148);
         if (!PLAYER.facingLeft) {
             self->ext.whip.unk88 = playerUnk46;
         } else {
@@ -419,9 +419,9 @@ void RicEntityWhip(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->animSet = -0x7FEE;
+        self->animSet = ANIMSET_OVL(18);
         self->animCurFrame = 0x1E;
-        self->palette = 0x8138;
+        self->palette = PAL_OVL(0x138);
         self->unk5A = 0x46;
         if (lowerParams < 8) {
             self->hitboxWidth = 3;
@@ -555,12 +555,12 @@ void RicEntityWhip(Entity* self) {
             if (PLAYER.animFrameIdx == 6) {
                 if ((PLAYER.animFrameDuration >= 0xF) ||
                     (PLAYER.animFrameDuration == 0)) {
-                    self->palette = 0x8138;
+                    self->palette = PAL_OVL(0x138);
                 } else if ((PLAYER.animFrameDuration == 11 ||
                             PLAYER.animFrameDuration == 12) ||
                            (PLAYER.animFrameDuration == 13 ||
                             PLAYER.animFrameDuration == 14)) {
-                    self->palette = 0x813C;
+                    self->palette = PAL_OVL(0x13C);
                 } else {
 // animFrameDuration can be -1 apparently.
 // todo this should read the previous element out of bounds?
@@ -613,15 +613,15 @@ void RicEntityWhip(Entity* self) {
                 }
                 // This very well might be a switch
                 if (PLAYER.animFrameDuration > 14) {
-                    self->palette = 0x8138;
+                    self->palette = PAL_OVL(0x138);
                 } else if (PLAYER.animFrameDuration == 0) {
-                    self->palette = 0x8138;
+                    self->palette = PAL_OVL(0x138);
                 } else if (PLAYER.animFrameDuration == 11 ||
                            PLAYER.animFrameDuration == 12) {
-                    self->palette = 0x813C;
+                    self->palette = PAL_OVL(0x13C);
                 } else if (PLAYER.animFrameDuration == 13 ||
                            PLAYER.animFrameDuration == 14) {
-                    self->palette = 0x813C;
+                    self->palette = PAL_OVL(0x13C);
                 } else {
 // animFrameDuration can be -1 apparently.
 // todo this should read the previous element out of bounds?
@@ -733,7 +733,7 @@ void RicEntityWhip(Entity* self) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->drawFlags |= DRAW_HIDE;
         }
-        self->palette = 0x8160;
+        self->palette = PAL_OVL(0x160);
     }
 }
 
@@ -761,7 +761,7 @@ void RicEntityArmBrandishWhip(Entity* entity) {
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
-        entity->palette = 0x8120;
+        entity->palette = PAL_OVL(0x120);
         entity->zPriority = PLAYER.zPriority + 2;
     }
 

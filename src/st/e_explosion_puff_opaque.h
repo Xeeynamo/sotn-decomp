@@ -50,7 +50,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         }
 
         if (self->params & 0xF0) {
-            self->palette = 0x819F;
+            self->palette = PAL_OVL(0x19F);
             self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }

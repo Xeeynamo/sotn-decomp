@@ -1371,10 +1371,10 @@ void EntityHighWaterSplash(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
-        self->palette = 0x8162;
+        self->palette = PAL_OVL(0x162);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->palette = 0x8018;
+        self->palette = PAL_OVL(0x18);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_UNK8;
         self->unk6C = 0xA0;

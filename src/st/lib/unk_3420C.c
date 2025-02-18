@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
+void func_us_801B0FBC(u8* ptr, u16 x, u16 y);
+Primitive* func_us_801B1064(
+    Primitive* arg0, u16 arg1, s16 arg2, const char* arg3, u16 arg4);
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
-void func_us_801B0FBC(u8* ptr, u16 x, u16 y);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B420C);
 
-extern u8* D_us_80181528[];
-extern u8** D_psp_092A5FC8;
+extern char* D_us_80181528[];
+extern char** D_psp_092A5FC8;
 extern u16 D_us_80181530;
 extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
 extern u8* D_psp_092A5F50;
-extern s32 g_CutsceneFlags;
-extern s32 D_91ED5F8;
 
 void func_us_801B4830(Entity* self) {
     Primitive* prim;
@@ -24,9 +24,9 @@ void func_us_801B4830(Entity* self) {
     s32 j;
     s32 count;
     u16* var_s4;
-    u8* tempPtr;
+    char* name;
     Entity* tempEntity;
-    s32* unused;
+    u8* unused;
 
     tempEntity = self - 1;
     switch (self->step) {
@@ -164,14 +164,14 @@ void func_us_801B4830(Entity* self) {
 
     case 1:
         if (!self->step_s) {
-            unused = &D_91ED5F8;
+            unused = g_Pix[0];
             for (i = 0; i < 2; i++) {
 #ifdef VERSION_PSP
-                tempPtr = D_psp_092A5FC8[i];
-                func_us_801B0FBC(tempPtr, 0x17, 0x104 + i * 16);
+                name = D_psp_092A5FC8[i];
+                func_us_801B0FBC(name, 0x17, 0x104 + i * 16);
 #else
-                tempPtr = D_us_80181528[i];
-                func_us_801B0FBC(tempPtr, 0x1A, 0x104 + i * 16);
+                name = D_us_80181528[i];
+                func_us_801B0FBC(name, 0x1A, 0x104 + i * 16);
 #endif
             }
             self->step_s++;
@@ -259,23 +259,301 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B4ED4);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B5068);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD088);
+const char D_us_801AD088[] = _S("Jewel of Open");
+const char D_us_801AD098[] = _S("Magic scroll 5");
+const char D_us_801AD0A8[] = _S("Magic scroll 4");
+const char D_us_801AD0B8[] = _S("Magic scroll 3");
+const char D_us_801AD0C8[] = _S("Magic scroll 2");
+const char D_us_801AD0D8[] = _S("Magic scroll 1");
+const char D_us_801AD0E8[] = _S("Castle map");
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD098);
+const RECT D_us_801AD0F4 = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0A8);
+extern AvailableInventoryItem D_us_801814D8[];
+extern char D_us_801816A4[];
+extern char* D_us_801816AC[];
+extern char* D_us_801816B0[];
+extern u32 D_us_801D415C[];
+extern s32 D_us_801D425C[];
+extern AvailableInventoryItem D_us_801D4364[];
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0B8);
+extern char** D_psp_092A5FA8;
+extern char** D_psp_092A5FB0;
+extern char* D_psp_092A5FB8;
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0C8);
+void func_us_801B56E4(Entity* self) {
+    Entity* tempEntity;
+    s32 primIndex;
+    s32 i, j;
+    AvailableInventoryItem* inventoryItem;
+    DRAWENV drawEnv;
+    DR_ENV* dr_env;
+    RECT clipRect;
+    const char* name;
+    Primitive* prim;
+    Primitive* prim2;
+    s16 posX, posY;
+    s16 itemId;
+    s16 index;
+    s32 count;
+    u32 price;
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0D8);
+    clipRect = D_us_801AD0F4;
+    tempEntity = self - 3;
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x13A);
+        if (primIndex != -1) {
+            InitializeEntity(g_EInitCommon);
+            i = 0;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env != NULL) {
+                prim->type = PRIM_ENV;
+                prim->priority = 0x10;
+                prim->drawMode = DRAW_DEFAULT;
+                drawEnv = g_CurrentBuffer->draw;
+                drawEnv.isbg = 1;
+                drawEnv.clip = clipRect;
+#ifdef VERSION_PSP
+                drawEnv.ofs[0] = 0;
+#else
+                drawEnv.ofs[0] = 0x100;
+#endif
+                drawEnv.ofs[1] = 0x100;
+                SetDrawEnv(dr_env, &drawEnv);
+            } else {
+                self->step = 0;
+                return;
+            }
+            prim = prim->next;
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env != NULL) {
+                prim->type = PRIM_ENV;
+                prim->priority = 0x12;
+                prim->drawMode = DRAW_UNK_800;
+            } else {
+                self->step = 0;
+                return;
+            }
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->clut = 0x196;
+                prim->tpage = 0x1E;
+                prim->u1 = prim->v1 = 8;
+                prim->priority = 0x11;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        }
+        break;
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0E8);
+    case 1:
+        if (g_CutsceneFlags & 0x400) {
+            if (tempEntity->params) {
+                SetStep(4);
+            } else {
+                SetStep(2);
+            }
+        }
+        break;
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD0F4);
+    case 2:
+        posY = tempEntity->ext.et_801B56E4.unk84 + 16;
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
+        prim = prim->next;
+        index = tempEntity->ext.et_801B56E4.unk82;
+        posY = 16;
+        for (i = 0; i < 8; i++) {
+            if (i == 7 && !tempEntity->ext.et_801B56E4.unk84) {
+                break;
+            }
+            if (tempEntity->params) {
+                inventoryItem = &D_us_801814D8[index];
+            } else {
+                inventoryItem = &D_us_801D4364[index];
+            }
+            itemId = inventoryItem->itemId;
+            switch (inventoryItem->category) {
+            case INVENTORY_HAND:
+                name = g_api.equipDefs[itemId].name;
+                break;
+            case INVENTORY_HEAD:
+            case INVENTORY_BODY:
+            case INVENTORY_CAPE:
+            case INVENTORY_ACCESSORY:
+                name = g_api.accessoryDefs[itemId].name;
+                break;
+            case INVENTORY_RELIC:
+#ifdef VERSION_PSP
+                name = D_psp_092A5FB0[itemId];
+#else
+                name = D_us_801816AC[itemId];
+#endif
+                break;
+            case INVENTORY_DOCUMENT:
+#ifdef VERSION_PSP
+                name = D_psp_092A5FA8[itemId];
+#else
+                name = D_us_801816B0[itemId];
+#endif
+                break;
+            default:
+#ifdef VERSION_PSP
+                name = *D_psp_092A5FC8;
+#else
+                name = *D_us_80181528;
+#endif
+                break;
+            }
+            prim = func_us_801B1064(prim, 8, posY, name, 0x196);
+            if (D_us_801D415C[index] != 0) {
+                posX = 0x7E;
+                prim->clut = 0x196;
+                prim->u0 = 0x40;
+                prim->v0 = 0x28;
+                prim->drawMode = DRAW_DEFAULT;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+                prim2 = prim;
+                for (j = 0; j < 2; j++) {
+                    prim->clut = 0x196;
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+                func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
+                posX += 10;
+                prim2 = prim;
+                price = inventoryItem->price * D_us_801D415C[index];
+                for (j = 0; j < 8; j++) {
+                    if (g_Status.gold < price) {
+                        prim->clut = 0x191;
+                    } else {
+                        prim->clut = 0x196;
+                    }
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+                func_us_801B3EC8(prim2, price, 8);
+            } else {
+#ifdef VERSION_PSP
+                posX = 0x80;
+                count = 16;
+                prim2 = prim;
+                for (j = 0; j < count; j++) {
+#else
+                posX = 0x96;
+                prim2 = prim;
+                for (j = 0; j < 8; j++) {
+#endif
+                    prim->clut = 0x196;
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+#ifdef VERSION_PSP
+                func_us_801B3FB4(prim2, D_psp_092A5FB8, count, 1);
+#else
+                func_us_801B3FB4(prim2, D_us_801816A4, 8, 1);
+#endif
+            }
+            posY += 12;
+            index++;
+        }
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if ((g_CutsceneFlags & 0x400) == 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            SetStep(3);
+        }
+        break;
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B56E4);
+    case 3:
+        DestroyEntity(self);
+        return;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
+        prim = prim->next;
+        index = tempEntity->ext.et_801B56E4.unk82;
+        posY = 0x10;
+        for (i = 0; i < 7; i++) {
+            inventoryItem = &D_us_801814D8[index];
+            name = g_api.accessoryDefs[inventoryItem->itemId].name;
+            if (D_us_801D425C[index] != 0) {
+                itemId = 0x196;
+            } else {
+                itemId = 0x191;
+            }
+            prim = func_us_801B1064(prim, 8, posY, name, itemId);
+            posX = 0x7E;
+            prim->clut = itemId;
+            prim->u0 = 0x40;
+            prim->v0 = 0x28;
+            prim->drawMode = DRAW_DEFAULT;
+            prim->x0 = posX;
+            prim->y0 = posY;
+            prim = prim->next;
+            posX += 8;
+            prim2 = prim;
+            for (j = 0; j < 2; j++) {
+                prim->clut = itemId;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+            }
+            func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
+            posX += 10;
+            prim2 = prim;
+            price = inventoryItem->price * D_us_801D415C[index];
+            for (j = 0; j < 8; j++) {
+                prim->clut = itemId;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+            }
+            func_us_801B3EC8(prim2, price, 8);
+            posY += 12;
+            index++;
+        }
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if ((g_CutsceneFlags & 0x400) == 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            SetStep(3);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B5F18);
 
@@ -285,52 +563,28 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B60C8);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B6124);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD134);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD144);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD14C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD150);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD15C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD16C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD178);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD188);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD198);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1A8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1B0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1D0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1EC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD1F8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD204);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD210);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD21C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD22C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD234);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD248);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD254);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD264);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD26C);
+const char D_us_801AD134[] = _S("Lord Dracula");
+const char D_us_801AD144[] = _S("Shaft");
+const char D_us_801AD14C[] = _S("カ");
+const char D_us_801AD150[] = _S("Galamoth");
+const char D_us_801AD15C[] = _S("Darkwing Bat");
+const char D_us_801AD16C[] = _S("Akmodan II");
+const char D_us_801AD178[] = _S("Doppleganger40");
+const char D_us_801AD188[] = _S("Lesser Demon");
+const char D_us_801AD198[] = _S("The Creature");
+const char D_us_801AD1A8[] = _S("Medusa");
+const char D_us_801AD1B0[] = _S("Richter Belmont");
+const char D_us_801AD1C4[] = _S("Cerberus");
+const char D_us_801AD1D0[] = _S("Death");
+const char D_us_801AD1D8[] = _S("Trevor&Grant&Sypha");
+const char D_us_801AD1EC[] = _S("Karasuman");
+const char D_us_801AD1F8[] = _S("Succubus");
+const char D_us_801AD204[] = _S("Beelzebub");
+const char D_us_801AD210[] = _S("Hippogryph");
+const char D_us_801AD21C[] = _S("Slogra&Gaibon");
+const char D_us_801AD22C[] = _S("Scylla");
+const char D_us_801AD234[] = _S("Minotaur&Werewolf");
+const char D_us_801AD248[] = _S("Granfaloon");
+const char D_us_801AD254[] = _S("Doppleganger10");
+const char D_us_801AD264[] = _S("Olrox");
+const char D_us_801AD26C[] = _S("Dracula");

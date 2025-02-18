@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+
 void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
@@ -26,7 +28,7 @@ void CutsceneRun(void) {
                      STAGE_ENTITY_START;
             DestroyEntity(entity);
             entity->entityId = *g_Dialogue.scriptEnd++;
-            entity->pfnUpdate = PfnEntityUpdates[entity->entityId - 1];
+            entity->pfnUpdate = OVL_EXPORT(EntityUpdates)[entity->entityId - 1];
             entity->posX.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
             entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
             entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;

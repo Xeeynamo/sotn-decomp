@@ -17,17 +17,18 @@ typedef enum EntityIDs {
     // /* 0x08 */ E_ROOM_FOREGROUND,
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
-    // /* 0x0B */ E_RELIC_ORB,
-    // /* 0x0C */ E_HEART_DROP,
+    /* 0x0B */ E_RELIC_ORB,
+    /* 0x0C */ E_HEART_DROP,
     // /* 0x0D */ E_ENEMY_BLOOD,
-    // /* 0x0E */ E_MESSAGE_BOX,
+    /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11,
     // /* 0x13 */ E_UNK_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x1D */ E_BLOOD_DRIPS = 0x1D,
+    /* 0x1C */ E_ID_1C = 0x1C,
+    /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
@@ -40,15 +41,23 @@ typedef enum EntityIDs {
     /* 0x2E */ E_ID_2E,
     /* 0x2F */ E_ID_2F,
     /* 0x31 */ E_ID_31 = 0x31,
+    /* 0x33 */ E_ID_33 = 0x33,
+    /* 0x34 */ E_ID_34,
+    /* 0x35 */ E_ID_35,
+    /* 0x36 */ E_ID_36,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
+    /* 0x3D */ E_CANDLE_TABLE,
     /* 0x3E */ E_ID_3E = 0x3E,
     /* 0x43 */ E_SKELETON = 0x43,
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
     /* 0x48 */ E_ID_48 = 0x48,
-    /* 0x4D */ E_ID_4D = 0x4D,
+    /* 0x4A */ E_ID_4A = 0x4A,
+    /* 0x4B */ E_ID_4B,
+    /* 0x4C */ E_ID_4C,
+    /* 0x4D */ E_ID_4D,
     /* 0x4E */ E_ID_4E,
 } EntityIDs;
 
@@ -62,6 +71,19 @@ typedef struct {
     /* 0x4 */ u32 price;
 } AvailableInventoryItem;
 
+/// the first 5 inventory categories are the same as
+/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
+/// special and only used for inventory so far.
+typedef enum {
+    INVENTORY_HAND,
+    INVENTORY_HEAD,
+    INVENTORY_BODY,
+    INVENTORY_CAPE,
+    INVENTORY_ACCESSORY,
+    INVENTORY_RELIC,
+    INVENTORY_DOCUMENT,
+} InventoryCategory;
+
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitCommon;
@@ -71,3 +93,19 @@ extern EInit g_EInitInteractable;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
+
+extern EInit g_EInitFleaMan;
+
+extern EInit D_us_80180878;
+
+extern EInit D_us_8018089C;
+extern EInit D_us_801808A8;
+extern EInit D_us_801808B4;
+
+extern s32 g_SkipCutscene;
+extern s32 g_IsCutsceneDone;
+extern u32 g_CutsceneFlags;
+extern Dialogue g_Dialogue;
+
+// Candle and table
+extern EInit D_us_801808FC;

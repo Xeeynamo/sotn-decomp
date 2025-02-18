@@ -9,6 +9,9 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCC10);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCFD4);
 
+// Lesser Demon minion spawn?
+// Seems like the vertical tractor beam effect that spawns
+// Mudmen, Skeleton, Ectoplasm
 INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BD268);
 
 u8 func_us_801BDA34(void);
@@ -490,7 +493,7 @@ void func_us_801BDAE4(Entity* self) {
         break;
 
     case 15:
-        self->palette = 0x8160;
+        self->palette = PAL_OVL(0x160);
         if (g_Timer % 7 == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

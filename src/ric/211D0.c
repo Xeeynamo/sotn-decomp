@@ -1364,7 +1364,7 @@ void RicEntityHitByDark(Entity* entity) {
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
-        entity->palette = 0x819F;
+        entity->palette = PAL_OVL(0x19F);
 
         if (D_80174FFC & 1) {
             entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;

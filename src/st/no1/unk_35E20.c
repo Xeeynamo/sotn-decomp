@@ -129,7 +129,7 @@ void func_us_801B6198(Entity* self) {
     case 0:
         if (self->params & 0x100) {
             InitializeEntity(g_EInitInteractable);
-            self->animSet = 0x8018;
+            self->animSet = ANIMSET_OVL(24);
             self->unk5A = 0x5B;
             self->palette = 0x22D;
             self->animCurFrame = 0x15;

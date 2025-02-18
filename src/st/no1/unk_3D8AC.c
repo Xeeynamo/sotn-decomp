@@ -127,7 +127,7 @@ void func_us_801BDA0C(Entity* self) {
         self->ext.et_801BDA0C.unk80 = 0;
         break;
     case 1:
-        self->palette = 0x804F;
+        self->palette = PAL_OVL(0x4F);
         if (self->ext.et_801BDA0C.unk84) {
             self->step++;
         }
@@ -157,7 +157,7 @@ void func_us_801BDA0C(Entity* self) {
             self->palette++;
             if (self->palette > 0x8058) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
-                self->palette = 0x804F;
+                self->palette = PAL_OVL(0x4F);
                 self->step++;
                 if (self->params == 5) {
                     (self + 1)->ext.et_801BDA0C.unk84 = 1;

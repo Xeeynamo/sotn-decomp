@@ -526,7 +526,7 @@ void func_8011EDA8(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_800AD57C;
-                self->palette = 0x8170;
+                self->palette = PAL_OVL(0x170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -585,7 +585,7 @@ void func_8011F074(Entity* entity) {
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
-        entity->palette = 0x819F;
+        entity->palette = PAL_OVL(0x19F);
 
         if (D_8013808C & 1) {
             entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -2380,7 +2380,7 @@ void func_80123F78(Entity* entity) {
         entity->unk5A = 0xD;
         entity->drawFlags = PLAYER.drawFlags;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->palette = 0x815F;
+        entity->palette = PAL_OVL(0x15F);
         entity->zPriority = PLAYER.zPriority - 2;
         entity->facingLeft = PLAYER.facingLeft;
 

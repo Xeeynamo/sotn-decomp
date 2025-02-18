@@ -1,19 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// the first 5 inventory categories are the same as
-/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
-/// special and only used for inventory so far.
-typedef enum {
-    INVENTORY_HAND,
-    INVENTORY_HEAD,
-    INVENTORY_BODY,
-    INVENTORY_CAPE,
-    INVENTORY_ACCESSORY,
-    INVENTORY_RELIC,
-    INVENTORY_DOCUMENT,
-} InventoryCategory;
-
 /// "documents" in the shop have their own
 /// item index, separate from other items.
 typedef enum {
@@ -141,7 +128,6 @@ static u8 D_us_8018151C[] = {
 extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
-extern s32 g_CutsceneFlags;
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 

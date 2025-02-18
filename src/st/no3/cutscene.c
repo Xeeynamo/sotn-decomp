@@ -52,22 +52,7 @@ static void CutsceneUnk4(void) {
 
 #include "../cutscene_run.h"
 
-static void func_801BECCC(Entity* self) {
-    if (g_pads[0].tapped == PAD_START) {
-        g_SkipCutscene = 1;
-        g_api.FreePrimitives(self->primIndex);
-        self->flags ^= FLAG_HAS_PRIMS;
-        if (g_Dialogue.primIndex[1] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
-        }
-        if (g_Dialogue.primIndex[0] != -1) {
-            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
-        }
-        g_api.PlaySfx(SET_STOP_MUSIC);
-        self->step = 1;
-        self->step_s = 0;
-    }
-}
+#include "../cutscene_skip.h"
 
 #include "../cutscene_scale_avatar.h"
 
@@ -87,7 +72,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
             ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
-            func_801BECCC(self);
+            CutsceneSkip(self);
         }
         if (self->step && g_Dialogue.unk3C) {
             CutsceneRun();
