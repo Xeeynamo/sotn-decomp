@@ -76,6 +76,7 @@ CutsceneRun = 0x801B9AC8;
 CutsceneSkip = 0x801B9D74;
 ScaleCutsceneAvatar = 0x801B9E54;
 LIB_EntityCutscene = 0x801B9F58;
+EntityCandleTable = 0x801BAF60;
 EntityChair = 0x801BEE38;
 Random = 0x801BF130;
 Update = 0x801BF160;

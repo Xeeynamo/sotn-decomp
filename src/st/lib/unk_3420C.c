@@ -16,7 +16,6 @@ extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
 extern u8* D_psp_092A5F50;
-extern s32 D_91ED5F8;
 
 void func_us_801B4830(Entity* self) {
     Primitive* prim;
@@ -27,7 +26,7 @@ void func_us_801B4830(Entity* self) {
     u16* var_s4;
     char* name;
     Entity* tempEntity;
-    s32* unused;
+    u8* unused;
 
     tempEntity = self - 1;
     switch (self->step) {
@@ -165,7 +164,7 @@ void func_us_801B4830(Entity* self) {
 
     case 1:
         if (!self->step_s) {
-            unused = &D_91ED5F8;
+            unused = g_Pix[0];
             for (i = 0; i < 2; i++) {
 #ifdef VERSION_PSP
                 name = D_psp_092A5FC8[i];
