@@ -82,7 +82,7 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4194);
 
 const char D_us_801ACF14[] = "DEF";
 const char D_us_801ACF18[] = "ATT";
-const char D_us_801ACF1C[] = {0xB3, 0xDA, 0xD9, 0xBA, 0xBD, 0xB3, 0xFF, 0x00};
+const char D_us_801ACF1C[] = _S("うれるこすう");
 const char D_us_801ACF24[] = _S("Not equipped");
 const char D_us_801ACF34[] = _S("Equipped");
 const char D_us_801ACF40[] = _S("Number");

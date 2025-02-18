@@ -280,7 +280,7 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B6124);
 
 const char D_us_801AD134[] = _S("Lord Dracula");
 const char D_us_801AD144[] = _S("Shaft");
-const char D_us_801AD14C[] = {0x76, 0xFF, 0x00, 0x00};
+const char D_us_801AD14C[] = _S("カ");
 const char D_us_801AD150[] = _S("Galamoth");
 const char D_us_801AD15C[] = _S("Darkwing Bat");
 const char D_us_801AD16C[] = _S("Akmodan II");
