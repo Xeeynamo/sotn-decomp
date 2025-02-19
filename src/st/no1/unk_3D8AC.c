@@ -463,7 +463,7 @@ void func_us_801BE2C8(Entity* self) {
             p3.vx = 0;
             p3.vy = t - 0;
             p3.vz = 0;
-            for (j = 0; p0.vx < 0xC0; j++) {
+            for (j = 0; p0.vx < 0xC0; j++, prim = prim->next) {
                 if (iter > 0x170) {
                     break;
                 }
@@ -492,7 +492,6 @@ void func_us_801BE2C8(Entity* self) {
                 p1.vx += 3;
                 p2.vx += 3;
                 p3.vx += 3;
-                prim = prim->next;
             }
             *zPointer += D_us_801815CC[i];
             zPointer++;
