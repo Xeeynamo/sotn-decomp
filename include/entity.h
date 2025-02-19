@@ -1697,7 +1697,7 @@ typedef struct {
     u8 digits[4];
     s16 number;
     s16 type;
-    s16 unk84;
+    s16 nDigits;
     u16 unk86;
     u16 unk88;
     u16 unk8A;
