@@ -918,4 +918,91 @@ void EntityTransparentWhiteCircle(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityPlayerPinkEffect);
+extern Unkstruct_800ADEF0 D_800ADEF0[];
+
+void EntityPlayerPinkEffect(Entity* self) {
+    s16 paramsHi = (self->params & 0x7F00) >> 8;
+    Unkstruct_800ADEF0* data_idx = (Unkstruct_800ADEF0*)&D_800ADEF0[paramsHi];
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->ext.timer.t = data_idx->unk0[0];
+        if (data_idx->unk18 != 0x83) {
+            PlaySfx(SFX_TRANSFORM);
+        }
+        if (data_idx->unk18 >= 128) {
+            func_8010E168(true, 64);
+        } else {
+            GiveStatBuff(data_idx->unk18);
+        }
+        self->step += 1;
+        break;
+    case 1:
+        if (--self->ext.timer.t != 0) {
+            return;
+        }
+        if (data_idx->unk8[self->ext.factory.unk7E]) {
+            CreateEntFactoryFromEntity(
+                self,
+                FACTORY(data_idx->unk8[self->ext.factory.unk7E],
+                        data_idx->unk16[self->ext.factory.unk7E]),
+                0);
+            if (data_idx->unk8[self->ext.factory.unk7E] == 0x28) {
+                PlaySfx(SFX_UI_MP_FULL);
+            }
+        }
+
+        self->ext.factory.unk7E++;
+        self->ext.timer.t = data_idx->unk0[self->ext.factory.unk7E];
+        if (self->ext.timer.t == 0xFF) {
+            switch (data_idx->unk18) {
+            case 0x83: // There is no un-stoning potion, perhaps related to
+                       // fairy using Hammer.
+                if (PLAYER.step == Player_StatusStone) {
+                    g_Player.unk5E = 1;
+                    D_800ACE44 = 0x40;
+                }
+                break;
+            case 0x80:
+                g_Player.timers[0] = 2;
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
+                break;
+            case 0x81:
+                g_Player.timers[1] = 2;
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
+                break;
+            case 0x84: // Potion most likely.
+                g_Player.unk56 = 1;
+                g_Player.unk58 =
+                    GetStatusAilmentTimer(STATUS_AILMENT_UNK04, 0x32);
+                break;
+            case 0x85: // High Potion most likely.
+                g_Player.unk56 = 1;
+                g_Player.unk58 =
+                    GetStatusAilmentTimer(STATUS_AILMENT_UNK05, 0x64);
+                break;
+            case 0x86: // Elixir
+                g_Player.unk56 = 1;
+                g_Player.unk58 = g_Status.hpMax;
+                break;
+            case 0x87: // Mana Prism
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
+                g_Status.mp = g_Status.mpMax;
+                break;
+            default: // Used by Resist and Stat Boosting Potions most likely.
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(0x2F, D_800AE120[data_idx->unk18]), 0);
+                PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
+            case 0x82:
+                break;
+            }
+            self->step += 1;
+        }
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+}

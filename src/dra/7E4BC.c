@@ -1107,7 +1107,6 @@ void EntityTransparentWhiteCircle(Entity* self) {
 void EntityPlayerPinkEffect(Entity* self) {
     s16 paramsHi = (self->params & 0x7F00) >> 8;
     Unkstruct_800ADEF0* data_idx = (Unkstruct_800ADEF0*)&D_800ADEF0[paramsHi];
-    u32 temp2;
 
     switch (self->step) {
     case 0:
@@ -1142,8 +1141,7 @@ void EntityPlayerPinkEffect(Entity* self) {
         self->ext.factory.unk7E++;
         self->ext.timer.t = data_idx->unk0[self->ext.factory.unk7E];
         if (self->ext.timer.t == 0xFF) {
-            temp2 = data_idx->unk18;
-            switch (temp2) {
+            switch (data_idx->unk18) {
             case 0x83: // There is no un-stoning potion, perhaps related to
                        // fairy using Hammer.
                 if (PLAYER.step == Player_StatusStone) {
@@ -1179,7 +1177,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                 break;
             default: // Used by Resist and Stat Boosting Potions most likely.
                 CreateEntFactoryFromEntity(
-                    self, FACTORY(0x2F, D_800AE120[temp2]), 0);
+                    self, FACTORY(0x2F, D_800AE120[data_idx->unk18]), 0);
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             case 0x82:
                 break;
