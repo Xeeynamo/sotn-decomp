@@ -379,4 +379,47 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_8011F074);
+extern s32 D_8013808C;
+
+void func_8011F074(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        self->flags =
+            FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
+        self->unk5A = 0x79;
+        self->animSet = ANIMSET_DRA(14);
+        self->zPriority = PLAYER.zPriority + 2;
+        self->palette = PAL_OVL(0x19F);
+
+        if (D_8013808C & 1) {
+            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        } else {
+            self->drawMode = DRAW_TPAGE;
+        }
+        D_8013808C++;
+        self->unk6C = 0xFF;
+        self->drawFlags =
+            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->rotX = self->rotY = 0x40;
+        self->anim = D_800ADC44;
+
+        self->posY.i.hi += ((rand() % 35) - 15);
+        self->posX.i.hi += ((rand() % 20) - 10);
+        self->velocityY = -0x6000 - (rand() & 0x3FFF);
+        self->step++;
+        break;
+
+    case 1:
+        if (self->unk6C > 16) {
+            self->unk6C -= 8;
+        }
+        self->posY.val += self->velocityY;
+        self->rotX += 8;
+        self->rotY += 8;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
