@@ -917,3 +917,5 @@ void EntityTransparentWhiteCircle(Entity* self) {
         prim1 = prim1->next;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityPlayerPinkEffect);
