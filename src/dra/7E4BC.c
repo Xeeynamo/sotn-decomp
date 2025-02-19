@@ -606,22 +606,22 @@ void func_8011F074(Entity* entity) {
 // effect when player takes lightning damage
 
 void EntityHitByLightning(Entity* self) {
-    Primitive* prevPrim;
-    Primitive* prim;
-    s16 temp_s0;
-    s32 temp_s2;
     s16 xBase;
     s16 yBase;
-
-    s16 tempAngle;
-    s32 i;
-    s16 temp_s1_2;
     s32 xOffset;
     s32 yOffset;
     bool var_s0 = false;
+    s32 temp_s2;
+    s16 temp_s1_2;
+    s16 temp_s0;
+    s32 i;
+    Primitive* prevPrim;
+    Primitive* prim;
 
     if ((self->params & 0xFF00) != 0) {
-        var_s0 = (++self->ext.hitbylightning.unk9C) > 0xA8;
+        if((++self->ext.hitbylightning.unk9C) > 0xA8){
+            var_s0 = true;
+        }
     } else if (PLAYER.step != 10) {
         var_s0 = true;
     }
@@ -636,7 +636,7 @@ void EntityHitByLightning(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x3F);
-        self->ext.hitbylightning.unk80 = rand();
+        self->ext.hitbylightning.unk80 = rand() & PSP_RANDMASK;
         self->ext.hitbylightning.unk82 = (rand() & 0x1FF) + 0x100;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
@@ -645,9 +645,7 @@ void EntityHitByLightning(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = D_800ADC7C[rand() & 1];
             prim->priority = PLAYER.zPriority - 2;
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = 0x80;
+            PGREY(prim,0) = PGREY(prim,1) = PGREY(prim,2) = PGREY(prim,3) = 0x80;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
@@ -668,10 +666,10 @@ void EntityHitByLightning(Entity* self) {
         xOffset = ((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 12;
         // This should probably be * -14 but that doesn't work.
         yOffset =
-            ((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * -7 << 1;
+            -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
-        if ((self->ext.hitbylightning.unk92 != 0) &&
+        if ((self->ext.hitbylightning.unk92) &&
             (g_Player.pl_vram_flag & 0xE)) {
             var_s0 = true;
         }
@@ -697,12 +695,12 @@ void EntityHitByLightning(Entity* self) {
         yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
                    ((rand() % 8) + 0xA)) +
                   self->ext.hitbylightning.unk98;
-        self->posX.val = xOffset + PLAYER.posX.val;
-        self->posY.val = yOffset + PLAYER.posY.val;
+        self->posX.val = PLAYER.posX.val + xOffset;
+        self->posY.val = PLAYER.posY.val + yOffset;
         self->ext.hitbylightning.unk98 -= 0x8000;
+        prim = &g_PrimBuf[self->primIndex];
         break;
     }
-
     xBase = (self->posX.i.hi + (rand() & 7)) - 4;
     yBase = (self->posY.i.hi + (rand() & 0x1F)) - 0x18;
     temp_s1_2 = self->ext.hitbylightning.unk94;
@@ -713,8 +711,8 @@ void EntityHitByLightning(Entity* self) {
         prim = prim->next;
         *prevPrim = *prim;
         prevPrim->next = prim;
-        prevPrim->u0 = prevPrim->u2 = (i * 0x10) - 0x70;
-        prevPrim->u1 = prevPrim->u3 = ((i + 1) * 0x10) - 0x70;
+        prevPrim->u0 = prevPrim->u2 = (i * 0x10) + 0x90;
+        prevPrim->u1 = prevPrim->u3 = ((i + 1) * 0x10) + 0x90;
         prevPrim->v0 = prevPrim->v1 = 0xC0;
         prevPrim->v2 = prevPrim->v3 = 0xCF;
     }
@@ -729,19 +727,17 @@ void EntityHitByLightning(Entity* self) {
     prim->x3 = xBase + (((rcos(temp_s0) >> 4) * temp_s1_2) >> 8);
     prim->y3 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
 
-    // FAKE: Annoying repeat of the access and bitmask
-    tempAngle = self->ext.hitbylightning.unk80 & 0xFFF;
-    if (((tempAngle) >= 0x400) &&
-        ((self->ext.hitbylightning.unk80 & 0xFFF) < 0xC00)) {
+    temp_s0 = (self->ext.hitbylightning.unk80 & 0xFFF);
+    if (temp_s0 < 0x400){
+        prim->priority = PLAYER.zPriority + 2;
+    } else if (temp_s0 < 0xC00) {
         prim->priority = PLAYER.zPriority - 2;
     } else {
         prim->priority = PLAYER.zPriority + 2;
     }
-    prim->u0 = prim->u2 = (i << 4) - 0x70;
+    prim->u0 = prim->u2 = (i << 4) + 0x90;
+    prim->u1 = prim->u3 = (i+1 << 4) + 0x90;
     prim->v0 = prim->v1 = 0xC0;
-    // FAKE but needed to duplicate the sll 4 instruction
-    tempAngle = i;
-    prim->u1 = prim->u3 = (tempAngle << 4) - 0x60;
     prim->v2 = prim->v3 = 0xCF;
 }
 
