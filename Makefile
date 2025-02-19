@@ -453,7 +453,7 @@ endif
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
 	mv src src_tmp
-	rm $(BUILD_DIR)/*.ld
+	find $(BUILD_DIR) -type f -name "*.ld" -delete
 	make extract -j
 	rm -rf src/
 	mv src_tmp src
