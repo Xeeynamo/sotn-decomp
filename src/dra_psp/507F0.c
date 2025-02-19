@@ -1006,3 +1006,13 @@ void EntityPlayerPinkEffect(Entity* self) {
         break;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityPlayerDissolves);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityLevelUpAnimation);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_091324E0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_09132550);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityMist);
