@@ -730,4 +730,190 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityTransparentWhiteCircle);
+void EntityTransparentWhiteCircle(Entity* self) {
+    bool flag;
+    s16 upperparams;
+    s16* loadedParams;
+    s16 selfX;
+    s16 selfY;
+    s16 rScale;
+    s16 gScale;
+    s16 bScale;
+    s16 gOffset;
+    s16 bOffset;
+    s16 sp38;
+    s16 base_angle;
+    s16 angle;
+    s32 i;
+    Primitive* prim1;
+    Primitive* prim2;
+
+    upperparams = (self->params & 0x7F00) >> 8;
+    flag = upperparams & 0x40;
+
+    loadedParams = &D_800ADDE8[upperparams & 0x3F][0];
+    rScale = loadedParams[2];
+    gScale = loadedParams[3];
+    bScale = loadedParams[4];
+    gOffset = loadedParams[0];
+    bOffset = loadedParams[1];
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    func_8010DFF0(1, 1);
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 32);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        prim2 = prim1 = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim1 = prim1->next;
+        }
+        for (i = 0; i < 16; i++) {
+            angle = i << 8;
+            prim2->u0 = ((rcos(angle) >> 4 << 5) >> 8) + 0x20;
+            prim2->v0 = -((rsin(angle) >> 4 << 5) >> 8) + 0xDF;
+            angle = i + 1 << 8;
+            prim2->u1 = ((rcos(angle) >> 4 << 5) >> 8) + 0x20;
+            prim2->v1 = -((rsin(angle) >> 4 << 5) >> 8) + 0xDF;
+            prim1->u2 = prim1->u3 = 0x20;
+            prim1->v2 = prim1->v3 = 0xDF;
+            prim2->u2 = prim1->u0 = (prim2->u0 + prim1->u2) / 2;
+            prim2->v2 = prim1->v0 = (prim2->v0 + prim1->v2) / 2;
+            prim2->u3 = prim1->u1 = (prim2->u1 + prim1->u3) / 2;
+            prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
+            prim1->tpage = prim2->tpage = 0x1A;
+            prim1->clut = prim2->clut = 0x15F;
+            prim1->priority = prim2->priority = PLAYER.zPriority + 2;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                DRAW_TRANSP;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+        }
+
+        if (flag == false) {
+            self->ext.whiteCircle.unk80 = self->ext.whiteCircle.unk82 = 0x280;
+            self->ext.whiteCircle.unk84 = self->ext.whiteCircle.unk86 = 0x240;
+            self->ext.whiteCircle.unk8A = loadedParams[5];
+            self->ext.whiteCircle.unk88 = 0xC0;
+        } else {
+            self->ext.whiteCircle.unk80 = self->ext.whiteCircle.unk82 = 0x40;
+            self->ext.whiteCircle.unk84 = self->ext.whiteCircle.unk86 = 0;
+            self->ext.whiteCircle.unk8A = loadedParams[5];
+            self->ext.whiteCircle.unk88 = 0xC0;
+        }
+        self->step += 1;
+        break;
+    case 1:
+        self->ext.whiteCircle.unk7E += 0x40;
+        if (flag == false) {
+            self->ext.whiteCircle.unk86 -= 0xA;
+            if (self->ext.whiteCircle.unk86 < 0) {
+                self->ext.whiteCircle.unk86 = 0;
+                self->ext.whiteCircle.unk7C = 0x20;
+                self->step += 1;
+            }
+            self->ext.whiteCircle.unk84 = self->ext.whiteCircle.unk86;
+            self->ext.whiteCircle.unk82 -= 5;
+            self->ext.whiteCircle.unk80 -= 5;
+        } else {
+            self->ext.whiteCircle.unk86 += 9;
+            self->ext.whiteCircle.unk84 += 6;
+            if (self->ext.whiteCircle.unk86 > 0x200) {
+                self->ext.whiteCircle.unk86 = 0x200;
+                self->step += 1;
+            }
+            self->ext.whiteCircle.unk82 += 3;
+            self->ext.whiteCircle.unk80 += 2;
+        }
+        break;
+    case 2:
+        self->ext.whiteCircle.unk7E += 0x40;
+        if (flag == false) {
+            self->ext.whiteCircle.unk82 -= 3;
+            self->ext.whiteCircle.unk80 -= 6;
+            if (--self->ext.whiteCircle.unk7C == 0) {
+                self->step += 1;
+                break;
+            }
+            break;
+        }
+        self->ext.whiteCircle.unk88 -= 4;
+        if (self->ext.whiteCircle.unk88 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        self->ext.whiteCircle.unk7E += 0x40;
+        self->ext.whiteCircle.unk82 -= 3;
+        self->ext.whiteCircle.unk80 -= 6;
+        self->ext.whiteCircle.unk88 -= 12;
+        if (self->ext.whiteCircle.unk88 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    sp38 = self->ext.whiteCircle.unk8A;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    prim1 = prim2 = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        prim1 = prim1->next;
+    }
+    for (i = 0; i < 16; i++) {
+        prim2->x0 =
+            selfX + ((prim2->u0 - 0x20) * self->ext.whiteCircle.unk80) / 0x100;
+        prim2->y0 =
+            selfY + ((prim2->v0 - 0xE0) * self->ext.whiteCircle.unk82) / 0x100;
+        prim2->x1 =
+            selfX + ((prim2->u1 - 0x20) * self->ext.whiteCircle.unk80) / 0x100;
+        prim2->y1 =
+            selfY + ((prim2->v1 - 0xE0) * self->ext.whiteCircle.unk82) / 0x100;
+        prim1->x2 =
+            selfX +
+            (((rcos(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
+                0x100;
+        prim1->y2 =
+            selfY -
+            (((rsin(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
+                0x100;
+        prim1->x3 =
+            selfX +
+            (((rcos(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
+                0x100;
+        prim1->y3 =
+            selfY -
+            (((rsin(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
+                0x100;
+        prim2->x2 = prim1->x0 = (prim2->x0 + prim1->x2) / 2;
+        prim2->y2 = prim1->y0 = (prim2->y0 + prim1->y2) / 2;
+        prim2->x3 = prim1->x1 = (prim2->x1 + prim1->x3) / 2;
+        prim2->y3 = prim1->y1 = (prim2->y1 + prim1->y3) / 2;
+        base_angle = i * sp38;
+        angle = self->ext.whiteCircle.unk7E + base_angle;
+        prim1->r0 = prim2->r2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        angle = self->ext.whiteCircle.unk7E + gOffset + base_angle;
+        prim1->g0 = prim2->g2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        angle = self->ext.whiteCircle.unk7E + bOffset + base_angle;
+        prim1->b0 = prim2->b2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
+        angle = self->ext.whiteCircle.unk7E + sp38 + base_angle;
+        prim1->r1 = prim2->r3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        angle = self->ext.whiteCircle.unk7E + gOffset + sp38 + base_angle;
+        prim1->g1 = prim2->g3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        angle = self->ext.whiteCircle.unk7E + bOffset + sp38 + base_angle;
+        prim1->b1 = prim2->b3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
+        PGREY(prim2,0) = PGREY(prim2,1) = 0;
+        PGREY(prim1,2) = PGREY(prim1,3) = 0;
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+    }
+}

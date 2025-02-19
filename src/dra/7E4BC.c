@@ -916,6 +916,9 @@ void EntityHitByIce(Entity* self) {
 // Entity ID #38. Created by blueprint 53. No known callers.
 // Near-duplicate of RIC RicEntityShrinkingPowerUpRing.
 void EntityTransparentWhiteCircle(Entity* self) {
+    bool flag;
+    s16 upperparams;
+    s16* loadedParams;
     s16 selfX;
     s16 selfY;
     s16 rScale;
@@ -924,16 +927,16 @@ void EntityTransparentWhiteCircle(Entity* self) {
     s16 gOffset;
     s16 bOffset;
     s16 sp38;
+    s16 base_angle;
+    s16 angle;
+    s32 i;
     Primitive* prim1;
     Primitive* prim2;
-    s32 baseAngle;
-    s32 i;
-    s16* loadedParams;
-    s32 temp_s6;
 
-    u32 upperparams = self->params & 0x7F00;
+    upperparams = (self->params & 0x7F00) >> 8;
+    flag = upperparams & 0x40;
 
-    loadedParams = &D_800ADDE8[(upperparams >> 8) & 0x3F][0];
+    loadedParams = &D_800ADDE8[upperparams & 0x3F][0];
     rScale = loadedParams[2];
     gScale = loadedParams[3];
     bScale = loadedParams[4];
@@ -941,7 +944,6 @@ void EntityTransparentWhiteCircle(Entity* self) {
     bOffset = loadedParams[1];
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    temp_s6 = (upperparams >> 8) & 0x40;
     func_8010DFF0(1, 1);
     switch (self->step) {
     case 0:
@@ -952,15 +954,19 @@ void EntityTransparentWhiteCircle(Entity* self) {
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
         prim2 = prim1 = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim1 = prim1->next;
         }
         for (i = 0; i < 16; i++) {
-            prim2->u0 = ((rcos((s16)(i << 8)) * 2) >> 8) + 0x20;
-            prim2->v0 = -((rsin((s16)(i << 8)) * 2) >> 8) - 0x21;
-            prim2->u1 = ((rcos((s16)(i + 1 << 8)) * 2) >> 8) + 0x20;
-            prim2->v1 = -((rsin((s16)(i + 1 << 8)) * 2) >> 8) - 0x21;
+            angle = i << 8;
+            prim2->u0 = ((rcos(angle) >> 4 << 5) >> 8) + 0x20;
+            prim2->v0 = -((rsin(angle) >> 4 << 5) >> 8) + 0xDF;
+            angle = i + 1 << 8;
+            prim2->u1 = ((rcos(angle) >> 4 << 5) >> 8) + 0x20;
+            prim2->v1 = -((rsin(angle) >> 4 << 5) >> 8) + 0xDF;
             prim1->u2 = prim1->u3 = 0x20;
             prim1->v2 = prim1->v3 = 0xDF;
             prim2->u2 = prim1->u0 = (prim2->u0 + prim1->u2) / 2;
@@ -977,22 +983,24 @@ void EntityTransparentWhiteCircle(Entity* self) {
             prim1 = prim1->next;
         }
 
-        if (temp_s6 == 0) {
+        if (flag == false) {
             self->ext.whiteCircle.unk80 = self->ext.whiteCircle.unk82 = 0x280;
             self->ext.whiteCircle.unk84 = self->ext.whiteCircle.unk86 = 0x240;
+            self->ext.whiteCircle.unk8A = loadedParams[5];
+            self->ext.whiteCircle.unk88 = 0xC0;
         } else {
             self->ext.whiteCircle.unk80 = self->ext.whiteCircle.unk82 = 0x40;
             self->ext.whiteCircle.unk84 = self->ext.whiteCircle.unk86 = 0;
+            self->ext.whiteCircle.unk8A = loadedParams[5];
+            self->ext.whiteCircle.unk88 = 0xC0;
         }
-
-        self->ext.whiteCircle.unk8A = loadedParams[5];
-        self->ext.whiteCircle.unk88 = 0xC0;
-        goto label; // unfortunately needed to match
+        self->step += 1;
+        break;
     case 1:
         self->ext.whiteCircle.unk7E += 0x40;
-        if (temp_s6 == 0) {
+        if (flag == false) {
             self->ext.whiteCircle.unk86 -= 0xA;
-            if (self->ext.whiteCircle.unk86 << 0x10 < 0) {
+            if (self->ext.whiteCircle.unk86 < 0) {
                 self->ext.whiteCircle.unk86 = 0;
                 self->ext.whiteCircle.unk7C = 0x20;
                 self->step += 1;
@@ -1013,11 +1021,10 @@ void EntityTransparentWhiteCircle(Entity* self) {
         break;
     case 2:
         self->ext.whiteCircle.unk7E += 0x40;
-        if (temp_s6 == 0) {
+        if (flag == false) {
             self->ext.whiteCircle.unk82 -= 3;
             self->ext.whiteCircle.unk80 -= 6;
             if (--self->ext.whiteCircle.unk7C == 0) {
-            label:
                 self->step += 1;
                 break;
             }
@@ -1030,9 +1037,9 @@ void EntityTransparentWhiteCircle(Entity* self) {
         }
         break;
     case 3:
-        self->ext.whiteCircle.unk7E = self->ext.whiteCircle.unk7E + 0x40;
-        self->ext.whiteCircle.unk82 = self->ext.whiteCircle.unk82 - 3;
-        self->ext.whiteCircle.unk80 = self->ext.whiteCircle.unk80 - 6;
+        self->ext.whiteCircle.unk7E += 0x40;
+        self->ext.whiteCircle.unk82 -= 3;
+        self->ext.whiteCircle.unk80 -= 6;
         self->ext.whiteCircle.unk88 -= 12;
         if (self->ext.whiteCircle.unk88 < 0) {
             DestroyEntity(self);
@@ -1043,7 +1050,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
     sp38 = self->ext.whiteCircle.unk8A;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    prim2 = prim1 = &g_PrimBuf[self->primIndex];
+    prim1 = prim2 = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
         prim1 = prim1->next;
     }
@@ -1058,67 +1065,39 @@ void EntityTransparentWhiteCircle(Entity* self) {
             selfY + ((prim2->v1 - 0xE0) * self->ext.whiteCircle.unk82) / 0x100;
         prim1->x2 =
             selfX +
-            (((rcos(i + 1 << 8) * 2) >> 8) * self->ext.whiteCircle.unk84) /
+            (((rcos(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
                 0x100;
         prim1->y2 =
             selfY -
-            (((rsin(i + 1 << 8) * 2) >> 8) * self->ext.whiteCircle.unk86) /
+            (((rsin(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
                 0x100;
         prim1->x3 =
             selfX +
-            (((rcos(i + 2 << 8) * 2) >> 8) * self->ext.whiteCircle.unk84) /
+            (((rcos(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
                 0x100;
         prim1->y3 =
             selfY -
-            (((rsin(i + 2 << 8) * 2) >> 8) * self->ext.whiteCircle.unk86) /
+            (((rsin(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
                 0x100;
         prim2->x2 = prim1->x0 = (prim2->x0 + prim1->x2) / 2;
         prim2->y2 = prim1->y0 = (prim2->y0 + prim1->y2) / 2;
         prim2->x3 = prim1->x1 = (prim2->x1 + prim1->x3) / 2;
         prim2->y3 = prim1->y1 = (prim2->y1 + prim1->y3) / 2;
-        baseAngle = i * sp38;
-        prim1->r0 = prim2->r2 =
-            (((rsin((s16)(baseAngle + self->ext.whiteCircle.unk7E)) + 0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            rScale;
-        prim1->g0 = prim2->g2 =
-            (((rsin(
-                   (s16)(baseAngle + (gOffset + self->ext.whiteCircle.unk7E))) +
-               0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            gScale;
-        prim1->b0 = prim2->b2 =
-            (((rsin(
-                   (s16)(baseAngle + (bOffset + self->ext.whiteCircle.unk7E))) +
-               0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            bScale;
-        prim1->r1 = prim2->r3 =
-            (((rsin((s16)(baseAngle + (sp38 + self->ext.whiteCircle.unk7E))) +
-               0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            rScale;
-        prim1->g1 = prim2->g3 =
-            (((rsin((s16)(baseAngle +
-                          (sp38 + (gOffset + self->ext.whiteCircle.unk7E)))) +
-               0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            gScale;
-        prim1->b1 = prim2->b3 =
-            (((rsin((s16)(baseAngle +
-                          (sp38 + (bOffset + self->ext.whiteCircle.unk7E)))) +
-               0x1000) >>
-              7) *
-             self->ext.whiteCircle.unk88) /
-            bScale;
-        prim1->r2 = prim1->g2 = prim1->b2 = prim1->r3 = prim1->g3 = prim1->b3 =
-            prim2->r0 = prim2->g0 = prim2->b0 = prim2->r1 = prim2->g1 =
-                prim2->b1 = 0;
+        base_angle = i * sp38;
+        angle = self->ext.whiteCircle.unk7E + base_angle;
+        prim1->r0 = prim2->r2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        angle = self->ext.whiteCircle.unk7E + gOffset + base_angle;
+        prim1->g0 = prim2->g2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        angle = self->ext.whiteCircle.unk7E + bOffset + base_angle;
+        prim1->b0 = prim2->b2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
+        angle = self->ext.whiteCircle.unk7E + sp38 + base_angle;
+        prim1->r1 = prim2->r3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        angle = self->ext.whiteCircle.unk7E + gOffset + sp38 + base_angle;
+        prim1->g1 = prim2->g3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        angle = self->ext.whiteCircle.unk7E + bOffset + sp38 + base_angle;
+        prim1->b1 = prim2->b3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
+        PGREY(prim2,0) = PGREY(prim2,1) = 0;
+        PGREY(prim1,2) = PGREY(prim1,3) = 0;
         prim2 = prim2->next;
         prim1 = prim1->next;
     }
