@@ -155,8 +155,8 @@ typedef struct {
     /* 0x03 */ u8 b;
     /* 0x04 */ u8 w;
     /* 0x05 */ u8 h;
-    /* 0x06 */ u16 priority;
-    /* 0x08 */ u16 drawMode;
+    /* 0x06 */ s16 priority;
+    /* 0x08 */ s16 drawMode;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u32 flags;
 } unkStr_8011E4BC; // size = 0x10
