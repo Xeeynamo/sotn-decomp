@@ -44,7 +44,7 @@ void EntityBreakableWithDebris(Entity* self) {
     AnimateEntity(g_eBreakableAnimations[breakableType], self);
 
     if (self->hitParams) {
-        g_api_PlaySfx(SFX_FIRE_SHOT);
+        g_api.PlaySfx(SFX_FIRE_SHOT);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, entity);

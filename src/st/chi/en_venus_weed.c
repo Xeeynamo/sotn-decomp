@@ -1200,7 +1200,7 @@ void EntityVenusWeedDart(Entity* self) {
 
         x = self->posX.i.hi + self->ext.venusWeedDart.nextPosDeltaX;
         y = self->posY.i.hi + self->ext.venusWeedDart.nextPosDeltaY;
-        g_api_CheckCollision(x, y, &collider, 0);
+        g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             PlaySfxPositional(SFX_STOMP_HARD_E);
             // Correct position to be against the edge

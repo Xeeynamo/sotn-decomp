@@ -359,7 +359,7 @@ u16 D_801396E4;
 u16 D_801396E6;
 u16 D_801396E8;
 s16 D_801396EA;
-u16 D_801396EC;
+s16 D_801396EC;
 padding u16 D_801396EE;
 s32 g_CdCommandStatus;
 s16 g_CdSoundCommandQueuePos;

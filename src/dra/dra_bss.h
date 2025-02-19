@@ -131,7 +131,7 @@ extern u16 D_801396E4;
 extern u16 D_801396E6;
 extern u16 D_801396E8;
 extern s16 D_801396EA;
-extern u16 D_801396EC;
+extern s16 D_801396EC;
 extern s32 g_CdCommandStatus;
 extern volatile s16 g_CdSoundCommandQueuePos;
 extern s32 D_801396F8[32];

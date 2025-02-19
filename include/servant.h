@@ -80,9 +80,6 @@ extern u16 g_ServantClut[48];
 extern s32 g_PlaySfxStep;
 extern EntitySearch g_EntityRanges[];
 
-#ifdef VERSION_PSP
-extern ServantDesc D_8D1DC40;
-#endif
 void DestroyEntity(Entity* entity);
 extern ServantDesc g_ServantDesc;
 
