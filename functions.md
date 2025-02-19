@@ -1046,7 +1046,7 @@
 | st0    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | wrp    | Update                              |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_psp_09138240                   |      269 |         49 |        |                                 |       |
-| dra    | func_8011EDA8                       |      270 |         27 |        |                                 |       |
+| dra    | func_8011EDA8                       |      270 |         27 |        | https://decomp.me/scratch/fBpkl | 0.984 |
 | no4    | func_psp_0923E690                   |      272 |         23 |        |                                 |       |
 | lib    | func_psp_09261338                   |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.985 |
 | st0    | func_801B101C                       |      275 |         24 |        |                                 |       |
@@ -1217,7 +1217,7 @@
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
 | lib    | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
-| dra    | EntityHitByLightning                |      657 |         61 |        |                                 |       |
+| dra    | EntityHitByLightning                |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib    | UnkRecursivePrimFunc2               |      663 |         11 |        |                                 |       |
 | dra    | func_psp_0910D8F8                   |      672 |         81 |        | https://decomp.me/scratch/HLovD | 0.987 |
@@ -1229,7 +1229,7 @@
 | lib    | func_psp_09241690                   |      691 |         73 |        |                                 |       |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/ZJDcJ | 0.934 |
 | dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
-| dra    | EntityHitByIce                      |      700 |         67 |        |                                 |       |
+| dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
 | lib    | func_psp_09265608                   |      711 |         73 | Yes    |                                 |       |
 | dra    | HandleGameOver                      |      723 |        139 |        |                                 |       |
@@ -1278,7 +1278,7 @@
 | no4    | func_psp_09245BB8                   |     1004 |         86 |        |                                 |       |
 | wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | lib    | func_psp_0926AED0                   |     1018 |        104 | Yes    |                                 |       |
-| dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        |                                 |       |
+| dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 0.886 |
 | dra    | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib    | func_psp_09267400                   |     1060 |        102 | Yes    | https://decomp.me/scratch/d5C0A | 0.996 |
