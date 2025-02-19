@@ -35,7 +35,6 @@ extern u8 D_us_80181B9C[];
 extern u8 D_us_80181BAC[];
 extern u8 D_us_80181BBC[];
 extern s16 D_us_80181C34[];
-extern s32 D_psp_08B42050;
 extern s32 D_psp_092A5668;
 extern s32 D_psp_092A5670;
 extern s32 D_psp_092A5678;
