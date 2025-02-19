@@ -423,3 +423,9 @@ void func_8011F074(Entity* self) {
         break;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityHitByLightning);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityHitByIce);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityTransparentWhiteCircle);

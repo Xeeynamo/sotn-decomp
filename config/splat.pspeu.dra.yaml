@@ -111,7 +111,6 @@ segments:
       - [0x45688, c, dra/8A0A4]
       - [0x47EA8, c, dra/7879C]
       - [0x507F0, c, dra_psp/507F0]
-      - [0x51A40, c, dra_psp/51A40]
       - [0x53DB0, c, dra_psp/53DB0]
       - [0x54180, c, dra_psp/54180]
       - [0x581A0, c, dra_psp/581A0]
