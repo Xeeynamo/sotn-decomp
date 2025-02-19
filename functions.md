@@ -7,7 +7,7 @@
 | dra    | DebugUpdate                         |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090F6B20                   |        7 |          1 |        |                                 |       |
 | dra    | nullsub_9                           |        7 |          1 |        |                                 |       |
-| dra    | func_psp_0912DDA0                   |        7 |          1 |        |                                 |       |
+| dra    | func_8011EDA0                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_0913D610                   |        7 |          1 |        |                                 |       |
 | dra    | SetReverbDepth                      |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED058                   |        7 |          1 |        |                                 |       |
@@ -27,10 +27,10 @@
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
+| dra    | EntityNull                          |        9 |          1 |        |                                 |       |
+| dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_091088E0                   |        9 |          1 |        |                                 |       |
-| dra    | func_8011A4C8                       |        9 |          1 |        |                                 |       |
-| dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
 | dra    | func_psp_0913D618                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
@@ -382,16 +382,16 @@
 | dra    | func_801092E8                       |       41 |          1 |        |                                 |       |
 | dra    | func_8010E470                       |       41 |          2 |        |                                 |       |
 | dra    | func_psp_0913E468                   |       41 |          2 |        |                                 |       |
-| dra    | func_800EAEA4                       |       41 |          3 |        |                                 |       |
 | dra    | func_8011A328                       |       41 |          3 |        |                                 |       |
+| dra    | func_800EAEA4                       |       41 |          3 |        |                                 |       |
 | lib    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | no4    | func_psp_0925AD78                   |       41 |          3 |        |                                 |       |
 | st0    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | st0    | func_801ADAC8                       |       41 |          3 |        |                                 |       |
 | wrp    | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | dra    | func_psp_090F1CE8                   |       41 |          4 |        |                                 |       |
-| dra    | SetStageDisplayBuffer               |       41 |          6 |        |                                 |       |
 | dra    | func_8011B530                       |       41 |          6 |        |                                 |       |
+| dra    | SetStageDisplayBuffer               |       41 |          6 |        |                                 |       |
 | dra    | func_psp_090F6A90                   |       41 |         15 |        |                                 |       |
 |        | bat.rodata                          |       42 |          0 | Yes    |                                 |       |
 | lib    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
@@ -413,8 +413,8 @@
 | dra    | func_psp_090ECE88                   |       43 |          3 |        |                                 |       |
 | dra    | func_psp_090ED9E0                   |       43 |          4 |        |                                 |       |
 | no4    | func_psp_09238490                   |       43 |          4 |        |                                 |       |
+| dra    | CreateHPNumMove                     |       43 |          5 |        |                                 |       |
 | dra    | func_psp_090FCE58                   |       43 |          5 |        |                                 |       |
-| dra    | func_psp_09124FB8                   |       43 |          5 |        | https://decomp.me/scratch/zssLQ | 1.0   |
 | dra    | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra    | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
 | dra    | func_8010DF70                       |       43 |          8 |        |                                 |       |
@@ -473,8 +473,8 @@
 | dra    | func_psp_09144BD8                   |       50 |         12 |        |                                 |       |
 | dra    | func_psp_090F1DF0                   |       51 |          4 |        |                                 |       |
 | lib    | func_psp_0925EAF0                   |       51 |          4 |        | https://decomp.me/scratch/uVDtw | 1.0   |
-| dra    | AddHearts                           |       51 |          5 |        |                                 |       |
 | dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
+| dra    | AddHearts                           |       51 |          5 |        |                                 |       |
 | dra    | func_psp_090F4FC8                   |       51 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
 | dra    | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
 | dra    | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
@@ -496,10 +496,10 @@
 | dra    | func_psp_090EF380                   |       54 |          4 |        |                                 |       |
 | dra    | func_psp_090DCC60                   |       55 |          1 |        |                                 |       |
 | dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
-| dra    | func_psp_091248D0                   |       55 |          5 |        |                                 |       |
+| dra    | GetFreeEntityReverse                |       55 |          5 |        |                                 |       |
 | dra    | LearnSpell                          |       55 |          6 |        |                                 |       |
 | dra    | func_8010E0D0                       |       55 |          7 |        |                                 |       |
-| dra    | func_psp_091295F0                   |       55 |          7 |        |                                 |       |
+| dra    | func_8011BD48                       |       55 |          7 |        |                                 |       |
 | lib    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | no4    | func_psp_0924CB20                   |       55 |          8 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
@@ -569,7 +569,7 @@
 | lib    | cutscene.rodata                     |       64 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090F17D8                   |       64 |          5 |        |                                 |       |
 | dra    | func_801026BC                       |       64 |          7 |        |                                 |       |
-| dra    | func_psp_09127B50                   |       65 |          8 |        | https://decomp.me/scratch/9ZT5U | 1.0   |
+| dra    | func_8011A9D8                       |       65 |          8 |        |                                 |       |
 | lib    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | no4    | func_psp_092447C0                   |       65 |         11 |        |                                 |       |
 | st0    | UpdateRoomPosition                  |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -688,7 +688,7 @@
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
 | dra    | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
 | dra    | func_psp_09136BF8                   |       83 |         14 |        |                                 |       |
-| dra    | func_psp_09127348                   |       84 |          4 |        | https://decomp.me/scratch/f2fS2 | 1.0   |
+| dra    | GetServantStats                     |       84 |          4 |        |                                 |       |
 | lib    | EntityGreyPuffSpawner               |       84 |          5 |        |                                 |       |
 | dra    | func_psp_090EEE78                   |       84 |          7 |        |                                 |       |
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
@@ -846,7 +846,7 @@
 | dra    | PlaySfx                             |      117 |         18 |        | https://decomp.me/scratch/qLAhD | 0.992 |
 |        | IsMovementAllowed                   |      117 |         23 |        |                                 |       |
 | dra    | EntitySmallRisingHeart              |      118 |         10 |        |                                 |       |
-| dra    | func_psp_091279A0                   |      119 |         19 |        | https://decomp.me/scratch/gjiIs | 0.998 |
+| dra    | func_8011A870                       |      119 |         19 |        |                                 |       |
 | st0    | CollectSubweapon                    |      120 |          9 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra    | func_psp_090ED658                   |      120 |         11 |        |                                 |       |
 | dra    | GetEquipProperties                  |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
@@ -958,7 +958,7 @@
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        |                                 |       |
 | no4    | func_psp_09249FA0                   |      193 |         24 |        |                                 |       |
-| dra    | 47EA8.rodata                        |      194 |          0 | Yes    |                                 |       |
+| dra    | 7879C.rodata                        |      194 |          0 | Yes    |                                 |       |
 | dra    | func_800FE3C4                       |      194 |         20 |        |                                 |       |
 | dra    | func_8010D59C                       |      196 |         22 |        |                                 |       |
 | dra    | func_psp_091398F0                   |      196 |         35 | Yes    |                                 |       |
@@ -1110,10 +1110,10 @@
 | no4    | func_psp_09254DE8                   |      352 |         30 |        |                                 |       |
 | dra    | func_80130264                       |      352 |         34 | Yes    |                                 |       |
 | no4    | func_psp_09249030                   |      356 |         34 |        |                                 |       |
-| dra    | func_8011A4D0                       |      356 |         51 |        |                                 |       |
+| dra    | UpdatePlayerEntities                |      356 |         51 |        |                                 |       |
 | lib    | func_psp_09264E20                   |      357 |         45 |        | https://decomp.me/scratch/67tPj | 0.999 |
 | lib    | func_psp_092576C8                   |      359 |         33 |        |                                 |       |
-| lib    | func_psp_0926D5E0                   |      363 |         31 | Yes    | https://decomp.me/scratch/OAawr | 0.995 |
+| lib    | func_psp_0926D5E0                   |      363 |         31 | Yes    | https://decomp.me/scratch/OAawr | 0.996 |
 | lib    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | no4    | func_psp_0924B288                   |      364 |         33 |        |                                 |       |
 | st0    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
