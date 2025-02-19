@@ -309,6 +309,74 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0() {}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_8011EDA8);
+void func_8011EDA8(Entity* self) {
+    s16 paramsLo = self->params & 0xFF;
+    s16 paramsHi = (self->params >> 8) & 0xFF;
+
+    switch (self->step) {
+    case 0:
+        if (paramsHi == 1) {
+            self->rotX = 0xC0;
+            self->rotY = 0xC0;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->animSet = ANIMSET_DRA(2);
+            self->anim = D_800ADC10;
+        }
+
+        if ((paramsHi == 0) || (paramsHi == 2)) {
+            if (paramsLo & 3) {
+                self->anim = D_800ADBD4;
+                self->rotX = 0x120;
+                self->rotY = 0x120;
+                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->animSet = ANIMSET_DRA(2);
+            } else {
+                self->animSet = ANIMSET_DRA(5);
+                self->anim = D_800AD57C;
+                self->palette = PAL_OVL(0x170);
+            }
+        }
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+
+        if (rand() & 3) {
+            self->zPriority = PLAYER.zPriority + 2;
+        } else {
+            self->zPriority = PLAYER.zPriority - 2;
+        }
+
+        if (paramsHi == 2) {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+        }
+
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
+        self->velocityY = FIX(-0.5);
+        self->velocityX = PLAYER.velocityX >> 2;
+        self->step++;
+        break;
+
+    case 1:
+        self->rotX -= 4;
+        self->rotY -= 4;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
+            self->drawMode = DRAW_TPAGE;
+            if (!(paramsLo & 1) && (self->animFrameDuration == 1)) {
+                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+            }
+        }
+
+        if ((self->animFrameIdx == 16) && (self->anim == D_800AD57C)) {
+            self->drawMode = DRAW_TPAGE;
+        }
+
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_8011F074);

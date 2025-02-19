@@ -486,12 +486,10 @@ void func_8011EDA0() {}
 
 // RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
-    u16 params = self->params;
-    s16 paramsHi = self->params >> 8;
-    s32 step = self->step;
-    s32 rnd;
+    s16 paramsLo = self->params & 0xFF;
+    s16 paramsHi = (self->params >> 8) & 0xFF;
 
-    switch (step) {
+    switch (self->step) {
     case 0:
         if (paramsHi == 1) {
             self->rotX = 0xC0;
@@ -502,7 +500,7 @@ void func_8011EDA8(Entity* self) {
         }
 
         if ((paramsHi == 0) || (paramsHi == 2)) {
-            if (params & 3) {
+            if (paramsLo & 3) {
                 self->anim = D_800ADBD4;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
@@ -516,7 +514,7 @@ void func_8011EDA8(Entity* self) {
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
 
-        if (rand() % 4) {
+        if (rand() & 3) {
             self->zPriority = PLAYER.zPriority + 2;
         } else {
             self->zPriority = PLAYER.zPriority - 2;
@@ -528,8 +526,7 @@ void func_8011EDA8(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
         }
 
-        rnd = rand() & 31;
-        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
         self->velocityY = FIX(-0.5);
         self->velocityX = PLAYER.velocityX >> 2;
         self->step++;
@@ -542,7 +539,7 @@ void func_8011EDA8(Entity* self) {
         self->posX.val += self->velocityX;
         if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
-            if (!(params & 1) && (self->animFrameDuration == step)) {
+            if (!(paramsLo & 1) && (self->animFrameDuration == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
