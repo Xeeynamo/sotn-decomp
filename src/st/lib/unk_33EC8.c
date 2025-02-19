@@ -76,7 +76,21 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4010);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4080);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B40F0);
+void func_us_801B40F0(u16* arg0) {
+    *arg0 = g_Status.attackHands[0];
+    arg0 += 2;
+    *arg0 = g_Status.attackHands[1];
+    arg0 += 2;
+    *arg0 = g_Status.defenseEquip;
+    arg0 += 2;
+    *arg0 = g_Status.statsBase[0] + g_Status.statsEquip[0];
+    arg0 += 2;
+    *arg0 = g_Status.statsBase[1] + g_Status.statsEquip[1];
+    arg0 += 2;
+    *arg0 = g_Status.statsBase[2] + g_Status.statsEquip[2];
+    arg0 += 2;
+    *arg0 = g_Status.statsBase[3] + g_Status.statsEquip[3];
+}
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4194);
 

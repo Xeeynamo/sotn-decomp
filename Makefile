@@ -1,10 +1,57 @@
 .SECONDEXPANSION:
 .SECONDARY:
+.DEFAULT_GOAL := all
 
-# Binaries
+# Variables
+# User environment
 VERSION         ?= us
-MAIN            := main
-DRA             := dra
+
+# VERSION=us
+# main dra ric weapon
+PSX_US_GAME		:= main dra ric weapon
+# are cat cen chi dai dre lib mad no0 no1 no2 no3 no4 np3 nz0 nz1 sel st0 top wrp
+PSX_US_STAGE	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
+# rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp
+PSX_US_REV_STAGE:= rwrp
+# bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
+PSX_US_ALL_BOSS	:= bo4 mar rbo3
+# tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
+PSX_US_SERVANT	:= tt_000 tt_001 tt_002 tt_003 tt_004
+
+# VERSION=hd
+PSX_HD_GAME		:= dra ric
+PSX_HD_STAGE	:= cen wrp
+PSX_HD_REV_STAGE:= 
+PSX_HD_ALL_BOSS	:= 
+PSX_HD_SERVANTS	:= tt_000
+
+# VERSION=pspeu
+PSP_EU_GAME		:= dra
+PSP_EU_STAGE	:= lib no4 st0 wrp
+PSP_EU_REV_STAGE:= 
+PSP_EU_ALL_BOSS	:= 
+PSP_EU_SERVANTS	:= tt_000
+
+# VERSION=saturn
+SATURN_GAME		:= GAME ALUCARD
+SATURN_STAGE	:= STAGE_02 WARP
+SATURN_REV_STAGE:= 
+SATURN_ALL_BOSS := 
+SATURN_SERVANTS	:= T_BAT
+
+ifeq ($(VERSION),us)
+VERSION_PREFIX := PSX_US
+else ifeq ($(VERSION),hd)
+VERSION_PREFIX := PSX_HD
+else ifeq ($(VERSION),pspeu)
+VERSION_PREFIX := PSP_EU
+else ifeq ($(VERSION),saturn)
+VERSION_PREFIX := SATURN
+endif
+
+$(VERSION_PREFIX)_ALLSTAGES	:= $($(VERSION_PREFIX)_STAGE) $($(VERSION_PREFIX)_REV_STAGE)
+$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_ALLSTAGES)) $(addprefix bo,$($(VERSION_PREFIX)_ALL_BOSS)) $($(VERSION_PREFIX)_SERVANTS)
+$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_ALLSTAGES) $($(VERSION_PREFIX)_ALL_BOSS) $($(VERSION_PREFIX)_SERVANTS)
 
 # Compilers
 CC1PSX          := ./bin/cc1-psx-26
@@ -32,25 +79,9 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 
-PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
-
-# Files
-PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
-PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
-
-MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/$(MAIN)/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
-MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/$(MAIN)/,. $(PSXLIB_DIRS))
-
-MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
-MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
-MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
-MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
-MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
-
-MAIN_TARGET     := $(BUILD_DIR)/$(MAIN)
-
-VENV_PATH       ?= .venv
-export PATH     := $(VENV_PATH)/bin:$(PATH)
+# Symbols
+MAIN_TARGET     := $(BUILD_DIR)/main
+BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Tooling
 PYTHON          := python3
@@ -77,7 +108,73 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
+SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+VENV_PATH       ?= .venv
+export PATH     := $(VENV_PATH)/bin:$(PATH)
 
+SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
+SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
+
+CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
+
+# Platform specific variables
+ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
+# flags
+AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
+PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
+
+# libs
+PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
+
+# Files
+PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
+PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
+MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/main/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
+MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/main/,. $(PSXLIB_DIRS))
+
+MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
+MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
+MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
+MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
+MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
+else ifeq ($(VERSION),pspeu)
+# Flags
+AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
+MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
+
+# Tools
+ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
+AS              := $(ALLEGREX_AS)
+WIBO            := $(BIN_DIR)/wibo
+MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
+CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
+
+MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
+MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
+
+MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
+MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
+MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
+else ifeq ($(VERSION),saturn)
+SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
+SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
+
+DOSEMU						:= dosemu
+DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
+DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
+SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
+CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
+SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
+
+SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
+SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
+SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
+SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
+endif
+
+# Functions
 define list_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
@@ -122,10 +219,33 @@ define link
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
-SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
-SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
+# Helper Functions
+define list_src_files_psp
+	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
+	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
+endef
 
-CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
+define list_o_files_psp
+	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
+endef
+
+# leverages MWCC ability to compile data and text as separate sections to allow
+# LD using --gc-sections and remove all the symbols that are unreferenced.
+# symexport.*.txt is used to enforce a specific symbol and all its dependencies
+# to be used. Refer to *.map to know which sections are being discarded by LD.
+# Use nm to retrieve the symbol name out of a object file such as the mwo_header.
+define link_with_deadstrip
+	$(LD) $(LD_FLAGS) -o $(2) \
+		--gc-sections \
+		-Map $(BUILD_DIR)/$(1).map \
+		-T $(BUILD_DIR)/$(1).ld \
+		-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
+endef
 
 .PHONY: build
 
@@ -144,8 +264,7 @@ extract: extract_$(VERSION)
 
 build: ##@ build game files
 build: build_$(VERSION)
-build_us: main dra weapon ric cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp rwrp mar bo4 rbo3 tt_000 tt_001 tt_002 tt_003 tt_004
-build_hd: dra cen wrp tt_000
+
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -271,177 +390,12 @@ main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 $(MAIN_TARGET).exe: $(MAIN_TARGET).elf
 	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
+$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
 	$(LD) $(LD_FLAGS) -o $@ \
 	-Map $(MAIN_TARGET).map \
 	-T $(BUILD_DIR)/main.ld \
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(MAIN).txt
-
-dra: $(BUILD_DIR)/DRA.BIN
-$(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/$(DRA).elf
-	$(OBJCOPY) -O binary $< $@
-
-ric: $(BUILD_DIR)/RIC.BIN
-$(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
-	$(call link,ric,$@)
-
-cen: $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
-$(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CEN.BIN:
-	$(GFXSTAGE) e assets/st/cen $@
-
-chi: $(BUILD_DIR)/CHI.BIN $(BUILD_DIR)/F_CHI.BIN
-$(BUILD_DIR)/CHI.BIN: $(BUILD_DIR)/stchi.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CHI.BIN:
-	$(GFXSTAGE) e assets/st/chi $@
-
-dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
-$(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_DRE.BIN:
-	$(GFXSTAGE) e assets/st/dre $@
-
-lib: $(BUILD_DIR)/LIB.BIN $(BUILD_DIR)/F_LIB.BIN
-$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_LIB.BIN:
-	$(GFXSTAGE) e assets/st/lib $@
-
-mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
-$(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAD.BIN:
-	$(GFXSTAGE) e assets/st/mad $@
-
-no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
-$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO0.BIN:
-	$(GFXSTAGE) e assets/st/no0 $@
-
-no1: $(BUILD_DIR)/NO1.BIN $(BUILD_DIR)/F_NO1.BIN
-$(BUILD_DIR)/NO1.BIN: $(BUILD_DIR)/stno1.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO1.BIN:
-	$(GFXSTAGE) e assets/st/no1 $@
-
-no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
-$(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO3.BIN:
-	$(GFXSTAGE) e assets/st/no3 $@
-
-no4: $(BUILD_DIR)/NO4.BIN $(BUILD_DIR)/F_NO4.BIN
-$(BUILD_DIR)/NO4.BIN: $(BUILD_DIR)/stno4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO4.BIN:
-	$(GFXSTAGE) e assets/st/no4 $@
-
-np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
-$(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NP3.BIN:
-	$(GFXSTAGE) e assets/st/np3 $@
-
-nz0: $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
-$(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NZ0.BIN:
-	$(GFXSTAGE) e assets/st/nz0 $@
-
-sel: $(BUILD_DIR)/SEL.BIN
-$(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
-	$(OBJCOPY) -O binary $< $@
-
-st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
-$(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_ST0.BIN:
-	$(GFXSTAGE) e assets/st/st0 $@
-
-wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
-$(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_WRP.BIN:
-	$(GFXSTAGE) e assets/st/wrp $@
-
-rwrp: $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
-$(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RWRP.BIN:
-	$(GFXSTAGE) e assets/st/rwrp $@
-
-mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN
-$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAR.BIN:
-	$(GFXSTAGE) e assets/boss/mar $@
-
-bo4: $(BUILD_DIR)/BO4.BIN $(BUILD_DIR)/F_BO4.BIN
-$(BUILD_DIR)/BO4.BIN: $(BUILD_DIR)/bobo4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_BO4.BIN:
-	$(GFXSTAGE) e assets/boss/bo4 $@
-
-rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
-$(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RBO3.BIN:
-	$(GFXSTAGE) e assets/boss/rbo3 $@
-
-# servant (familiar) targets
-
-tt_000: $(BUILD_DIR)/TT_000.BIN
-tt_001: $(BUILD_DIR)/TT_001.BIN
-tt_002: $(BUILD_DIR)/TT_002.BIN
-tt_003: $(BUILD_DIR)/TT_003.BIN
-tt_004: $(BUILD_DIR)/TT_004.BIN
-
-$(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
-	cp $< $@.tmp
-	truncate -c -s 40960 $@.tmp
-	mv $@.tmp $@
-
-mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
-		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
-
-tt_%_dirs:
-	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-bo%_dirs:
-	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-st%_dirs:
-	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-%_dirs:
-	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
-	$(LD) $(LD_FLAGS) -o $@ \
-		-Map $(BUILD_DIR)/stmad.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
-	$(call link,stsel,$@)
-ifneq ($(VERSION),saturn)
-$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
-	$(call link,st$*,$@)
-endif
-$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
-	$(call link,bo$*,$@)
+	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
 
 # Weapon overlays
 WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
@@ -488,12 +442,13 @@ $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
 	./tools/png2bin.py $< $@
 
-ifneq (,$(filter psp%,$(VERSION)))
-include Makefile.psp.mk
-else
+ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
-endif
+else ifeq ($(VERSION),pspeu)
+include Makefile.psp.mk
+else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
+endif
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
@@ -592,7 +547,32 @@ disk_debug: disk_prepare
 extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
+test:
+	$(PYTHON) tools/symbols_test.py
 
+function-finder:
+	# TODO: make sure graphviz is installed
+	$(MAKE) force_symbols
+	$(MAKE) force_extract
+	$(PYTHON) tools/analyze_calls.py
+	git clean -fdx asm/
+	git checkout config/
+	rm -f build/us/main.ld
+	rm -rf build/us/weapon.ld
+	$(MAKE) -j extract
+	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
+	rm -rf gh-duplicates/function_calls || true
+	mv function_calls gh-duplicates/
+	mv function_graphs.md gh-duplicates/
+
+duplicates-report:
+	$(MAKE) force_symbols
+	$(MAKE) force_extract
+	cd tools/dups; \
+	    cargo run --release -- \
+            --threshold .90 \
+            --output-file ../../gh-duplicates/duplicates.txt
+			
 python-dependencies:
 	# the python setup cannot depend on the virtualenv
 	# because it may not be set up yet
@@ -600,9 +580,7 @@ python-dependencies:
 	pip install -r $(TOOLS_DIR)/requirements-python.txt
 
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(SATURN_SPLITTER_APP) $(GO) $(ALLEGREX_AS) python-dependencies
-	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
-	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) $(ALLEGREX_AS) python-dependencies
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
@@ -680,7 +658,7 @@ dump_disk_psp%: dump_disk_not_supported
 dump_disk_xbla%: dump_disk_not_supported
 dump_disk_cd: disks/sotn.$(VERSION).cue
 dump_disk_not_supported:
-	@echo "Auatomated dumping of $(VERSION) is not supported" >&2 && exit 1
+	@echo "Automated dumping of $(VERSION) is not supported" >&2 && exit 1
 disks/sotn.%.bin disks/sotn.%.cue:
 	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
 	cd disks && \
@@ -693,8 +671,6 @@ disks/sotn.%.bin disks/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-
-include tools/tools.mk
 
 .PHONY: all clean patch check build expected
 .PHONY: format ff format-src format-tools format-symbols

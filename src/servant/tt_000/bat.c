@@ -1148,6 +1148,6 @@ void unused_3C24(void) {}
 #ifdef VERSION_PSP
 extern ServantDesc bat_ServantDesc;
 void func_092EC220(void) {
-    memcpy((u8*)&D_8D1DC40, (u8*)&bat_ServantDesc, sizeof(ServantDesc));
+    memcpy((u8*)&g_ServantDesc, (u8*)&bat_ServantDesc, sizeof(ServantDesc));
 }
 #endif

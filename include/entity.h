@@ -1697,7 +1697,7 @@ typedef struct {
     u8 digits[4];
     s16 number;
     s16 type;
-    s16 unk84;
+    s16 nDigits;
     u16 unk86;
     u16 unk88;
     u16 unk8A;
@@ -2825,7 +2825,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u8 : 8;
+    /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
 } ET_801C9870;
 
