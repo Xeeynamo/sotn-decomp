@@ -15,8 +15,8 @@ extern s32 D_psp_092A5590;
 static s32 D_us_80181A8C = 0;
 // I expect this symbol will change depending on the function that is including
 // pad2_anim_debug.h
-extern s32 D_psp_08B42050;
-#define BUTTON_SYMBOL D_psp_08B42050
+extern s32 D_8B42050;
+#define BUTTON_SYMBOL D_8B42050
 #else
 static s32 D_us_80181A8C = 3;
 #endif
