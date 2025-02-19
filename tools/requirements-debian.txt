@@ -14,3 +14,5 @@ python3-pip
 python3-venv
 unzip
 wget
+xfonts-utils
+./tools/dosemu-deb/*.deb

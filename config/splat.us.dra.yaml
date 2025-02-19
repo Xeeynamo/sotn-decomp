@@ -106,7 +106,7 @@ segments:
       - [0xCF4C, .data, 6E42C]
       - [0xCF6C, .data, 70394]
       - [0xCF74, .data, d_CF74]
-      - [0xD0C4, .data, 7879C]
+      - [0xD094, .data, 7879C]
       - [0xD1D4, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
@@ -210,7 +210,7 @@ segments:
       # - [0x41A38, .rodata, 75F54] # func_80117DEC
       - [0x41A44, .rodata, 7879C] # EntityNumberMovesToHpMeter
       # - [0x41A74, .rodata, 7879C] # EntityGuardText
-      # - [0x41AA4, .rodata, 7879C] # func_8011A4D0
+      # - [0x41AA4, .rodata, 7879C] # UpdatePlayerEntities
       # - [0x41AB4, .rodata, 7879C] # EntityEntFactory
       # - [0x41AF4, .rodata, 7879C] # EntityPlayerBlinkWhite
       # - [0x41B94, .rodata, 7879C] # EntityMpReplenished

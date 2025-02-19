@@ -198,7 +198,7 @@ typedef enum {
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
 
-#ifndef VERSION_PC
+#if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
@@ -1428,11 +1428,11 @@ typedef struct {
     /* 0x04 */ const char* combo;
     /* 0x08 */ const char* description;
     /* 0x0C */ u8 mpUsage;
-    /* 0x0D */ s8 nFramesInvincibility;
-    /* 0x0E */ s16 stunFrames;
-    /* 0x10 */ s16 hitboxState;
-    /* 0x12 */ s16 hitEffect;
-    /* 0x14 */ s16 entityRoomIndex;
+    /* 0x0D */ u8 nFramesInvincibility;
+    /* 0x0E */ u16 stunFrames;
+    /* 0x10 */ u16 hitboxState;
+    /* 0x12 */ u16 hitEffect;
+    /* 0x14 */ u16 entityRoomIndex;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
     /* 0x1A */ s16 unk1A;
@@ -1607,7 +1607,7 @@ extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
 extern u8* g_PlOvlSpritesheet[];
 
-/**** Helper signatures ****/
+/**** Helper signatures - used for M2C, not in main repo ****/
 extern void (*g_api_FreePrimitives)(s32);
 extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
 extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
