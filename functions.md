@@ -290,6 +290,7 @@
 | dra    | func_psp_090F21F8                   |       33 |          6 |        |                                 |       |
 | dra    | func_800EAD0C                       |       33 |          8 |        |                                 |       |
 | dra    | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
+| lib    | 35F60.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0    | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0    | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib    | GetDistanceToPlayerX                |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
@@ -546,9 +547,9 @@
 | dra    | func_psp_09137038                   |       61 |         12 |        |                                 |       |
 | dra    | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
+| lib    | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
-| lib    | func_psp_0925D350                   |       62 |          5 |        | https://decomp.me/scratch/CPHDm | 1.0   |
 | no4    | func_psp_0924C490                   |       62 |          5 |        |                                 |       |
 | no4    | func_psp_09238520                   |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -625,7 +626,7 @@
 | dra    | BatFormFinished                     |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40                   |       72 |          5 |        |                                 |       |
 | dra    | func_8011B480                       |       72 |          7 |        | https://decomp.me/scratch/UO5p1 | 0.992 |
-| lib    | func_psp_0926CE18                   |       72 |          7 |        |                                 |       |
+| lib    | PlayerIsWithinHitbox                |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
 | st0    | PlayerIsWithinHitbox                |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
 | dra    | func_psp_09136D18                   |       72 |         14 |        |                                 |       |
 | dra    | func_800EA720                       |       73 |          1 |        |                                 |       |
@@ -874,6 +875,7 @@
 | no4    | func_psp_09256138                   |      134 |          9 |        |                                 |       |
 | dra    | CheckHolyWaterCollision             |      135 |         12 |        |                                 |       |
 | dra    | UnknownEntId48                      |      135 |         13 |        |                                 |       |
+| lib    | 2BC10.rodata                        |      136 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EEFA8                   |      136 |         11 |        |                                 |       |
 | no4    | func_psp_0925DBD8                   |      136 |         17 |        |                                 |       |
 | dra    | func_psp_09141668                   |      136 |         21 |        |                                 |       |
@@ -917,7 +919,6 @@
 | dra    | EntityBatFireball                   |      161 |         14 |        | https://decomp.me/scratch/u4uRW | 0.997 |
 | dra    | EntityHellfireBigFireball           |      161 |         19 |        | https://decomp.me/scratch/WSXa9 | 0.998 |
 | dra    | EntityUnarmedAttack                 |      162 |         17 |        | https://decomp.me/scratch/67yNb | 0.994 |
-| lib    | 2BC10.rodata                        |      164 |          0 | Yes    |                                 |       |
 | dra    | DrawHud                             |      164 |         14 |        |                                 |       |
 | dra    | func_psp_0910EA68                   |      164 |         24 |        |                                 |       |
 | no4    | func_psp_09238600                   |      165 |         18 |        |                                 |       |
@@ -1160,7 +1161,7 @@
 | dra    | func_801309B4                       |      464 |         52 | Yes    |                                 |       |
 | dra    | func_psp_09110FC8                   |      466 |         93 |        |                                 |       |
 | dra    | func_800F0CD8                       |      473 |         40 |        |                                 |       |
-| lib    | func_psp_0926CF18                   |      473 |         53 |        | https://decomp.me/scratch/qMKvg | 0.998 |
+| lib    | EntityLockCamera                    |      473 |         53 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra    | StoreSaveData                       |      481 |         49 |        |                                 |       |
 | dra    | EntitySubwpnBible                   |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra    | func_psp_0910D1F0                   |      482 |         75 |        |                                 |       |
