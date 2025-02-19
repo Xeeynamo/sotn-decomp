@@ -560,6 +560,174 @@ void EntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityHitByIce);
+void EntityHitByIce(Entity* self) {
+    s32 i;
+    s16 xShift;
+    s16 yShift;
+    s32 size;
+    s16 primYshift;
+    s16 selfX;
+    s16 selfY;
+    Point16* offset;
+    bool sp18; 
+
+    s16 angle;
+
+    Primitive* prim;
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    
+    sp18 = false;
+    if(!(g_Player.status & PLAYER_STATUS_UNK10000)){
+        sp18 = true;
+    }
+    
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT3, 24);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
+            if (rand() & 1) {
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                                 DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            } else {
+                prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE |
+                                 DRAW_COLORS | DRAW_TRANSP;
+            }
+            prim->type = PRIM_G4;
+            prim->priority = PLAYER.zPriority + 2;
+        }
+        if (PLAYER.velocityY != 0) {
+            self->ext.hitbyice.unk7E = 1;
+        }
+        if (PLAYER.step == Player_Kill) {
+            self->ext.hitbyice.unk80 = 1;
+            self->ext.hitbyice.unk82 = 0x14;
+            self->ext.hitbyice.unk7E = 0;
+        }
+        if (PLAYER.velocityY != 0) {
+            if (PLAYER.facingLeft) {
+                self->rotZ = 0x100;
+            } else {
+                self->rotZ = -0x100;
+            }
+        } else {
+            if (PLAYER.velocityX > 0) {
+                self->rotZ = 0x80;
+            } else {
+                self->rotZ = 0xF80;
+            }
+        }
+        PlaySfx(SFX_MAGIC_SWITCH);
+        self->step++;
+        break;
+    case 1:
+        if (self->ext.hitbyice.unk80 && --self->ext.hitbyice.unk82 == 0) {
+            sp18 = true;
+        }
+        // Could rewrite as a series of && and || but that would probably reduce
+        // readability
+        if (self->ext.hitbyice.unk7E) {
+            if (g_Player.pl_vram_flag & 0xC) {
+                sp18 = true;
+            }
+            if (PLAYER.step == Player_Hit && PLAYER.step_s == 5) {
+                sp18 = true;
+            }
+        }
+        if (sp18) {
+            self->ext.hitbyice.unk7C = 0x40;
+            PlaySfx(SFX_GLASS_BREAK_B);
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.hitbyice.unk7C == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 24; prim = prim->next, i++) {
+        offset = D_800ADCC8[i * 3];
+        if (prim->u0 < 2) {
+            size = SquareRoot12(
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x0 = selfX + xShift;
+            prim->y0 = selfY + yShift;
+
+            offset = D_800ADCC8[i * 3 + 1];
+            size = SquareRoot12(
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x1 = selfX + xShift;
+            prim->y1 = selfY + yShift;
+
+            offset = D_800ADCC8[i * 3 + 2];
+            size = SquareRoot12(
+                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
+            angle = self->rotZ + ratan2(offset->y, offset->x);
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x2 = prim->x3 = selfX + xShift;
+            prim->y2 = prim->y3 = selfY + yShift;
+        }
+        if ((prim->u0 == 0) && (sp18 != 0)) {
+            prim->u0++;
+            prim->v0 = (rand() & 15) + 1;
+        }
+        if (prim->u0 == 1) {
+            if (--prim->v0 == 0) {
+                prim->u0++;
+                prim->v0 = 0x20;
+                prim->u2 = 0xF0;
+            }
+        }
+        if (prim->u0 == 2) {
+            if ((prim->u2 < 0x70) || (prim->u2 > 0xD0)) {
+                prim->u2 += 4;
+            }
+            primYshift = (s8)prim->u2 >> 4;
+            prim->y0 += primYshift;
+            prim->y1 += primYshift;
+            prim->y2 += primYshift;
+            prim->y3 += primYshift;
+            if (prim->r3 < 4) {
+                prim->r3 -= 4;
+            }
+            if (prim->g3 < 4) {
+                prim->g3 -= 4;
+            }
+            if (prim->b3 < 4) {
+                prim->b3 -= 4;
+            }
+            prim->r0 = prim->r1 = prim->r2 = prim->r3;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3;
+            prim->drawMode |= DRAW_UNK02;
+            prim->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            self->flags &= ~(FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED);
+            if (--prim->v0 == 0) {
+                prim->drawMode |= DRAW_HIDE;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityTransparentWhiteCircle);

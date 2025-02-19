@@ -744,24 +744,27 @@ void EntityHitByLightning(Entity* self) {
 // player gets frozen
 void EntityHitByIce(Entity* self) {
     s32 i;
-    Primitive* prim;
-    s16 angle;
-    s32 xShift1;
-    s32 xShift2;
-    s32 xShift3;
-    s32 yShift1;
-    s32 yShift2;
-    s32 yShift3;
+    s16 xShift;
+    s16 yShift;
     s32 size;
-    u32 primYshift;
-    u16 selfX;
-    u16 selfY;
+    s16 primYshift;
+    s16 selfX;
+    s16 selfY;
     Point16* offset;
-    bool sp18 = false;
+    bool sp18; 
+
+    s16 angle;
+
+    Primitive* prim;
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    sp18 = (g_Player.status & PLAYER_STATUS_UNK10000) == sp18;
+    
+    sp18 = false;
+    if(!(g_Player.status & PLAYER_STATUS_UNK10000)){
+        sp18 = true;
+    }
+    
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT3, 24);
@@ -770,10 +773,9 @@ void EntityHitByIce(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        prim = &g_PrimBuf[self->primIndex];
-        while (prim != NULL) {
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
                 prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
@@ -784,7 +786,6 @@ void EntityHitByIce(Entity* self) {
             }
             prim->type = PRIM_G4;
             prim->priority = PLAYER.zPriority + 2;
-            prim = prim->next;
         }
         if (PLAYER.velocityY != 0) {
             self->ext.hitbyice.unk7E = 1;
@@ -795,28 +796,28 @@ void EntityHitByIce(Entity* self) {
             self->ext.hitbyice.unk7E = 0;
         }
         if (PLAYER.velocityY != 0) {
-            if (PLAYER.facingLeft == 0) {
-                self->rotZ = -0x100;
-            } else {
+            if (PLAYER.facingLeft) {
                 self->rotZ = 0x100;
+            } else {
+                self->rotZ = -0x100;
             }
         } else {
-            if (PLAYER.velocityX <= 0) {
-                self->rotZ = 0xF80;
-            } else {
+            if (PLAYER.velocityX > 0) {
                 self->rotZ = 0x80;
+            } else {
+                self->rotZ = 0xF80;
             }
         }
         PlaySfx(SFX_MAGIC_SWITCH);
         self->step++;
         break;
     case 1:
-        if (self->ext.hitbyice.unk80 != 0 && --self->ext.hitbyice.unk82 == 0) {
+        if (self->ext.hitbyice.unk80 && --self->ext.hitbyice.unk82 == 0) {
             sp18 = true;
         }
         // Could rewrite as a series of && and || but that would probably reduce
         // readability
-        if (self->ext.hitbyice.unk7E != 0) {
+        if (self->ext.hitbyice.unk7E) {
             if (g_Player.pl_vram_flag & 0xC) {
                 sp18 = true;
             }
@@ -839,35 +840,34 @@ void EntityHitByIce(Entity* self) {
     }
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 24; i++) {
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 24; prim = prim->next, i++) {
         offset = D_800ADCC8[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x0 = selfX + xShift1;
-            prim->y0 = selfY + yShift1;
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x0 = selfX + xShift;
+            prim->y0 = selfY + yShift;
 
             offset = D_800ADCC8[i * 3 + 1];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x1 = selfX + xShift2;
-            prim->y1 = selfY + yShift2;
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x1 = selfX + xShift;
+            prim->y1 = selfY + yShift;
 
             offset = D_800ADCC8[i * 3 + 2];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
             angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x2 = prim->x3 = selfX + xShift3;
-            prim->y2 = prim->y3 = selfY + yShift3;
+            xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
+            yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
+            prim->x2 = prim->x3 = selfX + xShift;
+            prim->y2 = prim->y3 = selfY + yShift;
         }
         if ((prim->u0 == 0) && (sp18 != 0)) {
             prim->u0++;
@@ -875,9 +875,9 @@ void EntityHitByIce(Entity* self) {
         }
         if (prim->u0 == 1) {
             if (--prim->v0 == 0) {
+                prim->u0++;
                 prim->v0 = 0x20;
                 prim->u2 = 0xF0;
-                prim->u0++;
             }
         }
         if (prim->u0 == 2) {
@@ -885,10 +885,10 @@ void EntityHitByIce(Entity* self) {
                 prim->u2 += 4;
             }
             primYshift = (s8)prim->u2 >> 4;
-            prim->y0 = primYshift + prim->y0;
-            prim->y1 = primYshift + prim->y1;
-            prim->y2 = primYshift + prim->y2;
-            prim->y3 = primYshift + prim->y3;
+            prim->y0 += primYshift;
+            prim->y1 += primYshift;
+            prim->y2 += primYshift;
+            prim->y3 += primYshift;
             if (prim->r3 < 4) {
                 prim->r3 -= 4;
             }
@@ -909,7 +909,6 @@ void EntityHitByIce(Entity* self) {
                 prim->drawMode |= DRAW_HIDE;
             }
         }
-        prim = prim->next;
     }
 }
 
