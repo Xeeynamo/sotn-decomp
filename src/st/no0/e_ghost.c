@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-static u8 anim_phase_in[] = {0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03,
-                             0x04, 0x03, 0x05, 0x03, 0x06, 0xFF, 0x00};
-static u8 anim_burning[] = {0x03, 0x07, 0x03, 0x08, 0x00};
+static u8 anim_phase_in[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, -1, 0};
+static u8 anim_burning[] = {3, 7, 3, 8, 0, 0};
 static s16 min_max_positions[] = {
-    416, 1152, 288, 480}; // xMin, xMax, yMin, yMax
+    0x1A0, 0x480, 0x120, 0x1E0}; // xMin, xMax, yMin, yMax
 
 void EntityGhostEnemy(Entity* self) {
     Entity* newEntity;

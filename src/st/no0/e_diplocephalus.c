@@ -1,28 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-// func_us_801CF4A8
-extern s32 D_us_80181CC4[];    // velocityX
-extern s32 D_us_80181CE8[][8]; // velocityY
-extern s16 D_us_80181D54[];    // sensors_ground
-
-// func_us_801CF910
-extern s32 D_us_80181CD4[]; // velocityX
-extern s16 D_us_80181D64[]; // sensors_ground
-extern u8 D_us_80181DAC[];  // anims
-extern u8 D_us_80181DB4[];  // anims
-
-// Main entity
-extern s16 D_us_80181D28[]; // posX array?
-extern u32 D_us_80181D30[]; // collider offsets
-extern u32 D_us_80181D3C[]; // collider offsets
-extern u32 D_us_80181D48[]; // collider offsets
-extern s16 D_us_80181D74[]; // sensors_ground
-extern u8 D_us_80181D88[];  // anim
-extern u8 D_us_80181DA0[];  // anim
-
-// Foot
-extern u8 D_us_80181D83[]; // anim frames
+static s32 D_us_80181CC4[] = {
+    FIX(0),    FIX(2),     FIX(-2),    FIX(0.5),   FIX(-0.5),
+    FIX(1.25), FIX(-1.25), FIX(0.125), FIX(-0.125)};
+static s32 D_us_80181CE8[][8] = {
+    {FIX(2.5), FIX(1.5), FIX(0.8125), FIX(1.25), FIX(1.25), FIX(2), FIX(1),
+     FIX(0.5)},
+    {FIX(1.25), FIX(1.9375), FIX(1), FIX(0.625), FIX(1.5), FIX(1.125),
+     FIX(0.25), FIX(1.125)}};
+static s16 D_us_80181D28[] = {-16, 0, 16};
+static s16 D_us_80181D30[] = {0x40, 0x10, 0x40, 0x20, 0xFF};
+static s16 D_us_80181D3C[] = {-0x48, 0x10, -0x48, 0x24, 0xFF};
+static s16 D_us_80181D48[] = {0x00, 0x18, 0x00, 0x14, 0xFF};
+static s16 D_us_80181D54[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80181D64[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80181D74[] = {0, 10, 0, 4, 8, -4, -16, 0};
+static u8 D_us_80181D84[] = {12, 14, 16, 18};
+static u8 D_us_80181D88[] = {
+    6, 1, 6, 2, 6, 3, 6, 4, 6, 5, 6, 6, 6, 5, 6, 4, 6, 3, 6, 2, 0, 0};
+static u8 D_us_80181DA0[] = {4, 1, 4, 2, 2, 3, 4, 2, 0, 0};
+static u8 D_us_80181DAC[] = {6, 7, 6, 8, 0, 0};
+static u8 D_us_80181DB4[] = {6, 9, 6, 10, 0, 0};
 
 // Some sort of death entity
 // Perhaps the parts that go flying on death
@@ -87,13 +86,13 @@ void EntityDiplocephalusFoot(Entity* self) {
         InitializeEntity(g_EInitDiplocephalusFoot);
         g_CurrentEntity->hitboxOffY = 4;
         g_CurrentEntity->animCurFrame =
-            D_us_80181D83[g_CurrentEntity->ext.diplocephalus.unk9E];
+            D_us_80181D84[g_CurrentEntity->ext.diplocephalus.unk9E - 1];
         g_CurrentEntity = currentEntity;
         // fallthrough
     case 1:
         currentEntity = g_CurrentEntity;
         g_CurrentEntity = self;
-        if (UnkCollisionFunc3(D_us_80181D54) & 1) {
+        if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
             g_CurrentEntity->step++;
         }
         g_CurrentEntity = currentEntity;
@@ -131,7 +130,7 @@ void EntityDiplocephalusFoot(Entity* self) {
         g_CurrentEntity = self;
 
         // Walk forward, spawning dust cloud when stepping
-        if (UnkCollisionFunc3(D_us_80181D54) & 1) {
+        if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
             PlaySfxPositional(0x779);
             self->velocityX = 0;
             self->velocityY = 0;
@@ -220,7 +219,7 @@ void func_us_801CF910(Entity* self) {
         }
         break;
     case 7:
-        self->velocityX = D_us_80181CD4[self->ext.diplocephalusUnk.unk9E];
+        self->velocityX = D_us_80181CC4[self->ext.diplocephalusUnk.unk9E + 4];
         if (self->facingLeft ^ 1) {
             self->velocityX = -self->velocityX;
         }
@@ -563,7 +562,7 @@ void EntityDiplocephalus(Entity* self) {
         }
         self->ext.diplocephalus.velocityY = 0;
 
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < LEN(D_us_80181D28); i++) {
             entityRef = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entityRef != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entityRef);

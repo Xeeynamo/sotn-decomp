@@ -1,8 +1,210 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no0.h"
 
-extern SVECTOR D_us_80181FC0;
+static s16 D_us_80181FA0[] = {
+    -3, -3, 0, 0, 3, -3, 0, 0, -3, 3, 0, 0, 3, 3, 0, 0};
+static SVECTOR D_us_80181FC0 = {.vx = 0, .vy = 0, .vz = 0};
+
+void func_us_801D4E30(void) {
+    Primitive* prim;
+    s32 i;
+
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 10; i++) {
+        prim->x0 = (prim->x0 + prim->x1) / 2;
+        prim->y0 = (prim->y0 + prim->y2) / 2;
+        prim = prim->next;
+    }
+}
+
+void func_us_801D4E94(s32 arg0) {
+    s32 angle;
+    s32 i;
+    s32 xOffset;
+    s32 yOffset;
+    s32 magnitudeSqr;
+
+    s32 posX = g_CurrentEntity->posX.val >> 8;
+    s32 posY = g_CurrentEntity->posY.val >> 8;
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 0xA; i++) {
+        xOffset = prim->x0 << 8;
+        yOffset = prim->y0 << 8;
+        xOffset += prim->p2;
+        yOffset += prim->p3;
+        xOffset -= posX;
+        yOffset -= posY;
+        yOffset += arg0;
+        angle = ratan2(-xOffset, yOffset);
+        magnitudeSqr = (xOffset * xOffset) + (yOffset * yOffset);
+        if (magnitudeSqr > FIX(64)) {
+            xOffset = -((rsin(angle) * 8) >> 4);
+            yOffset = (rcos(angle) * 8) >> 4;
+        }
+        posX += xOffset;
+        posY += yOffset;
+        prim->x0 = posX >> 8;
+        prim->y0 = posY >> 8;
+        prim->p2 = posX & 0xFF;
+        prim->p3 = posY & 0xFF;
+        prim = prim->next;
+    }
+}
+
+void func_us_801D4FCC(void) {
+    s32 i;
+    s32 xOffset;
+    s32 yOffset;
+
+    s32 posX = g_CurrentEntity->posX.i.hi;
+    s32 posY = g_CurrentEntity->posY.i.hi;
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    s32 angle = g_CurrentEntity->ext.plateLordUnknown.unk84;
+    s8 pad[40];
+
+    for (i = 0; i < 0xA; i++) {
+        xOffset = (rsin(angle) * 8) >> 0xC;
+        yOffset = (rcos(angle) * 8) >> 0xC;
+        posX -= xOffset;
+        posY += yOffset;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+    }
+}
+
+void func_us_801D5074(s32 arg0) {
+    Primitive* nextPrim;
+    Primitive* prim;
+    Point32* pos;
+    s32 posX;
+    s32 posY;
+    s32 i;
+    s32 s2;
+    s32 s1;
+    s32 s4;
+    s32 s5;
+
+    posX = g_CurrentEntity->posX.val >> 8;
+    posY = g_CurrentEntity->posY.val >> 8;
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 9; i++) {
+        nextPrim = prim->next;
+        s2 = nextPrim->x0 << 8;
+        s1 = nextPrim->y0 << 8;
+        s2 += nextPrim->p2;
+        s1 += nextPrim->p3;
+        s2 = (s2 + posX) / 2;
+        s1 = (s1 + posY) / 2;
+        s5 = prim->x0 << 8;
+        s4 = prim->y0 << 8;
+        s5 += prim->p2;
+        s4 += prim->p3;
+        s5 -= s2;
+        s4 -= s1;
+        posX = (s5 / 2) + s2;
+        posY = (s4 / 2) + s1;
+        posY += arg0;
+        prim->x0 = posX >> 8;
+        prim->y0 = posY >> 8;
+        prim->p2 = posX & 0xFF;
+        prim->p3 = posY & 0xFF;
+        prim = nextPrim;
+    }
+    pos = (Point32*)&(g_CurrentEntity + 4)->posX.val;
+    s2 = pos->x >> 8;
+    s1 = pos->y >> 8;
+    s2 = (s2 + posX) / 2;
+    s1 = (s1 + posY) / 2;
+    s5 = prim->x0 << 8;
+    s4 = prim->y0 << 8;
+    s5 += prim->p2;
+    s4 += prim->p3;
+    s5 -= s2;
+    s4 -= s1;
+    posX = (s5 / 2) + s2;
+    posY = (s4 / 2) + s1;
+    prim->x0 = posX >> 8;
+    prim->y0 = posY >> 8;
+    prim->p2 = posX & 0xFF;
+    prim->p3 = posY & 0xFF;
+}
+
+void func_us_801D51EC(void) {
+    Primitive* prim;
+    s32 i;
+
+    prim = g_CurrentEntity->ext.prim;
+    for (i = 0; i < 10; i++) {
+        prim->x0 = prim->x2 = prim->x0 - 3;
+        prim->x1 = prim->x3 = prim->x0 + 6;
+        prim->y0 = prim->y1 = prim->y0 - 3;
+        prim->y2 = prim->y3 = prim->y0 + 6;
+
+        prim = prim->next;
+    }
+}
+
+void func_us_801D5250(void) {
+    Primitive* prim = g_CurrentEntity->ext.prim;
+    Collider collider;
+    s32 i;
+
+    for (i = 0; i < 10; i++) {
+        g_api.CheckCollision(prim->x0, prim->y0 + 3, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            prim->y0 += collider.unk18;
+        }
+        prim = prim->next;
+    }
+}
+
+s32 func_us_801D52E0(void) {
+    Entity* tempEntity;
+    s32 angle;
+    s32 dx;
+    s32 dy;
+    s32 tempVal;
+
+    tempEntity = (g_CurrentEntity - 3);
+    dy = tempEntity->posY.i.hi - 6 - g_CurrentEntity->posY.i.hi;
+    tempEntity = (g_CurrentEntity + 4);
+    dx = tempEntity->posX.i.hi - g_CurrentEntity->posX.i.hi;
+    tempVal = 0x50;
+    tempVal = (tempVal * tempVal) - (dy * dy);
+    tempVal = SquareRoot0(tempVal);
+    if (tempVal < abs(dx)) {
+        if (dx > 0) {
+            dx = tempVal;
+        } else {
+            dx = -tempVal;
+        }
+    } else {
+        return 0;
+    }
+    angle = ratan2(-dx, dy);
+    return angle;
+}
+
+void func_us_801D5384(void) {
+    Collider collider;
+    s32 posY;
+    s32 posX;
+    Primitive* prim;
+    Point32* tempPoint32;
+
+    prim = g_CurrentEntity->ext.plateLordUnknown.unkA0;
+    posX = (prim->x0 + prim->x1) / 2;
+    posY = (prim->y0 + prim->y2) / 2;
+    tempPoint32 = (Point32*)&(g_CurrentEntity + 4)->posX;
+    F(tempPoint32->x).i.hi = posX;
+    F(tempPoint32->y).i.hi = posY;
+    posY += 0xA;
+    g_api.CheckCollision(posX, posY, &collider, 0);
+    if (collider.effects & EFFECT_SOLID) {
+        F(tempPoint32->y).i.hi += collider.unk18;
+    }
+}
 
 void func_us_801D542C(Entity* self) {
     long unusedA;
