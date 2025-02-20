@@ -119,3 +119,6 @@ g_CurrentBuffer = 0x091FC4E0;
 g_GpuBuffers = 0x091FC4E8;
 g_CastleFlags = 0x09234730;
 DestroyEntity = 0x092EE938;
+D_80097928 = 0x091CE5B0;
+D_80073510 = 0x091E17B8;
+D_8003BE5E = 0x092347A2;
