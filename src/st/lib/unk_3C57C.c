@@ -137,7 +137,7 @@ void func_us_801BD268(void) {
 #ifdef VERSION_PSP
                         entityId = D_psp_092A5510;
 #else
-                        entityId = 0x4D;
+                        entityId = E_ID_4D;
 #endif
                         break;
 
@@ -145,7 +145,7 @@ void func_us_801BD268(void) {
 #ifdef VERSION_PSP
                         entityId = D_psp_092A55C0;
 #else
-                        entityId = 0x37;
+                        entityId = E_ID_37;
 #endif
                         break;
 
@@ -153,7 +153,7 @@ void func_us_801BD268(void) {
 #ifdef VERSION_PSP
                         entityId = D_psp_092A5560;
 #else
-                        entityId = 0x43;
+                        entityId = E_SKELETON;
 #endif
                         break;
                     }
