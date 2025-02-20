@@ -288,7 +288,6 @@ INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD3C);
 INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD60);
 
 extern s8 D_80073510;
-extern u8 D_8003BE5E;
 extern u16 D_us_80180824;
 
 // This is probably EntityLibrarian, but I don't know for sure
@@ -312,7 +311,7 @@ void func_us_801AFE0C(Entity* self) {
             g_api.PlaySfx(0x202);
 #endif
         }
-        if (D_8003BE5E) {
+        if (g_CastleFlags[MET_LIBRARIAN]) {
             self->step = 8;
             break;
         }
@@ -402,7 +401,7 @@ void func_us_801AFE0C(Entity* self) {
         self->step++;
         break;
     case 5:
-        D_8003BE5E = 1;
+        g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
         g_Player.D_80072EFC = 1;
