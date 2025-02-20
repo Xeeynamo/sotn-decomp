@@ -1926,3 +1926,8 @@ void EntityMist(Entity* self) {
 block_147:
     self->facingLeft = PLAYER.facingLeft;
 }
+
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", UnknownEntId48);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", UnknownEntId49);
