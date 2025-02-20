@@ -1437,18 +1437,19 @@ void EntityLevelUpAnimation(Entity* self) {
     Primitive* prim;
     Unkstruct_800AE180* unkstruct;
     s16 posX_hi, posY_hi;
-    s16 temp_v0;
-    s16 temp_v1_2;
-    s32 var_a1;
-    s32 var_a1_2;
+    s16 angle;
+    s16 prim_x0_x2;
+    s16 prim_y0_y2;
+    s16 prim_x1_x3;
+    s16 prim_y1_y3;
     s32 i;
-    s32 var_v0;
-    s32 var_v0_2;
 
-    unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
+    s16 upperParams = (self->params >> 8) & 0xff;
+
+    unkstruct = &D_800AE180[upperParams];
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, 0xE);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 14);
         if (self->primIndex == -1) {
             return;
         }
@@ -1542,31 +1543,29 @@ void EntityLevelUpAnimation(Entity* self) {
 
     posX_hi = self->posX.i.hi - 176;
     posY_hi = self->posY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; i < 14; i++) {
-        temp_v0 = D_800AE190[i];
-        var_v0 = -(rsin(temp_v0) >> 5) * self->ext.factory.unk80 / 256;
-        var_v0_2 = (rcos(temp_v0) >> 5) * self->ext.factory.unk82 / 256;
-        temp_v1_2 = D_800AE190[i + 1];
-        var_a1 = -(rsin(temp_v1_2) >> 5) * self->ext.factory.unk80 / 256;
-        var_a1_2 = (rcos(temp_v1_2) >> 5) * self->ext.factory.unk82 / 256;
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 14; prim = prim->next,i++) {
+        angle = D_800AE190[i];
+        prim_y0_y2 = -(rsin(angle) >> 5) * self->ext.factory.unk80 / 256;
+        prim_x0_x2 = (rcos(angle) >> 5) * self->ext.factory.unk82 / 256;
+        angle = D_800AE190[i + 1];
+        prim_y1_y3 = -(rsin(angle) >> 5) * self->ext.factory.unk80 / 256;
+        prim_x1_x3 = (rcos(angle) >> 5) * self->ext.factory.unk82 / 256;
 
-        prim->x0 = var_v0_2 + (posX_hi + prim->u0);
-        prim->x1 = var_a1_2 + (posX_hi + prim->u1);
-        prim->x2 = var_v0_2 + (posX_hi + prim->u2);
-        prim->x3 = var_a1_2 + (posX_hi + prim->u3);
+        prim->x0 = prim_x0_x2 + (posX_hi + prim->u0);
+        prim->x1 = prim_x1_x3 + (posX_hi + prim->u1);
+        prim->x2 = prim_x0_x2 + (posX_hi + prim->u2);
+        prim->x3 = prim_x1_x3 + (posX_hi + prim->u3);
 
-        prim->y0 = posY_hi + var_v0;
-        prim->y1 = posY_hi + var_a1;
-        prim->y2 = posY_hi + 0x18 + var_v0;
-        prim->y3 = posY_hi + 0x18 + var_a1;
-
+        prim->y0 = posY_hi + prim_y0_y2;
+        prim->y1 = posY_hi + prim_y1_y3;
+        prim->y2 = posY_hi + 0x18 + prim_y0_y2;
+        prim->y3 = posY_hi + 0x18 + prim_y1_y3;
+        // weird RBG assign order, not RGB
         prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
             prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 = prim->g3 =
                 self->ext.factory.unk7E;
 
         D_800AE190[i] += self->ext.factory.unk84;
-        prim = prim->next;
     }
 }
 

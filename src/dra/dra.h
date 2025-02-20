@@ -380,7 +380,7 @@ extern RECT D_800AE130;
 extern RECT D_800AE138;
 extern u8 D_800AE140[][8];
 extern Unkstruct_800AE180 D_800AE180[];
-extern u16 D_800AE190[];
+extern s16 D_800AE190[];
 extern s16 D_800AE1B0[];
 extern s16 D_800AE1F0[];
 extern u32 D_800AE230[8];

@@ -1248,7 +1248,142 @@ void EntityPlayerDissolves(Entity* self) {
     func_8010DFF0(1, 1);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityLevelUpAnimation);
+extern s32 D_80138090;
+void EntityLevelUpAnimation(Entity* self) {
+    Primitive* prim;
+    Unkstruct_800AE180* unkstruct;
+    s16 posX_hi, posY_hi;
+    s16 angle;
+    s16 prim_x0_x2;
+    s16 prim_y0_y2;
+    s16 prim_x1_x3;
+    s16 prim_y1_y3;
+    s32 i;
+
+    s16 upperParams = (self->params >> 8) & 0xff;
+
+    unkstruct = &D_800AE180[upperParams];
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, 14);
+        if (self->primIndex == -1) {
+            return;
+        }
+        PlaySfx(SFX_LEVEL_UP); // Max HP & MP
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_UNK_20000 | FLAG_UNK_10000;
+        CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 48;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 14; i++) {
+            prim->v0 = prim->v1 = unkstruct->unk2;
+            prim->v2 = prim->v3 = prim->v0 + 0x18;
+            prim->u0 = ((i * 8) + 0x80);
+            prim->u1 = (((i + 1) * 8) + 0x80);
+            prim->u2 = (((i - 1) * 8) + 0x80);
+            prim->u3 = ((i * 8) + 0x80);
+            if (i == 0) {
+                prim->u2 = 0x80;
+            }
+            if (i == 0xD) {
+                prim->u1 = prim->u0;
+            }
+            prim->tpage = 0x1C;
+            prim->clut = unkstruct->palette;
+            prim->priority = 0x1FE;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->ext.timer.t = 0;
+        self->ext.factory.unk80 = 0x100;
+        self->ext.factory.unk82 = 0x100;
+        self->ext.factory.unk7E = 0;
+        self->ext.factory.unk84 = 0x40;
+        self->step++;
+        D_80138090 = 0;
+        break;
+    case 1:
+        if (++D_80138090 == 2) {
+            g_unkGraphicsStruct.unk20 = 3;
+        }
+        self->ext.factory.unk80 -= 8;
+        self->ext.factory.unk82 -= 8;
+        self->ext.factory.unk7E += 6;
+        if (self->ext.factory.unk7E > 0xFF) {
+            self->ext.factory.unk7E = 0xFF;
+        }
+        if (self->ext.factory.unk82 < 0) {
+            self->ext.factory.unk82 = 0;
+        }
+        if (self->ext.factory.unk80 < 0) {
+            self->ext.factory.unk80 = 0;
+            self->ext.timer.t = 0x20;
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 14; i++) {
+                prim->drawMode = DRAW_DEFAULT;
+                prim = prim->next;
+            }
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.factory.unk80 = 8;
+        self->ext.factory.unk82 = 4;
+        if (--self->ext.timer.t == 0) {
+            CreateEntFactoryFromEntity(self, FACTORY(0x28, 10), 0);
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 14; i++) {
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                prim = prim->next;
+            }
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.factory.unk80 += 0x10;
+        self->ext.factory.unk82 += 2;
+        self->ext.factory.unk7E -= 6;
+        if (self->ext.factory.unk7E < 0) {
+            self->ext.factory.unk7E = 0;
+        }
+        if (self->ext.factory.unk80 > 0x200) {
+            g_unkGraphicsStruct.unk20 = 0;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    posX_hi = self->posX.i.hi - 176;
+    posY_hi = self->posY.i.hi;
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 14; prim = prim->next,i++) {
+        angle = D_800AE190[i];
+        prim_y0_y2 = -(rsin(angle) >> 5) * self->ext.factory.unk80 / 256;
+        prim_x0_x2 = (rcos(angle) >> 5) * self->ext.factory.unk82 / 256;
+        angle = D_800AE190[i + 1];
+        prim_y1_y3 = -(rsin(angle) >> 5) * self->ext.factory.unk80 / 256;
+        prim_x1_x3 = (rcos(angle) >> 5) * self->ext.factory.unk82 / 256;
+
+        prim->x0 = prim_x0_x2 + (posX_hi + prim->u0);
+        prim->x1 = prim_x1_x3 + (posX_hi + prim->u1);
+        prim->x2 = prim_x0_x2 + (posX_hi + prim->u2);
+        prim->x3 = prim_x1_x3 + (posX_hi + prim->u3);
+
+        prim->y0 = posY_hi + prim_y0_y2;
+        prim->y1 = posY_hi + prim_y1_y3;
+        prim->y2 = posY_hi + 0x18 + prim_y0_y2;
+        prim->y3 = posY_hi + 0x18 + prim_y1_y3;
+        // weird RBG assign order, not RGB
+        prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+            prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 = prim->g3 =
+                self->ext.factory.unk7E;
+
+        D_800AE190[i] += self->ext.factory.unk84;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_091324E0);
 
