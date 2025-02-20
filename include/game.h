@@ -175,6 +175,8 @@ typedef enum {
 #define PAD_LEFT 0x0080
 #endif
 
+#define PAD_NONE 0x0000
+
 // Game Buttons unofficially refers to buttons used in playing the game.
 // Direction, action and shoulder buttons. Any button except start or select.
 #define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
