@@ -33,10 +33,10 @@ typedef enum {
     /* 0x21 */ NO2_SECRET_CEILING_OPEN = 33,
     /* 0x22 */ NO2_STAGE_FLAG = 34,
     /* 0x28 */ RNO2_SECRET_WALL_OPEN = 40, // See 0x20 note
+    /* 0x29 */ RNO2_SECRET_FLOOR_OPEN = 41,
     /* 0x30 */ NO4_TO_NP3_SHORTCUT = 48,
     /* 0x31 */ NO0_TO_NP3_SHORTCUT = 49,
     /* 0x32 */ WRP_TO_NP3_SHORTCUT = 50,
-    /* 0x29 */ RNO2_SECRET_FLOOR_OPEN = 41,
 
     // Used for tracking the steps to unlock the jewel sword room
     // Bit 1 is set when the left side rocks are destroyed
