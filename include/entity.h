@@ -2663,12 +2663,11 @@ typedef struct {
 } ET_Chair;
 
 typedef struct {
-    /* 0x7C */ u16 : 16;
-    /* 0x7E */ u16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ u16 unk80;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 : 8;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ struct Entity* unk88;
