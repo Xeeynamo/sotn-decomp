@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", NO4_EntityBackgroundBlock);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityUnkId12);
+INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityLockCamera);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C0FC8);
 

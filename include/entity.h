@@ -945,10 +945,6 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_Entity12;
-
-typedef struct {
     u8 fiveFrameCounter;
     struct Entity* parent;
     char pad[8];
@@ -1594,17 +1590,6 @@ typedef struct {
     s16 unk86;
     s16 unk88;
 } ET_LifeUpSpawn;
-
-typedef struct {
-    u16 unk7C;
-    u16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    u16 unk88;
-    u16 unk8A;
-} ET_801B0AA4;
 
 typedef struct {
     byte pad[4];
@@ -2878,7 +2863,6 @@ typedef union { // offset=0x7C
     ET_EntFactory factory;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
-    ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
@@ -2998,7 +2982,6 @@ typedef union { // offset=0x7C
     ET_3DBackgroundhouse bghouse;
     ET_LifeUpSpawn lifeUpSpawn;
     ET_AxeKnight axeknight;
-    ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
     ET_80123B40 et_80123B40;
