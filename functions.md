@@ -922,7 +922,7 @@
 | dra    | DrawHud                             |      164 |         14 |        |                                 |       |
 | dra    | func_psp_0910EA68                   |      164 |         24 |        |                                 |       |
 | no4    | func_psp_09238600                   |      165 |         18 |        |                                 |       |
-| wrp    | EntityUnkId12                       |      165 |         18 |        |                                 |       |
+| wrp    | EntityLockCamera                    |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra    | func_psp_09139068                   |      166 |         16 |        |                                 |       |
 | dra    | func_psp_090E81A8                   |      166 |         19 |        |                                 |       |
 | st0    | EntityDraculaMeteorball             |      166 |         24 |        |                                 |       |
@@ -1179,7 +1179,7 @@
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
-| lib    | func_psp_0925D8D8                   |      534 |         67 | Yes    | https://decomp.me/scratch/ydeqP | 0.999 |
+| lib    | func_psp_0925D8D8                   |      534 |         67 | Yes    | https://decomp.me/scratch/ydeqP | 0.986 |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
 | no4    | func_psp_09258E30                   |      540 |         51 | Yes    |                                 |       |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
@@ -1216,7 +1216,7 @@
 | dra    | func_psp_090DCD28                   |      639 |        101 |        |                                 |       |
 | lib    | func_psp_092644E0                   |      642 |         61 | Yes    |                                 |       |
 | dra    | func_psp_09137900                   |      646 |        129 |        |                                 |       |
-| lib    | func_psp_09258100                   |      650 |         63 | Yes    |                                 |       |
+| lib    | func_psp_09258100                   |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
 | lib    | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
 | dra    | EntityHitByLightning                |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
@@ -1227,7 +1227,7 @@
 | st0    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | wrp    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
-| lib    | func_psp_09241690                   |      691 |         73 |        |                                 |       |
+| lib    | func_psp_09241690                   |      691 |         73 |        | https://decomp.me/scratch/ClZtd | 0.998 |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/ZJDcJ | 0.934 |
 | dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
@@ -1244,7 +1244,7 @@
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
-| lib    | func_psp_0923A538                   |      768 |        100 | Yes    |                                 |       |
+| lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
