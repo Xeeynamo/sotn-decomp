@@ -23,4 +23,4 @@ void EntityBackgroundBlock(Entity* self) {
     AnimateEntity(objInit->animFrames, self);
 }
 
-#include "../../st/entity_unk_id12.h"
+#include "../../st/entity_lock_camera.h"

@@ -22,4 +22,4 @@ void func_801A7D64(Entity* self) {
     AnimateEntity(objInit->animFrames, self);
 }
 
-#include "../../st/entity_unk_id12.h"
+#include "../../st/entity_lock_camera.h"

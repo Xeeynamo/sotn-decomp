@@ -4,7 +4,7 @@
 
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityBackgroundBlock(Entity*);
-void EntityUnkId12(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -29,7 +29,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock, // unused
-    EntityUnkId12,         // unused? looks debugging stuff
+    EntityLockCamera,      // unused? looks debugging stuff
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -52,7 +52,7 @@ u16 g_EInitInteractable[] = {
 u16 g_EInitUnkId13[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0002, 0x0000,
 };
-u16 g_EInitUnkId12[] = {
+u16 g_EInitLockCamera[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000,
 };
 u16 g_EInitCommon[] = {
