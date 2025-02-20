@@ -88,7 +88,7 @@ void func_us_801CD318(Entity* self) {
     case 1:
         self->ext.et_801CD318.unk7C += self->ext.et_801CD318.unk92;
         self->ext.et_801CD318.unk7E += 0x40;
-        if (g_pads[0].tapped & 0x80) {
+        if (g_pads[0].tapped & PAD_SQUARE) {
             self->step++;
             self->ext.et_801CD318.unk92 = self->ext.et_801CD318.unk92 * 2;
             self->ext.et_801CD318.unk80 = 0;
@@ -153,7 +153,7 @@ void func_us_801CD318(Entity* self) {
             tempEntity = g_api.GetFreeEntity(0xE0, 0x100);
             if (tempEntity != NULL) {
                 DestroyEntity(tempEntity);
-                tempEntity->entityId = 2;
+                tempEntity->entityId = E_EXPLOSION;
                 tempEntity->pfnUpdate =
                     PfnEntityUpdates[tempEntity->entityId - 1];
                 tempEntity->params = 0;
