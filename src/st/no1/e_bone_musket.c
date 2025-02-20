@@ -5,20 +5,20 @@ static s16 D_us_80182998[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_801829A8[] = {0, 16, 12, 0};
 static u8 D_us_801829B0[] = {2, 8, 2, 9, 2, 10, 12, 11, 20, 12, 1,  2,
                              1, 3, 1, 4, 1, 5,  6,  6,  4,  7,  -1, 0};
-static u8 D_us_801829C8[] = {2, 10, 12, 11, 20, 12, 1, 2, 1,  3, 1, 4,
-                             1, 5,  12, 6,  8,  7,  4, 1, -1, 0, 0, 0};
+static u8 D_us_801829C8[] = {
+    2, 10, 12, 11, 20, 12, 1, 2, 1, 3, 1, 4, 1, 5, 12, 6, 8, 7, 4, 1, -1, 0};
 static u8 D_us_801829E0[] = {
     4,  7,  9,  6,  10, 13, 2,  14, 1,  15, 1,  16, 1,  17, 1,  18, 1,
     19, 1,  20, 1,  19, 1,  18, 2,  17, 1,  18, 1,  19, 1,  20, 2,  19,
     18, 20, 5,  6,  5,  7,  5,  1,  20, 23, 5,  22, 7,  21, 5,  22, 10,
-    23, 5,  22, 20, 21, 7,  1,  2,  7,  2,  6,  2,  1,  -1, 0,  0,  0};
+    23, 5,  22, 20, 21, 7,  1,  2,  7,  2,  6,  2,  1,  -1, 0};
 static u8 D_us_80182A24[] = {10, 1, 6, 27, 4, 26, -1, 0};
 static u8 D_us_80182A2C[] = {5, 26, 8, 25, 10, 24, 8, 25, 5, 26, 0, 0};
 static u8 D_us_80182A38[] = {8, 26, 4, 27, 1, 1, -1, 0};
-static u8 D_us_80182A40[] = {1, 28, 1, 29, 1, 30, 1, 0, -1, 0, 0, 0};
-static s16 D_us_80182A4C[] = {0, 20, 40, 0};
+static u8 D_us_80182A40[] = {1, 28, 1, 29, 1, 30, 1, 0, -1, 0};
+static s16 D_us_80182A4C[] = {0, 20, 40};
 static s32 D_us_80182A54[] = {1, 1, -2};
-static u8 D_us_80182A60[][2] = {{3, 1}, {7, 0}, {5, 1}, {0, 0}};
+static u8 D_us_80182A60[][2] = {{3, 1}, {7, 0}, {5, 1}};
 static s16 D_us_80182A68[] = {0, 1, 8, 15, -3, -8, 6, 23, -1, -3, 7, 18};
 
 void EntityBoneMusket(Entity* self) {
@@ -47,7 +47,8 @@ void EntityBoneMusket(Entity* self) {
     case 1:
         if (UnkCollisionFunc3(D_us_80182998) & 1) {
             if (!self->params) {
-                for (tempEntity = self + 1, i = 1; i < 3; i++, tempEntity++) {
+                tempEntity = self + 1;
+                for (i = 1; i < LEN(D_us_80182A4C); i++, tempEntity++) {
                     CreateEntityFromEntity(E_BONE_MUSKET, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
@@ -65,7 +66,8 @@ void EntityBoneMusket(Entity* self) {
     case 2:
         if (!self->params) {
             if (GetDistanceToPlayerX() < 0xC0) {
-                for (tempEntity = self, i = 0; i < 3; i++, tempEntity++) {
+                tempEntity = self;
+                for (i = 0; i < LEN(D_us_80182A60); i++, tempEntity++) {
                     tempEntity->step = D_us_80182A60[i][0];
                     tempEntity->step_s = D_us_80182A60[i][1];
                 }
