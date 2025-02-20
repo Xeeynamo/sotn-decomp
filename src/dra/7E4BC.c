@@ -1580,49 +1580,53 @@ void func_80121F14(s32 arg0, s32 arg1) {
 }
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+    s32 primU0;
+    s32 tempU;
+    s32 tempV;
+    s32 primU1;
+    s32 primV0;
+    s32 primV1;
+    s16 angle1;
+    s16 angle2;
     Primitive* prim;
-    s16 temp_s4;
-    s16 temp_s5;
-    s32 var_a0;
-    s32 var_s3;
-    s32 var_v1;
-    u8 var_a3;
-    u8 var_t0;
-    s8 var_t1;
-    s8 var_t2;
+    s32 i;
 
-    if (arg0 == 0) {
+    if (arg0 == false) {
         if (facingLeft) {
             prim = &D_801381F4[D_800AE230[arg1 >> 1]];
-            var_t0 = prim->u0;
-            var_t2 = prim->u1;
-            var_a3 = prim->v0;
-            var_t1 = prim->v1;
+            primU0 = prim->u0;
+            tempU = prim->u1;
+            primV0 = prim->v0;
+            tempV = prim->v1;
         } else {
             prim = &D_801381F4[D_800AE250[arg1 >> 1]];
-            var_t0 = prim->u1;
-            var_t2 = prim->u0;
-            var_a3 = prim->v1;
-            var_t1 = prim->v0;
+            primU0 = prim->u1;
+            tempU = prim->u0;
+            primV0 = prim->v1;
+            tempV = prim->v0;
         }
 
-        var_v1 = (prim->u0 + prim->u1) / 2;
-        var_a0 = (prim->v0 + prim->v1) / 2;
+        primU1 = (prim->u0 + prim->u1) / 2;
+        primV1 = (prim->v0 + prim->v1) / 2;
 
         if (arg1 & 1) {
-            var_t0 = var_v1;
-            var_v1 = var_t2 & 0xFF;
-            var_a3 = var_a0;
-            var_a0 = var_t1 & 0xFF;
+            primU0 = primU1;
+            primU1 = tempU;
+            primV0 = primV1;
+            primV1 = tempV;
         }
-        arg2->u0 = var_t0;
-        arg2->v0 = var_a3;
-        arg2->u1 = var_v1;
-        arg2->v1 = var_a0;
+        arg2->u0 = primU0;
+        arg2->v0 = primV0;
+        arg2->u1 = primU1;
+        arg2->v1 = primV1;
         arg2->u3 = arg2->u2 = prim->u2;
         arg2->v3 = arg2->v2 = prim->v2;
         if (PLAYER.animSet == 0xF) {
+            #ifdef VERSION_PSP
+            arg2->tpage = 0x4118;
+            #else
             arg2->tpage = 0x118;
+            #endif
         } else {
             arg2->tpage = 0x18;
         }
@@ -1632,22 +1636,18 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
                          DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         arg2 = arg2->next;
     } else {
-        temp_s5 = D_80138094[arg1].angle1;
-        temp_s4 = D_80138094[(arg1 + 1) % 16].angle1;
+        angle1 = D_80138094[arg1].angle1;
+        angle2 = D_80138094[(arg1 + 1) % 16].angle1;
 
-        for (var_s3 = 0; var_s3 < 4; var_s3++) {
+        for (i = 0; i < 4; i++) {
             // nb: the cos/sin arguments seem to be invariant, could've been
             // extracted outside the loop
-            arg2->u0 =
-                0x60 + (((rcos(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->v0 =
-                -0x60 - (((rsin(temp_s5) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->u1 =
-                0x60 + (((rcos(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
-            arg2->v1 =
-                -0x60 - (((rsin(temp_s4) >> 4) * ((var_s3 + 1) << 3)) >> 8);
+            arg2->u0 = 0x60 + ((((rcos(angle1) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->v0 = 0xA0 - ((((rsin(angle1) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->u1 = 0x60 + ((((rcos(angle2) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->v1 = 0xA0 - ((((rsin(angle2) >> 4) * 8) * (i + 1)) >> 8);
 
-            if (var_s3 == 3) {
+            if (i == 3) {
                 if (arg2->u0 < 4) {
                     arg2->u0 = -1;
                 }
@@ -1662,10 +1662,10 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
                 }
             }
 
-            arg2->u2 = 0x60 + (((rcos(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
-            arg2->v2 = -0x60 - (((rsin(temp_s5) >> 4) * (var_s3 << 3)) >> 8);
-            arg2->u3 = 0x60 + (((rcos(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
-            arg2->v3 = -0x60 - (((rsin(temp_s4) >> 4) * (var_s3 << 3)) >> 8);
+            arg2->u2 = 0x60 + ((((rcos(angle1) >> 4) * 8) * i) >> 8);
+            arg2->v2 = 0xA0 - ((((rsin(angle1) >> 4) * 8) * i) >> 8);
+            arg2->u3 = 0x60 + ((((rcos(angle2) >> 4) * 8) * i) >> 8);
+            arg2->v3 = 0xA0 - ((((rsin(angle2) >> 4) * 8) * i) >> 8);
 
             arg2->tpage = 0x18;
             arg2->clut = 0x10F;
