@@ -107,6 +107,9 @@ extern EInit D_us_801808B4;
 // Candle and table
 extern EInit D_us_801808FC;
 
+extern EInit D_us_80180914;
+extern EInit D_us_80180944;
+
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
