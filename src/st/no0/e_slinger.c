@@ -17,25 +17,19 @@ typedef enum {
     SLINGER_LAND
 } SlingerJumpSubSteps;
 
-static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
-                         0x04, 0x05, 0x05, 0x05, 0x06, 0x00};
-static u8 anim_walk_backwards[] = {0x06, 0x01, 0x05, 0x06, 0x05, 0x05, 0x06,
-                                   0x04, 0x04, 0x03, 0x04, 0x02, 0x00};
-static u8 anim_throw_bone[] = {0x05, 0x07, 0x06, 0x08, 0x05, 0x09, 0x05,
-                               0x0A, 0x05, 0x0B, 0x05, 0x0C, 0xFF, 0x00};
-static u8 anim_jump1[] = {0x01, 0x01, 0x04, 0x0D, 0x04, 0x0E, 0x01, 0x01, 0x00};
-static u8 anim_jump2[] = {
-    0x01, 0x01, 0x04, 0x0D, 0x06, 0x0E, 0x04, 0x0D, 0x01, 0x01, 0x00};
-static u16 anim_bone_rot[] = {
-    0x0100, 0x0080, 0x0048, 0x0020, 0x0040, 0x0010, 0x0030, 0x0000};
-static s8 dead_parts_selector[] = {
-    0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x20, 0x00};
+static u8 anim_walk[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0, 0};
+static u8 anim_walk_backwards[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0, 0};
+static u8 anim_throw_bone[] = {5, 7, 6, 8, 5, 9, 5, 10, 5, 11, 5, 12, -1, 0};
+static u8 anim_jump1[] = {1, 1, 4, 13, 4, 14, 1, 1, 0, 0};
+static u8 anim_jump2[] = {1, 1, 4, 13, 6, 14, 4, 13, 1, 1, 0, 0};
+static u16 anim_bone_rot[] = {0x100, 0x080, 0x048, 0x020, 0x040, 0x010, 0x030};
+static s8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x20};
 static s32 dead_parts_velocity_x[] = {
-    FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), 0};
+    FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0)};
 static s32 dead_parts_velocity_y[] = {
     FIX(-5), FIX(-3), FIX(-2), FIX(-3), FIX(-4), FIX(-.875), FIX(-4)};
-static u16 dead_parts_pos_x[] = {-4, 0, 4, -4, -4, 4, 0, 0};
-static u16 dead_parts_pos_y[] = {-16, -8, -4, -4, 9, 9, 0, 0};
+static u16 dead_parts_pos_x[] = {-4, 0, 4, -4, -4, 4, 0};
+static u16 dead_parts_pos_y[] = {-16, -8, -4, -4, 9, 9, 0};
 static u8 attack_timer_cycles[2][4] = {
     {0x80, 0x08, 0x08, 0x40}, {0xF0, 0xC0, 0xA0, 0x80}};
 static s16 sensors_ground[][2] = {{0, 19}, {8, 0}};

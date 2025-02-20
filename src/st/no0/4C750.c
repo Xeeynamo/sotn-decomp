@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no0.h"
+
+static s16 D_us_80181C14[] = {0x50, 0x68, 0x70, 0x68, 0x50, 0x38, 0x30, 0x38};
+static s16 D_us_80181C24[] = {0x90, 0x93, 0x9C, 0xA5, 0xA8, 0xA5, 0x9C, 0x93};
 
 extern void func_us_801CC8F8(Entity*);
 
@@ -71,9 +73,6 @@ void func_us_801CC8F8(Entity* self) {
         self->posX.i.hi -= 0x180;
     }
 }
-
-extern s16 D_us_80181C14[];
-extern s16 D_us_80181C24[];
 
 // updates entity movement direction
 void func_us_801CC9B4(Entity* self) {
