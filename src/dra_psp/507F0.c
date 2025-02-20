@@ -1928,6 +1928,34 @@ block_147:
 }
 
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", UnknownEntId48);
+void UnknownEntId48(Entity* self) {
+    u32 lowerParams;
+
+    lowerParams = self->params & 0xFF;
+    if (!(g_Player.status & PLAYER_STATUS_MIST_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!IsRelicActive(RELIC_GAS_CLOUD)) {
+        self->hitboxState = 0;
+    } else {
+        self->hitboxState = 2;
+    }
+    if (!self->step) {
+        func_8011A328(self, 0xC);
+        self->enemyId = 4;
+        self->hitboxWidth = self->hitboxHeight = 8;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
+        self->step++;
+    }
+    if (lowerParams == 0) {
+        self->posX.i.hi = (PLAYER.posX.i.hi + g_Entities[16].posX.i.hi) / 2;
+        self->posY.i.hi = (PLAYER.posY.i.hi + g_Entities[16].posY.i.hi) / 2;
+        self->hitboxWidth = self->hitboxHeight = 0x1C;
+    } else {
+        self->posX.i.hi = D_80138094[lowerParams - 1].posX.i.hi;
+        self->posY.i.hi = D_80138094[lowerParams - 1].posY.i.hi;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", UnknownEntId49);
