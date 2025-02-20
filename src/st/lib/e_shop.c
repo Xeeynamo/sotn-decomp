@@ -125,11 +125,12 @@ static u8 D_us_8018151C[] = {
     // clang-format on
 };
 
-extern u32 D_us_801D415C[];
-extern s32 D_us_801D425C[];
-extern AvailableInventoryItem D_us_801D4364[];
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
+// bss
+static u32 D_us_801D415C[64];
+static u32 D_us_801D425C[64];
+STATIC_PAD_BSS(8);
+static AvailableInventoryItem D_us_801D4364[75];
+STATIC_PAD_BSS(8);
 
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6) {
@@ -410,7 +411,7 @@ void func_us_801B2BE4(Entity* self) {
                 self->ext.et_801B6F30.unk88 = func_us_801B29C4();
                 ptr = D_us_801D4364;
             }
-            for (i = 0; i < 64; i++) {
+            for (i = 0; i < LEN(D_us_801D425C); i++) {
                 itemId = ptr->itemId;
                 switch (ptr->category) {
                 case INVENTORY_HAND:
@@ -717,8 +718,8 @@ void func_us_801B2BE4(Entity* self) {
             } else {
                 g_Status.gold +=
                     D_us_801D415C[itemId] * D_us_801814D8[itemId].price;
-                if (g_Status.gold > 0xF423F) {
-                    g_Status.gold = 0xF423F;
+                if (g_Status.gold > 999999) {
+                    g_Status.gold = 999999;
                 }
                 ptr = &D_us_801814D8[itemId];
                 g_Status.equipBodyCount[ptr->itemId] -= D_us_801D415C[itemId];

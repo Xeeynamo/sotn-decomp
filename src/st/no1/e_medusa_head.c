@@ -29,11 +29,11 @@ static MedusaHeadSpawnerParams medusaHeadSpawnerParams[] = {
 };
 // clang-format on
 
-static u8 anim_medusa_head[] = {8, 1, 8, 2, 0, 0, 0, 0};
+static u8 anim_medusa_head[] = {8, 1, 8, 2, 0, 0};
 
 static MedusaHeadInitParams medusaHeadInitParams[] = {
-    {.velocityX = FIX(1.125), .posX = 0xFFF0, .facingLeft = 1},
-    {.velocityX = FIX(-1.125), .posX = 0x0110, .facingLeft = 0},
+    {.velocityX = FIX(1.125), .posX = -16, .facingLeft = 1},
+    {.velocityX = FIX(-1.125), .posX = 272, .facingLeft = 0},
 };
 
 extern void EntityMedusaHeadYellow(Entity* self);

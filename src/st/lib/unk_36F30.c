@@ -4,8 +4,6 @@
 extern AvailableInventoryItem D_us_8018173C[];
 extern RECT D_us_801AD0F4;
 
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
 extern s32 D_psp_08C630DC;
 extern s32 D_psp_092A5600;
 
@@ -814,7 +812,6 @@ INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD484);
 
 extern u16 D_us_80180E90[];
 extern u8* D_us_80180FB4[];
-extern s32 D_psp_08B42054;
 extern u8** D_psp_092A5F48;
 extern u8** D_psp_092A5F98;
 
