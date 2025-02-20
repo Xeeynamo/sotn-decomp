@@ -21,4 +21,4 @@ void func_801B246C(Entity* self) {
     AnimateEntity(objInit->animFrames, self);
 }
 
-#include "../entity_unk_id12.h"
+#include "../entity_lock_camera.h"

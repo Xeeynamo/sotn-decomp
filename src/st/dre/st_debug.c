@@ -28,4 +28,4 @@ void EntityUnkId11(Entity* entity) {
     AnimateEntity(obj->animFrames, entity);
 }
 
-#include "../entity_unk_id12.h"
+#include "../entity_lock_camera.h"

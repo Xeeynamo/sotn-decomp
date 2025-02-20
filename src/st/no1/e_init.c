@@ -18,7 +18,7 @@ void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void EntityEnvTile(Entity* self);
-void EntityUnkId12(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -114,7 +114,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
     /* 0x10 */ EntityEnvTile,
-    /* 0x11 */ EntityUnkId12,
+    /* 0x11 */ EntityLockCamera,
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,
@@ -201,7 +201,7 @@ EInit D_us_80180974 = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003};
 EInit D_us_80180980 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B};
 EInit D_us_8018098C = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
-EInit g_EInitUnkId12 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_801809C8 = {ANIMSET_OVL(0x01), 0x4B, 0x00, 0x000, 0x005};
