@@ -1574,8 +1574,8 @@ void func_80121F14(s32 arg0, s32 arg1) {
     s32 i;
 
     for (i = 0; i < LEN(D_80138094); i++, ptr++) {
-        ptr->posX.val = arg0 + ptr->posX.val;
-        ptr->posY.val = arg1 + ptr->posY.val;
+        ptr->posX.val += (s32)arg0;
+        ptr->posY.val += (s32)arg1;
     }
 }
 

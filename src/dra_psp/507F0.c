@@ -1385,7 +1385,17 @@ void EntityLevelUpAnimation(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_091324E0);
+extern mistStruct D_80138094[16];
+
+void func_80121F14(s32 arg0, s32 arg1) {
+    mistStruct* ptr = D_80138094;
+    s32 i;
+
+    for (i = 0; i < LEN(D_80138094); i++, ptr++) {
+        ptr->posX.val += (s32)arg0;
+        ptr->posY.val += (s32)arg1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_09132550);
 
