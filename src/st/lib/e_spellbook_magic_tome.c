@@ -47,7 +47,7 @@ void func_us_801D2274(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801D2274.unk7C = prim;
-        palette = 0x25A;
+        palette = PAL_DRA(0x25A);
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_801830DC[i];
@@ -322,7 +322,7 @@ void func_us_801D2DA8(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801D2274.unk7C = prim;
-        palette = 0x25E;
+        palette = PAL_DRA(0x25E);
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_8018310C[i];
