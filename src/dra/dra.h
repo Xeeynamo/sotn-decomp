@@ -378,7 +378,7 @@ extern s16 D_800ADDE8[][6];
 extern u8 D_800AE120[];
 extern RECT D_800AE130;
 extern RECT D_800AE138;
-extern u8 D_800AE140[];
+extern u8 D_800AE140[][8];
 extern Unkstruct_800AE180 D_800AE180[];
 extern u16 D_800AE190[];
 extern s16 D_800AE1B0[];

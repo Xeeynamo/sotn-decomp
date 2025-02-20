@@ -1214,10 +1214,8 @@ void EntityPlayerDissolves(Entity* self) {
     s16 s5;
     s16 s6;
     s16 s7;
-    u32* data;
+    u_long* data;
     u8* plSprite;
-    u8* temp1;
-    u8* temp2;
 
     if (PLAYER.ext.player.anim != 0x38 && PLAYER.ext.player.anim != 0x39 &&
         PLAYER.ext.player.anim != 0x3A &&
@@ -1253,8 +1251,8 @@ void EntityPlayerDissolves(Entity* self) {
     height = hSprite - yMargin;
     s3 = width / 6;
     s4 = height / 6;
-    xPivot = *sp38++ + plSprite[2];
-    yPivot = *sp38++ + plSprite[3];
+    xPivot = sp38[0] + plSprite[2];
+    yPivot = sp38[1] + plSprite[3];
     if (self->facingLeft) {
         s5 = s5 - xPivot;
     } else {
@@ -1270,10 +1268,8 @@ void EntityPlayerDissolves(Entity* self) {
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
         self->ext.dissolve.unk7C = 0;
-        temp1 = D_800AE140;
         self->ext.dissolve.unk80 = rand() & 7;
-        self->ext.dissolve.unk7E = *(
-            temp1 + (self->ext.dissolve.unk80 * 8) + self->ext.dissolve.unk7C);
+        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCount; i++) {
 
@@ -1338,10 +1334,8 @@ void EntityPlayerDissolves(Entity* self) {
         break;
     case 3:
         PLAYER.animCurFrame |= ~0x7FFF;
-        temp2 = D_800AE140;
-        self->ext.dissolve.unk7E =
-            *(temp2 + self->ext.dissolve.unk80 * 8 + self->ext.dissolve.unk7C);
-        data = D_80139A7C;
+        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        data = (u_long*)D_80139A7C;
         s2 = (u8*)data;
         s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
         s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
@@ -1388,7 +1382,7 @@ void EntityPlayerDissolves(Entity* self) {
             break;
         }
         for (sp3C = 0; sp3C < 6; sp3C++) {
-            data = D_80139A7C;
+            data = (u_long*)D_80139A7C;
             s2 = (u8*)data;
             s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
             s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
@@ -1454,7 +1448,7 @@ void EntityLevelUpAnimation(Entity* self) {
     unkstruct = &D_800AE180[(self->params >> 8) & 0xff];
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(4U, 0xE);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 0xE);
         if (self->primIndex == -1) {
             return;
         }

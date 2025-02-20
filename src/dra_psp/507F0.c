@@ -1007,7 +1007,246 @@ void EntityPlayerPinkEffect(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityPlayerDissolves);
+void EntityPlayerDissolves(Entity* self) {
+    const int PrimCount = 36;
+    const int Iterations = 40;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
+    s16 sp42;
+    s32 sp3C;
+    s16* sp38;
+    Primitive* prim;
+    s32 i;
+    u8* s2;
+    s16 s3;
+    s16 s4;
+    s16 s5;
+    s16 s6;
+    s16 s7;
+    u_long* data;
+    u8* plSprite;
+
+    if (PLAYER.ext.player.anim != 0x38 && PLAYER.ext.player.anim != 0x39 &&
+        PLAYER.ext.player.anim != 0x3A &&
+        (self->step == 2 || self->step == 3)) {
+        self->step = 4;
+        LoadImage(&D_800AE138, D_80139A7C);
+        self->ext.dissolve.unk7E = rand() & 0xFF;
+        self->ext.dissolve.unk7C = 0x30;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    s5 = self->posX.i.hi = PLAYER.posX.i.hi;
+    s7 = self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (!(PLAYER.animCurFrame & 0x7FFF)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    sp38 = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
+    sp42 = *sp38++;
+    sp42 &= 0x7FFF;
+    plSprite = ((u8**)SPRITESHEET_PTR)[sp42];
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    width = wSprite - xMargin;
+    height = hSprite - yMargin;
+    s3 = width / 6;
+    s4 = height / 6;
+    xPivot = sp38[0] + plSprite[2];
+    yPivot = sp38[1] + plSprite[3];
+    if (self->facingLeft) {
+        s5 = s5 - xPivot;
+    } else {
+        s5 = s5 + xPivot;
+    }
+    s7 = s7 + yPivot;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
+        self->ext.dissolve.unk7C = 0;
+        self->ext.dissolve.unk80 = rand() & 7;
+        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim->u0 = prim->u2 = (xMargin) + (s3 * (i % 6)) + 0x80;
+            prim->u1 = prim->u3 = prim->u0 + s3;
+            prim->v0 = prim->v1 = (yMargin + (s4 * (i / 6)));
+            prim->v2 = prim->v3 = prim->v0 + s4;
+            prim->g0 = (((i / 6) * 2) + (rand() & 3));
+            prim->tpage = 0x18;
+            prim->clut = PLAYER.palette & 0x7FFF;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->step += 1;
+        break;
+    case 1:
+        StoreImage(&D_800AE130, D_80139A7C);
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = s5 - (s3 * (i % 6)) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+                ;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        self->step += 1;
+        /* fallthrough */
+    case 2:
+        PLAYER.animCurFrame |= ~0x7FFF;
+        if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
+            self->step += 1;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        break;
+    case 3:
+        PLAYER.animCurFrame |= ~0x7FFF;
+        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        data = (u_long*)D_80139A7C;
+        s2 = (u8*)data;
+        s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+        s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
+        for (i = 0; i < Iterations; i++) {
+            if (rand() & 3) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
+                        *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 1;
+                    }
+                } else if (*(s2 + (i & 7) * 8 + (i >> 3) * 0x400)) {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) |= 0x10;
+                }
+            }
+        }
+        LoadImage(&D_800AE130, data);
+        if (++self->ext.dissolve.unk7C == 8) {
+            self->ext.dissolve.unk7C = 0;
+            self->ext.dissolve.unk80 += 1;
+            self->ext.dissolve.unk80 &= 7;
+            self->step = 2;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim = prim->next;
+        }
+        break;
+    case 4:
+        if (PLAYER.step == 0x10) {
+            if (g_Timer % 2 == 0) {
+                break;
+            }
+        } else if (g_Timer % 3 == 0) {
+            break;
+        }
+        for (sp3C = 0; sp3C < 6; sp3C++) {
+            data = (u_long*)D_80139A7C;
+            s2 = (u8*)data;
+            s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+            s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 6);
+            for (i = 0; i < Iterations; i++) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0xF0;
+                } else {
+                    *(s2 + (i & 7) * 8 + (i >> 3) * 0x400) &= 0x0F;
+                }
+            }
+            // some sort of prng state
+            self->ext.dissolve.unk7E += 0x23;
+            self->ext.dissolve.unk7E &= 0xFF;
+        }
+        LoadImage(&D_800AE138, data);
+        if (--self->ext.dissolve.unk7C == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode &= DRAW_UNK_200;
+            prim->drawMode |= DRAW_UNK02;
+            if (prim->r0 == 0) {
+                if (--prim->g0 == 0) {
+                    prim->r0++;
+                    prim->b0 = ((rand() & 3) + 0xF8);
+                    prim->r1 = 0x20 - (i / 6 * 2);
+                }
+            } else {
+                if (prim->r1) {
+                    prim->r1--;
+                } else {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                if (prim->b0 < 0x30 || prim->b0 > 0xD0) {
+                    prim->b0 += 2;
+                }
+                s6 = (s8)prim->b0 >> 4;
+                prim->y0 += s6;
+                prim->y1 += s6;
+                prim->y2 += s6;
+                prim->y3 += s6;
+            }
+            prim = prim->next;
+        }
+    }
+    func_8010DFF0(1, 1);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", EntityLevelUpAnimation);
 
