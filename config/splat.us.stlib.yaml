@@ -137,7 +137,7 @@ segments:
       - [0x5139C, c, prim_helpers]
       - [0x51BCC, c, e_spellbook_magic_tome]
       - [0x538A8, c, e_life_up]
-      - [0x5415C, bss]
+      - [0x5415C, .bss, e_shop]
       - [0x545C4, .bss, create_entity]
       - [0x545D4, bss]
       - [0x5528C, .bss, e_collect]
