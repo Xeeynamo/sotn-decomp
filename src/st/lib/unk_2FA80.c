@@ -706,8 +706,6 @@ extern u8* D_us_80181310[];
 extern u8* D_us_80181340[];
 extern u8 D_us_80183F64;
 
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
 extern u8* D_psp_092A54E0;
 extern s32 D_psp_092A5500;
 extern s32 D_psp_092A5538;
