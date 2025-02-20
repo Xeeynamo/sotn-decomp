@@ -2118,19 +2118,19 @@
 | 1.00 | true     | StageNamePopupHelper                | asm/us/st/wrp/matchings/e_stage_name/StageNamePopupHelper.s 
 | 1.00 | false    | StageNamePopupHelper                | asm/us/st/no4/nonmatchings/e_stage_name/StageNamePopupHelper.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityUnkId12                       | asm/us/boss/bo4/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/boss/mar/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/boss/rbo3/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/cen/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/chi/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/dre/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/mad/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/no1/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/no3/matchings/377D4/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/np3/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/rwrp/matchings/rwrp/st_debug/EntityUnkId12.s 
-| 1.00 | true     | EntityUnkId12                       | asm/us/st/wrp/matchings/st_debug/EntityUnkId12.s 
-| 1.00 | false    | EntityUnkId12                       | asm/us/st/no4/nonmatchings/first_c_file/EntityUnkId12.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/boss/bo4/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/boss/mar/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/boss/rbo3/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/cen/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/chi/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/dre/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/mad/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/no1/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/no3/matchings/377D4/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/np3/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/rwrp/matchings/rwrp/st_debug/EntityLockCamera.s 
+| 1.00 | true     | EntityLockCamera                    | asm/us/st/wrp/matchings/st_debug/EntityLockCamera.s 
+| 1.00 | false    | EntityLockCamera                    | asm/us/st/no4/nonmatchings/first_c_file/EntityLockCamera.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBackgroundBlock               | asm/us/boss/bo4/matchings/st_debug/EntityBackgroundBlock.s 
 | 1.00 | true     | func_us_8018AC0C                    | asm/us/boss/mar/matchings/st_debug/func_us_8018AC0C.s 
@@ -2140,7 +2140,7 @@
 | 1.00 | true     | func_8018E5AC                       | asm/us/st/mad/matchings/st_debug/func_8018E5AC.s 
 | 0.92 | true     | EntityCavernDoorVase                | asm/us/st/no3/matchings/377D4/EntityCavernDoorVase.s 
 | 0.92 | true     | func_801B246C                       | asm/us/st/np3/matchings/st_debug/func_801B246C.s 
-| 1.00 | true     | func_801B0958                       | asm/us/st/nz0/matchings/30958/func_801B0958.s 
+| 1.00 | true     | NZ0_EntityBackgroundBlock           | asm/us/st/nz0/matchings/st_debug/NZ0_EntityBackgroundBlock.s 
 | 1.00 | true     | ST0_EntityBackgroundBlock           | asm/us/st/st0/matchings/st_debug/ST0_EntityBackgroundBlock.s 
 | 1.00 | false    | NO4_EntityBackgroundBlock           | asm/us/st/no4/nonmatchings/first_c_file/NO4_EntityBackgroundBlock.s 
 -------------------------------------------------------------------------------
@@ -2383,9 +2383,14 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/lib/matchings/e_lock_camera/PlayerIsWithinHitbox.s 
 | 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/no0/matchings/e_stage_decoration/PlayerIsWithinHitbox.s 
-| 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/nz0/matchings/30958/PlayerIsWithinHitbox.s 
+| 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/nz0/matchings/e_lock_camera/PlayerIsWithinHitbox.s 
 | 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/st0/matchings/e_lock_camera/PlayerIsWithinHitbox.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/lib/matchings/e_skeleton/EntitySkeletonThrownBone.s 
@@ -2523,10 +2528,6 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -2548,8 +2549,8 @@
 | 1.00 | true     | func_801C53AC                       | asm/us/st/nz0/matchings/e_bloody_zombie/func_801C53AC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityLockCamera                    | asm/us/st/lib/matchings/e_lock_camera/EntityLockCamera.s 
-| 0.91 | true     | func_801B0AA4                       | asm/us/st/no0/matchings/419EC/func_801B0AA4.s 
-| 0.92 | true     | func_801B0AA4                       | asm/us/st/nz0/matchings/30958/func_801B0AA4.s 
+| 0.91 | true     | EntityLockCamera                    | asm/us/st/no0/matchings/e_lock_camera/EntityLockCamera.s 
+| 0.92 | true     | EntityLockCamera                    | asm/us/st/nz0/matchings/e_lock_camera/EntityLockCamera.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | D_us_801AD324                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD324.s 
 | 1.00 | true     | D_us_801AD33C                       | asm/us/st/lib/matchings/unk_36F30/D_us_801AD33C.s 
@@ -2952,9 +2953,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
