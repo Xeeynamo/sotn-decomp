@@ -1750,20 +1750,12 @@ void EntityMist(Entity* self) {
         if (self->primIndex == -1) {
             goto block_147;
         }
-// Not sure why PSP masks to 7FFF. Might be worth digging into.
-// There might be some special magic in how the systems differ.
-// I don't think this is a real ifdef.
-#ifdef VER_PSP
-        D_801381D4 = rand() & 0x7FFF;
-        D_801381D8 = rand() & 0x7FFF;
-        D_801381DC = rand() & 0x7FFF;
-        D_801381E0 = rand() & 0x7FFF;
-#else
-        D_801381D4 = rand();
-        D_801381D8 = rand();
-        D_801381DC = rand();
-        D_801381E0 = rand();
-#endif
+
+        D_801381D4 = rand() & PSP_RANDMASK;
+        D_801381D8 = rand() & PSP_RANDMASK;
+        D_801381DC = rand() & PSP_RANDMASK;
+        D_801381E0 = rand() & PSP_RANDMASK;
+
         D_801381E4 = 0xEF;
         D_801381E8 = 0xEF;
         D_801381EC = 0xEF;
@@ -1850,19 +1842,19 @@ void EntityMist(Entity* self) {
         yVar = yVar4 - self->posY.i.hi;
         angle = ratan2(-yVar, xVar);
         magnitude = SquareRoot12(((xVar * xVar) + (yVar * yVar)) << 0xC) >> 0xC;
-        if (magnitude >= 0xB) {
+        if (magnitude > 10) {
             cosine = rcos(angle) * 8;
             sine = -rsin(angle) * 8;
-            if (magnitude >= 0x24) {
+            if (magnitude > 35) {
                 cosine *= 2;
                 sine *= 2;
             }
-            if (magnitude >= 0x3D) {
+            if (magnitude > 60) {
                 cosine *= 2;
                 sine *= 2;
             }
-            self->posX.val = cosine + self->posX.val;
-            self->posY.val = sine + self->posY.val;
+            self->posX.val += (s32)cosine;
+            self->posY.val += (s32)sine;
         }
         angle3 = angle;
         xVar3 = (self->posX.i.hi + xVar4) / 2;
@@ -1897,8 +1889,8 @@ void EntityMist(Entity* self) {
             mistStruct->posX.val += rcos(angle) << 5;
             mistStruct->posY.val += -rsin(angle) << 5;
             if (D_800AE1F0[index] == -1) {
-                mistStruct->posX.val = velX + mistStruct->posX.val;
-                mistStruct->posY.val = velY + mistStruct->posY.val;
+                mistStruct->posX.val += (s32)velX;
+                mistStruct->posY.val += (s32)velY;
             }
         }
         D_80138394 += 8;
@@ -2001,8 +1993,8 @@ void EntityMist(Entity* self) {
         xVar4 = PLAYER.posX.i.hi + self->ext.mist.xCurrent;
         yVar4 = PLAYER.posY.i.hi + self->ext.mist.yCurrent;
 
-        xVar = self->posX.i.hi - xVar4;
-        yVar = self->posY.i.hi - yVar4;
+        xVar = xVar4 - self->posX.i.hi;
+        yVar = yVar4 - self->posY.i.hi;
 
         mistStruct = D_80138094;
 
@@ -2050,9 +2042,8 @@ void EntityMist(Entity* self) {
         prim->x3 = xVar4;
         prim->y2 = yVar4;
         prim->y3 = yVar4;
-        prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = 0;
-        prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-            D_80138398;
+        PGREY(prim,0) = PGREY(prim,1) = 0;
+        PGREY(prim,2) = PGREY(prim,3) = D_80138398;
 #ifndef VERSION_HD
         if (D_80138398 < 0x10) {
             prim->drawMode |= DRAW_HIDE;
@@ -2067,7 +2058,7 @@ void EntityMist(Entity* self) {
         yVar5 = D_80138094[j].posY.i.hi;
         xVar2 = D_80138094[(j + 1) % 16].posX.i.hi;
         yVar2 = D_80138094[(j + 1) % 16].posY.i.hi;
-        for (i = 0; i < 4; i++) {
+        for (i = 0; i < 4; prim = prim->next, i++) {
             prim->x0 = xVar4 + (i + 1) * (xVar5 - xVar4) / 4;
             prim->y0 = yVar4 + (i + 1) * (yVar5 - yVar4) / 4;
             prim->x1 = xVar4 + (i + 1) * (xVar2 - xVar4) / 4;
@@ -2078,31 +2069,22 @@ void EntityMist(Entity* self) {
             prim->y3 = yVar4 + i * (yVar2 - yVar4) / 4;
             switch (i) {
             case 0:
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = (D_80138394 * primColor2 / 256) & 0xFF;
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = (D_80138394 * primColor1 / 256) & 0xFF;
+                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor2 / 256) & 0xFF;
+                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor1 / 256) & 0xFF;
                 break;
             case 1:
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = (D_80138394 * primColor3 / 256) & 0xFF;
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = (D_80138394 * primColor2 / 256) & 0xFF;
+                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor3 / 256) & 0xFF;
+                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor2 / 256) & 0xFF;
                 break;
             case 2:
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = (D_80138394 * primColor4 / 256) & 0xFF;
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = (D_80138394 * primColor3 / 256) & 0xFF;
+                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor4 / 256) & 0xFF;
+                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor3 / 256) & 0xFF;
                 break;
             case 3:
-                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                    prim->b1 = 0;
-                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
-                    prim->b3 = (D_80138394 * primColor4 / 256) & 0xFF;
+                PGREY(prim,0) = PGREY(prim,1) = 0;
+                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor4 / 256) & 0xFF;
                 break;
             }
-            prim = prim->next;
         }
     }
 
