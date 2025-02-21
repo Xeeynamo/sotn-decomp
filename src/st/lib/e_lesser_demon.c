@@ -1,13 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BC57C);
+// Lesser demon start
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BB8DC);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BC814);
+u8 func_us_801BBAB4(void);
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BBAB4);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCC10);
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BBEB0);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCFD4);
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC28C);
+
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC57C);
+
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC814);
+
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCC10);
+
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCFD4);
 
 extern s32 D_psp_092A5510;
 extern s32 D_psp_092A5560;
@@ -238,7 +248,7 @@ void func_us_801BD268(void) {
 }
 
 u8 func_us_801BDA34(void);
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BDA34);
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BDA34);
 
 u8 func_us_801BBAB4(void);
 
@@ -826,4 +836,4 @@ void func_us_801BDAE4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BED48);
+INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BED48);
