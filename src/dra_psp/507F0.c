@@ -2026,4 +2026,96 @@ void func_80123A60(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123B40);
+void func_80123B40(Entity* self) {
+    Entity copy;
+    Primitive* prim;
+    s16 params;
+    s32 i;
+
+    params = self->params;
+    copy = PLAYER;
+
+    if (!self->step) {
+        self->animSet = PLAYER.animSet = 1;
+        self->animCurFrame = PLAYER.animCurFrame = 0x9F;
+        self->palette = PAL_OVL(0x10D);
+        self->unk5A = 0xC;
+        self->params = 0x2600;
+        EntityPlayerBlinkWhite(self);
+        self->params = params;
+
+        PLAYER = copy;
+
+        if (!(self->flags & FLAG_HAS_PRIMS)) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->velocityY = FIX(-3.0);
+        SetSpeedX(-0x1AAAA);
+        self->ext.et_80123B40.unk28 = 0x80;
+        self->ext.et_80123B40.unk29 = 0x80;
+    } else {
+        if (g_Timer & 1) {
+            self->posX.val += self->velocityX;
+            self->posY.val += self->velocityY;
+            self->velocityY += FIX(0.15625);
+        }
+        PLAYER.posX.val = self->posX.val;
+        PLAYER.posY.val = self->posY.val;
+        PLAYER.facingLeft = self->facingLeft;
+        self->animSet = PLAYER.animSet = 1;
+        self->animCurFrame = PLAYER.animCurFrame = 0x9F;
+        self->params = 0x2600;
+        EntityPlayerBlinkWhite(self);
+        self->params = params;
+
+        PLAYER = copy;
+
+        if (self->ext.et_80123B40.unk29 > 4) {
+            self->ext.et_80123B40.unk29 -= 1;
+        }
+        if (self->step == 0x10 && self->velocityY > 0) {
+            self->step = 0x11;
+        }
+        if (self->step == 0x11 && self->ext.et_80123B40.unk28 > 4) {
+            self->ext.et_80123B40.unk28 -= 1;
+        }
+        if (self->step == 0x12) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        prim->u0 += 0x80;
+        prim->u1 += 0x80;
+        prim->u2 += 0x80;
+        prim->u3 += 0x80;
+        prim->v0 += 0x80;
+        prim->v1 += 0x80;
+        prim->v2 += 0x80;
+        prim->v3 += 0x80;
+        prim->priority = PLAYER.zPriority - 8;
+        if (params == 0) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 =
+                self->ext.et_80123B40.unk28;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                prim->b2 = prim->b3 = 0;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        }
+        if (params == 1) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = self->ext.et_80123B40.unk29;
+            prim->clut = 0x100;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        }
+        prim = prim->next;
+    }
+}

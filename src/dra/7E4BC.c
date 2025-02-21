@@ -2238,13 +2238,13 @@ void func_80123B40(Entity* self) {
 
         PLAYER = copy;
 
-        if (self->ext.et_80123B40.unk29 >= 5) {
+        if (self->ext.et_80123B40.unk29 > 4) {
             self->ext.et_80123B40.unk29 -= 1;
         }
         if (self->step == 0x10 && self->velocityY > 0) {
             self->step = 0x11;
         }
-        if (self->step == 0x11 && self->ext.et_80123B40.unk28 >= 5) {
+        if (self->step == 0x11 && self->ext.et_80123B40.unk28 > 4) {
             self->ext.et_80123B40.unk28 -= 1;
         }
         if (self->step == 0x12) {
