@@ -19,9 +19,11 @@ INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCC10);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCFD4);
 
-extern s32 D_psp_092A5510;
-extern s32 D_psp_092A5560;
-extern s32 D_psp_092A55C0;
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_37);
+extern s32 E_ID(E_SKELETON);
+extern s32 E_ID(ID_4D);
+#endif
 
 // Lesser Demon minion spawn?
 // Seems like the vertical tractor beam effect that spawns
@@ -144,27 +146,15 @@ void func_us_801BD268(void) {
                     switch (Random() & 3) {
                     case 0:
                     case 1:
-#ifdef VERSION_PSP
-                        entityId = D_psp_092A5510;
-#else
-                        entityId = E_ID_4D;
-#endif
+                        entityId = E_ID(ID_4D);
                         break;
 
                     case 2:
-#ifdef VERSION_PSP
-                        entityId = D_psp_092A55C0;
-#else
-                        entityId = E_ID_37;
-#endif
+                        entityId = E_ID(ID_37);
                         break;
 
                     case 3:
-#ifdef VERSION_PSP
-                        entityId = D_psp_092A5560;
-#else
-                        entityId = E_SKELETON;
-#endif
+                        entityId = E_ID(SKELETON);
                         break;
                     }
                     CreateEntityFromEntity(
@@ -268,9 +258,11 @@ extern u8 D_us_80181B9C[];
 extern u8 D_us_80181BAC[];
 extern u8 D_us_80181BBC[];
 extern s16 D_us_80181C34[];
-extern s32 D_psp_092A5668;
-extern s32 D_psp_092A5670;
-extern s32 D_psp_092A5678;
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_22);
+extern s32 E_ID(ID_21);
+extern s32 E_ID(ID_20);
+#endif
 
 // Lesser Demon
 void func_us_801BDAE4(Entity* self) {
@@ -500,11 +492,7 @@ void func_us_801BDAE4(Entity* self) {
             }
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_092A5668, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_22, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_22), self, tempEntity);
                 self->ext.et_801BDAE4.unk88 = tempEntity;
             } else {
                 self->ext.et_801BDAE4.unk88 = NULL;
@@ -595,11 +583,7 @@ void func_us_801BDAE4(Entity* self) {
             if (func_us_801BBAB4()) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                    CreateEntityFromEntity(D_psp_092A5678, self, tempEntity);
-#else
-                    CreateEntityFromEntity(E_ID_20, self, tempEntity);
-#endif
+                    CreateEntityFromEntity(E_ID(ID_20), self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 12;
@@ -637,11 +621,7 @@ void func_us_801BDAE4(Entity* self) {
             self->ext.et_801BDAE4.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_092A5670, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_21, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_21), self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
