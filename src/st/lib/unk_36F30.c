@@ -5,7 +5,9 @@ extern AvailableInventoryItem D_us_8018173C[];
 extern RECT D_us_801AD0F4;
 
 extern s32 D_psp_08C630DC;
-extern s32 D_psp_092A5600;
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_2F);
+#endif
 
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
@@ -649,11 +651,7 @@ void func_us_801B6F30(Entity* self) {
                 prim = prim->next;
             }
             tempEntity = self + 1;
-#ifdef VERSION_PSP
-            CreateEntityFromCurrentEntity(D_psp_092A5600, tempEntity);
-#else
-            CreateEntityFromCurrentEntity(E_ID_2F, tempEntity);
-#endif
+            CreateEntityFromCurrentEntity(E_ID(ID_2F), tempEntity);
             tempEntity->params =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
