@@ -24,12 +24,14 @@ typedef enum EntityIDs {
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11,
+    /* 0x12 */ E_ID_12 = 0x12,
     // /* 0x13 */ E_UNK_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1C */ E_ID_1C = 0x1C,
     /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
+    /* 0x1F */ E_ID_1F,
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
     /* 0x22 */ E_ID_22,
@@ -45,11 +47,14 @@ typedef enum EntityIDs {
     /* 0x34 */ E_ID_34,
     /* 0x35 */ E_ID_35,
     /* 0x36 */ E_ID_36,
+    /* 0x37 */ E_ID_37,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
     /* 0x3D */ E_CANDLE_TABLE,
     /* 0x3E */ E_ID_3E = 0x3E,
+    /* 0x40 */ E_ID_40 = 0x40,
+    /* 0x42 */ E_ID_42 = 0x42,
     /* 0x43 */ E_SKELETON = 0x43,
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
@@ -106,6 +111,9 @@ extern EInit D_us_801808B4;
 
 // Candle and table
 extern EInit D_us_801808FC;
+
+extern EInit D_us_80180914;
+extern EInit D_us_80180944;
 
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;

@@ -11,12 +11,8 @@ void BlinkItem(Entity* self, u16 renderFlags) {
     prim->y2 = prim->y3 = prim->y0 + 14;
 
     if (renderFlags & RENDERFLAGS_NOSHADOW) {
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-                255;
+        PCOL(prim) = 255;
     } else {
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-                128;
+        PCOL(prim) = 128;
     }
 }

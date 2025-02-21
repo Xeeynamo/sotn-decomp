@@ -18,7 +18,7 @@ void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void func_801B246C(Entity* self);
-void EntityUnkId12(Entity* self);
+void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -111,7 +111,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy, // 0x10
     func_801B246C,
-    EntityUnkId12,
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -193,7 +193,7 @@ u16 g_EInitParticle[] = {0x0003, 0x0000, 0x0000, 0x0000, 0x0002};
 u16 g_EInitSpawner[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0004};
 u16 g_EInitInteractable[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0005};
 u16 g_EInitUnkId13[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0002};
-u16 g_EInitUnkId12[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
+u16 g_EInitLockCamera[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0001};
 u16 g_EInitCommon[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
 u16 g_EInitDamageNum[] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0003};
 u16 g_EInitStInteractable[] = {0x8001, 0x0000, 0x0000, 0x0000, 0x0005};

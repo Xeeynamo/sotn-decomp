@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
+static u8 D_us_80180FC0[] = {
+    8, 3, 4, 4, 4, 5, 4, 6, 4, 7, 4, 8, 4, 9, 2, 10, 1, 11, 16, 10, -1, 0};
+static u8 D_us_80180FD8[] = {
+    4, 10, 4, 9, 4, 8, 4, 7, 4, 6, 4, 5, 4, 4, 4, 3, 2, 12, 4, 3, -1, 0};
+
 s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
     s16 temp_v0;
@@ -58,9 +63,6 @@ s16 func_us_801C2044(Primitive* prim, s16 offset) {
     }
     return offset;
 }
-
-extern u8 D_us_80180FC0[];
-extern u8 D_us_80180FD8[];
 
 void func_us_801C2184(Entity* self) {
     Entity* player = &PLAYER;

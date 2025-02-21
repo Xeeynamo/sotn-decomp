@@ -41,7 +41,7 @@ segments:
       - [0x47C, .data, header] # graphics banks
       - [0x8EC, .data, e_laydef] # layout entries header
       - [0xA94, .data, e_init]
-      - [0xDBC, .data, 30958]
+      - [0xDBC, .data, e_lock_camera]
       - [0xDE4, .data, e_breakable]
       - [0xE54, .data, 311C0]
       - [0xF50, .data, 337B4]
@@ -151,7 +151,8 @@ segments:
       - [0x30900, .rodata, e_stage_name]
       - [0x30934, .rodata, prim_helpers]
       - [0x3093C, .rodata, e_life_up]
-      - [0x30958, c]
+      - [0x30958, c, st_debug]
+      - [0x30A20, c, e_lock_camera]
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]
       - [0x337B4, c]

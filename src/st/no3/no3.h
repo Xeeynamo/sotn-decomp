@@ -98,7 +98,7 @@ extern u16 D_80182FC8[];
 extern u16 D_80182FE8[];
 extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
-extern u16 g_EInitUnkId12[];
+extern u16 g_EInitLockCamera[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitStInteractable[];
 extern u16 D_80180B24[];

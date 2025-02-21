@@ -945,10 +945,6 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_Entity12;
-
-typedef struct {
     u8 fiveFrameCounter;
     struct Entity* parent;
     char pad[8];
@@ -1594,17 +1590,6 @@ typedef struct {
     s16 unk86;
     s16 unk88;
 } ET_LifeUpSpawn;
-
-typedef struct {
-    u16 unk7C;
-    u16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    u16 unk88;
-    u16 unk8A;
-} ET_801B0AA4;
 
 typedef struct {
     byte pad[4];
@@ -2663,12 +2648,11 @@ typedef struct {
 } ET_Chair;
 
 typedef struct {
-    /* 0x7C */ u16 : 16;
-    /* 0x7E */ u16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ u16 unk80;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 : 8;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ struct Entity* unk88;
@@ -2884,6 +2868,12 @@ typedef struct {
     /* 0x96 */ s16 unk96;
 } ET_801CD318;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_801BB200;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2892,7 +2882,6 @@ typedef union { // offset=0x7C
     ET_EntFactory factory;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
-    ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
@@ -3012,7 +3001,6 @@ typedef union { // offset=0x7C
     ET_3DBackgroundhouse bghouse;
     ET_LifeUpSpawn lifeUpSpawn;
     ET_AxeKnight axeknight;
-    ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
     ET_80123B40 et_80123B40;
@@ -3134,6 +3122,7 @@ typedef union { // offset=0x7C
     ET_FleaArmor fleaArmor;
     ET_801B56E4 et_801B56E4;
     ET_801CD318 et_801CD318;
+    ET_801BB200 et_801BB200;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
