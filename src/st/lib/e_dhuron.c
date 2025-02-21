@@ -42,8 +42,7 @@ static u8 unused[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 4, 2, 3, 2, 2, 0, 0};
 static u8 D_us_80182ACC[] = {
     3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 2, 6, 3, 7, 3, 8, -1, 0};
 
-// Dhuron
-void func_us_801CC054(Entity* self) {
+void EntityDhuron(Entity* self) {
     Entity* tempEntity;
     s32 tempVar;
     s32 i;
@@ -54,7 +53,7 @@ void func_us_801CC054(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018089C);
+        InitializeEntity(g_EInitDhuron);
         tempEntity = self + 1;
         CreateEntityFromEntity(E_ID_34, self, tempEntity);
         break;

@@ -18,11 +18,11 @@ static s16 D_us_801828A0[] = {4,  3,  2,  2,  2,  1,  0,  0,  -1, -1, -1, -1,
                               -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2};
 STATIC_PAD_DATA(4);
 
-void func_us_801C9870(Entity* self) {
+void EntityFlyingZombie2(Entity* self) {
     Entity* tempEntity;
     s32 i;
 
-    if (!self->ext.et_801C9870.unk81 && (self->hitFlags & 3) &&
+    if (!self->ext.flyingZombie.unk81 && (self->hitFlags & 3) &&
         self->step != 3) {
         self->hitboxState = 0;
         self->hitPoints = g_api.enemyDefs[15].hitPoints;
@@ -30,7 +30,7 @@ void func_us_801C9870(Entity* self) {
         PlaySfxPositional(0x714);
     }
     if (self->flags & FLAG_DEAD) {
-        if (!self->ext.et_801C9870.unk81) {
+        if (!self->ext.flyingZombie.unk81) {
             self->hitboxState = 0;
             self->flags &= ~FLAG_DEAD;
             self->hitPoints = g_api.enemyDefs[15].hitPoints;
@@ -43,7 +43,7 @@ void func_us_801C9870(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180878);
+        InitializeEntity(g_EInitFlyingZombie2);
         self->zPriority -= 2;
         self->hitboxOffX = 1;
         self->hitboxOffY = 10;
@@ -76,8 +76,8 @@ void func_us_801C9870(Entity* self) {
             if (CheckColliderOffsets(D_us_8018282C, self->facingLeft)) {
                 self->velocityX = 0;
             }
-            if (self->ext.et_801C9870.unk7C++ > 0x80) {
-                self->ext.et_801C9870.unk7C = 0;
+            if (self->ext.flyingZombie.unk7C++ > 0x80) {
+                self->ext.flyingZombie.unk7C = 0;
                 self->step_s--;
             }
             if (self->animCurFrame == 7) {
@@ -101,7 +101,7 @@ void func_us_801C9870(Entity* self) {
     case 3:
         if (!self->step_s) {
             PlaySfxPositional(0x716);
-            self->ext.et_801C9870.unk81 = 1;
+            self->ext.flyingZombie.unk81 = 1;
             for (i = 0; i < 2; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -141,32 +141,32 @@ void func_us_801C9870(Entity* self) {
             (self + 1)->facingLeft = self->facingLeft;
             (self + 1)->zPriority -= 8;
             (self + 1)->posY.i.hi = self->posY.i.hi - 0xA;
-            self->ext.et_801C9870.unk81 = 1;
+            self->ext.flyingZombie.unk81 = 1;
             self->animCurFrame = 0x12;
-            self->ext.et_801C9870.unk7C = 8;
-            self->ext.et_801C9870.unk7E = 0;
+            self->ext.flyingZombie.unk7C = 8;
+            self->ext.flyingZombie.unk7E = 0;
             self->step_s++;
             break;
 
         case 1:
-            if (!--self->ext.et_801C9870.unk7C) {
-                self->ext.et_801C9870.unk7E = 0;
-                self->ext.et_801C9870.unk7C = 2;
+            if (!--self->ext.flyingZombie.unk7C) {
+                self->ext.flyingZombie.unk7E = 0;
+                self->ext.flyingZombie.unk7C = 2;
                 self->step_s++;
             }
             break;
 
         case 2:
-            if (!--self->ext.et_801C9870.unk7C) {
+            if (!--self->ext.flyingZombie.unk7C) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                     tempEntity->params = 1;
-                    tempEntity->posY.i.hi -= self->ext.et_801C9870.unk7E * 8;
+                    tempEntity->posY.i.hi -= self->ext.flyingZombie.unk7E * 8;
                 }
-                self->ext.et_801C9870.unk7C = 6;
-                self->ext.et_801C9870.unk7E++;
-                if (self->ext.et_801C9870.unk7E > 1) {
+                self->ext.flyingZombie.unk7C = 6;
+                self->ext.flyingZombie.unk7E++;
+                if (self->ext.flyingZombie.unk7E > 1) {
                     PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
                     DestroyEntity(self + 1);
                     SetStep(5);
@@ -187,7 +187,7 @@ void func_us_801C9870(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            self->ext.et_801C9870.unk7C = D_us_80182898[Random() & 3];
+            self->ext.flyingZombie.unk7C = D_us_80182898[Random() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0 / 16);
             } else {
@@ -216,7 +216,7 @@ void func_us_801C9870(Entity* self) {
                     self->velocityX -= FIX(5.0 / 2048);
                 }
             }
-            if (!--self->ext.et_801C9870.unk7C) {
+            if (!--self->ext.flyingZombie.unk7C) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
@@ -249,7 +249,7 @@ void func_us_801C9870(Entity* self) {
     }
 }
 
-void func_us_801CA090(Entity* self) {
+void EntityFlyingZombie1(Entity* self) {
     Entity* tempEntity;
     s16 angle;
     s32 dx, dy;
@@ -258,17 +258,17 @@ void func_us_801CA090(Entity* self) {
         self->step = 5;
         self->step_s = 0;
         self->hitboxState = 0;
-        self->ext.et_801C9870.unk7E = 0;
-        self->ext.et_801C9870.unk80 = 0;
+        self->ext.flyingZombie.unk7E = 0;
+        self->ext.flyingZombie.unk80 = 0;
         PlaySfxPositional(0x715);
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180884);
+        InitializeEntity(g_EInitFlyingZombie1);
         self->hitboxOffX = -4;
         self->hitboxOffY = -14;
-        self->ext.et_801C9870.unk80 = 0;
+        self->ext.flyingZombie.unk80 = 0;
         break;
 
     case 1:
@@ -309,7 +309,7 @@ void func_us_801CA090(Entity* self) {
             self->rotZ = angle;
             self->velocityX = rsin(angle) * 40;
             self->velocityY = rcos(angle) * -40;
-            self->ext.et_801C9870.unk7C = 2;
+            self->ext.flyingZombie.unk7C = 2;
             self->step_s++;
             break;
 
@@ -322,7 +322,7 @@ void func_us_801CA090(Entity* self) {
                 }
                 DestroyEntity(self);
             } else {
-                if (!--self->ext.et_801C9870.unk7C) {
+                if (!--self->ext.flyingZombie.unk7C) {
                     tempEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
@@ -331,7 +331,7 @@ void func_us_801CA090(Entity* self) {
                         tempEntity->drawFlags = FLAG_DRAW_ROTZ;
                         tempEntity->rotZ = self->rotZ;
                     }
-                    self->ext.et_801C9870.unk7C = 6;
+                    self->ext.flyingZombie.unk7C = 6;
                 }
             }
             break;
@@ -349,7 +349,7 @@ void func_us_801CA090(Entity* self) {
 
     case 7:
         if ((Random() & 0x7F) == 0) {
-            self->ext.et_801C9870.unk80 = 1;
+            self->ext.flyingZombie.unk80 = 1;
         }
         if ((Random() & 0x1F) == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -367,12 +367,12 @@ void func_us_801CA090(Entity* self) {
             } else {
                 self->velocityX = FIX(-0.5);
             }
-            self->ext.et_801C9870.unk7C = 0x60;
+            self->ext.flyingZombie.unk7C = 0x60;
             self->step_s++;
         } else {
             MoveEntity();
             AnimateEntity(D_us_80182848, self);
-            if (!--self->ext.et_801C9870.unk7C) {
+            if (!--self->ext.flyingZombie.unk7C) {
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
                 self->step_s = 0;
@@ -384,13 +384,13 @@ void func_us_801CA090(Entity* self) {
     case 8:
         tempEntity = &PLAYER;
         if (!self->step_s) {
-            self->ext.et_801C9870.unk7C = 0x40;
+            self->ext.flyingZombie.unk7C = 0x40;
             angle = GetAngleBetweenEntitiesShifted(self, tempEntity);
             SetEntityVelocityFromAngle(angle, 6);
             self->step_s++;
         } else {
             if ((Random() & 0x7F) == 0) {
-                self->ext.et_801C9870.unk80 = 1;
+                self->ext.flyingZombie.unk80 = 1;
             }
             if ((Random() & 0x1F) == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -403,7 +403,7 @@ void func_us_801CA090(Entity* self) {
             }
             MoveEntity();
             AnimateEntity(D_us_80182848, self);
-            if (!--self->ext.et_801C9870.unk7C) {
+            if (!--self->ext.flyingZombie.unk7C) {
                 self->velocityY = 0;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
@@ -417,12 +417,12 @@ void func_us_801CA090(Entity* self) {
         self->posX.i.hi = (self - 1)->posX.i.hi;
         self->posY.i.hi = (self - 1)->posY.i.hi;
     }
-    if (self->ext.et_801C9870.unk80 && g_Timer % 3 == 0) {
-        self->posY.i.hi += D_us_801828A0[self->ext.et_801C9870.unk7E];
-        self->ext.et_801C9870.unk7E++;
-        if (self->ext.et_801C9870.unk7E > LEN(D_us_801828A0) - 1) {
-            self->ext.et_801C9870.unk7E = 0;
-            self->ext.et_801C9870.unk80 = 0;
+    if (self->ext.flyingZombie.unk80 && g_Timer % 3 == 0) {
+        self->posY.i.hi += D_us_801828A0[self->ext.flyingZombie.unk7E];
+        self->ext.flyingZombie.unk7E++;
+        if (self->ext.flyingZombie.unk7E > LEN(D_us_801828A0) - 1) {
+            self->ext.flyingZombie.unk7E = 0;
+            self->ext.flyingZombie.unk80 = 0;
         }
     }
 }
