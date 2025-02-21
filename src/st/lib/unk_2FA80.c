@@ -316,7 +316,7 @@ void func_us_801AFE0C(Entity* self) {
             break;
         }
 #ifdef VERSION_PSP
-        g_Player.padSim = PAD_LEFT | PLAYER_STATUS_UNK20000;
+        g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
 #endif
         break;
@@ -351,19 +351,19 @@ void func_us_801AFE0C(Entity* self) {
                 if (g_Timer & 1) {
                     if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
 #ifdef VERSION_PSP
-                        g_Player.padSim = PAD_R1 | PLAYER_STATUS_UNK20000;
+                        g_Player.padSim = PAD_R1 | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_R1;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
-                        g_Player.padSim = PAD_NONE | PLAYER_STATUS_UNK20000;
+                        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_L1;
 #endif
                     } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
 #ifdef VERSION_PSP
-                        g_Player.padSim = PAD_L1 | PLAYER_STATUS_UNK20000;
+                        g_Player.padSim = PAD_L1 | PAD_SIM_UNK20000;
 #else
                         g_Player.padSim = PAD_R2;
 #endif
@@ -396,7 +396,7 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.D_80072EFC = 1;
         break;
     case 4:
-        g_Player.padSim = PAD_NONE | PLAYER_STATUS_UNK20000;
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
         self->step++;
         break;
@@ -472,14 +472,14 @@ void func_us_801AFE0C(Entity* self) {
         break;
     case 10:
         if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
-            g_Player.padSim = PAD_NONE | PLAYER_STATUS_UNK20000;
+            g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
             g_Player.D_80072EFC = 1;
             self->step++;
         }
         entity->posX.i.hi = 0x74;
         break;
     case 11:
-        g_Player.padSim = PAD_NONE | PLAYER_STATUS_UNK20000;
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
