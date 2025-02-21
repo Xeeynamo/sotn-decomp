@@ -2122,15 +2122,14 @@ void UnknownEntId48(Entity* self) {
     }
 }
 
-// Appears as D_800AD0C4[49].
 void UnknownEntId49(Entity* self) {
-    s32 x_offset;
+    s16 x_offset;
 
     if (!(g_Player.status & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
         DestroyEntity(self);
         return;
     }
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = PLAYER.animSet;
         self->animCurFrame = 7;
         self->unk5A = PLAYER.unk5A;
@@ -2145,12 +2144,18 @@ void UnknownEntId49(Entity* self) {
     self->unk6C = PLAYER.unk6C;
 
     if (abs(PLAYER.rotZ) == 0x200) {
-        x_offset = PLAYER.entityRoomIndex != 0 ? 0x10 : -0x10;
-        self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
+        x_offset = -0x10;
+        if(PLAYER.entityRoomIndex){
+            x_offset = -x_offset;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
         self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
     } else {
-        x_offset = PLAYER.entityRoomIndex != 0 ? 0x18 : -0x18;
-        self->posX.i.hi = x_offset + PLAYER.posX.i.hi;
+        x_offset = -0x18;
+        if(PLAYER.entityRoomIndex){
+            x_offset = -x_offset;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
         self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((g_GameTimer >> 1) & 1);
     }
 }

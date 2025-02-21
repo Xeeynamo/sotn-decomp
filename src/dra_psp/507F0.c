@@ -1958,4 +1958,40 @@ void UnknownEntId48(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", UnknownEntId49);
+void UnknownEntId49(Entity* self) {
+    s16 x_offset;
+
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR) || (PLAYER.step != 0x2B)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->step) {
+        self->animSet = PLAYER.animSet;
+        self->animCurFrame = 7;
+        self->unk5A = PLAYER.unk5A;
+        self->palette = PLAYER.palette;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        self->step++;
+    }
+    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
+    self->unk6C = PLAYER.unk6C;
+
+    if (abs(PLAYER.rotZ) == 0x200) {
+        x_offset = -0x10;
+        if(PLAYER.entityRoomIndex){
+            x_offset = -x_offset;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
+        self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
+    } else {
+        x_offset = -0x18;
+        if(PLAYER.entityRoomIndex){
+            x_offset = -x_offset;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
+        self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((g_GameTimer >> 1) & 1);
+    }
+}
