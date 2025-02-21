@@ -13,3 +13,6 @@
 [submodule "tools/mwccgap"]
 	path = tools/mwccgap
 	url = https://github.com/mkst/mwccgap.git
+[submodule "tools/dosemu-deb"]
+	path = tools/dosemu-deb
+	url = https://github.com/sozud/dosemu-deb.git
