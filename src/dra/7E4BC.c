@@ -2284,45 +2284,43 @@ void func_80123B40(Entity* self) {
     }
 }
 
-void func_80123F78(Entity* entity) {
+void func_80123F78(Entity* self) {
     PlayerDraw* plDraw = &g_PlayerDraw[13];
 
     if (g_unkGraphicsStruct.D_800973FC == 0) {
         plDraw->enableColorBlend = 0;
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
-        entity->flags = FLAG_UNK_10000 | FLAG_UNK_20000 |
+        self->flags = FLAG_UNK_10000 | FLAG_UNK_20000 |
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         if (PLAYER.animSet != 1) {
-            DestroyEntity(entity);
-            break;
+            DestroyEntity(self);
+            return;
         }
-        entity->animSet = ANIMSET_DRA(1);
-        entity->animCurFrame = PLAYER.animCurFrame;
-        entity->unk5A = 0xD;
-        entity->drawFlags = PLAYER.drawFlags;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->palette = PAL_OVL(0x15F);
-        entity->zPriority = PLAYER.zPriority - 2;
-        entity->facingLeft = PLAYER.facingLeft;
+        self->animSet = ANIMSET_DRA(1);
+        self->animCurFrame = PLAYER.animCurFrame;
+        self->unk5A = 0xD;
+        self->drawFlags = PLAYER.drawFlags;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->palette = PAL_OVL(0x15F);
+        self->zPriority = PLAYER.zPriority - 2;
+        self->facingLeft = PLAYER.facingLeft;
 
-        plDraw->b0 = plDraw->b1 = plDraw->b2 = plDraw->b3 = 128;
-        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = 128;
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = 128;
+        PCOL(plDraw) = 0x80;
         plDraw->enableColorBlend = true;
-        entity->step++;
+        self->step++;
         break;
 
     case 1:
-        plDraw->b3 += 255;
+        plDraw->b3 -= 1;
         if (plDraw->b3 < 4) {
             plDraw->enableColorBlend = 0;
-            DestroyEntity(entity);
-            break;
+            DestroyEntity(self);
+            return;
         }
         plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->g0 =
             plDraw->g1 = plDraw->g2 = plDraw->g3 = plDraw->b0 = plDraw->b1 =
