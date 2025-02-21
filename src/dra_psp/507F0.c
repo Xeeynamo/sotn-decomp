@@ -2164,3 +2164,5 @@ void func_80123F78(Entity* self) {
         break;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_091357E0);
