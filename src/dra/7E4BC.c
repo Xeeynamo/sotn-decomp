@@ -2160,40 +2160,34 @@ void UnknownEntId49(Entity* self) {
     }
 }
 
-void func_80123A60(Entity* entity) {
-    Entity* player = &PLAYER;
-
+void func_80123A60(Entity* self) {
     if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
         return;
     }
 
-    entity->posX.i.hi = player->posX.i.hi;
-    entity->posY.i.hi = player->posY.i.hi;
-    if (entity->step == 0) {
-        func_8011A328(entity, 0xB);
-        entity->flags =
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    if (self->step == 0) {
+        func_8011A328(self, 0xB);
+        self->step++;
+        self->flags =
             FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->step++;
     }
 
-    if (player->animCurFrame == 5) {
-        entity->hitboxWidth = 12;
-        entity->hitboxHeight = 32;
-        entity->hitboxOffX = 0x1C;
-        entity->hitboxOffY = -0xC;
-        return;
+    if (PLAYER.animCurFrame == 5) {
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0x1C;
+        self->hitboxOffY = -0xC;
+    } else if (PLAYER.animCurFrame == 6) {
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 10;
+        self->hitboxOffX = 0x1C;
+        self->hitboxOffY = 0x10;
+    } else {
+        DestroyEntity(self);
     }
-
-    if (player->animCurFrame == 6) {
-        entity->hitboxWidth = 10;
-        entity->hitboxHeight = 10;
-        entity->hitboxOffX = 0x1C;
-        entity->hitboxOffY = 0x10;
-        return;
-    }
-
-    DestroyEntity(entity);
 }
 
 void func_80123B40(Entity* self) {

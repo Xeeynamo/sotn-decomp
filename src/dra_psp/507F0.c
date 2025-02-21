@@ -1996,6 +1996,34 @@ void UnknownEntId49(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123A60);
+void func_80123A60(Entity* self) {
+    if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    if (self->step == 0) {
+        func_8011A328(self, 0xB);
+        self->step++;
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+    }
+
+    if (PLAYER.animCurFrame == 5) {
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0x1C;
+        self->hitboxOffY = -0xC;
+    } else if (PLAYER.animCurFrame == 6) {
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 10;
+        self->hitboxOffX = 0x1C;
+        self->hitboxOffY = 0x10;
+    } else {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123B40);
