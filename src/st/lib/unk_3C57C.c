@@ -9,10 +9,233 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCC10);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BCFD4);
 
+extern s32 D_psp_092A5510;
+extern s32 D_psp_092A5560;
+extern s32 D_psp_092A55C0;
+
 // Lesser Demon minion spawn?
 // Seems like the vertical tractor beam effect that spawns
 // Mudmen, Skeleton, Ectoplasm
-INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BD268);
+void func_us_801BD268(void) {
+    Entity* tempEntity;
+    Primitive* prim;
+    s32 primIndex;
+    s32 entityId;
+    s16 xOffset;
+
+    FntPrint("eff_step %x\n", g_CurrentEntity->ext.et_801BDAE4.unk84);
+    FntPrint("eff_timer %x\n", g_CurrentEntity->ext.et_801BDAE4.unk85);
+    switch (g_CurrentEntity->ext.et_801BDAE4.unk84) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 0x1E);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.et_801BDAE4.unk7C = prim;
+            while (prim != NULL) {
+                prim->priority = g_CurrentEntity->zPriority + 8;
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
+            }
+        } else {
+            g_CurrentEntity->ext.et_801BDAE4.unk84 = 6;
+        }
+        g_CurrentEntity->ext.et_801BDAE4.unk84++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        prim->p3 = 2;
+        PGREY(prim, 0) = 0;
+        PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = 0x60;
+        PGREY(prim, 3) = 0x60;
+        prim->r2 += 0x40;
+        prim->r3 += 0x40;
+        prim->y0 = 0x120;
+        prim->y1 = 0x100;
+        prim->y2 = 0x140;
+        prim->y3 = 0x120;
+        if (g_CurrentEntity->facingLeft) {
+            xOffset = -8;
+        } else {
+            xOffset = 8;
+        }
+        prim->x0 = g_CurrentEntity->posX.i.hi - 1 + xOffset;
+        prim->x1 = prim->x0 + 2;
+        prim->x2 = prim->x0;
+        prim->x3 = prim->x1;
+        prim->v0 = 1;
+        prim->priority = g_CurrentEntity->zPriority + 4;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->u1 = 1;
+        prim = prim->next;
+
+        prim->p3 = 2;
+        PGREY(prim, 0) = 0;
+        PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = 0x60;
+        PGREY(prim, 3) = 0x60;
+        prim->r2 += 0x40;
+        prim->r3 += 0x40;
+        prim->x0 = g_CurrentEntity->posX.i.hi + 1 + xOffset;
+        prim->x1 = prim->x0 - 2;
+        prim->x2 = prim->x0;
+        prim->x3 = prim->x1;
+        prim->y0 = 0x140;
+        prim->y1 = 0x120;
+        prim->y2 = 0x160;
+        prim->y3 = 0x140;
+        prim->v0 = 1;
+        prim->priority = g_CurrentEntity->zPriority - 2;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->u1 = 0;
+        g_CurrentEntity->ext.et_801BDAE4.unk85 = 0x18;
+        g_CurrentEntity->ext.et_801BDAE4.unk84 = 3;
+        break;
+
+    case 2:
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_us_801BCFD4(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            if (g_CurrentEntity->ext.et_801BDAE4.unk80 % 2) {
+                if (prim->u1) {
+                    prim->x0--;
+                    prim->x2 = prim->x0;
+                    prim->x1++;
+                    prim->x3 = prim->x1;
+                } else {
+                    prim->x0++;
+                    prim->x2 = prim->x0;
+                    prim->x1--;
+                    prim->x3 = prim->x1;
+                }
+            }
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (g_CurrentEntity->ext.et_801BDAE4.unk80 % 2) {
+            if (!--g_CurrentEntity->ext.et_801BDAE4.unk85) {
+                g_CurrentEntity->ext.et_801BDAE4.unk84++;
+                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (tempEntity != NULL) {
+                    switch (Random() & 3) {
+                    case 0:
+                    case 1:
+#ifdef VERSION_PSP
+                        entityId = D_psp_092A5510;
+#else
+                        entityId = E_ID_4D;
+#endif
+                        break;
+
+                    case 2:
+#ifdef VERSION_PSP
+                        entityId = D_psp_092A55C0;
+#else
+                        entityId = E_ID_37;
+#endif
+                        break;
+
+                    case 3:
+#ifdef VERSION_PSP
+                        entityId = D_psp_092A5560;
+#else
+                        entityId = E_SKELETON;
+#endif
+                        break;
+                    }
+                    CreateEntityFromEntity(
+                        entityId, g_CurrentEntity, tempEntity);
+                    tempEntity->facingLeft = g_CurrentEntity->facingLeft;
+                    if (g_CurrentEntity->facingLeft) {
+                        tempEntity->posX.i.hi -= 8;
+                    } else {
+                        tempEntity->posX.i.hi += 8;
+                    }
+                    tempEntity->posY.i.hi += 0x30;
+                    tempEntity->params = 0x10;
+                }
+            }
+        }
+        break;
+
+    case 3:
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_us_801BCFD4(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (g_CurrentEntity->ext.et_801BDAE4.unk85) {
+            if (!--g_CurrentEntity->ext.et_801BDAE4.unk85) {
+                g_CurrentEntity->ext.et_801BDAE4.unk85 = 0x18;
+                g_CurrentEntity->ext.et_801BDAE4.unk84--;
+            }
+        }
+        break;
+
+    case 4:
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_us_801BCFD4(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.et_801BDAE4.unk7C;
+        while (prim != NULL) {
+            if (prim->u1) {
+                prim->x0++;
+                prim->x2 = prim->x0;
+                prim->x1--;
+                prim->x3 = prim->x1;
+            } else {
+                prim->x0--;
+                prim->x2 = prim->x0;
+                prim->x1++;
+                prim->x3 = prim->x1;
+            }
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (++g_CurrentEntity->ext.et_801BDAE4.unk85 > 0x18) {
+            g_CurrentEntity->ext.et_801BDAE4.unk84++;
+        }
+        break;
+
+    case 5:
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        g_CurrentEntity->ext.et_801BDAE4.unk84++;
+        break;
+    }
+}
 
 u8 func_us_801BDA34(void);
 INCLUDE_ASM("st/lib/nonmatchings/unk_3C57C", func_us_801BDA34);
