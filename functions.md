@@ -736,7 +736,7 @@
 | dra    | func_psp_091392D8                   |       95 |         11 |        |                                 |       |
 | dra    | CheckChainLimit                     |       95 |         14 |        |                                 |       |
 | no4    | func_psp_09259F90                   |       96 |          6 |        |                                 |       |
-| dra    | func_80123A60                       |       96 |         11 |        |                                 |       |
+| dra    | func_80123A60                       |       96 |         11 |        | https://decomp.me/scratch/Lfdzl | 0.994 |
 | lib    | UnkCollisionFunc                    |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
 | no4    | func_psp_0925B9F0                   |       96 |         11 |        |                                 |       |
 | lib    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
@@ -908,7 +908,7 @@
 | dra    | func_80118970                       |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
 | dra    | UnknownEntId49                      |      154 |         11 |        |                                 |       |
 | dra    | func_psp_09144810                   |      155 |         10 |        |                                 |       |
-| dra    | func_80123F78                       |      155 |         14 |        |                                 |       |
+| dra    | func_80123F78                       |      155 |         14 |        | https://decomp.me/scratch/rLwSV | 0.967 |
 | dra    | func_psp_091396C8                   |      156 |         26 |        |                                 |       |
 | dra    | EntityHellfireNormalFireball        |      157 |         18 |        | https://decomp.me/scratch/Rzlhs | 0.996 |
 | dra    | func_80119E78                       |      158 |          6 |        | https://decomp.me/scratch/jxhNr | 0.979 |
@@ -1056,7 +1056,7 @@
 | no4    | func_psp_0923FF60                   |      277 |         31 |        |                                 |       |
 | no4    | func_psp_092423C8                   |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
-| dra    | func_psp_091357E0                   |      279 |         17 |        |                                 |       |
+| dra    | func_psp_091357E0                   |      279 |         17 |        | https://decomp.me/scratch/cpFqK | 0.995 |
 | dra    | CheckDarkMetamorphosisInput         |      279 |         37 | Yes    |                                 |       |
 | dra    | CheckWingSmashInput                 |      279 |         38 | Yes    |                                 |       |
 | dra    | EntityExpandingCircle               |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
