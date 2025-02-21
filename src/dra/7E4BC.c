@@ -2331,104 +2331,31 @@ void func_80123F78(Entity* self) {
 
 // Corresponding RIC function is func_80165DD8
 void func_80124164(
-    POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
-    s16 top = y - radius;
-    s16 bottom = y + radius;
-    s32 colorChannel;
+    Primitive* prim, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
+    prim->y0 = prim->y1 = y - radius;
+    prim->y2 = prim->y3 = y + radius;
 
-    poly->y1 = top;
-    poly->y0 = top;
-
-    poly->y3 = bottom;
-    poly->y2 = bottom;
-
-    if (poly->y0 < 0) {
-        poly->y1 = 0;
-        poly->y0 = 0;
+    if (prim->y0 < 0) {
+        prim->y0 = prim->y1 = 0;
     }
 
-    if (poly->y0 > 240) {
-        poly->y3 = 240;
-        poly->y2 = 240;
+    if (prim->y0 > 240) {
+        prim->y2 = prim->y3 = 240;
     }
 
     if (arg4 == 0) {
-        colorChannel = colorIntensity * D_800AE270[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[3];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[4];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[5];
+        prim->r1 = prim->r3 = D_800AE270[0] * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE270[1] * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE270[2] * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE270[3] * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE270[4] * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE270[5] * colorIntensity / 0x100;
     } else {
-        colorChannel = colorIntensity * D_800AE270[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r3 = (u32)colorChannel >> 8;
-        poly->r1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g3 = (u32)colorChannel >> 8;
-        poly->g1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b3 = (u32)colorChannel >> 8;
-        poly->b1 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[6];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r2 = (u32)colorChannel >> 8;
-        poly->r0 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_800AE270[7];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g2 = (u32)colorChannel >> 8;
-        poly->g0 = (u32)colorChannel >> 8;
-        colorChannel = colorIntensity * D_800AE270[8];
+        prim->r1 = prim->r3 = D_800AE270[0] * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE270[1] * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE270[2] * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE270[6] * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE270[7] * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE270[8] * colorIntensity / 0x100;
     }
-    if (colorChannel < 0) {
-        colorChannel += 255;
-    }
-    poly->b2 = (u32)colorChannel >> 8;
-    poly->b0 = (u32)colorChannel >> 8;
 }
