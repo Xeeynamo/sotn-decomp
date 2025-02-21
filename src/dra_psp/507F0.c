@@ -2119,3 +2119,5 @@ void func_80123B40(Entity* self) {
         prim = prim->next;
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123F78);
