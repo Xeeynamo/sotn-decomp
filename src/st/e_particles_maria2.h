@@ -74,6 +74,6 @@ void func_psp_0923B2F0(Entity* self) {
         }
         break;
     }
-    D_psp_091CF3AC = 0;
+    g_Player.unk2C = 0;
     DestroyEntity(self);
 }
