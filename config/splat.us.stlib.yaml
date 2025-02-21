@@ -37,7 +37,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x6C8, .data, e_init]
+      - [0x9F8, data]
       - [0xAD8, .data, e_lock_camera]
       - [0xB58, data]
       - [0xDC0, .data, e_library_bg]

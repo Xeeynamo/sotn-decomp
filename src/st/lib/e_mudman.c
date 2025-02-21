@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-extern u16 D_us_801809E0[];
 extern s32 D_us_80181ACC;
 extern u8 D_us_80182E3C[];
 extern u8 D_us_80182E4C[];

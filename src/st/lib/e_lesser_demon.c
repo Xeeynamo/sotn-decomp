@@ -252,7 +252,6 @@ INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BDA34);
 
 u8 func_us_801BBAB4(void);
 
-extern u16 D_us_80180968[];
 extern s32 D_us_80181ACC;
 extern s16 D_us_80181AD4[];
 extern u8 D_us_80181B04[];

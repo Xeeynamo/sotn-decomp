@@ -90,30 +90,48 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
+// extern EInit D_us_80180800;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-extern EInit g_EInitCommon;
+// extern EInit D_us_80180824;
 extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
-
-// Skeleton
-extern EInit g_EInitSkeleton;
-extern EInit g_EInitSkeletonPieces;
-extern EInit g_EInitSkeletonBone;
-
-extern EInit g_EInitFleaMan;
-
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
+extern EInit g_EInitBloodyZombie;
 extern EInit D_us_80180878;
 extern EInit D_us_80180884;
+// extern EInit D_us_80180890;
 extern EInit D_us_8018089C;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
-
-// Candle and table
+// extern EInit D_us_801808C0;
+extern EInit g_EInitThornweed;
+// extern EInit D_us_801808D8;
+extern EInit g_EInitCorpseweed;
+extern EInit g_EInitCorpseweedProjectile;
 extern EInit D_us_801808FC;
-
+// extern EInit D_us_80180908;
 extern EInit D_us_80180914;
+// extern EInit D_us_80180920;
+// extern EInit D_us_8018092C;
+// extern EInit D_us_80180938;
 extern EInit D_us_80180944;
+// extern EInit D_us_80180950;
+// extern EInit D_us_8018095C;
+extern EInit D_us_80180968;
+// extern EInit D_us_80180974;
+// extern EInit D_us_80180980;
+// extern EInit D_us_8018098C;
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
+extern EInit D_us_801809BC;
+extern EInit D_us_801809C8;
+extern EInit g_EInitFleaMan;
+extern EInit D_us_801809E0;
+// extern EInit D_us_801809EC;
 
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
