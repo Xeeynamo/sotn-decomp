@@ -290,7 +290,7 @@
 | dra    | func_psp_090F21F8                   |       33 |          6 |        |                                 |       |
 | dra    | func_800EAD0C                       |       33 |          8 |        |                                 |       |
 | dra    | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
-| lib    | 35F60.rodata                        |       34 |          0 | Yes    |                                 |       |
+| lib    | unk_3B200.rodata                    |       34 |          0 | Yes    |                                 |       |
 | st0    | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0    | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib    | GetDistanceToPlayerX                |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
@@ -483,7 +483,7 @@
 | dra    | func_psp_090EAF08                   |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib    | GetLang                             |       51 |         10 |        |                                 |       |
-| lib    | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/xbJv7 | 1.0   |
+| lib    | func_psp_0925D430                   |       51 |         10 |        |                                 |       |
 | no4    | func_psp_0925DDC0                   |       51 |         10 |        |                                 |       |
 | st0    | GetLang                             |       51 |         10 |        |                                 |       |
 | dra    | func_800EDD9C                       |       52 |          6 |        |                                 |       |
@@ -1038,7 +1038,7 @@
 | dra    | func_psp_090F6430                   |      258 |         36 |        |                                 |       |
 | no4    | func_psp_09240CD0                   |      261 |         21 |        |                                 |       |
 | st0    | func_801A8328                       |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
-| lib    | func_psp_0925D4D0                   |      263 |         19 |        | https://decomp.me/scratch/DYb0g | 1.0   |
+| lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
 | dra    | func_8010BFFC                       |      264 |         28 |        |                                 |       |
 | no4    | func_psp_0923FB88                   |      265 |         22 |        |                                 |       |
 | st0    | func_801A805C                       |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
@@ -1079,7 +1079,7 @@
 | no4    | func_psp_0924ADF8                   |      307 |         26 |        |                                 |       |
 | st0    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
 | wrp    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
-| lib    | func_psp_09254288                   |      307 |         37 | Yes    | https://decomp.me/scratch/PKakS | 0.989 |
+| lib    | func_us_801BB53C                    |      307 |         37 | Yes    |                                 |       |
 | dra    | CheckTetraSpiritInput               |      309 |         43 | Yes    |                                 |       |
 | dra    | DrawRichterHud                      |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra    | func_801028AC                       |      310 |         32 | Yes    |                                 |       |
@@ -1114,7 +1114,7 @@
 | dra    | UpdatePlayerEntities                |      356 |         51 |        |                                 |       |
 | lib    | func_psp_09264E20                   |      357 |         45 |        | https://decomp.me/scratch/67tPj | 0.999 |
 | lib    | func_psp_092576C8                   |      359 |         33 |        |                                 |       |
-| lib    | func_psp_0926D5E0                   |      363 |         31 | Yes    | https://decomp.me/scratch/OAawr | 0.996 |
+| lib    | func_us_801BB200                    |      363 |         31 | Yes    |                                 |       |
 | lib    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | no4    | func_psp_0924B288                   |      364 |         33 |        |                                 |       |
 | st0    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
