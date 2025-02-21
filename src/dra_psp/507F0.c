@@ -1995,3 +1995,7 @@ void UnknownEntId49(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi + 16 + ((g_GameTimer >> 1) & 1);
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123A60);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_80123B40);
