@@ -1,6 +1,3 @@
-D_80097910 = 0x091CE5A0;
-D_80097928 = 0x091CE5B0;
-D_80076E98 = 0x091E5140;
 CreateEntityFromLayout = 0x09237700;
 CreateEntityWhenInVerticalRange = 0x09237820;
 CreateEntityWhenInHorizontalRange = 0x092379B8;
