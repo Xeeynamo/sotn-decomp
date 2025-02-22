@@ -287,7 +287,227 @@ INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD3C);
 
 INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD60);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801AFE0C);
+extern s8 D_80073510;
+extern u16 D_us_80180824;
+
+// This is probably EntityLibrarian, but I don't know for sure
+void func_us_801AFE0C(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* entity = g_Entities;
+
+    switch (self->step) {
+    case 0:
+#ifdef VERSION_PSP
+        func_psp_0925D4D0();
+#endif
+        InitializeEntity(&D_us_80180824);
+        if (entity->posX.i.hi < 0x100) {
+// I expect these two sounds to be the same, but 0x202 has not yet been defined.
+// This leads me to think that the macro that has been defined for sfx 0x302
+// is only accurate for PSX and does not align with the sfx for PSP here.
+#ifdef VERSION_PSP
+            g_api.PlaySfx(0x302);
+#else
+            g_api.PlaySfx(0x202);
+#endif
+        }
+        if (g_CastleFlags[MET_LIBRARIAN]) {
+            self->step = 8;
+            break;
+        }
+#ifdef VERSION_PSP
+        g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+#endif
+        break;
+    case 1:
+        D_80073510 = 1;
+        g_PauseAllowed = false;
+        g_unkGraphicsStruct.pauseEnemies = true;
+        g_Player.padSim = PAD_LEFT;
+        g_Player.D_80072EFC = 1;
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            g_Player.padSim = PAD_R1;
+        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+            g_Player.padSim = PAD_NONE;
+#else
+            g_Player.padSim = PAD_L1;
+#endif
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+            g_Player.padSim = PAD_L1;
+#else
+            g_Player.padSim = PAD_R2;
+#endif
+        }
+        g_Player.D_80072EFC = 1;
+        SetStep(2);
+        break;
+    case 2:
+        if (entity->posX.i.hi > 0xE8) {
+            if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+                g_Player.padSim = PAD_NONE;
+                if (g_Timer & 1) {
+                    if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_R1 | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_R1;
+#endif
+                    } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_L1;
+#endif
+                    } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_L1 | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_R2;
+#endif
+                    }
+                }
+            } else {
+                g_Player.padSim = PAD_LEFT;
+            }
+        } else {
+            g_CutsceneFlags |= 1;
+            g_Player.padSim = PAD_NONE;
+            entity->posX.i.hi = 0xE8;
+            self->step++;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+    case 3:
+        if (g_CutsceneFlags & 0x40) {
+            if (entity->posX.i.hi > 0x74) {
+                D_80073510 = 1;
+                g_Player.padSim = PAD_LEFT;
+            } else {
+                entity->posX.i.hi = 0x74;
+                g_Player.padSim = PAD_NONE;
+                self->step++;
+            }
+        } else {
+            entity->posX.i.hi = 0xE8;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+    case 4:
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+        self->step++;
+        break;
+    case 5:
+        g_CastleFlags[MET_LIBRARIAN] = 1;
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
+        g_Player.D_80072EFC = 1;
+        self->step++;
+        /* fallthrough */
+    case 6:
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
+            self->step = 0x10;
+            break;
+        }
+        entity->posX.i.hi = 0x74;
+        break;
+    case 8:
+        self->step++;
+        /* fallthrough */
+    case 9:
+        if (entity->posX.i.hi > 0xFF) {
+            g_api.PlaySfx(CD_SOUND_COMMAND_7);
+            DestroyEntity(self);
+            break;
+        }
+        if (entity->posX.i.hi < 0x75) {
+            switch (self->step_s) {
+            case 0:
+                D_80073510 = 1;
+                g_PauseAllowed = false;
+                g_unkGraphicsStruct.pauseEnemies = true;
+                g_Player.padSim = PAD_NONE;
+                g_Player.D_80072EFC = 0x10;
+                self->step_s++;
+                g_CutsceneFlags |= 1;
+                break;
+            case 1:
+                if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+                    g_Player.padSim = PAD_NONE;
+                    if (g_Timer & 1) {
+                        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                            g_Player.padSim = PAD_R1;
+                        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                            g_Player.padSim = PAD_NONE;
+#else
+                            g_Player.padSim = PAD_L1;
+#endif
+                        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+                            g_Player.padSim = PAD_L1;
+#else
+                            g_Player.padSim = PAD_R2;
+#endif
+                        }
+                    }
+                } else {
+                    g_Player.padSim = PAD_LEFT;
+                    self->step_s++;
+                }
+                g_Player.D_80072EFC = 1;
+                break;
+            case 2:
+                g_Player.padSim = PAD_NONE;
+                g_Player.D_80072EFC = 0x80;
+                SetStep(10);
+                break;
+            }
+            entity->posX.i.hi = 0x74;
+        }
+        break;
+    case 10:
+        if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
+            g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+            g_Player.D_80072EFC = 1;
+            self->step++;
+        }
+        entity->posX.i.hi = 0x74;
+        break;
+    case 11:
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
+            self->step = 0x10;
+        }
+        break;
+    case 16:
+#ifdef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        g_Player.D_80072EFC = 0x20;
+        g_Player.padSim = PAD_RIGHT;
+        D_80097928 = 1;
+        self->step++;
+        break;
+    case 17:
+#ifdef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        if (!g_Player.D_80072EFC) {
+#ifdef VERSION_PSP
+            g_PauseAllowed = true;
+#endif
+            SetStep(9);
+        }
+        break;
+    }
+}
 
 extern u8 D_us_801811FC[];
 extern u8 D_us_80181204[];
@@ -707,14 +927,16 @@ extern u8* D_us_80181340[];
 extern u8 D_us_80183F64;
 
 extern u8* D_psp_092A54E0;
-extern s32 D_psp_092A5500;
-extern s32 D_psp_092A5538;
-extern s32 D_psp_092A5608;
-extern s32 D_psp_092A5610;
-extern s32 D_psp_092A5628;
-extern s32 D_psp_092A5630;
-extern s32 D_psp_092A5638;
-extern s32 D_psp_092A5640;
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_4F);
+extern s32 E_ID(ID_48);
+extern s32 E_ID(ID_2E);
+extern s32 E_ID(ID_2D);
+extern s32 E_ID(ID_2A);
+extern s32 E_ID(ID_29);
+extern s32 E_ID(ID_28);
+extern s32 E_ID(ID_27);
+#endif
 extern u8** D_psp_092A5FC0[];
 
 void func_us_801B15C0(Entity* self) {
@@ -922,29 +1144,13 @@ void func_us_801B15C0(Entity* self) {
             case 0:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5640, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_27, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5638, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_28, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5630, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_29, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5628, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_2A, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -952,11 +1158,7 @@ void func_us_801B15C0(Entity* self) {
             case 1:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5610, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_2D, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_2D), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -964,11 +1166,7 @@ void func_us_801B15C0(Entity* self) {
             case 2:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5608, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_2E, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_2E), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -976,11 +1174,7 @@ void func_us_801B15C0(Entity* self) {
             case 3:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5538, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_48, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_48), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -993,30 +1187,14 @@ void func_us_801B15C0(Entity* self) {
             case 5:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5640, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_27, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_27), tempEntity);
                 tempEntity->params = 1;
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5638, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_28, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_28), tempEntity);
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5630, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_29, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_29), tempEntity);
                 tempEntity++;
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5628, tempEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_2A, tempEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_2A), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -1025,7 +1203,7 @@ void func_us_801B15C0(Entity* self) {
             case 6:
                 g_CutsceneFlags |= 0x400;
                 tempEntity = self + 1;
-                CreateEntityFromCurrentEntity(D_psp_092A5500, tempEntity);
+                CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
                 SetStep(5);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;

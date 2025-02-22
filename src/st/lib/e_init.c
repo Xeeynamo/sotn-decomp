@@ -27,11 +27,11 @@ void EntityBackgroundFurniture(Entity* self);
 void EntityBackgroundShadow(Entity* self);
 void func_us_801AFA80(Entity* self);
 void func_us_801AE8E8(Entity* self);
-void func_us_801C9870(Entity* self);
-void func_us_801CA090(Entity* self);
+void EntityFlyingZombie2(Entity* self);
+void EntityFlyingZombie1(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
-void func_us_801BDAE4(Entity* self);
+void EntityLesserDemon(Entity* self);
 void func_us_801BBEB0(Entity* self);
 void func_us_801BCC10(Entity* self);
 void func_us_801BED48(Entity* self);
@@ -48,10 +48,10 @@ void func_us_801B60C8(Entity* self);
 void func_us_801B6324(Entity* self);
 void func_us_801B6F30(Entity* self);
 void func_us_801B8234(Entity* self);
-void func_us_801D2274(Entity* self);
+void EntitySpellbook(Entity* self);
 void func_us_801D2CE0(Entity* self);
-void func_us_801D2DA8(Entity* self);
-void func_us_801CC054(Entity* self);
+void EntityMagicTome(Entity* self);
+void EntityDhuron(Entity* self);
 void func_us_801CC6B0(Entity* self);
 void func_us_801CC984(Entity* self);
 void func_us_801CC7BC(Entity* self);
@@ -77,7 +77,7 @@ void EntityMistDoor(Entity* self);
 void EntityFleaArmor(Entity* self);
 void func_us_801D00C4(Entity* self);
 void EntityFleaMan(Entity* self);
-void func_us_801D064C(Entity* self);
+void EntityMudman(Entity* self);
 void func_us_801D1298(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -107,11 +107,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x17 */ EntityBackgroundShadow,
     /* 0x18 */ func_us_801AFA80,
     /* 0x19 */ func_us_801AE8E8,
-    /* 0x1A */ func_us_801C9870,
-    /* 0x1B */ func_us_801CA090,
+    /* 0x1A */ EntityFlyingZombie2,
+    /* 0x1B */ EntityFlyingZombie1,
     /* 0x1C */ EntityBloodDrips,
     /* 0x1D */ EntityBloodSplatter,
-    /* 0x1E */ func_us_801BDAE4,
+    /* 0x1E */ EntityLesserDemon,
     /* 0x1F */ func_us_801BBEB0,
     /* 0x20 */ func_us_801BCC10,
     /* 0x21 */ func_us_801BED48,
@@ -128,10 +128,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x2C */ func_us_801B6324,
     /* 0x2D */ func_us_801B6F30,
     /* 0x2E */ func_us_801B8234,
-    /* 0x2F */ func_us_801D2274,
+    /* 0x2F */ EntitySpellbook,
     /* 0x30 */ func_us_801D2CE0,
-    /* 0x31 */ func_us_801D2DA8,
-    /* 0x32 */ func_us_801CC054,
+    /* 0x31 */ EntityMagicTome,
+    /* 0x32 */ EntityDhuron,
     /* 0x33 */ func_us_801CC6B0,
     /* 0x34 */ func_us_801CC984,
     /* 0x35 */ func_us_801CC7BC,
@@ -157,7 +157,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x49 */ EntityFleaArmor,
     /* 0x4A */ func_us_801D00C4,
     /* 0x4B */ EntityFleaMan,
-    /* 0x4C */ func_us_801D064C,
+    /* 0x4C */ EntityMudman,
     /* 0x4D */ func_us_801D1298};
 
 EInit D_us_80180800 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x000};
@@ -170,10 +170,10 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 EInit g_EInitBloodyZombie = {ANIMSET_OVL(0x05), 0x01, 0x48, 0x0207, 0x00D};
-EInit D_us_80180878 = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x020A, 0x00F};
-EInit D_us_80180884 = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x020A, 0x00E};
+EInit g_EInitFlyingZombie2 = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x020A, 0x00F};
+EInit g_EInitFlyingZombie1 = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x020A, 0x00E};
 EInit D_us_80180890 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x003};
-EInit D_us_8018089C = {ANIMSET_OVL(0x03), 0x01, 0x4D, 0x0200, 0x092};
+EInit g_EInitDhuron = {ANIMSET_OVL(0x03), 0x01, 0x4D, 0x0200, 0x092};
 EInit D_us_801808A8 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x093};
 EInit D_us_801808B4 = {ANIMSET_OVL(0x03), 0x01, 0x4D, 0x0200, 0x002};
 EInit D_us_801808C0 = {ANIMSET_OVL(0x05), 0x00, 0x4A, 0x023E, 0x058};
@@ -184,22 +184,22 @@ EInit g_EInitCorpseweedProjectile = {
     ANIMSET_OVL(0x07), 0x00, 0x50, 0x0252, 0x0A0};
 EInit D_us_801808FC = {ANIMSET_OVL(0x08), 0x00, 0x50, 0x0256, 0x005};
 EInit D_us_80180908 = {ANIMSET_OVL(0x02), 0x00, 0x54, 0x0266, 0x002};
-EInit D_us_80180914 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0F7};
+EInit g_EInitSpellbook = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0F7};
 EInit D_us_80180920 = {ANIMSET_OVL(0x02), 0x00, 0x54, 0x0266, 0x0F8};
 EInit D_us_8018092C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0F9};
 EInit D_us_80180938 = {ANIMSET_OVL(0x02), 0x00, 0x54, 0x0266, 0x0FA};
-EInit D_us_80180944 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0FB};
+EInit g_EInitMagicTome = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0FB};
 EInit D_us_80180950 = {ANIMSET_OVL(0x02), 0x00, 0x54, 0x0266, 0x0FC};
 EInit D_us_8018095C = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
-EInit D_us_80180968 = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x0249, 0x017};
+EInit g_EInitLesserDemon = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x0249, 0x017};
 EInit D_us_80180974 = {ANIMSET_OVL(0x0A), 0x19, 0x4C, 0x0249, 0x019};
 EInit D_us_80180980 = {ANIMSET_DRA(0x09), 0x01, 0x00, 0x81B0, 0x01A};
 EInit D_us_8018098C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x018};
 EInit g_EInitSkeleton = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x026B, 0x04B};
 EInit g_EInitSkeletonPieces = {ANIMSET_OVL(0x09), 0x00, 0x4B, 0x026B, 0x002};
 EInit g_EInitSkeletonBone = {ANIMSET_OVL(0x09), 0x15, 0x4B, 0x026B, 0x04C};
-EInit D_us_801809BC = {ANIMSET_OVL(0x0D), 0x01, 0x49, 0x0274, 0x029};
+EInit g_EInitFleaArmor = {ANIMSET_OVL(0x0D), 0x01, 0x49, 0x0274, 0x029};
 EInit D_us_801809C8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x02A};
 EInit g_EInitFleaMan = {ANIMSET_OVL(0x0D), 0x00, 0x49, 0x0274, 0x028};
-EInit D_us_801809E0 = {ANIMSET_OVL(0x0E), 0x00, 0x53, 0x0277, 0x0D6};
+EInit g_EInitMudman = {ANIMSET_OVL(0x0E), 0x00, 0x53, 0x0277, 0x0D6};
 EInit D_us_801809EC = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D7};

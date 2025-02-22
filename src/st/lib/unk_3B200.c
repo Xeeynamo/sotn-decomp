@@ -2,7 +2,7 @@
 #include "lib.h"
 
 #ifdef VERSION_PSP
-extern s32 D_psp_092A5578;
+extern s32 E_ID(ID_40);
 #endif
 extern u16 D_us_8018095C;
 extern u16 D_us_80181AA8[][2];
@@ -31,19 +31,11 @@ void func_us_801BB200(Entity* self) {
         if (!self->params) {
             newEntity = self + 1;
             for (i = 1; i < 4; i++, newEntity++) {
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5578, newEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_40, newEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
                 newEntity->params = i;
             }
             for (i = 0; i < 4; i++, newEntity++) {
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_092A5578, newEntity);
-#else
-                CreateEntityFromCurrentEntity(E_ID_40, newEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(ID_40), newEntity);
                 newEntity->params = i + 0x100;
             }
         }

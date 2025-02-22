@@ -2657,7 +2657,7 @@ typedef struct {
     /* 0x87 */ u8 unk87;
     /* 0x88 */ struct Entity* unk88;
     /* 0x8C */ u16 unk8C;
-} ET_801BDAE4;
+} ET_LesserDemon;
 
 typedef struct {
     /* 0x7C */ struct Entity* unk7C;
@@ -2761,7 +2761,7 @@ typedef struct {
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
     /* 0x9C */ struct Entity* unk9C;
-} ET_801D064C;
+} ET_Mudman;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -2787,7 +2787,7 @@ typedef struct {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s16 unkA8;
-} ET_801D2274;
+} ET_SpellbookMagicTome;
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
@@ -2818,7 +2818,7 @@ typedef struct {
     /* 0x7E */ u16 unk7E;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
-} ET_801C9870;
+} ET_FlyingZombie;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -3101,7 +3101,7 @@ typedef union { // offset=0x7C
     ET_801BE2C8 et_801BE2C8;
     ET_801B9BE4 et_801B9BE4;
     ET_Chair chair;
-    ET_801BDAE4 et_801BDAE4;
+    ET_LesserDemon lesserDemon;
     ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
     ET_801BE880 et_801BE880;
@@ -3112,12 +3112,12 @@ typedef union { // offset=0x7C
     ET_Marionette marionette;
     ET_801B6F30 et_801B6F30;
     ET_801B15C0 et_801B15C0;
-    ET_801D064C et_801D064C;
-    ET_801D2274 et_801D2274;
+    ET_Mudman mudman;
+    ET_SpellbookMagicTome spellbookMagicTome;
     ET_LibrarianChair libraryChair;
     ET_LibraryShadow libraryShadow;
     ET_Dhuron dhuron;
-    ET_801C9870 et_801C9870;
+    ET_FlyingZombie flyingZombie;
     ET_801AE8E8 et_801AE8E8;
     ET_FleaArmor fleaArmor;
     ET_801B56E4 et_801B56E4;

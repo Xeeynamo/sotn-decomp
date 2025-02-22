@@ -29,7 +29,7 @@ void EntityFleaArmor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809BC);
+        InitializeEntity(g_EInitFleaArmor);
         CreateEntityFromEntity(E_ID_4B, self, self + 1);
         self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
         break;
