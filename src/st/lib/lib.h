@@ -24,12 +24,14 @@ typedef enum EntityIDs {
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11,
+    /* 0x12 */ E_ID_12 = 0x12,
     // /* 0x13 */ E_UNK_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1C */ E_ID_1C = 0x1C,
     /* 0x1D */ E_BLOOD_DRIPS,
     /* 0x1E */ E_BLOOD_SPLATTER,
+    /* 0x1F */ E_ID_1F,
     /* 0x20 */ E_ID_20 = 0x20,
     /* 0x21 */ E_ID_21,
     /* 0x22 */ E_ID_22,
@@ -45,11 +47,14 @@ typedef enum EntityIDs {
     /* 0x34 */ E_ID_34,
     /* 0x35 */ E_ID_35,
     /* 0x36 */ E_ID_36,
+    /* 0x37 */ E_ID_37,
     /* 0x3A */ E_THORNWEED = 0x3A,
     /* 0x3B */ E_CORPSEWEED,
     /* 0x3C */ E_CORPSEWEED_PROJECTILE,
     /* 0x3D */ E_CANDLE_TABLE,
     /* 0x3E */ E_ID_3E = 0x3E,
+    /* 0x40 */ E_ID_40 = 0x40,
+    /* 0x42 */ E_ID_42 = 0x42,
     /* 0x43 */ E_SKELETON = 0x43,
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
@@ -85,27 +90,48 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
+// extern EInit D_us_80180800;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-extern EInit g_EInitCommon;
+// extern EInit D_us_80180824;
 extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
-
-// Skeleton
-extern EInit g_EInitSkeleton;
-extern EInit g_EInitSkeletonPieces;
-extern EInit g_EInitSkeletonBone;
-
-extern EInit g_EInitFleaMan;
-
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
+extern EInit g_EInitBloodyZombie;
 extern EInit D_us_80180878;
 extern EInit D_us_80180884;
+// extern EInit D_us_80180890;
 extern EInit D_us_8018089C;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
-
-// Candle and table
+// extern EInit D_us_801808C0;
+extern EInit g_EInitThornweed;
+// extern EInit D_us_801808D8;
+extern EInit g_EInitCorpseweed;
+extern EInit g_EInitCorpseweedProjectile;
 extern EInit D_us_801808FC;
+// extern EInit D_us_80180908;
+extern EInit D_us_80180914;
+// extern EInit D_us_80180920;
+// extern EInit D_us_8018092C;
+// extern EInit D_us_80180938;
+extern EInit D_us_80180944;
+// extern EInit D_us_80180950;
+// extern EInit D_us_8018095C;
+extern EInit D_us_80180968;
+// extern EInit D_us_80180974;
+// extern EInit D_us_80180980;
+// extern EInit D_us_8018098C;
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
+extern EInit D_us_801809BC;
+extern EInit D_us_801809C8;
+extern EInit g_EInitFleaMan;
+extern EInit D_us_801809E0;
+// extern EInit D_us_801809EC;
 
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
