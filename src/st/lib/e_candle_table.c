@@ -9,12 +9,11 @@ static u8 D_us_80181A68[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 0, 0};
 static u8 D_us_80181A78[] = {
     3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 3, 14, 3, 15, 3, 16, 0, 0};
 
-extern s32 D_psp_092A5590;
-
 #ifdef VERSION_PSP
 static s32 D_us_80181A8C = 0;
-// I expect this symbol will change depending on the function that is including
-// pad2_anim_debug.h
+extern s32 E_ID(CANDLE_TABLE);
+// I expect this symbol will change depending on the function that is
+// including pad2_anim_debug.h
 extern s32 D_8B42050;
 #define BUTTON_SYMBOL D_8B42050
 #else
@@ -50,11 +49,7 @@ void EntityCandleTable(Entity* self) {
             self->hitboxOffY = -10;
             self->hitboxState = 2;
             newEntity = self + 1;
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_092A5590, self, newEntity);
-#else
-            CreateEntityFromEntity(E_CANDLE_TABLE, self, newEntity);
-#endif
+            CreateEntityFromEntity(E_ID(CANDLE_TABLE), self, newEntity);
 
             newEntity->params = 0x100;
         }

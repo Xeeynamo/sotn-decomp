@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #ifdef VERSION_PSP
-extern s32 D_psp_092A5680;
-extern s32 D_psp_092A56E8;
-extern s32 D_psp_092A5568;
+extern s32 E_ID(ID_1F);
+extern s32 E_ID(ID_12);
+extern s32 E_ID(ID_42);
 extern Entity D_91E5084;
 #endif
 extern s32 D_80097910;
@@ -38,23 +38,15 @@ void func_us_801BB53C(Entity* self) {
             return;
         }
         tempEntity = &D_80076E98;
-
-#ifdef VERSION_PSP
-        CreateEntityFromCurrentEntity(D_psp_092A5680, tempEntity);
-#else
-        CreateEntityFromCurrentEntity(E_ID_1F, tempEntity);
-#endif
-
+        CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;
-
 #ifdef VERSION_PSP
         tempEntity = &D_91E5084;
-        CreateEntityFromCurrentEntity(D_psp_092A56E8, tempEntity);
 #else
-        CreateEntityFromCurrentEntity(E_ID_12, --tempEntity);
+        tempEntity--;
 #endif
-
+        CreateEntityFromCurrentEntity(E_ID(ID_12), tempEntity);
         tempEntity->params = 6;
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x270 - g_Tilemap.scrollY.i.hi;
@@ -100,11 +92,7 @@ void func_us_801BB53C(Entity* self) {
         if (D_us_80181ACC & 0x4) {
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_092A5568, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_42, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_42), self, tempEntity);
                 tempEntity->posX.i.hi = 0x80;
                 tempEntity->posY.i.hi = 0x80;
                 tempEntity->params = 7;
