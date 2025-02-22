@@ -1796,7 +1796,7 @@ typedef struct {
     /* 80072F3C */ s32 unk1C;
     /* 80072F40 */ s32 unk20;
     /* 80072F44 */ s32 unk24;
-    /* 80072F48 */ void (*unk28)(Entity*);
+    /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
     /* 80072F50 */ s32 unk30;
     /* 80072F54 */ s32 unk34;
