@@ -94,6 +94,12 @@ typedef enum {
 
 #include "entity.h"
 
+#ifdef VERSION_PSP
+#define E_ID(name) D_psp_E_##name
+#else
+#define E_ID(name) E_##name
+#endif
+
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
