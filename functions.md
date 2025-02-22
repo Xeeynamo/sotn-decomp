@@ -1087,7 +1087,7 @@
 | dra    | EntityStopWatchExpandingCircle      |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
 | no4    | func_psp_0923D568                   |      312 |         27 |        |                                 |       |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
-| lib    | func_psp_09256018                   |      315 |         26 |        | https://decomp.me/scratch/Av6Re | 0.982 |
+| lib    | func_psp_09256018                   |      315 |         26 |        | https://decomp.me/scratch/35pX4 | 0.999 |
 | no4    | func_psp_09258960                   |      317 |         18 |        |                                 |       |
 | no4    | func_psp_09238860                   |      320 |         54 |        |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
@@ -1150,7 +1150,7 @@
 | wrp    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | no4    | func_psp_0924A260                   |      420 |         78 |        |                                 |       |
 | st0    | EntitySecretStairs                  |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
-| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.501 |
+| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.849 |
 | no4    | func_psp_0923DD38                   |      428 |         36 |        |                                 |       |
 | dra    | func_psp_09138778                   |      434 |         82 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
@@ -1179,7 +1179,7 @@
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
-| lib    | func_psp_0925D8D8                   |      534 |         67 | Yes    | https://decomp.me/scratch/ydeqP | 0.986 |
+| lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
 | no4    | func_psp_09258E30                   |      540 |         51 | Yes    |                                 |       |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
