@@ -7,15 +7,30 @@ Primitive* func_us_801B1064(
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B420C);
-
-extern char* D_us_80181528[];
-extern char** D_psp_092A5FC8;
+extern u16 D_us_801814D4[];
+extern AvailableInventoryItem D_us_801814D8[];
+extern const char* D_us_80181528[];
 extern u16 D_us_80181530;
 extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
+extern const char* D_us_8018168C[];
+extern char D_us_801816A4[];
+extern char* D_us_801816AC[];
+extern char* D_us_801816B0[];
+
+extern u32 D_us_801D415C[];
+extern s32 D_us_801D425C[];
+extern AvailableInventoryItem D_us_801D4364[];
+
 extern u8* D_psp_092A5F50;
+extern const char** D_psp_092A5F58;
+extern char** D_psp_092A5FA8;
+extern char** D_psp_092A5FB0;
+extern char* D_psp_092A5FB8;
+extern char** D_psp_092A5FC8;
+
+INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B420C);
 
 void func_us_801B4830(Entity* self) {
     Primitive* prim;
@@ -255,10 +270,63 @@ INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD000);
 
 INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD024);
 
-void func_us_801B4ED4(s16 arg0, u16 arg1);
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B4ED4);
+void func_us_801B4ED4(s16 index, u16 arg1) {
+    const char* desc;
+    u16 itemId;
+    AvailableInventoryItem* inventoryItem;
+    unsigned char* unused;
 
-extern s32 D_us_801D425C[];
+    if (arg1) {
+        inventoryItem = &D_us_801814D8[index];
+    } else {
+        inventoryItem = &D_us_801D4364[index];
+    }
+    itemId = inventoryItem->itemId;
+    switch (inventoryItem->category) {
+    case INVENTORY_HAND:
+        desc = g_api.equipDefs[itemId].description;
+        g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                            g_api.equipDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_HEAD:
+    case INVENTORY_BODY:
+    case INVENTORY_CAPE:
+    case INVENTORY_ACCESSORY:
+        desc = g_api.accessoryDefs[itemId].description;
+        g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
+                            g_api.accessoryDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_RELIC:
+        itemId = D_us_801814D4[itemId];
+        desc = g_api.relicDefs[itemId].desc;
+        g_api.LoadEquipIcon(g_api.relicDefs[itemId].icon,
+                            g_api.relicDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_DOCUMENT:
+#ifdef VERSION_PSP
+        desc = D_psp_092A5F58[itemId];
+#else
+        desc = D_us_8018168C[itemId];
+#endif
+        if (itemId) {
+            itemId = 0x112;
+        } else {
+            itemId = 0x111;
+        }
+        g_api.LoadEquipIcon(itemId, 0x118, 0x1F);
+        break;
+    default:
+#ifdef VERSION_PSP
+        desc = *D_psp_092A5FC8;
+#else
+        desc = *D_us_80181528;
+#endif
+        break;
+    }
+    unused = &g_Pix[0][0x1000];
+    itemId = 2;
+    func_us_801B0C40(&g_Pix[0][0x800], desc, 2, 0x184, 0x7E);
+}
 
 void func_us_801B5068(Entity* self) {
     Primitive* prim;
@@ -490,17 +558,6 @@ const char D_us_801AD0D8[] = _S("Magic scroll 1");
 const char D_us_801AD0E8[] = _S("Castle map");
 
 const RECT D_us_801AD0F4 = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
-
-extern AvailableInventoryItem D_us_801814D8[];
-extern char D_us_801816A4[];
-extern char* D_us_801816AC[];
-extern char* D_us_801816B0[];
-extern u32 D_us_801D415C[];
-extern AvailableInventoryItem D_us_801D4364[];
-
-extern char** D_psp_092A5FA8;
-extern char** D_psp_092A5FB0;
-extern char* D_psp_092A5FB8;
 
 void func_us_801B56E4(Entity* self) {
     Entity* tempEntity;
