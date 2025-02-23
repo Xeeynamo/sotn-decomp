@@ -1,12 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u32 speed;
+} ET_GhostEnemy;
+#define ENTITY_EXT GhostEnemy
+#include "entity_new.h"
+
 static u8 anim_phase_in[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, -1, 0};
 static u8 anim_burning[] = {3, 7, 3, 8, 0, 0};
 static s16 min_max_positions[] = {
     0x1A0, 0x480, 0x120, 0x1E0}; // xMin, xMax, yMin, yMax
 
-void EntityGhostEnemy(Entity* self) {
+void EntityGhostEnemy(E_GhostEnemy* self) {
     Entity* newEntity;
     s16 angle;
     s32 speed;
@@ -48,11 +57,11 @@ void EntityGhostEnemy(Entity* self) {
         // Seek towards player
         newEntity = &PLAYER;
         angle = GetAngleBetweenEntities(self, newEntity);
-        angle = GetNormalizedAngle(16, self->ext.ghostEnemy.angle, angle);
-        speed = self->ext.ghostEnemy.speed;
+        angle = GetNormalizedAngle(16, self->ext.angle, angle);
+        speed = self->ext.speed;
         self->velocityX = (speed * rcos(angle)) >> 12;
         self->velocityY = (speed * rsin(angle)) >> 12;
-        self->ext.ghostEnemy.angle = angle;
+        self->ext.angle = angle;
 
         speed += FIX(0.015625);
         if (speed > FIX(0.75)) {
@@ -62,12 +71,19 @@ void EntityGhostEnemy(Entity* self) {
         if (self->hitFlags) {
             speed = FIX(-0.75);
         }
-        self->ext.ghostEnemy.speed = speed;
+        self->ext.speed = speed;
         break;
     }
 }
 
-void EntityGhostEnemySpawner(Entity* self) {
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_GhostEnemySpawner;
+#define ENTITY_EXT GhostEnemySpawner
+#include "entity_new.h"
+
+void EntityGhostEnemySpawner(E_GhostEnemySpawner* self) {
     Entity* entity;
     s32 xPos;
     s32 yPos;
@@ -76,10 +92,10 @@ void EntityGhostEnemySpawner(Entity* self) {
     if (!self->step) {
         InitializeEntity(D_us_80180A88);
         self->flags &= ~FLAG_UNK_2000;
-        self->ext.ghostEnemySpawner.timer = 1;
+        self->ext.timer = 1;
     }
-    if (!--self->ext.ghostEnemySpawner.timer) {
-        self->ext.ghostEnemySpawner.timer = (Random() & 47) + 48;
+    if (!--self->ext.timer) {
+        self->ext.timer = (Random() & 47) + 48;
         entity = &PLAYER;
         xPos = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         yPos = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
