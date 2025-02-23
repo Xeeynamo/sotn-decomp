@@ -219,7 +219,7 @@
 | lib    | CollectLifeVessel                   |       27 |          4 |        | https://decomp.me/scratch/y8pEq | 0.986 |
 | no4    | func_psp_0924CBE0                   |       27 |          4 |        |                                 |       |
 | wrp    | CollectLifeVessel                   |       27 |          4 |        | https://decomp.me/scratch/y8pEq | 0.986 |
-| st0    | func_pspeu_09246B88                 |       27 |          5 |        |                                 |       |
+| st0    | func_pspeu_09246B88                 |       27 |          5 |        | https://decomp.me/scratch/b8HGJ | 1.0   |
 | dra    | func_psp_09140DB0                   |       27 |          6 |        |                                 |       |
 | lib    | e_mudman.rodata                     |       28 |          0 | Yes    |                                 |       |
 | lib    | unk_1D9E8.rodata                    |       28 |          0 | Yes    |                                 |       |
@@ -745,7 +745,7 @@
 | wrp    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0                   |       96 |         16 |        |                                 |       |
 | no4    | func_psp_09243320                   |       96 |         19 |        |                                 |       |
-| st0    | func_pspeu_092469A0                 |       97 |          1 |        |                                 |       |
+| st0    | func_pspeu_092469A0                 |       97 |          1 |        | https://decomp.me/scratch/DhW59 | 0.859 |
 | dra    | UpdateUnarmedAnim                   |       97 |          6 |        | https://decomp.me/scratch/3r6LM | 0.998 |
 | lib    | func_us_801D00C4                    |       97 |          7 |        |                                 |       |
 | lib    | PlaySfxPositional                   |       97 |         12 |        |                                 |       |
@@ -1001,7 +1001,7 @@
 | no4    | func_psp_09240350                   |      223 |         22 |        |                                 |       |
 | dra    | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
-| lib    | func_psp_09256AC0                   |      225 |         18 |        | https://decomp.me/scratch/TXHRR | 0.547 |
+| lib    | func_psp_09256AC0                   |      225 |         18 |        | https://decomp.me/scratch/TXHRR | 0.595 |
 | lib    | func_psp_09252E70                   |      227 |         29 |        | https://decomp.me/scratch/heQmR | 0.995 |
 | lib    | func_psp_0925ED00                   |      231 |         11 |        |                                 |       |
 | dra    | func_psp_0910B768                   |      232 |         32 |        |                                 |       |
@@ -1150,7 +1150,7 @@
 | wrp    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | no4    | func_psp_0924A260                   |      420 |         78 |        |                                 |       |
 | st0    | EntitySecretStairs                  |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
-| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.822 |
+| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.998 |
 | no4    | func_psp_0923DD38                   |      428 |         36 |        |                                 |       |
 | dra    | func_psp_09138778                   |      434 |         82 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
@@ -1322,7 +1322,7 @@
 | lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
 | dra    | func_psp_090F2D80                   |     2075 |        403 | Yes    |                                 |       |
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
-| lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/Kr1J4 | 0.692 |
+| lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/lkatc | 0.702 |
 | no4    | func_psp_09256330                   |     2559 |        253 | Yes    |                                 |       |
