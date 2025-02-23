@@ -990,7 +990,7 @@
 | dra    | EntitySubwpnCrashCrossParticles     |      215 |         28 |        | https://decomp.me/scratch/ONw6f | 0.999 |
 | dra    | func_psp_09110B78                   |      215 |         32 |        |                                 |       |
 | no4    | func_psp_09240680                   |      216 |         18 |        |                                 |       |
-| lib    | func_psp_09265320                   |      218 |         16 | Yes    |                                 |       |
+| lib    | func_psp_09265320                   |      218 |         16 | Yes    | https://decomp.me/scratch/YXFhJ | 0.99  |
 | dra    | DecompressData                      |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
 | dra    | func_psp_0910ECC0                   |      219 |         43 |        |                                 |       |
 | no4    | func_psp_09255310                   |      220 |         22 |        |                                 |       |
@@ -1150,7 +1150,7 @@
 | wrp    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | no4    | func_psp_0924A260                   |      420 |         78 |        |                                 |       |
 | st0    | EntitySecretStairs                  |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
-| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.849 |
+| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.822 |
 | no4    | func_psp_0923DD38                   |      428 |         36 |        |                                 |       |
 | dra    | func_psp_09138778                   |      434 |         82 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
@@ -1232,7 +1232,7 @@
 | dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
-| lib    | func_psp_09265608                   |      711 |         73 | Yes    |                                 |       |
+| lib    | func_psp_09265608                   |      711 |         73 | Yes    | https://decomp.me/scratch/Xs23j | 0.992 |
 | dra    | HandleGameOver                      |      723 |        139 |        |                                 |       |
 | dra    | EntitySubwpnReboundStone            |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
 | dra    | EntityGiantSpinningCross            |      729 |         63 |        |                                 |       |
