@@ -4,8 +4,8 @@
 
 #ifdef VERSION_PSP
 extern bool g_isSecretStairsButtonPressed;
-extern u32 D_pspeu_09279DF0;
-extern u32 D_pspeu_09279DF8;
+extern u32 E_ID(SECRET_STAIRS);
+extern u32 E_ID(SECRET_BUTTON);
 #else
 static bool g_isSecretStairsButtonPressed = 0;
 #endif
@@ -55,11 +55,7 @@ void EntitySecretButton(Entity* self) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_pspeu_09279DF8, self, newEntity);
-#else
-                CreateEntityFromEntity(E_SECRET_BUTTON, self, newEntity);
-#endif
+                CreateEntityFromEntity(E_ID(SECRET_BUTTON), self, newEntity);
                 newEntity->params = 1;
             }
             self->step++;
@@ -161,11 +157,7 @@ void EntitySecretStairs(Entity* self) {
             self->ext.secretStairs.unk84 = true;
             otherEntity = self + 1;
             for (i = 0; i < 3; i++, otherEntity++) {
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_pspeu_09279DF0, otherEntity);
-#else
-                CreateEntityFromCurrentEntity(E_SECRET_STAIRS, otherEntity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(SECRET_STAIRS), otherEntity);
                 otherEntity->params = i + 1;
             }
 
