@@ -1809,7 +1809,7 @@ typedef struct {
     /* 80072F3C */ s32 unk1C;
     /* 80072F40 */ s32 unk20;
     /* 80072F44 */ s32 unk24;
-    /* 80072F48 */ s32 unk28;
+    /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
     /* 80072F50 */ s32 unk30;
     /* 80072F54 */ s32 unk34;
@@ -1939,12 +1939,6 @@ extern s16 D_800705CC[];       // part of g_Clut
 extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
-// the following are most likely part of g_Player
-extern Entity* D_psp_091CF3A0;
-extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?
-extern void (*D_psp_091CF3A8)(Entity*);
-extern s32 D_psp_091CF3AC; // maybe not s32 but a pointer?
-extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;
