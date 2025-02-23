@@ -258,17 +258,12 @@ void func_us_801B4830(Entity* self) {
     }
 }
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801ACF88);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801ACFA4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801ACFC4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801ACFE0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD000);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_3420C", D_us_801AD024);
+const char D_us_801ACF88[] = "Contains \x81h\x81hSoul Steal\x81h\x81h";
+const char D_us_801ACFA4[] = "Contains \x81h\x81hTetra Spirits\x81h\x81h";
+const char D_us_801ACFC4[] = "Contains \x81h\x81hHellfire\x81h\x81h";
+const char D_us_801ACFE0[] = "Contains \x81h\x81hSummon Spirit\x81h\x81h";
+const char D_us_801AD000[] = "Contains \x81h\x81hDark Metamorphosis\x81h\x81h";
+const char D_us_801AD024[] = {'B', 'a', 's', 'i', 'c', ' ', 'm', 'a', 'p', ' ', 'o', 'f', ' ', 'D', 'r', 'a', 'c', 'u', 'l', 'a', '\x81', 'f', 's', ' ', 'c', 'a', 's', 't', 'l', 'e', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;
