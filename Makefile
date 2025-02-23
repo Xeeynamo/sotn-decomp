@@ -16,7 +16,7 @@ PSX_US_REV_STAGE:= rwrp
 # bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
 PSX_US_ALL_BOSS	:= bo4 mar rbo3
 # tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
-PSX_US_SERVANT	:= tt_000 tt_001 tt_002 tt_003 tt_004
+PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 
 # VERSION=hd
 PSX_HD_GAME		:= dra ric
