@@ -30,7 +30,10 @@ const gameMetadata = {
             "id": "us",
             "name": "PlayStation 1 US",
             "overlays": [
-                "dra", "ric", "weapon", "stcen", "stchi", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp", "bomar", "borbo3", "tt_000", "tt_001", "tt_002", "tt_003", "tt_004"
+                "dra", "ric", "weapon",
+                "stcen", "stchi", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp",
+                "bomar", "bobo4", "borbo3",
+                "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
             ]
         },
         {
@@ -120,6 +123,10 @@ const gameMetadata = {
         "bomar": {
             "name": "BOSS/MAR/MAR.BIN",
             "desc": "Maria cutscene (clock room)"
+        },
+        "bobo4": {
+            "name": "BOSS/BO4/BO4.BIN",
+            "desc": "Doppleganger10 boss"
         },
         "borbo3": {
             "name": "BOSS/RBO3/RBO3.BIN",
