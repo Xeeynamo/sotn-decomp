@@ -6,6 +6,7 @@ Primitive* func_us_801B1064(
     Primitive* arg0, u16 arg1, s16 arg2, const char* arg3, u16 arg4);
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
+Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits);
 
 extern u16 D_us_801814D4[];
 extern AvailableInventoryItem D_us_801814D8[];
@@ -15,8 +16,12 @@ extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
 #ifdef VERSION_PSP
+extern char* D_us_80181668;
+extern char** D_us_80181674;
 extern const char** D_us_8018168C;
 #else
+extern char D_us_80181668[];
+extern char* D_us_80181674[];
 extern const char* D_us_8018168C[];
 #endif
 extern char D_us_801816A4[];
@@ -27,13 +32,278 @@ extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
 
+extern s16 D_psp_092A4A10[];
+extern u16 D_psp_092A4A78[];
+extern s16 D_psp_092A4A88[];
+extern u16 D_psp_092A4AA0[];
+extern s16 D_psp_092A49B8[];
 extern u8* D_psp_092A5F50;
 extern char** D_psp_092A5FA8;
 extern char** D_psp_092A5FB0;
 extern char* D_psp_092A5FB8;
 extern char** D_psp_092A5FC8;
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_3420C", func_us_801B420C);
+void func_us_801B420C(Primitive* prim, Entity* arg1) {
+    u16 index;
+    s16 x0;
+    s16 x1, y1;
+    AvailableInventoryItem* inventoryItem;
+    s16* condition;
+    u16 stats[14];
+    u16 equipment[7];
+    s16 maxDigits;
+    s32 i, j;
+    s16 itemId;
+    s16 number;
+    u16* ptr;
+    Primitive* primA;
+    Primitive* primB;
+    s16 y0;
+
+    for (i = 0; i < 11; i++) {
+        prim = prim->next;
+    }
+    for (i = 0; i < 8; i++) {
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+    }
+    prim = func_us_801B3EC8(prim, g_Status.gold, 8);
+    index = arg1->ext.et_801B6F30.unk80 + arg1->ext.et_801B6F30.unk82;
+#ifdef VERSION_PSP
+    condition = 0;
+    if (arg1->params) {
+        inventoryItem = &D_us_801814D8[index];
+        condition = D_psp_092A4A88;
+        primA = prim;
+        ptr = D_psp_092A4A78;
+        prim = func_us_801B3FB4(prim, D_us_80181674[0], 8, 1);
+        primB = prim;
+        x0 = 0x28;
+        y0 = 0x10;
+        prim = func_us_801B3EC8(prim, D_us_801D425C[index], 2);
+    } else {
+        inventoryItem = &D_us_801D4364[index];
+        primA = prim;
+        if (inventoryItem->category < 5) {
+            ptr = D_psp_092A4A78;
+            prim = func_us_801B3FB4(prim, D_us_80181674[0], 12, 1);
+            condition = D_psp_092A4A88;
+            primB = prim;
+            x0 = 0x28;
+            y0 = 0x10;
+            prim = func_us_801B3EC8(prim, 99 - D_us_801D425C[index], 2);
+        } else {
+            ptr = D_psp_092A4AA0;
+            if (D_us_801D425C[index] != 0) {
+                prim = func_us_801B3FB4(prim, D_us_80181674[2], 12, 1);
+            } else {
+                prim = func_us_801B3FB4(prim, D_us_80181674[1], 12, 1);
+            }
+        }
+    }
+    x1 = *ptr++;
+    y1 = *ptr++;
+    for (i = 0; i < 12; i++) {
+        primA->x0 = x1 + 0xBA + i * 8;
+        primA->y0 = y1 + 0xA0;
+        primA = primA->next;
+    }
+    if (condition) {
+        for (i = 0; i < 2; i++) {
+            primB->x0 = x0 + 0xBA + i * 8;
+            primB->y0 = y0 + 0xA0;
+            primB = primB->next;
+        }
+    }
+#else
+    primA = prim;
+    for (i = 0; i < 11; i++) {
+        primA->drawMode = DRAW_HIDE;
+        primA = primA->next;
+    }
+    if (arg1->params) {
+        inventoryItem = &D_us_801814D8[index];
+        prim =
+            func_us_801B3EC8(func_us_801B4194(prim), D_us_801D425C[index], 2);
+    } else {
+        inventoryItem = &D_us_801D4364[index];
+        if (inventoryItem->category < 5) {
+            prim = func_us_801B3EC8(
+                func_us_801B4194(prim), 99 - D_us_801D425C[index], 2);
+        } else {
+            if (D_us_801D425C[index] != 0) {
+                prim =
+                    func_us_801B1064(prim, 0x9A, 0xB0, D_us_80181674[2], 0x196);
+            } else {
+                prim =
+                    func_us_801B1064(prim, 0xB6, 0xB0, D_us_80181674[1], 0x196);
+            }
+        }
+    }
+    prim = primA;
+#endif
+    func_us_801B4010(equipment);
+    func_us_801B40F0(stats);
+    itemId = inventoryItem->itemId;
+    switch (inventoryItem->category) {
+    case INVENTORY_HAND:
+        g_Status.equipment[LEFT_HAND_SLOT] = itemId;
+        g_Status.equipment[RIGHT_HAND_SLOT] = itemId;
+        break;
+    case INVENTORY_HEAD:
+        g_Status.equipment[HEAD_SLOT] = itemId;
+        break;
+    case INVENTORY_BODY:
+        g_Status.equipment[ARMOR_SLOT] = itemId;
+        break;
+    case INVENTORY_CAPE:
+        g_Status.equipment[CAPE_SLOT] = itemId;
+        break;
+    case INVENTORY_ACCESSORY:
+        g_Status.equipment[ACCESSORY_1_SLOT] = itemId;
+        g_api.func_800F53A4();
+        func_us_801B40F0(stats + 1);
+        func_us_801B4080(equipment);
+        g_Status.equipment[ACCESSORY_2_SLOT] = itemId;
+        g_api.func_800F53A4();
+        i = 3;
+        ptr = stats + 1;
+        maxDigits = *ptr - g_Status.attackHands[0];
+        ptr += 4;
+        maxDigits += *ptr - g_Status.defenseEquip;
+        if (maxDigits < 0) {
+            i++;
+        } else if (maxDigits == 0) {
+            ptr += 2;
+            maxDigits = *ptr - (g_Status.statsBase[0] + g_Status.statsEquip[0]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[1] + g_Status.statsEquip[1]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[2] + g_Status.statsEquip[2]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[3] + g_Status.statsEquip[3]);
+            if (maxDigits < 0) {
+                i++;
+            }
+        }
+        func_us_801B4080(equipment);
+        (g_Status.equipment + 2)[i] = itemId;
+        break;
+    case INVENTORY_RELIC:
+        break;
+    }
+    g_api.func_800F53A4();
+    func_us_801B40F0(stats + 1);
+    func_us_801B4080(equipment);
+    g_api.func_800F53A4();
+    ptr = stats;
+    for (i = 0; i < 3; i++) {
+#ifdef VERSION_PSP
+        primA = prim;
+        for (j = 0; j < 7; j++) {
+            prim->x0 = D_psp_092A4A10[j * 2 + (i * 7) * 2] + 0xBA;
+            prim->y0 = D_psp_092A4A10[j * 2 + (i * 7) * 2 + 1] + 0xA0;
+            prim = prim->next;
+        }
+        prim = primA;
+#endif
+        maxDigits = *ptr++;
+        prim = func_us_801B3EC8(prim, maxDigits, 3);
+        if (!arg1->params) {
+            maxDigits -= *ptr;
+            if (maxDigits) {
+                if (maxDigits > 0) {
+                    prim->u0 = 0x28;
+                } else {
+                    prim->u0 = 0x18;
+                }
+            } else {
+                prim->u0 = 0x20;
+            }
+            prim->v0 = 0x70;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+            prim = func_us_801B3EC8(prim, *ptr++, 3);
+        } else {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+#ifdef VERSION_PSP
+            ptr++;
+#endif
+        }
+    }
+    if (!arg1->params) {
+        for (i = 0; i < 4; i++) {
+            maxDigits = *ptr++;
+            number = *ptr++;
+#ifdef VERSION_PSP
+            primA = prim;
+            for (j = 0; j < 6; j++) {
+                prim->x2 = prim->x0 =
+                    D_psp_092A49B8[j * 2 + (i * 6) * 2] + 0xBA;
+                prim->y1 = prim->y0 =
+                    D_psp_092A49B8[j * 2 + (i * 6) * 2 + 1] + 0xA0;
+                prim->x3 = prim->x1 = prim->x0 + 8;
+                prim->y3 = prim->y2 = prim->y0 + 8;
+                prim->v1 = prim->u1 = 8;
+                prim->type = PRIM_SPRT;
+                prim->clut = 0x196;
+                prim->tpage = 0x1E;
+                prim->priority = 0x11;
+                prim = prim->next;
+            }
+            prim = primA;
+#endif
+            if (maxDigits != number) {
+                prim = func_us_801B3FB4(prim, &D_us_80181668[i * 3], 3, 1);
+                if (maxDigits > number) {
+                    number = maxDigits - number;
+                    maxDigits = 2;
+                    if (number / 10 == 0) {
+                        prim->drawMode = DRAW_HIDE;
+                        prim = prim->next;
+                        maxDigits = 1;
+                    }
+                    prim->u0 = 0x68;
+                } else {
+                    number -= maxDigits;
+                    maxDigits = 2;
+                    if (number / 10 == 0) {
+                        prim->drawMode = DRAW_HIDE;
+                        prim = prim->next;
+                        maxDigits = 1;
+                    }
+                    prim->u0 = 0x58;
+                }
+                prim->v0 = 0;
+                prim->drawMode = DRAW_DEFAULT;
+                prim = prim->next;
+                prim = func_us_801B3EC8(prim, number, maxDigits);
+            } else {
+                for (j = 0; j < 6; j++) {
+                    prim->drawMode = DRAW_HIDE;
+                    prim = prim->next;
+                }
+            }
+            if (prim == NULL) {
+                break;
+            }
+        }
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_us_801B4830(Entity* self) {
     Primitive* prim;

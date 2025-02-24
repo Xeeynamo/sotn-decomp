@@ -72,9 +72,25 @@ Primitive* func_us_801B3FB4(Primitive* prim, u8* uv, u16 count, s32 arg3) {
     return prim;
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4010);
+void func_us_801B4010(u16* arg0) {
+    *arg0++ = g_Status.equipment[0];
+    *arg0++ = g_Status.equipment[1];
+    *arg0++ = g_Status.equipment[2];
+    *arg0++ = g_Status.equipment[3];
+    *arg0++ = g_Status.equipment[4];
+    *arg0++ = g_Status.equipment[5];
+    *arg0 = g_Status.equipment[6];
+}
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4080);
+void func_us_801B4080(u16* arg0) {
+    g_Status.equipment[0] = *arg0++;
+    g_Status.equipment[1] = *arg0++;
+    g_Status.equipment[2] = *arg0++;
+    g_Status.equipment[3] = *arg0++;
+    g_Status.equipment[4] = *arg0++;
+    g_Status.equipment[5] = *arg0++;
+    g_Status.equipment[6] = *arg0;
+}
 
 void func_us_801B40F0(u16* arg0) {
     *arg0 = g_Status.attackHands[0];
@@ -92,7 +108,24 @@ void func_us_801B40F0(u16* arg0) {
     *arg0 = g_Status.statsBase[3] + g_Status.statsEquip[3];
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_33EC8", func_us_801B4194);
+extern s32 D_us_80181674;
+extern u16 D_us_80181684[];
+
+Primitive* func_us_801B4194(Primitive* prim) {
+    Primitive* prim2;
+    s32 i;
+    u16* ptr;
+
+    prim = func_us_801B1064(prim, 0xAA, 0xB0, D_us_80181674, 0x196);
+    prim2 = prim;
+    ptr = D_us_80181684;
+    for (i = 0; i < 2; i++) {
+        prim2->x0 = *ptr++;
+        prim2->y0 = *ptr++;
+        prim2 = prim2->next;
+    }
+    return prim;
+}
 
 const char D_us_801ACF14[] = "DEF";
 const char D_us_801ACF18[] = "ATT";
