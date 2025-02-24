@@ -1228,7 +1228,7 @@
 | wrp    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_psp_09241690                   |      691 |         73 |        | https://decomp.me/scratch/ClZtd | 0.998 |
-| st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/ZJDcJ | 0.934 |
+| st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/ZJDcJ | 0.981 |
 | dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
@@ -1258,10 +1258,10 @@
 | no4    | func_psp_0923C460                   |      845 |        106 | Yes    |                                 |       |
 | lib    | EntityLifeUpSpawn                   |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | no4    | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
-| st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/1ovk5 | 0.96  |
+| st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.982 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
-| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.32  |
+| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.76  |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
