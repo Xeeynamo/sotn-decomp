@@ -38,7 +38,7 @@ void func_us_801BB8DC(s16* unkArg) {
         if (g_CurrentEntity->ext.lesserDemon.unkB0 % 2) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
         } else {
-            g_CurrentEntity->palette = PAL_DRA(0x819F);
+            g_CurrentEntity->palette = PAL_OVL(0x819F);
         }
 
         if (!(--g_CurrentEntity->ext.lesserDemon.unkB0)) {
