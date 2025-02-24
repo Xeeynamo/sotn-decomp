@@ -14,7 +14,11 @@ extern u16 D_us_80181530;
 extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
+#ifdef VERSION_PSP
+extern const char** D_us_8018168C;
+#else
 extern const char* D_us_8018168C[];
+#endif
 extern char D_us_801816A4[];
 extern char* D_us_801816AC[];
 extern char* D_us_801816B0[];
@@ -24,7 +28,6 @@ extern s32 D_us_801D425C[];
 extern AvailableInventoryItem D_us_801D4364[];
 
 extern u8* D_psp_092A5F50;
-extern const char** D_psp_092A5F58;
 extern char** D_psp_092A5FA8;
 extern char** D_psp_092A5FB0;
 extern char* D_psp_092A5FB8;
@@ -263,10 +266,7 @@ const char D_us_801ACFA4[] = "Contains \x81h\x81hTetra Spirits\x81h\x81h";
 const char D_us_801ACFC4[] = "Contains \x81h\x81hHellfire\x81h\x81h";
 const char D_us_801ACFE0[] = "Contains \x81h\x81hSummon Spirit\x81h\x81h";
 const char D_us_801AD000[] = "Contains \x81h\x81hDark Metamorphosis\x81h\x81h";
-const char D_us_801AD024[] = {
-    'B', 'a', 's', 'i', 'c', ' ', 'm',  'a',  'p',    ' ',  'o',  'f',
-    ' ', 'D', 'r', 'a', 'c', 'u', 'l',  'a',  '\x81', 'f',  's',  ' ',
-    'c', 'a', 's', 't', 'l', 'e', 0x00, 0x00, 0x00,   0x00, 0x00, 0x00};
+const char D_us_801AD024[] = "Basic map of Dracula\x81\x66s castle";
 
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;
@@ -301,11 +301,7 @@ void func_us_801B4ED4(s16 index, u16 arg1) {
                             g_api.relicDefs[itemId].iconPalette, 0x1F);
         break;
     case INVENTORY_DOCUMENT:
-#ifdef VERSION_PSP
-        desc = D_psp_092A5F58[itemId];
-#else
         desc = D_us_8018168C[itemId];
-#endif
         if (itemId) {
             itemId = 0x112;
         } else {
