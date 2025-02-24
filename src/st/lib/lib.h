@@ -143,7 +143,7 @@ extern EInit g_EInitMagicTome;
 // extern EInit D_us_80180950;
 // extern EInit D_us_8018095C;
 extern EInit g_EInitLesserDemon;
-// extern EInit D_us_80180974;
+extern EInit g_EInitLesserDemonSpit;
 // extern EInit D_us_80180980;
 // extern EInit D_us_8018098C;
 extern EInit g_EInitSkeleton;
