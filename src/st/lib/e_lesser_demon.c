@@ -24,7 +24,7 @@ u8 func_us_801BBAB4(void) {
             g_CurrentEntity->primIndex = primIndex;
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.prim = prim;
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
             for (; prim != NULL; prim = prim->next) {
                 PGREY_ALT(prim, 0, 0)
                 prim->u0 = 2;
@@ -70,7 +70,7 @@ u8 func_us_801BBAB4(void) {
         g_CurrentEntity->ext.lesserDemon.unk84++;
         break;
     case 1:
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
         for (; prim != NULL; prim = prim->next) {
             tempPrim.x.i.hi = prim->x0;
             tempPrim.x.i.lo = prim->x1;
@@ -78,20 +78,13 @@ u8 func_us_801BBAB4(void) {
             tempPrim.y.i.lo = prim->y1;
             tempPrim.x.val += LOWU(prim->x2);
             tempPrim.y.val += LOWU(prim->x3);
-#ifdef VERSION_PSP
-            prim->x0 = LOH(tempPrim.x.i.hi);
-            prim->x1 = LOH(tempPrim.x.i.lo);
-            prim->y0 = LOH(tempPrim.y.i.hi);
-            prim->y1 = LOH(tempPrim.y.i.lo);
-#else
-            prim->x0 = tempPrim.x.i.hi;
-            prim->x1 = tempPrim.x.i.lo;
-            prim->y0 = tempPrim.y.i.hi;
-            prim->y1 = tempPrim.y.i.lo;
-#endif
+            LOH(prim->x0) = tempPrim.x.i.hi;
+            LOH(prim->x1) = tempPrim.x.i.lo;
+            LOH(prim->y0) = tempPrim.y.i.hi;
+            LOH(prim->y1) = tempPrim.y.i.lo;
             prim->r0 += 3;
         }
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
         PrimToggleVisibility(prim, 0x18);
         if (g_CurrentEntity->ext.lesserDemon.unk80++ > 0x30) {
             primIndex = g_CurrentEntity->primIndex;
