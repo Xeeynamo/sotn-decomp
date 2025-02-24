@@ -6,7 +6,7 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09255068);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_us_801BB8DC);
 
 // func_us_801BBAB4 code is shared with PSX and is ready for merge
-/// Seems to be the windup just before the spit attack
+// Seems to be the windup just before the spit attack
 u8 func_us_801BBAB4(void) {
     Primitive* prim;
     Pos tempPrim;
