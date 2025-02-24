@@ -1150,7 +1150,7 @@
 | wrp    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | no4    | func_psp_0924A260                   |      420 |         78 |        |                                 |       |
 | st0    | EntitySecretStairs                  |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
-| lib    | func_psp_092564B8                   |      425 |         35 | Yes    | https://decomp.me/scratch/E72B1 | 0.998 |
+| lib    | EntityLesserDemonSpit               |      425 |         35 | Yes    |                                 |       |
 | no4    | func_psp_0923DD38                   |      428 |         36 |        |                                 |       |
 | dra    | func_psp_09138778                   |      434 |         82 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
@@ -1261,7 +1261,7 @@
 | st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.982 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
-| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.866 |
+| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.957 |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
