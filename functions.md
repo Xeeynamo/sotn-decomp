@@ -505,8 +505,8 @@
 | no4    | func_psp_0924CB20                   |       55 |          8 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | dra    | func_psp_09141488                   |       56 |          2 |        |                                 |       |
-| lib    | func_psp_09263558                   |       57 |          1 |        |                                 |       |
-| lib    | func_psp_09263628                   |       57 |          1 |        |                                 |       |
+| lib    | func_psp_09263558                   |       57 |          1 |        | https://decomp.me/scratch/MpMzf | 0.987 |
+| lib    | func_psp_09263628                   |       57 |          1 |        | https://decomp.me/scratch/JNqKh | 0.987 |
 | lib    | CutsceneUnk4                        |       57 |          2 |        |                                 |       |
 | no4    | func_psp_0925E1F8                   |       57 |          2 |        |                                 |       |
 | st0    | CutsceneUnk4                        |       57 |          2 |        |                                 |       |
@@ -1001,7 +1001,7 @@
 | no4    | func_psp_09240350                   |      223 |         22 |        |                                 |       |
 | dra    | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
-| lib    | func_psp_09256AC0                   |      225 |         18 |        | https://decomp.me/scratch/TXHRR | 0.999 |
+| lib    | func_us_801BC28C                    |      225 |         18 |        |                                 |       |
 | lib    | func_psp_09252E70                   |      227 |         29 |        | https://decomp.me/scratch/heQmR | 0.995 |
 | lib    | func_psp_0925ED00                   |      231 |         11 |        |                                 |       |
 | dra    | func_psp_0910B768                   |      232 |         32 |        |                                 |       |
@@ -1261,7 +1261,7 @@
 | st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.982 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
-| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.957 |
+| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.965 |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
