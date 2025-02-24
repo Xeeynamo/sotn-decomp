@@ -1,27 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern u16 D_80180DC4[];
-extern u32 D_091CF6DC;
-extern u32 D_091CF698;
 static void CollectSubweapon(u16 subWeaponIdx) {
     Entity* player = &PLAYER;
     u16 subWeapon;
 
     g_api.PlaySfx(SFX_ITEM_PICKUP);
     if (g_PlayableCharacter == PLAYER_MARIA) {
-        subWeapon = D_091CF6DC;
+        subWeapon = g_Status.D_80097C40;
     } else {
-        subWeapon = D_091CF698;
+        subWeapon = g_Status.subWeapon;
     }
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
-        D_091CF6DC = maria_subweapons_idx[subWeaponIdx - 14];
+        g_Status.D_80097C40 = maria_subweapons_idx[subWeaponIdx - 14];
         func_90E4C90();
     } else {
-        D_091CF698 = aluric_subweapons_idx[subWeaponIdx - 14];
+        g_Status.subWeapon = aluric_subweapons_idx[subWeaponIdx - 14];
     }
 
-    if (g_PlayableCharacter != PLAYER_MARIA && subWeapon == D_091CF698 ||
-        g_PlayableCharacter == PLAYER_MARIA && subWeapon == D_091CF6DC) {
+    if (g_PlayableCharacter != PLAYER_MARIA &&
+            subWeapon == g_Status.subWeapon ||
+        g_PlayableCharacter == PLAYER_MARIA &&
+            subWeapon == g_Status.D_80097C40) {
         subWeapon = 1;
         g_CurrentEntity->unk6D[0] = 0x10;
     } else {

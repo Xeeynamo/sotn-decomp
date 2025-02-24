@@ -128,13 +128,13 @@ extern s32 D_psp_09147418[];
 Primitive* func_psp_090E4828(Primitive* prim) {
     s32* ptr;
 
-    if (D_psp_091CF698 == 0) {
+    if (g_Status.subWeapon == 0) {
         prim->drawMode = DRAW_HIDE;
     } else {
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            ptr = &D_psp_09147418[D_psp_091CF698 * 8];
+            ptr = &D_psp_09147418[g_Status.subWeapon * 8];
         } else {
-            ptr = &D_psp_091472F8[(D_psp_091CF698 - 1) * 8];
+            ptr = &D_psp_091472F8[(g_Status.subWeapon - 1) * 8];
         }
         SetTexturedPrimRect(
             prim, ptr[0] + 2, ptr[1] + 22, ptr[2], ptr[3], ptr[4], ptr[5]);
@@ -191,23 +191,23 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
 void func_psp_090E4C18(void) {
     if (D_psp_091474B8 < 0) {
         D_psp_091474B8 = 0;
-        D_psp_091CDC80 = D_psp_091CF698;
-        D_psp_091CDC88 = D_psp_091CF6DC;
+        D_psp_091CDC80 = g_Status.subWeapon;
+        D_psp_091CDC88 = g_Status.D_80097C40;
     }
 }
 
 s32 func_psp_090E4C58(void) { return D_psp_091474B8; }
 
 void func_psp_090E4C68(void) {
-    D_psp_091CDC80 = D_psp_091CF698;
-    D_psp_091CDC88 = D_psp_091CF6DC;
+    D_psp_091CDC80 = g_Status.subWeapon;
+    D_psp_091CDC88 = g_Status.D_80097C40;
 }
 
 void func_psp_090E4C90(void) {
     if (D_psp_091474B8 < 0) {
-        D_psp_091CDC88 = D_psp_091CF6DC;
+        D_psp_091CDC88 = g_Status.D_80097C40;
     } else {
-        D_psp_091CDC80 = D_psp_091CF6DC;
+        D_psp_091CDC80 = g_Status.D_80097C40;
     }
 }
 
