@@ -1261,7 +1261,7 @@
 | st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.982 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
-| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.965 |
+| lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
