@@ -1,8 +1,54 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-// Lesser demon start
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BB8DC);
+// Seems to be related to the iframes of the ectoplasm and the skeleton spawns
+// Mudman spawn animation causes iframes for it
+void func_us_801BB8DC(s16* unkArg) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->zPriority -= 0x10;
+        g_CurrentEntity->ext.lesserDemon.unkB2 = g_CurrentEntity->palette;
+        g_CurrentEntity->drawFlags |= FLAG_DRAW_UNK8;
+        g_CurrentEntity->unk6C = 2;
+        g_CurrentEntity->step_s++;
+        g_CurrentEntity->flags |= FLAG_UNK_2000;
+        g_CurrentEntity->flags &= ~(FLAG_UNK_800 | FLAG_UNK_400);
+        if (!unkArg) {
+            g_CurrentEntity->step_s = 2;
+        }
+        break;
+    case 1:
+        if (UnkCollisionFunc3(unkArg) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        g_CurrentEntity->unk6C += 4;
+        if (g_CurrentEntity->unk6C > 0xA0) {
+            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->ext.lesserDemon.unkB0 = 0x20;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 3:
+        if (g_CurrentEntity->ext.lesserDemon.unkB0 % 2) {
+            g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
+        } else {
+            g_CurrentEntity->palette = PAL_OVL(0x19F);
+        }
+
+        if (!(--g_CurrentEntity->ext.lesserDemon.unkB0)) {
+            g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
+            g_CurrentEntity->hitboxState = 3;
+            SetStep(1);
+        }
+        break;
+    }
+}
 
 // Seems to be the windup just before the spit attack
 u8 func_us_801BBAB4(void) {
