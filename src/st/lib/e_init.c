@@ -32,7 +32,7 @@ void EntityFlyingZombie1(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void EntityLesserDemon(Entity* self);
-void func_us_801BBEB0(Entity* self);
+void EntityLesserDemonSpit(Entity* self);
 void func_us_801BCC10(Entity* self);
 void func_us_801BED48(Entity* self);
 void func_us_801AFE0C(Entity* self);
@@ -112,7 +112,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x1C */ EntityBloodDrips,
     /* 0x1D */ EntityBloodSplatter,
     /* 0x1E */ EntityLesserDemon,
-    /* 0x1F */ func_us_801BBEB0,
+    /* 0x1F */ EntityLesserDemonSpit,
     /* 0x20 */ func_us_801BCC10,
     /* 0x21 */ func_us_801BED48,
     /* 0x22 */ func_us_801AFE0C,
@@ -192,7 +192,7 @@ EInit g_EInitMagicTome = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x0FB};
 EInit D_us_80180950 = {ANIMSET_OVL(0x02), 0x00, 0x54, 0x0266, 0x0FC};
 EInit D_us_8018095C = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit g_EInitLesserDemon = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x0249, 0x017};
-EInit D_us_80180974 = {ANIMSET_OVL(0x0A), 0x19, 0x4C, 0x0249, 0x019};
+EInit g_EInitLesserDemonSpit = {ANIMSET_OVL(0x0A), 0x19, 0x4C, 0x0249, 0x019};
 EInit D_us_80180980 = {ANIMSET_DRA(0x09), 0x01, 0x00, 0x81B0, 0x01A};
 EInit D_us_8018098C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x018};
 EInit g_EInitSkeleton = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x026B, 0x04B};
