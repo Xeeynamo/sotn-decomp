@@ -26,6 +26,13 @@ typedef enum {
 // prim->r0 = prim->g0 = prim->b0 = 255 becomes
 // PGREY(prim, 0) = 255
 #define PGREY(p, n) p->r##n = p->g##n = p->b##n
+// TODO: Merge these two macros
+// This one was created to work for both PSP and PSX, but touches
+// enough files to justify a separate PR to change the original.
+#define PGREY_ALT(p, n, v)                                                     \
+    p->r##n = v;                                                               \
+    p->g##n = v;                                                               \
+    p->b##n = v;
 
 typedef enum {
     PRIM_NONE,
