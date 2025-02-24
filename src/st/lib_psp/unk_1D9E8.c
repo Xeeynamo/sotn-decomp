@@ -3,8 +3,8 @@
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09255068);
 
-// func_us_801BB8DC code is shared with PSX and is ready for merge
-// Lesser Demon punch attack
+// Seems to be related to the iframes of the ectoplasm and the skeleton spawns
+// Mudman spawn animation causes iframes for it
 void func_us_801BB8DC(s16* unkArg) {
     switch (g_CurrentEntity->step_s) {
     case 0:
