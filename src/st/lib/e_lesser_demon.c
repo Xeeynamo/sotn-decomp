@@ -55,30 +55,18 @@ void func_us_801BC28C(void) {
         g_CurrentEntity->ext.lesserDemon.unk84++;
         return;
     case 1:
-        prim = g_CurrentEntity->ext.prim;
-#ifdef VERSION_PSP
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
         if (prim->next->r3) {
             prim->clut = 0x252;
         } else {
             prim->clut = 0x24A;
         }
-#else
-        if (!prim->next->r3) {
-            prim->clut = 0x24A;
-        } else {
-            prim->clut = 0x252;
-        }
-#endif
 
         prim->next->r3 ^= 1;
         UnkPrimHelper(prim);
         LOH(prim->next->r2) += 2;
         LOH(prim->next->b2) -= 1;
-#ifdef VERSION_PSP
         prim->next->b3 -= 4;
-#else
-        prim->next->b3 += 0xFC;
-#endif
         if (LOH(prim->next->r2) > 0x38) {
             g_CurrentEntity->ext.lesserDemon.unk84++;
         }
