@@ -1,3 +1,43 @@
+# Game OVL options: main dra ric weapon
+# Both stage and reverse stage fall under "STAGES" variable, they are split only for readability.
+# Stage OVL options: are cat cen chi dai dre lib mad no0 no1 no2 no3 no4 np3 nz0 nz1 sel st0 top wrp
+# Reverse stage OVL options: rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp
+# Boss OVL options: bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
+# Servant OVL options: tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
+
+VERSION_PREFIX 	:= PSP_EU
+PSP_EU_GAME		:= dra
+PSP_EU_STAGES	:= lib no4 st0 wrp
+PSP_EU_STAGES	+= 
+PSP_EU_BOSSES	:= 
+PSP_EU_SERVANTS	:= tt_000
+
+# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
+$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
+# Build targets is for when the non-prefixed name is needed
+$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
+
+# Flags
+AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
+MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
+
+# Tools
+ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
+AS              := $(ALLEGREX_AS)
+WIBO            := $(BIN_DIR)/wibo
+MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
+CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
+
+MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
+MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
+
+MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
+MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
+MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
+
+DEPENDENCIES	+= $(ALLEGREX_AS)
+
 # PSP specific targets
 build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
 
