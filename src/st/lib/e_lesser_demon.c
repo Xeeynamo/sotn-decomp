@@ -56,7 +56,7 @@ void EntityLesserDemonSpit(Entity* self) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                self->ext.prim = prim;
+                self->ext.lesserDemon.unk7C = prim;
                 prim->tpage = 0x13;
                 prim->clut = 0x24D;
                 prim->u0 = 0x68;
@@ -91,7 +91,7 @@ void EntityLesserDemonSpit(Entity* self) {
         }
         break;
     case 4:
-        prim = self->ext.prim;
+        prim = self->ext.lesserDemon.unk7C;
         if (self->ext.lesserDemon.unk80++ > 0x10) {
             self->step++;
             self->ext.lesserDemon.unk80 = 0x1D;
@@ -105,7 +105,7 @@ void EntityLesserDemonSpit(Entity* self) {
         self->hitboxOffY = -self->hitboxHeight;
         break;
     case 5:
-        prim = self->ext.prim;
+        prim = self->ext.lesserDemon.unk7C;
 
         if (!(--self->ext.lesserDemon.unk80)) {
             self->animFrameIdx = 0;
@@ -117,11 +117,7 @@ void EntityLesserDemonSpit(Entity* self) {
         }
         prim->y0 += 4;
         prim->y1 = prim->y0;
-#ifdef VERSION_PSP
         prim->v2 -= 2;
-#else
-        prim->v2 += 0xFE;
-#endif
         prim->v3 = prim->v2;
         self->hitboxHeight = 8;
         self->hitboxOffY = -4;
