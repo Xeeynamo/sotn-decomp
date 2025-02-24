@@ -7,21 +7,20 @@ INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BB8DC);
 u8 func_us_801BBAB4(void);
 INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BBAB4);
 
-extern EInit D_us_80180974;
 extern Collider D_us_80181AEC;
 extern u8 D_us_80181BCC;
 extern u8 D_us_80181BD8;
 extern u8 D_us_80181BE8;
 
 // Lesser Demon aerial spit projectile
-void func_us_801BBEB0(Entity* self) {
+void EntityLesserDemonSpit(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     u16 posX, posY;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180974);
+        InitializeEntity(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;

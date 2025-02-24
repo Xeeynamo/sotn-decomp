@@ -7,22 +7,21 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_us_801BB8DC);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_1D9E8", func_psp_09256018);
 
-extern EInit D_us_80180974;
 extern Collider D_us_80181AEC;
 extern u8 D_us_80181BCC;
 extern u8 D_us_80181BD8;
 extern u8 D_us_80181BE8;
 
-// func_us_801BBEB0 code is shared with PSX and is ready for merge
+// EntityLesserDemonSpit code is shared with PSX and is ready for merge
 // Lesser Demon aerial spit projectile
-void func_us_801BBEB0(Entity* self) {
+void EntityLesserDemonSpit(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     u16 posX, posY;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180974);
+        InitializeEntity(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
