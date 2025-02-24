@@ -281,12 +281,21 @@ void EntitySpittleBoneSpit(Entity* self) {
             tempPrim.x.i.lo = prim->x1;
             tempPrim.y.i.hi = prim->y0;
             tempPrim.y.i.lo = prim->y1;
-            tempPrim.x.val += LOW(prim->x2);
-            tempPrim.y.val += LOW(prim->x3);
+            tempPrim.x.val += LOWU(prim->x2);
+            tempPrim.y.val += LOWU(prim->x3);
+// This conditional added on the unvalidated assumption that
+// it will be needed to code share in the future
+#ifdef VERSION_PSP
+            prim->x0 = LOH(tempPrim.x.i.hi);
+            prim->x1 = LOH(tempPrim.x.i.lo);
+            prim->y0 = LOH(tempPrim.y.i.hi);
+            prim->y1 = LOH(tempPrim.y.i.lo);
+#else
             prim->x0 = tempPrim.x.i.hi;
             prim->x1 = tempPrim.x.i.lo;
             prim->y0 = tempPrim.y.i.hi;
             prim->y1 = tempPrim.y.i.lo;
+#endif
             LOW(prim->x3) += 0x1800;
             if (LOW(prim->x3) > 0) {
                 g_api.CheckCollision(
