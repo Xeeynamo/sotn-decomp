@@ -1087,7 +1087,7 @@
 | dra    | EntityStopWatchExpandingCircle      |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
 | no4    | func_psp_0923D568                   |      312 |         27 |        |                                 |       |
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
-| lib    | func_psp_09256018                   |      315 |         26 |        | https://decomp.me/scratch/NMR2i | 0.999 |
+| lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_psp_09258960                   |      317 |         18 |        |                                 |       |
 | no4    | func_psp_09238860                   |      320 |         54 |        |                                 |       |
 | dra    | func_psp_090EE5D0                   |      323 |         37 |        |                                 |       |
