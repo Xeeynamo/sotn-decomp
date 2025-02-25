@@ -7,7 +7,8 @@ const char D_us_801AB960[] = "Lord of Wallachia．@Father of Alucard．";
 const char D_us_801AB988[] = "Dark Priest of Dracula．";
 const char D_us_801AB9A4[] = "Dracula’s close friend．";
 const char D_us_801AB9C0[] = "High level Armor Lord．";
-const char D_us_801AB9D8[] = "Magical being with plan to @rule the netherworld．";
+const char D_us_801AB9D8[] =
+    "Magical being with plan to @rule the netherworld．";
 const char D_us_801ABA0C[] = "Rare bird．@Runs when sees people．";
 const char D_us_801ABA30[] = "Master Vampire hunter．";
 const char D_us_801ABA48[] = "Young female witch．";
@@ -26,7 +27,8 @@ const char D_us_801ABBF0[] = "Gruesome Demon from Hell．";
 const char D_us_801ABC0C[] = "Armor plated war−beast．";
 const char D_us_801ABC28[] = "Flame demon．";
 const char D_us_801ABC38[] = "Evil mutated octopus．";
-const char D_us_801ABC50[] = "Pre−intelligent bloodsucker @with long tongue for sucking．";
+const char D_us_801ABC50[] =
+    "Pre−intelligent bloodsucker @with long tongue for sucking．";
 const char D_us_801ABC90[] = "Skeleton mounted on Warg．";
 const char D_us_801ABCAC[] = "Skeleton with leaping attack．";
 const char D_us_801ABCCC[] = "Angel archer．@Slew Amalaric of the Goths．";
@@ -55,10 +57,12 @@ const char D_us_801ABFC8[] = "The cowardly lion．";
 const char D_us_801ABFDC[] = "Watered with human blood．";
 const char D_us_801ABFF8[] = "Gravestones possessed by @evil spirits of dead．";
 const char D_us_801AC02C[] = "Female demon．@Invades men’s dreams．";
-const char D_us_801AC054[] = "Magic−wielding vampire．@Rules upper part of castle．";
+const char D_us_801AC054[] =
+    "Magic−wielding vampire．@Rules upper part of castle．";
 const char D_us_801AC08C[] = "Master Fish−head．";
 const char D_us_801AC0A0[] = "Watchdog of Hell．";
-const char D_us_801AC0B4[] = "Thunder−wielding demon．@Called ””Musician from Hell””．";
+const char D_us_801AC0B4[] =
+    "Thunder−wielding demon．@Called ””Musician from Hell””．";
 const char D_us_801AC0F4[] = "Monster created from slimy @gel substance．";
 const char D_us_801AC120[] = "Demon Lord of Ravens．";
 const char D_us_801AC138[] = "Discus−wielding armored @knight．";
@@ -66,12 +70,16 @@ const char D_us_801AC15C[] = "Giant brother．@Uses huge steel hammer．";
 const char D_us_801AC188[] = "Giant brother．@Wields a gurkha knife．";
 const char D_us_801AC1B0[] = "Eldest Giant brother．@Wields two huge daggers．";
 const char D_us_801AC1E4[] = "Ghost witches from Salem．";
-const char D_us_801AC200[] = "Searches among graves and @knows much wise lore．";
-const char D_us_801AC234[] = "Short magic−wielding demon．@Summons demonic allies．";
+const char D_us_801AC200[] =
+    "Searches among graves and @knows much wise lore．";
+const char D_us_801AC234[] =
+    "Short magic−wielding demon．@Summons demonic allies．";
 const char D_us_801AC26C[] = "Fish head guardian．";
 const char D_us_801AC284[] = "Mysterious cloaked @swordsman．";
-const char D_us_801AC2A4[] = "Bloodthirsty undead knight @who eternally seeks combat．";
-const char D_us_801AC2E0[] = "Portable skull shrine carried @by skeleton priests．";
+const char D_us_801AC2A4[] =
+    "Bloodthirsty undead knight @who eternally seeks combat．";
+const char D_us_801AC2E0[] =
+    "Portable skull shrine carried @by skeleton priests．";
 const char D_us_801AC318[] = "Shape−shifting lycanthrope．";
 const char D_us_801AC338[] = "Bull−headed monster．";
 const char D_us_801AC350[] = "Creature with head of @woman and body of bird．";
@@ -84,13 +92,16 @@ const char D_us_801AC418[] = "Giant skeleton．";
 const char D_us_801AC42C[] = "Part horse， lion and eagle．";
 const char D_us_801AC44C[] = "Flea Man armed with axe and@shield．";
 const char D_us_801AC474[] = "Sword Lord wields sword @even when banished．";
-const char D_us_801AC4A4[] = "Heavily armored knight @Attacks with trained owl．";
+const char D_us_801AC4A4[] =
+    "Heavily armored knight @Attacks with trained owl．";
 const char D_us_801AC4D8[] = "Animated mud golem．";
 const char D_us_801AC4F0[] = "Invisible huntress spirit．";
 const char D_us_801AC50C[] = "Mythological sea monster．";
 const char D_us_801AC528[] = "Naginata−wielding skeleton．";
-const char D_us_801AC548[] = "Evil demon−sword． Causes @poltergeist phenomena．";
-const char D_us_801AC57C[] = "Flea Man riding on specially @trained war−goose．";
+const char D_us_801AC548[] =
+    "Evil demon−sword． Causes @poltergeist phenomena．";
+const char D_us_801AC57C[] =
+    "Flea Man riding on specially @trained war−goose．";
 const char D_us_801AC5B0[] = "Skeleton equipped with @spiked iron flail．";
 const char D_us_801AC5DC[] = "Spirit of long−dead blue @raven．";
 const char D_us_801AC600[] = "Flesh−eating raven．";
@@ -103,14 +114,17 @@ const char D_us_801AC6AC[] = "Armored guard．@Strong in perilous areas． ";
 const char D_us_801AC6D8[] = "Heavily armored undead @warrior．";
 const char D_us_801AC6FC[] = "Toad magically enlarged by @demonic baptism．";
 const char D_us_801AC72C[] = "Knight armed with @Greatsword．";
-const char D_us_801AC74C[] = "Physical manifestations of @bodiless tormented souls．";
+const char D_us_801AC74C[] =
+    "Physical manifestations of @bodiless tormented souls．";
 const char D_us_801AC784[] = "Slow−flying skeleton warrior．";
 const char D_us_801AC7A4[] = "Book of beginner’s spells．";
 const char D_us_801AC7C4[] = "Armored warrior with @naginata．";
 const char D_us_801AC7E8[] = "Animated ape skeleton．@Hurls wooden barrels．";
 const char D_us_801AC818[] = "Snake living off Scylla．";
-const char D_us_801AC834[] = "Executed soldier’s head．@Hunting for vengeance．";
-const char D_us_801AC868[] = "Local barnyard owl Mutated @by castle’s influence．";
+const char D_us_801AC834[] =
+    "Executed soldier’s head．@Hunting for vengeance．";
+const char D_us_801AC868[] =
+    "Local barnyard owl Mutated @by castle’s influence．";
 const char D_us_801AC8A0[] = "Shape−shifting demon．";
 const char D_us_801AC8B8[] = "Cannon built of white @dragon skulls．";
 const char D_us_801AC8E0[] = "Skeleton archer equipped @with bow．";
@@ -122,8 +136,10 @@ const char D_us_801AC9A0[] = "From Medusa’s hair．@Can petrify．";
 const char D_us_801AC9C4[] = "Skeletons equipped with @rifles．";
 const char D_us_801AC9E8[] = "Novice of twin−bladed @combat．";
 const char D_us_801ACA0C[] = "From Medusa’s hair．";
-const char D_us_801ACA24[] = "Strange human−like creature．@Jumps like a flea．";
-const char D_us_801ACA58[] = "Nauseating two−headed @beast． Which is the head？";
+const char D_us_801ACA24[] =
+    "Strange human−like creature．@Jumps like a flea．";
+const char D_us_801ACA58[] =
+    "Nauseating two−headed @beast． Which is the head？";
 const char D_us_801ACA8C[] = "Demon with enchanted spear．";
 const char D_us_801ACAAC[] = "Demonic puppet from Hell．";
 const char D_us_801ACAC8[] = "Low level flaming ghosts．";
@@ -132,10 +148,12 @@ const char D_us_801ACB04[] = "Plant with razor−sharp @leaves．";
 const char D_us_801ACB28[] = "Boomerang wielding skeleton．";
 const char D_us_801ACB48[] = "Possessed Ouija table．";
 const char D_us_801ACB60[] = "Bone−hurling skeleton．";
-const char D_us_801ACB7C[] = "Eastern Church soldiers @dispatched ３００ years ago．";
+const char D_us_801ACB7C[] =
+    "Eastern Church soldiers @dispatched ３００ years ago．";
 const char D_us_801ACBB4[] = "Low level axe knight．";
 const char D_us_801ACBCC[] = "４−legged skeleton．@Drips poison．";
-const char D_us_801ACBF4[] = "Fireball−spitting Merman．@Largest of merman kind．";
+const char D_us_801ACBF4[] =
+    "Fireball−spitting Merman．@Largest of merman kind．";
 const char D_us_801ACC2C[] = "Ferocious skeleton @swordsman．";
 const char D_us_801ACC4C[] = "Wolves which guard castle @entrance．";
 const char D_us_801ACC74[] = "Magically animated skeleton．";
@@ -144,7 +162,8 @@ const char D_us_801ACCC8[] = "Fresh corpses．@Magically animated．";
 const char D_us_801ACCF0[] = "Indestructible spinning skull．";
 const char D_us_801ACD10[] = "Vampire bats．@Feared as servants of evil．";
 const char D_us_801ACD3C[] = "Revives due to blood soaked@bones．";
-const char D_us_801ACD60[] = "Destroyed by Richter in １７９２．（５ years ago）";
+const char D_us_801ACD60[] =
+    "Destroyed by Richter in １７９２．（５ years ago）";
 
 extern s8 D_80073510;
 extern u16 D_us_80180824;
@@ -880,9 +899,9 @@ void func_us_801B15C0(Entity* self) {
                 prim = prim->next;
             }
 #ifdef VERSION_PSP
-            func_us_801B11A0(0, 0x100, 'X', self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 0x58, self->ext.et_801B15C0.unk86 * 2);
 #else
-            func_us_801B11A0(0, 0x100, 'T', self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 0x54, self->ext.et_801B15C0.unk86 * 2);
 #endif
             return;
         }
