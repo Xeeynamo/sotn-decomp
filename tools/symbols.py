@@ -434,7 +434,11 @@ def print_elf_symbols(file, elf_file_name, no_default):
     symbols = get_elf_symbols(elf_file_name)
     sorted_symbols = sorted(symbols.items(), key=lambda item: item[1])
     for name, offset in sorted_symbols:
-        if no_default and (name.startswith("func_") or name.startswith("D_")):
+        if (
+            no_default
+            and (name.startswith("func_") or name.startswith("D_"))
+            or name.startswith(".L")
+        ):
             continue
         print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
 
