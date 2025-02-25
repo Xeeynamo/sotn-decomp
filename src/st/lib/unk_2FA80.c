@@ -788,17 +788,12 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B1200);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B12D0);
 
-const char D_us_801ACDE0[] = {
-    '\x03', 'S', 'e', 'l', 'l', ' ', 'g', 'e', 'm', 0x00, 0x00, 0x00};
-const char D_us_801ACDEC[] = {'\x06', 'E', 'x', 'i', 't', 0x00, 0x00, 0x00};
-const char D_us_801ACDF4[] = {
-    '\x01', 'S', 'o', 'u', 'n', 'd', ' ', 't', 'e', 's', 't', 0x00};
-const char D_us_801ACE00[] = {
-    '\x01', 'E', 'n', 'e', 'm', 'y', ' ', 'l', 'i', 's', 't', 0x00};
-const char D_us_801ACE0C[] = {
-    '\x03', 'T', 'a', 'c', 't', 'i', 'c', 's', 0x00, 0x00, 0x00, 0x00};
-const char D_us_801ACE18[] = {'\x03', 'B',  'u',  'y',  ' ',  'i',  't',  'e',
-                              'm',    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const char D_us_801ACDE0[] = "\003Sell gem";
+const char D_us_801ACDEC[] = "\006Exit";
+const char D_us_801ACDF4[] = "\001Sound test";
+const char D_us_801ACE00[] = "\001Enemy list";
+const char D_us_801ACE0C[] = "\003Tactics";
+const char D_us_801ACE18[] = "\003Buy item";
 
 extern u8* D_us_80181310[];
 extern u8* D_us_80181340[];
