@@ -3,289 +3,148 @@
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801AFA80);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AB960);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AB988);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AB9A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AB9C0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AB9D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABA0C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABA30);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABA48);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABA60);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABA90);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABAA8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABAC4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABAE4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABB00);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABB20);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABB40);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABB74);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABBA4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABBD4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABBF0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABC0C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABC28);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABC38);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABC50);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABC90);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABCAC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABCCC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABCF8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABD18);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABD34);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABD58);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABD78);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABD98);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABDB4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABDD8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABDEC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABE1C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABE38);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABE58);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABE78);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABEA8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABED8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABEF8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABF24);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABF44);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABF58);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABF7C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABFA8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABFC8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABFDC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ABFF8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC02C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC054);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC08C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC0A0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC0B4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC0F4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC120);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC138);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC15C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC188);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC1B0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC1E4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC200);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC234);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC26C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC284);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC2A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC2E0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC318);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC338);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC350);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC380);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC398);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC3C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC3DC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC400);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC418);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC42C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC44C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC474);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC4A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC4D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC4F0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC50C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC528);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC548);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC57C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC5B0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC5DC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC600);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC618);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC630);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC64C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC66C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC684);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC6AC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC6D8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC6FC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC72C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC74C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC784);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC7A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC7C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC7E8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC818);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC834);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC868);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC8A0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC8B8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC8E0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC908);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC938);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC954);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC974);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC9A0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC9C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801AC9E8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACA0C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACA24);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACA58);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACA8C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACAAC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACAC8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACAE4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACB04);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACB28);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACB48);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACB60);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACB7C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACBB4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACBCC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACBF4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACC2C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACC4C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACC74);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACC94);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACCC8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACCF0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD10);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD3C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACD60);
+const char D_us_801AB960[] = "Lord of Wallachia．@Father of Alucard．";
+const char D_us_801AB988[] = "Dark Priest of Dracula．";
+const char D_us_801AB9A4[] = "Dracula’s close friend．";
+const char D_us_801AB9C0[] = "High level Armor Lord．";
+const char D_us_801AB9D8[] = "Magical being with plan to @rule the netherworld．";
+const char D_us_801ABA0C[] = "Rare bird．@Runs when sees people．";
+const char D_us_801ABA30[] = "Master Vampire hunter．";
+const char D_us_801ABA48[] = "Young female witch．";
+const char D_us_801ABA60[] = "New−half ice spirit．@Servant of Galamoth．";
+const char D_us_801ABA90[] = "Executioner of Hell．";
+const char D_us_801ABAA8[] = "Beelzebub Lord of Flies．";
+const char D_us_801ABAC4[] = "Zombie impersonating Sypha．";
+const char D_us_801ABAE4[] = "Mischievous little demon．";
+const char D_us_801ABB00[] = "Zombie impersonating Trevor．";
+const char D_us_801ABB20[] = "Zombie impersonating Grant．";
+const char D_us_801ABB40[] = "Made from the body parts @of powerful warriors．";
+const char D_us_801ABB74[] = "Snake−headed demoness @with gaze of stone．";
+const char D_us_801ABBA4[] = "Advanced Venus Weed．@Fed with demon blood．";
+const char D_us_801ABBD4[] = "Ancient egyptian mummy．";
+const char D_us_801ABBF0[] = "Gruesome Demon from Hell．";
+const char D_us_801ABC0C[] = "Armor plated war−beast．";
+const char D_us_801ABC28[] = "Flame demon．";
+const char D_us_801ABC38[] = "Evil mutated octopus．";
+const char D_us_801ABC50[] = "Pre−intelligent bloodsucker @with long tongue for sucking．";
+const char D_us_801ABC90[] = "Skeleton mounted on Warg．";
+const char D_us_801ABCAC[] = "Skeleton with leaping attack．";
+const char D_us_801ABCCC[] = "Angel archer．@Slew Amalaric of the Goths．";
+const char D_us_801ABCF8[] = "Rock−tossing armored @knight．";
+const char D_us_801ABD18[] = "Fireball−spitting wolf．";
+const char D_us_801ABD34[] = "Animated skeleton of huge @dragon．";
+const char D_us_801ABD58[] = "Wyrm controlled by Flea Man．";
+const char D_us_801ABD78[] = "Wields fearsome beam @weapon．";
+const char D_us_801ABD98[] = "Half−man， half−bull．";
+const char D_us_801ABDB4[] = "White dragon ridden by Flea @Man．";
+const char D_us_801ABDD8[] = "Giant vampire bat．";
+const char D_us_801ABDEC[] = "Liquid creature．@Takes black panther shape．";
+const char D_us_801ABE1C[] = "Half−man， half−wolf．";
+const char D_us_801ABE38[] = "Fiendishly accurate archer．";
+const char D_us_801ABE58[] = "Expert at throwing weapons．";
+const char D_us_801ABE78[] = "Mutated insect．@Visible only to magicians．";
+const char D_us_801ABEA8[] = "Zombies which attack even @when cut in half．";
+const char D_us_801ABED8[] = "Bomb−tossing armored @knight．";
+const char D_us_801ABEF8[] = "Skeleton eternally chasing @his own skull．";
+const char D_us_801ABF24[] = "Holds countless poison seeds．";
+const char D_us_801ABF44[] = "Heartless tin man．";
+const char D_us_801ABF58[] = "Monster nicknamed ””schmoo””．";
+const char D_us_801ABF7C[] = "Nightmarish creature．@Composed of many．";
+const char D_us_801ABFA8[] = "Impaled man looking for brain．";
+const char D_us_801ABFC8[] = "The cowardly lion．";
+const char D_us_801ABFDC[] = "Watered with human blood．";
+const char D_us_801ABFF8[] = "Gravestones possessed by @evil spirits of dead．";
+const char D_us_801AC02C[] = "Female demon．@Invades men’s dreams．";
+const char D_us_801AC054[] = "Magic−wielding vampire．@Rules upper part of castle．";
+const char D_us_801AC08C[] = "Master Fish−head．";
+const char D_us_801AC0A0[] = "Watchdog of Hell．";
+const char D_us_801AC0B4[] = "Thunder−wielding demon．@Called ””Musician from Hell””．";
+const char D_us_801AC0F4[] = "Monster created from slimy @gel substance．";
+const char D_us_801AC120[] = "Demon Lord of Ravens．";
+const char D_us_801AC138[] = "Discus−wielding armored @knight．";
+const char D_us_801AC15C[] = "Giant brother．@Uses huge steel hammer．";
+const char D_us_801AC188[] = "Giant brother．@Wields a gurkha knife．";
+const char D_us_801AC1B0[] = "Eldest Giant brother．@Wields two huge daggers．";
+const char D_us_801AC1E4[] = "Ghost witches from Salem．";
+const char D_us_801AC200[] = "Searches among graves and @knows much wise lore．";
+const char D_us_801AC234[] = "Short magic−wielding demon．@Summons demonic allies．";
+const char D_us_801AC26C[] = "Fish head guardian．";
+const char D_us_801AC284[] = "Mysterious cloaked @swordsman．";
+const char D_us_801AC2A4[] = "Bloodthirsty undead knight @who eternally seeks combat．";
+const char D_us_801AC2E0[] = "Portable skull shrine carried @by skeleton priests．";
+const char D_us_801AC318[] = "Shape−shifting lycanthrope．";
+const char D_us_801AC338[] = "Bull−headed monster．";
+const char D_us_801AC350[] = "Creature with head of @woman and body of bird．";
+const char D_us_801AC380[] = "Pyromaniacal gremlin．";
+const char D_us_801AC398[] = "Grave Keeper．@Master of unarmed combat．";
+const char D_us_801AC3C4[] = "Were panther skeleton．";
+const char D_us_801AC3DC[] = "Master of twin−bladed @combat．";
+const char D_us_801AC400[] = "Monster made from gel．";
+const char D_us_801AC418[] = "Giant skeleton．";
+const char D_us_801AC42C[] = "Part horse， lion and eagle．";
+const char D_us_801AC44C[] = "Flea Man armed with axe and@shield．";
+const char D_us_801AC474[] = "Sword Lord wields sword @even when banished．";
+const char D_us_801AC4A4[] = "Heavily armored knight @Attacks with trained owl．";
+const char D_us_801AC4D8[] = "Animated mud golem．";
+const char D_us_801AC4F0[] = "Invisible huntress spirit．";
+const char D_us_801AC50C[] = "Mythological sea monster．";
+const char D_us_801AC528[] = "Naginata−wielding skeleton．";
+const char D_us_801AC548[] = "Evil demon−sword． Causes @poltergeist phenomena．";
+const char D_us_801AC57C[] = "Flea Man riding on specially @trained war−goose．";
+const char D_us_801AC5B0[] = "Skeleton equipped with @spiked iron flail．";
+const char D_us_801AC5DC[] = "Spirit of long−dead blue @raven．";
+const char D_us_801AC600[] = "Flesh−eating raven．";
+const char D_us_801AC618[] = "Giant skull spirit．";
+const char D_us_801AC630[] = "Book of ancient weapons．";
+const char D_us_801AC64C[] = "Ice−wielding female spirit．";
+const char D_us_801AC66C[] = "Cave−dwelling frog．";
+const char D_us_801AC684[] = "Headless skeleton．@Wields a rapier．";
+const char D_us_801AC6AC[] = "Armored guard．@Strong in perilous areas． ";
+const char D_us_801AC6D8[] = "Heavily armored undead @warrior．";
+const char D_us_801AC6FC[] = "Toad magically enlarged by @demonic baptism．";
+const char D_us_801AC72C[] = "Knight armed with @Greatsword．";
+const char D_us_801AC74C[] = "Physical manifestations of @bodiless tormented souls．";
+const char D_us_801AC784[] = "Slow−flying skeleton warrior．";
+const char D_us_801AC7A4[] = "Book of beginner’s spells．";
+const char D_us_801AC7C4[] = "Armored warrior with @naginata．";
+const char D_us_801AC7E8[] = "Animated ape skeleton．@Hurls wooden barrels．";
+const char D_us_801AC818[] = "Snake living off Scylla．";
+const char D_us_801AC834[] = "Executed soldier’s head．@Hunting for vengeance．";
+const char D_us_801AC868[] = "Local barnyard owl Mutated @by castle’s influence．";
+const char D_us_801AC8A0[] = "Shape−shifting demon．";
+const char D_us_801AC8B8[] = "Cannon built of white @dragon skulls．";
+const char D_us_801AC8E0[] = "Skeleton archer equipped @with bow．";
+const char D_us_801AC908[] = "Fire and ice demon．@Seems reluctant to fight．";
+const char D_us_801AC938[] = "Well armored axe knight．";
+const char D_us_801AC954[] = "Mutated plant．@Seeds petrify．";
+const char D_us_801AC974[] = "Heavily armored knight with @iron ball．";
+const char D_us_801AC9A0[] = "From Medusa’s hair．@Can petrify．";
+const char D_us_801AC9C4[] = "Skeletons equipped with @rifles．";
+const char D_us_801AC9E8[] = "Novice of twin−bladed @combat．";
+const char D_us_801ACA0C[] = "From Medusa’s hair．";
+const char D_us_801ACA24[] = "Strange human−like creature．@Jumps like a flea．";
+const char D_us_801ACA58[] = "Nauseating two−headed @beast． Which is the head？";
+const char D_us_801ACA8C[] = "Demon with enchanted spear．";
+const char D_us_801ACAAC[] = "Demonic puppet from Hell．";
+const char D_us_801ACAC8[] = "Low level flaming ghosts．";
+const char D_us_801ACAE4[] = "Fire−breathing flying demon．";
+const char D_us_801ACB04[] = "Plant with razor−sharp @leaves．";
+const char D_us_801ACB28[] = "Boomerang wielding skeleton．";
+const char D_us_801ACB48[] = "Possessed Ouija table．";
+const char D_us_801ACB60[] = "Bone−hurling skeleton．";
+const char D_us_801ACB7C[] = "Eastern Church soldiers @dispatched ３００ years ago．";
+const char D_us_801ACBB4[] = "Low level axe knight．";
+const char D_us_801ACBCC[] = "４−legged skeleton．@Drips poison．";
+const char D_us_801ACBF4[] = "Fireball−spitting Merman．@Largest of merman kind．";
+const char D_us_801ACC2C[] = "Ferocious skeleton @swordsman．";
+const char D_us_801ACC4C[] = "Wolves which guard castle @entrance．";
+const char D_us_801ACC74[] = "Magically animated skeleton．";
+const char D_us_801ACC94[] = "Legendary ””creature””．@Attacks all invaders．";
+const char D_us_801ACCC8[] = "Fresh corpses．@Magically animated．";
+const char D_us_801ACCF0[] = "Indestructible spinning skull．";
+const char D_us_801ACD10[] = "Vampire bats．@Feared as servants of evil．";
+const char D_us_801ACD3C[] = "Revives due to blood soaked@bones．";
+const char D_us_801ACD60[] = "Destroyed by Richter in １７９２．（５ years ago）";
 
 extern s8 D_80073510;
 extern u16 D_us_80180824;
@@ -1021,9 +880,9 @@ void func_us_801B15C0(Entity* self) {
                 prim = prim->next;
             }
 #ifdef VERSION_PSP
-            func_us_801B11A0(0, 0x100, 0x58, self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 'X', self->ext.et_801B15C0.unk86 * 2);
 #else
-            func_us_801B11A0(0, 0x100, 0x54, self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 'T', self->ext.et_801B15C0.unk86 * 2);
 #endif
             return;
         }

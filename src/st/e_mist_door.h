@@ -28,10 +28,9 @@ static char* richter_mist_label; // bss
 
 extern s32 D_8B42058; // User's language selection?
 #else
-static char alucard_mist_label[] = "\x7C\x0EMist could pass\x81\x44";
+static char alucard_mist_label[] = "\x7C\x0EMist could pass．";
 static char richter_mist_label[] =
-    "\x94\x1EI have nothing to do\x01"
-    "with this wall\x81\x44\x81\x44\x81\x44";
+    "\x94\x1EI have nothing to do\x01with this wall．．．";
 #endif
 
 #ifdef VERSION_PSP
