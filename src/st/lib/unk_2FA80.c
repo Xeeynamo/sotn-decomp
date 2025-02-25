@@ -788,17 +788,12 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B1200);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B12D0);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACDE0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACDEC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACDF4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACE00);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACE0C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_2FA80", D_us_801ACE18);
+const char D_us_801ACDE0[] = {'\x03', 'S', 'e', 'l', 'l', ' ', 'g', 'e', 'm', 0x00, 0x00, 0x00};
+const char D_us_801ACDEC[] = {'\x06', 'E', 'x', 'i', 't', 0x00, 0x00, 0x00};
+const char D_us_801ACDF4[] = {'\x01', 'S', 'o', 'u', 'n', 'd', ' ', 't', 'e', 's', 't', 0x00};
+const char D_us_801ACE00[] = {'\x01', 'E', 'n', 'e', 'm', 'y', ' ', 'l', 'i', 's', 't', 0x00};
+const char D_us_801ACE0C[] = {'\x03', 'T', 'a', 'c', 't', 'i', 'c', 's', 0x00, 0x00, 0x00, 0x00};
+const char D_us_801ACE18[] = {'\x03', 'B', 'u', 'y', ' ', 'i', 't', 'e', 'm', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 extern u8* D_us_80181310[];
 extern u8* D_us_80181340[];
@@ -901,7 +896,7 @@ void func_us_801B15C0(Entity* self) {
 #ifdef VERSION_PSP
             func_us_801B11A0(0, 0x100, 0x58, self->ext.et_801B15C0.unk86 * 2);
 #else
-            func_us_801B11A0(0, 0x100, 0x54, self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 'T', self->ext.et_801B15C0.unk86 * 2);
 #endif
             return;
         }
