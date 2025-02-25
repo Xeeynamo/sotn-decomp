@@ -896,7 +896,7 @@ void func_us_801B15C0(Entity* self) {
 #ifdef VERSION_PSP
             func_us_801B11A0(0, 0x100, 0x58, self->ext.et_801B15C0.unk86 * 2);
 #else
-            func_us_801B11A0(0, 0x100, 'T', self->ext.et_801B15C0.unk86 * 2);
+            func_us_801B11A0(0, 0x100, 0x54, self->ext.et_801B15C0.unk86 * 2);
 #endif
             return;
         }
