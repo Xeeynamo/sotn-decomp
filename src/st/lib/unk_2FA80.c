@@ -788,12 +788,18 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B1200);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_2FA80", func_us_801B12D0);
 
-const char D_us_801ACDE0[] = "\003" "Sell gem";
-const char D_us_801ACDEC[] = "\006" "Exit";
-const char D_us_801ACDF4[] = "\001" "Sound test";
-const char D_us_801ACE00[] = "\001" "Enemy list";
-const char D_us_801ACE0C[] = "\003" "Tactics";
-const char D_us_801ACE18[] = "\003" "Buy item";
+const char D_us_801ACDE0[] = "\003"
+                             "Sell gem";
+const char D_us_801ACDEC[] = "\006"
+                             "Exit";
+const char D_us_801ACDF4[] = "\001"
+                             "Sound test";
+const char D_us_801ACE00[] = "\001"
+                             "Enemy list";
+const char D_us_801ACE0C[] = "\003"
+                             "Tactics";
+const char D_us_801ACE18[] = "\003"
+                             "Buy item";
 
 extern u8* D_us_80181310[];
 extern u8* D_us_80181340[];
