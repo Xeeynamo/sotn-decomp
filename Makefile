@@ -32,9 +32,10 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 # Tooling
 SHELL 			 = /bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
-PYTHON_BIN		:= $(VENV_DIR)/bin
-PYTHON          := $(PYTHON_BIN)/python3
-PIP				:= $(PYTHON_BIN)/pip3
+#PYTHON_BIN		:= $(VENV_DIR)/bin
+#PYTHON          := $(PYTHON_BIN)/python3
+PYTHON			:= python3
+#PIP			 := $(PYTHON_BIN)/pip3
 SPLAT           := splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
