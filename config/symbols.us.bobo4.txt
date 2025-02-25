@@ -192,3 +192,6 @@ D_800B0594 = 0x80184024;
 g_shadowOpacityReductionTable = 0x801812F8;
 g_D_800ACF3C = 0x80181308;
 g_D_800ACF18 = 0x801812E4;
+g_Dop_padPressed = 0x801D4D38;
+g_Dop_padTapped = 0x801D4D3C;
+g_Dop_padHeld = 0x801D4D40;
