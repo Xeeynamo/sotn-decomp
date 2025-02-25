@@ -1105,14 +1105,14 @@ extern const char* D_us_801818F4[];
 #endif
 
 void func_us_801B8958(Primitive* prim, Entity* self) {
-    s16 var_s2;
+    s16 posY;
     s32 i, j;
 
-    var_s2 = 16;
+    posY = 16;
     j = self->ext.et_801B6F30.unk82;
     for (i = 0; i < 7; i++, j++) {
-        prim = func_us_801B1064(prim, 16, var_s2, D_us_801818F4[j], 0x196);
-        var_s2 += 12;
+        prim = func_us_801B1064(prim, 16, posY, D_us_801818F4[j], 0x196);
+        posY += 12;
     }
     while (prim != NULL) {
         prim->drawMode = DRAW_HIDE;
