@@ -14,15 +14,23 @@ use types::{DupsFile, Function, Instruction};
 fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
     let mut instructions = Vec::new();
     let mut func_name = "";
+    let mut section = ".text";
 
     for line in input.lines() {
         let parts: Vec<&str> = line.split_whitespace().collect();
 
         // find the function name
         if parts.len() == 2 {
-            if parts[0] == "glabel" {
-                func_name = parts[1];
+            match parts[0] {
+                "glabel" => func_name = parts[1],
+                ".section" => section = parts[1],
+                _ => (),
             }
+        }
+
+        if section != ".text" {
+            // ignore non-code sections
+            continue;
         }
 
         if parts.len() < 3 {
