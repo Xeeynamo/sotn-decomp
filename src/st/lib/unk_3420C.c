@@ -10,23 +10,32 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits);
 
 extern u16 D_us_801814D4[];
 extern AvailableInventoryItem D_us_801814D8[];
+
+#ifdef VERSION_PSP
+extern const char** D_psp_092A5FC8;
+extern u16 D_us_80181530;
+extern u8 D_us_80181650[];
+extern u8 D_us_80181658[];
+extern u8* D_us_80181660;
+extern char* D_us_80181668;
+extern char** D_us_80181674;
+extern const char** D_us_8018168C;
+extern char* D_us_801816A4;
+extern char** D_us_801816AC;
+extern char** D_us_801816B0;
+#else
 extern const char* D_us_80181528[];
 extern u16 D_us_80181530;
 extern u8 D_us_80181650[];
 extern u8 D_us_80181658[];
 extern u8 D_us_80181660[];
-#ifdef VERSION_PSP
-extern char* D_us_80181668;
-extern char** D_us_80181674;
-extern const char** D_us_8018168C;
-#else
 extern char D_us_80181668[];
 extern char* D_us_80181674[];
 extern const char* D_us_8018168C[];
-#endif
 extern char D_us_801816A4[];
 extern char* D_us_801816AC[];
 extern char* D_us_801816B0[];
+#endif
 
 extern u32 D_us_801D415C[];
 extern s32 D_us_801D425C[];
@@ -37,11 +46,6 @@ extern u16 D_psp_092A4A78[];
 extern s16 D_psp_092A4A88[];
 extern u16 D_psp_092A4AA0[];
 extern s16 D_psp_092A49B8[];
-extern u8* D_psp_092A5F50;
-extern char** D_psp_092A5FA8;
-extern char** D_psp_092A5FB0;
-extern char* D_psp_092A5FB8;
-extern char** D_psp_092A5FC8;
 
 void func_us_801B420C(Primitive* prim, Entity* arg1) {
     u16 index;
@@ -386,17 +390,6 @@ void func_us_801B4830(Entity* self) {
                     var_s4 = &D_us_80181530;
                 } else if (i < 15) {
                     if (i == 11) {
-#ifdef VERSION_PSP
-                        D_psp_092A5F50[0] =
-                            D_us_80181650[g_Settings.buttonConfig[0]];
-                        D_psp_092A5F50[1] =
-                            D_us_80181658[g_Settings.buttonConfig[0]];
-                        D_psp_092A5F50[2] =
-                            D_us_80181650[g_Settings.buttonConfig[1]];
-                        D_psp_092A5F50[3] =
-                            D_us_80181658[g_Settings.buttonConfig[1]];
-                        func_us_801B3FB4(prim, D_psp_092A5F50, 8, 0);
-#else
                         D_us_80181660[0] =
                             D_us_80181650[g_Settings.buttonConfig[0]];
                         D_us_80181660[1] =
@@ -406,7 +399,6 @@ void func_us_801B4830(Entity* self) {
                         D_us_80181660[3] =
                             D_us_80181658[g_Settings.buttonConfig[1]];
                         func_us_801B3FB4(prim, D_us_80181660, 8, 0);
-#endif
                     }
                     prim->x0 = *var_s4++ + 0xBA;
                     prim->y0 = *var_s4++ + 0xA0;
@@ -454,11 +446,10 @@ void func_us_801B4830(Entity* self) {
         if (!self->step_s) {
             unused = g_Pix[0];
             for (i = 0; i < 2; i++) {
+                name = D_us_80181528[i];
 #ifdef VERSION_PSP
-                name = D_psp_092A5FC8[i];
                 func_us_801B0FBC(name, 0x17, 0x104 + i * 16);
 #else
-                name = D_us_80181528[i];
                 func_us_801B0FBC(name, 0x1A, 0x104 + i * 16);
 #endif
             }
@@ -580,11 +571,7 @@ void func_us_801B4ED4(s16 index, u16 arg1) {
         g_api.LoadEquipIcon(itemId, 0x118, 0x1F);
         break;
     default:
-#ifdef VERSION_PSP
-        desc = *D_psp_092A5FC8;
-#else
         desc = *D_us_80181528;
-#endif
         break;
     }
     unused = &g_Pix[0][0x1000];
@@ -930,25 +917,13 @@ void func_us_801B56E4(Entity* self) {
                 name = g_api.accessoryDefs[itemId].name;
                 break;
             case INVENTORY_RELIC:
-#ifdef VERSION_PSP
-                name = D_psp_092A5FB0[itemId];
-#else
                 name = D_us_801816AC[itemId];
-#endif
                 break;
             case INVENTORY_DOCUMENT:
-#ifdef VERSION_PSP
-                name = D_psp_092A5FA8[itemId];
-#else
                 name = D_us_801816B0[itemId];
-#endif
                 break;
             default:
-#ifdef VERSION_PSP
-                name = *D_psp_092A5FC8;
-#else
                 name = *D_us_80181528;
-#endif
                 break;
             }
             prim = func_us_801B1064(prim, 8, posY, name, 0x196);
@@ -1004,7 +979,7 @@ void func_us_801B56E4(Entity* self) {
                     posX += 8;
                 }
 #ifdef VERSION_PSP
-                func_us_801B3FB4(prim2, D_psp_092A5FB8, count, 1);
+                func_us_801B3FB4(prim2, D_us_801816A4, count, 1);
 #else
                 func_us_801B3FB4(prim2, D_us_801816A4, 8, 1);
 #endif
