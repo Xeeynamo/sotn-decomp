@@ -10,9 +10,6 @@ extern s32 g_HandId;
 #define g_Animset w_014_1
 #define g_Animset2 w_014_2
 
-extern u8 D_8007341E;
-extern u8 D_8007341F;
-
 void EntityWeaponAttack(Entity* self) {
     Primitive* prim;
     s16 angle;
@@ -139,10 +136,10 @@ void EntityWeaponAttack(Entity* self) {
         break;
     case 3:
         xDiff = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
-        if (xDiff < (D_8007341E + 16) / 2) {
+        if (xDiff < (PLAYER.hitboxWidth + 16) / 2) {
             yDiff =
                 abs((PLAYER.posY.i.hi + PLAYER.hitboxOffY) - self->posY.i.hi);
-            if (yDiff < (D_8007341F + 4) / 2) {
+            if (yDiff < (PLAYER.hitboxHeight + 4) / 2) {
                 DestroyEntity(self);
                 return;
             }
