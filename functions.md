@@ -537,7 +537,7 @@
 | dra    | func_8011690C                       |       61 |          5 |        |                                 |       |
 | lib    | func_psp_092410A8                   |       61 |          5 |        |                                 |       |
 | dra    | func_psp_090F77E8                   |       61 |          6 |        |                                 |       |
-| lib    | func_psp_0926BD98                   |       61 |          6 |        |                                 |       |
+| lib    | func_psp_0926BD98                   |       61 |          6 |        | https://decomp.me/scratch/3EQre | 0.997 |
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | dra    | func_psp_09106008                   |       61 |          9 |        |                                 |       |
 | lib    | func_psp_09253D58                   |       61 |         10 |        |                                 |       |
@@ -968,7 +968,7 @@
 | dra    | func_psp_0910E4B8                   |      198 |         34 | Yes    |                                 |       |
 |        | ServantInit                         |      199 |         20 |        |                                 |       |
 | dra    | func_psp_090DE7D0                   |      200 |         16 |        |                                 |       |
-| lib    | func_psp_09266120                   |      200 |         18 |        |                                 |       |
+| lib    | func_psp_09266120                   |      200 |         18 |        | https://decomp.me/scratch/UVAF8 | 1.0   |
 | lib    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
 | no4    | func_psp_0925B140                   |      200 |         20 |        |                                 |       |
 | dra    | func_800F0940                       |      200 |         22 | Yes    |                                 |       |
@@ -1186,7 +1186,7 @@
 | dra    | func_psp_09143758                   |      546 |        139 |        |                                 |       |
 | dra    | func_psp_090F2258                   |      554 |         79 |        | https://decomp.me/scratch/5zeE3 | 0.682 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
-| lib    | func_psp_092697D0                   |      556 |         54 |        |                                 |       |
+| lib    | func_psp_092697D0                   |      556 |         54 |        | https://decomp.me/scratch/F9CJ5 | 0.996 |
 | dra    | EntityEntFactory                    |      557 |         48 | Yes    | https://decomp.me/scratch/pklqi | 0.998 |
 | st0    | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/r33yC | 0.853 |
 | st0    | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
