@@ -733,33 +733,38 @@ const char* func_us_801B7C94(u16 itemId) {
 #ifdef VERSION_PSP
 Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
     s32 x = posX;
-#else
-Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
-    s16 x = 0x84;
-#endif
     s16 y = 8;
     s32 i;
     if ((arg1 & 0xFFE0) == 0) {
-#ifdef VERSION_PSP
         prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
-#else
-        prim = func_us_801B1064(prim, 0x84, posY, D_us_8018181C[0], 0x159);
-#endif
     } else {
         for (i = 0; i < 11; i++) {
             if (arg1 & D_us_801818A8[i]) {
-#ifdef VERSION_PSP
                 prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
                 x += 0x20;
-#else
-                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x15C);
-                x += 0x1C;
-#endif
             }
         }
     }
     return prim;
 }
+#else
+Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
+    s16 x = 0x84;
+    s16 y = 8;
+    s32 i;
+    if ((arg1 & 0xFFE0) == 0) {
+        prim = func_us_801B1064(prim, 0x84, posY, D_us_8018181C[0], 0x159);
+    } else {
+        for (i = 0; i < 11; i++) {
+            if (arg1 & D_us_801818A8[i]) {
+                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x15C);
+                x += 0x1C;
+            }
+        }
+    }
+    return prim;
+}
+#endif
 
 void func_us_801B7DF8(Primitive* arg0, Entity* arg1, s16 arg2);
 INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7DF8);
