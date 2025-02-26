@@ -718,10 +718,10 @@ const char* func_us_801B7C94(u16 itemId) {
     const char* name;
     if (itemId >= 0x80) {
         itemId -= 0x80;
-        if (itemId < 0xA9) {
+        if (itemId < NUM_HAND_ITEMS) {
             name = g_api.equipDefs[itemId].name;
         } else {
-            itemId -= 0xA9;
+            itemId -= NUM_HAND_ITEMS;
             name = g_api.accessoryDefs[itemId].name;
         }
     } else {
