@@ -3,7 +3,7 @@
 
 void func_us_801B0FBC(u8* ptr, u16 x, u16 y);
 Primitive* func_us_801B1064(
-    Primitive* arg0, u16 arg1, s16 arg2, const char* arg3, u16 arg4);
+    Primitive* prim, s16 x, s16 y, const u8* str, u16 clut);
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
 Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits);
@@ -531,12 +531,12 @@ void func_us_801B4830(Entity* self) {
     }
 }
 
-const char D_us_801ACF88[] = "Contains \x81h\x81hSoul Steal\x81h\x81h";
-const char D_us_801ACFA4[] = "Contains \x81h\x81hTetra Spirits\x81h\x81h";
-const char D_us_801ACFC4[] = "Contains \x81h\x81hHellfire\x81h\x81h";
-const char D_us_801ACFE0[] = "Contains \x81h\x81hSummon Spirit\x81h\x81h";
-const char D_us_801AD000[] = "Contains \x81h\x81hDark Metamorphosis\x81h\x81h";
-const char D_us_801AD024[] = "Basic map of Dracula\x81\x66s castle";
+const char D_us_801ACF88[] = "Contains ””Soul Steal””";
+const char D_us_801ACFA4[] = "Contains ””Tetra Spirits””";
+const char D_us_801ACFC4[] = "Contains ””Hellfire””";
+const char D_us_801ACFE0[] = "Contains ””Summon Spirit””";
+const char D_us_801AD000[] = "Contains ””Dark Metamorphosis””";
+const char D_us_801AD024[] = "Basic map of Dracula’s castle";
 
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;

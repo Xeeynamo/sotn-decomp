@@ -37,34 +37,34 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, u8* uv, u16 count, s32 arg3) {
-    u8 d;
+Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
+    u8 ch;
     s32 i;
     u32 max;
-    u8* ptr;
+    u8* chPtr;
 
-    ptr = uv;
+    chPtr = str;
     max = 0;
-    for (i = 0; i < count; i++) {
+    for (i = 0; i < length; i++) {
 #ifdef VERSION_PSP
-        if (*ptr == 0xFF) {
+        if (*chPtr == 0xFF) {
             break;
         }
-        ptr++;
+        chPtr++;
         max++;
     }
     for (i = 0; i < max; i++) {
 #endif
-        d = *uv++;
-        prim->u0 = (d & 0xF) * 8;
-        prim->v0 = (d & 0xF0) >> 1;
+        ch = *str++;
+        prim->u0 = (ch & 0xF) * 8;
+        prim->v0 = (ch & 0xF0) >> 1;
         if (arg3 != 0) {
             prim->drawMode = DRAW_DEFAULT;
         }
         prim = prim->next;
     }
 #ifdef VERSION_PSP
-    for (; i < count; i++) {
+    for (; i < length; i++) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
