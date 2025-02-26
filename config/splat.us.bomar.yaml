@@ -21,6 +21,7 @@ options:
   extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
   disassemble_all: true
+  global_vram_start: 0x80010000
   section_order:
     - .data
     - .rodata

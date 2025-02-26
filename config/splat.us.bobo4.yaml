@@ -28,6 +28,7 @@ options:
   ld_bss_is_noload: false
   disasm_unknown: true
   disassemble_all: true
+  global_vram_start: 0x80010000
 sha1: b90a2a70ae9651ed107b306d4dcfba2311b523fc
 segments:
   - name: bobo4

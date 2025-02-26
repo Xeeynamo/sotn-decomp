@@ -391,7 +391,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 // Luck mode code check! This is X-X!V''Q
                 fileName = g_CheatCodes[0];
                 for (i = 0; i < 8; i++) {
-                    if (g_SaveName[i] != *fileName++) {
+                    if (g_Status.saveName[i] != *fileName++) {
                         break;
                     }
                 }
@@ -413,7 +413,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 if (g_IsTimeAttackUnlocked) {
                     fileName = g_CheatCodes[1];
                     for (i = 0; i < 8; i++) {
-                        if (g_SaveName[i] != *fileName++) {
+                        if (g_Status.saveName[i] != *fileName++) {
                             break;
                         }
                     }

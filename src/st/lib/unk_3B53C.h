@@ -10,7 +10,6 @@ extern s32 D_80097928;
 extern s32 D_us_80181AC8;
 extern s32 D_us_80181ACC;
 extern s32 D_us_80181AD0;
-extern Entity D_80076E98;
 
 // PSX symbols unused in code, but referenced in ASM so may be needed for
 // importing the data.
@@ -37,7 +36,7 @@ void func_us_801BB53C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        tempEntity = &D_80076E98;
+        tempEntity = &g_Entities[UNK_ENTITY_50];
         CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;
