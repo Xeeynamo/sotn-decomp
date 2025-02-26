@@ -3,7 +3,7 @@
 
 void func_us_801B0FBC(u8* ptr, u16 x, u16 y);
 Primitive* func_us_801B1064(
-    Primitive* arg0, u16 arg1, s16 arg2, const char* arg3, u16 arg4);
+    Primitive* prim, s16 x, s16 y, const u8* str, u16 clut);
 void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
                       s32 arg5, s32 arg6);
 Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits);

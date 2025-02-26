@@ -1098,7 +1098,27 @@ void func_us_801B8234(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B8958);
+#ifdef VERSION_PSP
+extern const char** D_us_801818F4;
+#else
+extern const char* D_us_801818F4[];
+#endif
+
+void func_us_801B8958(Primitive* prim, Entity* self) {
+    s16 posY;
+    s32 i, j;
+
+    posY = 16;
+    j = self->ext.et_801B6F30.unk82;
+    for (i = 0; i < 7; i++, j++) {
+        prim = func_us_801B1064(prim, 16, posY, D_us_801818F4[j], 0x196);
+        posY += 12;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 const char D_us_801AD4CC[] = _S("I am the wind");
 const char D_us_801AD4DC[] = _S("Metamorphosis 3");
