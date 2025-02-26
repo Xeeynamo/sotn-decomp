@@ -549,7 +549,7 @@
 | dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib    | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
-| lib    | func_psp_092696F8                   |       62 |          5 |        |                                 |       |
+| lib    | func_psp_092696F8                   |       62 |          5 |        | https://decomp.me/scratch/zEpmm | 0.994 |
 | no4    | func_psp_0924C490                   |       62 |          5 |        |                                 |       |
 | no4    | func_psp_09238520                   |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -661,7 +661,7 @@
 | dra    | CalcPlayerDamage                    |       77 |          9 |        |                                 |       |
 | dra    | CalcPlayerDamageAgain               |       77 |          9 |        |                                 |       |
 | dra    | func_psp_090ED0B0                   |       77 |          9 |        |                                 |       |
-| lib    | func_psp_0926A128                   |       78 |          8 |        |                                 |       |
+| lib    | func_psp_0926A128                   |       78 |          8 |        | https://decomp.me/scratch/sgO7N | 0.949 |
 |        | GetTargetPositionWithDistanceBuffer |       78 |          9 |        |                                 |       |
 | dra    | func_psp_090E8518                   |       78 |         12 |        |                                 |       |
 | dra    | func_psp_09141D28                   |       78 |         13 |        |                                 |       |
@@ -1265,7 +1265,7 @@
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
-| st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/lsS9k | 0.966 |
+| st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/C6npN | 0.991 |
 | dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    | https://decomp.me/scratch/BBczf | 1.0   |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 | no4    | func_psp_0924CC60                   |      948 |        120 | Yes    |                                 |       |
