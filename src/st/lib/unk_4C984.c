@@ -6,7 +6,6 @@ INCLUDE_ASM("st/lib/nonmatchings/unk_4C984", func_us_801CCED0);
 
 INCLUDE_ASM("st/lib/nonmatchings/unk_4C984", func_us_801CCF6C);
 
-extern u16 D_us_801808C0[];
 extern s32 D_us_80181ACC;
 extern AnimationFrame D_us_80182AF0[];
 extern AnimationFrame D_us_80182B38[];

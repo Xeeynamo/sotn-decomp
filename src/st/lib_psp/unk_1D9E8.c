@@ -150,10 +150,10 @@ u8 func_us_801BBAB4(void) {
     return ret;
 }
 
-extern Collider D_us_80181AEC;
-extern u8 D_us_80181BCC;
-extern u8 D_us_80181BD8;
-extern u8 D_us_80181BE8;
+extern Collider D_us_80181AEC[];
+extern u8 D_us_80181BCC[];
+extern u8 D_us_80181BD8[];
+extern u8 D_us_80181BE8[];
 
 // EntityLesserDemonSpit code is shared with PSX and is ready for merge
 // Lesser Demon aerial spit projectile
@@ -182,8 +182,8 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
     case 2:
         MoveEntity();
-        AnimateEntity(&D_us_80181BCC, self);
-        if (CheckColliderOffsets(&D_us_80181AEC, 0)) {
+        AnimateEntity(D_us_80181BCC, self);
+        if (CheckColliderOffsets(D_us_80181AEC, 0)) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->rotX = 0x140;
@@ -194,7 +194,7 @@ void EntityLesserDemonSpit(Entity* self) {
         }
         break;
     case 3:
-        if (!AnimateEntity(&D_us_80181BD8, self)) {
+        if (!AnimateEntity(D_us_80181BD8, self)) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
@@ -270,7 +270,7 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
     case 6:
         self->rotY -= 0x20;
-        if (!AnimateEntity(&D_us_80181BE8, self)) {
+        if (!AnimateEntity(D_us_80181BE8, self)) {
             self->drawFlags |= FLAG_DRAW_UNK8;
             self->unk6C = 0x80;
             self->step++;

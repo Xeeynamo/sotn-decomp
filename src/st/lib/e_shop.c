@@ -39,7 +39,6 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
-extern u16 D_us_80180824[];
 extern u8 D_us_801811FC[];
 extern u8 D_us_80181204[];
 extern u8 D_us_80181210[];
@@ -700,46 +699,46 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 2:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(3);
         }
         break;
     case 3:
-        AnimateEntity(&D_us_80181204, self);
+        AnimateEntity(D_us_80181204, self);
         if (g_CutsceneFlags & 4) {
             SetStep(4);
         }
         break;
     case 4:
-        AnimateEntity(&D_us_80181210, self);
+        AnimateEntity(D_us_80181210, self);
         if (g_CutsceneFlags & 8) {
             SetStep(5);
         }
         break;
     case 5:
-        AnimateEntity(&D_us_8018121C, self);
+        AnimateEntity(D_us_8018121C, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(6);
         }
         break;
     case 6:
-        AnimateEntity(&D_us_80181234, self);
+        AnimateEntity(D_us_80181234, self);
         if (g_CutsceneFlags & 0x20) {
             SetStep(7);
         }
         break;
     case 7:
-        if (AnimateEntity(&D_us_80181244, self) == 0) {
+        if (AnimateEntity(D_us_80181244, self) == 0) {
             SetStep(11);
         }
         break;
     case 9:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(10);
         }
         break;
     case 10:
-        if (AnimateEntity(&D_us_801812C0, self) == 0) {
+        if (AnimateEntity(D_us_801812C0, self) == 0) {
             SetStep(11);
         }
         break;
@@ -753,7 +752,7 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 12:
-        AnimateEntity(&D_us_801812C8, self);
+        AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
             g_CutsceneFlags &= ~0x800;
             self->animCurFrame = 2;
@@ -767,7 +766,7 @@ void EntityLibrarianChair(Entity* self) {
     case 13:
         break;
     case 16:
-        AnimateEntity(&D_us_801812D0, self);
+        AnimateEntity(D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {
