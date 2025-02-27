@@ -766,8 +766,279 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
 }
 #endif
 
-void func_us_801B7DF8(Primitive* arg0, Entity* arg1, s16 arg2);
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7DF8);
+#ifdef VERSION_PSP
+extern const char** D_us_801818C0;
+extern const char** D_us_801818DC;
+#else
+extern const char* D_us_801818C0[];
+extern const char* D_us_801818DC[];
+#endif
+extern const char* D_us_801818EC[];
+
+#ifdef VERSION_PSP
+void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
+    s16 posX, posY;
+    s32 i;
+    EnemyDef* enemyDef;
+    u8 params;
+    s32 strLen;
+    s32 xOffset;
+
+    xOffset = 12;
+    enemyDef = &g_api.enemyDefs[enemyId];
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    posX = 0x14;
+    posY = 0x2C;
+    prim = func_us_801B1064(prim, posX, posY, enemyDef->name, 0x196);
+    posX = 0xB4;
+    posY = 0x2C;
+    func_us_801B3FB4(prim, D_us_801818C0[5], 3, 1); // "No."
+    for (i = 0; i < 3; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    func_us_801B3EC8(prim, arg1->params + 1, 3);
+    for (i = 0; i < 3; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX = 0x18;
+    posY = 0x38;
+    func_us_801B3FB4(prim, D_us_801818C0[0], 2, 1); // "Strong VS."
+    for (i = 0; i < 2; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX += 2;
+    if (arg1->params) {
+        func_us_801B3EC8(prim, enemyDef->level, 2);
+    } else {
+        func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
+    }
+    for (i = 0; i < 2; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        if (prim->drawMode != DRAW_HIDE) {
+            posX += 8;
+        }
+        prim = prim->next;
+    }
+    posX = 0x40;
+    posY = 0x38;
+    func_us_801B3FB4(prim, D_us_801818C0[1], 2, 1); // "HP"
+    for (i = 0; i < 2; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX += 2;
+    if (enemyDef->hitPoints > 9999) {
+        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+    } else {
+        func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
+    }
+    for (i = 0; i < 4; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        if (prim->drawMode != DRAW_HIDE) {
+            posX += 8;
+        }
+        prim = prim->next;
+    }
+    posX = 0x84;
+    posY = 0xA4;
+    func_us_801B3FB4(prim, D_us_801818C0[3], 3, 1); // "Exp"
+    for (i = 0; i < 3; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    func_us_801B3EC8(prim, enemyDef->exp, 4);
+    for (i = 0; i < 4; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX = 0x84;
+    posY = 0x7C;
+    strLen = 0x14;
+    func_us_801B3FB4(prim, D_us_801818C0[4], strLen, 1); // "Drop Items"
+    for (i = 0; i < strLen; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX - xOffset;
+        prim->y0 = posY;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX = 0x88;
+    posY = 0x88;
+    prim = func_us_801B1064(prim, posX - xOffset, posY,
+                            func_us_801B7C94(enemyDef->uncommonItemId), 0x196);
+    posX = 0x88;
+    posY = 0x94;
+    params = arg1->params;
+    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
+         (1 << (params & 7))) ||
+        !enemyDef->rareItemId) {
+        prim = func_us_801B1064(prim, posX - xOffset, posY,
+                                func_us_801B7C94(enemyDef->rareItemId), 0x196);
+    } else {
+        prim = func_us_801B1064(
+            prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
+    }
+    for (i = 0; i < 4; i++) {
+        prim = func_us_801B1064(
+            prim, 0x84 - xOffset, ((i * 0x10) + 0x3C), D_us_801818DC[i], 0x196);
+    }
+    prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
+    prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
+    prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x8C - xOffset, 0x64);
+    prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x8C - xOffset, 0x74);
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
+#else
+void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
+    s16 posX, posY;
+    s32 i;
+    EnemyDef* enemyDef;
+    u8 params;
+    u16 clut;
+
+    enemyDef = &g_api.enemyDefs[enemyId];
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    posX = 0x80;
+    posY = 0x34;
+    prim = func_us_801B1064(
+        prim, posX, posY, D_us_801818DC[0], 0x196); // "Strong VS."
+    prim = func_us_801B7D10(prim, enemyDef->strengths, 0x3D);
+    posY += 0x14;
+    prim =
+        func_us_801B1064(prim, posX, posY, D_us_801818DC[1], 0x196); // "Immune"
+    prim = func_us_801B7D10(prim, enemyDef->immunes, 0x51);
+    posY += 0x14;
+    prim = func_us_801B1064(
+        prim, posX, posY, D_us_801818DC[2], 0x196); // "Weak VS."
+    prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x65);
+    posY += 0x14;
+    prim =
+        func_us_801B1064(prim, posX, posY, D_us_801818DC[3], 0x196); // "Absorb"
+    prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x79);
+
+    posX = 0x18;
+    prim = func_us_801B1064(prim, posX, 0x28, enemyDef->name, 0x196);
+
+    posX += 0xA0;
+    prim = func_us_801B1064(prim, posX, 0x28, D_us_801818C0[5], 0x196); // "No."
+
+    posX = 0xD0;
+    func_us_801B3EC8(prim, arg1->params + 1, 3);
+    for (i = 0; i < 3; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = 0x28;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX = 0x1C;
+    prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[0], 0x196); // "LV"
+    posX += 0x12;
+    if (arg1->params != 0) {
+        func_us_801B3EC8(prim, enemyDef->level, 2);
+    } else {
+        func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
+    }
+    for (i = 0; i < 2; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = 0x34;
+        if (prim->drawMode != DRAW_HIDE) {
+            posX += 8;
+        }
+        prim = prim->next;
+    }
+    posX = 0x44;
+    prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[1], 0x196); // "HP"
+    posX += 0x12;
+    if (enemyDef->hitPoints > 9999) {
+        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+    } else {
+        func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
+    }
+    for (i = 0; i < 4; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = 0x34;
+        if (prim->drawMode != DRAW_HIDE) {
+            posX += 8;
+        }
+        prim = prim->next;
+    }
+    posX = 0x80;
+    prim = func_us_801B1064(prim, posX, 0xA6, D_us_801818C0[3], 0x196); // "Exp"
+    posX += 0x1C;
+    func_us_801B3EC8(prim, enemyDef->exp, 4);
+    for (i = 0; i < 4; i++) {
+        prim->clut = 0x196;
+        prim->x0 = posX;
+        prim->y0 = 0xA6;
+        prim = prim->next;
+        posX += 8;
+    }
+    posX = 0x80;
+    prim = func_us_801B1064(
+        prim, posX, 0x85, D_us_801818C0[4], 0x196); // "Drop Items"
+    posX = enemyDef->uncommonItemId;
+    if (posX != 0) {
+        clut = 0x196;
+    } else {
+        clut = 0x159;
+    }
+    prim = func_us_801B1064(prim, 0x84, 0x8F, func_us_801B7C94(posX), clut);
+    params = arg1->params;
+    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
+         (1 << (params & 7))) ||
+        !enemyDef->rareItemId) {
+        prim = func_us_801B1064(
+            prim, 0x84, 0x99, func_us_801B7C94(enemyDef->rareItemId), clut);
+    } else {
+        prim = func_us_801B1064(
+            prim, 0x84, 0x99, D_us_801818EC[0], 0x196); // "????????"
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
+#endif
 
 const char D_us_801AD2C8[] = _S("ライフアップポーション");
 const char D_us_801AD2DC[] = _S("アグネアのぶき(サブ)");
