@@ -33,3 +33,6 @@ sotn_calltree.txt
 function_calls
 
 gmon.out
+
+nonmatchings/
+tools/sotn_permuter/permute.me/

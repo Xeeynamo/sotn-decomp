@@ -13,3 +13,7 @@
 [submodule "tools/mwccgap"]
 	path = tools/mwccgap
 	url = https://github.com/mkst/mwccgap.git
+[submodule "tools/decomp-permuter"]
+	path = tools/decomp-permuter
+	url = https://github.com/simonlindholm/decomp-permuter
+	update = none
