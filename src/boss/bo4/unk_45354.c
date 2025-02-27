@@ -1,25 +1,100 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "bo4.h"
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5354);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E0A8);
+void func_8010E0A8(void) {
+    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E0B8);
+void func_8010E0B8(void) {
+    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
+    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
+}
+
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5430);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DecelerateX);
+// begin: split to common decelerate
+void DecelerateX(s32 amount) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += amount;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= amount;
+        if (g_CurrentEntity->velocityX < 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    }
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DecelerateY);
+void DecelerateY(s32 amount) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += amount;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= amount;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
+// end: split to common decelerate
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", CheckMoveDirection);
+extern s32 g_Dop_padPressed;
+extern s32 g_Dop_padTapped;
+extern s32 g_Dop_padHeld;
+
+// 0x7C to unk44 equivalent
+extern u16 g_Dop_unk44;
+extern u16 g_Dop_unk4C;
+
+extern PlayerState g_Dop;
+
+s32 CheckMoveDirection(void) {
+    if (g_Dop.unk44 & 2) {
+        return 0;
+    }
+    if (DOPPELGANGER.facingLeft == 1) {
+        if (g_Dop.padPressed & PAD_RIGHT) {
+            DOPPELGANGER.facingLeft = 0;
+            g_Dop.unk4C = 1;
+            return -1;
+        } else if (g_Dop.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Dop.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Dop.padPressed & PAD_LEFT) {
+            DOPPELGANGER.facingLeft = 1;
+            g_Dop.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C55A8);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", SetSpeedX);
+void SetSpeedX(s32 speed) {
+    if (g_CurrentEntity->facingLeft == 1) {
+        speed = -speed;
+    }
+    g_CurrentEntity->velocityX = speed;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E3B8);
+void func_8010E3B8(s32 velocityX) {
+    if (DOPPELGANGER.entityRoomIndex == 1) {
+        velocityX = -velocityX;
+    }
+    DOPPELGANGER.velocityX = velocityX;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5648);
 
@@ -95,11 +170,31 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C95E4);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9694);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", GetFreeEntity);
+Entity* GetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", GetFreeEntityReverse);
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9B64);
+Entity* GetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80118C28);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9BC0);
 
@@ -123,11 +218,11 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CB020);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CB07C);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CC6A4);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityPlayerOutline);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CCD90);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityGravityBootBeam);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CD048);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityWingSmashTrail);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CD178);
 
@@ -135,19 +230,19 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CD89C);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CDB68);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CE280);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityHitByIce);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CE9EC);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CEA30);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CEDF4);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityMist);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0318);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0D4C);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", ReboundStoneBounce1);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0D90);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", ReboundStoneBounce2);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0DE0);
 
