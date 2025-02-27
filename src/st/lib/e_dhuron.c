@@ -16,12 +16,12 @@ static u8 D_us_80182984[] = {
     16, 1,  4, 7,  4, 8,  16, 9,  1, 10, 1, 11, 1,  12, 2,  13,
     8,  14, 8, 15, 2, 16, 2,  17, 2, 18, 2, 19, 32, 20, -1, 0};
 static u8 D_us_801829A4[] = {
-    8, 1,  5, 21, 3, 22, 8, 23, 11, 22, 2,  24, 2,  25, 2, 26,
-    2, 25, 2, 24, 2, 25, 2, 26, 2,  25, 32, 22, -1, 0,  0, 0};
+    8,  1, 5,  21, 3,  22, 8,  23, 11, 22, 2,  24, 2,  25, 2,
+    26, 2, 25, 2,  24, 2,  25, 2,  26, 2,  25, 32, 22, -1, 0};
 static u8 D_us_801829C4[] = {
     8, 1, 5, 21, 3, 22, 8, 23, 2, 13, 8, 14, 8, 15, -1, 0};
-static u8 D_us_801829D4[] = {4, 15, 2, 13, 1, 12, 1, 11, 1, 10, 16, 9, 1, 10,
-                             1, 11, 1, 12, 2, 13, 8, 14, 4, 15, 0,  0, 0, 0};
+static u8 D_us_801829D4[] = {4,  15, 2,  13, 1,  12, 1,  11, 1,  10, 16, 9, 1,
+                             10, 1,  11, 1,  12, 2,  13, 8,  14, 4,  15, 0, 0};
 static u8 D_us_801829F0[] = {2, 16, 2, 17, 2, 18, 2, 19, 32, 20, -1, 0};
 static s8 D_us_801829FC[][4] = {
     {0, 0, 0, 0},     {0, 2, 7, 21},   {-7, -2, 7, 17},
@@ -38,13 +38,11 @@ static dhuronUnkStruct D_us_80182A64[] = {
     {FIX(-1.0), FIX(-2.0), -8, 32},   {FIX(-1.25), FIX(-2.5), -8, 24},
     {FIX(-1.0), FIX(-2.5), -16, 32},  {FIX(-0.875), FIX(-1.0), -8, 24},
     {FIX(-0.375), FIX(-3.0), 64, 224}};
-static u8 unused[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5,
-                      2, 4, 2, 3, 2, 2, 0, 0, 0, 0};
+static u8 unused[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 4, 2, 3, 2, 2, 0, 0};
 static u8 D_us_80182ACC[] = {
-    3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 2, 6, 3, 7, 3, 8, -1, 0, 0, 0};
+    3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 2, 6, 3, 7, 3, 8, -1, 0};
 
-// Dhuron
-void func_us_801CC054(Entity* self) {
+void EntityDhuron(Entity* self) {
     Entity* tempEntity;
     s32 tempVar;
     s32 i;
@@ -55,7 +53,7 @@ void func_us_801CC054(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018089C);
+        InitializeEntity(g_EInitDhuron);
         tempEntity = self + 1;
         CreateEntityFromEntity(E_ID_34, self, tempEntity);
         break;
@@ -145,9 +143,8 @@ void func_us_801CC054(Entity* self) {
         case 1:
             if (!AnimateEntity(D_us_801829D4, self)) {
                 self->ext.dhuron.unk84--;
-                if (((GetSideToPlayer() & 1) == self->facingLeft) ||
-                    (GetDistanceToPlayerX() > 0x60) ||
-                    !self->ext.dhuron.unk84) {
+                if ((GetSideToPlayer() & 1) == self->facingLeft ||
+                    GetDistanceToPlayerX() > 0x60 || !self->ext.dhuron.unk84) {
                     SetSubStep(2);
                 }
             }

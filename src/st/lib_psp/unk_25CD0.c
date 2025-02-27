@@ -1,13 +1,228 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../../st/lib/lib.h"
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D350);
+#include "../lib/lib.h"
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D430);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D4D0);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D8D8);
+// This is probably EntityLibrarian, but I don't know for sure
+void func_us_801AFE0C(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+#ifdef VERSION_PSP
+        func_psp_0925D4D0();
+#endif
+        InitializeEntity(D_us_80180824);
+        if (player->posX.i.hi < 0x100) {
+// I expect these two sounds to be the same, but 0x202 has not yet been defined.
+// This leads me to think that the macro that has been defined for sfx 0x302
+// is only accurate for PSX and does not align with the sfx for PSP here.
+#ifdef VERSION_PSP
+            g_api.PlaySfx(0x302);
+#else
+            g_api.PlaySfx(0x202);
+#endif
+        }
+        if (g_CastleFlags[MET_LIBRARIAN]) {
+            self->step = 8;
+            break;
+        }
+#ifdef VERSION_PSP
+        g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+#endif
+        break;
+    case 1:
+        g_Entities[1].ext.entSlot1.unk0 = 1;
+        g_PauseAllowed = false;
+        g_unkGraphicsStruct.pauseEnemies = true;
+        g_Player.padSim = PAD_LEFT;
+        g_Player.D_80072EFC = 1;
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            g_Player.padSim = PAD_R1;
+        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+            g_Player.padSim = PAD_NONE;
+#else
+            g_Player.padSim = PAD_L1;
+#endif
+        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+            g_Player.padSim = PAD_L1;
+#else
+            g_Player.padSim = PAD_R2;
+#endif
+        }
+        g_Player.D_80072EFC = 1;
+        SetStep(2);
+        break;
+    case 2:
+        if (player->posX.i.hi > 0xE8) {
+            if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+                g_Player.padSim = PAD_NONE;
+                if (g_Timer & 1) {
+                    if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_R1 | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_R1;
+#endif
+                    } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_L1;
+#endif
+                    } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+                        g_Player.padSim = PAD_L1 | PAD_SIM_UNK20000;
+#else
+                        g_Player.padSim = PAD_R2;
+#endif
+                    }
+                }
+            } else {
+                g_Player.padSim = PAD_LEFT;
+            }
+        } else {
+            g_CutsceneFlags |= 1;
+            g_Player.padSim = PAD_NONE;
+            player->posX.i.hi = 0xE8;
+            self->step++;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+    case 3:
+        if (g_CutsceneFlags & 0x40) {
+            if (player->posX.i.hi > 0x74) {
+                g_Entities[1].ext.entSlot1.unk0 = 1;
+                g_Player.padSim = PAD_LEFT;
+            } else {
+                player->posX.i.hi = 0x74;
+                g_Player.padSim = PAD_NONE;
+                self->step++;
+            }
+        } else {
+            player->posX.i.hi = 0xE8;
+        }
+        g_Player.D_80072EFC = 1;
+        break;
+    case 4:
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+        self->step++;
+        break;
+    case 5:
+        g_CastleFlags[MET_LIBRARIAN] = 1;
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
+        g_Player.D_80072EFC = 1;
+        self->step++;
+        /* fallthrough */
+    case 6:
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
+            self->step = 0x10;
+            break;
+        }
+        player->posX.i.hi = 0x74;
+        break;
+    case 8:
+        self->step++;
+        /* fallthrough */
+    case 9:
+        if (player->posX.i.hi > 0xFF) {
+            g_api.PlaySfx(CD_SOUND_COMMAND_7);
+            DestroyEntity(self);
+            break;
+        }
+        if (player->posX.i.hi < 0x75) {
+            switch (self->step_s) {
+            case 0:
+                g_Entities[1].ext.entSlot1.unk0 = 1;
+                g_PauseAllowed = false;
+                g_unkGraphicsStruct.pauseEnemies = true;
+                g_Player.padSim = PAD_NONE;
+                g_Player.D_80072EFC = 0x10;
+                self->step_s++;
+                g_CutsceneFlags |= 1;
+                break;
+            case 1:
+                if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
+                    g_Player.padSim = PAD_NONE;
+                    if (g_Timer & 1) {
+                        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+                            g_Player.padSim = PAD_R1;
+                        } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
+#ifdef VERSION_PSP
+                            g_Player.padSim = PAD_NONE;
+#else
+                            g_Player.padSim = PAD_L1;
+#endif
+                        } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+#ifdef VERSION_PSP
+                            g_Player.padSim = PAD_L1;
+#else
+                            g_Player.padSim = PAD_R2;
+#endif
+                        }
+                    }
+                } else {
+                    g_Player.padSim = PAD_LEFT;
+                    self->step_s++;
+                }
+                g_Player.D_80072EFC = 1;
+                break;
+            case 2:
+                g_Player.padSim = PAD_NONE;
+                g_Player.D_80072EFC = 0x80;
+                SetStep(10);
+                break;
+            }
+            player->posX.i.hi = 0x74;
+        }
+        break;
+    case 10:
+        if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
+            g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+            g_Player.D_80072EFC = 1;
+            self->step++;
+        }
+        player->posX.i.hi = 0x74;
+        break;
+    case 11:
+        g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
+        g_Player.D_80072EFC = 1;
+        if (g_CutsceneFlags & 0x100) {
+            g_CutsceneFlags |= 0x2000;
+            self->step = 0x10;
+        }
+        break;
+    case 16:
+#ifdef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        g_Player.D_80072EFC = 0x20;
+        g_Player.padSim = PAD_RIGHT;
+        D_80097928 = 1;
+        self->step++;
+        break;
+    case 17:
+#ifdef VERSION_PSP
+        g_PauseAllowed = false;
+#endif
+        if (!g_Player.D_80072EFC) {
+#ifdef VERSION_PSP
+            g_PauseAllowed = true;
+#endif
+            SetStep(9);
+        }
+        break;
+    }
+}
 
 extern u8 D_us_801811FC[];
 extern u8 D_us_80181204[];
@@ -132,46 +347,46 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 2:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(3);
         }
         break;
     case 3:
-        AnimateEntity(&D_us_80181204, self);
+        AnimateEntity(D_us_80181204, self);
         if (g_CutsceneFlags & 4) {
             SetStep(4);
         }
         break;
     case 4:
-        AnimateEntity(&D_us_80181210, self);
+        AnimateEntity(D_us_80181210, self);
         if (g_CutsceneFlags & 8) {
             SetStep(5);
         }
         break;
     case 5:
-        AnimateEntity(&D_us_8018121C, self);
+        AnimateEntity(D_us_8018121C, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(6);
         }
         break;
     case 6:
-        AnimateEntity(&D_us_80181234, self);
+        AnimateEntity(D_us_80181234, self);
         if (g_CutsceneFlags & 0x20) {
             SetStep(7);
         }
         break;
     case 7:
-        if (AnimateEntity(&D_us_80181244, self) == 0) {
+        if (AnimateEntity(D_us_80181244, self) == 0) {
             SetStep(11);
         }
         break;
     case 9:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(10);
         }
         break;
     case 10:
-        if (AnimateEntity(&D_us_801812C0, self) == 0) {
+        if (AnimateEntity(D_us_801812C0, self) == 0) {
             SetStep(11);
         }
         break;
@@ -185,7 +400,7 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 12:
-        AnimateEntity(&D_us_801812C8, self);
+        AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
             g_CutsceneFlags &= ~0x800;
             self->animCurFrame = 2;
@@ -199,7 +414,7 @@ void EntityLibrarianChair(Entity* self) {
     case 13:
         break;
     case 16:
-        AnimateEntity(&D_us_801812D0, self);
+        AnimateEntity(D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {

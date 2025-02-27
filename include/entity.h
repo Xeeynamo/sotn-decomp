@@ -945,10 +945,6 @@ typedef struct {
 } ET_EntitySlot16;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_Entity12;
-
-typedef struct {
     u8 fiveFrameCounter;
     struct Entity* parent;
     char pad[8];
@@ -1596,17 +1592,6 @@ typedef struct {
 } ET_LifeUpSpawn;
 
 typedef struct {
-    u16 unk7C;
-    u16 unk7E;
-    s16 unk80;
-    s16 unk82;
-    s16 unk84;
-    s16 unk86;
-    u16 unk88;
-    u16 unk8A;
-} ET_801B0AA4;
-
-typedef struct {
     byte pad[4];
     // Needs further study; there is a use of LOW(unk80).
     u16 unk80;
@@ -1732,6 +1717,13 @@ typedef struct {
 
 typedef struct {
     u16 unk7C;
+    u16 unk7E;
+    s16 unk80;
+    s16 unk82;
+    s16 unk84;
+    s16 unk86;
+    u16 unk88;
+    u16 unk8A;
 } ET_LockCamera;
 
 typedef struct {
@@ -2656,17 +2648,26 @@ typedef struct {
 } ET_Chair;
 
 typedef struct {
-    /* 0x7C */ u16 : 16;
-    /* 0x7E */ u16 : 16;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ u16 unk80;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 : 8;
+    /* 0x85 */ u8 unk85;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ struct Entity* unk88;
     /* 0x8C */ u16 unk8C;
-} ET_801BDAE4;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ u16 unkB2;
+} ET_LesserDemon;
 
 typedef struct {
     /* 0x7C */ struct Entity* unk7C;
@@ -2770,7 +2771,7 @@ typedef struct {
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
     /* 0x9C */ struct Entity* unk9C;
-} ET_801D064C;
+} ET_Mudman;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -2796,7 +2797,7 @@ typedef struct {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
     /* 0xA8 */ s16 unkA8;
-} ET_801D2274;
+} ET_SpellbookMagicTome;
 
 typedef struct {
     /* 0x7C */ Primitive* prim;
@@ -2825,9 +2826,9 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u8 : 8;
+    /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
-} ET_801C9870;
+} ET_FlyingZombie;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -2863,6 +2864,26 @@ typedef struct {
     /* 0x84 */ s16 unk84;
 } ET_801B56E4;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+} ET_801CD318;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_801BB200;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -2871,7 +2892,6 @@ typedef union { // offset=0x7C
     ET_EntFactory factory;
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
-    ET_Entity12 ent12; // entityID 12
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
@@ -2991,7 +3011,6 @@ typedef union { // offset=0x7C
     ET_3DBackgroundhouse bghouse;
     ET_LifeUpSpawn lifeUpSpawn;
     ET_AxeKnight axeknight;
-    ET_801B0AA4 et_801B0AA4;
     ET_Owl owl;
     ET_AlucardWaterEffect aluwater;
     ET_80123B40 et_80123B40;
@@ -3092,7 +3111,7 @@ typedef union { // offset=0x7C
     ET_801BE2C8 et_801BE2C8;
     ET_801B9BE4 et_801B9BE4;
     ET_Chair chair;
-    ET_801BDAE4 et_801BDAE4;
+    ET_LesserDemon lesserDemon;
     ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
     ET_801BE880 et_801BE880;
@@ -3103,15 +3122,17 @@ typedef union { // offset=0x7C
     ET_Marionette marionette;
     ET_801B6F30 et_801B6F30;
     ET_801B15C0 et_801B15C0;
-    ET_801D064C et_801D064C;
-    ET_801D2274 et_801D2274;
+    ET_Mudman mudman;
+    ET_SpellbookMagicTome spellbookMagicTome;
     ET_LibrarianChair libraryChair;
     ET_LibraryShadow libraryShadow;
     ET_Dhuron dhuron;
-    ET_801C9870 et_801C9870;
+    ET_FlyingZombie flyingZombie;
     ET_801AE8E8 et_801AE8E8;
     ET_FleaArmor fleaArmor;
     ET_801B56E4 et_801B56E4;
+    ET_801CD318 et_801CD318;
+    ET_801BB200 et_801BB200;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -1138,6 +1138,7 @@ g_Status_equipment_0 = 0x80097C00;
 g_Status_equipment_1 = 0x80097C04;
 g_Status_equipment_2 = 0x80097C08;
 g_Status_equipment_3 = 0x80097C0C;
+g_Status_equipment_4 = 0x80097C10;
 g_Status_equipment_5 = 0x80097C14;
 g_Status_equipment_6 = 0x80097C18;
 g_Status_attackHands_0 = 0x80097C1C;

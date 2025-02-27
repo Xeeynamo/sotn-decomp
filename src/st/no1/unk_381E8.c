@@ -39,7 +39,7 @@ void func_us_801B81E8(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-extern s32 D_us_801D637C;
+static s32 D_us_801D637C;
 
 void func_us_801B832C(s8* msg) {
     s32 temp_v0;

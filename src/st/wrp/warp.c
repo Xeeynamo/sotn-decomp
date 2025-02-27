@@ -9,7 +9,7 @@ static u32 bg_color_angle[] = {
 
 #if defined(VERSION_PSP)
 extern u32 D_80180648; // SBSS
-extern s32 D_psp_0924BC90;
+extern s32 E_ID(SMALL_ROCKS);
 #else
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
@@ -145,11 +145,7 @@ void EntityWarpRoom(Entity* self) {
         for (i = 0; i < 32; i++) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0x100]);
             if (entity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromCurrentEntity(D_psp_0924BC90, entity);
-#else
-                CreateEntityFromCurrentEntity(E_SMALL_ROCKS, entity);
-#endif
+                CreateEntityFromCurrentEntity(E_ID(SMALL_ROCKS), entity);
                 entity->posY.i.hi = 0xCC - g_Tilemap.scrollY.i.hi;
                 entity->posX.i.hi = (Random() & 0x7F) + 0x40;
             }

@@ -23,7 +23,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityBackgroundBlock(Entity*);
-void EntityUnkId12(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -71,8 +71,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     EntityBackgroundBlock,
-    EntityUnkId12, // EntityCameraLock
-    EntityUnkId13, // EntityParticleTrail
+    EntityLockCamera, // EntityCameraLock
+    EntityUnkId13,    // EntityParticleTrail
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityDemonSwitchWall,
@@ -118,7 +118,7 @@ EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0x00, 0x000, 5};
 // D_8018064C
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0x00, 0x000, 2};
 // D_80180658
-EInit g_EInitUnkId12 = {ANIMSET_DRA(0), 0, 0x00, 0x000, 1};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0x00, 0x000, 1};
 // D_80180664
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0x00, 0x000, 3};
 // D_80180670

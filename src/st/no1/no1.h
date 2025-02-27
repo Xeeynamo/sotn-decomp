@@ -32,8 +32,8 @@ typedef enum EntityIDs {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x1B */ E_CHAIR = 0x1B,
-    // /* 0x20 */ E_AXE_KNIGHT_BLUE = 0x20,
-    /* 0x21 */ E_AXE_KNIGHT_AXE = 0x21,
+    /* 0x20 */ E_AXE_KNIGHT_BLUE = 0x20,
+    /* 0x21 */ E_AXE_KNIGHT_AXE,
     /* 0x22 */ E_AXE_KNIGHT_AXE_2, // func_us_801CBA30
     /* 0x23 */ E_UNK_ENTITY,       // InitializeUnkEntity
     /* 0x25 */ E_ID_25 = 0x25,
@@ -88,7 +88,7 @@ extern EInit g_EInitInteractable;
 // extern EInit D_us_80180980;
 // extern EInit D_us_8018098C;
 // extern EInit g_EInitUnkId13;
-// extern EInit g_EInitUnkId12;
+// extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 extern EInit D_us_801809C8;

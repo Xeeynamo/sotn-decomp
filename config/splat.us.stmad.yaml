@@ -17,7 +17,7 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.stmad.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
-  migrate_rodata_to_functions: no
+  migrate_rodata_to_functions: yes
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   string_encoding: SHIFT-JIS
@@ -76,12 +76,12 @@ segments:
       - [0x1774, data]
       - [0x19A4, data]
       - [0x1D14, data]
-      - [0xD794, rodata]
+      - [0xD794, .rodata, D8C8]
       - [0xD7CC, .rodata, e_red_door] # EntityRedDoor
       - [0xD83C, .rodata, e_collect]
       - [0xD85C, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD874, .rodata, e_misc]
-      - [0xD8AC, rodata]
+      - [0xD8AC, .rodata, 17B94]
       - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
       - [0xE5AC, c, st_debug]

@@ -9,7 +9,7 @@ s32 WarpBackgroundBrightness;
 s32 D_80180648;
 
 // st_debug.c
-u8 g_EntityUnkId12Data[8];
+u8 entityLockCameraData[8];
 
 // e_misc.c
 u8 WRP_PrizeDrops[8]; // different than the g_HeartDropArray in warp.c ???
@@ -21,13 +21,13 @@ u8 D_psp_0924BCD0[0x1000];
 u8 g_eBreakableExplosionTypes[8];
 
 // st_init_wrp.c
-s32 D_psp_0924BCC0;
-s32 D_psp_0924BCB8;
-s32 D_psp_0924BCB0;
-s32 D_psp_0924BCA8;
-s32 D_psp_0924BCA0;
-s32 D_psp_0924BC98;
-s32 D_psp_0924BC90;
+s32 E_ID(ID_11);
+s32 E_ID(ID_12);
+s32 E_ID(ID_13);
+s32 E_ID(ID_14);
+s32 E_ID(ID_15);
+s32 E_ID(ID_16);
+s32 E_ID(SMALL_ROCKS);
 
 // ????
 LayerDef D_psp_0924BC80;

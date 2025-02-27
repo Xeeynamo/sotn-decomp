@@ -3,7 +3,6 @@
 
 // Flea armor
 void EntityFleaMan(Entity* self);
-extern EInit D_us_801809BC;
 extern s32 D_us_80181ACC;
 extern u8 D_us_80182D78[];
 extern u8 D_us_80182D84[];
@@ -30,7 +29,7 @@ void EntityFleaArmor(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809BC);
+        InitializeEntity(g_EInitFleaArmor);
         CreateEntityFromEntity(E_ID_4B, self, self + 1);
         self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
         break;
@@ -241,7 +240,6 @@ void EntityFleaArmor(Entity* self) {
 // Flea armor death pieces?
 extern Point16 D_us_80182DD4[];
 extern Size16 D_us_80182DDC[];
-extern EInit D_us_801809C8;
 
 void func_us_801D00C4(Entity* self) {
     Entity* prevEntity;
