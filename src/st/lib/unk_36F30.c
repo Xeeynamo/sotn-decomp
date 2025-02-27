@@ -705,9 +705,66 @@ void func_us_801B6F30(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7C94);
+#ifdef VERSION_PSP
+extern const char** D_us_8018181C;
+extern const char** D_us_8018187C;
+#else
+extern const char* D_us_8018181C[];
+extern const char* D_us_8018187C[];
+#endif
+extern u16 D_us_801818A8[];
 
-INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7D10);
+const char* func_us_801B7C94(u16 itemId) {
+    const char* name;
+    if (itemId >= 0x80) {
+        itemId -= 0x80;
+        if (itemId < NUM_HAND_ITEMS) {
+            name = g_api.equipDefs[itemId].name;
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            name = g_api.accessoryDefs[itemId].name;
+        }
+    } else {
+        name = D_us_8018181C[itemId];
+    }
+    return name;
+}
+
+#ifdef VERSION_PSP
+Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
+    s32 x = posX;
+    s16 y = 8;
+    s32 i;
+    if ((arg1 & 0xFFE0) == 0) {
+        prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
+    } else {
+        for (i = 0; i < 11; i++) {
+            if (arg1 & D_us_801818A8[i]) {
+                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
+                x += 0x20;
+            }
+        }
+    }
+    return prim;
+}
+#else
+Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
+    s16 x = 0x84;
+    s16 y = 8;
+    s32 i;
+    if ((arg1 & 0xFFE0) == 0) {
+        prim = func_us_801B1064(prim, 0x84, posY, D_us_8018181C[0], 0x159);
+    } else {
+        for (i = 0; i < 11; i++) {
+            if (arg1 & D_us_801818A8[i]) {
+                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x15C);
+                x += 0x1C;
+            }
+        }
+    }
+    return prim;
+}
+#endif
 
 void func_us_801B7DF8(Primitive* arg0, Entity* arg1, s16 arg2);
 INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7DF8);

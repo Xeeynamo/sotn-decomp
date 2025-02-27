@@ -7,6 +7,8 @@
 #define OVL_EXPORT(x) BO4_##x
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
+#define DOPPELGANGER g_Entities[STAGE_ENTITY_START]
+
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
