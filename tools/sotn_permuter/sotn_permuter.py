@@ -125,12 +125,12 @@ if __name__ == "__main__":
         exit()
 
     if args.action == "import":
-        print(f"Importing ${args.version} function.")
+        print(f"Importing {args.version} function.")
         args = [a for a in defaultArgs]
         sys.argv.extend(args)
         importer.main(sys.argv[1:])
     elif args.action == "permute":
-        print(f"Permuting ${args.version} function.")
+        print(f"Permuting {args.version} function.")
         args = [a for a in defaultArgs if not any(i.startswith(a) for i in sys.argv)]
         args = [a + f"{multiprocessing.cpu_count()}" if a == "-j" else a for a in args]
         sys.argv.extend(args)
