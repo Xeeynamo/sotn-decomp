@@ -843,7 +843,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x88;
     posY = 0x94;
     params = arg1->params;
-    if ((g_CastleFlags[(params >> 3) + 0x1B0] & (1 << (params & 7))) ||
+    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
+         (1 << (params & 7))) ||
         !enemyDef->rareItemId) {
         prim = func_us_801B1064(prim, posX - xOffset, posY,
                                 func_us_801B7C94(enemyDef->rareItemId), 0x196);
@@ -967,7 +968,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     prim = func_us_801B1064(prim, 0x84, 0x8F, func_us_801B7C94(posX), clut);
     params = arg1->params;
-    if ((g_CastleFlags[(params >> 3) + 0x1B0] & (1 << (params & 7))) ||
+    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
+         (1 << (params & 7))) ||
         !enemyDef->rareItemId) {
         prim = func_us_801B1064(
             prim, 0x84, 0x99, func_us_801B7C94(enemyDef->rareItemId), clut);
