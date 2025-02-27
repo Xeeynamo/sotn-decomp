@@ -570,11 +570,12 @@ function-finder:
 duplicates-report:
 	$(MAKE) force_symbols
 	$(MAKE) force_extract
+	$(PYTHON) tools/function_finder/fix_matchings.py
 	cd tools/dups; \
 	    cargo run --release -- \
             --threshold .90 \
             --output-file ../../gh-duplicates/duplicates.txt
-			
+
 python-dependencies:
 	# the python setup cannot depend on the virtualenv
 	# because it may not be set up yet
