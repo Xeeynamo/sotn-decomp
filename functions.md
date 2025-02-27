@@ -1265,7 +1265,7 @@
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    |                                 |       |
 | dra    | func_8011E4BC                       |      904 |         88 | Yes    | https://decomp.me/scratch/kUQAr | 0.999 |
-| st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/C6npN | 0.991 |
+| st0    | func_801ABBBC                       |      927 |        100 | Yes    | https://decomp.me/scratch/C6npN | 1.0   |
 | dra    | EntityNumberMovesToHpMeter          |      930 |         70 | Yes    | https://decomp.me/scratch/BBczf | 1.0   |
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 | no4    | func_psp_0924CC60                   |      948 |        120 | Yes    |                                 |       |
