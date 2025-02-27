@@ -769,101 +769,54 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
 void func_us_801B7DF8(Primitive* arg0, Entity* arg1, s16 arg2);
 INCLUDE_ASM("st/lib/nonmatchings/unk_36F30", func_us_801B7DF8);
 
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD2C8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD2DC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD2F0);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD304);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD314);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD324);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD330);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD33C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD348);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD350);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD35C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD360);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD36C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD374);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD37C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD384);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD38C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD394);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD39C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3A4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3AC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3B4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3B8);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3C4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3CC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3D4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3DC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3E4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3EC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3F4);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD3FC);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD404);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD40C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD414);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD41C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD424);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD42C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD438);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD440);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD44C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD450);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD458);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD464);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD46C);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD470);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD474);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD478);
-
-INCLUDE_RODATA("st/lib/nonmatchings/unk_36F30", D_us_801AD484);
+const char D_us_801AD2C8[] = _S("ライフアップポーション");
+const char D_us_801AD2DC[] = _S("アグネアのぶき(サブ)");
+const char D_us_801AD2F0[] = _S("ビブーティ(サブ)");
+const char D_us_801AD304[] = _S("けんじのいし(サブ)");
+const char D_us_801AD314[] = _S("バイブル(サブ)");
+const char D_us_801AD324[] = _S("とけい(サブ)");
+const char D_us_801AD330[] = _S("せいすい(サブ)");
+const char D_us_801AD33C[] = _S("クロス(サブ)");
+const char D_us_801AD348[] = _S("Axe");
+const char D_us_801AD350[] = _S("ナイフ(サブ)");
+const char D_us_801AD35C[] = _S("にく");
+const char D_us_801AD360[] = _S("ハートのうつわ");
+const char D_us_801AD36C[] = _S("$5000");
+const char D_us_801AD374[] = _S("$2000");
+const char D_us_801AD37C[] = _S("$1000");
+const char D_us_801AD384[] = _S("$700");
+const char D_us_801AD38C[] = _S("$400");
+const char D_us_801AD394[] = _S("$250");
+const char D_us_801AD39C[] = _S("$100");
+const char D_us_801AD3A4[] = _S("$50");
+const char D_us_801AD3AC[] = _S("$25");
+const char D_us_801AD3B4[] = _S("$1");
+const char D_us_801AD3B8[] = _S("だいハート");
+const char D_us_801AD3C4[] = _S("None");
+const char D_us_801AD3CC[] = _S("HIT");
+const char D_us_801AD3D4[] = _S("CUT");
+const char D_us_801AD3DC[] = _S("CUR");
+const char D_us_801AD3E4[] = _S("PSN");
+const char D_us_801AD3EC[] = _S("STN");
+const char D_us_801AD3F4[] = _S("H2O");
+const char D_us_801AD3FC[] = _S("ICE");
+const char D_us_801AD404[] = _S("THU");
+const char D_us_801AD40C[] = _S("FIR");
+const char D_us_801AD414[] = _S("DRK");
+const char D_us_801AD41C[] = _S("HOL");
+const char D_us_801AD424[] = _S("Absorb");
+const char D_us_801AD42C[] = _S("Weak VS.");
+const char D_us_801AD438[] = _S("Immune");
+const char D_us_801AD440[] = _S("Strong VS.");
+const char D_us_801AD44C[] = {CH('?'), CH('?'), 0x00};
+const char D_us_801AD450[] = _S("No.");
+const char D_us_801AD458[] = _S("Drop Items");
+const char D_us_801AD464[] = _S("Exp");
+const char D_us_801AD46C[] = {CH('D'), CH('e'), CH('f'), 0x00};
+const char D_us_801AD470[] = _S("HP");
+const char D_us_801AD474[] = _S("LV");
+const char D_us_801AD478[] = _S("????????");
+const char D_us_801AD484[] = _S("????");
 
 extern u16 D_us_80180E90[];
 extern u8* D_us_80180FB4[];
