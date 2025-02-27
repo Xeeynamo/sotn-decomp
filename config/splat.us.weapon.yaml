@@ -19,6 +19,7 @@ options:
   use_legacy_include_asm: no
   extensions_path: tools/splat_ext
   symbol_name_format: $SEG_$VRAM
+  global_vram_start: 0x80010000
   section_order:
     - ".data"
     - ".rodata"

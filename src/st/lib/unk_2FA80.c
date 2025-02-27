@@ -165,7 +165,6 @@ const char D_us_801ACD3C[] = "Revives due to blood soaked@bones．";
 const char D_us_801ACD60[] =
     "Destroyed by Richter in １７９２．（５ years ago）";
 
-extern s8 D_80073510;
 extern u16 D_us_80180824;
 
 // This is probably EntityLibrarian, but I don't know for sure
@@ -199,7 +198,7 @@ void func_us_801AFE0C(Entity* self) {
 #endif
         break;
     case 1:
-        D_80073510 = 1;
+        g_Entities[1].ext.entSlot1.unk0 = 1;
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
@@ -261,7 +260,7 @@ void func_us_801AFE0C(Entity* self) {
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (entity->posX.i.hi > 0x74) {
-                D_80073510 = 1;
+                g_Entities[1].ext.entSlot1.unk0 = 1;
                 g_Player.padSim = PAD_LEFT;
             } else {
                 entity->posX.i.hi = 0x74;
@@ -305,7 +304,7 @@ void func_us_801AFE0C(Entity* self) {
         if (entity->posX.i.hi < 0x75) {
             switch (self->step_s) {
             case 0:
-                D_80073510 = 1;
+                g_Entities[1].ext.entSlot1.unk0 = 1;
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;

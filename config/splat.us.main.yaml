@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
   disassemble_all: true
+  global_vram_start: 0x80010000
   section_order:
     - ".rodata"
     - ".text"
