@@ -5,8 +5,6 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D430);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D4D0);
 
-extern u16 D_us_80180824;
-
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -17,7 +15,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         func_psp_0925D4D0();
 #endif
-        InitializeEntity(&D_us_80180824);
+        InitializeEntity(D_us_80180824);
         if (player->posX.i.hi < 0x100) {
 // I expect these two sounds to be the same, but 0x202 has not yet been defined.
 // This leads me to think that the macro that has been defined for sfx 0x302
@@ -349,46 +347,46 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 2:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(3);
         }
         break;
     case 3:
-        AnimateEntity(&D_us_80181204, self);
+        AnimateEntity(D_us_80181204, self);
         if (g_CutsceneFlags & 4) {
             SetStep(4);
         }
         break;
     case 4:
-        AnimateEntity(&D_us_80181210, self);
+        AnimateEntity(D_us_80181210, self);
         if (g_CutsceneFlags & 8) {
             SetStep(5);
         }
         break;
     case 5:
-        AnimateEntity(&D_us_8018121C, self);
+        AnimateEntity(D_us_8018121C, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(6);
         }
         break;
     case 6:
-        AnimateEntity(&D_us_80181234, self);
+        AnimateEntity(D_us_80181234, self);
         if (g_CutsceneFlags & 0x20) {
             SetStep(7);
         }
         break;
     case 7:
-        if (AnimateEntity(&D_us_80181244, self) == 0) {
+        if (AnimateEntity(D_us_80181244, self) == 0) {
             SetStep(11);
         }
         break;
     case 9:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(10);
         }
         break;
     case 10:
-        if (AnimateEntity(&D_us_801812C0, self) == 0) {
+        if (AnimateEntity(D_us_801812C0, self) == 0) {
             SetStep(11);
         }
         break;
@@ -402,7 +400,7 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 12:
-        AnimateEntity(&D_us_801812C8, self);
+        AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
             g_CutsceneFlags &= ~0x800;
             self->animCurFrame = 2;
@@ -416,7 +414,7 @@ void EntityLibrarianChair(Entity* self) {
     case 13:
         break;
     case 16:
-        AnimateEntity(&D_us_801812D0, self);
+        AnimateEntity(D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {
