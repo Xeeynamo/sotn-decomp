@@ -320,6 +320,9 @@ format-tools:
 	black tools/*.py
 	black tools/splat_ext/*.py
 	black tools/split_jpt_yaml/*.py
+	black tools/sotn_str/*.py
+	black tools/sotn_permuter/sotn_permuter.py
+	black tools/split_jpt_yaml/*.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
