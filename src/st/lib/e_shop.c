@@ -4257,24 +4257,15 @@ static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400,
 
 #ifdef VERSION_PSP
 extern const char** D_us_801818C0;
+extern const char* D_us_801818EC[];
+extern const char* D_us_801818F0[];
 #else
 static const char* D_us_801818C0[] = {
     _S("LV"),         _S("HP"),       "$EF",       _S("Exp"),
     _S("Drop Items"), _S("No."),      "\x1F\x1F",  _S("Strong VS."),
     _S("Immune"),     _S("Weak VS."), _S("Absorb")};
-#endif
-
-const char D_us_801AD478[] = _S("????????");
-const char D_us_801AD484[] = _S("????");
-
-#ifdef VERSION_PSP
-extern const char* D_us_801818EC[];
-extern const char** D_us_801818F4;
-extern u16 D_us_80181978[];
-#else
-extern const char* D_us_801818EC[];
-extern const char* D_us_801818F4[];
-extern u16 D_us_80181978[];
+static const char* D_us_801818EC[] = {_S("????????")};
+static const char* D_us_801818F0[] = {_S("????")};
 #endif
 
 const char* func_us_801B7C94(u16 itemId) {
@@ -4404,7 +4395,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX += 2;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4543,7 +4534,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[1], 0x196); // "HP"
     posX += 0x12;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4879,6 +4870,82 @@ void func_us_801B8234(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
+extern const char** D_us_801818F4;
+#else
+static const char* D_us_801818F4[] = {
+    _S("Metamorphosis 1"),
+    _S("Prologue"),
+    _S("Dance of Illusions"),
+    _S("Moonlight Nocturne"),
+    _S("Prayer"),
+    _S("Dracula's Castle"),
+    _S("Dance of Gold"),
+    _S("Marble Gallery"),
+    _S("Tower of Mist"),
+    _S("Wood Carving Partita"),
+    _S("Door of Holy Spirits"),
+    _S("Festival of Servants"),
+    _S("Land of Benediction"),
+    _S("Requiem for the Gods"),
+    _S("Crystal Teardrop"),
+    _S("Abandoned Pit"),
+    _S("Rainbow Cemetery"),
+    _S("Silence"),
+    _S("Lost Painting"),
+    _S("Dance of Pales"),
+    _S("Curse Zone"),
+    _S("Enchanted Banquet"),
+    _S("Wandering Ghosts"),
+    _S("The Tragic Prince"),
+    _S("Door to the Abyss"),
+    _S("Heavenly Doorway"),
+    _S("Death Ballad"),
+    _S("Blood Relations"),
+    _S("Metamorphosis 2"),
+    _S("Finale Toccata"),
+    _S("Black Banquet"),
+    _S("Metamorphosis 3"),
+    _S("I am the wind"),
+};
+#endif
+
+static u16 D_us_80181978[] = {
+    MU_METAMORPHOSIS,
+    MU_PROLOGUE,
+    MU_DANCE_OF_ILLUSIONS,
+    MU_MOONLIGHT_NOCTURNE,
+    MU_PRAYER,
+    MU_DRACULAS_CASTLE,
+    MU_DANCE_OF_GOLD,
+    MU_MARBLE_GALLERY,
+    MU_TOWER_OF_MIST,
+    MU_WOOD_CARVING_PARTITA,
+    MU_DOOR_OF_HOLY_SPIRITS,
+    MU_FESTIVAL_OF_SERVANTS,
+    MU_LAND_OF_BENEDICTION,
+    MU_REQUIEM_FOR_THE_GODS,
+    MU_CRYSTAL_TEARDROPS,
+    MU_ABANDONED_PIT,
+    MU_RAINBOW_CEMETERY,
+    MU_SILENCE,
+    MU_LOST_PAINTING,
+    MU_DANCE_OF_PALES,
+    MU_CURSE_ZONE,
+    MU_ENCHANTED_BANQUET,
+    MU_WANDERING_GHOSTS,
+    MU_THE_TRAGIC_PRINCE,
+    MU_THE_DOOR_TO_THE_ABYSS,
+    MU_HEAVENLY_DOORWAY,
+    MU_DEATH_BALLAD,
+    MU_BLOOD_RELATIONS,
+    MU_METAMORPHOSIS_II,
+    MU_FINAL_TOCATTA,
+    MU_BLACK_BANQUET,
+    MU_METAMORPHOSIS_III,
+    MU_I_AM_THE_WIND,
+};
+
 void func_us_801B8958(Primitive* prim, Entity* self) {
     s16 posY;
     s32 i, j;
@@ -4894,40 +4961,6 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
         prim = prim->next;
     }
 }
-
-const char D_us_801AD4CC[] = _S("I am the wind");
-const char D_us_801AD4DC[] = _S("Metamorphosis 3");
-const char D_us_801AD4F0[] = _S("Black Banquet");
-const char D_us_801AD500[] = _S("Finale Toccata");
-const char D_us_801AD510[] = _S("Metamorphosis 2");
-const char D_us_801AD524[] = _S("Blood Relations");
-const char D_us_801AD538[] = _S("Death Ballad");
-const char D_us_801AD548[] = _S("Heavenly Doorway");
-const char D_us_801AD55C[] = _S("Door to the Abyss");
-const char D_us_801AD570[] = _S("The Tragic Prince");
-const char D_us_801AD584[] = _S("Wandering Ghosts");
-const char D_us_801AD598[] = _S("Enchanted Banquet");
-const char D_us_801AD5AC[] = _S("Curse Zone");
-const char D_us_801AD5B8[] = _S("Dance of Pales");
-const char D_us_801AD5C8[] = _S("Lost Painting");
-const char D_us_801AD5D8[] = _S("Silence");
-const char D_us_801AD5E4[] = _S("Rainbow Cemetery");
-const char D_us_801AD5F8[] = _S("Abandoned Pit");
-const char D_us_801AD608[] = _S("Crystal Teardrop");
-const char D_us_801AD61C[] = _S("Requiem for the Gods");
-const char D_us_801AD634[] = _S("Land of Benediction");
-const char D_us_801AD64C[] = _S("Festival of Servants");
-const char D_us_801AD664[] = _S("Door of Holy Spirits");
-const char D_us_801AD67C[] = _S("Wood Carving Partita");
-const char D_us_801AD694[] = _S("Tower of Mist");
-const char D_us_801AD6A4[] = _S("Marble Gallery");
-const char D_us_801AD6B4[] = _S("Dance of Gold");
-const char D_us_801AD6C4[] = _S("Dracula's Castle");
-const char D_us_801AD6D8[] = _S("Prayer");
-const char D_us_801AD6E0[] = _S("Moonlight Nocturne");
-const char D_us_801AD6F4[] = _S("Dance of Illusions");
-const char D_us_801AD708[] = _S("Prologue");
-const char D_us_801AD714[] = _S("Metamorphosis 1");
 
 #ifdef VERSION_PSP
 #define unkVal2 0x17

@@ -115,7 +115,7 @@ enum SfxModes {
 #define MU_THE_DOOR_TO_THE_ABYSS_LOOP_POINT 0x326
 #define MU_METAMORPHOSIS 0x327
 #define MU_METAMORPHOSIS_II 0x328
-// 0x329 blank
+#define MU_METAMORPHOSIS_III 0x329
 #define SE_INTRO_WIND 0x32A // wind sound from intro
 #define SE_INTRO_WIND_LOOP_POINT 0x32B
 #define SE_INTRO_WIND_QUIET 0x32C // quieter wind
