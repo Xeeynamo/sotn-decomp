@@ -46,7 +46,7 @@ segments:
       - [0xDC0, .data, e_library_bg]
       - [0xDF0, data]
       - [0x1310, .data, e_shop]
-      - [0x187C, data]
+      - [0x18C0, data]
       - [0x19BC, .data, cutscene]
       - [0x1A68, .data, e_candle_table]
       - [0x1A90, data]

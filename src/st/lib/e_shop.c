@@ -4207,6 +4207,7 @@ void func_us_801B6F30(Entity* self) {
 
 #ifdef VERSION_PSP
 extern const char** D_us_8018181C;
+extern const char** D_us_8018187C;
 #else
 static const char* D_us_8018181C[] = {
     _S("None"),
@@ -4233,19 +4234,13 @@ static const char* D_us_8018181C[] = {
     _S("ビブーティ(サブ)"),
     _S("アグネアのぶき(サブ)"),
     _S("ライフアップポーション")};
+static const char* D_us_8018187C[] = {
+    _S("HOL"), _S("DRK"), _S("FIR"), _S("THU"), _S("ICE"), _S("H2O"),
+    _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
 #endif
 
-const char D_us_801AD3CC[] = _S("HIT");
-const char D_us_801AD3D4[] = _S("CUT");
-const char D_us_801AD3DC[] = _S("CUR");
-const char D_us_801AD3E4[] = _S("PSN");
-const char D_us_801AD3EC[] = _S("STN");
-const char D_us_801AD3F4[] = _S("H2O");
-const char D_us_801AD3FC[] = _S("ICE");
-const char D_us_801AD404[] = _S("THU");
-const char D_us_801AD40C[] = _S("FIR");
-const char D_us_801AD414[] = _S("DRK");
-const char D_us_801AD41C[] = _S("HOL");
+static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400, 0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
+
 const char D_us_801AD424[] = _S("Absorb");
 const char D_us_801AD42C[] = _S("Weak VS.");
 const char D_us_801AD438[] = _S("Immune");
@@ -4261,16 +4256,12 @@ const char D_us_801AD478[] = _S("????????");
 const char D_us_801AD484[] = _S("????");
 
 #ifdef VERSION_PSP
-extern const char** D_us_8018187C;
-extern u16 D_us_801818A8[];
 extern const char** D_us_801818C0;
 extern const char** D_us_801818DC;
 extern const char* D_us_801818EC[];
 extern const char** D_us_801818F4;
 extern u16 D_us_80181978[];
 #else
-extern const char* D_us_8018187C[];
-extern u16 D_us_801818A8[];
 extern const char* D_us_801818C0[];
 extern const char* D_us_801818DC[];
 extern const char* D_us_801818EC[];
