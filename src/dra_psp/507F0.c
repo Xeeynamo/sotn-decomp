@@ -2165,4 +2165,32 @@ void func_80123F78(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/507F0", func_psp_091357E0);
+void func_80124164(
+    Primitive* prim, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
+    prim->y0 = prim->y1 = y - radius;
+    prim->y2 = prim->y3 = y + radius;
+
+    if (prim->y0 < 0) {
+        prim->y0 = prim->y1 = 0;
+    }
+
+    if (prim->y0 > 240) {
+        prim->y2 = prim->y3 = 240;
+    }
+
+    if (arg4 == 0) {
+        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE27C * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE280 * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE284 * colorIntensity / 0x100;
+    } else {
+        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE288 * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE28C * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE290 * colorIntensity / 0x100;
+    }
+}
