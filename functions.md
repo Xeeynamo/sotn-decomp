@@ -1229,7 +1229,7 @@
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_psp_09241690                   |      691 |         73 |        | https://decomp.me/scratch/ClZtd | 0.998 |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
-| dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
+| dra    | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/CRmJr | 0.956 |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
 | lib    | func_psp_09265608                   |      711 |         73 | Yes    | https://decomp.me/scratch/Xs23j | 0.992 |
