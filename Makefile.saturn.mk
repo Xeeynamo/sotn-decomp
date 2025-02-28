@@ -29,14 +29,6 @@ SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
 SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
 DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
 
-# Saturn specific targets
-.PHONY: saturn
-saturn: build_saturn check_saturn
-
-.PHONY: check_saturn
-check_saturn:
-	sha1sum --check config/check.saturn.sha
-
 .PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(SATURN_BUILD_PRGS)
 
