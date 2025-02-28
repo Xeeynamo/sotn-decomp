@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
+#include "no4.h"
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", NO4_EntityBackgroundBlock);
 
@@ -111,7 +112,12 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9130);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9460);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9538);
+void func_us_801C9538(void) {
+    D_us_801DF788 = 2;
+    D_us_801DF78A = 0;
+    D_us_801DF78E = 0;
+    D_us_801DF78F = 8;
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9568);
 
