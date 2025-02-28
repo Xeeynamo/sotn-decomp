@@ -30,7 +30,7 @@ $(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$(
 $(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
 
 # compiler
-CC1PSX          := ./bin/cc1-psx-26
+CC1PSX          := $(BIN_DIR)/cc1-psx-26
 CC              := $(CC1PSX)
 AS              := $(CROSS)as
 CPP             := $(CROSS)cpp
@@ -63,7 +63,7 @@ DEPENDENCIES	+= $(MASPSX_APP)
 
 # PSX specific targets
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
+	$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json disks/us assets/game
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
@@ -122,10 +122,10 @@ $(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_1.animset.o: $(ASSETS_DIR)/weapon/%_1.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
+	$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
 	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s -s g_Animset2
+	$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s -s g_Animset2
 	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s
 
 # assembly and c files
@@ -141,10 +141,10 @@ $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgp
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
 
 extract_assets: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
+	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
+	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
 build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build config/assets.$(VERSION).yaml
+	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
@@ -416,4 +416,4 @@ $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_d
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	./tools/png2bin.py $< $@
+	$(TOOLS_DIR)/png2bin.py $< $@

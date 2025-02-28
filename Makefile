@@ -21,6 +21,7 @@ SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
 BUILD_DIR       := build/$(VERSION)
+EXPECTED_DIR	:= expected/$(BUILD_DIR)
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
@@ -30,12 +31,12 @@ MAIN_TARGET     := $(BUILD_DIR)/main
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Tooling
-SHELL 			 = /bin/bash -e -o pipefail
+SHELL 			 = /usr/bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
-#PYTHON_BIN		:= $(VENV_DIR)/bin
-#PYTHON          := $(PYTHON_BIN)/python3
-PYTHON			:= python3
-#PIP			 := $(PYTHON_BIN)/pip3
+PYTHON_BIN		:= $(VENV_DIR)/bin
+PYTHON          := $(PYTHON_BIN)/python3
+PIP			 	:= $(PYTHON_BIN)/pip3
+INLINE_PYTHON	:= $(PYTHON) -c
 SPLAT           := splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
@@ -64,10 +65,10 @@ export PATH     := $(VENV_DIR)/bin:$(PATH)
 # Dependencies
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
-SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
-SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
+SOTNDISK_SOURCES   := $(shell find $(TOOLS_DIR)/sotn-disk -name '*.go')
+SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 
-CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
+CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
 # Functions
 define list_src_files
@@ -176,7 +177,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx config/*$(VERSION)*
+	git clean -fdx $(CONFIG_DIR)/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
@@ -209,8 +210,8 @@ format: ##@ Format source code, clean symbols, other linting
 format: format-src format-tools format-symbols format-license
 
 .PHONY: format-src
-format-src: bin/clang-format
-	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
+format-src: $(BIN_DIR)/clang-format
+	cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml ./src
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
 	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
@@ -223,13 +224,13 @@ format-src: bin/clang-format
         -type d \( -name 3rd -o -name CMakeFiles \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
-        | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
+        | xargs -0 -n10 -P$$(nproc) $(BIN_DIR)/clang-format -i
 
 .PHONY: format-tools
 format-tools:
-	black tools/*.py
-	black tools/splat_ext/*.py
-	black tools/split_jpt_yaml/*.py
+	black $(TOOLS_DIR)/*.py
+	black $(TOOLS_DIR)/splat_ext/*.py
+	black $(TOOLS_DIR)/split_jpt_yaml/*.py
 
 .PHONY: format-symbols
 format-symbols:
@@ -267,12 +268,12 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/game.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/items.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
+	python3 $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
+	python3 $(TOOLS_DIR)/lint-license.py include/entity.h AGPL-3.0-or-later
+	python3 $(TOOLS_DIR)/lint-license.py include/items.h AGPL-3.0-or-later
+	python3 $(TOOLS_DIR)/lint-license.py include/lba.h AGPL-3.0-or-later
+	python3 $(TOOLS_DIR)/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
 .PHONY: ff
@@ -282,11 +283,11 @@ ff:
 
 .PHONY: patch
 patch:
-	$(DIRT_PATCHER) config/dirt.$(VERSION).json
+	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
 
 .PHONY: check
 check: ##@ compare built files to original game files
-check: config/check.$(VERSION).sha patch $(CHECK_FILES)
+check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
         printf "%s\t[ ", $$1; \
         if ($$2 == "OK") \
@@ -312,30 +313,30 @@ force_extract:
 	mv src_tmp src
 
 force_symbols: ##@ Extract a full list of symbols from a successful build
-	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno1.elf > config/symbols.us.stno1.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno4.elf > config/symbols.us.stno4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_003.elf > config/symbols.us.tt_003.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_004.elf > config/symbols.us.tt_004.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/dra.elf > $(CONFIG_DIR)/symbols.us.dra.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/ric.elf > $(CONFIG_DIR)/symbols.us.ric.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stcen.elf > $(CONFIG_DIR)/symbols.us.stcen.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stchi.elf > $(CONFIG_DIR)/symbols.us.stchi.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stdre.elf > $(CONFIG_DIR)/symbols.us.stdre.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stlib.elf > $(CONFIG_DIR)/symbols.us.stlib.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno0.elf > $(CONFIG_DIR)/symbols.us.stno0.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno1.elf > $(CONFIG_DIR)/symbols.us.stno1.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno3.elf > $(CONFIG_DIR)/symbols.us.stno3.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno4.elf > $(CONFIG_DIR)/symbols.us.stno4.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stnp3.elf > $(CONFIG_DIR)/symbols.us.stnp3.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stnz0.elf > $(CONFIG_DIR)/symbols.us.stnz0.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stsel.elf > $(CONFIG_DIR)/symbols.us.stsel.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stst0.elf > $(CONFIG_DIR)/symbols.us.stst0.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stwrp.elf > $(CONFIG_DIR)/symbols.us.stwrp.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/strwrp.elf > $(CONFIG_DIR)/symbols.us.strwrp.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/bomar.elf > $(CONFIG_DIR)/symbols.us.bomar.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/bobo4.elf > $(CONFIG_DIR)/symbols.us.bobo4.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/borbo3.elf > $(CONFIG_DIR)/symbols.us.borbo3.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_000.elf > $(CONFIG_DIR)/symbols.us.tt_000.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_001.elf > $(CONFIG_DIR)/symbols.us.tt_001.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_002.elf > $(CONFIG_DIR)/symbols.us.tt_002.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_003.elf > $(CONFIG_DIR)/symbols.us.tt_003.txt
+	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_004.elf > $(CONFIG_DIR)/symbols.us.tt_004.txt
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
@@ -393,7 +394,7 @@ disk_prepare: build $(SOTNDISK)
 disk: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
-	cd tools/sotn-debugmodule && make
+	cd $(TOOLS_DIR)/sotn-debugmodule && make
 	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
@@ -403,19 +404,19 @@ extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 test:
-	$(PYTHON) tools/symbols_test.py
+	$(PYTHON) $(TOOLS_DIR)/symbols_test.py
 
 function-finder:
 	# TODO: make sure graphviz is installed
 	$(MAKE) force_symbols
 	$(MAKE) force_extract
-	$(PYTHON) tools/analyze_calls.py
+	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py
 	git clean -fdx asm/
-	git checkout config/
+	git checkout $(CONFIG_DIR)/
 	rm -f build/us/main.ld
 	rm -rf build/us/weapon.ld
 	$(MAKE) -j extract
-	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
+	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
 	rm -rf gh-duplicates/function_calls || true
 	mv function_calls gh-duplicates/
 	mv function_graphs.md gh-duplicates/
@@ -440,14 +441,14 @@ update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
-	git clean -fd bin/
+	git clean -fd $(BIN_DIR)/
 
-bin/%: bin/%.tar.gz
+$(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	sha256sum --check $<.sha256
-	cd bin && tar -xzf ../$<
+	cd $(BIN_DIR) && tar -xzf ../$<
 	rm $<
 	touch $@
-bin/%.tar.gz: bin/%.tar.gz.sha256
+$(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
@@ -466,19 +467,19 @@ $(GO):
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
 	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
-	cd tools/sotn-disk; $(GO) install
+	cd $(TOOLS_DIR)/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
-	cd tools/sotn-assets; $(GO) install
+	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
-	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	mkdir -p $(dir $@)

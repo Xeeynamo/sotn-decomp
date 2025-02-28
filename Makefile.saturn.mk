@@ -19,7 +19,7 @@ SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc li
 DOSEMU						:= dosemu
 DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
 DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
-SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
+SATURN_TOOLCHAIN			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
 SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
@@ -76,26 +76,26 @@ $(BUILD_DIR)/WARP.PRG: $(BUILD_DIR)/warp.elf
 $(BUILD_DIR)/T_BAT.PRG: $(BUILD_DIR)/t_bat.elf
 	sh-elf-objcopy $< -O binary $@
 
-$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(SATURN_LIB_OBJECTS) config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/zero_user_syms.txt
+$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(SATURN_LIB_OBJECTS) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
 	cd $(BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
 		-Map zero.map \
-		-T ../../config/saturn/zero.ld \
-		-T ../../config/saturn/zero_syms.txt \
-		-T ../../config/saturn/game_syms.txt \
-		-T ../../config/saturn/zero_user_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/zero.ld \
+		-T ../../$(CONFIG_DIR)/saturn/zero_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/game_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/zero_user_syms.txt \
 		zero.o $(addsuffix .o,$(SATURN_LIB_TARGETS))
 
-$(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o config/saturn/zero_syms.txt config/saturn/game_syms.txt config/saturn/%_user_syms.txt
+$(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/%_user_syms.txt
 	cd $(BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o $*.elf \
 		-Map $*.map \
-		-T ../../config/saturn/$*.ld \
-		-T ../../config/saturn/zero_syms.txt \
-		-T ../../config/saturn/game_syms.txt \
-		-T ../../config/saturn/$*_user_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/$*.ld \
+		-T ../../$(CONFIG_DIR)/saturn/zero_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/game_syms.txt \
+		-T ../../$(CONFIG_DIR)/saturn/$*_user_syms.txt \
 		$*.o
 
 $(BUILD_DIR)/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(CC1_SATURN)
@@ -107,19 +107,19 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(CC1_SATURN)
 
 $(CC1_SATURN): $(SATURN_TOOLCHAIN)
 	mkdir -p $(dir $@)
+	mkdir -p $(BUILD_DIR)/$(ASM_DIR)/
 	cp -r $(SATURN_TOOLCHAIN)/* $(BUILD_DIR)
-	cp  ./src/saturn/macro.inc $(BUILD_DIR)
-	cp -r ./src/saturn/*.c $(BUILD_DIR)
-	cp -r ./src/saturn/*.h $(BUILD_DIR)
-	cp -r ./src/saturn/lib $(BUILD_DIR)/lib
-	cp -r ./include/saturn $(BUILD_DIR)/saturn
-	mkdir -p $(BUILD_DIR)/asm/saturn/
-	cp -r ./asm/saturn/game $(BUILD_DIR)/asm/saturn/game
-	cp -r ./asm/saturn/t_bat $(BUILD_DIR)/asm/saturn/t_bat
-	cp -r ./asm/saturn/zero $(BUILD_DIR)/asm/saturn/zero
-	cp -r ./asm/saturn/stage_02 $(BUILD_DIR)/asm/saturn/stage_02
-	cp -r ./asm/saturn/warp $(BUILD_DIR)/asm/saturn/warp
-	cp -r ./asm/saturn/alucard $(BUILD_DIR)/asm/saturn/alucard
+	cp  $(SRC_DIR)/saturn/macro.inc $(BUILD_DIR)
+	cp -r $(SRC_DIR)/saturn/*.c $(BUILD_DIR)
+	cp -r $(SRC_DIR)/saturn/*.h $(BUILD_DIR)
+	cp -r $(SRC_DIR)/saturn/lib $(BUILD_DIR)/lib
+	cp -r $(INCLUDE_DIR)/saturn $(BUILD_DIR)/$(INCLUDE_DIR)
+	cp -r $(ASM_DIR)/game $(BUILD_DIR)/$(ASM_DIR)/game
+	cp -r $(ASM_DIR)/t_bat $(BUILD_DIR)/$(ASM_DIR)/t_bat
+	cp -r $(ASM_DIR)/zero $(BUILD_DIR)/$(ASM_DIR)/zero
+	cp -r $(ASM_DIR)/stage_02 $(BUILD_DIR)/$(ASM_DIR)/stage_02
+	cp -r $(ASM_DIR)/warp $(BUILD_DIR)/$(ASM_DIR)/warp
+	cp -r $(ASM_DIR)/alucard $(BUILD_DIR)/$(ASM_DIR)/alucard
 	touch $(CC1_SATURN)
 
 $(SATURN_SPLITTER_APP):
