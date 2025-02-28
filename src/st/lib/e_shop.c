@@ -46,17 +46,175 @@ typedef enum {
 } InventoryCategory;
 
 extern u16 D_us_80180E90[];
-extern u8* D_us_80180FB4[];
-extern u8 D_us_801811FC[];
-extern u8 D_us_80181204[];
-extern u8 D_us_80181210[];
-extern u8 D_us_8018121C[];
-extern u8 D_us_80181234[];
-extern u8 D_us_80181244[];
-extern u8 D_us_801812C0[];
-extern u8 D_us_801812C8[];
-extern u8 D_us_801812D0[];
-extern u8* D_us_801812D8[];
+
+static const char* D_us_80180FB4[] = {
+    "Destroyed by Richter in １７９２．（５ years ago）",
+    "Revives due to blood soaked@bones．",
+    "Vampire bats．@Feared as servants of evil．",
+    "Indestructible spinning skull．",
+    "Fresh corpses．@Magically animated．",
+    "Legendary ””creature””．@Attacks all invaders．",
+    "Magically animated skeleton．",
+    "Wolves which guard castle @entrance．",
+    "Ferocious skeleton @swordsman．",
+    "Fireball−spitting Merman．@Largest of merman kind．",
+    "４−legged skeleton．@Drips poison．",
+    "Low level axe knight．",
+    "Eastern Church soldiers @dispatched ３００ years ago．",
+    "Bone−hurling skeleton．",
+    "Possessed Ouija table．",
+    "Boomerang wielding skeleton．",
+    "Plant with razor−sharp @leaves．",
+    "Fire−breathing flying demon．",
+    "Low level flaming ghosts．",
+    "Demonic puppet from Hell．",
+    "Demon with enchanted spear．",
+    "Nauseating two−headed @beast． Which is the head？",
+    "Strange human−like creature．@Jumps like a flea．",
+    "From Medusa’s hair．",
+    "Novice of twin−bladed @combat．",
+    "Skeletons equipped with @rifles．",
+    "From Medusa’s hair．@Can petrify．",
+    "Heavily armored knight with @iron ball．",
+    "Mutated plant．@Seeds petrify．",
+    "Well armored axe knight．",
+    "Fire and ice demon．@Seems reluctant to fight．",
+    "Skeleton archer equipped @with bow．",
+    "Cannon built of white @dragon skulls．",
+    "Shape−shifting demon．",
+    "Local barnyard owl Mutated @by castle’s influence．",
+    "Executed soldier’s head．@Hunting for vengeance．",
+    "Snake living off Scylla．",
+    "Animated ape skeleton．@Hurls wooden barrels．",
+    "Armored warrior with @naginata．",
+    "Book of beginner’s spells．",
+    "Slow−flying skeleton warrior．",
+    "Physical manifestations of @bodiless tormented souls．",
+    "Knight armed with @Greatsword．",
+    "Toad magically enlarged by @demonic baptism．",
+    "Heavily armored undead @warrior．",
+    "Armored guard．@Strong in perilous areas． ",
+    "Headless skeleton．@Wields a rapier．",
+    "Cave−dwelling frog．",
+    "Ice−wielding female spirit．",
+    "Book of ancient weapons．",
+    "Giant skull spirit．",
+    "Flesh−eating raven．",
+    "Spirit of long−dead blue @raven．",
+    "Plant with razor−sharp @leaves．",
+    "Skeleton equipped with @spiked iron flail．",
+    "Flea Man riding on specially @trained war−goose．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Naginata−wielding skeleton．",
+    "Mythological sea monster．",
+    "Invisible huntress spirit．",
+    "Animated mud golem．",
+    "Heavily armored knight @Attacks with trained owl．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Sword Lord wields sword @even when banished．",
+    "Flea Man armed with axe and@shield．",
+    "Part horse， lion and eagle．",
+    "Giant skeleton．",
+    "Monster made from gel．",
+    "Master of twin−bladed @combat．",
+    "Were panther skeleton．",
+    "Grave Keeper．@Master of unarmed combat．",
+    "Pyromaniacal gremlin．",
+    "Creature with head of @woman and body of bird．",
+    "Bull−headed monster．",
+    "Shape−shifting lycanthrope．",
+    "Portable skull shrine carried @by skeleton priests．",
+    "Bloodthirsty undead knight @who eternally seeks combat．",
+    "Mysterious cloaked @swordsman．",
+    "Fish head guardian．",
+    "Short magic−wielding demon．@Summons demonic allies．",
+    "Searches among graves and @knows much wise lore．",
+    "Ghost witches from Salem．",
+    "Eldest Giant brother．@Wields two huge daggers．",
+    "Giant brother．@Wields a gurkha knife．",
+    "Giant brother．@Uses huge steel hammer．",
+    "Discus−wielding armored @knight．",
+    "Demon Lord of Ravens．",
+    "Monster created from slimy @gel substance．",
+    "Thunder−wielding demon．@Called ””Musician from Hell””．",
+    "Watchdog of Hell．",
+    "Master Fish−head．",
+    "Magic−wielding vampire．@Rules upper part of castle．",
+    "Female demon．@Invades men’s dreams．",
+    "Gravestones possessed by @evil spirits of dead．",
+    "Watered with human blood．",
+    "The cowardly lion．",
+    "Impaled man looking for brain．",
+    "Nightmarish creature．@Composed of many．",
+    "Monster nicknamed ””schmoo””．",
+    "Heartless tin man．",
+    "Holds countless poison seeds．",
+    "Skeleton eternally chasing @his own skull．",
+    "Bomb−tossing armored @knight．",
+    "Zombies which attack even @when cut in half．",
+    "Mutated insect．@Visible only to magicians．",
+    "Expert at throwing weapons．",
+    "Fiendishly accurate archer．",
+    "Half−man， half−wolf．",
+    "Liquid creature．@Takes black panther shape．",
+    "Giant vampire bat．",
+    "White dragon ridden by Flea @Man．",
+    "Half−man， half−bull．",
+    "Wields fearsome beam @weapon．",
+    "Wyrm controlled by Flea Man．",
+    "Animated skeleton of huge @dragon．",
+    "Fireball−spitting wolf．",
+    "Rock−tossing armored @knight．",
+    "Angel archer．@Slew Amalaric of the Goths．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Skeleton with leaping attack．",
+    "Skeleton mounted on Warg．",
+    "Pre−intelligent bloodsucker @with long tongue for sucking．",
+    "Evil mutated octopus．",
+    "Flame demon．",
+    "Armor plated war−beast．",
+    "Gruesome Demon from Hell．",
+    "Ancient egyptian mummy．",
+    "Advanced Venus Weed．@Fed with demon blood．",
+    "Shape−shifting demon．",
+    "Snake−headed demoness @with gaze of stone．",
+    "Made from the body parts @of powerful warriors．",
+    "Zombie impersonating Grant．",
+    "Zombie impersonating Trevor．",
+    "Mischievous little demon．",
+    "Zombie impersonating Sypha．",
+    "Beelzebub Lord of Flies．",
+    "Executioner of Hell．",
+    "New−half ice spirit．@Servant of Galamoth．",
+    "Young female witch．",
+    "Master Vampire hunter．",
+    "Rare bird．@Runs when sees people．",
+    "Magical being with plan to @rule the netherworld．",
+    "High level Armor Lord．",
+    "Dracula’s close friend．",
+    "Dark Priest of Dracula．",
+    "Lord of Wallachia．@Father of Alucard．",
+};
+static u8 D_us_801811FC[] = {6, 3, 16, 4, -1, 0};
+static u8 D_us_80181204[] = {10, 5, 10, 4, 10, 5, 1, 4, -1, 0};
+static u8 D_us_80181210[] = {12, 14, 10, 15, 8, 16, 4, 17, -1, 0};
+static u8 D_us_8018121C[] = {4, 16, 53, 19, 7, 18, 7, 19, 7, 18, 7, 19, 7, 18, 3, 19, 6, 16, 4, 17, -1, 0};
+static u8 D_us_80181234[] = {7, 16, 6, 19, 6, 20, 7, 21, 8, 22, 4, 23, -1, 0};
+static u8 D_us_80181244[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 52, 17, 6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 52, 2, 11, 10, 7, 11, 8, 12, 36, 13, 6, 12, 7, 11, 7, 10, 4, 2, -1, 0};
+static u8 D_us_80181270[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 4, 17, -1, 0};
+static u8 D_us_80181280[] = {6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 4, 2, -1, 0};
+static u8 D_us_80181290[] = {11, 10, 7, 11, 8, 12, 4, 13, -1, 0};
+static u8 D_us_8018129C[] = {6, 12, 7, 11, 7, 10, 4, 2, -1, 0};
+static u8 D_us_801812A8[] = {11, 2, 10, 6, 7, 7, 7, 8, 49, 9, 0, 0};
+static u8 D_us_801812B4[] = {3, 8, 7, 7, 7, 6, 4, 2, 0, 0};
+static u8 D_us_801812C0[] = {32, 4, 8, 3, 4, 2, -1, 0};
+static u8 D_us_801812C8[] = {8, 2, 8, 24, 0, 0};
+static u8 D_us_801812D0[] = {4, 41, 4, 42, -1, 0};
+static u8* D_us_801812D8[] = {
+    D_us_801811FC, D_us_80181204, D_us_80181210, D_us_8018121C, 
+    D_us_80181234, D_us_80181270, D_us_80181280, D_us_80181290, 
+    D_us_8018129C, D_us_801812A8, D_us_801812B4, D_us_801812C0, 
+    D_us_801812C8, D_us_801812D0};
 
 #ifdef VERSION_PSP
 extern s32 D_psp_08C630DC;
@@ -86,168 +244,6 @@ static AvailableInventoryItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801AFA80);
-
-const char D_us_801AB960[] = "Lord of Wallachia．@Father of Alucard．";
-const char D_us_801AB988[] = "Dark Priest of Dracula．";
-const char D_us_801AB9A4[] = "Dracula’s close friend．";
-const char D_us_801AB9C0[] = "High level Armor Lord．";
-const char D_us_801AB9D8[] =
-    "Magical being with plan to @rule the netherworld．";
-const char D_us_801ABA0C[] = "Rare bird．@Runs when sees people．";
-const char D_us_801ABA30[] = "Master Vampire hunter．";
-const char D_us_801ABA48[] = "Young female witch．";
-const char D_us_801ABA60[] = "New−half ice spirit．@Servant of Galamoth．";
-const char D_us_801ABA90[] = "Executioner of Hell．";
-const char D_us_801ABAA8[] = "Beelzebub Lord of Flies．";
-const char D_us_801ABAC4[] = "Zombie impersonating Sypha．";
-const char D_us_801ABAE4[] = "Mischievous little demon．";
-const char D_us_801ABB00[] = "Zombie impersonating Trevor．";
-const char D_us_801ABB20[] = "Zombie impersonating Grant．";
-const char D_us_801ABB40[] = "Made from the body parts @of powerful warriors．";
-const char D_us_801ABB74[] = "Snake−headed demoness @with gaze of stone．";
-const char D_us_801ABBA4[] = "Advanced Venus Weed．@Fed with demon blood．";
-const char D_us_801ABBD4[] = "Ancient egyptian mummy．";
-const char D_us_801ABBF0[] = "Gruesome Demon from Hell．";
-const char D_us_801ABC0C[] = "Armor plated war−beast．";
-const char D_us_801ABC28[] = "Flame demon．";
-const char D_us_801ABC38[] = "Evil mutated octopus．";
-const char D_us_801ABC50[] =
-    "Pre−intelligent bloodsucker @with long tongue for sucking．";
-const char D_us_801ABC90[] = "Skeleton mounted on Warg．";
-const char D_us_801ABCAC[] = "Skeleton with leaping attack．";
-const char D_us_801ABCCC[] = "Angel archer．@Slew Amalaric of the Goths．";
-const char D_us_801ABCF8[] = "Rock−tossing armored @knight．";
-const char D_us_801ABD18[] = "Fireball−spitting wolf．";
-const char D_us_801ABD34[] = "Animated skeleton of huge @dragon．";
-const char D_us_801ABD58[] = "Wyrm controlled by Flea Man．";
-const char D_us_801ABD78[] = "Wields fearsome beam @weapon．";
-const char D_us_801ABD98[] = "Half−man， half−bull．";
-const char D_us_801ABDB4[] = "White dragon ridden by Flea @Man．";
-const char D_us_801ABDD8[] = "Giant vampire bat．";
-const char D_us_801ABDEC[] = "Liquid creature．@Takes black panther shape．";
-const char D_us_801ABE1C[] = "Half−man， half−wolf．";
-const char D_us_801ABE38[] = "Fiendishly accurate archer．";
-const char D_us_801ABE58[] = "Expert at throwing weapons．";
-const char D_us_801ABE78[] = "Mutated insect．@Visible only to magicians．";
-const char D_us_801ABEA8[] = "Zombies which attack even @when cut in half．";
-const char D_us_801ABED8[] = "Bomb−tossing armored @knight．";
-const char D_us_801ABEF8[] = "Skeleton eternally chasing @his own skull．";
-const char D_us_801ABF24[] = "Holds countless poison seeds．";
-const char D_us_801ABF44[] = "Heartless tin man．";
-const char D_us_801ABF58[] = "Monster nicknamed ””schmoo””．";
-const char D_us_801ABF7C[] = "Nightmarish creature．@Composed of many．";
-const char D_us_801ABFA8[] = "Impaled man looking for brain．";
-const char D_us_801ABFC8[] = "The cowardly lion．";
-const char D_us_801ABFDC[] = "Watered with human blood．";
-const char D_us_801ABFF8[] = "Gravestones possessed by @evil spirits of dead．";
-const char D_us_801AC02C[] = "Female demon．@Invades men’s dreams．";
-const char D_us_801AC054[] =
-    "Magic−wielding vampire．@Rules upper part of castle．";
-const char D_us_801AC08C[] = "Master Fish−head．";
-const char D_us_801AC0A0[] = "Watchdog of Hell．";
-const char D_us_801AC0B4[] =
-    "Thunder−wielding demon．@Called ””Musician from Hell””．";
-const char D_us_801AC0F4[] = "Monster created from slimy @gel substance．";
-const char D_us_801AC120[] = "Demon Lord of Ravens．";
-const char D_us_801AC138[] = "Discus−wielding armored @knight．";
-const char D_us_801AC15C[] = "Giant brother．@Uses huge steel hammer．";
-const char D_us_801AC188[] = "Giant brother．@Wields a gurkha knife．";
-const char D_us_801AC1B0[] = "Eldest Giant brother．@Wields two huge daggers．";
-const char D_us_801AC1E4[] = "Ghost witches from Salem．";
-const char D_us_801AC200[] =
-    "Searches among graves and @knows much wise lore．";
-const char D_us_801AC234[] =
-    "Short magic−wielding demon．@Summons demonic allies．";
-const char D_us_801AC26C[] = "Fish head guardian．";
-const char D_us_801AC284[] = "Mysterious cloaked @swordsman．";
-const char D_us_801AC2A4[] =
-    "Bloodthirsty undead knight @who eternally seeks combat．";
-const char D_us_801AC2E0[] =
-    "Portable skull shrine carried @by skeleton priests．";
-const char D_us_801AC318[] = "Shape−shifting lycanthrope．";
-const char D_us_801AC338[] = "Bull−headed monster．";
-const char D_us_801AC350[] = "Creature with head of @woman and body of bird．";
-const char D_us_801AC380[] = "Pyromaniacal gremlin．";
-const char D_us_801AC398[] = "Grave Keeper．@Master of unarmed combat．";
-const char D_us_801AC3C4[] = "Were panther skeleton．";
-const char D_us_801AC3DC[] = "Master of twin−bladed @combat．";
-const char D_us_801AC400[] = "Monster made from gel．";
-const char D_us_801AC418[] = "Giant skeleton．";
-const char D_us_801AC42C[] = "Part horse， lion and eagle．";
-const char D_us_801AC44C[] = "Flea Man armed with axe and@shield．";
-const char D_us_801AC474[] = "Sword Lord wields sword @even when banished．";
-const char D_us_801AC4A4[] =
-    "Heavily armored knight @Attacks with trained owl．";
-const char D_us_801AC4D8[] = "Animated mud golem．";
-const char D_us_801AC4F0[] = "Invisible huntress spirit．";
-const char D_us_801AC50C[] = "Mythological sea monster．";
-const char D_us_801AC528[] = "Naginata−wielding skeleton．";
-const char D_us_801AC548[] =
-    "Evil demon−sword． Causes @poltergeist phenomena．";
-const char D_us_801AC57C[] =
-    "Flea Man riding on specially @trained war−goose．";
-const char D_us_801AC5B0[] = "Skeleton equipped with @spiked iron flail．";
-const char D_us_801AC5DC[] = "Spirit of long−dead blue @raven．";
-const char D_us_801AC600[] = "Flesh−eating raven．";
-const char D_us_801AC618[] = "Giant skull spirit．";
-const char D_us_801AC630[] = "Book of ancient weapons．";
-const char D_us_801AC64C[] = "Ice−wielding female spirit．";
-const char D_us_801AC66C[] = "Cave−dwelling frog．";
-const char D_us_801AC684[] = "Headless skeleton．@Wields a rapier．";
-const char D_us_801AC6AC[] = "Armored guard．@Strong in perilous areas． ";
-const char D_us_801AC6D8[] = "Heavily armored undead @warrior．";
-const char D_us_801AC6FC[] = "Toad magically enlarged by @demonic baptism．";
-const char D_us_801AC72C[] = "Knight armed with @Greatsword．";
-const char D_us_801AC74C[] =
-    "Physical manifestations of @bodiless tormented souls．";
-const char D_us_801AC784[] = "Slow−flying skeleton warrior．";
-const char D_us_801AC7A4[] = "Book of beginner’s spells．";
-const char D_us_801AC7C4[] = "Armored warrior with @naginata．";
-const char D_us_801AC7E8[] = "Animated ape skeleton．@Hurls wooden barrels．";
-const char D_us_801AC818[] = "Snake living off Scylla．";
-const char D_us_801AC834[] =
-    "Executed soldier’s head．@Hunting for vengeance．";
-const char D_us_801AC868[] =
-    "Local barnyard owl Mutated @by castle’s influence．";
-const char D_us_801AC8A0[] = "Shape−shifting demon．";
-const char D_us_801AC8B8[] = "Cannon built of white @dragon skulls．";
-const char D_us_801AC8E0[] = "Skeleton archer equipped @with bow．";
-const char D_us_801AC908[] = "Fire and ice demon．@Seems reluctant to fight．";
-const char D_us_801AC938[] = "Well armored axe knight．";
-const char D_us_801AC954[] = "Mutated plant．@Seeds petrify．";
-const char D_us_801AC974[] = "Heavily armored knight with @iron ball．";
-const char D_us_801AC9A0[] = "From Medusa’s hair．@Can petrify．";
-const char D_us_801AC9C4[] = "Skeletons equipped with @rifles．";
-const char D_us_801AC9E8[] = "Novice of twin−bladed @combat．";
-const char D_us_801ACA0C[] = "From Medusa’s hair．";
-const char D_us_801ACA24[] =
-    "Strange human−like creature．@Jumps like a flea．";
-const char D_us_801ACA58[] =
-    "Nauseating two−headed @beast． Which is the head？";
-const char D_us_801ACA8C[] = "Demon with enchanted spear．";
-const char D_us_801ACAAC[] = "Demonic puppet from Hell．";
-const char D_us_801ACAC8[] = "Low level flaming ghosts．";
-const char D_us_801ACAE4[] = "Fire−breathing flying demon．";
-const char D_us_801ACB04[] = "Plant with razor−sharp @leaves．";
-const char D_us_801ACB28[] = "Boomerang wielding skeleton．";
-const char D_us_801ACB48[] = "Possessed Ouija table．";
-const char D_us_801ACB60[] = "Bone−hurling skeleton．";
-const char D_us_801ACB7C[] =
-    "Eastern Church soldiers @dispatched ３００ years ago．";
-const char D_us_801ACBB4[] = "Low level axe knight．";
-const char D_us_801ACBCC[] = "４−legged skeleton．@Drips poison．";
-const char D_us_801ACBF4[] =
-    "Fireball−spitting Merman．@Largest of merman kind．";
-const char D_us_801ACC2C[] = "Ferocious skeleton @swordsman．";
-const char D_us_801ACC4C[] = "Wolves which guard castle @entrance．";
-const char D_us_801ACC74[] = "Magically animated skeleton．";
-const char D_us_801ACC94[] = "Legendary ””creature””．@Attacks all invaders．";
-const char D_us_801ACCC8[] = "Fresh corpses．@Magically animated．";
-const char D_us_801ACCF0[] = "Indestructible spinning skull．";
-const char D_us_801ACD10[] = "Vampire bats．@Feared as servants of evil．";
-const char D_us_801ACD3C[] = "Revives due to blood soaked@bones．";
-const char D_us_801ACD60[] =
-    "Destroyed by Richter in １７９２．（５ years ago）";
 
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
