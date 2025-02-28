@@ -412,14 +412,17 @@ duplicates-report:
             --threshold .90 \
             --output-file ../../gh-duplicates/duplicates.txt
 			
-.PHONY: update-dependencies python-dendencies
-python-dependencies:
-	# the python setup cannot depend on the virtualenv
-	# because it may not be set up yet
-	[ -d $(VENV_DIR) ] || python3 -m venv $(VENV_DIR)
-	pip install -r $(TOOLS_DIR)/requirements-python.txt
+.PHONY: %-dependencies
+debian-dependencies:
+	sudo apt-get install -y $(cat tools/requirements-debian.txt)
+	touch debian-dependencies
 
-.PHONY: update-dependencies
+python-dependencies: $(VENV_DIR)
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
+
+$(VENV_DIR): debian-dependencies
+	python3 -m venv $(VENV_DIR)
+
 update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
