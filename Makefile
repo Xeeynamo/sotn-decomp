@@ -232,41 +232,22 @@ format-tools:
 	black $(TOOLS_DIR)/splat_ext/*.py
 	black $(TOOLS_DIR)/split_jpt_yaml/*.py
 
+ORPHAN_EXCLUSIONS 	:= splat.us.weapon assets.hd assets.us
+ORPHAN_EXCLUSIONS	:= $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXCLUSIONS)))
+ORPHAN_REMOVALS 	:= $(filter-out $(ORPHAN_EXCLUSIONS), $(wildcard config/*.yaml))
+
 .PHONY: format-symbols
 format-symbols:
-	VERSION=us $(PYTHON) ./tools/symbols.py sort
-	VERSION=hd $(PYTHON) ./tools/symbols.py sort
-	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+	for VERSION in us hd pspeu saturn; do  \
+	echo Sorting $$VERSION symbols; 	   \
+	$(PYTHON) $(TOOLS_DIR)/symbols.py sort; \
+	done
+	for FILE in $(ORPHAN_REMOVALS); do     \
+	echo Removing orphan symbols from $$FILE; \
+	$(TOOLS_DIR)/symbols.py remove-orphans $$FILE; \
+	done
+
+$(DEBUG).SILENT: format-license
 format-license:
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
 	python3 $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
