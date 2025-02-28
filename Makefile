@@ -237,6 +237,7 @@ ORPHAN_EXCLUSIONS	:= $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXC
 ORPHAN_REMOVALS 	:= $(filter-out $(ORPHAN_EXCLUSIONS), $(wildcard config/*.yaml))
 
 .PHONY: format-symbols
+$(DEBUG).SILENT: format-symbols
 format-symbols:
 	for VERSION in us hd pspeu saturn; do  \
 	echo Sorting $$VERSION symbols; 	   \
@@ -249,6 +250,7 @@ format-symbols:
 
 $(DEBUG).SILENT: format-license
 format-license:
+	echo Checking for license line in code files
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
 	python3 $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
 	python3 $(TOOLS_DIR)/lint-license.py include/entity.h AGPL-3.0-or-later
