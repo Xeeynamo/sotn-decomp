@@ -2344,18 +2344,18 @@ void func_80124164(
     }
 
     if (arg4 == 0) {
-        prim->r1 = prim->r3 = D_800AE270[0] * colorIntensity / 0x100;
-        prim->g1 = prim->g3 = D_800AE270[1] * colorIntensity / 0x100;
-        prim->b1 = prim->b3 = D_800AE270[2] * colorIntensity / 0x100;
-        prim->r0 = prim->r2 = D_800AE270[3] * colorIntensity / 0x100;
-        prim->g0 = prim->g2 = D_800AE270[4] * colorIntensity / 0x100;
-        prim->b0 = prim->b2 = D_800AE270[5] * colorIntensity / 0x100;
+        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE27C * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE280 * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE284 * colorIntensity / 0x100;
     } else {
-        prim->r1 = prim->r3 = D_800AE270[0] * colorIntensity / 0x100;
-        prim->g1 = prim->g3 = D_800AE270[1] * colorIntensity / 0x100;
-        prim->b1 = prim->b3 = D_800AE270[2] * colorIntensity / 0x100;
-        prim->r0 = prim->r2 = D_800AE270[6] * colorIntensity / 0x100;
-        prim->g0 = prim->g2 = D_800AE270[7] * colorIntensity / 0x100;
-        prim->b0 = prim->b2 = D_800AE270[8] * colorIntensity / 0x100;
+        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
+        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
+        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
+        prim->r0 = prim->r2 = D_800AE288 * colorIntensity / 0x100;
+        prim->g0 = prim->g2 = D_800AE28C * colorIntensity / 0x100;
+        prim->b0 = prim->b2 = D_800AE290 * colorIntensity / 0x100;
     }
 }
