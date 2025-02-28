@@ -45,7 +45,21 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
-extern u16 D_us_80180E90[];
+static u16 D_us_80180E90[] = {
+    0x0A9, 0x046, 0x040, 0x180, 0x06E, 0x01B, 0x04B, 0x0AF, 0x069, 0x01D, 0x051,
+    0x0F6, 0x00D, 0x0B2, 0x0C1, 0x00B, 0x09D, 0x0FE, 0x09C, 0x031, 0x0F3, 0x010,
+    0x028, 0x12F, 0x07C, 0x066, 0x130, 0x061, 0x055, 0x006, 0x0E9, 0x06C, 0x0B7,
+    0x0FD, 0x016, 0x043, 0x126, 0x053, 0x05D, 0x0F7, 0x080, 0x058, 0x009, 0x06A,
+    0x022, 0x0B4, 0x092, 0x06B, 0x063, 0x0FB, 0x105, 0x073, 0x072, 0x09E, 0x044,
+    0x030, 0x081, 0x076, 0x11F, 0x0E3, 0x0D6, 0x014, 0x088, 0x0E4, 0x029, 0x12C,
+    0x0D3, 0x042, 0x07A, 0x03D, 0x06F, 0x0E1, 0x0EF, 0x0CB, 0x0CE, 0x02D, 0x085,
+    0x10F, 0x115, 0x017, 0x083, 0x0DD, 0x0BE, 0x0BC, 0x0BA, 0x04D, 0x118, 0x041,
+    0x047, 0x16B, 0x15E, 0x032, 0x156, 0x071, 0x0A1, 0x106, 0x142, 0x127, 0x143,
+    0x108, 0x11D, 0x078, 0x0A5, 0x00E, 0x0B6, 0x074, 0x131, 0x185, 0x025, 0x111,
+    0x090, 0x182, 0x07E, 0x08D, 0x02B, 0x094, 0x0A7, 0x0C3, 0x08A, 0x0D8, 0x097,
+    0x099, 0x026, 0x04F, 0x01F, 0x0EC, 0x10B, 0x188, 0x174, 0x16E, 0x172, 0x14E,
+    0x148, 0x11C, 0x151, 0x144, 0x0E0, 0x0D9, 0x0E5, 0x133, 0x068, 0x0C6, 0x18C,
+    0x164, 0x15F, 0x17B};
 
 static const char* D_us_80180FB4[] = {
     "Destroyed by Richter in １７９２．（５ years ago）",
@@ -198,9 +212,13 @@ static const char* D_us_80180FB4[] = {
 static u8 D_us_801811FC[] = {6, 3, 16, 4, -1, 0};
 static u8 D_us_80181204[] = {10, 5, 10, 4, 10, 5, 1, 4, -1, 0};
 static u8 D_us_80181210[] = {12, 14, 10, 15, 8, 16, 4, 17, -1, 0};
-static u8 D_us_8018121C[] = {4, 16, 53, 19, 7, 18, 7, 19, 7, 18, 7, 19, 7, 18, 3, 19, 6, 16, 4, 17, -1, 0};
+static u8 D_us_8018121C[] = {4,  16, 53, 19, 7,  18, 7,  19, 7,  18, 7,
+                             19, 7,  18, 3,  19, 6,  16, 4,  17, -1, 0};
 static u8 D_us_80181234[] = {7, 16, 6, 19, 6, 20, 7, 21, 8, 22, 4, 23, -1, 0};
-static u8 D_us_80181244[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 52, 17, 6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 52, 2, 11, 10, 7, 11, 8, 12, 36, 13, 6, 12, 7, 11, 7, 10, 4, 2, -1, 0};
+static u8 D_us_80181244[] = {
+    4,  22, 29, 21, 4,  20, 4, 19, 3,  16, 52, 17, 6,  16,
+    10, 15, 7,  14, 10, 4,  9, 3,  52, 2,  11, 10, 7,  11,
+    8,  12, 36, 13, 6,  12, 7, 11, 7,  10, 4,  2,  -1, 0};
 static u8 D_us_80181270[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 4, 17, -1, 0};
 static u8 D_us_80181280[] = {6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 4, 2, -1, 0};
 static u8 D_us_80181290[] = {11, 10, 7, 11, 8, 12, 4, 13, -1, 0};
@@ -211,10 +229,9 @@ static u8 D_us_801812C0[] = {32, 4, 8, 3, 4, 2, -1, 0};
 static u8 D_us_801812C8[] = {8, 2, 8, 24, 0, 0};
 static u8 D_us_801812D0[] = {4, 41, 4, 42, -1, 0};
 static u8* D_us_801812D8[] = {
-    D_us_801811FC, D_us_80181204, D_us_80181210, D_us_8018121C, 
-    D_us_80181234, D_us_80181270, D_us_80181280, D_us_80181290, 
-    D_us_8018129C, D_us_801812A8, D_us_801812B4, D_us_801812C0, 
-    D_us_801812C8, D_us_801812D0};
+    D_us_801811FC, D_us_80181204, D_us_80181210, D_us_8018121C, D_us_80181234,
+    D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
+    D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
 #ifdef VERSION_PSP
 extern s32 D_psp_08C630DC;
@@ -4235,31 +4252,26 @@ static const char* D_us_8018187C[] = {
     _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
 #endif
 
-static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400, 0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
+static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400,
+                              0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
 
-const char D_us_801AD424[] = _S("Absorb");
-const char D_us_801AD42C[] = _S("Weak VS.");
-const char D_us_801AD438[] = _S("Immune");
-const char D_us_801AD440[] = _S("Strong VS.");
-const char D_us_801AD44C[] = {CH('?'), CH('?'), 0x00};
-const char D_us_801AD450[] = _S("No.");
-const char D_us_801AD458[] = _S("Drop Items");
-const char D_us_801AD464[] = _S("Exp");
-const char D_us_801AD46C[] = {CH('D'), CH('e'), CH('f'), 0x00};
-const char D_us_801AD470[] = _S("HP");
-const char D_us_801AD474[] = _S("LV");
+#ifdef VERSION_PSP
+extern const char** D_us_801818C0;
+#else
+static const char* D_us_801818C0[] = {
+    _S("LV"),         _S("HP"),       "$EF",       _S("Exp"),
+    _S("Drop Items"), _S("No."),      "\x1F\x1F",  _S("Strong VS."),
+    _S("Immune"),     _S("Weak VS."), _S("Absorb")};
+#endif
+
 const char D_us_801AD478[] = _S("????????");
 const char D_us_801AD484[] = _S("????");
 
 #ifdef VERSION_PSP
-extern const char** D_us_801818C0;
-extern const char** D_us_801818DC;
 extern const char* D_us_801818EC[];
 extern const char** D_us_801818F4;
 extern u16 D_us_80181978[];
 #else
-extern const char* D_us_801818C0[];
-extern const char* D_us_801818DC[];
 extern const char* D_us_801818EC[];
 extern const char* D_us_801818F4[];
 extern u16 D_us_80181978[];
@@ -4451,8 +4463,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(
-            prim, 0x84 - xOffset, ((i * 0x10) + 0x3C), D_us_801818DC[i], 0x196);
+        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
+                                D_us_801818C0[i + 7], 0x196);
     }
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
@@ -4480,19 +4492,19 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x80;
     posY = 0x34;
     prim = func_us_801B1064(
-        prim, posX, posY, D_us_801818DC[0], 0x196); // "Strong VS."
+        prim, posX, posY, D_us_801818C0[7], 0x196); // "Strong VS."
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x3D);
     posY += 0x14;
     prim =
-        func_us_801B1064(prim, posX, posY, D_us_801818DC[1], 0x196); // "Immune"
+        func_us_801B1064(prim, posX, posY, D_us_801818C0[8], 0x196); // "Immune"
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x51);
     posY += 0x14;
     prim = func_us_801B1064(
-        prim, posX, posY, D_us_801818DC[2], 0x196); // "Weak VS."
+        prim, posX, posY, D_us_801818C0[9], 0x196); // "Weak VS."
     prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x65);
     posY += 0x14;
-    prim =
-        func_us_801B1064(prim, posX, posY, D_us_801818DC[3], 0x196); // "Absorb"
+    prim = func_us_801B1064(
+        prim, posX, posY, D_us_801818C0[10], 0x196); // "Absorb"
     prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x79);
 
     posX = 0x18;
@@ -4587,14 +4599,14 @@ void func_us_801B8234(Entity* self) {
     s32 primIndex;
     s32 i;
     s16 j;
-    u16 temp_a2;
+    u16 enemyId;
     u16 pads;
     u8* pix;
     u8* s3;
-    EnemyDef* s8;
+    EnemyDef* enemyDef;
     s32 pad[12];
 
-    temp_a2 = D_us_80180E90[self->params];
+    enemyId = D_us_80180E90[self->params];
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
@@ -4743,7 +4755,7 @@ void func_us_801B8234(Entity* self) {
             for (i = 0; i < 4; i++) {
                 s3 = D_psp_092A5F98[i];
             }
-            s8 = &g_api.enemyDefs[temp_a2];
+            enemyDef = &g_api.enemyDefs[enemyId];
             s3 = D_psp_092A5F48[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1C0, 0x6E);
             s3 = D_psp_092A5F48[self->params];
@@ -4760,7 +4772,7 @@ void func_us_801B8234(Entity* self) {
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
             }
-            func_us_801B7DF8(prim, self, temp_a2);
+            func_us_801B7DF8(prim, self, enemyId);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
             SetStep(2);
