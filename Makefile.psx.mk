@@ -356,19 +356,19 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_o_files,st,_shared)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T $(BUILD_DIR)/stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_o_files,st,_shared)
 	$(call link,stsel,$@)
 
-$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*,_st) $$(call list_o_files,st,_shared)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+$(BUILD_DIR)/bo%.elf: $$(call list_o_files,boss/$$*,_st) $$(call list_o_files,boss,_shared)
 	$(call link,bo$*,$@)
 
 # Weapon overlays

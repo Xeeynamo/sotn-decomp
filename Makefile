@@ -71,61 +71,32 @@ SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
 # Functions
+ROOT		:= /
+ifneq ($(filter $(VERSION),us hd),)
+ASM_SUBDIRS := $(ROOT) /data /psxsdk /handwritten
+SRC_SUBDIRS := $(ROOT) /psxsdk
+else ifeq ($(VERSION),pspeu)
+ASM_SUBDIRS := $(ROOT) /data
+SRC_SUBDIRS := $(ROOT)
+endif
+ST_ASM_SUBDIRS := $(ROOT) /data
+ST_ASSETS = /D_801*.bin /*.gfxbin /*.palbin /cutscene_*.bin
+
 define list_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/handwritten,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
+	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
+	$(foreach dir,$(addprefix $(SRC_DIR)/$(1), $(SRC_SUBDIRS)),$(wildcard $(dir)/*.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*))
 endef
 define list_st_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_801*.bin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.gfxbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.palbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/cutscene_*.bin))
+	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ST_ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
+	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(addprefix $(dir), $(ST_ASSETS))))
 endef
-
-define list_o_files
-	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define list_st_o_files
-	$(foreach file,$(call list_st_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
 define list_shared_src_files
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 endef
-
-define list_shared_o_files
-	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define link
-	$(LD) $(LD_FLAGS) -o $(2) \
-		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
-endef
-
-# Helper Functions
-# These will eventually be merged with the equivalent PSX functions
-define list_src_files_psp
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
-endef
-
-define list_o_files_psp
-	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
+define list_o_files
+	$(foreach file,$(call list$(2)_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 endef
 
 # leverages MWCC ability to compile data and text as separate sections to allow
@@ -133,18 +104,23 @@ endef
 # symexport.*.txt is used to enforce a specific symbol and all its dependencies
 # to be used. Refer to *.map to know which sections are being discarded by LD.
 # Use nm to retrieve the symbol name out of a object file such as the mwo_header.
-define link_with_deadstrip
+ifeq ($(VERSION),pspeu)
+GC_SECTIONS := --gc-sections
+SYM_EXPORT 	= -T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt
+endif
+
+define link
 	$(LD) $(LD_FLAGS) -o $(2) \
-		--gc-sections \
+		$(GC_SECTIONS) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt \
+		$(SYM_EXPORT) \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
-ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
+ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
 else ifeq ($(VERSION),pspeu)
 include Makefile.psp.mk

@@ -85,10 +85,10 @@ yaml_file=open(os.path.join(os.getcwd(),"config/splat.pspeu.dra.yaml"));\
 config = yaml.safe_load(yaml_file);\
 yaml_file.close();\
 print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("dra/")]))')
-$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
-	$(call link_with_deadstrip,dra,$@)
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
-	$(call link_with_deadstrip,tt_$*,$@)
+$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files,dra_psp)
+	$(call link,dra,$@)
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
+	$(call link,tt_$*,$@)
 
 # This isn't ideal, but it works for now.
 ST_LIB_MERGE = $(shell $(INLINE_PYTHON) $$'import yaml;\
@@ -97,8 +97,8 @@ yaml_file=open(os.path.join(os.getcwd(),"config/splat.pspeu.stlib.yaml"));\
 config = yaml.safe_load(yaml_file);\
 yaml_file.close();\
 print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("lib/")]))')
-$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
-	$(call link_with_deadstrip,stlib,$@)
+$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
+	$(call link,stlib,$@)
 
 # This isn't ideal, but it works for now.
 ST_NO4_MERGE = $(shell $(INLINE_PYTHON) $$'import yaml;\
@@ -107,8 +107,8 @@ yaml_file=open(os.path.join(os.getcwd(),"config/splat.pspeu.stno4.yaml"));\
 config = yaml.safe_load(yaml_file);\
 yaml_file.close();\
 print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("no4/")]))')
-$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/stno4.ld $(addprefix $(BUILD_DIR)/src/st/no4/,$(addsuffix .c.o,$(ST_NO4_MERGE))) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
-	$(call link_with_deadstrip,stno4,$@)
+$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/stno4.ld $(addprefix $(BUILD_DIR)/src/st/no4/,$(addsuffix .c.o,$(ST_NO4_MERGE))) $$(call list_o_files,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
+	$(call link,stno4,$@)
 
 # This isn't ideal, but it works for now.
 ST_ST0_MERGE = $(shell $(INLINE_PYTHON) $$'import yaml;\
@@ -117,8 +117,8 @@ yaml_file=open(os.path.join(os.getcwd(),"config/splat.pspeu.stst0.yaml"));\
 config = yaml.safe_load(yaml_file);\
 yaml_file.close();\
 print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("st0/")]))')
-$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
-	$(call link_with_deadstrip,stst0,$@)
+$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
+	$(call link,stst0,$@)
 
 # This isn't ideal, but it works for now.
 ST_WRP_MERGE = $(shell $(INLINE_PYTHON) $$'import yaml;\
@@ -127,8 +127,8 @@ yaml_file=open(os.path.join(os.getcwd(),"config/splat.pspeu.stwrp.yaml"));\
 config = yaml.safe_load(yaml_file);\
 yaml_file.close();\
 print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("wrp/")]))')
-$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
-	$(call link_with_deadstrip,stwrp,$@)
+$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
+	$(call link,stwrp,$@)
 
 # Recipes
 $(BUILD_DIR)/%.s.o: %.s
