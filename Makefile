@@ -42,7 +42,7 @@ PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
 endif
 PYTHON          := $(PYTHON_BIN)python3
 BLACK			:= $(PYTHON_BIN)black
-PIP			 	:= $(PYTHON_BIN)pip3
+PIP			 	:= $(realpath $(VENV_DIR))/bin/pip3
 SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
