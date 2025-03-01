@@ -62,6 +62,7 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
+export PATH     := $(VENV_DIR)/bin:$(PATH)
 
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
