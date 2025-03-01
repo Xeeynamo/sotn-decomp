@@ -219,7 +219,7 @@ void func_8011E4BC(Entity* self) {
     s16 selfYPos;
     unkStr_8011E4BC* temp_s5;
     s32 i;
-    
+
     upperParams = self->params >> 8;
     temp_s5 = D_800ADB98[upperParams];
     selfXPos = self->posX.i.hi;
@@ -255,7 +255,8 @@ void func_8011E4BC(Entity* self) {
             self->ext.et_8011E4BC.unk7C = 0x1F;
             break;
         }
-        for(tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true; i++, tilePrim = tilePrim->next){
+        for (tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true;
+             i++, tilePrim = tilePrim->next) {
             tilePrim->drawMode = temp_s5->drawMode;
             tilePrim->priority = PLAYER.zPriority + temp_s5->priority;
             if (tilePrim->next == NULL) {
@@ -279,7 +280,8 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->velocityY.val = (((rand() & 0x1FF) - 0x100) << 8);
                 break;
             case 2:
-                tilePrim->velocityX.val = ((s32)(((rand() & PSP_RANDMASK) * 2) - 0x8000)) >> 1;
+                tilePrim->velocityX.val =
+                    ((s32)(((rand() & PSP_RANDMASK) * 2) - 0x8000)) >> 1;
                 tilePrim->velocityY.val = -(rand() & 0x3FFF);
                 tilePrim->posX.val += (tilePrim->velocityX.val * 19);
                 tilePrim->posY.i.hi = (selfYPos + (rand() & 7)) - 3;
@@ -290,14 +292,16 @@ void func_8011E4BC(Entity* self) {
                 if (PLAYER.facingLeft) {
                     twelveShift = -twelveShift;
                 }
-                tilePrim->velocityX.val = (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
+                tilePrim->velocityX.val =
+                    (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
                 tilePrim->velocityY.val = -(rand() & 0x3FFF);
                 tilePrim->posX.val +=
                     ((tilePrim->velocityX.val * 35) + (twelveShift << 16));
                 tilePrim->velocityX.val >>= 2;
-                // Trying this line happens to fix a ton of stuff, but it's obviously wrong.
-                // tilePrim->posY.i.hi = selfYPos - (rand() & 0xFF & 0x1F);
-                tilePrim->posY.i.hi = selfYPos - 1 + 1 -(rand() & 0x1F);
+                // Trying this line happens to fix a ton of stuff, but it's
+                // obviously wrong. tilePrim->posY.i.hi = selfYPos - (rand() &
+                // 0xFF & 0x1F);
+                tilePrim->posY.i.hi = selfYPos - 1 + 1 - (rand() & 0x1F);
                 tilePrim->delay = ((rand() & 0x1F) + 0x10);
                 break;
             case 3:
@@ -339,7 +343,8 @@ void func_8011E4BC(Entity* self) {
             case 13:
                 tilePrim->posX.i.hi = selfXPos;
                 tilePrim->posY.i.hi = selfYPos;
-                tilePrim->velocityX.val = (s32)((rand() & PSP_RANDMASK) - 0x4000) >> 1;
+                tilePrim->velocityX.val =
+                    (s32)((rand() & PSP_RANDMASK) - 0x4000) >> 1;
                 tilePrim->velocityY.val = -((rand() & 0x1FFF) + 0x6000);
                 tilePrim->timer = i * 4;
                 break;
@@ -383,13 +388,14 @@ void func_8011E4BC(Entity* self) {
             var_a2 = self->ext.et_8011E4BC.unk7C;
             if (var_a2 < 9) {
                 thickness--;
-            } 
+            }
             if (var_a2 < 4) {
                 thickness--;
             }
             break;
         }
-        for(tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true; i++, tilePrim = tilePrim->next){
+        for (tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true;
+             i++, tilePrim = tilePrim->next) {
             if (tilePrim->next == NULL) {
                 tilePrim->drawMode &= ~DRAW_HIDE;
                 tilePrim->y0 = tilePrim->x0 = tilePrim->w = 0;
@@ -454,7 +460,7 @@ void func_8011E4BC(Entity* self) {
                         tilePrim->drawMode = DRAW_UNK02;
                     }
                 }
-                
+
                 tilePrim->w = tilePrim->h = thickness;
                 break;
             case 13:
@@ -466,7 +472,8 @@ void func_8011E4BC(Entity* self) {
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
                     if ((D_80097448[0] == 0) ||
-                        tilePrim->posY.i.hi <= (((PLAYER.posY.i.hi - D_80097448[0]) + 25))) {
+                        tilePrim->posY.i.hi <=
+                            ((PLAYER.posY.i.hi - D_80097448[0]) + 25)) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
@@ -525,7 +532,8 @@ void func_8011EDA8(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
         }
 
-        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
+        self->posY.i.hi =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
         self->velocityY = FIX(-0.5);
         self->velocityX = PLAYER.velocityX >> 2;
         self->step++;
@@ -558,8 +566,7 @@ void func_8011EDA8(Entity* self) {
 void func_8011F074(Entity* self) {
     switch (self->step) {
     case 0:
-        self->flags =
-            FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
+        self->flags = FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = PLAYER.zPriority + 2;
@@ -611,7 +618,7 @@ void EntityHitByLightning(Entity* self) {
     Primitive* prim;
 
     if ((self->params & 0xFF00) != 0) {
-        if((++self->ext.hitbylightning.unk9C) > 0xA8){
+        if ((++self->ext.hitbylightning.unk9C) > 0xA8) {
             var_s0 = true;
         }
     } else if (PLAYER.step != 10) {
@@ -637,7 +644,8 @@ void EntityHitByLightning(Entity* self) {
             prim->tpage = 0x1A;
             prim->clut = D_800ADC7C[rand() & 1];
             prim->priority = PLAYER.zPriority - 2;
-            PGREY(prim,0) = PGREY(prim,1) = PGREY(prim,2) = PGREY(prim,3) = 0x80;
+            PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) =
+                0x80;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
@@ -661,8 +669,7 @@ void EntityHitByLightning(Entity* self) {
             -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
-        if ((self->ext.hitbylightning.unk92) &&
-            (g_Player.pl_vram_flag & 0xE)) {
+        if ((self->ext.hitbylightning.unk92) && (g_Player.pl_vram_flag & 0xE)) {
             var_s0 = true;
         }
         if (var_s0) {
@@ -720,7 +727,7 @@ void EntityHitByLightning(Entity* self) {
     prim->y3 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
 
     temp_s0 = (self->ext.hitbylightning.unk80 & 0xFFF);
-    if (temp_s0 < 0x400){
+    if (temp_s0 < 0x400) {
         prim->priority = PLAYER.zPriority + 2;
     } else if (temp_s0 < 0xC00) {
         prim->priority = PLAYER.zPriority - 2;
@@ -728,7 +735,7 @@ void EntityHitByLightning(Entity* self) {
         prim->priority = PLAYER.zPriority + 2;
     }
     prim->u0 = prim->u2 = (i << 4) + 0x90;
-    prim->u1 = prim->u3 = (i+1 << 4) + 0x90;
+    prim->u1 = prim->u3 = (i + 1 << 4) + 0x90;
     prim->v0 = prim->v1 = 0xC0;
     prim->v2 = prim->v3 = 0xCF;
 }
@@ -743,7 +750,7 @@ void EntityHitByIce(Entity* self) {
     s16 selfX;
     s16 selfY;
     Point16* offset;
-    bool sp18; 
+    bool sp18;
 
     s16 angle;
 
@@ -751,12 +758,12 @@ void EntityHitByIce(Entity* self) {
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    
+
     sp18 = false;
-    if(!(g_Player.status & PLAYER_STATUS_UNK10000)){
+    if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
         sp18 = true;
     }
-    
+
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT3, 24);
@@ -765,7 +772,8 @@ void EntityHitByIce(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
@@ -832,7 +840,8 @@ void EntityHitByIce(Entity* self) {
     }
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 24; prim = prim->next, i++) {
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 24; prim = prim->next,
+        i++) {
         offset = D_800ADCC8[i * 3];
         if (prim->u0 < 2) {
             size = SquareRoot12(
@@ -1055,41 +1064,43 @@ void EntityTransparentWhiteCircle(Entity* self) {
             selfX + ((prim2->u1 - 0x20) * self->ext.whiteCircle.unk80) / 0x100;
         prim2->y1 =
             selfY + ((prim2->v1 - 0xE0) * self->ext.whiteCircle.unk82) / 0x100;
-        prim1->x2 =
-            selfX +
-            (((rcos(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
-                0x100;
-        prim1->y2 =
-            selfY -
-            (((rsin(i + 1 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
-                0x100;
-        prim1->x3 =
-            selfX +
-            (((rcos(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk84) /
-                0x100;
-        prim1->y3 =
-            selfY -
-            (((rsin(i + 2 << 8) >> 4 << 5) >> 8) * self->ext.whiteCircle.unk86) /
-                0x100;
+        prim1->x2 = selfX + (((rcos(i + 1 << 8) >> 4 << 5) >> 8) *
+                             self->ext.whiteCircle.unk84) /
+                                0x100;
+        prim1->y2 = selfY - (((rsin(i + 1 << 8) >> 4 << 5) >> 8) *
+                             self->ext.whiteCircle.unk86) /
+                                0x100;
+        prim1->x3 = selfX + (((rcos(i + 2 << 8) >> 4 << 5) >> 8) *
+                             self->ext.whiteCircle.unk84) /
+                                0x100;
+        prim1->y3 = selfY - (((rsin(i + 2 << 8) >> 4 << 5) >> 8) *
+                             self->ext.whiteCircle.unk86) /
+                                0x100;
         prim2->x2 = prim1->x0 = (prim2->x0 + prim1->x2) / 2;
         prim2->y2 = prim1->y0 = (prim2->y0 + prim1->y2) / 2;
         prim2->x3 = prim1->x1 = (prim2->x1 + prim1->x3) / 2;
         prim2->y3 = prim1->y1 = (prim2->y1 + prim1->y3) / 2;
         base_angle = i * sp38;
         angle = self->ext.whiteCircle.unk7E + base_angle;
-        prim1->r0 = prim2->r2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        prim1->r0 = prim2->r2 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / rScale;
         angle = self->ext.whiteCircle.unk7E + gOffset + base_angle;
-        prim1->g0 = prim2->g2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        prim1->g0 = prim2->g2 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / gScale;
         angle = self->ext.whiteCircle.unk7E + bOffset + base_angle;
-        prim1->b0 = prim2->b2 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
+        prim1->b0 = prim2->b2 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / bScale;
         angle = self->ext.whiteCircle.unk7E + sp38 + base_angle;
-        prim1->r1 = prim2->r3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / rScale;
+        prim1->r1 = prim2->r3 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / rScale;
         angle = self->ext.whiteCircle.unk7E + gOffset + sp38 + base_angle;
-        prim1->g1 = prim2->g3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / gScale;
+        prim1->g1 = prim2->g3 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / gScale;
         angle = self->ext.whiteCircle.unk7E + bOffset + sp38 + base_angle;
-        prim1->b1 = prim2->b3 = ((rsin(angle) + 0x1000) >> 7) * self->ext.whiteCircle.unk88 / bScale;
-        PGREY(prim2,0) = PGREY(prim2,1) = 0;
-        PGREY(prim1,2) = PGREY(prim1,3) = 0;
+        prim1->b1 = prim2->b3 = ((rsin(angle) + 0x1000) >> 7) *
+                                self->ext.whiteCircle.unk88 / bScale;
+        PGREY(prim2, 0) = PGREY(prim2, 1) = 0;
+        PGREY(prim1, 2) = PGREY(prim1, 3) = 0;
         prim2 = prim2->next;
         prim1 = prim1->next;
     }
@@ -1263,7 +1274,8 @@ void EntityPlayerDissolves(Entity* self) {
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
         self->ext.dissolve.unk7C = 0;
         self->ext.dissolve.unk80 = rand() & 7;
-        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        self->ext.dissolve.unk7E =
+            D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCount; i++) {
 
@@ -1328,7 +1340,8 @@ void EntityPlayerDissolves(Entity* self) {
         break;
     case 3:
         PLAYER.animCurFrame |= ~0x7FFF;
-        self->ext.dissolve.unk7E = D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        self->ext.dissolve.unk7E =
+            D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
         data = (u_long*)D_80139A7C;
         s2 = (u8*)data;
         s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
@@ -1537,7 +1550,8 @@ void EntityLevelUpAnimation(Entity* self) {
 
     posX_hi = self->posX.i.hi - 176;
     posY_hi = self->posY.i.hi;
-    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 14; prim = prim->next,i++) {
+    for (prim = &g_PrimBuf[self->primIndex], i = 0; i < 14; prim = prim->next,
+        i++) {
         angle = D_800AE190[i];
         prim_y0_y2 = -(rsin(angle) >> 5) * self->ext.factory.unk80 / 256;
         prim_x0_x2 = (rcos(angle) >> 5) * self->ext.factory.unk82 / 256;
@@ -1616,11 +1630,11 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
         arg2->u3 = arg2->u2 = prim->u2;
         arg2->v3 = arg2->v2 = prim->v2;
         if (PLAYER.animSet == 0xF) {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             arg2->tpage = 0x4118;
-            #else
+#else
             arg2->tpage = 0x118;
-            #endif
+#endif
         } else {
             arg2->tpage = 0x18;
         }
@@ -2036,8 +2050,8 @@ void EntityMist(Entity* self) {
         prim->x3 = xVar4;
         prim->y2 = yVar4;
         prim->y3 = yVar4;
-        PGREY(prim,0) = PGREY(prim,1) = 0;
-        PGREY(prim,2) = PGREY(prim,3) = D_80138398;
+        PGREY(prim, 0) = PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = PGREY(prim, 3) = D_80138398;
 #ifndef VERSION_HD
         if (D_80138398 < 0x10) {
             prim->drawMode |= DRAW_HIDE;
@@ -2063,20 +2077,27 @@ void EntityMist(Entity* self) {
             prim->y3 = yVar4 + i * (yVar2 - yVar4) / 4;
             switch (i) {
             case 0:
-                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor2 / 256) & 0xFF;
-                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor1 / 256) & 0xFF;
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_80138394 * primColor2 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_80138394 * primColor1 / 256) & 0xFF;
                 break;
             case 1:
-                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor3 / 256) & 0xFF;
-                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor2 / 256) & 0xFF;
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_80138394 * primColor3 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_80138394 * primColor2 / 256) & 0xFF;
                 break;
             case 2:
-                PGREY(prim,0) = PGREY(prim,1) = (D_80138394 * primColor4 / 256) & 0xFF;
-                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor3 / 256) & 0xFF;
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_80138394 * primColor4 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_80138394 * primColor3 / 256) & 0xFF;
                 break;
             case 3:
-                PGREY(prim,0) = PGREY(prim,1) = 0;
-                PGREY(prim,2) = PGREY(prim,3) = (D_80138394 * primColor4 / 256) & 0xFF;
+                PGREY(prim, 0) = PGREY(prim, 1) = 0;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_80138394 * primColor4 / 256) & 0xFF;
                 break;
             }
         }
@@ -2139,14 +2160,14 @@ void UnknownEntId49(Entity* self) {
 
     if (abs(PLAYER.rotZ) == 0x200) {
         x_offset = -0x10;
-        if(PLAYER.entityRoomIndex){
+        if (PLAYER.entityRoomIndex) {
             x_offset = -x_offset;
         }
         self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
         self->posY.i.hi = PLAYER.posY.i.hi + 9 + ((g_GameTimer >> 1) & 1);
     } else {
         x_offset = -0x18;
-        if(PLAYER.entityRoomIndex){
+        if (PLAYER.entityRoomIndex) {
             x_offset = -x_offset;
         }
         self->posX.i.hi = PLAYER.posX.i.hi + x_offset;
@@ -2290,7 +2311,7 @@ void func_80123F78(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_10000 | FLAG_UNK_20000 |
-                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+                      FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         if (PLAYER.animSet != 1) {
             DestroyEntity(self);
             return;
@@ -2368,7 +2389,7 @@ void EntityTeleport(Entity* self) {
     s32 xVar;
     s32 i;
     s32 result;
-    
+
     s32 upperParams = self->params & 0xFE00;
     bool wasCase3 = false;
     bool var_s5 = false;
@@ -2405,7 +2426,7 @@ void EntityTeleport(Entity* self) {
             yVar = 0xE0 - (rand() & 0x3F);
             D_8013839C[i].x = xVar;
             D_8013839C[i].y = yVar;
-            //SOTN please why do you do this
+            // SOTN please why do you do this
             prim->clut = 0x1B2;
             prim->clut = 0x1B5;
             prim->clut = 0x1BA;
@@ -2429,9 +2450,9 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Hydrostorm;
-            #ifndef VERSION_PSP
+#ifndef VERSION_PSP
             PlaySfx(SFX_UNK_8BB);
-            #endif
+#endif
         } else {
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.width = 1;
@@ -2487,10 +2508,10 @@ void EntityTeleport(Entity* self) {
         break;
     case 6:
         PLAYER.palette = 0x810D;
-        #ifdef VERSION_PSP
-        func_892A620(0,1);
-        func_892A620(1,1);
-        #endif
+#ifdef VERSION_PSP
+        func_892A620(0, 1);
+        func_892A620(1, 1);
+#endif
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
             self->ext.teleport.unk90 = 0;
@@ -2514,9 +2535,9 @@ void EntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             PlaySfx(SFX_UNK_8BB);
-            #endif
+#endif
             self->step++;
         }
         break;
@@ -2557,14 +2578,16 @@ void EntityTeleport(Entity* self) {
             prim->drawMode &= ~DRAW_HIDE;
         }
     }
-    
+
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar - w;
-    func_80124164(prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    func_80124164(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar + w;
-    func_80124164(prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    func_80124164(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
     if (wasCase3) {
         for (i = 0; i < LEN(D_8013839C); i++) {

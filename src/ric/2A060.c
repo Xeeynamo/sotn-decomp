@@ -193,11 +193,13 @@ void RicEntityTeleport(Entity* self) {
     }
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar - selfUnk7C;
-    func_80165DD8(prim, self->ext.teleport.colorIntensity, yVar, selfUnk80, upperParams);
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, selfUnk80, upperParams);
     prim = prim->next;
     prim->x1 = prim->x3 = xVar;
     prim->x0 = prim->x2 = xVar + selfUnk7C;
-    func_80165DD8(prim, self->ext.teleport.colorIntensity, yVar, selfUnk80, upperParams);
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, selfUnk80, upperParams);
     prim = prim->next;
     if (showParticles) {
         for (i = 0; i < LEN(D_80175000); i++) {
