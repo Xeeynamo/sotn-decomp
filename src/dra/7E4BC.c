@@ -2362,22 +2362,23 @@ void func_80124164(
 
 // BSS
 extern Point16 D_8013839C[32];
+// this can probably be removed if these files get merged
+s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter);
 
 // teleport effect like when using library card (ID 0x42)
 void EntityTeleport(Entity* self) {
     Primitive* prim;
-    s32 selfUnk7C;
-    s32 selfUnk80;
+    s32 w;
+    s32 h;
     s32 yVar;
     s32 xVar;
-    s32 upperParams;
     s32 i;
     s32 result;
-
+    
+    s32 upperParams = self->params & 0xFE00;
     bool wasCase3 = false;
     bool var_s5 = false;
 
-    upperParams = self->params & 0xFE00;
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
@@ -2388,10 +2389,9 @@ void EntityTeleport(Entity* self) {
                       FLAG_HAS_PRIMS | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 2; i++) {
+            // RBG not RGB because i'm a rebel
+            prim->r0 = prim->b0 = prim->g0 = 0;
             prim->x0 = 0xC0 * i;
-            prim->g0 = 0;
-            prim->b0 = 0;
-            prim->r0 = 0;
             prim->y0 = 0;
             prim->u0 = 0xC0;
             prim->v0 = 0xF0;
@@ -2408,87 +2408,95 @@ void EntityTeleport(Entity* self) {
         }
         for (i = 0; i < LEN(D_8013839C); i++) {
             xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
-            yVar = rand();
-            yVar = 0xE0 - (yVar & 0x3F);
+            yVar = 0xE0 - (rand() & 0x3F);
             D_8013839C[i].x = xVar;
             D_8013839C[i].y = yVar;
+            //SOTN please why do you do this
+            prim->clut = 0x1B2;
+            prim->clut = 0x1B5;
             prim->clut = 0x1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
             prim->g0 = 0;
             prim->g1 = (rand() & 0x1F) + 1;
+            prim->g2 = 0;
             prim->priority = 0x1F0;
             prim->drawMode = DRAW_HIDE;
-            prim->g2 = 0;
             prim = prim->next;
         }
-        self->ext.teleport.unk7C = 0;
-        self->ext.teleport.unk80 = 0x10;
-        self->ext.teleport.unk88 = 0x80;
-        if (self->params & 0x100) {
-            var_s5 = true;
-            self->ext.teleport.unk7C = 0x10;
-            self->ext.teleport.unk80 = 0x100;
-            self->ext.teleport.unk88 = 0x80;
+        self->ext.teleport.width = 0;
+        self->ext.teleport.height = 0x10;
+        self->ext.teleport.colorIntensity = 0x80;
+        if ((self->params & 0x100) == 0x100) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.height = 0x100;
+            self->ext.teleport.colorIntensity = 0x80;
             self->ext.teleport.unk90 = 0xFF;
-            self->step = 0x14;
+            var_s5 = true;
+            self->step = Player_Hydrostorm;
             PlaySfx(SFX_UNK_8BB);
         } else {
-            self->ext.teleport.unk7C = 1;
             self->ext.teleport.unk90 = 0;
-            self->ext.teleport.unk80 = 0x10;
-            self->ext.teleport.unk88 = 0x80;
+            self->ext.teleport.width = 1;
+            self->ext.teleport.height = 0x10;
+            self->ext.teleport.colorIntensity = 0x80;
             self->step = 1;
             PlaySfx(SFX_TELEPORT_BANG_A);
             PlaySfx(NA_SE_PL_TELEPORT);
         }
         break;
     case 1:
-        self->ext.teleport.unk80 += 0x20;
-        if (self->ext.teleport.unk80 >= 0x101) {
+        self->ext.teleport.height += 0x20;
+        if (self->ext.teleport.height > 0x100) {
             self->step++;
         }
         break;
     case 2:
-        if (++self->ext.teleport.unk7C >= 0x10) {
-            self->ext.teleport.unk7C = 0x10;
-            self->ext.teleport.unk84 = 0x80;
+        self->ext.teleport.width++;
+        if (self->ext.teleport.width >= 0x10) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.timer = 0x80;
             self->step++;
         }
         break;
     case 3:
         wasCase3 = true;
-        self->ext.teleport.unk88 += 4;
-        if (self->ext.teleport.unk88 >= 0x100) {
-            self->ext.teleport.unk88 = 0x100;
+        self->ext.teleport.colorIntensity += 4;
+        if (self->ext.teleport.colorIntensity >= 0x100) {
+            self->ext.teleport.colorIntensity = 0x100;
         }
-        if (--self->ext.teleport.unk84 == 0) {
+        if (--self->ext.teleport.timer == 0) {
             PLAYER.palette = 0x810D;
             self->step++;
         }
         break;
     case 4:
         PLAYER.palette = 0x810D;
-        if (--self->ext.teleport.unk7C <= 0) {
-            self->ext.teleport.unk7C = 0;
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width <= 0) {
+            self->ext.teleport.width = 0;
             self->step++;
         }
         break;
     case 5:
-        var_s5 = true;
         PLAYER.palette = 0x810D;
+        var_s5 = true;
         self->ext.teleport.unk90 += 4;
         if (self->ext.teleport.unk90 >= 0x100) {
             self->ext.teleport.unk90 = 0xFF;
-            self->ext.teleport.unk84 = 0x20;
+            self->ext.teleport.timer = 0x20;
             self->step++;
         }
         break;
     case 6:
-        var_s5 = true;
         PLAYER.palette = 0x810D;
-        if (--self->ext.teleport.unk84 == 0) {
+        #ifdef VERSION_PSP
+        func_892A620(0,1);
+        func_892A620(1,1);
+        #endif
+        var_s5 = true;
+        if (--self->ext.teleport.timer == 0) {
             self->ext.teleport.unk90 = 0;
             if (upperParams == 0) {
                 D_80097C98 = 6;
@@ -2504,12 +2512,12 @@ void EntityTeleport(Entity* self) {
     case 20:
         var_s5 = true;
         self->ext.teleport.unk90 = 0xFF;
-        self->ext.teleport.unk84 = 0x20;
+        self->ext.teleport.timer = 0x20;
         self->step++;
         break;
     case 21:
         var_s5 = true;
-        if (--self->ext.teleport.unk84 == 0) {
+        if (--self->ext.teleport.timer == 0) {
             self->step++;
         }
         break;
@@ -2522,9 +2530,10 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 23:
-        if (--self->ext.teleport.unk7C < 2) {
-            self->ext.teleport.unk7C = 0;
-            self->ext.teleport.unk84 = 4;
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width < 2) {
+            self->ext.teleport.width = 0;
+            self->ext.teleport.timer = 4;
             self->step++;
             g_Player.unk1C = 1;
             PlaySfx(SFX_TELEPORT_BANG_B);
@@ -2533,28 +2542,30 @@ void EntityTeleport(Entity* self) {
         }
         break;
     }
-    selfUnk7C = self->ext.teleport.unk7C;
-    selfUnk80 = self->ext.teleport.unk80;
+
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
     xVar = PLAYER.posX.i.hi;
     yVar = PLAYER.posY.i.hi;
-    for (i = 0; i < 2; i++) {
+    w = self->ext.teleport.width;
+    h = self->ext.teleport.height;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 2; prim = prim->next, i++) {
         prim->r0 = prim->b0 = prim->g0 = self->ext.teleport.unk90;
         prim->drawMode |= DRAW_HIDE;
         if (var_s5) {
             prim->drawMode &= ~DRAW_HIDE;
         }
-        prim = prim->next;
     }
+    
     prim->x1 = prim->x3 = xVar;
-    prim->x0 = prim->x2 = xVar - selfUnk7C;
-    func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    prim->x0 = prim->x2 = xVar - w;
+    func_80124164(prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
     prim->x1 = prim->x3 = xVar;
-    prim->x0 = prim->x2 = xVar + selfUnk7C;
-    func_80124164(prim, self->ext.teleport.unk88, yVar, selfUnk80, upperParams);
+    prim->x0 = prim->x2 = xVar + w;
+    func_80124164(prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
     if (wasCase3) {
         for (i = 0; i < LEN(D_8013839C); i++) {
@@ -2565,7 +2576,9 @@ void EntityTeleport(Entity* self) {
                 }
                 break;
             case 1:
-                result = func_80119E78(prim, D_8013839C[i].x, D_8013839C[i].y);
+                xVar = D_8013839C[i].x;
+                yVar = D_8013839C[i].y;
+                result = func_80119E78(prim, xVar, yVar);
                 D_8013839C[i].y -= 16;
                 if (result < 0) {
                     prim->drawMode |= DRAW_HIDE;
@@ -2577,12 +2590,11 @@ void EntityTeleport(Entity* self) {
             }
             prim = prim->next;
         }
-        return;
-    }
-
-    // Potential bug? Should probably be doing prim = prim->next, right?
-    for (i = 0; i < 32; i++) {
-        prim->drawMode |= DRAW_HIDE;
+    } else {
+        // Potential bug? Should probably be doing prim = prim->next, right?
+        for (i = 0; i < LEN(D_8013839C); i++) {
+            prim->drawMode |= DRAW_HIDE;
+        }
     }
 }
 

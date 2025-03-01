@@ -1329,10 +1329,10 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-    s32 unk7C;
-    s32 unk80;
-    s32 unk84;
-    s32 unk88;
+    s32 width;
+    s32 height;
+    s32 timer;
+    s32 colorIntensity;
     struct Entity* parent;
     s32 unk90;
 } ET_Teleport;
