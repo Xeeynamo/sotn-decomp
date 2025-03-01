@@ -72,7 +72,7 @@ extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitUnkId13[];
-extern u16 g_EInitUnkId12[];
+extern u16 g_EInitLockCamera[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitDamageNum[];
 extern u16 g_EInitSecret[];

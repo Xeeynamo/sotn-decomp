@@ -11,7 +11,7 @@ void EntitySoulStealOrb(Entity* self) {
 
 #ifdef VERSION_PSP
     if (g_PlayableCharacter == PLAYER_MARIA) {
-        D_psp_091CF3A8 = &func_psp_0923B2F0;
+        g_Player.unk28 = &func_psp_0923B2F0;
         func_psp_0923AD68(self);
         return;
     }

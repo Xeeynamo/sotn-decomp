@@ -324,7 +324,8 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/cutscene_data.c
     src/st/nz0/tile_data.c
     src/st/nz0/sprites.c
-    src/st/nz0/30958.c
+    src/st/nz0/st_debug.c
+    src/st/nz0/e_lock_camera.c
     src/st/nz0/e_breakable.c
     src/st/nz0/d_prize_drops.c
     src/st/nz0/311C0.c

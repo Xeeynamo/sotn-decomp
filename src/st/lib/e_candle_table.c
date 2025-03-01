@@ -5,20 +5,19 @@
 // I've verified it for PSX, but PSP needs e_init.c
 // EInit D_us_801808FC = {ANIMSET_OVL(0x08), 0x00, 0x50, 0x256, 0x005};
 
-static u16 D_us_80181A68[] = {
-    0x0103, 0x0203, 0x0303, 0x0403, 0x0503, 0x0603, 0x0703, 0x0000};
+static u8 D_us_80181A68[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 0, 0};
+static u8 D_us_80181A78[] = {
+    3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 3, 14, 3, 15, 3, 16, 0, 0};
 
 #ifdef VERSION_PSP
-static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
-                              0xF03,  0x1003, 0x0000, 0x0000, 0x0000, 0x0000};
-extern u32 D_psp_092A5590;
+static s32 D_us_80181A8C = 0;
+extern s32 E_ID(CANDLE_TABLE);
+// I expect this symbol will change depending on the function that is
+// including pad2_anim_debug.h
 extern s32 D_8B42050;
-// I expect this symbol will change depending on the function that is including
-// pad2_anim_debug.h
 #define BUTTON_SYMBOL D_8B42050
 #else
-static u16 D_us_80181A78[] = {0x0903, 0x0A03, 0x0B03, 0x0C03, 0x0D03, 0x0E03,
-                              0xF03,  0x1003, 0x0000, 0x0000, 0x0003, 0x0000};
+static s32 D_us_80181A8C = 3;
 #endif
 
 void EntityCandleTable(Entity* self) {
@@ -50,11 +49,7 @@ void EntityCandleTable(Entity* self) {
             self->hitboxOffY = -10;
             self->hitboxState = 2;
             newEntity = self + 1;
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_092A5590, self, newEntity);
-#else
-            CreateEntityFromEntity(E_CANDLE_TABLE, self, newEntity);
-#endif
+            CreateEntityFromEntity(E_ID(CANDLE_TABLE), self, newEntity);
 
             newEntity->params = 0x100;
         }

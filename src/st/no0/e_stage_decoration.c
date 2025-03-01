@@ -28,7 +28,7 @@ static u16 animset[] = {
     ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
     ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
     ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
-    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_DRA(0)};
+    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1)};
 
 static u8 angel_statue_left[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 anim_2[] = {0x40, 0x06, 0xFF, 0x00};
@@ -45,20 +45,18 @@ static u8 window_highlight_4[] = {0x04, 0x28, 0x00, 0x00};
 static u8 red_moveable_floor[] = {0x04, 0x2A, 0x00, 0x00};
 
 static u16 zPriority[] = {
-    0x01FA, 0x0040, 0x006A, 0x006A, 0x003F, 0x0080, 0x0080,
-    0x0080, 0x0080, 0x0080, 0x0080, 0x0080, 0x0080, 0x0080,
-    0x0080, 0x0080, 0x009E, 0x009E, 0x0080, 0x0000};
+    0x1FA, 0x040, 0x06A, 0x06A, 0x03F, 0x080, 0x080, 0x080, 0x080, 0x080,
+    0x080, 0x080, 0x080, 0x080, 0x080, 0x080, 0x09E, 0x09E, 0x080};
 
-static u16 unk5A[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+static u16 unk5A[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u16 palette[] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u16 drawFlags[] = {
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
-    FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT};
+    FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT};
 static u16 drawMode[] = {
     DRAW_TPAGE,
     DRAW_DEFAULT,
@@ -78,8 +76,7 @@ static u16 drawMode[] = {
     DRAW_TPAGE,
     DRAW_DEFAULT,
     DRAW_DEFAULT,
-    DRAW_TPAGE,
-    DRAW_DEFAULT};
+    DRAW_TPAGE};
 static s32 flags[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u32 facingLeft[] = {
     false, false, false, false, false, false, false, false, false, false,

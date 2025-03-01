@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
-#include "dra_bss.h"
 
 void SetPlayerStep(s16 step) {
     PLAYER.step = step;
@@ -143,6 +142,8 @@ void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->animFrameDuration = 0;
     g_CurrentEntity->animFrameIdx = 0;
 }
+
+extern AnimationFrame* D_800B0594[];
 
 AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     u16* anim;

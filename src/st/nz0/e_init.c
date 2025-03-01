@@ -17,8 +17,8 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void func_801B0958(Entity*);
-void func_801B0AA4(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
+void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -96,8 +96,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    func_801B0958,
-    func_801B0AA4,
+    OVL_EXPORT(EntityBackgroundBlock),
+    EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -188,7 +188,7 @@ EInit g_EInitGaibonLargeProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x0100};
 static u32 D_80180D54[] = {0x00000B10};
 static u32 D_80180D58[] = {0x0D080C08, 0x0F080E08, 0x00001008};
 
-ObjInit D_80180D64[] = {
+ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
     {0x8001, 0x0069, 0x0000, 0x0000, 0x00, 0x00, 0x00000000, D_80180D54},
     {0x8001, 0x0069, 0x0000, 0x0000, 0x00, 0x30, 0x00000000, D_80180D58},
 };

@@ -16,7 +16,7 @@ PSX_US_REV_STAGE:= rwrp
 # bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
 PSX_US_ALL_BOSS	:= bo4 mar rbo3
 # tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
-PSX_US_SERVANT	:= tt_000 tt_001 tt_002 tt_003 tt_004
+PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 
 # VERSION=hd
 PSX_HD_GAME		:= dra ric
@@ -320,6 +320,9 @@ format-tools:
 	black tools/*.py
 	black tools/splat_ext/*.py
 	black tools/split_jpt_yaml/*.py
+	black tools/sotn_str/*.py
+	black tools/sotn_permuter/sotn_permuter.py
+	black tools/split_jpt_yaml/*.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
@@ -453,7 +456,7 @@ endif
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
 	mv src src_tmp
-	rm $(BUILD_DIR)/*.ld
+	find $(BUILD_DIR) -type f -name "*.ld" -delete
 	make extract -j
 	rm -rf src/
 	mv src_tmp src
@@ -465,6 +468,8 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
+	# note the lack of `version` for mad
+	$(PYTHON) ./tools/symbols.py elf build/us/stmad.elf > config/symbols.stmad.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stno1.elf > config/symbols.us.stno1.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt

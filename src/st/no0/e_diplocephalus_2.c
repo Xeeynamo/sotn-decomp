@@ -1,17 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-// Fireball
-extern u8 D_us_80181E3C[]; // anim
-extern u8 D_us_80181E54[]; // anim
-extern u8 D_us_80181E70[]; // anim
+// Tail animations
+static u8 D_us_80181DBC[] = {
+    6,  31, 6,  36, 6,  37, 6,  38, 6,  39, 6,  50, 6,  51, 6,
+    52, 6,  51, 6,  50, 6,  39, 6,  38, 6,  37, 6,  36, 0,  0};
+static u8 D_us_80181DDC[] = {
+    8, 30, 8, 46, 8, 47, 8, 48, 40, 49, 8, 30, 16, 24, -1, 0};
+static u8 D_us_80181DEC[] = {
+    8, 30, 8, 46, 2, 32, 2, 33, 2, 34, 2, 33, 2,  32, 2,  33,
+    3, 34, 3, 33, 3, 32, 3, 33, 4, 34, 5, 33, 32, 32, -1, 0};
+static u8 D_us_80181E0C[] = {
+    4,  25, 4,  24, 4,  23, 8,  40, 8,  41, 20, 42, 1,  23, 1,  24, 1,
+    25, 1,  26, 2,  43, 2,  44, 2,  45, 5,  27, 5,  28, 22, 29, 0,  0};
+static u8 D_us_80181E30[] = {6, 19, 6, 20, 6, 21, 6, 20, 0, 0};
 
-// Tail
-extern u8 D_us_80181DBC[]; // anim
-extern u8 D_us_80181DDC[]; // anim
-extern u8 D_us_80181DEC[]; // anim
-extern u8 D_us_80181E0C[]; // anim
-extern u8 D_us_80181E30[]; // anim
+// Fireball animations
+static u8 D_us_80181E3C[] = {
+    2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 6, 2, 5, 2, 4, 2, 3, 0, 0};
+static u8 D_us_80181E54[] = {2, 2, 2, 3,  2, 4,  2, 5,  2, 6,  2, 7,  2,  8,
+                             2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, -1, 0};
+static u8 D_us_80181E70[] = {
+    1,  0,  0, 31, 31, 2,  32, 0, 31, 31, 2,  64, 0, 31, 31, 2,  96, 0,
+    31, 31, 2, 0,  32, 31, 31, 2, 32, 32, 31, 15, 2, 32, 48, 31, 15, 0};
 
 void EntityDiplocephalusFireball(Entity* self) {
     Entity* player;

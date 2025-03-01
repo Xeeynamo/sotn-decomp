@@ -1,9 +1,266 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "game.h"
 #include "st0.h"
-#include "sfx.h"
 
-INCLUDE_ASM("st/st0/nonmatchings/3AB08", EntityClouds);
+typedef struct {
+    u8* unkPtr;
+    s16 unk4;
+    u16 priority;
+} cloudData;
+
+typedef struct {
+    /* 0x00 */ s32 unk0;
+    /* 0x04 */ s32 unk4;
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+} cloudStructUnk;
+
+static s16 D_80182084[] = {
+    0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
+    0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE,
+    0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81,
+    0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
+static SVECTOR cloudVectorOne = {-128, 0, 0, 0};
+static SVECTOR cloudVectorTwo = {128, 0, 0, 0};
+static SVECTOR cloudVectorThree = {-128, 0, 256, 0};
+static SVECTOR cloudVectorFour = {128, 0, 256, 0};
+static u8 D_801820EC[] = {
+    0x05, 0x00, 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x06, 0x00, 0x08,
+    0x05, 0x00, 0x00, 0x07, 0x05, 0x00, 0x05, 0x00, 0x06, 0x05, 0x00,
+    0x08, 0x06, 0x00, 0x06, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x05,
+    0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x07, 0x06, 0x05, 0x00, 0x08,
+    0x00, 0x05, 0x05, 0x08, 0x00, 0x06, 0x00, 0x05, 0x05, 0x06, 0x06,
+    0x00, 0x00, 0x00, 0x00, 0x06, 0x06, 0x07, 0x00, 0x00};
+static u8 D_8018212C[] = {
+    0x04, 0x03, 0x03, 0x04, 0x02, 0x04, 0x03, 0x04, 0x01, 0x03, 0x02,
+    0x03, 0x04, 0x02, 0x02, 0x04, 0x03, 0x02, 0x02, 0x03, 0x02, 0x04,
+    0x03, 0x04, 0x02, 0x02, 0x04, 0x03, 0x01, 0x03, 0x02, 0x04, 0x01,
+    0x01, 0x02, 0x01, 0x04, 0x04, 0x04, 0x04, 0x03, 0x02, 0x02, 0x03,
+    0x02, 0x01, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x04, 0x02,
+    0x02, 0x03, 0x03, 0x04, 0x02, 0x02, 0x04, 0x03, 0x04};
+static cloudData data[] = {
+    {.unkPtr = D_801820EC, .unk4 = 0xFEE0, .priority = 0x1C},
+    {.unkPtr = D_8018212C, .unk4 = 0x00C0, .priority = 0x18}};
+static SVECTOR empty = {0, 0, 0, 0}; // bss on PSP
+
+void EntityClouds(Entity* self) {
+#ifdef VERSION_PC
+    u8 sp[SP_LEN];
+#endif
+    Primitive* prim;
+    s16* var_s1;
+    s32 var_s2;
+    u8* var_s3;
+    s32 i;
+    s32 j;
+    Primitive* primTwo;
+    s32* var_s7;
+
+    s32 sp5C;
+    s32 sp58;
+    s32 priority;
+    s32 primIndex;
+    s32 sp4C;
+    s32 posX;
+    s32 sp44;
+    long sp40;
+    MATRIX* matrix;
+    u8* sp38;
+    cloudStructUnk* cloudStruct;
+    cloudData* cloudData;
+    SVECTOR* vector;
+
+    if (!self->step) {
+        InitializeEntity(g_EInit3DObject);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x70);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.clouds.prim = prim;
+        prim->tpage = 0xF;
+        prim->clut = 0x46;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x65;
+        prim->v0 = prim->v1 = 0x80;
+        prim->v2 = prim->v3 = 0xFB;
+        prim->x0 = prim->x2 = 0x4B;
+        prim->x1 = prim->x3 = 0xB0;
+        prim->y0 = prim->y1 = 0;
+        prim->y2 = prim->y3 = 0x7B;
+
+        self->ext.clouds.unk9C.i.hi = 0x4B;
+        self->ext.clouds.unkA0.i.hi = 0;
+        prim->priority = 4;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+        while (prim != NULL) {
+            prim->tpage = 0xF;
+            prim->clut = 0x226;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    self->ext.clouds.unk84.val += FIX(3);
+    self->ext.clouds.unk8C += FIX(8);
+    self->ext.clouds.unk88 += FIX(8);
+    self->ext.clouds.unk90 += FIX(4);
+
+    g_GpuBuffers[0].draw.r0 = 0x10;
+    g_GpuBuffers[0].draw.g0 = 8;
+    g_GpuBuffers[0].draw.b0 = 0x20;
+    g_GpuBuffers[1].draw.r0 = 0x10;
+    g_GpuBuffers[1].draw.g0 = 8;
+    g_GpuBuffers[1].draw.b0 = 0x20;
+
+    matrix = (MATRIX*)SP(0);
+    primTwo = (Primitive*)SP(0x20);
+    vector = (SVECTOR*)SP(0x60);
+    vector[0] = cloudVectorOne;
+    vector[1] = cloudVectorTwo;
+    vector[2] = cloudVectorThree;
+    vector[3] = cloudVectorFour;
+
+    var_s7 = (s32*)SP(0x80);
+    var_s1 = D_80182084;
+    for (i = 0; i < 0x24; i++, var_s7++, var_s1++) {
+        *var_s7 = *var_s1;
+    }
+
+    var_s3 = (u8*)SP(0x200);
+    var_s3[3] = 4;
+    var_s3[7] = 4;
+
+    SetGeomScreen(256);
+    SetGeomOffset(128, 160);
+    RotMatrix(&empty, matrix);
+    SetRotMatrix(matrix);
+    cloudData = data;
+    var_s1 = &self->ext.clouds.unk84.i.hi;
+    prim = self->ext.clouds.prim;
+    if (g_Timer & 1) {
+        prim->clut = 0x46;
+    } else {
+        prim->clut = 0x47;
+    }
+
+    self->ext.clouds.unk9C.val -= (g_ScrollDeltaX << 0x10) / 6;
+    self->ext.clouds.unkA0.val -= (g_ScrollDeltaY << 0x10) / 6;
+
+    prim->x0 = prim->x2 = self->ext.clouds.unk9C.i.hi;
+    prim->x1 = prim->x3 = self->ext.clouds.unk9C.i.hi + 0x65;
+    prim->y0 = prim->y1 = self->ext.clouds.unkA0.i.hi;
+    prim->y2 = prim->y3 = self->ext.clouds.unkA0.i.hi + 0x7B;
+    prim = prim->next;
+
+    for (i = 0; i < 2; i++, cloudData++, var_s1 += 4) {
+        posX = self->posX.i.hi + *var_s1;
+        posX %= 0x800;
+        priority = cloudData->priority;
+        var_s2 = cloudData->unk4;
+        var_s2 += (0x40 - g_Tilemap.scrollY.i.hi / 4);
+        gte_ldty(var_s2);
+        for (sp5C = 0; sp5C < 8; sp5C++) {
+            var_s2 = sp5C * 0x100 + 0x1C0;
+            sp40 = (u16)var_s1[2];
+            var_s2 -= sp40 % 0x100;
+            gte_ldtz(var_s2);
+            sp40 = (sp5C + (sp40 / 0x100)) % 8;
+            sp38 = (cloudData->unkPtr + sp40 * 8);
+            var_s2 -= 0x1C0;
+
+            sp4C = FIX(15) - var_s2 * 0x1A0;
+            var_s3[0] = sp4C >> 12;
+            var_s3[4] = (sp4C + FIX(-1.625)) >> 12;
+
+            sp4C = FIX(15) - var_s2 * 0x1C0;
+            var_s3[1] = sp4C >> 12;
+            var_s3[5] = (sp4C + FIX(-1.75)) >> 12;
+
+            sp4C = FIX(15) - var_s2 * 0x160;
+            var_s3[2] = sp4C >> 12;
+            var_s3[6] = (sp4C + FIX(-1.375)) >> 12;
+
+            sp44 = posX;
+            j = 0;
+            sp58 = -1;
+            while (1) {
+                sp44 += sp58 << 8;
+                j += sp58;
+                j &= 7;
+                var_s2 = sp38[j];
+                if (var_s2 == 0) {
+                    continue;
+                }
+
+                gte_ldtx(sp44);
+                gte_ldv0(&vector[3]);
+                gte_rtps();
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+
+                cloudStruct = &((cloudStructUnk*)(SP(0x80)))[var_s2];
+                LOH(prim->u0) = cloudStruct->unk0;
+                gte_stsxy((long*)&primTwo->x3);
+                gte_ldv3c(vector);
+                gte_rtpt();
+                if (primTwo->y3 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                    break;
+                }
+                if (primTwo->x3 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                    if (sp58 < 0) {
+                        sp58 += 2;
+                        sp44 = posX - 0x100;
+                        j = 7;
+                    }
+                    continue;
+                }
+                if (var_s2 < 5) {
+                    prim->clut = (g_Timer & 1) + 0x4A;
+                } else {
+                    prim->clut = (g_Timer & 1) + 0x48;
+                }
+                LOH(prim->u1) = cloudStruct->unk4;
+                LOH(prim->u2) = cloudStruct->unk8;
+                gte_stsxy3_gt3(primTwo);
+
+                if (primTwo->x2 > 0x100) {
+                    prim->drawMode = DRAW_HIDE;
+                    if (sp58 > 0) {
+                        break;
+                    } else {
+                        continue;
+                    }
+                } else {
+                    LOH(prim->u3) = cloudStruct->unkC;
+                    LOW(prim->x0) = LOW(primTwo->x0);
+                    LOW(prim->x1) = LOW(primTwo->x1);
+                    LOW(prim->x2) = LOW(primTwo->x2);
+                    LOW(prim->x3) = LOW(primTwo->x3);
+                    LOW(prim->r0) = LOW(prim->r1) = LOW(var_s3[0]);
+                    LOW(prim->r2) = LOW(prim->r3) = LOW(var_s3[4]);
+                    prim->priority = priority;
+                    prim = prim->next;
+                    if (prim == NULL) {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    for (j = 0; prim != NULL; j++, prim = prim->next) {
+        prim->drawMode = DRAW_HIDE;
+    }
+    sp44 = g_Tilemap.scrollX.i.hi + PLAYER.posX.i.hi;
+    if (sp44 < 0x100) {
+        DestroyEntity(self);
+    }
+}
 
 typedef struct {
     u8 u0, v0, u1, v1, u2, v2;

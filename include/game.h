@@ -94,6 +94,12 @@ typedef enum {
 
 #include "entity.h"
 
+#ifdef VERSION_PSP
+#define E_ID(name) D_psp_E_##name
+#else
+#define E_ID(name) E_##name
+#endif
+
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
@@ -137,47 +143,54 @@ typedef enum {
 #define DISP_STAGE_NEXT_X DISP_STAGE_W
 #endif
 
-#define BUTTON_COUNT 8
-#define PAD_COUNT 2
-
-#if !defined(VERSION_PSP)
-#define PAD_L2 0x0001
-#define PAD_R2 0x0002
-#define PAD_L1 0x0004
-#define PAD_R1 0x0008
-#define PAD_TRIANGLE 0x0010
-#define PAD_CIRCLE 0x0020
-#define PAD_CROSS 0x0040
-#define PAD_SQUARE 0x0080
-#define PAD_SELECT 0x0100
-#define PAD_L3 0x0200
-#define PAD_R3 0x0400
-#define PAD_START 0x0800
-#define PAD_UP 0x1000
-#define PAD_RIGHT 0x2000
-#define PAD_DOWN 0x4000
-#define PAD_LEFT 0x8000
-
+// PSP buttons use same order as PSX, rather than by
+// value for logical conistency between the two
+typedef enum {
+    BUTTON_COUNT = 8,
+    PAD_COUNT = 2,
+    PAD_NONE = 0x0000,
+// R3 button on a DS3 controller attached to PSP
+// for debug mode may not be captured in these
+#ifdef VERSION_PSP
+    PAD_L2 = 0x0002,
+    PAD_R2 = 0x0400,
+    PAD_L1 = 0x0100,
+    PAD_R1 = 0x0200,
+    PAD_TRIANGLE = 0x1000,
+    PAD_CIRCLE = 0x2000,
+    PAD_CROSS = 0x4000,
+    PAD_SQUARE = 0x8000,
+    PAD_SELECT = 0x0001,
+    PAD_L3 = 0x0000, // No L3 on PSP
+    PAD_R3 = 0x0000, // No R3 on PSP
+    PAD_START = 0x0008,
+    PAD_UP = 0x0010,
+    PAD_RIGHT = 0x0020,
+    PAD_DOWN = 0x0040,
+    PAD_LEFT = 0x0080,
 #else
-#define PAD_L2 0x0002
-#define PAD_R2 0x0400
-#define PAD_L1 0x0100
-#define PAD_R1 0x0200
-#define PAD_TRIANGLE 0x1000
-#define PAD_CIRCLE 0x2000
-#define PAD_CROSS 0x4000
-#define PAD_SQUARE 0x8000
-#define PAD_SELECT 0x0001
-#define PAD_START 0x0008
-#define PAD_UP 0x0010
-#define PAD_RIGHT 0x0020
-#define PAD_DOWN 0x0040
-#define PAD_LEFT 0x0080
+    PAD_L2 = 0x0001,
+    PAD_R2 = 0x0002,
+    PAD_L1 = 0x0004,
+    PAD_R1 = 0x0008,
+    PAD_TRIANGLE = 0x0010,
+    PAD_CIRCLE = 0x0020,
+    PAD_CROSS = 0x0040,
+    PAD_SQUARE = 0x0080,
+    PAD_SELECT = 0x0100,
+    PAD_L3 = 0x0200,
+    PAD_R3 = 0x0400,
+    PAD_START = 0x0800,
+    PAD_UP = 0x1000,
+    PAD_RIGHT = 0x2000,
+    PAD_DOWN = 0x4000,
+    PAD_LEFT = 0x8000,
 #endif
-
-// Game Buttons unofficially refers to buttons used in playing the game.
-// Direction, action and shoulder buttons. Any button except start or select.
-#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
+    PAD_SIM_UNK20000 = 0x20000,
+    // Game Buttons unofficially refers to buttons used in playing the game.
+    // Any button except start or select.
+    GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
+} PlayerPad;
 
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
@@ -1796,7 +1809,7 @@ typedef struct {
     /* 80072F3C */ s32 unk1C;
     /* 80072F40 */ s32 unk20;
     /* 80072F44 */ s32 unk24;
-    /* 80072F48 */ s32 unk28;
+    /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
     /* 80072F50 */ s32 unk30;
     /* 80072F54 */ s32 unk34;
@@ -1926,12 +1939,6 @@ extern s16 D_800705CC[];       // part of g_Clut
 extern u32 D_80070BCC;         // part of g_Clut
 
 extern PlayerState g_Player;
-// the following are most likely part of g_Player
-extern Entity* D_psp_091CF3A0;
-extern s32 D_psp_091CF3A4; // maybe not s32 but a pointer?
-extern void (*D_psp_091CF3A8)(Entity*);
-extern s32 D_psp_091CF3AC; // maybe not s32 but a pointer?
-extern u16 D_psp_091CF3DC;
 
 extern GfxLoad g_GfxLoad[0x10];
 extern u32 g_GameStep;

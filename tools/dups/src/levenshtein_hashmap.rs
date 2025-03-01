@@ -65,16 +65,21 @@ impl LevenshteinHashMap {
 
     pub fn get(&mut self, key: &[u8]) -> Option<&mut Vec<Function>> {
         let mut closest_key = None;
-        let mut closest_distance = std::f64::MAX;
+        let mut closest_similarity = std::f64::MIN;
 
         let map = self.map.clone();
 
         for (k, _) in map.iter() {
-            let distance = levenshtein_similarity(key, k, &mut self.cache);
+            let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
+            if size_diff < self.threshold || size_diff <= closest_similarity {
+                continue;
+            }
 
-            if distance < closest_distance && distance >= self.threshold {
+            let similarity = levenshtein_similarity(key, k, &mut self.cache);
+
+            if  similarity >= self.threshold && similarity > closest_similarity {
                 closest_key = Some(k);
-                closest_distance = distance;
+                closest_similarity = similarity;
             }
         }
 
@@ -87,20 +92,25 @@ impl LevenshteinHashMap {
 
     pub fn insert(&mut self, key: Vec<u8>, mut value: Function) {
         let mut closest_key = None;
-        let mut closest_distance = std::f64::MAX;
+        let mut closest_similarity = std::f64::MIN;
 
         for k in self.map.keys() {
-            let distance = levenshtein_similarity(&key, k, &mut self.cache);
+            let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
+            if size_diff < self.threshold || size_diff <= closest_similarity {
+                continue;
+            }
 
-            if distance < closest_distance && distance >= self.threshold {
+            let similarity = levenshtein_similarity(&key, k, &mut self.cache);
+
+            if  similarity >= self.threshold && similarity > closest_similarity {
                 closest_key = Some(k.clone());
-                closest_distance = distance;
+                closest_similarity = similarity;
             }
         }
 
         if let Some(k) = closest_key {
             let mut val = self.map.get_mut(&k);
-            value.similarity = closest_distance;
+            value.similarity = closest_similarity;
             val.unwrap().push(value);
         } else {
             let mut my_vec: Vec<Function> = Vec::new();

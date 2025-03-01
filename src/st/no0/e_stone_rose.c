@@ -2,6 +2,24 @@
 #include "no0.h"
 #include "../pfn_entity_update.h"
 
+static s16 D_us_80182268[][4] = {{0x03E, 0x101, 0x001, 0x000},
+                                 {0x03F, 0x106, 0x006, 0x000},
+                                 {0x040, 0x020, 0x008, 0x106}};
+static AnimationFrame D_us_80182280[] = {{2, 2}, {2, 3}, {0, 0}};
+static AnimationFrame D_us_8018228C[] = {
+    {2, 2}, {3, 3}, {2, 2},  {2, 3},  {2, 2},
+    {2, 3}, {2, 2}, {16, 3}, {48, 2}, {-1, 0}};
+static AnimationFrame D_us_801822B4[] = {
+    {2, 2}, {3, 3}, {3, 2}, {4, 3},  {4, 2}, {5, 3}, {5, 2},
+    {5, 3}, {5, 2}, {5, 3}, {5, 2},  {5, 3}, {5, 2}, {5, 3},
+    {5, 2}, {5, 3}, {5, 2}, {16, 3}, {-1, 0}};
+static AnimationFrame D_us_80182300[] = {
+    {5, 8}, {5, 7}, {5, 6}, {5, 5}, {5, 4}, {0, 0}};
+static AnimationFrame D_us_80182318[] = {{4, 10}, {4, 11}, {0, 0}};
+static u16 D_us_80182324[] = {
+    0, 2, 4, 6, 8, 6, 4, 2, 0, -2, -4, -6, -8, -6, -2};
+static s16 D_us_80182344[] = {0, 40, 8, 0};
+
 // spawn seed
 Entity* func_us_801D7D00(u16 arg0) {
     Entity* newEntity;
@@ -23,17 +41,6 @@ Entity* func_us_801D7D00(u16 arg0) {
     return NULL;
 }
 
-extern PfnEntityUpdate D_us_8018091C[];
-
-typedef struct {
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    s16 unk6;
-} Unk_D_us_80182268;
-
-extern Unk_D_us_80182268 D_us_80182268[];
-
 // seed update function
 void func_us_801D7DAC(Entity* self) {
     Entity* newEntity;
@@ -43,18 +50,18 @@ void func_us_801D7DAC(Entity* self) {
 
     params = self->params;
     if (self->step == 0) {
-        self->rotX = D_us_80182268[params].unk0 & 0xFF;
-        self->rotY = D_us_80182268[params].unk2 & 0xFF;
-        self->rotZ = D_us_80182268[params].unk4 & 0x7F;
-        self->rotPivotX = D_us_80182268[params].unk6 & 0x7F;
-        if (D_us_80182268[params].unk6 & 0x80) {
+        self->rotX = D_us_80182268[params][0] & 0xFF;
+        self->rotY = D_us_80182268[params][1] & 0xFF;
+        self->rotZ = D_us_80182268[params][2] & 0x7F;
+        self->rotPivotX = D_us_80182268[params][3] & 0x7F;
+        if (D_us_80182268[params][3] & 0x80) {
             self->attackElement = self->rotPivotX;
         }
-        self->hitPoints = D_us_80182268[params].unk6 >> 0x8;
-        self->hitParams = D_us_80182268[params].unk4 >> 0x8;
-        self->entityRoomIndex = (D_us_80182268[params].unk4 >> 7) & 1;
-        self->hitEffect = D_us_80182268[params].unk0 & 0xFF00;
-        self->hitboxOffX = D_us_80182268[params].unk2 >> 0x8;
+        self->hitPoints = D_us_80182268[params][3] >> 8;
+        self->hitParams = D_us_80182268[params][2] >> 8;
+        self->entityRoomIndex = (D_us_80182268[params][2] >> 7) & 1;
+        self->hitEffect = D_us_80182268[params][0] & 0xFF00;
+        self->hitboxOffX = D_us_80182268[params][1] >> 8;
         self->rotPivotY = 0;
         self->step++;
         switch (self->hitParams) {
@@ -106,11 +113,7 @@ void func_us_801D7DAC(Entity* self) {
                 i++;
             }
         }
-#ifdef VERSION_PSP
-        newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId - 1];
-#else
-        newEntity->pfnUpdate = D_us_8018091C[newEntity->entityId];
-#endif
+        newEntity->pfnUpdate = PfnEntityUpdates[newEntity->entityId - 1];
         newEntity->params = self->hitEffect;
         newEntity->ext.stoneRose.unk8C = self->ext.stoneRose.unk8C;
         newEntity->posX.val = self->posX.val;
@@ -129,12 +132,6 @@ void func_us_801D7DAC(Entity* self) {
     }
     self->attackElement = self->rotPivotX;
 }
-
-extern AnimationFrame D_us_80182280;
-extern AnimationFrame D_us_8018228C;
-extern AnimationFrame D_us_801822B4;
-extern AnimationFrame D_us_80182300;
-extern u16 D_us_80182324[];
 
 // Main Stone Rose entity
 void func_us_801D8150(Entity* self) {
@@ -187,13 +184,13 @@ void func_us_801D8150(Entity* self) {
                 if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
                     self->animFrameIdx = 0;
                     self->animFrameDuration = 0;
-                    self->anim = &D_us_80182280;
+                    self->anim = D_us_80182280;
                 }
             } else {
                 self->ext.stoneRose.unk8A = true;
                 self->animFrameIdx = 0;
                 self->animFrameDuration = 0;
-                self->anim = &D_us_801822B4;
+                self->anim = D_us_801822B4;
                 self->step = 3;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
             }
@@ -260,7 +257,7 @@ void func_us_801D8150(Entity* self) {
         if (((self->ext.stoneRose.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            self->anim = &D_us_8018228C;
+            self->anim = D_us_8018228C;
             PlaySfxPositional(SFX_SEED_SPIT);
             self->step = 2;
         }
@@ -288,7 +285,7 @@ void func_us_801D8150(Entity* self) {
         if (self->animFrameDuration < 0) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            self->anim = &D_us_80182300;
+            self->anim = D_us_80182300;
             PlaySfxPositional(SFX_SEED_SPIT);
             self->step++;
         }
@@ -331,7 +328,7 @@ void func_us_801D8150(Entity* self) {
                 if (params == 0xB && (self->step == 2 || self->step == 1)) {
                     self->animFrameIdx = 7;
                     self->animFrameDuration = 1;
-                    self->anim = &D_us_8018228C;
+                    self->anim = D_us_8018228C;
                     self->step = 2;
                 }
             }
@@ -545,8 +542,6 @@ void func_us_801D8DF0(Entity* self) {
     self->rotZ = zRotation;
 }
 
-extern AnimationFrame D_us_80182318;
-
 // Seed entity
 void func_us_801D8FFC(Entity* self) {
     Collider collider;
@@ -563,7 +558,7 @@ void func_us_801D8FFC(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
-        self->anim = &D_us_80182318;
+        self->anim = D_us_80182318;
         self->ext.stoneRose.unk86 = rand();
         angle = (rand() & 0x1FF) + 0x700;
         self->velocityX = rcos(angle) * 0x10;

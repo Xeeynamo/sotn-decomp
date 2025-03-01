@@ -104,7 +104,8 @@ segments:
       - [0x35060, c, dra_psp/35060]
       - [0x353B0, c, dra/704D0] # O0
       - [0x373F8, c, dra/6E42C]
-      - [0x39AA8, c, dra/6D584]
+      - [0x39AA8, c, dra/alu_anim]
+      - [0x3ABB8, c, dra/6DF70]
       - [0x3B280, c, dra/6FDF8]
       - [0x3B9B0, c, dra/6BF64]
       - [0x3D738, c, dra/84B88]
@@ -150,7 +151,7 @@ segments:
       - [0x6DE50, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
-      - [0xA68E8, .data, dra/6D584]
+      - [0xA68E8, .data, dra/alu_anim]
       - [0xA6920, data]
       - [0xA6B30, .data, dra/84B88] # "light_timer:%02x\n" for hellfire
       - [0xA6B48, data]

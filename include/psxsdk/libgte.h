@@ -216,6 +216,10 @@ extern long ratan2(long y, long x);
                      :                                                         \
                      : "r"(r0), "r"(r1), "r"(r2))
 
+#define gte_ldtx(r0) __asm__ volatile("ctc2   %0, $5;" : : "r"(r0))
+#define gte_ldty(r0) __asm__ volatile("ctc2   %0, $6;" : : "r"(r0))
+#define gte_ldtz(r0) __asm__ volatile("ctc2   %0, $7;" : : "r"(r0))
+
 #define gte_SetTransVector(r0)                                                 \
     __asm__ volatile(                                                          \
         "lw	$12, 0( %0 );"                                                     \
@@ -367,6 +371,9 @@ void gte_ldv0(SVECTOR* v);
 void gte_rtps(void);
 void gte_stsxy(long* sxsy);
 void gte_stszotz(long* otz);
+void gte_ldtx(s16);
+void gte_ldty(s16);
+void gte_ldtz(s16);
 
 #define gte_stdp(x) func_892804C();
 #define gte_stflg(x) func_892804C();

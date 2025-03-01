@@ -11,8 +11,8 @@ void func_psp_0923AD68(Entity* self) {
     u16 direction;
     Entity* pl;
 
-    if (D_psp_091CF3DC && D_psp_091CF3A0) {
-        pl = D_psp_091CF3A0;
+    if (g_Player.unk5C && g_Player.unk20) {
+        pl = (Entity*)g_Player.unk20;
     } else {
         pl = &PLAYER;
     }
@@ -54,7 +54,7 @@ void func_psp_0923AD68(Entity* self) {
         }
         if (abs(pl->posX.i.hi - self->posX.i.hi) < 8 &&
             abs(pl->posY.i.hi - self->posY.i.hi) < 8) {
-            D_psp_091CF3A4 += 4;
+            g_Player.unk24 += 4;
             DestroyEntity(self);
             return;
         }

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-extern u16 D_us_801809E0[];
 extern s32 D_us_80181ACC;
 extern u8 D_us_80182E3C[];
 extern u8 D_us_80182E4C[];
@@ -9,8 +8,7 @@ extern s16 D_us_80182E70[];
 extern s16 D_us_80182E80[];
 extern s32 D_us_80182E88[][2];
 
-// Mudman
-void func_us_801D064C(Entity* self) {
+void EntityMudman(Entity* self) {
     Entity* tempEntity;
     Entity* tempEntity2;
     Primitive* prim;
@@ -26,17 +24,17 @@ void func_us_801D064C(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809E0);
+        InitializeEntity(g_EInitMudman);
         self->zPriority = 0x78;
         tempEntity2 = AllocEntity(&g_Entities[64], &g_Entities[192]);
         if (tempEntity2 != NULL) {
             CreateEntityFromEntity(E_ID_4E, self, tempEntity2);
-            tempEntity2->ext.et_801D064C.unk9C = self;
+            tempEntity2->ext.mudman.unk9C = self;
         }
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_2000;
-        self->ext.et_801D064C.unk84 = 0;
-        self->ext.et_801D064C.unk81 = 0;
+        self->ext.mudman.unk84 = 0;
+        self->ext.mudman.unk81 = 0;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->unk60 = NULL;
         break;
@@ -49,7 +47,7 @@ void func_us_801D064C(Entity* self) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                self->ext.et_801D064C.unk7C = prim;
+                self->ext.mudman.unk7C = prim;
                 prim->tpage = 0x14;
                 prim->clut = 0x277;
                 prim->u0 = 0x80;
@@ -81,15 +79,15 @@ void func_us_801D064C(Entity* self) {
         break;
     case 2:
         if (g_Timer % 2 == 0) {
-            prim = self->ext.et_801D064C.unk7C;
-            if (self->ext.et_801D064C.unk80 == 0x10) {
+            prim = self->ext.mudman.unk7C;
+            if (self->ext.mudman.unk80 == 0x10) {
                 if (self->facingLeft) {
                     prim->x0 -= 8;
                 } else {
                     prim->x0 += 8;
                 }
             }
-            if (self->ext.et_801D064C.unk80 < 0x10) {
+            if (self->ext.mudman.unk80 < 0x10) {
                 if (self->facingLeft) {
                     prim->x0++;
                     prim->x1--;
@@ -101,26 +99,26 @@ void func_us_801D064C(Entity* self) {
                 prim->x3 = prim->x1;
             } else {
                 prim->y1--;
-                if (self->ext.et_801D064C.unk80 >= 0x20) {
+                if (self->ext.mudman.unk80 >= 0x20) {
                     prim->y0--;
                 }
-                if (self->ext.et_801D064C.unk80 >= 0x36) {
+                if (self->ext.mudman.unk80 >= 0x36) {
                     prim->y1++;
                     prim->y0--;
                 }
             }
-            if (self->ext.et_801D064C.unk80 >= 0x3D) {
+            if (self->ext.mudman.unk80 >= 0x3D) {
                 if (self->facingLeft) {
                     prim->x0++;
                 } else {
                     prim->x0--;
                 }
             }
-            self->ext.et_801D064C.unk80++;
-            PGREY(prim, 2) = (self->ext.et_801D064C.unk80 * 2) + 4;
-            PGREY(prim, 3) = (self->ext.et_801D064C.unk80 * 2) + 4;
-            if (self->ext.et_801D064C.unk80 >= 0x3E) {
-                self->ext.et_801D064C.unk80 = 0;
+            self->ext.mudman.unk80++;
+            PGREY(prim, 2) = (self->ext.mudman.unk80 * 2) + 4;
+            PGREY(prim, 3) = (self->ext.mudman.unk80 * 2) + 4;
+            if (self->ext.mudman.unk80 >= 0x3E) {
+                self->ext.mudman.unk80 = 0;
                 self->step++;
             }
         }
@@ -129,14 +127,14 @@ void func_us_801D064C(Entity* self) {
     case 3:
         if (g_Timer % 6 == 0) {
             self->step_s = 6;
-            prim = self->ext.et_801D064C.unk7C;
+            prim = self->ext.mudman.unk7C;
             if (self->facingLeft) {
                 prim->x0++;
             } else {
                 prim->x0--;
             }
-            if (self->ext.et_801D064C.unk80++ > 3) {
-                prim = self->ext.et_801D064C.unk7C;
+            if (self->ext.mudman.unk80++ > 3) {
+                prim = self->ext.mudman.unk7C;
                 primIndex = prim - g_PrimBuf;
                 g_api.FreePrimitives(primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
@@ -146,7 +144,7 @@ void func_us_801D064C(Entity* self) {
                     self->velocityX = FIX(-0.25);
                 }
                 self->animCurFrame = 1;
-                self->ext.et_801D064C.unk80 = 0;
+                self->ext.mudman.unk80 = 0;
                 self->step = 6;
             }
         }
@@ -154,8 +152,8 @@ void func_us_801D064C(Entity* self) {
 
     case 4:
         if (g_Timer % 2 == 0) {
-            prim = self->ext.et_801D064C.unk7C;
-            if (self->ext.et_801D064C.unk80 < 0x10) {
+            prim = self->ext.mudman.unk7C;
+            if (self->ext.mudman.unk80 < 0x10) {
                 if (self->facingLeft) {
                     prim->x0++;
                     prim->x1--;
@@ -167,19 +165,19 @@ void func_us_801D064C(Entity* self) {
                 prim->x3 = prim->x1;
             } else {
                 prim->y1--;
-                if (self->ext.et_801D064C.unk80 >= 0x20) {
+                if (self->ext.mudman.unk80 >= 0x20) {
                     prim->y0--;
                 }
-                if (self->ext.et_801D064C.unk80 >= 0x36) {
+                if (self->ext.mudman.unk80 >= 0x36) {
                     prim->y1++;
                     prim->y0--;
                 }
             }
-            self->ext.et_801D064C.unk80++;
-            PGREY(prim, 2) = (self->ext.et_801D064C.unk80 * 2) + 4;
-            PGREY(prim, 3) = (self->ext.et_801D064C.unk80 * 2) + 4;
-            if (self->ext.et_801D064C.unk80 >= 0x3E) {
-                prim = self->ext.et_801D064C.unk7C;
+            self->ext.mudman.unk80++;
+            PGREY(prim, 2) = (self->ext.mudman.unk80 * 2) + 4;
+            PGREY(prim, 3) = (self->ext.mudman.unk80 * 2) + 4;
+            if (self->ext.mudman.unk80 >= 0x3E) {
+                prim = self->ext.mudman.unk7C;
                 primIndex = prim - g_PrimBuf;
                 g_api.FreePrimitives(primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
@@ -196,8 +194,8 @@ void func_us_801D064C(Entity* self) {
 
     case 5:
         if (g_Timer % 2 == 0) {
-            prim = self->ext.et_801D064C.unk7C;
-            if (self->ext.et_801D064C.unk80 < 0x3E) {
+            prim = self->ext.mudman.unk7C;
+            if (self->ext.mudman.unk80 < 0x3E) {
                 if (self->facingLeft) {
                     prim->x0++;
                     prim->x1--;
@@ -220,9 +218,9 @@ void func_us_801D064C(Entity* self) {
                 prim->x2 = prim->x0;
                 prim->x3 = prim->x1;
             }
-            self->ext.et_801D064C.unk80++;
-            if (self->ext.et_801D064C.unk80 >= 0x6B) {
-                prim = self->ext.et_801D064C.unk7C;
+            self->ext.mudman.unk80++;
+            if (self->ext.mudman.unk80 >= 0x6B) {
+                prim = self->ext.mudman.unk7C;
                 primIndex = prim - g_PrimBuf;
                 g_api.FreePrimitives(primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
@@ -255,7 +253,7 @@ void func_us_801D064C(Entity* self) {
         if (AnimateEntity(D_us_80182E4C, self) == 0) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
-            self->ext.et_801D064C.unk81 = 1;
+            self->ext.mudman.unk81 = 1;
             self->step = 6;
         }
         if (!self->animFrameDuration && self->animFrameIdx == 3) {
@@ -264,13 +262,13 @@ void func_us_801D064C(Entity* self) {
         break;
 
     case 8:
-        prim = self->ext.et_801D064C.unk7C;
+        prim = self->ext.mudman.unk7C;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.et_801D064C.unk7C = prim;
+            self->ext.mudman.unk7C = prim;
             prim->tpage = 0x14;
             prim->clut = 0x277;
             prim->u0 = 0x80;
@@ -306,7 +304,7 @@ void func_us_801D064C(Entity* self) {
             return;
         }
         self->animCurFrame = 0;
-        self->ext.et_801D064C.unk80 = 0;
+        self->ext.mudman.unk80 = 0;
         self->step_s = 0;
         self->hitboxState = 0;
         PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
@@ -315,8 +313,8 @@ void func_us_801D064C(Entity* self) {
 
     case 9:
         if (g_Timer % 2 == 0) {
-            prim = self->ext.et_801D064C.unk7C;
-            if (self->ext.et_801D064C.unk80 < 0x10) {
+            prim = self->ext.mudman.unk7C;
+            if (self->ext.mudman.unk80 < 0x10) {
                 if (self->facingLeft) {
                     prim->x0 -= 1;
                     prim->x1 -= 0;
@@ -329,11 +327,11 @@ void func_us_801D064C(Entity* self) {
                     prim->x3 += 0;
                 }
             }
-            if (self->ext.et_801D064C.unk80 < 0x26) {
+            if (self->ext.mudman.unk80 < 0x26) {
                 prim->y1++;
                 prim->y0++;
             }
-            if (self->ext.et_801D064C.unk80++ > 0x26) {
+            if (self->ext.mudman.unk80++ > 0x26) {
                 DestroyEntity(self);
                 return;
             }

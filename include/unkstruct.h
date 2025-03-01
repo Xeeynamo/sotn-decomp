@@ -72,23 +72,6 @@ typedef struct {
     s32 unkC;
 } Unkstruct_800FDB18;
 
-typedef struct Unkstruct_801C6C6C {
-    union {
-        struct {
-            u16 w;
-            u16 x;
-        } c;
-        s32 p;
-    } x;
-    union {
-        struct {
-            u16 h;
-            u16 y;
-        } c;
-        s32 p;
-    } y;
-} Unkstruct_801C6C6C;
-
 typedef struct {
     u16 start;
     s16 current;
