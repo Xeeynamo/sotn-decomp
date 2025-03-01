@@ -2449,7 +2449,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x80;
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
-            self->step = Player_Hydrostorm;
+            self->step = Player_Unk20;
 #ifndef VERSION_PSP
             PlaySfx(SFX_UNK_8BB);
 #endif
