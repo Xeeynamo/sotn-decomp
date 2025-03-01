@@ -37,7 +37,13 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 SHELL 			 = /bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
 PYTHON_BIN		:= $(VENV_DIR)/bin
+# This is a temporary workaround for a combination of the makefile
+# and CI not being fully compatible with venv
+ifneq ($(wildcard $(VENV_DIR)),)
 PYTHON          := $(PYTHON_BIN)/python3
+else
+PYTHON		  	:= python3
+endif
 PIP			 	:= $(PYTHON_BIN)/pip3
 SPLAT           := splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
