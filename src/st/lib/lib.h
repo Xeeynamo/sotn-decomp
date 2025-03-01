@@ -93,29 +93,10 @@ extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-typedef struct {
-    /* 0x0 */ u16 category;
-    /* 0x2 */ u16 itemId;
-    /* 0x4 */ u32 price;
-} AvailableInventoryItem;
-
-/// the first 5 inventory categories are the same as
-/// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
-/// special and only used for inventory so far.
-typedef enum {
-    INVENTORY_HAND,
-    INVENTORY_HEAD,
-    INVENTORY_BODY,
-    INVENTORY_CAPE,
-    INVENTORY_ACCESSORY,
-    INVENTORY_RELIC,
-    INVENTORY_DOCUMENT,
-} InventoryCategory;
-
 // extern EInit D_us_80180800;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-// extern EInit D_us_80180824;
+extern EInit D_us_80180824;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
@@ -128,7 +109,7 @@ extern EInit g_EInitFlyingZombie1;
 extern EInit g_EInitDhuron;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
-// extern EInit D_us_801808C0;
+extern EInit D_us_801808C0;
 extern EInit g_EInitThornweed;
 // extern EInit D_us_801808D8;
 extern EInit g_EInitCorpseweed;
@@ -141,9 +122,9 @@ extern EInit g_EInitSpellbook;
 // extern EInit D_us_80180938;
 extern EInit g_EInitMagicTome;
 // extern EInit D_us_80180950;
-// extern EInit D_us_8018095C;
+extern EInit D_us_8018095C;
 extern EInit g_EInitLesserDemon;
-// extern EInit D_us_80180974;
+extern EInit g_EInitLesserDemonSpit;
 // extern EInit D_us_80180980;
 // extern EInit D_us_8018098C;
 extern EInit g_EInitSkeleton;
