@@ -128,44 +128,11 @@ else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
 
-##@ Variables
-##@
-##@     VERSION              the game version to build (us, hd, pspeu, saturn, pc) (Default: us)
-##@
-##@ Primary Targets
-##@
-
-.PHONY: all
-all: ##@ (Default) build and check
-all: build check
-
-.PHONY: extract 
-extract: ##@ split game files into assets and assembly
-extract: extract_$(VERSION)
-
-.PHONY: build 
-build: ##@ build game files
-build: build_$(VERSION)
-
-.PHONY: clean
-clean: ##@ clean extracted files, assets, and build artifacts
-	git clean -fdx assets/
-	git clean -fdx asm/$(VERSION)/
-	git clean -fdx build/$(VERSION)/
-	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx $(CONFIG_DIR)/*$(VERSION)*
-	git clean -fdx function_calls/
-	git clean -fdx sotn_calltree.txt
-
-##@
-##@ Misc Targets
-##@
-
-# this help target will find targets which are followed by a comment beging with '#' '#' '@' and
+# this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
 # will act as section dividers.
 .PHONY: help
-help: ##@ Print listing of key targets with their descriptions
+help:
 	@printf "\nUsage: make [VERSION=version] <target> …\n"
 	@grep -F -h "##@" $(MAKEFILE_LIST) | grep -F -v grep -F | sed -e 's/\\$$//' | awk 'BEGIN {FS = ":*[[:space:]]*##@[[:space:]]?"}; \
 	{ \
@@ -181,8 +148,56 @@ help: ##@ Print listing of key targets with their descriptions
         }; \
 	}'
 
-.PHONY: format
+##@ Variables
+##@
+##@     VERSION              the game version to build (us, hd, pspeu, saturn, pc) (Default: us)
+##@
+##@ Primary Targets
+##@
+
+all: ##@ (Default) build and check
+extract: ##@ split game files into assets and assembly
+build: ##@ build game files
+clean: ##@ clean extracted files, assets, and build artifacts
+
+##@
+##@ Misc Targets
+##@
+
+help: ##@ Print listing of key targets with their descriptions
 format: ##@ Format source code, clean symbols, other linting
+check: ##@ compare built files to original game files
+force_symbols: ##@ Extract a full list of symbols from a successful build
+context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
+extract_disk: ##@ Extract game files from a disc image.
+update-dependencies: ##@ update tools and internal dependencies
+
+##@
+##@ Disc Dumping Targets
+##@
+dump_disk: ##@ dump a physical game disk
+
+
+.PHONY: all
+all: build check
+
+.PHONY: extract 
+extract: extract_$(VERSION)
+
+.PHONY: build 
+build: build_$(VERSION)
+
+.PHONY: clean
+clean:
+	git clean -fdx assets/
+	git clean -fdx asm/$(VERSION)/
+	git clean -fdx build/$(VERSION)/
+	git clean -fdx $(SRC_DIR)/weapon
+	git clean -fdx $(CONFIG_DIR)/*$(VERSION)*
+	git clean -fdx function_calls/
+	git clean -fdx sotn_calltree.txt
+
+.PHONY: format
 format: format-src format-tools format-symbols format-license
 
 .PHONY: format-src
@@ -245,7 +260,6 @@ patch:
 	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
 
 .PHONY: check
-check: ##@ compare built files to original game files
 check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
         printf "%s\t[ ", $$1; \
@@ -271,7 +285,7 @@ force_extract:
 	rm -rf src/
 	mv src_tmp src
 
-force_symbols: ##@ Extract a full list of symbols from a successful build
+force_symbols:
 	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/dra.elf > $(CONFIG_DIR)/symbols.us.dra.txt
 	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/ric.elf > $(CONFIG_DIR)/symbols.us.ric.txt
 	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stcen.elf > $(CONFIG_DIR)/symbols.us.stcen.txt
@@ -297,12 +311,11 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_003.elf > $(CONFIG_DIR)/symbols.us.tt_003.txt
 	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_004.elf > $(CONFIG_DIR)/symbols.us.tt_004.txt
 
-context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
+context:
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
 .PHONY: extract_%
-extract_disk: ##@ Extract game files from a disc image.
 extract_disk: extract_disk_$(VERSION)
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(DISK_DIR)
@@ -395,11 +408,11 @@ debian-dependencies:
 
 python-dependencies: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
+	touch python-dependencies
 
 $(VENV_DIR): debian-dependencies
 	python3 -m venv $(VENV_DIR)
 
-update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
@@ -458,12 +471,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
-##@
-##@ Disc Dumping Targets
-##@
-
 .PHONY: dump_disk dump_disk_%
-dump_disk: ##@ dump a physical game disk
 dump_disk: dump_disk_$(VERSION)
 dump_disk_eu: dump_disk_cd
 dump_disk_hk: dump_disk_cd
