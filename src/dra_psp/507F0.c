@@ -79,6 +79,15 @@ AnimationFrame D_800AD5FC[] = {
     {0xFFFF, 0x0000},
 };
 
+// This is BSS on PSP.
+#ifndef VERSION_PSP
+s32 D_800AD630[] = {
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+#endif
+
 s16 D_800AD670[42][10] = {
     {0, 0, 0, 351, 256, 256, 256, 96, 49, 512},
     {0, 2, 6, 351, 256, 256, 256, 16, 49, 512},
@@ -474,6 +483,7 @@ void func_8011E4BC(Entity* self) {
 
 void func_8011EDA0() {}
 
+// RIC function is func_80161C2C
 void func_8011EDA8(Entity* self) {
     s16 paramsLo = self->params & 0xFF;
     s16 paramsHi = (self->params >> 8) & 0xFF;
@@ -544,10 +554,8 @@ void func_8011EDA8(Entity* self) {
     }
 }
 
-extern s32 D_8013808C;
-
+// same as RIC/RicEntityHitByDark
 void func_8011F074(Entity* self) {
-
     switch (self->step) {
     case 0:
         self->flags =
@@ -574,7 +582,6 @@ void func_8011F074(Entity* self) {
         self->velocityY = -0x6000 - (rand() & 0x3FFF);
         self->step++;
         break;
-
     case 1:
         if (self->unk6C > 16) {
             self->unk6C -= 8;
@@ -589,6 +596,7 @@ void func_8011F074(Entity* self) {
     }
 }
 
+// effect when player takes lightning damage
 void EntityHitByLightning(Entity* self) {
     s16 xBase;
     s16 yBase;
@@ -725,6 +733,7 @@ void EntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
+// player gets frozen
 void EntityHitByIce(Entity* self) {
     s32 i;
     s16 xShift;
@@ -895,6 +904,9 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
+// Transparent white circle closes over player
+// Entity ID #38. Created by blueprint 53. No known callers.
+// Near-duplicate of RIC RicEntityShrinkingPowerUpRing.
 void EntityTransparentWhiteCircle(Entity* self) {
     bool flag;
     s16 upperparams;
@@ -1173,6 +1185,7 @@ void EntityPlayerPinkEffect(Entity* self) {
     }
 }
 
+// player dissolves into pixels
 void EntityPlayerDissolves(Entity* self) {
     const int PrimCount = 36;
     const int Iterations = 40;
@@ -1414,7 +1427,6 @@ void EntityPlayerDissolves(Entity* self) {
     func_8010DFF0(1, 1);
 }
 
-extern s32 D_80138090;
 void EntityLevelUpAnimation(Entity* self) {
     Primitive* prim;
     Unkstruct_800AE180* unkstruct;
@@ -1551,8 +1563,6 @@ void EntityLevelUpAnimation(Entity* self) {
     }
 }
 
-extern mistStruct D_80138094[16];
-
 void func_80121F14(s32 arg0, s32 arg1) {
     mistStruct* ptr = D_80138094;
     s32 i;
@@ -1562,8 +1572,6 @@ void func_80121F14(s32 arg0, s32 arg1) {
         ptr->posY.val += (s32)arg1;
     }
 }
-
-extern Primitive D_801381F4[8];
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
@@ -1665,6 +1673,7 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     return arg2;
 }
 
+// spawns mist (player transform)
 void EntityMist(Entity* self) {
     Primitive* prim;
     Primitive* mistPrim;
@@ -2077,7 +2086,6 @@ block_147:
     self->facingLeft = PLAYER.facingLeft;
 }
 
-
 void UnknownEntId48(Entity* self) {
     u32 lowerParams;
 
@@ -2315,6 +2323,7 @@ void func_80123F78(Entity* self) {
     }
 }
 
+// Corresponding RIC function is func_80165DD8
 static void func_80124164(
     Primitive* prim, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     prim->y0 = prim->y1 = y - radius;
@@ -2420,6 +2429,9 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Hydrostorm;
+            #ifndef VERSION_PSP
+            PlaySfx(SFX_UNK_8BB);
+            #endif
         } else {
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.width = 1;
@@ -2475,8 +2487,10 @@ void EntityTeleport(Entity* self) {
         break;
     case 6:
         PLAYER.palette = 0x810D;
+        #ifdef VERSION_PSP
         func_892A620(0,1);
         func_892A620(1,1);
+        #endif
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
             self->ext.teleport.unk90 = 0;
@@ -2500,7 +2514,9 @@ void EntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
+            #ifdef VERSION_PSP
             PlaySfx(SFX_UNK_8BB);
+            #endif
             self->step++;
         }
         break;

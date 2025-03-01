@@ -79,11 +79,14 @@ AnimationFrame D_800AD5FC[] = {
     {0xFFFF, 0x0000},
 };
 
+// This is BSS on PSP.
+#ifndef VERSION_PSP
 s32 D_800AD630[] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
+#endif
 
 s16 D_800AD670[42][10] = {
     {0, 0, 0, 351, 256, 256, 256, 96, 49, 512},
@@ -552,55 +555,48 @@ void func_8011EDA8(Entity* self) {
 }
 
 // same as RIC/RicEntityHitByDark
-void func_8011F074(Entity* entity) {
-    s16 posX;
-    s16 posY;
-
-    switch (entity->step) {
+void func_8011F074(Entity* self) {
+    switch (self->step) {
     case 0:
-        entity->flags =
+        self->flags =
             FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
-        entity->unk5A = 0x79;
-        entity->animSet = ANIMSET_DRA(14);
-        entity->zPriority = PLAYER.zPriority + 2;
-        entity->palette = PAL_OVL(0x19F);
+        self->unk5A = 0x79;
+        self->animSet = ANIMSET_DRA(14);
+        self->zPriority = PLAYER.zPriority + 2;
+        self->palette = PAL_OVL(0x19F);
 
         if (D_8013808C & 1) {
-            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
-            entity->drawMode = DRAW_TPAGE;
+            self->drawMode = DRAW_TPAGE;
         }
-        entity->rotY = 0x40;
-        entity->rotX = 0x40;
-        entity->anim = D_800ADC44;
         D_8013808C++;
-        entity->unk6C = 0xFF;
-        entity->drawFlags =
+        self->unk6C = 0xFF;
+        self->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        posX = 10;
-        posY = 15;
-        entity->posY.i.hi = entity->posY.i.hi - posY + (rand() % 35);
-        entity->posX.i.hi = entity->posX.i.hi - posX + (rand() % 20);
-        entity->velocityY = -0x6000 - (rand() & 0x3FFF);
-        entity->step++;
-        break;
+        self->rotX = self->rotY = 0x40;
+        self->anim = D_800ADC44;
 
+        self->posY.i.hi += ((rand() % 35) - 15);
+        self->posX.i.hi += ((rand() % 20) - 10);
+        self->velocityY = -0x6000 - (rand() & 0x3FFF);
+        self->step++;
+        break;
     case 1:
-        if (entity->unk6C >= 17) {
-            entity->unk6C += 248;
+        if (self->unk6C > 16) {
+            self->unk6C -= 8;
         }
-        entity->posY.val += entity->velocityY;
-        entity->rotX += 8;
-        entity->rotY += 8;
-        if (entity->animFrameDuration < 0) {
-            DestroyEntity(entity);
+        self->posY.val += self->velocityY;
+        self->rotX += 8;
+        self->rotY += 8;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
         }
         break;
     }
 }
 
 // effect when player takes lightning damage
-
 void EntityHitByLightning(Entity* self) {
     s16 xBase;
     s16 yBase;
@@ -2328,7 +2324,7 @@ void func_80123F78(Entity* self) {
 }
 
 // Corresponding RIC function is func_80165DD8
-void func_80124164(
+static void func_80124164(
     Primitive* prim, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
     prim->y0 = prim->y1 = y - radius;
     prim->y2 = prim->y3 = y + radius;
@@ -2433,7 +2429,9 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.unk90 = 0xFF;
             var_s5 = true;
             self->step = Player_Hydrostorm;
+            #ifndef VERSION_PSP
             PlaySfx(SFX_UNK_8BB);
+            #endif
         } else {
             self->ext.teleport.unk90 = 0;
             self->ext.teleport.width = 1;
@@ -2516,6 +2514,9 @@ void EntityTeleport(Entity* self) {
     case 21:
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
+            #ifdef VERSION_PSP
+            PlaySfx(SFX_UNK_8BB);
+            #endif
             self->step++;
         }
         break;
