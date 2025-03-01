@@ -1,12 +1,16 @@
-# Make configuration
 .SECONDEXPANSION:
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Environment
+# Preflight checks
 ifeq ($(VERSION),)
 $(info VERSION not defined, defaulting to VERSION=us)
 VERSION         ?= us
+endif
+
+WHICH_PYTHON != which python3
+ifeq ($(WHICH_PYTHON),)
+$(error The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
 endif
 
 # Compilers
@@ -32,10 +36,9 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 # Tooling
 SHELL 			 = /bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
-#PYTHON_BIN		:= $(VENV_DIR)/bin
-#PYTHON          := $(PYTHON_BIN)/python3
-PYTHON			:= python3
-#PIP			 := $(PYTHON_BIN)/pip3
+PYTHON_BIN		:= $(VENV_DIR)/bin
+PYTHON          := $(PYTHON_BIN)/python3
+PIP			 	:= $(PYTHON_BIN)/pip3
 SPLAT           := splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
@@ -59,9 +62,7 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
-export PATH     := $(VENV_DIR)/bin:$(PATH)
 
-# Dependencies
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
@@ -267,12 +268,12 @@ format-symbols:
 	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
 	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/game.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/items.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
 .PHONY: ff
@@ -398,7 +399,6 @@ disk_debug: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 # put this here as both PSX HD and PSP use it
-.PHONY: extract_%
 extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
@@ -427,13 +427,13 @@ duplicates-report:
 	    cargo run --release -- \
             --threshold .90 \
             --output-file ../../gh-duplicates/duplicates.txt
-			
-.PHONY: update-dependencies python-dendencies
-python-dependencies:
-	# the python setup cannot depend on the virtualenv
-	# because it may not be set up yet
-	[ -d $(VENV_DIR) ] || python3 -m venv $(VENV_DIR)
-	pip install -r $(TOOLS_DIR)/requirements-python.txt
+
+.PHONY: python-dependencies
+python-dependencies: $(VENV_DIR)
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
+
+$(VENV_DIR):
+	$(WHICH_PYTHON) -m venv $(VENV_DIR)
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
@@ -499,7 +499,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 ##@ Disc Dumping Targets
 ##@
 
-.PHONY: dump_disk dump_disk_%
+.PHONY: dump_disk%
 dump_disk: ##@ dump a physical game disk
 dump_disk: dump_disk_$(VERSION)
 dump_disk_eu: dump_disk_cd
