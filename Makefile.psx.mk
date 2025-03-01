@@ -63,12 +63,10 @@ DEPENDENCIES	+= $(MASPSX_APP)
 
 # PSX specific targets
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	ls -al $(PYTHON_BIN)
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
-	ls -al $(PYTHON_BIN)
 	echo $(PSX_HD_EXTRACT_TARGETS)
 	make extract_assets
 	make build_assets
@@ -87,6 +85,7 @@ $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
 	touch $@
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
+	ls -al ./ .venv/ $(PYTHON_BIN)
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
