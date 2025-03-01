@@ -37,12 +37,13 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 SHELL 			 = /bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
 PYTHON_BIN		:= $(VENV_DIR)/bin
-# This is a temporary workaround for a combination of the makefile
-# and CI not being fully compatible with venv
+# This is a temporary workaround for CI not being fully compatible with venv
 ifneq ($(wildcard $(VENV_DIR)),)
 PYTHON          := $(PYTHON_BIN)/python3
+BLACK			:= $(PYTHON_BIN)/black
 else
 PYTHON		  	:= python3
+BLACK			:= black
 endif
 PIP			 	:= $(PYTHON_BIN)/pip3
 SPLAT           := splat split
@@ -68,7 +69,6 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
-export PATH     := $(VENV_DIR)/bin:$(PATH)
 
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
@@ -235,45 +235,45 @@ format-src: bin/clang-format
 
 .PHONY: format-tools
 format-tools:
-	black tools/*.py
-	black tools/splat_ext/*.py
-	black tools/split_jpt_yaml/*.py
+	$(BLACK) tools/*.py
+	$(BLACK) tools/splat_ext/*.py
+	$(BLACK) tools/split_jpt_yaml/*.py
 
 .PHONY: format-symbols
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.dra.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
