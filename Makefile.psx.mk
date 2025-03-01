@@ -85,7 +85,6 @@ $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
 	touch $@
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
-	ls -al ./ .venv/ $(PYTHON_BIN)
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
