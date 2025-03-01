@@ -14,7 +14,7 @@ endif
 PSX_US_GAME		:= main dra ric weapon
 PSX_US_STAGES	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
 PSX_US_STAGES   += rwrp # Second line for stages for future readability
-PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for stages for future readability
+PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for bosses for future readability
 PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 
 # VERSION=hd
@@ -63,10 +63,12 @@ DEPENDENCIES	+= $(MASPSX_APP)
 
 # PSX specific targets
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
+	ls -al $(PYTHON_BIN)
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
+	ls -al $(PYTHON_BIN)
 	echo $(PSX_HD_EXTRACT_TARGETS)
 	make extract_assets
 	make build_assets
@@ -416,4 +418,4 @@ $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_d
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	./tools/png2bin.py $< $@
+	$(PYTHON) ./tools/png2bin.py $< $@
