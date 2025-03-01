@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 u8 D_800AD4B8[] = {
     // TODO: move to 7A4D0.c
@@ -37,7 +35,7 @@ u16* D_800AD520[] = {
     D_800AD4F4, D_800AD500, D_800AD50C,
 };
 
-extern u8 D_800B0188[];
+extern s8 D_800B0188[];
 // TODO: move to 7A4D0.c
 WeaponAnimation D_800AD53C[] = {
     {D_800AD520, D_800B0188, 0x0000, SFX_WEAPON_SWISH_C, 0x24, 1},
@@ -185,8 +183,6 @@ static unkStr_8011E4BC* D_800ADB98[] = {
     &D_800ADAF8, &D_800ADB08, &D_800ADB18, &D_800ADB28, &D_800ADB38,
     &D_800ADB48, &D_800ADB58, &D_800ADB68, &D_800ADB78, &D_800ADB88,
 };
-
-extern Unkstruct_800ADEF0 D_800ADEF0[];
 
 // BSS
 extern s32 D_8013808C;
@@ -1102,6 +1098,8 @@ void EntityTransparentWhiteCircle(Entity* self) {
         prim1 = prim1->next;
     }
 }
+
+extern Unkstruct_800ADEF0 D_800ADEF0[];
 
 // Potion Entity. Has different effects based on a parameter.
 void EntityPlayerPinkEffect(Entity* self) {

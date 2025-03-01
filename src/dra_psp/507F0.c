@@ -1085,6 +1085,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
 
 extern Unkstruct_800ADEF0 D_800ADEF0[];
 
+// Potion Entity. Has different effects based on a parameter.
 void EntityPlayerPinkEffect(Entity* self) {
     s16 paramsHi = (self->params & 0x7F00) >> 8;
     Unkstruct_800ADEF0* data_idx = (Unkstruct_800ADEF0*)&D_800ADEF0[paramsHi];
