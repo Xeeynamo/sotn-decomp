@@ -1,12 +1,16 @@
-# Make configuration
 .SECONDEXPANSION:
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Environment
+# Pre flight checks
 ifeq ($(VERSION),)
 $(info VERSION not defined, defaulting to VERSION=us)
 VERSION         ?= us
+endif
+
+WHICH_PYTHON != which python3
+ifeq ($(WHICH_PYTHON),)
+$(error The python3 command is required, but not found.  Run 'sudo make debian-requirements' to install the required packages)
 endif
 
 # Compilers
@@ -62,15 +66,13 @@ DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
 export PATH     := $(VENV_DIR)/bin:$(PATH)
 
-# Dependencies
-DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
+DEPENDENCIES	= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find $(TOOLS_DIR)/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
-# Functions
 ROOT		:= /
 ifneq ($(filter $(VERSION),us hd),)
 ASM_SUBDIRS := $(ROOT) /data /psxsdk /handwritten
@@ -175,9 +177,11 @@ update-dependencies: ##@ update tools and internal dependencies
 ##@
 ##@ Disc Dumping Targets
 ##@
+
 dump_disk: ##@ dump a physical game disk
 
 
+# Pseudo targets
 .PHONY: all
 all: build check
 
@@ -188,14 +192,10 @@ extract: extract_$(VERSION)
 build: build_$(VERSION)
 
 .PHONY: clean
-clean:
-	git clean -fdx assets/
-	git clean -fdx asm/$(VERSION)/
-	git clean -fdx build/$(VERSION)/
-	git clean -fdx $(SRC_DIR)/weapon
-	git clean -fdx $(CONFIG_DIR)/*$(VERSION)*
-	git clean -fdx function_calls/
-	git clean -fdx sotn_calltree.txt
+CLEAN_TARGETS := $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
+clean: $(addprefix clean_, $(subst /,_,$(CLEAN_TARGETS)))
+clean_%:
+	git clean -fdx $(subst _,/,$*)
 
 .PHONY: format
 format: format-src format-tools format-symbols format-license
@@ -402,16 +402,14 @@ duplicates-report:
             --output-file ../../gh-duplicates/duplicates.txt
 			
 .PHONY: %-dependencies
-debian-dependencies:
-	sudo apt-get install -y $(cat tools/requirements-debian.txt)
-	touch debian-dependencies
+requirements-debian:
+	apt-get install -y $(cat tools/requirements-debian.txt)
 
-python-dependencies: $(VENV_DIR)
+requirements-python: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
-	touch python-dependencies
 
-$(VENV_DIR): debian-dependencies
-	python3 -m venv $(VENV_DIR)
+$(VENV_DIR):
+	$(WHICH_PYTHON) -m venv $(VENV_DIR)
 
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
