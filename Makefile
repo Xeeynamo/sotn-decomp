@@ -2,7 +2,7 @@
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Pre flight checks
+# Preflight checks
 ifeq ($(VERSION),)
 $(info VERSION not defined, defaulting to VERSION=us)
 VERSION         ?= us
@@ -10,7 +10,12 @@ endif
 
 WHICH_PYTHON != which python3
 ifeq ($(WHICH_PYTHON),)
-$(error The python3 command is required, but not found.  Run 'sudo make debian-requirements' to install the required packages)
+$(error The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
+endif
+
+BASH != which bash
+ifeq ($(BASH),)
+$(info Bash is expected by sotn-decomp, but was not found.  You may experience unexpected errors)
 endif
 
 # Compilers
@@ -26,22 +31,28 @@ ASSETS_DIR      := assets
 INCLUDE_DIR     := include
 BUILD_DIR       := build/$(VERSION)
 EXPECTED_DIR	:= expected/$(BUILD_DIR)
-DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
+BUILD_DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
+RETAIL_DISK_DIR  := disks
 
 # Symbols
 MAIN_TARGET     := $(BUILD_DIR)/main
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Tooling
-SHELL 			 = /usr/bin/bash -e -o pipefail
+BASH_FLAGS	  	:= -e -o pipefail
+SHELL 			 = $(BASH) $(BASH_FLAGS)
 VENV_DIR       	?= .venv
-PYTHON_BIN		:= $(VENV_DIR)/bin
-PYTHON          := $(PYTHON_BIN)/python3
-PIP			 	:= $(PYTHON_BIN)/pip3
+
+ifneq ($(wildcard $(VENV_DIR)),)
+PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
+endif
+PYTHON          := $(PYTHON_BIN)python3
+BLACK			:= $(PYTHON_BIN)black
+PIP			 	:= $(realpath .)/$(VENV_DIR)/bin/pip3
 INLINE_PYTHON	:= $(PYTHON) -c
-SPLAT           := splat split
+SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
@@ -64,9 +75,8 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
-export PATH     := $(VENV_DIR)/bin:$(PATH)
 
-DEPENDENCIES	= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
+DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) requirements-python
 
 SOTNDISK_SOURCES   := $(shell find $(TOOLS_DIR)/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
@@ -219,9 +229,15 @@ format-src: $(BIN_DIR)/clang-format
 
 .PHONY: format-tools
 format-tools:
-	black $(TOOLS_DIR)/*.py
-	black $(TOOLS_DIR)/splat_ext/*.py
-	black $(TOOLS_DIR)/split_jpt_yaml/*.py
+	$(BLACK) $(TOOLS_DIR)/*.py
+	$(BLACK) $(TOOLS_DIR)/splat_ext/*.py
+	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
+	$(BLACK) $(TOOLS_DIR)/*.py
+	$(BLACK) $(TOOLS_DIR)/splat_ext/*.py
+	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
+	$(BLACK) $(TOOLS_DIR)/sotn_str/*.py
+	$(BLACK) $(TOOLS_DIR)/sotn_permuter/sotn_permuter.py
+	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
 
 ORPHAN_EXCLUSIONS 	:= splat.us.weapon assets.hd assets.us
 ORPHAN_EXCLUSIONS	:= $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXCLUSIONS)))
@@ -236,18 +252,18 @@ format-symbols:
 	done
 	for FILE in $(ORPHAN_REMOVALS); do     \
 	echo Removing orphan symbols from $$FILE; \
-	$(TOOLS_DIR)/symbols.py remove-orphans $$FILE; \
+	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $$FILE; \
 	done
 
 $(DEBUG).SILENT: format-license
 format-license:
 	echo Checking for license line in code files
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
-	python3 $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
-	python3 $(TOOLS_DIR)/lint-license.py include/entity.h AGPL-3.0-or-later
-	python3 $(TOOLS_DIR)/lint-license.py include/items.h AGPL-3.0-or-later
-	python3 $(TOOLS_DIR)/lint-license.py include/lba.h AGPL-3.0-or-later
-	python3 $(TOOLS_DIR)/lint-license.py include/memcard.h AGPL-3.0-or-later
+	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
+	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/entity.h AGPL-3.0-or-later
+	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/items.h AGPL-3.0-or-later
+	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/lba.h AGPL-3.0-or-later
+	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
 .PHONY: ff
@@ -317,64 +333,64 @@ context:
 
 .PHONY: extract_%
 extract_disk: extract_disk_$(VERSION)
+extract_disk_psp%:
+	mkdir -p $(RETAIL_DISK_DIR)/psp$*
+	7z x -y $(RETAIL_DISK_DIR)/sotn.psp$*.iso -o$(RETAIL_DISK_DIR)/psp$*/
+
 disk_prepare: build $(SOTNDISK)
-	mkdir -p $(DISK_DIR)
-	cp -r disks/${VERSION}/* $(DISK_DIR)
-	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
-	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
-	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
-	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
-	cp $(BUILD_DIR)/F_CEN.BIN $(DISK_DIR)/ST/CEN/F_CEN.BIN
-	cp $(BUILD_DIR)/CHI.BIN $(DISK_DIR)/ST/CHI/CHI.BIN
-	cp $(BUILD_DIR)/F_CHI.BIN $(DISK_DIR)/ST/CHI/F_CHI.BIN
-	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
-	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
-	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
-	cp $(BUILD_DIR)/F_LIB.BIN $(DISK_DIR)/ST/LIB/F_LIB.BIN
-	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
-	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
-	cp $(BUILD_DIR)/NO0.BIN $(DISK_DIR)/ST/NO0/NO0.BIN
-	cp $(BUILD_DIR)/F_NO0.BIN $(DISK_DIR)/ST/NO0/F_NO0.BIN
-	cp $(BUILD_DIR)/NO1.BIN $(DISK_DIR)/ST/NO1/NO1.BIN
-	cp $(BUILD_DIR)/F_NO1.BIN $(DISK_DIR)/ST/NO1/F_NO1.BIN
-	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
-	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
-	cp $(BUILD_DIR)/NO4.BIN $(DISK_DIR)/ST/NO4/NO4.BIN
-	cp $(BUILD_DIR)/F_NO4.BIN $(DISK_DIR)/ST/NO4/F_NO4.BIN
-	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
-	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
-	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
-	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
-	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
-	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
-	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
-	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
-	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
-	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
-	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
-	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
-	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
-	cp $(BUILD_DIR)/BO4.BIN $(DISK_DIR)/BOSS/BO4/BO4.BIN
-	cp $(BUILD_DIR)/F_BO4.BIN $(DISK_DIR)/BOSS/BO4/F_BO4.BIN
-	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
-	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
-	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
-	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
-	cp $(BUILD_DIR)/TT_002.BIN $(DISK_DIR)/SERVANT/TT_002.BIN
-	cp $(BUILD_DIR)/TT_003.BIN $(DISK_DIR)/SERVANT/TT_003.BIN
-	cp $(BUILD_DIR)/TT_004.BIN $(DISK_DIR)/SERVANT/TT_004.BIN
+	mkdir -p $(BUILD_DISK_DIR)
+	cp -r $(RETAIL_DISK_DIR)/${VERSION}/* $(BUILD_DISK_DIR)
+	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
+	cp $(BUILD_DIR)/DRA.BIN $(BUILD_DISK_DIR)/DRA.BIN
+	cp $(BUILD_DIR)/RIC.BIN $(BUILD_DISK_DIR)/BIN/RIC.BIN
+	cp $(BUILD_DIR)/CEN.BIN $(BUILD_DISK_DIR)/ST/CEN/CEN.BIN
+	cp $(BUILD_DIR)/F_CEN.BIN $(BUILD_DISK_DIR)/ST/CEN/F_CEN.BIN
+	cp $(BUILD_DIR)/CHI.BIN $(BUILD_DISK_DIR)/ST/CHI/CHI.BIN
+	cp $(BUILD_DIR)/F_CHI.BIN $(BUILD_DISK_DIR)/ST/CHI/F_CHI.BIN
+	cp $(BUILD_DIR)/DRE.BIN $(BUILD_DISK_DIR)/ST/DRE/DRE.BIN
+	cp $(BUILD_DIR)/F_DRE.BIN $(BUILD_DISK_DIR)/ST/DRE/F_DRE.BIN
+	cp $(BUILD_DIR)/LIB.BIN $(BUILD_DISK_DIR)/ST/LIB/LIB.BIN
+	cp $(BUILD_DIR)/F_LIB.BIN $(BUILD_DISK_DIR)/ST/LIB/F_LIB.BIN
+	cp $(BUILD_DIR)/MAD.BIN $(BUILD_DISK_DIR)/ST/MAD/MAD.BIN
+	cp $(BUILD_DIR)/F_MAD.BIN $(BUILD_DISK_DIR)/ST/MAD/F_MAD.BIN
+	cp $(BUILD_DIR)/NO0.BIN $(BUILD_DISK_DIR)/ST/NO0/NO0.BIN
+	cp $(BUILD_DIR)/F_NO0.BIN $(BUILD_DISK_DIR)/ST/NO0/F_NO0.BIN
+	cp $(BUILD_DIR)/NO1.BIN $(BUILD_DISK_DIR)/ST/NO1/NO1.BIN
+	cp $(BUILD_DIR)/F_NO1.BIN $(BUILD_DISK_DIR)/ST/NO1/F_NO1.BIN
+	cp $(BUILD_DIR)/NO3.BIN $(BUILD_DISK_DIR)/ST/NO3/NO3.BIN
+	cp $(BUILD_DIR)/F_NO3.BIN $(BUILD_DISK_DIR)/ST/NO3/F_NO3.BIN
+	cp $(BUILD_DIR)/NO4.BIN $(BUILD_DISK_DIR)/ST/NO4/NO4.BIN
+	cp $(BUILD_DIR)/F_NO4.BIN $(BUILD_DISK_DIR)/ST/NO4/F_NO4.BIN
+	cp $(BUILD_DIR)/NP3.BIN $(BUILD_DISK_DIR)/ST/NP3/NP3.BIN
+	cp $(BUILD_DIR)/F_NP3.BIN $(BUILD_DISK_DIR)/ST/NP3/F_NP3.BIN
+	cp $(BUILD_DIR)/NZ0.BIN $(BUILD_DISK_DIR)/ST/NZ0/NZ0.BIN
+	cp $(BUILD_DIR)/F_NZ0.BIN $(BUILD_DISK_DIR)/ST/NZ0/F_NZ0.BIN
+	cp $(BUILD_DIR)/RWRP.BIN $(BUILD_DISK_DIR)/ST/RWRP/RWRP.BIN
+	cp $(BUILD_DIR)/F_RWRP.BIN $(BUILD_DISK_DIR)/ST/RWRP/F_RWRP.BIN
+	cp $(BUILD_DIR)/SEL.BIN $(BUILD_DISK_DIR)/ST/SEL/SEL.BIN
+	cp $(BUILD_DIR)/ST0.BIN $(BUILD_DISK_DIR)/ST/ST0/ST0.BIN
+	cp $(BUILD_DIR)/F_ST0.BIN $(BUILD_DISK_DIR)/ST/ST0/F_ST0.BIN
+	cp $(BUILD_DIR)/WRP.BIN $(BUILD_DISK_DIR)/ST/WRP/WRP.BIN
+	cp $(BUILD_DIR)/F_WRP.BIN $(BUILD_DISK_DIR)/ST/WRP/F_WRP.BIN
+	cp $(BUILD_DIR)/MAR.BIN $(BUILD_DISK_DIR)/BOSS/MAR/MAR.BIN
+	cp $(BUILD_DIR)/F_MAR.BIN $(BUILD_DISK_DIR)/BOSS/MAR/F_MAR.BIN
+	cp $(BUILD_DIR)/BO4.BIN $(BUILD_DISK_DIR)/BOSS/BO4/BO4.BIN
+	cp $(BUILD_DIR)/F_BO4.BIN $(BUILD_DISK_DIR)/BOSS/BO4/F_BO4.BIN
+	cp $(BUILD_DIR)/RBO3.BIN $(BUILD_DISK_DIR)/BOSS/RBO3/RBO3.BIN
+	cp $(BUILD_DIR)/F_RBO3.BIN $(BUILD_DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
+	cp $(BUILD_DIR)/TT_000.BIN $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
+	cp $(BUILD_DIR)/TT_001.BIN $(BUILD_DISK_DIR)/SERVANT/TT_001.BIN
+	cp $(BUILD_DIR)/TT_002.BIN $(BUILD_DISK_DIR)/SERVANT/TT_002.BIN
+	cp $(BUILD_DIR)/TT_003.BIN $(BUILD_DISK_DIR)/SERVANT/TT_003.BIN
+	cp $(BUILD_DIR)/TT_004.BIN $(BUILD_DISK_DIR)/SERVANT/TT_004.BIN
 disk: disk_prepare
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 disk_debug: disk_prepare
 	cd $(TOOLS_DIR)/sotn-debugmodule && make
-	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
+	$(SOTNDISK) make build/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 # put this here as both PSX HD and PSP use it
-.PHONY: extract_%
-extract_disk_psp%:
-	mkdir -p disks/psp$*
-	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
 test:
 	$(PYTHON) $(TOOLS_DIR)/symbols_test.py
 
@@ -383,7 +399,7 @@ function-finder:
 	$(MAKE) force_symbols
 	$(MAKE) force_extract
 	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py
-	git clean -fdx asm/
+	git clean -fdx $(ASM_DIR)/
 	git checkout $(CONFIG_DIR)/
 	rm -f build/us/main.ld
 	rm -rf build/us/weapon.ld
@@ -401,16 +417,14 @@ duplicates-report:
             --threshold .90 \
             --output-file ../../gh-duplicates/duplicates.txt
 			
-.PHONY: %-dependencies
-requirements-debian:
-	apt-get install -y $(cat tools/requirements-debian.txt)
-
+.PHONY: requirements-python
 requirements-python: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 
 $(VENV_DIR):
 	$(WHICH_PYTHON) -m venv $(VENV_DIR)
 
+.PHONY: update-dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
@@ -446,13 +460,13 @@ $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
-	$(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
-	$(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
-	$(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	mkdir -p $(dir $@)
@@ -481,13 +495,13 @@ dump_disk_us: dump_disk_cd
 dump_disk_usproto: dump_disk_cd
 dump_disk_psp%: dump_disk_not_supported
 dump_disk_xbla%: dump_disk_not_supported
-dump_disk_cd: disks/sotn.$(VERSION).cue
+dump_disk_cd: $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
 dump_disk_not_supported:
 	@echo "Automated dumping of $(VERSION) is not supported" >&2 && exit 1
 
-disks/sotn.%.bin disks/sotn.%.cue:
+$(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
 	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
-	cd disks && \
+	cd $(RETAIL_DISK_DIR) && \
         DEVICE="$(shell cdrdao scanbus 2>&1 | grep -vi cdrdao | head -n1 | sed 's/ : [^:]*$$//g')" && \
         cdrdao read-cd \
             --read-raw \

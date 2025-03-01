@@ -14,7 +14,7 @@ endif
 PSX_US_GAME		:= main dra ric weapon
 PSX_US_STAGES	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
 PSX_US_STAGES   += rwrp # Second line for stages for future readability
-PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for stages for future readability
+PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for bosses for future readability
 PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 
 # VERSION=hd
@@ -63,7 +63,7 @@ DEPENDENCIES	+= $(MASPSX_APP)
 
 # PSX specific targets
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json disks/us assets/game
+	$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(RETAIL_DISK_DIR)/us $(ASSETS_DIR)/game
 	make extract_assets
 	make build_assets
 extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
@@ -74,7 +74,7 @@ extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS))
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
 extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
+	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$*.cue $(RETAIL_DISK_DIR)/$* > /dev/null
 
 build_us: $(PSX_US_BUILD_TARGETS)
 build_hd: $(PSX_HD_BUILD_TARGETS)
@@ -94,17 +94,17 @@ $(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(BASE_SYMBOLS) $(C
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt | stmad_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
+	$(GFXSTAGE) d $(RETAIL_DISK_DIR)/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
+	$(GFXSTAGE) d $(RETAIL_DISK_DIR)/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
 $(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
+	$(GFXSTAGE) d $(RETAIL_DISK_DIR)/$(VERSION)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
 build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
+	$(GFXSTAGE) d $(RETAIL_DISK_DIR)/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
 	$(SPLAT) $<
 	touch $@
@@ -416,4 +416,4 @@ $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_d
 $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	$(TOOLS_DIR)/png2bin.py $< $@
+	$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@

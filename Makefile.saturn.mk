@@ -25,8 +25,8 @@ SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/
 
 SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
 SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
-SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
-SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
+SATURN_PCM_FILES 		:= $(wildcard $(RETAIL_DISK_DIR)/saturn/SD/*.PCM)
+SATURN_WAV_FILES 		:= $(patsubst $(RETAIL_DISK_DIR)/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
 DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
 
 .PHONY: build_saturn
@@ -43,8 +43,8 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 
 .PHONY: extract_disk_saturn
 extract_disk_saturn:
-	bchunk disks/sotn.saturn.bin disks/sotn.saturn.cue disks/sotn.saturn.iso
-	7z x disks/sotn.saturn.iso01.iso -odisks/saturn/ || true
+	bchunk $(RETAIL_DISK_DIR)/sotn.saturn.bin $(RETAIL_DISK_DIR)/sotn.saturn.cue $(RETAIL_DISK_DIR)/sotn.saturn.iso
+	7z x $(RETAIL_DISK_DIR)/sotn.saturn.iso01.iso -o$(RETAIL_DISK_DIR)/saturn/ || true
 
 .PHONY: extract_saturn_pcm
 extract_saturn_pcm: $(SATURN_WAV_FILES)
@@ -52,7 +52,7 @@ extract_saturn_pcm: $(SATURN_WAV_FILES)
 .PHONY: diff_saturn
 diff_saturn:
 	sh-elf-objdump -z -m sh2 -b binary -D ./build/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-ours.txt && \
-	sh-elf-objdump -z -m sh2 -b binary -D ./disks/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-theirs.txt && \
+	sh-elf-objdump -z -m sh2 -b binary -D ./$(RETAIL_DISK_DIR)/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-theirs.txt && \
 	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
 
 $(BUILD_DIR)/0.BIN: $(BUILD_DIR)/zero.elf
@@ -120,7 +120,7 @@ $(SATURN_SPLITTER_APP):
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
-$(ASSETS_DIR)/saturn/SD/%.wav: disks/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
+$(ASSETS_DIR)/saturn/SD/%.wav: $(RETAIL_DISK_DIR)/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
 	mkdir -p $(ASSETS_DIR)/saturn/SD
 	$(SATURN_ADPCM_EXTRACT_APP) $< $@
 
