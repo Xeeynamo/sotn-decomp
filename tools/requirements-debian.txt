@@ -15,4 +15,4 @@ python3-venv
 unzip
 wget
 xfonts-utils
-./tools/dosemu-deb/*.deb
+graphviz
