@@ -36,17 +36,14 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 # Tooling
 SHELL 			 = /bin/bash -e -o pipefail
 VENV_DIR       	?= .venv
-PYTHON_BIN		:= $(VENV_DIR)/bin
 # This is a temporary workaround for CI not being fully compatible with venv
 ifneq ($(wildcard $(VENV_DIR)),)
-PYTHON          := $(PYTHON_BIN)/python3
-BLACK			:= $(PYTHON_BIN)/black
-else
-PYTHON		  	:= python3
-BLACK			:= black
+PYTHON_BIN		:= $(VENV_DIR)/bin/
 endif
-PIP			 	:= $(PYTHON_BIN)/pip3
-SPLAT           := splat split
+PYTHON          := $(PYTHON_BIN)python3
+BLACK			:= $(PYTHON_BIN)black
+PIP			 	:= $(PYTHON_BIN)pip3
+SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
