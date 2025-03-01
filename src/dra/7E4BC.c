@@ -2484,12 +2484,12 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = 0x810D;
+            PLAYER.palette = PAL_OVL(0x10D);
             self->step++;
         }
         break;
     case 4:
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_OVL(0x10D);
         self->ext.teleport.width--;
         if (self->ext.teleport.width <= 0) {
             self->ext.teleport.width = 0;
@@ -2497,7 +2497,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 5:
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_OVL(0x10D);
         var_s5 = true;
         self->ext.teleport.unk90 += 4;
         if (self->ext.teleport.unk90 >= 0x100) {
@@ -2507,7 +2507,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 6:
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_OVL(0x10D);
 #ifdef VERSION_PSP
         func_892A620(0, 1);
         func_892A620(1, 1);
