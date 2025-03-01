@@ -326,7 +326,7 @@ void func_8011E4BC(Entity* self) {
             case 10:
                 tilePrim->posX.i.hi = playerXpos;
                 tilePrim->posY.i.hi = playerYpos;
-                tilePrim->velocityY.val = -(((i * i) << 0xC) + 0x4000);
+                tilePrim->velocityY.val = -(((i * i) << 0xC) + FIX(0.25));
                 tilePrim->delay = 0x3F;
                 break;
             case 12:
@@ -344,8 +344,8 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->posX.i.hi = selfXPos;
                 tilePrim->posY.i.hi = selfYPos;
                 tilePrim->velocityX.val =
-                    (s32)((rand() & PSP_RANDMASK) - 0x4000) >> 1;
-                tilePrim->velocityY.val = -((rand() & 0x1FFF) + 0x6000);
+                    (s32)((rand() & PSP_RANDMASK) - FIX(0.25)) >> 1;
+                tilePrim->velocityY.val = -((rand() & 0x1FFF) + FIX(0.375));
                 tilePrim->timer = i * 4;
                 break;
             }
@@ -586,7 +586,7 @@ void func_8011F074(Entity* self) {
 
         self->posY.i.hi += ((rand() % 35) - 15);
         self->posX.i.hi += ((rand() % 20) - 10);
-        self->velocityY = -0x6000 - (rand() & 0x3FFF);
+        self->velocityY = FIX(-0.375) - (rand() & 0x3FFF);
         self->step++;
         break;
     case 1:
