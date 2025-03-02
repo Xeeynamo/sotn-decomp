@@ -505,8 +505,8 @@ add_executable(${PROJECT_NAME}
     src/pc/render_shared.c
     src/pc/render_gl.c
     src/pc/psxsdk/mednafen/gpu.cpp
-    src/pc/psxsdk/mednafen/gpu_line.cpp
     src/pc/psxsdk/mednafen/gpu_polygon.cpp
+    src/pc/psxsdk/mednafen/gpu_line.cpp
     src/pc/psxsdk/mednafen/gpu_sprite.cpp
     src/pc/sdl2_macros.c
 )
