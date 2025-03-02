@@ -339,11 +339,17 @@ context:
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-.PHONY: extract_%
+# Grouping all extract_disk together for consistency since hd and pspeu use the extract_disk target
+.PHONY: extract_disk%
 extract_disk: extract_disk_$(VERSION)
-extract_disk_psp%:
-	mkdir -p $(RETAIL_DISK_DIR)/psp$*
-	7z x -y $(RETAIL_DISK_DIR)/sotn.psp$*.iso -o$(RETAIL_DISK_DIR)/psp$*/
+extract_disk_us: $(SOTNDISK)
+	@$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+$(addprefix extract_disk_, pspeu hd):
+	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
+	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
+extract_disk_saturn:
+	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)/sotn.$(VERSION).iso
+	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR)
@@ -398,7 +404,6 @@ disk_debug: disk_prepare
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 
-# put this here as both PSX HD and PSP use it
 test:
 	$(PYTHON) $(TOOLS_DIR)/symbols_test.py
 

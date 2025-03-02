@@ -45,11 +45,6 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
 
-.PHONY: extract_disk_saturn
-extract_disk_saturn:
-	bchunk $(RETAIL_DISK_DIR)/sotn.saturn.bin $(RETAIL_DISK_DIR)/sotn.saturn.cue $(RETAIL_DISK_DIR)/sotn.saturn.iso
-	7z x $(RETAIL_DISK_DIR)/sotn.saturn.iso01.iso -o$(RETAIL_DISK_DIR)/saturn/ || true
-
 .PHONY: extract_saturn_pcm
 extract_saturn_pcm: $(WAV_FILES)
 
