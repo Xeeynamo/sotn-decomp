@@ -110,6 +110,10 @@ jobs:
     runs-on: macos-latest
     needs: extract-assets
     steps:
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Install requirements
         run: brew install SDL2
       - name: Install Go
