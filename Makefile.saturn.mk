@@ -1,36 +1,31 @@
-# Saturn is special and does not yet conform
-VERSION_PREFIX 	:= SATURN
-SATURN_GAME		:= GAME ALUCARD
-SATURN_STAGES	:= STAGE_02 WARP
-SATURN_STAGES	+= 
-SATURN_BOSSES 	:= 
-SATURN_SERVANTS	:= T_BAT
+# Game OVL options: GAME ALUCARD
+# Both stage and reverse stage fall under "STAGES" variable, they are split only for readability.
+# Stage OVL options: STAGE_02 WARP
+# Reverse stage OVL options: 
+# Boss OVL options: 
+# Servant OVL options: T_BAT
+LIB_TARGETS	:= $(addprefix lib/, gfs spr dma scl csh per cdc mth bup sys)
+LIB_OBJECTS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(LIB_TARGETS)))
 
-# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
-$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
-# Build targets is for when the non-prefixed name is needed
-$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
+SATURN_SPLITTER_DIR	:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+SATURN_ASSETS_DIR 	:= $(ASSETS_DIR)/saturn
 
-SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
-SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
+DOSEMU				:= dosemu
+DOSEMU_FLAGS		:= -quiet -dumb -f ./dosemurc -K . -E
+DOSEMU_APP			:= $(DOSEMU) $(DOSEMU_FLAGS)
+SATURN_TOOLCHAIN	:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
+OBJDUMP				:= sh-elf-objdump
+OBJDUMP_FLAGS		:= -z -m sh2 -b binary -D
+CC1_SATURN			:= $(BUILD_DIR)/CC1.EXE
+ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
-DOSEMU						:= dosemu
-DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
-DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
-SATURN_TOOLCHAIN			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
-CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
-SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
-
-SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
-SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
-SATURN_PCM_FILES 		:= $(wildcard $(RETAIL_DISK_DIR)/saturn/SD/*.PCM)
-SATURN_WAV_FILES 		:= $(patsubst $(RETAIL_DISK_DIR)/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
-DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
+PCM_FILES 			:= $(wildcard $(EXTRACTED_DISK_DIR)/SD/*.PCM)
+WAV_FILES 			:= $(patsubst $(EXTRACTED_DISK_DIR)/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(PCM_FILES))
+DEPENDENCIES		+= $(SATURN_SPLITTER_APP)
 
 .PHONY: build_saturn
-build_saturn: $(BUILD_DIR)/0.BIN $(SATURN_BUILD_PRGS)
+build_saturn: $(BUILD_DIR)/0.BIN $(BUILD_PRGS)
 
 .PHONY: extract_saturn
 extract_saturn: $(SATURN_SPLITTER_APP)
@@ -47,13 +42,13 @@ extract_disk_saturn:
 	7z x $(RETAIL_DISK_DIR)/sotn.saturn.iso01.iso -o$(RETAIL_DISK_DIR)/saturn/ || true
 
 .PHONY: extract_saturn_pcm
-extract_saturn_pcm: $(SATURN_WAV_FILES)
+extract_saturn_pcm: $(WAV_FILES)
 
 .PHONY: diff_saturn
 diff_saturn:
-	sh-elf-objdump -z -m sh2 -b binary -D ./build/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-ours.txt && \
-	sh-elf-objdump -z -m sh2 -b binary -D ./$(RETAIL_DISK_DIR)/saturn/$(FILENAME) > ./build/saturn/$(FILENAME)-theirs.txt && \
-	diff ./build/saturn/$(FILENAME)-ours.txt ./build/saturn/$(FILENAME)-theirs.txt > ./build/saturn/$(FILENAME)-diff.txt || true
+	$(OBJDUMP) $(OBJDUMP_FLAGS) $(BUILD_DIR)/$(FILENAME) > $(BUILD_DIR)/$(FILENAME)-ours.txt && \
+	$(OBJDUMP) $(OBJDUMP_FLAGS) $(EXTRACTED_DISK_DIR)/$(FILENAME) > $(BUILD_DIR)/$(FILENAME)-theirs.txt && \
+	-diff $(BUILD_DIR)/$(FILENAME)-ours.txt $(BUILD_DIR)/$(FILENAME)-theirs.txt > $(BUILD_DIR)/$(FILENAME)-diff.txt
 
 $(BUILD_DIR)/0.BIN: $(BUILD_DIR)/zero.elf
 	sh-elf-objcopy $< -O binary $@
@@ -68,7 +63,7 @@ $(BUILD_DIR)/WARP.PRG: $(BUILD_DIR)/warp.elf
 $(BUILD_DIR)/T_BAT.PRG: $(BUILD_DIR)/t_bat.elf
 	sh-elf-objcopy $< -O binary $@
 
-$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(SATURN_LIB_OBJECTS) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
+$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(LIB_OBJECTS) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
 	cd $(BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
@@ -77,7 +72,7 @@ $(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(SATURN_LIB_OBJECTS) $(CONFIG_DIR)/s
 		-T ../../$(CONFIG_DIR)/saturn/zero_syms.txt \
 		-T ../../$(CONFIG_DIR)/saturn/game_syms.txt \
 		-T ../../$(CONFIG_DIR)/saturn/zero_user_syms.txt \
-		zero.o $(addsuffix .o,$(SATURN_LIB_TARGETS))
+		zero.o $(addsuffix .o,$(LIB_TARGETS))
 
 $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/%_user_syms.txt
 	cd $(BUILD_DIR) && \
@@ -120,9 +115,9 @@ $(SATURN_SPLITTER_APP):
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
-$(ASSETS_DIR)/saturn/SD/%.wav: $(RETAIL_DISK_DIR)/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
-	mkdir -p $(ASSETS_DIR)/saturn/SD
-	$(SATURN_ADPCM_EXTRACT_APP) $< $@
+$(SATURN_ASSETS_DIR)/SD/%.wav: $(EXTRACTED_DISK_DIR)/SD/%.PCM $(SATURN_SPLITTER_APP)
+	mkdir -p $(SATURN_ASSETS_DIR)/SD
+	$(ADPCM_EXTRACT_APP) $< $@
 
 # Fixes build -j breaking due to dosemu
 .NOTPARALLEL: build_saturn

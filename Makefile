@@ -29,12 +29,13 @@ BIN_DIR         := bin
 SRC_DIR         := src
 ASSETS_DIR      := assets
 INCLUDE_DIR     := include
-BUILD_DIR       := build/$(VERSION)
-EXPECTED_DIR	:= expected/$(BUILD_DIR)
-BUILD_DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
-RETAIL_DISK_DIR  := disks
+BUILD_DIR       := build/$(VERSION)
+EXPECTED_DIR	:= expected/$(BUILD_DIR)
+BUILD_DISK_DIR  := $(BUILD_DIR)/${VERSION}/disk
+RETAIL_DISK_DIR := disks
+EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 
 # Symbols
 MAIN_TARGET     := $(BUILD_DIR)/main
@@ -117,16 +118,16 @@ endef
 # to be used. Refer to *.map to know which sections are being discarded by LD.
 # Use nm to retrieve the symbol name out of a object file such as the mwo_header.
 ifeq ($(VERSION),pspeu)
-GC_SECTIONS := --gc-sections
-SYM_EXPORT 	= -T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt
+IF_PSP_GC_SECTIONS := --gc-sections
+IF_PSP_SYM_EXPORT 	= -T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt
 endif
 
 define link
 	$(LD) $(LD_FLAGS) -o $(2) \
-		$(GC_SECTIONS) \
+		$(IF_PSP_GC_SECTIONS) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
-		$(SYM_EXPORT) \
+		$(IF_PSP_SYM_EXPORT) \
 		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
@@ -339,7 +340,7 @@ extract_disk_psp%:
 
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR)
-	cp -r $(RETAIL_DISK_DIR)/${VERSION}/* $(BUILD_DISK_DIR)
+	cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
 	cp $(BUILD_DIR)/DRA.BIN $(BUILD_DISK_DIR)/DRA.BIN
 	cp $(BUILD_DIR)/RIC.BIN $(BUILD_DISK_DIR)/BIN/RIC.BIN
@@ -384,11 +385,11 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/TT_003.BIN $(BUILD_DISK_DIR)/SERVANT/TT_003.BIN
 	cp $(BUILD_DIR)/TT_004.BIN $(BUILD_DISK_DIR)/SERVANT/TT_004.BIN
 disk: disk_prepare
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+	$(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 disk_debug: disk_prepare
 	cd $(TOOLS_DIR)/sotn-debugmodule && make
-	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
+	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 
 # put this here as both PSX HD and PSP use it
 test:
@@ -426,8 +427,8 @@ $(VENV_DIR):
 
 .PHONY: update-dependencies
 update-dependencies: $(DEPENDENCIES)
-	rm $(SOTNDISK) && make $(SOTNDISK) || true
-	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
+	-rm $(SOTNDISK) && make $(SOTNDISK)
+	-rm $(SOTNASSETS) && make $(SOTNASSETS)
 	git clean -fd $(BIN_DIR)/
 
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
