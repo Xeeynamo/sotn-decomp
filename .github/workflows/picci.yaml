@@ -10,6 +10,7 @@ on:
       - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
+      - 'Makefile*'
   pull_request:
     paths:
       - 'include/**'
@@ -17,6 +18,7 @@ on:
       - 'tools/sotn-assets/**'
       - 'cmake/**'
       - 'CMakeLists*'
+      - 'Makefile*'
   workflow_dispatch:
 
 jobs:
