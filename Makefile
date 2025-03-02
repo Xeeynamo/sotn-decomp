@@ -235,12 +235,8 @@ format-tools:
 	$(BLACK) tools/*.py
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
-	$(BLACK) tools/*.py
-	$(BLACK) tools/splat_ext/*.py
-	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_str/*.py
 	$(BLACK) tools/sotn_permuter/sotn_permuter.py
-	$(BLACK) tools/split_jpt_yaml/*.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
