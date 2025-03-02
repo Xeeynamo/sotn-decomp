@@ -10,7 +10,7 @@ endif
 
 WHICH_PYTHON != which python3
 ifeq ($(WHICH_PYTHON),)
-$(error The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
+$(info The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
 endif
 
 # Compilers
