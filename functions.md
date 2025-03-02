@@ -3,11 +3,11 @@
 | lib    | e_mist_door.rodata                  |        7 |          0 |        |                                 |       |
 | wrp    | jtbl_psp_0924BB78                   |        7 |          0 | Yes    |                                 |       |
 | dra    | func_801027A4                       |        7 |          1 |        |                                 |       |
+| dra    | func_8011EDA0                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED9D8                   |        7 |          1 |        |                                 |       |
 | dra    | DebugUpdate                         |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090F6B20                   |        7 |          1 |        |                                 |       |
 | dra    | nullsub_9                           |        7 |          1 |        |                                 |       |
-| dra    | func_8011EDA0                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_0913D610                   |        7 |          1 |        |                                 |       |
 | dra    | SetReverbDepth                      |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED058                   |        7 |          1 |        |                                 |       |
@@ -74,7 +74,6 @@
 | dra    | func_psp_090ED2E8                   |       15 |          3 |        |                                 |       |
 | dra    | 14490.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dra    | 32DA0.rodata                        |       16 |          0 | Yes    |                                 |       |
-| dra    | 54180.rodata                        |       16 |          0 | Yes    |                                 |       |
 | lib    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
@@ -98,7 +97,6 @@
 | dra    | 160C0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 19AB0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 329F0.rodata                        |       18 |          0 | Yes    |                                 |       |
-| dra    | 53DB0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 80.rodata                           |       18 |          0 | Yes    |                                 |       |
 | dra    | A710.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib    | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
@@ -301,8 +299,8 @@
 | dra    | func_800E34DC                       |       35 |          2 |        |                                 |       |
 | dra    | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
 | dra    | InitSoundVars2                      |       35 |          2 |        |                                 |       |
+| dra    | func_80121F14                       |       35 |          3 |        |                                 |       |
 | dra    | func_psp_090F1EC8                   |       35 |          3 |        |                                 |       |
-| dra    | func_psp_091324E0                   |       35 |          3 |        | https://decomp.me/scratch/h4bId | 0.975 |
 | dra    | func_psp_090FFAB8                   |       35 |          4 |        |                                 |       |
 | dra    | func_psp_090E7F98                   |       35 |          4 |        |                                 |       |
 | dra    | func_psp_090E8E58                   |       35 |          4 |        |                                 |       |
@@ -638,7 +636,6 @@
 | wrp    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
 | lib    | func_psp_0926ADD8                   |       73 |          8 |        |                                 |       |
 | dra    | CheckMoveDirection                  |       73 |         12 |        |                                 |       |
-| dra    | 507F0.rodata                        |       74 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E8658                   |       74 |          6 |        |                                 |       |
 | dra    | func_8010DFF0                       |       74 |          7 |        | https://decomp.me/scratch/fbTWl | 0.952 |
 | dra    | func_psp_0910B660                   |       74 |          7 |        |                                 |       |
@@ -735,6 +732,7 @@
 | lib    | func_psp_09263410                   |       95 |          9 |        | https://decomp.me/scratch/VwGnN | 1.0   |
 | dra    | func_psp_091392D8                   |       95 |         11 |        |                                 |       |
 | dra    | CheckChainLimit                     |       95 |         14 |        |                                 |       |
+| dra    | 7E4BC.rodata                        |       96 |          0 | Yes    |                                 |       |
 | no4    | func_psp_09259F90                   |       96 |          6 |        |                                 |       |
 | dra    | func_80123A60                       |       96 |         11 |        | https://decomp.me/scratch/Lfdzl | 0.994 |
 | lib    | UnkCollisionFunc                    |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
@@ -1056,7 +1054,7 @@
 | no4    | func_psp_0923FF60                   |      277 |         31 |        |                                 |       |
 | no4    | func_psp_092423C8                   |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
-| dra    | func_psp_091357E0                   |      279 |         17 |        | https://decomp.me/scratch/cpFqK | 0.995 |
+| dra    | func_80124164                       |      279 |         17 |        |                                 |       |
 | dra    | CheckDarkMetamorphosisInput         |      279 |         37 | Yes    |                                 |       |
 | dra    | CheckWingSmashInput                 |      279 |         38 | Yes    |                                 |       |
 | dra    | EntityExpandingCircle               |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
@@ -1131,7 +1129,7 @@
 | wrp    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
 | no4    | func_psp_09243478                   |      378 |         56 | Yes    |                                 |       |
-| dra    | func_psp_09132550                   |      381 |         27 |        | https://decomp.me/scratch/s95Fn | 1.0   |
+| dra    | func_80121F58                       |      381 |         27 |        |                                 |       |
 | lib    | EntityBloodSplatter                 |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
 | no4    | func_psp_0925A170                   |      395 |         63 |        |                                 |       |
