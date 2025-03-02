@@ -450,18 +450,16 @@ $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	touch $@
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
-$(ASMDIFFER_APP):
-	git submodule init $(ASMDIFFER_DIR)
-	git submodule update $(ASMDIFFER_DIR)
 $(M2CTX_APP):
 	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
-$(M2C_APP):
-	git submodule init $(M2C_DIR)
-	git submodule update $(M2C_DIR)
-	$(PYTHON) -m pip install --upgrade pycparser
-$(MASPSX_APP):
-	git submodule init $(MASPSX_DIR)
-	git submodule update $(MASPSX_DIR)
+
+git_submodule_%:
+	git submodule init $*
+	git submodule update $*
+
+$(ASMDIFFER_APP): git_submodule_$(ASMDIFFER_DIR)
+$(M2C_APP): git_submodule_$(M2C_DIR)
+	$(PIP) install --upgrade pycparser
 $(GO):
 	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz

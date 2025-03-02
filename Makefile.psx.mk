@@ -51,6 +51,7 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 DEPENDENCIES	+= $(MASPSX_APP) 
 
+$(MASPSX_APP): git_submodule_$(MASPSX_DIR)
 build_$(VERSION): $(call get_targets)
 
 # todo: these should have an explicit dependency on extract disk

@@ -31,7 +31,7 @@ ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-e
 
 PCM_FILES 			:= $(wildcard $(EXTRACTED_DISK_DIR)/SD/*.PCM)
 WAV_FILES 			:= $(patsubst $(EXTRACTED_DISK_DIR)/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(PCM_FILES))
-DEPENDENCIES		+= $(SATURN_SPLITTER_APP)
+DEPENDENCIES		+= $(SATURN_SPLITTER_APP) $(DOSEMU)
 
 .PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(BUILD_PRGS)
@@ -113,9 +113,7 @@ $(CC1_SATURN): $(SATURN_TOOLCHAIN)
 	cp -r $(ASM_DIR)/alucard $(BUILD_DIR)/$(ASM_DIR)/alucard
 	touch $(CC1_SATURN)
 
-$(SATURN_SPLITTER_APP):
-	git submodule init $(SATURN_SPLITTER_DIR)
-	git submodule update $(SATURN_SPLITTER_DIR)
+$(SATURN_SPLITTER_APP): git_submodule_$(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
@@ -123,5 +121,10 @@ $(SATURN_ASSETS_DIR)/SD/%.wav: $(EXTRACTED_DISK_DIR)/SD/%.PCM $(SATURN_SPLITTER_
 	mkdir -p $(SATURN_ASSETS_DIR)/SD
 	$(ADPCM_EXTRACT_APP) $< $@
 
+$(DOSEMU):
+	cd $(TOOLS_DIR); \
+	git clone https://github.com/sozud/dosemu-deb.git
+	sudo dpkg -i $(TOOLS_DIR)/dosemu-deb/*.deb
+	
 # Fixes build -j breaking due to dosemu
 .NOTPARALLEL: build_saturn
