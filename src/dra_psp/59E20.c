@@ -99,6 +99,28 @@ bool WolfFormFinished(void) {
     return false;
 }
 
+// func_8012C97C
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136D18);
-
+// func_8012CA64
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136E18);
+// func_8012CB0C
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136EE0);
+// func_8012CB4C
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136F30);
+// func_8012CC30
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137038);
+// func_8012CCE4
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137110);
+// func_8012CED4
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137358);
+// func_8012CFA8
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137448);
+// func_8012CFF0
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137498);
+// func_8012D024
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_091374D0);
+// func_8012D178
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137668);
+// func_8012D28C (confirmed)
+INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137748);
+
