@@ -52,6 +52,17 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 DEPENDENCIES	+= $(MASPSX_APP) 
 
 $(MASPSX_APP): git_submodule_$(MASPSX_DIR)
+
+.PHONY: extract_%
+ifeq ($(VERSION),us)
+IF_US_BDECODE := $(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(EXTRACTED_DISK_DIR) $(ASSETS_DIR)/game
+endif
+$(addprefix extract_, us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
+	$(IF_US_BDECODE)
+	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
+	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
+	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
+
 build_$(VERSION): $(call get_targets)
 
 # todo: these should have an explicit dependency on extract disk
@@ -114,12 +125,6 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
-
-extract_assets: $(SOTNASSETS)
-	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
-build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)
