@@ -45,167 +45,193 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
-extern u16 D_us_80180E90[];
-extern u8* D_us_80180FB4[];
-extern u8 D_us_801811FC[];
-extern u8 D_us_80181204[];
-extern u8 D_us_80181210[];
-extern u8 D_us_8018121C[];
-extern u8 D_us_80181234[];
-extern u8 D_us_80181244[];
-extern u8 D_us_801812C0[];
-extern u8 D_us_801812C8[];
-extern u8 D_us_801812D0[];
-extern u8* D_us_801812D8[];
-extern u8** D_psp_092A5FC0[];
-extern u8* D_us_80181310[];
-extern u8* D_us_80181340[];
+static u16 D_us_80180E90[] = {
+    0x0A9, 0x046, 0x040, 0x180, 0x06E, 0x01B, 0x04B, 0x0AF, 0x069, 0x01D, 0x051,
+    0x0F6, 0x00D, 0x0B2, 0x0C1, 0x00B, 0x09D, 0x0FE, 0x09C, 0x031, 0x0F3, 0x010,
+    0x028, 0x12F, 0x07C, 0x066, 0x130, 0x061, 0x055, 0x006, 0x0E9, 0x06C, 0x0B7,
+    0x0FD, 0x016, 0x043, 0x126, 0x053, 0x05D, 0x0F7, 0x080, 0x058, 0x009, 0x06A,
+    0x022, 0x0B4, 0x092, 0x06B, 0x063, 0x0FB, 0x105, 0x073, 0x072, 0x09E, 0x044,
+    0x030, 0x081, 0x076, 0x11F, 0x0E3, 0x0D6, 0x014, 0x088, 0x0E4, 0x029, 0x12C,
+    0x0D3, 0x042, 0x07A, 0x03D, 0x06F, 0x0E1, 0x0EF, 0x0CB, 0x0CE, 0x02D, 0x085,
+    0x10F, 0x115, 0x017, 0x083, 0x0DD, 0x0BE, 0x0BC, 0x0BA, 0x04D, 0x118, 0x041,
+    0x047, 0x16B, 0x15E, 0x032, 0x156, 0x071, 0x0A1, 0x106, 0x142, 0x127, 0x143,
+    0x108, 0x11D, 0x078, 0x0A5, 0x00E, 0x0B6, 0x074, 0x131, 0x185, 0x025, 0x111,
+    0x090, 0x182, 0x07E, 0x08D, 0x02B, 0x094, 0x0A7, 0x0C3, 0x08A, 0x0D8, 0x097,
+    0x099, 0x026, 0x04F, 0x01F, 0x0EC, 0x10B, 0x188, 0x174, 0x16E, 0x172, 0x14E,
+    0x148, 0x11C, 0x151, 0x144, 0x0E0, 0x0D9, 0x0E5, 0x133, 0x068, 0x0C6, 0x18C,
+    0x164, 0x15F, 0x17B};
 
-static InventoryItem D_us_8018134C[] = {
-    // clang-format off
-    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
-    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
-    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
-    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
-    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
-    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
-    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
-    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
-    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
-    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
-    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
-    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
-    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
-    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
-    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
-    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
-    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
-    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
-    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
-    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
-    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
-    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
-    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
-    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
-    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
-    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
-    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
-    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
-    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
-    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
-    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
-    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
-    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
-    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
-    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
-    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
-    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
-    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
-    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
-    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
-    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
-    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
-    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      103 },
-    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
-    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
-    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
-    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
-    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
-    { INVENTORY_DOCUMENT,  0,    0x000A,              1000000 },
-    // clang-format on
+static const char* D_us_80180FB4[] = {
+    "Destroyed by Richter in １７９２．（５ years ago）",
+    "Revives due to blood soaked@bones．",
+    "Vampire bats．@Feared as servants of evil．",
+    "Indestructible spinning skull．",
+    "Fresh corpses．@Magically animated．",
+    "Legendary ””creature””．@Attacks all invaders．",
+    "Magically animated skeleton．",
+    "Wolves which guard castle @entrance．",
+    "Ferocious skeleton @swordsman．",
+    "Fireball−spitting Merman．@Largest of merman kind．",
+    "４−legged skeleton．@Drips poison．",
+    "Low level axe knight．",
+    "Eastern Church soldiers @dispatched ３００ years ago．",
+    "Bone−hurling skeleton．",
+    "Possessed Ouija table．",
+    "Boomerang wielding skeleton．",
+    "Plant with razor−sharp @leaves．",
+    "Fire−breathing flying demon．",
+    "Low level flaming ghosts．",
+    "Demonic puppet from Hell．",
+    "Demon with enchanted spear．",
+    "Nauseating two−headed @beast． Which is the head？",
+    "Strange human−like creature．@Jumps like a flea．",
+    "From Medusa’s hair．",
+    "Novice of twin−bladed @combat．",
+    "Skeletons equipped with @rifles．",
+    "From Medusa’s hair．@Can petrify．",
+    "Heavily armored knight with @iron ball．",
+    "Mutated plant．@Seeds petrify．",
+    "Well armored axe knight．",
+    "Fire and ice demon．@Seems reluctant to fight．",
+    "Skeleton archer equipped @with bow．",
+    "Cannon built of white @dragon skulls．",
+    "Shape−shifting demon．",
+    "Local barnyard owl Mutated @by castle’s influence．",
+    "Executed soldier’s head．@Hunting for vengeance．",
+    "Snake living off Scylla．",
+    "Animated ape skeleton．@Hurls wooden barrels．",
+    "Armored warrior with @naginata．",
+    "Book of beginner’s spells．",
+    "Slow−flying skeleton warrior．",
+    "Physical manifestations of @bodiless tormented souls．",
+    "Knight armed with @Greatsword．",
+    "Toad magically enlarged by @demonic baptism．",
+    "Heavily armored undead @warrior．",
+    "Armored guard．@Strong in perilous areas． ",
+    "Headless skeleton．@Wields a rapier．",
+    "Cave−dwelling frog．",
+    "Ice−wielding female spirit．",
+    "Book of ancient weapons．",
+    "Giant skull spirit．",
+    "Flesh−eating raven．",
+    "Spirit of long−dead blue @raven．",
+    "Plant with razor−sharp @leaves．",
+    "Skeleton equipped with @spiked iron flail．",
+    "Flea Man riding on specially @trained war−goose．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Naginata−wielding skeleton．",
+    "Mythological sea monster．",
+    "Invisible huntress spirit．",
+    "Animated mud golem．",
+    "Heavily armored knight @Attacks with trained owl．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Sword Lord wields sword @even when banished．",
+    "Flea Man armed with axe and@shield．",
+    "Part horse， lion and eagle．",
+    "Giant skeleton．",
+    "Monster made from gel．",
+    "Master of twin−bladed @combat．",
+    "Were panther skeleton．",
+    "Grave Keeper．@Master of unarmed combat．",
+    "Pyromaniacal gremlin．",
+    "Creature with head of @woman and body of bird．",
+    "Bull−headed monster．",
+    "Shape−shifting lycanthrope．",
+    "Portable skull shrine carried @by skeleton priests．",
+    "Bloodthirsty undead knight @who eternally seeks combat．",
+    "Mysterious cloaked @swordsman．",
+    "Fish head guardian．",
+    "Short magic−wielding demon．@Summons demonic allies．",
+    "Searches among graves and @knows much wise lore．",
+    "Ghost witches from Salem．",
+    "Eldest Giant brother．@Wields two huge daggers．",
+    "Giant brother．@Wields a gurkha knife．",
+    "Giant brother．@Uses huge steel hammer．",
+    "Discus−wielding armored @knight．",
+    "Demon Lord of Ravens．",
+    "Monster created from slimy @gel substance．",
+    "Thunder−wielding demon．@Called ””Musician from Hell””．",
+    "Watchdog of Hell．",
+    "Master Fish−head．",
+    "Magic−wielding vampire．@Rules upper part of castle．",
+    "Female demon．@Invades men’s dreams．",
+    "Gravestones possessed by @evil spirits of dead．",
+    "Watered with human blood．",
+    "The cowardly lion．",
+    "Impaled man looking for brain．",
+    "Nightmarish creature．@Composed of many．",
+    "Monster nicknamed ””schmoo””．",
+    "Heartless tin man．",
+    "Holds countless poison seeds．",
+    "Skeleton eternally chasing @his own skull．",
+    "Bomb−tossing armored @knight．",
+    "Zombies which attack even @when cut in half．",
+    "Mutated insect．@Visible only to magicians．",
+    "Expert at throwing weapons．",
+    "Fiendishly accurate archer．",
+    "Half−man， half−wolf．",
+    "Liquid creature．@Takes black panther shape．",
+    "Giant vampire bat．",
+    "White dragon ridden by Flea @Man．",
+    "Half−man， half−bull．",
+    "Wields fearsome beam @weapon．",
+    "Wyrm controlled by Flea Man．",
+    "Animated skeleton of huge @dragon．",
+    "Fireball−spitting wolf．",
+    "Rock−tossing armored @knight．",
+    "Angel archer．@Slew Amalaric of the Goths．",
+    "Evil demon−sword． Causes @poltergeist phenomena．",
+    "Skeleton with leaping attack．",
+    "Skeleton mounted on Warg．",
+    "Pre−intelligent bloodsucker @with long tongue for sucking．",
+    "Evil mutated octopus．",
+    "Flame demon．",
+    "Armor plated war−beast．",
+    "Gruesome Demon from Hell．",
+    "Ancient egyptian mummy．",
+    "Advanced Venus Weed．@Fed with demon blood．",
+    "Shape−shifting demon．",
+    "Snake−headed demoness @with gaze of stone．",
+    "Made from the body parts @of powerful warriors．",
+    "Zombie impersonating Grant．",
+    "Zombie impersonating Trevor．",
+    "Mischievous little demon．",
+    "Zombie impersonating Sypha．",
+    "Beelzebub Lord of Flies．",
+    "Executioner of Hell．",
+    "New−half ice spirit．@Servant of Galamoth．",
+    "Young female witch．",
+    "Master Vampire hunter．",
+    "Rare bird．@Runs when sees people．",
+    "Magical being with plan to @rule the netherworld．",
+    "High level Armor Lord．",
+    "Dracula’s close friend．",
+    "Dark Priest of Dracula．",
+    "Lord of Wallachia．@Father of Alucard．",
 };
-
-/// relic index
-u16 D_us_801814D4[] = {16, 0};
-
-// sellable items
-AvailableInventoryItem D_us_801814D8[] = {
-    // clang-format off
-    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
-    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
-    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
-    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
-    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
-    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
-    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
-    // clang-format on
-};
-
-// magic scroll index to spell ID
-static u16 D_us_80181510[] = {
-    // clang-format off
-    SPELL_DARK_METAMORPHOSIS,
-    SPELL_SUMMON_SPIRIT,
-    SPELL_HELLFIRE,
-    SPELL_TETRA_SPIRIT,
-    SPELL_SOUL_STEAL,
-    // clang-format on
-};
-
-// these are pairs of bytes, but only the first is used.
-// these are used to determine which magic scrolls
-// should be visible. typically this is if spells are
-// known, either through magic scrolls or otherwise,
-// but a completed game save overrides that check
-// (in func_us_801B29C4).
-static u8 D_us_8018151C[] = {
-    // clang-format off
-    0x00, 0x00,
-    0x01, 0x00,
-    0x02, 0x00,
-    0x05, 0x00,
-    0x06, 0x00,
-    0x00, 0x00,
-    // clang-format on
-};
-
-#ifdef VERSION_PSP
-extern const char** D_us_80181528;
-extern u16 D_us_80181530;
-extern u8 D_us_80181650[];
-extern u8 D_us_80181658[];
-extern u8* D_us_80181660;
-extern char* D_us_80181668;
-extern char** D_us_80181674;
-extern u16 D_us_80181684[];
-extern const char** D_us_8018168C;
-extern char* D_us_801816A4;
-extern char** D_us_801816AC;
-extern char** D_us_801816B0;
-extern AvailableInventoryItem D_us_8018173C[];
-extern const char** D_us_8018181C;
-extern const char** D_us_8018187C;
-extern u16 D_us_801818A8[];
-extern const char** D_us_801818C0;
-extern const char** D_us_801818DC;
-extern const char* D_us_801818EC[];
-extern const char** D_us_801818F4;
-extern u16 D_us_80181978[];
-extern u8* D_psp_092A54E0;
-#else
-extern const char* D_us_80181528[];
-extern u16 D_us_80181530;
-extern u8 D_us_80181650[];
-extern u8 D_us_80181658[];
-extern u8 D_us_80181660[];
-extern char D_us_80181668[];
-extern char* D_us_80181674[];
-extern u16 D_us_80181684[];
-extern const char* D_us_8018168C[];
-extern char D_us_801816A4[];
-extern char* D_us_801816AC[];
-extern char* D_us_801816B0[];
-extern AvailableInventoryItem D_us_8018173C[];
-extern const char* D_us_8018181C[];
-extern const char* D_us_8018187C[];
-extern u16 D_us_801818A8[];
-extern const char* D_us_801818C0[];
-extern const char* D_us_801818DC[];
-extern const char* D_us_801818EC[];
-extern const char* D_us_801818F4[];
-extern u16 D_us_80181978[];
-extern u8 D_us_80183F64;
-#endif
+static u8 D_us_801811FC[] = {6, 3, 16, 4, -1, 0};
+static u8 D_us_80181204[] = {10, 5, 10, 4, 10, 5, 1, 4, -1, 0};
+static u8 D_us_80181210[] = {12, 14, 10, 15, 8, 16, 4, 17, -1, 0};
+static u8 D_us_8018121C[] = {4,  16, 53, 19, 7,  18, 7,  19, 7,  18, 7,
+                             19, 7,  18, 3,  19, 6,  16, 4,  17, -1, 0};
+static u8 D_us_80181234[] = {7, 16, 6, 19, 6, 20, 7, 21, 8, 22, 4, 23, -1, 0};
+static u8 D_us_80181244[] = {
+    4,  22, 29, 21, 4,  20, 4, 19, 3,  16, 52, 17, 6,  16,
+    10, 15, 7,  14, 10, 4,  9, 3,  52, 2,  11, 10, 7,  11,
+    8,  12, 36, 13, 6,  12, 7, 11, 7,  10, 4,  2,  -1, 0};
+static u8 D_us_80181270[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 4, 17, -1, 0};
+static u8 D_us_80181280[] = {6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 4, 2, -1, 0};
+static u8 D_us_80181290[] = {11, 10, 7, 11, 8, 12, 4, 13, -1, 0};
+static u8 D_us_8018129C[] = {6, 12, 7, 11, 7, 10, 4, 2, -1, 0};
+static u8 D_us_801812A8[] = {11, 2, 10, 6, 7, 7, 7, 8, 49, 9, 0, 0};
+static u8 D_us_801812B4[] = {3, 8, 7, 7, 7, 6, 4, 2, 0, 0};
+static u8 D_us_801812C0[] = {32, 4, 8, 3, 4, 2, -1, 0};
+static u8 D_us_801812C8[] = {8, 2, 8, 24, 0, 0};
+static u8 D_us_801812D0[] = {4, 41, 4, 42, -1, 0};
+static u8* D_us_801812D8[] = {
+    D_us_801811FC, D_us_80181204, D_us_80181210, D_us_8018121C, D_us_80181234,
+    D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
+    D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
 #ifdef VERSION_PSP
 extern s32 D_psp_08C630DC;
@@ -235,168 +261,6 @@ static AvailableInventoryItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801AFA80);
-
-const char D_us_801AB960[] = "Lord of Wallachia．@Father of Alucard．";
-const char D_us_801AB988[] = "Dark Priest of Dracula．";
-const char D_us_801AB9A4[] = "Dracula’s close friend．";
-const char D_us_801AB9C0[] = "High level Armor Lord．";
-const char D_us_801AB9D8[] =
-    "Magical being with plan to @rule the netherworld．";
-const char D_us_801ABA0C[] = "Rare bird．@Runs when sees people．";
-const char D_us_801ABA30[] = "Master Vampire hunter．";
-const char D_us_801ABA48[] = "Young female witch．";
-const char D_us_801ABA60[] = "New−half ice spirit．@Servant of Galamoth．";
-const char D_us_801ABA90[] = "Executioner of Hell．";
-const char D_us_801ABAA8[] = "Beelzebub Lord of Flies．";
-const char D_us_801ABAC4[] = "Zombie impersonating Sypha．";
-const char D_us_801ABAE4[] = "Mischievous little demon．";
-const char D_us_801ABB00[] = "Zombie impersonating Trevor．";
-const char D_us_801ABB20[] = "Zombie impersonating Grant．";
-const char D_us_801ABB40[] = "Made from the body parts @of powerful warriors．";
-const char D_us_801ABB74[] = "Snake−headed demoness @with gaze of stone．";
-const char D_us_801ABBA4[] = "Advanced Venus Weed．@Fed with demon blood．";
-const char D_us_801ABBD4[] = "Ancient egyptian mummy．";
-const char D_us_801ABBF0[] = "Gruesome Demon from Hell．";
-const char D_us_801ABC0C[] = "Armor plated war−beast．";
-const char D_us_801ABC28[] = "Flame demon．";
-const char D_us_801ABC38[] = "Evil mutated octopus．";
-const char D_us_801ABC50[] =
-    "Pre−intelligent bloodsucker @with long tongue for sucking．";
-const char D_us_801ABC90[] = "Skeleton mounted on Warg．";
-const char D_us_801ABCAC[] = "Skeleton with leaping attack．";
-const char D_us_801ABCCC[] = "Angel archer．@Slew Amalaric of the Goths．";
-const char D_us_801ABCF8[] = "Rock−tossing armored @knight．";
-const char D_us_801ABD18[] = "Fireball−spitting wolf．";
-const char D_us_801ABD34[] = "Animated skeleton of huge @dragon．";
-const char D_us_801ABD58[] = "Wyrm controlled by Flea Man．";
-const char D_us_801ABD78[] = "Wields fearsome beam @weapon．";
-const char D_us_801ABD98[] = "Half−man， half−bull．";
-const char D_us_801ABDB4[] = "White dragon ridden by Flea @Man．";
-const char D_us_801ABDD8[] = "Giant vampire bat．";
-const char D_us_801ABDEC[] = "Liquid creature．@Takes black panther shape．";
-const char D_us_801ABE1C[] = "Half−man， half−wolf．";
-const char D_us_801ABE38[] = "Fiendishly accurate archer．";
-const char D_us_801ABE58[] = "Expert at throwing weapons．";
-const char D_us_801ABE78[] = "Mutated insect．@Visible only to magicians．";
-const char D_us_801ABEA8[] = "Zombies which attack even @when cut in half．";
-const char D_us_801ABED8[] = "Bomb−tossing armored @knight．";
-const char D_us_801ABEF8[] = "Skeleton eternally chasing @his own skull．";
-const char D_us_801ABF24[] = "Holds countless poison seeds．";
-const char D_us_801ABF44[] = "Heartless tin man．";
-const char D_us_801ABF58[] = "Monster nicknamed ””schmoo””．";
-const char D_us_801ABF7C[] = "Nightmarish creature．@Composed of many．";
-const char D_us_801ABFA8[] = "Impaled man looking for brain．";
-const char D_us_801ABFC8[] = "The cowardly lion．";
-const char D_us_801ABFDC[] = "Watered with human blood．";
-const char D_us_801ABFF8[] = "Gravestones possessed by @evil spirits of dead．";
-const char D_us_801AC02C[] = "Female demon．@Invades men’s dreams．";
-const char D_us_801AC054[] =
-    "Magic−wielding vampire．@Rules upper part of castle．";
-const char D_us_801AC08C[] = "Master Fish−head．";
-const char D_us_801AC0A0[] = "Watchdog of Hell．";
-const char D_us_801AC0B4[] =
-    "Thunder−wielding demon．@Called ””Musician from Hell””．";
-const char D_us_801AC0F4[] = "Monster created from slimy @gel substance．";
-const char D_us_801AC120[] = "Demon Lord of Ravens．";
-const char D_us_801AC138[] = "Discus−wielding armored @knight．";
-const char D_us_801AC15C[] = "Giant brother．@Uses huge steel hammer．";
-const char D_us_801AC188[] = "Giant brother．@Wields a gurkha knife．";
-const char D_us_801AC1B0[] = "Eldest Giant brother．@Wields two huge daggers．";
-const char D_us_801AC1E4[] = "Ghost witches from Salem．";
-const char D_us_801AC200[] =
-    "Searches among graves and @knows much wise lore．";
-const char D_us_801AC234[] =
-    "Short magic−wielding demon．@Summons demonic allies．";
-const char D_us_801AC26C[] = "Fish head guardian．";
-const char D_us_801AC284[] = "Mysterious cloaked @swordsman．";
-const char D_us_801AC2A4[] =
-    "Bloodthirsty undead knight @who eternally seeks combat．";
-const char D_us_801AC2E0[] =
-    "Portable skull shrine carried @by skeleton priests．";
-const char D_us_801AC318[] = "Shape−shifting lycanthrope．";
-const char D_us_801AC338[] = "Bull−headed monster．";
-const char D_us_801AC350[] = "Creature with head of @woman and body of bird．";
-const char D_us_801AC380[] = "Pyromaniacal gremlin．";
-const char D_us_801AC398[] = "Grave Keeper．@Master of unarmed combat．";
-const char D_us_801AC3C4[] = "Were panther skeleton．";
-const char D_us_801AC3DC[] = "Master of twin−bladed @combat．";
-const char D_us_801AC400[] = "Monster made from gel．";
-const char D_us_801AC418[] = "Giant skeleton．";
-const char D_us_801AC42C[] = "Part horse， lion and eagle．";
-const char D_us_801AC44C[] = "Flea Man armed with axe and@shield．";
-const char D_us_801AC474[] = "Sword Lord wields sword @even when banished．";
-const char D_us_801AC4A4[] =
-    "Heavily armored knight @Attacks with trained owl．";
-const char D_us_801AC4D8[] = "Animated mud golem．";
-const char D_us_801AC4F0[] = "Invisible huntress spirit．";
-const char D_us_801AC50C[] = "Mythological sea monster．";
-const char D_us_801AC528[] = "Naginata−wielding skeleton．";
-const char D_us_801AC548[] =
-    "Evil demon−sword． Causes @poltergeist phenomena．";
-const char D_us_801AC57C[] =
-    "Flea Man riding on specially @trained war−goose．";
-const char D_us_801AC5B0[] = "Skeleton equipped with @spiked iron flail．";
-const char D_us_801AC5DC[] = "Spirit of long−dead blue @raven．";
-const char D_us_801AC600[] = "Flesh−eating raven．";
-const char D_us_801AC618[] = "Giant skull spirit．";
-const char D_us_801AC630[] = "Book of ancient weapons．";
-const char D_us_801AC64C[] = "Ice−wielding female spirit．";
-const char D_us_801AC66C[] = "Cave−dwelling frog．";
-const char D_us_801AC684[] = "Headless skeleton．@Wields a rapier．";
-const char D_us_801AC6AC[] = "Armored guard．@Strong in perilous areas． ";
-const char D_us_801AC6D8[] = "Heavily armored undead @warrior．";
-const char D_us_801AC6FC[] = "Toad magically enlarged by @demonic baptism．";
-const char D_us_801AC72C[] = "Knight armed with @Greatsword．";
-const char D_us_801AC74C[] =
-    "Physical manifestations of @bodiless tormented souls．";
-const char D_us_801AC784[] = "Slow−flying skeleton warrior．";
-const char D_us_801AC7A4[] = "Book of beginner’s spells．";
-const char D_us_801AC7C4[] = "Armored warrior with @naginata．";
-const char D_us_801AC7E8[] = "Animated ape skeleton．@Hurls wooden barrels．";
-const char D_us_801AC818[] = "Snake living off Scylla．";
-const char D_us_801AC834[] =
-    "Executed soldier’s head．@Hunting for vengeance．";
-const char D_us_801AC868[] =
-    "Local barnyard owl Mutated @by castle’s influence．";
-const char D_us_801AC8A0[] = "Shape−shifting demon．";
-const char D_us_801AC8B8[] = "Cannon built of white @dragon skulls．";
-const char D_us_801AC8E0[] = "Skeleton archer equipped @with bow．";
-const char D_us_801AC908[] = "Fire and ice demon．@Seems reluctant to fight．";
-const char D_us_801AC938[] = "Well armored axe knight．";
-const char D_us_801AC954[] = "Mutated plant．@Seeds petrify．";
-const char D_us_801AC974[] = "Heavily armored knight with @iron ball．";
-const char D_us_801AC9A0[] = "From Medusa’s hair．@Can petrify．";
-const char D_us_801AC9C4[] = "Skeletons equipped with @rifles．";
-const char D_us_801AC9E8[] = "Novice of twin−bladed @combat．";
-const char D_us_801ACA0C[] = "From Medusa’s hair．";
-const char D_us_801ACA24[] =
-    "Strange human−like creature．@Jumps like a flea．";
-const char D_us_801ACA58[] =
-    "Nauseating two−headed @beast． Which is the head？";
-const char D_us_801ACA8C[] = "Demon with enchanted spear．";
-const char D_us_801ACAAC[] = "Demonic puppet from Hell．";
-const char D_us_801ACAC8[] = "Low level flaming ghosts．";
-const char D_us_801ACAE4[] = "Fire−breathing flying demon．";
-const char D_us_801ACB04[] = "Plant with razor−sharp @leaves．";
-const char D_us_801ACB28[] = "Boomerang wielding skeleton．";
-const char D_us_801ACB48[] = "Possessed Ouija table．";
-const char D_us_801ACB60[] = "Bone−hurling skeleton．";
-const char D_us_801ACB7C[] =
-    "Eastern Church soldiers @dispatched ３００ years ago．";
-const char D_us_801ACBB4[] = "Low level axe knight．";
-const char D_us_801ACBCC[] = "４−legged skeleton．@Drips poison．";
-const char D_us_801ACBF4[] =
-    "Fireball−spitting Merman．@Largest of merman kind．";
-const char D_us_801ACC2C[] = "Ferocious skeleton @swordsman．";
-const char D_us_801ACC4C[] = "Wolves which guard castle @entrance．";
-const char D_us_801ACC74[] = "Magically animated skeleton．";
-const char D_us_801ACC94[] = "Legendary ””creature””．@Attacks all invaders．";
-const char D_us_801ACCC8[] = "Fresh corpses．@Magically animated．";
-const char D_us_801ACCF0[] = "Indestructible spinning skull．";
-const char D_us_801ACD10[] = "Vampire bats．@Feared as servants of evil．";
-const char D_us_801ACD3C[] = "Revives due to blood soaked@bones．";
-const char D_us_801ACD60[] =
-    "Destroyed by Richter in １７９２．（５ years ago）";
 
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
@@ -837,6 +701,133 @@ void EntityLibrarianChair(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
+extern const char** D_us_80181310;
+#else
+extern const char* D_us_80181310[] = {
+    "\003"
+    "Buy item",
+    "\003"
+    "Tactics",
+    "\001"
+    "Enemy list",
+    "\001"
+    "Sound test",
+    "\006"
+    "Exit",
+    "\003"
+    "Sell gem"};
+#endif
+
+static u8 D_us_80181328[] = {4, 0, 5, 1, 4};
+static u8 D_us_80181330[] = {5, 0, 5, 1, 2, 4};
+static u8 D_us_80181338[] = {6, 0, 5, 1, 2, 3, 4};
+static u8* D_us_80181340[] = {D_us_80181328, D_us_80181330, D_us_80181338};
+
+static InventoryItem D_us_8018134C[] = {
+    // clang-format off
+    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
+    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
+    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
+    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
+    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
+    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
+    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
+    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
+    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
+    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
+    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
+    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
+    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
+    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
+    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
+    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
+    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
+    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
+    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
+    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
+    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
+    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
+    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
+    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
+    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
+    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
+    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
+    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
+    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
+    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
+    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
+    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
+    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
+    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
+    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
+    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
+    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
+    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
+    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
+    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
+    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
+    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
+    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      103 },
+    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
+    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
+    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
+    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
+    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
+    { INVENTORY_DOCUMENT,  0,    0x000A,              1000000 },
+    // clang-format on
+};
+
+/// relic index
+u16 D_us_801814D4[] = {16, 0};
+
+// sellable items
+AvailableInventoryItem D_us_801814D8[] = {
+    // clang-format off
+    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
+    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
+    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
+    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
+    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
+    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
+    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
+    // clang-format on
+};
+
+// magic scroll index to spell ID
+static u16 D_us_80181510[] = {
+    // clang-format off
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_SOUL_STEAL,
+    // clang-format on
+};
+
+// these are pairs of bytes, but only the first is used.
+// these are used to determine which magic scrolls
+// should be visible. typically this is if spells are
+// known, either through magic scrolls or otherwise,
+// but a completed game save overrides that check
+// (in func_us_801B29C4).
+static u8 D_us_8018151C[] = {
+    // clang-format off
+    0x00, 0x00,
+    0x01, 0x00,
+    0x02, 0x00,
+    0x05, 0x00,
+    0x06, 0x00,
+    0x00, 0x00,
+    // clang-format on
+};
+
+#ifdef VERSION_PSP
+extern u8* D_psp_092A54E0;
+#else
+extern u8 D_us_80183F64;
+#endif
+
 void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
     const u16 MINSCODE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
@@ -1109,19 +1100,6 @@ INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B1200);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B12D0);
 
-const char D_us_801ACDE0[] = "\003"
-                             "Sell gem";
-const char D_us_801ACDEC[] = "\006"
-                             "Exit";
-const char D_us_801ACDF4[] = "\001"
-                             "Sound test";
-const char D_us_801ACE00[] = "\001"
-                             "Enemy list";
-const char D_us_801ACE0C[] = "\003"
-                             "Tactics";
-const char D_us_801ACE18[] = "\003"
-                             "Buy item";
-
 void func_us_801B15C0(Entity* self) {
     Entity* tempEntity;
     Primitive* otherPrim;
@@ -1215,11 +1193,7 @@ void func_us_801B15C0(Entity* self) {
 
     case 1:
         for (i = 0; i < self->ext.et_801B15C0.unk84; i++) {
-#ifdef VERSION_PSP
-            ptr = *(*D_psp_092A5FC0 + self->ext.et_801B15C0.unk88[i]);
-#else
             ptr = D_us_80181310[self->ext.et_801B15C0.unk88[i]];
-#endif
             tempVar = *ptr++;
             func_us_801B0FBC(ptr, tempVar, 0x108 + i * 16);
         }
@@ -2349,6 +2323,52 @@ Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
     return prim;
 }
 
+#ifdef VERSION_PSP
+extern const char** D_us_80181528;
+#else
+static const char* D_us_80181528[] = {"ATT", "DEF"};
+#endif
+
+static u16 D_us_80181530[] = {
+    -0x012, -0x022, -0x00A, -0x022, -0x012, -0x01A, -0x00A, -0x01A, -0x02E,
+    0x01A,  -0x026, 0x01A,  -0x01E, 0x01A,  -0x016, 0x01A,  -0x006, 0x01A,
+    0x002,  0x01A,  0x00A,  0x01A,  0x012,  0x01A,  0x01A,  0x01A,  0x022,
+    0x01A,  0x02A,  0x01A,  0x032,  0x01A,  -0x016, 0x010,  -0x00E, 0x010,
+    -0x006, 0x010,  0x002,  0x010,  0x00A,  0x010,  0x012,  0x010,  0x01A,
+    0x010,  0x01A,  0x010,  0x022,  0x010,  0x02A,  0x010,  0x032,  0x010,
+    0x002,  -0x022, 0x00A,  -0x022, 0x012,  -0x022, 0x01A,  -0x023, 0x022,
+    -0x022, 0x02A,  -0x022, 0x032,  -0x022, 0x002,  -0x01A, 0x00A,  -0x01A,
+    0x012,  -0x01A, 0x01A,  -0x01B, 0x022,  -0x01A, 0x02A,  -0x01A, 0x032,
+    -0x01A, 0x002,  -0x00E, 0x00A,  -0x00E, 0x012,  -0x00E, 0x01A,  -0x00F,
+    0x022,  -0x00E, 0x02A,  -0x00E, 0x032,  -0x00E, -0x036, -0x002, -0x02E,
+    -0x002, -0x026, -0x002, -0x01A, -0x002, -0x012, -0x002, -0x00A, -0x002,
+    0x006,  -0x002, 0x00E,  -0x002, 0x016,  -0x002, 0x022,  -0x002, 0x02A,
+    -0x002, 0x032,  -0x002, -0x036, 0x006,  -0x02E, 0x006,  -0x026, 0x006,
+    -0x01A, 0x006,  -0x012, 0x006,  -0x00A, 0x006,  0x006,  0x006,  0x00E,
+    0x006,  0x016,  0x006,  0x022,  0x006,  0x02A,  0x006,  0x032,  0x006};
+static u8 D_us_80181650[] = {0x00, 0x00, 0x00, 0x00, 0x32, 0x2C, 0x32, 0x2C};
+static u8 D_us_80181658[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x12, 0x11, 0x11, 0x12};
+
+#ifdef VERSION_PSP
+extern u8* D_us_80181660;
+extern char* D_us_80181668;
+extern char** D_us_80181674;
+#else
+static u8 D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181668[] = {
+    // clang-format off
+    CH('S'), CH('T'), CH('R'), 
+    CH('C'), CH('O'), CH('N'), 
+    CH('I'), CH('N'), CH('T'), 
+    CH('L'), CH('C'), CH('K')
+    // clang-format on
+};
+static char* D_us_80181674[] = {
+    _S("Number"), _S("Equipped"), _S("Not equipped"), _S("うれるこすう")};
+#endif
+
+static u16 D_us_80181684[] = {0xE4, 0xB0, 0xEC, 0xB0};
+
 void func_us_801B4010(u16* arg0) {
     *arg0++ = g_Status.equipment[0];
     *arg0++ = g_Status.equipment[1];
@@ -2400,13 +2420,6 @@ Primitive* func_us_801B4194(Primitive* prim) {
     }
     return prim;
 }
-
-const char D_us_801ACF14[] = "DEF";
-const char D_us_801ACF18[] = "ATT";
-const char D_us_801ACF1C[] = _S("うれるこすう");
-const char D_us_801ACF24[] = _S("Not equipped");
-const char D_us_801ACF34[] = _S("Equipped");
-const char D_us_801ACF40[] = _S("Number");
 
 void func_us_801B420C(Primitive* prim, Entity* arg1) {
     u16 index;
@@ -2748,7 +2761,7 @@ void func_us_801B4830(Entity* self) {
                     prim->y0 = 0x7E;
                     prim->priority = 0x11;
                     prim->drawMode = DRAW_HIDE;
-                    var_s4 = &D_us_80181530;
+                    var_s4 = D_us_80181530;
                 } else if (i < 15) {
                     if (i == 11) {
                         D_us_80181660[0] =
@@ -2883,12 +2896,14 @@ void func_us_801B4830(Entity* self) {
     }
 }
 
-const char D_us_801ACF88[] = "Contains ””Soul Steal””";
-const char D_us_801ACFA4[] = "Contains ””Tetra Spirits””";
-const char D_us_801ACFC4[] = "Contains ””Hellfire””";
-const char D_us_801ACFE0[] = "Contains ””Summon Spirit””";
-const char D_us_801AD000[] = "Contains ””Dark Metamorphosis””";
-const char D_us_801AD024[] = "Basic map of Dracula’s castle";
+#ifdef VERSION_PSP
+extern const char** D_us_8018168C;
+#else
+static const char* D_us_8018168C[] = {
+    "Basic map of Dracula’s castle", "Contains ””Dark Metamorphosis””",
+    "Contains ””Summon Spirit””",    "Contains ””Hellfire””",
+    "Contains ””Tetra Spirits””",    "Contains ””Soul Steal””"};
+#endif
 
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;
@@ -3161,13 +3176,18 @@ void func_us_801B5068(Entity* self) {
     }
 }
 
-const char D_us_801AD088[] = _S("Jewel of Open");
-const char D_us_801AD098[] = _S("Magic scroll 5");
-const char D_us_801AD0A8[] = _S("Magic scroll 4");
-const char D_us_801AD0B8[] = _S("Magic scroll 3");
-const char D_us_801AD0C8[] = _S("Magic scroll 2");
-const char D_us_801AD0D8[] = _S("Magic scroll 1");
-const char D_us_801AD0E8[] = _S("Castle map");
+#ifdef VERSION_PSP
+extern char* D_us_801816A4;
+extern const char** D_us_801816AC;
+extern const char** D_us_801816B0;
+#else
+static char D_us_801816A4[] = {
+    CH('S'), CH('O'), CH('L'), CH('D'), CH(' '), CH('O'), CH('U'), CH('T')};
+static const char* D_us_801816AC[] = {_S("Jewel of Open")};
+static const char* D_us_801816B0[] = {
+    _S("Castle map"),     _S("Magic scroll 1"), _S("Magic scroll 2"),
+    _S("Magic scroll 3"), _S("Magic scroll 4"), _S("Magic scroll 5")};
+#endif
 
 const RECT D_us_801AD0F4 = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
 
@@ -3342,7 +3362,7 @@ void func_us_801B56E4(Entity* self) {
 #ifdef VERSION_PSP
                 func_us_801B3FB4(prim2, D_us_801816A4, count, 1);
 #else
-                func_us_801B3FB4(prim2, D_us_801816A4, 8, 1);
+                func_us_801B3FB4(prim2, D_us_801816A4, LEN(D_us_801816A4), 1);
 #endif
             }
             posY += 12;
@@ -3439,33 +3459,71 @@ INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B5F84);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B60C8);
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B6124);
+static const char* D_us_801816C8[] = {
+    _S("Dracula"),
+    _S("Olrox"),
+    _S("Doppleganger10"),
+    _S("Granfaloon"),
+    _S("Minotaur&Werewolf"),
+    _S("Scylla"),
+    _S("Slogra&Gaibon"),
+    _S("Hippogryph"),
+    _S("Beelzebub"),
+    _S("Succubus"),
+    _S("Karasuman"),
+    _S("Trevor&Grant&Sypha"),
+    _S("Death"),
+    _S("Cerberus"),
+    _S("Richter Belmont"),
+    _S("Medusa"),
+    _S("The Creature"),
+    _S("Lesser Demon"),
+    _S("Doppleganger40"),
+    _S("Akmodan II"),
+    _S("Darkwing Bat"),
+    _S("Galamoth"),
+    _S("カ"),
+    _S("カ"),
+    _S("カ"),
+    _S("カ"),
+    _S("カ"),
+    _S("Shaft"),
+    _S("Lord Dracula")};
 
-const char D_us_801AD134[] = _S("Lord Dracula");
-const char D_us_801AD144[] = _S("Shaft");
-const char D_us_801AD14C[] = _S("カ");
-const char D_us_801AD150[] = _S("Galamoth");
-const char D_us_801AD15C[] = _S("Darkwing Bat");
-const char D_us_801AD16C[] = _S("Akmodan II");
-const char D_us_801AD178[] = _S("Doppleganger40");
-const char D_us_801AD188[] = _S("Lesser Demon");
-const char D_us_801AD198[] = _S("The Creature");
-const char D_us_801AD1A8[] = _S("Medusa");
-const char D_us_801AD1B0[] = _S("Richter Belmont");
-const char D_us_801AD1C4[] = _S("Cerberus");
-const char D_us_801AD1D0[] = _S("Death");
-const char D_us_801AD1D8[] = _S("Trevor&Grant&Sypha");
-const char D_us_801AD1EC[] = _S("Karasuman");
-const char D_us_801AD1F8[] = _S("Succubus");
-const char D_us_801AD204[] = _S("Beelzebub");
-const char D_us_801AD210[] = _S("Hippogryph");
-const char D_us_801AD21C[] = _S("Slogra&Gaibon");
-const char D_us_801AD22C[] = _S("Scylla");
-const char D_us_801AD234[] = _S("Minotaur&Werewolf");
-const char D_us_801AD248[] = _S("Granfaloon");
-const char D_us_801AD254[] = _S("Doppleganger10");
-const char D_us_801AD264[] = _S("Olrox");
-const char D_us_801AD26C[] = _S("Dracula");
+static AvailableInventoryItem D_us_8018173C[] = {
+    // clang-format off
+    {INVENTORY_HAND, ITEM_EMPTY_HAND,     200}, 
+    {INVENTORY_HAND, ITEM_KNIGHT_SHIELD,  500},
+    {INVENTORY_HAND, ITEM_MONSTER_VIAL_2, 700},
+    {INVENTORY_HAND, ITEM_IRON_SHIELD,    1000},
+    {INVENTORY_HAND, ITEM_LEATHER_SHIELD, 1200},
+    {INVENTORY_HAND, ITEM_SHIELD_ROD,     1400},
+    {INVENTORY_HAND, ITEM_DARK_SHIELD,    1800},
+    {INVENTORY_HAND, ITEM_HERALD_SHIELD,  2000},
+    {INVENTORY_HAND, ITEM_MEDUSA_SHIELD,  2200},
+    {INVENTORY_HAND, ITEM_MONSTER_VIAL_1, 2500},
+    {INVENTORY_HAND, ITEM_MONSTER_VIAL_3, 2800},
+    {INVENTORY_HAND, ITEM_SKULL_SHIELD,   3000},
+    {INVENTORY_HAND, ITEM_COMBAT_KNIFE,   3500},
+    {INVENTORY_HAND, ITEM_SHORT_SWORD,    3500},
+    {INVENTORY_HAND, ITEM_FIRE_SHIELD,    3500},
+    {INVENTORY_HAND, ITEM_ALUCARD_SHIELD, 3500},
+    {INVENTORY_HAND, ITEM_SHAMAN_SHIELD,  4000},
+    {INVENTORY_HAND, ITEM_BASILARD,       4500},
+    {INVENTORY_HAND, ITEM_GODDESS_SHIELD, 5000},
+    {INVENTORY_HAND, ITEM_AXELORD_SHIELD, 6000},
+    {INVENTORY_HAND, ITEM_NUNCHAKU,       7000},
+    {INVENTORY_HAND, ITEM_TAKEMITSU,      8500},
+    {INVENTORY_HAND, ITEM_SHOTEL,         10000},
+    // clang-format on
+};
+
+static char D_us_801817F4[] = _S("--------------");
+static char D_us_80181804[] = {
+    CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
+static char D_us_8018180C[] = _S("--------------");
+
+INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B6124);
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
@@ -3597,7 +3655,7 @@ void func_us_801B6324(Entity* self) {
 #ifdef VERSION_PSP
             for (i = 0; i < 24; i++) {
 #else
-            for (i = 0; i < 23; i++) {
+            for (i = 0; i < LEN(D_us_8018173C); i++) {
 #endif
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
@@ -3670,11 +3728,11 @@ void func_us_801B6324(Entity* self) {
             itemID =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80);
             switch (D_us_8018173C[itemID].category) {
-            case 0:
+            case INVENTORY_HAND:
                 g_api.PlaySfx(SFX_UI_ERROR);
                 break;
 
-            case 1:
+            case INVENTORY_HEAD:
                 if (g_Status.gold < D_us_8018173C[itemID].price) {
                     g_api.PlaySfx(SFX_UI_ERROR);
                 } else {
@@ -3687,8 +3745,8 @@ void func_us_801B6324(Entity* self) {
                 }
                 break;
 
-            case 2:
-            case 3:
+            case INVENTORY_BODY:
+            case INVENTORY_CAPE:
                 SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -4160,6 +4218,56 @@ void func_us_801B6F30(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
+extern const char** D_us_8018181C;
+extern const char** D_us_8018187C;
+#else
+static const char* D_us_8018181C[] = {
+    _S("None"),
+    _S("だいハート"),
+    _S("$1"),
+    _S("$25"),
+    _S("$50"),
+    _S("$100"),
+    _S("$250"),
+    _S("$400"),
+    _S("$700"),
+    _S("$1000"),
+    _S("$2000"),
+    _S("$5000"),
+    _S("ハートのうつわ"),
+    _S("にく"),
+    _S("ナイフ(サブ)"),
+    _S("Axe"),
+    _S("クロス(サブ)"),
+    _S("せいすい(サブ)"),
+    _S("とけい(サブ)"),
+    _S("バイブル(サブ)"),
+    _S("けんじのいし(サブ)"),
+    _S("ビブーティ(サブ)"),
+    _S("アグネアのぶき(サブ)"),
+    _S("ライフアップポーション")};
+static const char* D_us_8018187C[] = {
+    _S("HOL"), _S("DRK"), _S("FIR"), _S("THU"), _S("ICE"), _S("H2O"),
+    _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
+#endif
+
+static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400,
+                              0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
+
+#ifdef VERSION_PSP
+extern const char** D_us_801818C0;
+extern const char* D_us_801818EC[];
+extern const char* D_us_801818F0[];
+#else
+static const char* D_us_801818C0[] = {
+    _S("LV"),         _S("HP"),       "$EF",       _S("Exp"),
+    _S("Drop Items"), _S("No."),      "\x1F\x1F",  _S("Strong VS."),
+    _S("Immune"),     _S("Weak VS."), _S("Absorb")};
+static const char* D_us_801818EC[] = {_S("????????")};
+static const char* D_us_801818F0[] = {_S("????")};
+#endif
+
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
     if (itemId >= 0x80) {
@@ -4287,7 +4395,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX += 2;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4346,8 +4454,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(
-            prim, 0x84 - xOffset, ((i * 0x10) + 0x3C), D_us_801818DC[i], 0x196);
+        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
+                                D_us_801818C0[i + 7], 0x196);
     }
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
@@ -4375,19 +4483,19 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x80;
     posY = 0x34;
     prim = func_us_801B1064(
-        prim, posX, posY, D_us_801818DC[0], 0x196); // "Strong VS."
+        prim, posX, posY, D_us_801818C0[7], 0x196); // "Strong VS."
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x3D);
     posY += 0x14;
     prim =
-        func_us_801B1064(prim, posX, posY, D_us_801818DC[1], 0x196); // "Immune"
+        func_us_801B1064(prim, posX, posY, D_us_801818C0[8], 0x196); // "Immune"
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x51);
     posY += 0x14;
     prim = func_us_801B1064(
-        prim, posX, posY, D_us_801818DC[2], 0x196); // "Weak VS."
+        prim, posX, posY, D_us_801818C0[9], 0x196); // "Weak VS."
     prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x65);
     posY += 0x14;
-    prim =
-        func_us_801B1064(prim, posX, posY, D_us_801818DC[3], 0x196); // "Absorb"
+    prim = func_us_801B1064(
+        prim, posX, posY, D_us_801818C0[10], 0x196); // "Absorb"
     prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x79);
 
     posX = 0x18;
@@ -4426,7 +4534,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[1], 0x196); // "HP"
     posX += 0x12;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818EC[1], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4477,68 +4585,19 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
 }
 #endif
 
-const char D_us_801AD2C8[] = _S("ライフアップポーション");
-const char D_us_801AD2DC[] = _S("アグネアのぶき(サブ)");
-const char D_us_801AD2F0[] = _S("ビブーティ(サブ)");
-const char D_us_801AD304[] = _S("けんじのいし(サブ)");
-const char D_us_801AD314[] = _S("バイブル(サブ)");
-const char D_us_801AD324[] = _S("とけい(サブ)");
-const char D_us_801AD330[] = _S("せいすい(サブ)");
-const char D_us_801AD33C[] = _S("クロス(サブ)");
-const char D_us_801AD348[] = _S("Axe");
-const char D_us_801AD350[] = _S("ナイフ(サブ)");
-const char D_us_801AD35C[] = _S("にく");
-const char D_us_801AD360[] = _S("ハートのうつわ");
-const char D_us_801AD36C[] = _S("$5000");
-const char D_us_801AD374[] = _S("$2000");
-const char D_us_801AD37C[] = _S("$1000");
-const char D_us_801AD384[] = _S("$700");
-const char D_us_801AD38C[] = _S("$400");
-const char D_us_801AD394[] = _S("$250");
-const char D_us_801AD39C[] = _S("$100");
-const char D_us_801AD3A4[] = _S("$50");
-const char D_us_801AD3AC[] = _S("$25");
-const char D_us_801AD3B4[] = _S("$1");
-const char D_us_801AD3B8[] = _S("だいハート");
-const char D_us_801AD3C4[] = _S("None");
-const char D_us_801AD3CC[] = _S("HIT");
-const char D_us_801AD3D4[] = _S("CUT");
-const char D_us_801AD3DC[] = _S("CUR");
-const char D_us_801AD3E4[] = _S("PSN");
-const char D_us_801AD3EC[] = _S("STN");
-const char D_us_801AD3F4[] = _S("H2O");
-const char D_us_801AD3FC[] = _S("ICE");
-const char D_us_801AD404[] = _S("THU");
-const char D_us_801AD40C[] = _S("FIR");
-const char D_us_801AD414[] = _S("DRK");
-const char D_us_801AD41C[] = _S("HOL");
-const char D_us_801AD424[] = _S("Absorb");
-const char D_us_801AD42C[] = _S("Weak VS.");
-const char D_us_801AD438[] = _S("Immune");
-const char D_us_801AD440[] = _S("Strong VS.");
-const char D_us_801AD44C[] = {CH('?'), CH('?'), 0x00};
-const char D_us_801AD450[] = _S("No.");
-const char D_us_801AD458[] = _S("Drop Items");
-const char D_us_801AD464[] = _S("Exp");
-const char D_us_801AD46C[] = {CH('D'), CH('e'), CH('f'), 0x00};
-const char D_us_801AD470[] = _S("HP");
-const char D_us_801AD474[] = _S("LV");
-const char D_us_801AD478[] = _S("????????");
-const char D_us_801AD484[] = _S("????");
-
 void func_us_801B8234(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
     s16 j;
-    u16 temp_a2;
+    u16 enemyId;
     u16 pads;
     u8* pix;
     u8* s3;
-    EnemyDef* s8;
+    EnemyDef* enemyDef;
     s32 pad[12];
 
-    temp_a2 = D_us_80180E90[self->params];
+    enemyId = D_us_80180E90[self->params];
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
@@ -4687,7 +4746,7 @@ void func_us_801B8234(Entity* self) {
             for (i = 0; i < 4; i++) {
                 s3 = D_psp_092A5F98[i];
             }
-            s8 = &g_api.enemyDefs[temp_a2];
+            enemyDef = &g_api.enemyDefs[enemyId];
             s3 = D_psp_092A5F48[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1C0, 0x6E);
             s3 = D_psp_092A5F48[self->params];
@@ -4704,7 +4763,7 @@ void func_us_801B8234(Entity* self) {
             for (i = 0; i < 10; i++) {
                 prim = prim->next;
             }
-            func_us_801B7DF8(prim, self, temp_a2);
+            func_us_801B7DF8(prim, self, enemyId);
             self->ext.et_801B6F30.unk7C = 0;
             self->ext.et_801B6F30.unk7E = 0;
             SetStep(2);
@@ -4811,6 +4870,82 @@ void func_us_801B8234(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
+extern const char** D_us_801818F4;
+#else
+static const char* D_us_801818F4[] = {
+    _S("Metamorphosis 1"),
+    _S("Prologue"),
+    _S("Dance of Illusions"),
+    _S("Moonlight Nocturne"),
+    _S("Prayer"),
+    _S("Dracula's Castle"),
+    _S("Dance of Gold"),
+    _S("Marble Gallery"),
+    _S("Tower of Mist"),
+    _S("Wood Carving Partita"),
+    _S("Door of Holy Spirits"),
+    _S("Festival of Servants"),
+    _S("Land of Benediction"),
+    _S("Requiem for the Gods"),
+    _S("Crystal Teardrop"),
+    _S("Abandoned Pit"),
+    _S("Rainbow Cemetery"),
+    _S("Silence"),
+    _S("Lost Painting"),
+    _S("Dance of Pales"),
+    _S("Curse Zone"),
+    _S("Enchanted Banquet"),
+    _S("Wandering Ghosts"),
+    _S("The Tragic Prince"),
+    _S("Door to the Abyss"),
+    _S("Heavenly Doorway"),
+    _S("Death Ballad"),
+    _S("Blood Relations"),
+    _S("Metamorphosis 2"),
+    _S("Finale Toccata"),
+    _S("Black Banquet"),
+    _S("Metamorphosis 3"),
+    _S("I am the wind"),
+};
+#endif
+
+static u16 D_us_80181978[] = {
+    MU_METAMORPHOSIS,
+    MU_PROLOGUE,
+    MU_DANCE_OF_ILLUSIONS,
+    MU_MOONLIGHT_NOCTURNE,
+    MU_PRAYER,
+    MU_DRACULAS_CASTLE,
+    MU_DANCE_OF_GOLD,
+    MU_MARBLE_GALLERY,
+    MU_TOWER_OF_MIST,
+    MU_WOOD_CARVING_PARTITA,
+    MU_DOOR_OF_HOLY_SPIRITS,
+    MU_FESTIVAL_OF_SERVANTS,
+    MU_LAND_OF_BENEDICTION,
+    MU_REQUIEM_FOR_THE_GODS,
+    MU_CRYSTAL_TEARDROPS,
+    MU_ABANDONED_PIT,
+    MU_RAINBOW_CEMETERY,
+    MU_SILENCE,
+    MU_LOST_PAINTING,
+    MU_DANCE_OF_PALES,
+    MU_CURSE_ZONE,
+    MU_ENCHANTED_BANQUET,
+    MU_WANDERING_GHOSTS,
+    MU_THE_TRAGIC_PRINCE,
+    MU_THE_DOOR_TO_THE_ABYSS,
+    MU_HEAVENLY_DOORWAY,
+    MU_DEATH_BALLAD,
+    MU_BLOOD_RELATIONS,
+    MU_METAMORPHOSIS_II,
+    MU_FINAL_TOCATTA,
+    MU_BLACK_BANQUET,
+    MU_METAMORPHOSIS_III,
+    MU_I_AM_THE_WIND,
+};
+
 void func_us_801B8958(Primitive* prim, Entity* self) {
     s16 posY;
     s32 i, j;
@@ -4826,40 +4961,6 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
         prim = prim->next;
     }
 }
-
-const char D_us_801AD4CC[] = _S("I am the wind");
-const char D_us_801AD4DC[] = _S("Metamorphosis 3");
-const char D_us_801AD4F0[] = _S("Black Banquet");
-const char D_us_801AD500[] = _S("Finale Toccata");
-const char D_us_801AD510[] = _S("Metamorphosis 2");
-const char D_us_801AD524[] = _S("Blood Relations");
-const char D_us_801AD538[] = _S("Death Ballad");
-const char D_us_801AD548[] = _S("Heavenly Doorway");
-const char D_us_801AD55C[] = _S("Door to the Abyss");
-const char D_us_801AD570[] = _S("The Tragic Prince");
-const char D_us_801AD584[] = _S("Wandering Ghosts");
-const char D_us_801AD598[] = _S("Enchanted Banquet");
-const char D_us_801AD5AC[] = _S("Curse Zone");
-const char D_us_801AD5B8[] = _S("Dance of Pales");
-const char D_us_801AD5C8[] = _S("Lost Painting");
-const char D_us_801AD5D8[] = _S("Silence");
-const char D_us_801AD5E4[] = _S("Rainbow Cemetery");
-const char D_us_801AD5F8[] = _S("Abandoned Pit");
-const char D_us_801AD608[] = _S("Crystal Teardrop");
-const char D_us_801AD61C[] = _S("Requiem for the Gods");
-const char D_us_801AD634[] = _S("Land of Benediction");
-const char D_us_801AD64C[] = _S("Festival of Servants");
-const char D_us_801AD664[] = _S("Door of Holy Spirits");
-const char D_us_801AD67C[] = _S("Wood Carving Partita");
-const char D_us_801AD694[] = _S("Tower of Mist");
-const char D_us_801AD6A4[] = _S("Marble Gallery");
-const char D_us_801AD6B4[] = _S("Dance of Gold");
-const char D_us_801AD6C4[] = _S("Dracula's Castle");
-const char D_us_801AD6D8[] = _S("Prayer");
-const char D_us_801AD6E0[] = _S("Moonlight Nocturne");
-const char D_us_801AD6F4[] = _S("Dance of Illusions");
-const char D_us_801AD708[] = _S("Prologue");
-const char D_us_801AD714[] = _S("Metamorphosis 1");
 
 #ifdef VERSION_PSP
 #define unkVal2 0x17
