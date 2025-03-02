@@ -4,6 +4,15 @@
 # Reverse stage OVL options: 
 # Boss OVL options: 
 # Servant OVL options: T_BAT
+
+GAME		:= GAME ALUCARD
+STAGES		:= STAGE_02 WARP
+STAGES		+= 
+BOSSES 		:= 
+SERVANTS	:= T_BAT
+
+BUILD_PRGS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
+
 LIB_TARGETS	:= $(addprefix lib/, gfs spr dma scl csh per cdc mth bup sys)
 LIB_OBJECTS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(LIB_TARGETS)))
 

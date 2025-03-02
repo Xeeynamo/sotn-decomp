@@ -6,28 +6,18 @@
 # Servant OVL options: tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
 
 ifeq ($(VERSION),us)
-VERSION_PREFIX := PSX_US
+GAME		:= main dra ric weapon
+STAGES		:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
+STAGES   	+= rwrp
+BOSSES		:= bo4 mar rbo3
+SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 else ifeq ($(VERSION),hd)
-VERSION_PREFIX := PSX_HD
+GAME		:= dra ric
+STAGES		:= cen wrp
+STAGES		+= 
+BOSSES		:= 
+SERVANTS	:= tt_000
 endif
-
-PSX_US_GAME		:= main dra ric weapon
-PSX_US_STAGES	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
-PSX_US_STAGES   += rwrp # Second line for stages for future readability
-PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for bosses for future readability
-PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
-
-# VERSION=hd
-PSX_HD_GAME		:= dra ric
-PSX_HD_STAGES	:= cen wrp
-PSX_HD_STAGES	+= 
-PSX_HD_BOSSES	:= 
-PSX_HD_SERVANTS	:= tt_000
-
-# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
-$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
-# Build targets is for when the non-prefixed name is needed
-$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
 
 # compiler
 CC1PSX          := $(BIN_DIR)/cc1-psx-26
@@ -61,23 +51,7 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 DEPENDENCIES	+= $(MASPSX_APP) 
 
-# PSX specific targets
-extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(RETAIL_DISK_DIR)/us $(ASSETS_DIR)/game
-	make extract_assets
-	make build_assets
-extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
-	echo $(PSX_HD_EXTRACT_TARGETS)
-	make extract_assets
-	make build_assets
-
-extract_disk_us: extract_disk_psxus
-extract_disk_hd: extract_disk_pspeu
-extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$*.cue $(RETAIL_DISK_DIR)/$* > /dev/null
-
-build_us: $(PSX_US_BUILD_TARGETS)
-build_hd: $(PSX_HD_BUILD_TARGETS)
+build_$(VERSION): $(call get_targets)
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs

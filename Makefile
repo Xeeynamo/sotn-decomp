@@ -85,6 +85,13 @@ SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
 ROOT		:= /
+
+# Use $(call get_targets) when the non-prefised name is needed
+# Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
+define get_targets
+	$(GAME) $(addprefix $1,$(STAGES)) $(addprefix $2,$(BOSSES)) $(SERVANTS)
+endef
+
 ifneq ($(filter $(VERSION),us hd),)
 ASM_SUBDIRS := $(ROOT) /data /psxsdk /handwritten
 SRC_SUBDIRS := $(ROOT) /psxsdk
@@ -484,21 +491,12 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
-.PHONY: dump_disk dump_disk_%
+.PHONY: dump_disk
 dump_disk: dump_disk_$(VERSION)
-dump_disk_eu: dump_disk_cd
-dump_disk_hk: dump_disk_cd
-dump_disk_jp10: dump_disk_cd
-dump_disk_jp11: dump_disk_cd
-dump_disk_jp: dump_disk_cd
-dump_disk_saturn: dump_disk_cd
-dump_disk_us: dump_disk_cd
-dump_disk_usproto: dump_disk_cd
-dump_disk_psp%: dump_disk_not_supported
-dump_disk_xbla%: dump_disk_not_supported
-dump_disk_cd: $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
-dump_disk_not_supported:
-	@echo "Automated dumping of $(VERSION) is not supported" >&2 && exit 1
+$(addprefix dump_disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
+
+dump_disk_%:
+	$(error Automated dumping of $* is not supported)
 
 $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
 	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )

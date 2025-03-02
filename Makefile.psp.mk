@@ -5,17 +5,11 @@
 # Boss OVL options: bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
 # Servant OVL options: tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
 
-VERSION_PREFIX 	:= PSP_EU
-PSP_EU_GAME		:= dra
-PSP_EU_STAGES	:= lib no4 st0 wrp
-PSP_EU_STAGES	+= 
-PSP_EU_BOSSES	:= 
-PSP_EU_SERVANTS	:= tt_000
-
-# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
-$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
-# Build targets is for when the non-prefixed name is needed
-$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
+GAME		:= dra
+STAGES		:= lib no4 st0 wrp
+STAGES		+= 
+BOSSES		:= 
+SERVANTS	:= tt_000
 
 # Flags
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
@@ -39,9 +33,9 @@ MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 DEPENDENCIES	+= $(ALLEGREX_AS)
 
 # PSP specific targets
-build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
+build_pspeu: $(addsuffix _psp,$(call get_targets,st,bo))
 
-extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_EXTRACT_TARGETS)))
+extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
 
 $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
