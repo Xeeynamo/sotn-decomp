@@ -1188,7 +1188,7 @@
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_psp_092697D0                   |      556 |         54 |        | https://decomp.me/scratch/F9CJ5 | 0.996 |
 | dra    | EntityEntFactory                    |      557 |         48 | Yes    | https://decomp.me/scratch/pklqi | 0.998 |
-| st0    | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/r33yC | 0.853 |
+| st0    | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | st0    | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
 | no4    | func_psp_09249760                   |      559 |         92 | Yes    |                                 |       |
 | no4    | func_psp_0924DD78                   |      562 |         67 | Yes    |                                 |       |
@@ -1206,7 +1206,7 @@
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
-| dra    | EntityBatEcho                       |      618 |         43 |        |                                 |       |
+| dra    | EntityBatEcho                       |      618 |         43 |        | https://decomp.me/scratch/ewB0M | 0.998 |
 | dra    | func_800EB758                       |      619 |         30 |        |                                 |       |
 | no4    | func_psp_0923BB30                   |      621 |         50 |        |                                 |       |
 | no4    | func_psp_092483A0                   |      624 |         88 | Yes    |                                 |       |
@@ -1229,7 +1229,7 @@
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_psp_09241690                   |      691 |         73 |        | https://decomp.me/scratch/ClZtd | 0.998 |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
-| dra    | EntityTeleport                      |      694 |         76 |        |                                 |       |
+| dra    | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | st0    | func_801B1298                       |      705 |         69 |        |                                 |       |
 | lib    | func_psp_09265608                   |      711 |         73 | Yes    | https://decomp.me/scratch/Xs23j | 0.992 |
@@ -1287,7 +1287,7 @@
 | no4    | func_psp_09252B00                   |     1095 |        132 |        |                                 |       |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | no4    | func_psp_0924E5D0                   |     1159 |         87 | Yes    |                                 |       |
-| st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    |                                 |       |
+| st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/PhWZ0 | 0.974 |
 | dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/HtGSm | 0.708 |
 | lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
