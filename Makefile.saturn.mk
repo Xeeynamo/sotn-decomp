@@ -36,13 +36,9 @@ DEPENDENCIES		+= $(SATURN_SPLITTER_APP) $(DOSEMU)
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
 
 .PHONY: extract_saturn
+EXTRACT_SATURN := $(subst 0,zero,0.bin) $(addsuffix .prg,$(call to_lower,$(call get_targets)))
 extract_saturn: $(SATURN_SPLITTER_APP)
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
+	$(foreach item,$(EXTRACT_SATURN),$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/$(item).yaml;)
 
 .PHONY: extract_saturn_pcm
 extract_saturn_pcm: $(WAV_FILES)
@@ -54,17 +50,9 @@ diff_saturn:
 	-diff $(BUILD_DIR)/$(FILENAME)-ours.txt $(BUILD_DIR)/$(FILENAME)-theirs.txt > $(BUILD_DIR)/$(FILENAME)-diff.txt
 
 $(BUILD_DIR)/0.BIN: $(BUILD_DIR)/zero.elf
-	sh-elf-objcopy $< -O binary $@
-$(BUILD_DIR)/GAME.PRG: $(BUILD_DIR)/game.elf
-	sh-elf-objcopy $< -O binary $@
-$(BUILD_DIR)/ALUCARD.PRG: $(BUILD_DIR)/alucard.elf
-	sh-elf-objcopy $< -O binary $@
-$(BUILD_DIR)/STAGE_02.PRG: $(BUILD_DIR)/stage_02.elf
-	sh-elf-objcopy $< -O binary $@
-$(BUILD_DIR)/WARP.PRG: $(BUILD_DIR)/warp.elf
-	sh-elf-objcopy $< -O binary $@
-$(BUILD_DIR)/T_BAT.PRG: $(BUILD_DIR)/t_bat.elf
-	sh-elf-objcopy $< -O binary $@
+	$(SATURN_OBJCOPY) $< -O binary $@
+$(BUILD_DIR)/%.PRG: $(BUILD_DIR)/$$(call to_lower,%).elf
+	$(SATURN_OBJCOPY) $< -O binary $@
 
 $(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(LIB_OBJECTS) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
 	cd $(BUILD_DIR) && \
