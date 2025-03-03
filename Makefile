@@ -2,71 +2,21 @@
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Variables
-# User environment
+# Preflight checks
+ifeq ($(VERSION),)
+$(info VERSION not defined, defaulting to VERSION=us)
 VERSION         ?= us
-
-# VERSION=us
-# main dra ric weapon
-PSX_US_GAME		:= main dra ric weapon
-# are cat cen chi dai dre lib mad no0 no1 no2 no3 no4 np3 nz0 nz1 sel st0 top wrp
-PSX_US_STAGE	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
-# rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp
-PSX_US_REV_STAGE:= rwrp
-# bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
-PSX_US_ALL_BOSS	:= bo4 mar rbo3
-# tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
-PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
-
-# VERSION=hd
-PSX_HD_GAME		:= dra ric
-PSX_HD_STAGE	:= cen wrp
-PSX_HD_REV_STAGE:= 
-PSX_HD_ALL_BOSS	:= 
-PSX_HD_SERVANTS	:= tt_000
-
-# VERSION=pspeu
-PSP_EU_GAME		:= dra
-PSP_EU_STAGE	:= lib no4 st0 wrp
-PSP_EU_REV_STAGE:= 
-PSP_EU_ALL_BOSS	:= 
-PSP_EU_SERVANTS	:= tt_000
-
-# VERSION=saturn
-SATURN_GAME		:= GAME ALUCARD
-SATURN_STAGE	:= STAGE_02 WARP
-SATURN_REV_STAGE:= 
-SATURN_ALL_BOSS := 
-SATURN_SERVANTS	:= T_BAT
-
-ifeq ($(VERSION),us)
-VERSION_PREFIX := PSX_US
-else ifeq ($(VERSION),hd)
-VERSION_PREFIX := PSX_HD
-else ifeq ($(VERSION),pspeu)
-VERSION_PREFIX := PSP_EU
-else ifeq ($(VERSION),saturn)
-VERSION_PREFIX := SATURN
 endif
 
-$(VERSION_PREFIX)_ALLSTAGES	:= $($(VERSION_PREFIX)_STAGE) $($(VERSION_PREFIX)_REV_STAGE)
-$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_ALLSTAGES)) $(addprefix bo,$($(VERSION_PREFIX)_ALL_BOSS)) $($(VERSION_PREFIX)_SERVANTS)
-$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_ALLSTAGES) $($(VERSION_PREFIX)_ALL_BOSS) $($(VERSION_PREFIX)_SERVANTS)
+WHICH_PYTHON != which python3
+ifeq ($(WHICH_PYTHON),)
+$(error The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
+endif
 
 # Compilers
-CC1PSX          := ./bin/cc1-psx-26
 CROSS           := mipsel-linux-gnu-
-AS              := $(CROSS)as
-CC              := $(CC1PSX)
 LD              := $(CROSS)ld
-CPP             := $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
-
-CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
-CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM
-CPP_FLAGS       += -D_internal_version_$(VERSION) -DSOTN_STR
-LD_FLAGS        := -nostdlib --no-check-sections
 
 # Directories
 ASM_DIR         := asm/$(VERSION)
@@ -84,8 +34,16 @@ MAIN_TARGET     := $(BUILD_DIR)/main
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Tooling
-PYTHON          := python3
-SPLAT           := splat split
+SHELL 			 = /bin/bash -e -o pipefail
+VENV_DIR       	?= .venv
+
+ifneq ($(wildcard $(VENV_DIR)),)
+PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
+endif
+PYTHON          := $(PYTHON_BIN)python3
+BLACK			:= $(PYTHON_BIN)black
+PIP			 	:= $(realpath .)/$(VENV_DIR)/bin/pip3
+SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
@@ -108,71 +66,13 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
-SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-VENV_PATH       ?= .venv
-export PATH     := $(VENV_PATH)/bin:$(PATH)
+
+DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
 CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
-
-# Platform specific variables
-ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
-# flags
-AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
-PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
-
-# libs
-PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
-
-# Files
-PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
-PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
-MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/main/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
-MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/main/,. $(PSXLIB_DIRS))
-
-MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
-MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
-MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
-MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
-MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
-else ifeq ($(VERSION),pspeu)
-# Flags
-AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
-MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
-
-# Tools
-ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
-AS              := $(ALLEGREX_AS)
-WIBO            := $(BIN_DIR)/wibo
-MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
-CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
-
-MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
-MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
-
-MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
-MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
-MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
-else ifeq ($(VERSION),saturn)
-SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
-SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
-
-DOSEMU						:= dosemu
-DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
-DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
-SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
-CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
-SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
-
-SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
-SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
-SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
-SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
-endif
 
 # Functions
 define list_src_files
@@ -220,6 +120,7 @@ define link
 endef
 
 # Helper Functions
+# These will eventually be merged with the equivalent PSX functions
 define list_src_files_psp
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
@@ -247,7 +148,13 @@ define link_with_deadstrip
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
-.PHONY: build
+ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
+include Makefile.psx.mk
+else ifeq ($(VERSION),pspeu)
+include Makefile.psp.mk
+else ifeq ($(VERSION),saturn)
+include Makefile.saturn.mk
+endif
 
 ##@ Variables
 ##@
@@ -256,15 +163,19 @@ endef
 ##@ Primary Targets
 ##@
 
+.PHONY: all
 all: ##@ (Default) build and check
 all: build check
 
+.PHONY: extract 
 extract: ##@ split game files into assets and assembly
 extract: extract_$(VERSION)
 
+.PHONY: build 
 build: ##@ build game files
 build: build_$(VERSION)
 
+.PHONY: clean
 clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
@@ -298,9 +209,11 @@ help: ##@ Print listing of key targets with their descriptions
         }; \
 	}'
 
+.PHONY: format
 format: ##@ Format source code, clean symbols, other linting
 format: format-src format-tools format-symbols format-license
 
+.PHONY: format-src
 format-src: bin/clang-format
 	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
 	@# find explainer:
@@ -316,62 +229,67 @@ format-src: bin/clang-format
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
+
+.PHONY: format-tools
 format-tools:
-	black tools/*.py
-	black tools/splat_ext/*.py
-	black tools/split_jpt_yaml/*.py
-	black tools/sotn_str/*.py
-	black tools/sotn_permuter/sotn_permuter.py
-	black tools/split_jpt_yaml/*.py
+	$(BLACK) tools/*.py
+	$(BLACK) tools/splat_ext/*.py
+	$(BLACK) tools/split_jpt_yaml/*.py
+	$(BLACK) tools/sotn_str/*.py
+	$(BLACK) tools/sotn_permuter/sotn_permuter.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-	./tools/symbols.py remove-orphans config/splat.us.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
-	./tools/symbols.py remove-orphans config/splat.us.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
-	./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
-	./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
-	./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
-	./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.dra.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.ric.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 ./tools/lint-license.py - AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/game.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/items.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
-	python3 ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
+	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
+	$(PYTHON) ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
 
 # fast-format
+.PHONY: ff
 ff: MAKEFLAGS += --jobs
 ff:
 	$(MAKE) format
 
+.PHONY: patch
 patch:
 	$(DIRT_PATCHER) config/dirt.$(VERSION).json
+
+.PHONY: check
 check: ##@ compare built files to original game files
 check: config/check.$(VERSION).sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
@@ -383,75 +301,12 @@ check: config/check.$(VERSION).sha patch $(CHECK_FILES)
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
     }' | column --separator $$'\t' --table
+
+.PHONY: expected
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
 	cp -r build/$(VERSION) expected/build/
-
-main: $(MAIN_TARGET).exe
-main_dirs:
-	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-$(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-	$(LD) $(LD_FLAGS) -o $@ \
-	-Map $(MAIN_TARGET).map \
-	-T $(BUILD_DIR)/main.ld \
-	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-
-# Weapon overlays
-WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
-WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
-WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
-weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
-$(WEAPON_DIRS):
-	@mkdir -p $@
-$(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
-	cat $^ > $@
-$(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
-	$(OBJCOPY) -O binary $< $@
-	dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc
-$(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data has been imported
-	touch $@
-$(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
-	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w0_$*.map \
-		-T weapon0.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w1_$*.map \
-		-T weapon1.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
-	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
-	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	./tools/png2bin.py $< $@
-
-ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
-include Makefile.psx.mk
-else ifeq ($(VERSION),pspeu)
-include Makefile.psp.mk
-else ifeq ($(VERSION),saturn)
-include Makefile.saturn.mk
-endif
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
@@ -493,6 +348,7 @@ context: ##@ create a context for decomp.me. Set the SOURCE variable prior to ca
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
+.PHONY: extract_%
 extract_disk: ##@ Extract game files from a disc image.
 extract_disk: extract_disk_$(VERSION)
 disk_prepare: build $(SOTNDISK)
@@ -577,15 +433,17 @@ duplicates-report:
 	    cargo run --release -- \
             --threshold .90 \
             --output-file ../../gh-duplicates/duplicates.txt
-			
-python-dependencies:
-	# the python setup cannot depend on the virtualenv
-	# because it may not be set up yet
-	[ -d $(VENV_PATH) ] || python3 -m venv $(VENV_PATH)
-	pip install -r $(TOOLS_DIR)/requirements-python.txt
 
+.PHONY: python-dependencies
+python-dependencies: $(VENV_DIR)
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
+
+$(VENV_DIR):
+	$(WHICH_PYTHON) -m venv $(VENV_DIR)
+
+.PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) $(ALLEGREX_AS) python-dependencies
+update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	git clean -fd bin/
@@ -620,13 +478,13 @@ $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
-	./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(PYTHON) ./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
-	./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
 $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
 	mkdir -p $(dir $@)
@@ -643,12 +501,11 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
 
-SHELL = /bin/bash -e -o pipefail
-
 ##@
 ##@ Disc Dumping Targets
 ##@
 
+.PHONY: dump_disk%
 dump_disk: ##@ dump a physical game disk
 dump_disk: dump_disk_$(VERSION)
 dump_disk_eu: dump_disk_cd
@@ -664,6 +521,7 @@ dump_disk_xbla%: dump_disk_not_supported
 dump_disk_cd: disks/sotn.$(VERSION).cue
 dump_disk_not_supported:
 	@echo "Automated dumping of $(VERSION) is not supported" >&2 && exit 1
+
 disks/sotn.%.bin disks/sotn.%.cue:
 	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
 	cd disks && \
@@ -676,14 +534,3 @@ disks/sotn.%.bin disks/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-
-.PHONY: all clean patch check build expected
-.PHONY: format ff format-src format-tools format-symbols
-.PHONY: main dra ric weapon
-.PHONY: cen chi dre lib mad no0 no1 no3 no4 np3 nz0 st0 wrp rwrp
-.PHONY: mar bo4 rbo3
-.PHONY: tt_000 tt_001 tt_002 tt_003 tt_004
-.PHONY: %_dirs
-.PHONY: extract extract_%
-.PHONY: update-dependencies python-dendencies
-.PHONY: dump_disk dump_disk_%

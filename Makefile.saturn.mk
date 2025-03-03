@@ -1,3 +1,34 @@
+# Saturn is special and does not yet conform
+VERSION_PREFIX 	:= SATURN
+SATURN_GAME		:= GAME ALUCARD
+SATURN_STAGES	:= STAGE_02 WARP
+SATURN_STAGES	+= 
+SATURN_BOSSES 	:= 
+SATURN_SERVANTS	:= T_BAT
+
+# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
+$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
+# Build targets is for when the non-prefixed name is needed
+$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
+
+SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
+SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys
+
+DOSEMU						:= dosemu
+DOSEMU_FLAGS				:= -quiet -dumb -f ./dosemurc -K . -E
+DOSEMU_APP					:= $(DOSEMU) $(DOSEMU_FLAGS)
+SATURN_TOOLCHAIN			:= bin/cygnus-2.7-96Q3-bin
+CC1_SATURN					:= $(BUILD_DIR)/CC1.EXE
+SATURN_ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
+
+SATURN_BUILD_PRGS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(SATURN_BUILD_TARGETS)))
+SATURN_LIB_OBJECTS		:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(SATURN_LIB_TARGETS)))
+SATURN_PCM_FILES 		:= $(wildcard disks/saturn/SD/*.PCM)
+SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(SATURN_PCM_FILES))
+DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
+
 # Saturn specific targets
 .PHONY: saturn
 saturn: build_saturn check_saturn
