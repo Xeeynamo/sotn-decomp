@@ -47,7 +47,11 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
+#if defined(VERSION_PSP)
+            abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+#else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
+#endif
             return TELEPORT_CHECK_TO_TOP;
         }
     }
@@ -761,10 +765,10 @@ static void RicDebugEnter(void) {
 
 static void RicDebugExit(void) {
     g_IsRicDebugEnter = false;
-    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = g_RicDebugCurFrame;
     PLAYER.drawFlags = g_RicDebugDrawFlags;
     PLAYER.palette = g_RicDebugPalette;
+    PLAYER.hitParams = 0;
 }
 
 static bool RicDebug(void) {
