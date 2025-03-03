@@ -5,7 +5,8 @@ static SVECTOR D_801824E8[] = {
     {0x0100, 0x0200, 0x0300, 0xFFC0},
     {0x0000, 0x0000, 0x0000, 0xFD00},
     {0x0000, 0x0000, 0x0400, 0xFA00},
-    {0x0200, 0x0100, 0xFE00, 0xF700}};
+    {0x0200, 0x0100, 0xFE00, 0xF700},
+};
 static SVECTOR D_80182508 = {0x0022, 0xFFEE, 0xFFF5};
 static SVECTOR D_80182510 = {0x0015, 0x0012, 0xFFE3};
 static SVECTOR D_80182518 = {0x0000, 0xFFEE, 0xFFDC};
@@ -33,11 +34,18 @@ static SVECTOR* D_80182568[] = {
     &D_80182540, &D_80182538, &D_80182560, &D_80182538, &D_80182540,
     &D_80182558, &D_80182540, &D_80182540, &D_80182510, &D_80182538,
     &D_80182538, &D_80182538, &D_80182540, &D_80182540, &D_80182540,
-    &D_80182538, &D_80182538, NULL,        NULL,
+    &D_80182538, &D_80182538,
+#ifndef VERSION_PSP
+    NULL,        NULL,
+#endif
 };
 
+#ifdef VERSION_PSP
+extern SVECTOR D_pspeu_09279DC0; // bss
+#endif
+
 // Defines for the locations of scratchpad values
-#define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
+#define offsetof(st, m) (size_t)((size_t)&(((st*)0)->m)) // __builtin_offsetof
 typedef struct {
     MATRIX m[2];
     SVECTOR vec[1];
@@ -69,11 +77,11 @@ void func_801BC5C0(Entity* self) {
     s32* ptr_sp5c;
     SVECTOR* ptr_sp58;
     s32 sp54;
-    CVECTOR* ptr_sp50;
+    CVECTOR* cVector;
     SVECTOR* sp4c;
-    SVECTOR** sp48;
+    SVECTOR** vectors;
     SVECTOR* vec;
-    s32 sp38[3];
+    VECTOR sp38;
 
     FntPrint("d_step %x\n", self->step);
     switch (self->step) {
@@ -145,10 +153,10 @@ void func_801BC5C0(Entity* self) {
         m = (MATRIX*)SP(offsetof(ST0_SCRATCHPAD, m));
         vec = (SVECTOR*)SP(offsetof(ST0_SCRATCHPAD, vec));
         ptr_sp5c = (s32*)SP(offsetof(ST0_SCRATCHPAD, sp5c));
-        ptr_sp50 = (CVECTOR*)SP(offsetof(ST0_SCRATCHPAD, sp50));
+        cVector = (CVECTOR*)SP(offsetof(ST0_SCRATCHPAD, sp50));
 
-        ptr_sp50->r = ptr_sp50->g = ptr_sp50->b = 0x80;
-        ptr_sp50->cd = 5;
+        cVector->r = cVector->g = cVector->b = 0x80;
+        cVector->cd = 5;
         SetGeomScreen(0x100);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         SetFarColor(0x60, 0, 0);
@@ -158,35 +166,34 @@ void func_801BC5C0(Entity* self) {
         vec->vz = self->rotZ;
         RotMatrix(vec, m);
         SetRotMatrix(m);
-        // seems like an xyz; x and y are unused but do get set.
-        sp38[0] = 0;
-        sp38[1] = 0;
-        sp38[2] = self->rotX + 0x100;
+        sp38.vx = 0;
+        sp38.vy = 0;
+        sp38.vz = self->rotX + 0x100;
 
-        sp64 = sp38[2] >> 2;
-        gte_ldtr(0, 0, sp38[2]);
+        sp64 = sp38.vz >> 2;
+        gte_ldtr(0, 0, sp38.vz);
         prim = self->ext.prim;
 
-        sp48 = &D_80182568[0];
+        vectors = &D_80182568[0];
         for (i = 0; i < 20; i++) {
             if (prim->u3) {
                 prim->y3 += 12;
                 prim->x3 += 6;
-                gte_ldtr(prim->x3, 0, prim->y3 + sp38[2]);
+                gte_ldtr(prim->x3, 0, sp38.vz + prim->y3);
             } else {
-                gte_ldtr(0, 0, sp38[2]);
+                gte_ldtr(0, 0, sp38.vz);
             }
-            gte_ldv3(sp48[0], sp48[1], sp48[2]);
+            gte_ldv3(vectors[0], vectors[1], vectors[2]);
             gte_rtpt();
             gte_stsxy3_gt3(prim);
-            gte_ldrgb(ptr_sp50);
+            gte_ldrgb(cVector);
             gte_dpcs();
             gte_strgb(&prim->r0);
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             gte_avsz3();
-            gte_stszotz(ptr_sp5c);
+            gte_stszotz((long*)ptr_sp5c);
             if (self->step > 2) {
                 if (prim->x0 > (self->posX.i.hi + 0x10)) {
                     prim->u3 = 1;
@@ -197,7 +204,7 @@ void func_801BC5C0(Entity* self) {
             if (prim->priority > 0x1F8) {
                 prim->priority = 0x1F8;
             }
-            sp48 += 3;
+            vectors += 3;
             prim = prim->next;
         }
 
@@ -251,6 +258,14 @@ void func_801BC5C0(Entity* self) {
                     }
                     sp4c[0].vz = -var_s6;
                     sp4c[1].vz = -var_s6;
+#ifdef VERSION_PSP
+                    RotMatrix(&D_pspeu_09279DC0, m);
+                    RotMatrixY(var_s7, m);
+                    RotMatrixX(vec->vx, m);
+                    RotMatrixY(vec->vy, m);
+                    RotMatrixZ(vec->vz, m);
+                    SetRotMatrix(m);
+#else
                     // This seems to be creating an identity matrix?
                     // First we zero it out, then we write the proper diagonal
                     // elements. But how to zero it out? This works I guess.
@@ -279,10 +294,11 @@ void func_801BC5C0(Entity* self) {
                     gte_stclmv(&m->m[0][2]);
 
                     gte_SetRotMatrix(m);
+#endif
                     gte_ldv01c(sp4c);
                     gte_rtpt();
                     gte_stsxy01c(&var_s3[j * 2]);
-                    gte_stszotz(&ptr_sp5c[j]);
+                    gte_stszotz((long*)&ptr_sp5c[j]);
 
                     if (var_s7 < 0) {
                         var_s2++;

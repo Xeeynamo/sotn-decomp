@@ -52,7 +52,7 @@ segments:
       - [0x8230, c, st0_psp/2DAC8]
       - [0xB3A0, c, st0_psp/3101C]
       - [0xC3E0, c, st0/3AB08]
-      - [0xE658, c, st0_psp/3C5C0]
+      - [0xE658, c, st0/3C5C0]
       - [0xF320, c, st0_psp/st_init_st0]
       - [0xF560, c, st0/2805C]
       - [0xFD18, c, st0/st_debug]
@@ -81,7 +81,8 @@ segments:
       - [0x1C8C8, .data, st0/2A8DC]
       - [0x1C930, data]
       - [0x25278, .data, st0/3AB08]
-      - [0x256E8, data]
+      - [0x256E8, .data, st0/3C5C0]
+      - [0x25898, data, st_init_st0]
       - [0x419E0, .data, st0/2805C]
       - [0x41B28, data]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
