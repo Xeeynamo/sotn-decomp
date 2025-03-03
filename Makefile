@@ -252,11 +252,6 @@ format-license:
 	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
 	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
 # fast-format
-.PHONY: ff
-ff: MAKEFLAGS += --jobs
-ff:
-	$(MAKE) format
-
 .PHONY: patch
 patch:
 	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
