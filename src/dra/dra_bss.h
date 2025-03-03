@@ -159,7 +159,7 @@ extern s16 g_XaVolumeMultiplier;
 extern s16 g_SoundCommandRingBufferWritePos; // D_80139A70
 extern s16 D_80139A74;
 extern s16 g_XaFadeCounter;
-extern u16 D_80139A7C[32 * 80]; // size from D_800AE130, D_800AE138
+extern u_long D_80139A7C[32 * 40]; // size from D_800AE130, D_800AE138
 extern u16 g_SfxVolumeMultiplier;
 extern volatile u8 g_CdSoundCommandStep;
 extern s16 g_CurrentSfxScriptSfxId[4];

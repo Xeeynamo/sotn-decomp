@@ -126,12 +126,19 @@ def get_chr(chr):
 
 alt_utf8_to_index = dict((value, index) for index, value in enumerate("ＡＴＤＥＦ"))
 
-alt_hd_utf8_to_index = dict((value, index) for index, value in enumerate("".join([
-    #0 1 2 3 4 5 6 7 8 9 A B C D E F
-    "装備技システム短剣必殺使攻撃力防",
-    "御魔導器拳こ一覧棒両手食物爆弾盾",
-    "投射薬ん右左武兜鎧マントその他い",
-])))
+alt_hd_utf8_to_index = dict(
+    (value, index)
+    for index, value in enumerate(
+        "".join(
+            [
+                # 0 1 2 3 4 5 6 7 8 9 A B C D E F
+                "装備技システム短剣必殺使攻撃力防",
+                "御魔導器拳こ一覧棒両手食物爆弾盾",
+                "投射薬ん右左武兜鎧マントその他い",
+            ]
+        )
+    )
+)
 
 
 def convert_j(f):
@@ -253,7 +260,7 @@ def remove_dakuten_handakuten(utf8_char):
         "プ": "フ",
         "ペ": "ヘ",
         "ポ": "ホ",
-        "ヴ": "ウ"
+        "ヴ": "ウ",
     }
     return table[utf8_char]
 
@@ -273,12 +280,13 @@ def utf8_to_byte_literals(input_str):
     for char in input_str:
         if has_dakuten(char) or has_handakuten(char):
             bytes += dakuten_to_bytes(char)
-        elif char == '月':
-            bytes += [0xff, 0xff]
+        elif char == "月":
+            bytes += [0xFF, 0xFF]
         else:
             bytes.append(utf8_to_index[char])
     bytes.append(0xFF)
     return bytes
+
 
 def alt_utf8_to_byte_literals(input_str):
     bytes = []
@@ -287,12 +295,14 @@ def alt_utf8_to_byte_literals(input_str):
     bytes.append(0xFF)
     return bytes
 
+
 def alt_hd_utf8_to_byte_literals(input_str):
     bytes = []
     for char in input_str:
         bytes.append(alt_hd_utf8_to_index[char])
     bytes.append(0xFF)
     return bytes
+
 
 def utf8_to_byte_literals_escaped(input):
     out = utf8_to_byte_literals(input)

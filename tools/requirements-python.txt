@@ -15,3 +15,4 @@ rabbitizer>=1.12.5
 n64img==0.3.3
 pygfxd
 pillow
+toml

@@ -19,7 +19,7 @@ typedef enum {
     Player_Unk17,
     Player_Teleport, // also Grand Cross and Spiral Axe
     Player_FlameWhip,
-    Player_Hydrostorm,
+    Player_Unk20,
     Player_ThousandBlades,
     Player_RichterFourHolyBeasts,
     Player_Slide,

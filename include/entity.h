@@ -1325,10 +1325,10 @@ typedef struct {
 #ifdef PLATFORM_64BIT
     s32 _align_parent[2];
 #endif
-    s32 unk7C;
-    s32 unk80;
-    s32 unk84;
-    s32 unk88;
+    s32 width;
+    s32 height;
+    s32 timer;
+    s32 colorIntensity;
     struct Entity* parent;
     s32 unk90;
 } ET_Teleport;
@@ -2657,6 +2657,16 @@ typedef struct {
     /* 0x87 */ u8 unk87;
     /* 0x88 */ struct Entity* unk88;
     /* 0x8C */ u16 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ u16 unkB2;
 } ET_LesserDemon;
 
 typedef struct {
@@ -2873,6 +2883,19 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
 } ET_801BB200;
+
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ f32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ f32 unk9C;
+    /* 0xA0 */ f32 unkA0;
+} ET_Clouds;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3123,6 +3146,7 @@ typedef union { // offset=0x7C
     ET_801B56E4 et_801B56E4;
     ET_801CD318 et_801CD318;
     ET_801BB200 et_801BB200;
+    ET_Clouds clouds;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -274,6 +274,8 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
     }' | column --separator $$'\t' --table
 
 .PHONY: expected
+
+.PHONY: expected
 expected: check
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
@@ -281,7 +283,7 @@ expected: check
 
 force_extract:
 	mv src src_tmp
-	rm $(BUILD_DIR)/*.ld
+	find $(BUILD_DIR) -type f -name "*.ld" -delete
 	make extract -j
 	rm -rf src/
 	mv src_tmp src

@@ -187,7 +187,7 @@ void EntityRotateSpittlebone(Entity* self) {
 // spit projectile from spittle bone
 void EntitySpittleBoneSpit(Entity* self) {
     Collider collider;
-    Unkstruct_801C6C6C test;
+    Pos tempPrim;
     s16 primIndex;
     Primitive* prim;
     Entity* entity;
@@ -277,16 +277,16 @@ void EntitySpittleBoneSpit(Entity* self) {
 
         prim = *(s32*)&self->ext.spittleBone.unk84;
         while (prim != NULL) {
-            test.x.c.x = prim->x0;
-            test.x.c.w = prim->x1;
-            test.y.c.y = prim->y0;
-            test.y.c.h = prim->y1;
-            test.x.p += LOW(prim->x2);
-            test.y.p += LOW(prim->x3);
-            prim->x0 = test.x.c.x;
-            prim->x1 = test.x.c.w;
-            prim->y0 = test.y.c.y;
-            prim->y1 = test.y.c.h;
+            tempPrim.x.i.hi = prim->x0;
+            tempPrim.x.i.lo = prim->x1;
+            tempPrim.y.i.hi = prim->y0;
+            tempPrim.y.i.lo = prim->y1;
+            tempPrim.x.val += LOWU(prim->x2);
+            tempPrim.y.val += LOWU(prim->x3);
+            LOH(prim->x0) = tempPrim.x.i.hi;
+            LOH(prim->x1) = tempPrim.x.i.lo;
+            LOH(prim->y0) = tempPrim.y.i.hi;
+            LOH(prim->y1) = tempPrim.y.i.lo;
             LOW(prim->x3) += 0x1800;
             if (LOW(prim->x3) > 0) {
                 g_api.CheckCollision(

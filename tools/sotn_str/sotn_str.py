@@ -3,7 +3,11 @@
 import argparse
 import re
 import sys
-from jp import utf8_to_byte_literals, alt_utf8_to_byte_literals, alt_hd_utf8_to_byte_literals
+from jp import (
+    utf8_to_byte_literals,
+    alt_utf8_to_byte_literals,
+    alt_hd_utf8_to_byte_literals,
+)
 
 
 def parse(filename, str_offset):
@@ -27,6 +31,7 @@ def process_string(match: re.Match[str]):
         r += f"\\x{ch - 0x20:02X}"
     return f'"{r}\\xFF"'
 
+
 def transform_match(transform):
     def repl(match: re.Match[str]):
         s = match.group(1)
@@ -34,33 +39,32 @@ def transform_match(transform):
         out = transform(s)
         escaped = "".join([f"\\x{val:02X}" for val in out])
         return f'"{escaped}"'
+
     return repl
 
+
 def process_macro(line, macro_name, transform):
-    return re.sub(macro_name + r'\("((?:\\["]|[^"])*)"\)',
-                  transform,
-                  line)
+    return re.sub(macro_name + r'\("((?:\\["]|[^"])*)"\)', transform, line)
+
 
 def process_s_macro(line):
-    return process_macro(line,
-                         '_S',
-                         transform_match(utf8_to_byte_literals))
+    return process_macro(line, "_S", transform_match(utf8_to_byte_literals))
+
 
 def process_s2_macro(line):
-    return process_macro(line,
-                         "_S2",
-                         transform_match(alt_utf8_to_byte_literals))
+    return process_macro(line, "_S2", transform_match(alt_utf8_to_byte_literals))
+
 
 def process_s2_hd_macro(line):
-    return process_macro(line,
-                         "_S2_HD",
-                         transform_match(alt_hd_utf8_to_byte_literals))
+    return process_macro(line, "_S2_HD", transform_match(alt_hd_utf8_to_byte_literals))
+
 
 def do_sub(line):
     processed = process_s_macro(line)
     processed = process_s2_macro(processed)
     processed = process_s2_hd_macro(processed)
     return processed
+
 
 def process(filename):
     if not filename or filename == "-":

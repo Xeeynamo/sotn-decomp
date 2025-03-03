@@ -5,21 +5,18 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D430);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925D4D0);
 
-extern s8 D_80073510;
-extern u16 D_us_80180824;
-
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
-    Entity* entity = g_Entities;
+    Entity* player = &PLAYER;
 
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
         func_psp_0925D4D0();
 #endif
-        InitializeEntity(&D_us_80180824);
-        if (entity->posX.i.hi < 0x100) {
+        InitializeEntity(D_us_80180824);
+        if (player->posX.i.hi < 0x100) {
 // I expect these two sounds to be the same, but 0x202 has not yet been defined.
 // This leads me to think that the macro that has been defined for sfx 0x302
 // is only accurate for PSX and does not align with the sfx for PSP here.
@@ -39,7 +36,7 @@ void func_us_801AFE0C(Entity* self) {
 #endif
         break;
     case 1:
-        D_80073510 = 1;
+        g_Entities[1].ext.entSlot1.unk0 = 1;
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
@@ -63,7 +60,7 @@ void func_us_801AFE0C(Entity* self) {
         SetStep(2);
         break;
     case 2:
-        if (entity->posX.i.hi > 0xE8) {
+        if (player->posX.i.hi > 0xE8) {
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                 g_Player.padSim = PAD_NONE;
                 if (g_Timer & 1) {
@@ -93,23 +90,23 @@ void func_us_801AFE0C(Entity* self) {
         } else {
             g_CutsceneFlags |= 1;
             g_Player.padSim = PAD_NONE;
-            entity->posX.i.hi = 0xE8;
+            player->posX.i.hi = 0xE8;
             self->step++;
         }
         g_Player.D_80072EFC = 1;
         break;
     case 3:
         if (g_CutsceneFlags & 0x40) {
-            if (entity->posX.i.hi > 0x74) {
-                D_80073510 = 1;
+            if (player->posX.i.hi > 0x74) {
+                g_Entities[1].ext.entSlot1.unk0 = 1;
                 g_Player.padSim = PAD_LEFT;
             } else {
-                entity->posX.i.hi = 0x74;
+                player->posX.i.hi = 0x74;
                 g_Player.padSim = PAD_NONE;
                 self->step++;
             }
         } else {
-            entity->posX.i.hi = 0xE8;
+            player->posX.i.hi = 0xE8;
         }
         g_Player.D_80072EFC = 1;
         break;
@@ -131,21 +128,21 @@ void func_us_801AFE0C(Entity* self) {
             self->step = 0x10;
             break;
         }
-        entity->posX.i.hi = 0x74;
+        player->posX.i.hi = 0x74;
         break;
     case 8:
         self->step++;
         /* fallthrough */
     case 9:
-        if (entity->posX.i.hi > 0xFF) {
+        if (player->posX.i.hi > 0xFF) {
             g_api.PlaySfx(CD_SOUND_COMMAND_7);
             DestroyEntity(self);
             break;
         }
-        if (entity->posX.i.hi < 0x75) {
+        if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
             case 0:
-                D_80073510 = 1;
+                g_Entities[1].ext.entSlot1.unk0 = 1;
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;
@@ -185,7 +182,7 @@ void func_us_801AFE0C(Entity* self) {
                 SetStep(10);
                 break;
             }
-            entity->posX.i.hi = 0x74;
+            player->posX.i.hi = 0x74;
         }
         break;
     case 10:
@@ -194,7 +191,7 @@ void func_us_801AFE0C(Entity* self) {
             g_Player.D_80072EFC = 1;
             self->step++;
         }
-        entity->posX.i.hi = 0x74;
+        player->posX.i.hi = 0x74;
         break;
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
@@ -350,46 +347,46 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 2:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(3);
         }
         break;
     case 3:
-        AnimateEntity(&D_us_80181204, self);
+        AnimateEntity(D_us_80181204, self);
         if (g_CutsceneFlags & 4) {
             SetStep(4);
         }
         break;
     case 4:
-        AnimateEntity(&D_us_80181210, self);
+        AnimateEntity(D_us_80181210, self);
         if (g_CutsceneFlags & 8) {
             SetStep(5);
         }
         break;
     case 5:
-        AnimateEntity(&D_us_8018121C, self);
+        AnimateEntity(D_us_8018121C, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(6);
         }
         break;
     case 6:
-        AnimateEntity(&D_us_80181234, self);
+        AnimateEntity(D_us_80181234, self);
         if (g_CutsceneFlags & 0x20) {
             SetStep(7);
         }
         break;
     case 7:
-        if (AnimateEntity(&D_us_80181244, self) == 0) {
+        if (AnimateEntity(D_us_80181244, self) == 0) {
             SetStep(11);
         }
         break;
     case 9:
-        if (AnimateEntity(&D_us_801811FC, self) == 0) {
+        if (AnimateEntity(D_us_801811FC, self) == 0) {
             SetStep(10);
         }
         break;
     case 10:
-        if (AnimateEntity(&D_us_801812C0, self) == 0) {
+        if (AnimateEntity(D_us_801812C0, self) == 0) {
             SetStep(11);
         }
         break;
@@ -403,7 +400,7 @@ void EntityLibrarianChair(Entity* self) {
         }
         break;
     case 12:
-        AnimateEntity(&D_us_801812C8, self);
+        AnimateEntity(D_us_801812C8, self);
         if (!--self->ext.libraryChair.timer) {
             g_CutsceneFlags &= ~0x800;
             self->animCurFrame = 2;
@@ -417,7 +414,7 @@ void EntityLibrarianChair(Entity* self) {
     case 13:
         break;
     case 16:
-        AnimateEntity(&D_us_801812D0, self);
+        AnimateEntity(D_us_801812D0, self);
         if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
             self->velocityY += FIX(3.0 / 8);
             if (self->velocityY > FIX(7)) {

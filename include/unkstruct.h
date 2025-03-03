@@ -72,23 +72,6 @@ typedef struct {
     s32 unkC;
 } Unkstruct_800FDB18;
 
-typedef struct Unkstruct_801C6C6C {
-    union {
-        struct {
-            u16 w;
-            u16 x;
-        } c;
-        s32 p;
-    } x;
-    union {
-        struct {
-            u16 h;
-            u16 y;
-        } c;
-        s32 p;
-    } y;
-} Unkstruct_801C6C6C;
-
 typedef struct {
     u16 start;
     s16 current;
@@ -155,8 +138,8 @@ typedef struct {
     /* 0x03 */ u8 b;
     /* 0x04 */ u8 w;
     /* 0x05 */ u8 h;
-    /* 0x06 */ u16 priority;
-    /* 0x08 */ u16 drawMode;
+    /* 0x06 */ s16 priority;
+    /* 0x08 */ s16 drawMode;
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u32 flags;
 } unkStr_8011E4BC; // size = 0x10
