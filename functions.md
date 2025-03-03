@@ -1209,7 +1209,7 @@
 | no4    | func_psp_0923BB30                   |      621 |         50 |        |                                 |       |
 | no4    | func_psp_092483A0                   |      624 |         88 | Yes    |                                 |       |
 | lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
-| st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.962 |
+| st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra    | func_psp_090DCD28                   |      639 |        101 |        |                                 |       |
 | lib    | func_psp_092644E0                   |      642 |         61 | Yes    | https://decomp.me/scratch/6FuJt | 0.996 |
@@ -1256,7 +1256,7 @@
 | no4    | func_psp_0923C460                   |      845 |        106 | Yes    |                                 |       |
 | lib    | EntityLifeUpSpawn                   |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | no4    | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
-| st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.982 |
+| st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    |                                 |       |
 | lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
 | lib    | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
