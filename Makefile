@@ -243,22 +243,15 @@ format-tools:
 	$(BLACK) $(TOOLS_DIR)/sotn_permuter/sotn_permuter.py
 	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
 
-ORPHAN_EXCLUSIONS 	:= splat.us.weapon assets.hd assets.us
-ORPHAN_EXCLUSIONS	:= $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXCLUSIONS)))
-ORPHAN_REMOVALS 	:= $(filter-out $(ORPHAN_EXCLUSIONS), $(wildcard config/*.yaml))
-
 .PHONY: format-symbols
 $(DEBUG).SILENT: format-symbols
+ORPHAN_EXCLUDE 	:= splat.us.weapon assets.hd assets.us
+REMOVE-ORPHANS 	:= $(filter-out $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXCLUDE))), $(wildcard config/*.yaml))
 format-symbols:
-	for VERSION in us hd pspeu saturn; do  \
-	echo Sorting $$VERSION symbols; 	   \
-	$(PYTHON) $(TOOLS_DIR)/symbols.py sort; \
-	done
-	for FILE in $(ORPHAN_REMOVALS); do     \
-	echo Removing orphan symbols from $$FILE; \
-	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $$FILE; \
-	done
+	$(foreach item, us hd pspeu saturn, $(call echo,Sorting $(item) symbols); VERSION=$(item) $(PYTHON) $(TOOLS_DIR)/symbols.py sort;)
+	$(foreach item, $(REMOVE-ORPHANS), $(call echo,Removing orphan symbols from $(item)); $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $(item);)
 
+.PHONY: format-license
 $(DEBUG).SILENT: format-license
 format-license:
 	echo Checking for license line in code files
