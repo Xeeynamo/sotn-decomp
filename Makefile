@@ -3,19 +3,23 @@
 .DEFAULT_GOAL := all
 
 # Preflight checks
+OS := $(subst Darwin,MacOS,$(shell uname -s))
+
 ifeq ($(VERSION),)
 $(info VERSION not defined, defaulting to VERSION=us)
 VERSION         ?= us
 endif
 
-WHICH_PYTHON != which python3
+WHICH_PYTHON := $(shell which python3)
 ifeq ($(WHICH_PYTHON),)
-$(error The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
+WHICH_PYTHON := /usr/bin/python3
+$(info The python3 executable path could not be identified, defaulting to /usr/bin/python3)
 endif
 
-BASH != which bash
+BASH := $(shell which bash)
 ifeq ($(BASH),)
-$(info Bash is expected by sotn-decomp, but was not found.  You may experience unexpected errors)
+$(info The bash executable path could not be identified, defaulting to /usr/bin/bash)
+BASH := /usr/bin/bash
 endif
 
 # Compilers
@@ -33,7 +37,7 @@ CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
 EXPECTED_DIR	:= expected/$(BUILD_DIR)
-BUILD_DISK_DIR  := $(BUILD_DIR)/${VERSION}/disk
+BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 
@@ -45,7 +49,6 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 BASH_FLAGS	  	:= -e -o pipefail
 SHELL 			 = $(BASH) $(BASH_FLAGS)
 VENV_DIR       	?= .venv
-
 ifneq ($(wildcard $(VENV_DIR)),)
 PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
 endif
@@ -85,13 +88,6 @@ SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
 ROOT		:= /
-
-# Use $(call get_targets) when the non-prefised name is needed
-# Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
-define get_targets
-	$(GAME) $(addprefix $1,$(STAGES)) $(addprefix $2,$(BOSSES)) $(SERVANTS)
-endef
-
 ifneq ($(filter $(VERSION),us hd),)
 ASM_SUBDIRS := $(ROOT) /data /psxsdk /handwritten
 SRC_SUBDIRS := $(ROOT) /psxsdk
@@ -112,12 +108,8 @@ define list_st_src_files
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(addprefix $(dir), $(ST_ASSETS))))
 endef
-define list_shared_src_files
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-endef
-define list_o_files
-	$(foreach file,$(call list$(2)_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
+list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+list_o_files = $(foreach file,$(call list$(2)_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 
 # leverages MWCC ability to compile data and text as separate sections to allow
 # LD using --gc-sections and remove all the symbols that are unreferenced.
@@ -139,6 +131,10 @@ define link
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
+
+# Use $(call get_targets) when the non-prefised name is needed
+# Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
+get_targets = $(GAME) $(addprefix $1,$(STAGES)) $(addprefix $2,$(BOSSES)) $(SERVANTS)
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk

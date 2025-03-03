@@ -11,8 +11,6 @@ STAGES		+=
 BOSSES 		:= 
 SERVANTS	:= T_BAT
 
-BUILD_PRGS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
-
 LIB_TARGETS	:= $(addprefix lib/, gfs spr dma scl csh per cdc mth bup sys)
 LIB_OBJECTS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(LIB_TARGETS)))
 
@@ -26,6 +24,7 @@ DOSEMU_APP			:= $(DOSEMU) $(DOSEMU_FLAGS)
 SATURN_TOOLCHAIN	:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 OBJDUMP				:= sh-elf-objdump
 OBJDUMP_FLAGS		:= -z -m sh2 -b binary -D
+SATURN_OBJCOPY				:= sh-elf-objcopy
 CC1_SATURN			:= $(BUILD_DIR)/CC1.EXE
 ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
 
@@ -34,7 +33,7 @@ WAV_FILES 			:= $(patsubst $(EXTRACTED_DISK_DIR)/SD/%.PCM,$(SATURN_ASSETS_DIR)/S
 DEPENDENCIES		+= $(SATURN_SPLITTER_APP) $(DOSEMU)
 
 .PHONY: build_saturn
-build_saturn: $(BUILD_DIR)/0.BIN $(BUILD_PRGS)
+build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
 
 .PHONY: extract_saturn
 extract_saturn: $(SATURN_SPLITTER_APP)

@@ -7,7 +7,7 @@
 
 ifeq ($(VERSION),us)
 GAME		:= main dra ric weapon
-STAGES		:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
+STAGES		:= cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp
 STAGES   	+= rwrp
 BOSSES		:= bo4 mar rbo3
 SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
@@ -63,7 +63,7 @@ $(addprefix extract_, us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffi
 	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
 	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
 
-build_$(VERSION): $(call get_targets)
+build_us build_hd: $(call get_targets)
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
@@ -90,7 +90,7 @@ $(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(C
 	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
 build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
+	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
 	$(SPLAT) $<
 	touch $@
