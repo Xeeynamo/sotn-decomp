@@ -378,10 +378,10 @@ void func_us_801AFA80(Entity* self) {
                 if (prim->y2 < 0) {
                     prim->drawMode = DRAW_HIDE;
                 }
-                prim->r0 = prim->g0 = prim->b0 = *(ptr + i * 5 + j + 0);
-                prim->r1 = prim->g1 = prim->b1 = *(ptr + i * 5 + j + 1);
-                prim->r2 = prim->g2 = prim->b2 = *(ptr + (i + 1) * 5 + j + 0);
-                prim->r3 = prim->g3 = prim->b3 = *(ptr + (i + 1) * 5 + j + 1);
+                PGREY(prim, 0) = *(ptr + i * 5 + j + 0);
+                PGREY(prim, 1) = *(ptr + i * 5 + j + 1);
+                PGREY(prim, 2) = *(ptr + (i + 1) * 5 + j + 0);
+                PGREY(prim, 3) = *(ptr + (i + 1) * 5 + j + 1);
                 prim = prim->next;
             }
         }
