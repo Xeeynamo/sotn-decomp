@@ -67,37 +67,27 @@ $(addprefix extract_, us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffi
 build_us build_hd: $(call get_targets)
 
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
+DRA_SYMBOLS := $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt
+STMAD_SYMBOLS := $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt
+WEAPON_SYMBOLS := $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
+STAGE_SYMBOLS := $(if $$(filter mad,%),$(STMAD_SYMBOLS),$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt)
+$(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) $(if $(filter weapon,%),,| %_dirs)
 	$(SPLAT) $<
 	touch $@
+
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
+US_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR)/ST/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/st/$*
+US_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR)/BOSS/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/boss/$*
+HD_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
+HD_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/boss/$*
+$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(STAGE_SYMBOLS) | st%_dirs
 	$(SPLAT) $<
-	touch $@
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).ric.txt | ric_dirs
-	$(SPLAT) $<
-	touch $@
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt | stmad_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR)/ST/$$(call to_upper,$*)/F_$$(call to_upper,$*).BIN $(ASSETS_DIR)/st/$*
+	$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_ST)
+
 $(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
 	$(SPLAT) $<
-	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR)/BOSS/$$(call to_upper,$*)/F_$$(call to_upper,$*).BIN $(ASSETS_DIR)/boss/$*
-build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
-	$(SPLAT) $<
-	touch $@
-$(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
-	$(SPLAT) $<
-	touch $@
+	$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_BO)
+
 
 $(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
 	echo $(call list_o_files,dra)
