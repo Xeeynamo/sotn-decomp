@@ -232,16 +232,10 @@ format-src: $(BIN_DIR)/clang-format
         | xargs -0 -n10 -P$$(nproc) $(BIN_DIR)/clang-format -i
 
 .PHONY: format-tools
+$(DEBUG).SILENT: format-tools
+FORMAT_TOOLS := $(addprefix $(TOOLS_DIR)/, / splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/sotn_permuter )
 format-tools:
-	$(BLACK) $(TOOLS_DIR)/*.py
-	$(BLACK) $(TOOLS_DIR)/splat_ext/*.py
-	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
-	$(BLACK) $(TOOLS_DIR)/*.py
-	$(BLACK) $(TOOLS_DIR)/splat_ext/*.py
-	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
-	$(BLACK) $(TOOLS_DIR)/sotn_str/*.py
-	$(BLACK) $(TOOLS_DIR)/sotn_permuter/sotn_permuter.py
-	$(BLACK) $(TOOLS_DIR)/split_jpt_yaml/*.py
+	$(foreach item, $(FORMAT_TOOLS://=/),$(call echo,Formatting $(item)*.py); $(BLACK) $(item)*.py;)
 
 .PHONY: format-symbols
 $(DEBUG).SILENT: format-symbols
