@@ -274,7 +274,6 @@ expected: check
 	rm -rf expected/build/$(VERSION)
 	cp -r build/$(VERSION) expected/build/
 
-# Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
 	mv src src_tmp
 	rm $(BUILD_DIR)/*.ld
@@ -290,14 +289,15 @@ force_symbols:
 	$(foreach item,$(FORCE_SYMBOLS),$(call echo,$(Extracting symbols for $(item)));$(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$(item).elf > $(CONFIG_DIR)/symbols.us.$(item).txt;)
 
 context:
-	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
-	@echo ctx.c has been updated.
+	$(VERSION) $(M2CTX) $(SOURCE)
+	$(call echo,ctx.c has been updated.)
 
 # Grouping all extract_disk together for consistency since hd and pspeu use the extract_disk target
 .PHONY: extract_disk%
+$(DEBUG).SILENT: extract_disk_us
 extract_disk: extract_disk_$(VERSION)
 extract_disk_us: $(SOTNDISK)
-	@$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
 $(addprefix extract_disk_, pspeu hd):
 	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
 	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
