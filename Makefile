@@ -407,28 +407,30 @@ disk_debug: disk_prepare
 test:
 	$(PYTHON) $(TOOLS_DIR)/symbols_test.py
 
-function-finder:
-	# TODO: make sure graphviz is installed
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py
+# Needs validation
+function-finder: graphviz duplicates-report
+	-$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
 	git clean -fdx $(ASM_DIR)/
 	git checkout $(CONFIG_DIR)/
-	rm -f build/us/main.ld
-	rm -rf build/us/weapon.ld
+	rm -f $(BUILD_DIR)/main.ld
+	rm -rf $(BUILD_DIR)/weapon.ld
 	$(MAKE) -j extract
-	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
-	rm -rf gh-duplicates/function_calls || true
-	mv function_calls gh-duplicates/
-	mv function_graphs.md gh-duplicates/
+	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder_$(VERSION).py --no-fetch --use-call-trees > $(TOOLS_DIR)/gh-duplicates/functions.md
+	-rm -rf $(TOOLS_DIR)/gh-duplicates/function_calls/
+	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
+	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
 
-duplicates-report:
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	cd tools/dups; \
+graphviz:
+	$(PIP) install --upgrade graphviz
+
+# Needs validation
+duplicates-report: force_symbols force_extract
+	$(PYTHON) $(TOOLS_DIR)/function_finder/fix_matchings.py
+	mkdir -p $(TOOLS_DIR)/gh-duplicates
+	cd $(TOOLS_DIR)/dups; \
 	    cargo run --release -- \
             --threshold .90 \
-            --output-file ../../gh-duplicates/duplicates.txt
+            --output-file ../gh-duplicates/duplicates.txt
 			
 .PHONY: requirements-python
 requirements-python: $(VENV_DIR)
