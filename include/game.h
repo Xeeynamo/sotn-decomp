@@ -248,18 +248,23 @@ extern u8 g_BmpCastleMap[0x20000];
 #endif
 
 // used with various equipment, enemy resistances, etc
-#define ELEMENT_HIT 0x20
-#define ELEMENT_CUT 0x40
-#define ELEMENT_POISON 0x80
-#define ELEMENT_CURSE 0x100
-#define ELEMENT_STONE 0x200
-#define ELEMENT_WATER 0x400
-#define ELEMENT_DARK 0x800
-#define ELEMENT_HOLY 0x1000
-#define ELEMENT_ICE 0x2000
-#define ELEMENT_THUNDER 0x4000
-#define ELEMENT_FIRE 0x8000
-#define ELEMENT_UNK_10000 0x10000
+typedef enum {
+    ELEMENT_HIT = 0x20,
+    ELEMENT_CUT = 0x40,
+    ELEMENT_POISON = 0x80,
+    ELEMENT_CURSE = 0x100,
+    ELEMENT_STONE = 0x200,
+    ELEMENT_WATER = 0x400,
+    ELEMENT_DARK = 0x800,
+    ELEMENT_HOLY = 0x1000,
+    ELEMENT_ICE = 0x2000,
+    ELEMENT_THUNDER = 0x4000,
+    ELEMENT_FIRE = 0x8000,
+    ELEMENT_ALL = ELEMENT_FIRE | ELEMENT_THUNDER | ELEMENT_ICE | ELEMENT_HOLY |
+                  ELEMENT_DARK | ELEMENT_WATER | ELEMENT_STONE | ELEMENT_CURSE |
+                  ELEMENT_POISON | ELEMENT_CUT | ELEMENT_HIT,
+    ELEMENT_UNK_10000 = 0x10000,
+} Elements;
 
 // Indices of g_StatBuffTimers
 typedef enum {
