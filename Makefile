@@ -136,6 +136,11 @@ endef
 # Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(addprefix $1,$(STAGES)) $(addprefix $2,$(BOSSES)) $(SERVANTS)
 
+to_upper = $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
+to_lower = $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
+echo = echo -e "$(1)"
+get_filename = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$2$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$3$1),$(call to_lower,$1)))
+
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
 else ifeq ($(VERSION),pspeu)
