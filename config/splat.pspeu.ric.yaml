@@ -1,0 +1,54 @@
+options:
+  platform: psp
+  basename: ric
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
+  asm_path: asm/pspeu/ric_psp
+  asset_path: assets/ric
+  src_path: src/ric_psp
+  ld_script_path: build/pspeu/ric.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.ric.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.ric.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.ric.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 9fd233b8334468c1c750547d0b772a8d58357f8c
+segments:
+  - [0x0, bin, mwo_header]
+  - name: ric
+    type: code
+    start: 0x80
+    vram:  0x092A6280
+    bss_size: 0x1F80
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, 80]
+      - [0x90, c, 90]
+      - [0x410, c, 410]
+      - [0x4B60, c, 4B60]
+      - [0x6DB0, c, 6DB0]
+      - [0x28400, data]
+      - [0x30100, .rodata, 410]
+      - [0x30158, .rodata, 6DB0]
+      - {type: bss, vram: 0x92D6600}
+  - [0x30400]
