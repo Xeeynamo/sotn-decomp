@@ -282,31 +282,12 @@ force_extract:
 	rm -rf src/
 	mv src_tmp src
 
+# This is currently intentionally hard coded to us because the us files are used for functions in other versions
+.PHONY: force_symbols
+$(DEBUG).SILENT: force_symbols
+FORCE_SYMBOLS := $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
 force_symbols:
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/dra.elf > $(CONFIG_DIR)/symbols.us.dra.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/ric.elf > $(CONFIG_DIR)/symbols.us.ric.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stcen.elf > $(CONFIG_DIR)/symbols.us.stcen.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stchi.elf > $(CONFIG_DIR)/symbols.us.stchi.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stdre.elf > $(CONFIG_DIR)/symbols.us.stdre.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stlib.elf > $(CONFIG_DIR)/symbols.us.stlib.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno0.elf > $(CONFIG_DIR)/symbols.us.stno0.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno1.elf > $(CONFIG_DIR)/symbols.us.stno1.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno3.elf > $(CONFIG_DIR)/symbols.us.stno3.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stno4.elf > $(CONFIG_DIR)/symbols.us.stno4.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stnp3.elf > $(CONFIG_DIR)/symbols.us.stnp3.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stnz0.elf > $(CONFIG_DIR)/symbols.us.stnz0.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stsel.elf > $(CONFIG_DIR)/symbols.us.stsel.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stst0.elf > $(CONFIG_DIR)/symbols.us.stst0.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/stwrp.elf > $(CONFIG_DIR)/symbols.us.stwrp.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/strwrp.elf > $(CONFIG_DIR)/symbols.us.strwrp.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/bomar.elf > $(CONFIG_DIR)/symbols.us.bomar.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/bobo4.elf > $(CONFIG_DIR)/symbols.us.bobo4.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/borbo3.elf > $(CONFIG_DIR)/symbols.us.borbo3.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_000.elf > $(CONFIG_DIR)/symbols.us.tt_000.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_001.elf > $(CONFIG_DIR)/symbols.us.tt_001.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_002.elf > $(CONFIG_DIR)/symbols.us.tt_002.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_003.elf > $(CONFIG_DIR)/symbols.us.tt_003.txt
-	$(PYTHON) $(TOOLS_DIR)/symbols.py elf build/us/tt_004.elf > $(CONFIG_DIR)/symbols.us.tt_004.txt
+	$(foreach item,$(FORCE_SYMBOLS),$(call echo,$(Extracting symbols for $(item)));$(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$(item).elf > $(CONFIG_DIR)/symbols.us.$(item).txt;)
 
 context:
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
