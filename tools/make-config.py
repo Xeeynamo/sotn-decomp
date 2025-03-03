@@ -436,6 +436,7 @@ def get_splat_config(
             "ld_bss_is_noload": bss_is_no_load,
             "disasm_unknown": True,
             "disassemble_all": True,
+            "global_vram_start": HexInt(0x80010000),
         }
     }
 
