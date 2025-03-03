@@ -4378,8 +4378,10 @@ static const char* D_us_8018187C[] = {
     _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
 #endif
 
-static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400,
-                              0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
+static u16 D_us_801818A8[] = {
+    ELEMENT_HOLY,  ELEMENT_DARK,  ELEMENT_FIRE,  ELEMENT_THUNDER,
+    ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
+    ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
 
 #ifdef VERSION_PSP
 extern const char** D_us_801818C0;
@@ -4415,10 +4417,10 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
     s32 x = posX;
     s16 y = 8;
     s32 i;
-    if ((arg1 & 0xFFE0) == 0) {
+    if ((arg1 & ELEMENT_ALL) == 0) {
         prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
     } else {
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < LEN(D_us_801818A8); i++) {
             if (arg1 & D_us_801818A8[i]) {
                 prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
                 x += 0x20;
@@ -4432,10 +4434,10 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     s16 x = 0x84;
     s16 y = 8;
     s32 i;
-    if ((arg1 & 0xFFE0) == 0) {
+    if ((arg1 & ELEMENT_ALL) == 0) {
         prim = func_us_801B1064(prim, 0x84, posY, D_us_8018181C[0], 0x159);
     } else {
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < LEN(D_us_801818A8); i++) {
             if (arg1 & D_us_801818A8[i]) {
                 prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x15C);
                 x += 0x1C;
