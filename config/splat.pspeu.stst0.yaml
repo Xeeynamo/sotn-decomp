@@ -51,7 +51,7 @@ segments:
       - [0x58B8, c, st0_psp/2C564]
       - [0x8230, c, st0_psp/2DAC8]
       - [0xB3A0, c, st0_psp/3101C]
-      - [0xC3E0, c, st0_psp/3AB08]
+      - [0xC3E0, c, st0/3AB08]
       - [0xE658, c, st0_psp/3C5C0]
       - [0xF320, c, st0_psp/st_init_st0]
       - [0xF560, c, st0/2805C]
@@ -80,6 +80,8 @@ segments:
       - [0x1C500, .data, st0_psp/cutscene]
       - [0x1C8C8, .data, st0/2A8DC]
       - [0x1C930, data]
+      - [0x25278, .data, st0/3AB08]
+      - [0x256E8, data]
       - [0x419E0, .data, st0/2805C]
       - [0x41B28, data]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
@@ -97,7 +99,7 @@ segments:
       - [0x424F8, .rodata, st0/title_card]
       - [0x42530, .rodata, st0_psp/2C564]
       - [0x42580, .rodata, st0_psp/2DAC8]
-      - [0x425D8, .rodata, st0_psp/3AB08]
+      - [0x425D8, .rodata, st0/3AB08]
       - [0x42610, .rodata, st0/2A218] # EntityCutscene
       - [0x42650, .rodata, st0/e_red_door]
       - [0x42668, .rodata, st0/e_collect]
