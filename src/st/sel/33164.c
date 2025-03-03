@@ -247,7 +247,6 @@ void func_801B3A54(s32 arg0, s32 arg1) {
     D_801BB008 = arg1;
 }
 
-extern s32 D_8007F208;
 s32 func_801B3A94(s32 arg0) {
     char saveFile[0x20];
     s32 ret;
@@ -291,7 +290,7 @@ s32 func_801B3A94(s32 arg0) {
         save = (SaveData*)g_Pix;
         if (arg0 != 0) {
             if (arg0 == 1) {
-                D_8007F208 |= 1;
+                LOW(g_Pix[0][0x224]) |= 1;
             } else {
                 strcpy(save->info.name, (const char*)arg0);
                 strcpy(save->status.saveName, (const char*)arg0);
