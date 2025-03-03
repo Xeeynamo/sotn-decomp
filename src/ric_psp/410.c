@@ -2,7 +2,27 @@
 #include "../ric/ric.h"
 #include <player.h>
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", func_80158B04);
+void func_80158B04(u16 arg0) {
+    s16 xMod = 3;
+    if (PLAYER.facingLeft) {
+        xMod = -xMod;
+    }
+
+    PLAYER.posY.i.hi -= 16;
+    PLAYER.posX.i.hi += xMod;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_EMBERS, 1), 0);
+    PLAYER.posY.i.hi += 16;
+    PLAYER.posX.i.hi -= xMod;
+
+    if (arg0 & 1) {
+        g_api.func_80102CD8(3);
+        g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+    }
+    if (arg0 & 2) {
+        PLAYER.velocityX = 0;
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleStand);
 
