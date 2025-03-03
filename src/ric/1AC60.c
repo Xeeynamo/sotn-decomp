@@ -771,7 +771,7 @@ static void RicDebugExit(void) {
     PLAYER.hitParams = 0;
 }
 
-static bool RicDebug(void) {
+bool RicDebug(void) {
     if (!g_IsRicDebugEnter) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.D_80072EFC == 0) {
@@ -781,12 +781,14 @@ static bool RicDebug(void) {
         }
         return false;
     }
-
-    if (g_Player.D_80072EFC || g_Player.padTapped & PAD_L2) {
+    if (g_Player.D_80072EFC) {
         RicDebugExit();
         return false;
     }
-
+    if (g_Player.padTapped & PAD_L2) {
+        RicDebugExit();
+        return false;
+    }
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
             g_Entities->posX.val += FIX(16.0);
@@ -826,7 +828,7 @@ static bool RicDebug(void) {
     if (PLAYER.animCurFrame <= 0) {
         PLAYER.animCurFrame = 1;
     }
-    if (PLAYER.animCurFrame < 212 == 0) {
+    if (PLAYER.animCurFrame > 211) {
         PLAYER.animCurFrame = 211;
     }
     FntPrint("charal:%02x\n", PLAYER.animCurFrame);
