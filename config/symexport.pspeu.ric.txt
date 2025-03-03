@@ -1,0 +1,3 @@
+EXTERN(_binary_assets_ric_mwo_header_bin_start);
+EXTERN(func_pspeu_092BBD10)
+EXTERN(func_pspeu_092C8D48)
