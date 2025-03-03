@@ -248,14 +248,9 @@ format-symbols:
 .PHONY: format-license
 $(DEBUG).SILENT: format-license
 format-license:
-	echo Checking for license line in code files
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
-	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/game.h AGPL-3.0-or-later
-	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/entity.h AGPL-3.0-or-later
-	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/items.h AGPL-3.0-or-later
-	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/lba.h AGPL-3.0-or-later
-	$(PYTHON) $(TOOLS_DIR)/lint-license.py include/memcard.h AGPL-3.0-or-later
-
+	$(call echo,Checking for license line in code files)
+	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
+	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
 # fast-format
 .PHONY: ff
 ff: MAKEFLAGS += --jobs
