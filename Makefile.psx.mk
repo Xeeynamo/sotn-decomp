@@ -166,7 +166,7 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 ###
 
 .PHONY: $(call get_targets)
-dra ric sel: %: $(BUILD_DIR)/%.BIN
+dra ric sel: %: $(BUILD_DIR)/$$(call to_upper,%).BIN
 $(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
 $(BOSSES): %: $(BUILD_DIR)/$(call to_upper,%).BIN $(BUILD_DIR)/F_$(call to_upper,%).BIN
 
