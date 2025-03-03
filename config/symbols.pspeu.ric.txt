@@ -1,3 +1,6 @@
+RicDebugEnter = 0x092A6290;
+RicDebugExit = 0x092A62D8;
+RicDebug = 0x092A6328;
 func_80158B04 = 0x092A6610;
 RicHandleStand = 0x092A6728;
 RicHandleWalk = 0x092A6AF8;
@@ -17,6 +20,7 @@ RicHandleGenericSubwpnCrash = 0x092A96D8;
 RicHandleThrowDaggers = 0x092A9738;
 RicHandleDeadPrologue = 0x092A9840;
 RicHandleSlide = 0x092A9EA0;
+func_8015BB80 = 0x092AA248;
 func_8015BCD0 = 0x092AA388;
 RicHandleSlideKick = 0x092AA678;
 RicHandleBladeDash = 0x092AA9F8;
