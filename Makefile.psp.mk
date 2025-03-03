@@ -33,8 +33,7 @@ MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 DEPENDENCIES	+= $(ALLEGREX_AS)
 
 # PSP specific targets
-build_pspeu: $(addsuffix _psp,$(call get_targets,st,bo))
-
+build_pspeu: $(call get_targets)
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
 
 $(WIBO):
@@ -46,29 +45,12 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 $(MWCCGAP_APP):
 	git submodule update --init $(MWCCGAP_DIR)
 
-dra_psp: $(BUILD_DIR)/dra.bin
-stlib_psp: $(BUILD_DIR)/lib.bin
-stno4_psp: $(BUILD_DIR)/no4.bin
-stst0_psp: $(BUILD_DIR)/st0.bin
-stwrp_psp: $(BUILD_DIR)/wrp.bin
-tt_000_psp: $(BUILD_DIR)/tt_000.bin
+$(call get_targets): %: $(BUILD_DIR)/%.bin
 
-$(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/lib.bin: $(BUILD_DIR)/stlib.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/no4.bin: $(BUILD_DIR)/stno4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/st0.bin: $(BUILD_DIR)/stst0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/wrp.bin: $(BUILD_DIR)/stwrp.elf
+$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
 	$(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
-	$(SPLAT) $<
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
-	$(SPLAT) $<
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
+$(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt
 	$(SPLAT) $<
 
 # This isn't ideal, but it works for now.
