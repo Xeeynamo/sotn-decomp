@@ -111,7 +111,6 @@ static s32 g_HandId = HAND_ID;
 
 #include "shared.h"
 
-extern s32 D_80097420;
 extern s32 D_138000_8017A260[];
 
 void EntityWeaponAttack(Entity* self) {
@@ -277,7 +276,7 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.unk90 -= 3;
         self->ext.weapon.unk94 += 6;
         if (self->ext.weapon.unk90 < 0) {
-            D_80097420 = 0;
+            g_unkGraphicsStruct.unk20 = 0;
             self->ext.weapon.unk90 = 0;
             DestroyEntity(self);
             return;

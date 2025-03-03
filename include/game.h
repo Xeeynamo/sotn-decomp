@@ -1974,6 +1974,7 @@ typedef enum {
     UNK_ENTITY_12 = 0x12, // related to wolf?
     UNK_ENTITY_13 = 0x13,
     UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_50 = 0x50,
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
@@ -1990,8 +1991,6 @@ extern s32 g_PlayerX;
 extern s32 g_PlayerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
-extern s8 D_80097B98;
-extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
@@ -2020,7 +2019,6 @@ extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
-extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
 extern s32 D_800987B4;
