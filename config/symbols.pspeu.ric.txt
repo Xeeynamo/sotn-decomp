@@ -122,3 +122,7 @@ RicEntitySubwpnCross = 0x092CD528;
 func_80169C10 = 0x092CDD08;
 RicEntitySubwpnCrossTrail = 0x092CDF18;
 RicEntitySubwpnCrashCrossParticles = 0x092CE170;
+g_RicDebugCurFrame = 0x092D7A48;
+g_RicDebugDrawFlags = 0x092D7A4A;
+g_RicDebugPalette = 0x092D7A4C;
+g_IsRicDebugEnter = 0x092D7A4E;
