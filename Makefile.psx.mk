@@ -51,7 +51,8 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 DEPENDENCIES	+= $(MASPSX_APP) 
 
-$(MASPSX_APP): git_submodule_$(MASPSX_DIR)
+$(MASPSX_APP):
+	git submodule update --init $(MASPSX_DIR)
 
 .PHONY: extract_%
 ifeq ($(VERSION),us)

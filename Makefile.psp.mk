@@ -43,7 +43,8 @@ $(WIBO):
 	chmod +x $(WIBO)
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
-$(MWCCGAP_APP): git_submodule_$(MWCCGAP_DIR)
+$(MWCCGAP_APP):
+	git submodule update --init $(MWCCGAP_DIR)
 
 dra_psp: $(BUILD_DIR)/dra.bin
 stlib_psp: $(BUILD_DIR)/lib.bin

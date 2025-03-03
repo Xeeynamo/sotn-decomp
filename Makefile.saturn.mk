@@ -112,7 +112,8 @@ $(CC1_SATURN): $(SATURN_TOOLCHAIN)
 	cp -r $(ASM_DIR)/alucard $(BUILD_DIR)/$(ASM_DIR)/alucard
 	touch $(CC1_SATURN)
 
-$(SATURN_SPLITTER_APP): git_submodule_$(SATURN_SPLITTER_DIR)
+$(SATURN_SPLITTER_APP):
+	git submodule update --init $(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 

@@ -381,12 +381,10 @@ $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
 $(M2CTX_APP):
 	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
 
-git_submodule_%:
-	git submodule init $*
-	git submodule update $*
-
-$(ASMDIFFER_APP): git_submodule_$(ASMDIFFER_DIR)
-$(M2C_APP): git_submodule_$(M2C_DIR)
+$(ASMDIFFER_APP):
+	git submodule update --init $(ASMDIFFER_DIR)
+$(M2C_APP):
+	git submodule update --init $(M2C_DIR)
 	$(PIP) install --upgrade pycparser
 $(GO):
 	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
