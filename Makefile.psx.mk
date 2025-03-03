@@ -163,160 +163,26 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 	-T $(BUILD_DIR)/main.ld \
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
+###
 
-# Game category structure
-.PHONY: dra
-dra: $(BUILD_DIR)/DRA.BIN
-$(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/dra.elf
-	$(OBJCOPY) -O binary $< $@
+.PHONY: $(call get_targets)
+dra ric sel: %: $(BUILD_DIR)/%.BIN
+$(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
+$(BOSSES): %: $(BUILD_DIR)/$(call to_upper,%).BIN $(BUILD_DIR)/F_$(call to_upper,%).BIN
 
-sel: $(BUILD_DIR)/SEL.BIN
-$(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
-	$(OBJCOPY) -O binary $< $@
-
-# Richter category structure
-.PHONY: ric
-ric: $(BUILD_DIR)/RIC.BIN
-$(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
-	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
-
-# Stage category structure
-.PHONY: cen
-cen: $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
-$(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
+$(addprefix $(BUILD_DIR)/,F_%.BIN f_%.bin):
+	$(GFXSTAGE) e $(ASSETS_DIR)/$(call get_filename,$*,st/,boss/) $@
+$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CEN.BIN:
-	$(GFXSTAGE) e assets/st/cen $@
 
-.PHONY: chi
-chi: $(BUILD_DIR)/CHI.BIN $(BUILD_DIR)/F_CHI.BIN
-$(BUILD_DIR)/CHI.BIN: $(BUILD_DIR)/stchi.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CHI.BIN:
-	$(GFXSTAGE) e assets/st/chi $@
-
-.PHONY: dre
-dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
-$(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_DRE.BIN:
-	$(GFXSTAGE) e assets/st/dre $@
-
-.PHONY: lib
-lib: $(BUILD_DIR)/LIB.BIN $(BUILD_DIR)/F_LIB.BIN
-$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_LIB.BIN:
-	$(GFXSTAGE) e assets/st/lib $@
-
-.PHONY: mad
-mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
-$(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAD.BIN:
-	$(GFXSTAGE) e assets/st/mad $@
-
- PHONY: no0
-no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
-$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO0.BIN:
-	$(GFXSTAGE) e assets/st/no0 $@
-
-.PHONY: no1
-no1: $(BUILD_DIR)/NO1.BIN $(BUILD_DIR)/F_NO1.BIN
-$(BUILD_DIR)/NO1.BIN: $(BUILD_DIR)/stno1.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO1.BIN:
-	$(GFXSTAGE) e assets/st/no1 $@
-
-.PHONY: no3
-no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
-$(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO3.BIN:
-	$(GFXSTAGE) e assets/st/no3 $@
-
-.PHONY: no4
-no4: $(BUILD_DIR)/NO4.BIN $(BUILD_DIR)/F_NO4.BIN
-$(BUILD_DIR)/NO4.BIN: $(BUILD_DIR)/stno4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO4.BIN:
-	$(GFXSTAGE) e assets/st/no4 $@
-
-.PHONY: np3
-np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
-$(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NP3.BIN:
-	$(GFXSTAGE) e assets/st/np3 $@
-
-.PHONY: nz0
-nz0: $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
-$(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NZ0.BIN:
-	$(GFXSTAGE) e assets/st/nz0 $@
-
-.PHONY: st0
-st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
-$(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_ST0.BIN:
-	$(GFXSTAGE) e assets/st/st0 $@
-
-.PHONY: wrp
-wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
-$(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_WRP.BIN:
-	$(GFXSTAGE) e assets/st/wrp $@
-
-.PHONY: rwrp
-rwrp: $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
-$(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RWRP.BIN:
-	$(GFXSTAGE) e assets/st/rwrp $@
-
-# Boss category structure
-.PHONY: bo4
-bo4: $(BUILD_DIR)/BO4.BIN $(BUILD_DIR)/F_BO4.BIN
-$(BUILD_DIR)/BO4.BIN: $(BUILD_DIR)/bobo4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_BO4.BIN:
-	$(GFXSTAGE) e assets/boss/bo4 $@
-
-.PHONY: mar
-mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN
-$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAR.BIN:
-	$(GFXSTAGE) e assets/boss/mar $@
-
-.PHONY: rbo3
-rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
-$(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RBO3.BIN:
-	$(GFXSTAGE) e assets/boss/rbo3 $@
-
-# servant (familiar) targets
-.PHONY: tt_000 tt_001 tt_002 tt_003 tt_004
-tt_000: $(BUILD_DIR)/TT_000.BIN
-tt_001: $(BUILD_DIR)/TT_001.BIN
-tt_002: $(BUILD_DIR)/TT_002.BIN
-tt_003: $(BUILD_DIR)/TT_003.BIN
-tt_004: $(BUILD_DIR)/TT_004.BIN
+tt_00%: $(BUILD_DIR)/TT_00%.BIN
 
 $(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
 	cp $< $@.tmp
 	truncate -c -s 40960 $@.tmp
 	mv $@.tmp $@
-$(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
-	$(OBJCOPY) -O binary $< $@
 
 mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
