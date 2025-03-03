@@ -45,14 +45,6 @@ void DecelerateY(s32 amount) {
 }
 // end: split to common decelerate
 
-extern s32 g_Dop_padPressed;
-extern s32 g_Dop_padTapped;
-extern s32 g_Dop_padHeld;
-
-// 0x7C to unk44 equivalent
-extern u16 g_Dop_unk44;
-extern u16 g_Dop_unk4C;
-
 extern PlayerState g_Dop;
 
 s32 CheckMoveDirection(void) {
@@ -194,11 +186,29 @@ Entity* GetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80118C28);
+// TODO: this is the same as unionD_800ACFB4 in src/dra
+typedef union {
+    u8 rawBytes[4];
+    AnimationFrame af;
+} unionD_us_8018136C;
+extern unionD_us_8018136C D_us_8018136C[];
+
+extern u8 D_us_801D3D4C;
+extern u8 D_us_801D3D50;
+extern u8 D_us_801D3D54;
+extern u8 D_us_801D3D58;
+
+void func_80118C28(s32 arg0) {
+    // Break up the 4-byte struct D_us_8018136C[arg0] into individual bytes.
+    D_us_801D3D4C = D_us_8018136C[arg0].rawBytes[0];
+    D_us_801D3D50 = D_us_8018136C[arg0].rawBytes[1];
+    D_us_801D3D54 = D_us_8018136C[arg0].rawBytes[2];
+    D_us_801D3D58 = D_us_8018136C[arg0].rawBytes[3];
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9BC0);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9CB8);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DopEntityHitByHoly);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9FEC);
 
@@ -212,7 +222,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CA748);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CA834);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CAE48);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DopEntityHitByDark);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CB020);
 
@@ -228,7 +238,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CD178);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CD89C);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CDB68);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DopEntityHitByLightning);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityHitByIce);
 

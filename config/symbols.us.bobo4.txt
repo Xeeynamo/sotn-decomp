@@ -183,3 +183,8 @@ EntityWingSmashTrail = 0x801CD048;
 EntityPlayerOutline = 0x801CC6A4;
 EntityHitByIce = 0x801CE280;
 EntityMist = 0x801CEDF4;
+
+DopEntityHitByHoly = 0x801C9CB8;
+DopEntityHitByLightning = 0x801CDB68;
+DopEntityHitByDark = 0x801CAE48;
+
