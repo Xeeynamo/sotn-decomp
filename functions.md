@@ -685,7 +685,7 @@
 | lib    | CheckFieldCollisionY                |       83 |          7 |        |                                 |       |
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
 | dra    | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
-| dra    | func_psp_09136BF8                   |       83 |         14 |        |                                 |       |
+| dra    | WolfFormFinished                    |       83 |         14 |        |                                 |       |
 | dra    | GetServantStats                     |       84 |          4 |        |                                 |       |
 | lib    | EntityGreyPuffSpawner               |       84 |          5 |        |                                 |       |
 | dra    | func_psp_090EEE78                   |       84 |          7 |        |                                 |       |
@@ -1072,7 +1072,7 @@
 | dra    | HandleEnding                        |      298 |         60 |        |                                 |       |
 | no4    | func_psp_0923EA80                   |      300 |         26 |        |                                 |       |
 | dra    | func_psp_09144280                   |      303 |         47 |        |                                 |       |
-| dra    | func_psp_091367A0                   |      305 |         25 |        | https://decomp.me/scratch/ons5L | 1.0   |
+| dra    | func_8012C600                       |      305 |         25 |        |                                 |       |
 | lib    | func_psp_09242880                   |      307 |         26 |        |                                 |       |
 | no4    | func_psp_0924ADF8                   |      307 |         26 |        |                                 |       |
 | st0    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
