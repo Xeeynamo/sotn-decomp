@@ -14,35 +14,7 @@ void func_8010E0B8(void) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5430);
 
-// begin: split to common decelerate
-void DecelerateX(s32 amount) {
-    if (g_CurrentEntity->velocityX < 0) {
-        g_CurrentEntity->velocityX += amount;
-        if (g_CurrentEntity->velocityX > 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityX -= amount;
-        if (g_CurrentEntity->velocityX < 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    }
-}
-
-void DecelerateY(s32 amount) {
-    if (g_CurrentEntity->velocityY < 0) {
-        g_CurrentEntity->velocityY += amount;
-        if (g_CurrentEntity->velocityY > 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityY -= amount;
-        if (g_CurrentEntity->velocityY < 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-}
-// end: split to common decelerate
+#include "../../decelerate.h"
 
 extern PlayerState g_Dop;
 
@@ -73,12 +45,7 @@ s32 CheckMoveDirection(void) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C55A8);
 
-void SetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facingLeft == 1) {
-        speed = -speed;
-    }
-    g_CurrentEntity->velocityX = speed;
-}
+#include "../../set_speed_x.h"
 
 void func_8010E3B8(s32 velocityX) {
     if (DOPPLEGANGER.entityRoomIndex == 1) {
@@ -161,31 +128,9 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C95E4);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C9694);
 
-Entity* GetFreeEntity(s16 start, s16 end) {
-    Entity* entity = &g_Entities[start];
-    s16 i;
+#include "../../get_free_entity.h"
 
-    for (i = start; i < end; i++, entity++) {
-        if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
-
-Entity* GetFreeEntityReverse(s16 start, s16 end) {
-    Entity* entity = &g_Entities[end - 1];
-    s16 i;
-
-    for (i = end - 1; i >= start; i--, entity--) {
-        if (entity->entityId == E_NONE) {
-            return entity;
-        }
-    }
-    return NULL;
-}
-
-// TODO: this is the same as unionD_800ACFB4 in src/dra
+// this is the same as unionD_800ACFB4 in DRA
 typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
@@ -298,9 +243,9 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CA748);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801CA834);
 
-// INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", DopEntityHitByDark);
 extern s32 D_us_801D3D9C;
 extern AnimationFrame D_us_80181828[];
+
 void DopEntityHitByDark(Entity* self) {
     switch (self->step) {
     case 0:
@@ -426,12 +371,6 @@ void EntityGravityBootBeam(Entity* self) {
 }
 
 // The blue outlines of the bat that show up when wing smashing
-typedef enum {
-    Dop_MorphBat = 6,
-    Dop_Hit = 11,
-    Dop_Kill = 17,
-} Doppleganger_Steps;
-
 void EntityWingSmashTrail(Entity* self) {
     if (!(DOPPLEGANGER.step_s == 3 && DOPPLEGANGER.step == Dop_MorphBat)) {
         DestroyEntity(self);
@@ -611,12 +550,9 @@ void DopEntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
-extern Point16* D_us_80181DF8[];
-
 // player gets frozen
 extern Point16* D_us_80181DF8[];
 
-// player gets frozen
 void EntityHitByIce(Entity* self) {
     s32 i;
     s16 xShift;
@@ -793,23 +729,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", EntityMist);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0318);
 
-static void ReboundStoneBounce1(s16 bounceAngle) {
-    g_CurrentEntity->ext.reboundStone.stoneAngle =
-        (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
-    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
-        g_CurrentEntity->ext.reboundStone.unk80++;
-        g_CurrentEntity->ext.reboundStone.unk82++;
-    }
-}
-
-static void ReboundStoneBounce2(s16 bounceAngle) {
-    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
-        g_CurrentEntity->ext.reboundStone.stoneAngle =
-            (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
-        g_CurrentEntity->ext.reboundStone.unk80++;
-        g_CurrentEntity->ext.reboundStone.unk82++;
-    }
-}
+#include "../../rebound_stone.h"
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801D0DE0);
 

@@ -67,40 +67,11 @@ static void SetWeaponAnimation(u8 anim) {
 #endif
 
 #if !defined(W_044)
-static void DecelerateX(s32 amount) {
-    if (g_CurrentEntity->velocityX < 0) {
-        g_CurrentEntity->velocityX += amount;
-        if (g_CurrentEntity->velocityX > 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityX -= amount;
-        if (g_CurrentEntity->velocityX < 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    }
-}
 
-static void DecelerateY(s32 amount) {
-    if (g_CurrentEntity->velocityY < 0) {
-        g_CurrentEntity->velocityY += amount;
-        if (g_CurrentEntity->velocityY > 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityY -= amount;
-        if (g_CurrentEntity->velocityY < 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-}
+#include "../decelerate.h"
 
-static void SetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facingLeft == 1) {
-        speed = -speed;
-    }
-    g_CurrentEntity->velocityX = speed;
-}
+#include "../set_speed_x.h"
+
 #endif
 
 #if !defined(W_030) && !defined(W_051)

@@ -30,4 +30,10 @@ typedef enum {
     /* 0x15 */ E_GREY_PUFF,
 } EntityIDs;
 
+typedef enum {
+    Dop_MorphBat = 6,
+    Dop_Hit = 11,
+    Dop_Kill = 17,
+} Doppleganger_Steps;
+
 #endif // BO4_H
