@@ -112,8 +112,8 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C80D8);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C8184);
 
-s32 func_us_801C820C(void) {
-    if (g_Dop.padTapped & 0x80) {
+static s32 func_us_801C820C(void) {
+    if (g_Dop.padTapped & PAD_SQUARE) {
         return 1;
     }
     return 0;
