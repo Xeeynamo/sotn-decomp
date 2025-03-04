@@ -56,7 +56,7 @@ static s16 g_SineTable[] = {
 #include "move_entity.h"
 #include "fall_entity.h"
 
-#if defined(VERSION_BETA) || STAGE == STAGE_ST0
+#if defined(VERSION_BETA) || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
 u8 func_8019214C(void) {
     u8 unkState;
     Entity* entity;
