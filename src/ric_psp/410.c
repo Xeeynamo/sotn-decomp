@@ -294,7 +294,22 @@ void RicHandleJump(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleFall);
+void RicHandleFall(void) {
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    RicDecelerateX(0x1000);
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
+            RicSetJump();
+        } else if (RicCheckFacing()) {
+            RicSetSpeedX(0xC000);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleCrouch);
 

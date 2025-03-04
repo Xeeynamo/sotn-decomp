@@ -302,13 +302,14 @@ void RicHandleFall(void) {
         return;
     }
     RicDecelerateX(0x1000);
-    if (PLAYER.step_s != 0) {
-        return;
-    }
-    if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
-        RicSetJump();
-    } else if (RicCheckFacing() != 0) {
-        RicSetSpeedX(0xC000);
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
+            RicSetJump();
+        } else if (RicCheckFacing()) {
+            RicSetSpeedX(0xC000);
+        }
+        break;
     }
 }
 
