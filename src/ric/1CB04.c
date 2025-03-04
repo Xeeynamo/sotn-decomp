@@ -26,24 +26,24 @@ void func_80158B04(u16 arg0) {
 }
 
 void RicHandleStand(void) {
-    s32 var_s0;
+    s16 xMod;
+    s32 facing;
 
     if (PLAYER.step < 64) {
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (D_80097448[0] >= 49) {
+        } else if (D_80097448[0] > 48) {
+            xMod = 4;
             if (PLAYER.facingLeft) {
-                var_s0 = -4;
-            } else {
-                var_s0 = 4;
+                xMod = -xMod;
             }
-            PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+            PLAYER.posX.i.hi += xMod;
             PLAYER.posY.i.hi -= 16;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
-            D_8015459C = 0x60;
             PLAYER.posY.i.hi += 16;
-            PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
+            PLAYER.posX.i.hi -= xMod;
+            D_8015459C = 0x60;
         }
     }
 
@@ -52,32 +52,26 @@ void RicHandleStand(void) {
         RicDecelerateX(0x2000);
         switch (PLAYER.step_s) {
         case 0:
-            if (RicCheckFacing() == 0) {
-                if (g_Player.padPressed & PAD_UP) {
-                    RicSetAnimation(ric_anim_press_up);
-                    PLAYER.step_s = 1;
-                    break;
-                }
-            } else {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
+            } else if (g_Player.padPressed & PAD_UP) {
+                RicSetAnimation(ric_anim_press_up);
+                PLAYER.step_s = 1;
+                break;
             }
             break;
-
         case 1:
-            if (RicCheckFacing() != 0) {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
-                break;
             } else if (g_Player.padPressed & PAD_UP) {
-                break;
             } else {
                 RicSetStand(0);
-                break;
             }
-
+            break;
         case 64:
             DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
-                RicCheckFacing();
+                facing = RicCheckFacing();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = PL_S_CROUCH;
                     PLAYER.anim = D_801555A8;
@@ -87,8 +81,8 @@ void RicHandleStand(void) {
 
             if (PLAYER.animFrameDuration < 0) {
                 if (g_Player.padPressed & PAD_SQUARE) {
-                    g_Player.unk46 = 2;
                     PLAYER.step_s++;
+                    g_Player.unk46 = 2;
                     RicSetAnimation(ric_anim_brandish_whip);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
@@ -98,7 +92,6 @@ void RicHandleStand(void) {
                 RicSetStand(0);
             }
             break;
-
         case 65:
             DisableAfterImage(1, 1);
             if (g_Player.padPressed & PAD_SQUARE) {
@@ -107,7 +100,6 @@ void RicHandleStand(void) {
             g_Player.unk46 = 0;
             RicSetStand(0);
             break;
-
         case 66:
             DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
@@ -117,6 +109,7 @@ void RicHandleStand(void) {
                 g_Player.unk46 = 0;
                 RicSetStand(0);
             }
+            break;
         }
     }
 }
