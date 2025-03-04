@@ -188,3 +188,9 @@ DopEntityHitByHoly = 0x801C9CB8;
 DopEntityHitByLightning = 0x801CDB68;
 DopEntityHitByDark = 0x801CAE48;
 
+
+DOPPELGANGER_posX_i_hi = 0x800762DA;
+DOPPELGANGER_hitboxOffX = 0x800762E8;
+DOPPELGANGER_posY_i_hi = 0x800762DE;
+DOPPELGANGER_hitboxOffY = 0x800762EA;
+g_Dop_status = 0x801D4D7C;
