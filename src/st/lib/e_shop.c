@@ -296,6 +296,7 @@ static u8* D_us_801812D8[] = {
 #ifdef VERSION_PSP
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
 extern s32 E_ID(ID_29);
@@ -3605,11 +3606,72 @@ void func_us_801B56E4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B5F18);
+void func_us_801B5F18(Entity* self) {
+    Entity* tempEntity = &g_Entities[192];
+    CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
+    self->step++;
+#ifdef VERSION_PSP
+    *D_psp_092A54E0 = 0;
+#else
+    D_us_80183F64 = 0;
+#endif
+    if (D_8003C730 == 2) {
+        D_8003C730 = 0;
+#ifdef VERSION_PSP
+        *D_psp_092A54E0 = 1;
+#else
+        D_us_80183F64 = 1;
+#endif
+    }
+}
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B5F84);
+void func_us_801B5F84(Entity* self) {
+    Entity* player = &PLAYER;
+    s16 posY;
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B60C8);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        if (g_PlayableCharacter) {
+            self->step++;
+        } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
+                   player->posX.i.hi > 0xC0) {
+            D_80097928 = 1;
+            D_80097910 = 0;
+        }
+        break;
+
+    case 1:
+        if (D_8003C730 != 2) {
+            self->hitboxWidth = 0x10;
+            self->hitboxHeight = 0x20;
+            if (player->posX.i.hi > 0xE0) {
+                posY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
+                if (posY >= 0x60 && posY < 0xA0) {
+                    func_us_801B5F18(self);
+                }
+            }
+        } else {
+            func_us_801B5F18(self);
+        }
+        break;
+
+    case 2:
+        break;
+    }
+}
+
+void func_us_801B60C8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        break;
+
+    case 1:
+        GetPlayerCollisionWith(self, 8, 0x48, 1);
+        break;
+    }
+}
 
 static const char* D_us_801816C8[] = {
     _S("Dracula"),
