@@ -164,7 +164,135 @@ void RicHandleRun(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleJump);
+void RicHandleJump(void) {
+    s32 facing;
+    if (!g_IsPrologueStage && (PLAYER.velocityY < FIX(-1)) &&
+        !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
+        PLAYER.velocityY = FIX(-1);
+    }
+    if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+        PLAYER.velocityY = FIX(-0.25);
+        g_Player.unk44 |= 0x20;
+    }
+    if (RicCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_JUMP)) {
+        return;
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        RicDecelerateX(0x1000);
+        facing = RicCheckFacing();
+        if (facing) {
+            if (g_Player.unk44 & 0x10) {
+                RicSetSpeedX(FIX(2.25));
+            } else {
+                RicSetSpeedX(FIX(1.25));
+            }
+            g_Player.unk44 &= ~4;
+        } else {
+            g_Player.unk44 &= ~0x10;
+            if ((PLAYER.animFrameIdx < 2) && !(g_Player.unk44 & 8) &&
+                (g_Player.unk44 & 4) && (g_Player.padTapped & PAD_CROSS)) {
+                RicSetAnimation(D_8015555C);
+                RicSetSpeedX(FIX(-1.5));
+                PLAYER.velocityY = FIX(-2.625);
+                if (g_Player.unk72) {
+                    PLAYER.velocityY = 0;
+                }
+                g_Player.unk44 |= 0xA;
+                g_Player.unk44 &= ~4;
+                PLAYER.step_s = 2;
+            }
+        }
+        break;
+    case 2:
+        break;
+    case 0x40:
+        DisableAfterImage(1, 1);
+        if (PLAYER.animFrameIdx < 3) {
+            facing = RicCheckFacing();
+            if (facing) {
+                if (g_Player.unk44 & 0x10) {
+                    RicSetSpeedX(FIX(2.25));
+                } else {
+                    RicSetSpeedX(FIX(1.25));
+                }
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                if (g_Player.unk44 & 0x10) {
+                    RicSetSpeedX(FIX(2.25));
+                } else {
+                    RicSetSpeedX(FIX(1.25));
+                }
+                RicSetSpeedX(FIX(1.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if (g_Player.padPressed & PAD_SQUARE) {
+                PLAYER.step_s += 1;
+                g_Player.unk46 = 2;
+                RicSetAnimation(D_80155740);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
+            } else {
+                g_Player.unk46 = 0;
+                PLAYER.step_s = 0;
+                RicSetAnimation(D_80155528);
+            }
+        }
+        break;
+    case 0x41:
+        DisableAfterImage(1, 1);
+        if (!(g_Player.padPressed & PAD_SQUARE)) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            RicSetAnimation(D_80155528);
+        }
+        break;
+    case 0x42:
+        DisableAfterImage(1, 1);
+        if (PLAYER.animFrameIdx < 3) {
+            facing = RicCheckFacing();
+            if (facing) {
+                if (g_Player.unk44 & 0x10) {
+                    RicSetSpeedX(FIX(2.25));
+                } else {
+                    RicSetSpeedX(FIX(1.25));
+                }
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                if (g_Player.unk44 & 0x10) {
+                    RicSetSpeedX(FIX(2.25));
+                } else {
+                    RicSetSpeedX(FIX(1.25));
+                }
+                RicSetSpeedX(FIX(1.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            RicSetAnimation(D_80155528);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleFall);
 

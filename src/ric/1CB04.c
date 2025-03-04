@@ -166,6 +166,8 @@ void RicHandleRun(void) {
 }
 
 void RicHandleJump(void) {
+    s32 facing;
+
     if (!g_IsPrologueStage && (PLAYER.velocityY < FIX(-1)) &&
         !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
         PLAYER.velocityY = FIX(-1);
@@ -179,12 +181,10 @@ void RicHandleJump(void) {
         return;
     }
     switch (PLAYER.step_s) {
-    // Need at least one fake case to make the switch match
-    case 1:
-        return;
     case 0:
         RicDecelerateX(0x1000);
-        if (RicCheckFacing()) {
+        facing = RicCheckFacing();
+        if (facing) {
             if (g_Player.unk44 & 0x10) {
                 RicSetSpeedX(FIX(2.25));
             } else {
@@ -193,25 +193,27 @@ void RicHandleJump(void) {
             g_Player.unk44 &= ~4;
         } else {
             g_Player.unk44 &= ~0x10;
-            if ((PLAYER.animFrameIdx < 2) &&
-                ((LOW(g_Player.unk44) & 0xC) == 4) &&
-                (g_Player.padTapped & PAD_CROSS)) {
+            if ((PLAYER.animFrameIdx < 2) && !(g_Player.unk44 & 8) &&
+                (g_Player.unk44 & 4) && (g_Player.padTapped & PAD_CROSS)) {
                 RicSetAnimation(D_8015555C);
                 RicSetSpeedX(FIX(-1.5));
                 PLAYER.velocityY = FIX(-2.625);
                 if (g_Player.unk72) {
                     PLAYER.velocityY = 0;
                 }
-                PLAYER.step_s = 2;
                 g_Player.unk44 |= 0xA;
                 g_Player.unk44 &= ~4;
+                PLAYER.step_s = 2;
             }
         }
-        return;
+        break;
+    case 2:
+        break;
     case 0x40:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (RicCheckFacing() != 0) {
+            facing = RicCheckFacing();
+            if (facing) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -222,7 +224,7 @@ void RicHandleJump(void) {
                 g_Player.unk44 &= ~0x10;
             }
         } else {
-            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
                 ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
@@ -237,8 +239,8 @@ void RicHandleJump(void) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if (g_Player.padPressed & PAD_SQUARE) {
-                g_Player.unk46 = 2;
                 PLAYER.step_s += 1;
+                g_Player.unk46 = 2;
                 RicSetAnimation(D_80155740);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
@@ -248,7 +250,7 @@ void RicHandleJump(void) {
                 RicSetAnimation(D_80155528);
             }
         }
-        return;
+        break;
     case 0x41:
         DisableAfterImage(1, 1);
         if (!(g_Player.padPressed & PAD_SQUARE)) {
@@ -256,11 +258,12 @@ void RicHandleJump(void) {
             PLAYER.step_s = 0;
             RicSetAnimation(D_80155528);
         }
-        return;
+        break;
     case 0x42:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (RicCheckFacing() != 0) {
+            facing = RicCheckFacing();
+            if (facing) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -271,7 +274,7 @@ void RicHandleJump(void) {
                 g_Player.unk44 &= ~0x10;
             }
         } else {
-            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
                 ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
@@ -289,6 +292,7 @@ void RicHandleJump(void) {
             PLAYER.step_s = 0;
             RicSetAnimation(D_80155528);
         }
+        break;
     }
 }
 

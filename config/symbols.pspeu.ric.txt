@@ -131,3 +131,7 @@ g_RicDebugCurFrame = 0x092D7A48;
 g_RicDebugDrawFlags = 0x092D7A4A;
 g_RicDebugPalette = 0x092D7A4C;
 g_IsRicDebugEnter = 0x092D7A4E;
+g_IsPrologueStage = 0x092D7A60;
+D_8015555C = 0x092CE838;
+D_80155740 = 0x092CEA28;
+D_80155528 = 0x092CE800;
