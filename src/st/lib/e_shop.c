@@ -3563,7 +3563,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
 #ifdef VERSION_PSP
     g_Settings.D_8003CB00 |= 1;
 #endif
-    itemIndex = arg1->ext.ILLEGAL.u16[3];
+    itemIndex = arg1->ext.et_801B6F30.unk82;
     posY = 16;
     for (i = 0; i < g_CurrentEntity->ext.et_801B6F30.unk84; i++) {
         enemyTactics = &D_us_8018173C[itemIndex];
@@ -3590,7 +3590,8 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
                 clut = 0x183;
             }
 #ifdef VERSION_PSP
-            prim = func_us_801B1064(prim, 8, posY, D_us_801816C8[itemIndex], clut);
+            prim =
+                func_us_801B1064(prim, 8, posY, D_us_801816C8[itemIndex], clut);
 #else
             prim = func_us_801B1064(prim, 8, posY, D_us_801816C8[itemId], clut);
 #endif
@@ -3617,7 +3618,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         posY += 12;
     }
     while (prim != NULL) {
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
 }
