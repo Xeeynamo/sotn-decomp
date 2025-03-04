@@ -522,7 +522,7 @@
 | no4     | func_psp_0925DDC0                   |       51 |         10 |        |                                 |       |
 | st0     | GetLang                             |       51 |         10 |        |                                 |       |
 | dra     | func_800EDD9C                       |       52 |          6 |        |                                 |       |
-| st0     | func_801AD838                       |       52 |         10 |        |                                 |       |
+| st0     | func_801AD838                       |       52 |         10 |        | https://decomp.me/scratch/2pNca | 0.995 |
 | dra     | func_psp_090F18B0                   |       53 |          3 |        |                                 |       |
 | no4     | func_psp_0923D0C8                   |       53 |          3 |        |                                 |       |
 | dra     | func_psp_090FF3C0                   |       53 |          5 |        |                                 |       |
@@ -760,7 +760,7 @@
 | st0     | EntityCutscenePhotographFire        |       87 |         10 |        |                                 |       |
 | dra     | func_8010E6AC                       |       87 |         14 |        |                                 |       |
 | dra     | func_psp_090EC248                   |       88 |          3 |        |                                 |       |
-| st0     | EntityDraculaBody                   |       88 |         10 |        |                                 |       |
+| st0     | EntityDraculaBody                   |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | st0     | EntitySecretStairsCeiling           |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra     | func_psp_090E4828                   |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
 | dra     | TimeAttackController                |       89 |          8 |        |                                 |       |
@@ -874,7 +874,7 @@
 | dra     | func_psp_090EC0C0                   |      108 |          3 |        |                                 |       |
 | dra     | func_800EA5E4                       |      108 |          9 |        | https://decomp.me/scratch/I1WLh | 0.997 |
 | dra     | func_psp_090F0550                   |      108 |          9 |        |                                 |       |
-| st0     | EntityDraculaFireball               |      108 |         15 |        |                                 |       |
+| st0     | EntityDraculaFireball               |      108 |         15 |        | https://decomp.me/scratch/nypsq | 0.998 |
 | lib     | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
 | no4     | func_psp_0924DBE0                   |      109 |          3 |        |                                 |       |
 | wrp     | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
@@ -1009,7 +1009,7 @@
 | wrp     | EntityLockCamera                    |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra     | func_psp_09139068                   |      166 |         16 |        |                                 |       |
 | dra     | func_psp_090E81A8                   |      166 |         19 |        |                                 |       |
-| st0     | EntityDraculaMeteorball             |      166 |         24 |        |                                 |       |
+| st0     | EntityDraculaMeteorball             |      166 |         24 |        | https://decomp.me/scratch/w4afZ | 0.995 |
 | dra     | func_psp_09105DA0                   |      167 |         27 |        |                                 |       |
 | ric_psp | func_8015C4AC                       |      168 |         15 |        |                                 |       |
 | lib     | UpdateAnimation                     |      169 |          7 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -1023,7 +1023,7 @@
 | lib     | EntityBloodDrips                    |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra     | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | lib     | func_psp_0923DA30                   |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
-| st0     | EntityDraculaGlass                  |      179 |         30 |        |                                 |       |
+| st0     | EntityDraculaGlass                  |      179 |         30 |        | https://decomp.me/scratch/2FUOR | 0.998 |
 | lib     | func_us_801BB8DC                    |      181 |         19 |        |                                 |       |
 | no4     | func_psp_09242FB8                   |      182 |         22 |        |                                 |       |
 | dra     | PlayAnimation                       |      183 |         17 |        |                                 |       |
@@ -1075,7 +1075,7 @@
 | lib     | DrawCutsceneActorName               |      212 |         14 |        |                                 |       |
 | no4     | func_psp_0925DE60                   |      212 |         14 |        |                                 |       |
 | st0     | DrawCutsceneActorName               |      212 |         14 |        |                                 |       |
-| lib     | func_psp_092670F8                   |      213 |         19 |        |                                 |       |
+| lib     | func_psp_092670F8                   |      213 |         19 |        | https://decomp.me/scratch/mehWs | 0.997 |
 | no4     | func_psp_09241B28                   |      213 |         25 |        |                                 |       |
 | dra     | EntitySubwpnCrashCrossParticles     |      215 |         28 |        | https://decomp.me/scratch/ONw6f | 0.999 |
 | dra     | func_psp_09110B78                   |      215 |         32 |        |                                 |       |
@@ -1457,7 +1457,7 @@
 | lib     | EntityCorpseweed                    |     1267 |        134 | Yes    | https://decomp.me/scratch/ZHUBn | 0.999 |
 | st0     | ST0_HitDetection                    |     1332 |        147 |        |                                 |       |
 | dra     | func_psp_0910BE88                   |     1338 |        206 | Yes    |                                 |       |
-| st0     | EntityDracula                       |     1396 |        179 | Yes    |                                 |       |
+| st0     | EntityDracula                       |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra     | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
 | dra     | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra     | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
