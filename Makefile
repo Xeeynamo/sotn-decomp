@@ -97,7 +97,8 @@ define list_src_files
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
 endef
 list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-list_o_files = $(foreach file,$(call list$(3)_src_files,$(1),$(if $(filter-out st/sel,$(1)),$(2))),$(BUILD_DIR)/$(file).o)
+list_src_files_filtered = $(call list$(3)_src_files,$(1),$(if $(filter-out st/sel,$(1)),$(2)))
+list_o_files = $(foreach file,$(list_src_files_filtered),$(BUILD_DIR)/$(file).o)
 
 # leverages MWCC ability to compile data and text as separate sections to allow
 # LD using --gc-sections and remove all the symbols that are unreferenced.
