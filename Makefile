@@ -298,11 +298,11 @@ extract_disk_saturn:
 
 .PHONY: disk_prepare
 $(DEBUG).SILENT: disk_prepare
-DISK_PREPARE := DRA.BIN BIN/RIC.BIN
-DISK_PREPARE += $(addprefix ST/,CEN/CEN.BIN CHI/CHI.BIN DRE/DRE.BIN LIB/LIB.BIN MAD/MAD.BIN NO0/NO0.BIN NO1/NO1.BIN NO3/NO3.BIN NO4/NO4.BIN NP3/NP3.BIN NZ0/NZ0.BIN RWRP/RWRP.BIN SEL/SEL.BIN ST0/ST0.BIN WRP/WRP.BIN)
-DISK_PREPARE += $(addprefix ST/,CEN/F_CEN.BIN CHI/F_CHI.BIN DRE/F_DRE.BIN LIB/F_LIB.BIN MAD/F_MAD.BIN NO0/F_NO0.BIN NO1/F_NO1.BIN NO3/F_NO3.BIN NO4/F_NO4.BIN NP3/F_NP3.BIN NZ0/F_NZ0.BIN RWRP/F_RWRP.BIN ST0/F_ST0.BIN WRP/F_WRP.BIN)
-DISK_PREPARE += $(addprefix BOSS/,MAR/MAR.BIN MAR/F_MAR.BIN BO4/BO4.BIN BO4/F_BO4.BIN RBO3/RBO3.BIN RBO3/F_RBO3.BIN)
-DISK_PREPARE += $(addprefix SERVANT/,TT_000.BIN TT_001.BIN TT_002.BIN TT_003.BIN TT_004.BIN)
+disk_prepare  = $(1)/$(1).BIN $(1)/F_$(1).BIN
+DISK_PREPARE := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
+DISK_PREPARE += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call disk_prepare,$(call to_upper,$(target)))))
+DISK_PREPARE += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call disk_prepare,$(call to_upper,$(target)))))
+DISK_PREPARE += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
 disk_prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR)
 	cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
