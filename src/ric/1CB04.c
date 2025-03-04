@@ -316,8 +316,9 @@ void RicHandleFall(void) {
 void RicHandleCrouch(void) {
     s32 i;
     s16 xShift;
+    s32 facing;
 
-    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
         (g_Player.padPressed & PAD_DOWN)) {
         for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
             if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
@@ -329,11 +330,11 @@ void RicHandleCrouch(void) {
     if (RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_ATTACK | CHECK_SLIDE)) {
         return;
     }
-    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
         (!g_Player.unk72)) {
         RicSetJump(1);
         return;
-    } else if ((!g_Player.unk72) && (g_Player.unk46 == 0) &&
+    } else if (!g_Player.unk72 && !g_Player.unk46 &&
                (g_Player.padTapped & PAD_TRIANGLE) && RicDoCrash()) {
         return;
     }
@@ -342,19 +343,18 @@ void RicHandleCrouch(void) {
     case 0x0:
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if ((*D_80097448 >= 0x19) && (g_Player.unk48 == 0)) {
+        } else if (*D_80097448 > 0x18 && !g_Player.unk48) {
+            xShift = 9;
             if (PLAYER.facingLeft) {
-                xShift = -9;
-            } else {
-                xShift = 9;
+                xShift = -xShift;
             }
             PLAYER.posX.i.hi += xShift;
             PLAYER.posY.i.hi += 2;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
-            D_8015459C = 0x60;
             PLAYER.posY.i.hi -= 2;
             PLAYER.posX.i.hi -= xShift;
+            D_8015459C = 0x60;
         }
         if (!(g_Player.padPressed & PAD_DOWN) &&
             ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
@@ -366,15 +366,15 @@ void RicHandleCrouch(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN) &&
             ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
-            if (RicCheckFacing() == 0) {
-                PLAYER.anim = D_801554E0;
-                PLAYER.step_s = 2;
-                PLAYER.animFrameDuration = 1;
-                PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
+            if (RicCheckFacing()) {
+                RicSetWalk(0);
                 return;
             }
-            RicSetWalk(0);
-            return;
+            PLAYER.anim = D_801554E0;
+            PLAYER.step_s = 2;
+            PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
+            PLAYER.animFrameDuration = 1;
+            break;
         }
     case 0x4:
         if (PLAYER.animFrameDuration != -1) {
@@ -382,10 +382,10 @@ void RicHandleCrouch(void) {
         }
         RicSetAnimation(ric_anim_crouch);
         PLAYER.step_s = 0;
-        return;
+        break;
     case 0x2:
-        if ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40)) {
-            if (RicCheckFacing() != 0) {
+        if (!g_Player.unk72 || !(g_Player.pl_vram_flag & 0x40)) {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
                 return;
             }
@@ -405,8 +405,8 @@ void RicHandleCrouch(void) {
     case 0x40:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            RicCheckFacing();
-            if (!(g_Player.padPressed & PAD_DOWN) && (!g_Player.unk72)) {
+            facing = RicCheckFacing();
+            if (!(g_Player.padPressed & PAD_DOWN) && !g_Player.unk72) {
                 PLAYER.step = PL_S_STAND;
                 PLAYER.anim = D_80155588;
                 return;
@@ -414,8 +414,8 @@ void RicHandleCrouch(void) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if (g_Player.padPressed & PAD_SQUARE) {
-                g_Player.unk46 = 2;
                 PLAYER.step_s++;
+                g_Player.unk46 = 2;
                 RicSetAnimation(D_80155738);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
