@@ -642,7 +642,7 @@ void EntityHitByIce(Entity* self) {
         }
         if (sp18) {
             self->ext.hitbyice.unk7C = 0x40;
-            g_api.PlaySfx(0x69D);
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
             self->step++;
         }
         break;

@@ -47,7 +47,7 @@ void func_us_801B55DC(Entity* self) {
         }
 
         if (!(g_Timer & 0xF)) {
-            g_api.PlaySfx(0x608);
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
             return;
         }
         break;
