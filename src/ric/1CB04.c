@@ -445,38 +445,39 @@ void func_80159BC8(void) {
 }
 
 void func_80159C04(void) {
-    Entity* entity = PLAYER.unkB8;
-    s16 temp_v0;
-    s32 var_a0;
-    s32 var_a2;
+    Entity* entity;
+    s16 var_s3;
+    s16 var_s2;
+    s16 var_s1;
 
+    entity = PLAYER.unkB8;
+#if defined(VERSION_PSP)
+    if (!entity) {
+        return;
+    }
+#endif
     if (entity->facingLeft) {
-        var_a2 = -entity->hitboxOffX;
+        var_s3 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->hitboxOffX;
+        var_s3 = entity->hitboxOffX;
     }
-
     if (PLAYER.facingLeft) {
-        var_a0 = -PLAYER.hitboxOffX;
+        var_s2 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.hitboxOffX;
+        var_s2 = PLAYER.hitboxOffX;
     }
 
-    temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
-
-    if (abs(temp_v0) < 16) {
-        if (entity->velocityX != 0) {
-            if (entity->velocityX < 0) {
-                PLAYER.entityRoomIndex = 0;
-                return;
-            } else {
-                PLAYER.entityRoomIndex = 1;
-                return;
-            }
+    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
+    if (abs(var_s1) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+            return;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+            return;
         }
     }
-
-    if (temp_v0 < 0) {
+    if (var_s1 < 0) {
         PLAYER.entityRoomIndex = 0;
     } else {
         PLAYER.entityRoomIndex = 1;

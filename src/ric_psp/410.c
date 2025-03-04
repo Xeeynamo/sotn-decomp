@@ -442,7 +442,45 @@ void func_80159BC8(void) {
     PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", func_80159C04);
+void func_80159C04(void) {
+    Entity* entity;
+    s16 var_s3;
+    s16 var_s2;
+    s16 var_s1;
+
+    entity = PLAYER.unkB8;
+#if defined(VERSION_PSP)
+    if (!entity) {
+        return;
+    }
+#endif
+    if (entity->facingLeft) {
+        var_s3 = -entity->hitboxOffX;
+    } else {
+        var_s3 = entity->hitboxOffX;
+    }
+    if (PLAYER.facingLeft) {
+        var_s2 = -PLAYER.hitboxOffX;
+    } else {
+        var_s2 = PLAYER.hitboxOffX;
+    }
+
+    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
+    if (abs(var_s1) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+            return;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+            return;
+        }
+    }
+    if (var_s1 < 0) {
+        PLAYER.entityRoomIndex = 0;
+    } else {
+        PLAYER.entityRoomIndex = 1;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHit);
 
