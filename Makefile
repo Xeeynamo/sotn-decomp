@@ -116,20 +116,15 @@ list_o_files = $(foreach file,$(call list$(2)_src_files,$(1)),$(BUILD_DIR)/$(fil
 # symexport.*.txt is used to enforce a specific symbol and all its dependencies
 # to be used. Refer to *.map to know which sections are being discarded by LD.
 # Use nm to retrieve the symbol name out of a object file such as the mwo_header.
-ifeq ($(VERSION),pspeu)
-IF_PSP_GC_SECTIONS := --gc-sections
-IF_PSP_SYM_EXPORT 	= -T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt
-endif
-
 define link
 	$(LD) $(LD_FLAGS) -o $(2) \
-		$(IF_PSP_GC_SECTIONS) \
+		$(call if_version,pspeu,--gc-sections) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
-		$(IF_PSP_SYM_EXPORT) \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
+		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
+		-T $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(if $(filter-out stmad,$(1)),$(VERSION).)$(1).txt \
+		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad,$(1)),$(VERSION).)$(1).txt)
 endef
 
 # Use $(call get_targets) when the non-prefised name is needed
