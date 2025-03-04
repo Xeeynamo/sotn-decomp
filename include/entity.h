@@ -707,11 +707,10 @@ typedef struct {
     /* 0xB4 */ struct Entity* follow;
 } ET_SwordFamiliar;
 
-struct draculaPrimitive;
 typedef struct ET_Dracula {
     /* 0x7C */ char pad_7C[4];
-    /* 0x80 */ struct draculaPrimitive* unk80;
-    /* 0x84 */ struct draculaPrimitive* unk84;
+    /* 0x80 */ struct Primitive* unk80;
+    /* 0x84 */ struct Primitive* unk84;
     /* 0x88 */ char pad_88[4];
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ char pad_8E[0x2];

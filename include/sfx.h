@@ -229,7 +229,11 @@ enum SfxModes {
 #define NA_SE_EV_WATER_SPLASH 0x7C2
 #define NA_SE_VO_DR_TAUNT_1 0x84F
 #define NA_SE_VO_DR_TAUNT_2 0x850
+#ifdef VERSION_PSP
+#define NA_SE_VO_DR_HURT_1 0x85A
+#else
 #define NA_SE_VO_DR_HURT_1 0x853
+#endif
 #define NA_SE_VO_DR_HERE_IS_TRUE_POWER 0x855
 #define NA_SE_VO_DR_GRANT_ME_POWER 0x857
 #define NA_SE_VO_DR_PLAYTIME_IS_OVER 0x858

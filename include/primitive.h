@@ -154,42 +154,6 @@ typedef struct PrimLineG2 {
     /* 0x32 */ u16 drawMode;
 } PrimLineG2;
 
-typedef struct {
-    struct primitive* next;
-    /* 0x04 */ u8 r0;
-    /* 0x05 */ u8 g0;
-    /* 0x06 */ u8 b0;
-    /* 0x07 */ u8 type;
-    /* 0x08 */ s16 x0;
-    /* 0x0A */ s16 y0;
-    /* 0x0C */ u8 u0;
-    /* 0x0D */ u8 v0;
-    /* 0x0E */ u16 clut;
-    /* 0x10 */ u8 r1;
-    /* 0x11 */ u8 g1;
-    /* 0x12 */ u8 b1;
-    /* 0x13 */ u8 p1;
-    /* 0x14 */ s16 x1;
-    /* 0x16 */ s16 y1;
-    /* 0x18 */ u8 u1;
-    /* 0x19 */ u8 v1;
-    /* 0x1A */ u16 tpage;
-    /* 0x1C */ u8 r2;
-    /* 0x1D */ u8 g2;
-    /* 0x1E */ u8 b2;
-    /* 0x1F */ u8 p2;
-    /* 0x20 */ f32 y1_f32;
-    /* 0x24 */ s16 unk24;
-    /* 0x26 */ u16 priority;
-    /* 0x28 */ u8 r3;
-    /* 0x29 */ u8 g3;
-    /* 0x2A */ u8 b3;
-    /* 0x2B */ u8 p3;
-    /* 0x2C */ f32 y1_f32_velocity;
-    /* 0x30 */ s16 unk30;
-    /* 0x32 */ u16 drawMode;
-} draculaPrimitive;
-
 typedef struct AxePrim {
     struct AxePrim* next;
     /* 0x04 */ u8 r0;
