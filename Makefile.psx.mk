@@ -154,7 +154,7 @@ main: $(BUILD_DIR)/main.exe
 dra ric sel: %: $(BUILD_DIR)/$$(call to_upper,%).BIN
 weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
 $(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
-$(BOSSES): %: $(BUILD_DIR)/$(call to_upper,%).BIN $(BUILD_DIR)/F_$(call to_upper,%).BIN
+$(BOSSES): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
 tt_00%: $(BUILD_DIR)/TT_00%.BIN
 
 $(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf

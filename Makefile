@@ -53,7 +53,7 @@ PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
 endif
 PYTHON          := $(PYTHON_BIN)python3
 BLACK			:= $(PYTHON_BIN)black
-PIP			 	:= $(realpath .)/$(VENV_DIR)/bin/pip3
+PIP			 	:= $(realpath $(VENV_DIR))/bin/pip3
 INLINE_PYTHON	:= $(PYTHON) -c
 SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
@@ -75,7 +75,7 @@ ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
 
-DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) requirements-python
+DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO) requirements-python
 
 SOTNDISK_SOURCES   := $(shell find $(TOOLS_DIR)/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
@@ -222,7 +222,7 @@ format-src: $(BIN_DIR)/clang-format
 
 .PHONY: format-tools
 $(DEBUG).SILENT: format-tools
-FORMAT_TOOLS := $(addprefix $(TOOLS_DIR)/, / splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/sotn_permuter )
+FORMAT_TOOLS := $(addprefix $(TOOLS_DIR)/, $(ROOT) splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/sotn_permuter )
 format-tools:
 	$(foreach item, $(FORMAT_TOOLS://=/),$(call echo,Formatting $(item)*.py); $(BLACK) $(item)*.py;)
 
@@ -238,7 +238,7 @@ format-symbols:
 $(DEBUG).SILENT: format-license
 format-license:
 	$(call echo,Checking for license line in code files)
-	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | python3 $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
+	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
 	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
 # fast-format
 .PHONY: patch
