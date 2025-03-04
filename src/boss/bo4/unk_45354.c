@@ -50,9 +50,9 @@ s32 CheckMoveDirection(void) {
     if (g_Dop.unk44 & 2) {
         return 0;
     }
-    if (DOPPELGANGER.facingLeft == 1) {
+    if (DOPPLEGANGER.facingLeft == 1) {
         if (g_Dop.padPressed & PAD_RIGHT) {
-            DOPPELGANGER.facingLeft = 0;
+            DOPPLEGANGER.facingLeft = 0;
             g_Dop.unk4C = 1;
             return -1;
         } else if (g_Dop.padPressed & PAD_LEFT) {
@@ -63,7 +63,7 @@ s32 CheckMoveDirection(void) {
             return 1;
         }
         if (g_Dop.padPressed & PAD_LEFT) {
-            DOPPELGANGER.facingLeft = 1;
+            DOPPLEGANGER.facingLeft = 1;
             g_Dop.unk4C = 1;
             return -1;
         }
@@ -81,10 +81,10 @@ void SetSpeedX(s32 speed) {
 }
 
 void func_8010E3B8(s32 velocityX) {
-    if (DOPPELGANGER.entityRoomIndex == 1) {
+    if (DOPPLEGANGER.entityRoomIndex == 1) {
         velocityX = -velocityX;
     }
-    DOPPELGANGER.velocityX = velocityX;
+    DOPPLEGANGER.velocityX = velocityX;
 }
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5648);
@@ -226,8 +226,8 @@ void DopEntityHitByHoly(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
-        hitboxX = DOPPELGANGER.posX.i.hi + DOPPELGANGER.hitboxOffX;
-        hitboxY = DOPPELGANGER.posY.i.hi + DOPPELGANGER.hitboxOffY;
+        hitboxX = DOPPLEGANGER.posX.i.hi + DOPPLEGANGER.hitboxOffX;
+        hitboxY = DOPPLEGANGER.posY.i.hi + DOPPLEGANGER.hitboxOffY;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < LEN(D_us_801D3D5C); i++) {
             xRand = hitboxX + rand() % 24 - 12;
@@ -241,7 +241,7 @@ void DopEntityHitByHoly(Entity* self) {
             prim->g0 = 0;
             prim->g1 = (rand() & 7) + 1;
             prim->g2 = 0;
-            prim->priority = DOPPELGANGER.zPriority + 4;
+            prim->priority = DOPPLEGANGER.zPriority + 4;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_HIDE |
                              DRAW_UNK02 | DRAW_TRANSP;
             if (rand() & 1) {
@@ -307,7 +307,7 @@ void DopEntityHitByDark(Entity* self) {
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
-        self->zPriority = DOPPELGANGER.zPriority + 2;
+        self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->palette = PAL_OVL(0x19F);
 
         if (D_us_801D3D9C & 1) {
@@ -355,7 +355,7 @@ void EntityGravityBootBeam(Entity* self) {
 
     switch (self->step) {
     case 0:
-        self->posY.i.hi = DOPPELGANGER.posY.i.hi + 37;
+        self->posY.i.hi = DOPPLEGANGER.posY.i.hi + 37;
         self->ext.timer.t = 1536;
         self->primIndex = g_api.AllocPrimitives(PRIM_G4, 4);
         if (self->primIndex == -1) {
@@ -381,7 +381,7 @@ void EntityGravityBootBeam(Entity* self) {
             prim->g3 = 0x40;
             prim->b3 = 0x40;
 
-            prim->priority = DOPPELGANGER.zPriority - 2;
+            prim->priority = DOPPLEGANGER.zPriority - 2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
@@ -389,7 +389,7 @@ void EntityGravityBootBeam(Entity* self) {
         break;
 
     case 1:
-        if (DOPPELGANGER.velocityY > FIX(-1.5)) {
+        if (DOPPLEGANGER.velocityY > FIX(-1.5)) {
             self->step = 2;
         }
         // If transformed, timer drains faster
@@ -418,9 +418,9 @@ void EntityGravityBootBeam(Entity* self) {
         }
         prim->x0 = self->posX.i.hi - halfWidth;
         prim->x1 = self->posX.i.hi + halfWidth;
-        prim->x2 = DOPPELGANGER.posX.i.hi - halfWidth;
-        prim->x3 = DOPPELGANGER.posX.i.hi + halfWidth;
-        prim->y2 = prim->y3 = DOPPELGANGER.posY.i.hi - yOffset;
+        prim->x2 = DOPPLEGANGER.posX.i.hi - halfWidth;
+        prim->x3 = DOPPLEGANGER.posX.i.hi + halfWidth;
+        prim->y2 = prim->y3 = DOPPLEGANGER.posY.i.hi - yOffset;
         prim->y0 = prim->y1 = self->posY.i.hi;
     }
 }
@@ -433,23 +433,23 @@ typedef enum {
 } Doppleganger_Steps;
 
 void EntityWingSmashTrail(Entity* self) {
-    if (!(DOPPELGANGER.step_s == 3 && DOPPELGANGER.step == Dop_MorphBat)) {
+    if (!(DOPPLEGANGER.step_s == 3 && DOPPLEGANGER.step == Dop_MorphBat)) {
         DestroyEntity(self);
         return;
     }
 
     if (self->step == 0) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->animSet = DOPPELGANGER.animSet;
-        self->animCurFrame = DOPPELGANGER.animCurFrame | ANIM_FRAME_LOAD;
+        self->animSet = DOPPLEGANGER.animSet;
+        self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
         self->unk5A = 8;
-        self->zPriority = DOPPELGANGER.zPriority - 2;
-        self->drawFlags = DOPPELGANGER.drawFlags |
+        self->zPriority = DOPPLEGANGER.zPriority - 2;
+        self->drawFlags = DOPPLEGANGER.drawFlags |
                           (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         self->unk6C = 0x80; // a lifetime counter
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->rotZ = DOPPELGANGER.rotZ;
-        self->facingLeft = DOPPELGANGER.facingLeft;
+        self->rotZ = DOPPLEGANGER.rotZ;
+        self->facingLeft = DOPPLEGANGER.facingLeft;
         self->palette = PAL_OVL(0x202);
         self->rotX = self->rotY = 0x100;
         self->step++;
@@ -458,7 +458,7 @@ void EntityWingSmashTrail(Entity* self) {
     // This actually makes the wing smashes shrink over time, not rotate.
     self->rotX -= 8;
     self->rotY -= 8;
-    self->animCurFrame = DOPPELGANGER.animCurFrame | ANIM_FRAME_LOAD;
+    self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
     // Unclear why we count down by 5's instead of just making unk6C start
     // smaller
     if (self->unk6C >= 5) {
@@ -491,7 +491,7 @@ void DopEntityHitByLightning(Entity* self) {
         if ((++self->ext.hitbylightning.unk9C) > 0xA8) {
             var_s0 = true;
         }
-    } else if (DOPPELGANGER.step != 11) {
+    } else if (DOPPLEGANGER.step != 11) {
         var_s0 = true;
     }
 
@@ -514,14 +514,14 @@ void DopEntityHitByLightning(Entity* self) {
             prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
             prim->tpage = 0x1A;
             prim->clut = D_us_80181DAC[rand() & 1];
-            prim->priority = DOPPELGANGER.zPriority - 2;
+            prim->priority = DOPPLEGANGER.zPriority - 2;
             PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) =
                 0x80;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
-        if ((DOPPELGANGER.velocityY != 0) && (DOPPELGANGER.step != 17)) {
+        if ((DOPPLEGANGER.velocityY != 0) && (DOPPLEGANGER.step != 17)) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 16;
@@ -538,8 +538,8 @@ void DopEntityHitByLightning(Entity* self) {
         // This should probably be * -14 but that doesn't work.
         yOffset =
             -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
-        self->posX.val = xOffset + DOPPELGANGER.posX.val;
-        self->posY.val = yOffset + DOPPELGANGER.posY.val;
+        self->posX.val = xOffset + DOPPLEGANGER.posX.val;
+        self->posY.val = yOffset + DOPPLEGANGER.posY.val;
         if ((self->ext.hitbylightning.unk92) && (g_Dop.pl_vram_flag & 0xE)) {
             var_s0 = true;
         }
@@ -565,8 +565,8 @@ void DopEntityHitByLightning(Entity* self) {
         yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
                    ((rand() % 8) + 10)) +
                   self->ext.hitbylightning.unk98;
-        self->posX.val = DOPPELGANGER.posX.val + xOffset;
-        self->posY.val = DOPPELGANGER.posY.val + yOffset;
+        self->posX.val = DOPPLEGANGER.posX.val + xOffset;
+        self->posY.val = DOPPLEGANGER.posY.val + yOffset;
         self->ext.hitbylightning.unk98 -= 0x8000;
         prim = &g_PrimBuf[self->primIndex];
         break;
@@ -599,11 +599,11 @@ void DopEntityHitByLightning(Entity* self) {
 
     temp_s0 = (self->ext.hitbylightning.unk80 & 0xFFF);
     if (temp_s0 < 0x400) {
-        prim->priority = DOPPELGANGER.zPriority + 2;
+        prim->priority = DOPPLEGANGER.zPriority + 2;
     } else if (temp_s0 < 0xC00) {
-        prim->priority = DOPPELGANGER.zPriority - 2;
+        prim->priority = DOPPLEGANGER.zPriority - 2;
     } else {
-        prim->priority = DOPPELGANGER.zPriority + 2;
+        prim->priority = DOPPLEGANGER.zPriority + 2;
     }
     prim->u0 = prim->u2 = (i << 4) + 0x90;
     prim->u1 = prim->u3 = (i + 1 << 4) + 0x90;
@@ -632,8 +632,8 @@ void EntityHitByIce(Entity* self) {
 
     Primitive* prim;
 
-    self->posX.i.hi = DOPPELGANGER.posX.i.hi;
-    self->posY.i.hi = DOPPELGANGER.posY.i.hi;
+    self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+    self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
 
     sp18 = false;
     if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
@@ -660,24 +660,24 @@ void EntityHitByIce(Entity* self) {
                 prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
             prim->type = PRIM_G4;
-            prim->priority = DOPPELGANGER.zPriority + 2;
+            prim->priority = DOPPLEGANGER.zPriority + 2;
         }
-        if (DOPPELGANGER.velocityY != 0) {
+        if (DOPPLEGANGER.velocityY != 0) {
             self->ext.hitbyice.unk7E = 1;
         }
-        if (DOPPELGANGER.step == Dop_Kill) {
+        if (DOPPLEGANGER.step == Dop_Kill) {
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x14;
             self->ext.hitbyice.unk7E = 0;
         }
-        if (DOPPELGANGER.velocityY != 0) {
-            if (DOPPELGANGER.facingLeft) {
+        if (DOPPLEGANGER.velocityY != 0) {
+            if (DOPPLEGANGER.facingLeft) {
                 self->rotZ = 0x100;
             } else {
                 self->rotZ = -0x100;
             }
         } else {
-            if (DOPPELGANGER.velocityX > 0) {
+            if (DOPPLEGANGER.velocityX > 0) {
                 self->rotZ = 0x80;
             } else {
                 self->rotZ = 0xF80;
@@ -695,7 +695,7 @@ void EntityHitByIce(Entity* self) {
             if (g_Dop.pl_vram_flag & 0xC) {
                 sp18 = true;
             }
-            if (DOPPELGANGER.step == Dop_Hit && DOPPELGANGER.step_s == 5) {
+            if (DOPPLEGANGER.step == Dop_Hit && DOPPLEGANGER.step_s == 5) {
                 sp18 = true;
             }
         }

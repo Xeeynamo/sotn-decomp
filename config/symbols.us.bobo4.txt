@@ -1,7 +1,3 @@
-DOPPELGANGER_posX_i_hi = 0x800762DA;
-DOPPELGANGER_posY_i_hi = 0x800762DE;
-DOPPELGANGER_hitboxOffX = 0x800762E8;
-DOPPELGANGER_hitboxOffY = 0x800762EA;
 BO4_pStObjLayoutHorizontal = 0x80180188;
 BO4_pStObjLayoutVertical = 0x8018025C;
 BO4_EntityUpdates = 0x80180330;
