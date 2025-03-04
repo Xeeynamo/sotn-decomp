@@ -114,43 +114,6 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
 
-$(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
-	mkdir -p $(dir $@)
-	$(PNG2S) encode $< \
-		$(BUILD_DIR)/assets/dra/memcard_$*.png.s g_saveIcon$* \
-		$(BUILD_DIR)/assets/dra/memcard_$*.pal.s g_saveIconPal$*
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.png.o $(BUILD_DIR)/assets/dra/memcard_$*.png.s
-	rm $(BUILD_DIR)/assets/dra/memcard_$*.png.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.pal.o $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
-	rm $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
-$(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
-	mkdir -p $(dir $@)
-	$(PNG2S) encode $< \
-		$(BUILD_DIR)/assets/st/sel/memcard_$*.png.s g_saveIcon$* \
-		$(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s g_saveIconPal$*
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
-	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
-	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
-
-# anything from MAD is an exception and it should be ignored
-$(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
-	touch $@
-
-.PHONY: main
-main: $(MAIN_TARGET).exe
-.PHONY: %_dirs
-main_dirs:
-	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-$(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-	$(LD) $(LD_FLAGS) -o $@ \
-	-Map $(MAIN_TARGET).map \
-	-T $(BUILD_DIR)/main.ld \
-	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-###
 
 .PHONY: $(call get_targets)
 main: $(BUILD_DIR)/main.exe
@@ -256,3 +219,13 @@ $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
 	$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@
+
+$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
+	mkdir -p $(dir $@)
+	$(PNG2S) encode $< \
+		$(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s g_saveIcon$(lastword $(subst _, ,$*)) \
+		$(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.s g_saveIconPal$(lastword $(subst _, ,$*))
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.png.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s
+	rm $(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.s
+	rm $(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.s
