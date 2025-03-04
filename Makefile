@@ -83,28 +83,21 @@ SOTNASSETS_SOURCES := $(shell find $(TOOLS_DIR)/sotn-assets -name '*.go')
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 
 ROOT		:= /
-ifneq ($(filter $(VERSION),us hd),)
-ASM_SUBDIRS := $(ROOT) /data /psxsdk /handwritten
-SRC_SUBDIRS := $(ROOT) /psxsdk
-else ifeq ($(VERSION),pspeu)
 ASM_SUBDIRS := $(ROOT) /data
 SRC_SUBDIRS := $(ROOT)
+ifneq ($(filter $(VERSION),us hd),)
+ASM_SUBDIRS += /psxsdk /handwritten
+SRC_SUBDIRS += /psxsdk
 endif
-ST_ASM_SUBDIRS := $(ROOT) /data
-ST_ASSETS = /D_801*.bin /*.gfxbin /*.palbin /cutscene_*.bin
+ST_ASSETS = D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 
 define list_src_files
 	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(addprefix $(SRC_DIR)/$(1), $(SRC_SUBDIRS)),$(wildcard $(dir)/*.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*))
-endef
-define list_st_src_files
-	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ST_ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(addprefix $(dir), $(ST_ASSETS))))
+	$(foreach dir,$(addprefix $(SRC_DIR)/$(1), $(if $(2),/,$(SRC_SUBDIRS)/)),$(wildcard $(dir)/*.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
 endef
 list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-list_o_files = $(foreach file,$(call list$(if $(filter-out st/sel,$(1)),$(2))_src_files,$(1)),$(BUILD_DIR)/$(file).o)
+list_o_files = $(foreach file,$(call list$(3)_src_files,$(1),$(if $(filter-out st/sel,$(1)),$(2))),$(BUILD_DIR)/$(file).o)
 
 # leverages MWCC ability to compile data and text as separate sections to allow
 # LD using --gc-sections and remove all the symbols that are unreferenced.
