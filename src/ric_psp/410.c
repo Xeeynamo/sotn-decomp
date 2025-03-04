@@ -119,7 +119,9 @@ void RicHandleWalk(void) {
         RicDecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-        } else if (g_Entities[0].step_s != 0) {
+            return;
+        }
+        if (g_Entities[0].step_s != 0) {
             if (g_Entities[0].step_s) {
             }
         } else {
@@ -128,7 +130,39 @@ void RicHandleWalk(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleRun);
+void RicHandleRun(void) {
+#ifdef VERSION_US
+    if (g_Player.unk7A != 0) {
+        RicSetWalk(0);
+        return;
+    }
+#endif
+    g_Player.timers[PL_T_8] = 8;
+    g_Player.timers[PL_T_CURSE] = 8;
+    if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                       CHECK_ATTACK | CHECK_CROUCH)) {
+        RicDecelerateX(0x2000);
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+            if (g_Player.timers[PL_T_RUN] == 0) {
+                if (!(g_Player.pl_vram_flag & 0xC)) {
+                    RicSetAnimation(ric_anim_stop_run);
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
+                }
+            } else {
+                PLAYER.velocityX = 0;
+            }
+            return;
+        }
+        if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(2.25));
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleJump);
 

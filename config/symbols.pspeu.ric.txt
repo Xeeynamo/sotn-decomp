@@ -123,6 +123,7 @@ func_80169C10 = 0x092CDD08;
 RicEntitySubwpnCrossTrail = 0x092CDF18;
 RicEntitySubwpnCrashCrossParticles = 0x092CE170;
 ric_anim_press_up = 0x092CE660;
+ric_anim_stop_run = 0x092CE668;
 D_801555A8 = 0x092CE888;
 ric_anim_brandish_whip = 0x092CEA18;
 D_8015459C = 0x092D6600;

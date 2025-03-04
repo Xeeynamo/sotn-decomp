@@ -120,7 +120,9 @@ void RicHandleWalk(void) {
         RicDecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-        } else if (g_Entities[0].step_s != 0) {
+            return;
+        }
+        if (g_Entities[0].step_s != 0) {
             if (g_Entities[0].step_s) {
             }
         } else {
@@ -143,7 +145,7 @@ void RicHandleRun(void) {
         RicDecelerateX(0x2000);
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-            if (!g_Player.timers[PL_T_RUN]) {
+            if (g_Player.timers[PL_T_RUN] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
                     RicSetAnimation(ric_anim_stop_run);
                     RicCreateEntFactoryFromEntity(
@@ -152,8 +154,13 @@ void RicHandleRun(void) {
             } else {
                 PLAYER.velocityX = 0;
             }
-        } else if (PLAYER.step_s == 0) {
-            RicSetSpeedX(0x24000);
+            return;
+        }
+        if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(2.25));
         }
     }
 }
