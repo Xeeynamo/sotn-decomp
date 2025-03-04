@@ -2132,7 +2132,7 @@ typedef struct {
     /* 0x98 */ s32 : 32;
     /* 0x9C */ s16 unk9C;
     /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s32 unkA0;
+    /* 0xA0 */ u32 unkA0;
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
 } ET_801BC5C0;

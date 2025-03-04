@@ -398,7 +398,6 @@ D_80097448 = 0x091CE648;
 g_RoomCount = 0x091CE6B8;
 g_MenuNavigation = 0x091cefd0;
 D_800974AC = 0x091CF878;
-g_BgLayers = 0x091E1328;
 D_80097C98 = 0x091ed280;
 g_PlayerY = 0x091ED290;
 g_PlayerX = 0x091ED298;
