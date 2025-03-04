@@ -313,7 +313,12 @@ void RicHandleFall(void) {
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleCrouch);
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", func_80159BC8);
+void func_80159BC8(void) {
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
+    g_Player.unk44 = 0;
+    g_Player.unk46 = 0;
+    PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", func_80159C04);
 

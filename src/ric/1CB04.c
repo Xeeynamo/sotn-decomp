@@ -438,8 +438,7 @@ void RicHandleCrouch(void) {
 }
 
 void func_80159BC8(void) {
-    PLAYER.animFrameDuration = 0;
-    PLAYER.animFrameIdx = 0;
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
