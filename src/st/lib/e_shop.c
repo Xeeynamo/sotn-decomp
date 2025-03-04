@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// "documents" in the shop have their own
-/// item index, separate from other items.
-typedef enum {
-    DOC_CASTLE_MAP,
-    DOC_MAGIC_SCROLL_1,
-    DOC_MAGIC_SCROLL_2,
-    DOC_MAGIC_SCROLL_3,
-    DOC_MAGIC_SCROLL_4,
-    DOC_MAGIC_SCROLL_5,
-} SHOP_DOCUMENTS;
-
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
 /// which is related to the number of things which have been
@@ -30,7 +19,45 @@ typedef struct {
     /* 0x0 */ u16 category;
     /* 0x2 */ u16 itemId;
     /* 0x4 */ u32 price;
-} AvailableInventoryItem;
+} ShopItem;
+
+typedef enum {
+    DRACULA_TACTICS,
+    OLROX_TACTICS,
+    DOPPLEGANGER10_TACTICS,
+    GRANFALOON_TACTICS,
+    MINOTAUR_WEREWOLF_TACTICS,
+    SCYLLA_TACTICS,
+    SLO_GAI_TACTICS,
+    HIPPOGRYPH_TACTICS,
+    BEELZEBUB_TACTICS,
+    SUCCUBUS_TACTICS,
+    KARASUMAN_TACTICS,
+    TREVOR_GRANT_SYPHA_TACTICS,
+    DEATH_TACTICS,
+    CERBERUS_TACTICS,
+    RICHTER_TACTICS,
+    MEDUSA_TACTICS,
+    THE_CREATURE_TACTICS,
+    LESSER_DEMON_TACTICS,
+    DOPPLEGANGER40_TACTICS,
+    AKMODAN_II_TACTICS,
+    DARKWING_BAT_TACTICS,
+    GALAMOTH_TACTICS,
+    SHAFT_TACTICS = 27,
+    LORD_DRACULA_TACTICS,
+} SHOP_TACTICS;
+
+/// "documents" in the shop have their own
+/// item index, separate from other items.
+typedef enum {
+    DOC_CASTLE_MAP,
+    DOC_MAGIC_SCROLL_1,
+    DOC_MAGIC_SCROLL_2,
+    DOC_MAGIC_SCROLL_3,
+    DOC_MAGIC_SCROLL_4,
+    DOC_MAGIC_SCROLL_5,
+} SHOP_DOCUMENTS;
 
 /// the first 5 inventory categories are the same as
 /// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
@@ -258,7 +285,7 @@ extern u8** D_psp_092A5F98;
 static u32 D_us_801D415C[64];
 static u32 D_us_801D425C[64];
 STATIC_PAD_BSS(8);
-static AvailableInventoryItem D_us_801D4364[75];
+static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
 INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801AFA80);
@@ -783,7 +810,7 @@ static InventoryItem D_us_8018134C[] = {
 u16 D_us_801814D4[] = {16, 0};
 
 // sellable items
-AvailableInventoryItem D_us_801814D8[] = {
+ShopItem D_us_801814D8[] = {
     // clang-format off
     { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
     { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
@@ -1739,7 +1766,7 @@ void func_us_801B2BE4(Entity* self) {
     s32 i;
     s16 itemId;
     s16 tempVar;
-    AvailableInventoryItem* ptr;
+    ShopItem* ptr;
     s32 primIndex;
 
 #ifndef VERSION_PSP
@@ -2426,7 +2453,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     u16 index;
     s16 x0;
     s16 x1, y1;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     s16* condition;
     u16 stats[14];
     u16 equipment[7];
@@ -2451,7 +2478,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #ifdef VERSION_PSP
     condition = 0;
     if (arg1->params) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
         condition = D_psp_092A4A88;
         primA = prim;
         ptr = D_psp_092A4A78;
@@ -2461,9 +2488,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         y0 = 0x10;
         prim = func_us_801B3EC8(prim, D_us_801D425C[index], 2);
     } else {
-        inventoryItem = &D_us_801D4364[index];
+        shopItem = &D_us_801D4364[index];
         primA = prim;
-        if (inventoryItem->category < 5) {
+        if (shopItem->category < INVENTORY_RELIC) {
             ptr = D_psp_092A4A78;
             prim = func_us_801B3FB4(prim, D_us_80181674[0], 12, 1);
             condition = D_psp_092A4A88;
@@ -2501,12 +2528,12 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         primA = primA->next;
     }
     if (arg1->params) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
         prim =
             func_us_801B3EC8(func_us_801B4194(prim), D_us_801D425C[index], 2);
     } else {
-        inventoryItem = &D_us_801D4364[index];
-        if (inventoryItem->category < 5) {
+        shopItem = &D_us_801D4364[index];
+        if (shopItem->category < INVENTORY_RELIC) {
             prim = func_us_801B3EC8(
                 func_us_801B4194(prim), 99 - D_us_801D425C[index], 2);
         } else {
@@ -2523,8 +2550,8 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #endif
     func_us_801B4010(equipment);
     func_us_801B40F0(stats);
-    itemId = inventoryItem->itemId;
-    switch (inventoryItem->category) {
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
     case INVENTORY_HAND:
         g_Status.equipment[LEFT_HAND_SLOT] = itemId;
         g_Status.equipment[RIGHT_HAND_SLOT] = itemId;
@@ -2909,16 +2936,16 @@ static const char* D_us_8018168C[] = {
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;
     u16 itemId;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     unsigned char* unused;
 
     if (arg1) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
     } else {
-        inventoryItem = &D_us_801D4364[index];
+        shopItem = &D_us_801D4364[index];
     }
-    itemId = inventoryItem->itemId;
-    switch (inventoryItem->category) {
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
     case INVENTORY_HAND:
         desc = g_api.equipDefs[itemId].description;
         g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
@@ -3194,7 +3221,7 @@ void func_us_801B56E4(Entity* self) {
     Entity* tempEntity;
     s32 primIndex;
     s32 i, j;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
     RECT clipRect;
@@ -3281,12 +3308,12 @@ void func_us_801B56E4(Entity* self) {
                 break;
             }
             if (tempEntity->params) {
-                inventoryItem = &D_us_801814D8[index];
+                shopItem = &D_us_801814D8[index];
             } else {
-                inventoryItem = &D_us_801D4364[index];
+                shopItem = &D_us_801D4364[index];
             }
-            itemId = inventoryItem->itemId;
-            switch (inventoryItem->category) {
+            itemId = shopItem->itemId;
+            switch (shopItem->category) {
             case INVENTORY_HAND:
                 name = g_api.equipDefs[itemId].name;
                 break;
@@ -3328,7 +3355,7 @@ void func_us_801B56E4(Entity* self) {
                 func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
                 posX += 10;
                 prim2 = prim;
-                price = inventoryItem->price * D_us_801D415C[index];
+                price = shopItem->price * D_us_801D415C[index];
                 for (j = 0; j < 8; j++) {
                     if (g_Status.gold < price) {
                         prim->clut = 0x191;
@@ -3394,8 +3421,8 @@ void func_us_801B56E4(Entity* self) {
         index = tempEntity->ext.et_801B56E4.unk82;
         posY = 0x10;
         for (i = 0; i < 7; i++) {
-            inventoryItem = &D_us_801814D8[index];
-            name = g_api.accessoryDefs[inventoryItem->itemId].name;
+            shopItem = &D_us_801814D8[index];
+            name = g_api.accessoryDefs[shopItem->itemId].name;
             if (D_us_801D425C[index] != 0) {
                 itemId = 0x196;
             } else {
@@ -3422,7 +3449,7 @@ void func_us_801B56E4(Entity* self) {
             func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
             posX += 10;
             prim2 = prim;
-            price = inventoryItem->price * D_us_801D415C[index];
+            price = shopItem->price * D_us_801D415C[index];
             for (j = 0; j < 8; j++) {
                 prim->clut = itemId;
                 prim->x0 = posX;
@@ -3489,31 +3516,31 @@ static const char* D_us_801816C8[] = {
     _S("Shaft"),
     _S("Lord Dracula")};
 
-static AvailableInventoryItem D_us_8018173C[] = {
+static ShopItem D_us_8018173C[] = {
     // clang-format off
-    {INVENTORY_HAND, ITEM_EMPTY_HAND,     200}, 
-    {INVENTORY_HAND, ITEM_KNIGHT_SHIELD,  500},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_2, 700},
-    {INVENTORY_HAND, ITEM_IRON_SHIELD,    1000},
-    {INVENTORY_HAND, ITEM_LEATHER_SHIELD, 1200},
-    {INVENTORY_HAND, ITEM_SHIELD_ROD,     1400},
-    {INVENTORY_HAND, ITEM_DARK_SHIELD,    1800},
-    {INVENTORY_HAND, ITEM_HERALD_SHIELD,  2000},
-    {INVENTORY_HAND, ITEM_MEDUSA_SHIELD,  2200},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_1, 2500},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_3, 2800},
-    {INVENTORY_HAND, ITEM_SKULL_SHIELD,   3000},
-    {INVENTORY_HAND, ITEM_COMBAT_KNIFE,   3500},
-    {INVENTORY_HAND, ITEM_SHORT_SWORD,    3500},
-    {INVENTORY_HAND, ITEM_FIRE_SHIELD,    3500},
-    {INVENTORY_HAND, ITEM_ALUCARD_SHIELD, 3500},
-    {INVENTORY_HAND, ITEM_SHAMAN_SHIELD,  4000},
-    {INVENTORY_HAND, ITEM_BASILARD,       4500},
-    {INVENTORY_HAND, ITEM_GODDESS_SHIELD, 5000},
-    {INVENTORY_HAND, ITEM_AXELORD_SHIELD, 6000},
-    {INVENTORY_HAND, ITEM_NUNCHAKU,       7000},
-    {INVENTORY_HAND, ITEM_TAKEMITSU,      8500},
-    {INVENTORY_HAND, ITEM_SHOTEL,         10000},
+    {0, DRACULA_TACTICS,            200}, 
+    {0, SLO_GAI_TACTICS,            500},
+    {0, DOPPLEGANGER10_TACTICS,     700},
+    {0, HIPPOGRYPH_TACTICS,         1000},
+    {0, SCYLLA_TACTICS,             1200},
+    {0, MINOTAUR_WEREWOLF_TACTICS,  1400},
+    {0, KARASUMAN_TACTICS,          1800},
+    {0, SUCCUBUS_TACTICS,           2000},
+    {0, CERBERUS_TACTICS,           2200},
+    {0, OLROX_TACTICS,              2500},
+    {0, GRANFALOON_TACTICS,         2800},
+    {0, RICHTER_TACTICS,            3000},
+    {0, DARKWING_BAT_TACTICS,       3500},
+    {0, AKMODAN_II_TACTICS,         3500},
+    {0, MEDUSA_TACTICS,             3500},
+    {0, THE_CREATURE_TACTICS,       3500},
+    {0, DEATH_TACTICS,              4000},
+    {0, DOPPLEGANGER40_TACTICS,     4500},
+    {0, TREVOR_GRANT_SYPHA_TACTICS, 5000},
+    {0, BEELZEBUB_TACTICS,          6000},
+    {0, GALAMOTH_TACTICS,           7000},
+    {0, SHAFT_TACTICS,              8500},
+    {0, LORD_DRACULA_TACTICS,       10000},
     // clang-format on
 };
 
@@ -3531,7 +3558,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
     u16 itemIndex;
     u32 price;
     Primitive* prim2;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* enemyTactics;
 
 #ifdef VERSION_PSP
     g_Settings.D_8003CB00 |= 1;
@@ -3539,8 +3566,8 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
     itemIndex = arg1->ext.ILLEGAL.u16[3];
     posY = 16;
     for (i = 0; i < g_CurrentEntity->ext.et_801B6F30.unk84; i++) {
-        inventoryItem = &D_us_8018173C[itemIndex];
-        itemId = inventoryItem->itemId;
+        enemyTactics = &D_us_8018173C[itemIndex];
+        itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
 #ifdef VERSION_PSP
         if (D_8C630D0) {
@@ -3548,16 +3575,16 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         }
 #endif
         if (itemMask & (1 << (itemId & 7))) {
-            inventoryItem->category = 2;
-            inventoryItem->price = 0;
+            enemyTactics->category = 2;
+            enemyTactics->price = 0;
         } else {
-            inventoryItem->category = 0;
+            enemyTactics->category = 0;
         }
 #ifdef VERSION_PSP
         price = 0;
 #endif
         if (g_Settings.D_8003CB00 & (1 << itemId)) {
-            price = inventoryItem->price;
+            price = enemyTactics->price;
             clut = 0x196;
             if (g_Status.gold < price) {
                 clut = 0x183;
@@ -3567,7 +3594,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
 #else
             prim = func_us_801B1064(prim, 8, posY, D_us_801816C8[itemId], clut);
 #endif
-            inventoryItem->category++;
+            enemyTactics->category++;
         } else {
             clut = 0x191;
             prim = func_us_801B1064(prim, 8, posY, D_us_801817F4, 0x191);
@@ -3581,7 +3608,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
             prim = prim->next;
             posX += 8;
         }
-        if (inventoryItem->category) {
+        if (enemyTactics->category) {
             func_us_801B3EC8(prim2, price, 8);
         } else {
             func_us_801B3FB4(prim2, D_us_80181804, 8, 1);
@@ -3798,11 +3825,11 @@ void func_us_801B6324(Entity* self) {
             itemID =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80);
             switch (D_us_8018173C[itemID].category) {
-            case INVENTORY_HAND:
+            case 0:
                 g_api.PlaySfx(SFX_UI_ERROR);
                 break;
 
-            case INVENTORY_HEAD:
+            case 1:
                 if (g_Status.gold < D_us_8018173C[itemID].price) {
                     g_api.PlaySfx(SFX_UI_ERROR);
                 } else {
@@ -3815,8 +3842,8 @@ void func_us_801B6324(Entity* self) {
                 }
                 break;
 
-            case INVENTORY_BODY:
-            case INVENTORY_CAPE:
+            case 2:
+            case 3:
                 SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
