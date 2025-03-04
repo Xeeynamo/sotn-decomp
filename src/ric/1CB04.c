@@ -117,14 +117,14 @@ void RicHandleStand(void) {
 void RicHandleWalk(void) {
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-            return;
-        }
-
-        if (PLAYER.step_s == 0) {
-            RicSetSpeedX(0x14000);
+        } else if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(1.25));
         }
     }
 }

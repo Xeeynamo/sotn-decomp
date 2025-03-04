@@ -113,7 +113,20 @@ void RicHandleStand(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleWalk);
+void RicHandleWalk(void) {
+    if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                       CHECK_ATTACK | CHECK_CROUCH)) {
+        RicDecelerateX(FIX(0.125));
+        if (RicCheckFacing() == 0) {
+            RicSetStand(0);
+        } else if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(1.25));
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleRun);
 
