@@ -12,7 +12,6 @@ void func_8010E0B8(void) {
     g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5430);
 
 // begin: split to common decelerate
@@ -363,7 +362,8 @@ void EntityGravityBootBeam(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x18800000;
+        self->flags =
+            FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
             prim = prim->next) {
@@ -382,9 +382,8 @@ void EntityGravityBootBeam(Entity* self) {
             prim->b3 = 0x40;
 
             prim->priority = DOPPELGANGER.zPriority - 2;
-            prim->drawMode =
-                DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
-                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         }
         self->step++;
         break;
@@ -394,7 +393,7 @@ void EntityGravityBootBeam(Entity* self) {
             self->step = 2;
         }
         // If transformed, timer drains faster
-        if (g_Dop.status & (PLAYER_STATUS_BAT_FORM |  PLAYER_STATUS_MIST_FORM)) {
+        if (g_Dop.status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
             self->step = 3;
         }
         break;
@@ -426,13 +425,12 @@ void EntityGravityBootBeam(Entity* self) {
     }
 }
 
-
 // The blue outlines of the bat that show up when wing smashing
-typedef enum {            
-    Dop_MorphBat = 6,    
+typedef enum {
+    Dop_MorphBat = 6,
     Dop_Hit = 11,
-    Dop_Kill = 17,        
-} Doppleganger_Steps;     
+    Dop_Kill = 17,
+} Doppleganger_Steps;
 
 void EntityWingSmashTrail(Entity* self) {
     if (!(DOPPELGANGER.step_s == 3 && DOPPELGANGER.step == Dop_MorphBat)) {
@@ -447,7 +445,7 @@ void EntityWingSmashTrail(Entity* self) {
         self->unk5A = 8;
         self->zPriority = DOPPELGANGER.zPriority - 2;
         self->drawFlags = DOPPELGANGER.drawFlags |
-                            (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+                          (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         self->unk6C = 0x80; // a lifetime counter
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->rotZ = DOPPELGANGER.rotZ;
@@ -519,8 +517,8 @@ void DopEntityHitByLightning(Entity* self) {
             prim->priority = DOPPELGANGER.zPriority - 2;
             PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) =
                 0x80;
-            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE |
-                             DRAW_UNK02 | DRAW_TRANSP;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         if ((DOPPELGANGER.velocityY != 0) && (DOPPELGANGER.step != 17)) {
@@ -613,7 +611,6 @@ void DopEntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
-
 extern Point16* D_us_80181DF8[];
 
 // player gets frozen
@@ -657,11 +654,10 @@ void EntityHitByIce(Entity* self) {
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
-                prim->drawMode = DRAW_TPAGE2 |
-                                 DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             } else {
-                prim->drawMode = DRAW_TPAGE |
-                                 DRAW_COLORS | DRAW_TRANSP;
+                prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
             prim->type = PRIM_G4;
             prim->priority = DOPPELGANGER.zPriority + 2;
@@ -780,8 +776,8 @@ void EntityHitByIce(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3;
             prim->b0 = prim->b1 = prim->b2 = prim->b3;
             prim->g0 = prim->g1 = prim->g2 = prim->g3;
-            
-            prim->drawMode &= 0xFFFD;
+
+            prim->drawMode &= ~DRAW_UNK02;
             if (--prim->v0 == 0) {
                 prim->drawMode |= DRAW_HIDE;
             }

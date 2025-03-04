@@ -17,14 +17,14 @@ void func_us_801B55DC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180458);
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
         self->rotZ = -0x400;
         if (self->params & 1) {
             self->animCurFrame = 0x64;
-            self->velocityX = -0x8000;
+            self->velocityX = FIX(-0.5);
         } else {
             self->animCurFrame = 0x62;
-            self->velocityX = 0x8000;
+            self->velocityX = FIX(0.5);
         }
         self->zPriority = 0x5E;
         // fallthrough
@@ -62,7 +62,6 @@ void func_us_801B55DC(Entity* self) {
         break;
     }
 }
-
 
 // light effects
 INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B5774);
