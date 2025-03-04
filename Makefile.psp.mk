@@ -32,9 +32,15 @@ MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
 DEPENDENCIES	+= $(ALLEGREX_AS)
 
-# PSP specific targets
+# Most of PSP is compiled with -O0, except part of DRA. This block selects the proper flag.
+OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
+# Allow override. Any file in this list will get O4.
+OPT_HI_OVERRIDES = $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C90 64EE0)
+OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)),$(OPT_HIGH),-Op)
+
 build_pspeu: $(call get_targets)
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
+$(call get_targets): %: $(BUILD_DIR)/%.bin
 
 $(WIBO):
 	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
@@ -45,9 +51,7 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 $(MWCCGAP_APP):
 	git submodule update --init $(MWCCGAP_DIR)
 
-$(call get_targets): %: $(BUILD_DIR)/%.bin
-
-$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
+$(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
 	$(OBJCOPY) -O binary $< $@
 
 $(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt
@@ -110,11 +114,6 @@ $(BUILD_DIR)/%.s.o: %.s
 	@mkdir -p $(dir $@)
 	$(AS) $(AS_FLAGS) -o $@ $<
 
-# Most of PSP is compiled with -O0, except part of DRA. This block selects the proper flag.
-OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
-# Allow override. Any file in this list will get O4.
-OPT_HI_OVERRIDES = 33F0.c.o A710.c.o C0B0.c.o EC60.c.o 186E8.c.o 61F30.c.o 624DC.c.o 628AC.c.o 63C90.c.o 64EE0.c.o
-OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)

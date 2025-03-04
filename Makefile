@@ -42,7 +42,6 @@ RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 
 # Symbols
-MAIN_TARGET     := $(BUILD_DIR)/main
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Tooling
@@ -66,10 +65,6 @@ M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
 SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
-MASPSX_DIR      := $(TOOLS_DIR)/maspsx
-MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
-MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
-MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
 GO              := $(HOME)/go/bin/go
 GOPATH          := $(HOME)/go
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
@@ -135,6 +130,7 @@ to_upper = $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower = $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 echo = echo -e "$(1)"
 get_filename = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$2$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$3$1),$(call to_lower,$1)))
+if_version = $(if $(filter $1,$(VERSION)),$2,$3)
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
@@ -391,31 +387,6 @@ $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd $(TOOLS_DIR)/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
-
-# Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
-	$(PYTHON) $(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
-	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
-	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
-# for now '.dec' files are ignored
-	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
-	touch $@
 
 .PHONY: dump_disk
 dump_disk: dump_disk_$(VERSION)

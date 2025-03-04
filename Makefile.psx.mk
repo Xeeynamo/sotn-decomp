@@ -55,11 +55,8 @@ $(MASPSX_APP):
 	git submodule update --init $(MASPSX_DIR)
 
 .PHONY: extract_%
-ifeq ($(VERSION),us)
-IF_US_BDECODE := $(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(EXTRACTED_DISK_DIR) $(ASSETS_DIR)/game
-endif
 $(addprefix extract_, us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
-	$(IF_US_BDECODE)
+	$(call if_version us,$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(EXTRACTED_DISK_DIR) $(ASSETS_DIR)/game)
 	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
 	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
 	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
@@ -156,9 +153,12 @@ $(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined
 ###
 
 .PHONY: $(call get_targets)
+main: $(BUILD_DIR)/main.exe
 dra ric sel: %: $(BUILD_DIR)/$$(call to_upper,%).BIN
+weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
 $(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
 $(BOSSES): %: $(BUILD_DIR)/$(call to_upper,%).BIN $(BUILD_DIR)/F_$(call to_upper,%).BIN
+tt_00%: $(BUILD_DIR)/TT_00%.BIN
 
 $(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
 	$(call link,ric,$@)
@@ -184,6 +184,8 @@ mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 .PHONY: %_dirs
+main_dirs:
+	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 bo%_dirs:
