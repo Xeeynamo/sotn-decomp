@@ -312,7 +312,7 @@ void func_us_801AFA80(Entity* self) {
             D_us_80180E78[self->params].x - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi =
             D_us_80180E78[self->params].y - g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.func_800EDB58(4, 0x10);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
