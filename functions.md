@@ -310,8 +310,8 @@
 | dra     | func_800EAD0C                       |       33 |          8 |        |                                 |       |
 | dra     | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib     | unk_3B200.rodata                    |       34 |          0 | Yes    |                                 |       |
-| st0     | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0     | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
+| st0     | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib     | GetDistanceToPlayerX                |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | no4     | func_psp_0925ACB0                   |       34 |          2 |        |                                 |       |
 | dra     | HasEnoughMp                         |       34 |          4 |        | https://decomp.me/scratch/ZUbXu | 0.68  |
