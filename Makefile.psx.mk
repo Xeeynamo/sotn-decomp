@@ -51,6 +51,18 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
 DEPENDENCIES	+= $(MASPSX_APP) 
 
+WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
+WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
+WEAPON_DIRS   := $(addprefix $(BUILD_DIR)/, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
+
+MASPSX_DIR      := $(TOOLS_DIR)/maspsx
+MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
+MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
+MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
+
+$(WEAPON_DIRS):
+	@mkdir -p $@
+
 $(MASPSX_APP):
 	git submodule update --init $(MASPSX_DIR)
 
@@ -86,31 +98,53 @@ $(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(C
 	$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_BO)
 
 
-$(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
-	echo $(call list_o_files,dra)
-	$(call link,dra,$@)
+# We only want this to consider game category overlays, not including main
+$(addprefix $(BUILD_DIR)/,$(addsuffix .elf, $(filter-out main,$(GAME)))): $(BUILD_DIR)/%.elf: $$(call list_o_files,%)
+	$(call link,$*,$@)
+
+# Main has different prequisites
+$(BUILD_DIR)/main.elf: $(BUILD_DIR)/%.elf: $(MAIN_O_FILES) $(BUILD_DIR)/%.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).%.txt
+	$(call link,$*,$@)
+
+# Need to figure out a structure for link to support this
+$(BUILD_DIR)/weapon/%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/$$(subst 0_,_,$(subst 1_,_,%)).c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/$$(subst 0_,_,$(subst 1_,_,%)).data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/$$(subst 0_,_,$(subst 1_,_,%)).sbss.s.o
+	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
+		-Map $(BUILD_DIR)/weapon/$*.map \
+		-T $(firstword $(subst _, ,$(subst w,weapon,$*))).ld \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
+		$^
+
+$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
+	$(LD) -r -b binary -o $@ $<
+$(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
+	$(LD) -r -b binary -o $@ $<
+
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
 	$(call link,tt_$*,$@)
 
-$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/%,_st) $$(call list_o_files,st,_shared)
+	$(call link,st$*,$@)
+$(BUILD_DIR)/bo%.elf: $$(call list_o_files,boss/$$*,_st) $$(call list_o_files,boss,_shared)
+	$(call link,bo$*,$@)
+	
 
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_1.animset.o: $(ASSETS_DIR)/weapon/%_1.animset.json
-	$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animset.json
-	$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s -s g_Animset2
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s
+
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o: $(ASSETS_DIR)/weapon/%.animset.json
+	$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s -s g_Animset$(subst 1,,$(lastword $(subst _, ,$*)))
+	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s
 
 # assembly and c files
 $(BUILD_DIR)/%.s.o: %.s
-	mkdir -p $(dir $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
+	mkdir -p $(dir $@); $(AS) $(AS_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-	mkdir -p $(dir $@)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+$(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel_dirs)
+	mkdir -p $(dir $@); $(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
+	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
+# Only difference for this is MASPSX_21 instead of MASPSX
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
 
@@ -123,29 +157,24 @@ $(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR
 $(BOSSES): %: $(BUILD_DIR)/$(call to_upper,%).BIN $(BUILD_DIR)/F_$(call to_upper,%).BIN
 tt_00%: $(BUILD_DIR)/TT_00%.BIN
 
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
-	$(call link,ric,$@)
+$(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
+	$(OBJCOPY) -O binary $< $@
 $(addprefix $(BUILD_DIR)/,F_%.BIN f_%.bin):
 	$(GFXSTAGE) e $(ASSETS_DIR)/$(call get_filename,$*,st/,boss/) $@
-$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
+$(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
+	cat $^ > $@
+$(BUILD_DIR)/weapon/%.bin: $(BUILD_DIR)/weapon/%.elf
 	$(OBJCOPY) -O binary $< $@
-
-tt_00%: $(BUILD_DIR)/TT_00%.BIN
-
+	$(if $(findstring w0, $*),dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc)
 $(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
-	cp $< $@.tmp
-	truncate -c -s 40960 $@.tmp
-	mv $@.tmp $@
+	cp $< $@.tmp && truncate -c -s 40960 $@.tmp && mv $@.tmp $@
 
-mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
-		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
+# Can this be used as the mad target and make the current mad a prerequisite?
+mad_fix: $$(call list_o_files,st/mad) $$(call list_o_files,st_) | stmad_dirs
+	$(call link,stmad_fix,$@)
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
+# Still needs cleanup
 .PHONY: %_dirs
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
@@ -158,65 +187,42 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_o_files,st,_shared)
-	$(LD) $(LD_FLAGS) -o $@ \
-		-Map $(BUILD_DIR)/stmad.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_o_files,st,_shared)
-	$(call link,stsel,$@)
-
-$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/$$*,_st) $$(call list_o_files,st,_shared)
-	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $$(call list_o_files,boss/$$*,_st) $$(call list_o_files,boss,_shared)
-	$(call link,bo$*,$@)
-
-# Weapon overlays
-WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
-WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
-WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
-
-.PHONY: weapon
-weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
-$(WEAPON_DIRS):
-	@mkdir -p $@
-$(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
-	cat $^ > $@
-$(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
-	$(OBJCOPY) -O binary $< $@
-	dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc
 $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data has been imported
 	touch $@
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
 	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w0_$*.map \
-		-T weapon0.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w1_$*.map \
-		-T weapon1.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
-	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
-	$(LD) -r -b binary -o $@ $<
+
+
+
+# Handles assets
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
+	$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+# dra is the only folder for .dec and for now they are ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.dec.o: $(ASSETS_DIR)/dra/%.dec
+	touch $@
+# For now ric png.o files are ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.png.o: $(ASSETS_DIR)/ric/%.png
+	touch $@
+# anything from MAD is an exception and it should be ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
+	touch $@
+
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
 	$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@
 
