@@ -8,8 +8,8 @@
 VERSION_PREFIX 	:= PSP_EU
 PSP_EU_GAME		:= dra ric
 PSP_EU_STAGES	:= lib no4 st0 wrp
-PSP_EU_STAGES	+= 
-PSP_EU_BOSSES	:= 
+PSP_EU_STAGES	+=
+PSP_EU_BOSSES	:=
 PSP_EU_SERVANTS	:= tt_000
 
 # Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
@@ -98,7 +98,7 @@ $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/li
 ST_NO4_MERGE =
 $(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/stno4.ld $(addprefix $(BUILD_DIR)/src/st/no4/,$(addsuffix .c.o,$(ST_NO4_MERGE))) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
 	$(call link_with_deadstrip,stno4,$@)
-ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles e_collect prim_helpers e_bg_vortex e_misc 2805C 2A8DC 3AB08
+ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles e_collect prim_helpers e_bg_vortex e_misc 2805C 2A8DC 3AB08 3C5C0 3D8F0
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
 	$(call link_with_deadstrip,stst0,$@)
 ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity prim_helpers collision e_stage_name
