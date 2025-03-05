@@ -787,3 +787,13 @@ void func_us_801B4010(u16* arg0) {
     *arg0++ = g_Status.equipment[5];
     *arg0 = g_Status.equipment[6];
 }
+
+void func_us_801B4080(u16* arg0) {
+    g_Status.equipment[0] = *arg0++;
+    g_Status.equipment[1] = *arg0++;
+    g_Status.equipment[2] = *arg0++;
+    g_Status.equipment[3] = *arg0++;
+    g_Status.equipment[4] = *arg0++;
+    g_Status.equipment[5] = *arg0++;
+    g_Status.equipment[6] = *arg0;
+}
