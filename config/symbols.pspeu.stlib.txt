@@ -131,6 +131,7 @@ func_us_801B29C4 = 0x09261338;
 func_us_801B2BE4 = 0x09261718;
 func_us_801B3EC8 = 0x09263290;
 func_us_801B3FB4 = 0x09263410;
+func_us_801B4010 = 0x09263558;
 func_us_801B0FBC = 0x09266028;
 PlayerIsWithinHitbox = 0x0926CE18;
 EntityLockCamera = 0x0926CF18;

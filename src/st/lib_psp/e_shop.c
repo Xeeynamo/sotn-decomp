@@ -777,3 +777,13 @@ Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
 #endif
     return prim;
 }
+
+void func_us_801B4010(u16* arg0) {
+    *arg0++ = g_Status.equipment[0];
+    *arg0++ = g_Status.equipment[1];
+    *arg0++ = g_Status.equipment[2];
+    *arg0++ = g_Status.equipment[3];
+    *arg0++ = g_Status.equipment[4];
+    *arg0++ = g_Status.equipment[5];
+    *arg0 = g_Status.equipment[6];
+}
