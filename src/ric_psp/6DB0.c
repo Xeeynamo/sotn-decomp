@@ -2,7 +2,34 @@
 #include "../ric/ric.h"
 #include <player.h>
 
-INCLUDE_ASM("ric_psp/nonmatchings/6DB0", GetTeleportToOtherCastle);
+static TeleportCheck GetTeleportToOtherCastle(void) {
+    // Is player in the pose when pressing UP?
+    if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
+        return TELEPORT_CHECK_NONE;
+    }
+
+    // Check for X/Y boundaries in TOP
+    if (g_StageId == STAGE_TOP) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX - 8000) < 4 &&
+            abs((g_Tilemap.top << 8) + g_PlayerY - 2127) < 4) {
+            return TELEPORT_CHECK_TO_RTOP;
+        }
+    }
+
+    // Check for X/Y boundaries in RTOP
+    if (g_StageId == STAGE_RTOP) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
+#if defined(VERSION_PSP)
+            abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+#else
+            abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
+#endif
+            return TELEPORT_CHECK_TO_TOP;
+        }
+    }
+
+    return TELEPORT_CHECK_NONE;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/6DB0", func_80156DE4);
 

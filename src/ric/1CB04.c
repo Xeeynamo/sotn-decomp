@@ -3,26 +3,22 @@
 #include "player.h"
 #include "sfx.h"
 
-void func_80158B04(s32 arg0) {
-    s32 var_s0;
-
+void func_80158B04(u16 arg0) {
+    s16 xMod = 3;
     if (PLAYER.facingLeft) {
-        var_s0 = -3;
-    } else {
-        var_s0 = 3;
+        xMod = -xMod;
     }
 
     PLAYER.posY.i.hi -= 16;
-    PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+    PLAYER.posX.i.hi += xMod;
     RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_EMBERS, 1), 0);
     PLAYER.posY.i.hi += 16;
-    PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
+    PLAYER.posX.i.hi -= xMod;
 
     if (arg0 & 1) {
         g_api.func_80102CD8(3);
         g_api.PlaySfx(SFX_WALL_DEBRIS_B);
     }
-
     if (arg0 & 2) {
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;
@@ -30,24 +26,24 @@ void func_80158B04(s32 arg0) {
 }
 
 void RicHandleStand(void) {
-    s32 var_s0;
+    s16 xMod;
+    s32 facing;
 
     if (PLAYER.step < 64) {
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if (D_80097448[0] >= 49) {
+        } else if (D_80097448[0] > 48) {
+            xMod = 4;
             if (PLAYER.facingLeft) {
-                var_s0 = -4;
-            } else {
-                var_s0 = 4;
+                xMod = -xMod;
             }
-            PLAYER.posX.i.hi = var_s0 + PLAYER.posX.i.hi;
+            PLAYER.posX.i.hi += xMod;
             PLAYER.posY.i.hi -= 16;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
-            D_8015459C = 0x60;
             PLAYER.posY.i.hi += 16;
-            PLAYER.posX.i.hi = PLAYER.posX.i.hi - var_s0;
+            PLAYER.posX.i.hi -= xMod;
+            D_8015459C = 0x60;
         }
     }
 
@@ -56,32 +52,26 @@ void RicHandleStand(void) {
         RicDecelerateX(0x2000);
         switch (PLAYER.step_s) {
         case 0:
-            if (RicCheckFacing() == 0) {
-                if (g_Player.padPressed & PAD_UP) {
-                    RicSetAnimation(ric_anim_press_up);
-                    PLAYER.step_s = 1;
-                    break;
-                }
-            } else {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
+            } else if (g_Player.padPressed & PAD_UP) {
+                RicSetAnimation(ric_anim_press_up);
+                PLAYER.step_s = 1;
+                break;
             }
             break;
-
         case 1:
-            if (RicCheckFacing() != 0) {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
-                break;
             } else if (g_Player.padPressed & PAD_UP) {
-                break;
             } else {
                 RicSetStand(0);
-                break;
             }
-
+            break;
         case 64:
             DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
-                RicCheckFacing();
+                facing = RicCheckFacing();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = PL_S_CROUCH;
                     PLAYER.anim = D_801555A8;
@@ -91,8 +81,8 @@ void RicHandleStand(void) {
 
             if (PLAYER.animFrameDuration < 0) {
                 if (g_Player.padPressed & PAD_SQUARE) {
-                    g_Player.unk46 = 2;
                     PLAYER.step_s++;
+                    g_Player.unk46 = 2;
                     RicSetAnimation(ric_anim_brandish_whip);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
@@ -102,7 +92,6 @@ void RicHandleStand(void) {
                 RicSetStand(0);
             }
             break;
-
         case 65:
             DisableAfterImage(1, 1);
             if (g_Player.padPressed & PAD_SQUARE) {
@@ -111,7 +100,6 @@ void RicHandleStand(void) {
             g_Player.unk46 = 0;
             RicSetStand(0);
             break;
-
         case 66:
             DisableAfterImage(1, 1);
             if (PLAYER.animFrameIdx < 3) {
@@ -121,6 +109,7 @@ void RicHandleStand(void) {
                 g_Player.unk46 = 0;
                 RicSetStand(0);
             }
+            break;
         }
     }
 }
@@ -128,14 +117,16 @@ void RicHandleStand(void) {
 void RicHandleWalk(void) {
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
             return;
         }
-
-        if (PLAYER.step_s == 0) {
-            RicSetSpeedX(0x14000);
+        if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(1.25));
         }
     }
 }
@@ -154,7 +145,7 @@ void RicHandleRun(void) {
         RicDecelerateX(0x2000);
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
-            if (!g_Player.timers[PL_T_RUN]) {
+            if (g_Player.timers[PL_T_RUN] == 0) {
                 if (!(g_Player.pl_vram_flag & 0xC)) {
                     RicSetAnimation(ric_anim_stop_run);
                     RicCreateEntFactoryFromEntity(
@@ -163,13 +154,20 @@ void RicHandleRun(void) {
             } else {
                 PLAYER.velocityX = 0;
             }
-        } else if (PLAYER.step_s == 0) {
-            RicSetSpeedX(0x24000);
+            return;
+        }
+        if (g_Entities[0].step_s != 0) {
+            if (g_Entities[0].step_s) {
+            }
+        } else {
+            RicSetSpeedX(FIX(2.25));
         }
     }
 }
 
 void RicHandleJump(void) {
+    s32 facing;
+
     if (!g_IsPrologueStage && (PLAYER.velocityY < FIX(-1)) &&
         !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
         PLAYER.velocityY = FIX(-1);
@@ -183,12 +181,10 @@ void RicHandleJump(void) {
         return;
     }
     switch (PLAYER.step_s) {
-    // Need at least one fake case to make the switch match
-    case 1:
-        return;
     case 0:
         RicDecelerateX(0x1000);
-        if (RicCheckFacing()) {
+        facing = RicCheckFacing();
+        if (facing) {
             if (g_Player.unk44 & 0x10) {
                 RicSetSpeedX(FIX(2.25));
             } else {
@@ -197,25 +193,27 @@ void RicHandleJump(void) {
             g_Player.unk44 &= ~4;
         } else {
             g_Player.unk44 &= ~0x10;
-            if ((PLAYER.animFrameIdx < 2) &&
-                ((LOW(g_Player.unk44) & 0xC) == 4) &&
-                (g_Player.padTapped & PAD_CROSS)) {
+            if ((PLAYER.animFrameIdx < 2) && !(g_Player.unk44 & 8) &&
+                (g_Player.unk44 & 4) && (g_Player.padTapped & PAD_CROSS)) {
                 RicSetAnimation(D_8015555C);
                 RicSetSpeedX(FIX(-1.5));
                 PLAYER.velocityY = FIX(-2.625);
                 if (g_Player.unk72) {
                     PLAYER.velocityY = 0;
                 }
-                PLAYER.step_s = 2;
                 g_Player.unk44 |= 0xA;
                 g_Player.unk44 &= ~4;
+                PLAYER.step_s = 2;
             }
         }
-        return;
+        break;
+    case 2:
+        break;
     case 0x40:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (RicCheckFacing() != 0) {
+            facing = RicCheckFacing();
+            if (facing) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -226,7 +224,7 @@ void RicHandleJump(void) {
                 g_Player.unk44 &= ~0x10;
             }
         } else {
-            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
                 ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
@@ -241,8 +239,8 @@ void RicHandleJump(void) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if (g_Player.padPressed & PAD_SQUARE) {
-                g_Player.unk46 = 2;
                 PLAYER.step_s += 1;
+                g_Player.unk46 = 2;
                 RicSetAnimation(D_80155740);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
@@ -252,7 +250,7 @@ void RicHandleJump(void) {
                 RicSetAnimation(D_80155528);
             }
         }
-        return;
+        break;
     case 0x41:
         DisableAfterImage(1, 1);
         if (!(g_Player.padPressed & PAD_SQUARE)) {
@@ -260,11 +258,12 @@ void RicHandleJump(void) {
             PLAYER.step_s = 0;
             RicSetAnimation(D_80155528);
         }
-        return;
+        break;
     case 0x42:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            if (RicCheckFacing() != 0) {
+            facing = RicCheckFacing();
+            if (facing) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
                 } else {
@@ -275,7 +274,7 @@ void RicHandleJump(void) {
                 g_Player.unk44 &= ~0x10;
             }
         } else {
-            if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
                 ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
                 if (g_Player.unk44 & 0x10) {
                     RicSetSpeedX(FIX(2.25));
@@ -293,6 +292,7 @@ void RicHandleJump(void) {
             PLAYER.step_s = 0;
             RicSetAnimation(D_80155528);
         }
+        break;
     }
 }
 
@@ -302,21 +302,23 @@ void RicHandleFall(void) {
         return;
     }
     RicDecelerateX(0x1000);
-    if (PLAYER.step_s != 0) {
-        return;
-    }
-    if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
-        RicSetJump();
-    } else if (RicCheckFacing() != 0) {
-        RicSetSpeedX(0xC000);
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
+            RicSetJump();
+        } else if (RicCheckFacing()) {
+            RicSetSpeedX(0xC000);
+        }
+        break;
     }
 }
 
 void RicHandleCrouch(void) {
     s32 i;
     s16 xShift;
+    s32 facing;
 
-    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
         (g_Player.padPressed & PAD_DOWN)) {
         for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
             if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
@@ -328,11 +330,11 @@ void RicHandleCrouch(void) {
     if (RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_ATTACK | CHECK_SLIDE)) {
         return;
     }
-    if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
         (!g_Player.unk72)) {
         RicSetJump(1);
         return;
-    } else if ((!g_Player.unk72) && (g_Player.unk46 == 0) &&
+    } else if (!g_Player.unk72 && !g_Player.unk46 &&
                (g_Player.padTapped & PAD_TRIANGLE) && RicDoCrash()) {
         return;
     }
@@ -341,19 +343,18 @@ void RicHandleCrouch(void) {
     case 0x0:
         if (D_8015459C != 0) {
             D_8015459C--;
-        } else if ((*D_80097448 >= 0x19) && (g_Player.unk48 == 0)) {
+        } else if (*D_80097448 > 0x18 && !g_Player.unk48) {
+            xShift = 9;
             if (PLAYER.facingLeft) {
-                xShift = -9;
-            } else {
-                xShift = 9;
+                xShift = -xShift;
             }
             PLAYER.posX.i.hi += xShift;
             PLAYER.posY.i.hi += 2;
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
-            D_8015459C = 0x60;
             PLAYER.posY.i.hi -= 2;
             PLAYER.posX.i.hi -= xShift;
+            D_8015459C = 0x60;
         }
         if (!(g_Player.padPressed & PAD_DOWN) &&
             ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
@@ -365,15 +366,15 @@ void RicHandleCrouch(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN) &&
             ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
-            if (RicCheckFacing() == 0) {
-                PLAYER.anim = D_801554E0;
-                PLAYER.step_s = 2;
-                PLAYER.animFrameDuration = 1;
-                PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
+            if (RicCheckFacing()) {
+                RicSetWalk(0);
                 return;
             }
-            RicSetWalk(0);
-            return;
+            PLAYER.anim = D_801554E0;
+            PLAYER.step_s = 2;
+            PLAYER.animFrameIdx = 2 - PLAYER.animFrameIdx;
+            PLAYER.animFrameDuration = 1;
+            break;
         }
     case 0x4:
         if (PLAYER.animFrameDuration != -1) {
@@ -381,10 +382,10 @@ void RicHandleCrouch(void) {
         }
         RicSetAnimation(ric_anim_crouch);
         PLAYER.step_s = 0;
-        return;
+        break;
     case 0x2:
-        if ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40)) {
-            if (RicCheckFacing() != 0) {
+        if (!g_Player.unk72 || !(g_Player.pl_vram_flag & 0x40)) {
+            if (RicCheckFacing()) {
                 RicSetWalk(0);
                 return;
             }
@@ -404,8 +405,8 @@ void RicHandleCrouch(void) {
     case 0x40:
         DisableAfterImage(1, 1);
         if (PLAYER.animFrameIdx < 3) {
-            RicCheckFacing();
-            if (!(g_Player.padPressed & PAD_DOWN) && (!g_Player.unk72)) {
+            facing = RicCheckFacing();
+            if (!(g_Player.padPressed & PAD_DOWN) && !g_Player.unk72) {
                 PLAYER.step = PL_S_STAND;
                 PLAYER.anim = D_80155588;
                 return;
@@ -413,8 +414,8 @@ void RicHandleCrouch(void) {
         }
         if (PLAYER.animFrameDuration < 0) {
             if (g_Player.padPressed & PAD_SQUARE) {
-                g_Player.unk46 = 2;
                 PLAYER.step_s++;
+                g_Player.unk46 = 2;
                 RicSetAnimation(D_80155738);
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_ARM_BRANDISH_WHIP, 0);
@@ -437,46 +438,46 @@ void RicHandleCrouch(void) {
 }
 
 void func_80159BC8(void) {
-    PLAYER.animFrameDuration = 0;
-    PLAYER.animFrameIdx = 0;
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
 }
 
 void func_80159C04(void) {
-    Entity* entity = PLAYER.unkB8;
-    s16 temp_v0;
-    s32 var_a0;
-    s32 var_a2;
+    Entity* entity;
+    s16 var_s3;
+    s16 var_s2;
+    s16 var_s1;
 
+    entity = PLAYER.unkB8;
+#if defined(VERSION_PSP)
+    if (!entity) {
+        return;
+    }
+#endif
     if (entity->facingLeft) {
-        var_a2 = -entity->hitboxOffX;
+        var_s3 = -entity->hitboxOffX;
     } else {
-        var_a2 = entity->hitboxOffX;
+        var_s3 = entity->hitboxOffX;
     }
-
     if (PLAYER.facingLeft) {
-        var_a0 = -PLAYER.hitboxOffX;
+        var_s2 = -PLAYER.hitboxOffX;
     } else {
-        var_a0 = PLAYER.hitboxOffX;
+        var_s2 = PLAYER.hitboxOffX;
     }
 
-    temp_v0 = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
-
-    if (abs(temp_v0) < 16) {
-        if (entity->velocityX != 0) {
-            if (entity->velocityX < 0) {
-                PLAYER.entityRoomIndex = 0;
-                return;
-            } else {
-                PLAYER.entityRoomIndex = 1;
-                return;
-            }
+    var_s1 = PLAYER.posX.i.hi + var_s2 - entity->posX.i.hi - var_s3;
+    if (abs(var_s1) < 16 && entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+            return;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+            return;
         }
     }
-
-    if (temp_v0 < 0) {
+    if (var_s1 < 0) {
         PLAYER.entityRoomIndex = 0;
     } else {
         PLAYER.entityRoomIndex = 1;

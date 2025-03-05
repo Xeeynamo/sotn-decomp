@@ -47,7 +47,8 @@ segments:
       - [0x410, c, 410]
       - [0x4B60, c, 4B60]
       - [0x6DB0, c, 6DB0]
-      - [0x28400, data]
+      - [0x28400, .data, 90]
+      - [0x28410, data]
       - [0x30100, .rodata, 410]
       - [0x30158, .rodata, 6DB0]
       - {type: bss, vram: 0x92D6600}
