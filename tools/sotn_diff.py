@@ -65,10 +65,16 @@ def firstDiffOvl():
         default=os.getenv("VERSION") or "us",
     )
     parser.add_argument(
-        "-b", "--binfile", help="Which .bin file should be processed (filename only)", required=True
+        "-b",
+        "--binfile",
+        help="Which .bin file should be processed with implicit build/{VERSION}/",
+        required=True,
     )
     parser.add_argument(
-        "-m", "--mapfile", help="Which .map file should be used (filename only)", required=True
+        "-m",
+        "--mapfile",
+        help="Which .map file should be used with implicit build/{VERSION}/",
+        required=True,
     )
     parser.add_argument(
         "-a", "--add-colons", action="store_true", help="Add colon between bytes"
