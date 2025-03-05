@@ -348,5 +348,54 @@ void func_8012D178(void) {
     }
 }
 
-// func_8012D28C (confirmed)
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137748);
+void func_8012D28C(bool exitEarly) {
+    bool bitNotFound;
+    s32 i;
+
+    func_80102CD8(2);
+    PlaySfx(SFX_WALL_DEBRIS_B);
+    PLAYER.velocityX = 0;
+    g_Player.D_80072EFC = 0x20;
+    g_Player.padSim = 0;
+    // Odd logic, if we exit early, we force an R2-tap. Strange!
+    if (exitEarly) {
+        g_Player.padTapped = PAD_L1;
+        WolfFormFinished();
+        return;
+    }
+    // Start a routine where we look through this array for a value.
+    bitNotFound = 0;
+    for (i = 3; i < NUM_VERTICAL_SENSORS; i++) {
+        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+            break;
+        }
+    }
+    // If we made it through that loop without finding one, skip i=7,8,9
+    // and keep searching.
+    if (i == 7) {
+        for (i = NUM_VERTICAL_SENSORS + 3; i < NUM_VERTICAL_SENSORS * 2; i++) {
+            if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                break;
+            }
+        }
+    }
+    // If we even made it through that one, then conclude the bit was not found.
+    if (i == 14) {
+        bitNotFound++;
+    }
+
+    SetSpeedX(FIX(1));
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 9), 0);
+    D_800B0914 = 0;
+    // Finally make use of that bit to control if X is positive or negative.
+    if (bitNotFound) {
+        func_8012CED4();
+        SetSpeedX(FIX(1));
+        PLAYER.velocityY = FIX(-3.5);
+    } else {
+        func_8012CFA8();
+        SetSpeedX(FIX(-1));
+        PLAYER.velocityY = FIX(-3.5);
+    }
+}
+
