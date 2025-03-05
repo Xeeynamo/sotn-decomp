@@ -14,7 +14,8 @@ endif
 PSX_US_GAME		:= main dra ric weapon
 PSX_US_STAGES	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
 PSX_US_STAGES   += rwrp # Second line for stages for future readability
-PSX_US_BOSSES	:= bo4 mar rbo3 # Second line for bosses for future readability
+PSX_US_BOSSES   := bo4 mar
+PSX_US_BOSSES   += rbo3 rbo5
 PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 
 # VERSION=hd
@@ -321,6 +322,13 @@ $(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
 	$(OBJCOPY) -O binary $< $@
 $(BUILD_DIR)/F_RBO3.BIN:
 	$(GFXSTAGE) e assets/boss/rbo3 $@
+
+.PHONY: rbo5
+rbo5: $(BUILD_DIR)/RBO5.BIN $(BUILD_DIR)/F_RBO5.BIN
+$(BUILD_DIR)/RBO5.BIN: $(BUILD_DIR)/borbo5.elf
+	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/F_RBO5.BIN:
+	$(GFXSTAGE) e assets/boss/rbo5 $@
 
 # servant (familiar) targets
 .PHONY: tt_000 tt_001 tt_002 tt_003 tt_004

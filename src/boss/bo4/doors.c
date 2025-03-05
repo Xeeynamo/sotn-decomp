@@ -70,6 +70,3 @@ INCLUDE_RODATA("boss/bo4/nonmatchings/doors", D_us_801B4168);
 
 // hit during enter sequence
 INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B5FB0);
-
-// 4-segment block doors
-INCLUDE_ASM("boss/bo4/nonmatchings/doors", func_us_801B65FC);
