@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// "documents" in the shop have their own
-/// item index, separate from other items.
-typedef enum {
-    DOC_CASTLE_MAP,
-    DOC_MAGIC_SCROLL_1,
-    DOC_MAGIC_SCROLL_2,
-    DOC_MAGIC_SCROLL_3,
-    DOC_MAGIC_SCROLL_4,
-    DOC_MAGIC_SCROLL_5,
-} SHOP_DOCUMENTS;
-
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
 /// which is related to the number of things which have been
@@ -30,7 +19,45 @@ typedef struct {
     /* 0x0 */ u16 category;
     /* 0x2 */ u16 itemId;
     /* 0x4 */ u32 price;
-} AvailableInventoryItem;
+} ShopItem;
+
+typedef enum {
+    DRACULA_TACTICS,
+    OLROX_TACTICS,
+    DOPPLEGANGER10_TACTICS,
+    GRANFALOON_TACTICS,
+    MINOTAUR_WEREWOLF_TACTICS,
+    SCYLLA_TACTICS,
+    SLO_GAI_TACTICS,
+    HIPPOGRYPH_TACTICS,
+    BEELZEBUB_TACTICS,
+    SUCCUBUS_TACTICS,
+    KARASUMAN_TACTICS,
+    TREVOR_GRANT_SYPHA_TACTICS,
+    DEATH_TACTICS,
+    CERBERUS_TACTICS,
+    RICHTER_TACTICS,
+    MEDUSA_TACTICS,
+    THE_CREATURE_TACTICS,
+    LESSER_DEMON_TACTICS,
+    DOPPLEGANGER40_TACTICS,
+    AKMODAN_II_TACTICS,
+    DARKWING_BAT_TACTICS,
+    GALAMOTH_TACTICS,
+    SHAFT_TACTICS = 0x1B,
+    LORD_DRACULA_TACTICS,
+} SHOP_TACTICS;
+
+/// "documents" in the shop have their own
+/// item index, separate from other items.
+typedef enum {
+    DOC_CASTLE_MAP,
+    DOC_MAGIC_SCROLL_1,
+    DOC_MAGIC_SCROLL_2,
+    DOC_MAGIC_SCROLL_3,
+    DOC_MAGIC_SCROLL_4,
+    DOC_MAGIC_SCROLL_5,
+} SHOP_DOCUMENTS;
 
 /// the first 5 inventory categories are the same as
 /// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
@@ -44,6 +71,39 @@ typedef enum {
     INVENTORY_RELIC,
     INVENTORY_DOCUMENT,
 } InventoryCategory;
+
+static SVECTOR D_us_80180DF0 = {.vx = 0, .vy = 0, .vz = 0x400};
+// clang-format off
+static u8 D_us_80180DF8[] = {
+    0x00, 0xF0, 0xF0, 0xF0, 0x00,
+    0x00, 0xC0, 0xF0, 0xC0, 0x00,
+    0x00, 0x40, 0x80, 0x40, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00};
+static u8 D_us_80180E14[] = {
+    0x40, 0x20, 0x60, 0xA0, 0x20,
+    0x50, 0x30, 0x70, 0xB0, 0x30,
+    0x60, 0x40, 0x80, 0xC0, 0x40,
+    0x70, 0x50, 0x90, 0xD0, 0x50,
+    0x80, 0x60, 0xA0, 0xE0, 0x60};
+static u8 D_us_80180E30[] = {
+    0x40, 0x20, 0x60, 0xA0, 0x20,
+    0x50, 0x30, 0x70, 0xB0, 0x30,
+    0x60, 0x40, 0x80, 0xC0, 0x40,
+    0x70, 0x50, 0x90, 0xD0, 0x50,
+    0x80, 0x60, 0xA0, 0xE0, 0x60};
+static u8 D_us_80180E4C[] = {
+    0x00, 0xC0, 0xF0, 0xC0, 0x00,
+    0x00, 0x60, 0x60, 0x60, 0x00,
+    0x00, 0x40, 0x80, 0x40, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00,
+    0x00, 0x20, 0x20, 0x20, 0x00};
+// clang-format on
+static u8* D_us_80180E68[] = {
+    D_us_80180DF8, D_us_80180E14, D_us_80180E30, D_us_80180E4C};
+static Point16 D_us_80180E78[] = {
+    {0x000, 0x000}, {0x420, 0x1E0}, {0x0B0, 0x280}, {0x080, 0x1A0}};
+static SVECTOR D_us_80180E88 = {.vx = 0, .vy = 0, .vz = 0};
 
 static u16 D_us_80180E90[] = {
     0x0A9, 0x046, 0x040, 0x180, 0x06E, 0x01B, 0x04B, 0x0AF, 0x069, 0x01D, 0x051,
@@ -234,6 +294,7 @@ static u8* D_us_801812D8[] = {
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
 #ifdef VERSION_PSP
+extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
@@ -257,10 +318,103 @@ extern u8** D_psp_092A5F98;
 static u32 D_us_801D415C[64];
 static u32 D_us_801D425C[64];
 STATIC_PAD_BSS(8);
-static AvailableInventoryItem D_us_801D4364[75];
+static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801AFA80);
+void func_us_801AFA80(Entity* self) {
+    long p, flag;
+    u8 pad[4];
+    long sxy;
+    VECTOR trans;
+    MATRIX m;
+    Primitive* prim;
+    s32 primIndex;
+    s32 i, j;
+    u8* ptr;
+    s16 posX, posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->posX.i.hi =
+            D_us_80180E78[self->params].x - g_Tilemap.scrollX.i.hi;
+        self->posY.i.hi =
+            D_us_80180E78[self->params].y - g_Tilemap.scrollY.i.hi;
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            for (i = 0; prim != NULL; i++) {
+                prim->tpage = 0xF;
+                prim->clut = 0x2F;
+                if (i % 2) {
+                    prim->u0 = prim->u2 = 0x88;
+                    prim->u1 = prim->u3 = 0xFE;
+                } else {
+                    prim->u0 = prim->u2 = 0xFE;
+                    prim->u1 = prim->u3 = 0x88;
+                }
+                prim->v0 = prim->v1 = 0x81;
+                prim->v2 = prim->v3 = 0xFF;
+                prim->priority = 0x20;
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        g_GpuBuffers[0].draw.r0 = 0x40;
+        g_GpuBuffers[0].draw.g0 = 0x38;
+        g_GpuBuffers[0].draw.b0 = 0x28;
+        g_GpuBuffers[1].draw.r0 = 0x40;
+        g_GpuBuffers[1].draw.g0 = 0x38;
+        g_GpuBuffers[1].draw.b0 = 0x28;
+    case 1:
+        SetGeomScreen(0x400);
+        SetGeomOffset(0x80, 0x80);
+        RotMatrix(&D_us_80180E88, &m);
+        trans.vx = self->posX.i.hi - 0x80;
+        trans.vy = self->posY.i.hi - 0x80;
+        trans.vz = 0x400;
+        TransMatrix(&m, &trans);
+        SetRotMatrix(&m);
+        SetTransMatrix(&m);
+        RotTransPers(&D_us_80180DF0, &sxy, &p, &flag);
+        posX = sxy & 0xFFFF;
+        posY = sxy >> 0x10;
+        prim = self->ext.prim;
+        ptr = D_us_80180E68[self->params];
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+                prim->x0 = prim->x2 = posX + (j * 0x78) - 0xF0;
+                if (prim->x0 > 0x100) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->x1 = prim->x3 = posX + (j * 0x78) - 0x78;
+                if (prim->x1 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->y0 = prim->y1 = posY + (i * 0x80) - 0x100;
+                if (prim->y0 > 0x100) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim->y2 = prim->y3 = posY + (i * 0x80) - 0x80;
+                if (prim->y2 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                PGREY(prim, 0) = *(ptr + i * 5 + j + 0);
+                PGREY(prim, 1) = *(ptr + i * 5 + j + 1);
+                PGREY(prim, 2) = *(ptr + (i + 1) * 5 + j + 0);
+                PGREY(prim, 3) = *(ptr + (i + 1) * 5 + j + 1);
+                prim = prim->next;
+            }
+        }
+    }
+}
 
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
@@ -782,7 +936,7 @@ static InventoryItem D_us_8018134C[] = {
 u16 D_us_801814D4[] = {16, 0};
 
 // sellable items
-AvailableInventoryItem D_us_801814D8[] = {
+ShopItem D_us_801814D8[] = {
     // clang-format off
     { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
     { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
@@ -1738,7 +1892,7 @@ void func_us_801B2BE4(Entity* self) {
     s32 i;
     s16 itemId;
     s16 tempVar;
-    AvailableInventoryItem* ptr;
+    ShopItem* ptr;
     s32 primIndex;
 
 #ifndef VERSION_PSP
@@ -1811,9 +1965,9 @@ void func_us_801B2BE4(Entity* self) {
                     prim->x1 = prim->x3 = 0xEF;
                     prim->y0 = prim->y1 = 0x2B;
                     prim->y2 = prim->y3 = 0x37;
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x10;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x10;
+                    PRED(prim) = 0x40;
+                    PGRN(prim) = 0x10;
+                    PBLU(prim) = 0x10;
                     prim->priority = 0x1FB;
                     prim->drawMode = DRAW_HIDE;
                 } else {
@@ -2425,7 +2579,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     u16 index;
     s16 x0;
     s16 x1, y1;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     s16* condition;
     u16 stats[14];
     u16 equipment[7];
@@ -2450,7 +2604,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #ifdef VERSION_PSP
     condition = 0;
     if (arg1->params) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
         condition = D_psp_092A4A88;
         primA = prim;
         ptr = D_psp_092A4A78;
@@ -2460,9 +2614,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         y0 = 0x10;
         prim = func_us_801B3EC8(prim, D_us_801D425C[index], 2);
     } else {
-        inventoryItem = &D_us_801D4364[index];
+        shopItem = &D_us_801D4364[index];
         primA = prim;
-        if (inventoryItem->category < 5) {
+        if (shopItem->category < INVENTORY_RELIC) {
             ptr = D_psp_092A4A78;
             prim = func_us_801B3FB4(prim, D_us_80181674[0], 12, 1);
             condition = D_psp_092A4A88;
@@ -2500,12 +2654,12 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         primA = primA->next;
     }
     if (arg1->params) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
         prim =
             func_us_801B3EC8(func_us_801B4194(prim), D_us_801D425C[index], 2);
     } else {
-        inventoryItem = &D_us_801D4364[index];
-        if (inventoryItem->category < 5) {
+        shopItem = &D_us_801D4364[index];
+        if (shopItem->category < INVENTORY_RELIC) {
             prim = func_us_801B3EC8(
                 func_us_801B4194(prim), 99 - D_us_801D425C[index], 2);
         } else {
@@ -2522,8 +2676,8 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #endif
     func_us_801B4010(equipment);
     func_us_801B40F0(stats);
-    itemId = inventoryItem->itemId;
-    switch (inventoryItem->category) {
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
     case INVENTORY_HAND:
         g_Status.equipment[LEFT_HAND_SLOT] = itemId;
         g_Status.equipment[RIGHT_HAND_SLOT] = itemId;
@@ -2908,16 +3062,16 @@ static const char* D_us_8018168C[] = {
 void func_us_801B4ED4(s16 index, u16 arg1) {
     const char* desc;
     u16 itemId;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     unsigned char* unused;
 
     if (arg1) {
-        inventoryItem = &D_us_801814D8[index];
+        shopItem = &D_us_801814D8[index];
     } else {
-        inventoryItem = &D_us_801D4364[index];
+        shopItem = &D_us_801D4364[index];
     }
-    itemId = inventoryItem->itemId;
-    switch (inventoryItem->category) {
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
     case INVENTORY_HAND:
         desc = g_api.equipDefs[itemId].description;
         g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
@@ -3189,13 +3343,11 @@ static const char* D_us_801816B0[] = {
     _S("Magic scroll 3"), _S("Magic scroll 4"), _S("Magic scroll 5")};
 #endif
 
-const RECT D_us_801AD0F4 = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
-
 void func_us_801B56E4(Entity* self) {
     Entity* tempEntity;
     s32 primIndex;
     s32 i, j;
-    AvailableInventoryItem* inventoryItem;
+    ShopItem* shopItem;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
     RECT clipRect;
@@ -3208,7 +3360,7 @@ void func_us_801B56E4(Entity* self) {
     s32 count;
     u32 price;
 
-    clipRect = D_us_801AD0F4;
+    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     tempEntity = self - 3;
     switch (self->step) {
     case 0:
@@ -3282,12 +3434,12 @@ void func_us_801B56E4(Entity* self) {
                 break;
             }
             if (tempEntity->params) {
-                inventoryItem = &D_us_801814D8[index];
+                shopItem = &D_us_801814D8[index];
             } else {
-                inventoryItem = &D_us_801D4364[index];
+                shopItem = &D_us_801D4364[index];
             }
-            itemId = inventoryItem->itemId;
-            switch (inventoryItem->category) {
+            itemId = shopItem->itemId;
+            switch (shopItem->category) {
             case INVENTORY_HAND:
                 name = g_api.equipDefs[itemId].name;
                 break;
@@ -3329,7 +3481,7 @@ void func_us_801B56E4(Entity* self) {
                 func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
                 posX += 10;
                 prim2 = prim;
-                price = inventoryItem->price * D_us_801D415C[index];
+                price = shopItem->price * D_us_801D415C[index];
                 for (j = 0; j < 8; j++) {
                     if (g_Status.gold < price) {
                         prim->clut = 0x191;
@@ -3395,8 +3547,8 @@ void func_us_801B56E4(Entity* self) {
         index = tempEntity->ext.et_801B56E4.unk82;
         posY = 0x10;
         for (i = 0; i < 7; i++) {
-            inventoryItem = &D_us_801814D8[index];
-            name = g_api.accessoryDefs[inventoryItem->itemId].name;
+            shopItem = &D_us_801814D8[index];
+            name = g_api.accessoryDefs[shopItem->itemId].name;
             if (D_us_801D425C[index] != 0) {
                 itemId = 0x196;
             } else {
@@ -3423,7 +3575,7 @@ void func_us_801B56E4(Entity* self) {
             func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
             posX += 10;
             prim2 = prim;
-            price = inventoryItem->price * D_us_801D415C[index];
+            price = shopItem->price * D_us_801D415C[index];
             for (j = 0; j < 8; j++) {
                 prim->clut = itemId;
                 prim->x0 = posX;
@@ -3490,31 +3642,31 @@ static const char* D_us_801816C8[] = {
     _S("Shaft"),
     _S("Lord Dracula")};
 
-static AvailableInventoryItem D_us_8018173C[] = {
+static ShopItem D_us_8018173C[] = {
     // clang-format off
-    {INVENTORY_HAND, ITEM_EMPTY_HAND,     200}, 
-    {INVENTORY_HAND, ITEM_KNIGHT_SHIELD,  500},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_2, 700},
-    {INVENTORY_HAND, ITEM_IRON_SHIELD,    1000},
-    {INVENTORY_HAND, ITEM_LEATHER_SHIELD, 1200},
-    {INVENTORY_HAND, ITEM_SHIELD_ROD,     1400},
-    {INVENTORY_HAND, ITEM_DARK_SHIELD,    1800},
-    {INVENTORY_HAND, ITEM_HERALD_SHIELD,  2000},
-    {INVENTORY_HAND, ITEM_MEDUSA_SHIELD,  2200},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_1, 2500},
-    {INVENTORY_HAND, ITEM_MONSTER_VIAL_3, 2800},
-    {INVENTORY_HAND, ITEM_SKULL_SHIELD,   3000},
-    {INVENTORY_HAND, ITEM_COMBAT_KNIFE,   3500},
-    {INVENTORY_HAND, ITEM_SHORT_SWORD,    3500},
-    {INVENTORY_HAND, ITEM_FIRE_SHIELD,    3500},
-    {INVENTORY_HAND, ITEM_ALUCARD_SHIELD, 3500},
-    {INVENTORY_HAND, ITEM_SHAMAN_SHIELD,  4000},
-    {INVENTORY_HAND, ITEM_BASILARD,       4500},
-    {INVENTORY_HAND, ITEM_GODDESS_SHIELD, 5000},
-    {INVENTORY_HAND, ITEM_AXELORD_SHIELD, 6000},
-    {INVENTORY_HAND, ITEM_NUNCHAKU,       7000},
-    {INVENTORY_HAND, ITEM_TAKEMITSU,      8500},
-    {INVENTORY_HAND, ITEM_SHOTEL,         10000},
+    {0, DRACULA_TACTICS,            200}, 
+    {0, SLO_GAI_TACTICS,            500},
+    {0, DOPPLEGANGER10_TACTICS,     700},
+    {0, HIPPOGRYPH_TACTICS,         1000},
+    {0, SCYLLA_TACTICS,             1200},
+    {0, MINOTAUR_WEREWOLF_TACTICS,  1400},
+    {0, KARASUMAN_TACTICS,          1800},
+    {0, SUCCUBUS_TACTICS,           2000},
+    {0, CERBERUS_TACTICS,           2200},
+    {0, OLROX_TACTICS,              2500},
+    {0, GRANFALOON_TACTICS,         2800},
+    {0, RICHTER_TACTICS,            3000},
+    {0, DARKWING_BAT_TACTICS,       3500},
+    {0, AKMODAN_II_TACTICS,         3500},
+    {0, MEDUSA_TACTICS,             3500},
+    {0, THE_CREATURE_TACTICS,       3500},
+    {0, DEATH_TACTICS,              4000},
+    {0, DOPPLEGANGER40_TACTICS,     4500},
+    {0, TREVOR_GRANT_SYPHA_TACTICS, 5000},
+    {0, BEELZEBUB_TACTICS,          6000},
+    {0, GALAMOTH_TACTICS,           7000},
+    {0, SHAFT_TACTICS,              8500},
+    {0, LORD_DRACULA_TACTICS,       10000},
     // clang-format on
 };
 
@@ -3523,7 +3675,79 @@ static char D_us_80181804[] = {
     CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
 static char D_us_8018180C[] = _S("--------------");
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B6124);
+void func_us_801B6124(Primitive* prim, Entity* arg1) {
+    s16 posX, posY;
+    u16 clut;
+    s32 i, j;
+    u16 itemId;
+    u16 itemMask;
+    u16 itemIndex;
+    u32 price;
+    Primitive* prim2;
+    ShopItem* enemyTactics;
+
+#ifdef VERSION_PSP
+    g_Settings.D_8003CB00 |= 1;
+#endif
+    itemIndex = arg1->ext.et_801B6F30.unk82;
+    posY = 16;
+    for (i = 0; i < g_CurrentEntity->ext.et_801B6F30.unk84; i++) {
+        enemyTactics = &D_us_8018173C[itemIndex];
+        itemId = enemyTactics->itemId;
+        itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
+#ifdef VERSION_PSP
+        if (D_8C630D0) {
+            itemMask |= (1 << (itemId & 7));
+        }
+#endif
+        if (itemMask & (1 << (itemId & 7))) {
+            enemyTactics->category = 2;
+            enemyTactics->price = 0;
+        } else {
+            enemyTactics->category = 0;
+        }
+#ifdef VERSION_PSP
+        price = 0;
+#endif
+        if (g_Settings.D_8003CB00 & (1 << itemId)) {
+            price = enemyTactics->price;
+            clut = 0x196;
+            if (g_Status.gold < price) {
+                clut = 0x183;
+            }
+#ifdef VERSION_PSP
+            prim =
+                func_us_801B1064(prim, 8, posY, D_us_801816C8[itemIndex], clut);
+#else
+            prim = func_us_801B1064(prim, 8, posY, D_us_801816C8[itemId], clut);
+#endif
+            enemyTactics->category++;
+        } else {
+            clut = 0x191;
+            prim = func_us_801B1064(prim, 8, posY, D_us_801817F4, 0x191);
+        }
+        posX = 0x80;
+        prim2 = prim;
+        for (j = 0; j < 8; j++) {
+            prim->clut = clut;
+            prim->x0 = posX;
+            prim->y0 = posY;
+            prim = prim->next;
+            posX += 8;
+        }
+        if (enemyTactics->category) {
+            func_us_801B3EC8(prim2, price, 8);
+        } else {
+            func_us_801B3FB4(prim2, D_us_80181804, 8, 1);
+        }
+        itemIndex++;
+        posY += 12;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
@@ -3536,7 +3760,7 @@ void func_us_801B6324(Entity* self) {
     s32 var_v1;
     u16 pads;
 
-    clipRect = D_us_801AD0F4;
+    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -3659,7 +3883,7 @@ void func_us_801B6324(Entity* self) {
 #endif
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
-                if (g_Settings.D_8003CB00) {
+                if (D_8C630D0) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
                 }
 #endif
@@ -3728,11 +3952,11 @@ void func_us_801B6324(Entity* self) {
             itemID =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80);
             switch (D_us_8018173C[itemID].category) {
-            case INVENTORY_HAND:
+            case 0:
                 g_api.PlaySfx(SFX_UI_ERROR);
                 break;
 
-            case INVENTORY_HEAD:
+            case 1:
                 if (g_Status.gold < D_us_8018173C[itemID].price) {
                     g_api.PlaySfx(SFX_UI_ERROR);
                 } else {
@@ -3745,8 +3969,8 @@ void func_us_801B6324(Entity* self) {
                 }
                 break;
 
-            case INVENTORY_BODY:
-            case INVENTORY_CAPE:
+            case 2:
+            case 3:
                 SetStep(4);
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 break;
@@ -3838,7 +4062,44 @@ void func_us_801B6324(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B6E20);
+void func_us_801B6E20(Primitive* prim, Entity* arg1) {
+    s16 posX, posY;
+    u16 enemyIndex;
+    s32 i;
+    u16 enemyId;
+    u16 enemyMask;
+
+    enemyIndex = arg1->ext.et_801B6F30.unk82 * 2;
+    posY = 4;
+    for (i = 0; i < 14; i++) {
+        if ((i & 1) == 0) {
+#ifdef VERSION_PSP
+            posY += 12;
+            posX = 4;
+#else
+            posX = 0;
+            posY += 12;
+#endif
+        } else {
+            posX = 0x78;
+        }
+        enemyId = D_us_80180E90[enemyIndex];
+        if (enemyId != 0xFFFF) {
+            enemyMask = g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190];
+            if (enemyMask & (1 << (enemyIndex & 7))) {
+                prim = func_us_801B1064(
+                    prim, posX, posY, g_api.enemyDefs[enemyId].name, 0x196);
+            } else {
+                prim = func_us_801B1064(prim, posX, posY, D_us_8018180C, 0x191);
+            }
+        }
+        enemyIndex++;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 #ifdef VERSION_PSP
 #define unkVal 0x43
@@ -3852,12 +4113,12 @@ void func_us_801B6F30(Entity* self) {
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
-    s16 enemyMask;
+    s16 enemyIndex;
     s32 i;
     u16 pads;
     Entity* tempEntity;
 
-    clipRect = D_us_801AD0F4;
+    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -4060,12 +4321,12 @@ void func_us_801B6F30(Entity* self) {
 #else
         if (pads & PAD_CROSS) {
 #endif
-            enemyMask =
+            enemyIndex =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80) *
                     2 +
                 self->ext.et_801B6F30.unk84;
-            if (g_CastleFlags[(enemyMask >> 3) + ENEMY_LIST_190] &
-                (1 << (enemyMask & 7))) {
+            if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
+                (1 << (enemyIndex & 7))) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 SetStep(4);
             } else {
@@ -4252,8 +4513,10 @@ static const char* D_us_8018187C[] = {
     _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
 #endif
 
-static u16 D_us_801818A8[] = {0x1000, 0x0800, 0x8000, 0x4000, 0x2000, 0x0400,
-                              0x0200, 0x0080, 0x0100, 0x0040, 0x0020, 0x0000};
+static u16 D_us_801818A8[] = {
+    ELEMENT_HOLY,  ELEMENT_DARK,  ELEMENT_FIRE,  ELEMENT_THUNDER,
+    ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
+    ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
 
 #ifdef VERSION_PSP
 extern const char** D_us_801818C0;
@@ -4289,10 +4552,10 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
     s32 x = posX;
     s16 y = 8;
     s32 i;
-    if ((arg1 & 0xFFE0) == 0) {
+    if ((arg1 & ELEMENT_ALL) == 0) {
         prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
     } else {
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < LEN(D_us_801818A8); i++) {
             if (arg1 & D_us_801818A8[i]) {
                 prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
                 x += 0x20;
@@ -4306,10 +4569,10 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     s16 x = 0x84;
     s16 y = 8;
     s32 i;
-    if ((arg1 & 0xFFE0) == 0) {
+    if ((arg1 & ELEMENT_ALL) == 0) {
         prim = func_us_801B1064(prim, 0x84, posY, D_us_8018181C[0], 0x159);
     } else {
-        for (i = 0; i < 11; i++) {
+        for (i = 0; i < LEN(D_us_801818A8); i++) {
             if (arg1 & D_us_801818A8[i]) {
                 prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x15C);
                 x += 0x1C;
@@ -4589,7 +4852,7 @@ void func_us_801B8234(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
-    s16 j;
+    s16 enemyIndex;
     u16 enemyId;
     u16 pads;
     u8* pix;
@@ -4790,22 +5053,26 @@ void func_us_801B8234(Entity* self) {
         pads = g_pads[0].repeat;
         if (pads & PAD_RIGHT) {
 #ifdef VERSION_PSP
-            for (j = self->params + 1; j < 0x94; j++) {
+            for (enemyIndex = self->params + 1; enemyIndex < 0x94;
+                 enemyIndex++) {
 #else
-            for (j = self->params + 1; j < 0x92; j++) {
+            for (enemyIndex = self->params + 1; enemyIndex < 0x92;
+                 enemyIndex++) {
 #endif
-                if (g_CastleFlags[(j >> 3) + ENEMY_LIST_190] & (1 << (j & 7)) &&
-                    (D_us_80180E90[self->params] != 0xFFFF)) {
-                    self->params = j;
+                if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
+                        (1 << (enemyIndex & 7)) &&
+                    D_us_80180E90[self->params] != 0xFFFF) {
+                    self->params = enemyIndex;
                     SetStep(4);
                     break;
                 }
             }
         } else if (pads & PAD_LEFT) {
-            for (j = self->params - 1; j >= 0; j--) {
-                if (g_CastleFlags[(j >> 3) + ENEMY_LIST_190] & (1 << (j & 7)) &&
-                    (D_us_80180E90[self->params] != 0xFFFF)) {
-                    self->params = j;
+            for (enemyIndex = self->params - 1; enemyIndex >= 0; enemyIndex--) {
+                if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
+                        (1 << (enemyIndex & 7)) &&
+                    D_us_80180E90[self->params] != 0xFFFF) {
+                    self->params = enemyIndex;
                     SetStep(4);
                     break;
                 }
@@ -4978,7 +5245,7 @@ void func_us_801B8A00(Entity* self) {
     u16 pads;
     s16 sfxIndex;
 
-    clipRect = D_us_801AD0F4;
+    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -5028,9 +5295,9 @@ void func_us_801B8A00(Entity* self) {
                     prim->type = PRIM_G4;
                     prim->y0 = prim->y1 = 0x4B;
                     prim->y2 = prim->y3 = 0x57;
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x20;
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x40;
+                    PRED(prim) = 0;
+                    PGRN(prim) = 0x20;
+                    PBLU(prim) = 0x40;
                     prim->priority = 0x1FB;
                     prim->drawMode = DRAW_HIDE;
                 } else if (i < 13) {
