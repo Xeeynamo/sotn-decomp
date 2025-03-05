@@ -30,13 +30,9 @@ MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
 MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
-DEPENDENCIES	+= $(ALLEGREX_AS)
-
-# Most of PSP is compiled with -O0, except part of DRA. This block selects the proper flag.
-OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
-# Allow override. Any file in this list will get O4.
-OPT_HI_OVERRIDES = $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C90 64EE0)
-OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)),$(OPT_HIGH),-Op)
+# Any file in this list will get -O4,p instead of -Op
+OPT_HI_FUNCS = $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C90 64EE0)
+OPT_LEVEL = $(if $(filter $(notdir $@),$(OPT_HI_FUNCS)),-O4$(comma)p,-Op)
 
 build_pspeu: $(call get_targets)
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
@@ -64,7 +60,7 @@ $(BUILD_DIR)/%.s.o: %.s
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION)
+	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL)
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)
