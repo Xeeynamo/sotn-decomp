@@ -20,6 +20,25 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
+extern s32 D_8C630D0;
+extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_27);
+extern s32 E_ID(ID_28);
+extern s32 E_ID(ID_29);
+extern s32 E_ID(ID_2A);
+extern s32 E_ID(ID_2D);
+extern s32 E_ID(ID_2E);
+extern s32 E_ID(ID_2F);
+extern s32 E_ID(ID_48);
+extern s32 E_ID(ID_4F);
+extern s16 D_psp_092A4A10[];
+extern u16 D_psp_092A4A78[];
+extern s16 D_psp_092A4A88[];
+extern u16 D_psp_092A4AA0[];
+extern s16 D_psp_092A49B8[];
+extern u8** D_psp_092A5F48;
+extern u8** D_psp_092A5F98;
+
 extern const char D_psp_092A4880[];
 extern u16 D_us_801814D4[];
 extern ShopItem D_us_801814D8[];
@@ -743,11 +762,11 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
+Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
     u8 ch;
     s32 i;
     u32 max;
-    u8* chPtr;
+    char* chPtr;
 
     chPtr = str;
     max = 0;
@@ -777,6 +796,24 @@ Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
 #endif
     return prim;
 }
+
+#ifdef VERSION_PSP
+extern u8* D_us_80181660;
+extern char* D_us_80181668;
+extern char** D_us_80181674;
+#else
+static u8 D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181668[] = {
+    // clang-format off
+    CH('S'), CH('T'), CH('R'), 
+    CH('C'), CH('O'), CH('N'), 
+    CH('I'), CH('N'), CH('T'), 
+    CH('L'), CH('C'), CH('K')
+    // clang-format on
+};
+static char* D_us_80181674[] = {
+    _S("Number"), _S("Equipped"), _S("Not equipped"), _S("うれるこすう")};
+#endif
 
 void func_us_801B4010(u16* arg0) {
     *arg0++ = g_Status.equipment[0];
@@ -812,4 +849,266 @@ void func_us_801B40F0(u16* arg0) {
     *arg0 = g_Status.statsBase[2] + g_Status.statsEquip[2];
     arg0 += 2;
     *arg0 = g_Status.statsBase[3] + g_Status.statsEquip[3];
+}
+
+void func_us_801B420C(Primitive* prim, Entity* arg1) {
+    u16 index;
+    s16 x0;
+    s16 x1, y1;
+    ShopItem* shopItem;
+    s16* condition;
+    u16 stats[14];
+    u16 equipment[7];
+    s16 maxDigits;
+    s32 i, j;
+    s16 itemId;
+    s16 number;
+    u16* ptr;
+    Primitive* primA;
+    Primitive* primB;
+    s16 y0;
+
+    for (i = 0; i < 11; i++) {
+        prim = prim->next;
+    }
+    for (i = 0; i < 8; i++) {
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+    }
+    prim = func_us_801B3EC8(prim, g_Status.gold, 8);
+    index = arg1->ext.et_801B6F30.unk80 + arg1->ext.et_801B6F30.unk82;
+#ifdef VERSION_PSP
+    condition = 0;
+    if (arg1->params) {
+        shopItem = &D_us_801814D8[index];
+        condition = D_psp_092A4A88;
+        primA = prim;
+        ptr = D_psp_092A4A78;
+        prim = func_us_801B3FB4(prim, D_us_80181674[0], 8, 1);
+        primB = prim;
+        x0 = 0x28;
+        y0 = 0x10;
+        prim = func_us_801B3EC8(prim, D_us_801D425C[index], 2);
+    } else {
+        shopItem = &D_us_801D4364[index];
+        primA = prim;
+        if (shopItem->category < INVENTORY_RELIC) {
+            ptr = D_psp_092A4A78;
+            prim = func_us_801B3FB4(prim, D_us_80181674[0], 12, 1);
+            condition = D_psp_092A4A88;
+            primB = prim;
+            x0 = 0x28;
+            y0 = 0x10;
+            prim = func_us_801B3EC8(prim, 99 - D_us_801D425C[index], 2);
+        } else {
+            ptr = D_psp_092A4AA0;
+            if (D_us_801D425C[index] != 0) {
+                prim = func_us_801B3FB4(prim, D_us_80181674[2], 12, 1);
+            } else {
+                prim = func_us_801B3FB4(prim, D_us_80181674[1], 12, 1);
+            }
+        }
+    }
+    x1 = *ptr++;
+    y1 = *ptr++;
+    for (i = 0; i < 12; i++) {
+        primA->x0 = x1 + 0xBA + i * 8;
+        primA->y0 = y1 + 0xA0;
+        primA = primA->next;
+    }
+    if (condition) {
+        for (i = 0; i < 2; i++) {
+            primB->x0 = x0 + 0xBA + i * 8;
+            primB->y0 = y0 + 0xA0;
+            primB = primB->next;
+        }
+    }
+#else
+    primA = prim;
+    for (i = 0; i < 11; i++) {
+        primA->drawMode = DRAW_HIDE;
+        primA = primA->next;
+    }
+    if (arg1->params) {
+        shopItem = &D_us_801814D8[index];
+        prim =
+            func_us_801B3EC8(func_us_801B4194(prim), D_us_801D425C[index], 2);
+    } else {
+        shopItem = &D_us_801D4364[index];
+        if (shopItem->category < INVENTORY_RELIC) {
+            prim = func_us_801B3EC8(
+                func_us_801B4194(prim), 99 - D_us_801D425C[index], 2);
+        } else {
+            if (D_us_801D425C[index] != 0) {
+                prim =
+                    func_us_801B1064(prim, 0x9A, 0xB0, D_us_80181674[2], 0x196);
+            } else {
+                prim =
+                    func_us_801B1064(prim, 0xB6, 0xB0, D_us_80181674[1], 0x196);
+            }
+        }
+    }
+    prim = primA;
+#endif
+    func_us_801B4010(equipment);
+    func_us_801B40F0(stats);
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
+    case INVENTORY_HAND:
+        g_Status.equipment[LEFT_HAND_SLOT] = itemId;
+        g_Status.equipment[RIGHT_HAND_SLOT] = itemId;
+        break;
+    case INVENTORY_HEAD:
+        g_Status.equipment[HEAD_SLOT] = itemId;
+        break;
+    case INVENTORY_BODY:
+        g_Status.equipment[ARMOR_SLOT] = itemId;
+        break;
+    case INVENTORY_CAPE:
+        g_Status.equipment[CAPE_SLOT] = itemId;
+        break;
+    case INVENTORY_ACCESSORY:
+        g_Status.equipment[ACCESSORY_1_SLOT] = itemId;
+        g_api.func_800F53A4();
+        func_us_801B40F0(stats + 1);
+        func_us_801B4080(equipment);
+        g_Status.equipment[ACCESSORY_2_SLOT] = itemId;
+        g_api.func_800F53A4();
+        i = 3;
+        ptr = stats + 1;
+        maxDigits = *ptr - g_Status.attackHands[0];
+        ptr += 4;
+        maxDigits += *ptr - g_Status.defenseEquip;
+        if (maxDigits < 0) {
+            i++;
+        } else if (maxDigits == 0) {
+            ptr += 2;
+            maxDigits = *ptr - (g_Status.statsBase[0] + g_Status.statsEquip[0]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[1] + g_Status.statsEquip[1]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[2] + g_Status.statsEquip[2]);
+            ptr += 2;
+            maxDigits +=
+                *ptr - (g_Status.statsBase[3] + g_Status.statsEquip[3]);
+            if (maxDigits < 0) {
+                i++;
+            }
+        }
+        func_us_801B4080(equipment);
+        (g_Status.equipment + 2)[i] = itemId;
+        break;
+    case INVENTORY_RELIC:
+        break;
+    }
+    g_api.func_800F53A4();
+    func_us_801B40F0(stats + 1);
+    func_us_801B4080(equipment);
+    g_api.func_800F53A4();
+    ptr = stats;
+    for (i = 0; i < 3; i++) {
+#ifdef VERSION_PSP
+        primA = prim;
+        for (j = 0; j < 7; j++) {
+            prim->x0 = D_psp_092A49B8[j * 2 + (i * 7) * 2] + 0xBA;
+            prim->y0 = D_psp_092A49B8[j * 2 + (i * 7) * 2 + 1] + 0xA0;
+            prim = prim->next;
+        }
+        prim = primA;
+#endif
+        maxDigits = *ptr++;
+        prim = func_us_801B3EC8(prim, maxDigits, 3);
+        if (!arg1->params) {
+            maxDigits -= *ptr;
+            if (maxDigits) {
+                if (maxDigits > 0) {
+                    prim->u0 = 0x28;
+                } else {
+                    prim->u0 = 0x18;
+                }
+            } else {
+                prim->u0 = 0x20;
+            }
+            prim->v0 = 0x70;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+            prim = func_us_801B3EC8(prim, *ptr++, 3);
+        } else {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+#ifdef VERSION_PSP
+            ptr++;
+#endif
+        }
+    }
+    if (!arg1->params) {
+        for (i = 0; i < 4; i++) {
+            maxDigits = *ptr++;
+            number = *ptr++;
+#ifdef VERSION_PSP
+            primA = prim;
+            for (j = 0; j < 6; j++) {
+                prim->x2 = prim->x0 =
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2] + 0xBA;
+                prim->y1 = prim->y0 =
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2 + 1] + 0xA0;
+                prim->x3 = prim->x1 = prim->x0 + 8;
+                prim->y3 = prim->y2 = prim->y0 + 8;
+                prim->v1 = prim->u1 = 8;
+                prim->type = PRIM_SPRT;
+                prim->clut = 0x196;
+                prim->tpage = 0x1E;
+                prim->priority = 0x11;
+                prim = prim->next;
+            }
+            prim = primA;
+#endif
+            if (maxDigits != number) {
+                prim = func_us_801B3FB4(prim, &D_us_80181668[i * 3], 3, 1);
+                if (maxDigits > number) {
+                    number = maxDigits - number;
+                    maxDigits = 2;
+                    if (number / 10 == 0) {
+                        prim->drawMode = DRAW_HIDE;
+                        prim = prim->next;
+                        maxDigits = 1;
+                    }
+                    prim->u0 = 0x68;
+                } else {
+                    number -= maxDigits;
+                    maxDigits = 2;
+                    if (number / 10 == 0) {
+                        prim->drawMode = DRAW_HIDE;
+                        prim = prim->next;
+                        maxDigits = 1;
+                    }
+                    prim->u0 = 0x58;
+                }
+                prim->v0 = 0;
+                prim->drawMode = DRAW_DEFAULT;
+                prim = prim->next;
+                prim = func_us_801B3EC8(prim, number, maxDigits);
+            } else {
+                for (j = 0; j < 6; j++) {
+                    prim->drawMode = DRAW_HIDE;
+                    prim = prim->next;
+                }
+            }
+            if (prim == NULL) {
+                break;
+            }
+        }
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
 }

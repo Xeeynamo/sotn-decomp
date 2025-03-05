@@ -2541,11 +2541,11 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
+Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
     u8 ch;
     s32 i;
     u32 max;
-    u8* chPtr;
+    char* chPtr;
 
     chPtr = str;
     max = 0;
@@ -2835,8 +2835,8 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #ifdef VERSION_PSP
         primA = prim;
         for (j = 0; j < 7; j++) {
-            prim->x0 = D_psp_092A4A10[j * 2 + (i * 7) * 2] + 0xBA;
-            prim->y0 = D_psp_092A4A10[j * 2 + (i * 7) * 2 + 1] + 0xA0;
+            prim->x0 = D_psp_092A49B8[j * 2 + (i * 7) * 2] + 0xBA;
+            prim->y0 = D_psp_092A49B8[j * 2 + (i * 7) * 2 + 1] + 0xA0;
             prim = prim->next;
         }
         prim = primA;
@@ -2880,9 +2880,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
             primA = prim;
             for (j = 0; j < 6; j++) {
                 prim->x2 = prim->x0 =
-                    D_psp_092A49B8[j * 2 + (i * 6) * 2] + 0xBA;
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2] + 0xBA;
                 prim->y1 = prim->y0 =
-                    D_psp_092A49B8[j * 2 + (i * 6) * 2 + 1] + 0xA0;
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2 + 1] + 0xA0;
                 prim->x3 = prim->x1 = prim->x0 + 8;
                 prim->y3 = prim->y2 = prim->y0 + 8;
                 prim->v1 = prim->u1 = 8;
