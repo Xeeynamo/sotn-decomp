@@ -238,8 +238,26 @@ void func_8012CCE4(void) {
     D_80138430 += 0x80;
 }
 
-// func_8012CED4
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137358);
+void func_8012CED4(void) {
+    if (PLAYER.step_s == 2 && D_800B0914 == 2) {
+        SetPlayerAnim(0xE7);
+        D_800B0914 = 1;
+    } else {
+        SetPlayerAnim(0xE8);
+        SetSpeedX(FIX(1));
+        D_800B0914 = 0;
+        if (D_80138438 & 0x40) {
+            PLAYER.velocityX = 0;
+            PLAYER.animFrameIdx = 4;
+            PLAYER.animFrameDuration = 1;
+        }
+    }
+    PLAYER.step_s = 5;
+    D_80138430 -= 0x100;
+    g_Player.timers[ALU_T_5] = 8;
+    PLAYER.velocityY = 0;
+}
+
 // func_8012CFA8
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137448);
 // func_8012CFF0
