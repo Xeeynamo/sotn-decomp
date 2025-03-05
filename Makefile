@@ -2,44 +2,39 @@
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Sets VERSION=us if VERSION is not defined
+# Sets VERSION and VENV_DIR if not defined
 VERSION         ?= us
 VENV_DIR       	?= .venv
-
 # For disambiguation/escaping of characters
 slash		:= /
 comma		:= ,
+dot			:= .
 
-# System related variables
-OS := $(subst Darwin,MacOS,$(shell uname -s))
-# Attempts to get system paths, uses defaults if null
-SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)
-BASH			:= $(or $(shell which bash),/usr/bin/bash)
-BASH_FLAGS	  	:= -e -o pipefail
-SHELL 			 = $(BASH) $(BASH_FLAGS)
-# Will be empty if $(VENV_DIR)/bin doesn't exist
-PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
-# SYSTEM_PYTHON is only used for installing venv, PYTHON is for all other uses
-PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3
-# Pip will always use a venv
-PIP			 	:= $(realpath $(VENV_DIR))/bin/pip3
-# This only includes dependencies which apply to more than one version
-DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO) requirements-python
-
-# Make "system" functions
+# Utility functions
 rwildcard  = $(subst //,/,$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
 to_upper   = $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower   = $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version = $(if $(filter $1,$(VERSION)),$2,$3)
-# Cheater function for echo in bash and changes // to /
-echo = echo -e "$(subst //,/,$(1))"
+#if_overlay = $(if $(filter-out $(1),$(2)),$(3))
+echo = echo -e "$(subst //,/,$(1))" # Sugar function so the subst doesn't muddy echo commands
+
+# System related variables
+OS := $(subst Darwin,MacOS,$(shell uname -s))
+SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3) # Only used for installing venv
+PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
+PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3 # This is slightly redundant to handle the slash
+PIP			 	:= $(realpath $(VENV_DIR))/bin/pip3 # Pip will always use venv
+BASH			:= $(or $(shell which bash),/usr/bin/bash)
+BASH_FLAGS	  	:= -e -o pipefail
+SHELL 			:= $(BASH) $(BASH_FLAGS)
+DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(GO) requirements-python
 
 # Directories
 BIN_DIR         := bin
 ASM_DIR         := asm/$(VERSION)
-ASM_SUBDIRS := $(slash) /data $(call if_version,us hd,/psxsdk /handwritten)
+ASM_SUBDIRS 	:= $(slash) /data $(call if_version,us hd,/psxsdk /handwritten)
 SRC_DIR         := src
-SRC_SUBDIRS := $(slash) $(call if_version,us hd,/psxsdk)
+SRC_SUBDIRS 	:= $(slash) $(call if_version,us hd,/psxsdk)
 INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
@@ -63,8 +58,7 @@ LD              := $(CROSS)ld
 OBJCOPY         := $(CROSS)objcopy
 # Linkers
 # Assemblers
-
-# Symbol related variables
+# Symbols
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Other tooling
@@ -77,7 +71,6 @@ SHASUM          := shasum
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 CLANG			:= $(BIN_DIR)/clang-format
-
 GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 
@@ -93,6 +86,15 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := m2c.py
 M2C             := $(PYTHON) $(M2C_DIR)/$(M2C_APP) -P 4
 
+MASPSX_DIR      := $(TOOLS_DIR)/maspsx
+MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
+MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
+MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
+
+MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
+MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
+MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
+
 SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk
 SOTNDISK_APP	:= bin/sotn-disk
 SOTNDISK        := $(GOPATH)/$(SOTNDISK_APP)
@@ -105,14 +107,7 @@ SOTNASSETS      := $(GOPATH)/$(SOTNASSETS_APP)
 FORMAT_SRC_IGNORE := src/pc/3rd/cJSON/cJSON.c src/pc/3rd/cJSON/cJSON.h
 REMOVE_ORPHANS_IGNORE 	:= splat.us.weapon assets.hd assets.us
 
-# Use $(call get_targets) when the non-prefixed name is needed
-# Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
-get_targets = $(GAME) $(addprefix $1,$(STAGES)) $(addprefix $2,$(BOSSES)) $(SERVANTS)
-get_filename = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$2$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$3$1),$(call to_lower,$1)))
-
-get_targets_simp = $(GAME) $(if $1,$(addprefix st,$(STAGES)),$(STAGES)) $(if $1,$(addprefix bo,$(BOSSES)),$(BOSSES)) $(SERVANTS)
-get_filename_simp = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$2$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$3$1),$(call to_lower,$1)))
-
+# Build functions
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
 list_o_files = $(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o)
@@ -128,6 +123,7 @@ list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 # symexport.*.txt is used to enforce a specific symbol and all its dependencies
 # to be used. Refer to *.map to know which sections are being discarded by LD.
 # Use nm to retrieve the symbol name out of a object file such as the mwo_header.
+
 define link
 	$(LD) $(LD_FLAGS) -o $(2) \
 		$(call if_version,pspeu,--gc-sections) \
@@ -138,6 +134,22 @@ define link
 		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt \
 		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad,$(1)),$(VERSION).)$(1).txt)
 endef
+
+define get_merged_functions 
+	$(shell $(PYTHON) -c 'import yaml;\
+	import os;\
+	yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
+	config = yaml.safe_load(yaml_file);\
+	yaml_file.close();\
+	print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("$(1)/")]))')
+endef
+get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
+# Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
+get_targets = $(GAME) $(if $1,$(addprefix st,$(STAGES)),$(STAGES)) $(if $1,$(addprefix bo,$(BOSSES)),$(BOSSES)) $(SERVANTS)
+is_stage = $(filter $(call to_lower,$1),$(STAGES))
+is_boss = $(filter $(call to_lower,$1),$(BOSSES))
+# If stage then $2$1, else if boss then $3$1, else $1
+get_filename = $(if $(call is_stage,$1),$(call to_lower,$2$1),$(if $(call is_boss,$1),$(call to_lower,$3$1),$(call to_lower,$1)))
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
@@ -150,11 +162,11 @@ endif
 .PHONY: all build%
 $(DEBUG).SILENT: all build%
 all: build check
-# Start build group
+#/* Start build group */
 build: build_$(VERSION)
-# End build group
+#/* End build group */
 
-# Start miscellaneous group
+#/* Start miscellaneous group */
 .PHONY: clean $(addprefix CLEAN_,$(CLEAN_FILES))
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
@@ -175,9 +187,13 @@ ifndef SOURCE
 endif
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	$(call echo,ctx.c has been updated.)
-# End miscellaneous group
+permuter: #placeholder
+sotn: #"make clean && make -j extract && make -j build && make expected"
+decompile: #".venv/bin/python3 ./tools/decompile.py"
+differ: #".venv/bin/python3 ./tools/asm-differ/diff.py -mow3 --overlay"
+#/* End miscellaneous group */
 
-# Start expected group
+#/* Start expected group */
 patch:
 	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
 check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
@@ -192,9 +208,9 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
     }' | column --separator $$'\t' --table
 expected: check
 	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
-# End expected group
+#/* End expected group */
 
-# Start extract group
+#/* Start extract group */
 extract: extract_$(VERSION)
 force-extract:
 	-rm -rf /tmp/src_tmp
@@ -203,10 +219,10 @@ force-extract:
 	$(MAKE) extract
 	rm -rf src/
 	mv /tmp/src_tmp src
-# End extract group
+#/* End extract group */
 FORCE_SYMBOLS := $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
 
-# Start format group
+#/* Start format group */
 format: format-src format-tools format-symbols format-license
 
 .PHONY: format-src $(addprefix FORMAT_,$(FORMAT_SRC))
@@ -234,9 +250,9 @@ format-license:
 	$(call echo,Checking for license line in code files)
 	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
 	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
-# End format group
+#/* End format group */
 
-# Start extract-disk group
+#/* Start extract-disk group */
 extract-disk: extract-disk-$(VERSION)
 $(DEBUG).SILENT: extract-disk-us
 extract-disk-us: $(SOTNDISK)
@@ -247,9 +263,9 @@ $(addprefix extract-disk-, pspeu hd):
 extract-disk_saturn:
 	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)/sotn.$(VERSION).iso
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
-# End extract-disk group
+#/* End extract-disk group */
 
-# Start disk-prepare group
+#/* Start disk-prepare group */
 .PHONY: disk%
 $(DEBUG).SILENT: disk%
 disk: disk-prepare
@@ -268,9 +284,9 @@ disk-debug: disk-prepare
 	cd $(TOOLS_DIR)/sotn-debugmodule && make
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
-# End disk-prepare group
+#/* End disk-prepare group */
 
-# Start dump-disk group
+#/* Start dump-disk group */
 .PHONY: dump-disk% $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue
 dump-disk: dump-disk_$(VERSION)
 $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
@@ -288,9 +304,9 @@ $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-# End dump-disk group
+#/* End dump-disk group */
 
-# Start function-finder gruop
+#/* Start function-finder group */
 # Currently broken because of force-symbols
 .PHONY: function-finder duplicates-report
 function-finder: graphviz duplicates-report
@@ -313,9 +329,9 @@ duplicates-report: force-symbols force-extract
 	    cargo run --release -- \
             --threshold .90 \
             --output-file ../gh-duplicates/duplicates.txt
-# End function-finder group
+#/* End function-finder group */
 
-# Start dependency group
+#/* Start dependency group */
 .PHONY: update-dependencies dpendencies% git-submodules graphviz requirements%
 update-dependencies: $(DEPENDENCIES)
 	git clean -fd $(BIN_DIR)/
@@ -328,9 +344,9 @@ requirements-python: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 graphviz: $(VENV_DIR)
 	$(PIP) install --upgrade graphviz
-# End dependency group
+#/* End dependency group */
 
-# Start app install group
+#/* Start app install group */
 $(ASMDIFFER_APP):
 	git submodule update --init $(ASMDIFFER_DIR)
 $(M2C_APP):
@@ -355,7 +371,18 @@ $(SOTNDISK_APP): $(GO) $(shell find $(SOTNDISK_DIR) -type f -name '*.go')
 	rm $(SOTNDISK) || true; cd $(SOTNDISK_DIR); $(GO) install
 $(SOTNASSETS_APP): $(GO) $(shell find $(SOTNASSETS_DIR) -type f -name '*.go')
 	rm $(SOTNASSETS) || true; cd $(SOTNASSETS_DIR); $(GO) install
-# End app install group
+$(MASPSX_APP):
+	git submodule update --init $(MASPSX_DIR)
+$(WIBO):
+	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
+	sha256sum --check $(WIBO).sha256
+	chmod +x $(WIBO)
+$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
+$(MWCCGAP_APP):
+	git submodule update --init $(MWCCGAP_DIR)
+#/* End app install group */
+
+
 
 # this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'

@@ -35,17 +35,8 @@ OPT_HI_FUNCS = $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C9
 OPT_LEVEL = $(if $(filter $(notdir $@),$(OPT_HI_FUNCS)),-O4$(comma)p,-Op)
 
 build_pspeu: $(call get_targets)
-extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,st,bo)))
+extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
 $(call get_targets): %: $(BUILD_DIR)/%.bin
-
-$(WIBO):
-	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
-	sha256sum --check $(WIBO).sha256
-	chmod +x $(WIBO)
-$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
-
-$(MWCCGAP_APP):
-	git submodule update --init $(MWCCGAP_DIR)
 
 $(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf
 	$(OBJCOPY) -O binary $< $@
@@ -65,17 +56,6 @@ $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)
 	$(LD) -r -b binary -o $@ $<
-
-define get_merged_functions 
-$(shell $(PYTHON) -c 'import yaml;\
-import os;\
-yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
-config = yaml.safe_load(yaml_file);\
-yaml_file.close();\
-print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("$(1)/")]))')
-endef
-
-get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
 
 $(addprefix $(BUILD_DIR)/,$(addsuffix .elf,$(filter-out main,$(GAME)))): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_functions,%) $$(call list_o_files,%_psp)
 	$(call link,$*,$@)
