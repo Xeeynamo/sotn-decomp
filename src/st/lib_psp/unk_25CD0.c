@@ -455,10 +455,10 @@ void EntityLibrarianChair(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925EAF0);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B11A0);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925EBA0);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B1200);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925ED00);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B12D0);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_psp_0925F068);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B15C0);
