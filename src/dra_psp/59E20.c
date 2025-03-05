@@ -272,9 +272,81 @@ void func_8012CFF0(void) {
     D_800B0914 = 0;
 }
 
-// func_8012D024
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_091374D0);
-// func_8012D178
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137668);
+void func_8012D024(void) {
+    #ifdef VERSION_PSP
+    #define WOLF_CHARGE_BTN (PAD_SQUARE | PAD_CIRCLE)
+    #else
+    #define WOLF_CHARGE_BTN (PAD_SQUARE)
+    #endif
+
+    DecelerateX(FIX(1.0/8));
+    if (g_Player.padTapped & PAD_CROSS) {
+        func_8012CCE4();
+        return;
+    }
+    if (!(g_Player.pl_vram_flag & 1)) {
+        func_8012CED4();
+        return;
+    }
+    if (g_Player.padTapped & WOLF_CHARGE_BTN) {
+        func_8012CC30(0);
+        return;
+    }
+    if (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) {
+        func_8012CB4C();
+        return;
+    }
+    if (g_Player.padPressed & PAD_DOWN) {
+        func_8012CFF0();
+        return;
+    }
+    switch(D_800B0914) {
+        case 0:
+        if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
+            --D_800B0918 == 0) {
+            D_800B0914 = 1;
+            SetPlayerAnim(0xE9);
+        }
+        else if (g_Player.pl_vram_flag & 0x40) {
+            D_800B0914 = 1;
+            SetPlayerAnim(0xE9);
+        }
+        case 1:
+            return;
+    }
+}
+
+void func_8012D178(void) {
+    if (g_Player.padTapped & PAD_CROSS) {
+        func_8012CCE4();
+    } else if (!(g_Player.pl_vram_flag & 1)) {
+        func_8012CFA8();
+    } else {
+        #ifdef VERSION_US
+        if (PLAYER.facingLeft) {
+            if(g_Player.padPressed & PAD_LEFT){
+                func_8012CB4C();
+                return;
+            };
+        } else {
+            if(g_Player.padPressed & PAD_RIGHT){
+                func_8012CB4C();
+                return;
+            }
+        }
+        #else
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
+            func_8012CB4C();
+            return;
+        } 
+        #endif
+        if (g_Player.unk04 & 0x40) {
+            func_8012CA64();
+        } else if (g_GameTimer % 6 == 0) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
+        }
+    }
+}
+
 // func_8012D28C (confirmed)
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137748);
