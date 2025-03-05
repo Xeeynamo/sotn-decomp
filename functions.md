@@ -310,8 +310,8 @@
 | dra     | func_800EAD0C                       |       33 |          8 |        |                                 |       |
 | dra     | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib     | unk_3B200.rodata                    |       34 |          0 | Yes    |                                 |       |
-| st0     | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0     | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
+| st0     | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib     | GetDistanceToPlayerX                |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | no4     | func_psp_0925ACB0                   |       34 |          2 |        |                                 |       |
 | dra     | HasEnoughMp                         |       34 |          4 |        | https://decomp.me/scratch/ZUbXu | 0.68  |
@@ -370,7 +370,7 @@
 | no4     | func_psp_092441E8                   |       38 |          4 |        |                                 |       |
 | st0     | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | wrp     | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
-| lib     | func_psp_09267080                   |       38 |          7 |        |                                 |       |
+| lib     | func_psp_09267080                   |       38 |          7 |        | https://decomp.me/scratch/aO2L2 | 1.0   |
 | lib     | CreateEntityFromCurrentEntity       |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | lib     | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | lib     | GetAngleBetweenEntitiesShifted      |       39 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
@@ -679,7 +679,7 @@
 | dra     | func_8011B480                       |       72 |          7 |        | https://decomp.me/scratch/UO5p1 | 0.992 |
 | lib     | PlayerIsWithinHitbox                |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
 | st0     | PlayerIsWithinHitbox                |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
-| dra     | func_psp_09136D18                   |       72 |         14 |        |                                 |       |
+| dra     | func_psp_09136D18                   |       72 |         14 |        | https://decomp.me/scratch/UmyfT | 0.922 |
 | dra     | func_800EA720                       |       73 |          1 |        |                                 |       |
 | lib     | MakeEntityFromId                    |       73 |          4 |        |                                 |       |
 | dra     | func_psp_090ECD78                   |       73 |          7 |        |                                 |       |
@@ -888,7 +888,7 @@
 | dra     | EntityDiveKickAttack                |      112 |          9 |        |                                 |       |
 | dra     | func_psp_090EC380                   |      112 |          9 |        |                                 |       |
 | ric_psp | func_80156DE4                       |      112 |         11 |        |                                 |       |
-| lib     | func_psp_09266EE8                   |      112 |         18 |        |                                 |       |
+| lib     | func_psp_09266EE8                   |      112 |         18 |        | https://decomp.me/scratch/4U404 | 0.998 |
 | no4     | func_psp_09255F98                   |      113 |          5 |        |                                 |       |
 | no4     | func_psp_0925DA38                   |      113 |         10 |        |                                 |       |
 | lib     | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
