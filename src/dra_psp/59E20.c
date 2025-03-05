@@ -180,8 +180,25 @@ void func_8012CB4C(void) {
     }
 }
 
-// func_8012CC30
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137038);
+void func_8012CC30(s32 arg0) {
+    if (arg0 == 0) {
+        D_80138444 = 1;
+        if (g_ButtonCombo[COMBO_QCF].buttonsCorrect == COMBO_COMPLETE &&
+            IsRelicActive(RELIC_SKILL_OF_WOLF) &&
+            CastSpell(SPELL_WOLF_CHARGE)) {
+            CheckMoveDirection();
+            PLAYER.step_s = 2;
+            D_800B0914 = 4;
+            SetSpeedX(FIX(5));
+            g_CurrentEntity->velocityY = 0;
+            SetPlayerAnim(0xED);
+            LearnSpell(SPELL_WOLF_CHARGE);
+        }
+    } else {
+        D_80138444 = 1;
+    }
+}
+
 // func_8012CCE4
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137110);
 // func_8012CED4
