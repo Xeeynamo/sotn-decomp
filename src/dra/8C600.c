@@ -3,11 +3,11 @@
 #include "dra_bss.h"
 
 void func_8012C600(void) {
-    #ifdef VERSION_PSP
+#ifdef VERSION_PSP
     const limiting_value = 0x13;
-    #else
+#else
     const limiting_value = 0x14;
-    #endif
+#endif
 
     s32 x, y;
     s32 i;
@@ -106,7 +106,7 @@ bool WolfFormFinished(void) {
 }
 
 void func_8012C97C(void) {
-    if (g_Entities[PLAYER_CHARACTER].step_s == 0 || 
+    if (g_Entities[PLAYER_CHARACTER].step_s == 0 ||
         g_Entities[PLAYER_CHARACTER].step_s == 8 ||
         g_Entities[PLAYER_CHARACTER].step_s == 9) {
         return;
@@ -177,7 +177,7 @@ void func_8012CB4C(void) {
 
         // This is a weird phantom call that only happens on PSP.
         abs(PLAYER.velocityX < FIX(2));
-        
+
         SetSpeedX(FIX(2));
     } else {
         SetPlayerAnim(0xE0);
@@ -279,13 +279,13 @@ void func_8012CFF0(void) {
 }
 
 void func_8012D024(void) {
-    #ifdef VERSION_PSP
-    #define WOLF_CHARGE_BTN (PAD_SQUARE | PAD_CIRCLE)
-    #else
-    #define WOLF_CHARGE_BTN (PAD_SQUARE)
-    #endif
+#ifdef VERSION_PSP
+#define WOLF_CHARGE_BTN (PAD_SQUARE | PAD_CIRCLE)
+#else
+#define WOLF_CHARGE_BTN (PAD_SQUARE)
+#endif
 
-    DecelerateX(FIX(1.0/8));
+    DecelerateX(FIX(1.0 / 8));
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
         return;
@@ -306,19 +306,18 @@ void func_8012D024(void) {
         func_8012CFF0();
         return;
     }
-    switch(D_800B0914) {
-        case 0:
+    switch (D_800B0914) {
+    case 0:
         if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
             --D_800B0918 == 0) {
             D_800B0914 = 1;
             SetPlayerAnim(0xE9);
-        }
-        else if (g_Player.pl_vram_flag & 0x40) {
+        } else if (g_Player.pl_vram_flag & 0x40) {
             D_800B0914 = 1;
             SetPlayerAnim(0xE9);
         }
-        case 1:
-            return;
+    case 1:
+        return;
     }
 }
 
@@ -328,24 +327,24 @@ void func_8012D178(void) {
     } else if (!(g_Player.pl_vram_flag & 1)) {
         func_8012CFA8();
     } else {
-        #ifdef VERSION_US
+#ifdef VERSION_US
         if (PLAYER.facingLeft) {
-            if(g_Player.padPressed & PAD_LEFT){
+            if (g_Player.padPressed & PAD_LEFT) {
                 func_8012CB4C();
                 return;
             }
         } else {
-            if(g_Player.padPressed & PAD_RIGHT){
+            if (g_Player.padPressed & PAD_RIGHT) {
                 func_8012CB4C();
                 return;
             }
         }
-        #else
+#else
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
             func_8012CB4C();
             return;
-        } 
-        #endif
+        }
+#endif
         if (g_Player.unk04 & 0x40) {
             func_8012CA64();
         } else if (g_GameTimer % 6 == 0) {
@@ -404,4 +403,3 @@ void func_8012D28C(bool exitEarly) {
         PLAYER.velocityY = FIX(-3.5);
     }
 }
-

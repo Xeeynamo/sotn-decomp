@@ -185,7 +185,7 @@ typedef enum {
     PAD_RIGHT = 0x2000,
     PAD_DOWN = 0x4000,
     PAD_LEFT = 0x8000,
-    #define BTN_WOLF PAD_R2
+#define BTN_WOLF PAD_R2
 #endif
     PAD_SIM_UNK20000 = 0x20000,
     // Game Buttons unofficially refers to buttons used in playing the game.
