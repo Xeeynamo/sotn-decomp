@@ -161,7 +161,7 @@ force_symbols: $(addprefix FORCE_,$(FORCE_SYMBOLS))
 extract_disk: extract_disk_$(VERSION)
 
 format: format-src format-tools format-symbols format-license
-format-tools: $(PY_TOOLS_SUBDIRS)
+format-tools: $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
 format-symbols: $(addprefix format-symbols-,us hd pspeu saturn) $(addprefix REMOVE_,$(REMOVE_ORPHANS))
 format-src: $(addprefix FORMAT_,$(FORMAT_FILES))
 	cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)
@@ -189,13 +189,13 @@ endif
 .PHONY: $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
 .PHONY: $(addprefix REMOVE_,$(REMOVE_ORPHANS))
 .PHONY: $(addprefix FORCE_,$(FORCE_SYMBOLS))
-$(addprefix CLEAN_,$(WHAT_TO_CLEAN)):
-	$(call echo,Cleaning $@)
-	git clean -fdx $@
+$(addprefix CLEAN_,$(WHAT_TO_CLEAN)): CLEAN_%:
+	$(call echo,Cleaning $*)
+	git clean -fdx $*
 $(addprefix FORMAT_,$(FORMAT_FILES)): FORMAT_%: $(CLANG)
 	$(CLANG) -i $*
 $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS)): FORMAT_%:
-	$(call echo,Formatting $@*.py); $(BLACK) $@*.py
+	$(call echo,Formatting $**.py); $(BLACK) $**.py
 $(addprefix REMOVE_,$(REMOVE_ORPHANS)): REMOVE_%:
 	$(call echo,Removing orphan symbols from $*); $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
 # This is currently intentionally hard coded to us because the us files are used for functions in other versions
