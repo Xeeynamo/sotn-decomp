@@ -763,7 +763,7 @@
 | st0     | EntityDraculaBody                   |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | st0     | EntitySecretStairsCeiling           |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra     | func_psp_090E4828                   |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
-| dra     | TimeAttackController                |       89 |          8 |        |                                 |       |
+| dra     | TimeAttackController                |       89 |          8 |        | https://decomp.me/scratch/zoZnO | 0.994 |
 | dra     | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
 | dra     | func_psp_0910E378                   |       89 |         11 |        |                                 |       |
 | ric_psp | func_8015BB80                       |       89 |         11 |        |                                 |       |
