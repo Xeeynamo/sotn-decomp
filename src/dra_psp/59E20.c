@@ -99,8 +99,37 @@ bool WolfFormFinished(void) {
     return false;
 }
 
-// func_8012C97C
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136D18);
+void func_8012C97C(void) {
+    if (g_Entities[PLAYER_CHARACTER].step_s == 0 || 
+        g_Entities[PLAYER_CHARACTER].step_s == 8 ||
+        g_Entities[PLAYER_CHARACTER].step_s == 9) {
+        return;
+    }
+    if (D_80097448[1] <= 12) {
+        return;
+    }
+    if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
+        return;
+    }
+    if (!IsRelicActive(RELIC_SKILL_OF_WOLF)) {
+        return;
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        return;
+    }
+    if (!(g_Player.padPressed & PAD_TRIANGLE)) {
+        return;
+    }
+    if (D_80138440 != 0) {
+        return;
+    }
+
+    PLAYER.step_s = 9;
+    D_800B0914 = 0;
+    SetPlayerAnim(0xEC);
+    PLAYER.velocityY = 0;
+}
+
 // func_8012CA64
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136E18);
 // func_8012CB0C
