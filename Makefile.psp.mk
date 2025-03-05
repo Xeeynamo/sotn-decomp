@@ -71,7 +71,7 @@ $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(LD) -r -b binary -o $@ $<
 
 define get_merged_functions 
-$(shell $(INLINE_PYTHON) 'import yaml;\
+$(shell $(PYTHON) -c 'import yaml;\
 import os;\
 yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
 config = yaml.safe_load(yaml_file);\

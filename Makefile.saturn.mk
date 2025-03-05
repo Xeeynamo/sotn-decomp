@@ -30,7 +30,6 @@ ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-e
 
 PCM_FILES 			:= $(wildcard $(EXTRACTED_DISK_DIR)/SD/*.PCM)
 WAV_FILES 			:= $(patsubst $(EXTRACTED_DISK_DIR)/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(PCM_FILES))
-DEPENDENCIES		+= $(SATURN_SPLITTER_APP) $(DOSEMU)
 
 .PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))

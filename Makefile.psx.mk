@@ -49,8 +49,6 @@ MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
-DEPENDENCIES	+= $(MASPSX_APP) 
-
 WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
 WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
 WEAPON_DIRS   := $(addprefix $(BUILD_DIR)/, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
