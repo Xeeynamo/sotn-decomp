@@ -465,7 +465,34 @@ void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B1200);
+void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
+    prim->x0 = otherPrim->x0;
+    prim->y0 = otherPrim->y0;
+    prim->x1 = otherPrim->x1;
+    prim->y1 = otherPrim->y1;
+    prim->drawMode = DRAW_DEFAULT;
+
+    prim = prim->next;
+    prim->x0 = otherPrim->x1;
+    prim->y0 = otherPrim->y1;
+    prim->x1 = otherPrim->x3;
+    prim->y1 = otherPrim->y3;
+    prim->drawMode = DRAW_DEFAULT;
+
+    prim = prim->next;
+    prim->x0 = otherPrim->x0;
+    prim->y0 = otherPrim->y0;
+    prim->x1 = otherPrim->x2;
+    prim->y1 = otherPrim->y2;
+    prim->drawMode = DRAW_DEFAULT;
+
+    prim = prim->next;
+    prim->x0 = otherPrim->x2;
+    prim->y0 = otherPrim->y2;
+    prim->x1 = otherPrim->x3;
+    prim->y1 = otherPrim->y3;
+    prim->drawMode = DRAW_DEFAULT;
+}
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B12D0);
 
