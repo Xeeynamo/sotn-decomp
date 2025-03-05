@@ -128,11 +128,11 @@ define link
 	$(LD) $(LD_FLAGS) -o $(2) \
 		$(call if_version,pspeu,--gc-sections) \
 		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
+		-T $(BUILD_DIR)/$(subst _fix,,$1).ld \
 		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
 		-T $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt \
-		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad,$(1)),$(VERSION).)$(1).txt)
+		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad stmad_fix,$(1)),.$(VERSION)).$(subst _fix,,$(1)).txt \
+		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad stmad_fix,$(1)),$(VERSION).)$(subst _fix,,$(1)).txt)
 endef
 
 define get_merged_functions 
@@ -167,6 +167,10 @@ build: build_$(VERSION)
 #/* End build group */
 
 #/* Start miscellaneous group */
+mad_fix: build extract $$(call list_o_files,st/mad,_st) $$(call list_o_files,st,_shared) | stmad_dirs
+	$(call link,stmad_fix,$@)
+	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
+
 .PHONY: clean $(addprefix CLEAN_,$(CLEAN_FILES))
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
