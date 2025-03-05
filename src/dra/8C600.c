@@ -4,9 +4,9 @@
 
 void func_8012C600(void) {
 #ifdef VERSION_PSP
-    const limiting_value = 0x13;
+    const s32 limiting_value = 0x13;
 #else
-    const limiting_value = 0x14;
+    const s32 limiting_value = 0x14;
 #endif
 
     s32 x, y;
