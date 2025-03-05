@@ -3,6 +3,12 @@
 #include "../dra/dra_bss.h"
 
 void func_8012C600(void) {
+    #ifdef VERSION_PSP
+    const limiting_value = 0x13;
+    #else
+    const limiting_value = 0x14;
+    #endif
+
     s32 x, y;
     s32 i;
     s32 t0 = PLAYER.posX.i.hi;
@@ -65,12 +71,12 @@ void func_8012C600(void) {
         if (D_8013AEBC[2] < -0x2C) {
             D_8013AEBC[2] = -0x2C;
         }
-        if (D_8013AEBC[0] > 0x13) {
-            D_8013AEBC[0] = 0x13;
+        if (D_8013AEBC[0] > limiting_value) {
+            D_8013AEBC[0] = limiting_value;
         }
     } else {
-        if (D_8013AEBC[2] < -0x13) {
-            D_8013AEBC[2] = -0x13;
+        if (D_8013AEBC[2] < -limiting_value) {
+            D_8013AEBC[2] = -limiting_value;
         }
         if (D_8013AEBC[0] > 0x2C) {
             D_8013AEBC[0] = 0x2C;
@@ -83,7 +89,7 @@ bool WolfFormFinished(void) {
         return false;
     }
     if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
-        g_Player.padTapped & PAD_L1 ||
+        g_Player.padTapped & BTN_WOLF ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
         SetPlayerAnim(0xCA);
@@ -327,7 +333,7 @@ void func_8012D178(void) {
             if(g_Player.padPressed & PAD_LEFT){
                 func_8012CB4C();
                 return;
-            };
+            }
         } else {
             if(g_Player.padPressed & PAD_RIGHT){
                 func_8012CB4C();

@@ -185,12 +185,21 @@ typedef enum {
     PAD_RIGHT = 0x2000,
     PAD_DOWN = 0x4000,
     PAD_LEFT = 0x8000,
+    #define BTN_WOLF PAD_R2
 #endif
     PAD_SIM_UNK20000 = 0x20000,
     // Game Buttons unofficially refers to buttons used in playing the game.
     // Any button except start or select.
     GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
 } PlayerPad;
+
+// PSP only has one shoulder button on each side, so its default transform
+// controls are different. This captures those.
+#ifdef VERSION_PSP
+#define BTN_WOLF PAD_L1
+#else
+#define BTN_WOLF PAD_R2
+#endif
 
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
