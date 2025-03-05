@@ -199,8 +199,45 @@ void func_8012CC30(s32 arg0) {
     }
 }
 
-// func_8012CCE4
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137110);
+void func_8012CCE4(void) {
+    PLAYER.velocityY = FIX(-3.5);
+    if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
+        SetPlayerAnim(0xE7);
+        if (PLAYER.facingLeft) {
+            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
+            }
+            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+                PLAYER.velocityY = FIX(-0.5);
+            }
+        } else {
+            if ((g_Player.pl_vram_flag & 0xF000) == 0x8000) {
+                PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
+            }
+            if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
+                PLAYER.velocityY = FIX(-0.5);
+            }
+        }
+        D_800B0914 = 2;
+    } else if (
+        (g_Player.padPressed & (PAD_RIGHT | PAD_LEFT)) &&
+        ((PLAYER.step_s != 2) || (D_800B0914 != 0)) && (PLAYER.step_s != 9)) {
+        SetPlayerAnim(0xE7);
+        D_800B0914 = 1;
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.velocityY = FIX(-4.875);
+        }
+    } else {
+        SetPlayerAnim(0xE6);
+        D_800B0914 = 0;
+        if (g_Player.padPressed & PAD_UP) {
+            PLAYER.velocityY = FIX(-4.875);
+        }
+    }
+    PLAYER.step_s = 4;
+    D_80138430 += 0x80;
+}
+
 // func_8012CED4
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137358);
 // func_8012CFA8
