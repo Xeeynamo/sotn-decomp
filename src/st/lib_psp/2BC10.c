@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_092636F8);
-
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_09263810);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/2BC10", func_psp_092644E0);

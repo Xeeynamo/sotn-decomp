@@ -78,7 +78,7 @@ segments:
       - [0x25CD0, c, lib/st_debug]
       - [0x25DB0, c, lib_psp/unk_25CD0]
       - [0x290C8, c, lib_psp/e_shop]
-      - [0x2C078, c, lib_psp/2BC10]
+      - [0x2C190, c, lib_psp/2BC10]
       - [0x35798, c, lib/e_lock_camera]
       - [0x35F60, c, lib/unk_3B200]
       - [0x36428, c, lib/e_candle_table]
