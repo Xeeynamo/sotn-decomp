@@ -54,6 +54,7 @@ EXPECTED_DIR	:= expected/$(BUILD_DIR)
 # Files
 CHECK_FILES := $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS := D_801*.bin *.gfxbin *.palbin cutscene_*.bin
+CLEAN_FILES := $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
 
 # Toolchain related variables
 # Compilers
@@ -100,14 +101,9 @@ SOTNASSETS_DIR	:= $(TOOLS_DIR)/sotn-assets
 SOTNASSETS_APP  := bin/sotn-assets
 SOTNASSETS      := $(GOPATH)/$(SOTNASSETS_APP)
 
-WHAT_TO_CLEAN := $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
-
+# File exclusions
 FORMAT_SRC_IGNORE := src/pc/3rd/cJSON/cJSON.c src/pc/3rd/cJSON/cJSON.h
-FORMAT_FILES := $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,src/ include/,*.c *.h))
-ORPHAN_EXCLUDE 	:= splat.us.weapon assets.hd assets.us
-REMOVE_ORPHANS 	:= $(filter-out $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(ORPHAN_EXCLUDE))), $(wildcard config/*.yaml))
-FORCE_SYMBOLS := $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
-
+REMOVE_ORPHANS_IGNORE 	:= splat.us.weapon assets.hd assets.us
 
 # Use $(call get_targets) when the non-prefixed name is needed
 # Use $(call get_targets,st,bo) when stages and bosses need to be prefixed
@@ -151,30 +147,26 @@ else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
 
-.PHONY: all build extract clean format% patch check force_extract force% extract_disk% test
-$(DEBUG).SILENT: all build extract clean format% patch check force_extract force% extract_disk% test
+.PHONY: all build%
+$(DEBUG).SILENT: all build%
 all: build check
-extract: extract_$(VERSION)
+# Start build group
 build: build_$(VERSION)
-clean: $(addprefix CLEAN_,$(WHAT_TO_CLEAN))
-force_symbols: $(addprefix FORCE_,$(FORCE_SYMBOLS))
-extract_disk: extract_disk_$(VERSION)
+# End build group
 
-format: format-src format-tools format-symbols format-license
-format-tools: $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
-format-symbols: $(addprefix format-symbols-,us hd pspeu saturn) $(addprefix REMOVE_,$(REMOVE_ORPHANS))
-format-src: $(addprefix FORMAT_,$(FORMAT_FILES))
-	cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)
-format-symbols-%:
-	$(call echo,Sorting $* symbols); VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
-format-license:
-	$(call echo,Checking for license line in code files)
-	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
-	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
-patch:
-	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
-expected: check
-	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
+# Start miscellaneous group
+.PHONY: clean $(addprefix CLEAN_,$(CLEAN_FILES))
+clean: $(addprefix CLEAN_,$(CLEAN_FILES))
+$(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
+	$(call echo,Cleaning $*)
+	git clean -fdx $*
+
+.PHONY: force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS))
+force-symbols: $(addprefix FORCE_,$(FORCE_SYMBOLS))
+# This is currently intentionally hard coded to us because the us files are used for functions in other versions
+$(addprefix FORCE_,$(FORCE_SYMBOLS)): FORCE_%:
+	$(call echo,Extracting symbols for $*);$(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
+
 test:
 	$(PYTHON) $(TOOLS_DIR)/symbols_test.py
 context:
@@ -183,25 +175,11 @@ ifndef SOURCE
 endif
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	$(call echo,ctx.c has been updated.)
+# End miscellaneous group
 
-.PHONY: $(addprefix CLEAN_,$(WHAT_TO_CLEAN))
-.PHONY: $(addprefix FORMAT_,$(FORMAT_FILES))
-.PHONY: $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
-.PHONY: $(addprefix REMOVE_,$(REMOVE_ORPHANS))
-.PHONY: $(addprefix FORCE_,$(FORCE_SYMBOLS))
-$(addprefix CLEAN_,$(WHAT_TO_CLEAN)): CLEAN_%:
-	$(call echo,Cleaning $*)
-	git clean -fdx $*
-$(addprefix FORMAT_,$(FORMAT_FILES)): FORMAT_%: $(CLANG)
-	$(CLANG) -i $*
-$(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS)): FORMAT_%:
-	$(call echo,Formatting $**.py); $(BLACK) $**.py
-$(addprefix REMOVE_,$(REMOVE_ORPHANS)): REMOVE_%:
-	$(call echo,Removing orphan symbols from $*); $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
-# This is currently intentionally hard coded to us because the us files are used for functions in other versions
-$(addprefix FORCE_,$(FORCE_SYMBOLS)): FORCE_%:
-	$(call echo,Extracting symbols for $*);$(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
-
+# Start expected group
+patch:
+	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
 check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
         printf "%s\t[ ", $$1; \
@@ -212,51 +190,91 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha patch $(CHECK_FILES)
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
     }' | column --separator $$'\t' --table
+expected: check
+	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
+# End expected group
 
-force_extract:
+# Start extract group
+extract: extract_$(VERSION)
+force-extract:
 	-rm -rf /tmp/src_tmp
 	mv src /tmp/src_tmp
 	find $(BUILD_DIR) -type f -name "*.ld" -delete
 	$(MAKE) extract
 	rm -rf src/
 	mv /tmp/src_tmp src
+# End extract group
+FORCE_SYMBOLS := $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
 
-# Start extract_disk group
-$(DEBUG).SILENT: extract_disk_us
-extract_disk_us: $(SOTNDISK)
+# Start format group
+format: format-src format-tools format-symbols format-license
+
+.PHONY: format-src $(addprefix FORMAT_,$(FORMAT_SRC))
+FORMAT_SRC := $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,src/ include/,*.c *.h))
+format-src: $(addprefix FORMAT_,$(FORMAT_SRC))
+	cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)
+$(addprefix FORMAT_,$(FORMAT_SRC)): FORMAT_%: $(CLANG)
+	$(CLANG) -i $*
+
+.PHONY: format-tools $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
+format-tools: $(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS))
+$(addprefix FORMAT_,$(PY_TOOLS_SUBDIRS)): FORMAT_%:
+	$(call echo,Formatting $**.py); $(BLACK) $**.py
+
+.PHONY: format-symbols% $(addprefix REMOVE_,$(FORMAT_SYMBOLS))
+FORMAT_SYMBOLS 	:= $(filter-out $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(REMOVE_ORPHANS_IGNORE))), $(wildcard config/*.yaml))
+format-symbols: $(addprefix format-symbols-,us hd pspeu saturn) $(addprefix REMOVE_,$(FORMAT_SYMBOLS))
+format-symbols-%:
+	$(call echo,Sorting $* symbols); VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
+$(addprefix REMOVE_,$(FORMAT_SYMBOLS)): REMOVE_%:
+	$(call echo,Removing orphan symbols from $*); $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
+
+.PHONY: format-license
+format-license:
+	$(call echo,Checking for license line in code files)
+	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
+	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
+# End format group
+
+# Start extract-disk group
+extract-disk: extract-disk-$(VERSION)
+$(DEBUG).SILENT: extract-disk-us
+extract-disk-us: $(SOTNDISK)
 	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
-$(addprefix extract_disk_, pspeu hd):
+$(addprefix extract-disk-, pspeu hd):
 	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
 	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
-extract_disk_saturn:
+extract-disk_saturn:
 	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)/sotn.$(VERSION).iso
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
-# End extract_disk group
-# Start disk_prepare group
+# End extract-disk group
+
+# Start disk-prepare group
 .PHONY: disk%
 $(DEBUG).SILENT: disk%
-disk: disk_prepare
+disk: disk-prepare
 	$(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
-disk_prepare  = $(1)/$(1).BIN $(1)/F_$(1).BIN
+disk-prepare  = $(1)/$(1).BIN $(1)/F_$(1).BIN
 DISK_PREPARE := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
-DISK_PREPARE += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call disk_prepare,$(call to_upper,$(target)))))
-DISK_PREPARE += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call disk_prepare,$(call to_upper,$(target)))))
+DISK_PREPARE += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call disk-prepare,$(call to_upper,$(target)))))
+DISK_PREPARE += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call disk-prepare,$(call to_upper,$(target)))))
 DISK_PREPARE += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
-disk_prepare: build $(SOTNDISK)
+disk-prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR)
 	cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
 	$(foreach item,$(DISK_PREPARE),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
-disk_debug: disk_prepare
+disk-debug: disk-prepare
 	cd $(TOOLS_DIR)/sotn-debugmodule && make
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
-# End disk_prepare group
-# Start dump_disk group
-.PHONY: dump_disk% $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue
-dump_disk: dump_disk_$(VERSION)
-$(addprefix dump_disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
-dump_disk_%:
+# End disk-prepare group
+
+# Start dump-disk group
+.PHONY: dump-disk% $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue
+dump-disk: dump-disk_$(VERSION)
+$(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
+dump-disk_%:
 	$(error Automated dumping of $* is not supported)
 $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
 	@( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
@@ -270,9 +288,10 @@ $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-# End dump_disk group
+# End dump-disk group
+
 # Start function-finder gruop
-# Currently broken because of force_symbols
+# Currently broken because of force-symbols
 .PHONY: function-finder duplicates-report
 function-finder: graphviz duplicates-report
 	-$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
@@ -286,8 +305,8 @@ function-finder: graphviz duplicates-report
 	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
 	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
 
-# Currently broken because of force_symbols
-duplicates-report: force_symbols force_extract
+# Currently broken because of force-symbols
+duplicates-report: force-symbols force-extract
 	$(PYTHON) $(TOOLS_DIR)/function_finder/fix_matchings.py
 	mkdir -p $(TOOLS_DIR)/gh-duplicates
 	cd $(TOOLS_DIR)/dups; \
@@ -295,6 +314,7 @@ duplicates-report: force_symbols force_extract
             --threshold .90 \
             --output-file ../gh-duplicates/duplicates.txt
 # End function-finder group
+
 # Start dependency group
 .PHONY: update-dependencies dpendencies% git-submodules graphviz requirements%
 update-dependencies: $(DEPENDENCIES)
@@ -309,6 +329,7 @@ requirements-python: $(VENV_DIR)
 graphviz: $(VENV_DIR)
 	$(PIP) install --upgrade graphviz
 # End dependency group
+
 # Start app install group
 $(ASMDIFFER_APP):
 	git submodule update --init $(ASMDIFFER_DIR)
@@ -376,13 +397,13 @@ clean: ##@ clean extracted files, assets, and build artifacts
 help: ##@ Print listing of key targets with their descriptions
 format: ##@ Format source code, clean symbols, other linting
 check: ##@ compare built files to original game files
-force_symbols: ##@ Extract a full list of symbols from a successful build
+force-symbols: ##@ Extract a full list of symbols from a successful build
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
-extract_disk: ##@ Extract game files from a disc image.
+extract-disk: ##@ Extract game files from a disc image.
 update-dependencies: ##@ update tools and internal dependencies
 
 ##@
 ##@ Disc Dumping Targets
 ##@
 
-dump_disk: ##@ dump a physical game disk
+dump-disk: ##@ dump a physical game disk
