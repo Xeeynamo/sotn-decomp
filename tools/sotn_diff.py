@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 
+"""
+example usage:
+sotn_diff.py -b LIB.BIN -m stlib.map
+example usage: sotn_diff.py --version=pspeu -b dra.bin -m dra.map
+"""
+
 import argparse
 import os
 from pathlib import Path
