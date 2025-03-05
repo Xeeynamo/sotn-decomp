@@ -455,7 +455,15 @@ void EntityLibrarianChair(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B11A0);
+void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
+    RECT rect;
+
+    rect.x = x / 4;
+    rect.y = y;
+    rect.w = w / 4 + 1;
+    rect.h = h + 1;
+    ClearImage(&rect, 0, 0, 0);
+}
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/unk_25CD0", func_us_801B1200);
 
