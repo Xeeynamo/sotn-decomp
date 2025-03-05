@@ -130,8 +130,27 @@ void func_8012C97C(void) {
     PLAYER.velocityY = 0;
 }
 
-// func_8012CA64
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136E18);
+void func_8012CA64(void) {
+    s32 anim = 0xDE;
+
+    PLAYER.step_s = 1;
+    D_800B0914 = 0;
+
+    if (g_Player.pl_vram_flag & 0x20) {
+        anim++;
+    }
+    SetPlayerAnim(anim);
+
+    PLAYER.velocityX /= 2;
+    PLAYER.velocityY = 0;
+
+    D_800B0918 = 0x200;
+    if (g_Player.pl_vram_flag & 0x40) {
+        D_800B0914 = 1;
+        SetPlayerAnim(0xE9);
+    }
+}
+
 // func_8012CB0C
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136EE0);
 // func_8012CB4C
