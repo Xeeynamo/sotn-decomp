@@ -1111,9 +1111,9 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
     return &pix[(size << 4) << 1];
 }
 
-void func_us_801B0FBC(u8* str, u16 x, u16 y) {
+void func_us_801B0FBC(const char* str, u16 x, u16 y) {
     RECT rect;
-    u8 ch;
+    char ch;
 
 loop:
     ch = *str++;
@@ -2603,11 +2603,11 @@ static u8 D_us_80181650[] = {0x00, 0x00, 0x00, 0x00, 0x32, 0x2C, 0x32, 0x2C};
 static u8 D_us_80181658[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x12, 0x11, 0x11, 0x12};
 
 #ifdef VERSION_PSP
-extern u8* D_us_80181660;
+extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
 #else
-static u8 D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
 static char D_us_80181668[] = {
     // clang-format off
     CH('S'), CH('T'), CH('R'), 
@@ -2943,7 +2943,7 @@ void func_us_801B4830(Entity* self) {
     s32 j;
     s32 count;
     u16* var_s4;
-    char* name;
+    const char* name;
     Entity* tempEntity;
     u8* unused;
 

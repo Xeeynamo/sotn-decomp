@@ -1112,3 +1112,5 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         prim = prim->next;
     }
 }
+
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4830);
