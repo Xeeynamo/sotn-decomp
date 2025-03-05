@@ -151,10 +151,35 @@ void func_8012CA64(void) {
     }
 }
 
-// func_8012CB0C
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136EE0);
-// func_8012CB4C
-INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09136F30);
+void func_8012CB0C(void) {
+    PLAYER.velocityY = 0;
+    PLAYER.animFrameDuration = PLAYER.animFrameIdx = D_800B0914 = 0;
+    PLAYER.ext.player.anim = 0xDE;
+    PLAYER.step_s = 7;
+}
+
+void func_8012CB4C(void) {
+    PLAYER.step_s = 2;
+    if ((PLAYER.facingLeft && g_Player.padPressed & PAD_RIGHT) ||
+        (!PLAYER.facingLeft && g_Player.padPressed & PAD_LEFT)) {
+        SetPlayerAnim(0xE1);
+        D_800B0914 = 0;
+        D_8013842C = 0;
+    } else if (D_8013842C != 0) {
+        SetPlayerAnim(0xE2);
+        D_800B0914 = 2;
+
+        // This is a weird phantom call that only happens on PSP.
+        abs(PLAYER.velocityX < FIX(2));
+        
+        SetSpeedX(FIX(2));
+    } else {
+        SetPlayerAnim(0xE0);
+        D_800B0914 = 1;
+        D_8013842C = 0xC;
+    }
+}
+
 // func_8012CC30
 INCLUDE_ASM("dra_psp/psp/dra_psp/59E20", func_psp_09137038);
 // func_8012CCE4
