@@ -1851,7 +1851,7 @@ typedef struct {
     /* 80072F9A */ u16 unk7A;
     /* 80072F9C */ u16 unk7C;
     /* 80072F9E */ u16 unk7E;
-} PlayerState;
+} PlayerState; /* size = 0x3D0 */
 
 // Primitive used ad-hoc for the Player entity and the after-image effect
 typedef struct {
