@@ -114,10 +114,6 @@ segments:
       - [0x507F0, c, dra/7E4BC]
       - [0x59E20, c, dra/8C600]
       - [0x5AF80, c, dra_psp/5AF80]
-      - [0x5B8C0, c, dra_psp/5B8C0]
-      - [0x5BC80, c, dra_psp/5BC80]
-      - [0x5C420, c, dra_psp/5C420]
-      - [0x5DA20, c, dra_psp/5DA20]
       - [0x5EC50, c, dra_psp/5EC50]
       - [0x60C90, c, dra_psp/60C90]
       - [0x60D80, c, dra_psp/60D80] # O0
@@ -184,8 +180,7 @@ segments:
       - [0xEE8B8, .rodata, dra/8A0A4]
       - [0xEE8D8, .rodata, dra/7879C]
       - [0xEEB28, .rodata, dra/7E4BC]
-      - [0xEEC30, .rodata, dra_psp/5C420]
-      - [0xEEC58, .rodata, dra_psp/5DA20]
+      - [0xEEC30, .rodata, dra_psp/5AF80]
       - [0xEECA8, .rodata, dra_psp/5EC50]
       - [0xEED48, .rodata, dra_psp/65790]
       - { type: bss, vram: 0x91CB700 }
