@@ -763,7 +763,7 @@
 | st0     | EntityDraculaBody                   |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | st0     | EntitySecretStairsCeiling           |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra     | func_psp_090E4828                   |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
-| dra     | TimeAttackController                |       89 |          8 |        | https://decomp.me/scratch/zoZnO | 0.994 |
+| dra     | TimeAttackController                |       89 |          8 |        |                                 |       |
 | dra     | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
 | dra     | func_psp_0910E378                   |       89 |         11 |        |                                 |       |
 | ric_psp | func_8015BB80                       |       89 |         11 |        |                                 |       |
@@ -1350,7 +1350,7 @@
 | dra     | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra     | func_psp_090DCD28                   |      639 |        101 |        |                                 |       |
 | lib     | func_psp_092644E0                   |      642 |         61 | Yes    | https://decomp.me/scratch/6FuJt | 0.996 |
-| dra     | func_psp_09137900                   |      646 |        129 |        |                                 |       |
+| dra     | func_psp_09137900                   |      646 |        129 |        | https://decomp.me/scratch/UgjUb | 0.97  |
 | lib     | func_psp_09258100                   |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
 | ric_psp | RicEntityAguneaCircle               |      655 |         49 | Yes    |                                 |       |
 | lib     | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
@@ -1408,7 +1408,7 @@
 | lib     | EntityLifeUpSpawn                   |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | no4     | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
 | st0     | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
-| st0     | func_801AF774                       |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.448 |
+| st0     | func_801AF774                       |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.998 |
 | lib     | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
 | lib     | func_psp_09263810                   |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
 | st0     | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
