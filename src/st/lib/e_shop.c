@@ -72,39 +72,6 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
-static SVECTOR D_us_80180DF0 = {.vx = 0, .vy = 0, .vz = 0x400};
-// clang-format off
-static u8 D_us_80180DF8[] = {
-    0x00, 0xF0, 0xF0, 0xF0, 0x00,
-    0x00, 0xC0, 0xF0, 0xC0, 0x00,
-    0x00, 0x40, 0x80, 0x40, 0x00,
-    0x00, 0x20, 0x20, 0x20, 0x00,
-    0x00, 0x20, 0x20, 0x20, 0x00};
-static u8 D_us_80180E14[] = {
-    0x40, 0x20, 0x60, 0xA0, 0x20,
-    0x50, 0x30, 0x70, 0xB0, 0x30,
-    0x60, 0x40, 0x80, 0xC0, 0x40,
-    0x70, 0x50, 0x90, 0xD0, 0x50,
-    0x80, 0x60, 0xA0, 0xE0, 0x60};
-static u8 D_us_80180E30[] = {
-    0x40, 0x20, 0x60, 0xA0, 0x20,
-    0x50, 0x30, 0x70, 0xB0, 0x30,
-    0x60, 0x40, 0x80, 0xC0, 0x40,
-    0x70, 0x50, 0x90, 0xD0, 0x50,
-    0x80, 0x60, 0xA0, 0xE0, 0x60};
-static u8 D_us_80180E4C[] = {
-    0x00, 0xC0, 0xF0, 0xC0, 0x00,
-    0x00, 0x60, 0x60, 0x60, 0x00,
-    0x00, 0x40, 0x80, 0x40, 0x00,
-    0x00, 0x20, 0x20, 0x20, 0x00,
-    0x00, 0x20, 0x20, 0x20, 0x00};
-// clang-format on
-static u8* D_us_80180E68[] = {
-    D_us_80180DF8, D_us_80180E14, D_us_80180E30, D_us_80180E4C};
-static Point16 D_us_80180E78[] = {
-    {0x000, 0x000}, {0x420, 0x1E0}, {0x0B0, 0x280}, {0x080, 0x1A0}};
-static SVECTOR D_us_80180E88 = {.vx = 0, .vy = 0, .vz = 0};
-
 static u16 D_us_80180E90[] = {
     0x0A9, 0x046, 0x040, 0x180, 0x06E, 0x01B, 0x04B, 0x0AF, 0x069, 0x01D, 0x051,
     0x0F6, 0x00D, 0x0B2, 0x0C1, 0x00B, 0x09D, 0x0FE, 0x09C, 0x031, 0x0F3, 0x010,
@@ -321,101 +288,6 @@ static u32 D_us_801D425C[64];
 STATIC_PAD_BSS(8);
 static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
-
-void func_us_801AFA80(Entity* self) {
-    long p, flag;
-    u8 pad[4];
-    long sxy;
-    VECTOR trans;
-    MATRIX m;
-    Primitive* prim;
-    s32 primIndex;
-    s32 i, j;
-    u8* ptr;
-    s16 posX, posY;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitInteractable);
-        self->posX.i.hi =
-            D_us_80180E78[self->params].x - g_Tilemap.scrollX.i.hi;
-        self->posY.i.hi =
-            D_us_80180E78[self->params].y - g_Tilemap.scrollY.i.hi;
-        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
-        if (primIndex != -1) {
-            self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = primIndex;
-            prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
-            for (i = 0; prim != NULL; i++) {
-                prim->tpage = 0xF;
-                prim->clut = 0x2F;
-                if (i % 2) {
-                    prim->u0 = prim->u2 = 0x88;
-                    prim->u1 = prim->u3 = 0xFE;
-                } else {
-                    prim->u0 = prim->u2 = 0xFE;
-                    prim->u1 = prim->u3 = 0x88;
-                }
-                prim->v0 = prim->v1 = 0x81;
-                prim->v2 = prim->v3 = 0xFF;
-                prim->priority = 0x20;
-                prim->drawMode = DRAW_UNK02;
-                prim = prim->next;
-            }
-        } else {
-            DestroyEntity(self);
-            return;
-        }
-        g_GpuBuffers[0].draw.r0 = 0x40;
-        g_GpuBuffers[0].draw.g0 = 0x38;
-        g_GpuBuffers[0].draw.b0 = 0x28;
-        g_GpuBuffers[1].draw.r0 = 0x40;
-        g_GpuBuffers[1].draw.g0 = 0x38;
-        g_GpuBuffers[1].draw.b0 = 0x28;
-    case 1:
-        SetGeomScreen(0x400);
-        SetGeomOffset(0x80, 0x80);
-        RotMatrix(&D_us_80180E88, &m);
-        trans.vx = self->posX.i.hi - 0x80;
-        trans.vy = self->posY.i.hi - 0x80;
-        trans.vz = 0x400;
-        TransMatrix(&m, &trans);
-        SetRotMatrix(&m);
-        SetTransMatrix(&m);
-        RotTransPers(&D_us_80180DF0, &sxy, &p, &flag);
-        posX = sxy & 0xFFFF;
-        posY = sxy >> 0x10;
-        prim = self->ext.prim;
-        ptr = D_us_80180E68[self->params];
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
-                prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
-                prim->x0 = prim->x2 = posX + (j * 0x78) - 0xF0;
-                if (prim->x0 > 0x100) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->x1 = prim->x3 = posX + (j * 0x78) - 0x78;
-                if (prim->x1 < 0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->y0 = prim->y1 = posY + (i * 0x80) - 0x100;
-                if (prim->y0 > 0x100) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->y2 = prim->y3 = posY + (i * 0x80) - 0x80;
-                if (prim->y2 < 0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                PGREY(prim, 0) = *(ptr + i * 5 + j + 0);
-                PGREY(prim, 1) = *(ptr + i * 5 + j + 1);
-                PGREY(prim, 2) = *(ptr + (i + 1) * 5 + j + 0);
-                PGREY(prim, 3) = *(ptr + (i + 1) * 5 + j + 1);
-                prim = prim->next;
-            }
-        }
-    }
-}
 
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
@@ -1112,9 +984,9 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
     return &pix[(size << 4) << 1];
 }
 
-void func_us_801B0FBC(u8* str, u16 x, u16 y) {
+void func_us_801B0FBC(const char* str, u16 x, u16 y) {
     RECT rect;
-    u8 ch;
+    char ch;
 
 loop:
     ch = *str++;
@@ -2542,11 +2414,11 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, u8* str, u16 length, s32 arg3) {
+Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
     u8 ch;
     s32 i;
     u32 max;
-    u8* chPtr;
+    char* chPtr;
 
     chPtr = str;
     max = 0;
@@ -2604,11 +2476,11 @@ static u8 D_us_80181650[] = {0x00, 0x00, 0x00, 0x00, 0x32, 0x2C, 0x32, 0x2C};
 static u8 D_us_80181658[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x12, 0x11, 0x11, 0x12};
 
 #ifdef VERSION_PSP
-extern u8* D_us_80181660;
+extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
 #else
-static u8 D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
 static char D_us_80181668[] = {
     // clang-format off
     CH('S'), CH('T'), CH('R'), 
@@ -2836,8 +2708,8 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 #ifdef VERSION_PSP
         primA = prim;
         for (j = 0; j < 7; j++) {
-            prim->x0 = D_psp_092A4A10[j * 2 + (i * 7) * 2] + 0xBA;
-            prim->y0 = D_psp_092A4A10[j * 2 + (i * 7) * 2 + 1] + 0xA0;
+            prim->x0 = D_psp_092A49B8[j * 2 + (i * 7) * 2] + 0xBA;
+            prim->y0 = D_psp_092A49B8[j * 2 + (i * 7) * 2 + 1] + 0xA0;
             prim = prim->next;
         }
         prim = primA;
@@ -2881,9 +2753,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
             primA = prim;
             for (j = 0; j < 6; j++) {
                 prim->x2 = prim->x0 =
-                    D_psp_092A49B8[j * 2 + (i * 6) * 2] + 0xBA;
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2] + 0xBA;
                 prim->y1 = prim->y0 =
-                    D_psp_092A49B8[j * 2 + (i * 6) * 2 + 1] + 0xA0;
+                    D_psp_092A4A10[j * 2 + (i * 6) * 2 + 1] + 0xA0;
                 prim->x3 = prim->x1 = prim->x0 + 8;
                 prim->y3 = prim->y2 = prim->y0 + 8;
                 prim->v1 = prim->u1 = 8;
@@ -2944,7 +2816,7 @@ void func_us_801B4830(Entity* self) {
     s32 j;
     s32 count;
     u16* var_s4;
-    char* name;
+    const char* name;
     Entity* tempEntity;
     u8* unused;
 
