@@ -30,3 +30,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_psp_0913A3A0);
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012F894);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130264);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130618);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_801309B4);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130E94);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8013136C);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", EntityGiantSpinningCross);
