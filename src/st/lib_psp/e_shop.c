@@ -47,8 +47,6 @@ extern u32 D_us_801D415C[];
 extern u32 D_us_801D425C[];
 extern ShopItem D_us_801D4364[];
 
-// INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801AFA80);
-
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D4D0);
