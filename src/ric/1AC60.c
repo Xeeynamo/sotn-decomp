@@ -47,7 +47,11 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
+#if defined(VERSION_PSP)
+            abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+#else
             abs((g_Tilemap.top << 8) + g_PlayerY) - 14407 < 4) {
+#endif
             return TELEPORT_CHECK_TO_TOP;
         }
     }
@@ -761,13 +765,13 @@ static void RicDebugEnter(void) {
 
 static void RicDebugExit(void) {
     g_IsRicDebugEnter = false;
-    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = g_RicDebugCurFrame;
     PLAYER.drawFlags = g_RicDebugDrawFlags;
     PLAYER.palette = g_RicDebugPalette;
+    PLAYER.hitParams = 0;
 }
 
-static bool RicDebug(void) {
+bool RicDebug(void) {
     if (!g_IsRicDebugEnter) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.D_80072EFC == 0) {
@@ -777,12 +781,14 @@ static bool RicDebug(void) {
         }
         return false;
     }
-
-    if (g_Player.D_80072EFC || g_Player.padTapped & PAD_L2) {
+    if (g_Player.D_80072EFC) {
         RicDebugExit();
         return false;
     }
-
+    if (g_Player.padTapped & PAD_L2) {
+        RicDebugExit();
+        return false;
+    }
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
             g_Entities->posX.val += FIX(16.0);
@@ -822,7 +828,7 @@ static bool RicDebug(void) {
     if (PLAYER.animCurFrame <= 0) {
         PLAYER.animCurFrame = 1;
     }
-    if (PLAYER.animCurFrame < 212 == 0) {
+    if (PLAYER.animCurFrame > 211) {
         PLAYER.animCurFrame = 211;
     }
     FntPrint("charal:%02x\n", PLAYER.animCurFrame);

@@ -80,8 +80,6 @@ void ProcessEvent(Entity* self, bool resetEvent) {
     } else {
         queue = g_EventQueue;
         while (queue->next != NULL) {
-            if (!evt->delay) {
-            }
             if (queue->next->cameraX == cameraX &&
                 queue->next->cameraY == cameraY &&
                 (queue->next->condition == -1 ||

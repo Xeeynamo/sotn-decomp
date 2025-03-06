@@ -328,8 +328,8 @@ extern s8 D_80156904;
 
 extern ButtonComboState g_bladeDashButtons;
 extern ButtonComboState D_801758E4;
-extern u16 g_RicDebugCurFrame;
-extern u16 g_RicDebugDrawFlags;
+extern s16 g_RicDebugCurFrame;
+extern s16 g_RicDebugDrawFlags;
 extern u16 g_RicDebugPalette;
 extern s16 g_IsRicDebugEnter;
 extern s32 D_80175958[32];

@@ -2,8 +2,8 @@
 #include "bo4.h"
 
 void SetPlayerStep(s16 step) {
-    DOPPELGANGER.step = step;
-    DOPPELGANGER.step_s = 0;
+    DOPPLEGANGER.step = step;
+    DOPPLEGANGER.step_s = 0;
 }
 
 static u8 g_D_800ACF18[] = {
@@ -23,7 +23,7 @@ void func_8010D59C(void) {
         return;
     }
 
-    switch (DOPPELGANGER.ext.player.anim) {
+    switch (DOPPLEGANGER.ext.player.anim) {
     case 0x5E:
     case 0x5D:
     case 0x60:
@@ -35,7 +35,7 @@ void func_8010D59C(void) {
 
     if ((g_Dop_padTapped & GAMEBUTTONS) ||
         ((g_Dop_padHeld ^ g_Dop_padPressed) & g_Dop_padHeld & GAMEBUTTONS) ||
-        (DOPPELGANGER.velocityY > FIX(0.5))) {
+        (DOPPLEGANGER.velocityY > FIX(0.5))) {
         g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 = 0;
         g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 = 0;
     } else {
@@ -63,12 +63,12 @@ void func_8010D59C(void) {
     while (prim) {
         if (i == g_Entities[STAGE_ENTITY_START + 1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
-            prim->x0 = DOPPELGANGER.posX.i.hi;
-            prim->y0 = DOPPELGANGER.posY.i.hi;
-            prim->x1 = DOPPELGANGER.animCurFrame;
+            prim->x0 = DOPPLEGANGER.posX.i.hi;
+            prim->y0 = DOPPLEGANGER.posY.i.hi;
+            prim->x1 = DOPPLEGANGER.animCurFrame;
             prim->y1 = 0;
-            prim->x2 = DOPPELGANGER.facingLeft;
-            prim->y2 = DOPPELGANGER.palette;
+            prim->x2 = DOPPLEGANGER.facingLeft;
+            prim->y2 = DOPPLEGANGER.palette;
         }
         i++;
         prim = prim->next;
@@ -130,7 +130,7 @@ void func_8010D800(void) {
         g_Entities[STAGE_ENTITY_START + (i / 2) + 1].facingLeft = prim->x2;
         g_Entities[STAGE_ENTITY_START + (i / 2) + 1].palette = prim->y2;
         g_Entities[STAGE_ENTITY_START + (i / 2) + 1].zPriority =
-            DOPPELGANGER.zPriority - 2;
+            DOPPLEGANGER.zPriority - 2;
         if (temp_t2) {
             g_Entities[STAGE_ENTITY_START + (i / 2) + 1].animCurFrame = 0;
             prim->x1 = 0;
@@ -194,7 +194,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;
 
     frameIndex =
-        frames[g_CurrentEntity->ext.player.anim] + DOPPELGANGER.animFrameIdx;
+        frames[g_CurrentEntity->ext.player.anim] + DOPPLEGANGER.animFrameIdx;
     if (*frameIndex == 0xFFFF) {
         return -1;
     }
@@ -209,7 +209,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
         g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
-    if (DOPPELGANGER.animFrameDuration < 0) {
+    if (DOPPLEGANGER.animFrameDuration < 0) {
         return -1;
     } else {
         return 0;

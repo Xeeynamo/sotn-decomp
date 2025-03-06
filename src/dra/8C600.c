@@ -3,6 +3,12 @@
 #include "dra_bss.h"
 
 void func_8012C600(void) {
+#ifdef VERSION_PSP
+    const s32 limiting_value = 0x13;
+#else
+    const s32 limiting_value = 0x14;
+#endif
+
     s32 x, y;
     s32 i;
     s32 t0 = PLAYER.posX.i.hi;
@@ -65,12 +71,12 @@ void func_8012C600(void) {
         if (D_8013AEBC[2] < -0x2C) {
             D_8013AEBC[2] = -0x2C;
         }
-        if (D_8013AEBC[0] > 0x14) {
-            D_8013AEBC[0] = 0x14;
+        if (D_8013AEBC[0] > limiting_value) {
+            D_8013AEBC[0] = limiting_value;
         }
     } else {
-        if (D_8013AEBC[2] < -0x14) {
-            D_8013AEBC[2] = -0x14;
+        if (D_8013AEBC[2] < -limiting_value) {
+            D_8013AEBC[2] = -limiting_value;
         }
         if (D_8013AEBC[0] > 0x2C) {
             D_8013AEBC[0] = 0x2C;
@@ -79,14 +85,11 @@ void func_8012C600(void) {
 }
 
 bool WolfFormFinished(void) {
-    if (PLAYER.step_s == 0) {
-        return false;
-    }
-    if (PLAYER.step_s == 8) {
+    if (PLAYER.step_s == 0 || PLAYER.step_s == 8) {
         return false;
     }
     if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
-        g_Player.padTapped & PAD_R2 ||
+        g_Player.padTapped & BTN_WOLF ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
         SetPlayerAnim(0xCA);
@@ -103,14 +106,12 @@ bool WolfFormFinished(void) {
 }
 
 void func_8012C97C(void) {
-    if (g_Entities[PLAYER_CHARACTER].step_s == 0) {
+    if (g_Entities[PLAYER_CHARACTER].step_s == 0 ||
+        g_Entities[PLAYER_CHARACTER].step_s == 8 ||
+        g_Entities[PLAYER_CHARACTER].step_s == 9) {
         return;
     }
-    if (g_Entities[PLAYER_CHARACTER].step_s >= 8 &&
-        g_Entities[PLAYER_CHARACTER].step_s < 10) {
-        return;
-    }
-    if (D_80097448[1] < 13) {
+    if (D_80097448[1] <= 12) {
         return;
     }
     if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {
@@ -136,19 +137,18 @@ void func_8012C97C(void) {
 }
 
 void func_8012CA64(void) {
-    u8 anim;
+    s32 anim = 0xDE;
 
     PLAYER.step_s = 1;
     D_800B0914 = 0;
 
-    anim = 0xDE;
     if (g_Player.pl_vram_flag & 0x20) {
-        anim = 0xDF;
+        anim++;
     }
     SetPlayerAnim(anim);
 
-    PLAYER.velocityY = 0;
     PLAYER.velocityX /= 2;
+    PLAYER.velocityY = 0;
 
     D_800B0918 = 0x200;
     if (g_Player.pl_vram_flag & 0x40) {
@@ -158,27 +158,27 @@ void func_8012CA64(void) {
 }
 
 void func_8012CB0C(void) {
-    PLAYER.ext.player.anim = 0xDE;
     PLAYER.velocityY = 0;
-    D_800B0914 = 0;
-    PLAYER.animFrameIdx = 0;
-    PLAYER.animFrameDuration = 0;
+    PLAYER.animFrameDuration = PLAYER.animFrameIdx = D_800B0914 = 0;
+    PLAYER.ext.player.anim = 0xDE;
     PLAYER.step_s = 7;
 }
 
 void func_8012CB4C(void) {
     PLAYER.step_s = 2;
-    if ((PLAYER.facingLeft != 0 && g_Player.padPressed & PAD_RIGHT) ||
-        (PLAYER.facingLeft == 0 && g_Player.padPressed & PAD_LEFT)) {
+    if ((PLAYER.facingLeft && g_Player.padPressed & PAD_RIGHT) ||
+        (!PLAYER.facingLeft && g_Player.padPressed & PAD_LEFT)) {
         SetPlayerAnim(0xE1);
         D_800B0914 = 0;
         D_8013842C = 0;
-        return;
     } else if (D_8013842C != 0) {
         SetPlayerAnim(0xE2);
         D_800B0914 = 2;
-        SetSpeedX(0x20000);
-        return;
+
+        // This is a weird phantom call that only happens on PSP.
+        abs(PLAYER.velocityX < FIX(2));
+
+        SetSpeedX(FIX(2));
     } else {
         SetPlayerAnim(0xE0);
         D_800B0914 = 1;
@@ -195,10 +195,10 @@ void func_8012CC30(s32 arg0) {
             CheckMoveDirection();
             PLAYER.step_s = 2;
             D_800B0914 = 4;
-            SetSpeedX(0x50000);
+            SetSpeedX(FIX(5));
             g_CurrentEntity->velocityY = 0;
             SetPlayerAnim(0xED);
-            LearnSpell(4);
+            LearnSpell(SPELL_WOLF_CHARGE);
         }
     } else {
         D_80138444 = 1;
@@ -209,8 +209,6 @@ void func_8012CCE4(void) {
     PLAYER.velocityY = FIX(-3.5);
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
         SetPlayerAnim(0xE7);
-        // Might be possible to rewrite this block to reduce duplication with
-        // some clever && and ||
         if (PLAYER.facingLeft) {
             if ((g_Player.pl_vram_flag & 0xF000) == 0xC000) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
@@ -247,31 +245,31 @@ void func_8012CCE4(void) {
 }
 
 void func_8012CED4(void) {
-    if (PLAYER.step_s == 2 && D_800B0914 == PLAYER.step_s) {
+    if (PLAYER.step_s == 2 && D_800B0914 == 2) {
         SetPlayerAnim(0xE7);
         D_800B0914 = 1;
     } else {
         SetPlayerAnim(0xE8);
-        SetSpeedX(0x10000);
+        SetSpeedX(FIX(1));
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
-            PLAYER.animFrameIdx = 4;
             PLAYER.velocityX = 0;
+            PLAYER.animFrameIdx = 4;
             PLAYER.animFrameDuration = 1;
         }
     }
     PLAYER.step_s = 5;
-    g_Player.timers[5] = 8;
-    PLAYER.velocityY = 0;
     D_80138430 -= 0x100;
+    g_Player.timers[ALU_T_5] = 8;
+    PLAYER.velocityY = 0;
 }
 
 void func_8012CFA8(void) {
     SetPlayerAnim(0xEA);
-    PLAYER.step_s = 6;
     D_800B0914 = 0;
     PLAYER.velocityX = 0;
-    g_Player.timers[5] = 8;
+    PLAYER.step_s = 6;
+    g_Player.timers[ALU_T_5] = 8;
 }
 
 void func_8012CFF0(void) {
@@ -281,7 +279,13 @@ void func_8012CFF0(void) {
 }
 
 void func_8012D024(void) {
-    DecelerateX(0x2000);
+#ifdef VERSION_PSP
+#define WOLF_CHARGE_BTN (PAD_SQUARE | PAD_CIRCLE)
+#else
+#define WOLF_CHARGE_BTN (PAD_SQUARE)
+#endif
+
+    DecelerateX(FIX(1.0 / 8));
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
         return;
@@ -290,7 +294,7 @@ void func_8012D024(void) {
         func_8012CED4();
         return;
     }
-    if (g_Player.padTapped & PAD_SQUARE) {
+    if (g_Player.padTapped & WOLF_CHARGE_BTN) {
         func_8012CC30(0);
         return;
     }
@@ -302,41 +306,46 @@ void func_8012D024(void) {
         func_8012CFF0();
         return;
     }
-    if (D_800B0914 != 0) {
+    switch (D_800B0914) {
+    case 0:
+        if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
+            --D_800B0918 == 0) {
+            D_800B0914 = 1;
+            SetPlayerAnim(0xE9);
+        } else if (g_Player.pl_vram_flag & 0x40) {
+            D_800B0914 = 1;
+            SetPlayerAnim(0xE9);
+        }
+    case 1:
         return;
-    }
-    if (abs(PLAYER.posY.i.hi - g_Entities[17].posY.i.hi) < 4 &&
-        --D_800B0918 == 0) {
-        D_800B0914 = 1;
-        SetPlayerAnim(0xE9);
-        return;
-    }
-    if (g_Player.pl_vram_flag & 0x40) {
-        D_800B0914 = 1;
-        SetPlayerAnim(0xE9);
     }
 }
 
 void func_8012D178(void) {
-    s32 var_v0;
-
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
     } else if (!(g_Player.pl_vram_flag & 1)) {
         func_8012CFA8();
     } else {
-#if defined(VERSION_US)
-        if (PLAYER.facingLeft != 0) {
-            var_v0 = g_Player.padPressed & PAD_LEFT;
+#ifdef VERSION_US
+        if (PLAYER.facingLeft) {
+            if (g_Player.padPressed & PAD_LEFT) {
+                func_8012CB4C();
+                return;
+            }
         } else {
-            var_v0 = g_Player.padPressed & PAD_RIGHT;
+            if (g_Player.padPressed & PAD_RIGHT) {
+                func_8012CB4C();
+                return;
+            }
         }
-#elif defined(VERSION_HD)
-        var_v0 = g_Player.padPressed & (PAD_LEFT | PAD_RIGHT);
-#endif
-        if (var_v0 != 0) {
+#else
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
             func_8012CB4C();
-        } else if (g_Player.unk04 & 0x40) {
+            return;
+        }
+#endif
+        if (g_Player.unk04 & 0x40) {
             func_8012CA64();
         } else if (g_GameTimer % 6 == 0) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
@@ -355,7 +364,7 @@ void func_8012D28C(bool exitEarly) {
     g_Player.padSim = 0;
     // Odd logic, if we exit early, we force an R2-tap. Strange!
     if (exitEarly) {
-        g_Player.padTapped = PAD_R2;
+        g_Player.padTapped = BTN_WOLF;
         WolfFormFinished();
         return;
     }
@@ -387,9 +396,10 @@ void func_8012D28C(bool exitEarly) {
     if (bitNotFound) {
         func_8012CED4();
         SetSpeedX(FIX(1));
+        PLAYER.velocityY = FIX(-3.5);
     } else {
         func_8012CFA8();
         SetSpeedX(FIX(-1));
+        PLAYER.velocityY = FIX(-3.5);
     }
-    PLAYER.velocityY = FIX(-3.5);
 }

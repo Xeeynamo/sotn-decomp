@@ -296,6 +296,7 @@ static u8* D_us_801812D8[] = {
 #ifdef VERSION_PSP
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
 extern s32 E_ID(ID_29);
@@ -1111,23 +1112,23 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
     return &pix[(size << 4) << 1];
 }
 
-void func_us_801B0FBC(u8* ptr, u16 x, u16 y) {
+void func_us_801B0FBC(u8* str, u16 x, u16 y) {
     RECT rect;
-    u8 pos;
+    u8 ch;
 
 loop:
-    pos = *ptr++;
-    if (pos) {
-        if (pos == 0x20) {
+    ch = *str++;
+    if (ch) {
+        if (ch == ' ') {
             x++;
             goto loop;
 #ifdef VERSION_PSP
-        } else if (pos == 0xCC) {
-            pos = 0xBB;
+        } else if (ch == 0xCC) {
+            ch = 0xBB;
 #endif
         }
-        rect.x = ((pos & 0xF) << 1) + 0x380;
-        rect.y = ((pos & 0xF0) >> 1) + 0xF0;
+        rect.x = ((ch & 0xF) << 1) + 0x380;
+        rect.y = ((ch & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
         MoveImage(&rect, x, y);
@@ -1250,9 +1251,108 @@ void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B1200);
+void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
+    prim->x0 = otherPrim->x0;
+    prim->y0 = otherPrim->y0;
+    prim->x1 = otherPrim->x1;
+    prim->y1 = otherPrim->y1;
+    prim->drawMode = DRAW_DEFAULT;
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B12D0);
+    prim = prim->next;
+    prim->x0 = otherPrim->x1;
+    prim->y0 = otherPrim->y1;
+    prim->x1 = otherPrim->x3;
+    prim->y1 = otherPrim->y3;
+    prim->drawMode = DRAW_DEFAULT;
+
+    prim = prim->next;
+    prim->x0 = otherPrim->x0;
+    prim->y0 = otherPrim->y0;
+    prim->x1 = otherPrim->x2;
+    prim->y1 = otherPrim->y2;
+    prim->drawMode = DRAW_DEFAULT;
+
+    prim = prim->next;
+    prim->x0 = otherPrim->x2;
+    prim->y0 = otherPrim->y2;
+    prim->x1 = otherPrim->x3;
+    prim->y1 = otherPrim->y3;
+    prim->drawMode = DRAW_DEFAULT;
+}
+
+void func_us_801B12D0(Entity* self, u16 arg1) {
+    Primitive* prim2;
+    Primitive* prim;
+    s16 s_4;
+    s16 posY;
+    s16 posX;
+    s32 i;
+    s16 s_3;
+    s16 temp_v1;
+    s16 var_s4;
+
+    prim = &g_PrimBuf[g_CurrentEntity->primIndex];
+    prim = prim->next;
+    prim2 = prim;
+    for (i = 0; i < 4; i++) {
+        prim = prim->next;
+    }
+    i = 0;
+    s_3 = g_CurrentEntity->ext.et_801B15C0.unk86;
+    s_4 = g_CurrentEntity->ext.et_801B15C0.unk80 * 0x10;
+#ifdef VERSION_PSP
+    if (arg1) {
+        posY = (g_CurrentEntity->ext.et_801B15C0.unk7C * ((s_3 + 0x18) - s_4)) /
+               24;
+        posX = (g_CurrentEntity->ext.et_801B15C0.unk7C * -0x88) / 24;
+#else
+    if (arg1 & 1) {
+        posY = (g_CurrentEntity->ext.et_801B15C0.unk7C * ((s_3 + 0x18) - s_4)) /
+               24;
+        posX = (g_CurrentEntity->ext.et_801B15C0.unk7C * -0x98) / 24;
+#endif
+    } else {
+        posY = (g_CurrentEntity->ext.et_801B15C0.unk7C * ((s_3 + 0x40) - s_4)) /
+               24;
+        posX = 0;
+    }
+#ifdef VERSION_PSP
+    for (; prim != NULL; i++) {
+        prim->x0 = prim->x2 = posX + 0x94;
+        prim->x1 = prim->x3 = posX + 0xEC;
+#else
+    if (arg1 & 0x10) {
+        s32 temp = g_CurrentEntity->ext.et_801B15C0.unk7C;
+        var_s4 = temp / 3;
+    } else {
+        var_s4 = 0;
+    }
+    for (; prim != NULL; i++) {
+        prim->x0 = prim->x2 = posX + 0x96 + var_s4;
+        prim->x1 = prim->x3 = posX + 0xEA - var_s4;
+        if (i != 0) {
+            prim->u0 = prim->u2 = var_s4;
+            prim->u1 = prim->u3 = 0x54 - var_s4;
+        }
+#endif
+        temp_v1 = (g_CurrentEntity->ext.et_801B15C0.unk7C * (s_4 + 2)) / 24;
+        if (i != 0) {
+            prim->v0 = prim->v1 = temp_v1;
+        }
+        prim->y0 = prim->y1 = (0x60 - s_3) + temp_v1 + posY;
+        temp_v1 = (g_CurrentEntity->ext.et_801B15C0.unk7C *
+                   (s_3 * 2 - (s_4 + 0x15))) /
+                  24;
+        if (i != 0) {
+            prim->v2 = prim->v3 = s_3 * 2 - temp_v1;
+        }
+        prim->y2 = prim->y3 = (s_3 + 0x60) - temp_v1 + posY;
+        if (i == 0) {
+            func_us_801B1200(prim2, prim);
+        }
+        prim = prim->next;
+    }
+}
 
 void func_us_801B15C0(Entity* self) {
     Entity* tempEntity;
@@ -3605,11 +3705,72 @@ void func_us_801B56E4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B5F18);
+void func_us_801B5F18(Entity* self) {
+    Entity* tempEntity = &g_Entities[192];
+    CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
+    self->step++;
+#ifdef VERSION_PSP
+    *D_psp_092A54E0 = 0;
+#else
+    D_us_80183F64 = 0;
+#endif
+    if (D_8003C730 == 2) {
+        D_8003C730 = 0;
+#ifdef VERSION_PSP
+        *D_psp_092A54E0 = 1;
+#else
+        D_us_80183F64 = 1;
+#endif
+    }
+}
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B5F84);
+void func_us_801B5F84(Entity* self) {
+    Entity* player = &PLAYER;
+    s16 posY;
 
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B60C8);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        if (g_PlayableCharacter) {
+            self->step++;
+        } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
+                   player->posX.i.hi > 0xC0) {
+            D_80097928 = 1;
+            D_80097910 = 0;
+        }
+        break;
+
+    case 1:
+        if (D_8003C730 != 2) {
+            self->hitboxWidth = 0x10;
+            self->hitboxHeight = 0x20;
+            if (player->posX.i.hi > 0xE0) {
+                posY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
+                if (posY >= 0x60 && posY < 0xA0) {
+                    func_us_801B5F18(self);
+                }
+            }
+        } else {
+            func_us_801B5F18(self);
+        }
+        break;
+
+    case 2:
+        break;
+    }
+}
+
+void func_us_801B60C8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        break;
+
+    case 1:
+        GetPlayerCollisionWith(self, 8, 0x48, 1);
+        break;
+    }
+}
 
 static const char* D_us_801816C8[] = {
     _S("Dracula"),
@@ -5388,7 +5549,6 @@ void func_us_801B8A00(Entity* self) {
         if (self->ext.et_801B6F30.unk7C == 0x10) {
             g_api.PlaySfx(SET_STOP_SEQ);
             SetStep(3);
-            return;
         }
         break;
 
