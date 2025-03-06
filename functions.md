@@ -128,7 +128,6 @@
 | dra     | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
 | dra     | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra     | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
-| dra     | 5C420.rodata                        |       20 |          0 | Yes    |                                 |       |
 | lib     | 8658.rodata                         |       20 |          0 | Yes    |                                 |       |
 | lib     | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
 | dra     | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
@@ -307,7 +306,6 @@
 | dra     | PerformSoulSteal                    |       33 |          6 |        |                                 |       |
 | dra     | func_psp_090F21F8                   |       33 |          6 |        |                                 |       |
 | dra     | func_800EAD0C                       |       33 |          8 |        |                                 |       |
-| dra     | 5DA20.rodata                        |       34 |          0 | Yes    |                                 |       |
 | lib     | unk_3B200.rodata                    |       34 |          0 | Yes    |                                 |       |
 | st0     | 2C564.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0     | 3D8F0.rodata                        |       34 |          0 | Yes    |                                 |       |
@@ -588,7 +586,6 @@
 | no4     | func_psp_09237B20                   |       61 |         10 |        |                                 |       |
 | st0     | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra     | func_8012CC30                       |       61 |         12 |        |                                 |       |
-| dra     | 5EC50.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra     | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib     | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib     | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -847,6 +844,7 @@
 | st0     | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | wrp     | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | st0     | func_801B0058                       |      103 |         13 |        |                                 |       |
+| dra     | 5AF80.rodata                        |      104 |          0 | Yes    |                                 |       |
 | dra     | func_801349F4                       |      104 |          3 |        |                                 |       |
 | lib     | EntityExplosionVariantsSpawner      |      104 |          5 |        |                                 |       |
 | dra     | func_psp_090EF200                   |      104 |         10 |        |                                 |       |
@@ -1426,7 +1424,7 @@
 | lib     | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4     | func_psp_09245BB8                   |     1004 |         86 |        |                                 |       |
 | wrp     | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
-| lib     | func_psp_0926AED0                   |     1018 |        104 | Yes    |                                 |       |
+| lib     | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/kNLfY | 0.634 |
 | dra     | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
 | dra     | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | ric_psp | RicHandleHit                        |     1050 |        167 | Yes    |                                 |       |
