@@ -183,11 +183,11 @@ enum SfxModes {
 
 #define NA_VO_AL_INTERESTED 0x3A9 // Alucard says "I'm interested in this"
 #if defined(VERSION_PSP)
-#define NA_VO_ML_THANKS 0x3AB     // Master Librarian says "Thank you"
+#define NA_VO_ML_THANKS 0x3AB // Master Librarian says "Thank you"
 #else
-#define NA_VO_ML_THANKS 0x3AD     // Master Librarian says "Thank you"
+#define NA_VO_ML_THANKS 0x3AD // Master Librarian says "Thank you"
 #endif
-#define NA_VO_ML_FAREWELL 0x3B2   // Master Librarian says "Farewell for now"
+#define NA_VO_ML_FAREWELL 0x3B2 // Master Librarian says "Farewell for now"
 
 #if defined(VERSION_US)
 #define NA_VO_MA_IF_YOU_WEAR                                                   \
