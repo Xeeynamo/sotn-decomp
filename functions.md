@@ -1404,7 +1404,7 @@
 | lib     | EntityLifeUpSpawn                   |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | no4     | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
 | st0     | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
-| st0     | func_801AF774                       |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.998 |
+| st0     | func_801AF774                       |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
 | lib     | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
 | lib     | func_us_801B420C                    |      884 |         74 | Yes    |                                 |       |
 | st0     | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
@@ -1424,7 +1424,7 @@
 | lib     | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4     | func_psp_09245BB8                   |     1004 |         86 |        |                                 |       |
 | wrp     | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
-| lib     | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/kNLfY | 0.634 |
+| lib     | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/kNLfY | 0.814 |
 | dra     | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
 | dra     | func_psp_09109200                   |     1045 |        179 |        |                                 |       |
 | ric_psp | RicHandleHit                        |     1050 |        167 | Yes    |                                 |       |
