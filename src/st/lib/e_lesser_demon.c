@@ -355,7 +355,128 @@ void func_us_801BC28C(void) {
 
 INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC57C);
 
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC814);
+void func_us_801BC814(Primitive* prim) {
+    s16 angleOffset;
+    s32 posX2;
+    s32 posY2;
+    Pos params;
+    Pos offsets;
+    Primitive* prim2;
+    s16 angle2;
+    u8 rnd;
+    s32 posX;
+    s32 i;
+    u8* rgbPtr;
+    s16 angle;
+    s32 posY;
+    u8* component;
+
+    switch (prim->u0) {
+    case 0:
+        prim->r0 = prim->r1 = 0x80;
+        prim->g0 = prim->g1 = 0x80;
+        prim->b0 = prim->b1 = 0x80;
+        prim->priority = g_CurrentEntity->zPriority + 2;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->x3 += prim->y3;
+        prim->x3 &= 0xFFF;
+        angle = prim->x3;
+        offsets.x.val = rcos(angle) << 3 << 4;
+        offsets.y.val = -(rsin(angle) << 3 << 4);
+        params.x.i.hi = prim->x0;
+        params.x.i.lo = prim->clut;
+        params.y.i.hi = prim->y0;
+        params.y.i.lo = prim->tpage;
+        params.x.val += offsets.x.val;
+        params.y.val += offsets.y.val;
+        prim->x1 = params.x.i.hi;
+        prim->clut = params.x.i.lo;
+        prim->y1 = params.y.i.hi;
+        prim->tpage = params.y.i.lo;
+        if (!prim->u2) {
+            prim->u2 = 5;
+            rnd = Random() & 1;
+            if (g_CurrentEntity->facingLeft) {
+                posX = g_CurrentEntity->posX.i.hi + rnd * 16;
+            } else {
+                posX = g_CurrentEntity->posX.i.hi - rnd * 16;
+            }
+            posY = g_CurrentEntity->posY.i.hi + ((Random() & 3) * 8) - 12;
+            posX2 = posX - prim->x1;
+            posY2 = posY - prim->y1;
+            angle = ratan2(-posY2, posX2);
+            angleOffset = prim->x3;
+            angle2 = angle - angleOffset;
+            if (angle2 > 0x800) {
+                angle2 = 0x1000 - angle2;
+            }
+            if (angle2 < -0x800) {
+                angle2 = 0x1000 + angle2;
+            }
+            angle2 /= 5;
+            prim->y3 = angle2;
+        }
+        prim->v0 = 1;
+        prim->u0++;
+        break;
+
+    case 1:
+        if (!--prim->v0) {
+            prim2 = g_CurrentEntity->ext.prim;
+            prim2 = FindFirstUnkPrim(prim2);
+            if (prim2 != NULL) {
+                if (g_CurrentEntity->facingLeft) {
+                    prim2->x0 = prim->x1 + 1;
+                } else {
+                    prim2->x0 = prim->x1 - 1;
+                }
+                prim2->y0 = prim->y1;
+                prim2->clut = prim->clut;
+                prim2->tpage = prim->tpage;
+                prim2->p3 = 2;
+                prim2->x3 = prim->x3;
+                prim2->y3 = prim->y3;
+                prim2->u2 = prim->u2 - 1;
+                prim->v0 = 8;
+                prim->u0++;
+            }
+        }
+        break;
+
+    case 2:
+        rgbPtr = &prim->r1;
+        for (i = 0; i < 3; i++) {
+            component = &rgbPtr[i];
+            if (Random() & 1) {
+                *component -= 24;
+            } else {
+                *component -= 12;
+            }
+            if (*component > 0xC0) {
+                *component = 0;
+            }
+        }
+        rgbPtr = &prim->r0;
+        for (i = 0; i < 3; i++) {
+            component = &rgbPtr[i];
+            if (Random() & 1) {
+                *component -= 16;
+            } else {
+                *component -= 8;
+            }
+            if (*component > 0xC0) {
+                *component = 0;
+            }
+        }
+        if (!--prim->v0) {
+            prim->u0 = 0;
+            prim->p3 = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        break;
+    }
+}
 
 extern u16 D_us_80180980[];
 extern u8 D_us_80181BF0[];
