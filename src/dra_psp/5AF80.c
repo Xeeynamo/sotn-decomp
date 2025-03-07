@@ -185,7 +185,69 @@ void func_8012D3E8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012DBBC);
+void func_8012DBBC(void) {
+    s32 vel_boost;
+
+    if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
+        func_8012CCE4();
+        return;
+    }
+    if ((PLAYER.facingLeft && !(g_Player.padPressed & PAD_LEFT)) ||
+        (!PLAYER.facingLeft && !(g_Player.padPressed & PAD_RIGHT))) {
+        DecelerateX(FIX(4.0 / 128));
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        if (D_800B0914 == 1) {
+            PLAYER.step_s = 2;
+            D_800B0914 = 2;
+            SetPlayerAnim(0xE2);
+        } else if (PLAYER.velocityY > FIX(6.875)) {
+            PLAYER.step_s = 3;
+            D_800B0914 = 3;
+            SetPlayerAnim(0xE5);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        } else {
+            func_8012CA64();
+        }
+        PLAYER.velocityY = 0;
+        PlaySfx(SFX_STOMP_SOFT_B);
+        return;
+    }
+    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+        func_8012CC30(1);
+    }
+    switch (D_800B0914) {
+    case 0:
+        CheckMoveDirection();
+        break;
+    case 1:
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(1);
+            return;
+        }
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(0);
+            return;
+        }
+        if (((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(2.5))) ||
+            ((g_Player.pl_vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
+            DecelerateX(FIX(0.125));
+        }
+        if (PLAYER.animFrameIdx == 3) {
+            PLAYER.animFrameDuration = 6;
+        }
+    }
+    vel_boost = FIX(20.0 / 128);
+    if (D_80097448[0] > 12) {
+        vel_boost /= 4;
+    }
+    PLAYER.velocityY += vel_boost;
+    if (PLAYER.velocityY > FIX(7)) {
+        PLAYER.velocityY = FIX(7);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012DF04);
 
