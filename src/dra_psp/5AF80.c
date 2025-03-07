@@ -2,7 +2,188 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012D3E8);
+void func_8012D3E8(void) {
+    byte pad[0x28];
+    s32 directionsPressed =
+        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+
+    if ((g_Player.padTapped & PAD_CROSS) && (D_800B0914 != 4)) {
+        func_8012CCE4();
+        return;
+    }
+    if (!(g_Player.pl_vram_flag & 1) && (D_800B0914 != 4)) {
+        func_8012CED4();
+        return;
+    }
+    if ((g_Player.padPressed & PAD_DOWN) && (D_800B0914 != 4)) {
+        func_8012CFF0();
+        return;
+    }
+
+    switch (D_800B0914) {
+    case 0:
+        if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+            func_8012CC30(0);
+            break;
+        }
+        if (PLAYER.animFrameIdx >= 3) {
+            if (PLAYER.animFrameDuration < 0) {
+                func_8012CB4C();
+                if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
+                    // Evil! This function takes no arguments! This is
+                    // why func_8012CA64 had to be commented out of dra.h.
+                    func_8012CA64(0);
+                    break;
+                }
+            }
+            SetSpeedX(FIX(1));
+            break;
+        }
+        if (PLAYER.animFrameDuration == 1 && PLAYER.animFrameIdx == 2) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+        }
+        SetSpeedX(FIX(-1));
+        break;
+
+    case 1:
+        if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+            func_8012CC30(0);
+            break;
+        }
+        SetSpeedX(FIX(1));
+        if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
+            D_800B0914 = 0;
+            SetPlayerAnim(0xE1);
+        }
+
+        if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
+            func_8012CA64();
+        }
+        break;
+    case 2:
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            (abs(PLAYER.velocityX) < FIX(3))) {
+            func_8012CC30(0);
+            break;
+        }
+
+        if (g_GameTimer % 6 == 0) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
+        }
+        if (PLAYER.velocityX > 0) {
+            PLAYER.velocityX += FIX(3.0 / 128);
+            if (PLAYER.velocityX > FIX(9)) {
+                PLAYER.velocityX = FIX(9);
+            }
+            if (!IsRelicActive(RELIC_POWER_OF_WOLF) &&
+                PLAYER.velocityX > FIX(3)) {
+                PLAYER.velocityX = FIX(3);
+            }
+        }
+        if (PLAYER.velocityX < 0) {
+            PLAYER.velocityX -= FIX(3.0 / 128);
+            if (PLAYER.velocityX < FIX(-9)) {
+                PLAYER.velocityX = FIX(-9);
+            }
+            // @bug The end of this should be FIX(-3) since we're capping
+            // the negative velocity. This is weird and could be useful for
+            // someone! Namely, if velocity is less than 0 (which was already
+            // checked) then you will instantly accelerate up to -3.
+            if (!IsRelicActive(RELIC_POWER_OF_WOLF) &&
+                PLAYER.velocityX < FIX(3)) {
+                PLAYER.velocityX = FIX(-3);
+            }
+        }
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(1);
+            break;
+        }
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(0);
+            break;
+        }
+        if ((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > 0 ||
+            (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 ||
+            (directionsPressed & (PAD_LEFT | PAD_RIGHT)) == 0) {
+            PLAYER.ext.player.anim = 0xE0;
+            // Set the state to 3, and the timer to 24. Note that in case 3,
+            // this decrements.
+            D_800B0914 = 3;
+            D_800B091C = 24;
+            break;
+        }
+
+        if (PLAYER.facingLeft) {
+            if (((g_Player.unk04 & 0xF001) == 1) &&
+                ((D_80138438 & 0xF001) == 0xC001)) {
+                func_8012CCE4();
+                PLAYER.velocityY /= 4;
+            }
+            if (((g_Player.unk04 & 0xF001) == 0x8001) &&
+                ((D_80138438 & 0xF001) == 1)) {
+                func_8012CCE4();
+                PLAYER.velocityY /= 2;
+            }
+        } else {
+            if (((g_Player.unk04 & 0xF001) == 1) &&
+                ((D_80138438 & 0xF001) == 0x8001)) {
+                func_8012CCE4();
+                PLAYER.velocityY /= 4;
+            }
+            if (((g_Player.unk04 & 0xF001) == 0xC001) &&
+                ((D_80138438 & 0xF001) == 1)) {
+                func_8012CCE4();
+                PLAYER.velocityY /= 2;
+            }
+        }
+        break;
+    case 3:
+        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+            (abs(PLAYER.velocityX) < FIX(3))) {
+            func_8012CC30(0);
+            break;
+        }
+        if (abs(PLAYER.velocityX) > FIX(1)) {
+            DecelerateX(0x2000);
+        }
+        if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
+            (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {
+            D_800B0914 = 0;
+            SetPlayerAnim(0xE1);
+        }
+
+        if (--D_800B091C == 0) {
+            D_800B0914 = 1;
+            D_8013842C = 0xC;
+        }
+        break;
+    case 4:
+        DecelerateX(0x400);
+        if (!(g_GameTimer % 2)) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
+        }
+        if (PLAYER.animFrameDuration >= 0) {
+            break;
+        }
+        if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
+            ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+            SetPlayerAnim(0xE2);
+            D_800B0914 = 2;
+            if (abs(PLAYER.velocityX) < FIX(2)) {
+                SetSpeedX(FIX(2));
+                break;
+            }
+        } else {
+            func_8012CA64();
+            PLAYER.velocityX = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012DBBC);
 
