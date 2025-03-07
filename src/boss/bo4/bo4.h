@@ -7,7 +7,7 @@
 #define OVL_EXPORT(x) BO4_##x
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
-#define DOPPELGANGER g_Entities[STAGE_ENTITY_START]
+#define DOPPLEGANGER g_Entities[STAGE_ENTITY_START]
 
 typedef enum {
     /* 0x00 */ E_NONE,
@@ -29,5 +29,11 @@ typedef enum {
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
 } EntityIDs;
+
+typedef enum {
+    Dop_MorphBat = 6,
+    Dop_Hit = 11,
+    Dop_Kill = 17,
+} Doppleganger_Steps;
 
 #endif // BO4_H

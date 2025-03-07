@@ -85,35 +85,7 @@ void func_8010E168(s32 arg0, s16 arg1) {
     }
 }
 
-// begin: split to common decelerate
-void DecelerateX(s32 amount) {
-    if (g_CurrentEntity->velocityX < 0) {
-        g_CurrentEntity->velocityX += amount;
-        if (g_CurrentEntity->velocityX > 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityX -= amount;
-        if (g_CurrentEntity->velocityX < 0) {
-            g_CurrentEntity->velocityX = 0;
-        }
-    }
-}
-
-void DecelerateY(s32 amount) {
-    if (g_CurrentEntity->velocityY < 0) {
-        g_CurrentEntity->velocityY += amount;
-        if (g_CurrentEntity->velocityY > 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    } else {
-        g_CurrentEntity->velocityY -= amount;
-        if (g_CurrentEntity->velocityY < 0) {
-            g_CurrentEntity->velocityY = 0;
-        }
-    }
-}
-// end: split to common decelerate
+#include "../decelerate.h"
 
 // Checks the player's left/right inputs and compares to the facing direction.
 // If the player is pressing the opposite of facing, we change the facing value
@@ -161,13 +133,7 @@ s32 func_8010E334(s32 xStart, s32 xEnd) {
     return 0;
 }
 
-// Sets velocity based on an input speed, and the existing facing value
-void SetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facingLeft == 1) {
-        speed = -speed;
-    }
-    g_CurrentEntity->velocityX = speed;
-}
+#include "../set_speed_x.h"
 
 // Updates the Player velocity in the X Axis
 void func_8010E3B8(s32 velocityX) {

@@ -192,6 +192,14 @@ typedef enum {
     GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
 } PlayerPad;
 
+// PSP only has one shoulder button on each side, so its default transform
+// controls are different. This captures those.
+#ifdef VERSION_PSP
+#define BTN_WOLF PAD_L1
+#else
+#define BTN_WOLF PAD_R2
+#endif
+
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
@@ -1851,7 +1859,7 @@ typedef struct {
     /* 80072F9A */ u16 unk7A;
     /* 80072F9C */ u16 unk7C;
     /* 80072F9E */ u16 unk7E;
-} PlayerState;
+} PlayerState; /* size = 0x3D0 */
 
 // Primitive used ad-hoc for the Player entity and the after-image effect
 typedef struct {
