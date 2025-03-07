@@ -472,7 +472,68 @@ void func_8012E550(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E7A4);
+void func_8012E7A4(void) {
+    s32 i, j; //Not nested, just two incrementers for two loops
+    Entity* entity;
+#if defined(VERSION_US)
+    if (g_Entities[16].entityId != 0x22) {
+        if (CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x23), 0) ==
+            NULL) {
+            return;
+        }
+        func_8010FAF4();
+        g_Player.unk66++;
+    }
+#endif
+
+    for (i = 0; i < 6; i++) {
+        D_800B08CC[i].state = 0;
+    }
+
+    D_801396EC = PLAYER.animCurFrame;
+    D_801396E0 = PLAYER.animSet;
+    func_8010E168(1, 4);
+    DestroyEntity(&g_Entities[17]);
+    g_Entities[17].entityId = 0x38;
+    DestroyEntity(&g_Entities[18]);
+    g_Entities[18].entityId = 0x37;
+    DestroyEntity(&g_Entities[19]);
+    g_Entities[19].entityId = 0x39;
+    DestroyEntity(&g_Entities[20]);
+    g_Entities[20].entityId = 0x3A;
+
+    for (entity = &g_Entities[21], j = 0; j < 9; j++, entity++) {
+        DestroyEntity(entity);
+        entity->entityId = 0x3B;
+        entity->params = j;
+    }
+    // We create entity #60, which is func_8013136C
+    DestroyEntity(&g_Entities[30]);
+    g_Entities[30].entityId = 60;
+
+    func_8012CED4();
+    PLAYER.animFrameIdx = 4;
+    PLAYER.animFrameDuration = 4;
+    PLAYER.step_s = 8;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
+    D_80138430 = 0x800;
+    PLAYER.rotZ = 0;
+    g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
+    D_8013842C = 0;
+    PLAYER.velocityX = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.unk5A = 0x7E;
+    PLAYER.animSet = 0xF;
+    PLAYER.palette = 0x810D;
+    
+#if !defined(VERSION_US)
+    if (g_Entities[16].entityId != 0x22) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x23), 0);
+        func_8010FAF4();
+        g_Player.unk66++;
+    }
+#endif
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E9C0);
 
