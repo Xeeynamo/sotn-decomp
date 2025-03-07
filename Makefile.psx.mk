@@ -18,13 +18,14 @@ BOSSES		:=
 SERVANTS	:= tt_000
 endif
 
-# compiler
+# Compiler
 CC1PSX          := $(BIN_DIR)/cc1-psx-26
 CC              := $(CC1PSX)
 AS              := $(CROSS)as
 CPP             := $(CROSS)cpp
+MASPSX			 = $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=$(if $(findstring libgpu/sys.c.o,$@),2.21,2.34)
 
-# flags
+# Flags
 CC_FLAGS        += -G0 -w -O2 $(addprefix -f,unsigned-char peephole function-cse pcc-struct-return common verbose-asm) -msoft-float -g
 CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
 CPP_FLAGS     	+= $(addprefix -D,mips __GNUC__=2 __OPTIMIZE__ __mips__ __mips psx __psx__ __psx _PSYQ __EXTENSIONS__ _MIPSEL)
@@ -34,10 +35,10 @@ PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 LD_FLAGS        := -nostdlib --no-check-sections
 
 COMPILER		:= $(CPP) $(CPP_FLAGS) -lang-c
-COMPILER_ARGS	:= | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
+COMPILER_ARGS	 = | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
 COMPILER_REQS	 = $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel_dirs)
 
-# libs
+# Libs
 PSXLIBS         := libc libc2 libapi libetc libcard libgpu libgs libgte libcd libsnd libspu
 
 # Files
@@ -86,7 +87,8 @@ $(WEAPON_DIRS):
 # Step 1/2 of extract
 # The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) $(if $(filter weapon,%),,| %_dirs)
+SYMBOL_FILTER = $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS)))
+$(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(SYMBOL_FILTER) $(if $(filter weapon,%),,| %_dirs)
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
@@ -101,8 +103,7 @@ $(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYM
 $(addprefix extract_,us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
 	$(call if_version,us,$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(EXTRACTED_DISK_DIR) $(ASSETS_DIR)/game)
 	cd $(TOOLS_DIR)/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
-	$(SOTNASSETS) build $(CONFIG_DIR)/assets.$(VERSION).yaml
+	$(foreach action,extract build,$(SOTNASSETS) $(action) $(CONFIG_DIR)/assets.$(VERSION).yaml;)
 
 # Step 1/6 of build
 $(ASM_DIR)/weapon/data/w_%.s:# Create an empty file if all the data or bss has been imported
@@ -113,11 +114,9 @@ $(BUILD_DIR)/%.s.o: %.s
 	mkdir -p $(dir $@); $(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(COMPILER_REQS)
 	mkdir -p $(dir $@); $(COMPILER) $< $(call if_version,pspeu,$@) $(COMPILER_ARGS) $(call if_version,us hd,$@)
+# Weapons use nearly the same compilation string, but it is too much trouble to combine them
 $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-# Only difference for this is MASPSX_21 instead of MASPSX
-$(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
+	$(COMPILER) -DW_$* $< $(call if_version,pspeu,$@) $(COMPILER_ARGS) $(call if_version,us hd,$@)
 
 # Step 3/6 of build
 # Main has different prequisites

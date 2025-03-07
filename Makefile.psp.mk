@@ -10,23 +10,10 @@ STAGES		+=
 BOSSES		:= 
 SERVANTS	:= tt_000
 
-# Tools
-ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
-AS              := $(ALLEGREX_AS)
-WIBO            := $(BIN_DIR)/wibo
-MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
-CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
-MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
-MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
-
-# Flags
+AS              := $(BIN_DIR)/allegrex-as
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
-MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
-
-# Compiler
 OPT_HI_FUNCS	:= $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C90 64EE0) # These objects will get -O4,p instead of -Op
-COMPILER		:= $(MWCCGAP)
+COMPILER		:= $(PYTHON) $(MWCCGAP_APP)
 COMPILER_ARGS	 = --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL)
 COMPILER_REQS	:= $(MWCCPSP) $(MWCCGAP_APP)
 OPT_LEVEL		 = $(if $(filter $(notdir $@),$(OPT_HI_FUNCS)),-O4$(comma)p,-Op)
