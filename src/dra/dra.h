@@ -341,8 +341,12 @@ extern s16 g_SensorsWallDefault[];
 extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
+
+// These appear to be the same variable.
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
+#elif defined(VERSION_PSP)
+extern s32 D_psp_09234B68;
 #endif
 extern s32 D_800ACF74;               // These two might...
 extern s32 g_AlucardChairSleepTimer; // ...be an array
