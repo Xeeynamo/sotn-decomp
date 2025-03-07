@@ -630,8 +630,56 @@ void func_8012EAD0(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012ED30);
-
+void func_8012ED30(void) {
+    if (g_Player.padTapped & PAD_CROSS) {
+        func_8012CCE4();
+        D_80138440 = 0x10;
+        return;
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        func_8012CA64();
+        return;
+    }
+    if (!IsRelicActive(RELIC_SKILL_OF_WOLF) ||
+        !(g_Player.padPressed & PAD_TRIANGLE) || (D_80097448[1] == 0)) {
+        func_8012CED4();
+        return;
+    }
+    SetSpeedX(FIX(0.5));
+    if (D_80097448[1] > 12) {
+        PLAYER.velocityY = FIX(-0.5);
+    } else {
+        PLAYER.velocityY = 0;
+    }
+    if (g_Player.padPressed & PAD_RIGHT) {
+        PLAYER.facingLeft = 0;
+        PLAYER.velocityX = FIX(0.5);
+    }
+    if (g_Player.padPressed & PAD_LEFT) {
+        PLAYER.facingLeft = 1;
+        PLAYER.velocityX = FIX(-0.5);
+    }
+    // If you're not pressing any of right, left, or up
+    if (!(g_Player.padPressed & (PAD_RIGHT | PAD_LEFT | PAD_UP))) {
+        DecelerateX(0x400);
+        PLAYER.velocityY = FIX(0.5);
+    }
+    if (PLAYER.velocityY <= 0) {
+        if (D_80138430 > 2112) {
+            D_80138430 -= 8;
+        }
+        if (D_80138430 < 2112) {
+            D_80138430 += 8;
+        }
+    } else {
+        if (D_80138430 > 1824) {
+            D_80138430 -= 8;
+        }
+        if (D_80138430 < 1824) {
+            D_80138430 += 8;
+        }
+    }
+}
 void func_8012EF2C(void) {
     s32 i;
     s32 xSpeed;
