@@ -535,7 +535,30 @@ void func_8012E7A4(void) {
 #endif
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E9C0);
+void func_8012E9C0(void) {
+    s32 i;
+
+    PLAYER.palette = 0x810D;
+    for (i = 0; i < 4; i++) {
+        if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
+            g_SensorsFloor[i].y++;
+        }
+    }
+    func_8010E168(1, 4);
+    PLAYER.velocityY = 0;
+    PLAYER.animFrameDuration = 4;
+    if (g_Entities[16].entityId == 0x22) {
+        if (func_8011203C() == 0) {
+            return;
+        }
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x1b), 0);
+    } else if (g_Player.unk66 != 3) {
+        return;
+    }
+    PLAYER.palette = 0x104;
+    PLAYER.step_s = 5;
+    PLAYER.velocityY = FIX(-1.5);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012EAD0);
 
