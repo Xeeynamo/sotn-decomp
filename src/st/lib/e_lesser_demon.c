@@ -478,7 +478,126 @@ void func_us_801BC814(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCC10);
+extern u16 D_us_80180980[];
+extern u8 D_us_80181BF0[];
+
+void func_us_801BCC10(Entity* self) {
+    Primitive* prim;
+    Primitive* uninitializedPrim;
+    s32 primIndex;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180980);
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+        self->drawFlags = FLAG_DRAW_ROTX;
+        self->rotX = 0x180;
+        if (self->facingLeft) {
+            self->velocityX = FIX(5.0);
+        } else {
+            self->velocityX = FIX(-5.0);
+        }
+        primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x3C);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.lesserDemon.unk7C = prim;
+            while (prim != NULL) {
+                prim->p3 = 0;
+                prim->drawMode = DRAW_HIDE;
+                prim->u0 = 0;
+                prim = prim->next;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        prim = self->ext.lesserDemon.unk7C;
+        prim->p3 = 4;
+        prim->type = PRIM_GT4;
+        prim->tpage = 0x1A;
+        prim->clut = 0x169;
+        prim->u0 = prim->u2 = 0xE0;
+        prim->u1 = prim->u3 = 0xFF;
+        prim->v0 = prim->v1 = 0x40;
+        prim->v2 = prim->v3 = 0x5F;
+        prim->x0 = self->posX.i.hi;
+#ifdef VERSION_PSP
+        prim->x3 = prim->x0;
+#else
+        prim->x3 = uninitializedPrim->x0;
+#endif
+        prim->x1 = prim->x0 + 16;
+        prim->x2 = prim->x0 - 16;
+        prim->y1 = self->posY.i.hi;
+        prim->y2 = prim->y1;
+        prim->y0 = prim->y1 + 14;
+        prim->y3 = prim->y1 - 14;
+        PGREY(prim, 0) = 0x60;
+        PGREY(prim, 3) = 0x60;
+        if (self->facingLeft) {
+            PGREY(prim, 1) = 0xC0;
+            PGREY(prim, 2) = 0x10;
+        } else {
+            PGREY(prim, 1) = 0x10;
+            PGREY(prim, 2) = 0xC0;
+        }
+        prim->priority = self->zPriority + 4;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim = self->ext.lesserDemon.unk7C;
+        prim = prim->next;
+        for (i = 0; i < 3; i++) {
+            if (self->facingLeft) {
+                prim->x3 = 0;
+            } else {
+                prim->x3 = 0x800;
+            }
+            prim->y3 = 0;
+            if (self->facingLeft) {
+                prim->x0 = prim->x1 = self->posX.i.hi - 15;
+            } else {
+                prim->x0 = prim->x1 = self->posX.i.hi + 15;
+            }
+            prim->y0 = prim->y1 = self->posY.i.hi + i * 2 - 2;
+            prim->p3 = 2;
+            prim->u2 = 3;
+            prim->u0 = 0;
+            prim = prim->next;
+        }
+        break;
+
+    case 1:
+        AnimateEntity(D_us_80181BF0, self);
+        MoveEntity();
+        prim = self->ext.lesserDemon.unk7C;
+        if (self->facingLeft) {
+            prim->x0 = self->posX.i.hi;
+            prim->x3 = prim->x0;
+            prim->x1 = prim->x0 + 16;
+            if (prim->x1 - prim->x2 > 0x80) {
+                prim->x2 = prim->x1 - 0x80;
+            }
+        } else {
+            prim->x0 = self->posX.i.hi;
+            prim->x3 = prim->x0;
+            prim->x2 = prim->x0 - 16;
+            if (prim->x1 - prim->x2 > 0x80) {
+                prim->x1 = prim->x2 + 0x80;
+            }
+        }
+        prim = prim->next;
+        while (prim != NULL) {
+            if (prim->p3 & 2) {
+                func_us_801BC814(prim);
+            }
+            prim = prim->next;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCFD4);
 
