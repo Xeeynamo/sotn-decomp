@@ -249,7 +249,37 @@ void func_8012DBBC(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012DF04);
+void func_8012DF04(void) {
+    s32 velocityBoost;
+
+    if (g_Player.timers[5] && (g_Player.padTapped & PAD_CROSS)) {
+        func_8012CCE4();
+        return;
+    }
+    velocityBoost = FIX(20.0 / 128);
+    if (D_80097448[0] > 12) {
+        velocityBoost /= 4;
+    }
+    PLAYER.velocityY += velocityBoost;
+    if (PLAYER.velocityY > FIX(7)) {
+        PLAYER.velocityY = FIX(7);
+    }
+    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+        func_8012CC30(1);
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        PlaySfx(SFX_STOMP_SOFT_B);
+        if (PLAYER.velocityY > FIX(6.875)) {
+            PLAYER.step_s = 3;
+            D_800B0914 = 3;
+            SetPlayerAnim(0xE5);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        } else {
+            func_8012CA64();
+        }
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E040);
 
