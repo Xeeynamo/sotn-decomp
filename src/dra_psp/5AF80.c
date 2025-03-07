@@ -281,8 +281,125 @@ void func_8012DF04(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E040);
+void func_8012E040(void) {
+    s32 var_s0 = true;
+    s32 vel_boost;
+    s16 xOffset;
 
+    if ((PLAYER.facingLeft && !(g_Player.padPressed & PAD_LEFT)) ||
+        (!PLAYER.facingLeft && !(g_Player.padPressed & PAD_RIGHT))) {
+        var_s0 = false;
+        DecelerateX(FIX(16.0 / 128));
+    }
+    if (g_Player.pl_vram_flag & 1) {
+        if (D_800B0914 == 2) {
+            PLAYER.step_s = 2;
+            D_800B0914 = 2;
+            SetPlayerAnim(0xE2);
+        } else if ((PLAYER.velocityY > FIX(6.875)) || (D_800B0914 == 3)) {
+            PLAYER.step_s = 3;
+            D_800B0914 = 3;
+            SetPlayerAnim(0xE5);
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        } else {
+            if (D_800B0914 == 0) {
+                func_8012CA64();
+            }
+            if (D_800B0914 == 1) {
+                func_8012CB4C();
+            }
+        }
+        PlaySfx(SFX_STOMP_SOFT_B);
+        PLAYER.velocityY = 0;
+        return;
+    }
+    if ((PLAYER.velocityY < FIX(-1)) && (g_Player.pl_vram_flag & 2)) {
+        if (PLAYER.velocityY < FIX(-5)) {
+            xOffset = 3;
+            if (PLAYER.facingLeft) {
+                xOffset = -xOffset;
+            }
+            PLAYER.posX.i.hi += xOffset;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
+            PLAYER.posX.i.hi -= xOffset;
+            func_80102CD8(3);
+            PlaySfx(SFX_WALL_DEBRIS_B);
+            PLAYER.velocityX = 0;
+            PLAYER.velocityY = 0;
+            func_8012CED4();
+            return;
+        }
+        PLAYER.velocityY = 0;
+    }
+    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+        func_8012CC30(1);
+    }
+    switch (D_800B0914) {
+    case 0:
+        CheckMoveDirection();
+        if (var_s0) {
+            if (abs(PLAYER.velocityX) < FIX(1)) {
+                SetSpeedX(FIX(1));
+            }
+        }
+        break;
+    case 1:
+        CheckMoveDirection();
+        if (var_s0) {
+            if (abs(PLAYER.velocityX) < FIX(1)) {
+                SetSpeedX(FIX(1));
+            } else {
+                DecelerateX(FIX(16.0 / 128));
+            }
+        }
+        break;
+    case 2:
+        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(1);
+            return;
+        }
+        if ((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+            func_8012D28C(0);
+            return;
+        }
+        // This is a silly way to write this
+        if ((g_Player.pl_vram_flag & 8 && PLAYER.velocityX > 0) || 
+            (g_Player.pl_vram_flag & 8 && PLAYER.velocityX < 0)) {
+            D_800B0914 = 1;
+        }
+        if (abs(PLAYER.velocityX) < FIX(1)) {
+            D_800B0914 = 1;
+        }
+        if ((PLAYER.facingLeft && (g_Player.padPressed & PAD_RIGHT)) ||
+            (!PLAYER.facingLeft && (g_Player.padPressed & PAD_LEFT))) {
+            CheckMoveDirection();
+            D_800B0914 = 1;
+            SetSpeedX(FIX(1));
+            break;
+        }
+        if (PLAYER.animFrameIdx == 3) {
+            PLAYER.animFrameDuration = 6;
+        }
+        break;
+
+    case 3:
+        if (PLAYER.animFrameIdx == 3) {
+            PLAYER.animFrameDuration = 6;
+        }
+        break;
+    }
+    vel_boost = FIX(20.0 / 128);
+    if (D_80097448[0] > 12) {
+        // Interesting, wrong registers if you do /= here.
+        vel_boost = vel_boost / 4;
+    } 
+    PLAYER.velocityY += vel_boost;
+    if (PLAYER.velocityY > FIX(7)) {
+        PLAYER.velocityY = FIX(7);
+    }
+}
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E550);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012E7A4);
