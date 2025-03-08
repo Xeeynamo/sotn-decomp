@@ -4,32 +4,26 @@
 # Reverse stage OVL options: 
 # Boss OVL options: 
 # Servant OVL options: T_BAT
-
 GAME		:= GAME ALUCARD
 STAGES		:= STAGE_02 WARP
 STAGES		+= 
 BOSSES 		:= 
 SERVANTS	:= T_BAT
 
-LIB_TARGETS	:= $(addprefix lib/, gfs spr dma scl csh per cdc mth bup sys)
-LIB_OBJECTS	:= $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(LIB_TARGETS)))
+LIB_OBJECTS 		:= lib/gfs.o lib/spr.o lib/dma.o lib/scl.o lib/csh.o lib/per.o lib/cdc.o lib/mth.o lib/bup.o lib/sys.o
+ASSETS_DIR 			:= $(ASSETS_DIR)/saturn
 
-SATURN_SPLITTER_DIR	:= $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SATURN_ASSETS_DIR 	:= $(ASSETS_DIR)/saturn
-
-DOSEMU				:= dosemu
-DOSEMU_FLAGS		:= -quiet -dumb -f ./dosemurc -K . -E
-DOSEMU_APP			:= $(DOSEMU) $(DOSEMU_FLAGS)
-SATURN_TOOLCHAIN	:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
+DOSEMU				:= $(DOSEMU_APP) -quiet -dumb -f ./dosemurc -K . -E
 OBJDUMP				:= sh-elf-objdump
 OBJDUMP_FLAGS		:= -z -m sh2 -b binary -D
-SATURN_OBJCOPY				:= sh-elf-objcopy
+OBJCOPY				:= sh-elf-objcopy
 CC1_SATURN			:= $(BUILD_DIR)/CC1.EXE
 ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
+SATURN_SPLITTER 	:= $(SATURN_SPLITTER_APP)
 
+EXTRACT_SATURN_FILES := $(subst 0,zero,0.bin) $(addsuffix .prg,$(call to_lower,$(call get_targets)))
 PCM_FILES 			:= $(wildcard $(EXTRACTED_DISK_DIR)/SD/*.PCM)
-WAV_FILES 			:= $(patsubst $(EXTRACTED_DISK_DIR)/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%.wav,$(PCM_FILES))
+WAV_FILES 			:= $(PCM_FILES:$(EXTRACTED_DISK_DIR)/SD/%.PCM=$(ASSETS_DIR)/SD/%.wav)
 
 .PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
@@ -62,7 +56,7 @@ $(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(LIB_OBJECTS) $(CONFIG_DIR)/saturn/z
 		-T ../../$(CONFIG_DIR)/saturn/zero_syms.txt \
 		-T ../../$(CONFIG_DIR)/saturn/game_syms.txt \
 		-T ../../$(CONFIG_DIR)/saturn/zero_user_syms.txt \
-		zero.o $(addsuffix .o,$(LIB_TARGETS))
+		zero.o $(LIB_OBJECTS)
 
 $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/%_user_syms.txt
 	cd $(BUILD_DIR) && \
@@ -82,10 +76,10 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(CC1_SATURN)
 	mkdir -p $(dir $@)
 	cd $(BUILD_DIR) && $(DOSEMU_APP) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
 
-$(CC1_SATURN): $(SATURN_TOOLCHAIN)
+$(CC1_SATURN): $(CYGNUS)
 	mkdir -p $(dir $@)
 	mkdir -p $(BUILD_DIR)/$(ASM_DIR)/
-	cp -r $(SATURN_TOOLCHAIN)/* $(BUILD_DIR)
+	cp -r $(CYGNUS)/* $(BUILD_DIR)
 	cp  $(SRC_DIR)/saturn/macro.inc $(BUILD_DIR)
 	cp -r $(SRC_DIR)/saturn/*.c $(BUILD_DIR)
 	cp -r $(SRC_DIR)/saturn/*.h $(BUILD_DIR)
