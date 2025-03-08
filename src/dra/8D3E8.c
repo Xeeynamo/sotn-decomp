@@ -350,7 +350,7 @@ void func_8012E040(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
             PLAYER.posY.i.hi -= 0;
             PLAYER.posX.i.hi -= xOffset;
-            
+
             func_80102CD8(3);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
@@ -432,8 +432,8 @@ void func_8012E040(void) {
 
 void func_8012E550(void) {
     s32 i;
-    u16 playerFrame = PLAYER.animFrameIdx;
-    s32 pressingDown = g_Player.padPressed & PAD_DOWN;
+    s16 playerFrame = PLAYER.animFrameIdx;
+    bool pressingDown = g_Player.padPressed & PAD_DOWN;
 
     DecelerateX(FIX(0.125));
     if (g_Player.padTapped & PAD_CROSS) {
@@ -442,9 +442,9 @@ void func_8012E550(void) {
                 if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
                     g_Player.timers[7] = 8;
                     func_8012CED4();
+                    PLAYER.velocityX = 0;
                     PLAYER.animFrameIdx = 4;
                     PLAYER.animFrameDuration = 1;
-                    PLAYER.velocityX = 0;
                     PLAYER.velocityY = FIX(2);
                     return;
                 }
@@ -470,35 +470,40 @@ void func_8012E550(void) {
                 PLAYER.animFrameIdx = 1;
             }
         } else if (PLAYER.animFrameDuration < 0) {
-            D_800B0914 = 1;
+            D_800B0914++;
         }
-        return;
+        break;
     case 1:
         if (pressingDown) {
-            return;
+            break;
         }
         SetPlayerAnim(0xE4);
         D_800B0914 = 2;
-        return;
+        break;
     case 2:
         if (pressingDown) {
             SetPlayerAnim(0xE3);
             D_800B0914 = 0;
             if (playerFrame != 0) {
-                return;
+                break;
             }
             PLAYER.animFrameIdx = 1;
-            return;
+            break;
         }
+        if (PLAYER.animFrameDuration < 0) {
+            func_8012CA64();
+        }
+        break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
             func_8012CA64();
         }
+        break;
     }
 }
 
 void func_8012E7A4(void) {
-    s32 i;
+    s32 i, j; //Not nested, just two iterators for two loops
     Entity* entity;
 #if defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
@@ -527,10 +532,10 @@ void func_8012E7A4(void) {
     DestroyEntity(&g_Entities[20]);
     g_Entities[20].entityId = 0x3A;
 
-    for (entity = &g_Entities[21], i = 0; i < 9; i++, entity++) {
+    for (entity = &g_Entities[21], j = 0; j < 9; j++, entity++) {
         DestroyEntity(entity);
         entity->entityId = 0x3B;
-        entity->params = i;
+        entity->params = j;
     }
     // We create entity #60, which is func_8013136C
     DestroyEntity(&g_Entities[30]);
@@ -540,19 +545,18 @@ void func_8012E7A4(void) {
     PLAYER.animFrameIdx = 4;
     PLAYER.animFrameDuration = 4;
     PLAYER.step_s = 8;
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
     D_80138430 = 0x800;
-    PLAYER.unk5A = 0x7E;
-    PLAYER.animSet = 0xF;
     PLAYER.rotZ = 0;
-    g_Player.unk48 = 0;
-    g_Player.unk46 = 0;
-    g_Player.unk44 = 0;
+    g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
     D_8013842C = 0;
     PLAYER.velocityX = 0;
     PLAYER.velocityY = 0;
+    PLAYER.unk5A = 0x7E;
+    PLAYER.animSet = 0xF;
     PLAYER.palette = 0x810D;
-    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
-#if defined(VERSION_HD)
+    
+#if !defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x23), 0);
         func_8010FAF4();
@@ -571,8 +575,8 @@ void func_8012E9C0(void) {
         }
     }
     func_8010E168(1, 4);
-    PLAYER.animFrameDuration = 4;
     PLAYER.velocityY = 0;
+    PLAYER.animFrameDuration = 4;
     if (g_Entities[16].entityId == 0x22) {
         if (func_8011203C() == 0) {
             return;
@@ -598,9 +602,8 @@ void func_8012EAD0(void) {
     else_cycles = 0;
     switch (PLAYER.step_s) {
     case 0:
-        i = 0;
         for (i = 0; i < 4; i++) {
-            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+            if (g_SensorsCeiling[i].y > g_SensorsCeilingDefault[i]) {
                 g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
@@ -614,11 +617,10 @@ void func_8012EAD0(void) {
         if (else_cycles == 4) {
             PLAYER.animSet = 1;
             PLAYER.unk5A = 0;
-            PLAYER.rotZ = 0;
-            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+            PLAYER.drawFlags = PLAYER.rotZ = 0;
             SetPlayerAnim(0xCA);
             g_Player.unk66 = 1;
-            if (g_Player.unk68 != 0) {
+            if (g_Player.unk68) {
                 PLAYER.step_s = 2;
                 D_800AFDA4[1] = 0xC7;
             } else {
@@ -626,24 +628,27 @@ void func_8012EAD0(void) {
                 D_800AFDA4[1] = 0x5F;
             }
         }
-        return;
+        break;
     case 1:
         if (g_Player.unk66 == 3) {
             func_8010E83C(0);
             if (!(g_Player.pl_vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
+            g_Player.unk44 |= 0x100;
             PLAYER.palette = 0x8100;
+            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #if defined(VERSION_US)
             g_Player.unk20 = 0x18;
 #elif defined(VERSION_HD)
             D_800ACEDC_hd = 0x18;
+#elif defined(VERSION_PSP)
+            D_psp_09234B68 = 0x18;
 #endif
-            g_Player.unk44 |= 0x100;
-            PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
+            
             func_80111CC0();
         }
-        return;
+        break;
     case 2:
         if (g_Player.unk66 == 3) {
 #if defined(VERSION_US)
@@ -671,7 +676,7 @@ void func_8012ED30(void) {
         return;
     }
     SetSpeedX(FIX(0.5));
-    if (D_80097448[1] >= 13) {
+    if (D_80097448[1] > 12) {
         PLAYER.velocityY = FIX(-0.5);
     } else {
         PLAYER.velocityY = 0;
@@ -707,12 +712,12 @@ void func_8012ED30(void) {
 }
 
 void func_8012EF2C(void) {
-    s16 var_v1;
     s32 i;
+    s32 xSpeed;
+    s32 var_s0;
 
     PLAYER.palette = 0x104;
     PLAYER.drawMode = DRAW_DEFAULT;
-// HD version lacks this line!
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
@@ -761,18 +766,19 @@ void func_8012EF2C(void) {
     }
     D_80138438 = g_Player.unk04;
     for (i = 0; i < 8; i++) {
-        var_v1 = 4;
-        if (abs(PLAYER.velocityX) >= FIX(4)) {
-            var_v1 = 3;
+        var_s0 = 4;
+        xSpeed = abs(PLAYER.velocityX);
+        if (xSpeed >= FIX(4)) {
+            var_s0--;
         }
-        if (abs(PLAYER.velocityX) >= FIX(5)) {
-            var_v1--;
+        if (xSpeed >= FIX(5)) {
+            var_s0--;
         }
-        if (abs(PLAYER.velocityX) >= FIX(6)) {
-            var_v1--;
+        if (xSpeed >= FIX(6)) {
+            var_s0--;
         }
         // Might be misusing D_800AFFB8 here
-        D_800AFFB8[i * 2] = var_v1;
+        D_800AFFB8[i * 2] = var_s0;
     }
     if (D_80138430 < 0x600) {
         D_80138430 = 0x600;
@@ -780,8 +786,6 @@ void func_8012EF2C(void) {
     if (D_80138430 > 0xA00) {
         D_80138430 = 0xA00;
     }
-    // HD version lacks this line!
-
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
@@ -970,11 +974,16 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     s->prim->r1 = s->prim->g1 = s->prim->r3 = s->prim->g3;
 }
 
-s32 func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
+bool func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
     s32 diffX = x0 - x1;
     s32 diffY = y0 - y1;
+    s32 sqrt = SquareRoot12((SQ(diffX) + SQ(diffY)) << 12);
 
-    return (SquareRoot12((SQ(diffX) + SQ(diffY)) << 12) >> 12) >= distance;
+    if((sqrt >> 12) >= distance){
+        return true;
+    } else{
+        return false;
+    }
 }
 
 static s16 D_800B0A3C[] = {1, 2, 1, 0, 1, 2, 1, 0};
@@ -1006,7 +1015,7 @@ void func_8012F894(Entity* self) {
     if (PLAYER.ext.player.anim == 0xE1) {
         D_800B0920 = D_800B0924[PLAYER.animFrameIdx];
     }
-    if (self->step == 0) {
+    if (!self->step) {
         self->primIndex = AllocPrimitives(PRIM_GT4, 6);
         if (self->primIndex == -1) {
             return;
@@ -1014,18 +1023,18 @@ void func_8012F894(Entity* self) {
         self->animSet = 0xF;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#ifdef VERSION_HD
+#ifndef VERSION_US
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-    animControl = 0;
-#ifndef VERSION_HD
+#ifdef VERSION_US
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
+    animControl = 0;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         PLAYER.drawFlags = self->drawFlags |= DRAW_HIDE;
         PLAYER.drawMode = self->drawMode =
@@ -1287,12 +1296,12 @@ void func_80130264(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = ANIMSET_DRA(15);
         self->animCurFrame = 1;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
         self->zPriority = PLAYER.zPriority;
 #endif
         self->flags =
@@ -1306,7 +1315,7 @@ void func_80130264(Entity* self) {
         self->hitboxHeight = 6;
         self->step++;
     }
-#if !defined(VERSION_HD)
+#if defined(VERSION_US)
     self->zPriority = PLAYER.zPriority;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1391,6 +1400,7 @@ static s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
 static s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
 static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
 void func_80130618(Entity* self) {
+    s32 temp_s1;
     s32 var_v1;
 
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
@@ -1398,12 +1408,12 @@ void func_80130618(Entity* self) {
         return;
     }
 
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = 0xF;
         self->animCurFrame = 0x23;
         self->unk5A = 0x7E;
         self->palette = PLAYER.palette;
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
         self->zPriority = PLAYER.zPriority - 2;
 #endif
         self->flags =
@@ -1413,13 +1423,13 @@ void func_80130618(Entity* self) {
         self->rotPivotY = 8;
         self->step++;
     }
-#if !defined(VERSION_HD)
+#if defined(VERSION_US)
     self->zPriority = PLAYER.zPriority - 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
     self->posX.val = g_Entities[UNK_ENTITY_11].posX.val;
     self->posY.val = g_Entities[UNK_ENTITY_11].posY.val;
-    self->rotZ = -((D_80138430 - 0x800) / 2);
+    self->rotZ = 0x800 - (((D_80138430 - 0x800) / 2) + 0x800);
 
     switch (PLAYER.step_s) {
     case 1:
@@ -1495,7 +1505,11 @@ void func_80130618(Entity* self) {
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 160);
+        temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
+        if(temp_s1 > 0xA0){
+            temp_s1 = 0xA0;
+        }
+        self->unk6C = 0xFF - temp_s1;
     }
 }
 

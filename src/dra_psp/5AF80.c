@@ -350,7 +350,7 @@ void func_8012E040(void) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
             PLAYER.posY.i.hi -= 0;
             PLAYER.posX.i.hi -= xOffset;
-            
+
             func_80102CD8(3);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
@@ -503,7 +503,7 @@ void func_8012E550(void) {
 }
 
 void func_8012E7A4(void) {
-    s32 i, j; //Not nested, just two incrementers for two loops
+    s32 i, j; //Not nested, just two iterators for two loops
     Entity* entity;
 #if defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
@@ -710,6 +710,7 @@ void func_8012ED30(void) {
         }
     }
 }
+
 void func_8012EF2C(void) {
     s32 i;
     s32 xSpeed;
