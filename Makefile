@@ -1,6 +1,8 @@
 .SECONDEXPANSION:
 .SECONDARY:
 .DEFAULT_GOAL := build-and-check
+PHONY_TARGETS := # Empty variable
+MUFFLED_TARGETS := # Empty variable
 
 # Sets VERSION and VENV_DIR if not defined
 VERSION		?= us
@@ -8,13 +10,15 @@ VENV_DIR	?= .venv
 # For disambiguation/escaping of characters
 slash		:= /
 comma		:= ,
+# Allows DEBUG to unmuffle targets which can't use .SILENT
+muffle 		:= $(if $(DEBUG),,@)
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
+echo		= $(if $(and $(QUIET),$2),,echo -e "$(subst //,/,$1)";)# Allows for optional terminal messages
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $1,$(VERSION)),$2,$3)
-echo		= echo -e "$(subst //,/,$(1))"# Sugar function so the subst doesn't muddy echo commands
 
 # System related variables
 OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
@@ -111,7 +115,8 @@ list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 # to be used. Refer to *.map to know which sections are being discarded by LD.
 # Use nm to retrieve the symbol name out of a object file such as the mwo_header.
 define link
-	$(LD) $(LD_FLAGS) -o $(2) \
+	$(muffle)$(call echo,Linking $1,optional)
+	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
 		$(call if_version,pspeu,--gc-sections) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(subst _fix,,$1).ld \
@@ -155,8 +160,7 @@ all: clean extract build expected
 $(DEBUG).SILENT: $(addprefix CLEAN_,$(CLEAN_FILES))
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
-	$(call echo,Cleaning $*)
-	git clean -fdx $*
+	$(call echo,Cleaning $*) git clean -fdxq $*
 
 extract: extract_$(VERSION)
 build: build_$(VERSION)
@@ -178,18 +182,19 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
     }' | column --separator $$'\t' --table
 
 # Step 3/3 of expected
-expected: check
+	$(call echo,Copying build files to expected/)
 	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
 
 # Targets for copying the physical disk to an image file
 .PHONY: dump-disk $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue
 dump-disk: dump-disk_$(VERSION)
 $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
-dump-disk_%:
+dump-disk_%: PHONY
 	$(error Automated dumping of $* is not supported)
-$(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue:
-	( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
-	cd $(RETAIL_DISK_DIR) && \
+$(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
+	$(muffle)( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
+	$(call echo,Dumping disk)
+	$(muffle)cd $(RETAIL_DISK_DIR) && \
         DEVICE="$(shell cdrdao scanbus 2>&1 | grep -vi cdrdao | head -n1 | sed 's/ : [^:]*$$//g')" && \
         cdrdao read-cd \
             --read-raw \
@@ -213,19 +218,17 @@ extract-disk_saturn:
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
-.PHONY: disk disk-prepare disk-debug
-$(DEBUG).SILENT: disk%
 disk: disk-prepare
-	$(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
+	$(call echo,Creating disk image) $(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 disk-prepare  = $(1)/$(1).BIN $(1)/F_$(1).BIN
 DISK_PREPARE := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
 DISK_PREPARE += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call disk-prepare,$(call to_upper,$(target)))))
 DISK_PREPARE += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call disk-prepare,$(call to_upper,$(target)))))
 DISK_PREPARE += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
 disk-prepare: build $(SOTNDISK)
-	mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
-	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
-	$(foreach item,$(DISK_PREPARE),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
+	$(call echo,Copying extracted disk files) mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
+	$(call echo,Copying main.exe as SLUS_000.67) cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
+	$(foreach item,$(disk_prepare),$(call echo,Copying $(item)) cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
 	cd $(TOOLS_DIR)/sotn-debugmodule && make
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
@@ -233,27 +236,27 @@ disk-debug: disk-prepare
 
 # Targets for performing various automated formatting tasks
 format: format-src format-tools format-symbols format-license
-
-.PHONY: format-src $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
 format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
-	$(SOTNLINT)
-$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG)
+# Redirecting sotn-lint stdout because even if there was sometshing useful, you'd never see it because of the output spam
+	$(SOTNLINT) 1>/dev/null; rm $@.run
+format-src.run:
+	$(call echo,Running clang to format src/* and include/*) touch $@
+$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG) format-src.run
 	$(CLANG) -i $*
 
-.PHONY: format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-$(DEBUG).SILENT: format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 $(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%:
 	$(call echo,Formatting $**.py); $(BLACK) $**.py
 
-.PHONY: format-symbols $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
-format-symbols: $(addprefix format-symbols-,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
-format-symbols-%:
-	$(call echo,Sorting $* symbols); VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%:
-	$(call echo,Removing orphan symbols from $*); $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
+format-symbols: $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
+	rm $@.run
+format-symbols.run:
+	$(call echo,Removing orphan symbols using splat configs) touch $@
+$(addprefix format-symbols_,us hd pspeu saturn): format-symbols_%: | $(VENV_DIR)
+	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
+$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
+	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
 
-.PHONY: format-license
 format-license:
 	$(call echo,Checking for license line in code files)
 	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
@@ -288,7 +291,7 @@ mad_fix: $$(call list_o_files,st/mad,_st) $$(call list_o_files,st,_shared) | stm
 function-finder: graphviz force-extract
 	$(MAKE) force-symbols
 	-$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
-	git clean -fdx $(ASM_DIR)/
+	git clean -fdxq $(ASM_DIR)/
 	git checkout $(CONFIG_DIR)/
 	rm -f $(BUILD_DIR)/main.ld
 	rm -f $(BUILD_DIR)/weapon.ld
@@ -365,15 +368,9 @@ graphviz: | $(VENV_DIR)
 	$(PIP) install --upgrade graphviz
 	sudo apt install graphviz
 
-# .PHONY and .SILENT group
-# Putting this in a separate section so it doesn't clutter up the actual targets
-
-
 # this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
 # will act as section dividers.
-.PHONY: help
-$(DEBUG).SILENT: help
 help:
 	printf "\nUsage: make [VERSION=version] <target> …\n"
 	grep -F -h "##@" $(MAKEFILE_LIST) | grep -F -v "grep -F" | sed -e 's/\\$$//' | awk 'BEGIN {FS = ":*[[:space:]]*##@[[:space:]]?"}; \
@@ -419,3 +416,31 @@ update-dependencies: ##@ update tools and internal dependencies
 ##@
 
 dump-disk: ##@ dump a physical game disk
+
+# .PHONY and .SILENT group
+# Putting this in a separate section because if it is included with the targets as I'd prefer, it becomes very cluttered and harder to read.
+# These lists can be added to at any point since adding the lists to the actual .PHONY and .SILENT targets is the final action and order does not matter.
+# I'd prefer assigning to .PHONY and .SILENT directly without using the list, but the list allows us to have a target that displays it to the user for debugging.
+# They are grouped in the general order you will find the targets in the file.
+PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
+PHONY_TARGETS += all all-clean build-and-check clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto)
+PHONY_TARGETS += extract-disk $(addprefix extract-disk_,us pspeu hd saturn) disk disk-prepare disk-debug
+PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
+PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
+PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report
+PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
+PHONY_TARGETS += help get-debug get-phony get-silent
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(WIBO) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(GO) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(M2CTX_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR)
+.PHONY: $(PHONY_TARGETS)
+# Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
+$(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz Muffled in target: $(BIN_DIR)/%
+# This are walls of text, so they're redirected to files instead of stdout for debugging
+get-debug: get-phony get-silent
+get-phony:
+	echo ".PHONY:" > make.phony.targets
+	$(foreach target,$(PHONY_TARGETS),echo $(target) >> make.phony.targets;)
+get-silent:
+	echo ".SILENT:" > make.silent.targets
+	$(foreach target,$(MUFFLED_TARGETS),echo $(target) >> make.silent.targets;)

@@ -25,7 +25,6 @@ EXTRACT_SATURN_FILES := $(subst 0,zero,0.bin) $(addsuffix .prg,$(call to_lower,$
 PCM_FILES 			:= $(wildcard $(EXTRACTED_DISK_DIR)/SD/*.PCM)
 WAV_FILES 			:= $(PCM_FILES:$(EXTRACTED_DISK_DIR)/SD/%.PCM=$(ASSETS_DIR)/SD/%.wav)
 
-.PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
 
 extract_saturn: $(EXTRACT_SATURN_FILES)
@@ -34,19 +33,21 @@ $(EXTRACT_SATURN_FILES): $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
 
 extract_saturn_pcm: $(WAV_FILES)
 
-.PHONY: diff_saturn
 diff_saturn:
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $(BUILD_DIR)/$(FILENAME) > $(BUILD_DIR)/$(FILENAME)-ours.txt && \
 	$(OBJDUMP) $(OBJDUMP_FLAGS) $(EXTRACTED_DISK_DIR)/$(FILENAME) > $(BUILD_DIR)/$(FILENAME)-theirs.txt && \
 	-diff $(BUILD_DIR)/$(FILENAME)-ours.txt $(BUILD_DIR)/$(FILENAME)-theirs.txt > $(BUILD_DIR)/$(FILENAME)-diff.txt
 
 $(BUILD_DIR)/0.BIN: $(BUILD_DIR)/zero.elf
-	$(SATURN_OBJCOPY) $< -O binary $@
+	$(call echo,Building $(notdir $@))
+	$(OBJCOPY) $< -O binary $@
 $(BUILD_DIR)/%.PRG: $(BUILD_DIR)/$$(call to_lower,%).elf
-	$(SATURN_OBJCOPY) $< -O binary $@
+	$(call echo,Building $(notdir $@))
+	$(muffle)$(OBJCOPY) $< -O binary $@
 
-$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(LIB_OBJECTS) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
-	cd $(BUILD_DIR) && \
+$(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(addprefix $(BUILD_DIR)/,$(LIB_OBJECTS)) $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/zero_user_syms.txt
+	$(call echo,Linking 0)
+	$(muffle)cd $(BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o zero.elf \
 		-Map zero.map \
@@ -57,7 +58,8 @@ $(BUILD_DIR)/zero.elf: $(BUILD_DIR)/zero.o $(LIB_OBJECTS) $(CONFIG_DIR)/saturn/z
 		zero.o $(LIB_OBJECTS)
 
 $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG_DIR)/saturn/game_syms.txt $(CONFIG_DIR)/saturn/%_user_syms.txt
-	cd $(BUILD_DIR) && \
+	$(call echo,Linking $*)
+	$(muffle)cd $(BUILD_DIR) && \
 		sh-elf-ld -verbose --no-check-sections -nostdlib \
 		-o $*.elf \
 		-Map $*.map \
@@ -68,11 +70,14 @@ $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.o $(CONFIG_DIR)/saturn/zero_syms.txt $(CONFIG
 		$*.o
 
 $(BUILD_DIR)/lib/%.o: $(SRC_DIR)/saturn/lib/%.c $(CC1_SATURN)
-	mkdir -p $(dir $@)
-	cd $(BUILD_DIR) && $(DOSEMU_APP) "GCC.EXE -c -I./ -O0 -m2 -fsigned-char lib/$*.c -o lib/$*.o"
+	$(call echo,Compiling $(subst $(SRC_DIR),,$<))
+	$(muffle)mkdir -p $(dir $@); cd $(BUILD_DIR) && $(DOSEMU) "GCC.EXE -c -I./ -O0 -m2 -fsigned-char lib/$*.c -o lib/$*.o"
 $(BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(CC1_SATURN)
-	mkdir -p $(dir $@)
-	cd $(BUILD_DIR) && $(DOSEMU_APP) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
+	$(call echo,Linking $(subst $(SRC_DIR),,$<))
+	$(muffle)mkdir -p $(dir $@); cd $(BUILD_DIR) && $(DOSEMU) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
+
+	$(call echo,Extracting $@)
+	$(muffle)mkdir -p $(ASSETS_DIR)/SD; $(ADPCM_EXTRACT_APP) $< $@
 
 $(CC1_SATURN): $(CYGNUS)
 	mkdir -p $(dir $@)
@@ -93,3 +98,7 @@ $(CC1_SATURN): $(CYGNUS)
 
 # Fixes build -j breaking due to dosemu
 .NOTPARALLEL: build_saturn
+
+PHONY_TARGETS += build_saturn extract_saturn extract_saturn_pcm diff_saturn
+MUFFLED_TARGETS += $(EXTRACT_SATURN_FILES) $(BUILD_DIR)/0.BIN $(BUILD_DIR)/zero.elf $(CC1_SATURN)
+# Muffled in target: $(BUILD_DIR)/%.PRG $(BUILD_DIR)/%.elf $(BUILD_DIR)/lib/%.o $(BUILD_DIR)/%.o $(ASSETS_DIR)/SD/%.wav
