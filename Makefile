@@ -82,8 +82,10 @@ ASMDIFFER		:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP           := $(TOOLS_DIR)/m2ctx.py
 M2C_APP             := $(TOOLS_DIR)/m2c/m2c.py
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
-MWCCGAP_APP         := $(TOOLS_DIR)/mwccgap/mwccgap.py
-
+MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
+DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
+SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 
@@ -302,68 +304,64 @@ duplicates-report: force-extract
 	mkdir -p $(TOOLS_DIR)/gh-duplicates; $(DUPS)
 
 # Targets that specify and/or install dependencies
-.PHONY: git-submodules update-dependencies update-dependencies-all $(addprefix dependencies-,us pspeu hd saturn) requirements-python
-git-submodules: $(ASMDIFFER) $(M2C_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_APP)
-update-dependencies: $(DEPENDENCIES) dependencies-$(VERSION)
-	git clean -fd $(BIN_DIR)/
-update-dependencies-all: update-dependencies $(addprefix dependencies-,us pspeu hd saturn)
+git-submodules: $(ASMDIFFER) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
+update-dependencies: $(ASMDIFFER) $(M2CTX_APP) $(M2C_APP) requirements-python dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS)
+	git clean -fdq $(BIN_DIR)/
+update-dependencies-all: update-dependencies $(addprefix dependencies_,us pspeu hd saturn)
 
-dependencies-us dependencies-hd: $(MASPSX_APP) 
-$(MASPSX_APP):
+dependencies_us dependencies_hd: $(MASPSX_APP) 
+$(MASPSX_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MASPSX_APP))
 
-dependencies-pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
-$(MWCCGAP_APP):
+dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
+$(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
-	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
+	wget -a $(TOOLS_DIR)/wget-$*.log -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	sha256sum --check $(WIBO).sha256
-	chmod +x $(WIBO)
+	chmod +x $(WIBO); rm wget-$*.log
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
-dependencies-saturn: $(SATURN_SPLITTER_APP) $(DOSEMU)
-$(SATURN_SPLITTER_APP):
+dependencies_saturn: $(SATURN_SPLITTER_APP) $(DOSEMU_APP) $(CYGNUS)
+$(SATURN_SPLITTER_DIR):
 	git submodule update --init $(SATURN_SPLITTER_DIR)
+$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
-$(DOSEMU):
+$(DOSEMU_APP):
 	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
 	sudo dpkg -i $(TOOLS_DIR)/dosemu-deb/*.deb
-
-requirements-python: $(VENV_DIR)
-	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
-
 $(GO):
 	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
-	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
-	rm go1.22.4.linux-amd64.tar.gz
-
-$(ASMDIFFER):
+	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz; rm go1.22.4.linux-amd64.tar.gz
+$(ASMDIFFER): | $(VENV_DIR)
 	git submodule update --init $(dir $(ASMDIFFER))
-$(M2C_APP):
+$(dir $(M2C_APP)):
 	git submodule update --init $(dir $(M2C_APP))
+$(M2C_APP): $(dir $(M2C_APP)) | $(VENV_DIR)
 	$(PIP) install --upgrade pycparser
-	
-$(M2CTX_APP):
+$(PERMUTER_APP): | $(VENV_DIR)
+	git submodule update --init $(dir $(PERMUTER_APP))
+$(M2CTX_APP): | $(VENV_DIR)
 	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
-
-$(SOTNDISK_DIR): $(GO) $(shell find $(SOTNDISK_DIR) -type f -name '*.go')
-	rm $(SOTNDISK) || true; cd $(SOTNDISK_DIR); $(GO) install
-$(SOTNASSETS_DIR): $(GO) $(shell find $(SOTNASSETS_DIR) -type f -name '*.go')
-	rm $(SOTNASSETS) || true; cd $(SOTNASSETS_DIR); $(GO) install
-
+$(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
+	cd $(SOTNDISK_DIR); $(GO) install
+$(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
+	cd $(SOTNASSETS_DIR); $(GO) install
 $(VENV_DIR):
+	$(call Installing and setting up python virtual environment)
 	$(SYSTEM_PYTHON) -m venv $(VENV_DIR)
-
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && echo "Build environment has changed due to venv install, please restart Make" && exit 1
+requirements-python: | $(VENV_DIR)
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
-	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
+	wget -a $(TOOLS_DIR)/wget-$*.log -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
-	sha256sum --check $<.sha256
-	cd $(BIN_DIR) && tar -xzf ../$<
-	rm $<
-	touch $@
+	$(muffle)sha256sum --check $<.sha256
+	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
+	$(muffle)touch $@; rm $(TOOLS_DIR)/wget-$*.log
 
-graphviz: $(VENV_DIR)
+graphviz: | $(VENV_DIR)
 	$(PIP) install --upgrade graphviz
 	sudo apt install graphviz
 
