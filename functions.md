@@ -122,7 +122,7 @@
 | st0     | SetDisplayBufferColorsToBlack       |       19 |          1 |        |                                 |       |
 | st0     | SetGameState                        |       19 |          1 |        |                                 |       |
 | st0     | SetCutsceneEnd                      |       19 |          1 |        |                                 |       |
-| st0     | func_pspeu_09242A20                 |       19 |          1 |        |                                 |       |
+| st0     | func_pspeu_09242A20                 |       19 |          1 |        | https://decomp.me/scratch/lu9cB | 0.996 |
 | dra     | func_8012CFF0                       |       19 |          2 |        |                                 |       |
 | lib     | UpdateFacingDirection               |       19 |          2 |        |                                 |       |
 | dra     | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
@@ -156,7 +156,7 @@
 | no4     | func_psp_09247D78                   |       21 |          1 |        |                                 |       |
 | st0     | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0     | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| st0     | func_pspeu_09242A58                 |       21 |          1 |        |                                 |       |
+| st0     | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 0.66  |
 | wrp     | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | wrp     | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | dra     | func_8010FAF4                       |       21 |          2 |        |                                 |       |
@@ -452,7 +452,7 @@
 | dra     | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra     | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
 | lib     | func_psp_0925A798                   |       45 |          6 |        |                                 |       |
-| st0     | func_pspeu_09242F68                 |       45 |          7 |        |                                 |       |
+| st0     | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 0.516 |
 | dra     | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
 | dra     | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
 | lib     | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
@@ -1150,7 +1150,7 @@
 | no4     | func_psp_0923E690                   |      272 |         23 |        |                                 |       |
 | ric_psp | RicEntityRevivalColumn              |      273 |         26 |        |                                 |       |
 | lib     | func_us_801B29C4                    |      274 |         43 |        |                                 |       |
-| st0     | func_801B101C                       |      275 |         24 |        |                                 |       |
+| st0     | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra     | func_psp_090F1078                   |      275 |         39 | Yes    |                                 |       |
 | dra     | func_801042C4                       |      277 |         20 |        |                                 |       |
 | no4     | func_psp_0923FF60                   |      277 |         31 |        |                                 |       |
