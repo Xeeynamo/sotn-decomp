@@ -390,7 +390,6 @@ void gte_ldtz(s16);
 #define gte_SetRotMatrix SetRotMatrix
 #define gte_SetTransMatrix SetTransMatrix
 
-
 #else
 
 #define gte_SetRotMatrix(r0)

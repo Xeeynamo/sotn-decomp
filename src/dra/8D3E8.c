@@ -346,7 +346,7 @@ void func_8012E040(void) {
             // PS1 keeps it in even though it's -O2.
             PLAYER.posY.i.hi += 0;
             PLAYER.posX.i.hi += xOffset;
-            
+
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
             PLAYER.posY.i.hi -= 0;
             PLAYER.posX.i.hi -= xOffset;
@@ -394,7 +394,7 @@ void func_8012E040(void) {
             return;
         }
         // This is a silly way to write this
-        if ((g_Player.pl_vram_flag & 8 && PLAYER.velocityX > 0) || 
+        if ((g_Player.pl_vram_flag & 8 && PLAYER.velocityX > 0) ||
             (g_Player.pl_vram_flag & 8 && PLAYER.velocityX < 0)) {
             D_800B0914 = 1;
         }
@@ -423,7 +423,7 @@ void func_8012E040(void) {
     if (D_80097448[0] > 12) {
         // Interesting, wrong registers if you do /= here.
         vel_boost = vel_boost / 4;
-    } 
+    }
     PLAYER.velocityY += vel_boost;
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
@@ -503,7 +503,7 @@ void func_8012E550(void) {
 }
 
 void func_8012E7A4(void) {
-    s32 i, j; //Not nested, just two iterators for two loops
+    s32 i, j; // Not nested, just two iterators for two loops
     Entity* entity;
 #if defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
@@ -555,7 +555,7 @@ void func_8012E7A4(void) {
     PLAYER.unk5A = 0x7E;
     PLAYER.animSet = 0xF;
     PLAYER.palette = 0x810D;
-    
+
 #if !defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x23), 0);
@@ -645,7 +645,7 @@ void func_8012EAD0(void) {
 #elif defined(VERSION_PSP)
             D_psp_09234B68 = 0x18;
 #endif
-            
+
             func_80111CC0();
         }
         break;
@@ -979,9 +979,9 @@ bool func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
     s32 diffY = y0 - y1;
     s32 sqrt = SquareRoot12((SQ(diffX) + SQ(diffY)) << 12);
 
-    if((sqrt >> 12) >= distance){
+    if ((sqrt >> 12) >= distance) {
         return true;
-    } else{
+    } else {
         return false;
     }
 }
@@ -1506,7 +1506,7 @@ void func_80130618(Entity* self) {
         self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
-        if(temp_s1 > 0xA0){
+        if (temp_s1 > 0xA0) {
             temp_s1 = 0xA0;
         }
         self->unk6C = 0xFF - temp_s1;
@@ -1527,7 +1527,7 @@ void func_801309B4(Entity* self) {
     s16 var_s2;
     s32 var_s1;
     s32 var_s0;
-    
+
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
@@ -1579,7 +1579,7 @@ void func_801309B4(Entity* self) {
         switch (D_800B0914) {
         case 0:
             if (PLAYER.animCurFrame == 33) {
-                if(!PLAYER.facingLeft){
+                if (!PLAYER.facingLeft) {
                     self->posX.i.hi += 4;
                 } else {
                     self->posX.i.hi -= 4;
@@ -1662,7 +1662,7 @@ void func_801309B4(Entity* self) {
             D_80138448 -= 1;
         } else if (*D_80097448 > 0x18) {
             var_s2 = 4;
-            if(PLAYER.facingLeft){
+            if (PLAYER.facingLeft) {
                 var_s2 = -var_s2;
             }
             self->posX.i.hi += var_s2;
@@ -1692,7 +1692,6 @@ void func_80130E94(Entity* self) {
     s32 params;
     s32 var_s1;
     s32 var_s0;
-
 
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
@@ -1725,7 +1724,7 @@ void func_80130E94(Entity* self) {
 #endif
     if (params == 0) {
         var_s4 = g_Entities[19].posX.val;
-        if(PLAYER.facingLeft){
+        if (PLAYER.facingLeft) {
             var_s4 += FIX(3);
         } else {
             var_s4 -= FIX(3);
@@ -1768,7 +1767,7 @@ void func_80130E94(Entity* self) {
                 var_s1 = 0x40;
                 var_s0 = -0x100;
                 temp_s2 = (abs(PLAYER.velocityX) + -FIX(3)) >> 10;
-                if(temp_s2 > 0x100){
+                if (temp_s2 > 0x100) {
                     temp_s2 = 0x100;
                 }
                 var_s0 += temp_s2;
@@ -1836,7 +1835,7 @@ void func_80130E94(Entity* self) {
         self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
-        if(temp_s2 > 0x80){
+        if (temp_s2 > 0x80) {
             temp_s2 = 0x80;
         }
         self->unk6C = 0xFF - temp_s2;
@@ -2060,11 +2059,11 @@ static u8 dirty_data2 = 0x0D;
 void EntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
-    VECTOR trans1; //sp38
+    VECTOR trans1; // sp38
     SVECTOR pos = {0};
-    SVECTOR sp50 = {0xFFA0, 0, 0}; //sp28
-    s32 z; //sp24
-    s32 nclip; //sp20
+    SVECTOR sp50 = {0xFFA0, 0, 0}; // sp28
+    s32 z;                         // sp24
+    s32 nclip;                     // sp20
     Primitive* prim;
     s32 i;
     u8* primUVCoords;
@@ -2073,11 +2072,11 @@ void EntityGiantSpinningCross(Entity* self) {
     SVECTOR* temp_vec2;
     u16 temp_priority;
 
-    // Uninitialized in other versions
-    #ifdef VERSION_PSP
+// Uninitialized in other versions
+#ifdef VERSION_PSP
     z = 0;
     nclip = 0;
-    #endif
+#endif
 
     if (self->step == 0) {
         self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_800B0CB4));
@@ -2226,9 +2225,9 @@ void EntityGiantSpinningCross(Entity* self) {
     for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
-        #ifndef VERSION_PSP
+#ifndef VERSION_PSP
         temp_vec2 = vectors_ptr[2];
-        #endif
+#endif
         prim->type = PRIM_GT4;
         gte_nclip();
         prim->drawMode = DRAW_HIDE;
@@ -2238,14 +2237,14 @@ void EntityGiantSpinningCross(Entity* self) {
         }
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
 
-        #ifndef VERSION_PSP
+#ifndef VERSION_PSP
         gte_ldv0(temp_vec2);
-        #else
+#else
         gte_ldv0(vectors_ptr[2]);
-        #endif
+#endif
         gte_rtps();
         prim->drawMode = DRAW_DEFAULT;
-        #ifndef VERSION_PSP
+#ifndef VERSION_PSP
         if (z < 16) {
             temp_priority = 0x1B6;
         } else if (z > 998) {
@@ -2255,7 +2254,7 @@ void EntityGiantSpinningCross(Entity* self) {
             temp_priority -= (z - 0x50);
         }
         prim->priority = temp_priority;
-        #else
+#else
         if (z < 16) {
             prim->priority = 0x1B6;
         } else if (z > 998) {
@@ -2263,7 +2262,7 @@ void EntityGiantSpinningCross(Entity* self) {
         } else {
             prim->priority = 0xD0 - (z - 0x50);
         }
-        #endif
+#endif
         gte_stsxy((long*)&prim->x3);
     }
 }
