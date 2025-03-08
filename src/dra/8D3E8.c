@@ -2059,11 +2059,11 @@ static u8 dirty_data2 = 0x0D;
 void EntityGiantSpinningCross(Entity* self) {
     MATRIX m;
     SVECTOR rot;
-    VECTOR trans1; // sp38
+    VECTOR trans1;
     SVECTOR pos = {0};
-    SVECTOR sp50 = {0xFFA0, 0, 0}; // sp28
-    s32 z;                         // sp24
-    s32 nclip;                     // sp20
+    SVECTOR sp50 = {0xFFA0, 0, 0};
+    s32 z;
+    s32 nclip;
     Primitive* prim;
     s32 i;
     u8* primUVCoords;
