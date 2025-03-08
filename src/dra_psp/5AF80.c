@@ -1920,4 +1920,318 @@ void func_8013136C(Entity* self) {
     func_8012C600();
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", EntityGiantSpinningCross);
+static SVECTOR D_800B0B34 = {-8, -72, -4};
+static SVECTOR D_800B0B3C = {8, -72, -4};
+static SVECTOR D_800B0B44 = {-48, -32, -4};
+static SVECTOR D_800B0B4C = {-8, -32, -4};
+static SVECTOR D_800B0B54 = {8, -32, -4};
+static SVECTOR D_800B0B5C = {48, -32, -4};
+static SVECTOR D_800B0B64 = {-48, -16, -4};
+static SVECTOR D_800B0B6C = {-8, -16, -4};
+static SVECTOR D_800B0B74 = {8, -16, -4};
+static SVECTOR D_800B0B7C = {48, -16, -4};
+static SVECTOR D_800B0B84 = {-8, 72, -4};
+static SVECTOR D_800B0B8C = {8, 72, -4};
+static SVECTOR D_800B0B94 = {-24, -48, -4}; // unused
+static SVECTOR D_800B0B9C = {-8, -48, -4};
+static SVECTOR D_800B0BA4 = {8, -48, -4};
+static SVECTOR D_800B0BAC = {24, -48, -4}; // unused
+static SVECTOR D_800B0BB4 = {-24, -32, -4};
+static SVECTOR D_800B0BBC = {24, -32, -4};
+static SVECTOR D_800B0BC4 = {-24, -16, -4};
+static SVECTOR D_800B0BCC = {24, -16, -4};
+static SVECTOR D_800B0BD4 = {-24, 0, -4}; // unused
+static SVECTOR D_800B0BDC = {-8, 0, -4};
+static SVECTOR D_800B0BE4 = {8, 0, -4};
+static SVECTOR D_800B0BEC = {24, 0, -4}; // unused
+static SVECTOR D_800B0BF4 = {-8, -72, 4};
+static SVECTOR D_800B0BFC = {8, -72, 4};
+static SVECTOR D_800B0C04 = {-48, -32, 4};
+static SVECTOR D_800B0C0C = {-8, -32, 4};
+static SVECTOR D_800B0C14 = {8, -32, 4};
+static SVECTOR D_800B0C1C = {48, -32, 4};
+static SVECTOR D_800B0C24 = {-48, -16, 4};
+static SVECTOR D_800B0C2C = {-8, -16, 4};
+static SVECTOR D_800B0C34 = {8, -16, 4};
+static SVECTOR D_800B0C3C = {48, -16, 4};
+static SVECTOR D_800B0C44 = {-8, 72, 4};
+static SVECTOR D_800B0C4C = {8, 72, 4};
+static SVECTOR D_800B0C54 = {-24, -48, 4};
+static SVECTOR D_800B0C5C = {-8, -48, 4};
+static SVECTOR D_800B0C64 = {8, -48, 4};
+static SVECTOR D_800B0C6C = {24, -48, 4};
+static SVECTOR D_800B0C74 = {-24, -32, 4};
+static SVECTOR D_800B0C7C = {24, -32, 4};
+static SVECTOR D_800B0C84 = {-24, -16, 4};
+static SVECTOR D_800B0C8C = {24, -16, 4};
+static SVECTOR D_800B0C94 = {-24, 0, 4};
+static SVECTOR D_800B0C9C = {-8, 0, 4};
+static SVECTOR D_800B0CA4 = {8, 0, 4};
+static SVECTOR D_800B0CAC = {24, 0, 4};
+static SVECTOR* D_800B0CB4[][4] = {
+    {&D_800B0B4C, &D_800B0B54, &D_800B0B74, &D_800B0B6C},
+    {&D_800B0C54, &D_800B0C5C, &D_800B0C0C, &D_800B0C74},
+    {&D_800B0C64, &D_800B0C6C, &D_800B0C7C, &D_800B0C14},
+    {&D_800B0C84, &D_800B0C2C, &D_800B0C9C, &D_800B0C94},
+    {&D_800B0C34, &D_800B0C8C, &D_800B0CAC, &D_800B0CA4},
+    {&D_800B0C0C, &D_800B0C5C, &D_800B0C54, &D_800B0C74},
+    {&D_800B0C7C, &D_800B0C6C, &D_800B0C64, &D_800B0C14},
+    {&D_800B0C9C, &D_800B0C2C, &D_800B0C84, &D_800B0C94},
+    {&D_800B0CAC, &D_800B0C8C, &D_800B0C34, &D_800B0CA4},
+    {&D_800B0C14, &D_800B0C64, &D_800B0C5C, &D_800B0C0C},
+    {&D_800B0C2C, &D_800B0C0C, &D_800B0C74, &D_800B0C84},
+    {&D_800B0C8C, &D_800B0C7C, &D_800B0C14, &D_800B0C34},
+    {&D_800B0CA4, &D_800B0C34, &D_800B0C2C, &D_800B0C9C},
+    {&D_800B0C34, &D_800B0C14, &D_800B0C0C, &D_800B0C2C},
+    {&D_800B0B3C, &D_800B0BFC, &D_800B0C64, &D_800B0BA4},
+    {&D_800B0BA4, &D_800B0C64, &D_800B0C14, &D_800B0B54},
+    {&D_800B0B74, &D_800B0C34, &D_800B0CA4, &D_800B0BE4},
+    {&D_800B0BE4, &D_800B0CA4, &D_800B0C4C, &D_800B0B8C},
+    {&D_800B0C74, &D_800B0C0C, &D_800B0B4C, &D_800B0BB4},
+    {&D_800B0C14, &D_800B0C7C, &D_800B0BBC, &D_800B0B54},
+    {&D_800B0C64, &D_800B0BFC, &D_800B0BF4, &D_800B0C5C},
+    {&D_800B0C84, &D_800B0C74, &D_800B0C04, &D_800B0C24},
+    {&D_800B0C3C, &D_800B0C1C, &D_800B0C7C, &D_800B0C8C},
+    {&D_800B0C4C, &D_800B0CA4, &D_800B0C9C, &D_800B0C44},
+    {&D_800B0C5C, &D_800B0BF4, &D_800B0B34, &D_800B0B9C},
+    {&D_800B0C0C, &D_800B0C5C, &D_800B0B9C, &D_800B0B4C},
+    {&D_800B0C9C, &D_800B0C2C, &D_800B0B6C, &D_800B0BDC},
+    {&D_800B0C44, &D_800B0C9C, &D_800B0BDC, &D_800B0B84},
+    {&D_800B0B6C, &D_800B0C2C, &D_800B0C84, &D_800B0BC4},
+    {&D_800B0BCC, &D_800B0C8C, &D_800B0C34, &D_800B0B74},
+    {&D_800B0B6C, &D_800B0B74, &D_800B0BE4, &D_800B0BDC},
+    {&D_800B0BDC, &D_800B0BE4, &D_800B0B8C, &D_800B0B84},
+    {&D_800B0B34, &D_800B0B3C, &D_800B0BA4, &D_800B0B9C},
+    {&D_800B0B9C, &D_800B0BA4, &D_800B0B54, &D_800B0B4C},
+    {&D_800B0B5C, &D_800B0C1C, &D_800B0C3C, &D_800B0B7C},
+    {&D_800B0BF4, &D_800B0BFC, &D_800B0B3C, &D_800B0B34},
+    {&D_800B0C24, &D_800B0C04, &D_800B0B44, &D_800B0B64},
+    {&D_800B0B8C, &D_800B0C4C, &D_800B0C44, &D_800B0B84},
+    {&D_800B0C04, &D_800B0C74, &D_800B0BB4, &D_800B0B44},
+    {&D_800B0BC4, &D_800B0C84, &D_800B0C24, &D_800B0B64},
+    {&D_800B0C7C, &D_800B0C1C, &D_800B0B5C, &D_800B0BBC},
+    {&D_800B0B7C, &D_800B0C3C, &D_800B0C8C, &D_800B0BCC},
+    {&D_800B0BB4, &D_800B0B4C, &D_800B0B6C, &D_800B0BC4},
+    {&D_800B0B54, &D_800B0BBC, &D_800B0BCC, &D_800B0B74},
+    {&D_800B0B44, &D_800B0BB4, &D_800B0BC4, &D_800B0B64},
+    {&D_800B0BBC, &D_800B0B5C, &D_800B0B7C, &D_800B0BCC},
+};
+static u8 D_800B0F94[][5] = {
+    {0x38, 0x08, 0x10, 0x10, 0x0D}, {0x58, 0x08, 0x10, 0x10, 0x0E},
+    {0x58, 0x08, 0x10, 0x10, 0x1E}, {0x58, 0x08, 0x10, 0x10, 0x2E},
+    {0x58, 0x08, 0x10, 0x10, 0x3E}, {0x58, 0x08, 0x10, 0x10, 0x4E},
+    {0x58, 0x08, 0x10, 0x10, 0x5E}, {0x58, 0x08, 0x10, 0x10, 0x6E},
+    {0x58, 0x08, 0x10, 0x10, 0x7E}, {0x68, 0x08, 0x10, 0x10, 0x4E},
+    {0x68, 0x08, 0x10, 0x10, 0x2E}, {0x68, 0x08, 0x10, 0x10, 0x0E},
+    {0x68, 0x08, 0x10, 0x10, 0x6E}, {0x68, 0x18, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x0E}, {0x68, 0x30, 0x10, 0x10, 0x0E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x68, 0x30, 0x10, 0x10, 0x4E}, {0x68, 0x30, 0x10, 0x10, 0x4E},
+    {0x38, 0x18, 0x10, 0x10, 0x0F}, {0x38, 0x28, 0x10, 0x48, 0x0F},
+    {0x50, 0x20, 0x10, 0x18, 0x0F}, {0x50, 0x38, 0x10, 0x10, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x0F}, {0x70, 0x48, 0x08, 0x08, 0x0F},
+    {0x70, 0x48, 0x08, 0x08, 0x4F}, {0x70, 0x48, 0x08, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x0F}, {0x50, 0x50, 0x18, 0x08, 0x4F},
+    {0x50, 0x50, 0x18, 0x08, 0x1F}, {0x50, 0x50, 0x18, 0x08, 0x5F},
+    {0x68, 0x58, 0x10, 0x10, 0x0F}, {0x68, 0x58, 0x10, 0x10, 0x1F},
+    {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F},
+};
+
+#ifdef VERSION_US
+static u8 dirty_data1 = 0x20;
+static u8 dirty_data2 = 0x0D;
+#endif
+
+// When Alucard uses the cross subweapon for 100 hearts.
+// Entity ID 7, blueprint #7 (this is a coincidence)
+void EntityGiantSpinningCross(Entity* self) {
+    static SVECTOR D_800E202C = {0xFFA0, 0, 0};
+    MATRIX m;
+    SVECTOR rot;
+    VECTOR trans1; //sp38
+    SVECTOR pos = {0};
+    SVECTOR sp50; //sp28
+    s32 z; //sp24
+    s32 nclip; //sp20
+    Primitive* prim;
+    s32 i;
+    u8* primUVCoords;
+    SVECTOR** vectors_ptr;
+
+    sp50 = D_800E202C;
+    z = 0;
+    nclip = 0;
+
+    if (self->step == 0) {
+        self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_800B0CB4));
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->tpage = 0x1C;
+            prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
+            prim = prim->next;
+        }
+        func_8011A290(self);
+        self->hitboxHeight = 0x50;
+        self->hitboxWidth = 0xC;
+        self->facingLeft = 0;
+        self->posY.i.hi = 0x160;
+        self->velocityY = FIX(-6);
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->ext.giantcross.unk7C = 0;
+        self->ext.giantcross.unk7E = 0x400;
+        PlaySfx(SFX_FIREBALL_SHOT_B);
+        self->step++;
+        prim = &g_PrimBuf[self->primIndex];
+        primUVCoords = &D_800B0F94[0][0];
+        for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next,
+            primUVCoords += 5) {
+            prim->clut = (primUVCoords[4] & 0xF) + 0x1A0;
+            switch (primUVCoords[4] & 0xF0) {
+            case 0x10:
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x20:
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1];
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1];
+                break;
+            case 0x30:
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1];
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1];
+                break;
+            case 0x40:
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x50:
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1] + primUVCoords[3];
+                break;
+            case 0x60:
+                prim->u3 = primUVCoords[0];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1];
+                prim->u0 = primUVCoords[0] + primUVCoords[2];
+                prim->v0 = primUVCoords[1];
+                break;
+            case 0x70:
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                prim->u1 = primUVCoords[0];
+                prim->v1 = primUVCoords[1] + primUVCoords[3];
+                prim->u2 = primUVCoords[0] + primUVCoords[2];
+                prim->v2 = primUVCoords[1];
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1];
+                break;
+            default:
+                prim->u0 = primUVCoords[0];
+                prim->v0 = primUVCoords[1];
+                prim->u1 = primUVCoords[0] + primUVCoords[2];
+                prim->v1 = primUVCoords[1];
+                prim->u2 = primUVCoords[0];
+                prim->v2 = primUVCoords[1] + primUVCoords[3];
+                prim->u3 = primUVCoords[0] + primUVCoords[2];
+                prim->v3 = primUVCoords[1] + primUVCoords[3];
+                break;
+            }
+        }
+        return;
+    }
+    if (self->posY.i.hi < -0x40) {
+        DestroyEntity(self);
+        return;
+    }
+    if (self->posY.i.hi < 0) {
+        self->velocityY -= FIX(0.5);
+    }
+    self->posY.val += self->velocityY;
+    self->ext.giantcross.unk7C += 0x60;
+    self->ext.giantcross.unk7E += 0x60;
+    trans1.vx = -(rcos(self->ext.giantcross.unk7C) * 0x60) >> 0xC;
+    trans1.vy = self->posY.i.hi - 0x80;
+    trans1.vz = ((rsin(self->ext.giantcross.unk7C) * 0x60) >> 0xC) + 0x180;
+    rot.vy = self->ext.giantcross.unk7E;
+    rot.vz = 0x40;
+    rot.vx = 0;
+
+    SetGeomOffset(self->posX.i.hi, 120);
+    SetGeomScreen(320);
+    RotMatrix(&rot, &m);
+    TransMatrix(&m, &trans1);
+    SetRotMatrix(&m);
+    SetTransMatrix(&m);
+    gte_ldv0(&pos);
+    gte_rtps();
+    prim = &g_PrimBuf[self->primIndex];
+    vectors_ptr = (SVECTOR**)&D_800B0CB4;
+    gte_stsxy((long*)&prim->x0);
+    gte_stszotz((long*)&z);
+    self->hitboxOffX = prim->x0 - self->posX.i.hi;
+    self->hitboxOffY = prim->y0 - self->posY.i.hi;
+    for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next, vectors_ptr += 4) {
+        gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
+        gte_rtpt();
+        prim->type = PRIM_GT4;
+        gte_nclip();
+        prim->drawMode = DRAW_HIDE;
+        gte_stopz(&nclip);
+        if (nclip < 0) {
+            continue;
+        }
+        gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
+        gte_ldv0(vectors_ptr[2]);
+        gte_rtps();
+        prim->drawMode = DRAW_DEFAULT;
+        if (z < 16) {
+            prim->priority = 0x1B6;
+        } else if (z > 998) {
+            prim->priority = 0x10;
+        } else {
+            prim->priority = 0xD0 - (z - 0x50);
+        }
+        gte_stsxy((long*)&prim->x3);
+    }
+}
