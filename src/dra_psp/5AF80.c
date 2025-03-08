@@ -2058,22 +2058,26 @@ static u8 dirty_data2 = 0x0D;
 // When Alucard uses the cross subweapon for 100 hearts.
 // Entity ID 7, blueprint #7 (this is a coincidence)
 void EntityGiantSpinningCross(Entity* self) {
-    static SVECTOR D_800E202C = {0xFFA0, 0, 0};
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1; //sp38
     SVECTOR pos = {0};
-    SVECTOR sp50; //sp28
+    SVECTOR sp50 = {0xFFA0, 0, 0}; //sp28
     s32 z; //sp24
     s32 nclip; //sp20
     Primitive* prim;
     s32 i;
     u8* primUVCoords;
     SVECTOR** vectors_ptr;
+    // Not used on PSP, would be nice to eliminate
+    SVECTOR* temp_vec2;
+    u16 temp_priority;
 
-    sp50 = D_800E202C;
+    // Uninitialized in other versions
+    #ifdef VERSION_PSP
     z = 0;
     nclip = 0;
+    #endif
 
     if (self->step == 0) {
         self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_800B0CB4));
@@ -2206,11 +2210,11 @@ void EntityGiantSpinningCross(Entity* self) {
     rot.vx = 0;
 
     SetGeomOffset(self->posX.i.hi, 120);
-    SetGeomScreen(320);
+    gte_SetGeomScreen(320);
     RotMatrix(&rot, &m);
     TransMatrix(&m, &trans1);
-    SetRotMatrix(&m);
-    SetTransMatrix(&m);
+    gte_SetRotMatrix(&m);
+    gte_SetTransMatrix(&m);
     gte_ldv0(&pos);
     gte_rtps();
     prim = &g_PrimBuf[self->primIndex];
@@ -2222,6 +2226,9 @@ void EntityGiantSpinningCross(Entity* self) {
     for (i = 0; i < LEN(D_800B0CB4); i++, prim = prim->next, vectors_ptr += 4) {
         gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
         gte_rtpt();
+        #ifndef VERSION_PSP
+        temp_vec2 = vectors_ptr[2];
+        #endif
         prim->type = PRIM_GT4;
         gte_nclip();
         prim->drawMode = DRAW_HIDE;
@@ -2230,9 +2237,25 @@ void EntityGiantSpinningCross(Entity* self) {
             continue;
         }
         gte_stsxy3(&prim->x0, &prim->x1, &prim->x2);
+
+        #ifndef VERSION_PSP
+        gte_ldv0(temp_vec2);
+        #else
         gte_ldv0(vectors_ptr[2]);
+        #endif
         gte_rtps();
         prim->drawMode = DRAW_DEFAULT;
+        #ifndef VERSION_PSP
+        if (z < 16) {
+            temp_priority = 0x1B6;
+        } else if (z > 998) {
+            temp_priority = 0x10;
+        } else {
+            temp_priority = 0xD0;
+            temp_priority -= (z - 0x50);
+        }
+        prim->priority = temp_priority;
+        #else
         if (z < 16) {
             prim->priority = 0x1B6;
         } else if (z > 998) {
@@ -2240,6 +2263,7 @@ void EntityGiantSpinningCross(Entity* self) {
         } else {
             prim->priority = 0xD0 - (z - 0x50);
         }
+        #endif
         gte_stsxy((long*)&prim->x3);
     }
 }
