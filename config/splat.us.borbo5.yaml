@@ -1,0 +1,96 @@
+options:
+  platform: psx
+  basename: borbo5
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/RBO5/RBO5.BIN
+  asm_path: asm/us/boss/rbo5
+  asset_path: assets/boss/rbo5
+  src_path: src/boss/rbo5
+  ld_script_path: build/us/borbo5.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.borbo5.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.borbo5.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.borbo5.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: 4794abe060a76673daeb8b039d59d1077ea81f4b
+segments:
+  - name: borbo5
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x4D0, .data, st_debug]
+      - [0x550, .data, e_breakable]
+      - [0x5B0, data]
+      - [0x73C, .data, st_update]
+      - [0x768, .data, collision]
+      - [0xB28, .data, e_red_door]
+      - [0xB40, .data, st_common]
+      - [0xD40, .data, e_collect]
+      - [0x1030, .data, e_misc]
+      - [0x114C, .data, e_particles]
+      - [0x11CC, .data, e_room_fg]
+      - [0x1258, data]
+      - [0x1370, .data, dop_anim]
+      - [0x13A4, data]
+      - [0x4328, .data, e_life_up]
+      - [0x437C, data]
+      - [0x32BA8, .rodata, doors]
+      - [0x32C4C, .rodata, unk_354F0]
+      - [0x32C6C, .rodata, e_red_door]
+      - [0x32C84, .rodata, e_collect]
+      - [0x32D0C, .rodata, e_misc]
+      - [0x32D58, .rodata, e_stage_name]
+      - [0x32D8C, .rodata, doppleganger]
+      - [0x32F4C, .rodata, unk_44954]
+      - [0x32F78, .rodata, unk_4648C]
+      - [0x332B4, .rodata, prim_helpers]
+      - [0x332BC, .rodata, e_life_up]
+      - [0x332D8, c, st_debug]
+      - [0x3355C, c, e_breakable]
+      - [0x33690, c, doors]
+      - [0x354F0, c, unk_354F0]
+      - [0x358F0, c, st_update]
+      - [0x35D24, c, collision]
+      - [0x374E0, c, create_entity]
+      - [0x38058, c, e_red_door]
+      - [0x38D08, c, st_common]
+      - [0x3A1B8, c, e_collect]
+      - [0x3B724, c, blit_char]
+      - [0x3B9D4, c, e_misc]
+      - [0x3EEB8, c, e_stage_name]
+      - [0x3FD0C, c, e_particles]
+      - [0x40550, c, e_room_fg]
+      - [0x4063C, c, popup]
+      - [0x4096C, c, doppleganger]
+      - [0x43F58, c, dop_anim]
+      - [0x44954, c, unk_44954]
+      - [0x4648C, c, unk_4648C]
+      - [0x515F0, c, prim_helpers]
+      - [0x51E20, c, e_life_up]
+      - [0x526D4, bss]
+      - [0x526E0, .bss, create_entity]
+      - [0x526F0, bss]
+      - [0x543C8, .bss, e_collect]
+  - [0x54408]

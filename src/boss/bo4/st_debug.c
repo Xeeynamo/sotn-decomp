@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
+#include "bo4.h"
 
-extern ObjInit2 BO4_BackgroundBlockInit[];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
 void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* objInit = &BO4_BackgroundBlockInit[self->params];
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
 
     if (self->step == 0) {
         InitializeEntity(g_EInitCommon);

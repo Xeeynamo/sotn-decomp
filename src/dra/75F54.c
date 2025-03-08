@@ -254,7 +254,7 @@ void func_801167D0(void) {
 }
 
 bool BatFormFinished(void) {
-    if (g_Entities->step_s == 0) {
+    if (PLAYER.step_s == 0) {
         return false;
     }
     if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
@@ -266,7 +266,7 @@ bool BatFormFinished(void) {
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);
-        g_Entities->velocityY = g_Entities->velocityY >> 1;
+        PLAYER.velocityY >>= 1;
         return true;
     }
     return false;

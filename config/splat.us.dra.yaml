@@ -19,6 +19,7 @@ options:
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   disassemble_all: true
+  global_vram_start: 0x80010000
   section_order:
     - ".data"
     - ".rodata"
@@ -272,6 +273,7 @@ segments:
       - [0x84B88, c, 84B88]
       - [0x8A0A4, c, 8A0A4]
       - [0x8BEF8, c, 8BEF8]
+      - [0x8C600, c, 8C600]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, 91EBC]
       - [0x92F60, c, 92F60]

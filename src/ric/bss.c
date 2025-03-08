@@ -4,8 +4,8 @@
 ButtonComboState g_bladeDashButtons;
 ButtonComboState D_801758E4;
 STATIC_PAD_BSS(104);
-u16 g_RicDebugCurFrame;
-u16 g_RicDebugDrawFlags;
+s16 g_RicDebugCurFrame;
+s16 g_RicDebugDrawFlags;
 u16 g_RicDebugPalette;
 s16 g_IsRicDebugEnter;
 s32 D_80175958[32];

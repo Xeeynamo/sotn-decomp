@@ -192,6 +192,14 @@ typedef enum {
     GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
 } PlayerPad;
 
+// PSP only has one shoulder button on each side, so its default transform
+// controls are different. This captures those.
+#ifdef VERSION_PSP
+#define BTN_WOLF PAD_L1
+#else
+#define BTN_WOLF PAD_R2
+#endif
+
 #define MAX_PRIM_COUNT 0x500
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
@@ -248,18 +256,23 @@ extern u8 g_BmpCastleMap[0x20000];
 #endif
 
 // used with various equipment, enemy resistances, etc
-#define ELEMENT_HIT 0x20
-#define ELEMENT_CUT 0x40
-#define ELEMENT_POISON 0x80
-#define ELEMENT_CURSE 0x100
-#define ELEMENT_STONE 0x200
-#define ELEMENT_WATER 0x400
-#define ELEMENT_DARK 0x800
-#define ELEMENT_HOLY 0x1000
-#define ELEMENT_ICE 0x2000
-#define ELEMENT_THUNDER 0x4000
-#define ELEMENT_FIRE 0x8000
-#define ELEMENT_UNK_10000 0x10000
+typedef enum {
+    ELEMENT_HIT = 0x20,
+    ELEMENT_CUT = 0x40,
+    ELEMENT_POISON = 0x80,
+    ELEMENT_CURSE = 0x100,
+    ELEMENT_STONE = 0x200,
+    ELEMENT_WATER = 0x400,
+    ELEMENT_DARK = 0x800,
+    ELEMENT_HOLY = 0x1000,
+    ELEMENT_ICE = 0x2000,
+    ELEMENT_THUNDER = 0x4000,
+    ELEMENT_FIRE = 0x8000,
+    ELEMENT_ALL = ELEMENT_FIRE | ELEMENT_THUNDER | ELEMENT_ICE | ELEMENT_HOLY |
+                  ELEMENT_DARK | ELEMENT_WATER | ELEMENT_STONE | ELEMENT_CURSE |
+                  ELEMENT_POISON | ELEMENT_CUT | ELEMENT_HIT,
+    ELEMENT_UNK_10000 = 0x10000,
+} Elements;
 
 // Indices of g_StatBuffTimers
 typedef enum {
@@ -1846,7 +1859,7 @@ typedef struct {
     /* 80072F9A */ u16 unk7A;
     /* 80072F9C */ u16 unk7C;
     /* 80072F9E */ u16 unk7E;
-} PlayerState;
+} PlayerState; /* size = 0x3D0 */
 
 // Primitive used ad-hoc for the Player entity and the after-image effect
 typedef struct {
@@ -1974,6 +1987,7 @@ typedef enum {
     UNK_ENTITY_12 = 0x12, // related to wolf?
     UNK_ENTITY_13 = 0x13,
     UNK_ENTITY_20 = 0x20,
+    UNK_ENTITY_50 = 0x50,
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
@@ -1990,8 +2004,6 @@ extern s32 g_PlayerX;
 extern s32 g_PlayerY;
 extern u32 g_randomNext;
 extern s32 D_80096ED8[];
-extern s8 D_80097B98;
-extern s8 D_80097B99;
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
@@ -2020,7 +2032,6 @@ extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
-extern u8 g_SaveName[12] ALIGNED4;
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
 extern s32 D_800987B4;

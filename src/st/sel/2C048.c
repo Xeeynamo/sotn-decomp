@@ -719,7 +719,7 @@ void func_801AD66C(void) {
 
     // check if the name only contain spaces
     for (nSpaces = 0, i = 0; i < 8; i++) {
-        g_SaveName[i] = g_InputSaveName[i];
+        g_Status.saveName[i] = g_InputSaveName[i];
         if (g_InputSaveName[i] == ' ') {
             nSpaces++;
         }
@@ -727,15 +727,15 @@ void func_801AD66C(void) {
 
     // if it only contain spaces, set a default name
     if (nSpaces == 8) {
-        STRCPY(g_SaveName, "alucard ");
+        STRCPY(g_Status.saveName, "alucard ");
     }
 
-    D_80097B98 = 0;
-    D_80097B99 = 0;
+    g_Status.saveName[8] = 0;
+    g_Status.saveName[9] = 0;
 
     // check if the name is Richter
     for (strRichter = D_80180468[0], i = 0; i < 8; i++) {
-        if (g_SaveName[i] != *strRichter++) {
+        if (g_Status.saveName[i] != *strRichter++) {
             break;
         }
     }

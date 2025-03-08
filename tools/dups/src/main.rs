@@ -221,6 +221,7 @@ fn process_buffer_for_include_asm(file_content: &str, file_path: &str) -> Vec<In
 fn get_all_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     process_directory_for_include_asm(dir)
 }
+
 #[derive(Clone)]
 struct SrcAsmPair {
     asm_dir: String,
@@ -257,6 +258,13 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             overlay_name: String::from("RBO3"),
             include_asm: get_all_include_asm("../../src/boss/rbo3"),
             path_matcher: "/rbo3/".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/boss/rbo5/matchings/"),
+            src_dir: String::from("../../src/boss/rbo5"),
+            overlay_name: String::from("RBO5"),
+            include_asm: get_all_include_asm("../../src/boss/rbo5"),
+            path_matcher: "/rbo5/".to_string(),
         },
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/dra/matchings/"),

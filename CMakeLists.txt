@@ -194,7 +194,8 @@ set(SOURCE_FILES_DRA
     src/dra/d_CD80.c
     src/dra/692E8.c
     src/dra/6BF64.c
-    src/dra/6D584.c
+    src/dra/alu_anim.c
+    src/dra/6DF70.c
     src/dra/6E42C.c
     src/dra/6FDF8.c
     src/dra/70394.c
@@ -211,6 +212,7 @@ set(SOURCE_FILES_DRA
     src/dra/84B88.c
     src/dra/8A0A4.c
     src/dra/8BEF8.c
+    src/dra/8C600.c
     src/dra/8D3E8.c
     src/dra/91EBC.c
     src/dra/92F60.c

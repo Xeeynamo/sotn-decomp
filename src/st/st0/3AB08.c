@@ -19,10 +19,10 @@ static s16 D_80182084[] = {
     0xE1BE, 0xFE81, 0xFEBE, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181, 0xE1BE,
     0xFE81, 0xFEBE, 0x8181, 0x81BE, 0xA081, 0xA0BE, 0xA081, 0xA0BE, 0xBE81,
     0xBEBE, 0x81C1, 0x81FE, 0xA0C1, 0xA0FE, 0xA0C1, 0xA0FE, 0xBEC1, 0xBEFE};
-static SVECTOR cloudVectorOne = {-128, 0, 0, 0};
-static SVECTOR cloudVectorTwo = {128, 0, 0, 0};
-static SVECTOR cloudVectorThree = {-128, 0, 256, 0};
-static SVECTOR cloudVectorFour = {128, 0, 256, 0};
+static SVECTOR cloudVectorOne = {-128, 0, 0};
+static SVECTOR cloudVectorTwo = {128, 0, 0};
+static SVECTOR cloudVectorThree = {-128, 0, 256};
+static SVECTOR cloudVectorFour = {128, 0, 256};
 static u8 D_801820EC[] = {
     0x05, 0x00, 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x06, 0x00, 0x08,
     0x05, 0x00, 0x00, 0x07, 0x05, 0x00, 0x05, 0x00, 0x06, 0x05, 0x00,
@@ -40,7 +40,12 @@ static u8 D_8018212C[] = {
 static cloudData data[] = {
     {.unkPtr = D_801820EC, .unk4 = 0xFEE0, .priority = 0x1C},
     {.unkPtr = D_8018212C, .unk4 = 0x00C0, .priority = 0x18}};
-static SVECTOR empty = {0, 0, 0, 0}; // bss on PSP
+#ifdef VERSION_PSP
+extern E_ID(ID_2D);
+extern SVECTOR empty; // bss on PSP
+#else
+static SVECTOR empty = {0, 0, 0};
+#endif
 
 void EntityClouds(Entity* self) {
 #ifdef VERSION_PC
@@ -283,67 +288,40 @@ static ClockTowerData2 D_8018219C[] = {
     {0xC1, 0x41, 0x25, 0x3D, 0x44},
 };
 
-static u8 D_801821C8[] = {
-    0x00, 0x00, 0x4A, 0xFF, 0x41, 0x00, 0x00, 0x00, 0x00, 0x00, 0x4A, 0xFF,
-    0xBF, 0xFF, 0x00, 0x00, 0xBF, 0xFF, 0x9D, 0xFF, 0xBF, 0xFF, 0x00, 0x00,
-    0xBF, 0xFF, 0x9D, 0xFF, 0x41, 0x00, 0x00, 0x00, 0x41, 0x00, 0x9D, 0xFF,
-    0x41, 0x00, 0x00, 0x00, 0x41, 0x00, 0x9D, 0xFF, 0xBF, 0xFF, 0x00, 0x00,
+static SVECTOR D_801821C8[] = {
+    {0, -182, 65},  {0, -182, -65}, {-65, -99, -65},
+    {-65, -99, 65}, {65, -99, 65},  {65, -99, -65},
 };
-static u8 D_801821F8[] = {
-    0x52, 0x00, 0x5D, 0xFF, 0xAE, 0xFF, 0x00, 0x00, 0x41, 0x00,
-    0x9D, 0xFF, 0x9D, 0xFF, 0x00, 0x00, 0x41, 0x00, 0x9D, 0xFF,
-    0xBF, 0xFF, 0x00, 0x00, 0x63, 0x00, 0x9D, 0xFF, 0x9D, 0xFF,
-    0x00, 0x00, 0x63, 0x00, 0x9D, 0xFF, 0xBF, 0xFF, 0x00, 0x00,
+static SVECTOR D_801821F8[] = {
+    {82, -163, -82}, {65, -99, -99}, {65, -99, -65},
+    {99, -99, -99},  {99, -99, -65},
 };
-static u8 D_80182220[] = {
-    0x53, 0x00, 0x5D, 0xFF, 0x52, 0x00, 0x00, 0x00, 0x42, 0x00,
-    0x9D, 0xFF, 0x42, 0x00, 0x00, 0x00, 0x42, 0x00, 0x9D, 0xFF,
-    0x63, 0x00, 0x00, 0x00, 0x63, 0x00, 0x9D, 0xFF, 0x42, 0x00,
-    0x00, 0x00, 0x63, 0x00, 0x9D, 0xFF, 0x63, 0x00, 0x00, 0x00,
+static SVECTOR D_80182220[] = {
+    {83, -163, 82}, {66, -99, 66}, {66, -99, 99}, {99, -99, 66}, {99, -99, 99},
 };
-static u8 D_80182248[] = {
-    0xAD, 0xFF, 0x5D, 0xFF, 0xAE, 0xFF, 0x00, 0x00, 0x9D, 0xFF,
-    0x9D, 0xFF, 0x9D, 0xFF, 0x00, 0x00, 0x9D, 0xFF, 0x9D, 0xFF,
-    0xBF, 0xFF, 0x00, 0x00, 0xBE, 0xFF, 0x9D, 0xFF, 0x9D, 0xFF,
-    0x00, 0x00, 0xBE, 0xFF, 0x9D, 0xFF, 0xBF, 0xFF, 0x00, 0x00,
+static SVECTOR D_80182248[] = {
+    {-83, -163, -82}, {-99, -99, -99}, {-99, -99, -65},
+    {-66, -99, -99},  {-66, -99, -65},
 };
-static u8 D_80182270[] = {
-    0xAE, 0xFF, 0x5D, 0xFF, 0x52, 0x00, 0x00, 0x00, 0x9D, 0xFF,
-    0x9D, 0xFF, 0x41, 0x00, 0x00, 0x00, 0x9D, 0xFF, 0x9D, 0xFF,
-    0x63, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x9D, 0xFF, 0x41, 0x00,
-    0x00, 0x00, 0xBF, 0xFF, 0x9D, 0xFF, 0x63, 0x00, 0x00, 0x00,
+static SVECTOR D_80182270[] = {
+    {-82, -163, 82}, {-99, -99, 65}, {-99, -99, 99},
+    {-65, -99, 65},  {-65, -99, 99},
 };
-static u8 D_80182298[] = {
-    0x9D, 0xFF, 0x53, 0x00, 0x63, 0x00, 0x00, 0x00, 0x9D, 0xFF, 0x9C,
-    0xFF, 0x63, 0x00, 0x00, 0x00, 0x9D, 0xFF, 0x9C, 0xFF, 0x9D, 0xFF,
-    0x00, 0x00, 0x9D, 0xFF, 0x53, 0x00, 0x9D, 0xFF, 0x00, 0x00, 0x63,
-    0x00, 0x9C, 0xFF, 0x9D, 0xFF, 0x00, 0x00, 0x63, 0x00, 0x53, 0x00,
-    0x9D, 0xFF, 0x00, 0x00, 0x63, 0x00, 0x9C, 0xFF, 0x63, 0x00, 0x00,
-    0x00, 0x63, 0x00, 0x53, 0x00, 0x63, 0x00, 0x00, 0x00,
+static SVECTOR D_80182298[] = {
+    {-99, 83, 99},   {-99, -100, 99}, {-99, -100, -99}, {-99, 83, -99},
+    {99, -100, -99}, {99, 83, -99},   {99, -100, 99},   {99, 83, 99},
 };
-static u8 D_801822D8[] = {
-    0x9D, 0xFF, 0x53, 0x00, 0x63, 0x00, 0x00, 0x00, 0x9D, 0xFF, 0x53,
-    0x00, 0x9D, 0xFF, 0x00, 0x00, 0x63, 0x00, 0x53, 0x00, 0x9D, 0xFF,
-    0x00, 0x00, 0x63, 0x00, 0x53, 0x00, 0x63, 0x00, 0x00, 0x00, 0xBF,
-    0xFF, 0x74, 0x00, 0x41, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x74, 0x00,
-    0xBF, 0xFF, 0x00, 0x00, 0x41, 0x00, 0x74, 0x00, 0xBF, 0xFF, 0x00,
-    0x00, 0x41, 0x00, 0x74, 0x00, 0x41, 0x00, 0x00, 0x00,
+static SVECTOR D_801822D8[] = {
+    {-99, 83, 99},  {-99, 83, -99},  {99, 83, -99},  {99, 83, 99},
+    {-65, 116, 65}, {-65, 116, -65}, {65, 116, -65}, {65, 116, 65},
 };
-static u8 D_80182318[] = {
-    0xBF, 0xFF, 0x1B, 0x01, 0x41, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x74,
-    0x00, 0x41, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x74, 0x00, 0xBF, 0xFF,
-    0x00, 0x00, 0xBF, 0xFF, 0x1B, 0x01, 0xBF, 0xFF, 0x00, 0x00, 0x41,
-    0x00, 0x74, 0x00, 0xBF, 0xFF, 0x00, 0x00, 0x41, 0x00, 0x1B, 0x01,
-    0xBF, 0xFF, 0x00, 0x00, 0x41, 0x00, 0x74, 0x00, 0x41, 0x00, 0x00,
-    0x00, 0x41, 0x00, 0x1B, 0x01, 0x41, 0x00, 0x00, 0x00,
+static SVECTOR D_80182318[] = {
+    {-65, 283, 65}, {-65, 116, 65}, {-65, 116, -65}, {-65, 283, -65},
+    {65, 116, -65}, {65, 283, -65}, {65, 116, 65},   {65, 283, 65},
 };
-static u8 D_80182358[] = {
-    0xBF, 0xFF, 0xC2, 0x01, 0x41, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x1B,
-    0x01, 0x41, 0x00, 0x00, 0x00, 0xBF, 0xFF, 0x1B, 0x01, 0xBF, 0xFF,
-    0x00, 0x00, 0xBF, 0xFF, 0xC2, 0x01, 0xBF, 0xFF, 0x00, 0x00, 0x41,
-    0x00, 0x1B, 0x01, 0xBF, 0xFF, 0x00, 0x00, 0x41, 0x00, 0xC2, 0x01,
-    0xBF, 0xFF, 0x00, 0x00, 0x41, 0x00, 0x1B, 0x01, 0x41, 0x00, 0x00,
-    0x00, 0x41, 0x00, 0xC2, 0x01, 0x41, 0x00, 0x00, 0x00,
+static SVECTOR D_80182358[] = {
+    {-65, 450, 65}, {-65, 283, 65}, {-65, 283, -65}, {-65, 450, -65},
+    {65, 283, -65}, {65, 450, -65}, {65, 283, 65},   {65, 450, 65},
 };
 u8 D_80182398[] = {
     0x80, 0x01, 0x01, 0x00, 0x03, 0x01, 0x01, 0x00, 0x00, 0x04, 0x03, 0x00,
@@ -358,8 +336,9 @@ u8 D_801823D0[] = {
     0x80, 0x07, 0x06, 0x02, 0x04, 0x03, 0x05, 0x05, 0x05, 0x01, 0x02, 0x00,
     0x03, 0x05, 0x80, 0x08, 0x06, 0x02, 0x04, 0x03, 0x05, 0x05, 0x05, 0x01,
     0x02, 0x00, 0x03, 0x05, 0xFF, 0x00, 0x00, 0x00};
-u8* D_80182414[] = {D_801821C8, D_801821F8, D_80182220, D_80182248, D_80182270,
-                    D_80182298, D_801822D8, D_80182318, D_80182358};
+SVECTOR* D_80182414[] = {
+    D_801821C8, D_801821F8, D_80182220, D_80182248, D_80182270,
+    D_80182298, D_801822D8, D_80182318, D_80182358};
 
 void EntityClockTower3D(Entity* self) {
 #ifdef VERSION_PC
@@ -374,7 +353,7 @@ void EntityClockTower3D(Entity* self) {
     s32 unusedScratch4;
     s32 xBase;
     s32 primIndex;
-    s32 var_s4;
+    SVECTOR* vectors;
     ClockTowerData2* var_s3;
     ClockTowerData* var_s2;
     u8* var_s1; // not a struct, weird state machine sort of
@@ -433,7 +412,7 @@ void EntityClockTower3D(Entity* self) {
     var_s1 = D_80182398;
     while (*var_s1 != 0xFF) {
         if (*var_s1 & 0x80) {
-            var_s4 = D_80182414[var_s1[1]];
+            vectors = D_80182414[var_s1[1]];
             var_s1 += 2;
         }
         var_s2 = &D_80182184[0];
@@ -446,8 +425,7 @@ void EntityClockTower3D(Entity* self) {
         prim->v2 = var_s2->v2;
         prim->clut = var_s2->clut;
         prim->type = PRIM_GT3;
-        gte_ldv3(var_s4 + var_s1[0] * 8, var_s4 + var_s1[1] * 8,
-                 var_s4 + var_s1[2] * 8);
+        gte_ldv3(&vectors[var_s1[0]], &vectors[var_s1[1]], &vectors[var_s1[2]]);
         gte_rtpt();
         gte_stsxy3_gt3(prim);
         prim->drawMode = DRAW_UNK02;
@@ -458,7 +436,7 @@ void EntityClockTower3D(Entity* self) {
     var_s1 = D_801823D0;
     while (*var_s1 != 0xFF) {
         if (*var_s1 & 0x80) {
-            var_s4 = D_80182414[var_s1[1]];
+            vectors = D_80182414[var_s1[1]];
             var_s1 += 2;
         }
         var_s3 = &D_8018219C[0];
@@ -469,13 +447,12 @@ void EntityClockTower3D(Entity* self) {
         prim->v2 = prim->v3 = var_s3->v + var_s3->h;
         prim->clut = var_s3->clut;
         prim->type = PRIM_GT4;
-        gte_ldv3(var_s4 + var_s1[0] * 8, var_s4 + var_s1[1] * 8,
-                 var_s4 + var_s1[2] * 8);
+        gte_ldv3(&vectors[var_s1[0]], &vectors[var_s1[1]], &vectors[var_s1[2]]);
         gte_rtpt();
         gte_stsxy3_gt3(prim);
-        gte_ldv0(var_s4 + var_s1[3] * 8);
+        gte_ldv0(&vectors[var_s1[3]]);
         gte_rtps();
-        gte_stsxy(&prim->x3);
+        gte_stsxy((long*)&prim->x3);
         prim->priority = var_s1[4] + 0x40;
         prim->drawMode = DRAW_UNK02;
         var_s1 += 5;
@@ -491,18 +468,25 @@ void EntityClockTower3D(Entity* self) {
 }
 
 static u8 D_80182438[3] = {0x70, 0x50, 0x40};
+#ifdef VERSION_PSP
+static SVECTOR D_8018243C = {-128, -108, 0};
+static SVECTOR D_80182444 = {127, -108, 0};
+static SVECTOR D_8018244C = {-128, 100, 0};
+static SVECTOR D_80182454 = {127, 100, 0};
+#else
 static SVECTOR D_8018243C = {-128, -116, 0};
 static SVECTOR D_80182444 = {127, -116, 0};
 static SVECTOR D_8018244C = {-128, 108, 0};
 static SVECTOR D_80182454 = {127, 108, 0};
-static Point16 D_8018245C[] = {
-    {0x0080, 0x00B8}, {0x0078, 0x00B0}, {0x0088, 0x00B0}, {0x0070, 0x00A8},
-    {0x0080, 0x00A8}, {0x0090, 0x00A8}, {0x0068, 0x00A0}, {0x0078, 0x00A0},
-    {0x0088, 0x00A0}, {0x0098, 0x00A0}, {0x0060, 0x0098}, {0x0070, 0x0098},
-    {0x0080, 0x0098}, {0x0090, 0x0098}, {0x00A0, 0x0098}, {0x0068, 0x0090},
-    {0x0078, 0x0090}, {0x0088, 0x0090}, {0x0098, 0x0090}, {0x0058, 0x0090},
-    {0x00A8, 0x0090}, {0x0070, 0x0078}, {0x0080, 0x0078}, {0x0090, 0x0078},
-    {0x0078, 0x0070}, {0x0088, 0x0070}, {0x0080, 0x0068}, {0xFFFF, 0xFFFF}};
+#endif
+static s16 D_8018245C[] = {
+    0x0080, 0x00B8, 0x0078, 0x00B0, 0x0088, 0x00B0, 0x0070, 0x00A8,
+    0x0080, 0x00A8, 0x0090, 0x00A8, 0x0068, 0x00A0, 0x0078, 0x00A0,
+    0x0088, 0x00A0, 0x0098, 0x00A0, 0x0060, 0x0098, 0x0070, 0x0098,
+    0x0080, 0x0098, 0x0090, 0x0098, 0x00A0, 0x0098, 0x0068, 0x0090,
+    0x0078, 0x0090, 0x0088, 0x0090, 0x0098, 0x0090, 0x0058, 0x0090,
+    0x00A8, 0x0090, 0x0070, 0x0078, 0x0080, 0x0078, 0x0090, 0x0078,
+    0x0078, 0x0070, 0x0088, 0x0070, 0x0080, 0x0068, 0xFFFF, 0xFFFF};
 void EntityCutscenePhotograph(Entity* self) {
     RECT clipRect;
     DRAWENV drawEnv;
@@ -513,7 +497,7 @@ void EntityCutscenePhotograph(Entity* self) {
     s32 newEntX;
     s32 newEntY;
     s32 primIndex;
-    Point16* newEntXY;
+    s16* newEntXY;
     s32 dualFlag; // Used in color limit system, and as facing left
     s32 i;
     DR_ENV* dr_env;
@@ -532,6 +516,9 @@ void EntityCutscenePhotograph(Entity* self) {
     g_PauseAllowed = false;
     switch (self->step) {
     case 0:
+#ifdef VERSION_PSP
+        func_891B0BC(0);
+#endif
         InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {
@@ -547,6 +534,58 @@ void EntityCutscenePhotograph(Entity* self) {
             prim = prim->next;
         }
 
+#ifdef VERSION_PSP
+        func_891B0DC(0x300, 0);
+        prim = self->ext.prim;
+        prim->tpage = 0;
+        self->step = 2;
+        break;
+    case 2:
+        prim = self->ext.prim;
+        if (prim->tpage == 0) {
+            prim->tpage = 0x10C;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x14;
+            prim->v2 = prim->v3 = 0x14 + 0xD0;
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0xFF;
+            prim->y0 = prim->y1 = 0x14;
+            prim->y2 = prim->y3 = 0x14 + 0xD0;
+            prim->r0 = prim->g0 = prim->b0 = 0xFF;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 0x1F8;
+            prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        }
+
+        prim = self->ext.prim;
+        drawEnv = g_CurrentBuffer->draw;
+        prim->tpage = 0x10C;
+        dualFlag = 1;
+        if (prim->r0 > D_80182438[0] * 2) {
+            prim->r0--;
+            dualFlag = 0;
+        }
+        if (prim->g0 > D_80182438[1] * 2) {
+            prim->g0--;
+            dualFlag = 0;
+        }
+        if (prim->b0 > D_80182438[2] * 2) {
+            prim->b0--;
+            dualFlag = 0;
+        }
+
+        LOW(prim->r1) = LOW(prim->r2) = LOW(prim->r3) = LOW(prim->r0);
+
+        if (dualFlag == 0) {
+            return;
+        }
+        self->step++;
+        func_891B0DC(0x300, 0);
+        return;
+#else
     case 1:
         prim = self->ext.cutscenePhoto.prim;
         drawEnv = g_CurrentBuffer->draw;
@@ -605,30 +644,44 @@ void EntityCutscenePhotograph(Entity* self) {
         }
         self->step++;
         return;
+#endif
     case 3:
         prim = self->ext.cutscenePhoto.prim;
         prim = prim->next;
 
         drawEnv = g_CurrentBuffer->draw;
+#ifdef VERSION_PSP
+        prim->tpage = 0x10C;
+#else
         if (drawEnv.ofs[0] == 0) {
             prim->tpage = 0x100;
         } else {
             prim->tpage = 0x104;
         }
+#endif
         prim->type = PRIM_GT4;
         prim->u0 = prim->u2 = 6;
         prim->u1 = prim->u3 = 0xF9;
+#ifdef VERSION_PSP
+        prim->v0 = prim->v1 = 26;
+        prim->v2 = prim->v3 = 26 + 0xC4;
+        prim->x0 = prim->x2 = 6;
+        prim->x1 = prim->x3 = 0xF9;
+        prim->y0 = prim->y1 = 26;
+        prim->y2 = prim->y3 = 26 + 0xC4;
+#else
         prim->v0 = prim->v1 = 18;
         prim->v2 = prim->v3 = 18 + 0xD4;
         prim->x0 = prim->x2 = 6;
         prim->x1 = prim->x3 = 0xF9;
         prim->y0 = prim->y1 = 18;
         prim->y2 = prim->y3 = 18 + 0xD4;
+#endif
         prim->priority = 0x1FB;
         prim->drawMode = DRAW_DEFAULT;
 
         prim = prim->next;
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(12);
             return;
@@ -651,7 +704,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->drawMode = DRAW_DEFAULT;
 
         prim = prim->next;
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(12);
             return;
@@ -671,7 +724,11 @@ void EntityCutscenePhotograph(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F9;
+#ifdef VERSION_PSP
+        prim->drawMode = DRAW_HIDE;
+#else
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+#endif
         self->step++;
         break;
     case 4:
@@ -693,12 +750,21 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->tpage = 0x110;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0xFF;
+#ifdef VERSION_PSP
+        prim->v0 = prim->v1 = 20;
+        prim->v2 = prim->v3 = 20 + 0xD0;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0xFF;
+        prim->y0 = prim->y1 = 20;
+        prim->y2 = prim->y3 = 20 + 0xD0;
+#else
         prim->v0 = prim->v1 = 12;
         prim->v2 = prim->v3 = 12 + 0xE0;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0xFF;
         prim->y0 = prim->y1 = 12;
         prim->y2 = prim->y3 = 12 + 0xE0;
+#endif
         prim->r0 = prim->g0 = prim->b0 = 0x80;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
@@ -752,7 +818,7 @@ void EntityCutscenePhotograph(Entity* self) {
         gte_stsxy3_gt3(prim);
         gte_ldv0(&D_80182454);
         gte_rtps();
-        gte_stsxy(&prim->x3);
+        gte_stsxy((long*)&prim->x3);
 
         if (!self->ext.cutscenePhoto.rotationTimer) {
             self->rotZ += 2;
@@ -764,31 +830,47 @@ void EntityCutscenePhotograph(Entity* self) {
             return;
         }
         self->step++;
+#ifdef VERSION_PSP
+        func_891B0DC(0x300, 0);
+#endif
         return;
     case 6:
         prim = self->ext.cutscenePhoto.prim;
         prim = prim->next;
 
         drawEnv = g_CurrentBuffer->draw;
+#ifdef VERSION_PSP
+        prim->tpage = 0x10C;
+#else
         if (drawEnv.ofs[0] == 0) {
             prim->tpage = 0x100;
         } else {
             prim->tpage = 0x104;
         }
+#endif
         prim->type = PRIM_GT4;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0xFF;
+#ifdef VERSION_PSP
+        prim->v0 = prim->v1 = 20;
+        prim->v2 = prim->v3 = 20 + 0xD0;
+        prim->x0 = prim->x2 = 0;
+        prim->x1 = prim->x3 = 0xFF;
+        prim->y0 = prim->y1 = 20;
+        prim->y2 = prim->y3 = 20 + 0xD0;
+#else
         prim->v0 = prim->v1 = 12;
         prim->v2 = prim->v3 = 12 + 0xE0;
         prim->x0 = prim->x2 = 0;
         prim->x1 = prim->x3 = 0xFF;
         prim->y0 = prim->y1 = 12;
         prim->y2 = prim->y3 = 12 + 0xE0;
+#endif
         prim->priority = 0x1FB;
         prim->drawMode = DRAW_DEFAULT;
 
         prim = prim->next;
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(12);
             return;
@@ -811,7 +893,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->drawMode = DRAW_DEFAULT;
 
         prim = prim->next;
-        dr_env = g_api.func_800EDB08(prim);
+        dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(12);
             return;
@@ -883,6 +965,9 @@ void EntityCutscenePhotograph(Entity* self) {
         self->animFrameIdx = 0;
         g_api.PlaySfx(NA_SE_CS_BURNING_PHOTOGRAPH);
         self->step++;
+#ifdef VERSION_PSP
+        func_891B0BC(1);
+#endif
         /* fallthrough */
     case 8:
         if (self->animFrameDuration) {
@@ -892,14 +977,14 @@ void EntityCutscenePhotograph(Entity* self) {
         self->animFrameDuration = 4;
         // Ugh, this should have been a 2D array.
         newEntXY = D_8018245C;
-        newEntXY += self->animFrameIdx;
+        newEntXY = &newEntXY[self->animFrameIdx * 2];
         self->animFrameIdx++;
-        if (newEntXY->x == -1) {
+        if (newEntXY[0] == -1) {
             self->step++;
             return;
         }
-        newEntX = newEntXY->x;
-        newEntY = newEntXY->y;
+        newEntX = newEntXY[0];
+        newEntY = newEntXY[1];
 
         if (self->animFrameIdx & 1) {
             dualFlag = 0;
@@ -908,7 +993,7 @@ void EntityCutscenePhotograph(Entity* self) {
         }
         otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_ID_2D, otherEnt);
+            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY;
             otherEnt->facingLeft = dualFlag;
@@ -917,7 +1002,7 @@ void EntityCutscenePhotograph(Entity* self) {
 
         otherEnt = AllocEntity(self, &g_Entities[256]);
         if (otherEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_ID_2D, otherEnt);
+            CreateEntityFromCurrentEntity(E_ID(ID_2D), otherEnt);
             otherEnt->posX.i.hi = newEntX;
             otherEnt->posY.i.hi = newEntY + 0xC;
             otherEnt->facingLeft = dualFlag;
@@ -971,9 +1056,9 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->animSet = ANIMSET_OVL(7);
         entity->unk5A = 0x57;
         entity->palette = PAL_OVL(0x285);
+        entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->unk6C = 0x40;
-        entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
         if (entity->params) {
             entity->unk6C = 0x10;
             entity->zPriority = 0x1FB;

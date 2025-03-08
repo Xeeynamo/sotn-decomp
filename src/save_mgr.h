@@ -572,14 +572,14 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
     strcat(h.Title, "　");
     for (saveNameLen = 7; saveNameLen > 0; saveNameLen--) {
-        if (g_SaveName[saveNameLen] != 0x20) {
+        if (g_Status.saveName[saveNameLen] != 0x20) {
             break;
         }
     }
 
     // writes save name
     for (i = 0; i < saveNameLen + 1; i++) {
-        char ch = g_SaveName[i];
+        char ch = g_Status.saveName[i];
         for (j = 0; j < 0x20; j++) {
             // Converts ASCII into Shift-JIS
             if (ch == g_AsciiSet[j]) {
@@ -625,7 +625,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dstSettings = &save->settings;
     dst->header = h;
     for (i = 0; i < 10; i++) {
-        dst->info.name[i] = g_SaveName[i];
+        dst->info.name[i] = g_Status.saveName[i];
     }
 
     dst->info.level = g_Status.level;

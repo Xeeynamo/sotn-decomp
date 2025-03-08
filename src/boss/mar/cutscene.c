@@ -26,7 +26,6 @@ static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 extern s32 g_SkipCutscene;
 extern s32 D_us_8019AF2C;
-extern s32 D_8003CB04;
 extern u8 D_us_801805D4[];
 extern u8 D_us_801805D8[];
 extern u16 D_us_801805DC[];
@@ -55,7 +54,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     if (self->step) {
         if ((D_us_8019AF2C != 0) && !g_SkipCutscene &&
-            ((D_8003CB04 & 0x80) || g_IsTimeAttackUnlocked) &&
+            ((g_Settings.D_8003CB04 & 0x80) || g_IsTimeAttackUnlocked) &&
             (g_pads[0].tapped & PAD_START)) {
             g_SkipCutscene = 1;
             g_api.FreePrimitives(self->primIndex);

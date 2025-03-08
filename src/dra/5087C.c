@@ -346,8 +346,6 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     }
 }
 
-extern s16 D_80072F98;
-
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
     s16 temp_a3;

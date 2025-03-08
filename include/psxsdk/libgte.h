@@ -368,15 +368,23 @@ extern long ratan2(long y, long x);
 void gte_SetGeomScreen(long h);
 void gte_SetRotMatrix(MATRIX* m);
 void gte_ldv0(SVECTOR* v);
+void gte_ldv1(SVECTOR* v);
+void gte_ldv2(SVECTOR* v);
+#define gte_ldv3(x, y, z)                                                      \
+    gte_ldv0(x);                                                               \
+    gte_ldv1(y);                                                               \
+    gte_ldv2(z);
 void gte_rtps(void);
 void gte_stsxy(long* sxsy);
 void gte_stszotz(long* otz);
+void gte_ldtr(s16, s16, s16);
 void gte_ldtx(s16);
 void gte_ldty(s16);
 void gte_ldtz(s16);
 
 #define gte_stdp(x) func_892804C();
 #define gte_stflg(x) func_892804C();
+#define gte_SetColorMatrix(x) func_892804C();
 
 #else
 

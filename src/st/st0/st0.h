@@ -62,6 +62,6 @@ extern EInit g_EInitDraculaFinalForm;
 extern EInit g_EInitDraculaMegaFireball;
 extern EInit g_EInitSecretStairs;
 
-extern Point32 D_801BEB64[];
+extern s32 D_801BEB64[][2];
 extern s32 D_801C2578;
 extern u16 g_EInitObtainable[];

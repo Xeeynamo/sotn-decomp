@@ -24,22 +24,21 @@ void func_801BD8F0(Entity* self) {
     DRAWENV drawEnv;
     RECT cliprect;
     DR_ENV* dr_env;
-
-    Primitive* prim;
-    s32 var_s8;
-    s32 var_s7;
-    s32 i;
-    s32 yVar;
-    s32 var_s5;
-    s32 j;
-    s32 xVar;
-    unkstr_801C06B0* var_s3;
     s16 angle;
-    s32 sp48;
-    Entity* sp44;
+    s32 xVar;
+    s32 yVar;
+    s32 i;
+    s32 j;
+    s32 var_s5;
+    s32 var_s7;
+    s32 var_s8;
+    Primitive* prim;
+    unkstr_801C06B0* unkStr;
+    u32 primIndex;
+    Entity* entity;
     SVECTOR* sp40;
-    VECTOR* sp3c;
-    MATRIX* sp38;
+    VECTOR* vec;
+    MATRIX* m;
     SVECTOR* sp34;
 
     switch (self->step) {
@@ -51,25 +50,31 @@ void func_801BD8F0(Entity* self) {
         g_GpuBuffers[1].draw.r0 = 0;
         g_GpuBuffers[1].draw.g0 = 0;
         g_GpuBuffers[1].draw.b0 = 0;
-        /* fallthrough */
+        // fallthrough
     case 1:
         self->step++;
-        return;
+        break;
     case 2:
-        sp48 = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
-        if (sp48 == -1) {
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 15 * 15);
+        if (primIndex == -1) {
             SetStep(7);
-            return;
+            break;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = sp48;
-        prim = &g_PrimBuf[sp48];
+        self->primIndex = primIndex;
+
+        prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
-        for (; prim != NULL; prim = prim->next) {
+        while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
         }
-        self->step += 1;
+        self->step++;
+        // fallthrough
     case 3:
+#ifdef VERSION_PSP
+        func_891B0DC(0x300, 0);
+#else
         prim = self->ext.prim;
         drawEnv = g_CurrentBuffer->draw;
         if (drawEnv.ofs[0] == 0) {
@@ -114,15 +119,17 @@ void func_801BD8F0(Entity* self) {
         dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
         if (dr_env == NULL) {
             SetStep(7);
-            return;
+            break;
         }
         prim->type = PRIM_ENV;
         prim->priority = 0x6A;
         prim->drawMode = DRAW_UNK_800;
+#endif
         self->step++;
-        return;
+        break;
     case 4:
         prim = self->ext.prim;
+#ifndef VERSION_PSP
         prim = prim->next;
         for (i = 0; i < 2; i++) {
             dr_env = LOW(prim->r1);
@@ -131,13 +138,23 @@ void func_801BD8F0(Entity* self) {
             prim = prim->next;
         }
         prim = self->ext.prim;
+#endif
         for (i = 0; i < 15; i++) {
             for (j = 0; j < 15; j++) {
                 xVar = j * 17;
                 yVar = i * 16;
+#ifdef VERSION_PSP
+                prim->tpage = ((yVar & 0x100) >> 4 | 0x100 |
+                               ((xVar + 0x300) & 0x3FF) >> 6) |
+                              ((yVar & 0x200) << 2);
+                var_s5 = xVar % 0x40;
+                prim->u0 = prim->u2 = var_s5;
+                prim->u1 = prim->u3 = var_s5 + 17;
+#else
                 prim->tpage = 0x10C;
                 prim->u0 = prim->u2 = xVar;
                 prim->u1 = prim->u3 = xVar + 17;
+#endif
                 prim->v0 = prim->v1 = yVar;
                 prim->v2 = prim->v3 = yVar + 16;
                 prim->x0 = prim->x2 = xVar;
@@ -156,20 +173,20 @@ void func_801BD8F0(Entity* self) {
             }
         }
         self->step++;
-        return;
+        break;
     case 5:
-        var_s3 = &D_801C06B0;
         g_Tilemap.flags &= 0xFFFE;
         g_BgLayers[0].flags &= 0xFFFE;
         prim = self->ext.prim;
-        for (i = 0; i < 15 * 15; i++, var_s3++) {
+        unkStr = &D_801C06B0;
+        for (i = 0; i < 15 * 15; i++, unkStr++) {
             xVar = prim->x0 + 8;
             yVar = prim->y0 + 8;
             xVar -= 0x80;
             yVar -= 0x80;
-            var_s3->unkA = xVar;
-            var_s3->unkE = yVar;
-            var_s3->unk10 = 0x80;
+            unkStr->unkA = xVar;
+            unkStr->unkE = yVar;
+            unkStr->unk10 = 0x80;
             angle = ratan2(yVar, xVar);
             var_s7 = (xVar * xVar) + (yVar * yVar);
             xVar = rsin(angle) * 0x24;
@@ -180,79 +197,83 @@ void func_801BD8F0(Entity* self) {
             yVar = yVar * var_s8 / 0xC0;
             xVar >>= 0xC;
             yVar >>= 0xC;
-            var_s3->unk0.x = xVar;
-            var_s3->unk0.y = yVar;
-            var_s3->unk14 = ((var_s7 * 3) / 2) - (Random() & 0x1F);
-            if (var_s3->unk14 < 0) {
-                var_s3->unk14 = 0;
+            unkStr->unk0.x = xVar;
+            unkStr->unk0.y = yVar;
+            unkStr->unk14 = ((var_s7 * 3) / 2) - (Random() & 0x1F);
+            if (unkStr->unk14 < 0) {
+                unkStr->unk14 = 0;
             }
-            var_s3->unk4 = 0;
-            var_s3->unk6 = 0;
+            unkStr->unk4 = 0;
+            unkStr->unk6 = 0;
             prim = prim->next;
         }
         self->ext.GS_Props.pickupFlag = 1;
         self->step++;
-        return;
+        break;
     case 6:
         SetGeomScreen(0x80);
         SetGeomOffset(0x80, 0x80);
 #ifndef VERSION_PC
-        sp38 = (MATRIX*)SPAD(0);
+        m = (MATRIX*)SPAD(0);
         sp40 = (SVECTOR*)SPAD(8);
-        sp3c = (VECTOR*)SPAD(10);
+        vec = (VECTOR*)SPAD(10);
         sp34 = (SVECTOR*)SPAD(14);
 #else
         MATRIX sp38_;
         SVECTOR sp40_;
         VECTOR sp3c_;
         SVECTOR sp34_;
-        sp38 = &sp38_;
+        m = &sp38_;
         sp40 = &sp40_;
-        sp3c = &sp3c_;
+        vec = &sp3c_;
         sp34 = &sp34_;
 #endif
         sp34[0] = D_80182690;
         sp34[1] = D_80182698;
         sp34[2] = D_801826A0;
         sp34[3] = D_801826A8;
-        var_s3 = &D_801C06B0;
+        unkStr = &D_801C06B0;
         prim = self->ext.prim;
-        for (i = 0; i < 15 * 15; i++, var_s3++) {
-            if ((var_s3->unk14) || (var_s3->unk10 > 0x180)) {
+        for (i = 0; i < 15 * 15; i++, unkStr++) {
+            if ((unkStr->unk14) || (unkStr->unk10 > 0x180)) {
                 prim = prim->next;
                 continue;
             }
-            sp40->vx = var_s3->unk4;
-            sp40->vy = var_s3->unk6;
+            sp40->vx = unkStr->unk4;
+            sp40->vy = unkStr->unk6;
             sp40->vz = 0;
-            RotMatrixYXZ(sp40, sp38);
-            gte_SetRotMatrix(sp38);
-            sp3c->vx = var_s3->unkA;
-            sp3c->vy = var_s3->unkE;
-            sp3c->vz = var_s3->unk10;
-            gte_SetTransVector(sp3c);
+            RotMatrixYXZ(sp40, m);
+#ifdef VERSION_PSP
+            SetRotMatrix(m);
+#else
+            gte_SetRotMatrix(m);
+#endif
+            vec->vx = unkStr->unkA;
+            vec->vy = unkStr->unkE;
+            vec->vz = unkStr->unk10;
+            gte_SetTransVector(vec);
             gte_ldv3c(sp34);
             gte_rtpt();
             gte_stsxy3_gt3(prim);
             gte_ldv0(&sp34[3]);
             gte_rtps();
-            gte_stsxy(&prim->x3);
+            gte_stsxy((long*)&prim->x3);
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
         }
-        var_s3 = &D_801C06B0;
+        unkStr = &D_801C06B0;
         prim = self->ext.prim;
         var_s8 = 0;
-        for (i = 0; i < 15 * 15; i++, var_s3++) {
-            if (var_s3->unk14) {
-                var_s3->unk14--;
+        for (i = 0; i < 15 * 15; i++, unkStr++) {
+            if (unkStr->unk14) {
+                unkStr->unk14--;
                 prim = prim->next;
                 continue;
             }
-            var_s3->unk4 += var_s3->unk0.x;
-            var_s3->unk6 += var_s3->unk0.y;
-            var_s3->unk10 += 3;
-            if (var_s3->unk10 > 0x180) {
+            unkStr->unk4 += unkStr->unk0.x;
+            unkStr->unk6 += unkStr->unk0.y;
+            unkStr->unk10 += 3;
+            if (unkStr->unk10 > 0x180) {
                 var_s8 += 1;
                 prim->drawMode = DRAW_HIDE;
             }
@@ -261,8 +282,8 @@ void func_801BD8F0(Entity* self) {
         if (self->ext.GS_Props.pickupFlag) {
             if (var_s8 > 14) {
                 self->ext.GS_Props.pickupFlag = 0;
-                sp44 = self + 1;
-                CreateEntityFromCurrentEntity(E_ID_24, sp44);
+                entity = self + 1;
+                CreateEntityFromCurrentEntity(E_ID_24, entity);
             }
         }
         if (var_s8 == 15 * 15) {
@@ -270,8 +291,9 @@ void func_801BD8F0(Entity* self) {
         }
         break;
     case 7:
-        sp44 = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_24, sp44);
+        entity = self + 1;
+        CreateEntityFromCurrentEntity(E_ID_24, entity);
         DestroyEntity(self);
+        break;
     }
 }
