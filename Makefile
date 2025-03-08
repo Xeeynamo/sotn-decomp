@@ -25,7 +25,7 @@ OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
 SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)# Only used for installing venv
 PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
 PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3# This is slightly redundant to handle the slash
-PIP			 	:= $(realpath $(VENV_DIR))/bin/pip3# Pip will always use venv
+PIP			 	:= $(VENV_DIR)/bin/pip3# Pip will always use venv
 BASH			:= $(or $(shell which bash),/usr/bin/bash)
 BASH_FLAGS	  	:= -e -o pipefail
 SHELL 			:= $(BASH) $(BASH_FLAGS)
@@ -40,12 +40,12 @@ INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
-PY_TOOLS_DIRS	:= $(addprefix $(TOOLS_DIR)/,$(slash) splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/sotn_permuter)
+BUILD_DIR       := build/$(VERSION)
+EXPECTED_DIR	:= expected/$(BUILD_DIR)
+PY_TOOLS_DIRS	:= $(addprefix $(TOOLS_DIR)/,$(slash) splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
-BUILD_DIR       := build/$(VERSION)
-EXPECTED_DIR	:= expected/$(BUILD_DIR)
 
 # Files
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
@@ -64,6 +64,7 @@ ALLEGREX 		:= $(BIN_DIR)/allegrex-as
 WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
+CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
 # Symbols
 BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
@@ -80,11 +81,12 @@ PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 CLANG			:= $(BIN_DIR)/clang-format
 GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
-SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)
+SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
 ASMDIFFER		:= $(TOOLS_DIR)/asm-differ/diff.py
-M2CTX_APP           := $(TOOLS_DIR)/m2ctx.py
-M2C_APP             := $(TOOLS_DIR)/m2c/m2c.py
+M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
+M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
+PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
@@ -92,11 +94,8 @@ SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
-
 SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
 SOTNASSETS      := $(GOPATH)/bin/sotn-assets
-
-DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER) $(M2CTX_APP) $(M2C_APP) $(GO) requirements-python
 
 # Build functions
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
@@ -126,6 +125,8 @@ define link
 		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad stmad_fix,$(1)),$(VERSION).)$(subst _fix,,$(1)).txt)
 endef
 
+# This throws an error from Python occasionally within make, but it isn't an error in the functionality of the build pipeline.
+# Todo: revise the Python so that error doesn't happen, but also to make it more readable
 define get_merged_functions 
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
@@ -151,7 +152,6 @@ else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
 
-# Primary build chain, clean through expected
 build-and-check: build check | $(VENV_DIR)
 all: | $(VENV_DIR)
 	$(MAKE) extract
@@ -163,11 +163,11 @@ clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 	$(call echo,Cleaning $*) git clean -fdxq $*
 
-extract: extract_$(VERSION)
-build: build_$(VERSION)
+extract: extract_$(VERSION) | $(VENV_DIR)
+build: build_$(VERSION) | $(VENV_DIR)
 
 # Step 1/3 of expected
-patch: $(CONFIG_DIR)/dirt.$(VERSION).json
+patch: $(CONFIG_DIR)/dirt.$(VERSION).json build
 	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
 
 # Step 2/3 of expected
@@ -183,11 +183,13 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
     }' | column --separator $$'\t' --table
 
 # Step 3/3 of expected
+expected: check $(EXPECTED_DIR)
 	$(call echo,Copying build files to expected/)
 	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
+$(EXPECTED_DIR): 
+	mkdir -p $(EXPECTED_DIR)
 
 # Targets for copying the physical disk to an image file
-.PHONY: dump-disk $(RETAIL_DISK_DIR)/sotn.%.bin $(RETAIL_DISK_DIR)/sotn.%.cue
 dump-disk: dump-disk_$(VERSION)
 $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
 dump-disk_%: PHONY
@@ -218,19 +220,21 @@ $(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
+# It doesn't make sense to copy the extracted files, then overwrite them with the build files, but this works for now
+# Todo: Adjust this to be cp BUILD_DIR, then cp no clobber EXTRACTED_DISK_DIR
 disk: disk-prepare
 	$(call echo,Creating disk image) $(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
-disk-prepare  = $(1)/$(1).BIN $(1)/F_$(1).BIN
-DISK_PREPARE := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
-DISK_PREPARE += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call disk-prepare,$(call to_upper,$(target)))))
-DISK_PREPARE += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call disk-prepare,$(call to_upper,$(target)))))
-DISK_PREPARE += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
+ovl_to_bin  = $(1)/$(1).BIN $(1)/F_$(1).BIN
+disk_prepare := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
+disk_prepare += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call ovl_to_bin,$(call to_upper,$(target)))))
+disk_prepare += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call ovl_to_bin,$(call to_upper,$(target)))))
+disk_prepare += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
 disk-prepare: build $(SOTNDISK)
 	$(call echo,Copying extracted disk files) mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	$(call echo,Copying main.exe as SLUS_000.67) cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
 	$(foreach item,$(disk_prepare),$(call echo,Copying $(item)) cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
-	cd $(TOOLS_DIR)/sotn-debugmodule && make
+	cd $(TOOLS_DIR)/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 
@@ -245,8 +249,8 @@ $(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG) format-src.run
 	$(CLANG) -i $*
 
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%:
-	$(call echo,Formatting $**.py); $(BLACK) $**.py
+$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
+	$(call echo,Formatting $**.py) $(BLACK) $**.py
 
 format-symbols: $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
 	rm $@.run
@@ -263,12 +267,11 @@ format-license:
 	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
 
 # Other utility targets
-.PHONY: force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS))
-FORCE_SYMBOLS := $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
-force-symbols: $(addprefix FORCE_,$(FORCE_SYMBOLS))
+force_symbols = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
+force-symbols: $(addprefix FORCE_,$(force_symbols))
 # This is currently intentionally hard coded to us because the us files are used for functions in other versions
-$(addprefix FORCE_,$(FORCE_SYMBOLS)): FORCE_%:
-	$(call echo,Extracting symbols for $*);$(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
+$(addprefix FORCE_,$(force_symbols)): FORCE_%: | $(VENV_DIR)
+	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
 
 force-extract:
 	-rm -rf /tmp/src_tmp; mv src /tmp/src_tmp
@@ -276,21 +279,22 @@ force-extract:
 	$(MAKE) extract
 	rm -rf src/; mv /tmp/src_tmp src
 
-context:
+context: $(M2CTX_APP)
 ifndef SOURCE
 	$(error SOURCE environment variable must be set to generate context)
 endif
 	VERSION=$(VERSION) $(PYTHON) $(M2CTX_APP) $(SOURCE)
 	$(call echo,ctx.c has been updated.)
 
-mad_fix: $$(call list_o_files,st/mad,_st) $$(call list_o_files,st,_shared) | stmad_dirs
-	$(call link,stmad_fix,$@)
+# Must be run after a successful build and will cause check to fail
+mad_fix: $$(call list_o_files,st/mad,_st) $$(call list_o_files,st,_shared) | stmad-dirs
+	$(call link,stmad_fix,$(BUILD_DIR)/stmad_fix.elf)
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
-.PHONY: function-finder duplicates-report
+# function-finder and duplicates-report don't seem to work reliably, but it needs more investigation
 function-finder: graphviz force-extract
 	$(MAKE) force-symbols
-	-$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
+	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
 	git clean -fdxq $(ASM_DIR)/
 	git checkout $(CONFIG_DIR)/
 	rm -f $(BUILD_DIR)/main.ld
@@ -307,6 +311,7 @@ duplicates-report: force-extract
 	mkdir -p $(TOOLS_DIR)/gh-duplicates; $(DUPS)
 
 # Targets that specify and/or install dependencies
+# Todo: standardize web grabs to all use the same method and parameters
 git-submodules: $(ASMDIFFER) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
 update-dependencies: $(ASMDIFFER) $(M2CTX_APP) $(M2C_APP) requirements-python dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS)
 	git clean -fdq $(BIN_DIR)/
@@ -351,10 +356,11 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 	cd $(SOTNDISK_DIR); $(GO) install
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR); $(GO) install
+# Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
 $(VENV_DIR):
-	$(call Installing and setting up python virtual environment)
-	$(SYSTEM_PYTHON) -m venv $(VENV_DIR)
+	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && echo "Build environment has changed due to venv install, please restart Make" && exit 1
+# So that python requirements can be updated if .venv already exists
 requirements-python: | $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
@@ -434,7 +440,7 @@ PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extrac
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(WIBO) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(GO) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(M2CTX_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(GO) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(M2CTX_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(EXPECTED_DIR)
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz Muffled in target: $(BIN_DIR)/%

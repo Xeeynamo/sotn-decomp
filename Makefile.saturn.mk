@@ -76,6 +76,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/saturn/%.c $(CC1_SATURN)
 	$(call echo,Linking $(subst $(SRC_DIR),,$<))
 	$(muffle)mkdir -p $(dir $@); cd $(BUILD_DIR) && $(DOSEMU) "GCC.EXE -c -I./ -O2 -m2 -fsigned-char $*.c -o $*.o"
 
+$(ASSETS_DIR)/SD/%.wav: $(EXTRACTED_DISK_DIR)/SD/%.PCM $(SATURN_SPLITTER_APP)
 	$(call echo,Extracting $@)
 	$(muffle)mkdir -p $(ASSETS_DIR)/SD; $(ADPCM_EXTRACT_APP) $< $@
 

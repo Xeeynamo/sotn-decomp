@@ -4,7 +4,7 @@
 # Reverse stage OVL options: rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp
 # Boss OVL options: bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
 # Servant OVL options: tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
-GAME		:= dra
+GAME		:= dra ric
 STAGES		:= lib no4 st0 wrp
 STAGES		+= 
 BOSSES		:= 
@@ -37,7 +37,8 @@ $(BUILD_DIR:$(VERSION)=pspeu)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(muffle)mkdir -p $(dir $@); $(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
-$(addprefix $(BUILD_DIR:$(VERSION)=pspeu)/,$(addsuffix .elf,$(filter-out main,$(GAME)))): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_functions,%) $$(call list_o_files,%_psp)
+# Todo: This monstrosity of a target should probably be revised, but it works for now
+$(addprefix $(BUILD_DIR:$(VERSION)=pspeu)/,$(addsuffix .elf,$(filter-out main,$(GAME)))): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_functions,%) $$(call list_o_files,%_psp) $$(if $$(filter-out dra,%),$(BUILD_DIR)/assets/%/mwo_header.bin.o)
 	$(call link,$*,$@)
 $(BUILD_DIR:$(VERSION)=pspeu)/st%.elf: $(BUILD_DIR)/st%.ld $$(call get_functions,%,st) $$(call list_o_files,st/%_psp) $(BUILD_DIR)/assets/st/%/mwo_header.bin.o
 	$(call link,st$*,$@)
@@ -47,7 +48,7 @@ $(BUILD_DIR:$(VERSION)=pspeu)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_file
 	$(call link,tt_$*,$@)
 
 # Step 3/5 of build
-$(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf # Shared
+$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin %.exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf# Shared
 	$(muffle)$(call echo,Building $(notdir $@),optional) $(OBJCOPY) -O binary $< $@
 
 # Step 4/5 of build
