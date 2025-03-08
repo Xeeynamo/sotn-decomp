@@ -152,13 +152,13 @@ include Makefile.saturn.mk
 endif
 
 # Primary build chain, clean through expected
-.PHONY: all sotn clean extract build patch check expected
-$(DEBUG).SILENT: all sotn clean extract build patch check expected
-build-and-check: build check
-all: clean extract build expected
+build-and-check: build check | $(VENV_DIR)
+all: | $(VENV_DIR)
+	$(MAKE) extract
+	$(MAKE) expected
+all-clean: clean | $(VENV_DIR)
+	$(MAKE) all
 
-.PHONY: $(addprefix CLEAN_,$(CLEAN_FILES))
-$(DEBUG).SILENT: $(addprefix CLEAN_,$(CLEAN_FILES))
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 	$(call echo,Cleaning $*) git clean -fdxq $*
@@ -395,7 +395,9 @@ help:
 ##@ Primary Targets
 ##@
 
-all: ##@ (Default) build and check
+all: ##@ extract, build, and expected
+all-clean: ##@ clean before running all
+build-and-check: ##@ (Default) build and check
 extract: ##@ split game files into assets and assembly
 build: ##@ build game files
 clean: ##@ clean extracted files, assets, and build artifacts
