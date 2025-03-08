@@ -1522,21 +1522,20 @@ static s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
 extern s32 D_80138448;
 
 void func_801309B4(Entity* self) {
-    s32 var_s2;
-    s32 var_a1;
+    s32 var_s4;
+    s32 var_s3;
+    s16 var_s2;
+    s32 var_s1;
     s32 var_s0;
-    s32 var_s0_2;
-    s32 var_v0;
-    s32 var_v0_2;
-
+    
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = ANIMSET_DRA(15);
         self->unk5A = 0x7E;
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
         self->zPriority = PLAYER.zPriority + 2;
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
@@ -1549,7 +1548,7 @@ void func_801309B4(Entity* self) {
         self->animCurFrame = 72;
         self->step++;
     }
-#if !defined(VERSION_HD)
+#if defined(VERSION_US)
     self->zPriority = PLAYER.zPriority + 2;
 #endif
     self->facingLeft = PLAYER.facingLeft;
@@ -1558,19 +1557,20 @@ void func_801309B4(Entity* self) {
     self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 | FLAG_UNK_20000 |
                   FLAG_POS_PLAYER_LOCKED;
 
-    var_a1 = D_80138430 - 0x800;
+    var_s3 = D_80138430 - 0x800;
     if (D_80138430 > 0x980) {
-        var_a1 = 0x180;
+        var_s3 = 0x180;
     }
     if (D_80138430 < 0x680) {
-        var_a1 = -0x180;
+        var_s3 = -0x180;
     }
+    var_s0 = var_s3;
+    var_s1 = 11;
     self->palette = PLAYER.palette;
-    var_s2 = 11;
-    var_s0 = var_a1;
+
     switch (PLAYER.step_s) {
     case 1:
-        var_s0 = var_a1;
+        var_s0 = var_s3;
         if (D_800B0914 == 1) {
             var_s0 += 0x100;
         }
@@ -1579,9 +1579,11 @@ void func_801309B4(Entity* self) {
         switch (D_800B0914) {
         case 0:
             if (PLAYER.animCurFrame == 33) {
-                var_s0 = !PLAYER.facingLeft;
-                self->posX.i.hi =
-                    var_s0 ? self->posX.i.hi + 4 : self->posX.i.hi - 4;
+                if(!PLAYER.facingLeft){
+                    self->posX.i.hi += 4;
+                } else {
+                    self->posX.i.hi -= 4;
+                }
                 self->animCurFrame = 73;
                 self->flags &= ~FLAG_UNK_100000;
                 return;
@@ -1594,8 +1596,11 @@ void func_801309B4(Entity* self) {
             break;
         case 1:
             break;
+        case 3:
+            break;
         case 2:
-            var_s2 += D_800B0AEC[PLAYER.animFrameIdx];
+            var_s4 = D_800B0AEC[PLAYER.animFrameIdx];
+            var_s1 += var_s4;
             var_s0 -= 0x80;
             if (D_80138430 == 0xA00) {
                 var_s0 += 0x80;
@@ -1626,23 +1631,22 @@ void func_801309B4(Entity* self) {
         break;
     }
 
-    var_s2 = var_s2 - (var_s0 >> 7);
+    var_s1 += -(var_s0 >> 7);
     if (PLAYER.facingLeft) {
         var_s0 = 0x800 - var_s0;
     }
-    self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s2) >> 8;
-    self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s2) >> 8;
+    self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s1) >> 8;
+    self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s1) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
         self->animFrameDuration == -1) {
         PlaySfx(SFX_ALU_WOLF_BARK);
-        self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
+        self->animFrameIdx = self->animFrameDuration = 0;
     }
-    var_s2 = D_800B0AD4[self->animFrameIdx];
+    var_s1 = D_800B0AD4[self->animFrameIdx];
     if (PLAYER.facingLeft) {
-        var_s2 = -var_s2;
+        var_s1 = -var_s1;
     }
-    self->posX.i.hi += var_s2;
+    self->posX.i.hi += var_s1;
     if (PLAYER.step_s == 2 && D_800B0914 == 4) {
         func_8011A328(self, 4);
         self->enemyId = 3;
@@ -1656,14 +1660,17 @@ void func_801309B4(Entity* self) {
     if (self->animFrameDuration < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
-        } else if (*D_80097448 >= 0x19) {
-            var_s0_2 = PLAYER.facingLeft ? -4 : 4;
-            self->posX.i.hi = var_s0_2 + self->posX.i.hi;
+        } else if (*D_80097448 > 0x18) {
+            var_s2 = 4;
+            if(PLAYER.facingLeft){
+                var_s2 = -var_s2;
+            }
+            self->posX.i.hi += var_s2;
             self->posY.i.hi += 2;
             CreateEntFactoryFromEntity(self, FACTORY(4, 13), 0);
-            D_80138448 = 0x40;
             self->posY.i.hi -= 2;
-            self->posX.i.hi -= var_s0_2;
+            self->posX.i.hi -= var_s2;
+            D_80138448 = 0x40;
         }
     }
 }
@@ -1675,143 +1682,164 @@ extern s32 D_8013844C;
 extern s32 D_80138450;
 
 void func_80130E94(Entity* self) {
-    s32 temp_v1;
-    s32 var_s1;
-    s32 var_s2;
+    Entity* otherEnt;
+    s32 sp3c;
+    s32 var_s8;
+    s32 var_s7;
     s32 var_s3;
     s32 var_s4;
-    u16 params;
-    s32 var_s6;
-    s32 var_s7;
+    s32 temp_s2;
+    s32 params;
+    s32 var_s1;
+    s32 var_s0;
+
 
     if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
         DestroyEntity(self);
         return;
     }
     params = self->params;
+    var_s0 = 0;
     var_s1 = 0;
-    var_s2 = 0;
-    if (self->step == 0) {
+    if (!self->step) {
         self->animSet = 15;
         self->animCurFrame = D_800B0B0C[params];
         self->unk5A = 0x7E;
-        D_8013844C = 0;
         self->palette = PLAYER.palette;
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
         self->zPriority = PLAYER.zPriority - 3;
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        D_8013844C = 0;
         self->ext.timer.t = 0x20;
         self->rotZ = D_80138430;
         self->step++;
     }
+    otherEnt = self;
+    otherEnt--;
+    var_s7 = 2;
     self->facingLeft = PLAYER.facingLeft;
-#if !defined(VERSION_HD)
+#if defined(VERSION_US)
     self->zPriority = PLAYER.zPriority - 3;
 #endif
-    var_s6 = 2;
     if (params == 0) {
         var_s4 = g_Entities[19].posX.val;
-        var_s4 += PLAYER.facingLeft ? FIX(3) : -FIX(3);
-        var_s7 = g_Entities[19].posY.val + FIX(7);
+        if(PLAYER.facingLeft){
+            var_s4 += FIX(3);
+        } else {
+            var_s4 -= FIX(3);
+        }
+        sp3c = g_Entities[19].posY.val + FIX(7);
     } else {
-        var_s4 = self[-1].posX.val;
-        var_s7 = self[-1].posY.val;
+        var_s4 = otherEnt->posX.val;
+        sp3c = otherEnt->posY.val;
     }
     if (PLAYER.animCurFrame == 33) {
-        var_s6 = 1;
+        var_s7 = 1;
     }
     if (PLAYER.animCurFrame == 34) {
-        var_s6 = 0;
+        var_s7 = 0;
     }
     if (params == 0) {
         var_s3 = D_8013844C;
         switch (PLAYER.step_s) {
         case 1:
-            var_s2 = 0x100;
-            var_s1 = 0x80;
             D_8013844C += 0x18;
+            var_s1 = 0x100;
+            var_s0 = 0x80;
             if (D_800B0914 == 1) {
-                var_s1 = -0x80;
+                var_s0 = -0x80;
             }
             break;
         case 2:
             switch (D_800B0914) {
             case 0:
-                var_s1 = -0x300;
+                var_s0 = -0x300;
                 break;
             case 1:
             case 3:
-                var_s2 = 0x40;
-                var_s1 = -0x200;
                 D_8013844C += 0x100;
+                var_s1 = 0x40;
+                var_s0 = -0x200;
                 break;
             case 2:
-                var_s2 = 0x40;
                 D_8013844C += 0x100;
-                var_s1 =
-                    MIN((abs(PLAYER.velocityX) + -FIX(3)) >> 10, 0x100) - 0x100;
+                var_s1 = 0x40;
+                var_s0 = -0x100;
+                temp_s2 = (abs(PLAYER.velocityX) + -FIX(3)) >> 10;
+                if(temp_s2 > 0x100){
+                    temp_s2 = 0x100;
+                }
+                var_s0 += temp_s2;
                 break;
             }
             break;
         case 3:
-            var_s2 = 0x40;
-            var_s1 = 0x80;
             D_8013844C += 0x10;
+            var_s1 = 0x40;
+            var_s0 = 0x80;
             break;
         case 4:
             if (D_800B0914 == 0) {
-                var_s1 = -0x200;
                 if (PLAYER.velocityY < 0) {
-                    var_s1 = 0x600;
+                    var_s0 = 0x600;
+                } else {
+                    var_s0 = -0x200;
                 }
             } else {
-                var_s2 = 0x20;
-                var_s1 = -0x100;
+                var_s1 = 0x20;
                 if (PLAYER.velocityY < 0) {
-                    var_s1 = 0x100;
+                    var_s0 = 0x100;
+                } else {
+                    var_s0 = -0x100;
                 }
             }
             break;
-        case 7:
-            var_s1 = -0x80;
-            break;
         case 5:
-        case 6:
         case 8:
-            var_s1 = -0x200;
+            var_s0 = -0x200;
+            break;
+        case 7:
+            var_s0 = -0x80;
+            break;
+        case 6:
+            var_s0 = -0x200;
             break;
         case 9:
-            var_s2 = 0x100;
-            var_s1 = 0x80;
             D_8013844C += 0x18;
+            var_s1 = 0x100;
+            var_s0 = 0x80;
             break;
         }
         D_80138450 =
-            var_s1 + D_80138430 + (((rsin(var_s3) >> 8) * var_s2) >> 4);
+            D_80138430 + var_s0 + (((rsin(var_s3) >> 8) * var_s1) >> 4);
     }
-    temp_v1 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
-    if (temp_v1 < self->rotZ) {
+    var_s8 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
+    if (var_s8 < self->rotZ) {
         self->rotZ -= self->ext.timer.t;
     }
-    if (self->rotZ < temp_v1) {
+    if (self->rotZ < var_s8) {
         self->rotZ += self->ext.timer.t;
     }
-    if (PLAYER.facingLeft == 0) {
+    if (!PLAYER.facingLeft) {
         var_s3 = self->rotZ;
     } else {
         var_s3 = 0x800 - self->rotZ;
     }
-    self->posX.val = var_s4 + rcos(var_s3) * var_s6 * 0x10;
-    self->posY.val = var_s7 - rsin(var_s3) * var_s6 * 0x10;
+    self->posX.val = var_s4 + rcos(var_s3) * var_s7 * 0x10;
+    self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
     self->palette = PLAYER.palette;
     self->drawMode = DRAW_DEFAULT;
     self->drawFlags &= ~FLAG_DRAW_UNK8;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_UNK8;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        self->unk6C = ~MIN((abs(PLAYER.velocityX) - FIX(3)) >> 12, 128);
+        temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
+        if(temp_s2 > 0x80){
+            temp_s2 = 0x80;
+        }
+        self->unk6C = 0xFF - temp_s2;
     }
 }
 // Entity #60. This is created manually at g_Entities[30].
