@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "sfx.h"
 
 // Animations for EntityDraculaFinalForm
 static u8 anim_80180AA4[] = {
@@ -46,7 +45,7 @@ static u8 anim_80180BCC[] = {0x01, 0x50, 0x01, 0x51, 0x01, 0x52, 0x01,
                              0x53, 0x01, 0x54, 0x01, 0x55, 0x00, 0x00};
 static u8 anim_80180BDC[] = {0x01, 0x56, 0x01, 0x57, 0x01, 0x58, 0xFF, 0x00};
 
-static u16 D_80180BE4[][3][4] = {
+static s16 D_80180BE4[][3][4] = {
     {{-26, 48, 8, 24}, {37, 48, 10, 16}, {10, -4, 28, 36}},
     {{-26, 48, 8, 24}, {37, 48, 10, 16}, {10, -4, 28, 36}},
     {{-26, 48, 8, 24}, {37, 48, 10, 16}, {10, -4, 28, 36}},
@@ -104,91 +103,32 @@ static u16 D_80180BE4[][3][4] = {
 };
 static s16 D_801810F4[] = {0x180, 0x300, 0x200, -1};
 static s16 D_801810FC[] = {0xFFF0, 0x0018, 0x0030, 0xFFE0, 0x0008, 0xFFFF};
-static Point16 D_80181108[] = {
-    {0x0000, 0x0000}, {0x0024, 0x0000}, {0xFFF0, 0x0040}, {0x0018, 0x0010},
-    {0x0000, 0x0040}, {0xFFE0, 0x0020}, {0x0008, 0x0000}, {0x0014, 0x0018},
-    {0x0000, 0x0000}, {0x0024, 0x0000}, {0xFFF0, 0x0040}, {0x0018, 0x0010},
-    {0x0000, 0x0040}, {0xFFE0, 0x0020}, {0x0008, 0x0000}, {0x0014, 0x0018}};
+static s16 D_80181108[] = {
+    0x0000, 0x0000, 0x0024, 0x0000, 0xFFF0, 0x0040, 0x0018, 0x0010,
+    0x0000, 0x0040, 0xFFE0, 0x0020, 0x0008, 0x0000, 0x0014, 0x0018,
+    0x0000, 0x0000, 0x0024, 0x0000, 0xFFF0, 0x0040, 0x0018, 0x0010,
+    0x0000, 0x0040, 0xFFE0, 0x0020, 0x0008, 0x0000, 0x0014, 0x0018};
 static s32 D_80181148 = 0;
 static u32 D_8018114C = 0;
-static Point16 D_80181150[] = {
-    {0x00, 0x00}, {0x03, 0x04}, {0x07, 0x06}, {0x01, 0x0B}, {0x03, 0x0C},
-    {0x08, 0x09}, {0x05, 0x0D}, {0x19, 0x06}, {0x19, 0x06}, {0x19, 0x06},
-    {0x19, 0x06}, {0x11, 0x08}, {0x1E, 0x03}, {0x1F, 0x13}, {0x28, 0x0B},
-    {0x3B, 0x0B}, {0x2B, 0x1C}, {0x39, 0x11}, {0x3D, 0x11}, {0x1D, 0x0B},
-    {0x42, 0x0F}, {0x3F, 0x06}, {0x46, 0x0D}, {0x45, 0x08}, {0x39, 0x11},
-    {0x3D, 0x11}, {0x2B, 0x1C}, {0x28, 0x1C}, {0x27, 0x1E}, {0x1B, 0x19},
-    {0x1F, 0x0E}, {0x3E, 0x1D}, {0x25, 0x22}, {0x1B, 0x1E}, {0x21, 0x0B},
-    {0x20, 0x0D}, {0x1F, 0x0F}, {0x16, 0x1D}, {0x16, 0x21}, {0x1A, 0x0A},
-    {0x1B, 0x0D}, {0x1C, 0x0F}, {0x15, 0x26}, {0x1C, 0x2A}, {0x1C, 0x2D},
-    {0x1D, 0x2D}, {0x26, 0x26}, {0x18, 0x53}, {0x20, 0x3A}, {0x26, 0x26},
-    {0x26, 0x32}, {0x27, 0x3C}, {0x22, 0x3F}, {0x24, 0x4A}, {0x2A, 0x4A},
-    {0x25, 0x4E}, {0x2B, 0x4F}, {0x25, 0x53}, {0x2E, 0x53}, {0x15, 0x3B},
-    {0x1B, 0x3D}, {0x16, 0x41}, {0x1C, 0x45}, {0x15, 0x4C}, {0x1A, 0x4C},
-    {0x13, 0x4F}, {0x10, 0x53}, {0x16, 0x53}, {0x1C, 0x53}, {0x26, 0x32},
-    {0x28, 0x53}, {0x42, 0x53}, {0x3D, 0x28}, {0x3D, 0x32}, {0x3D, 0x3D},
-    {0x3E, 0x43}, {0x3F, 0x4E}, {0x05, 0x1F}, {0x05, 0x2C}, {0x05, 0x3B},
-    {0x06, 0x4D}, {0x05, 0x53}, {0x11, 0x1B}};
-static Point16 D_8018129C[] = {
-    {0x00, 0x00}, {0x00, 0x1C}, {0x00, 0x13}, {0x0F, 0x1B}, {0x0F, 0x16},
-    {0x09, 0x0C}, {0x0F, 0x13}, {0x14, 0x05}, {0x12, 0x16}, {0x1B, 0x06},
-    {0x1A, 0x1D}, {0x1C, 0x02}, {0x23, 0x04}, {0x2F, 0x0B}, {0x3E, 0x02},
-    {0x5E, 0x07}, {0x3D, 0x1A}, {0x50, 0x12}, {0x5D, 0x1A}, {0x67, 0x17},
-    {0x56, 0x25}, {0x6F, 0x26}, {0x59, 0x29}, {0x62, 0x31}, {0x51, 0x18},
-    {0x56, 0x1A}, {0x48, 0x1D}, {0x52, 0x1F}, {0x51, 0x29}, {0x38, 0x2B},
-    {0x34, 0x22}, {0x53, 0x35}, {0x4C, 0x34}, {0x38, 0x31}, {0x2E, 0x1D},
-    {0x25, 0x28}, {0x25, 0x2E}, {0x2E, 0x30}, {0x2F, 0x35}, {0x0F, 0x1C},
-    {0x0E, 0x22}, {0x20, 0x33}, {0x28, 0x38}, {0x3C, 0x47}, {0x39, 0x4A},
-    {0x42, 0x4C}, {0x50, 0x39}, {0x42, 0x54}, {0x49, 0x56}, {0x5A, 0x38},
-    {0x61, 0x45}, {0x5F, 0x53}, {0x4E, 0x62}, {0x5C, 0x65}, {0x68, 0x67},
-    {0x5F, 0x6A}, {0x72, 0x6A}, {0x5D, 0x74}, {0x78, 0x74}, {0x11, 0x4F},
-    {0x26, 0x58}, {0x18, 0x5B}, {0x2A, 0x5D}, {0x20, 0x67}, {0x28, 0x69},
-    {0x13, 0x6B}, {0x0E, 0x74}, {0x24, 0x74}, {0x31, 0x74}, {0x5C, 0x4C},
-    {0x49, 0x56}, {0x78, 0x74}, {0x4C, 0x34}, {0x5C, 0x4C}, {0x5F, 0x53},
-    {0x68, 0x67}, {0x72, 0x6A}, {0x2E, 0x30}, {0x28, 0x38}, {0x18, 0x5B},
-    {0x20, 0x67}, {0x0E, 0x74}, {0x25, 0x28}};
-static u8 D_801813E8[] = {
-    0x02, 0x04, 0x01, 0x03, 0x05, 0x06, 0x02, 0x04, 0x11, 0x0F, 0x12, 0x13,
-    0x12, 0x13, 0x14, 0x15, 0x14, 0x15, 0x16, 0x17, 0x1D, 0x1C, 0x21, 0x20,
-    0x25, 0x1D, 0x26, 0x21, 0x26, 0x21, 0x2B, 0x20, 0x26, 0x2B, 0x2A, 0x2C,
-    0x2A, 0x2C, 0x3B, 0x3C, 0x3B, 0x3C, 0x3D, 0x3E, 0x3D, 0x3E, 0x3F, 0x40,
-    0x3F, 0x40, 0x43, 0x44, 0x41, 0x3F, 0x42, 0x43, 0x2B, 0x20, 0x2D, 0x2E,
-    0x2D, 0x2E, 0x30, 0x45, 0x30, 0x45, 0x34, 0x33, 0x34, 0x33, 0x35, 0x36,
-    0x35, 0x36, 0x37, 0x38, 0x37, 0x38, 0x39, 0x3A, 0x2C, 0x2D, 0x2F, 0x46,
-    0x11, 0x12, 0x1B, 0x1F, 0x1B, 0x1F, 0x20, 0x48, 0x20, 0x48, 0x45, 0x49,
-    0x45, 0x49, 0x33, 0x4A, 0x33, 0x4A, 0x36, 0x4B, 0x36, 0x4B, 0x38, 0x4C,
-    0x38, 0x4C, 0x3A, 0x47, 0x06, 0x52, 0x4D, 0x25, 0x4D, 0x25, 0x4E, 0x2A,
-    0x4E, 0x2A, 0x4F, 0x3D, 0x4F, 0x3D, 0x50, 0x3F, 0x50, 0x3F, 0x51, 0x42,
-    0x0E, 0x0F, 0x1E, 0x11, 0x1E, 0x11, 0x24, 0x10, 0x24, 0x10, 0x0D, 0x1B,
-    0x0D, 0x1B, 0x1D, 0x1C, 0x0C, 0x0E, 0x22, 0x1E, 0x23, 0x22, 0x24, 0x1E,
-    0x0C, 0x22, 0x0A, 0x23, 0x0A, 0x23, 0x27, 0x24, 0x28, 0x29, 0x27, 0x24,
-    0x0B, 0x0A, 0x05, 0x27, 0x27, 0x28, 0x05, 0x29, 0x24, 0x0D, 0x29, 0x1D,
-    0x52, 0x29, 0x25, 0x1D, 0x06, 0x05, 0x52, 0x29, 0x00, 0x00, 0x00, 0x00};
-static u8 D_801814A8[] = {
-    0x02, 0x04, 0x01, 0x03, 0x05, 0x06, 0x02, 0x04, 0x05, 0x07, 0x06, 0x08,
-    0x07, 0x09, 0x08, 0x0A, 0x07, 0x0B, 0x09, 0x0C, 0x09, 0x0C, 0x0A, 0x0D,
-    0x0C, 0x0E, 0x0D, 0x0F, 0x0D, 0x0F, 0x10, 0x11, 0x11, 0x0F, 0x12, 0x13,
-    0x11, 0x12, 0x18, 0x19, 0x10, 0x11, 0x1A, 0x18, 0x18, 0x19, 0x1A, 0x1B,
-    0x19, 0x12, 0x1B, 0x14, 0x12, 0x13, 0x14, 0x15, 0x14, 0x15, 0x16, 0x17,
-    0x1B, 0x14, 0x1C, 0x16, 0x1C, 0x16, 0x20, 0x1F, 0x0D, 0x10, 0x22, 0x1E,
-    0x1E, 0x10, 0x1D, 0x1A, 0x1A, 0x1B, 0x1D, 0x1C, 0x1D, 0x1C, 0x21, 0x20,
-    0x22, 0x1E, 0x23, 0x1D, 0x23, 0x1D, 0x26, 0x21, 0x25, 0x1D, 0x26, 0x21,
-    0x26, 0x21, 0x2B, 0x20, 0x26, 0x2B, 0x2A, 0x2C, 0x2A, 0x2C, 0x3B, 0x3C,
-    0x3B, 0x3C, 0x3D, 0x3E, 0x3D, 0x3E, 0x3F, 0x40, 0x3F, 0x40, 0x43, 0x44,
-    0x41, 0x3F, 0x42, 0x43, 0x2B, 0x20, 0x2D, 0x2E, 0x2D, 0x2E, 0x30, 0x45,
-    0x31, 0x32, 0x2E, 0x45, 0x30, 0x45, 0x34, 0x33, 0x34, 0x33, 0x35, 0x36,
-    0x35, 0x36, 0x37, 0x38, 0x37, 0x38, 0x39, 0x3A, 0x2B, 0x2D, 0x2C, 0x30,
-    0x28, 0x27, 0x29, 0x08, 0x29, 0x08, 0x24, 0x0A, 0x24, 0x0A, 0x22, 0x0D,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-bool func_801ADAC8(s32 arg0) {
-    s32 unk = 0xD0;
-    Entity* entity = g_CurrentEntity;
-    s16 temp_v1 = entity->posY.i.hi + arg0;
+#ifdef VERSION_PSP
+#define BUTTON_SYMBOL PAD_CIRCLE
 
-    if (temp_v1 >= unk) {
-        entity->posY.i.hi = unk - temp_v1 + entity->posY.i.hi;
+extern s32 E_ID(DRACULA_UNK20);
+extern s32 E_ID(DRACULA_UNK21);
+extern s32 E_ID(DRACULA_UNK23);
+extern s32 E_ID(DRACULA_FIREBALL);
+extern s32 E_ID(DRACULA_UNK2C);
+extern s32 E_ID(DRACULA_UNK2E);
+#endif
+
+bool func_801ADAC8(s16 yOffset) {
+    s16 yDiff;
+
+    yDiff = g_CurrentEntity->posY.i.hi + yOffset;
+    if (yDiff >= 0xD0) {
+        yDiff = 0xD0 - yDiff;
+        g_CurrentEntity->posY.i.hi += yDiff;
         return true;
     } else {
         return false;
@@ -251,7 +191,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
         temp_v0 = var_v0 >> 4;
         bufRect.y = temp_v0 + 0xF0;
         bufRect.x = ((temp_a2 - (temp_v0 * 0x10)) * 0x10) + 0x100;
-        LoadImage(&bufRect, buf);
+        LoadImage(&bufRect, (u_long*)buf);
         g_ClutIds[arg2] = GetClut(bufRect.x, bufRect.y);
     }
 }
@@ -259,15 +199,14 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
 extern s32 D_80180910;
 void EntityDraculaFinalForm(Entity* self) {
     byte stackpad[56];
-    Entity* temp_s2;
-    Entity* var_s1;
+    Entity* entity;
     Primitive* prim;
-    s16 primIndex;
+    u32 primIndex;
     s32 i;
     s16* temp_s1;
-    s32 xShift;
+    s16 xShift;
+    s16 yShift;
     s32 timerDiff;
-    u16 selfzPriority;
     s32 selfParams;
 
     if (self->flags & FLAG_DEAD) {
@@ -277,38 +216,37 @@ void EntityDraculaFinalForm(Entity* self) {
             SetStep(6);
         }
     }
-    if (self->params == 0) {
-        if (!(g_Timer & 1)) {
-            self->palette = 0x204;
+
+    if (!self->params) {
+        if (g_Timer & 1) {
+            self->palette = PAL_DRA(0x202);
         } else {
-            self->palette = 0x202;
+            self->palette = PAL_DRA(0x204);
         }
     }
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDraculaFinalForm);
-        self->hitboxHeight = 16;
-        self->hitboxWidth = 16;
+        self->hitboxWidth = self->hitboxHeight = 16;
         self->hitboxOffX = -24;
         self->hitboxOffY = -16;
         self->hitboxState = 0;
-        if (self->params == 0) {
-            temp_s2 = self + 1;
+        if (!self->params) {
             D_8003C744 = 2;
-            var_s1 = self + 1;
             self->animCurFrame = 0;
-            for (i = 1; i < 4; i++, temp_s2++, var_s1++) {
-                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), temp_s2);
-                selfzPriority = self->zPriority;
-                var_s1->params = i;
-                var_s1->unk60 = temp_s2 - 1;
-                var_s1->unk5C = self;
+            entity = self + 1;
+            for (i = 1; i < 4; i++, entity++) {
+                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), entity);
+                entity->zPriority = self->zPriority + 2;
+                entity->params = i;
+                entity->unk60 = entity - 1;
+                entity->unk5C = self;
 
-                var_s1->zPriority = selfzPriority + 2;
                 // seems hitPoints might be used for something else
-                var_s1->hitPoints = 0x7FFE;
+                entity->hitPoints = 0x7FFE;
             }
-            self->unk5C = 0;
+            self->unk5C = NULL;
             self->unk60 = self + 3;
         } else {
             self->animCurFrame = 0;
@@ -328,15 +266,17 @@ void EntityDraculaFinalForm(Entity* self) {
         }
         break;
     case 2:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->ext.dracFinalForm.timer = 80;
             self->step_s++;
         }
-        if ((AnimateEntity(anim_80180AA4, self) == 0) &&
+
+        if (!AnimateEntity(anim_80180AA4, self) &&
             (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft)) {
             SetStep(3);
         }
-        if (--self->ext.dracFinalForm.timer == 0) {
+
+        if (!--self->ext.dracFinalForm.timer) {
             SetStep(5);
             if ((self->posX.i.hi < 152) && (self->facingLeft == 1)) {
                 if (Random() & 1) {
@@ -368,7 +308,8 @@ void EntityDraculaFinalForm(Entity* self) {
             if (AnimateEntity(anim_80180AB0, self) == 0) {
                 SetSubStep(2);
             }
-            if (self->animFrameIdx == 5 && self->animFrameDuration == 0) {
+
+            if (!self->animFrameDuration && self->animFrameIdx == 5) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(0.5);
                 } else {
@@ -417,44 +358,47 @@ void EntityDraculaFinalForm(Entity* self) {
                 SetStep(2);
             }
         }
-        if (self->animFrameIdx == 2 && self->animFrameDuration == 0) {
-            self->facingLeft = (self->facingLeft ^ 1);
+        if (!self->animFrameDuration && self->animFrameIdx == 2) {
+            self->facingLeft ^= 1;
         }
         break;
     case 4:
         switch (self->step_s) {
         case 0:
-            if (AnimateEntity(anim_80180B48, self) == 0) {
+            if (!AnimateEntity(anim_80180B48, self)) {
                 g_api.PlaySfx(0x866);
                 self->step_s++;
             }
             break;
         case 1:
-            temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (temp_s2 != NULL) {
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, temp_s2);
-                temp_s2->posX.i.hi = temp_s2->posX.i.hi;
-                temp_s2->posY.i.hi = temp_s2->posY.i.hi;
-                temp_s2->facingLeft = self->facingLeft;
-                temp_s2->params = 1;
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, entity);
+#ifndef VERSION_PSP
+                // Appears to be a bug on PSX.
+                // Possibly supposed to be assigning from self
+                entity->posX.i.hi = entity->posX.i.hi;
+                entity->posY.i.hi = entity->posY.i.hi;
+#endif
+                entity->facingLeft = self->facingLeft;
+                entity->params = 1;
             }
             self->ext.dracFinalForm.timer = 32;
             self->step_s++;
             break;
         case 2:
-            // FAKE assignment to i
-            if (i = --self->ext.dracFinalForm.timer == 0) {
+            if (!--self->ext.dracFinalForm.timer) {
                 self->ext.dracFinalForm.unk84 = 0;
                 self->step_s++;
             }
             break;
         case 3:
-            if (self->ext.dracFinalForm.timer != 0) {
+            if (self->ext.dracFinalForm.timer) {
                 self->ext.dracFinalForm.timer--;
                 break;
             }
             self->ext.dracFinalForm.timer = 48;
-            temp_s1 = &D_801810F4;
+            temp_s1 = D_801810F4;
             temp_s1 += self->ext.dracFinalForm.unk84;
             if (*temp_s1 == -1) {
                 SetStep(2);
@@ -465,15 +409,16 @@ void EntityDraculaFinalForm(Entity* self) {
             } else {
                 xShift = -32;
             }
-            temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (temp_s2 != NULL) {
+            yShift = -4;
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, temp_s2);
-                temp_s2->posX.i.hi = (xShift + temp_s2->posX.i.hi);
-                temp_s2->posY.i.hi = (temp_s2->posY.i.hi - 4);
-                temp_s2->rotZ = *temp_s1;
+                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, entity);
+                entity->posX.i.hi += xShift;
+                entity->posY.i.hi += yShift;
+                entity->rotZ = *temp_s1;
                 if (self->facingLeft) {
-                    temp_s2->rotZ = (0x800 - temp_s2->rotZ);
+                    entity->rotZ = (0x800 - entity->rotZ);
                 }
             }
             self->ext.dracFinalForm.unk84++;
@@ -487,12 +432,12 @@ void EntityDraculaFinalForm(Entity* self) {
             self->ext.dracFinalForm.timer = 4;
             self->ext.dracFinalForm.unk84 = 0;
             self->step_s++;
-            /* fallthrough */
+            // fallthrough
         case 1:
-            if (AnimateEntity(anim_80180B80, self) == 0) {
+            if (!AnimateEntity(anim_80180B80, self)) {
                 SetSubStep(2);
             }
-            if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+            if (!self->animFrameDuration && self->animFrameIdx == 3) {
                 g_api.PlaySfx(0x866);
                 self->velocityY = FIX(-7.0);
             }
@@ -500,21 +445,21 @@ void EntityDraculaFinalForm(Entity* self) {
             if (self->velocityY != 0) {
                 self->velocityY += FIX(0.09375);
             }
-            if (--self->ext.dracFinalForm.timer == 0) {
-                temp_s1 = &D_801810F4[4];
+            if (!--self->ext.dracFinalForm.timer) {
+                temp_s1 = D_801810FC;
                 temp_s1 += self->ext.dracFinalForm.unk84;
                 if (*temp_s1 == -1) {
                     self->ext.dracFinalForm.timer = 0x7FFF;
                     return;
                 }
                 self->ext.dracFinalForm.timer = 6;
-                temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (temp_s2 != NULL) {
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
                     g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
                     CreateEntityFromEntity(
-                        E_ID(DRACULA_FIREBALL), self, temp_s2);
-                    temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1);
-                    temp_s2->zPriority = (self->zPriority + 1);
+                        E_ID(DRACULA_FIREBALL), self, entity);
+                    entity->posX.i.hi += *temp_s1;
+                    entity->zPriority = (self->zPriority + 1);
                 }
                 self->ext.dracFinalForm.unk84++;
             }
@@ -547,16 +492,16 @@ void EntityDraculaFinalForm(Entity* self) {
         case 1:
             if (AnimateEntity(anim_80180AFC, self) == 0) {
                 g_api.PlaySfx(0x856);
-                temp_s2 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (temp_s2 != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, temp_s2);
-                    if (self->facingLeft != 0) {
-                        temp_s2->posX.i.hi += 40;
+                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, entity);
+                    if (self->facingLeft) {
+                        entity->posX.i.hi += 40;
                     } else {
-                        temp_s2->posX.i.hi -= 40;
+                        entity->posX.i.hi -= 40;
                     }
-                    temp_s2->posY.i.hi += 16;
-                    temp_s2->facingLeft = self->facingLeft;
+                    entity->posY.i.hi += 16;
+                    entity->facingLeft = self->facingLeft;
                 }
                 SetSubStep(2);
             }
@@ -571,20 +516,19 @@ void EntityDraculaFinalForm(Entity* self) {
             self->step_s++;
             break;
         case 4:
-            if (--self->ext.dracFinalForm.timer == 0) {
+            if (!--self->ext.dracFinalForm.timer) {
                 SetStep(2);
             }
         }
         break;
     case 16:
-        temp_s2 = self - self->params;
-        self->facingLeft = temp_s2->facingLeft;
-        self->hitboxState = temp_s2->hitboxState;
-        temp_s1 = &D_80180BE4;
-        self->posX.i.hi = temp_s2->posX.i.hi;
-        self->posY.i.hi = temp_s2->posY.i.hi;
-        // Fake reuse of the i variable
-        i = temp_s2->animCurFrame - 1;
+        entity = self - self->params;
+        self->facingLeft = entity->facingLeft;
+        self->hitboxState = entity->hitboxState;
+        self->posX.i.hi = entity->posX.i.hi;
+        self->posY.i.hi = entity->posY.i.hi;
+        i = entity->animCurFrame - 1;
+        temp_s1 = &D_80180BE4[0][0][0];
         temp_s1 += i * 12;
         temp_s1 += (self->params - 1) * 4;
         self->hitboxOffX = *temp_s1++;
@@ -599,22 +543,22 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->step_s++;
                 return;
             case 1:
-                if (--self->ext.dracFinalForm.timer == 0) {
+                if (!--self->ext.dracFinalForm.timer) {
                     self->animCurFrame = 0x5A;
                     self->unk5A = 0x5E;
                     self->palette = PAL_OVL(0x15F);
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-                    self->drawFlags =
-                        FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+                    self->drawFlags = FLAG_DRAW_UNK8;
+                    self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
                     self->unk6C = 0x10;
-                    self->rotY = 0x400;
-                    self->rotX = 0x400;
+                    self->rotX = self->rotY = 0x400;
                     g_api.PlaySfx(0x880);
                     self->step_s++;
                 }
                 break;
             case 2:
-                self->rotX = self->rotY = self->rotY - 0x18;
+                self->rotY -= 0x18;
+                self->rotX = self->rotY;
                 if (self->rotY < 0x100) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
@@ -635,15 +579,15 @@ void EntityDraculaFinalForm(Entity* self) {
                 break;
             case 4:
                 self->unk6C += 4;
-                self->animCurFrame = temp_s2->animCurFrame;
+                self->animCurFrame = entity->animCurFrame;
                 if (self->unk6C > 0x60) {
                     self->step_s++;
                 }
                 break;
             case 5:
                 self->unk6C -= 4;
-                self->animCurFrame = temp_s2->animCurFrame;
-                if (self->unk6C == 0) {
+                self->animCurFrame = entity->animCurFrame;
+                if (!self->unk6C) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
                     self->drawFlags = FLAG_DRAW_DEFAULT;
@@ -657,11 +601,10 @@ void EntityDraculaFinalForm(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_api.PlaySfx(0x866);
-            temp_s2 = self + 1;
             self->hitboxState = 0;
-            for (i = 0; i < 3; i++) {
-                DestroyEntity(temp_s2);
-                temp_s2++;
+            entity = self + 1;
+            for (i = 0; i < 3; i++, entity++) {
+                DestroyEntity(entity);
             }
             g_api.PlaySfx(0x80);
             self->ext.dracFinalForm.timer = 4;
@@ -669,7 +612,9 @@ void EntityDraculaFinalForm(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_SET_RECORD);
             g_PauseAllowed = false;
+#ifndef VERSION_PSP
             D_80181148 = 0x800;
+#endif
             self->step_s++;
             /* fallthrough */
         case 1:
@@ -678,7 +623,14 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 2:
+#ifdef VERSION_PSP
+            if (g_api.func_80131F68() != true) {
+                g_api.PlaySfx(0x35C);
+                self->step_s++;
+            }
+#else
             if (g_api.func_80131F68() == true) {
+
                 if (--D_80181148 == 0) {
                     D_80181148 = 0x800;
                     g_api.PlaySfx(0x80);
@@ -688,10 +640,16 @@ void EntityDraculaFinalForm(Entity* self) {
                 D_8018114C = g_Timer;
                 self->step_s++;
             }
+#endif
+
             break;
         case 3:
+#ifdef VERSION_PSP
+            g_api.PlaySfx(SFX_EXPLODE_A);
+            self->ext.dracFinalForm.unk82 = 0x80;
+            self->step_s++;
+#else
             if (g_api.func_80131F68() == false) {
-                // Fake reuse of the i variable
                 i = g_Timer - D_8018114C;
                 if (i >= 0x301) {
                     g_api.PlaySfx(SFX_EXPLODE_A);
@@ -712,14 +670,16 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->ext.dracFinalForm.unk82 = 0x80;
                 self->step_s++;
             }
+#endif
             break;
         case 4:
-            if (--self->ext.dracFinalForm.unk82 == 0) {
+            if (!--self->ext.dracFinalForm.unk82) {
                 self->step_s++;
             }
             break;
         case 5:
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), self + 1);
+            entity = self + 1;
+            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), entity);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -727,97 +687,173 @@ void EntityDraculaFinalForm(Entity* self) {
                 g_MenuStep = 0;
                 return;
             }
-            prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
-            self->ext.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
-            prim->r0 = prim->g0 = prim->b0 = 0;
-            LOW(prim->r1) = LOW(prim->r0);
-            LOW(prim->r2) = LOW(prim->r0);
-            LOW(prim->r3) = LOW(prim->r0);
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x100;
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0x100;
+            PGREY(prim, 0) = 0;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
             prim->priority = self->zPriority + 0x10;
             prim->drawMode = DRAW_TRANSP | 0x30;
             self->step_s++;
         case 6:
             prim = self->ext.prim;
-            prim->g0 = prim->b0 = prim->r0 = prim->r0 + 0x18;
+            prim->r0 += 0x18;
+            prim->g0 = prim->b0 = prim->r0;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
-            if (prim->r0 >= 0x81) {
+            if (prim->r0 > 0x80) {
                 self->step_s++;
             }
             break;
         case 7:
             break;
         }
-        if (--self->ext.dracFinalForm.timer == 0) {
+
+        if (!--self->ext.dracFinalForm.timer) {
             g_api.PlaySfx(SFX_EXPLODE_B);
             self->ext.dracFinalForm.timer = 8;
-            temp_s2 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84].x;
-            if (temp_s2 != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, temp_s2);
-                temp_s2->params = 3;
-                temp_s2->zPriority = (self->zPriority + 1);
-                temp_s2->posX.i.hi = (temp_s2->posX.i.hi + *temp_s1++);
-                temp_s2->posY.i.hi = (temp_s2->posY.i.hi + *temp_s1++);
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84 * 2];
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
+                entity->params = 3;
+                entity->zPriority = (self->zPriority + 1);
+                entity->posX.i.hi += temp_s1[0];
+                entity->posY.i.hi += temp_s1[1];
             }
-            self->ext.dracFinalForm.unk84 =
-                ((self->ext.dracFinalForm.unk84 + 1) & 0xF);
+            self->ext.dracFinalForm.unk84++;
+            self->ext.dracFinalForm.unk84 &= 0xF;
         }
+
         break;
     case 0xFF:
 #include "../pad2_anim_debug.h"
     }
 }
 
+static s16 D_80181150[][2] = {
+    {0x00, 0x00}, {0x03, 0x04}, {0x07, 0x06}, {0x01, 0x0B}, {0x03, 0x0C},
+    {0x08, 0x09}, {0x05, 0x0D}, {0x19, 0x06}, {0x19, 0x06}, {0x19, 0x06},
+    {0x19, 0x06}, {0x11, 0x08}, {0x1E, 0x03}, {0x1F, 0x13}, {0x28, 0x0B},
+    {0x3B, 0x0B}, {0x2B, 0x1C}, {0x39, 0x11}, {0x3D, 0x11}, {0x1D, 0x0B},
+    {0x42, 0x0F}, {0x3F, 0x06}, {0x46, 0x0D}, {0x45, 0x08}, {0x39, 0x11},
+    {0x3D, 0x11}, {0x2B, 0x1C}, {0x28, 0x1C}, {0x27, 0x1E}, {0x1B, 0x19},
+    {0x1F, 0x0E}, {0x3E, 0x1D}, {0x25, 0x22}, {0x1B, 0x1E}, {0x21, 0x0B},
+    {0x20, 0x0D}, {0x1F, 0x0F}, {0x16, 0x1D}, {0x16, 0x21}, {0x1A, 0x0A},
+    {0x1B, 0x0D}, {0x1C, 0x0F}, {0x15, 0x26}, {0x1C, 0x2A}, {0x1C, 0x2D},
+    {0x1D, 0x2D}, {0x26, 0x26}, {0x18, 0x53}, {0x20, 0x3A}, {0x26, 0x26},
+    {0x26, 0x32}, {0x27, 0x3C}, {0x22, 0x3F}, {0x24, 0x4A}, {0x2A, 0x4A},
+    {0x25, 0x4E}, {0x2B, 0x4F}, {0x25, 0x53}, {0x2E, 0x53}, {0x15, 0x3B},
+    {0x1B, 0x3D}, {0x16, 0x41}, {0x1C, 0x45}, {0x15, 0x4C}, {0x1A, 0x4C},
+    {0x13, 0x4F}, {0x10, 0x53}, {0x16, 0x53}, {0x1C, 0x53}, {0x26, 0x32},
+    {0x28, 0x53}, {0x42, 0x53}, {0x3D, 0x28}, {0x3D, 0x32}, {0x3D, 0x3D},
+    {0x3E, 0x43}, {0x3F, 0x4E}, {0x05, 0x1F}, {0x05, 0x2C}, {0x05, 0x3B},
+    {0x06, 0x4D}, {0x05, 0x53}, {0x11, 0x1B}};
+static s16 D_8018129C[][2] = {
+    {0x00, 0x00}, {0x00, 0x1C}, {0x00, 0x13}, {0x0F, 0x1B}, {0x0F, 0x16},
+    {0x09, 0x0C}, {0x0F, 0x13}, {0x14, 0x05}, {0x12, 0x16}, {0x1B, 0x06},
+    {0x1A, 0x1D}, {0x1C, 0x02}, {0x23, 0x04}, {0x2F, 0x0B}, {0x3E, 0x02},
+    {0x5E, 0x07}, {0x3D, 0x1A}, {0x50, 0x12}, {0x5D, 0x1A}, {0x67, 0x17},
+    {0x56, 0x25}, {0x6F, 0x26}, {0x59, 0x29}, {0x62, 0x31}, {0x51, 0x18},
+    {0x56, 0x1A}, {0x48, 0x1D}, {0x52, 0x1F}, {0x51, 0x29}, {0x38, 0x2B},
+    {0x34, 0x22}, {0x53, 0x35}, {0x4C, 0x34}, {0x38, 0x31}, {0x2E, 0x1D},
+    {0x25, 0x28}, {0x25, 0x2E}, {0x2E, 0x30}, {0x2F, 0x35}, {0x0F, 0x1C},
+    {0x0E, 0x22}, {0x20, 0x33}, {0x28, 0x38}, {0x3C, 0x47}, {0x39, 0x4A},
+    {0x42, 0x4C}, {0x50, 0x39}, {0x42, 0x54}, {0x49, 0x56}, {0x5A, 0x38},
+    {0x61, 0x45}, {0x5F, 0x53}, {0x4E, 0x62}, {0x5C, 0x65}, {0x68, 0x67},
+    {0x5F, 0x6A}, {0x72, 0x6A}, {0x5D, 0x74}, {0x78, 0x74}, {0x11, 0x4F},
+    {0x26, 0x58}, {0x18, 0x5B}, {0x2A, 0x5D}, {0x20, 0x67}, {0x28, 0x69},
+    {0x13, 0x6B}, {0x0E, 0x74}, {0x24, 0x74}, {0x31, 0x74}, {0x5C, 0x4C},
+    {0x49, 0x56}, {0x78, 0x74}, {0x4C, 0x34}, {0x5C, 0x4C}, {0x5F, 0x53},
+    {0x68, 0x67}, {0x72, 0x6A}, {0x2E, 0x30}, {0x28, 0x38}, {0x18, 0x5B},
+    {0x20, 0x67}, {0x0E, 0x74}, {0x25, 0x28}};
+static u8 D_801813E8[] = {
+    0x02, 0x04, 0x01, 0x03, 0x05, 0x06, 0x02, 0x04, 0x11, 0x0F, 0x12, 0x13,
+    0x12, 0x13, 0x14, 0x15, 0x14, 0x15, 0x16, 0x17, 0x1D, 0x1C, 0x21, 0x20,
+    0x25, 0x1D, 0x26, 0x21, 0x26, 0x21, 0x2B, 0x20, 0x26, 0x2B, 0x2A, 0x2C,
+    0x2A, 0x2C, 0x3B, 0x3C, 0x3B, 0x3C, 0x3D, 0x3E, 0x3D, 0x3E, 0x3F, 0x40,
+    0x3F, 0x40, 0x43, 0x44, 0x41, 0x3F, 0x42, 0x43, 0x2B, 0x20, 0x2D, 0x2E,
+    0x2D, 0x2E, 0x30, 0x45, 0x30, 0x45, 0x34, 0x33, 0x34, 0x33, 0x35, 0x36,
+    0x35, 0x36, 0x37, 0x38, 0x37, 0x38, 0x39, 0x3A, 0x2C, 0x2D, 0x2F, 0x46,
+    0x11, 0x12, 0x1B, 0x1F, 0x1B, 0x1F, 0x20, 0x48, 0x20, 0x48, 0x45, 0x49,
+    0x45, 0x49, 0x33, 0x4A, 0x33, 0x4A, 0x36, 0x4B, 0x36, 0x4B, 0x38, 0x4C,
+    0x38, 0x4C, 0x3A, 0x47, 0x06, 0x52, 0x4D, 0x25, 0x4D, 0x25, 0x4E, 0x2A,
+    0x4E, 0x2A, 0x4F, 0x3D, 0x4F, 0x3D, 0x50, 0x3F, 0x50, 0x3F, 0x51, 0x42,
+    0x0E, 0x0F, 0x1E, 0x11, 0x1E, 0x11, 0x24, 0x10, 0x24, 0x10, 0x0D, 0x1B,
+    0x0D, 0x1B, 0x1D, 0x1C, 0x0C, 0x0E, 0x22, 0x1E, 0x23, 0x22, 0x24, 0x1E,
+    0x0C, 0x22, 0x0A, 0x23, 0x0A, 0x23, 0x27, 0x24, 0x28, 0x29, 0x27, 0x24,
+    0x0B, 0x0A, 0x05, 0x27, 0x27, 0x28, 0x05, 0x29, 0x24, 0x0D, 0x29, 0x1D,
+    0x52, 0x29, 0x25, 0x1D, 0x06, 0x05, 0x52, 0x29, 0x00, 0x00, 0x00, 0x00};
+static u8 D_801814A8[] = {
+    0x02, 0x04, 0x01, 0x03, 0x05, 0x06, 0x02, 0x04, 0x05, 0x07, 0x06, 0x08,
+    0x07, 0x09, 0x08, 0x0A, 0x07, 0x0B, 0x09, 0x0C, 0x09, 0x0C, 0x0A, 0x0D,
+    0x0C, 0x0E, 0x0D, 0x0F, 0x0D, 0x0F, 0x10, 0x11, 0x11, 0x0F, 0x12, 0x13,
+    0x11, 0x12, 0x18, 0x19, 0x10, 0x11, 0x1A, 0x18, 0x18, 0x19, 0x1A, 0x1B,
+    0x19, 0x12, 0x1B, 0x14, 0x12, 0x13, 0x14, 0x15, 0x14, 0x15, 0x16, 0x17,
+    0x1B, 0x14, 0x1C, 0x16, 0x1C, 0x16, 0x20, 0x1F, 0x0D, 0x10, 0x22, 0x1E,
+    0x1E, 0x10, 0x1D, 0x1A, 0x1A, 0x1B, 0x1D, 0x1C, 0x1D, 0x1C, 0x21, 0x20,
+    0x22, 0x1E, 0x23, 0x1D, 0x23, 0x1D, 0x26, 0x21, 0x25, 0x1D, 0x26, 0x21,
+    0x26, 0x21, 0x2B, 0x20, 0x26, 0x2B, 0x2A, 0x2C, 0x2A, 0x2C, 0x3B, 0x3C,
+    0x3B, 0x3C, 0x3D, 0x3E, 0x3D, 0x3E, 0x3F, 0x40, 0x3F, 0x40, 0x43, 0x44,
+    0x41, 0x3F, 0x42, 0x43, 0x2B, 0x20, 0x2D, 0x2E, 0x2D, 0x2E, 0x30, 0x45,
+    0x31, 0x32, 0x2E, 0x45, 0x30, 0x45, 0x34, 0x33, 0x34, 0x33, 0x35, 0x36,
+    0x35, 0x36, 0x37, 0x38, 0x37, 0x38, 0x39, 0x3A, 0x2B, 0x2D, 0x2C, 0x30,
+    0x28, 0x27, 0x29, 0x08, 0x29, 0x08, 0x24, 0x0A, 0x24, 0x0A, 0x22, 0x0D,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
 void EntityDraculaMegaFireball(Entity* self) {
     s16 angle;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitDraculaMegaFireball);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        if (self->params == 0) {
-            angle = self->rotZ;
-            self->rotY = 0x80;
-            self->rotX = 0x80;
+        if (!self->params) {
             self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotZ = 0x1C0 - angle;
-            if (self->facingLeft != 0) {
+            self->rotX = self->rotY = 0x80;
+            angle = self->rotZ;
+            self->rotZ = 0x1C0;
+            self->rotZ -= angle;
+            if (self->facingLeft) {
                 self->velocityX = rcos(angle) * 0x60;
             } else {
-                self->velocityX = -(rcos(angle) * 0x60);
+                self->velocityX = rcos(angle) * -0x60;
             }
             self->velocityY = rsin(angle) * 0x60;
         }
     }
-    if (self->params != 0) {
-        if (AnimateEntity(anim_80180BA0, self) == 0) {
+
+    if (self->params) {
+        if (!AnimateEntity(anim_80180BA0, self)) {
             DestroyEntity(self);
         }
         if (g_Timer & 1) {
             self->animCurFrame = 0;
         }
-    } else {
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY = self->rotY + 0x10;
-        }
-        AnimateEntity(anim_80180BB8, self);
-        MoveEntity();
+        return;
     }
+
+    if (self->rotX < 0x100) {
+        self->rotX = self->rotY += 0x10;
+    }
+
+    AnimateEntity(anim_80180BB8, self);
+    MoveEntity();
 }
 
 extern EInit g_EInitDraculaRainAttack;
 void EntityDraculaRainAttack(Entity* self) {
     Entity* newEntity;
-    s32 velY;
-    s32 velX;
+    s32 rand;
     s16 angle;
     s32 i;
 
@@ -834,15 +870,14 @@ void EntityDraculaRainAttack(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDraculaRainAttack);
-        if (self->params != 0) {
+        if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = 0x59;
-            velX = (Random() & 0x1F) + 0x10;
+            rand = (Random() & 0x1F) + 0x10;
             angle = (Random() * 6) + 0x900;
-            self->velocityX = velX * rcos(angle);
-            velY = velX * rsin(angle);
+            self->velocityX = rand * rcos(angle);
+            self->velocityY = rand * rsin(angle);
             self->step = 3;
-            self->velocityY = velY;
             break;
         }
         self->velocityY = FIX(4);
@@ -863,8 +898,8 @@ void EntityDraculaRainAttack(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(DRACULA_FIREBALL), self, newEntity);
-                    newEntity->params = 1;
                     newEntity->posY.i.hi += 12;
+                    newEntity->params = 1;
                 }
             }
             DestroyEntity(self);
@@ -874,7 +909,7 @@ void EntityDraculaRainAttack(Entity* self) {
     case 3:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        if (self->posY.i.hi >= 0xF1) {
+        if (self->posY.i.hi > 0xF0) {
             DestroyEntity(self);
         }
         break;
@@ -883,35 +918,35 @@ void EntityDraculaRainAttack(Entity* self) {
 
 void func_801AF380(void) {
     Primitive* prim;
-    s16* var_t0;
+    s16* points;
     s32 i;
-    u8* var_a3;
-    s32 uBase;
-    s32 vBase;
+    u8* indexes;
+    u8 uBase;
+    u8 vBase;
 
-    var_t0 = &D_80181150[0];
-    var_a3 = &D_801813E8;
+    prim = g_CurrentEntity->ext.et_801AF774.prim1;
+    points = *D_80181150;
+    indexes = D_801813E8;
     uBase = 0;
     vBase = 0;
-    prim = g_CurrentEntity->ext.et_801AF774.prim1;
     for (i = 0; i < 47; i++) {
         prim->tpage = 0x17;
         prim->clut = 0x200;
         // This should REALLY be done using Point16, but no,
         // that would make too much sense for SOTN
-        prim->u0 = uBase + var_t0[*var_a3 * 2];
-        prim->v0 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u1 = uBase + var_t0[*var_a3 * 2];
-        prim->v1 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u2 = uBase + var_t0[*var_a3 * 2];
-        prim->v2 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u3 = uBase + var_t0[*var_a3 * 2];
-        prim->v3 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->r0 = prim->g0 = prim->b0 = 0x80;
+        prim->u0 = uBase + points[*indexes * 2];
+        prim->v0 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u1 = uBase + points[*indexes * 2];
+        prim->v1 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u2 = uBase + points[*indexes * 2];
+        prim->v2 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u3 = uBase + points[*indexes * 2];
+        prim->v3 = vBase + (&points[*indexes++ * 2])[1];
+
+        PGREY(prim, 0) = 0x80;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -919,27 +954,27 @@ void func_801AF380(void) {
         prim->drawMode = DRAW_TRANSP | 0x34;
         prim = prim->next;
     }
-    var_t0 = (s16*)D_8018129C;
-    var_a3 = (s16*)D_801814A8;
+    g_CurrentEntity->ext.et_801AF774.prim2 = prim;
+    points = *D_8018129C;
+    indexes = D_801814A8;
     uBase = 0;
     vBase = 0x80;
-    g_CurrentEntity->ext.et_801AF774.prim2 = prim;
     for (i = 0; i < 42; i++) {
         prim->tpage = 0x17;
         prim->clut = 0x204;
-        prim->u0 = uBase + var_t0[*var_a3 * 2];
-        prim->v0 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u1 = uBase + var_t0[*var_a3 * 2];
-        prim->v1 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u2 = uBase + var_t0[*var_a3 * 2];
-        prim->v2 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->u3 = uBase + var_t0[*var_a3 * 2];
-        prim->v3 = vBase + var_t0[*var_a3 * 2 + 1];
-        var_a3++;
-        prim->r0 = prim->g0 = prim->b0 = 0;
+        prim->u0 = uBase + points[*indexes * 2];
+        prim->v0 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u1 = uBase + points[*indexes * 2];
+        prim->v1 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u2 = uBase + points[*indexes * 2];
+        prim->v2 = vBase + (&points[*indexes++ * 2])[1];
+
+        prim->u3 = uBase + points[*indexes * 2];
+        prim->v3 = vBase + (&points[*indexes++ * 2])[1];
+
+        PGREY(prim, 0) = 0;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -948,51 +983,65 @@ void func_801AF380(void) {
         prim = prim->next;
     }
 
-    var_t0 = D_80181150;
+    points = *D_80181150;
     for (i = 0; i < LEN(D_80181150); i++) {
-        D_801BEB64[i].x = (*var_t0++ - 0x1E) << 0x10;
-        D_801BEB64[i].y = (*var_t0++ - 0x53) << 0x10;
+        D_801BEB64[i][0] = (points[0] - 0x1E) << 0x10;
+        points++;
+        D_801BEB64[i][1] = (points[0] - 0x53) << 0x10;
+        points++;
     }
 }
 
 void func_801AF6D0(void) {
-    s16* var_a0;
-    s16* var_a1;
+    s16* ptrOne;
+    s16* ptrTwo;
     s32 i;
-    Point32* var_a2;
-    s32 a, b, c, d;
+    s32 constOne, constTwo, constThree, constFour;
+    s32 valOne, valTwo;
 
-    var_a1 = (s16*)D_80181150;
-    var_a0 = (s16*)D_8018129C;
+    ptrOne = *D_80181150;
+    ptrTwo = *D_8018129C;
 
-    d = -0x1E;
-    c = -0x53;
-    b = -0x38;
-    a = -0x75;
+    constOne = -0x1E;
+    constTwo = -0x53;
+    constThree = -0x38;
+    constFour = -0x75;
 
-    var_a2 = D_801BEB64;
-    for (i = 0; i < LEN(D_80181150); ++i) {
-        D_801BEB64[i].x += ((b + *var_a0++) - (d + *var_a1++)) << 9;
-        D_801BEB64[i].y += ((a + *var_a0++) - (c + *var_a1++)) << 9;
-        var_a2++;
+    for (i = 0; i < LEN(D_80181150); i++) {
+        valOne = (constThree + *ptrTwo) - (constOne + *ptrOne);
+#ifdef VERSION_PSP
+        valOne = (valOne << 0x10) / 0x80;
+#else
+        valOne = (valOne << 9);
+#endif
+        D_801BEB64[i][0] = valOne + D_801BEB64[i][0];
+        ptrOne++;
+        ptrTwo++;
+
+        valTwo = (constFour + *ptrTwo) - (constTwo + *ptrOne);
+#ifdef VERSION_PSP
+        valTwo = (valTwo << 0x10) / 0x80;
+#else
+        valTwo = (valTwo << 9);
+#endif
+        D_801BEB64[i][1] = valTwo + D_801BEB64[i][1];
+        ptrOne++;
+        ptrTwo++;
     }
 }
 
-static inline s32 add(s32 a, s32 b) { return a + b; }
 void func_801AF774(Entity* self) {
-    RECT sp10;
-    DRAWENV sp18;
-    DRAWENV* var_a2;
-    DRAWENV* var_a3;
+    Entity* entity;
+    RECT rect;
+    DRAWENV drawEnv;
     Primitive* prim;
+    DR_ENV* drEnv;
+    u8* indexes;
+    s32* points;
     s32 primIndex;
     s32 i;
-    u32 var_t0;
-    u8 temp_t0;
-    u8* var_a2_3;
-    s16* temp_a3;
-    s32 xBase;
-    s32 yBase;
+    u8 rgb;
+    s16 xBase, yBase;
 
     switch (self->step) {
     case 0:
@@ -1005,62 +1054,69 @@ void func_801AF774(Entity* self) {
         self->ext.et_801AF774.unk90 = 1;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x5C);
         if (primIndex != -1) {
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.et_801AF774.prim3 = prim;
             self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801AF774.prim3 = prim;
             prim->tpage = 0x110;
             if (!self->facingLeft) {
                 prim->u0 = prim->u2 = 0;
-                prim->u1 = prim->u3 = 0x80;
-                prim->v0 = prim->v1 = 0;
-                prim->v2 = prim->v3 = 0x80;
+                prim->u1 = prim->u3 = prim->u0 + 0x80;
             } else {
                 prim->u1 = prim->u3 = 0;
-                do {
-                    prim->u0 = prim->u2 = 0x7F;
-                    prim->v0 = prim->v1 = 0;
-                    prim->v2 = prim->v3 = 0x80;
-                } while (0);
+                prim->u0 = prim->u2 = prim->u1 + 0x7F;
+            }
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = prim->v0 + 0x80;
+
+            // Bug? Code is the same in both paths
+            // Usually the +/- are flipped for else
+            if (!self->facingLeft) {
+                prim->x0 = prim->x2 = self->posX.i.hi - 0x40;
+                prim->x1 = prim->x3 = self->posX.i.hi + 0x40;
+            } else {
+                prim->x0 = prim->x2 = self->posX.i.hi - 0x40;
+                prim->x1 = prim->x3 = self->posX.i.hi + 0x40;
             }
 
-            prim->x0 = prim->x2 = self->posX.i.hi - 0x40;
-            prim->x1 = prim->x3 = self->posX.i.hi + 0x40;
             prim->y0 = prim->y1 = self->posY.i.hi - 0x25;
             prim->y2 = prim->y3 = self->posY.i.hi + 0x5B;
-            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            PGREY(prim, 0) = 0x80;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim->drawMode = DRAW_UNK02 | DRAW_HIDE;
             prim->priority = 0xA8;
             prim = prim->next;
+
             self->ext.et_801AF774.prim4 = prim;
-            if (g_api.func_800EDB08(prim) == NULL) {
+            drEnv = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (drEnv == NULL) {
                 g_api.FreePrimitives(primIndex);
-                self->step = 0;
                 self->flags &= ~FLAG_HAS_PRIMS;
+                self->step = 0;
                 return;
             }
             prim->type = PRIM_ENV;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            g_api.func_800EDB08(prim);
+
+            drEnv = g_api.func_800EDB08((POLY_GT4*)prim);
             if (prim == NULL) {
                 g_api.FreePrimitives(primIndex);
-                self->step = 0;
                 self->flags &= ~FLAG_HAS_PRIMS;
+                self->step = 0;
                 return;
             }
             prim->type = PRIM_ENV;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            self->ext.prim = prim;
+
+            self->ext.et_801AF774.prim1 = prim;
             while (prim != NULL) {
                 prim->priority = 0xA0;
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
-                var_a3 = &sp18;
             }
         } else {
             self->step = 0;
@@ -1068,48 +1124,53 @@ void func_801AF774(Entity* self) {
             return;
         }
     case 1:
-        var_a3 = &sp18;
         prim = self->ext.et_801AF774.prim4;
-        var_a2 = &g_CurrentBuffer->draw;
-        *var_a3 = *var_a2;
-        sp18.isbg = 1;
-        sp18.r0 = 0;
-        sp18.g0 = 0;
-        sp18.b0 = 0;
-        sp10.x = 0;
-        sp10.y = 0x100;
-        sp10.w = 0x7f;
-        sp10.h = 0xff;
-        sp18.clip = sp10;
-        sp18.ofs[0] = 0;
-        sp18.ofs[1] = 0x100;
-        SetDrawEnv(LOW(prim->r1), &sp18);
+        drawEnv = g_CurrentBuffer->draw;
+        drawEnv.isbg = 1;
+        drawEnv.r0 = 0;
+        drawEnv.g0 = 0;
+        drawEnv.b0 = 0;
+        rect.x = 0;
+        rect.y = 0x100;
+        rect.w = 0x7f;
+        rect.h = 0xff;
+#ifdef VERSION_PSP
+        drawEnv.dtd = 0;
+#endif
+        drawEnv.clip = rect;
+        drawEnv.ofs[0] = 0;
+        drawEnv.ofs[1] = 0x100;
+        drEnv = (DR_ENV*)LOW(prim->r1);
+        SetDrawEnv(drEnv, &drawEnv);
         prim->priority = 0x9F;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->priority = 0xA1;
         prim->drawMode = DRAW_UNK_800;
-    case 6:
         self->step++;
-        return;
+        break;
 
     case 2:
         func_801AF380();
-        var_a3 = &sp18;
         prim = self->ext.et_801AF774.prim4;
-        var_a2 = &g_CurrentBuffer->draw;
-        var_t0 = LOW(prim->r1);
-        *var_a3 = *var_a2;
-        sp18.isbg = 0;
-        sp18.dtd = 0;
-        sp10.x = 0;
-        sp10.y = 0x100;
-        sp10.w = 0x80;
-        sp10.h = 0x80;
-        sp18.clip = sp10;
-        sp18.ofs[0] = 0;
-        sp18.ofs[1] = 0x100;
-        SetDrawEnv(var_t0, &sp18);
+        drEnv = (DR_ENV*)LOW(prim->r1);
+        drawEnv = g_CurrentBuffer->draw;
+        drawEnv.isbg = 1;
+        drawEnv.isbg = 0;
+        // Bug? This seems odd.
+        drawEnv.dtd = 1;
+        drawEnv.dtd = 0;
+        rect.x = 0;
+        rect.y = 0x100;
+        rect.w = 0x80;
+        rect.h = 0x80;
+#ifdef VERSION_PSP
+        drawEnv.dtd = 0;
+#endif
+        drawEnv.clip = rect;
+        drawEnv.ofs[0] = 0;
+        drawEnv.ofs[1] = 0x100;
+        SetDrawEnv(drEnv, &drawEnv);
         prim->priority = 0x9F;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
@@ -1127,105 +1188,109 @@ void func_801AF774(Entity* self) {
         if (self->ext.et_801AF774.unk8E > 0) {
             func_801AF6D0();
         }
-        var_t0 = (u16)self->ext.et_801AF774.unk8C >> 8;
-        if (var_t0 >= 0x81) {
-            var_t0 = 0x80;
+        rgb = self->ext.et_801AF774.unk8C >> 8;
+        if (rgb > 0x80) {
+            rgb = 0x80;
         }
-        var_t0 = (u8)var_t0 >> 3;
-        prim = self->ext.prim;
+        rgb >>= 3;
+        prim = self->ext.et_801AF774.prim1;
         xBase = 0x40;
         yBase = 0x70;
-        temp_a3 = &D_801BEB64;
-        var_a2_3 = &D_801813E8;
+        points = *D_801BEB64;
+        indexes = D_801813E8;
 
         for (i = 0; i < 47; i++) {
-            prim->x0 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y0 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x1 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y1 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x2 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y2 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x3 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y3 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->b0 = var_t0;
-            prim->g0 = var_t0;
-            prim->r0 = var_t0;
+            // The way this is written is horrendous
+            // but required for match on PSP
+            prim->x0 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y0 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
 
+            prim->x1 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y1 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            prim->x2 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y2 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            prim->x3 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y3 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            PGREY(prim, 0) = rgb;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim = prim->next;
         }
-        var_t0 = (u16)self->ext.et_801AF774.unk8C >> 8;
-        if (var_t0 >= 0x81U) {
-            var_t0 = 0x80;
+        rgb = self->ext.et_801AF774.unk8C >> 8;
+        if (rgb > 0x80) {
+            rgb = 0x80;
         }
-        var_t0 = (0x80 - var_t0);
-        temp_t0 = var_t0;
-        temp_t0 >>= 3;
+        rgb = (0x80 - rgb);
+        rgb >>= 3;
         prim = self->ext.et_801AF774.prim2;
-        temp_a3 = &D_801BEB64;
-        var_a2_3 = &D_801814A8;
+        points = *D_801BEB64;
+        indexes = D_801814A8;
         xBase = 0x40;
         yBase = 0x70;
         for (i = 0; i < 42; i++) {
-            prim->x0 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y0 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x1 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y1 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x2 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y2 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
-            prim->x3 = add(xBase, temp_a3[*var_a2_3 * 4 + 1]);
-            prim->y3 = add(yBase, temp_a3[*var_a2_3 * 4 + 3]);
-            var_a2_3++;
+            prim->x0 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y0 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
 
-            prim->r0 = prim->g0 = prim->b0 = temp_t0;
+            prim->x1 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y1 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            prim->x2 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y2 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            prim->x3 = (((*indexes * 2)[points]) >> 16) + xBase;
+            prim->y3 = (((*indexes++ * 2)[points + 1]) >> 16) + yBase;
+
+            PGREY(prim, 0) = rgb;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
             prim = prim->next;
         }
-        self->ext.et_801AF774.unk8C =
-            ((--self->ext.et_801AF774.unk8E << 0x10) >> 8);
+        self->ext.et_801AF774.unk8E--;
+#ifdef VERSION_PSP
+        self->ext.et_801AF774.unk8C = self->ext.et_801AF774.unk8E << 8;
+#else
+        self->ext.et_801AF774.unk8C = self->ext.et_801AF774.unk8E << 0x10 >> 8;
+#endif
         if (self->ext.et_801AF774.unk8E < 0) {
             self->step = 4;
         }
-        if ((self->ext.et_801AF774.unk90 != 0) &&
-            (self->ext.et_801AF774.unk8E < 0x10)) {
+        if (self->ext.et_801AF774.unk90 && self->ext.et_801AF774.unk8E < 0x10) {
             self->ext.et_801AF774.unk90 = 0;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK23), self + 1);
+            entity = self + 1;
+            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK23), entity);
         }
-        return;
+        break;
     case 4:
+        D_801C2578 = 0;
         prim = self->ext.et_801AF774.prim3;
         prim->drawMode =
             DRAW_TPAGE | DRAW_TPAGE2 | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        prim = prim->next;
-        D_801C2578 = 0;
-        if (prim != NULL) {
-            do {
-                prim->drawMode = DRAW_HIDE;
-                prim = prim->next;
-            } while (prim != NULL);
+
+        for (prim = prim->next; prim != NULL; prim = prim->next) {
+            prim->drawMode = DRAW_HIDE;
         }
+
         self->ext.et_801AF774.unk8E = 0x10;
         self->step++;
-        return;
+        break;
     case 5:
-        if (--self->ext.et_801AF774.unk8E == 0) {
+        if (!--self->ext.et_801AF774.unk8E) {
             self->step++;
-            return;
         }
         break;
+
+    case 6:
+        self->step++;
+        break;
+
     case 7:
-        if (PrimDecreaseBrightness(self->ext.et_801AF774.prim3, 7) == 0) {
+        prim = self->ext.et_801AF774.prim3;
+        if (!PrimDecreaseBrightness(prim, 7)) {
             D_80180910 = 1;
             DestroyEntity(self);
         }
