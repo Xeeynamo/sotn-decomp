@@ -1388,7 +1388,122 @@ void func_80130264(Entity* self) {
     self->hitFlags = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130618);
+static s16 D_800B0A8C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A9C[] = {0, 1, 1, 0, 0, 1, 1, 0};
+static s16 D_800B0AAC[] = {0, 0, 0, 1, 1, 1, 2, 2};
+void func_80130618(Entity* self) {
+    s32 temp_s1;
+    s32 var_v1;
+
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (!self->step) {
+        self->animSet = 0xF;
+        self->animCurFrame = 0x23;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+#if !defined(VERSION_US)
+        self->zPriority = PLAYER.zPriority - 2;
+#endif
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotPivotX = 1;
+        self->rotPivotY = 8;
+        self->step++;
+    }
+#if defined(VERSION_US)
+    self->zPriority = PLAYER.zPriority - 2;
+#endif
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_11].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_11].posY.val;
+    self->rotZ = 0x800 - (((D_80138430 - 0x800) / 2) + 0x800);
+
+    switch (PLAYER.step_s) {
+    case 1:
+        if (D_800B0914 == 1) {
+            self->rotZ -= 0x100;
+            self->posY.i.hi += 8;
+        }
+        if (D_80138430 < 0x601) {
+            self->posY.i.hi += 2;
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                self->animCurFrame = 65;
+            }
+            if (PLAYER.animCurFrame == 34) {
+                self->animCurFrame = 66;
+            }
+            break;
+        case 1:
+        case 3:
+            var_v1 = D_800B0A8C[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            break;
+        case 2:
+            var_v1 = D_800B0A9C[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            break;
+        case 4:
+            var_v1 = D_800B0AAC[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            break;
+        }
+        if (D_80138430 < 0x701) {
+            self->posY.i.hi++;
+        }
+        if (D_80138430 < 0x601) {
+            self->posY.i.hi += 2;
+        }
+        break;
+    case 3:
+        if (PLAYER.animCurFrame == 0x12) {
+            self->posY.i.hi += 4;
+        }
+        if (PLAYER.animCurFrame == 0x13) {
+            self->posY.i.hi += 8;
+        }
+        if (PLAYER.animCurFrame == 0x14) {
+            self->posY.i.hi += 8;
+        }
+        if (D_80138430 <= 0x600) {
+            self->posY.i.hi += 2;
+        }
+        break;
+    case 4:
+        if (D_800B0914 == 0) {
+            self->posY.i.hi++;
+            self->rotZ -= 0x180;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        break;
+    }
+    self->palette = PLAYER.palette;
+    self->drawMode = DRAW_DEFAULT;
+    self->drawFlags &= ~FLAG_DRAW_UNK8;
+    if (abs(PLAYER.velocityX) > FIX(3)) {
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
+        if(temp_s1 > 0xA0){
+            temp_s1 = 0xA0;
+        }
+        self->unk6C = 0xFF - temp_s1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_801309B4);
 
