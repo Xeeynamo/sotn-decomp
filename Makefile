@@ -358,6 +358,7 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR); $(GO) install
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
+# Make needs to start with the venv existing so that it picks up the correct path
 $(VENV_DIR):
 	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && echo "Build environment has changed due to venv install, please restart Make" && exit 1
