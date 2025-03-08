@@ -760,8 +760,189 @@ void func_8012EF2C(void) {
 #endif
 }
 
-// func_8012F178
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_psp_09139B50);
+static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
+    // Someone got the brilliant idea to use the scratchpad for every
+    // single local variable in this function. So this isn't really a
+    // struct, but it describes the layout of that scratchpad. It's not
+    // used anywhere else, so we just define it inside the function.
+    typedef struct {
+        s32 unused;
+        s32 i;
+        s32 x;
+        s32 y;
+        s32 velX;
+        s32 velY;
+        s32 i_limit;
+        Primitive* prim;
+        helper_8012F178* helper;
+        byte pad[15];
+        u8 colors[2];
+    } scratchpad_8012F178;
+    scratchpad_8012F178* s;
+
+#ifdef VERSION_PSP
+#define LEFTVEL -0x13
+#define TPAGE 0x4118
+#define V_OFFSET 0
+#else
+#define LEFTVEL -0x14
+#define TPAGE 0x118
+#define V_OFFSET 0xC0
+#endif
+#ifdef VERSION_PC
+    scratchpad_8012F178 _s;
+    s = &_s;
+#else
+    s = (scratchpad_8012F178*)SPAD(0);
+#endif
+    s->prim = prim;
+    s->i_limit = count;
+    s->helper = &D_800B08CC[0];
+    // D_800B08CC has length 6 but we go i < 5? Odd.
+    for (s->i = 0; s->i < 5; s->i++, s->helper++) {
+        if (s->i == s->i_limit && s->helper->state) {
+            s->helper->state = 2;
+        }
+        switch (s->helper->state) {
+        case 0:
+            s->prim->u0 = s->prim->u2 = 0;
+            s->prim->u1 = s->prim->u3 = 0x3F;
+            s->prim->v0 = s->prim->v1 = V_OFFSET;
+            s->prim->v2 = s->prim->v3 = V_OFFSET + 0x3F;
+            s->prim->tpage = TPAGE;
+            s->prim->priority = PLAYER.zPriority - 6;
+            s->prim->drawMode =
+                DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            s->helper->state++;
+        case 1:
+#if defined(VERSION_US)
+            s->prim->priority = PLAYER.zPriority - 6;
+#endif
+            s->prim->drawMode |= DRAW_HIDE;
+            break;
+        case 2:
+            s->helper->facingLeft = PLAYER.facingLeft;
+            s->x = PLAYER.posX.i.hi;
+            s->y = PLAYER.posY.i.hi;
+            if (!PLAYER.facingLeft) {
+                s->velX = -0x2C;
+            } else {
+                s->velX = LEFTVEL;
+            }
+            s->velY = -0x18;
+            s->x += s->velX;
+            s->y += s->velY;
+            s->prim->x0 = s->prim->x2 = s->x;
+            s->prim->x1 = s->prim->x3 = s->x + 0x3F;
+            s->prim->y0 = s->prim->y1 = s->y;
+            s->prim->y2 = s->prim->y3 = s->y + 0x3F;
+            s->prim->drawMode &= ~DRAW_HIDE;
+            s->prim->r0 = s->prim->b0 = s->prim->g0 = s->prim->r1 =
+                s->prim->b1 = s->prim->g1 = s->prim->r2 = s->prim->b2 =
+                    s->prim->g2 = s->prim->r3 = s->prim->b3 = s->prim->g3 =
+                        0x80;
+#if defined(VERSION_US)
+            s->prim->priority = PLAYER.zPriority - 6;
+#endif
+            s->helper->timer = 0x20;
+            s->helper->state++;
+            break;
+        case 3:
+            if (s->helper->facingLeft) {
+                if (s->prim->g2 > 12) {
+                    s->prim->g2 -= 6;
+                } else {
+                    s->prim->g2 = 0;
+                }
+                if (s->prim->g3 > 12) {
+                    s->prim->g3 -= 12;
+                } else {
+                    s->prim->g3 = 0;
+                }
+            } else {
+                if (s->prim->g2 > 12) {
+                    s->prim->g2 -= 12;
+                } else {
+                    s->prim->g2 = 0;
+                }
+                if (s->prim->g3 > 12) {
+                    s->prim->g3 -= 6;
+                } else {
+                    s->prim->g3 = 0;
+                }
+            }
+            s->prim->r0 = s->prim->b0 = s->prim->g0 = s->prim->r2 =
+                s->prim->b2 = s->prim->g2;
+            s->prim->r1 = s->prim->b1 = s->prim->g1 = s->prim->r3 =
+                s->prim->b3 = s->prim->g3;
+#if defined(VERSION_US)
+            s->prim->priority = PLAYER.zPriority - 6;
+#endif
+            if (--s->helper->timer == 0) {
+                s->helper->state = 1;
+            }
+            s->prim->drawMode &= ~DRAW_HIDE;
+            break;
+        }
+        s->prim = s->prim->next;
+    }
+    // Not sure what the rest of this function is for. But to do it,
+    // we have to have finishUp set. If not, we hide and exit.
+    if (!finishUp) {
+        s->prim->drawMode |= DRAW_HIDE;
+        return;
+    }
+    // Rest of the function is what I'm calling the finishUp routine.
+    s->prim->u0 = s->prim->u2 = 0;
+    s->prim->u1 = s->prim->u3 = 0x3F;
+    s->prim->v0 = s->prim->v1 = V_OFFSET;
+    s->prim->v2 = s->prim->v3 = V_OFFSET + 0x3F;
+    s->prim->tpage = TPAGE;
+    s->prim->priority = PLAYER.zPriority;
+    s->prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                        DRAW_COLORS | DRAW_TRANSP;
+    s->helper->facingLeft = PLAYER.facingLeft;
+    s->x = PLAYER.posX.i.hi;
+    s->y = PLAYER.posY.i.hi;
+    if (!PLAYER.facingLeft) {
+        s->velX = -0x2C;
+    } else {
+        s->velX = LEFTVEL;
+    }
+    s->velY = -0x18;
+    s->x += s->velX;
+    s->y += s->velY;
+    s->prim->x0 = s->prim->x2 = s->x;
+    s->prim->x1 = s->prim->x3 = s->x + 0x3F;
+    s->prim->y0 = s->prim->y1 = s->y;
+    s->prim->y2 = s->prim->y3 = s->y + 0x3F;
+
+    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    if (s->i > 0x7F) {
+        s->i = 0x7F;
+    }
+    s->colors[1] = (u8)s->i + 0x80;
+
+    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    if (s->i > 0x7F) {
+        s->i = 0x7F;
+    }
+    s->colors[0] = 0x80 - (u8)s->i;
+
+    if (s->helper->facingLeft) {
+        s->prim->b0 = s->prim->g2 = s->colors[1];
+        s->prim->g3 = s->colors[0];
+        s->prim->b1 = s->prim->b2 = s->prim->b3 = 0xFF;
+    } else {
+        s->prim->b1 = s->prim->g2 = s->colors[0];
+        s->prim->g3 = s->colors[1];
+        s->prim->b0 = s->prim->b2 = s->prim->b3 = 0xFF;
+    }
+    s->prim->r0 = s->prim->g0 = s->prim->r2 = s->prim->g2;
+    s->prim->r1 = s->prim->g1 = s->prim->r3 = s->prim->g3;
+}
+
 // func_8012F83C
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_psp_0913A3A0);
 
