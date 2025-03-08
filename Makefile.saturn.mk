@@ -28,12 +28,10 @@ WAV_FILES 			:= $(PCM_FILES:$(EXTRACTED_DISK_DIR)/SD/%.PCM=$(ASSETS_DIR)/SD/%.wa
 .PHONY: build_saturn
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
 
-.PHONY: extract_saturn
-EXTRACT_SATURN := $(subst 0,zero,0.bin) $(addsuffix .prg,$(call to_lower,$(call get_targets)))
-extract_saturn: $(SATURN_SPLITTER_APP)
-	$(foreach item,$(EXTRACT_SATURN),$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/$(item).yaml;)
+extract_saturn: $(EXTRACT_SATURN_FILES)
+$(EXTRACT_SATURN_FILES): $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+	$(SATURN_SPLITTER) $(CONFIG_DIR)/saturn/$@.yaml
 
-.PHONY: extract_saturn_pcm
 extract_saturn_pcm: $(WAV_FILES)
 
 .PHONY: diff_saturn
