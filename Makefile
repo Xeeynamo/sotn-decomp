@@ -210,8 +210,9 @@ $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
 
 # Targets to extract the data from the disk image
 extract-disk: $(EXTRACTED_DISK_DIR)
-$(EXTRACTED_DISK_DIR:$(VERSION)=us): $(SOTNDISK)
+$(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
 	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+# Todo: Adjust hd so that it looks at the correct dir, hd currently runs every time
 $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
 	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
 	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
@@ -244,7 +245,7 @@ format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
 # Redirecting sotn-lint stdout because even if there was sometshing useful, you'd never see it because of the output spam
 	$(SOTNLINT) 1>/dev/null; rm $@.run
 format-src.run:
-	$(call echo,Running clang to format src/* and include/*) touch $@
+	$(call echo,Running clang to format src/* and include/* (this may take some time)) touch $@
 $(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG) format-src.run
 	$(CLANG) -i $*
 
@@ -432,8 +433,7 @@ dump-disk: ##@ dump a physical game disk
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all all-clean build-and-check clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto)
-PHONY_TARGETS += extract-disk $(addprefix extract-disk_,us pspeu hd saturn) disk disk-prepare disk-debug
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
 PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report

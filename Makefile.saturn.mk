@@ -28,7 +28,7 @@ WAV_FILES 			:= $(PCM_FILES:$(EXTRACTED_DISK_DIR)/SD/%.PCM=$(ASSETS_DIR)/SD/%.wa
 build_saturn: $(BUILD_DIR)/0.BIN $(addprefix $(BUILD_DIR)/,$(addsuffix .PRG,$(call get_targets)))
 
 extract_saturn: $(EXTRACT_SATURN_FILES)
-$(EXTRACT_SATURN_FILES): $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+$(EXTRACT_SATURN_FILES): $(SATURN_SPLITTER_APP) | $(EXTRACTED_DISK_DIR)
 	$(SATURN_SPLITTER) $(CONFIG_DIR)/saturn/$@.yaml
 
 extract_saturn_pcm: $(WAV_FILES)
