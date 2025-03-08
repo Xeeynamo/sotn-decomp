@@ -44,11 +44,11 @@ PSXLIBS         := libc libc2 libapi libetc libcard libgpu libgs libgte libcd li
 # Files
 PSXLIB_DIRS     := $(addprefix psxsdk/,$(slash) $(PSXLIBS))
 PSXLIB_DATA_DIRS := $(addprefix data/,$(slash) $(PSXLIB_DIRS))
-MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/main/,$(slash) $(PSXLIB_DIRS) $(PSXLIB_DATA_DIRS))
-MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/main/,$(slash) $(PSXLIB_DIRS))
+MAIN_ASM_DIRS   := $(subst //,/,$(addprefix $(ASM_DIR)/main/,$(slash) $(PSXLIB_DIRS) $(PSXLIB_DATA_DIRS)))
+MAIN_SRC_DIRS   := $(subst //,/,$(addprefix $(SRC_DIR)/main/,$(slash) $(PSXLIB_DIRS)))
 
-MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
-MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
+MAIN_S_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS))))
+MAIN_C_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS))))
 MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
@@ -67,23 +67,30 @@ US_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR)/BOSS/$(call to_upper,$*)/F_$(call to
 HD_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
 HD_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/boss/$*
 
-#/* Start dirs group */
-.PHONY: %_dirs
-main_dirs:
-	mkdir -p $(addprefix $(BUILD_DIR)/,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS))
-tt_%_dirs:
-	mkdir -p $(addprefix $(BUILD_DIR)/,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*)
-bo%_dirs:
-	mkdir -p $(addprefix $(BUILD_DIR)/,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*)
-st%_dirs:
-	mkdir -p $(addprefix $(BUILD_DIR)/,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*)
-%_dirs:
-	mkdir -p $(addprefix $(BUILD_DIR)/,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*)
-$(WEAPON_DIRS):
-	mkdir -p $@
-#/* End dirs group */
+main-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS))
+$(call get_build_dirs,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS)): main-dirs
 
-.PHONY: extract_%
+st%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*)
+$(call get_build_dirs,$(ASM_DIR)/st/% $(ASM_DIR)/st/%/data $(ASM_DIR)/st/%/handwritten $(SRC_DIR)/st/% $(ASSETS_DIR)/st/%): st%-dirs
+
+bo%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*)
+$(call get_build_dirs,$(ASM_DIR)/boss/% $(ASM_DIR)/boss/%/data $(ASM_DIR)/boss/%/handwritten $(SRC_DIR)/boss/% $(ASSETS_DIR)/boss/%): bo%-dirs
+
+tt_%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*)
+$(call get_build_dirs,$(ASM_DIR)/servant/tt_% $(ASM_DIR)/servant/tt_%/data $(SRC_DIR)/servant/tt_% $(ASSETS_DIR)/servant/tt_%): tt_%-dirs
+
+weapon-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
+$(call get_build_dirs, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon): | weapon-dirs
+
+%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*)
+$(call get_build_dirs,$(ASM_DIR)/%/data $(SRC_DIR)/% $(ASSETS_DIR)/%): | %-dirs
+
 # Step 1/2 of extract
 # The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
 	$(muffle)$(SPLAT) $<; touch $@

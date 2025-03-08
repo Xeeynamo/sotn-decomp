@@ -101,7 +101,7 @@ DEPENDENCIES	:= $(VENV_DIR) $(ASMDIFFER) $(M2CTX_APP) $(M2C_APP) $(GO) requireme
 # Build functions
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
-list_o_files = $(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o)
+list_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
 define list_src_files
 	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
 	$(foreach dir,$(addprefix $(SRC_DIR)/$(1), $(if $(2),/,$(SRC_SUBDIRS)/)),$(wildcard $(dir)/*.c))
@@ -141,6 +141,7 @@ is_stage = $(filter $(call to_lower,$1),$(STAGES))
 is_boss = $(filter $(call to_lower,$1),$(BOSSES))
 # If stage then $2$1, else if boss then $3$1, else $1
 get_filename = $(if $(call is_stage,$1),$(call to_lower,$2$1),$(if $(call is_boss,$1),$(call to_lower,$3$1),$(call to_lower,$1)))
+get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
