@@ -1278,7 +1278,115 @@ void func_8012F894(Entity* self) {
     self->palette = PLAYER.palette;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130264);
+static s16 D_800B0A5C[] = {0, 1, 0, -1, 0, 1, 0, -1};
+static s16 D_800B0A6C[] = {0, 1, 2, 3, 4, 3, 2, 1};
+static s16 D_800B0A7C[] = {0, 0, 1, 1, 2, 2, 3, 3};
+void func_80130264(Entity* self) {
+    s32 var_v1;
+
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->step) {
+        self->animSet = ANIMSET_DRA(15);
+        self->animCurFrame = 1;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+#if !defined(VERSION_US)
+        self->zPriority = PLAYER.zPriority;
+#endif
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotPivotX = 0;
+        self->rotPivotY = 9;
+        LOH(self->hitboxOffX) = -4;
+        self->hitboxOffY = 10;
+        self->hitboxWidth = 20;
+        self->hitboxHeight = 6;
+        self->step++;
+    }
+#if defined(VERSION_US)
+    self->zPriority = PLAYER.zPriority;
+#endif
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities->posX.val;
+    self->posY.val = PLAYER.posY.val;
+    self->rotZ = 0x800 - D_80138430;
+
+    switch (PLAYER.step_s) {
+    case 1:
+        if (D_800B0914 == 1) {
+            self->rotZ -= 0x180;
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                self->animCurFrame = 31;
+            }
+            if (PLAYER.animCurFrame == 34) {
+                self->animCurFrame = 32;
+            }
+            break;
+        case 1:
+        case 3:
+            var_v1 = D_800B0A5C[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            self->rotZ -= var_v1 << 5;
+            break;
+        case 2:
+            var_v1 = D_800B0A6C[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            self->rotZ -= var_v1 << 5;
+            break;
+        case 4:
+            var_v1 = D_800B0A7C[PLAYER.animFrameIdx];
+            self->posY.i.hi += var_v1;
+            break;
+        }
+        if (g_Player.pl_vram_flag & 0x8000) {
+            self->posY.i.hi += 2;
+        }
+        break;
+    case 3:
+        if (PLAYER.animCurFrame == 18) {
+            self->posY.i.hi += 4;
+        }
+        if (PLAYER.animCurFrame == 19) {
+            self->posY.i.hi += 8;
+        }
+        if (PLAYER.animCurFrame == 20) {
+            self->posY.i.hi += 8;
+        }
+        break;
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        break;
+    }
+    if (D_80138430 == 0xA00) {
+        self->posY.i.hi += 2;
+    }
+    self->palette = PLAYER.palette;
+    self->hitboxState = 0;
+    if (abs(PLAYER.velocityX) > FIX(3) &&
+        (PLAYER.step_s != 2 || D_800B0914 != 4)) {
+        func_8011A328(self, 13);
+        self->enemyId = 3;
+        if (self->hitFlags && !CastSpell(13)) {
+            D_800B0914 = 3;
+            PLAYER.ext.player.anim = 0xE0;
+            D_800B091C = 0x18;
+        }
+    }
+    self->hitFlags = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130618);
 
