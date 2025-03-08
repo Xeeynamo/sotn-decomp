@@ -2,6 +2,29 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
+static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
+
+static u16 D_800B093C[] = {69, 0};
+static u16 D_800B0940[] = {49, 0};
+static u16 D_800B0944[] = {48, 0};
+static u16 D_800B0948[] = {36, 37, 38, 39, 40, 41, 42, 43, 0};
+static u16 D_800B095C[] = {44, 45, 46, 47, 48, 49, 50, 51, 0};
+static u16 D_800B0970[] = {69, 67, 68, 68, 67, 69, -1};
+static u16 D_800B0980[] = {52, 53, -1};
+static u16 D_800B0988[] = {53, 52, -1};
+static u16 D_800B0990[] = {55, 56, 57, 58, 58, 58, 58, 61, 62, 63, 64, -1};
+static u16 D_800B09A8[] = {59, 60, 61, 62, 63, 64, 64, -1};
+static u16 D_800B09B8[] = {55, 56, 57, 61, 62, 63, 64, -1};
+static u16 D_800B09C8[] = {59, 60, 61, 62, 63, 64, -1};
+static u16 D_800B09D8[] = {52, 54, 52, -1};
+static u16 D_800B09E0[] = {53, -1};
+static u16 D_800B09E4[] = {60, 61, 62, 63, 60, 61, 62, 63, 0};
+static u16* D_800B09F8[] = {
+    D_800B093C, D_800B0940, D_800B095C, D_800B0970, D_800B0948, D_800B0980,
+    D_800B0988, D_800B09D8, D_800B09C8, D_800B0990, D_800B09B8, D_800B09E0,
+    D_800B09A8, D_800B0990, D_800B09E4, D_800B0990, D_800B0944,
+};
+
 void func_8012D3E8(void) {
     byte pad[0x28];
     s32 directionsPressed =
@@ -955,7 +978,305 @@ bool func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012F894);
+static s16 D_800B0A3C[] = {1, 2, 1, 0, 1, 2, 1, 0};
+static s16 D_800B0A4C[] = {0, 1, 2, 3, 4, 3, 2, 1};
+
+void func_8012F894(Entity* self) {
+    u16* chosenAnimArray;
+    s32 f178_count;
+    bool f178_finish;
+    Collider collider1;
+    Collider collider2;
+    Primitive* prim;
+
+    s32 playerX;
+    s32 playerY;
+    s32 var_s1;
+    s32 angle;
+    s32 hitboxY;
+    s32 hitboxX;
+    s32 animControl;
+    s32 chosenAnimIndex;
+
+    s32 vram_flag_F000;
+
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (PLAYER.ext.player.anim == 0xE1) {
+        D_800B0920 = D_800B0924[PLAYER.animFrameIdx];
+    }
+    if (!self->step) {
+        self->primIndex = AllocPrimitives(PRIM_GT4, 6);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->animSet = 0xF;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+#ifndef VERSION_US
+        self->zPriority = PLAYER.zPriority - 2;
+#endif
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        self->step++;
+    }
+#ifdef VERSION_US
+    self->zPriority = PLAYER.zPriority - 2;
+#endif
+    self->facingLeft = PLAYER.facingLeft;
+    animControl = 0;
+    if (abs(PLAYER.velocityX) > FIX(3)) {
+        PLAYER.drawFlags = self->drawFlags |= DRAW_HIDE;
+        PLAYER.drawMode = self->drawMode =
+            DRAW_UNK_40 | DRAW_TPAGE | DRAW_TPAGE2;
+
+        var_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 11;
+        if (var_s1 > 0x80) {
+            var_s1 = 0x80;
+        }
+        PLAYER.unk6C = self->unk6C = 0xFF - var_s1;
+    } else {
+        self->drawFlags &= ~DRAW_HIDE;
+        PLAYER.drawFlags = self->drawFlags;
+        PLAYER.drawMode = self->drawMode = DRAW_DEFAULT;
+    }
+    switch (PLAYER.step_s) {
+    case 1:
+        if (D_800B0914 == 1) {
+            D_800B0920 = 8;
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            break;
+        case 1:
+        case 3:
+            D_800B0920 -= D_800B0A3C[PLAYER.animFrameIdx];
+            break;
+        case 2:
+            D_800B0920 -= D_800B0A4C[PLAYER.animFrameIdx];
+            break;
+        case 4:
+            break;
+        }
+        break;
+    case 4:
+        if (PLAYER.velocityY < 0) {
+            if (D_80138430 > 0x700) {
+                D_80138430 -= 0x20;
+            }
+            D_800B0920 = 10;
+        } else {
+            if (D_80138430 < 0x7C0) {
+                D_80138430 += 0x20;
+            }
+            D_800B0920 = 12;
+        }
+        break;
+    case 5:
+    case 8:
+        D_800B0920 = 0xC;
+        break;
+    case 7:
+        if (D_80138430 < 0x900) {
+            D_80138430 += 0x20;
+        }
+        break;
+    case 9:
+        D_800B0920 -= D_800B0A3C[PLAYER.animFrameIdx];
+        break;
+    }
+
+    playerX = PLAYER.posX.i.hi;
+    playerY = PLAYER.posY.i.hi + 25;
+    if (!(g_Player.pl_vram_flag & 1) || (PLAYER.step_s == 7)) {
+        angle = D_80138430;
+        if (PLAYER.facingLeft) {
+            angle = 0x800 - D_80138430;
+        }
+        if (g_Player.unk04 & 0x40) {
+            angle = 0x800;
+            if (PLAYER.facingLeft) {
+                angle = 0x800 - angle;
+            }
+        }
+        hitboxX = (((rcos(angle) >> 4) * D_800B0920) >> 8) + playerX;
+        hitboxY = playerY + -(((rsin(angle) >> 4) * D_800B0920) >> 8);
+    } else {
+        var_s1 = 1;
+        hitboxY = playerY + 2;
+        // This loop is really gross, I will appreciate you forever if you can
+        // make it look more reasonable.
+        while (1) {
+            if (PLAYER.facingLeft) {
+                hitboxX = playerX + var_s1;
+            } else {
+                hitboxX = playerX - var_s1;
+            }
+            hitboxY += 2;
+            CheckCollision(hitboxX, hitboxY, &collider1, 0);
+            if (collider1.effects & EFFECT_SOLID) {
+                CheckCollision(
+                    hitboxX, (hitboxY + collider1.unk18) - 1, &collider2, 0);
+                if (!(collider2.effects & EFFECT_SOLID)) {
+                    hitboxY += collider1.unk18;
+                    if (func_8012F83C(playerX, playerY, hitboxX, hitboxY,
+                                      D_800B0920) != 0) {
+                        animControl = 1;
+                        if (collider1.effects & EFFECT_UNK_8000) {
+                            animControl = 3;
+                            if (PLAYER.facingLeft &&
+                                (collider1.effects & EFFECT_UNK_4000)) {
+                                animControl = 2;
+                            }
+                            if (!PLAYER.facingLeft &&
+                                !(collider1.effects & EFFECT_UNK_4000)) {
+                                animControl = 2;
+                            }
+                        }
+                        angle = ratan2(-(hitboxY - playerY), hitboxX - playerX);
+                        break;
+                    }
+                    var_s1++;
+                    continue;
+                }
+                if ((collider2.effects &
+                     (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) !=
+                    (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+                    continue;
+                }
+                hitboxY += collider1.unk18 - 1 + collider2.unk18;
+                if (func_8012F83C(
+                        playerX, playerY, hitboxX, hitboxY, D_800B0920)) {
+                    animControl = 3;
+                    if (PLAYER.facingLeft &&
+                        (collider1.effects & EFFECT_UNK_4000)) {
+                        animControl = 2;
+                    }
+                    if (!PLAYER.facingLeft &&
+                        !(collider1.effects & EFFECT_UNK_4000)) {
+                        animControl = 2;
+                    }
+
+                    angle = ratan2(-(hitboxY - playerY), hitboxX - playerX);
+                    break;
+                }
+                var_s1++;
+                continue;
+            }
+            if (var_s1 < 5) {
+                var_s1++;
+                hitboxY -= 2;
+                continue;
+            }
+
+            vram_flag_F000 = g_Player.pl_vram_flag & 0xF000;
+            angle = 0x800;
+            if (vram_flag_F000 == 0xE000) {
+                angle = 0x760;
+            }
+            if (vram_flag_F000 == 0xD000) {
+                angle = 0x6D2;
+            }
+            if (vram_flag_F000 == 0xC000) {
+                angle = 0x600;
+            }
+            if (vram_flag_F000 == 0x8000) {
+                angle = 0xA00;
+            }
+            if (vram_flag_F000 == 0x9000) {
+                angle = 0x92E;
+            }
+            if (vram_flag_F000 == 0xA000) {
+                angle = 0x8A0;
+            }
+            if (PLAYER.facingLeft) {
+                angle -= 0x800;
+            }
+            hitboxX = (((rcos(angle) >> 4) * D_800B0920) >> 8) + playerX;
+            hitboxY = playerY + -(((rsin(angle) >> 4) * D_800B0920) >> 8);
+            animControl = 0;
+            if (var_s1 <= 10) {
+                if ((PLAYER.facingLeft || (playerX - D_800B0920) >= 0) &&
+                    (!PLAYER.facingLeft || (playerX + D_800B0920) < 0x101) &&
+                    ((PLAYER.step_s == 1) || (PLAYER.step_s == 3))) {
+                    if (!PLAYER.facingLeft) {
+                        CheckCollision((PLAYER.posX.i.hi - D_800B0920) - 1,
+                                       PLAYER.posY.i.hi + 23, &collider1, 0);
+                        if (!(collider1.effects & EFFECT_SOLID)) {
+                            PLAYER.velocityX = FIX(-1);
+                            func_8012CB0C();
+                        }
+                    } else {
+                        CheckCollision(PLAYER.posX.i.hi + D_800B0920 + 1,
+                                       PLAYER.posY.i.hi + 23, &collider1, 0);
+                        if (!(collider1.effects & EFFECT_SOLID)) {
+                            PLAYER.velocityX = FIX(1);
+                            func_8012CB0C();
+                        }
+                    }
+                }
+            }
+            break; // Breaking here means the loop will never loop.
+            // Only way to repeat is through the many Continue statements.
+        }
+    }
+
+    if (!PLAYER.facingLeft) {
+        if (playerX - D_800B0920 < 0) {
+            hitboxX = playerX - D_800B0920;
+            hitboxY = playerY;
+            angle = 0x800;
+        }
+        D_80138430 = angle;
+    } else {
+        if (playerX + D_800B0920 > 0x100) {
+            hitboxX = playerX + D_800B0920;
+            hitboxY = playerY;
+            angle = 0;
+        }
+        D_80138430 = 0x800 - angle;
+    }
+    D_80138430 &= 0xFFF;
+    self->posX.i.hi = hitboxX;
+    self->posY.i.hi = hitboxY - 0x17;
+    self->posX.i.lo = PLAYER.posX.i.lo;
+    self->posY.i.lo = PLAYER.posY.i.lo;
+    chosenAnimIndex = PLAYER.ext.player.anim - 0xDE;
+    if ((PLAYER.step_s == 1) && (D_800B0914 == 0)) {
+        if (animControl == 2) {
+            chosenAnimIndex = 1;
+        }
+        if (animControl == 1) {
+            chosenAnimIndex = 0;
+        }
+        if (animControl == 3) {
+            chosenAnimIndex = 0x10;
+        }
+    }
+    chosenAnimArray = D_800B09F8[chosenAnimIndex];
+    self->animCurFrame = chosenAnimArray[PLAYER.animFrameIdx];
+    if (self->animCurFrame == -1) {
+        self->animCurFrame = (&chosenAnimArray[PLAYER.animFrameIdx])[-1];
+    }
+
+    f178_count = -1;
+    if ((abs(PLAYER.velocityX) > FIX(2.5)) && (g_GameTimer % 6 == 0)) {
+        f178_count = D_8013843C % 5;
+        D_8013843C++;
+    }
+    f178_finish = false;
+    if (abs(PLAYER.velocityX) > FIX(3)) {
+        f178_finish = true;
+        self->palette = PLAYER.palette = PAL_OVL(0x10D);
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    func_8012F178(prim, f178_count, f178_finish);
+    self->palette = PLAYER.palette;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130264);
 
