@@ -1667,7 +1667,173 @@ void func_801309B4(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130E94);
+static s16 D_800B0B0C[] = {87, 88, 89, 89, 90, 90, 89, 88, 87};
+static s16 D_800B0B20[] = {
+    0x0, 0x040, 0x080, 0x0C0, 0x100, 0x140, 0x180, 0x1C0, 0x200};
+extern s32 D_8013844C;
+extern s32 D_80138450;
+
+void func_80130E94(Entity* self) {
+    Entity* otherEnt;
+    s32 sp3c;
+    s32 var_s8;
+    s32 var_s7;
+    s32 var_s3;
+    s32 var_s4;
+    s32 temp_s2;
+    s32 params;
+    s32 var_s1;
+    s32 var_s0;
+
+
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    params = self->params;
+    var_s0 = 0;
+    var_s1 = 0;
+    if (!self->step) {
+        self->animSet = 15;
+        self->animCurFrame = D_800B0B0C[params];
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+#if !defined(VERSION_US)
+        self->zPriority = PLAYER.zPriority - 3;
+#endif
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        D_8013844C = 0;
+        self->ext.timer.t = 0x20;
+        self->rotZ = D_80138430;
+        self->step++;
+    }
+    otherEnt = self;
+    otherEnt--;
+    var_s7 = 2;
+    self->facingLeft = PLAYER.facingLeft;
+#if defined(VERSION_US)
+    self->zPriority = PLAYER.zPriority - 3;
+#endif
+    if (params == 0) {
+        var_s4 = g_Entities[19].posX.val;
+        if(PLAYER.facingLeft){
+            var_s4 += FIX(3);
+        } else {
+            var_s4 -= FIX(3);
+        }
+        sp3c = g_Entities[19].posY.val + FIX(7);
+    } else {
+        var_s4 = otherEnt->posX.val;
+        sp3c = otherEnt->posY.val;
+    }
+    if (PLAYER.animCurFrame == 33) {
+        var_s7 = 1;
+    }
+    if (PLAYER.animCurFrame == 34) {
+        var_s7 = 0;
+    }
+    if (params == 0) {
+        var_s3 = D_8013844C;
+        switch (PLAYER.step_s) {
+        case 1:
+            D_8013844C += 0x18;
+            var_s1 = 0x100;
+            var_s0 = 0x80;
+            if (D_800B0914 == 1) {
+                var_s0 = -0x80;
+            }
+            break;
+        case 2:
+            switch (D_800B0914) {
+            case 0:
+                var_s0 = -0x300;
+                break;
+            case 1:
+            case 3:
+                D_8013844C += 0x100;
+                var_s1 = 0x40;
+                var_s0 = -0x200;
+                break;
+            case 2:
+                D_8013844C += 0x100;
+                var_s1 = 0x40;
+                var_s0 = -0x100;
+                temp_s2 = (abs(PLAYER.velocityX) + -FIX(3)) >> 10;
+                if(temp_s2 > 0x100){
+                    temp_s2 = 0x100;
+                }
+                var_s0 += temp_s2;
+                break;
+            }
+            break;
+        case 3:
+            D_8013844C += 0x10;
+            var_s1 = 0x40;
+            var_s0 = 0x80;
+            break;
+        case 4:
+            if (D_800B0914 == 0) {
+                if (PLAYER.velocityY < 0) {
+                    var_s0 = 0x600;
+                } else {
+                    var_s0 = -0x200;
+                }
+            } else {
+                var_s1 = 0x20;
+                if (PLAYER.velocityY < 0) {
+                    var_s0 = 0x100;
+                } else {
+                    var_s0 = -0x100;
+                }
+            }
+            break;
+        case 5:
+        case 8:
+            var_s0 = -0x200;
+            break;
+        case 7:
+            var_s0 = -0x80;
+            break;
+        case 6:
+            var_s0 = -0x200;
+            break;
+        case 9:
+            D_8013844C += 0x18;
+            var_s1 = 0x100;
+            var_s0 = 0x80;
+            break;
+        }
+        D_80138450 =
+            D_80138430 + var_s0 + (((rsin(var_s3) >> 8) * var_s1) >> 4);
+    }
+    var_s8 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
+    if (var_s8 < self->rotZ) {
+        self->rotZ -= self->ext.timer.t;
+    }
+    if (self->rotZ < var_s8) {
+        self->rotZ += self->ext.timer.t;
+    }
+    if (!PLAYER.facingLeft) {
+        var_s3 = self->rotZ;
+    } else {
+        var_s3 = 0x800 - self->rotZ;
+    }
+    self->posX.val = var_s4 + rcos(var_s3) * var_s7 * 0x10;
+    self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
+    self->palette = PLAYER.palette;
+    self->drawMode = DRAW_DEFAULT;
+    self->drawFlags &= ~FLAG_DRAW_UNK8;
+    if (abs(PLAYER.velocityX) > FIX(3)) {
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
+        if(temp_s2 > 0x80){
+            temp_s2 = 0x80;
+        }
+        self->unk6C = 0xFF - temp_s2;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8013136C);
 
