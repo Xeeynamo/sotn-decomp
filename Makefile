@@ -236,7 +236,7 @@ format-tools:
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_str/*.py
-	$(BLACK) tools/sotn_permuter/sotn_permuter.py
+	$(BLACK) tools/sotn_permuter/permuter_loader.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
@@ -264,6 +264,7 @@ format-symbols:
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo5.yaml
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
 	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
@@ -338,6 +339,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/borbo5.elf > config/symbols.us.borbo5.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt

@@ -470,6 +470,7 @@ void func_801139CC(s32 arg0) {
         PLAYER.velocityY = 0;
     }
 }
+
 void func_80113AAC(void) {
     s32 var_s1 = 0;
     s32 temp;

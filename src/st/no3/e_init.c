@@ -16,7 +16,6 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
 void EntityCavernDoorVase(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
