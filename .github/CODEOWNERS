@@ -1,7 +1,7 @@
 # Non-exhaustive list of who owns what or who wants to be notified when certain
 # changes to the code base are made. Please add yourself in this.
 
-Makefile* @xeeynamo
+Makefile* @xeeynamo @ProjectOblivion
 .github/ @xeeynamo
 bin/ @xeeynamo
 
@@ -15,7 +15,9 @@ tools/gfxsotn/ @xeeynamo
 tools/sotn_str/ @xeeynamo
 tools/sotn-debugmodule/ @xeeynamo
 tools/sotn-disk/ @xeeynamo
+tools/sotn_permuter/ @ProjectOblivion
 tools/decompile.py @xeeynamo
 tools/gfxstage.py @xeeynamo
 tools/progress.py @xeeynamo
 tools/symbols.py @xeeynamo
+tools/sotn_diff.py @ProjectOblivion
