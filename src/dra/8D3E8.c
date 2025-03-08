@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
 
@@ -47,7 +45,7 @@ void func_8012D3E8(void) {
 
     switch (D_800B0914) {
     case 0:
-        if (g_Player.padTapped & PAD_SQUARE) {
+        if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
             func_8012CC30(0);
             return;
         }
@@ -71,7 +69,7 @@ void func_8012D3E8(void) {
         return;
 
     case 1:
-        if (g_Player.padTapped & PAD_SQUARE) {
+        if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
             func_8012CC30(0);
             return;
         }
@@ -87,7 +85,7 @@ void func_8012D3E8(void) {
         }
         return;
     case 2:
-        if ((g_Player.padTapped & PAD_SQUARE) &&
+        if ((g_Player.padTapped & WOLF_CHARGE_ATK_BTN) &&
             (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
@@ -167,7 +165,7 @@ void func_8012D3E8(void) {
 
         return;
     case 3:
-        if ((g_Player.padTapped & PAD_SQUARE) &&
+        if ((g_Player.padTapped & WOLF_CHARGE_ATK_BTN) &&
             (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             return;
@@ -238,7 +236,7 @@ void func_8012DBBC(void) {
         PlaySfx(SFX_STOMP_SOFT_B);
         return;
     }
-    if (g_Player.padTapped & PAD_SQUARE) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     switch (D_800B0914) {
@@ -292,7 +290,7 @@ void func_8012DF04(void) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if (g_Player.padTapped & PAD_SQUARE) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     if (g_Player.pl_vram_flag & 1) {
@@ -363,7 +361,7 @@ void func_8012E040(void) {
         }
         PLAYER.velocityY = 0;
     }
-    if (g_Player.padTapped & PAD_SQUARE) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     switch (D_800B0914) {
@@ -459,7 +457,7 @@ void func_8012E550(void) {
         func_8012CED4();
         return;
     }
-    if (g_Player.padTapped & PAD_SQUARE && D_800B0914 != 3) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN && D_800B0914 != 3) {
         func_8012CC30(0);
         return;
     }

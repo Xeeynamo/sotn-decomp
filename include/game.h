@@ -192,12 +192,16 @@ typedef enum {
     GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
 } PlayerPad;
 
-// PSP only has one shoulder button on each side, so its default transform
-// controls are different. This captures those.
+// PSP's wolf controls are slightly different.
 #ifdef VERSION_PSP
+// PSP only has one shoulder button, so it uses L1 for wolf transform.
 #define BTN_WOLF PAD_L1
+// PSP allows you to do the Wolf Charge spell with either square or circle.
+// This was changed from PS1, which only accepts square.
+#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
 #else
 #define BTN_WOLF PAD_R2
+#define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
 #endif
 
 #define MAX_PRIM_COUNT 0x500

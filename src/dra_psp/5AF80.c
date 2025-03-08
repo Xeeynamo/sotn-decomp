@@ -45,7 +45,7 @@ void func_8012D3E8(void) {
 
     switch (D_800B0914) {
     case 0:
-        if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+        if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
             func_8012CC30(0);
             break;
         }
@@ -70,7 +70,7 @@ void func_8012D3E8(void) {
         break;
 
     case 1:
-        if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+        if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
             func_8012CC30(0);
             break;
         }
@@ -86,7 +86,7 @@ void func_8012D3E8(void) {
         }
         break;
     case 2:
-        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+        if ((g_Player.padTapped & WOLF_CHARGE_ATK_BTN) &&
             (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             break;
@@ -165,7 +165,7 @@ void func_8012D3E8(void) {
         }
         break;
     case 3:
-        if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
+        if ((g_Player.padTapped & WOLF_CHARGE_ATK_BTN) &&
             (abs(PLAYER.velocityX) < FIX(3))) {
             func_8012CC30(0);
             break;
@@ -236,7 +236,7 @@ void func_8012DBBC(void) {
         PlaySfx(SFX_STOMP_SOFT_B);
         return;
     }
-    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     switch (D_800B0914) {
@@ -287,7 +287,7 @@ void func_8012DF04(void) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     if (g_Player.pl_vram_flag & 1) {
@@ -354,7 +354,7 @@ void func_8012E040(void) {
         }
         PLAYER.velocityY = 0;
     }
-    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
     switch (D_800B0914) {
@@ -450,7 +450,7 @@ void func_8012E550(void) {
         func_8012CED4();
         return;
     }
-    if (g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE) && D_800B0914 != 3) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN && D_800B0914 != 3) {
         func_8012CC30(0);
         return;
     }
