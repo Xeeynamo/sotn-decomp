@@ -342,9 +342,15 @@ void func_8012E040(void) {
             if (PLAYER.facingLeft) {
                 xOffset = -xOffset;
             }
+            // Interestingly, PSP compiles this out even though it's -O0
+            // PS1 keeps it in even though it's -O2.
+            PLAYER.posY.i.hi += 0;
             PLAYER.posX.i.hi += xOffset;
+            
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
+            PLAYER.posY.i.hi -= 0;
             PLAYER.posX.i.hi -= xOffset;
+            
             func_80102CD8(3);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
@@ -423,6 +429,7 @@ void func_8012E040(void) {
         PLAYER.velocityY = FIX(7);
     }
 }
+
 void func_8012E550(void) {
     s32 i;
     s16 playerFrame = PLAYER.animFrameIdx;
