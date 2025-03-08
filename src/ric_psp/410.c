@@ -482,7 +482,347 @@ void func_80159C04(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHit);
+#ifdef VERSION_PSP
+extern s32 ric_hit_stun_timer;
+#else
+static s32 ric_hit_stun_timer;
+#endif
+void RicHandleHit(
+    s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
+    DamageParam damage;
+    s32 damageResult;
+    s16 xShift;
+    bool step_s_zero;
+    s32 i;
+
+    step_s_zero = false;
+    if (ric_hit_stun_timer) {
+        ric_hit_stun_timer--;
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        step_s_zero = true;
+        func_80159BC8();
+        if (damageKind < DAMAGEKIND_16) {
+            func_80159C04();
+        } else {
+            PLAYER.entityRoomIndex = PLAYER.facingLeft;
+        }
+        if (damageEffect & ELEMENT_THUNDER) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, BP_HIT_BY_THUNDER, 0);
+            PLAYER.velocityY = FIX(-4);
+            func_8015CAAC(FIX(-1.25));
+            PLAYER.step_s = 1;
+            PLAYER.anim = D_801556C4;
+            g_Player.unk40 = 0x8120;
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, BP_HIT_BY_THUNDER, 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x46), 0);
+            g_Player.timers[PL_T_2] = 6;
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
+            break;
+        } else {
+            if (damageEffect & ELEMENT_ICE) {
+                damageKind = DAMAGEKIND_3;
+            }
+            // TODO check if this is real, i suspect not. Fix damageKind.
+            switch (damageKind) {
+            case 2:
+                switch (prevStep) {
+                case PL_S_STAND:
+                case PL_S_WALK:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 6;
+                    PLAYER.anim = D_8015569C;
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
+                    break;
+                case PL_S_CROUCH:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 7;
+                    PLAYER.anim = D_80155704;
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
+                    break;
+                case PL_S_JUMP:
+                case PL_S_FALL:
+                    PLAYER.velocityY = FIX(-3);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.anim = ric_anim_stun;
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
+                    break;
+                }
+                break;
+            case 5:
+            case 4:
+                g_Player.damageTaken = PLAYER.hitPoints;
+                PLAYER.posY.val -= 1;
+                PLAYER.velocityY = FIX(-0.5);
+                func_8015CAAC(FIX(-8));
+                PLAYER.step_s = 2;
+                PLAYER.anim = ric_anim_stun;
+                g_Player.timers[PL_T_2] = 0x200;
+                PLAYER.facingLeft = PLAYER.entityRoomIndex;
+                break;
+            default:
+            case 16:
+            case 3:
+                switch (prevStep) {
+                default:
+                case PL_S_STAND:
+                case PL_S_WALK:
+                    PLAYER.velocityY = FIX(-4);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.anim = ric_anim_stun;
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
+                    break;
+                case PL_S_CROUCH:
+                    PLAYER.velocityY = 0;
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 7;
+                    PLAYER.anim = D_80155704;
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_SKID_SMOKE, 0);
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
+                    break;
+                case PL_S_JUMP:
+                case PL_S_FALL:
+                    PLAYER.velocityY = FIX(-3);
+                    func_8015CAAC(FIX(-1.25));
+                    PLAYER.step_s = 1;
+                    PLAYER.anim = ric_anim_stun;
+                    g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
+                    break;
+                }
+                break;
+            }
+            g_Player.unk40 = 0x8166;
+            g_Player.timers[PL_T_2] = 6;
+            if (damageEffect & ELEMENT_FIRE) {
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_HIT_BY_FIRE, 1), 0);
+                RicCreateEntFactoryFromEntity(g_CurrentEntity, 9, 0);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x43), 0);
+                g_Player.unk40 = 0x8160;
+                g_Player.timers[PL_T_2] = 0x10;
+                break;
+            } else if (damageEffect & ELEMENT_CUT) {
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_HIT_BY_CUT, 5), 0);
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x44), 0);
+                g_Player.unk40 = 0x8166;
+                g_Player.timers[PL_T_2] = 0x10;
+                break;
+            } else if (damageEffect & ELEMENT_ICE) {
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_HIT_BY_ICE, 0);
+                g_Player.timers[PL_T_2] = 0xC;
+                g_Player.unk40 = 0x8169;
+                break;
+            } else {
+                if (damageEffect & ELEMENT_DARK) {
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_HIT_BY_DARK, 0);
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x56), 0);
+                    g_Player.timers[PL_T_2] = 0x10;
+                    g_Player.unk40 = 0x8164;
+                }
+                if (damageEffect & ELEMENT_HOLY) {
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, BP_HIT_BY_HOLY, 0);
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x57), 0);
+                    g_Player.timers[PL_T_2] = 8;
+                    g_Player.unk40 = 0x8168;
+                }
+                if (!(damageEffect & 0xF840)) {
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x53), 0);
+                }
+            }
+        }
+        break;
+    case 1:
+        if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+            PLAYER.velocityY = FIX(-1);
+        }
+        if (RicCheckInput(
+                CHECK_80 | CHECK_GRAVITY_HIT | CHECK_GROUND_AFTER_HIT)) {
+            return;
+        }
+        break;
+    case 2:
+        if ((g_Player.unk04 & 0x8000) && !(g_Player.pl_vram_flag & 0x8000)) {
+            goto block_6dc;
+        }
+        if ((g_Player.pl_vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SMOKE_PUFF_2, 10), 0);
+        }
+        if (!(g_Player.pl_vram_flag & 0xE)) {
+            break;
+        }
+        if (g_Player.pl_vram_flag & 2) {
+            func_80158B04(1);
+            PLAYER.velocityX /= 2;
+            PLAYER.velocityY = 0;
+            ric_hit_stun_timer = 0x18;
+            PLAYER.step_s = 5;
+            damage.effects = EFFECT_NONE;
+            damage.damageKind = DAMAGEKIND_1;
+            damage.damageTaken = g_Player.damageTaken;
+            damageResult = g_api.CalcPlayerDamage(&damage);
+            if (damageResult) {
+                RicSetStep(PL_S_DEAD);
+                RicHandleDead(0, 2, PL_S_HIT, 2);
+                return;
+            }
+            break;
+        } else {
+            if ((g_StageId != STAGE_BO6) && (g_StageId != STAGE_RBO6) &&
+                (g_StageId != STAGE_DRE)) {
+                for (i = 2; i < NUM_VERTICAL_SENSORS; i++) {
+                    if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                        break;
+                    }
+                }
+                if (i == NUM_VERTICAL_SENSORS) {
+                    for (i = NUM_VERTICAL_SENSORS + 2;
+                         i < NUM_VERTICAL_SENSORS * 2; i++) {
+                        if (g_Player.colWall[i].effects & EFFECT_UNK_0002) {
+                            break;
+                        }
+                    }
+                }
+                if (i == NUM_VERTICAL_SENSORS * 2) {
+                block_6dc:
+                    PLAYER.velocityY = FIX(-4);
+                    func_8015CAAC(FIX(-1.25));
+                    xShift = -3;
+                    if (PLAYER.velocityX != 0) {
+                        xShift = -xShift;
+                    }
+                    PLAYER.posY.i.hi += 20;
+                    PLAYER.posX.i.hi += xShift;
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_EMBERS, 9), 0);
+                    PLAYER.posY.i.hi -= 20;
+                    PLAYER.posX.i.hi -= xShift;
+                    g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+                    g_api.func_80102CD8(2);
+                    PLAYER.step_s = 1;
+                    damage.effects = EFFECT_NONE;
+                    damage.damageKind = DAMAGEKIND_1;
+                    damage.damageTaken = g_Player.damageTaken;
+                    damageResult = g_api.CalcPlayerDamage(&damage);
+                    if (damageResult) {
+                        RicSetStep(PL_S_DEAD);
+                        RicHandleDead(0, 2, PL_S_HIT, 2);
+                        return;
+                    }
+                    break;
+                }
+            }
+            ric_hit_stun_timer = 8;
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+            PLAYER.velocityY = FIX(-2.5);
+            g_api.func_80102CD8(2);
+            PLAYER.step_s = 3;
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SKID_SMOKE_2, 8), 0);
+        }
+        damage.effects = EFFECT_NONE;
+        damage.damageKind = DAMAGEKIND_1;
+        damage.damageTaken = g_Player.damageTaken;
+        damageResult = g_api.CalcPlayerDamage(&damage);
+        if (damageResult) {
+            RicSetStep(PL_S_DEAD);
+            RicHandleDead(0, 2, PL_S_HIT, 2);
+            return;
+        }
+        break;
+    case 3:
+        if (!ric_hit_stun_timer) {
+            RicSetSpeedX(FIX(0.75));
+            if (RicCheckInput(
+                    CHECK_80 | CHECK_GRAVITY_HIT | CHECK_GROUND_AFTER_HIT)) {
+                return;
+            }
+        }
+        break;
+    case 5:
+        RicDecelerateX(0x2000);
+        if (ric_hit_stun_timer) {
+            if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
+                func_80158B04(0);
+            }
+            break;
+        } else if (g_Player.pl_vram_flag & 0xC) {
+            if (!(g_Player.pl_vram_flag & (u16)~0xFC)) {
+                PLAYER.velocityY += FIX(12.0 / 128);
+                if (PLAYER.velocityY > FIX(7)) {
+                    PLAYER.velocityY = FIX(7);
+                }
+                if (!(g_GameTimer & 3)) {
+                    RicCreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_SKID_SMOKE_3, 4), 0);
+                }
+                break;
+            }
+        }
+        PLAYER.step_s = 1;
+        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
+        break;
+    case 6:
+        RicDecelerateX(0x2000);
+        if (!(g_Player.pl_vram_flag & 1)) {
+            RicSetFall();
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
+                RicSetStand(PLAYER.velocityX);
+            } else {
+                RicSetStand(PLAYER.velocityX);
+            }
+        }
+        break;
+    case 7:
+        RicDecelerateX(0x2000);
+        if (!(g_Player.pl_vram_flag & 1)) {
+            RicSetFall();
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
+                RicSetCrouch(0, PLAYER.velocityX);
+            } else {
+                RicSetCrouch(0, PLAYER.velocityX);
+            }
+        }
+        break;
+    }
+    if (step_s_zero && g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleBossGrab);
 

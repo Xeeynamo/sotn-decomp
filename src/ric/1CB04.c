@@ -491,10 +491,12 @@ static s32 ric_hit_stun_timer;
 void RicHandleHit(
     s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
-    s32 xShift;
+    s32 damageResult;
+    s16 xShift;
+    bool step_s_zero;
     s32 i;
-    bool step_s_zero = false;
 
+    step_s_zero = false;
     if (ric_hit_stun_timer) {
         ric_hit_stun_timer--;
     }
@@ -527,8 +529,8 @@ void RicHandleHit(
                 damageKind = DAMAGEKIND_3;
             }
             // TODO check if this is real, i suspect not. Fix damageKind.
-            switch (damageKind - 2) {
-            case 0:
+            switch (damageKind) {
+            case 2:
                 switch (prevStep) {
                 case PL_S_STAND:
                 case PL_S_WALK:
@@ -549,8 +551,8 @@ void RicHandleHit(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
-                case PL_S_FALL:
                 case PL_S_JUMP:
+                case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
@@ -559,11 +561,11 @@ void RicHandleHit(
                     break;
                 }
                 break;
-            case 2:
-            case 3:
-                PLAYER.velocityY = FIX(-0.5);
+            case 5:
+            case 4:
                 g_Player.damageTaken = PLAYER.hitPoints;
                 PLAYER.posY.val -= 1;
+                PLAYER.velocityY = FIX(-0.5);
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
                 PLAYER.anim = ric_anim_stun;
@@ -571,18 +573,8 @@ void RicHandleHit(
                 PLAYER.facingLeft = PLAYER.entityRoomIndex;
                 break;
             default:
-            case 1:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
+            case 16:
+            case 3:
                 switch (prevStep) {
                 default:
                 case PL_S_STAND:
@@ -602,8 +594,8 @@ void RicHandleHit(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
-                case PL_S_FALL:
                 case PL_S_JUMP:
+                case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
@@ -684,14 +676,15 @@ void RicHandleHit(
         }
         if (g_Player.pl_vram_flag & 2) {
             func_80158B04(1);
-            ric_hit_stun_timer = 0x18;
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
+            ric_hit_stun_timer = 0x18;
             PLAYER.step_s = 5;
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
-            if (g_api.CalcPlayerDamage(&damage)) {
+            damageResult = g_api.CalcPlayerDamage(&damage);
+            if (damageResult) {
                 RicSetStep(PL_S_DEAD);
                 RicHandleDead(0, 2, PL_S_HIT, 2);
                 return;
@@ -719,10 +712,10 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     xShift = -3;
                     if (PLAYER.velocityX != 0) {
-                        xShift = 3;
+                        xShift = -xShift;
                     }
                     PLAYER.posY.i.hi += 20;
-                    PLAYER.posX.i.hi = xShift + PLAYER.posX.i.hi;
+                    PLAYER.posX.i.hi += xShift;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_EMBERS, 9), 0);
                     PLAYER.posY.i.hi -= 20;
@@ -733,7 +726,8 @@ void RicHandleHit(
                     damage.effects = EFFECT_NONE;
                     damage.damageKind = DAMAGEKIND_1;
                     damage.damageTaken = g_Player.damageTaken;
-                    if (g_api.CalcPlayerDamage(&damage)) {
+                    damageResult = g_api.CalcPlayerDamage(&damage);
+                    if (damageResult) {
                         RicSetStep(PL_S_DEAD);
                         RicHandleDead(0, 2, PL_S_HIT, 2);
                         return;
@@ -752,7 +746,8 @@ void RicHandleHit(
         damage.effects = EFFECT_NONE;
         damage.damageKind = DAMAGEKIND_1;
         damage.damageTaken = g_Player.damageTaken;
-        if (g_api.CalcPlayerDamage(&damage)) {
+        damageResult = g_api.CalcPlayerDamage(&damage);
+        if (damageResult) {
             RicSetStep(PL_S_DEAD);
             RicHandleDead(0, 2, PL_S_HIT, 2);
             return;
@@ -775,7 +770,7 @@ void RicHandleHit(
             }
             break;
         } else if (g_Player.pl_vram_flag & 0xC) {
-            if (!(g_Player.pl_vram_flag & 0xFF03)) {
+            if (!(g_Player.pl_vram_flag & (u16)~0xFC)) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -788,8 +783,7 @@ void RicHandleHit(
             }
         }
         PLAYER.step_s = 1;
-        PLAYER.animFrameIdx = 0;
-        PLAYER.animFrameDuration = 0;
+        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
         break;
     case 6:
         RicDecelerateX(0x2000);
@@ -797,12 +791,15 @@ void RicHandleHit(
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
-            if (!g_Player.unk5C || g_Status.hp > 0) {
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
                 RicSetStand(PLAYER.velocityX);
-                break;
+            } else {
+                RicSetStand(PLAYER.velocityX);
             }
-            RicSetDeadPrologue();
-            return;
         }
         break;
     case 7:
@@ -811,15 +808,19 @@ void RicHandleHit(
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
-            if (g_Player.unk5C && g_Status.hp <= 0) {
-                RicSetDeadPrologue();
-                return;
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
+                RicSetCrouch(0, PLAYER.velocityX);
+            } else {
+                RicSetCrouch(0, PLAYER.velocityX);
             }
-            RicSetCrouch(0, PLAYER.velocityX);
         }
         break;
     }
-    if (step_s_zero && (g_Player.unk72)) {
+    if (step_s_zero && g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }
