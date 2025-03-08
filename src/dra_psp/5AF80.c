@@ -1505,7 +1505,167 @@ void func_80130618(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_801309B4);
+static AnimationFrame D_800B0ABC[] = {
+    {0x02, 0x48}, {0x04, 0x4B}, {0x10, 0x4C},
+    {0x04, 0x4B}, {0x08, 0x48}, {-1, 0x00},
+};
+static s32 D_800B0AD4[] = {0, 1, 2, 1, 0, 0};
+static s32 D_800B0AEC[] = {0, 1, 1, 2, 2, 1, 1, 0};
+extern s32 D_80138448;
+
+void func_801309B4(Entity* self) {
+    s32 var_s4;
+    s32 var_s3;
+    s16 var_s2;
+    s32 var_s1;
+    s32 var_s0;
+    
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->step) {
+        self->animSet = ANIMSET_DRA(15);
+        self->unk5A = 0x7E;
+#if !defined(VERSION_US)
+        self->zPriority = PLAYER.zPriority + 2;
+#endif
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
+                      FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        self->animFrameDuration = 1;
+        self->animFrameIdx = 4;
+        self->anim = D_800B0ABC;
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 8;
+        self->animCurFrame = 72;
+        self->step++;
+    }
+#if defined(VERSION_US)
+    self->zPriority = PLAYER.zPriority + 2;
+#endif
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_12].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_12].posY.val + FIX(4);
+    self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 | FLAG_UNK_20000 |
+                  FLAG_POS_PLAYER_LOCKED;
+
+    var_s3 = D_80138430 - 0x800;
+    if (D_80138430 > 0x980) {
+        var_s3 = 0x180;
+    }
+    if (D_80138430 < 0x680) {
+        var_s3 = -0x180;
+    }
+    var_s0 = var_s3;
+    var_s1 = 11;
+    self->palette = PLAYER.palette;
+
+    switch (PLAYER.step_s) {
+    case 1:
+        var_s0 = var_s3;
+        if (D_800B0914 == 1) {
+            var_s0 += 0x100;
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                if(!PLAYER.facingLeft){
+                    self->posX.i.hi += 4;
+                } else {
+                    self->posX.i.hi -= 4;
+                }
+                self->animCurFrame = 73;
+                self->flags &= ~FLAG_UNK_100000;
+                return;
+            }
+            if (PLAYER.animCurFrame == 34) {
+                self->animCurFrame = 74;
+                self->flags &= ~FLAG_UNK_100000;
+                return;
+            }
+            break;
+        case 1:
+            break;
+        case 3:
+            break;
+        case 2:
+            var_s4 = D_800B0AEC[PLAYER.animFrameIdx];
+            var_s1 += var_s4;
+            var_s0 -= 0x80;
+            if (D_80138430 == 0xA00) {
+                var_s0 += 0x80;
+            }
+            if (D_80138430 == 0x600) {
+                var_s0 += 0x80;
+            }
+            break;
+        }
+        break;
+    case 3:
+        var_s0 -= 0x100;
+        if (var_s0 < -0x180) {
+            var_s0 = -0x180;
+            break;
+        }
+        break;
+    case 4:
+        if (D_800B0914 == 2) {
+            var_s0 -= 0x40;
+        }
+        break;
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        break;
+    }
+
+    var_s1 += -(var_s0 >> 7);
+    if (PLAYER.facingLeft) {
+        var_s0 = 0x800 - var_s0;
+    }
+    self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s1) >> 8;
+    self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s1) >> 8;
+    if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
+        self->animFrameDuration == -1) {
+        PlaySfx(SFX_ALU_WOLF_BARK);
+        self->animFrameIdx = self->animFrameDuration = 0;
+    }
+    var_s1 = D_800B0AD4[self->animFrameIdx];
+    if (PLAYER.facingLeft) {
+        var_s1 = -var_s1;
+    }
+    self->posX.i.hi += var_s1;
+    if (PLAYER.step_s == 2 && D_800B0914 == 4) {
+        func_8011A328(self, 4);
+        self->enemyId = 3;
+    } else if (self->animCurFrame != 72 && self->animCurFrame != 73 &&
+               self->animCurFrame != 74) {
+        func_8011A328(self, 14);
+        self->enemyId = 3;
+    } else {
+        self->hitboxState = 0;
+    }
+    if (self->animFrameDuration < 0) {
+        if (D_80138448 != 0) {
+            D_80138448 -= 1;
+        } else if (*D_80097448 > 0x18) {
+            var_s2 = 4;
+            if(PLAYER.facingLeft){
+                var_s2 = -var_s2;
+            }
+            self->posX.i.hi += var_s2;
+            self->posY.i.hi += 2;
+            CreateEntFactoryFromEntity(self, FACTORY(4, 13), 0);
+            self->posY.i.hi -= 2;
+            self->posX.i.hi -= var_s2;
+            D_80138448 = 0x40;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_80130E94);
 
