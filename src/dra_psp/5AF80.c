@@ -1835,6 +1835,89 @@ void func_80130E94(Entity* self) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8013136C);
+// Entity #60. This is created manually at g_Entities[30].
+// Creation is in func_8012E7A4.
+void func_8013136C(Entity* self) {
+    if (!(g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->step) {
+        self->animSet = 0xF;
+        self->unk5A = 0x7E;
+        self->palette = PLAYER.palette;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotPivotX = -8;
+        self->step++;
+    }
+    self->animCurFrame = 80;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posX.val = g_Entities[UNK_ENTITY_13].posX.val;
+    self->posY.val = g_Entities[UNK_ENTITY_13].posY.val;
+    if (!PLAYER.facingLeft) {
+        self->zPriority = PLAYER.zPriority - 5;
+        self->posX.i.hi += 8;
+    } else {
+        self->zPriority = PLAYER.zPriority + 5;
+        self->posX.i.hi -= 8;
+    }
+    self->posY.i.hi += 3;
+    self->rotZ = g_Entities[UNK_ENTITY_12].rotZ;
+    switch (PLAYER.step_s) {
+    case 1:
+        if (D_800B0914 == 1) {
+            self->posY.i.hi -= 2;
+            if (!PLAYER.facingLeft) {
+                self->posX.i.hi -= 8;
+            } else {
+                self->posX.i.hi += 8;
+            }
+        }
+        break;
+    case 2:
+        switch (D_800B0914) {
+        case 0:
+            if (PLAYER.animCurFrame == 33) {
+                self->animCurFrame = 81;
+                if (!PLAYER.facingLeft) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 6;
+                }
+            }
+            if (PLAYER.animCurFrame == 34) {
+                if (!PLAYER.facingLeft) {
+                    self->posX.i.hi += 3;
+                } else {
+                    self->posX.i.hi += 13;
+                }
+                self->animCurFrame = 82;
+            }
+            break;
+        case 1:
+            break;
+        case 3:
+        case 2:
+        default:
+            break;
+        }
+        break;
+    case 3:
+        break;
+    case 4:
+        D_800B0914 == 0;
+        break;
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+        break;
+    }
+    self->palette = PLAYER.palette;
+    func_8012C600();
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", EntityGiantSpinningCross);
