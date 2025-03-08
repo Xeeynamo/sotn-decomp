@@ -943,8 +943,17 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     s->prim->r1 = s->prim->g1 = s->prim->r3 = s->prim->g3;
 }
 
-// func_8012F83C
-INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_psp_0913A3A0);
+bool func_8012F83C(s32 x0, s32 y0, s32 x1, s32 y1, s32 distance) {
+    s32 diffX = x0 - x1;
+    s32 diffY = y0 - y1;
+    s32 sqrt = SquareRoot12((SQ(diffX) + SQ(diffY)) << 12);
+
+    if((sqrt >> 12) >= distance){
+        return true;
+    } else{
+        return false;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/5AF80", func_8012F894);
 
