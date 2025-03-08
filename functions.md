@@ -156,7 +156,7 @@
 | no4     | func_psp_09247D78                   |       21 |          1 |        |                                 |       |
 | st0     | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0     | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| st0     | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 0.66  |
+| st0     | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 0.93  |
 | wrp     | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | wrp     | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | dra     | func_8010FAF4                       |       21 |          2 |        |                                 |       |
