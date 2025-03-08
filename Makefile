@@ -207,15 +207,14 @@ $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
         rm sotn.$*.toc
 
 # Targets to extract the data from the disk image
-extract-disk: extract-disk-$(VERSION)
-$(DEBUG).SILENT: extract-disk-us
-extract-disk-us: $(SOTNDISK)
+extract-disk: $(EXTRACTED_DISK_DIR)
+$(EXTRACTED_DISK_DIR:$(VERSION)=us): $(SOTNDISK)
 	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
-$(addprefix extract-disk-, pspeu hd):
+$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
 	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
 	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
-extract-disk_saturn:
-	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)/sotn.$(VERSION).iso
+$(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
+	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
