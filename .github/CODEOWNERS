@@ -7,9 +7,12 @@ bin/ @xeeynamo
 
 src/st/dra/ @xeeynamo
 src/st/pc/ @xeeynamo
+src/st/lib_psp/ @JoshSchreuder
 src/st/mad/ @xeeynamo
 src/st/sel/ @xeeynamo
+src/st/st0_psp/ @JoshSchreuder
 src/st/wrp/ @xeeynamo
+src/st/wrp_psp/ @JoshSchreuder
 
 tools/gfxsotn/ @xeeynamo
 tools/sotn_str/ @xeeynamo
