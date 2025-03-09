@@ -1951,7 +1951,7 @@ void func_80115C50(void) {
 }
 
 // Corresponding RIC function is func_8015BCD0
-void func_80115DA0(void) {
+void PlayerStepTeleport(void) {
     Entity* e;
 
     PLAYER.velocityY = 0;
