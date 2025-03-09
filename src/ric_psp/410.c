@@ -1523,4 +1523,62 @@ void RicHandleBladeDash(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHighJump);
+void RicHandleHighJump(void) {
+    bool loadAnim;
+
+#if defined(VERSION_US)
+    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
+    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
+    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
+#endif
+    loadAnim = false;
+    g_Player.pl_high_jump_timer++;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
+            if (PLAYER.facingLeft) {
+                if (!(g_Player.padPressed & PAD_LEFT)) {
+                    RicDecelerateX(0x1000);
+                }
+            } else {
+                if (!(g_Player.padPressed & PAD_RIGHT)) {
+                    RicDecelerateX(0x1000);
+                }
+            }
+        } else {
+            RicDecelerateX(0x1000);
+        }
+
+        if (g_Player.pl_vram_flag & 2) {
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+            PLAYER.step_s = 2;
+        } else if (g_Player.pl_high_jump_timer > 0x1C) {
+            PLAYER.step_s = 1;
+            PLAYER.velocityY = -0x60000;
+        }
+        break;
+    case 1:
+        if (g_Player.pl_vram_flag & 2) {
+            PLAYER.step_s = 2;
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+        } else {
+            PLAYER.velocityY += 0x6000;
+            if (PLAYER.velocityY > 0x8000) {
+                loadAnim = true;
+            }
+        }
+        break;
+    case 2:
+        if (g_Player.pl_high_jump_timer > 4) {
+            loadAnim = true;
+        }
+        break;
+    }
+
+    if (loadAnim) {
+        RicSetAnimation(D_80155534);
+        RicSetStep(PL_S_JUMP);
+    }
+}

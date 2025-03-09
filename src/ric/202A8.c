@@ -3,26 +3,26 @@
 #include "ric.h"
 
 void RicHandleHighJump(void) {
-    bool loadAnim = 0;
-    s32 temp;
+    bool loadAnim;
 
 #if defined(VERSION_US)
     FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
     FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
 #endif
+    loadAnim = false;
     g_Player.pl_high_jump_timer++;
-
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-            if (!PLAYER.facingLeft) {
-                temp = g_Player.padPressed & PAD_RIGHT;
+            if (PLAYER.facingLeft) {
+                if (!(g_Player.padPressed & PAD_LEFT)) {
+                    RicDecelerateX(0x1000);
+                }
             } else {
-                temp = g_Player.padPressed & PAD_LEFT;
-            }
-            if (temp == 0) {
-                RicDecelerateX(0x1000);
+                if (!(g_Player.padPressed & PAD_RIGHT)) {
+                    RicDecelerateX(0x1000);
+                }
             }
         } else {
             RicDecelerateX(0x1000);
@@ -32,12 +32,11 @@ void RicHandleHighJump(void) {
             func_80158B04(3);
             g_Player.pl_high_jump_timer = 0;
             PLAYER.step_s = 2;
-        } else if (g_Player.pl_high_jump_timer >= 0x1D) {
+        } else if (g_Player.pl_high_jump_timer > 0x1C) {
             PLAYER.step_s = 1;
             PLAYER.velocityY = -0x60000;
         }
         break;
-
     case 1:
         if (g_Player.pl_vram_flag & 2) {
             PLAYER.step_s = 2;
@@ -50,9 +49,8 @@ void RicHandleHighJump(void) {
             }
         }
         break;
-
     case 2:
-        if (g_Player.pl_high_jump_timer >= 5) {
+        if (g_Player.pl_high_jump_timer > 4) {
             loadAnim = true;
         }
         break;
