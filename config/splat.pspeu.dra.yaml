@@ -137,8 +137,8 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
-      - [0xA6820, .data, dra_psp/2BF60] # charal string
-      - [0xA6830, data]
+      - [0xA6820, .data, dra_psp/2BF60]
+      - [0xA6858, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/alu_anim]
