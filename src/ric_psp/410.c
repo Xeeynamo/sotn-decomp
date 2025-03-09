@@ -1439,7 +1439,66 @@ void func_8015BCD0(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleSlideKick);
+void RicHandleSlideKick(void) {
+    // If we are pressing square while in contact with an enemy
+    // (as detected in g_Player.unk44), we will bounce back.
+    if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
+        PLAYER.step = PL_S_JUMP;
+        RicSetAnimation(D_8015555C);
+        RicSetSpeedX(FIX(-1.5));
+        PLAYER.velocityY = 0;
+        if (!g_Player.unk72) {
+            PLAYER.velocityY = FIX(-4.5);
+        }
+        g_Player.unk44 |= (8 + 2);
+        g_Player.unk44 &= ~4;
+        PLAYER.step_s = 2;
+        return;
+    }
+    RicDecelerateX(0x1000);
+    PLAYER.velocityY += 0x1000;
+
+    if (g_Player.pl_vram_flag & 1) {
+        g_CurrentEntity->velocityX /= 2;
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        PLAYER.facingLeft++;
+        PLAYER.facingLeft &= 1;
+        RicSetCrouch(3, PLAYER.velocityX);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
+        return;
+    }
+    if (g_Player.pl_vram_flag & 0xC) {
+        PLAYER.velocityX = 0;
+    }
+    if (PLAYER.velocityX < 0) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX > FIX(-3) || (g_Player.pl_vram_flag & 8)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (g_Player.padPressed & PAD_LEFT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX < FIX(3) || (g_Player.pl_vram_flag & 4)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleBladeDash);
 
