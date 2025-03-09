@@ -19,6 +19,7 @@ echo		= $(if $(and $(QUIET),$2),,echo -e "$(subst //,/,$1)";)# Allows for option
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $1,$(VERSION)),$2,$3)
+wget		= wget -a wget-$(or $3,$2,$1).log $(if $2,-O $2 )$1
 
 # System related variables
 OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
@@ -96,7 +97,7 @@ SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
 SOTNASSETS      := $(GOPATH)/bin/sotn-assets
-
+ 
 # Build functions
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
@@ -124,16 +125,14 @@ define link
 		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad stmad_fix,$(1)),.$(VERSION)).$(subst _fix,,$(1)).txt \
 		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad stmad_fix,$(1)),$(VERSION).)$(subst _fix,,$(1)).txt)
 endef
-
-# This throws an error from Python occasionally within make, but it isn't an error in the functionality of the build pipeline.
-# Todo: revise the Python so that error doesn't happen, but also to make it more readable
 define get_merged_functions 
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
 	yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
-	config = yaml.safe_load(yaml_file);\
-	yaml_file.close();\
-	print(" ".join([x[2].split("/")[1] for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c" and x[2].startswith("$(1)/")]))')
+	config = yaml.safe_load(yaml_file); yaml_file.close();\
+	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
+	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
+	print(" ".join(merged_functions))')
 endef
 get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
@@ -212,17 +211,15 @@ $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
 extract-disk: $(EXTRACTED_DISK_DIR)
 $(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
 	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
-# Todo: Adjust hd so that it looks at the correct dir, hd currently runs every time
 $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
-	mkdir -p $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
-	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
+	mkdir -p $(EXTRACTED_DISK_DIR)
+	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
 $(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
 	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
 	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
 # It doesn't make sense to copy the extracted files, then overwrite them with the build files, but this works for now
-# Todo: Adjust this to be cp BUILD_DIR, then cp no clobber EXTRACTED_DISK_DIR
 disk: disk-prepare
 	$(call echo,Creating disk image) $(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 ovl_to_bin  = $(1)/$(1).BIN $(1)/F_$(1).BIN
@@ -312,7 +309,6 @@ duplicates-report: force-extract
 	mkdir -p $(TOOLS_DIR)/gh-duplicates; $(DUPS)
 
 # Targets that specify and/or install dependencies
-# Todo: standardize web grabs to all use the same method and parameters
 git-submodules: $(ASMDIFFER) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
 update-dependencies: $(ASMDIFFER) $(M2CTX_APP) $(M2C_APP) requirements-python dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS)
 	git clean -fdq $(BIN_DIR)/
@@ -326,9 +322,8 @@ dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
 $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
-	wget -a $(TOOLS_DIR)/wget-$*.log -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
-	sha256sum --check $(WIBO).sha256
-	chmod +x $(WIBO); rm wget-$*.log
+	$(call wget,https://github.com/decompals/wibo/releases/download/0.6.13/wibo,$@,wibo)
+	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO); rm wget-wibo.log
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 dependencies_saturn: $(SATURN_SPLITTER_APP) $(DOSEMU_APP) $(CYGNUS)
@@ -341,8 +336,9 @@ $(DOSEMU_APP):
 	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
 	sudo dpkg -i $(TOOLS_DIR)/dosemu-deb/*.deb
 $(GO):
-	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
+	$(call wget,https://go.dev/dl/go1.22.4.linux-amd64.tar.gz,go1.22.4.linux-amd64.tar.gz,go)
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz; rm go1.22.4.linux-amd64.tar.gz
+	$(muffle)rm wget-go.log
 $(ASMDIFFER): | $(VENV_DIR)
 	git submodule update --init $(dir $(ASMDIFFER))
 $(dir $(M2C_APP)):
@@ -352,7 +348,8 @@ $(M2C_APP): $(dir $(M2C_APP)) | $(VENV_DIR)
 $(PERMUTER_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(PERMUTER_APP))
 $(M2CTX_APP): | $(VENV_DIR)
-	curl -o $@ https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py
+	$(call wget,https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py,$@,m2ctx_app)
+	$(muffle)rm wget-m2ctx_app.log
 $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 	cd $(SOTNDISK_DIR); $(GO) install
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
@@ -366,11 +363,11 @@ $(VENV_DIR):
 requirements-python: | $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
-	wget -a $(TOOLS_DIR)/wget-$*.log -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
+	$(call wget,https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz,$@,$*) 
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
 	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
-	$(muffle)touch $@; rm $(TOOLS_DIR)/wget-$*.log
+	$(muffle)touch $@; rm wget-$*.log
 
 graphviz: | $(VENV_DIR)
 	$(PIP) install --upgrade graphviz
@@ -440,11 +437,11 @@ PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,u
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(WIBO) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(GO) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(M2CTX_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(EXPECTED_DIR)
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(EXPECTED_DIR)
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
-$(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz Muffled in target: $(BIN_DIR)/%
+$(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz $(M2CTX_APP) Muffled in target: $(BIN_DIR)/% $(GO) $(WIBO)
 # This are walls of text, so they're redirected to files instead of stdout for debugging
 get-debug: get-phony get-silent
 get-phony:
