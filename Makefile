@@ -137,11 +137,10 @@ endef
 get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(if $1,$(addprefix st,$(STAGES)),$(STAGES)) $(if $1,$(addprefix bo,$(BOSSES)),$(BOSSES)) $(SERVANTS)
-is_stage = $(filter $(call to_lower,$1),$(STAGES))
-is_boss = $(filter $(call to_lower,$1),$(BOSSES))
-# If stage then $2$1, else if boss then $3$1, else $1
-get_filename = $(if $(call is_stage,$1),$(call to_lower,$2$1),$(if $(call is_boss,$1),$(call to_lower,$3$1),$(call to_lower,$1)))
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
+# If stage then (or $2$1,st$1) else if boss then (or $3$1,bo$1), else $1
+add_ovl_prefix = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$(or $2,st)$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$(or $3,bo)$1),$(call to_lower,$1)))
+get_ovl_from_path = $(word $(or $2,1),$(filter $(call get_targets),$(subst /, ,$1)))
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk

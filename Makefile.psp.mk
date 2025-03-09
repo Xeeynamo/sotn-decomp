@@ -48,7 +48,7 @@ $(BUILD_DIR:$(VERSION)=pspeu)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_file
 	$(call link,tt_$*,$@)
 
 # Step 3/5 of build
-$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin %.exe): $(BUILD_DIR)/$$(call get_filename,%,st,bo).elf# Shared
+$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin %.exe): $(BUILD_DIR)/$$(call add_ovl_prefix,%,st,bo).elf# Shared
 	$(muffle)$(call echo,Building $(notdir $@),optional) $(OBJCOPY) -O binary $< $@
 
 # Step 4/5 of build
