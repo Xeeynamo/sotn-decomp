@@ -2179,6 +2179,15 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/62DEC/MemCardSetPort.s 
 | 1.00 | true     | func_800FAC30                       | asm/us/dra/matchings/menu/func_800FAC30.s 
 | 1.00 | true     | MemcardInfoInit                     | asm/us/dra/matchings/save_mgr/MemcardInfoInit.s 
@@ -2203,14 +2212,6 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/first_c_file/CutsceneUnk3.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2342,7 +2343,7 @@
 | 1.00 | true     | SetPlayerStep                       | asm/us/boss/bo4/matchings/dop_anim/SetPlayerStep.s 
 | 1.00 | true     | SetPlayerStep                       | asm/us/boss/rbo5/matchings/dop_anim/SetPlayerStep.s 
 | 1.00 | true     | SetPlayerStep                       | asm/us/dra/matchings/alu_anim/SetPlayerStep.s 
-| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/202A8/RicSetStep.s 
+| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/204AC/RicSetStep.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA2C                       | asm/us/boss/bo4/matchings/dop_anim/func_8010DA2C.s 
 | 1.00 | true     | func_8010DA2C                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010DA2C.s 
@@ -2546,7 +2547,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010D800                       | asm/us/boss/bo4/matchings/dop_anim/func_8010D800.s 
 | 1.00 | true     | func_8010D800                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010D800.s 
-| 1.00 | true     | func_8015C6D4                       | asm/us/ric/matchings/202A8/func_8015C6D4.s 
+| 1.00 | true     | func_8015C6D4                       | asm/us/ric/matchings/204AC/func_8015C6D4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA70                       | asm/us/boss/bo4/matchings/dop_anim/func_8010DA70.s 
 | 1.00 | true     | func_8010DA70                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010DA70.s 
@@ -2582,7 +2583,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C6E7C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C6E7C.s 
 | 1.00 | true     | func_us_801C648C                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C648C.s 
-| 1.00 | true     | func_80158B04                       | asm/us/ric/matchings/1CB04/func_80158B04.s 
+| 1.00 | true     | func_80158B04                       | asm/us/ric/matchings/pl_handlers/func_80158B04.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C9FEC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C9FEC.s 
 | 1.00 | true     | func_80103EAC                       | asm/us/boss/rbo5/matchings/unk_4648C/func_80103EAC.s 
@@ -2975,7 +2976,7 @@
 | 0.92 | true     | PlayerStepSummonSpells              | asm/us/dra/matchings/71830/PlayerStepSummonSpells.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | PlayerStepTeleport                  | asm/us/dra/matchings/71830/PlayerStepTeleport.s 
-| 1.00 | true     | func_8015BCD0                       | asm/us/ric/matchings/1FCD0/func_8015BCD0.s 
+| 1.00 | true     | func_8015BCD0                       | asm/us/ric/matchings/pl_handlers/func_8015BCD0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80111938                       | asm/us/dra/matchings/71830/func_80111938.s 
 | 1.00 | true     | RicDebugEnter                       | asm/us/ric/matchings/1AC60/RicDebugEnter.s 
@@ -2984,10 +2985,10 @@
 | 1.00 | true     | RicDebugExit                        | asm/us/ric/matchings/1AC60/RicDebugExit.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80113F7C                       | asm/us/dra/matchings/71830/func_80113F7C.s 
-| 1.00 | true     | func_80159C04                       | asm/us/ric/matchings/1CB04/func_80159C04.s 
+| 1.00 | true     | func_80159C04                       | asm/us/ric/matchings/pl_handlers/func_80159C04.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80115C50                       | asm/us/dra/matchings/71830/func_80115C50.s 
-| 1.00 | true     | func_8015BB80                       | asm/us/ric/matchings/1CB04/func_8015BB80.s 
+| 1.00 | true     | func_8015BB80                       | asm/us/ric/matchings/pl_handlers/func_8015BB80.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_80118970                       | asm/us/dra/matchings/7879C/func_80118970.s 
 | 0.93 | true     | func_us_80173AA0                    | asm/us/servant/tt_004/matchings/sword/func_us_80173AA0.s 
@@ -3166,23 +3167,20 @@
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
 -------------------------------------------------------------------------------
 | 0.97 | false    | SetAutoPan                          | asm/us/main/nonmatchings/psxsdk/libsnd/vmanager/SetAutoPan.s 
 | 1.00 | false    | SetAutoVol                          | asm/us/main/nonmatchings/psxsdk/libsnd/vmanager/SetAutoVol.s 
 -------------------------------------------------------------------------------
-| 0.91 | true     | RicHandleGenericSubwpnCrash         | asm/us/ric/matchings/1CB04/RicHandleGenericSubwpnCrash.s 
-| 1.00 | true     | RicHandleHydrostorm                 | asm/us/ric/matchings/1CB04/RicHandleHydrostorm.s 
--------------------------------------------------------------------------------
 | 0.96 | true     | RicCheckWallLeft                    | asm/us/ric/matchings/211D0/RicCheckWallLeft.s 
 | 1.00 | true     | RicCheckWallRight                   | asm/us/ric/matchings/211D0/RicCheckWallRight.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2C4C4/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
+-------------------------------------------------------------------------------
+| 0.91 | true     | RicHandleGenericSubwpnCrash         | asm/us/ric/matchings/pl_handlers/RicHandleGenericSubwpnCrash.s 
+| 1.00 | true     | RicHandleHydrostorm                 | asm/us/ric/matchings/pl_handlers/RicHandleHydrostorm.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DestroyServantEntity                | asm/us/servant/tt_000/matchings/bat/DestroyServantEntity.s 
 | 1.00 | true     | DestroyServantEntity                | asm/us/servant/tt_001/matchings/ghost/DestroyServantEntity.s 
