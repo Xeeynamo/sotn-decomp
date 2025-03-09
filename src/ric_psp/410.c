@@ -1365,7 +1365,79 @@ void func_8015BB80(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", func_8015BCD0);
+// Corresponding DRA function is func_80115DA0
+void func_8015BCD0(void) {
+    Entity* e;
+
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    g_Player.padSim = 0;
+    g_Player.D_80072EFC = 4;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 0), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 1:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 2:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 2), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 4:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 4), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 5:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleSlideKick);
 
