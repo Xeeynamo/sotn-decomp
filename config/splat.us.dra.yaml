@@ -205,10 +205,10 @@ segments:
       # - [0x418E0, .rodata, 71830] # PlayerStepHighJump
       # - [0x418F4, .rodata, 71830] # AlucardHandleDamage
       # - [0x419D0, .rodata, 71830] # PlayerStepTeleport
-      - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
-      # - [0x41A00, .rodata, 75F54] # func_80116994
-      # - [0x41A20, .rodata, 75F54] # func_80116B0C
-      # - [0x41A38, .rodata, 75F54] # func_80117DEC
+      # - [0x419E8, .rodata, 71830] # PlayerStepHellfire
+      # - [0x41A00, .rodata, 71830] # func_80116994
+      # - [0x41A20, .rodata, 71830] # func_80116B0C
+      # - [0x41A38, .rodata, 71830] # func_80117DEC
       - [0x41A44, .rodata, 7879C] # EntityNumberMovesToHpMeter
       # - [0x41A74, .rodata, 7879C] # EntityGuardText
       # - [0x41AA4, .rodata, 7879C] # UpdatePlayerEntities
@@ -266,7 +266,6 @@ segments:
       - [0x70394, c, 70394]
       - [0x704D0, c, 704D0]
       - [0x71830, c, 71830]
-      - [0x75F54, c, 75F54]
       - [0x7879C, c, 7879C]
       - [0x7E4BC, c, 7E4BC]
       - [0x84B88, c, 84B88]
