@@ -150,19 +150,19 @@ else ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
 
-build-and-check: build check | $(VENV_DIR)
-all: | $(VENV_DIR)
+build-and-check: build check
+all:
 	$(MAKE) extract
 	$(MAKE) expected
-all-clean: clean | $(VENV_DIR)
+all-clean: clean
 	$(MAKE) all
 
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 	$(call echo,Cleaning $*) git clean -fdxq $*
 
-extract: extract_$(VERSION) | $(VENV_DIR)
-build: build_$(VERSION) | $(VENV_DIR)
+extract: extract_$(VERSION)
+build: build_$(VERSION)
 
 # Step 1/3 of expected
 patch: $(CONFIG_DIR)/dirt.$(VERSION).json build
@@ -246,16 +246,16 @@ $(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG) format-src.run
 	$(CLANG) -i $*
 
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
+$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)/bin
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 
 format-symbols: $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
 	rm $@.run
 format-symbols.run:
 	$(call echo,Removing orphan symbols using splat configs) touch $@
-$(addprefix format-symbols_,us hd pspeu saturn): format-symbols_%: | $(VENV_DIR)
+$(addprefix format-symbols_,us hd pspeu saturn): format-symbols_%: | $(VENV_DIR)/bin
 	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
+$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)/bin
 	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
 
 format-license:
@@ -267,7 +267,7 @@ format-license:
 force_symbols = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
 force-symbols: $(addprefix FORCE_,$(force_symbols))
 # This is currently intentionally hard coded to us because the us files are used for functions in other versions
-$(addprefix FORCE_,$(force_symbols)): FORCE_%: | $(VENV_DIR)
+$(addprefix FORCE_,$(force_symbols)): FORCE_%: | $(VENV_DIR)/bin
 	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
 
 force-extract:
@@ -276,7 +276,7 @@ force-extract:
 	$(MAKE) extract
 	rm -rf src/; mv /tmp/src_tmp src
 
-context: $(M2CTX_APP)
+context: $(M2CTX_APP) | $(VENV_DIR)/bin
 ifndef SOURCE
 	$(error SOURCE environment variable must be set to generate context)
 endif
@@ -289,7 +289,7 @@ mad_fix: $$(call list_o_files,st/mad,_st) $$(call list_o_files,st,_shared) | stm
 	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
 
 # function-finder and duplicates-report don't seem to work reliably, but it needs more investigation
-function-finder: graphviz force-extract
+function-finder: graphviz force-extract | $(VENV_DIR)/bin
 	$(MAKE) force-symbols
 	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
 	git clean -fdxq $(ASM_DIR)/
@@ -302,7 +302,7 @@ function-finder: graphviz force-extract
 	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
 	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
 
-duplicates-report: force-extract
+duplicates-report: force-extract | $(VENV_DIR)/bin
 	$(MAKE) force-symbols
 	$(PYTHON) $(TOOLS_DIR)/function_finder/fix_matchings.py
 	mkdir -p $(TOOLS_DIR)/gh-duplicates; $(DUPS)
@@ -354,11 +354,13 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR); $(GO) install
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
-# Make needs to start with the venv existing so that it picks up the correct path
 $(VENV_DIR):
 	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
+	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
+# Used when an explicit make restart is needed after venv is created
+$(VENV_DIR)/bin:
+	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && echo "Build environment has changed due to venv install, please restart Make" && exit 1
-# So that python requirements can be updated if .venv already exists
 requirements-python: | $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
@@ -437,7 +439,7 @@ PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extrac
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(EXPECTED_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin $(EXPECTED_DIR)
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz $(M2CTX_APP) Muffled in target: $(BIN_DIR)/% $(GO) $(WIBO)

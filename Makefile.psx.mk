@@ -36,7 +36,7 @@ LD_FLAGS        := -nostdlib --no-check-sections
 
 COMPILER		:= $(CPP) $(CPP_FLAGS) -lang-c
 COMPILER_ARGS	 = | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
-COMPILER_REQS	 = $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel-dirs)
+COMPILER_REQS	 = $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel-dirs) | $(VENV_DIR)/bin
 
 # Libs
 PSXLIBS         := libc libc2 libapi libetc libcard libgpu libgs libgte libcd libsnd libspu
@@ -94,12 +94,12 @@ $(call get_build_dirs,$(ASM_DIR)/%/data $(SRC_DIR)/% $(ASSETS_DIR)/%): | %-dirs
 
 # Step 1/2 of extract
 # The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
-$(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) | %-dirs $(EXTRACTED_DISK_DIR)
+$(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) | %-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<; touch $@
-$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(STAGE_SYMBOLS) | st%-dirs $(EXTRACTED_DISK_DIR)
+$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(STAGE_SYMBOLS) | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<
 	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_ST)
-$(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%-dirs $(EXTRACTED_DISK_DIR)
+$(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<
 	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_BO)
 
@@ -135,19 +135,19 @@ $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(COMPILER_REQS)
 
 # Handles assets
 # Todo: make sure all file dependencies are in prerequisites
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png | $(VENV_DIR)/bin
 	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file, optional)
 	$(muffle)$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o: $(ASSETS_DIR)/weapon/%.animset.json
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o: $(ASSETS_DIR)/weapon/%.animset.json | $(VENV_DIR)/bin
 	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file, optional)
 	$(muffle)$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s -s g_Animset$(subst 1,,$(lastword $(subst _, ,$*)))
 	$(muffle)$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s
 
-$(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json
+$(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json | $(VENV_DIR)/bin
 	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
 	$(muffle)$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json | $(VENV_DIR)/bin
 	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
 	$(muffle)$(PYTHON) $(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
 	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s

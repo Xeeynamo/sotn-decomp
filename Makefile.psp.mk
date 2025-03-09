@@ -15,21 +15,21 @@ AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
 OPT_HI_FUNCS	:= $(addsuffix .c.o,33F0 A710 C0B0 EC60 186E8 61F30 624DC 628AC 63C90 64EE0) # These objects will get -O4,p instead of -Op
 COMPILER		:= $(PYTHON) $(MWCCGAP_APP)
 COMPILER_ARGS	 = --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL)
-COMPILER_REQS	:= $(MWCCPSP) $(MWCCGAP_APP)
+COMPILER_REQS	:= $(MWCCPSP) $(MWCCGAP_APP) | $(VENV_DIR)/bin
 OPT_LEVEL		 = $(if $(filter $(notdir $@),$(OPT_HI_FUNCS)),-O4$(comma)p,-Op)
 
 # Step 1/2 of extract
-$(BUILD_DIR:$(VERSION)=pspeu)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt | $(EXTRACTED_DISK_DIR) $(VENV_DIR)
+$(BUILD_DIR:$(VERSION)=pspeu)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt | $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<
 
 # Step 2/2 of extract
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
 
 # Step 1/5 of build
-$(BUILD_DIR)/%.s.o: %.s $(AS) # Shared
+$(BUILD_DIR)/%.s.o: %.s $(AS)# Shared
 	$(muffle)$(call echo,Assembling $<,optional)
 	$(muffle)mkdir -p $(dir $@); $(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(COMPILER_REQS) # Shared
+$(BUILD_DIR)/%.c.o: %.c $(COMPILER_REQS)# Shared
 	$(muffle)$(call echo,Compiling $<,optional)
 	$(muffle)mkdir -p $(dir $@); $(COMPILER) $< $(call if_version,pspeu,$@) $(COMPILER_ARGS) $(call if_version,us hd,$@)
 $(BUILD_DIR:$(VERSION)=pspeu)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
