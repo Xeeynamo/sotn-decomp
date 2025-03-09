@@ -1050,7 +1050,7 @@ void RicHandleStandInAir(void) {
             PLAYER.velocityY = 0;
             PLAYER.step_s = 1;
         }
-    } else if (g_Player.unk4E != 0) {
+    } else if (g_Player.unk4E) {
         g_Player.unk46 = 0;
         RicSetStep(PL_S_JUMP);
         RicSetAnimation(D_80155528);
