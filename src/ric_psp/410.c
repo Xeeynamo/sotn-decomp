@@ -1092,9 +1092,29 @@ void RicHandleEnableFlameWhip(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHydrostorm);
+void RicHandleHydrostorm(void) {
+    if (PLAYER.animFrameDuration < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleGenericSubwpnCrash);
+    if ((g_Player.pl_vram_flag & 1) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
+
+void RicHandleGenericSubwpnCrash(void) {
+    if (g_Player.unk4E) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if ((g_Player.pl_vram_flag & 1) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleThrowDaggers);
 
