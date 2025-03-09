@@ -1116,7 +1116,36 @@ void RicHandleGenericSubwpnCrash(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleThrowDaggers);
+#if defined(VERSION_PSP)
+extern s32 throw_dagger_timer;
+#else
+static s32 throw_dagger_timer;
+#endif
+void RicHandleThrowDaggers(void) {
+    if (PLAYER.step_s == 0) {
+        throw_dagger_timer = 0x200;
+        PLAYER.step_s++;
+    } else {
+        RicCheckFacing();
+        if (!--throw_dagger_timer) {
+            g_Player.unk46 = 0;
+            RicSetStand(0);
+            g_Player.unk4E = 1;
+        }
+    }
+    if (g_Player.padTapped & PAD_CROSS) {
+        RicSetJump();
+        g_Player.unk46 = 0;
+        g_Player.unk4E = 1;
+        throw_dagger_timer = 0;
+    }
+    if (!(g_Player.pl_vram_flag & 1)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+        g_Player.unk4E = 1;
+        throw_dagger_timer = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleDeadPrologue);
 
