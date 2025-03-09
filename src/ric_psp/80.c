@@ -2,4 +2,4 @@
 #include "../ric/ric.h"
 #include <player.h>
 
-INCLUDE_ASM("ric_psp/nonmatchings/80", func_pspeu_092A6280);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/80", func_pspeu_092A6280);

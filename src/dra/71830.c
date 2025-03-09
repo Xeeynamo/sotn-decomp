@@ -1931,22 +1931,20 @@ void PlayerStepUnk17(void) {
 // same as RIC/func_8015BB80
 void func_80115C50(void) {
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 < 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
-
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 > 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 < 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
@@ -1954,48 +1952,64 @@ void func_80115C50(void) {
 
 // Corresponding RIC function is func_8015BCD0
 void PlayerStepTeleport(void) {
+    Entity* e;
+
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     g_Player.padSim = 0;
     g_Player.D_80072EFC = 4;
-
     switch (PLAYER.step_s) {
     case 0:
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, 121, 0) == NULL) {
-            PLAYER.animFrameDuration = 2;
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 0), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
         }
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
-
+    case 1:
+        if (PLAYER.animFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        if (g_Player.unk1C != 0) {
+            func_8010E570(0);
+        }
+        break;
     case 2:
         func_80115C50();
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0) ==
-                NULL) {
-            PLAYER.animFrameDuration = 2;
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
         }
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
-
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            func_8010E570(0);
+        }
+        if (g_Player.unk1C != 0) {
+            func_8010E570(0);
+        }
+        break;
     case 4:
         func_80115C50();
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1 &&
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0) ==
-                NULL) {
-            PLAYER.animFrameDuration = 2;
+        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
         }
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
         break;
-
-    case 1:
-    case 3:
     case 5:
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);

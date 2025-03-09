@@ -486,15 +486,20 @@ void func_80159C04(void) {
 
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
-
+#ifdef VERSION_PSP
+extern s32 ric_hit_stun_timer;
+#else
 static s32 ric_hit_stun_timer;
+#endif
 void RicHandleHit(
     s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
-    s32 xShift;
+    s32 damageResult;
+    s16 xShift;
+    bool step_s_zero;
     s32 i;
-    bool step_s_zero = false;
 
+    step_s_zero = false;
     if (ric_hit_stun_timer) {
         ric_hit_stun_timer--;
     }
@@ -527,8 +532,8 @@ void RicHandleHit(
                 damageKind = DAMAGEKIND_3;
             }
             // TODO check if this is real, i suspect not. Fix damageKind.
-            switch (damageKind - 2) {
-            case 0:
+            switch (damageKind) {
+            case 2:
                 switch (prevStep) {
                 case PL_S_STAND:
                 case PL_S_WALK:
@@ -549,8 +554,8 @@ void RicHandleHit(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
-                case PL_S_FALL:
                 case PL_S_JUMP:
+                case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
@@ -559,11 +564,11 @@ void RicHandleHit(
                     break;
                 }
                 break;
-            case 2:
-            case 3:
-                PLAYER.velocityY = FIX(-0.5);
+            case 5:
+            case 4:
                 g_Player.damageTaken = PLAYER.hitPoints;
                 PLAYER.posY.val -= 1;
+                PLAYER.velocityY = FIX(-0.5);
                 func_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
                 PLAYER.anim = ric_anim_stun;
@@ -571,18 +576,8 @@ void RicHandleHit(
                 PLAYER.facingLeft = PLAYER.entityRoomIndex;
                 break;
             default:
-            case 1:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
+            case 16:
+            case 3:
                 switch (prevStep) {
                 default:
                 case PL_S_STAND:
@@ -602,8 +597,8 @@ void RicHandleHit(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
                     break;
-                case PL_S_FALL:
                 case PL_S_JUMP:
+                case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
@@ -684,14 +679,15 @@ void RicHandleHit(
         }
         if (g_Player.pl_vram_flag & 2) {
             func_80158B04(1);
-            ric_hit_stun_timer = 0x18;
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
+            ric_hit_stun_timer = 0x18;
             PLAYER.step_s = 5;
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
-            if (g_api.CalcPlayerDamage(&damage)) {
+            damageResult = g_api.CalcPlayerDamage(&damage);
+            if (damageResult) {
                 RicSetStep(PL_S_DEAD);
                 RicHandleDead(0, 2, PL_S_HIT, 2);
                 return;
@@ -719,10 +715,10 @@ void RicHandleHit(
                     func_8015CAAC(FIX(-1.25));
                     xShift = -3;
                     if (PLAYER.velocityX != 0) {
-                        xShift = 3;
+                        xShift = -xShift;
                     }
                     PLAYER.posY.i.hi += 20;
-                    PLAYER.posX.i.hi = xShift + PLAYER.posX.i.hi;
+                    PLAYER.posX.i.hi += xShift;
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_EMBERS, 9), 0);
                     PLAYER.posY.i.hi -= 20;
@@ -733,7 +729,8 @@ void RicHandleHit(
                     damage.effects = EFFECT_NONE;
                     damage.damageKind = DAMAGEKIND_1;
                     damage.damageTaken = g_Player.damageTaken;
-                    if (g_api.CalcPlayerDamage(&damage)) {
+                    damageResult = g_api.CalcPlayerDamage(&damage);
+                    if (damageResult) {
                         RicSetStep(PL_S_DEAD);
                         RicHandleDead(0, 2, PL_S_HIT, 2);
                         return;
@@ -752,7 +749,8 @@ void RicHandleHit(
         damage.effects = EFFECT_NONE;
         damage.damageKind = DAMAGEKIND_1;
         damage.damageTaken = g_Player.damageTaken;
-        if (g_api.CalcPlayerDamage(&damage)) {
+        damageResult = g_api.CalcPlayerDamage(&damage);
+        if (damageResult) {
             RicSetStep(PL_S_DEAD);
             RicHandleDead(0, 2, PL_S_HIT, 2);
             return;
@@ -775,7 +773,7 @@ void RicHandleHit(
             }
             break;
         } else if (g_Player.pl_vram_flag & 0xC) {
-            if (!(g_Player.pl_vram_flag & 0xFF03)) {
+            if (!(g_Player.pl_vram_flag & (u16)~0xFC)) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -788,8 +786,7 @@ void RicHandleHit(
             }
         }
         PLAYER.step_s = 1;
-        PLAYER.animFrameIdx = 0;
-        PLAYER.animFrameDuration = 0;
+        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
         break;
     case 6:
         RicDecelerateX(0x2000);
@@ -797,12 +794,15 @@ void RicHandleHit(
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
-            if (!g_Player.unk5C || g_Status.hp > 0) {
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
                 RicSetStand(PLAYER.velocityX);
-                break;
+            } else {
+                RicSetStand(PLAYER.velocityX);
             }
-            RicSetDeadPrologue();
-            return;
         }
         break;
     case 7:
@@ -811,21 +811,27 @@ void RicHandleHit(
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
-            if (g_Player.unk5C && g_Status.hp <= 0) {
-                RicSetDeadPrologue();
-                return;
+            if (g_Player.unk5C) {
+                if (g_Status.hp <= 0) {
+                    RicSetDeadPrologue();
+                    return;
+                }
+                RicSetCrouch(0, PLAYER.velocityX);
+            } else {
+                RicSetCrouch(0, PLAYER.velocityX);
             }
-            RicSetCrouch(0, PLAYER.velocityX);
         }
         break;
     }
-    if (step_s_zero && (g_Player.unk72)) {
+    if (step_s_zero && g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }
 
 void RicHandleBossGrab(void) {
     DamageParam damage;
+    s32 damageResult;
+
     switch (g_CurrentEntity->step_s) {
     case 0:
         func_80159BC8();
@@ -835,17 +841,18 @@ void RicHandleBossGrab(void) {
             g_Player.unk40 = 0x8166;
             g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
         }
-        PLAYER.step_s = 1;
         PLAYER.velocityX = PLAYER.velocityY = 0;
+        PLAYER.step_s = 1;
         g_Player.unk60 = 2;
-        return;
+        break;
     case 1:
         // Effectively a switch on g_Player.unk60
         if (g_Player.unk60 == 3) {
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
-            if (g_api.CalcPlayerDamage(&damage)) {
+            damageResult = g_api.CalcPlayerDamage(&damage);
+            if (damageResult) {
                 RicSetStep(PL_S_DEAD);
                 RicHandleDead(0, 2, PL_S_BOSS_GRAB, 1);
                 return;
@@ -854,6 +861,8 @@ void RicHandleBossGrab(void) {
                 g_Player.timers[PL_T_2] = 4;
                 g_Player.unk40 = 0x8166;
                 g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
+            }
+            if (g_Player.unk62 == 2) {
             }
             g_Player.unk60 = 2;
         } else if (g_Player.unk60 == 4) {
@@ -866,6 +875,7 @@ void RicHandleBossGrab(void) {
             PLAYER.step = PL_S_HIT;
             PLAYER.step_s = 1;
         }
+        break;
     }
 }
 
@@ -876,12 +886,20 @@ enum DeathKind {
     DEATH_BY_THUNDER,
     DEATH_BY_ICE,
 };
+#if defined(VERSION_PSP)
+extern u8 dead_dissolve_bmp[0x1400];
+extern s16 D_80174F68;
+extern s16 D_80174F6C;
+extern enum DeathKind death_kind;
+RECT D_801545A0 = {512, 256, 32, 80};
+#else
 static u8 dead_dissolve_bmp[0x1400];
 static s16 D_80174F68;
 STATIC_PAD_BSS(2);
 static s16 D_80174F6C;
 STATIC_PAD_BSS(2);
 static enum DeathKind death_kind;
+#endif
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
     s32 j;
@@ -959,7 +977,7 @@ void RicHandleDead(
         if (PLAYER.velocityY > FIX(1.0 / 16)) {
             PLAYER.velocityY >>= 2;
             PLAYER.velocityX >>= 3;
-            StoreImage(&D_801545A0, dead_dissolve_bmp);
+            StoreImage(&D_801545A0, (u_long*)dead_dissolve_bmp);
             D_80174F6C = 0;
             D_80174F68 = 0x40;
             PLAYER.step_s++;
@@ -991,7 +1009,7 @@ void RicHandleDead(
             D_80174F6C += 0x23;
             D_80174F6C &= 0xFF;
         }
-        LoadImage(&D_801545A0, imgPtr);
+        LoadImage(&D_801545A0, (u_long*)imgPtr);
         if (--D_80174F68 == 0) {
             PLAYER.velocityY = 0;
             playerDraw->enableColorBlend = 0;
@@ -1043,7 +1061,7 @@ void RicHandleStandInAir(void) {
             PLAYER.velocityY = 0;
             PLAYER.step_s = 1;
         }
-    } else if (g_Player.unk4E != 0) {
+    } else if (g_Player.unk4E) {
         g_Player.unk46 = 0;
         RicSetStep(PL_S_JUMP);
         RicSetAnimation(D_80155528);
@@ -1101,7 +1119,11 @@ void RicHandleGenericSubwpnCrash(void) {
     }
 }
 
+#if defined(VERSION_PSP)
+extern s32 throw_dagger_timer;
+#else
 static s32 throw_dagger_timer;
+#endif
 void RicHandleThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         throw_dagger_timer = 0x200;
@@ -1129,7 +1151,11 @@ void RicHandleThrowDaggers(void) {
 }
 
 // This happens when he dies in prologue and gets saved by Maria.
+#if defined(VERSION_PSP)
+extern s32 dead_prologue_timer;
+#else
 static s32 dead_prologue_timer;
+#endif
 void RicHandleDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
@@ -1147,12 +1173,11 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 1:
-        PLAYER.drawFlags = FLAG_DRAW_ROTY;
         D_801545AA += 64;
+        PLAYER.drawFlags = FLAG_DRAW_ROTY;
         PLAYER.rotY = (rsin(D_801545AA) >> 0xA) + 256;
-        if (D_801545AC != 0) {
-            D_801545AC--;
-            if ((D_801545AC) == 0) {
+        if (D_801545AC) {
+            if (--D_801545AC == 0) {
                 PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
                 PLAYER.rotY = 0x100;
                 RicCreateEntFactoryFromEntity(
@@ -1165,7 +1190,7 @@ void RicHandleDeadPrologue(void) {
     case 2:
         // In this step, Richter rises into the air, similar to when he uses the
         // Cross subweapon crash.
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             RicSetAnimation(D_801558B4);
             PLAYER.palette = 0x814E;
             g_CurrentEntity->velocityY = FIX(-1);
@@ -1178,7 +1203,7 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 3:
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             PLAYER.velocityY = 0;
             g_DeadPrologueTimer = 0xC0;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_36, 0);
@@ -1201,7 +1226,7 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 4:
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             g_DeadPrologueTimer = 0x10;
             PLAYER.step_s++;
         }
@@ -1219,7 +1244,7 @@ void RicHandleDeadPrologue(void) {
             PLAYER.palette = 0x8120;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_SPHERE, 0);
         }
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             RicSetAnimation(D_801558D4);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_CIRCLE, 0);
@@ -1253,24 +1278,24 @@ void RicHandleDeadPrologue(void) {
 void RicHandleSlide(void) {
     s32 isTouchingGround = 0;
 
-    if (!PLAYER.facingLeft) {
-        isTouchingGround = (g_Player.pl_vram_flag & 4) != isTouchingGround;
-    } else if (g_Player.pl_vram_flag & 8) {
+    if (PLAYER.facingLeft == 0 && g_Player.pl_vram_flag & 4) {
         isTouchingGround = 1;
     }
-    if ((PLAYER.posX.i.hi > (u8)-5) && (!PLAYER.facingLeft)) {
+    if (PLAYER.facingLeft && g_Player.pl_vram_flag & 8) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi < 5 && (PLAYER.facingLeft)) {
+    if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
         isTouchingGround = 1;
     }
-    if ((!PLAYER.facingLeft &&
-         (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) ||
-        (PLAYER.facingLeft &&
-         (g_Player.colFloor[3].effects & EFFECT_UNK_8000))) {
+    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
         isTouchingGround = 1;
     }
-    if (isTouchingGround && (PLAYER.animFrameIdx < 6)) {
+    if ((PLAYER.facingLeft == 0 &&
+         g_Player.colFloor[2].effects & EFFECT_UNK_8000) ||
+        (PLAYER.facingLeft && g_Player.colFloor[3].effects & EFFECT_UNK_8000)) {
+        isTouchingGround = 1;
+    }
+    if (isTouchingGround && PLAYER.animFrameIdx < 6) {
         PLAYER.animFrameIdx = 6;
         if (PLAYER.velocityX > FIX(1)) {
             PLAYER.velocityX = FIX(2);
@@ -1299,9 +1324,14 @@ void RicHandleSlide(void) {
     }
 
     RicDecelerateX(0x2000);
-    if (PLAYER.step_s == 0) {
-        if (!(g_GameTimer & 3) && (2 < PLAYER.animFrameIdx) &&
-            (PLAYER.animFrameIdx < 6)) {
+#if defined(VERSION_PSP)
+    FntPrint("pl_pose = %d\n", PLAYER.animFrameIdx);
+    FntPrint("pl_ptimer = %d\n", PLAYER.animFrameDuration);
+#endif
+    switch (PLAYER.step_s) {
+    case 0:
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 6 &&
+            PLAYER.animFrameIdx > 2) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
@@ -1311,29 +1341,246 @@ void RicHandleSlide(void) {
         if (PLAYER.animFrameDuration < 0) {
             RicSetCrouch(0, PLAYER.velocityX);
         }
+        break;
     }
 }
 
 // same as DRA/func_80115C50
 void func_8015BB80(void) {
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 > 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8000 < 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 < 0) {
             PLAYER.posX.i.hi++;
         }
     }
-
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 > 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }
 
-        if (abs(g_Tilemap.left * 256 + g_PlayerX) - 8384 < 0) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 < 0) {
             PLAYER.posX.i.hi++;
         }
+    }
+}
+
+// Corresponding DRA function is PlayerStepTeleport
+void func_8015BCD0(void) {
+    Entity* e;
+
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    g_Player.padSim = 0;
+    g_Player.D_80072EFC = 4;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 0), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 1:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 2:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 2), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 4:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 4), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 5:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    }
+}
+
+void RicHandleSlideKick(void) {
+    // If we are pressing square while in contact with an enemy
+    // (as detected in g_Player.unk44), we will bounce back.
+    if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
+        PLAYER.step = PL_S_JUMP;
+        RicSetAnimation(D_8015555C);
+        RicSetSpeedX(FIX(-1.5));
+        PLAYER.velocityY = 0;
+        if (!g_Player.unk72) {
+            PLAYER.velocityY = FIX(-4.5);
+        }
+        g_Player.unk44 |= (8 + 2);
+        g_Player.unk44 &= ~4;
+        PLAYER.step_s = 2;
+        return;
+    }
+    RicDecelerateX(0x1000);
+    PLAYER.velocityY += 0x1000;
+
+    if (g_Player.pl_vram_flag & 1) {
+        g_CurrentEntity->velocityX /= 2;
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        PLAYER.facingLeft++;
+        PLAYER.facingLeft &= 1;
+        RicSetCrouch(3, PLAYER.velocityX);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
+        return;
+    }
+    if (g_Player.pl_vram_flag & 0xC) {
+        PLAYER.velocityX = 0;
+    }
+    if (PLAYER.velocityX < 0) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX > FIX(-3) || (g_Player.pl_vram_flag & 8)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (g_Player.padPressed & PAD_LEFT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX < FIX(3) || (g_Player.pl_vram_flag & 4)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+}
+
+void RicHandleBladeDash(void) {
+    RicDecelerateX(0x1C00);
+
+    if (PLAYER.animFrameDuration < 0) {
+        g_Player.unk46 = 0;
+        RicSetStand(0);
+    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
+        g_Player.unk46 = 0;
+        RicSetFall();
+    } else {
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
+            g_Player.pl_vram_flag & 1) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+
+        if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
+            (g_Player.pl_vram_flag & 1)) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+    }
+}
+
+void RicHandleHighJump(void) {
+    bool loadAnim;
+
+#if defined(VERSION_US)
+    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
+    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
+    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
+#endif
+    loadAnim = false;
+    g_Player.pl_high_jump_timer++;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
+            if (PLAYER.facingLeft) {
+                if (!(g_Player.padPressed & PAD_LEFT)) {
+                    RicDecelerateX(0x1000);
+                }
+            } else {
+                if (!(g_Player.padPressed & PAD_RIGHT)) {
+                    RicDecelerateX(0x1000);
+                }
+            }
+        } else {
+            RicDecelerateX(0x1000);
+        }
+
+        if (g_Player.pl_vram_flag & 2) {
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+            PLAYER.step_s = 2;
+        } else if (g_Player.pl_high_jump_timer > 0x1C) {
+            PLAYER.step_s = 1;
+            PLAYER.velocityY = -0x60000;
+        }
+        break;
+    case 1:
+        if (g_Player.pl_vram_flag & 2) {
+            PLAYER.step_s = 2;
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+        } else {
+            PLAYER.velocityY += 0x6000;
+            if (PLAYER.velocityY > 0x8000) {
+                loadAnim = true;
+            }
+        }
+        break;
+    case 2:
+        if (g_Player.pl_high_jump_timer > 4) {
+            loadAnim = true;
+        }
+        break;
+    }
+
+    if (loadAnim) {
+        RicSetAnimation(D_80155534);
+        RicSetStep(PL_S_JUMP);
     }
 }
