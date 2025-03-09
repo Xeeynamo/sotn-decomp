@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
+
 // func_80111928
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_80111928);
 // func_80111938
