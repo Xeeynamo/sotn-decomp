@@ -1136,7 +1136,11 @@ void RicHandleThrowDaggers(void) {
 }
 
 // This happens when he dies in prologue and gets saved by Maria.
+#if defined(VERSION_PSP)
+extern s32 dead_prologue_timer;
+#else
 static s32 dead_prologue_timer;
+#endif
 void RicHandleDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
@@ -1154,12 +1158,11 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 1:
-        PLAYER.drawFlags = FLAG_DRAW_ROTY;
         D_801545AA += 64;
+        PLAYER.drawFlags = FLAG_DRAW_ROTY;
         PLAYER.rotY = (rsin(D_801545AA) >> 0xA) + 256;
-        if (D_801545AC != 0) {
-            D_801545AC--;
-            if ((D_801545AC) == 0) {
+        if (D_801545AC) {
+            if (--D_801545AC == 0) {
                 PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
                 PLAYER.rotY = 0x100;
                 RicCreateEntFactoryFromEntity(
@@ -1172,7 +1175,7 @@ void RicHandleDeadPrologue(void) {
     case 2:
         // In this step, Richter rises into the air, similar to when he uses the
         // Cross subweapon crash.
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             RicSetAnimation(D_801558B4);
             PLAYER.palette = 0x814E;
             g_CurrentEntity->velocityY = FIX(-1);
@@ -1185,7 +1188,7 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 3:
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             PLAYER.velocityY = 0;
             g_DeadPrologueTimer = 0xC0;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_36, 0);
@@ -1208,7 +1211,7 @@ void RicHandleDeadPrologue(void) {
         }
         break;
     case 4:
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             g_DeadPrologueTimer = 0x10;
             PLAYER.step_s++;
         }
@@ -1226,7 +1229,7 @@ void RicHandleDeadPrologue(void) {
             PLAYER.palette = 0x8120;
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_SPHERE, 0);
         }
-        if (!--g_DeadPrologueTimer) {
+        if (--g_DeadPrologueTimer == 0) {
             RicSetAnimation(D_801558D4);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_CIRCLE, 0);

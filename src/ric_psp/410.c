@@ -1147,7 +1147,130 @@ void RicHandleThrowDaggers(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleDeadPrologue);
+// This happens when he dies in prologue and gets saved by Maria.
+#if defined(VERSION_PSP)
+extern s32 dead_prologue_timer;
+#else
+static s32 dead_prologue_timer;
+#endif
+void RicHandleDeadPrologue(void) {
+    switch (PLAYER.step_s) {
+    case 0:
+        g_CurrentEntity->flags |= FLAG_UNK_10000;
+        g_unkGraphicsStruct.unk20 = 4;
+        RicDecelerateX(0x2000);
+        if (PLAYER.velocityX == 0) {
+            RicSetAnimation(D_80155748);
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_MARIA, 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_RIC_BLINK, 9), 0);
+            D_801545AC = 0;
+            PLAYER.step_s++;
+        }
+        break;
+    case 1:
+        D_801545AA += 64;
+        PLAYER.drawFlags = FLAG_DRAW_ROTY;
+        PLAYER.rotY = (rsin(D_801545AA) >> 0xA) + 256;
+        if (D_801545AC) {
+            if (--D_801545AC == 0) {
+                PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+                PLAYER.rotY = 0x100;
+                RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_MARIA_POWERS_APPLIED, 0);
+                g_DeadPrologueTimer = 0x90;
+                PLAYER.step_s++;
+            }
+        }
+        break;
+    case 2:
+        // In this step, Richter rises into the air, similar to when he uses the
+        // Cross subweapon crash.
+        if (--g_DeadPrologueTimer == 0) {
+            RicSetAnimation(D_801558B4);
+            PLAYER.palette = 0x814E;
+            g_CurrentEntity->velocityY = FIX(-1);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
+            g_DeadPrologueTimer = 0x30;
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
+            dead_prologue_timer = 0xA0;
+            PLAYER.step_s++;
+        }
+        break;
+    case 3:
+        if (--g_DeadPrologueTimer == 0) {
+            PLAYER.velocityY = 0;
+            g_DeadPrologueTimer = 0xC0;
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_36, 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_37, 2), 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_38, 3), 0);
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_39, 4), 0);
+            PLAYER.palette = 0x813D;
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = 0;
+            PLAYER.step_s++;
+        }
+        if (g_Status.hp < g_Status.hpMax) {
+            g_Status.hp++;
+        }
+        dead_prologue_timer--;
+        if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
+        }
+        break;
+    case 4:
+        if (--g_DeadPrologueTimer == 0) {
+            g_DeadPrologueTimer = 0x10;
+            PLAYER.step_s++;
+        }
+        if (g_Status.hp < g_Status.hpMax) {
+            g_Status.hp++;
+        }
+        dead_prologue_timer--;
+        if ((dead_prologue_timer >= 0) && (dead_prologue_timer % 20 == 0)) {
+            g_api.PlaySfx(SFX_RIC_SUC_REVIVE);
+        }
+        break;
+    case 5:
+        if (g_DeadPrologueTimer == 5) {
+            PLAYER.animFrameIdx = 6;
+            PLAYER.palette = 0x8120;
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_SPHERE, 0);
+        }
+        if (--g_DeadPrologueTimer == 0) {
+            RicSetAnimation(D_801558D4);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_CIRCLE, 0);
+            PLAYER.step_s++;
+            break;
+        }
+        if (g_Status.hp < g_Status.hpMax) {
+            g_Status.hp++;
+        }
+        break;
+    case 6:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetAnimation(D_801558DC);
+            PLAYER.step_s++;
+        }
+        break;
+    case 7:
+        if (PLAYER.animFrameDuration < 0) {
+            g_CurrentEntity->flags &= ~FLAG_UNK_10000;
+            g_unkGraphicsStruct.unk20 = 0;
+            RicSetFall();
+            RicSetAnimation(D_801558DC);
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_RIC_BLINK, 9), 0);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleSlide);
 
