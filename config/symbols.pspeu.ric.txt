@@ -42,6 +42,7 @@ RicSetFall = 0x092AF738;
 RicSetJump = 0x092AF898;
 RicDoCrash = 0x092B00F0;
 RicSetDeadPrologue = 0x092B0580;
+RicSetSlideKick = 0x092B0640;
 func_8015C4AC = 0x092B07A8;
 RicSetStep = 0x092B0E38;
 RicSetAnimation = 0x092B0E60;

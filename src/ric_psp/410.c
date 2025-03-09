@@ -889,6 +889,7 @@ extern u8 dead_dissolve_bmp[0x1400];
 extern s16 D_80174F68;
 extern s16 D_80174F6C;
 extern enum DeathKind death_kind;
+RECT D_801545A0 = {512, 256, 32, 80};
 #else
 static u8 dead_dissolve_bmp[0x1400];
 static s16 D_80174F68;
@@ -1272,7 +1273,75 @@ void RicHandleDeadPrologue(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleSlide);
+void RicHandleSlide(void) {
+    s32 isTouchingGround = 0;
+
+    if (PLAYER.facingLeft == 0 && g_Player.pl_vram_flag & 4) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.facingLeft && g_Player.pl_vram_flag & 8) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
+        isTouchingGround = 1;
+    }
+    if ((PLAYER.facingLeft == 0 &&
+         g_Player.colFloor[2].effects & EFFECT_UNK_8000) ||
+        (PLAYER.facingLeft && g_Player.colFloor[3].effects & EFFECT_UNK_8000)) {
+        isTouchingGround = 1;
+    }
+    if (isTouchingGround && PLAYER.animFrameIdx < 6) {
+        PLAYER.animFrameIdx = 6;
+        if (PLAYER.velocityX > FIX(1)) {
+            PLAYER.velocityX = FIX(2);
+        }
+        if (PLAYER.velocityX < FIX(-1)) {
+            PLAYER.velocityX = FIX(-2);
+        }
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+    }
+    if (PLAYER.animFrameIdx < 5) {
+        if (RicCheckInput(CHECK_FALL | CHECK_CRASH)) {
+            return;
+        }
+        if ((!g_Player.unk72) && (g_Player.padTapped & PAD_CROSS)) {
+            PLAYER.posY.i.hi -= 4;
+            RicSetSlideKick();
+            return;
+        }
+    } else if (PLAYER.animFrameIdx < 7) {
+        if (RicCheckInput(CHECK_FALL | CHECK_CRASH | CHECK_SLIDE)) {
+            return;
+        }
+    } else if (
+        RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_CRASH | CHECK_SLIDE)) {
+        return;
+    }
+
+    RicDecelerateX(0x2000);
+#if defined(VERSION_PSP)
+    FntPrint("pl_pose = %d\n", PLAYER.animFrameIdx);
+    FntPrint("pl_ptimer = %d\n", PLAYER.animFrameDuration);
+#endif
+    switch (PLAYER.step_s) {
+    case 0:
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 6 &&
+            PLAYER.animFrameIdx > 2) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+        if (PLAYER.animFrameIdx == 6 && PLAYER.animFrameDuration == 1) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetCrouch(0, PLAYER.velocityX);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", func_8015BB80);
 

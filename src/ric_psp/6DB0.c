@@ -71,7 +71,7 @@ INCLUDE_ASM("ric_psp/nonmatchings/6DB0", RicSetDeadPrologue);
 
 INCLUDE_ASM("ric_psp/nonmatchings/6DB0", func_pspeu_092B05A8);
 
-INCLUDE_ASM("ric_psp/nonmatchings/6DB0", func_pspeu_092B0640);
+INCLUDE_ASM("ric_psp/nonmatchings/6DB0", RicSetSlideKick);
 
 INCLUDE_ASM("ric_psp/nonmatchings/6DB0", func_pspeu_092B06F8);
 

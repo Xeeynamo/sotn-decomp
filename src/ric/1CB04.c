@@ -1263,24 +1263,24 @@ void RicHandleDeadPrologue(void) {
 void RicHandleSlide(void) {
     s32 isTouchingGround = 0;
 
-    if (!PLAYER.facingLeft) {
-        isTouchingGround = (g_Player.pl_vram_flag & 4) != isTouchingGround;
-    } else if (g_Player.pl_vram_flag & 8) {
+    if (PLAYER.facingLeft == 0 && g_Player.pl_vram_flag & 4) {
         isTouchingGround = 1;
     }
-    if ((PLAYER.posX.i.hi > (u8)-5) && (!PLAYER.facingLeft)) {
+    if (PLAYER.facingLeft && g_Player.pl_vram_flag & 8) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi < 5 && (PLAYER.facingLeft)) {
+    if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
         isTouchingGround = 1;
     }
-    if ((!PLAYER.facingLeft &&
-         (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) ||
-        (PLAYER.facingLeft &&
-         (g_Player.colFloor[3].effects & EFFECT_UNK_8000))) {
+    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
         isTouchingGround = 1;
     }
-    if (isTouchingGround && (PLAYER.animFrameIdx < 6)) {
+    if ((PLAYER.facingLeft == 0 &&
+         g_Player.colFloor[2].effects & EFFECT_UNK_8000) ||
+        (PLAYER.facingLeft && g_Player.colFloor[3].effects & EFFECT_UNK_8000)) {
+        isTouchingGround = 1;
+    }
+    if (isTouchingGround && PLAYER.animFrameIdx < 6) {
         PLAYER.animFrameIdx = 6;
         if (PLAYER.velocityX > FIX(1)) {
             PLAYER.velocityX = FIX(2);
@@ -1309,9 +1309,14 @@ void RicHandleSlide(void) {
     }
 
     RicDecelerateX(0x2000);
-    if (PLAYER.step_s == 0) {
-        if (!(g_GameTimer & 3) && (2 < PLAYER.animFrameIdx) &&
-            (PLAYER.animFrameIdx < 6)) {
+#if defined(VERSION_PSP)
+    FntPrint("pl_pose = %d\n", PLAYER.animFrameIdx);
+    FntPrint("pl_ptimer = %d\n", PLAYER.animFrameDuration);
+#endif
+    switch (PLAYER.step_s) {
+    case 0:
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 6 &&
+            PLAYER.animFrameIdx > 2) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
@@ -1321,6 +1326,7 @@ void RicHandleSlide(void) {
         if (PLAYER.animFrameDuration < 0) {
             RicSetCrouch(0, PLAYER.velocityX);
         }
+        break;
     }
 }
 
