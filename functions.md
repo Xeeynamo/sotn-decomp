@@ -82,7 +82,6 @@
 | wrp     | DestroyCurrentEntity                |       15 |          2 |        | https://decomp.me/scratch/aKfDL | 0.99  |
 | dra     | func_psp_090ED2E8                   |       15 |          3 |        |                                 |       |
 | dra     | 14490.rodata                        |       16 |          0 | Yes    |                                 |       |
-| dra     | 32DA0.rodata                        |       16 |          0 | Yes    |                                 |       |
 | lib     | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | st0     | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp     | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
@@ -105,7 +104,6 @@
 | dra     | 11C50.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra     | 160C0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra     | 19AB0.rodata                        |       18 |          0 | Yes    |                                 |       |
-| dra     | 329F0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra     | 80.rodata                           |       18 |          0 | Yes    |                                 |       |
 | dra     | A710.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib     | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
@@ -384,7 +382,6 @@
 | no4     | func_psp_0923BAB0                   |       39 |          4 |        |                                 |       |
 | dra     | LoadMonsterLibrarianPreview         |       39 |          5 |        |                                 |       |
 | dra     | 704D0.rodata                        |       40 |          0 | Yes    |                                 |       |
-| dra     | 2E0E0.rodata                        |       40 |          0 | Yes    |                                 |       |
 | ric     | 410.rodata                          |       40 |          0 | Yes    |                                 |       |
 | lib     | e_spellbook_magic_tome.rodata       |       40 |          0 | Yes    |                                 |       |
 | st0     | 2DAC8.rodata                        |       40 |          0 | Yes    |                                 |       |
@@ -586,6 +583,7 @@
 | no4     | func_psp_09237B20                   |       61 |         10 |        |                                 |       |
 | st0     | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra     | func_8012CC30                       |       61 |         12 |        |                                 |       |
+| dra     | 2BF60.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra     | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib     | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib     | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -1025,7 +1023,7 @@
 | lib     | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | no4     | func_psp_0924C888                   |      184 |         20 |        |                                 |       |
 | wrp     | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
-| dra     | func_8012EAD0                       |      185 |         25 |        | https://decomp.me/scratch/JtDOM | 0.99  |
+| dra     | PlayerStepUnmorphWolf               |      185 |         25 |        |                                 |       |
 | no4     | func_psp_09248D90                   |      185 |         27 |        |                                 |       |
 | no4     | func_psp_0923D180                   |      185 |         27 |        |                                 |       |
 | dra     | EntitySubwpnBibleTrail              |      186 |         14 |        |                                 |       |
@@ -1044,7 +1042,7 @@
 | dra     | 7879C.rodata                        |      194 |          0 | Yes    |                                 |       |
 | dra     | func_800FE3C4                       |      194 |         20 |        |                                 |       |
 | dra     | func_8010D59C                       |      196 |         22 |        |                                 |       |
-| dra     | func_8012EF2C                       |      196 |         35 | Yes    |                                 |       |
+| dra     | PlayerStepMorphWolf                 |      196 |         35 | Yes    |                                 |       |
 | lib     | func_psp_09253E20                   |      197 |          1 |        | https://decomp.me/scratch/ykdyz | 1.0   |
 | dra     | func_8012E550                       |      197 |         41 |        | https://decomp.me/scratch/FshRS | 0.994 |
 | dra     | func_psp_0910E4B8                   |      198 |         34 | Yes    |                                 |       |
