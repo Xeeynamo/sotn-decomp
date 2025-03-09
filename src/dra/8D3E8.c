@@ -590,7 +590,7 @@ void func_8012E9C0(void) {
     PLAYER.velocityY = FIX(-1.5);
 }
 
-void func_8012EAD0(void) {
+void PlayerStepUnmorphWolf(void) {
     s32 i;
     s32 else_cycles;
 
@@ -711,7 +711,7 @@ void func_8012ED30(void) {
     }
 }
 
-void func_8012EF2C(void) {
+void PlayerStepMorphWolf(void) {
     s32 i;
     s32 xSpeed;
     s32 var_s0;

@@ -2,7 +2,7 @@
 #include "ric.h"
 #include "sfx.h"
 
-// Corresponding DRA function is func_80115DA0
+// Corresponding DRA function is PlayerStepTeleport
 void func_8015BCD0(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
