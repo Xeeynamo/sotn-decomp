@@ -1351,3 +1351,221 @@ void func_8015BB80(void) {
         }
     }
 }
+
+// Corresponding DRA function is func_80115DA0
+void func_8015BCD0(void) {
+    Entity* e;
+
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    g_Player.padSim = 0;
+    g_Player.D_80072EFC = 4;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 0), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 1:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 2:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 2), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 3:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 4:
+        func_8015BB80();
+        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+            e = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_TELEPORT, 4), 0);
+            if (!e) {
+                PLAYER.animFrameDuration = 2;
+            }
+        }
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        break;
+    case 5:
+        if (PLAYER.animFrameDuration < 0) {
+            RicSetStand(0);
+        }
+        if (g_Player.unk1C != 0) {
+            RicSetStand(0);
+        }
+        break;
+    }
+}
+
+void RicHandleSlideKick(void) {
+    // If we are pressing square while in contact with an enemy
+    // (as detected in g_Player.unk44), we will bounce back.
+    if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
+        PLAYER.step = PL_S_JUMP;
+        RicSetAnimation(D_8015555C);
+        RicSetSpeedX(FIX(-1.5));
+        PLAYER.velocityY = 0;
+        if (!g_Player.unk72) {
+            PLAYER.velocityY = FIX(-4.5);
+        }
+        g_Player.unk44 |= (8 + 2);
+        g_Player.unk44 &= ~4;
+        PLAYER.step_s = 2;
+        return;
+    }
+    RicDecelerateX(0x1000);
+    PLAYER.velocityY += 0x1000;
+
+    if (g_Player.pl_vram_flag & 1) {
+        g_CurrentEntity->velocityX /= 2;
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        PLAYER.facingLeft++;
+        PLAYER.facingLeft &= 1;
+        RicSetCrouch(3, PLAYER.velocityX);
+        g_api.PlaySfx(SFX_STOMP_SOFT_A);
+        return;
+    }
+    if (g_Player.pl_vram_flag & 0xC) {
+        PLAYER.velocityX = 0;
+    }
+    if (PLAYER.velocityX < 0) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX > FIX(-3) || (g_Player.pl_vram_flag & 8)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (g_Player.padPressed & PAD_LEFT) {
+            RicDecelerateX(0x2000);
+        }
+        if (PLAYER.velocityX < FIX(3) || (g_Player.pl_vram_flag & 4)) {
+            PLAYER.facingLeft++;
+            PLAYER.facingLeft &= 1;
+            PLAYER.velocityX /= 2;
+            RicSetAnimation(D_80155788);
+            g_Player.unk44 = 0xA;
+            PLAYER.step_s = 2;
+            PLAYER.step = PL_S_JUMP;
+        }
+    }
+}
+
+void RicHandleBladeDash(void) {
+    RicDecelerateX(0x1C00);
+
+    if (PLAYER.animFrameDuration < 0) {
+        g_Player.unk46 = 0;
+        RicSetStand(0);
+    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
+        g_Player.unk46 = 0;
+        RicSetFall();
+    } else {
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
+            g_Player.pl_vram_flag & 1) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+
+        if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
+            (g_Player.pl_vram_flag & 1)) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+    }
+}
+
+void RicHandleHighJump(void) {
+    bool loadAnim;
+
+#if defined(VERSION_US)
+    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
+    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
+    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
+#endif
+    loadAnim = false;
+    g_Player.pl_high_jump_timer++;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
+            if (PLAYER.facingLeft) {
+                if (!(g_Player.padPressed & PAD_LEFT)) {
+                    RicDecelerateX(0x1000);
+                }
+            } else {
+                if (!(g_Player.padPressed & PAD_RIGHT)) {
+                    RicDecelerateX(0x1000);
+                }
+            }
+        } else {
+            RicDecelerateX(0x1000);
+        }
+
+        if (g_Player.pl_vram_flag & 2) {
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+            PLAYER.step_s = 2;
+        } else if (g_Player.pl_high_jump_timer > 0x1C) {
+            PLAYER.step_s = 1;
+            PLAYER.velocityY = -0x60000;
+        }
+        break;
+    case 1:
+        if (g_Player.pl_vram_flag & 2) {
+            PLAYER.step_s = 2;
+            func_80158B04(3);
+            g_Player.pl_high_jump_timer = 0;
+        } else {
+            PLAYER.velocityY += 0x6000;
+            if (PLAYER.velocityY > 0x8000) {
+                loadAnim = true;
+            }
+        }
+        break;
+    case 2:
+        if (g_Player.pl_high_jump_timer > 4) {
+            loadAnim = true;
+        }
+        break;
+    }
+
+    if (loadAnim) {
+        RicSetAnimation(D_80155534);
+        RicSetStep(PL_S_JUMP);
+    }
+}
