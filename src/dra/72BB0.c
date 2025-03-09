@@ -179,7 +179,7 @@ void PlayerStepJump(void) {
     }
 }
 
-void func_80113148(void) {
+void PlayerStepFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
@@ -190,7 +190,7 @@ void func_80113148(void) {
     }
 }
 
-void func_801131C4(void) {
+void PlayerStepCrouch(void) {
     s32 i;
     s32 x_offset;
     u16 local_flags;
@@ -471,7 +471,7 @@ void func_801139CC(s32 arg0) {
     }
 }
 
-void func_80113AAC(void) {
+void PlayerStepHighJump(void) {
     s32 var_s1 = 0;
     s32 temp;
 
@@ -578,7 +578,7 @@ s32 func_80113D7C(s16 damageAmount) {
     damage.effects = EFFECT_NONE;
     damage.damageKind = DAMAGEKIND_0;
     SetPlayerStep(Player_Kill);
-    func_80115394(&damage, step, temp_s1);
+    PlayerStepKill(&damage, step, temp_s1);
     return -1;
 }
 
@@ -1033,7 +1033,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     }
 }
 
-void func_80114DF4(s32 arg0) {
+void PlayerStepStoned(s32 arg0) {
     s16 animVariant;
     s32 newlyPetrified;
     s32 yShift;
@@ -1185,7 +1185,7 @@ void func_80114DF4(s32 arg0) {
 }
 
 // Somewhat weird args, worth more study. arg2 is unused.
-void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
+void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     s32 i;
     s32 j;
     Entity* ent;
@@ -1374,7 +1374,7 @@ void func_80115394(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     }
 }
 
-void func_80115BB0(void) {
+void PlayerStepUnk17(void) {
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
@@ -1416,7 +1416,7 @@ void func_80115C50(void) {
 }
 
 // Corresponding RIC function is func_8015BCD0
-void func_80115DA0(void) {
+void PlayerStepTeleport(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     g_Player.padSim = 0;

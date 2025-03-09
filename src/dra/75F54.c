@@ -12,7 +12,7 @@ extern s32 g_BatScreechDone;
 extern s32 g_MistTimer; // remaining time in mist transformation
 extern s32 D_80138008;
 
-void func_80115F54(void) {
+void PlayerStepKillWater(void) {
     PlayerDraw* plDraw;
     bool var_s2;
 
@@ -76,7 +76,7 @@ void func_80115F54(void) {
     }
 }
 
-void func_80116208(void) {
+void PlayerStepBossGrab(void) {
     DamageParam damage;
     s32 temp_s0;
 
@@ -100,7 +100,7 @@ void func_80116208(void) {
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);
-                func_80115394(&damage, Player_BossGrab, 1);
+                PlayerStepKill(&damage, Player_BossGrab, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
@@ -204,7 +204,7 @@ void PlayerStepHellfire(void) {
     }
 }
 
-void func_801166A4(void) {
+void PlayerStepUnk48(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_80113EE0();
@@ -230,7 +230,7 @@ void func_801166A4(void) {
     }
 }
 
-void func_8011678C(void) {
+void PlayerStepUnk49(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     if ((g_Player.padSim >> 16) != 2) {
@@ -238,7 +238,7 @@ void func_8011678C(void) {
     }
 }
 
-void func_801167D0(void) {
+void PlayerStepUnk50(void) {
     s32* velocityX = &PLAYER.velocityX;
     PLAYER.velocityY = 0;
     *velocityX = 0;
@@ -760,7 +760,7 @@ void ControlBatForm(void) {
     g_BatScreechDone = screechDone;
 }
 
-void func_801177A0(void) {
+void PlayerStepUnmorphBat(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -849,7 +849,7 @@ void func_801177A0(void) {
     }
 }
 
-void func_80117AC0(void) {
+void PlayerStepStuck(void) {
     Collider collider;
     s32 collisionCount;
 
@@ -1105,7 +1105,7 @@ void ControlMistForm(void) {
     }
 }
 
-void func_801182F8(void) {
+void PlayerStepUnmorphMist(void) {
     byte pad[0x28];
     s32 i;
     s32 else_cycles;
@@ -1191,19 +1191,19 @@ void func_801182F8(void) {
     }
 }
 
-void func_80118614(void) {
+void PlayerStepDarkMetamorphosis(void) {
     if (PLAYER.animFrameDuration < 0) {
         func_8010E570(0);
     }
 }
 
-void func_80118640(void) {
+void PlayerStepSummonSpells(void) {
     if (PLAYER.animFrameDuration < 0) {
         func_8010E470(0, 0);
     }
 }
 
-void func_80118670(void) {
+void PlayerStepSoulSteal(void) {
     if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
         PlaySfx(SFX_UI_MP_FULL);
@@ -1214,7 +1214,7 @@ void func_80118670(void) {
     }
 }
 
-void func_801186EC(void) {
+void PlayerStepSwordWarp(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
             D_80138008 = 0x10;

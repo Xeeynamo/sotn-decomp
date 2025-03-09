@@ -531,7 +531,7 @@ void PlayerStepStand(void) {
     }
 }
 
-void func_80112B64(void) {
+void PlayerStepWalk(void) {
     if (func_8010FDF8(0x4301C) == 0) {
         SetSpeedX(0x18000);
         if (CheckMoveDirection() == 0) {
