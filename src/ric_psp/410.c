@@ -1500,6 +1500,27 @@ void RicHandleSlideKick(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleBladeDash);
+void RicHandleBladeDash(void) {
+    RicDecelerateX(0x1C00);
+
+    if (PLAYER.animFrameDuration < 0) {
+        g_Player.unk46 = 0;
+        RicSetStand(0);
+    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
+        g_Player.unk46 = 0;
+        RicSetFall();
+    } else {
+        if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
+            g_Player.pl_vram_flag & 1) {
+            RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+
+        if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
+            (g_Player.pl_vram_flag & 1)) {
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHighJump);
