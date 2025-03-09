@@ -879,7 +879,7 @@ void RicHandleBossGrab(void) {
     }
 }
 
-// Compare to DRA func_80115394
+// Compare to DRA PlayerStepKill
 enum DeathKind {
     DEATH_GENERIC,
     DEATH_BY_FIRE,
@@ -1367,7 +1367,7 @@ void func_8015BB80(void) {
     }
 }
 
-// Corresponding DRA function is func_80115DA0
+// Corresponding DRA function is PlayerStepTeleport
 void func_8015BCD0(void) {
     Entity* e;
 
