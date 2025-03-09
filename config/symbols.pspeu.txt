@@ -126,6 +126,7 @@ D_80073510 = 0x091E17B8;
 D_80076E98 = 0x091E5140;
 g_PlayerY = 0x091ED290;
 g_PlayerX = 0x091ED298;
+g_PlayerDraw = 0x091ED2A8; // size:0x28
 g_Pix = 0x091ED5F8;
 g_Clut = 0x091F5DF8;
 g_Clut_2800 = 0x091F85F8;
