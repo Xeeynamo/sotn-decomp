@@ -486,8 +486,11 @@ void func_80159C04(void) {
 
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
-
+#ifdef VERSION_PSP
+extern s32 ric_hit_stun_timer;
+#else
 static s32 ric_hit_stun_timer;
+#endif
 void RicHandleHit(
     s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
@@ -883,12 +886,20 @@ enum DeathKind {
     DEATH_BY_THUNDER,
     DEATH_BY_ICE,
 };
+#if defined(VERSION_PSP)
+extern u8 dead_dissolve_bmp[0x1400];
+extern s16 D_80174F68;
+extern s16 D_80174F6C;
+extern enum DeathKind death_kind;
+RECT D_801545A0 = {512, 256, 32, 80};
+#else
 static u8 dead_dissolve_bmp[0x1400];
 static s16 D_80174F68;
 STATIC_PAD_BSS(2);
 static s16 D_80174F6C;
 STATIC_PAD_BSS(2);
 static enum DeathKind death_kind;
+#endif
 void RicHandleDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
     s32 j;
@@ -966,7 +977,7 @@ void RicHandleDead(
         if (PLAYER.velocityY > FIX(1.0 / 16)) {
             PLAYER.velocityY >>= 2;
             PLAYER.velocityX >>= 3;
-            StoreImage(&D_801545A0, dead_dissolve_bmp);
+            StoreImage(&D_801545A0, (u_long*)dead_dissolve_bmp);
             D_80174F6C = 0;
             D_80174F68 = 0x40;
             PLAYER.step_s++;
@@ -998,7 +1009,7 @@ void RicHandleDead(
             D_80174F6C += 0x23;
             D_80174F6C &= 0xFF;
         }
-        LoadImage(&D_801545A0, imgPtr);
+        LoadImage(&D_801545A0, (u_long*)imgPtr);
         if (--D_80174F68 == 0) {
             PLAYER.velocityY = 0;
             playerDraw->enableColorBlend = 0;
@@ -1108,7 +1119,11 @@ void RicHandleGenericSubwpnCrash(void) {
     }
 }
 
+#if defined(VERSION_PSP)
+extern s32 throw_dagger_timer;
+#else
 static s32 throw_dagger_timer;
+#endif
 void RicHandleThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         throw_dagger_timer = 0x200;
