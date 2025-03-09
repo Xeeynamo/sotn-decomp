@@ -200,11 +200,11 @@ segments:
       - [0x413C0, .rodata, 71830] # func_80111830
       # - [0x41400, .rodata, 71830] # func_801119C4
       - [0x41410, .rodata, 71830] # PlayerStepStand
-      - [0x41588, .rodata, 72BB0] # PlayerStepJump
-      # - [0x41750, .rodata, 72BB0] # PlayerStepCrouch
-      # - [0x418E0, .rodata, 72BB0] # PlayerStepHighJump
-      # - [0x418F4, .rodata, 72BB0] # AlucardHandleDamage
-      # - [0x419D0, .rodata, 72BB0] # PlayerStepTeleport
+      # - [0x41588, .rodata, 71830] # PlayerStepJump
+      # - [0x41750, .rodata, 71830] # PlayerStepCrouch
+      # - [0x418E0, .rodata, 71830] # PlayerStepHighJump
+      # - [0x418F4, .rodata, 71830] # AlucardHandleDamage
+      # - [0x419D0, .rodata, 71830] # PlayerStepTeleport
       - [0x419E8, .rodata, 75F54] # PlayerStepHellfire
       # - [0x41A00, .rodata, 75F54] # func_80116994
       # - [0x41A20, .rodata, 75F54] # func_80116B0C
@@ -266,7 +266,6 @@ segments:
       - [0x70394, c, 70394]
       - [0x704D0, c, 704D0]
       - [0x71830, c, 71830]
-      - [0x72BB0, c, 72BB0]
       - [0x75F54, c, 75F54]
       - [0x7879C, c, 7879C]
       - [0x7E4BC, c, 7E4BC]
