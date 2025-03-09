@@ -50,19 +50,41 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910E2D0);
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910E378);
 // PlayerStepTeleport
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910E4B8);
-
+// PlayerStepKillWater
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910E758);
-
+// PlayerStepBossGrab
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910EA68);
-
+// PlayerStepHellfire
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910ECC0);
-
+// PlayerStepUnk48
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910EFE0);
-
+// PlayerStepUnk49
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910F0D8);
-
+// PlayerStepUnk50
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_0910F128);
-
+// BatFormFinished
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", BatFormFinished);
-
+// func_8011690C
 INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_8011690C);
+// CheckWingSmashInput
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", CheckWingSmashInput);
+// ControlBatForm
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", ControlBatForm);
+// PlayerStepUnmorphBat
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_091107E8);
+// PlayerStepStuck
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09110B78);
+// MistFormFinished
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09110E90);
+// ControlMistForm
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09110FC8);
+// PlayerStepUnmorphMist
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09111648);
+// PlayerStepDarkMetamorphosis
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_091119E0);
+// PlayerStepSummonSpells
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09111A18);
+// PlayerStepSoulSteal
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09111A58);
+// PlayerStepSwordWarp
+INCLUDE_ASM("dra_psp/psp/dra_psp/2BF60", func_psp_09111B00);
