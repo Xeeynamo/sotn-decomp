@@ -1069,7 +1069,28 @@ void RicHandleStandInAir(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleEnableFlameWhip);
+void RicHandleEnableFlameWhip(void) {
+    if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.animFrameDuration == 1)) {
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+    }
+
+    if (PLAYER.animFrameDuration < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Player.timers[PL_T_POISON] = 0x800;
+    }
+
+    if (!(g_Player.pl_vram_flag & 1)) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x45), 0);
+        g_Player.timers[PL_T_POISON] = 0x800;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleHydrostorm);
 
