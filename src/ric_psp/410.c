@@ -824,7 +824,56 @@ void RicHandleHit(
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleBossGrab);
+void RicHandleBossGrab(void) {
+    DamageParam damage;
+    s32 damageResult;
+
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        func_80159BC8();
+        if (g_Player.unk62 == 0) {
+            PLAYER.anim = ric_anim_stun;
+            g_Player.timers[PL_T_2] = 8;
+            g_Player.unk40 = 0x8166;
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_B);
+        }
+        PLAYER.velocityX = PLAYER.velocityY = 0;
+        PLAYER.step_s = 1;
+        g_Player.unk60 = 2;
+        break;
+    case 1:
+        // Effectively a switch on g_Player.unk60
+        if (g_Player.unk60 == 3) {
+            damage.effects = EFFECT_NONE;
+            damage.damageKind = DAMAGEKIND_1;
+            damage.damageTaken = g_Player.damageTaken;
+            damageResult = g_api.CalcPlayerDamage(&damage);
+            if (damageResult) {
+                RicSetStep(PL_S_DEAD);
+                RicHandleDead(0, 2, PL_S_BOSS_GRAB, 1);
+                return;
+            }
+            if (g_Player.unk62 == 0) {
+                g_Player.timers[PL_T_2] = 4;
+                g_Player.unk40 = 0x8166;
+                g_api.PlaySfx(SFX_VO_RIC_PAIN_C);
+            }
+            if (g_Player.unk62 == 2) {
+            }
+            g_Player.unk60 = 2;
+        } else if (g_Player.unk60 == 4) {
+            PLAYER.step = PL_S_HIT;
+            PLAYER.step_s = 2;
+            g_Player.unk60 = 0;
+            g_Player.damageTaken = g_Player.unk64;
+            g_api.PlaySfx(SFX_VO_RIC_PAIN_D);
+        } else if (g_Player.unk60 == 0) {
+            PLAYER.step = PL_S_HIT;
+            PLAYER.step_s = 1;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/410", RicHandleDead);
 
