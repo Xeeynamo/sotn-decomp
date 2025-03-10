@@ -188,32 +188,51 @@ if __name__ == "__main__":
                 "options" in splatConfig
                 and "nonmatchings_path" in splatConfig["options"]
             ):
-                if args.version == "pspeu":
-                    nonmatchings_path = os.path.join(
-                        splatConfig["options"]["nonmatchings_path"],
-                        f"{args.overlay[-3:]}_psp",
-                    )
-                else:
-                    nonmatchings_path = splatConfig["options"]["nonmatchings_path"]
-            else:
-                nonmatchings_path = "nonmatchings"
-
-            if args.version == "pspeu":
-                src_path = os.path.join(
-                    os.getcwd(),
-                    splatConfig["options"]["src_path"],
-                    f"{args.overlay[-3:]}_psp",
+                nonmatchingsPath = os.path.join(
+                    splatConfig["options"]["nonmatchings_path"],
                 )
             else:
-                src_path = os.path.join(os.getcwd(), splatConfig["options"]["src_path"])
+                nonmatchingsPath = "nonmatchings"
 
-            cFilename = os.path.join(src_path, f"{args.source}.c")
+            segments = splatConfig["segments"]
+            subsegments = []
+            for segment in segments:
+                if "subsegments" in segment:
+                    subsegments.extend(
+                        [
+                            x[-1]
+                            for x in segment["subsegments"]
+                            if len(x) > 1
+                            and x[1] == "c"
+                            and x[-1].endswith(args.source)
+                        ]
+                    )
+            if subsegments and len(subsegments) == 1:
+                ssPath = [x for x in subsegments[0].split("/") if x != args.source]
+                if ssPath:
+                    nonmatchingsPath = os.path.join(nonmatchingsPath, ssPath[0])
+            elif len(subsegments) > 1:
+                print(f"Multiple subsegments found with {args.source}\n{subsegments}")
+                exit(1)
+            else:
+                print(f"No subsegments were found with {args.source}")
+                exit(1)
+
+            if args.version == "pspeu":
+                srcPath = os.path.join(
+                    os.getcwd(),
+                    splatConfig["options"]["src_path"],
+                )
+            else:
+                srcPath = os.path.join(os.getcwd(), splatConfig["options"]["src_path"])
+
+            cFilename = os.path.join(srcPath, f"{args.source}.c")
             sys.argv = [cFilename if a == args.source else a for a in sys.argv]
 
             sFilename = os.path.join(
                 os.getcwd(),
                 splatConfig["options"]["asm_path"],
-                nonmatchings_path,
+                nonmatchingsPath,
                 args.source,
                 f"{args.function}.s",
             )
@@ -229,7 +248,6 @@ if __name__ == "__main__":
         print(f"Importing {args.version} source {args.source} function {args.function}")
         addArgs = [a for a in importArgs]
         sys.argv.extend(addArgs)
-        print(sys.argv)
         importer.main(sys.argv[1:])
         if args.permute and args.overlay:
             sys.argv = [
