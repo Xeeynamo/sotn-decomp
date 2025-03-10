@@ -268,7 +268,7 @@ force_symbols = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
 force-symbols: $(addprefix FORCE_,$(force_symbols))
 # This is currently intentionally hard coded to us because the us files are used for functions in other versions
 $(addprefix FORCE_,$(force_symbols)): FORCE_%: | $(VENV_DIR)/bin
-	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
+	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
 
 force-extract:
 	-rm -rf /tmp/src_tmp; mv src /tmp/src_tmp
