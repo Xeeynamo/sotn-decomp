@@ -1720,7 +1720,7 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7C94);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7DF8);
 
-u8* func_psp_09269FF0(char* str, u8* pix, s16 x, s16 y) {
+s16* func_psp_09269FF0(char* str, s16* pix, s16 x, s16 y) {
     u16 ch;
     s32 i;
     u16* chPix;
@@ -1774,8 +1774,8 @@ void func_psp_0926ADD8(Primitive* prim, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0926AED0);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8A00);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8958);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8A00);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0926BE68);
