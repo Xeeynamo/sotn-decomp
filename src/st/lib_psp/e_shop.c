@@ -1684,7 +1684,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4830);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_09264E08);
+extern u8* D_psp_092A5D38;
+
+void func_psp_09264E08(void) { D_psp_092A5D38 = &g_Pix[0][0x2000]; }
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0C40);
 
@@ -1716,7 +1718,31 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7C94);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7DF8);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_09269FF0);
+s16* func_psp_09269FF0(u8* str, s16* pix, s16 x, s16 y) {
+    u16 ch;
+    s32 i;
+    u16* chPix;
+    s16* dst;
+
+loop:
+    ch = *str++;
+    if (ch) {
+        ch <<= 8;
+        ch |= *str++;
+        chPix = g_api.func_80106A28(ch, 1);
+        if (chPix != NULL) {
+            dst = pix;
+            for (i = 0; i < 0x30; i++) {
+                *dst++ = *chPix++;
+            }
+            LoadTPage((u_long*)pix, 0, 0, x, y, 12, 16);
+            x += 3;
+            pix += 0x30;
+        }
+        goto loop;
+    }
+    return pix;
+}
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7D10);
 
