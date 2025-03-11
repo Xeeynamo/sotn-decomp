@@ -1010,12 +1010,12 @@ loop:
 }
 
 Primitive* func_us_801B1064(
-    Primitive* prim, s16 x, s16 y, const u8* str, u16 clut) {
-    u8 buffer[64];
+    Primitive* prim, s16 x, s16 y, const char* str, u16 clut) {
+    char buffer[64];
     u16 length;
     s32 i;
-    u8 ch;
-    u8* chPtr;
+    char ch;
+    char* chPtr;
 
     chPtr = buffer;
     length = 0;
