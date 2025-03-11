@@ -2,68 +2,6 @@
 
 #include "ric.h"
 
-void RicHandleHighJump(void) {
-    bool loadAnim = 0;
-    s32 temp;
-
-#if defined(VERSION_US)
-    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
-    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
-    FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
-#endif
-    g_Player.pl_high_jump_timer++;
-
-    switch (PLAYER.step_s) {
-    case 0:
-        if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
-            if (!PLAYER.facingLeft) {
-                temp = g_Player.padPressed & PAD_RIGHT;
-            } else {
-                temp = g_Player.padPressed & PAD_LEFT;
-            }
-            if (temp == 0) {
-                RicDecelerateX(0x1000);
-            }
-        } else {
-            RicDecelerateX(0x1000);
-        }
-
-        if (g_Player.pl_vram_flag & 2) {
-            func_80158B04(3);
-            g_Player.pl_high_jump_timer = 0;
-            PLAYER.step_s = 2;
-        } else if (g_Player.pl_high_jump_timer >= 0x1D) {
-            PLAYER.step_s = 1;
-            PLAYER.velocityY = -0x60000;
-        }
-        break;
-
-    case 1:
-        if (g_Player.pl_vram_flag & 2) {
-            PLAYER.step_s = 2;
-            func_80158B04(3);
-            g_Player.pl_high_jump_timer = 0;
-        } else {
-            PLAYER.velocityY += 0x6000;
-            if (PLAYER.velocityY > 0x8000) {
-                loadAnim = true;
-            }
-        }
-        break;
-
-    case 2:
-        if (g_Player.pl_high_jump_timer >= 5) {
-            loadAnim = true;
-        }
-        break;
-    }
-
-    if (loadAnim) {
-        RicSetAnimation(D_80155534);
-        RicSetStep(PL_S_JUMP);
-    }
-}
-
 // Same function in DRA is func_8010D59C
 void func_8015C4AC(void) {
     byte stackpad[40];

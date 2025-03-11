@@ -27,7 +27,7 @@ bool func_us_801C5650(s32 branchFlags);
 
 extern PlayerState g_Dop;
 
-void func_80113AAC(void) {
+void PlayerStepHighJump(void) {
     s32 temp;
     s32 var_s1;
 
@@ -172,7 +172,7 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C854C);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C89D4);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_801186EC);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", PlayerStepSwordWarp);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C8CA4);
 

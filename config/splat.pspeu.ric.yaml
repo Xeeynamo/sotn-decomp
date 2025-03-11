@@ -6,7 +6,7 @@ options:
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
   asm_path: asm/pspeu/ric_psp
   asset_path: assets/ric
-  src_path: src/ric_psp
+  src_path: src
   ld_script_path: build/pspeu/ric.ld
   compiler: GCC
   symbol_addrs_path:
@@ -42,14 +42,15 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, 80]
-      - [0x90, c, 90]
-      - [0x410, c, 410]
-      - [0x4B60, c, 4B60]
-      - [0x6DB0, c, 6DB0]
-      - [0x28400, .data, 90]
-      - [0x28410, data]
-      - [0x30100, .rodata, 410]
-      - [0x30158, .rodata, 6DB0]
+      - [0x80, c, ric_psp/80]
+      - [0x90, c, ric_psp/90]
+      - [0x410, c, ric/pl_handlers]
+      - [0x4B60, c, ric_psp/4B60]
+      - [0x6DB0, c, ric_psp/6DB0]
+      - [0x28400, .data, ric_psp/90]
+      - [0x28410, .data, ric/pl_handlers]
+      - [0x28438, data]
+      - [0x30100, .rodata, ric/pl_handlers]
+      - [0x30158, .rodata, ric_psp/6DB0]
       - {type: bss, vram: 0x92D6600}
   - [0x30400]

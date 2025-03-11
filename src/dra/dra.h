@@ -341,8 +341,12 @@ extern s16 g_SensorsWallDefault[];
 extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
+
+// These appear to be the same variable.
 #if defined(VERSION_HD)
 extern s32 D_800ACEDC_hd;
+#elif defined(VERSION_PSP)
+extern s32 D_psp_09234B68;
 #endif
 extern s32 D_800ACF74;               // These two might...
 extern s32 g_AlucardChairSleepTimer; // ...be an array
@@ -398,7 +402,7 @@ extern AnimationFrame D_800AE294[];
 extern u16 D_800AFC50[];
 extern s16 D_800AFDA4[];
 extern RECT c_backbufferClear;
-extern s16 D_800AFFB8[];
+extern u16 D_800AFFB8[];
 extern s8 D_800B0130[];
 extern AnimationFrame* D_800B01B8[];
 extern u8 D_800B0608[];
@@ -582,7 +586,7 @@ bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
-void func_80115394(DamageParam* damage, s16 arg1, s16 arg2);
+void PlayerStepKill(DamageParam* damage, s16 arg1, s16 arg2);
 void func_80115C50(void);
 void func_80118894(Entity*);
 Entity* func_80118970(void);
