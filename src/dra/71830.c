@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-
-// BSS
-#if defined(VERSION_US)
-extern s32 D_80137FDC;
-#endif
 
 void func_80111928(void) { D_801396EA = 0; }
 
@@ -19,14 +13,17 @@ void func_80111938(void) {
 
 void func_8011197C(void) {
     D_801396EA = 0;
-    PLAYER.hitParams = 0;
     PLAYER.animCurFrame = D_801396E4;
     PLAYER.drawFlags = D_801396E6;
     PLAYER.palette = D_801396E8;
+    PLAYER.hitParams = 0;
 }
 
+#ifndef VERSION_HD
+extern s32 D_80137FDC;
+#endif
 bool func_801119C4(void) {
-    if (D_801396EA == 0) {
+    if (!D_801396EA) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.D_80072EFC == 0) {
                 func_80111938();
@@ -36,10 +33,17 @@ bool func_801119C4(void) {
 
         return false;
     }
-    if ((g_Player.D_80072EFC != 0) || (g_Player.padTapped & PAD_L2)) {
+
+    if (g_Player.D_80072EFC != 0) {
         func_8011197C();
         return false;
     }
+
+    if (g_Player.padTapped & PAD_L2) {
+        func_8011197C();
+        return false;
+    }
+
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
             g_Entities->posX.val += FIX(16.0f);
@@ -68,12 +72,12 @@ bool func_801119C4(void) {
             PLAYER.posY.val += FIX(16.0f);
         }
     }
-#ifdef VERSION_US
+#ifndef VERSION_HD
     if (g_Player.padTapped & PAD_TRIANGLE) {
-        if (!(D_80137FDC & 1)) {
-            PLAYER.palette = 0x8100;
-        } else {
+        if (D_80137FDC & 1) {
             PLAYER.palette = 0x810D;
+        } else {
+            PLAYER.palette = 0x8100;
         }
         D_80137FDC++;
     }
@@ -87,7 +91,7 @@ bool func_801119C4(void) {
     if (PLAYER.animCurFrame <= 0) {
         PLAYER.animCurFrame = 1;
     }
-    if (!(PLAYER.animCurFrame < 0xE1)) {
+    if (!(PLAYER.animCurFrame <= 0xE0)) {
         PLAYER.animCurFrame = 0xE0;
     }
     FntPrint("charal:%02x\n", PLAYER.animCurFrame);
