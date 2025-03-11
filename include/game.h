@@ -1349,7 +1349,7 @@ typedef enum {
 
 typedef struct Collider {
     /* 0x00 */ u32 effects;
-    /* 0x04 */ s32 unk4;
+    /* 0x04 */ s32 unk4; // possibly an x offset
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;

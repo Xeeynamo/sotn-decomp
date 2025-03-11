@@ -231,16 +231,7 @@ typedef struct {
     s32 unk28;
 } PlayerHud;
 
-typedef struct {
-    f32 posX;
-    f32 posY;
-    s16 angle1;
-    s16 angle2;
-    s16 size;
-    s16 xOffset;
-    s16 yOffset;
-    s16 pad;
-} mistStruct; // size = 0x14
+#include "mist.h"
 
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
