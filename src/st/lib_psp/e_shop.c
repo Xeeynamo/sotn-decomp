@@ -1720,7 +1720,7 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7C94);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7DF8);
 
-s16* func_psp_09269FF0(u8* str, s16* pix, s16 x, s16 y) {
+u8* func_psp_09269FF0(char* str, u8* pix, s16 x, s16 y) {
     u16 ch;
     s32 i;
     u16* chPix;
