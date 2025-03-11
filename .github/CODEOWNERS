@@ -7,7 +7,8 @@ bin/ @xeeynamo
 
 src/st/dra/ @xeeynamo
 src/st/pc/ @xeeynamo
-src/st/lib_psp/ @JoshSchreuder
+src/st/lib/ @gamezter
+src/st/lib_psp/ @JoshSchreuder @gamezter
 src/st/mad/ @xeeynamo
 src/st/sel/ @xeeynamo
 src/st/st0_psp/ @JoshSchreuder
