@@ -5415,7 +5415,7 @@ void func_us_801B8A00(Entity* self) {
         if (!self->step_s) {
             func_us_801B11A0(0, 0x180, 0x100, 0x60);
             pix = g_Pix[0];
-            pix = (u8*)func_psp_09269FF0(D_psp_092A4CC8, pix, 0, 0x180);
+            pix = func_psp_09269FF0(D_psp_092A4CC8, pix, 0, 0x180);
             self->step_s++;
             break;
         }
