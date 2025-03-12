@@ -1684,7 +1684,9 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4830);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_09264E08);
+extern u8* D_psp_092A5D38;
+
+void func_psp_09264E08(void) { D_psp_092A5D38 = &g_Pix[0][0x2000]; }
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0C40);
 
@@ -1694,6 +1696,8 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5068);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0FBC);
 
+Primitive* func_us_801B1064(
+    Primitive* prim, s16 x, s16 y, const char* str, u16 clut);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B1064);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B56E4);
@@ -1716,16 +1720,62 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7C94);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7DF8);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_09269FF0);
+s16* func_psp_09269FF0(char* str, s16* pix, s16 x, s16 y) {
+    u16 ch;
+    s32 i;
+    u16* chPix;
+    s16* dst;
+
+loop:
+    ch = *str++;
+    if (ch) {
+        ch <<= 8;
+        ch |= *str++;
+        chPix = g_api.func_80106A28(ch, 1);
+        if (chPix != NULL) {
+            dst = pix;
+            for (i = 0; i < 0x30; i++) {
+                *dst++ = *chPix++;
+            }
+            LoadTPage((u_long*)pix, 0, 0, x, y, 12, 16);
+            x += 3;
+            pix += 0x30;
+        }
+        goto loop;
+    }
+    return pix;
+}
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7D10);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8234);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0926ADD8);
+extern const char* D_psp_092A4CA8[];
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0926AED0);
+void func_psp_0926ADD8(Primitive* prim, s32 arg1) {
+    s16 x, y;
+    s32 i;
+
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    y = 0x24;
+    for (i = 0; i < 8; i++) {
+        if ((i & 1) == 0) {
+            x = 0x10;
+            y += 0xC;
+        } else {
+            x = 0x80;
+        }
+        prim = func_us_801B1064(prim, x, y, D_psp_092A4CA8[i], 0x196);
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
+
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8A00);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8958);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8A00);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0926BE68);
