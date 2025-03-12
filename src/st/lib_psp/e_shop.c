@@ -1712,7 +1712,17 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F18);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F84);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B60C8);
+void func_us_801B60C8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        break;
+
+    case 1:
+        GetPlayerCollisionWith(self, 8, 0x48, 1);
+        break;
+    }
+}
 
 void func_us_801B6124(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
