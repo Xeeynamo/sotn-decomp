@@ -279,12 +279,6 @@ void func_8012CFF0(void) {
 }
 
 void func_8012D024(void) {
-#ifdef VERSION_PSP
-#define WOLF_CHARGE_BTN (PAD_SQUARE | PAD_CIRCLE)
-#else
-#define WOLF_CHARGE_BTN (PAD_SQUARE)
-#endif
-
     DecelerateX(FIX(1.0 / 8));
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
@@ -294,7 +288,7 @@ void func_8012D024(void) {
         func_8012CED4();
         return;
     }
-    if (g_Player.padTapped & WOLF_CHARGE_BTN) {
+    if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(0);
         return;
     }

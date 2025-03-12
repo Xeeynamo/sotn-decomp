@@ -201,8 +201,6 @@ set(SOURCE_FILES_DRA
     src/dra/70394.c
     src/dra/704D0.c
     src/dra/71830.c
-    src/dra/72BB0.c
-    src/dra/75F54.c
     src/dra/7879C.c
     src/dra/d_CF74.c
     src/dra/7E4BC.c
@@ -229,14 +227,13 @@ set(SOURCE_FILES_DRA
 set(SOURCE_FILES_RIC
     src/ric/pl_header.c
     src/ric/1AC60.c
-    src/ric/1FCD0.c
+    src/ric/pl_handlers.c
     src/ric/20920.c
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
     src/ric/spriteparts.c
-    src/ric/1CB04.c
-    src/ric/202A8.c
+    src/ric/204AC.c
     src/ric/211D0.c
     src/ric/26C84.c
     src/ric/2C4C4.c
