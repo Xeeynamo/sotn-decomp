@@ -1710,8 +1710,108 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5068);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0FBC);
 
 Primitive* func_us_801B1064(
-    Primitive* prim, s16 x, s16 y, const char* str, u16 clut);
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B1064);
+    Primitive* prim, s16 x, s16 y, const char* str, u16 clut) {
+    char buffer[64];
+    u16 length;
+    s32 i;
+    char ch;
+    char* chPtr;
+
+    chPtr = buffer;
+    length = 0;
+    for (i = 0; i < 64; i++) {
+        *chPtr++ = 0;
+    }
+    chPtr = buffer;
+    while (true) {
+        ch = *str++;
+        if (ch == 0xFF) {
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+        }
+        *chPtr++ = ch;
+        length++;
+#ifdef VERSION_PSP
+        ch = *str;
+        if (ch == 0xFF) {
+            str++;
+            ch = *str++;
+            if (ch == 0) {
+                break;
+            }
+            if (ch != 0xFF) {
+                *chPtr = ch;
+            } else {
+                str -= 2;
+            }
+        }
+        chPtr++;
+#endif
+    }
+    chPtr = buffer;
+    if (!length) {
+        return prim;
+    }
+    do {
+        ch = *chPtr++;
+#ifdef VERSION_PSP
+        if (ch) {
+            prim->clut = clut;
+            prim->u0 = (s8)((ch & 0x0F) << 3);
+            prim->v0 = (s8)((ch & 0xF0) >> 1);
+            prim->drawMode = DRAW_DEFAULT;
+            prim->x0 = x;
+            prim->y0 = y;
+            prim = prim->next;
+        }
+        ch = *chPtr++;
+        if (ch) {
+            prim->clut = clut;
+            prim->u0 = (s8)((ch & 0x0F) << 3);
+            prim->v0 = (s8)((ch & 0xF0) >> 1);
+            prim->drawMode = DRAW_DEFAULT;
+            prim->x0 = x;
+            prim->y0 = y - 8;
+            prim = prim->next;
+        }
+        if (ch >= 0xF0 && ch <= 0xFC) {
+            x += 12;
+        } else {
+            x += 8;
+        }
+#else
+        if (ch) {
+            prim->clut = clut;
+            prim->u0 = (s8)((ch & 0x0F) << 3);
+            prim->v0 = (s8)((ch & 0xF0) >> 1);
+            prim->drawMode = DRAW_DEFAULT;
+            if (ch == CH('i') || ch == CH('l') || ch == CH('f') ||
+                ch == CH('I')) {
+                x--;
+            } else if (ch == CH('\'')) {
+                x -= 2;
+            }
+            prim->x0 = x;
+            prim->y0 = y;
+            prim = prim->next;
+            if (ch == CH('i') || ch == CH('l')) {
+                x += 7;
+            } else if (ch == CH('\'')) {
+                x += 6;
+            } else {
+                x += 8;
+            }
+        } else {
+            x += 4;
+        }
+#endif
+
+    } while (--length);
+
+    return prim;
+}
 
 void func_us_801B56E4(Entity* self) {
     Entity* tempEntity;
