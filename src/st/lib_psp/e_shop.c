@@ -89,6 +89,7 @@ extern char* D_psp_092A5FB8;
 extern const char** D_psp_092A5FB0;
 extern const char** D_psp_092A5FA8;
 extern const char** D_us_80181528;
+extern const char** D_psp_092A5F58;
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1703,8 +1704,55 @@ void func_psp_09264E08(void) { D_psp_092A5D38 = &g_Pix[0][0x2000]; }
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0C40);
 
-void func_us_801B4ED4(s16 index, u16 arg1);
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4ED4);
+void func_us_801B4ED4(s16 index, u16 arg1) {
+    const char* desc;
+    u16 itemId;
+    ShopItem* shopItem;
+    unsigned char* unused;
+
+    if (arg1) {
+        shopItem = &D_us_801814D8[index];
+    } else {
+        shopItem = &D_us_801D4364[index];
+    }
+    itemId = shopItem->itemId;
+    switch (shopItem->category) {
+    case INVENTORY_HAND:
+        desc = g_api.equipDefs[itemId].description;
+        g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                            g_api.equipDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_HEAD:
+    case INVENTORY_BODY:
+    case INVENTORY_CAPE:
+    case INVENTORY_ACCESSORY:
+        desc = g_api.accessoryDefs[itemId].description;
+        g_api.LoadEquipIcon(g_api.accessoryDefs[itemId].icon,
+                            g_api.accessoryDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_RELIC:
+        itemId = D_us_801814D4[itemId];
+        desc = g_api.relicDefs[itemId].desc;
+        g_api.LoadEquipIcon(g_api.relicDefs[itemId].icon,
+                            g_api.relicDefs[itemId].iconPalette, 0x1F);
+        break;
+    case INVENTORY_DOCUMENT:
+        desc = D_psp_092A5F58[itemId];
+        if (itemId) {
+            itemId = 0x112;
+        } else {
+            itemId = 0x111;
+        }
+        g_api.LoadEquipIcon(itemId, 0x118, 0x1F);
+        break;
+    default:
+        desc = *D_us_80181528;
+        break;
+    }
+    unused = &g_Pix[0][0x1000];
+    itemId = 2;
+    func_us_801B0C40(&g_Pix[0][0x800], desc, 2, 0x184, 0x7E);
+}
 
 void func_us_801B5068(Entity* self) {
     Primitive* prim;
