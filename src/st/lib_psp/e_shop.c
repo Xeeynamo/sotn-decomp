@@ -44,6 +44,7 @@ extern RECT D_psp_092A4D00;
 extern RECT D_psp_092A4D48;
 extern RECT D_psp_092A4BE8;
 extern RECT D_psp_092A4BD0;
+extern RECT D_psp_092A4AF0;
 extern u16 D_us_80181978[];
 extern u16 D_psp_092A4D08[];
 extern char D_psp_092A4CC8[];
@@ -84,6 +85,10 @@ extern const char** D_psp_092A5F60;
 extern char D_psp_092A4BB8[];
 extern char D_psp_092A4BC8[];
 extern u8* D_psp_092A54E0;
+extern char* D_psp_092A5FB8;
+extern const char** D_psp_092A5FB0;
+extern const char** D_psp_092A5FA8;
+extern const char** D_us_80181528;
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1708,7 +1713,267 @@ Primitive* func_us_801B1064(
     Primitive* prim, s16 x, s16 y, const char* str, u16 clut);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B1064);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B56E4);
+void func_us_801B56E4(Entity* self) {
+    Entity* tempEntity;
+    s32 primIndex;
+    s32 i, j;
+    ShopItem* shopItem;
+    DRAWENV drawEnv;
+    DR_ENV* dr_env;
+    RECT clipRect;
+    const char* name;
+    Primitive* prim;
+    Primitive* prim2;
+    s16 posX, posY;
+    s16 itemId;
+    s16 index;
+    s32 count;
+    u32 price;
+
+    clipRect = D_psp_092A4AF0;
+    tempEntity = self - 3;
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x13A);
+        if (primIndex != -1) {
+            InitializeEntity(g_EInitCommon);
+            i = 0;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env != NULL) {
+                prim->type = PRIM_ENV;
+                prim->priority = 0x10;
+                prim->drawMode = DRAW_DEFAULT;
+                drawEnv = g_CurrentBuffer->draw;
+                drawEnv.isbg = 1;
+                drawEnv.clip = clipRect;
+#ifdef VERSION_PSP
+                drawEnv.ofs[0] = 0;
+#else
+                drawEnv.ofs[0] = 0x100;
+#endif
+                drawEnv.ofs[1] = 0x100;
+                SetDrawEnv(dr_env, &drawEnv);
+            } else {
+                self->step = 0;
+                return;
+            }
+            prim = prim->next;
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env != NULL) {
+                prim->type = PRIM_ENV;
+                prim->priority = 0x12;
+                prim->drawMode = DRAW_UNK_800;
+            } else {
+                self->step = 0;
+                return;
+            }
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->clut = 0x196;
+                prim->tpage = 0x1E;
+                prim->u1 = prim->v1 = 8;
+                prim->priority = 0x11;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        if (g_CutsceneFlags & 0x400) {
+            if (tempEntity->params) {
+                SetStep(4);
+            } else {
+                SetStep(2);
+            }
+        }
+        break;
+
+    case 2:
+        posY = tempEntity->ext.et_801B56E4.unk84 + 16;
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
+        prim = prim->next;
+        index = tempEntity->ext.et_801B56E4.unk82;
+        posY = 16;
+        for (i = 0; i < 8; i++) {
+            if (i == 7 && !tempEntity->ext.et_801B56E4.unk84) {
+                break;
+            }
+            if (tempEntity->params) {
+                shopItem = &D_us_801814D8[index];
+            } else {
+                shopItem = &D_us_801D4364[index];
+            }
+            itemId = shopItem->itemId;
+            switch (shopItem->category) {
+            case INVENTORY_HAND:
+                name = g_api.equipDefs[itemId].name;
+                break;
+            case INVENTORY_HEAD:
+            case INVENTORY_BODY:
+            case INVENTORY_CAPE:
+            case INVENTORY_ACCESSORY:
+                name = g_api.accessoryDefs[itemId].name;
+                break;
+            case INVENTORY_RELIC:
+                name = D_psp_092A5FB0[itemId];
+                break;
+            case INVENTORY_DOCUMENT:
+                name = D_psp_092A5FA8[itemId];
+                break;
+            default:
+                name = *D_us_80181528;
+                break;
+            }
+            prim = func_us_801B1064(prim, 8, posY, name, 0x196);
+            if (D_us_801D415C[index] != 0) {
+                posX = 0x7E;
+                prim->clut = 0x196;
+                prim->u0 = 0x40;
+                prim->v0 = 0x28;
+                prim->drawMode = DRAW_DEFAULT;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+                prim2 = prim;
+                for (j = 0; j < 2; j++) {
+                    prim->clut = 0x196;
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+                func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
+                posX += 10;
+                prim2 = prim;
+                price = shopItem->price * D_us_801D415C[index];
+                for (j = 0; j < 8; j++) {
+                    if (g_Status.gold < price) {
+                        prim->clut = 0x191;
+                    } else {
+                        prim->clut = 0x196;
+                    }
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+                func_us_801B3EC8(prim2, price, 8);
+            } else {
+#ifdef VERSION_PSP
+                posX = 0x80;
+                count = 16;
+                prim2 = prim;
+                for (j = 0; j < count; j++) {
+#else
+                posX = 0x96;
+                prim2 = prim;
+                for (j = 0; j < 8; j++) {
+#endif
+                    prim->clut = 0x196;
+                    prim->x0 = posX;
+                    prim->y0 = posY;
+                    prim = prim->next;
+                    posX += 8;
+                }
+#ifdef VERSION_PSP
+                func_us_801B3FB4(prim2, D_psp_092A5FB8, count, 1);
+#else
+                func_us_801B3FB4(prim2, D_psp_092A5FB8, LEN(D_psp_092A5FB8), 1);
+#endif
+            }
+            posY += 12;
+            index++;
+        }
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if ((g_CutsceneFlags & 0x400) == 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        DestroyEntity(self);
+        return;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        prim = prim->next;
+        prim = prim->next;
+        index = tempEntity->ext.et_801B56E4.unk82;
+        posY = 0x10;
+        for (i = 0; i < 7; i++) {
+            shopItem = &D_us_801814D8[index];
+            name = g_api.accessoryDefs[shopItem->itemId].name;
+            if (D_us_801D425C[index] != 0) {
+                itemId = 0x196;
+            } else {
+                itemId = 0x191;
+            }
+            prim = func_us_801B1064(prim, 8, posY, name, itemId);
+            posX = 0x7E;
+            prim->clut = itemId;
+            prim->u0 = 0x40;
+            prim->v0 = 0x28;
+            prim->drawMode = DRAW_DEFAULT;
+            prim->x0 = posX;
+            prim->y0 = posY;
+            prim = prim->next;
+            posX += 8;
+            prim2 = prim;
+            for (j = 0; j < 2; j++) {
+                prim->clut = itemId;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+            }
+            func_us_801B3EC8(prim2, D_us_801D415C[index], 2);
+            posX += 10;
+            prim2 = prim;
+            price = shopItem->price * D_us_801D415C[index];
+            for (j = 0; j < 8; j++) {
+                prim->clut = itemId;
+                prim->x0 = posX;
+                prim->y0 = posY;
+                prim = prim->next;
+                posX += 8;
+            }
+            func_us_801B3EC8(prim2, price, 8);
+            posY += 12;
+            index++;
+        }
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        if ((g_CutsceneFlags & 0x400) == 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
+            prim = prim->next;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            SetStep(3);
+        }
+        break;
+    }
+}
 
 void func_us_801B5F18(Entity* self) {
     Entity* tempEntity = &g_Entities[192];
