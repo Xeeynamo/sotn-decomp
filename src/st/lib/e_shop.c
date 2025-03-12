@@ -882,7 +882,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
         pos = 0;
         while (*str >= 8) {
             s_8 = 0;
-#if VERSION_PSP
+#ifdef VERSION_PSP
             ch = g_api.func_ptr_91CF870((char*)str, &sp3f);
 #else
             ch = *str;
@@ -899,11 +899,12 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
                 ch = MINSCODE;
                 s_8 = 2;
             } else {
-#if VERSION_PSP
+#ifdef VERSION_PSP
                 if (sp3f > 1) {
                     str += sp3f - 1;
                 }
             }
+            chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
                 if (ch == MINSCODE) {
@@ -913,8 +914,8 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
                 str += 2;
             }
-#endif
             chPix = (u8*)g_api.func_80106A28(ch, 1);
+#endif
             while (true) {
                 if (ch == MINSCODE) {
                     break;
@@ -976,7 +977,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             break;
         }
         s_6++;
-        y += 16;
+        y += FontHeight;
         if (*str < 8) {
             str++;
         }
