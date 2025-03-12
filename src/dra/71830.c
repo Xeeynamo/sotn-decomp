@@ -1020,8 +1020,7 @@ void func_801139CC(s32 arg0) {
 }
 
 void PlayerStepHighJump(void) {
-    s32 var_s1 = 0;
-    s32 temp;
+    s16 var_s1 = 0;
 
     g_Player.unk4A++;
     if (func_8010FDF8(2) != 0) {
@@ -1032,20 +1031,21 @@ void PlayerStepHighJump(void) {
     case 0:
         if (g_Player.pl_vram_flag & 2) {
             func_801139CC(3);
-            if (g_Player.unk4A >= 5) {
+            if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
-                PLAYER.rotZ = 0x800;
-                PLAYER.rotPivotY = 2;
-                PLAYER.rotPivotX = 0;
                 PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
-                PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
+                PLAYER.rotZ = 0x800;
+                PLAYER.rotPivotX = 0;
+                PLAYER.rotPivotY = 2;
+                PLAYER.facingLeft += 1;
+                PLAYER.facingLeft &= 1;
                 SetPlayerAnim(0x2B);
             } else {
                 PLAYER.step_s = 3;
             }
         } else if (g_Player.unk4A > 28) {
             PLAYER.step_s = 1;
-            PLAYER.velocityY = -0x60000;
+            PLAYER.velocityY = FIX(-6);
             SetPlayerAnim(0x1B);
         }
         break;
@@ -1055,8 +1055,8 @@ void PlayerStepHighJump(void) {
             PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
-            PLAYER.velocityY += 0x6000;
-            if (PLAYER.velocityY > 0x8000) {
+            PLAYER.velocityY += FIX(3.0 / 8);
+            if (PLAYER.velocityY > FIX(0.5)) {
                 var_s1 = 1;
             }
         }
@@ -1066,14 +1066,15 @@ void PlayerStepHighJump(void) {
         PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
-        if (g_Player.unk4A >= 0x39) {
+        if (g_Player.unk4A > 0x38) {
             SetPlayerAnim(0x2D);
-            PLAYER.rotZ = 0;
-            PLAYER.step_s = 4;
             PLAYER.drawFlags &=
                 (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
                  FLAG_BLINK | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-            PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
+            PLAYER.rotZ = 0;
+            PLAYER.facingLeft += 1;
+            PLAYER.facingLeft &= 1;
+            PLAYER.step_s = 4;
         }
         break;
 
@@ -1084,16 +1085,15 @@ void PlayerStepHighJump(void) {
         break;
 
     case 4:
-        PLAYER.velocityY += 0x1000;
+        PLAYER.velocityY += FIX(1.0 / 16);
         if (PLAYER.animFrameDuration < 0) {
             var_s1 = 2;
         }
         break;
     }
 
-    if (var_s1 != 0) {
-        temp = 0; // TODO: !FAKE
-        if ((var_s1 - 1) != temp) {
+    if (var_s1) {
+        if (--var_s1) {
             SetPlayerAnim(0x1C);
         }
         PLAYER.palette = 0x8100;
