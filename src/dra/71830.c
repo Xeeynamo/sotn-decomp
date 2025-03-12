@@ -231,6 +231,8 @@ bool func_8011203C(void) {
     return false;
 }
 
+s32 D_800ACF74 = 0;
+
 void PlayerStepStand(void) {
     s16 x_offset;
     u16 local_flags = 3;

@@ -177,5 +177,5 @@ segments:
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/65790]
-      - { type: bss, vram: 0x91CB700 }
+      - [0xEED80, bss]
   - [0xEED80]
