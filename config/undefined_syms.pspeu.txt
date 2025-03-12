@@ -1,4 +1,5 @@
 D_psp_08B42060      = 0x08B42060;
+D_psp_08C630DC      = 0x08C630DC;
 g_StageId           = 0x091CE5B8;
 g_unkGraphicsStruct = 0x091CE5F8;
 D_80097488          = 0x091CE688;
