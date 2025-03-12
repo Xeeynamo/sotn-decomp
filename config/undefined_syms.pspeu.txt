@@ -17,6 +17,7 @@ g_Tilemap           = 0x091E1628;
 g_Entities          = 0x091E1680;
 g_Clut              = 0x091F5DF8;
 g_GameTimer         = 0x091FC460;
+D_8003C730          = 0x091FC498;
 g_pads              = 0x091FC4A8;
 g_GpuBuffers        = 0x091FC4E8;
 g_randomNext        = 0x091CE6B0;

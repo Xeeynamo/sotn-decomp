@@ -1710,7 +1710,41 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B56E4);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F18);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F84);
+void func_us_801B5F84(Entity* self) {
+    Entity* player = &PLAYER;
+    s16 posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        if (g_PlayableCharacter) {
+            self->step++;
+        } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
+                   player->posX.i.hi > 0xC0) {
+            D_80097928 = 1;
+            D_80097910 = 0;
+        }
+        break;
+
+    case 1:
+        if (D_8003C730 != 2) {
+            self->hitboxWidth = 0x10;
+            self->hitboxHeight = 0x20;
+            if (player->posX.i.hi > 0xE0) {
+                posY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
+                if (posY >= 0x60 && posY < 0xA0) {
+                    func_us_801B5F18(self);
+                }
+            }
+        } else {
+            func_us_801B5F18(self);
+        }
+        break;
+
+    case 2:
+        break;
+    }
+}
 
 void func_us_801B60C8(Entity* self) {
     switch (self->step) {
