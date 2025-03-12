@@ -1707,7 +1707,30 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4ED4);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5068);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0FBC);
+void func_us_801B0FBC(const char* str, u16 x, u16 y) {
+    RECT rect;
+    char ch;
+
+loop:
+    ch = *str++;
+    if (ch) {
+        if (ch == ' ') {
+            x++;
+            goto loop;
+#ifdef VERSION_PSP
+        } else if (ch == 0xCC) {
+            ch = 0xBB;
+#endif
+        }
+        rect.x = ((ch & 0x0F) << 1) + 0x380;
+        rect.y = ((ch & 0xF0) >> 1) + 0xF0;
+        rect.w = 2;
+        rect.h = 8;
+        MoveImage(&rect, x, y);
+        x += 2;
+        goto loop;
+    }
+}
 
 Primitive* func_us_801B1064(
     Primitive* prim, s16 x, s16 y, const char* str, u16 clut) {
