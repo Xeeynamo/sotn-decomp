@@ -3,7 +3,10 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_psp_090DE7D0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_psp_090DEAA8);
+void func_80105408(void) {
+    g_Player.padSim = PAD_UP;
+    g_Player.D_80072EFC = 1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_80105428);
 
