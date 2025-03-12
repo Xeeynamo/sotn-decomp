@@ -543,7 +543,7 @@ void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
+static void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
     prim->x0 = otherPrim->x0;
     prim->y0 = otherPrim->y0;
     prim->x1 = otherPrim->x1;
@@ -1703,9 +1703,229 @@ void func_psp_09264E08(void) { D_psp_092A5D38 = &g_Pix[0][0x2000]; }
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B0C40);
 
+void func_us_801B4ED4(s16 index, u16 arg1);
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B4ED4);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5068);
+void func_us_801B5068(Entity* self) {
+    Primitive* prim;
+    Primitive* otherPrim;
+    s32 primIndex;
+    s32 i;
+    s16 offset;
+    Entity* tempEntity;
+
+    tempEntity = self - 2;
+#ifdef VERSION_PSP
+    func_psp_09264E08();
+#endif
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 7);
+        if (primIndex != -1) {
+            InitializeEntity(g_EInitCommon);
+            i = 0;
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            for (; prim != NULL; i++) {
+                if (i < 4) {
+                    prim->type = PRIM_LINE_G2;
+                    prim->r0 = prim->r1 = 0x80;
+                    prim->g0 = prim->g1 = 0x80;
+                    prim->b0 = prim->b1 = 0x80;
+                    prim->priority = 0xBE;
+                    prim->drawMode = DRAW_HIDE;
+                } else if (i == 4) {
+                    func_us_801B11A0(0, 0x180, 0xF0, 0x16);
+                    prim->clut = 0x1A1;
+                    prim->tpage = 0x10;
+                    prim->u0 = prim->u2 = 0;
+                    prim->u1 = prim->u3 = 0xF0;
+                    prim->v0 = prim->v1 = 0x80;
+                    prim->v2 = prim->v3 = 0x96;
+                    prim->priority = 0xBE;
+                    prim->drawMode = DRAW_HIDE;
+                } else if (i == 5) {
+                    prim->type = PRIM_G4;
+                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
+                    prim->g0 = prim->g1 = 0x20;
+                    prim->g2 = prim->g3 = 0x40;
+                    prim->b0 = prim->b1 = 0;
+                    prim->b2 = prim->b3 = 0;
+                    prim->priority = 0xBD;
+                    prim->drawMode = DRAW_HIDE;
+                } else if (i == 6) {
+                    prim->tpage = 0x1A;
+                    prim->clut = 0x1EF;
+                    prim->x0 = prim->x2 = 0x49;
+                    prim->x1 = prim->x3 = 0x57;
+                    prim->y0 = prim->y1 = 0x96;
+                    prim->y2 = prim->y3 = 0xA4;
+                    prim->u0 = prim->u2 = 0x71;
+                    prim->u1 = prim->u3 = prim->u0 + 0xE;
+                    prim->v0 = prim->v1 = 0xB1;
+                    prim->v2 = prim->v3 = prim->v0 + 0xE;
+                    prim->priority = 0xC0;
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim = prim->next;
+            }
+        }
+        break;
+
+    case 1:
+        if (!self->step_s) {
+            self->ext.et_801B6F30.unk80 = 0;
+            func_us_801B4ED4(0, tempEntity->params);
+            self->step_s++;
+        } else if (g_CutsceneFlags & 0x400) {
+            SetStep(2);
+            self->ext.et_801B6F30.unk7C = 0x18;
+        }
+        break;
+
+    case 2:
+        if (!--self->ext.et_801B6F30.unk7C) {
+            SetStep(3);
+            self->ext.et_801B6F30.unk7C = 0x10;
+            self->ext.et_801B6F30.unk7E = 0;
+        }
+        break;
+
+    case 3:
+        self->ext.et_801B6F30.unk7C--;
+        self->ext.et_801B6F30.unk7E += 0x40;
+        prim = &g_PrimBuf[self->primIndex];
+        otherPrim = prim;
+        for (i = 0; i < 4; i++) {
+            prim = prim->next;
+        }
+#ifdef VERSION_PSP
+        i = 0;
+        if (self->ext.et_801B6F30.unk7C == 0) {
+            for (; i < 2; i++) {
+                prim->x0 = prim->x2 = 8;
+                prim->x1 = prim->x3 = prim->x0 + 0xF0;
+                prim->y0 = prim->y1 = 0xC9;
+                prim->y2 = prim->y3 = prim->y0 + 0x16;
+                if (i) {
+                    prim->drawMode =
+                        DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                    func_us_801B1200(otherPrim, prim);
+                } else {
+                    prim->drawMode = DRAW_DEFAULT;
+                }
+                prim = prim->next;
+            }
+        } else {
+            for (; i < 2; i++) {
+                offset = (rcos(self->ext.et_801B6F30.unk7E) * 16) / 0x1000;
+                prim->x0 = offset + 8;
+                prim->x2 = 8 - offset;
+                prim->x1 = 0xF8 - offset;
+                prim->x3 = offset + 0xF8;
+                offset = (rsin(self->ext.et_801B6F30.unk7E) * 11) / 0x1000;
+                prim->y0 = prim->y1 = 0xD4 - offset;
+                prim->y2 = prim->y3 = offset + 0xD4;
+                if (i) {
+                    prim->drawMode =
+                        DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                    func_us_801B1200(otherPrim, prim);
+                } else {
+                    prim->drawMode = DRAW_DEFAULT;
+                }
+                prim = prim->next;
+            }
+        }
+#else
+        for (i = 0; i < 2; i++) {
+            offset = (rcos(self->ext.et_801B6F30.unk7E) * 16) / 0x1000;
+            prim->x0 = offset + 8;
+            prim->x2 = 8 - offset;
+            prim->x1 = 0xF8 - offset;
+            prim->x3 = offset + 0xF8;
+            offset = (rsin(self->ext.et_801B6F30.unk7E) * 11) / 0x1000;
+            prim->y0 = prim->y1 = 0xD4 - offset;
+            prim->y2 = prim->y3 = offset + 0xD4;
+            if (i) {
+                prim->drawMode =
+                    DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                func_us_801B1200(otherPrim, prim);
+            } else {
+                prim->drawMode = DRAW_DEFAULT;
+            }
+            prim = prim->next;
+        }
+#endif
+        if (!self->ext.et_801B6F30.unk7C) {
+            SetStep(4);
+        }
+        break;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 6; i++) {
+            prim = prim->next;
+        }
+        if (D_us_801D425C[self->ext.et_801B6F30.unk80]) {
+            prim->drawMode = DRAW_DEFAULT;
+        } else {
+            prim->drawMode = DRAW_HIDE;
+        }
+        if (!self->step_s) {
+            if (self->ext.et_801B6F30.unk80 !=
+                (tempEntity->ext.et_801B6F30.unk80 +
+                 tempEntity->ext.et_801B6F30.unk82)) {
+                func_us_801B11A0(0, 0x180, 0xF0, 0x16);
+                prim->drawMode = DRAW_HIDE;
+                self->step_s = 1;
+            }
+        } else {
+            self->ext.et_801B6F30.unk80 = tempEntity->ext.et_801B6F30.unk80 +
+                                          tempEntity->ext.et_801B6F30.unk82;
+            func_us_801B4ED4(self->ext.et_801B6F30.unk80, tempEntity->params);
+            self->step_s = 0;
+        }
+        if ((g_CutsceneFlags & 0x400) == 0) {
+            prim->drawMode = DRAW_HIDE;
+            SetStep(7);
+            self->ext.et_801B6F30.unk7C = 0x10;
+        }
+        break;
+
+    case 7:
+        self->ext.et_801B6F30.unk7C--;
+        self->ext.et_801B6F30.unk7E += 0x40;
+        prim = &g_PrimBuf[self->primIndex];
+        otherPrim = prim;
+        for (i = 0; i < 4; i++) {
+            prim = prim->next;
+        }
+        for (i = 0; i < 2; i++) {
+            offset = (rcos(self->ext.et_801B6F30.unk7E) * 16) / 0x1000;
+            prim->x0 = offset + 8;
+            prim->x2 = 8 - offset;
+            prim->x1 = 0xF8 - offset;
+            prim->x3 = offset + 0xF8;
+            offset = (rsin(self->ext.et_801B6F30.unk7E) * 11) / 0x1000;
+            prim->y0 = prim->y1 = 0xD4 - offset;
+            prim->y2 = prim->y3 = offset + 0xD4;
+            if (i) {
+                prim->drawMode =
+                    DRAW_UNK_400 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                func_us_801B1200(otherPrim, prim);
+            } else {
+                prim->drawMode = DRAW_DEFAULT;
+            }
+            prim = prim->next;
+        }
+        if (!self->ext.et_801B6F30.unk7C) {
+            func_us_801B11A0(0, 0x180, 0xF0, 0x16);
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 void func_us_801B0FBC(const char* str, u16 x, u16 y) {
     RECT rect;
