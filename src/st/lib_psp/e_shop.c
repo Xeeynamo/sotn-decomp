@@ -75,6 +75,7 @@ extern const char** D_psp_092A5F80;
 extern const char** D_psp_092A5F98;
 extern const char* D_psp_092A4C18[];
 extern const char* D_psp_092A4C28[];
+extern const char** D_psp_092A5FA0;
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1715,8 +1716,21 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6E20);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6F30);
 
-const char* func_us_801B7C94(u16 itemId);
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7C94);
+const char* func_us_801B7C94(u16 itemId) {
+    const char* name;
+    if (itemId >= 0x80) {
+        itemId -= 0x80;
+        if (itemId < NUM_HAND_ITEMS) {
+            name = g_api.equipDefs[itemId].name;
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            name = g_api.accessoryDefs[itemId].name;
+        }
+    } else {
+        name = D_psp_092A5FA0[itemId];
+    }
+    return name;
+}
 
 Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY);
 
