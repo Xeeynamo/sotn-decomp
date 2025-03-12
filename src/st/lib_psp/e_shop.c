@@ -22,6 +22,7 @@ typedef enum {
 
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
 extern s32 E_ID(ID_29);
@@ -82,6 +83,7 @@ extern ShopItem D_psp_092A4AF8[24];
 extern const char** D_psp_092A5F60;
 extern char D_psp_092A4BB8[];
 extern char D_psp_092A4BC8[];
+extern u8* D_psp_092A54E0;
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1708,7 +1710,24 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B1064);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B56E4);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F18);
+void func_us_801B5F18(Entity* self) {
+    Entity* tempEntity = &g_Entities[192];
+    CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
+    self->step++;
+#ifdef VERSION_PSP
+    *D_psp_092A54E0 = 0;
+#else
+    D_us_80183F64 = 0;
+#endif
+    if (D_8003C730 == 2) {
+        D_8003C730 = 0;
+#ifdef VERSION_PSP
+        *D_psp_092A54E0 = 1;
+#else
+        D_us_80183F64 = 1;
+#endif
+    }
+}
 
 void func_us_801B5F84(Entity* self) {
     Entity* player = &PLAYER;
