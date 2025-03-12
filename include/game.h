@@ -1845,7 +1845,7 @@ typedef struct {
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;
-    /* 80072F6A */ u16 unk4A;
+    /* 80072F6A */ s16 unk4A;
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;

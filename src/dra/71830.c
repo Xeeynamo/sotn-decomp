@@ -109,11 +109,11 @@ void func_80111CC0(void) {
 
 bool func_80111D24(void) {
     Collider collider;
-    s32 speed = 0xC000;
-    s16 posX = PLAYER.posX.i.hi;
-    s16 posY = PLAYER.posY.i.hi;
-    s32 hitboxLeftMargin;
-    s32 hitboxRightMargin;
+    s32 hitboxRightMargin = 0;
+    s32 hitboxLeftMargin = 0;
+    s32 speed = FIX(0.75);
+    s32 posX = PLAYER.posX.i.hi;
+    s32 posY = PLAYER.posY.i.hi;
 
     CheckCollision(posX - 7, posY, &collider, 0);
     hitboxLeftMargin = collider.effects & EFFECT_MIST_ONLY;
@@ -136,15 +136,15 @@ bool func_80111D24(void) {
 bool func_80111DE8(bool mistReset) {
     Collider collider1;
     Collider collider2;
-    s32 yOffset;
+    s32 floorY;
+    s32 xPos;
+    s32 yPos;
     s32 filtered_effects;
-    s32 colliderXOffset;
-    s32 playerX;
 
-    yOffset = g_SensorsFloor[1].y - 1;
-
-    CheckCollision(
-        PLAYER.posX.i.hi + 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
+    floorY = g_SensorsFloor[1].y - 1;
+    xPos = PLAYER.posX.i.hi + 9;
+    yPos = PLAYER.posY.i.hi + floorY - 1;
+    CheckCollision(xPos, yPos, &collider1, 0);
     if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
         collider1.effects = EFFECT_NONE;
     }
@@ -160,11 +160,13 @@ bool func_80111DE8(bool mistReset) {
         filtered_effects == EFFECT_UNK_8000 + EFFECT_UNK_0002 + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_0800 + EFFECT_UNK_0002 + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
-        // silly arrangement needed to make registers match
-        playerX = PLAYER.posX.i.hi;
-        colliderXOffset = collider1.unk4;
-        CheckCollision(colliderXOffset + playerX + 8,
-                       PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
+        // This "plus 16, minus 8" is a random guess. The effect is just +8.
+        // We can use any pair that comes out to 8, but the compiler comes
+        // out wrong if we don't split it into two. So "+10-2" works equally
+        // well for example. The real numbers are likely unknowable.
+        xPos = (PLAYER.posX.i.hi + 16) + collider1.unk4 - 8;
+        yPos = PLAYER.posY.i.hi + floorY - 1;
+        CheckCollision(xPos, yPos, &collider2, 0);
         if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
             collider1.effects = EFFECT_NONE;
         }
@@ -173,9 +175,10 @@ bool func_80111DE8(bool mistReset) {
             return 1;
         }
     }
+    xPos = PLAYER.posX.i.hi - 9;
+    yPos = PLAYER.posY.i.hi + floorY - 1;
+    CheckCollision(xPos, yPos, &collider1, 0);
 
-    CheckCollision(
-        PLAYER.posX.i.hi - 9, PLAYER.posY.i.hi + yOffset - 1, &collider1, 0);
     if (mistReset && (collider1.effects & EFFECT_MIST_ONLY)) {
         collider1.effects = EFFECT_NONE;
     }
@@ -191,11 +194,11 @@ bool func_80111DE8(bool mistReset) {
         filtered_effects == EFFECT_UNK_4000 + EFFECT_UNK_0800 +
                                 EFFECT_UNK_0002 + EFFECT_SOLID ||
         filtered_effects == EFFECT_UNK_0002 + EFFECT_SOLID) {
-        // silly arrangement needed to make registers match
-        playerX = PLAYER.posX.i.hi;
-        colliderXOffset = collider1.unkC;
-        CheckCollision(colliderXOffset + playerX - 8,
-                       PLAYER.posY.i.hi + yOffset - 1, &collider2, 0);
+        // See above comment regarding values combining to 8.
+        xPos = (PLAYER.posX.i.hi - 9) + collider1.unkC + 1;
+        yPos = PLAYER.posY.i.hi + floorY - 1;
+        CheckCollision(xPos, yPos, &collider2, 0);
+
         if (mistReset && (collider2.effects & EFFECT_MIST_ONLY)) {
             collider1.effects = EFFECT_NONE;
         }
@@ -208,16 +211,19 @@ bool func_80111DE8(bool mistReset) {
 }
 
 bool func_8011203C(void) {
-    s32 collision = func_80111D24();
+    Entity* ent;
+    bool collision = func_80111D24();
 
     if (g_Entities[E_WEAPON].step == 5) {
-        if (collision == false) {
-            DestroyEntity(&g_Entities[E_WEAPON]);
+        if (collision) {
+            return false;
+        } else {
+            ent = &g_Entities[E_WEAPON];
+            DestroyEntity(ent);
             return true;
         }
-        return false;
     } else if (g_Entities[E_WEAPON].step <= 2) {
-        if (g_Entities[E_WEAPON].step != 0) {
+        if (g_Entities[E_WEAPON].step) {
             g_Player.unk46 = 0;
             g_Entities[E_WEAPON].step = 3;
         }
@@ -226,7 +232,7 @@ bool func_8011203C(void) {
 }
 
 void PlayerStepStand(void) {
-    s32 x_offset;
+    s16 x_offset;
     u16 local_flags = 3;
     s32 atLedge;
 
@@ -248,20 +254,20 @@ void PlayerStepStand(void) {
         DecelerateX(0x2000);
     }
 
-    if ((PLAYER.step < 0x40) && (g_Player.unk48 == 0)) {
+    if ((PLAYER.step < 0x40) && (!g_Player.unk48)) {
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] >= 0x31) {
+        } else if (D_80097448[0] > 0x30) {
             x_offset = 4;
-            if (PLAYER.facingLeft != 0) {
-                x_offset = -4;
+            if (PLAYER.facingLeft) {
+                x_offset = -x_offset;
             }
-            PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+            PLAYER.posX.i.hi += x_offset;
             PLAYER.posY.i.hi -= 0x10;
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 13), 0);
-            D_800ACF74 = 0x60;
             PLAYER.posY.i.hi += 0x10;
             PLAYER.posX.i.hi -= x_offset;
+            D_800ACF74 = 0x60;
         }
     }
     switch (PLAYER.step_s) {
@@ -271,36 +277,37 @@ void PlayerStepStand(void) {
         local_flags = 1;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
-            case 2:
-                SetPlayerAnim(0xF2);
-                PLAYER.facingLeft = 1;
-                break;
             case 1:
                 SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 0;
+                break;
+            case 2:
+                SetPlayerAnim(0xF2);
+                PLAYER.facingLeft = 1;
                 break;
             case 3:
                 SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 0;
                 break;
+            case 4:
             default:
                 SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 1;
                 break;
             }
             PLAYER.step_s = Player_Stand_ChairSit;
-            g_AlucardChairSleepTimer = 0x1800;
             local_flags |= 0x8000;
+            g_AlucardChairSleepTimer = 0x1800;
         } else if (!(g_Player.padPressed & PAD_UP)) {
             local_flags = 5;
         }
         break;
     case Player_Stand_2:
         switch (PLAYER.ext.player.anim) {
-        case 10:
         case 11:
-        case 14:
+        case 10:
         case 15:
+        case 14:
             break;
         default:
             SetPlayerAnim(0x63);
@@ -312,12 +319,10 @@ void PlayerStepStand(void) {
         break;
     case Player_Stand_3:
         local_flags = 0;
-        if (((u16)PLAYER.animFrameIdx >= 4U) ||
-            (PLAYER.ext.player.anim == 0xE)) {
+        if ((PLAYER.animFrameIdx >= 4) || (PLAYER.ext.player.anim == 0xE)) {
             local_flags = 1;
         }
-        if (((u16)PLAYER.animFrameIdx >= 7U) ||
-            (PLAYER.animFrameDuration < 0)) {
+        if ((PLAYER.animFrameIdx >= 7) || (PLAYER.animFrameDuration < 0)) {
             local_flags = 7;
         }
         break;
@@ -334,15 +339,15 @@ void PlayerStepStand(void) {
     case 0x40:
     case 0x59:
         func_8010DFF0(1, 1);
-        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
-            local_flags = 0;
-            if (PLAYER.animFrameIdx < 2U) {
+        if (PLAYER.animFrameIdx < g_Player.unk54) {
+            if (PLAYER.animFrameIdx < 2) {
                 CheckMoveDirection();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
                     PLAYER.ext.player.anim = 0x26;
                 }
             }
+            local_flags = 0;
         } else {
             g_Player.unk46 &= 0x7FFF;
             local_flags = 0xB;
@@ -371,28 +376,27 @@ void PlayerStepStand(void) {
     case 0x4B:
     case 0x4C:
     case 0x4D:
+    case 0x5D:
     case 0x4E:
     case 0x4F:
     case 0x50:
-    case 0x5D:
         func_8010DFF0(1, 1);
-        if ((u16)PLAYER.animFrameIdx < (u16)g_Player.unk54) {
+        if (PLAYER.animFrameIdx < g_Player.unk54) {
+            if (PLAYER.animFrameIdx < 3) {
+                CheckMoveDirection();
+                if (g_Player.padPressed & PAD_DOWN) {
+                    // Note that to reach this point, our minimum case is 0x41
+                    PLAYER.ext.player.anim =
+                        D_800B0608[PLAYER.step_s - 0x41] + 2;
+                    PLAYER.step = 2;
+                }
+            }
             local_flags = 0;
-            if (PLAYER.animFrameIdx >= 3U) {
-                break;
-            }
-            CheckMoveDirection();
-            if (g_Player.padPressed & PAD_DOWN) {
-                // Note that to reach this point, our minimum case is 0x41
-                PLAYER.ext.player.anim = D_800B0608[PLAYER.step_s - 0x41] + 2;
-                PLAYER.step = 2;
-            }
         } else {
             g_Player.unk46 &= 0x7FFF;
+            local_flags = 0x1B;
             if (PLAYER.animFrameDuration < 0) {
                 local_flags = 0xF;
-            } else {
-                local_flags = 0x1B;
             }
         }
         break;
@@ -410,9 +414,9 @@ void PlayerStepStand(void) {
                 PLAYER.animFrameDuration = 2;
             }
         }
-        if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {
-            local_flags = 0x1B;
+        if (PLAYER.animFrameIdx >= g_Player.unk54) {
             g_Player.unk46 &= 0x7FFF;
+            local_flags = 0x1B;
         }
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0xF;
@@ -427,9 +431,9 @@ void PlayerStepStand(void) {
             (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
-        if ((u16)PLAYER.animFrameIdx >= (u16)g_Player.unk54) {
-            local_flags = 0x19;
+        if (PLAYER.animFrameIdx >= g_Player.unk54) {
             g_Player.unk46 &= 0x7FFF;
+            local_flags = 0x19;
         }
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0xF;
@@ -454,7 +458,7 @@ void PlayerStepStand(void) {
         if (PLAYER.animFrameIdx == 6) {
             PLAYER.step_s = 0x40;
         }
-        if (g_Player.padTapped & 0x4000) {
+        if (g_Player.padTapped & PAD_DOWN) {
             PLAYER.step_s = 0x40;
         }
         if ((PLAYER.facingLeft && (g_Player.padPressed & PAD_RIGHT)) ||
@@ -487,8 +491,10 @@ void PlayerStepStand(void) {
     case 0x45:
     case 0x51:
         func_8010DFF0(1, 1);
-        // Probably some way to do this besides bit shifts but I couldn't get it
-        local_flags = (((u16)PLAYER.animFrameDuration << 0x10) >> 0x1F) & 0xF;
+        local_flags = 0;
+        if (PLAYER.animFrameDuration < 0) {
+            local_flags = 0xF;
+        }
         break;
     }
 
@@ -497,32 +503,33 @@ void PlayerStepStand(void) {
         local_flags |= 0x8000;
     }
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
-        g_Player.unk48 == 0) {
+        !g_Player.unk48) {
         SetPlayerAnim(atLedge);
         PLAYER.step_s = 1;
         local_flags |= 0x8000;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
-            case 2:
-                SetPlayerAnim(0xF2);
-                PLAYER.facingLeft = 1;
-                break;
             case 1:
                 SetPlayerAnim(0xF2);
                 PLAYER.facingLeft = 0;
+                break;
+            case 2:
+                SetPlayerAnim(0xF2);
+                PLAYER.facingLeft = 1;
                 break;
             case 3:
                 SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 0;
                 break;
+            case 4:
             default:
                 SetPlayerAnim(0xF3);
                 PLAYER.facingLeft = 1;
                 break;
             }
             PLAYER.step_s = 4;
-            g_AlucardChairSleepTimer = 0x1800;
             local_flags |= 0x8000;
+            g_AlucardChairSleepTimer = 0x1800;
         }
     }
 
