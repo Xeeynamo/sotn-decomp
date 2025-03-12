@@ -77,6 +77,7 @@ extern const char** D_psp_092A5F98;
 extern const char* D_psp_092A4C18[];
 extern const char* D_psp_092A4C28[];
 extern const char** D_psp_092A5FA0;
+extern char D_psp_092A4BD8[];
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1713,7 +1714,44 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6124);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6324);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6E20);
+void func_us_801B6E20(Primitive* prim, Entity* arg1) {
+    s16 posX, posY;
+    u16 enemyIndex;
+    s32 i;
+    u16 enemyId;
+    u16 enemyMask;
+
+    enemyIndex = arg1->ext.et_801B6F30.unk82 * 2;
+    posY = 4;
+    for (i = 0; i < 14; i++) {
+        if ((i & 1) == 0) {
+#ifdef VERSION_PSP
+            posY += 12;
+            posX = 4;
+#else
+            posX = 0;
+            posY += 12;
+#endif
+        } else {
+            posX = 0x78;
+        }
+        enemyId = D_psp_09298988[enemyIndex];
+        if (enemyId != 0xFFFF) {
+            enemyMask = g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190];
+            if (enemyMask & (1 << (enemyIndex & 7))) {
+                prim = func_us_801B1064(
+                    prim, posX, posY, g_api.enemyDefs[enemyId].name, 0x196);
+            } else {
+                prim = func_us_801B1064(prim, posX, posY, D_psp_092A4BD8, 0x191);
+            }
+        }
+        enemyIndex++;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_us_801B6F30(Entity* self) {
     DRAWENV drawEnv;
