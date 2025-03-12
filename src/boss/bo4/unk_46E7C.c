@@ -27,7 +27,7 @@ bool func_us_801C6040(s32 branchFlags);
 
 extern PlayerState g_Dop;
 
-void func_80113AAC(void) {
+void PlayerStepHighJump(void) {
     s32 temp;
     s32 var_s1;
 

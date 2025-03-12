@@ -88,7 +88,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80111CC0);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C6654);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80112B64);
+INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", PlayerStepWalk);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C68D0);
 

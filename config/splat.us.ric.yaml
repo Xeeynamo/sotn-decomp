@@ -54,9 +54,9 @@ segments:
       - [0x19EFC, .data, e_giant_spinning_cross]
       - [0x1A444, .rodata, 1AC60] # UpdateEntityRichter
       - [0x1A5E0, .rodata, 1AC60]
-      - [0x1A5F0, .rodata, 1CB04]
-      - [0x1A7A8, .rodata, 1FCD0]
-      - [0x1A7C0, .rodata, 202A8]
+      - [0x1A5F0, .rodata, pl_handlers]
+      - [0x1A7A8, .rodata, pl_handlers] # func_8015BCD0 and onwards
+      - [0x1A7C0, .rodata, pl_handlers] # RicHandleHighJump
       - [0x1A800, .rodata, 20920]
       - [0x1A80C, .rodata, 211D0]
       - [0x1A918, .rodata, 24788]
@@ -73,9 +73,8 @@ segments:
       - [0x1AB68, .rodata, e_giant_spinning_cross]
       - [0x1AC50, .rodata, e_giant_spinning_cross]
       - [0x1AC60, c, 1AC60]
-      - [0x1CB04, c, 1CB04]
-      - [0x1FCD0, c, 1FCD0]
-      - [0x202A8, c, 202A8]
+      - [0x1CB04, c, pl_handlers]
+      - [0x204AC, c, 204AC]
       - [0x20920, c, 20920]
       - [0x211D0, c, 211D0]
       - [0x24788, c, 24788]
@@ -85,7 +84,7 @@ segments:
       - [0x319C4, c, 319C4]
       - [0x359A4, c, 319C4]
       - [0x3728C, c, e_giant_spinning_cross]
-      - [0x37B64, .bss, 1CB04]
+      - [0x37B64, .bss, pl_handlers]
       - [0x37F80, .bss, 211D0]
       - [0x38000, .bss, 2A060]
       - [0x38088, .bss, 2C4C4]

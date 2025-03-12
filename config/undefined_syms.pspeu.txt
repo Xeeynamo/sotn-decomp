@@ -28,4 +28,5 @@ g_Status            = 0x091CF400;
 D_80097C98          = 0x091ed280;
 g_PlayerY           = 0x091ED290;
 g_PlayerX           = 0x091ED298;
+g_PlayerDraw        = 0x091ED2A8;
 abs                 = 0x08906AF0;
