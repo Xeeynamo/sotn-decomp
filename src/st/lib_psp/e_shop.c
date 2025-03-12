@@ -47,7 +47,6 @@ extern u16 D_us_80181978[];
 extern u16 D_psp_092A4D08[];
 extern char D_psp_092A4CC8[];
 extern const char** D_psp_092A5F68;
-
 extern const char D_psp_092A4880[];
 extern u16 D_us_801814D4[];
 extern ShopItem D_us_801814D8[];
@@ -80,6 +79,9 @@ extern const char* D_psp_092A4C28[];
 extern const char** D_psp_092A5FA0;
 extern char D_psp_092A4BD8[];
 extern ShopItem D_psp_092A4AF8[24];
+extern const char** D_psp_092A5F60;
+extern char D_psp_092A4BB8[];
+extern char D_psp_092A4BC8[];
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1712,7 +1714,80 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B5F84);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B60C8);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B6124);
+void func_us_801B6124(Primitive* prim, Entity* arg1) {
+    s16 posX, posY;
+    u16 clut;
+    s32 i, j;
+    u16 itemId;
+    u16 itemMask;
+    u16 itemIndex;
+    u32 price;
+    Primitive* prim2;
+    ShopItem* enemyTactics;
+
+#ifdef VERSION_PSP
+    g_Settings.D_8003CB00 |= 1;
+#endif
+    itemIndex = arg1->ext.et_801B6F30.unk82;
+    posY = 16;
+    for (i = 0; i < g_CurrentEntity->ext.et_801B6F30.unk84; i++) {
+        enemyTactics = &D_psp_092A4AF8[itemIndex];
+        itemId = enemyTactics->itemId;
+        itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
+#ifdef VERSION_PSP
+        if (D_8C630D0) {
+            itemMask |= (1 << (itemId & 7));
+        }
+#endif
+        if (itemMask & (1 << (itemId & 7))) {
+            enemyTactics->category = 2;
+            enemyTactics->price = 0;
+        } else {
+            enemyTactics->category = 0;
+        }
+#ifdef VERSION_PSP
+        price = 0;
+#endif
+        if (g_Settings.D_8003CB00 & (1 << itemId)) {
+            price = enemyTactics->price;
+            clut = 0x196;
+            if (g_Status.gold < price) {
+                clut = 0x183;
+            }
+#ifdef VERSION_PSP
+            prim = func_us_801B1064(
+                prim, 8, posY, D_psp_092A5F60[itemIndex], clut);
+#else
+            prim =
+                func_us_801B1064(prim, 8, posY, D_psp_092A5F60[itemId], clut);
+#endif
+            enemyTactics->category++;
+        } else {
+            clut = 0x191;
+            prim = func_us_801B1064(prim, 8, posY, D_psp_092A4BB8, 0x191);
+        }
+        posX = 0x80;
+        prim2 = prim;
+        for (j = 0; j < 8; j++) {
+            prim->clut = clut;
+            prim->x0 = posX;
+            prim->y0 = posY;
+            prim = prim->next;
+            posX += 8;
+        }
+        if (enemyTactics->category) {
+            func_us_801B3EC8(prim2, price, 8);
+        } else {
+            func_us_801B3FB4(prim2, D_psp_092A4BC8, 8, 1);
+        }
+        itemIndex++;
+        posY += 12;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
