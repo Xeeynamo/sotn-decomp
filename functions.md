@@ -1047,7 +1047,7 @@
 | dra    | func_8012E550                       |      197 |         41 |        | https://decomp.me/scratch/FshRS | 0.994 |
 | dra    | func_psp_0910E4B8                   |      198 |         34 | Yes    | https://decomp.me/scratch/OQ6N2 | 0.989 |
 |        | ServantInit                         |      199 |         20 |        |                                 |       |
-| dra    | func_psp_090DE7D0                   |      200 |         16 |        |                                 |       |
+| dra    | func_psp_090DE7D0                   |      200 |         16 |        | https://decomp.me/scratch/FTHpu | 0.919 |
 | lib    | func_us_801B1064                    |      200 |         18 |        |                                 |       |
 | lib    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
 | no4    | func_psp_0925B140                   |      200 |         20 |        |                                 |       |
@@ -1422,19 +1422,19 @@
 | lib    | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4    | func_psp_09245BB8                   |     1004 |         86 |        |                                 |       |
 | wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
-| lib    | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/CgyWa | 0.998 |
+| lib    | func_us_801B8A00                    |     1018 |        104 | Yes    |                                 |       |
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
 | dra    | func_psp_09109200                   |     1045 |        179 |        | https://decomp.me/scratch/2u214 | 0.991 |
 | ric    | RicHandleHit                        |     1050 |        167 | Yes    | https://decomp.me/scratch/al02E | 0.99  |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib    | func_us_801B6324                    |     1060 |        102 | Yes    |                                 |       |
-| lib    | func_us_801B8A00                    |     1080 |        118 | Yes    |                                 |       |
+| lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    | https://decomp.me/scratch/bUWNR | 0.996 |
 | no4    | func_psp_09252B00                   |     1095 |        132 |        |                                 |       |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | no4    | func_psp_0924E5D0                   |     1159 |         87 | Yes    |                                 |       |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/caTmz | 0.977 |
-| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/HtGSm | 0.708 |
+| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.976 |
 | lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
