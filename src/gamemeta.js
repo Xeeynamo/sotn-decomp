@@ -32,7 +32,7 @@ const gameMetadata = {
             "overlays": [
                 "dra", "ric", "weapon",
                 "stcen", "stchi", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp",
-                "bomar", "bobo4", "borbo3",
+                "bomar", "bobo4", "borbo3", "borbo5",
                 "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
             ]
         },
@@ -131,6 +131,10 @@ const gameMetadata = {
         "borbo3": {
             "name": "BOSS/RBO3/RBO3.BIN",
             "desc": "Medusa boss"
+        },
+        "borbo5": {
+            "name": "BOSS/RBO5/RBO5.BIN",
+            "desc": "Doppleganger40 boss"
         },
         "tt_000": {
             "name": "SERVANT/TT_000.BIN",
