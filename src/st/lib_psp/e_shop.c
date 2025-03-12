@@ -69,6 +69,9 @@ extern char* D_us_80181668;
 extern char** D_us_80181674;
 extern u8* D_psp_092A5D38;
 extern u16 D_psp_09298988[];
+extern u16 D_psp_092A4BF0[11];
+extern const char* D_psp_092A5F88;
+extern const char** D_psp_092A5F90;
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
 
@@ -1739,7 +1742,23 @@ loop:
     return pix;
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B7D10);
+Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
+    s32 x = posX;
+    s16 y = 8;
+    s32 i;
+    if ((arg1 & ELEMENT_ALL) == 0) {
+        prim = func_us_801B1064(prim, posX, posY, D_psp_092A5F88, 0x196);
+    } else {
+        for (i = 0; i < LEN(D_psp_092A4BF0); i++) {
+            if (arg1 & D_psp_092A4BF0[i]) {
+                prim =
+                    func_us_801B1064(prim, x, posY, D_psp_092A5F90[i], 0x196);
+                x += 0x20;
+            }
+        }
+    }
+    return prim;
+}
 
 void func_us_801B8234(Entity* self) {
     Primitive* prim;
