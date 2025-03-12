@@ -20,7 +20,7 @@ typedef enum {
     INVENTORY_DOCUMENT,
 } InventoryCategory;
 
-static u16 D_psp_09298988[] = {
+static u16 D_us_80180E90[] = {
     0x0A9, 0x046, 0x180, 0x06E, 0x040, 0x0AF, 0x04B, 0x01B, 0x051,
     0x069, 0x01D, 0x0F6, 0x0B2, 0x00D, 0x09D, 0x0C1, 0x00B, 0x0FE,
     0x09C, 0x0F3, 0x031, 0x010, 0x12F, 0x028, 0x066, 0x07C, 0x061,
@@ -3459,7 +3459,7 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
         } else {
             posX = 0x78;
         }
-        enemyId = D_psp_09298988[enemyIndex];
+        enemyId = D_us_80180E90[enemyIndex];
         if (enemyId != 0xFFFF) {
             enemyMask = g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190];
             if (enemyMask & (1 << (enemyIndex & 7))) {
@@ -4070,7 +4070,7 @@ void func_us_801B8234(Entity* self) {
     EnemyDef* enemyDef;
     s32 pad[12];
 
-    enemyId = D_psp_09298988[self->params];
+    enemyId = D_us_80180E90[self->params];
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
@@ -4271,7 +4271,7 @@ void func_us_801B8234(Entity* self) {
 #endif
                 if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
                         (1 << (enemyIndex & 7)) &&
-                    D_psp_09298988[self->params] != 0xFFFF) {
+                    D_us_80180E90[self->params] != 0xFFFF) {
                     self->params = enemyIndex;
                     SetStep(4);
                     break;
@@ -4281,7 +4281,7 @@ void func_us_801B8234(Entity* self) {
             for (enemyIndex = self->params - 1; enemyIndex >= 0; enemyIndex--) {
                 if (g_CastleFlags[(enemyIndex >> 3) + ENEMY_LIST_190] &
                         (1 << (enemyIndex & 7)) &&
-                    D_psp_09298988[self->params] != 0xFFFF) {
+                    D_us_80180E90[self->params] != 0xFFFF) {
                     self->params = enemyIndex;
                     SetStep(4);
                     break;
