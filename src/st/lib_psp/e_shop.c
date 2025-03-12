@@ -44,6 +44,7 @@ extern RECT D_psp_092A4D48;
 extern u16 D_us_80181978[];
 extern u16 D_psp_092A4D08[];
 extern char D_psp_092A4CC8[];
+extern const char** D_psp_092A5F68;
 
 extern const char D_psp_092A4880[];
 extern u16 D_us_801814D4[];
@@ -2179,7 +2180,21 @@ void func_us_801B8A00(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_us_801B8958);
+void func_us_801B8958(Primitive* prim, Entity* self) {
+    s16 posY;
+    s32 i, j;
+
+    posY = 16;
+    j = self->ext.et_801B6F30.unk82;
+    for (i = 0; i < 7; i++, j++) {
+        prim = func_us_801B1064(prim, 16, posY, D_psp_092A5F68[j], 0x196);
+        posY += 12;
+    }
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_psp_0926BE68(Entity* self) {
     DRAWENV drawEnv;
