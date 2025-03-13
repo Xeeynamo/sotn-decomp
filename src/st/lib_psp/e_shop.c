@@ -1134,147 +1134,156 @@ static char* D_psp_0929ED18[] = {
     D_psp_0929EBE8, D_psp_0929EBF8, D_psp_0929EC10, D_psp_0929EC30,
     D_psp_0929EC50, D_psp_0929EC70, D_psp_0929EC88, D_psp_0929ECA8,
     D_psp_0929ECC8, D_psp_0929ECE0, D_psp_0929ED00};
-static char D_psp_0929EF68[] = "en １７９２．（５ ans plus tﾛt）";
-static char D_psp_0929EF90[] = "couverts de sang.";
-static char D_psp_0929EFA8[] = "sur lui-mﾒme.";
-static char D_psp_0929EFB8[] = "Contrﾛlﾑ par la magie.";
-static char D_psp_0929EFD0[] = "Redoutﾑs serviteurs du diable.";
-static char D_psp_0929EFF0[] = "du chﾍteau.";
-static char D_psp_0929F000[] = "la magie.";
-static char D_psp_0929F010[] = "Attaque tous les intrus.";
-static char D_psp_0929F030[] = "Dﾑgouline de poison.";
-static char D_psp_0929F048[] = "feu. Le + grand de son espﾐce.";
-static char D_psp_0929F068[] = "ﾑquipﾑ d’une hache.";
-static char D_psp_0929F080[] = "envoyﾑs il y a ３００ ans.";
-static char D_psp_0929F0A0[] = "coupantes comme un rasoir.";
-static char D_psp_0929F0C0[] = "un boomerang.";
-static char D_psp_0929F0D0[] = "de bas niveau.";
-static char D_psp_0929F0E0[] = "magique.";
-static char D_psp_0929F0F0[] = "des Enfers.";
-static char D_psp_0929F100[] = "Mais laquelle est la tﾒte ?";
-static char D_psp_0929F120[] = "humaine. Saute comme une puce.";
-static char D_psp_0929F140[] = "de fusils.";
-static char D_psp_0929F150[] = "ﾋ deux ﾑpﾑes.";
-static char D_psp_0929F160[] = "armure et une boule de fer.";
-static char D_psp_0929F180[] = "Peut pﾑtrifier.";
-static char D_psp_0929F190[] = "Ses graines pﾑtrifient.";
-static char D_psp_0929F1A8[] = "armure et une hache.";
-static char D_psp_0929F1C0[] = "Semble rﾑticent ﾋ combattre.";
-static char D_psp_0929F1E0[] = "d’un arc.";
-static char D_psp_0929F1F0[] = "et une naginata.";
-static char D_psp_0929F208[] = "Lance des tonneaux en bois.";
-static char D_psp_0929F228[] = "d'apparence.";
-static char D_psp_0929F238[] = "A soif de vengeance.";
-static char D_psp_0929F250[] = "lentement.";
-static char D_psp_0929F260[] = "pour novices.";
-static char D_psp_0929F270[] = "devenu mutant avec le chﾍteau.";
-static char D_psp_0929F290[] = "crﾍne de dragon blanchi.";
-static char D_psp_0929F2B0[] = "Grande ﾑpﾑe.";
-static char D_psp_0929F2C0[] = "tourmentﾑe errant sans corps.";
-static char D_psp_0929F2E0[] = "ﾋ un rite malﾑfique.";
-static char D_psp_0929F2F8[] = "d’une lourde armure.";
-static char D_psp_0929F310[] = "dans les zones pﾑrilleuses.";
-static char D_psp_0929F330[] = "Manie une rapiﾐre.";
-static char D_psp_0929F348[] = "les grottes.";
-static char D_psp_0929F358[] = "la glace.";
-static char D_psp_0929F368[] = "en fer avec des piques.";
-static char D_psp_0929F380[] = "oie spﾑcialement entraﾖnﾑe.";
-static char D_psp_0929F3A0[] = "mort depuis longtemps.";
-static char D_psp_0929F3B8[] = "mythologique.";
-static char D_psp_0929F3C8[] = "une naginata.";
-static char D_psp_0929F3D8[] = "mﾒme aprﾐs avoir ﾑtﾑ banni.";
-static char D_psp_0929F3F8[] = "Attaque avec un hibou domptﾑ.";
-static char D_psp_0929F418[] = "et d’un bouclier.";
-static char D_psp_0929F430[] = "et mi-aigle.";
-static char D_psp_0929F440[] = "deux ﾑpﾑes.";
-static char D_psp_0929F450[] = "Maﾖtre du combat sans armes.";
-static char D_psp_0929F470[] = "femme et un corps d’oiseau.";
-static char D_psp_0929F490[] = "et condamnﾑ au combat ﾑternel.";
-static char D_psp_0929F4B0[] = "par des prﾒtres squelettes.";
-static char D_psp_0929F4D0[] = "d’inestimables connaissances.";
-static char D_psp_0929F4F0[] = "de poisson.";
-static char D_psp_0929F500[] = "portant une cape.";
-static char D_psp_0929F518[] = "Invoque des alliﾑs malﾑfiques.";
-static char D_psp_0929F538[] = "Manie un couteau gurkha.";
-static char D_psp_0929F558[] = "ﾑnorme marteau en acier.";
-static char D_psp_0929F578[] = "Manie deux grandes dagues.";
-static char D_psp_0929F598[] = "gluante.";
-static char D_psp_0929F5A8[] = "Manie un disque.";
-static char D_psp_0929F5C0[] = "des corbeaux.";
-static char D_psp_0929F5D0[] = "Appelﾑ \"Musicien des Enfers\".";
-static char D_psp_0929F5F0[] = "Rﾐgne sur le haut du chﾍteau.";
-static char D_psp_0929F610[] = "r l’esprit malﾑfique des morts.";
-static char D_psp_0929F638[] = "dans les rﾒves des hommes.";
-static char D_psp_0929F658[] = "de cerveaux.";
-static char D_psp_0929F668[] = "Forme un ensemble.";
-static char D_psp_0929F680[] = "ﾑternellement son crﾍne.";
-static char D_psp_0929F6A0[] = "de graines empoisonnﾑes.";
-static char D_psp_0929F6C0[] = "lanﾏant des bombes.";
-static char D_psp_0929F6D8[] = "mﾒme une fois coupﾑs en deux.";
-static char D_psp_0929F6F8[] = "magiciens peuvent le voir.";
-static char D_psp_0929F718[] = "changer de forme.";
-static char D_psp_0929F730[] = "un Homme-puce.";
-static char D_psp_0929F740[] = "de redoutables rayons.";
-static char D_psp_0929F758[] = "forme d’une panthﾐre noire.";
-static char D_psp_0929F778[] = "ﾑnorme dragon.";
-static char D_psp_0929F788[] = "vampire.";
-static char D_psp_0929F798[] = "A occis Amalaric des Goths.";
-static char D_psp_0929F7B8[] = "de feu.";
-static char D_psp_0929F7C0[] = "Lance des pierres.";
-static char D_psp_0929F7D8[] = "un saut d’attaque.";
-static char D_psp_0929F7F0[] = "un ouargue.";
-static char D_psp_0929F800[] = "par une armure.";
-static char D_psp_0929F810[] = "grﾍce ﾋ sa grande langue.";
-static char D_psp_0929F830[] = "de forme.";
-static char D_psp_0929F840[] = "guerriers.";
-static char D_psp_0929F850[] = "Nourrie avec du sang de dﾑmon.";
-static char D_psp_0929F870[] = "serpents et au regard pﾑtrif.";
-static char D_psp_0929F890[] = "de Grant.";
-static char D_psp_0929F8A0[] = "de Trevor.";
-static char D_psp_0929F8B0[] = "de Sypha.";
-static char D_psp_0929F8C0[] = "Serviteur de Galamoth.";
-static char D_psp_0929F8D8[] = "bﾒtes lﾑgend. Recher. Richter.";
-static char D_psp_0929F8F8[] = "quand il voit quelqu’un.";
-static char D_psp_0929F918[] = "sur le monde des tﾑnﾐbres.";
-static char D_psp_0929F938[] = "Pﾐre d’Alucard.";
+
 static char* D_psp_0929F950[] = {
-    D_psp_0929EF68, D_psp_0929EF90, D_psp_0929EFA8, D_psp_0929EFB8,
-    D_psp_0929EFD0, D_psp_0929EFF0, D_psp_0929F000, D_psp_0929F010,
-    D_psp_0929F030, "", D_psp_0929F048, D_psp_0929F068,
-    "", D_psp_0929F080, D_psp_0929F0A0, "",
-    D_psp_0929F0C0, "", D_psp_0929F0D0, D_psp_0929F0E0,
-    D_psp_0929F0F0, D_psp_0929F100, "", D_psp_0929F120,
-    D_psp_0929F140, D_psp_0929F150, D_psp_0929F160, D_psp_0929F180,
-    D_psp_0929F190, D_psp_0929F1A8, D_psp_0929F1C0, D_psp_0929F1E0,
-    D_psp_0929F1F0, "", D_psp_0929F208, D_psp_0929F228,
-    D_psp_0929F238, D_psp_0929F250, D_psp_0929F260, D_psp_0929F270,
-    D_psp_0929F290, D_psp_0929F2B0, D_psp_0929F2C0, D_psp_0929F2E0,
-    D_psp_0929F2F8, D_psp_0929F310, D_psp_0929F330, D_psp_0929F348,
-    D_psp_0929F358, "", "", D_psp_0929F368,
-    D_psp_0929F380, "", D_psp_0929F3A0, "",
-    D_psp_0929F0A0, D_psp_0929F3B8, D_psp_0929F3C8, D_psp_0929F3D8,
-    D_psp_0929F3F8, "", "", "",
-    D_psp_0929F418, "", "", D_psp_0929F430,
-    D_psp_0929F440, "", "", D_psp_0929F450,
-    D_psp_0929F470, "", "", D_psp_0929F490,
-    D_psp_0929F4B0, "", D_psp_0929F4D0, D_psp_0929F4F0,
-    D_psp_0929F500, D_psp_0929F518, D_psp_0929F538, D_psp_0929F558,
-    D_psp_0929F578, D_psp_0929F598, D_psp_0929F5A8, D_psp_0929F5C0,
-    D_psp_0929F5D0, "", "", D_psp_0929F5F0,
-    "", D_psp_0929F610, D_psp_0929F638, D_psp_0929F658,
-    "", "", "", D_psp_0929F668,
-    D_psp_0929F680, D_psp_0929F6A0, D_psp_0929F6C0, D_psp_0929F6D8,
-    "", D_psp_0929F6F8, "", D_psp_0929F718,
-    D_psp_0929F730, D_psp_0929F740, D_psp_0929F758, D_psp_0929F778,
-    D_psp_0929F730, "", D_psp_0929F788, D_psp_0929F798,
-    D_psp_0929F7B8, "", D_psp_0929F7C0, D_psp_0929F7D8,
-    D_psp_0929F7F0, "", D_psp_0929F800, D_psp_0929F810,
-    "", D_psp_0929F0F0, D_psp_0929F830, D_psp_0929F840,
-    D_psp_0929F850, "", D_psp_0929F870, "",
-    D_psp_0929F890, D_psp_0929F8A0, D_psp_0929F8B0, "",
-    "", "", D_psp_0929F8C0, D_psp_0929F8D8,
-    "", D_psp_0929F8F8, D_psp_0929F918, "",
-    "", "", D_psp_0929F938};
+    "en １７９２．（５ ans plus tﾛt）",
+    "couverts de sang.",
+    "sur lui-mﾒme.",
+    "Contrﾛlﾑ par la magie.",
+    "Redoutﾑs serviteurs du diable.",
+    "du chﾍteau.",
+    "la magie.",
+    "Attaque tous les intrus.",
+    "Dﾑgouline de poison.",
+    "",
+    "feu. Le + grand de son espﾐce.",
+    "ﾑquipﾑ d’une hache.",
+    "",
+    "envoyﾑs il y a ３００ ans.",
+    "coupantes comme un rasoir.",
+    "",
+    "un boomerang.",
+    "",
+    "de bas niveau.",
+    "magique.",
+    "des Enfers.",
+    "Mais laquelle est la tﾒte ?",
+    "",
+    "humaine. Saute comme une puce.",
+    "de fusils.",
+    "ﾋ deux ﾑpﾑes.",
+    "armure et une boule de fer.",
+    "Peut pﾑtrifier.",
+    "Ses graines pﾑtrifient.",
+    "armure et une hache.",
+    "Semble rﾑticent ﾋ combattre.",
+    "d’un arc.",
+    "et une naginata.",
+    "",
+    "Lance des tonneaux en bois.",
+    "d'apparence.",
+    "A soif de vengeance.",
+    "lentement.",
+    "pour novices.",
+    "devenu mutant avec le chﾍteau.",
+    "crﾍne de dragon blanchi.",
+    "Grande ﾑpﾑe.",
+    "tourmentﾑe errant sans corps.",
+    "ﾋ un rite malﾑfique.",
+    "d’une lourde armure.",
+    "dans les zones pﾑrilleuses.",
+    "Manie une rapiﾐre.",
+    "les grottes.",
+    "la glace.",
+    "",
+    "",
+    "en fer avec des piques.",
+    "oie spﾑcialement entraﾖnﾑe.",
+    "",
+    "mort depuis longtemps.",
+    "",
+    "coupantes comme un rasoir.",
+    "mythologique.",
+    "une naginata.",
+    "mﾒme aprﾐs avoir ﾑtﾑ banni.",
+    "Attaque avec un hibou domptﾑ.",
+    "",
+    "",
+    "",
+    "et d’un bouclier.",
+    "",
+    "",
+    "et mi-aigle.",
+    "deux ﾑpﾑes.",
+    "",
+    "",
+    "Maﾖtre du combat sans armes.",
+    "femme et un corps d’oiseau.",
+    "",
+    "",
+    "et condamnﾑ au combat ﾑternel.",
+    "par des prﾒtres squelettes.",
+    "",
+    "d’inestimables connaissances.",
+    "de poisson.",
+    "portant une cape.",
+    "Invoque des alliﾑs malﾑfiques.",
+    "Manie un couteau gurkha.",
+    "ﾑnorme marteau en acier.",
+    "Manie deux grandes dagues.",
+    "gluante.",
+    "Manie un disque.",
+    "des corbeaux.",
+    "Appelﾑ \"Musicien des Enfers\".",
+    "",
+    "",
+    "Rﾐgne sur le haut du chﾍteau.",
+    "",
+    "r l’esprit malﾑfique des morts.",
+    "dans les rﾒves des hommes.",
+    "de cerveaux.",
+    "",
+    "",
+    "",
+    "Forme un ensemble.",
+    "ﾑternellement son crﾍne.",
+    "de graines empoisonnﾑes.",
+    "lanﾏant des bombes.",
+    "mﾒme une fois coupﾑs en deux.",
+    "",
+    "magiciens peuvent le voir.",
+    "",
+    "changer de forme.",
+    "un Homme-puce.",
+    "de redoutables rayons.",
+    "forme d’une panthﾐre noire.",
+    "ﾑnorme dragon.",
+    "un Homme-puce.",
+    "",
+    "vampire.",
+    "A occis Amalaric des Goths.",
+    "de feu.",
+    "",
+    "Lance des pierres.",
+    "un saut d’attaque.",
+    "un ouargue.",
+    "",
+    "par une armure.",
+    "grﾍce ﾋ sa grande langue.",
+    "",
+    "des Enfers.",
+    "de forme.",
+    "guerriers.",
+    "Nourrie avec du sang de dﾑmon.",
+    "",
+    "serpents et au regard pﾑtrif.",
+    "",
+    "de Grant.",
+    "de Trevor.",
+    "de Sypha.",
+    "",
+    "",
+    "",
+    "Serviteur de Galamoth.",
+    "bﾒtes lﾑgend. Recher. Richter.",
+    "",
+    "quand il voit quelqu’un.",
+    "sur le monde des tﾑnﾐbres.",
+    "",
+    "",
+    "",
+    "Pﾐre d’Alucard."};
+
 static char D_psp_0929FBA0[] = "Von Richter vernichtet";
 static char D_psp_0929FBB8[] = "Wiedererweckt mit blut-";
 static char D_psp_0929FBD0[] = "Unzerstﾜrbarer Wirbelschﾎdel.";
