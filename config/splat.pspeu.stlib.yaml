@@ -109,7 +109,7 @@ segments:
       - [0x61158, data, cutscene] # LIB_EntityCutscene data
       - [0x61218, data]
       - [0x61308, .data, lib_psp/e_shop]
-      - [0x6D1A8, data]
+      - [0x6D538, data]
       - [0x6D6D0, .data, lib/e_lock_camera]
       - [0x6D748, data]
       - [0x6D768, .data, lib/e_candle_table]

@@ -2447,7 +2447,8 @@ static char D_psp_092A4650[] = {4, 0, 5, 1, 4};
 static char D_psp_092A4658[] = {5, 0, 5, 1, 2, 4};
 static char D_psp_092A4660[] = {6, 0, 5, 1, 2, 3, 4};
 static char D_psp_092A4668[] = {6, 0, 5, 1, 2, 6, 4};
-static char* D_us_80181340[] = {D_psp_092A4650, D_psp_092A4658, D_psp_092A4660, D_psp_092A4668};
+static char* D_us_80181340[] = {
+    D_psp_092A4650, D_psp_092A4658, D_psp_092A4660, D_psp_092A4668};
 
 static InventoryItem D_psp_092A4680[] = {
     // clang-format off
@@ -2509,6 +2510,130 @@ static InventoryItem D_psp_092A4680[] = {
 /// relic index
 u16 D_us_801814D4[] = {16, 0};
 
+// sellable items
+ShopItem D_us_801814D8[] = {
+    // clang-format off
+    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
+    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
+    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
+    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
+    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
+    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
+    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
+    // clang-format on
+};
+
+// magic scroll index to spell ID
+static u16 D_us_80181510[] = {
+    // clang-format off
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_SOUL_STEAL,
+    SPELL_WOLF_CHARGE,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    // clang-format on
+};
+
+// these are pairs of bytes, but only the first is used.
+// these are used to determine which magic scrolls
+// should be visible. typically this is if spells are
+// known, either through magic scrolls or otherwise,
+// but a completed game save overrides that check
+// (in func_us_801B29C4).
+static u8 D_psp_092A4870[] = {
+    // clang-format off
+    0x00, 0x00,
+    0x01, 0x00,
+    0x02, 0x00,
+    0x03, 0x00,
+    0x05, 0x00,
+    0x00, 0x00,
+    // clang-format on
+};
+
+static char D_psp_092A4880[] = "kosuu %x\n";
+
+static u16 D_us_80181530[] = {
+    0xFFEE, 0xFFDE, 0xFFF6, 0xFFDE, 0xFFEE, 0xFFE6, 0xFFF6, 0xFFE6, 0xFFD2,
+    0x001A, 0xFFDA, 0x001A, 0xFFE2, 0x001A, 0xFFEA, 0x001A, 0xFFFA, 0x001A,
+    0x0002, 0x001A, 0x000A, 0x001A, 0x0012, 0x001A, 0x001A, 0x001A, 0x0022,
+    0x001A, 0x002A, 0x001A, 0x0032, 0x001A, 0x0032, 0x001A, 0x0032, 0x001A,
+    0xFFEA, 0x0010, 0xFFF2, 0x0010, 0xFFFA, 0x0010, 0x0002, 0x0010, 0x000A,
+    0x0010, 0x0012, 0x0010, 0x001A, 0x0010, 0x0022, 0x0010, 0x002A, 0x0010,
+    0x0032, 0x0010, 0x0002, 0xFFDE, 0x000A, 0xFFDE, 0x0012, 0xFFDE, 0x001A,
+    0xFFDD, 0x0022, 0xFFDE, 0x002A, 0xFFDE, 0x0032, 0xFFDE, 0x0002, 0xFFE6,
+    0x000A, 0xFFE6, 0x0012, 0xFFE6, 0x001A, 0xFFE5, 0x0022, 0xFFE6, 0x002A,
+    0xFFE6, 0x0032, 0xFFE6, 0x0002, 0xFFF2, 0x000A, 0xFFF2, 0x0012, 0xFFF2,
+    0x001A, 0xFFF1, 0x0022, 0xFFF2, 0x002A, 0xFFF2, 0x0032, 0xFFF2, 0xFFCA,
+    0xFFFE, 0xFFD2, 0xFFFE, 0xFFDA, 0xFFFE, 0xFFE6, 0xFFFE, 0xFFEE, 0xFFFE,
+    0xFFF6, 0xFFFE, 0x0006, 0xFFFE, 0x000E, 0xFFFE, 0x0016, 0xFFFE, 0x0022,
+    0xFFFE, 0x002A, 0xFFFE, 0x0032, 0xFFFE, 0xFFCA, 0x0006, 0xFFD2, 0x0006,
+    0xFFDA, 0x0006, 0xFFE6, 0x0006, 0xFFEE, 0x0006, 0xFFF6, 0x0006, 0x0006,
+    0x0006, 0x000E, 0x0006, 0x0016, 0x0006, 0x0022, 0x0006, 0x002A, 0x0006,
+    0x0032, 0x0006};
+
+static s16 D_psp_092A49B8[] = {
+    0x0002, 0xFFDE, 0x000A, 0xFFDE, 0x0012, 0xFFDE, 0x001A, 0xFFDD, 0x0022,
+    0xFFDE, 0x002A, 0xFFDE, 0x0032, 0xFFDE, 0x0002, 0xFFE6, 0x000A, 0xFFE6,
+    0x0012, 0xFFE6, 0x001A, 0xFFE5, 0x0022, 0xFFE6, 0x002A, 0xFFE6, 0x0032,
+    0xFFE6, 0x0002, 0xFFF2, 0x000A, 0xFFF2, 0x0012, 0xFFF2, 0x001A, 0xFFF1,
+    0x0022, 0xFFF2, 0x002A, 0xFFF2, 0x0032, 0xFFF2, 0x0000, 0x0000};
+
+static s16 D_psp_092A4A10[] = {
+    0xFFCA, 0xFFFE, 0xFFD2, 0xFFFE, 0xFFDA, 0xFFFE, 0xFFE6, 0xFFFE,
+    0xFFEE, 0xFFFE, 0xFFF6, 0xFFFE, 0x0006, 0xFFFE, 0x000E, 0xFFFE,
+    0x0016, 0xFFFE, 0x0022, 0xFFFE, 0x002A, 0xFFFE, 0x0032, 0xFFFE,
+    0xFFCA, 0x0006, 0xFFD2, 0x0006, 0xFFDA, 0x0006, 0xFFE6, 0x0006,
+    0xFFEE, 0x0006, 0xFFF6, 0x0006, 0x0006, 0x0006, 0x000E, 0x0006,
+    0x0016, 0x0006, 0x0022, 0x0006, 0x002A, 0x0006, 0x0032, 0x0006};
+
+static char D_us_80181658[] = {
+    SQUARE, CIRCLE, CROSS, TRIANGLE, CH('L'), CH('R'), CH('L'), CH('R')};
+
+static u16 D_psp_092A4A78[] = {
+    0xFFE4, 0x0010, 0xFFEC, 0x0010, 0xFFF4, 0x0010, 0xFFFC, 0x0010};
+
+static s16 D_psp_092A4A88[] = {4, 16, 12, 16, 20, 16, 20, 8, 36, 16, 44, 16};
+
+static u16 D_psp_092A4AA0[] = {
+    0xFFD8, 0x0010, 0xFFEC, 0x0010, 0xFFEC, 0x0008, 0xFFF4, 0x0010,
+    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
+    0x001C, 0x0010, 0x0024, 0x0010, 0xFFD4, 0x0010, 0xFFF4, 0x0010,
+    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
+    0x0024, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010};
+
+static RECT D_psp_092A4AF0 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
+
+static ShopItem D_psp_092A4AF8[] = {
+    {0, 0x00, 200},
+    {0, 0x06, 500},
+    {0, 0x02, 700},
+    {0, 0x07, 1000},
+    {0, 0x05, 1200},
+    {0, 0x04, 1400},
+    {0, 0x0A, 1800},
+    {0, 0x09, 2000},
+    {0, 0x0D, 2200},
+    {0, 0x01, 2500},
+    {0, 0x03, 2800},
+    {0, 0x1A, 3000},
+    {0, 0x0E, 3000},
+    {0, 0x14, 3500},
+    {0, 0x13, 3500},
+    {0, 0x0F, 3500},
+    {0, 0x10, 3500},
+    {0, 0x0C, 4000},
+    {0, 0x12, 4500},
+    {0, 0x0B, 5000},
+    {0, 0x08, 6000},
+    {0, 0x15, 7000},
+    {0, 0x1B, 8500},
+    {0, 0x1C, 10000},
+};
+
 extern char** D_psp_092A5F40;
 extern char** D_psp_092A5F48;
 extern char** D_psp_092A5F58;
@@ -2540,24 +2665,14 @@ extern s32 E_ID(ID_2E);
 extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
-extern s16 D_psp_092A4A10[];
-extern u16 D_psp_092A4A78[];
-extern s16 D_psp_092A4A88[];
-extern u16 D_psp_092A4AA0[];
-extern s16 D_psp_092A49B8[];
 extern const char* D_psp_092A4CA8[];
 extern RECT D_psp_092A4D00;
 extern RECT D_psp_092A4D48;
 extern RECT D_psp_092A4BE8;
 extern RECT D_psp_092A4BD0;
-extern RECT D_psp_092A4AF0;
 extern u16 D_us_80181978[];
 extern u16 D_psp_092A4D08[];
 extern char D_psp_092A4CC8[];
-extern const char D_psp_092A4880[];
-extern u16 D_us_801814D4[];
-extern ShopItem D_us_801814D8[];
-extern u16 D_us_80181510[];
 extern u32 D_us_801D415C[];
 extern u32 D_us_801D425C[];
 extern ShopItem D_us_801D4364[];
@@ -2566,7 +2681,6 @@ extern u16 D_psp_092A4BF0[11];
 extern const char* D_psp_092A4C18[];
 extern const char* D_psp_092A4C28[];
 extern char D_psp_092A4BD8[];
-extern ShopItem D_psp_092A4AF8[24];
 extern char D_psp_092A4BB8[];
 extern char D_psp_092A4BC8[];
 extern u8* D_psp_092A54E0;
