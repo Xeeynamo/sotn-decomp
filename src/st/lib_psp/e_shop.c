@@ -1600,6 +1600,10 @@ static char* D_psp_092A1798[] = {
     "\002"
     "Sound test"};
 
+static char D_psp_092A17B8[] = {0x33, 0x2F, 0x2C, 0x24, 0x00, 0x2F, 0x35, 0x34, 0xFF, 0x00};
+static char D_psp_092A17C8[] = {0x2A, 0x45, 0x57, 0x45, 0x4C, 0x00, 0x4F, 0x46, 0x00, 0x2F, 0x50, 0x45, 0x4E, 0xFF, 0x00};
+static char* D_psp_092A17D8[] = { D_psp_092A17C8 };
+
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_25);
@@ -1671,8 +1675,23 @@ extern const char** D_us_80181528;
 extern const char** D_psp_092A5F58;
 extern const char** D_us_80181310;
 extern const char* D_us_80181340[];
+extern s32 D_8B42058;
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D430);
+char** func_psp_0925D430(char* en[], char* fr[], char* sp[], char* ge[], char* it[]) {
+    switch (D_8B42058) {
+    default:
+    case LANG_EN:
+        return en;
+    case LANG_FR:
+        return fr;
+    case LANG_SP:
+        return sp;
+    case LANG_GE:
+        return ge;
+    case LANG_IT:
+        return it;
+    }
+}
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_shop", func_psp_0925D4D0);
 
