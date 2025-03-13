@@ -1604,6 +1604,24 @@ static char* D_psp_092A14D0[] = {
     "",
     "Vater von Alucard."};
 
+static char* D_psp_092A1730[] = {"ATT", "DEF"};
+
+static char* D_psp_092A1798[] = {
+    "\002"
+    "Buy item",
+    "\002"
+    "Tactics",
+    "\002"
+    "Enemy list",
+    "\002"
+    "",
+    "\002"
+    "Exit",
+    "\002"
+    "Sell gem",
+    "\002"
+    "Sound test"};
+
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_25);
