@@ -1284,185 +1284,154 @@ static char* D_psp_0929F950[] = {
     "",
     "Pﾐre d’Alucard."};
 
-static char D_psp_0929FBA0[] = "Von Richter vernichtet";
-static char D_psp_0929FBB8[] = "Wiedererweckt mit blut-";
-static char D_psp_0929FBD0[] = "Unzerstﾜrbarer Wirbelschﾎdel.";
-static char D_psp_0929FBF0[] = "Frische Leichen.";
-static char D_psp_0929FC08[] = "Vampirfledermﾎuse.";
-static char D_psp_0929FC20[] = "Wﾜlfe, die den Zugang zum";
-static char D_psp_0929FC40[] = "Magisch beseeltes Skelett.";
-static char D_psp_0929FC60[] = "Legendﾎres Wesen.";
-static char D_psp_0929FC78[] = "Vierbeiniges Skelett.";
-static char D_psp_0929FC90[] = "Gefﾎhrlicher Skelett-";
-static char D_psp_0929FCA8[] = "Feuerspuckender Wassergeist.";
-static char D_psp_0929FCC8[] = "Niederer Axtritter.";
-static char D_psp_0929FCE0[] = "Knochenwerfendes Skelett.";
-static char D_psp_0929FD00[] = "Kirchensoldaten des Ostens,";
-static char D_psp_0929FD20[] = "Pflanze mit rasiermesser-";
-static char D_psp_0929FD40[] = "Besessener Ouijatisch.";
-static char D_psp_0929FD58[] = "Bumerangwerfendes Skelett.";
-static char D_psp_0929FD78[] = "Feuerspeiender Flugdﾎmon.";
-static char D_psp_0929FD98[] = "Niedere Flammengeister.";
-static char D_psp_0929FDB0[] = "Dﾎmon mit verzaubertem Speer.";
-static char D_psp_0929FDD0[] = "Dﾎmonische Puppe aus ";
-static char D_psp_0929FDE8[] = "Ekelerregende, zweikﾜpfige";
-static char D_psp_0929FE08[] = "Aus Medusenhaar.";
-static char D_psp_0929FE20[] = "Seltsames, menschenﾎhnliches";
-static char D_psp_0929FE40[] = "Skelette mit";
-static char D_psp_0929FE50[] = "Novize im Kampf mit";
-static char D_psp_0929FE68[] = "Schwer gepanzerter Ritter";
-static char D_psp_0929FE88[] = "Mutierte Pflanze.";
-static char D_psp_0929FEA0[] = "Gut gerｨsteter Axtritter.";
-static char D_psp_0929FEC0[] = "Feuer- und Eisdﾎmon.";
-static char D_psp_0929FED8[] = "Skelettbogenschｨtze";
-static char D_psp_0929FEF0[] = "Krieger, bewaffnet mit";
-static char D_psp_0929FF08[] = "Schlange, Parasit Scyllas.";
-static char D_psp_0929FF28[] = "Beseeltes Affenskelett.";
-static char D_psp_0929FF40[] = "Gestaltwandelnder Dﾎmon.";
-static char D_psp_0929FF60[] = "Kopf eines hingerichteten";
-static char D_psp_0929FF80[] = "Langsam fliegender ";
-static char D_psp_0929FF98[] = "Zauberbuch fｨr Anfﾎnger.";
-static char D_psp_0929FFB8[] = "Heimische Eule, die durch das";
-static char D_psp_0929FFD8[] = "Sﾎule aus einem gebleichten";
-static char D_psp_0929FFF8[] = "Ritter mit";
-static char D_psp_092A0008[] = "Kﾜrperliche Manifestationen";
-static char D_psp_092A0028[] = "Magisch vergrﾜﾊerte Krﾜte";
-static char D_psp_092A0048[] = "Schwer gepanzerter, untoter";
-static char D_psp_092A0068[] = "Gepanzerter Wﾎchter.";
-static char D_psp_092A0080[] = "Kopfloses Skelett.";
-static char D_psp_092A0098[] = "Hﾜhlenfrosch.";
-static char D_psp_092A00A8[] = "Eisbewaffneter, weiblicher";
-static char D_psp_092A00C8[] = "Riesiger Schﾎdelgeist.";
-static char D_psp_092A00E0[] = "Buch antiker Waffen.";
-static char D_psp_092A00F8[] = "Skelett mit";
-static char D_psp_092A0108[] = "Flohmann auf trainierter";
-static char D_psp_092A0128[] = "Fleischfressender Rabe.";
-static char D_psp_092A0140[] = "Geist eines lang toten";
-static char D_psp_092A0158[] = "Bﾜses Dﾎmonenschwert. Ruft";
-static char D_psp_092A0178[] = "Mythologisches Meeresmonster.";
-static char D_psp_092A0198[] = "Naginateschwingendes Skelett.";
-static char D_psp_092A01B8[] = "Der Schwertlord schwingt sein";
-static char D_psp_092A01D8[] = "Schwer gepanzerter Ritter.";
-static char D_psp_092A01F8[] = "Unsichtbarer Geist einer";
-static char D_psp_092A0218[] = "Animierter Schlammgolem.";
-static char D_psp_092A0238[] = "Flohmann mit Axt und";
-static char D_psp_092A0250[] = "Monster aus Gel und Schleim.";
-static char D_psp_092A0270[] = "Riesiges Skelett.";
-static char D_psp_092A0288[] = "In Teilen Pferd, Lﾜwe und";
-static char D_psp_092A02A8[] = "Meister im Kampf mit";
-static char D_psp_092A02C0[] = "Skelett eines Werpanters.";
-static char D_psp_092A02E0[] = "Halb Mensch, halb Wolf.";
-static char D_psp_092A02F8[] = "Grabwﾎchter.";
-static char D_psp_092A0308[] = "Wesen mit Frauenkopf und";
-static char D_psp_092A0328[] = "Halb Mensch, halb Stier.";
-static char D_psp_092A0348[] = "Pyromanischer Gremlin.";
-static char D_psp_092A0360[] = "Blutdurstiger, untoter Ritter,";
-static char D_psp_092A0380[] = "Tragbarer Schﾎdelschrein,";
-static char D_psp_092A03A0[] = "Geiserhexen aus Salem.";
-static char D_psp_092A03B8[] = "Durchsucht Grﾎber und";
-static char D_psp_092A03D0[] = "Fischkopfwﾎchter.";
-static char D_psp_092A03E8[] = "Geheimnisvoll verhｨllter";
-static char D_psp_092A0408[] = "Kleiner, magiekundiger Dﾎmon.";
-static char D_psp_092A0428[] = "Groﾊer Bruder.";
-static char D_psp_092A0438[] = "ｷltester groﾊer Bruder.";
-static char D_psp_092A0450[] = "Monster aus schleimiger";
-static char D_psp_092A0468[] = "Scheibenschwingender,";
-static char D_psp_092A0480[] = "Dﾎmonenlord der Raben.";
-static char D_psp_092A0498[] = "Donnerwerfender Dﾎmon.";
-static char D_psp_092A04B0[] = "Wachhund der Hﾜlle.";
-static char D_psp_092A04C8[] = "Mit Menschenblut gegossen.";
-static char D_psp_092A04E8[] = "Magiekundiger Vampir. Herrscht";
-static char D_psp_092A0508[] = "Fischkopfmeister.";
-static char D_psp_092A0520[] = "Grabsteine, beseelt von bﾜsen";
-static char D_psp_092A0540[] = "Weiblicher Dﾎmon.";
-static char D_psp_092A0558[] = "Gepfﾎhlter Mann auf der Suche";
-static char D_psp_092A0578[] = "Der feige Lﾜwe.";
-static char D_psp_092A0588[] = "Ein Monster namens  Schmu .";
-static char D_psp_092A05A8[] = "Herzloser Zinnmann.";
-static char D_psp_092A05C0[] = "Albtraumkreatur.";
-static char D_psp_092A05D8[] = "Skelett, das auf ewig seinen";
-static char D_psp_092A05F8[] = "Steckt voller Giftsamen.";
-static char D_psp_092A0618[] = "Bombenwerfender, gepanzerter";
-static char D_psp_092A0638[] = "Zombies, die auch angreifen,";
-static char D_psp_092A0658[] = "Meister mit Wurfgeschossen.";
-static char D_psp_092A0678[] = "Mutiertes Insekt.";
-static char D_psp_092A0690[] = "Erschreckend zielgenauer";
-static char D_psp_092A06B0[] = "Gestaltwandelnder Lykanthop.";
-static char D_psp_092A06D0[] = "Vom Flohmann beherrschter";
-static char D_psp_092A06F0[] = "Schwingt eine fｨrchterliche";
-static char D_psp_092A0710[] = "Flｨssiges Wesen. Tritt in Form";
-static char D_psp_092A0730[] = "Beseeltes Skelett eines ";
-static char D_psp_092A0750[] = "Vom Flohmann gerittener";
-static char D_psp_092A0768[] = "Stierkﾜpfiges Monster.";
-static char D_psp_092A0780[] = "Riesige Vampirfledermaus.";
-static char D_psp_092A07A0[] = "Engelsbogenschｨtze. Hat Amalar";
-static char D_psp_092A07C0[] = "Feuerspuckender Wolf.";
-static char D_psp_092A07D8[] = "Felsenwerfender, gepanzerter";
-static char D_psp_092A07F8[] = "Skelett mit Sprungangriff.";
-static char D_psp_092A0818[] = "Ein wargreitendes Skelett.";
-static char D_psp_092A0838[] = "Bﾜser, mutierter Oktopus.";
-static char D_psp_092A0858[] = "Geharnischtes Kriegstier.";
-static char D_psp_092A0878[] = "Wenig intelligenter Blutsauger";
-static char D_psp_092A0898[] = "Flammendﾎmon.";
-static char D_psp_092A08A8[] = "Schrecklicher Dﾎmon aus ";
-static char D_psp_092A08C8[] = "Besteht aus den Kﾜrperteilen";
-static char D_psp_092A08E8[] = "Mﾎchtige Venusranke.";
-static char D_psp_092A0900[] = "Uralte ﾎgyptische Mumie.";
-static char D_psp_092A0920[] = "Schlangenkﾜpfige Dﾎmonin";
-static char D_psp_092A0940[] = "Boshafter kleiner Dﾎmon.";
-static char D_psp_092A0960[] = "Zombie, der sich als Grant";
-static char D_psp_092A0980[] = "Zombie, der sich als Trevor";
-static char D_psp_092A09A0[] = "Zombie, der sich als Sypha";
-static char D_psp_092A09C0[] = "Beelzebub, Herr der Fliegen.";
-static char D_psp_092A09E0[] = "Junge Hexe.";
-static char D_psp_092A09F0[] = "Henker der Hﾜlle.";
-static char D_psp_092A0A08[] = "Transvestiten-Eisgeist.";
-static char D_psp_092A0A20[] = "Vampirjﾎger. Nutzt 4 legendﾎre";
-static char D_psp_092A0A40[] = "Meistervampirjﾎger.";
-static char D_psp_092A0A58[] = "Seltener Vogel.";
-static char D_psp_092A0A68[] = "Magisches Geschﾜpf, das die";
-static char D_psp_092A0A88[] = "Mﾎchtiger Rｨstungslord.";
-static char D_psp_092A0AA0[] = "Draculas Vertrauter.";
-static char D_psp_092A0AB8[] = "Dunkler Priester des Dracula.";
-static char D_psp_092A0AD8[] = "Herr von Wallachia.";
 static char* D_psp_092A0AF0[] = {
-    D_psp_0929FBA0, D_psp_0929FBB8, D_psp_0929FBD0, D_psp_0929FBF0,
-    D_psp_0929FC08, D_psp_0929FC20, D_psp_0929FC40, D_psp_0929FC60,
-    D_psp_0929FC78, D_psp_0929FC90, D_psp_0929FCA8, D_psp_0929FCC8,
-    D_psp_0929FCE0, D_psp_0929FD00, D_psp_0929FD20, D_psp_0929FD40,
-    D_psp_0929FD58, D_psp_0929FD78, D_psp_0929FD98, D_psp_0929FDB0,
-    D_psp_0929FDD0, D_psp_0929FDE8, D_psp_0929FE08, D_psp_0929FE20,
-    D_psp_0929FE40, D_psp_0929FE50, D_psp_0929FE68, D_psp_0929FE08,
-    D_psp_0929FE88, D_psp_0929FEA0, D_psp_0929FEC0, D_psp_0929FED8,
-    D_psp_0929FEF0, D_psp_0929FF08, D_psp_0929FF28, D_psp_0929FF40,
-    D_psp_0929FF60, D_psp_0929FF80, D_psp_0929FF98, D_psp_0929FFB8,
-    D_psp_0929FFD8, D_psp_0929FFF8, D_psp_092A0008, D_psp_092A0028,
-    D_psp_092A0048, D_psp_092A0068, D_psp_092A0080, D_psp_092A0098,
-    D_psp_092A00A8, D_psp_092A00C8, D_psp_092A00E0, D_psp_092A00F8,
-    D_psp_092A0108, D_psp_092A0128, D_psp_092A0140, D_psp_092A0158,
-    D_psp_0929FD20, D_psp_092A0178, D_psp_092A0198, D_psp_092A01B8,
-    D_psp_092A01D8, D_psp_092A01F8, D_psp_092A0218, D_psp_092A0158,
-    D_psp_092A0238, D_psp_092A0250, D_psp_092A0270, D_psp_092A0288,
-    D_psp_092A02A8, D_psp_092A02C0, D_psp_092A02E0, D_psp_092A02F8,
-    D_psp_092A0308, D_psp_092A0328, D_psp_092A0348, D_psp_092A0360,
-    D_psp_092A0380, D_psp_092A03A0, D_psp_092A03B8, D_psp_092A03D0,
-    D_psp_092A03E8, D_psp_092A0408, D_psp_092A0428, D_psp_092A0428,
-    D_psp_092A0438, D_psp_092A0450, D_psp_092A0468, D_psp_092A0480,
-    D_psp_092A0498, D_psp_092A04B0, D_psp_092A04C8, D_psp_092A04E8,
-    D_psp_092A0508, D_psp_092A0520, D_psp_092A0540, D_psp_092A0558,
-    D_psp_092A0578, D_psp_092A0588, D_psp_092A05A8, D_psp_092A05C0,
-    D_psp_092A05D8, D_psp_092A05F8, D_psp_092A0618, D_psp_092A0638,
-    D_psp_092A0658, D_psp_092A0678, D_psp_092A0690, D_psp_092A06B0,
-    D_psp_092A06D0, D_psp_092A06F0, D_psp_092A0710, D_psp_092A0730,
-    D_psp_092A0750, D_psp_092A0768, D_psp_092A0780, D_psp_092A07A0,
-    D_psp_092A07C0, D_psp_092A0158, D_psp_092A07D8, D_psp_092A07F8,
-    D_psp_092A0818, D_psp_092A0838, D_psp_092A0858, D_psp_092A0878,
-    D_psp_092A0898, D_psp_092A08A8, D_psp_0929FF40, D_psp_092A08C8,
-    D_psp_092A08E8, D_psp_092A0900, D_psp_092A0920, D_psp_092A0940,
-    D_psp_092A0960, D_psp_092A0980, D_psp_092A09A0, D_psp_092A09C0,
-    D_psp_092A09E0, D_psp_092A09F0, D_psp_092A0A08, D_psp_092A0A20,
-    D_psp_092A0A40, D_psp_092A0A58, D_psp_092A0A68, D_psp_092A0A88,
-    D_psp_092A0AA0, D_psp_092A0AB8, D_psp_092A0AD8};
+    "Von Richter vernichtet",
+    "Wiedererweckt mit blut-",
+    "Unzerstﾜrbarer Wirbelschﾎdel.",
+    "Frische Leichen.",
+    "Vampirfledermﾎuse.",
+    "Wﾜlfe, die den Zugang zum",
+    "Magisch beseeltes Skelett.",
+    "Legendﾎres Wesen.",
+    "Vierbeiniges Skelett.",
+    "Gefﾎhrlicher Skelett-",
+    "Feuerspuckender Wassergeist.",
+    "Niederer Axtritter.",
+    "Knochenwerfendes Skelett.",
+    "Kirchensoldaten des Ostens,",
+    "Pflanze mit rasiermesser-",
+    "Besessener Ouijatisch.",
+    "Bumerangwerfendes Skelett.",
+    "Feuerspeiender Flugdﾎmon.",
+    "Niedere Flammengeister.",
+    "Dﾎmon mit verzaubertem Speer.",
+    "Dﾎmonische Puppe aus ",
+    "Ekelerregende, zweikﾜpfige",
+    "Aus Medusenhaar.",
+    "Seltsames, menschenﾎhnliches",
+    "Skelette mit",
+    "Novize im Kampf mit",
+    "Schwer gepanzerter Ritter",
+    "Aus Medusenhaar.",
+    "Mutierte Pflanze.",
+    "Gut gerｨsteter Axtritter.",
+    "Feuer- und Eisdﾎmon.",
+    "Skelettbogenschｨtze",
+    "Krieger, bewaffnet mit",
+    "Schlange, Parasit Scyllas.",
+    "Beseeltes Affenskelett.",
+    "Gestaltwandelnder Dﾎmon.",
+    "Kopf eines hingerichteten",
+    "Langsam fliegender ",
+    "Zauberbuch fｨr Anfﾎnger.",
+    "Heimische Eule, die durch das",
+    "Sﾎule aus einem gebleichten",
+    "Ritter mit",
+    "Kﾜrperliche Manifestationen",
+    "Magisch vergrﾜﾊerte Krﾜte",
+    "Schwer gepanzerter, untoter",
+    "Gepanzerter Wﾎchter.",
+    "Kopfloses Skelett.",
+    "Hﾜhlenfrosch.",
+    "Eisbewaffneter, weiblicher",
+    "Riesiger Schﾎdelgeist.",
+    "Buch antiker Waffen.",
+    "Skelett mit",
+    "Flohmann auf trainierter",
+    "Fleischfressender Rabe.",
+    "Geist eines lang toten",
+    "Bﾜses Dﾎmonenschwert. Ruft",
+    "Pflanze mit rasiermesser-",
+    "Mythologisches Meeresmonster.",
+    "Naginateschwingendes Skelett.",
+    "Der Schwertlord schwingt sein",
+    "Schwer gepanzerter Ritter.",
+    "Unsichtbarer Geist einer",
+    "Animierter Schlammgolem.",
+    "Bﾜses Dﾎmonenschwert. Ruft",
+    "Flohmann mit Axt und",
+    "Monster aus Gel und Schleim.",
+    "Riesiges Skelett.",
+    "In Teilen Pferd, Lﾜwe und",
+    "Meister im Kampf mit",
+    "Skelett eines Werpanters.",
+    "Halb Mensch, halb Wolf.",
+    "Grabwﾎchter.",
+    "Wesen mit Frauenkopf und",
+    "Halb Mensch, halb Stier.",
+    "Pyromanischer Gremlin.",
+    "Blutdurstiger, untoter Ritter,",
+    "Tragbarer Schﾎdelschrein,",
+    "Geiserhexen aus Salem.",
+    "Durchsucht Grﾎber und",
+    "Fischkopfwﾎchter.",
+    "Geheimnisvoll verhｨllter",
+    "Kleiner, magiekundiger Dﾎmon.",
+    "Groﾊer Bruder.",
+    "Groﾊer Bruder.",
+    "ｷltester groﾊer Bruder.",
+    "Monster aus schleimiger",
+    "Scheibenschwingender,",
+    "Dﾎmonenlord der Raben.",
+    "Donnerwerfender Dﾎmon.",
+    "Wachhund der Hﾜlle.",
+    "Mit Menschenblut gegossen.",
+    "Magiekundiger Vampir. Herrscht",
+    "Fischkopfmeister.",
+    "Grabsteine, beseelt von bﾜsen",
+    "Weiblicher Dﾎmon.",
+    "Gepfﾎhlter Mann auf der Suche",
+    "Der feige Lﾜwe.",
+    "Ein Monster namens  Schmu .",
+    "Herzloser Zinnmann.",
+    "Albtraumkreatur.",
+    "Skelett, das auf ewig seinen",
+    "Steckt voller Giftsamen.",
+    "Bombenwerfender, gepanzerter",
+    "Zombies, die auch angreifen,",
+    "Meister mit Wurfgeschossen.",
+    "Mutiertes Insekt.",
+    "Erschreckend zielgenauer",
+    "Gestaltwandelnder Lykanthop.",
+    "Vom Flohmann beherrschter",
+    "Schwingt eine fｨrchterliche",
+    "Flｨssiges Wesen. Tritt in Form",
+    "Beseeltes Skelett eines ",
+    "Vom Flohmann gerittener",
+    "Stierkﾜpfiges Monster.",
+    "Riesige Vampirfledermaus.",
+    "Engelsbogenschｨtze. Hat Amalar",
+    "Feuerspuckender Wolf.",
+    "Bﾜses Dﾎmonenschwert. Ruft",
+    "Felsenwerfender, gepanzerter",
+    "Skelett mit Sprungangriff.",
+    "Ein wargreitendes Skelett.",
+    "Bﾜser, mutierter Oktopus.",
+    "Geharnischtes Kriegstier.",
+    "Wenig intelligenter Blutsauger",
+    "Flammendﾎmon.",
+    "Schrecklicher Dﾎmon aus ",
+    "Gestaltwandelnder Dﾎmon.",
+    "Besteht aus den Kﾜrperteilen",
+    "Mﾎchtige Venusranke.",
+    "Uralte ﾎgyptische Mumie.",
+    "Schlangenkﾜpfige Dﾎmonin",
+    "Boshafter kleiner Dﾎmon.",
+    "Zombie, der sich als Grant",
+    "Zombie, der sich als Trevor",
+    "Zombie, der sich als Sypha",
+    "Beelzebub, Herr der Fliegen.",
+    "Junge Hexe.",
+    "Henker der Hﾜlle.",
+    "Transvestiten-Eisgeist.",
+    "Vampirjﾎger. Nutzt 4 legendﾎre",
+    "Meistervampirjﾎger.",
+    "Seltener Vogel.",
+    "Magisches Geschﾜpf, das die",
+    "Mﾎchtiger Rｨstungslord.",
+    "Draculas Vertrauter.",
+    "Dunkler Priester des Dracula.",
+    "Herr von Wallachia."};
 
 static char* D_psp_092A14D0[] = {
     "im Jahre １７９２ (vor ５ Jahren).",
