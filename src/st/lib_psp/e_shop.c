@@ -1669,9 +1669,18 @@ static char* D_psp_092A1A88[] = {
     D_psp_092A1A30, D_psp_092A1A38, D_psp_092A1A40, D_psp_092A1A48,
     D_psp_092A1A50, D_psp_092A1A58, D_psp_092A1A60, D_psp_092A1A68,
     D_psp_092A1A70, D_psp_092A1A78, D_psp_092A1A80};
+static char D_psp_092A1AB8[] = "\x2E\x4F\x4E\x45\xFF";
+static char D_psp_092A1AC0[] = "\x2C\x36\xFF";
+static char D_psp_092A1AC8[] = "\x28\x30\xFF";
+static char D_psp_092A1AD0[] = "\x24\x45\x46\xFF";
+static char D_psp_092A1AD8[] = "\x25\x58\x50\xFF";
+static char D_psp_092A1AE0[] = "\x24\x52\x4F\x50\x00\x29\x54\x45\x4D\x53\xFF";
+static char D_psp_092A1AF0[] = "\x2E\x4F\x0E\xFF";
+static char D_psp_092A1AF8[] = "\x1F\x1F\xFF";
+extern char* D_psp_092A1B00[] = {
+    D_psp_092A1AC0, D_psp_092A1AC8, D_psp_092A1AD0, D_psp_092A1AD8,
+    D_psp_092A1AE0, D_psp_092A1AF0, D_psp_092A1AF8};
 
-extern char D_psp_092A1AB8[];
-extern char* D_psp_092A1B00[];
 extern char D_psp_092A1B20[];
 extern char* D_psp_092A1B60[];
 extern char* D_psp_092A1DC0[];
