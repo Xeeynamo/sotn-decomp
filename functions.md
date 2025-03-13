@@ -1434,7 +1434,7 @@
 | no4    | func_psp_0924E5D0                   |     1159 |         87 | Yes    |                                 |       |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/caTmz | 0.977 |
-| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.976 |
+| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.969 |
 | lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
