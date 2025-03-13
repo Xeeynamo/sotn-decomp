@@ -1454,125 +1454,156 @@ static char* D_psp_092A0AF0[] = {
     D_psp_092A09E0, D_psp_092A09F0, D_psp_092A0A08, D_psp_092A0A20,
     D_psp_092A0A40, D_psp_092A0A58, D_psp_092A0A68, D_psp_092A0A88,
     D_psp_092A0AA0, D_psp_092A0AB8, D_psp_092A0AD8};
-static char D_psp_092A0D40[] = "im Jahre １７９２ (vor ５ Jahren).";
-static char D_psp_092A0D68[] = "getrﾎnkten Knochen.";
-static char D_psp_092A0D80[] = "Magisch beseelt.";
-static char D_psp_092A0D98[] = "Gefｨrchtete Diener des Bﾜsen.";
-static char D_psp_092A0DB8[] = "Schloss bewachen.";
-static char D_psp_092A0DD0[] = "Greift alle Eindringlinge an.";
-static char D_psp_092A0DF0[] = "Trieft vor Gift.";
-static char D_psp_092A0E08[] = "schwertkﾎmpfer.";
-static char D_psp_092A0E18[] = "Grﾜﾊter Wassergeist.";
-static char D_psp_092A0E30[] = "seit 300 Jahren unterwegs.";
-static char D_psp_092A0E50[] = "scharfen Blﾎttern.";
-static char D_psp_092A0E68[] = "der Hﾜlle.";
-static char D_psp_092A0E78[] = "Bestie. Was ist der Kopf?";
-static char D_psp_092A0E98[] = "Wesen, springt wie ein Floh.";
-static char D_psp_092A0EB8[] = "Gewehren.";
-static char D_psp_092A0EC8[] = "zwei Klingen.";
-static char D_psp_092A0ED8[] = "mit Eisenkugel.";
-static char D_psp_092A0EE8[] = "Kann Feinde versteinern.";
-static char D_psp_092A0F08[] = "Die Samen versteinern.";
-static char D_psp_092A0F20[] = "Geht Kﾎmpfen aus dem Weg.";
-static char D_psp_092A0F40[] = "Naginata.";
-static char D_psp_092A0F50[] = "Schleudert Holzfﾎsser.";
-static char D_psp_092A0F68[] = "Soldaten. Sinnt auf Rache.";
-static char D_psp_092A0F88[] = "Skelettkrieger.";
-static char D_psp_092A0F98[] = "Schloss mutiert ist.";
-static char D_psp_092A0FB0[] = "Drachenschﾎdel.";
-static char D_psp_092A0FC0[] = "Breitschwert.";
-static char D_psp_092A0FD0[] = "gepeinigter Seelen.";
-static char D_psp_092A0FE8[] = "(dﾎmonisch getauft).";
-static char D_psp_092A1000[] = "Krieger.";
-static char D_psp_092A1010[] = "Stark i.gefﾎhrlichen Gebieten.";
-static char D_psp_092A1030[] = "Schwingt ein Rapier.";
-static char D_psp_092A1048[] = "Geist.";
-static char D_psp_092A1050[] = "Eisennagelflegel.";
-static char D_psp_092A1068[] = "Kriegsgans.";
-static char D_psp_092A1078[] = "blauen Raben.";
-static char D_psp_092A1088[] = "Poltergeister.";
-static char D_psp_092A1098[] = "Schwert auch unter Bann.";
-static char D_psp_092A10B8[] = "Greift m. trainierter Eule an.";
-static char D_psp_092A10D8[] = "Jﾎgerin.";
-static char D_psp_092A10E8[] = "Schild.";
-static char D_psp_092A10F0[] = "Adler.";
-static char D_psp_092A10F8[] = "Meister im Kampf ohne Waffen.";
-static char D_psp_092A1118[] = "Vogelkﾜrper.";
-static char D_psp_092A1128[] = "der ewig den Kampf sucht.";
-static char D_psp_092A1148[] = "getragen von Skelettpriestern.";
-static char D_psp_092A1168[] = "steckt voller Wissen.";
-static char D_psp_092A1180[] = "Schwertkﾎmpfer.";
-static char D_psp_092A1190[] = "Ruft dﾎmonische Helfer.";
-static char D_psp_092A11A8[] = "Schwingt ein Gurkha-Messer.";
-static char D_psp_092A11C8[] = "Benutzt einen Stahlhammer.";
-static char D_psp_092A11E8[] = "Schwingt 2 gewaltige Dolche.";
-static char D_psp_092A1208[] = "Gelmasse.";
-static char D_psp_092A1218[] = "gepanzerter Ritter.";
-static char D_psp_092A1230[] = "Genannt \"Musiker der Hﾜlle\".";
-static char D_psp_092A1250[] = "ｨb. d.oberen Teil d.Schlosses.";
-static char D_psp_092A1270[] = "Geistern der Toten.";
-static char D_psp_092A1288[] = "Dringt in Mﾎnnertrﾎume ein.";
-static char D_psp_092A12A8[] = "nach Intelligenz.";
-static char D_psp_092A12C0[] = "Besteht aus Vielen.";
-static char D_psp_092A12D8[] = "eigenen Schﾎdel jagt.";
-static char D_psp_092A12F0[] = "Ritter.";
-static char D_psp_092A12F8[] = "wenn sie zerschnitten sind.";
-static char D_psp_092A1318[] = "Nur fｨr Magier sichtbar.";
-static char D_psp_092A1338[] = "Bogenschｨtze.";
-static char D_psp_092A1348[] = "Wyrm.";
-static char D_psp_092A1350[] = "Strahlenwaffe.";
-static char D_psp_092A1360[] = "eines schwarzen Panters auf.";
-static char D_psp_092A1380[] = "gewaltigen Drachens.";
-static char D_psp_092A1398[] = "weiﾊer Drache.";
-static char D_psp_092A13A8[] = "von den Goth erschlagen.";
-static char D_psp_092A13C8[] = "mit langer Saugzunge.";
-static char D_psp_092A13E0[] = "mﾎchtiger Krieger.";
-static char D_psp_092A13F8[] = "Mit Dﾎmonenblut gegossen.";
-static char D_psp_092A1418[] = "mit versteinerndem Blick.";
-static char D_psp_092A1438[] = "ausgibt.";
-static char D_psp_092A1448[] = "Diener von Galamoth.";
-static char D_psp_092A1460[] = "Tiere. Sucht Richter.";
-static char D_psp_092A1478[] = "Lﾎuft vor Menschen davon.";
-static char D_psp_092A1498[] = "Unterwelt regieren will.";
-static char D_psp_092A14B8[] = "Vater von Alucard.";
+
 static char* D_psp_092A14D0[] = {
-    D_psp_092A0D40, D_psp_092A0D68, "", D_psp_092A0D80,
-    D_psp_092A0D98, D_psp_092A0DB8, "", D_psp_092A0DD0,
-    D_psp_092A0DF0, D_psp_092A0E08, D_psp_092A0E18, "",
-    "", D_psp_092A0E30, D_psp_092A0E50, "",
-    "", "", "", "",
-    D_psp_092A0E68, D_psp_092A0E78, "", D_psp_092A0E98,
-    D_psp_092A0EB8, D_psp_092A0EC8, D_psp_092A0ED8, D_psp_092A0EE8,
-    D_psp_092A0F08, "", D_psp_092A0F20, "",
-    D_psp_092A0F40, "", D_psp_092A0F50, "",
-    D_psp_092A0F68, D_psp_092A0F88, "", D_psp_092A0F98,
-    D_psp_092A0FB0, D_psp_092A0FC0, D_psp_092A0FD0, D_psp_092A0FE8,
-    D_psp_092A1000, D_psp_092A1010, D_psp_092A1030, "",
-    D_psp_092A1048, "", "", D_psp_092A1050,
-    D_psp_092A1068, "", D_psp_092A1078, D_psp_092A1088,
-    D_psp_092A0E50, "", "", D_psp_092A1098,
-    D_psp_092A10B8, D_psp_092A10D8, "", D_psp_092A1088,
-    D_psp_092A10E8, "", "", D_psp_092A10F0,
-    D_psp_092A0EC8, "", "", D_psp_092A10F8,
-    D_psp_092A1118, "", "", D_psp_092A1128,
-    D_psp_092A1148, "", D_psp_092A1168, "",
-    D_psp_092A1180, D_psp_092A1190, D_psp_092A11A8, D_psp_092A11C8,
-    D_psp_092A11E8, D_psp_092A1208, D_psp_092A1218, "",
-    D_psp_092A1230, "", "", D_psp_092A1250,
-    "", D_psp_092A1270, D_psp_092A1288, D_psp_092A12A8,
-    "", "", "", D_psp_092A12C0,
-    D_psp_092A12D8, "", D_psp_092A12F0, D_psp_092A12F8,
-    "", D_psp_092A1318, D_psp_092A1338, "",
-    D_psp_092A1348, D_psp_092A1350, D_psp_092A1360, D_psp_092A1380,
-    D_psp_092A1398, "", "", D_psp_092A13A8,
-    "", D_psp_092A1088, D_psp_092A12F0, "",
-    "", "", "", D_psp_092A13C8,
-    "", D_psp_092A0E68, "", D_psp_092A13E0,
-    D_psp_092A13F8, "", D_psp_092A1418, "",
-    D_psp_092A1438, D_psp_092A1438, D_psp_092A1438, "",
-    "", "", D_psp_092A1448, D_psp_092A1460,
-    "", D_psp_092A1478, D_psp_092A1498, "",
-    "", "", D_psp_092A14B8};
+    "im Jahre １７９２ (vor ５ Jahren).",
+    "getrﾎnkten Knochen.",
+    "",
+    "Magisch beseelt.",
+    "Gefｨrchtete Diener des Bﾜsen.",
+    "Schloss bewachen.",
+    "",
+    "Greift alle Eindringlinge an.",
+    "Trieft vor Gift.",
+    "schwertkﾎmpfer.",
+    "Grﾜﾊter Wassergeist.",
+    "",
+    "",
+    "seit 300 Jahren unterwegs.",
+    "scharfen Blﾎttern.",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "der Hﾜlle.",
+    "Bestie. Was ist der Kopf?",
+    "",
+    "Wesen, springt wie ein Floh.",
+    "Gewehren.",
+    "zwei Klingen.",
+    "mit Eisenkugel.",
+    "Kann Feinde versteinern.",
+    "Die Samen versteinern.",
+    "",
+    "Geht Kﾎmpfen aus dem Weg.",
+    "",
+    "Naginata.",
+    "",
+    "Schleudert Holzfﾎsser.",
+    "",
+    "Soldaten. Sinnt auf Rache.",
+    "Skelettkrieger.",
+    "",
+    "Schloss mutiert ist.",
+    "Drachenschﾎdel.",
+    "Breitschwert.",
+    "gepeinigter Seelen.",
+    "(dﾎmonisch getauft).",
+    "Krieger.",
+    "Stark i.gefﾎhrlichen Gebieten.",
+    "Schwingt ein Rapier.",
+    "",
+    "Geist.",
+    "",
+    "",
+    "Eisennagelflegel.",
+    "Kriegsgans.",
+    "",
+    "blauen Raben.",
+    "Poltergeister.",
+    "scharfen Blﾎttern.",
+    "",
+    "",
+    "Schwert auch unter Bann.",
+    "Greift m. trainierter Eule an.",
+    "Jﾎgerin.",
+    "",
+    "Poltergeister.",
+    "Schild.",
+    "",
+    "",
+    "Adler.",
+    "zwei Klingen.",
+    "",
+    "",
+    "Meister im Kampf ohne Waffen.",
+    "Vogelkﾜrper.",
+    "",
+    "",
+    "der ewig den Kampf sucht.",
+    "getragen von Skelettpriestern.",
+    "",
+    "steckt voller Wissen.",
+    "",
+    "Schwertkﾎmpfer.",
+    "Ruft dﾎmonische Helfer.",
+    "Schwingt ein Gurkha-Messer.",
+    "Benutzt einen Stahlhammer.",
+    "Schwingt 2 gewaltige Dolche.",
+    "Gelmasse.",
+    "gepanzerter Ritter.",
+    "",
+    "Genannt \"Musiker der Hﾜlle\".",
+    "",
+    "",
+    "ｨb. d.oberen Teil d.Schlosses.",
+    "",
+    "Geistern der Toten.",
+    "Dringt in Mﾎnnertrﾎume ein.",
+    "nach Intelligenz.",
+    "",
+    "",
+    "",
+    "Besteht aus Vielen.",
+    "eigenen Schﾎdel jagt.",
+    "",
+    "Ritter.",
+    "wenn sie zerschnitten sind.",
+    "",
+    "Nur fｨr Magier sichtbar.",
+    "Bogenschｨtze.",
+    "",
+    "Wyrm.",
+    "Strahlenwaffe.",
+    "eines schwarzen Panters auf.",
+    "gewaltigen Drachens.",
+    "weiﾊer Drache.",
+    "",
+    "",
+    "von den Goth erschlagen.",
+    "",
+    "Poltergeister.",
+    "Ritter.",
+    "",
+    "",
+    "",
+    "",
+    "mit langer Saugzunge.",
+    "",
+    "der Hﾜlle.",
+    "",
+    "mﾎchtiger Krieger.",
+    "Mit Dﾎmonenblut gegossen.",
+    "",
+    "mit versteinerndem Blick.",
+    "",
+    "ausgibt.",
+    "ausgibt.",
+    "ausgibt.",
+    "",
+    "",
+    "",
+    "Diener von Galamoth.",
+    "Tiere. Sucht Richter.",
+    "",
+    "Lﾎuft vor Menschen davon.",
+    "Unterwelt regieren will.",
+    "",
+    "",
+    "",
+    "Vater von Alucard."};
+
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_25);
