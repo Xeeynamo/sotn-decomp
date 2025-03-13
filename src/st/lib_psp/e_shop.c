@@ -1601,7 +1601,8 @@ static char* D_psp_092A1798[] = {
     "Sound test"};
 
 static char D_psp_092A17B8[] = "\x33\x2F\x2C\x24\x00\x2F\x35\x34\xFF";
-static char* D_psp_092A17D8[] = {"\x2A\x45\x57\x45\x4C\x00\x4F\x46\x00\x2F\x50\x45\x4E\xFF"};
+static char* D_psp_092A17D8[] = {
+    "\x2A\x45\x57\x45\x4C\x00\x4F\x46\x00\x2F\x50\x45\x4E\xFF"};
 static char* D_psp_092A1870[] = {
     "\x23\x41\x53\x54\x4C\x45\x00\x2D\x41\x50\xFF",
     "\x2D\x41\x47\x49\x43\x00\x33\x43\x52\x4F\x4C\x4C\x00\x11\xFF",
@@ -1613,9 +1614,62 @@ static char* D_psp_092A1870[] = {
     "\x2D\x41\x47\x49\x43\x00\x33\x43\x52\x4F\x4C\x4C\x00\x17\xFF",
     "\x2D\x41\x47\x49\x43\x00\x33\x43\x52\x4F\x4C\x4C\x00\x18\xFF"};
 
-extern char* D_psp_092A1990[];
-extern char* D_psp_092A1A20[];
-extern char* D_psp_092A1A88[];
+static char D_psp_092A1898[] = "\x2E\x4F\x54\x48\x49\x4E\x47\xFF";
+static char D_psp_092A18A8[] =
+    "\x2C\x41\x52\x47\x45\x00\x28\x45\x41\x52\x54\xFF";
+static char D_psp_092A18B8[] = "\x04\x11\xFF";
+static char D_psp_092A18C0[] = "\x04\x12\x15\xFF";
+static char D_psp_092A18C8[] = "\x04\x15\x10\xFF";
+static char D_psp_092A18D0[] = "\x04\x11\x10\x10\xFF";
+static char D_psp_092A18D8[] = "\x04\x12\x15\x10\xFF";
+static char D_psp_092A18E0[] = "\x04\x14\x10\x10\xFF";
+static char D_psp_092A18E8[] = "\x04\x17\x10\x10\xFF";
+static char D_psp_092A18F0[] = "\x04\x11\x10\x10\x10\xFF";
+static char D_psp_092A18F8[] = "\x04\x12\x10\x10\x10\xFF";
+static char D_psp_092A1900[] = "\x04\x15\x10\x10\x10\xFF";
+static char D_psp_092A1908[] = "\x28\x45\x41\x52\x54\x00\x35\x50\xFF";
+static char D_psp_092A1918[] = "\x2D\x45\x41\x54\xFF";
+static char D_psp_092A1920[] = "\x2B\x4E\x49\x46\x45\xFF";
+static char D_psp_092A1928[] = "\x21\x58\x45\xFF";
+static char D_psp_092A1930[] = "\x23\x52\x4F\x53\x53\xFF";
+static char D_psp_092A1938[] = "\x28\x4F\x4C\x59\x00\x37\x41\x54\x45\x52\xFF";
+static char D_psp_092A1948[] = "\x23\x4C\x4F\x43\x4B\xFF";
+static char D_psp_092A1950[] = "\x28\x4F\x4C\x59\x00\x22\x4F\x4F\x4B\xFF";
+static char D_psp_092A1960[] =
+    "\x32\x45\x42\x4F\x55\x4E\x44\x33\x54\x4F\x4E\x45\xFF";
+static char D_psp_092A1970[] = "\x22\x49\x42\x55\x54\x49\xFF";
+static char D_psp_092A1978[] = "\x21\x47\x55\x4E\x45\x41\xFF";
+static char D_psp_092A1980[] = "\x2C\x49\x46\x45\x00\x35\x50\xFF";
+static char* D_psp_092A1990[] = {
+    D_psp_092A1898, D_psp_092A18A8, D_psp_092A18B8, D_psp_092A18C0,
+    D_psp_092A18C8, D_psp_092A18D0, D_psp_092A18D8, D_psp_092A18E0,
+    D_psp_092A18E8, D_psp_092A18F0, D_psp_092A18F8, D_psp_092A1900,
+    D_psp_092A1908, D_psp_092A1918, D_psp_092A1920, D_psp_092A1928,
+    D_psp_092A1930, D_psp_092A1938, D_psp_092A1948, D_psp_092A1950,
+    D_psp_092A1960, D_psp_092A1970, D_psp_092A1978, D_psp_092A1980};
+
+static char D_psp_092A19F0[] = "\x33\x54\x52\x4F\x4E\x47\x00\x36\x33\x0E\xFF";
+static char D_psp_092A1A00[] = "\x29\x4D\x4D\x55\x4E\x45\xFF";
+static char D_psp_092A1A08[] = "\x37\x45\x41\x4B\x00\x36\x33\x0E\xFF";
+static char D_psp_092A1A18[] = "\x21\x42\x53\x4F\x52\x42\xFF";
+static char* D_psp_092A1A20[] = {
+    D_psp_092A19F0, D_psp_092A1A00, D_psp_092A1A08, D_psp_092A1A18};
+static char D_psp_092A1A30[] = "\x28\x2F\x2C\xFF";
+static char D_psp_092A1A38[] = "\x24\x32\x2B\xFF";
+static char D_psp_092A1A40[] = "\x26\x29\x32\xFF";
+static char D_psp_092A1A48[] = "\x34\x28\x35\xFF";
+static char D_psp_092A1A50[] = "\x29\x23\x25\xFF";
+static char D_psp_092A1A58[] = "\x28\x12\x2F\xFF";
+static char D_psp_092A1A60[] = "\x33\x34\x2E\xFF";
+static char D_psp_092A1A68[] = "\x30\x33\x2E\xFF";
+static char D_psp_092A1A70[] = "\x23\x35\x32\xFF";
+static char D_psp_092A1A78[] = "\x23\x35\x34\xFF";
+static char D_psp_092A1A80[] = "\x28\x29\x34\xFF";
+static char* D_psp_092A1A88[] = {
+    D_psp_092A1A30, D_psp_092A1A38, D_psp_092A1A40, D_psp_092A1A48,
+    D_psp_092A1A50, D_psp_092A1A58, D_psp_092A1A60, D_psp_092A1A68,
+    D_psp_092A1A70, D_psp_092A1A78, D_psp_092A1A80};
+
 extern char D_psp_092A1AB8[];
 extern char* D_psp_092A1B00[];
 extern char D_psp_092A1B20[];
