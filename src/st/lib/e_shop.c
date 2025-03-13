@@ -2473,15 +2473,18 @@ static u16 D_us_80181530[] = {
     -0x002, 0x032,  -0x002, -0x036, 0x006,  -0x02E, 0x006,  -0x026, 0x006,
     -0x01A, 0x006,  -0x012, 0x006,  -0x00A, 0x006,  0x006,  0x006,  0x00E,
     0x006,  0x016,  0x006,  0x022,  0x006,  0x02A,  0x006,  0x032,  0x006};
-static u8 D_us_80181650[] = {0x00, 0x00, 0x00, 0x00, 0x32, 0x2C, 0x32, 0x2C};
-static u8 D_us_80181658[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x12, 0x11, 0x11, 0x12};
+static char D_us_80181650[] = {
+    CH(' '), CH(' '), CH(' '), CH(' '), CH('R'), CH('L'), CH('R'), CH('L')};
+static char D_us_80181658[] = {
+    SQUARE, CIRCLE, CROSS, TRIANGLE, CH('2'), CH('1'), CH('1'), CH('2')};
 
 #ifdef VERSION_PSP
 extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
 #else
-static char D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181660[] = {
+    CIRCLE, SQUARE, CIRCLE, SQUARE, CH('G'), CH('O'), CH('L'), CH('D')};
 static char D_us_80181668[] = {
     // clang-format off
     CH('S'), CH('T'), CH('R'), 
