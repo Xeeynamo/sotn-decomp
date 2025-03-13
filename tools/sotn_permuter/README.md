@@ -1,25 +1,70 @@
 # I'm not fluent in markdown, so I'm not going to mess with it.  If anybody wants to improve this readme, please do.
-sotn_permuter.py is just a loader for decomp-permuter to address the hurdles that decomp-permuter presents for standardized use within sotn-decomp.
+permuter_loader.py is just a loader for decomp-permuter to address the hurdles that decomp-permuter presents for standardized use within sotn-decomp.
 
+For the expected usage, OVL is the overlay as it is written in the splat config (i.e. stlib) and subsegment is the name of the c subsegment as set in the splat config (no .c extension).  The -p or --permuter arguments is an optional way to import and permute with a single command.
+
+expected usage:
+tools/sotn_permuter/permuter_loader.py import {SUBSEGMENT} {FUNCTION} -o {OVL}
+tools/sotn_permuter/permuter_loader.py permute {FUNCTION}
+tools/sotn_permuter/permuter_loader.py clean {FUNCTION|all}
+
+
+When using the -o or --overlay argument, any previously imported version of the same name will be overwritten.  Omitting the -o argument will need the full path passed and will not automatically permute even if the -p argument is passed.  It will also append a number to the name if a directory for the function already exists.
+
+
+legacy usage:
 It passes any arguments except --version and import|permute directly to import.py and permuter.py as appropriate.
+tools/sotn_permuter/permuter_loader.py import {path_to_c_file} {path_to_s_file}
+tools/sotn_permuter/permuter_loader.py permute tools/sotn_permuter/permute.me/{func_name}
 
-default usage:
-tools/sotn_permuter/sotn_permuter.py import {path_to_c_file} {path_to_s_file}
-tools/sotn_permuter/sotn_permuter.py permute tools/sotn_permuter/permute.me/{func_name}
 
-sotn_permuter.py arguments
-usage: sotn_permuter.py [-h] [--version VERSION] {import,permute} [import.py or permuter.py args as appropriate]
+permuter_loader.py arguments
+usage: permuter_loader.py [-h] [--version VERSION] {import,permute} [import.py or permuter.py args as appropriate]
 
 Use decomp-permuter with sotn specific adjustments
 
 positional arguments:
-  {import,permute}   Whether to import or permute the function
+  {import,permute,clean}
+                        Whether to import or permute the function
+    import              Import a function to be permuted
+    permute             Permute a function
+    clean               Clean function folders from permuter
 
 options:
   -h, --help         show this help message and exit
   --version VERSION  Sets game version and overrides VERSION environment variable
 
+usage: permuter_loader.py import [-h] [-o OVERLAY] [-p] source function
 
+positional arguments:
+  source                The name specified for the splat subsegment or the source filename if not using --overlay
+  function              The function to be permuted or the function asm filename if not using --overlay
+
+options:
+  -h, --help            show this help message and exit
+  -o OVERLAY, --overlay OVERLAY
+                        Specifies the overlay name where the function exists, as it is in the splat config filename, and causes the loader to treat the positional arguments
+                        as subsegment and function.
+  -p, --permute         Begins permuting immediately after the function is imported
+
+usage: permuter_loader.py permute [-h] function
+
+positional arguments:
+  function    The function to be permuted
+
+options:
+  -h, --help  show this help message and exit
+
+usage: permuter_loader.py clean [-h] function
+
+positional arguments:
+  function    The function to be cleaned, or use "all" to clean all folders
+
+options:
+  -h, --help  show this help message and exit
+
+
+decomp-permuter arguments:
 import.py arguments
 usage: import.py [-h] [--keep] [--preserve-macros REGEX] [--no-prune] [--decompme] [--settings SETTINGS_FILE] c_file {asm_file|func_name} [make_flags ...]
 
