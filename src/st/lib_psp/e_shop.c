@@ -1681,76 +1681,974 @@ extern char* D_psp_092A1B00[] = {
     D_psp_092A1AC0, D_psp_092A1AC8, D_psp_092A1AD0, D_psp_092A1AD8,
     D_psp_092A1AE0, D_psp_092A1AF0, D_psp_092A1AF8};
 
-extern char D_psp_092A1B20[];
-extern char* D_psp_092A1B60[];
-extern char* D_psp_092A1DC0[];
-extern char* D_psp_092A1FA8[];
-extern char* D_psp_092A2110[];
-extern char D_psp_092A2138[];
-extern char* D_psp_092A2148[];
-extern char* D_psp_092A21A8[];
-extern char D_psp_092A21C8[];
-extern char* D_psp_092A21E8[];
-extern char* D_psp_092A2280[];
-extern char* D_psp_092A2390[];
-extern char* D_psp_092A2428[];
-extern char* D_psp_092A2480[];
-extern char D_psp_092A24B0[];
-extern char* D_psp_092A24E8[];
-extern char D_psp_092A2508[];
-extern char* D_psp_092A2540[];
-extern char* D_psp_092A27F0[];
-extern char* D_psp_092A2908[];
-extern char* D_psp_092A2A88[];
-extern char D_psp_092A2AB0[];
-extern char* D_psp_092A2AC0[];
-extern char* D_psp_092A2B20[];
-extern char D_psp_092A2B40[];
-extern char* D_psp_092A2B60[];
-extern char* D_psp_092A2BF8[];
-extern char* D_psp_092A2CB0[];
-extern char* D_psp_092A2D40[];
-extern char* D_psp_092A2D88[];
-extern char D_psp_092A2DB8[];
-extern char* D_psp_092A2DE8[];
-extern char D_psp_092A2E08[];
-extern char* D_psp_092A2E40[];
-extern char* D_psp_092A30F8[];
-extern char* D_psp_092A3210[];
-extern char* D_psp_092A3390[];
-extern char D_psp_092A33B8[];
-extern char* D_psp_092A33C0[];
-extern char* D_psp_092A3428[];
-extern char D_psp_092A3448[];
-extern char* D_psp_092A3468[];
-extern char* D_psp_092A3500[];
-extern char* D_psp_092A35C0[];
-extern char* D_psp_092A3650[];
-extern char* D_psp_092A36B8[];
-extern char D_psp_092A36E8[];
-extern char* D_psp_092A3708[];
-extern char D_psp_092A3728[];
-extern char* D_psp_092A3758[];
-extern char* D_psp_092A39A8[];
-extern char* D_psp_092A3AC8[];
-extern char* D_psp_092A3C48[];
-extern char D_psp_092A3C70[];
-extern char* D_psp_092A3C80[];
-extern char* D_psp_092A3CD8[];
-extern char D_psp_092A3CF8[];
-extern char* D_psp_092A3D18[];
-extern char* D_psp_092A3DB0[];
-extern char* D_psp_092A3E70[];
-extern char* D_psp_092A3F08[];
-extern char* D_psp_092A3F58[];
-extern char D_psp_092A3F88[];
-extern char* D_psp_092A3FB0[];
-extern char D_psp_092A3FD0[];
-extern char* D_psp_092A4008[];
-extern char* D_psp_092A4270[];
-extern char* D_psp_092A4398[];
-extern char* D_psp_092A44F0[];
-extern char D_psp_092A4518[];
+static char D_psp_092A1B20[] =
+    "\x33\x34\x32\x23\x2F\x2E\x29\x2E\x34\x2C\x23\x2B";
+static char D_psp_092A1B30[] = "\x2E\x55\x4D\x42\x45\x52\xFF";
+static char D_psp_092A1B38[] = "\x25\x51\x55\x49\x50\x50\x45\x44\xFF";
+static char D_psp_092A1B48[] =
+    "\x2E\x4F\x54\x00\x45\x51\x55\x49\x50\x50\x45\x44\xFF";
+static char D_psp_092A1B58[] = "\x41\xFF";
+static char* D_psp_092A1B60[] = {
+    D_psp_092A1B30, D_psp_092A1B38, D_psp_092A1B48, D_psp_092A1B58};
+static char D_psp_092A1B70[] = "\x30\x52\x4F\x4C\x4F\x47\x55\x45\xFF";
+static char D_psp_092A1B80[] = "\x24\x41\x4E\x43\x45\x00\x4F\x46\x00\x29\x4C"
+                               "\x4C\x55\x53\x49\x4F\x4E\x53\xFF";
+static char D_psp_092A1B98[] = "\x30\x52\x41\x59\x45\x52\xFF";
+static char D_psp_092A1BA0[] =
+    "\x24\x52\x41\x43\x55\x4C\x41\x07\x53\x00\x23\x41\x53\x54\x4C\x45\xFF";
+static char D_psp_092A1BB8[] =
+    "\x24\x41\x4E\x43\x45\x00\x4F\x46\x00\x27\x4F\x4C\x44\xFF";
+static char D_psp_092A1BC8[] =
+    "\x2D\x41\x52\x42\x4C\x45\x00\x27\x41\x4C\x4C\x45\x52\x59\xFF";
+static char D_psp_092A1BD8[] =
+    "\x34\x4F\x57\x45\x52\x00\x4F\x46\x00\x2D\x49\x53\x54\xFF";
+static char D_psp_092A1BE8[] = "\x2E\x4F\x43\x54\x55\x52\x4E\x45\xFF";
+static char D_psp_092A1BF8[] = "\x37\x4F\x4F\x44\x00\x23\x41\x52\x56\x49\x4E"
+                               "\x47\x00\x30\x41\x52\x54\x49\x54\x49\x41\xFF";
+static char D_psp_092A1C10[] = "\x24\x4F\x4F\x52\x00\x4F\x46\x00\x28\x4F\x4C"
+                               "\x59\x00\x33\x50\x49\x52\x49\x54\x53\xFF";
+static char D_psp_092A1C28[] = "\x26\x45\x53\x54\x49\x56\x41\x4C\x00\x4F\x46"
+                               "\x00\x33\x45\x52\x56\x41\x4E\x54\x53\xFF";
+static char D_psp_092A1C40[] = "\x2C\x41\x4E\x44\x00\x4F\x46\x00\x22\x45\x4E"
+                               "\x45\x44\x49\x43\x54\x49\x4F\x4E\xFF";
+static char D_psp_092A1C58[] = "\x32\x45\x51\x55\x49\x45\x4D\x00\x46\x4F\x52"
+                               "\x00\x54\x48\x45\x00\x27\x4F\x44\x53\xFF";
+static char D_psp_092A1C70[] =
+    "\x23\x52\x59\x53\x54\x41\x4C\x00\x34\x45\x41\x52\x44\x52\x4F\x50\xFF";
+static char D_psp_092A1C88[] =
+    "\x21\x42\x41\x4E\x44\x4F\x4E\x45\x44\x00\x30\x49\x54\xFF";
+static char D_psp_092A1C98[] =
+    "\x32\x41\x49\x4E\x42\x4F\x57\x00\x23\x45\x4D\x45\x54\x45\x52\x59\xFF";
+static char D_psp_092A1CB0[] = "\x33\x49\x4C\x45\x4E\x43\x45\xFF";
+static char D_psp_092A1CC0[] =
+    "\x2C\x4F\x53\x54\x00\x30\x41\x49\x4E\x54\x49\x4E\x47\xFF";
+static char D_psp_092A1CD0[] =
+    "\x24\x41\x4E\x43\x45\x00\x4F\x46\x00\x30\x41\x4C\x45\x53\xFF";
+static char D_psp_092A1CE0[] = "\x23\x55\x52\x53\x45\x00\x3A\x4F\x4E\x45\xFF";
+static char D_psp_092A1CF0[] =
+    "\x25\x4E\x43\x48\x41\x4E\x54\x45\x44\x00\x22\x41\x4E\x51\x55\x45\x54\xFF";
+static char D_psp_092A1D08[] =
+    "\x37\x41\x4E\x44\x45\x52\x49\x4E\x47\x00\x27\x48\x4F\x53\x54\x53\xFF";
+static char D_psp_092A1D20[] =
+    "\x34\x48\x45\x00\x34\x52\x41\x47\x49\x43\x00\x30\x52\x49\x4E\x43\x45\xFF";
+static char D_psp_092A1D38[] =
+    "\x24\x4F\x4F\x52\x00\x54\x4F\x00\x54\x48\x45\x00\x21\x42\x59\x53\x53\xFF";
+static char D_psp_092A1D50[] =
+    "\x28\x45\x41\x56\x45\x4E\x4C\x59\x00\x24\x4F\x4F\x52\x57\x41\x59\xFF";
+static char D_psp_092A1D68[] =
+    "\x24\x45\x41\x54\x48\x00\x22\x41\x4C\x4C\x41\x44\xFF";
+static char D_psp_092A1D78[] =
+    "\x34\x48\x45\x00\x2F\x55\x54\x43\x41\x53\x54\x53\xFF";
+static char D_psp_092A1D88[] =
+    "\x26\x49\x4E\x41\x4C\x45\x00\x34\x4F\x43\x43\x41\x54\x41\xFF";
+static char D_psp_092A1D98[] =
+    "\x22\x4C\x41\x43\x4B\x00\x22\x41\x4E\x51\x55\x45\x54\xFF";
+static char D_psp_092A1DA8[] =
+    "\x2D\x4F\x55\x52\x4E\x46\x55\x4C\x00\x33\x45\x52\x45\x4E\x41\x44\x45\xFF";
+static char* D_psp_092A1DC0[] = {
+    D_psp_092A1B70, D_psp_092A1B80, D_psp_092A1B98, D_psp_092A1BA0,
+    D_psp_092A1BB8, D_psp_092A1BC8, D_psp_092A1BD8, D_psp_092A1BE8,
+    D_psp_092A1BF8, D_psp_092A1C10, D_psp_092A1C28, D_psp_092A1C40,
+    D_psp_092A1C58, D_psp_092A1C70, D_psp_092A1C88, D_psp_092A1C98,
+    D_psp_092A1CB0, D_psp_092A1CC0, D_psp_092A1CD0, D_psp_092A1CE0,
+    D_psp_092A1CF0, D_psp_092A1D08, D_psp_092A1D20, D_psp_092A1D38,
+    D_psp_092A1D50, D_psp_092A1D68, D_psp_092A1D78, D_psp_092A1D88,
+    D_psp_092A1D98, D_psp_092A1DA8};
+static char D_psp_092A1E38[] = "\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char D_psp_092A1E48[] =
+    "\x33\x4C\x4F\x47\x52\x41\x06\x27\x41\x49\x42\x4F\x4E\xFF";
+static char D_psp_092A1E58[] =
+    "\x24\x4F\x50\x50\x4C\x45\x47\x41\x4E\x47\x45\x52\x11\x10\xFF";
+static char D_psp_092A1E68[] = "\x28\x49\x50\x50\x4F\x47\x52\x59\x50\x48\xFF";
+static char D_psp_092A1E78[] = "\x33\x43\x59\x4C\x4C\x41\xFF";
+static char D_psp_092A1E80[] =
+    "\x2D\x49\x4E\x4F\x54\x41\x55\x52\x06\x37\x45\x52\x45\x57\x4F\x4C\x46\xFF";
+static char D_psp_092A1E98[] = "\x2B\x41\x52\x41\x53\x55\x4D\x41\x4E\xFF";
+static char D_psp_092A1EA8[] = "\x33\x55\x43\x43\x55\x42\x55\x53\xFF";
+static char D_psp_092A1EB8[] = "\x23\x45\x52\x42\x45\x52\x55\x53\xFF";
+static char D_psp_092A1EC8[] = "\x2F\x4C\x52\x4F\x58\xFF";
+static char D_psp_092A1ED0[] = "\x27\x52\x41\x4E\x46\x41\x4C\x4F\x4F\x4E\xFF";
+static char D_psp_092A1EE0[] =
+    "\x2D\x41\x52\x49\x41\x00\x32\x45\x4E\x41\x52\x44\xFF";
+static char D_psp_092A1EF0[] =
+    "\x32\x49\x43\x48\x54\x45\x52\x00\x22\x45\x4C\x4D\x4F\x4E\x54\xFF";
+static char D_psp_092A1F08[] =
+    "\x24\x41\x52\x4B\x57\x49\x4E\x47\x00\x22\x41\x54\xFF";
+static char D_psp_092A1F18[] = "\x21\x4B\x4D\x4F\x44\x41\x4E\x00\x29\x29\xFF";
+static char D_psp_092A1F28[] = "\x2D\x45\x44\x55\x53\x41\xFF";
+static char D_psp_092A1F30[] =
+    "\x34\x48\x45\x00\x23\x52\x45\x41\x54\x55\x52\x45\xFF";
+static char D_psp_092A1F40[] = "\x24\x45\x41\x54\x48\xFF";
+static char D_psp_092A1F48[] =
+    "\x24\x4F\x50\x50\x4C\x45\x47\x41\x4E\x47\x45\x52\x14\x10\xFF";
+static char D_psp_092A1F58[] = "\x34\x52\x45\x56\x4F\x52\x00\x27\x52\x41\x4E"
+                               "\x54\x00\x33\x59\x50\x48\x41\xFF";
+static char D_psp_092A1F70[] = "\x22\x45\x45\x4C\x5A\x45\x42\x55\x42\xFF";
+static char D_psp_092A1F80[] = "\x27\x41\x4C\x41\x4D\x4F\x54\x48\xFF";
+static char D_psp_092A1F90[] = "\x33\x48\x41\x46\x54\xFF";
+static char D_psp_092A1F98[] =
+    "\x34\x52\x55\x45\x00\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char* D_psp_092A1FA8[] = {
+    D_psp_092A1E38, D_psp_092A1E48, D_psp_092A1E58, D_psp_092A1E68,
+    D_psp_092A1E78, D_psp_092A1E80, D_psp_092A1E98, D_psp_092A1EA8,
+    D_psp_092A1EB8, D_psp_092A1EC8, D_psp_092A1ED0, D_psp_092A1EE0,
+    D_psp_092A1EF0, D_psp_092A1F08, D_psp_092A1F18, D_psp_092A1F28,
+    D_psp_092A1F30, D_psp_092A1F40, D_psp_092A1F48, D_psp_092A1F58,
+    D_psp_092A1F70, D_psp_092A1F80, D_psp_092A1F90, D_psp_092A1F98};
+static char D_psp_092A2008[] = "Basic map of Dracula’s castle";
+static char D_psp_092A2028[] = "Contains ”Dark Metamorphosis”";
+static char D_psp_092A2048[] = "Contains ”Summon Spirit”";
+static char D_psp_092A2068[] = "Contains ”Hellfire”";
+static char D_psp_092A2080[] = "Contains ”Tetra Spirits”";
+static char D_psp_092A20A0[] = "Contains ”Soul Steal”";
+static char D_psp_092A20B8[] = "Contains ”Wolf Charge”";
+static char D_psp_092A20D8[] = "Contains ”Wing Smash”";
+static char D_psp_092A20F0[] = "Contains ”Sword Brothers”";
+static char* D_psp_092A2110[] = {
+    D_psp_092A2008, D_psp_092A2028, D_psp_092A2048,
+    D_psp_092A2068, D_psp_092A2080, D_psp_092A20A0,
+    D_psp_092A20B8, D_psp_092A20D8, D_psp_092A20F0};
+static char D_psp_092A2138[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_psp_092A2140[] = "ATQ";
+static char* D_psp_092A2148[] = {D_psp_092A2140, "DEF"};
+static char D_psp_092A2150[] = "\x02\x43\x6D\x70\x2E\x20\x6F\x62\x6A\x2E\x00";
+static char D_psp_092A2160[] = "\x02\x54\xCC\x63\x74\x69\x63\x61\x73\x00";
+static char D_psp_092A2170[] =
+    "\x02\x4C\x69\x73\x74\x61\x20\x65\x6E\x65\x6D\x2E";
+static char D_psp_092A2180[] = "\x02\x53\x61\x6C\x69\x72\x00";
+static char D_psp_092A2188[] = "\x02\x56\x6E\x64\x2E\x20\x67\x65\x6D\x61\x00";
+static char D_psp_092A2198[] =
+    "\x02\x50\x72\x6F\x62\x2E\x20\x73\x6F\x6E\x2E\x00";
+static char* D_psp_092A21A8[] = {
+    D_psp_092A2150,
+    D_psp_092A2160,
+    D_psp_092A2170,
+    "\002"
+    "",
+    D_psp_092A2180,
+    D_psp_092A2188,
+    D_psp_092A2198};
+static char D_psp_092A21C8[] = "\x21\x27\x2F\x34\x21\x24\x2F\xFF";
+static char D_psp_092A21D8[] =
+    "\x2A\x4F\x59\x41\x00\x41\x50\x45\x52\x54\x55\x52\x41\xFF";
+static char* D_psp_092A21E8[] = {D_psp_092A21D8};
+static char D_psp_092A21F0[] =
+    "\x2D\x41\x50\x41\x00\x43\x41\x53\x54\x49\x4C\x4C\x4F\xFF";
+static char D_psp_092A2200[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x11\xFF";
+static char D_psp_092A2210[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x12\xFF";
+static char D_psp_092A2220[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x13\xFF";
+static char D_psp_092A2230[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x14\xFF";
+static char D_psp_092A2240[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x15\xFF";
+static char D_psp_092A2250[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x16\xFF";
+static char D_psp_092A2260[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x17\xFF";
+static char D_psp_092A2270[] =
+    "\x30\x45\x52\x47\x0E\x00\x4D\x9B\x47\x49\x43\x4F\x00\x18\xFF";
+static char* D_psp_092A2280[] = {
+    D_psp_092A21F0, D_psp_092A2200, D_psp_092A2210,
+    D_psp_092A2220, D_psp_092A2230, D_psp_092A2240,
+    D_psp_092A2250, D_psp_092A2260, D_psp_092A2270};
+static char D_psp_092A22A8[] = "\x2E\x41\x44\x41\xFF";
+static char D_psp_092A22B0[] =
+    "\x27\x52\x41\x4E\x00\x43\x4F\x52\x41\x5A\xA9\x4E\xFF";
+static char D_psp_092A22C0[] = "\x11\x04\xFF";
+static char D_psp_092A22C8[] = "\x12\x15\x04\xFF";
+static char D_psp_092A22D0[] = "\x15\x10\x04\xFF";
+static char D_psp_092A22D8[] = "\x11\x10\x10\x04\xFF";
+static char D_psp_092A22E0[] = "\x12\x15\x10\x04\xFF";
+static char D_psp_092A22E8[] = "\x14\x10\x10\x04\xFF";
+static char D_psp_092A22F0[] = "\x17\x10\x10\x04\xFF";
+static char D_psp_092A22F8[] = "\x11\x10\x10\x10\x04\xFF";
+static char D_psp_092A2300[] = "\x12\x10\x10\x10\x04\xFF";
+static char D_psp_092A2308[] = "\x15\x10\x10\x10\x04\xFF";
+static char D_psp_092A2310[] =
+    "\x2D\x9B\x53\x00\x43\x4F\x52\x41\x5A\xA9\x4E\xFF";
+static char D_psp_092A2320[] = "\x23\x41\x52\x4E\x45\xFF";
+static char D_psp_092A2328[] = "\x23\x55\x43\x48\x49\x4C\x4C\x4F\xFF";
+static char D_psp_092A2338[] = "\x28\x41\x43\x48\x41\xFF";
+static char D_psp_092A2340[] = "\x23\x52\x55\x5A\xFF";
+static char D_psp_092A2348[] =
+    "\x21\x47\x55\x41\x00\x53\x41\x47\x52\x41\x44\x41\xFF";
+static char D_psp_092A2358[] = "\x32\x45\x4C\x4F\x4A\xFF";
+static char D_psp_092A2360[] =
+    "\x2C\x49\x42\x52\x4F\x00\x53\x41\x47\x52\x0E\xFF";
+static char D_psp_092A2370[] =
+    "\x30\x0E\x00\x52\x45\x43\x55\x50\x45\x52\x0E\xFF";
+static char D_psp_092A2380[] = "\x2D\x9B\x53\x00\x56\x49\x44\x41\xFF";
+static char* D_psp_092A2390[] = {
+    D_psp_092A22A8, D_psp_092A22B0, D_psp_092A22C0, D_psp_092A22C8,
+    D_psp_092A22D0, D_psp_092A22D8, D_psp_092A22E0, D_psp_092A22E8,
+    D_psp_092A22F0, D_psp_092A22F8, D_psp_092A2300, D_psp_092A2308,
+    D_psp_092A2310, D_psp_092A2320, D_psp_092A2328, D_psp_092A2338,
+    D_psp_092A2340, D_psp_092A2348, D_psp_092A2358, D_psp_092A2360,
+    D_psp_092A2370, D_psp_092A1970, D_psp_092A1978, D_psp_092A2380};
+static char D_psp_092A23F0[] =
+    "\x26\x55\x45\x52\x54\x45\x00\x43\x4F\x4E\x54\x52\x41\xFF";
+static char D_psp_092A2400[] = "\x29\x4E\x4D\x55\x4E\x45\xFF";
+static char D_psp_092A2408[] =
+    "\x24\xA0\x42\x49\x4C\x00\x43\x4F\x4E\x54\x52\x41\xFF";
+static char D_psp_092A2418[] = "\x21\x42\x53\x4F\x52\x42\x45\xFF";
+static char* D_psp_092A2428[] = {
+    D_psp_092A23F0, D_psp_092A2400, D_psp_092A2408, D_psp_092A2418};
+static char D_psp_092A2438[] = "\x33\x21\x27\xFF";
+static char D_psp_092A2440[] = "\x2F\x33\x23\xFF";
+static char D_psp_092A2448[] = "\x26\x35\x25\xFF";
+static char D_psp_092A2450[] = "\x34\x32\x35\xFF";
+static char D_psp_092A2458[] = "\x28\x29\x25\xFF";
+static char D_psp_092A2460[] = "\x30\x29\x25\xFF";
+static char D_psp_092A2468[] = "\x36\x25\x2E\xFF";
+static char D_psp_092A2470[] = "\x23\x2F\x32\xFF";
+static char D_psp_092A2478[] = "\x27\x2F\x2C\xFF";
+static char* D_psp_092A2480[] = {
+    D_psp_092A2438, D_psp_092A2440, D_psp_092A2448, D_psp_092A2450,
+    D_psp_092A2458, D_psp_092A1A58, D_psp_092A2460, D_psp_092A2468,
+    D_psp_092A1A70, D_psp_092A2470, D_psp_092A2478};
+static char D_psp_092A24B0[] = "\x2E\x49\x4E\x47\x55\x4E\x4F\xFF";
+static char D_psp_092A24C0[] = "\x2E\x36\xFF";
+static char D_psp_092A24C8[] = "\x30\x33\xFF";
+static char D_psp_092A24D0[] =
+    "\x33\x4F\x4C\x54\x41\x52\x00\x4F\x42\x4A\x45\x54\x4F\x53\xFF";
+static char D_psp_092A24E0[] = "\x2E\xB5\xFF";
+static char* D_psp_092A24E8[] = {
+    D_psp_092A24C0, D_psp_092A24C8, D_psp_092A1AD0, D_psp_092A1AD8,
+    D_psp_092A24D0, D_psp_092A24E0, D_psp_092A1AF8};
+static char D_psp_092A2508[] =
+    "\x26\x35\x25\x23\x2F\x2E\x29\x2E\x34\x33\x35\x25";
+static char D_psp_092A2518[] = "\x2E\xAD\x4D\x45\x52\x4F\xFF";
+static char D_psp_092A2520[] = "\x25\x51\x55\x49\x50\x41\x44\x4F\xFF";
+static char D_psp_092A2530[] =
+    "\x2E\x4F\x00\x45\x51\x55\x49\x50\x41\x44\x4F\xFF";
+static char* D_psp_092A2540[] = {
+    D_psp_092A2518, D_psp_092A2520, D_psp_092A2530, D_psp_092A1B58};
+static char D_psp_092A2550[] = "\x30\x52\xA9\x4C\x4F\x47\x4F\xFF";
+static char D_psp_092A2560[] = "\x22\x41\x49\x4C\x45\x00\x44\x45\x00\x49\x4C"
+                               "\x55\x53\x49\x4F\x4E\x45\x53\xFF";
+static char D_psp_092A2578[] = "\x30\x4C\x45\x47\x41\x52\x49\x41\xFF";
+static char D_psp_092A2588[] = "\x23\x41\x53\x54\x49\x4C\x4C\x4F\x00\x44\x45"
+                               "\x00\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char D_psp_092A25A0[] =
+    "\x22\x41\x49\x4C\x45\x00\x44\x45\x00\x4F\x52\x4F\xFF";
+static char D_psp_092A25B0[] =
+    "\x30\x41\x53\x49\x4C\x4C\x4F\x00\x44\x45\x00\x4D\x9B\x52\x4D\x4F\x4C\xFF";
+static char D_psp_092A25C8[] =
+    "\x34\x4F\x52\x52\x45\x00\x44\x45\x00\x4E\x49\x45\x42\x4C\x41\xFF";
+static char D_psp_092A25E0[] = "\x2E\x4F\x43\x54\x55\x52\x4E\x4F\xFF";
+static char D_psp_092A25F0[] =
+    "\x30\x41\x52\x54\x49\x54\x41\x00\x54\x41\x4C\x4C\x41\x44\x41\x00\x45\x4E"
+    "\x00\x4D\x41\x44\x45\x52\x41\xFF";
+static char D_psp_092A2610[] =
+    "\x30\x55\x45\x52\x54\x41\x00\x44\x45\x00\x45\x53\x50\xA4\x52\x49\x54\x55"
+    "\x53\x53\x41\x47\x52\x41\x44\x4F\x53\xFF";
+static char D_psp_092A2630[] = "\x26\x45\x53\x54\x49\x56\x41\x4C\x00\x44\x45"
+                               "\x00\x53\x49\x45\x52\x56\x4F\x53\xFF";
+static char D_psp_092A2648[] = "\x34\x49\x45\x52\x52\x41\x00\x44\x45\x00\x42"
+                               "\x45\x4E\x44\x49\x43\x49\xA9\x4E\xFF";
+static char D_psp_092A2660[] = "\x32\xA0\x51\x55\x49\x45\x4D\x00\x44\x45\x00"
+                               "\x4C\x4F\x53\x00\x44\x49\x4F\x53\x45\x53\xFF";
+static char D_psp_092A2678[] = "\x2C\x9B\x47\x52\x49\x4D\x41\x00\x44\x45\x00"
+                               "\x43\x52\x49\x53\x54\x41\x4C\xFF";
+static char D_psp_092A2690[] =
+    "\x30\x4F\x5A\x4F\x00\x41\x42\x41\x4E\x44\x4F\x4E\x41\x44\x4F\xFF";
+static char D_psp_092A26A8[] = "\x23\x45\x4D\x45\x4E\x54\x45\x52\x49\x4F\x00"
+                               "\x41\x52\x43\x4F\x00\x49\x52\x49\x53\xFF";
+static char D_psp_092A26C0[] = "\x33\x49\x4C\x45\x4E\x43\x49\x4F\xFF";
+static char D_psp_092A26D0[] =
+    "\x23\x55\x41\x44\x52\x4F\x00\x50\x45\x52\x44\x49\x44\x4F\xFF";
+static char D_psp_092A26E0[] = "\x22\x41\x49\x4C\x45\x00\x44\x45\x00\x4C\x4F"
+                               "\x53\x00\x42\x4C\x41\x4E\x43\x4F\x53\xFF";
+static char D_psp_092A26F8[] =
+    "\x3A\x4F\x4E\x41\x00\x44\x45\x00\x4D\x41\x4C\x44\x49\x43\x49\xA9\x4E\xFF";
+static char D_psp_092A2710[] = "\x22\x41\x4E\x51\x55\x45\x54\x45\x00\x45\x4E"
+                               "\x43\x41\x4E\x54\x41\x44\x4F\xFF";
+static char D_psp_092A2728[] = "\x26\x41\x4E\x54\x41\x53\x4D\x41\x53\x00\x45"
+                               "\x52\x52\x41\x4E\x54\x45\x53\xFF";
+static char D_psp_092A2740[] = "\x25\x4C\x00\x50\x52\xA4\x4E\x43\x49\x50\x45"
+                               "\x00\x54\x52\x9B\x47\x49\x43\x4F\xFF";
+static char D_psp_092A2758[] =
+    "\x30\x55\x45\x52\x54\x41\x00\x41\x4C\x00\x41\x42\x49\x53\x4D\x4F\xFF";
+static char D_psp_092A2770[] =
+    "\x30\x55\x45\x52\x54\x41\x00\x43\x45\x4C\x45\x53\x54\x49\x41\x4C\xFF";
+static char D_psp_092A2788[] = "\x22\x41\x4C\x41\x44\x41\x00\x44\x45\x00\x4C"
+                               "\x41\x00\x4D\x55\x45\x52\x54\x45\xFF";
+static char D_psp_092A27A0[] = "\x32\x45\x4C\x41\x43\x49\x4F\x4E\x45\x53\x00"
+                               "\x44\x45\x00\x53\x41\x4E\x47\x52\x45\xFF";
+static char D_psp_092A27B8[] =
+    "\x34\x4F\x43\x43\x41\x54\x41\x00\x46\x49\x4E\x41\x4C\xFF";
+static char D_psp_092A27C8[] =
+    "\x22\x41\x4E\x51\x55\x45\x54\x45\x00\x4E\x45\x47\x52\x4F\xFF";
+static char D_psp_092A27D8[] = "\x33\x45\x52\x45\x4E\x41\x54\x41\x00\x4C\x41"
+                               "\x4D\x45\x4E\x54\x41\x42\x4C\x45\xFF";
+static char* D_psp_092A27F0[] = {
+    D_psp_092A2550, D_psp_092A2560, D_psp_092A2578, D_psp_092A2588,
+    D_psp_092A25A0, D_psp_092A25B0, D_psp_092A25C8, D_psp_092A25E0,
+    D_psp_092A25F0, D_psp_092A2610, D_psp_092A2630, D_psp_092A2648,
+    D_psp_092A2660, D_psp_092A2678, D_psp_092A2690, D_psp_092A26A8,
+    D_psp_092A26C0, D_psp_092A26D0, D_psp_092A26E0, D_psp_092A26F8,
+    D_psp_092A2710, D_psp_092A2728, D_psp_092A2740, D_psp_092A2758,
+    D_psp_092A2770, D_psp_092A2788, D_psp_092A27A0, D_psp_092A27B8,
+    D_psp_092A27C8, D_psp_092A27D8};
+static char D_psp_092A2868[] =
+    "\x33\x4C\x4F\x47\x52\x41\x00\x59\x00\x27\x41\x49\x42\x4F\x4E\xFF";
+static char D_psp_092A2880[] = "\x28\x49\x50\x4F\x47\x52\x49\x46\x4F\xFF";
+static char D_psp_092A2890[] = "\x2D\x49\x4E\x4F\x54\x41\x55\x52\x4F\x00\x59"
+                               "\x00\x28\x0E\x4C\x4F\x42\x4F\xFF";
+static char D_psp_092A28A8[] = "\x33\xAD\x43\x55\x42\x4F\xFF";
+static char D_psp_092A28B0[] = "\x23\x41\x4E\x43\x45\x52\x42\x45\x52\x4F\xFF";
+static char D_psp_092A28C0[] =
+    "\x2D\x55\x52\x43\x49\xA0\x4C\x0E\x00\x41\x4C\x41\x00\x4F\x53\x43\x0E\xFF";
+static char D_psp_092A28D8[] =
+    "\x2C\x41\x00\x23\x52\x49\x41\x54\x55\x52\x41\xFF";
+static char D_psp_092A28E8[] = "\x2D\x55\x45\x52\x54\x45\xFF";
+static char D_psp_092A28F0[] =
+    "\x24\x52\x41\x43\x55\x4C\x41\x00\x41\x55\x54\xA0\x4E\x54\x49\x43\x4F\xFF";
+static char* D_psp_092A2908[] = {
+    D_psp_092A1E38, D_psp_092A2868, D_psp_092A1E58, D_psp_092A2880,
+    D_psp_092A1E78, D_psp_092A2890, D_psp_092A1E98, D_psp_092A28A8,
+    D_psp_092A28B0, D_psp_092A1EC8, D_psp_092A1ED0, D_psp_092A1EE0,
+    D_psp_092A1EF0, D_psp_092A28C0, D_psp_092A1F18, D_psp_092A1F28,
+    D_psp_092A28D8, D_psp_092A28E8, D_psp_092A1F48, D_psp_092A1F58,
+    D_psp_092A1F70, D_psp_092A1F80, D_psp_092A1F90, D_psp_092A28F0};
+static char D_psp_092A2968[] = "Mapa bﾌsico del castillo.";
+static char D_psp_092A2988[] = "Contiene ”Metamorfosis oscura”";
+static char D_psp_092A29B0[] = "Contiene ”Invoca-espﾕritu”";
+static char D_psp_092A29D0[] = "Contiene ”Fuego del infierno”";
+static char D_psp_092A29F0[] = "Contiene ”Tetra-espﾕritu”";
+static char D_psp_092A2A10[] = "Contiene ”Roba-almas”";
+static char D_psp_092A2A28[] = "Contiene ”Ataque de lobo”";
+static char D_psp_092A2A48[] = "Contiene ”Golpe de ala”";
+static char D_psp_092A2A68[] = "Contiene ”Hermanos espada”";
+static char* D_psp_092A2A88[] = {
+    D_psp_092A2968, D_psp_092A2988, D_psp_092A29B0,
+    D_psp_092A29D0, D_psp_092A29F0, D_psp_092A2A10,
+    D_psp_092A2A28, D_psp_092A2A48, D_psp_092A2A68};
+static char D_psp_092A2AB0[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x2F, 0x32, 0x2F};
+static char D_psp_092A2AB8[] = "DIF";
+static char* D_psp_092A2AC0[] = {"ATT", D_psp_092A2AB8};
+static char D_psp_092A2AC8[] =
+    "\x02\x43\x6F\x6D\x70\x72\x61\x20\x6F\x67\x2E\x00";
+static char D_psp_092A2AD8[] = "\x02\x54\x61\x74\x74\x69\x63\x68\x65\x00";
+static char D_psp_092A2AE8[] =
+    "\x02\x4C\x69\x73\x74\x61\x20\x6E\x65\x6D\x2E\x00";
+static char D_psp_092A2AF8[] = "\x02\x45\x73\x63\x69\x00";
+static char D_psp_092A2B00[] =
+    "\x02\x56\x65\x6E\x64\x69\x20\x67\x65\x6D\x2E\x00";
+static char D_psp_092A2B10[] =
+    "\x02\x54\x65\x73\x74\x20\x61\x75\x64\x69\x6F\x00";
+static char* D_psp_092A2B20[] = {
+    D_psp_092A2AC8,
+    D_psp_092A2AD8,
+    D_psp_092A2AE8,
+    "\002"
+    "",
+    D_psp_092A2AF8,
+    D_psp_092A2B00,
+    D_psp_092A2B10};
+static char D_psp_092A2B40[] = "\x25\x33\x21\x35\x32\x29\x34\x2F\xFF";
+static char D_psp_092A2B50[] =
+    "\x27\x49\x4F\x49\x41\x00\x23\x48\x49\x41\x56\x45\xFF";
+static char* D_psp_092A2B60[] = {D_psp_092A2B50};
+static char D_psp_092A2B68[] =
+    "\x2D\x41\x50\x50\x41\x00\x43\x41\x53\x54\x45\x4C\x0E\xFF";
+static char D_psp_092A2B78[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x11\xFF";
+static char D_psp_092A2B88[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x12\xFF";
+static char D_psp_092A2B98[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x13\xFF";
+static char D_psp_092A2BA8[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x14\xFF";
+static char D_psp_092A2BB8[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x15\xFF";
+static char D_psp_092A2BC8[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x16\xFF";
+static char D_psp_092A2BD8[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x17\xFF";
+static char D_psp_092A2BE8[] =
+    "\x32\x4F\x54\x4F\x4C\x4F\x2D\x41\x47\x49\x43\x4F\x00\x18\xFF";
+static char* D_psp_092A2BF8[] = {
+    D_psp_092A2B68, D_psp_092A2B78, D_psp_092A2B88,
+    D_psp_092A2B98, D_psp_092A2BA8, D_psp_092A2BB8,
+    D_psp_092A2BC8, D_psp_092A2BD8, D_psp_092A2BE8};
+static char D_psp_092A2C20[] = "\x2E\x49\x45\x4E\x54\x45\xFF";
+static char D_psp_092A2C28[] =
+    "\x27\x52\x41\x4E\x44\x45\x00\x23\x55\x4F\x52\x45\xFF";
+static char D_psp_092A2C38[] = "\x23\x55\x4F\x52\x45\x00\x0B\xFF";
+static char D_psp_092A2C48[] = "\x23\x4F\x4C\x54\x45\x4C\x4C\x4F\xFF";
+static char D_psp_092A2C58[] = "\x21\x53\x43\x49\x41\xFF";
+static char D_psp_092A2C60[] = "\x23\x52\x4F\x43\x45\xFF";
+static char D_psp_092A2C68[] =
+    "\x21\x43\x51\x55\x41\x00\x33\x41\x4E\x54\x41\xFF";
+static char D_psp_092A2C78[] = "\x2F\x52\x4F\x4C\x4F\x47\x49\x4F\xFF";
+static char D_psp_092A2C88[] =
+    "\x2C\x49\x42\x52\x4F\x00\x33\x41\x43\x52\x4F\xFF";
+static char D_psp_092A2C98[] = "\x32\x49\x4D\x42\x41\x4C\x5A\x49\x4E\x41\xFF";
+static char D_psp_092A2CA8[] = "\x36\x49\x54\x41\x00\x0B\xFF";
+static char* D_psp_092A2CB0[] = {
+    D_psp_092A2C20, D_psp_092A2C28, D_psp_092A18B8, D_psp_092A18C0,
+    D_psp_092A18C8, D_psp_092A18D0, D_psp_092A18D8, D_psp_092A18E0,
+    D_psp_092A18E8, D_psp_092A18F0, D_psp_092A18F8, D_psp_092A1900,
+    D_psp_092A2C38, D_psp_092A2320, D_psp_092A2C48, D_psp_092A2C58,
+    D_psp_092A2C60, D_psp_092A2C68, D_psp_092A2C78, D_psp_092A2C88,
+    D_psp_092A2C98, D_psp_092A1970, D_psp_092A1978, D_psp_092A2CA8};
+static char D_psp_092A2D10[] =
+    "\x30\x4F\x54\x45\x4E\x54\x45\x00\x43\x4F\x4E\x54\x52\x4F\xFF";
+static char D_psp_092A2D20[] =
+    "\x24\x45\x42\x4F\x4C\x45\x00\x43\x4F\x4E\x54\x52\x4F\xFF";
+static char D_psp_092A2D30[] = "\x21\x53\x53\x4F\x52\x42\x49\xFF";
+static char* D_psp_092A2D40[] = {
+    D_psp_092A2D10, D_psp_092A1A00, D_psp_092A2D20, D_psp_092A2D30};
+static char D_psp_092A2D50[] = "\x33\x21\x23\xFF";
+static char D_psp_092A2D58[] = "\x26\x35\x2F\xFF";
+static char D_psp_092A2D60[] = "\x2C\x21\x2D\xFF";
+static char D_psp_092A2D68[] = "\x27\x28\x29\xFF";
+static char D_psp_092A2D70[] = "\x36\x25\x2C\xFF";
+static char D_psp_092A2D78[] = "\x34\x21\x27\xFF";
+static char D_psp_092A2D80[] = "\x23\x2F\x2C\xFF";
+static char* D_psp_092A2D88[] = {
+    D_psp_092A2D50, D_psp_092A2440, D_psp_092A2D58, D_psp_092A2D60,
+    D_psp_092A2D68, D_psp_092A1A58, D_psp_092A2460, D_psp_092A2D70,
+    D_psp_092A1A70, D_psp_092A2D78, D_psp_092A2D80};
+static char D_psp_092A2DB8[] = "\x2E\x45\x53\x53\x55\x4E\x4F\xFF";
+static char D_psp_092A2DC8[] = "\x24\x49\x46\xFF";
+static char D_psp_092A2DD0[] = "\x25\x53\x50\xFF";
+static char D_psp_092A2DD8[] =
+    "\x2C\x41\x53\x43\x49\x41\x00\x4F\x47\x47\x45\x54\x54\x49\xFF";
+static char* D_psp_092A2DE8[] = {
+    D_psp_092A1AC0, D_psp_092A24C8, D_psp_092A2DC8, D_psp_092A2DD0,
+    D_psp_092A2DD8, D_psp_092A24E0, D_psp_092A1AF8};
+static char D_psp_092A2E08[] =
+    "\x30\x2F\x34\x26\x29\x33\x29\x2E\x34\x26\x2F\x32";
+static char D_psp_092A2E18[] = "\x2E\x55\x4D\x45\x52\x4F\xFF";
+static char D_psp_092A2E20[] =
+    "\x25\x51\x55\x49\x50\x41\x47\x47\x49\x41\x54\x4F\xFF";
+static char D_psp_092A2E30[] =
+    "\x2E\x4F\x4E\x00\x45\x51\x55\x49\x50\x41\x47\x0E\xFF";
+static char* D_psp_092A2E40[] = {
+    D_psp_092A2E18, D_psp_092A2E20, D_psp_092A2E30, D_psp_092A1B58};
+static char D_psp_092A2E50[] = "\x30\x52\x4F\x4C\x4F\x47\x4F\xFF";
+static char D_psp_092A2E60[] =
+    "\x24\x41\x4E\x5A\x41\x00\x44\x07\x49\x4C\x4C\x55\x53\x49\x4F\x4E\x49\xFF";
+static char D_psp_092A2E78[] =
+    "\x2C\x41\x00\x50\x52\x45\x47\x48\x49\x45\x52\x41\xFF";
+static char D_psp_092A2E88[] =
+    "\x29\x4C\x00\x43\x41\x53\x54\x45\x4C\x4C\x4F\x00\x44\x49\x00\x24\x52\x41"
+    "\x43\x55\x4C\x41\xFF";
+static char D_psp_092A2EA0[] =
+    "\x24\x41\x4E\x5A\x41\x00\x44\x45\x4C\x4C\x07\x4F\x52\x4F\xFF";
+static char D_psp_092A2EB0[] =
+    "\x27\x41\x4C\x4C\x45\x52\x49\x41\x00\x44\x49\x00\x4D\x41\x52\x4D\x4F\xFF";
+static char D_psp_092A2EC8[] = "\x34\x4F\x52\x52\x45\x00\x44\x45\x4C\x4C\x41"
+                               "\x00\x4E\x45\x42\x42\x49\x41\xFF";
+static char D_psp_092A2EE0[] = "\x2E\x4F\x54\x54\x55\x52\x4E\x4F\xFF";
+static char D_psp_092A2EF0[] =
+    "\x33\x50\x41\x52\x54\x49\x54\x4F\x00\x49\x4E\x43\x49\x53\x4F\x00\x4E\x45"
+    "\x4C\x00\x4C\x45\x47\x4E\xFF";
+static char D_psp_092A2F10[] =
+    "\x30\x4F\x52\x54\x41\x00\x44\x45\x47\x4C\x49\x00\x53\x50\x49\x52\x49\x54"
+    "\x49\x00\x53\x41\x4E\x54\xFF";
+static char D_psp_092A2F30[] = "\x26\x45\x53\x54\x49\x56\x41\x4C\x00\x44\x45"
+                               "\x49\x00\x53\x45\x52\x56\x49\xFF";
+static char D_psp_092A2F48[] = "\x34\x45\x52\x52\x41\x00\x44\x49\x00\x42\x45"
+                               "\x4E\x45\x44\x49\x5A\x49\x4F\x4E\x45\xFF";
+static char D_psp_092A2F60[] = "\x32\x45\x51\x55\x49\x45\x4D\x00\x50\x45\x52"
+                               "\x00\x47\x4C\x49\x00\x44\x45\x49\xFF";
+static char D_psp_092A2F78[] = "\x2C\x41\x43\x52\x49\x4D\x41\x00\x44\x49\x00"
+                               "\x43\x52\x49\x53\x54\x41\x4C\x4C\x4F\xFF";
+static char D_psp_092A2F90[] =
+    "\x26\x4F\x53\x53\x41\x00\x41\x42\x42\x41\x4E\x44\x4F\x4E\x41\x54\x41\xFF";
+static char D_psp_092A2FA8[] =
+    "\x23\x49\x4D\x49\x54\x45\x52\x4F\x00\x44\x45\x4C\x4C\x07\x41\x52\x43\x4F"
+    "\x42\x41\x4C\x45\x4E\x4F\xFF";
+static char D_psp_092A2FC8[] =
+    "\x29\x4C\x00\x53\x49\x4C\x45\x4E\x5A\x49\x4F\xFF";
+static char D_psp_092A2FD8[] = "\x29\x4C\x00\x44\x49\x50\x49\x4E\x54\x4F\x00"
+                               "\x50\x45\x52\x44\x55\x54\x4F\xFF";
+static char D_psp_092A2FF0[] =
+    "\x24\x41\x4E\x5A\x41\x00\x44\x45\x49\x00\x50\x41\x4C\x49\xFF";
+static char D_psp_092A3000[] =
+    "\x3A\x4F\x4E\x41\x00\x4D\x41\x4C\x45\x44\x45\x54\x54\x41\xFF";
+static char D_psp_092A3010[] = "\x22\x41\x4E\x43\x48\x45\x54\x54\x4F\x00\x49"
+                               "\x4E\x43\x41\x4E\x54\x41\x54\x4F\xFF";
+static char D_psp_092A3028[] =
+    "\x33\x50\x49\x52\x49\x54\x49\x00\x56\x41\x47\x41\x4E\x54\x49\xFF";
+static char D_psp_092A3040[] = "\x29\x4C\x00\x54\x52\x41\x47\x49\x43\x4F\x00"
+                               "\x50\x52\x49\x4E\x43\x49\x50\x45\xFF";
+static char D_psp_092A3058[] = "\x30\x4F\x52\x54\x41\x00\x50\x45\x52\x00\x47"
+                               "\x4C\x49\x00\x41\x42\x49\x53\x53\x49\xFF";
+static char D_psp_092A3070[] = "\x2C\x45\x00\x50\x4F\x52\x54\x45\x00\x44\x45"
+                               "\x4C\x00\x43\x49\x45\x4C\x4F\xFF";
+static char D_psp_092A3088[] =
+    "\x22\x41\x4C\x4C\x41\x54\x41\x00\x4D\x41\x43\x41\x42\x52\x41\xFF";
+static char D_psp_092A30A0[] =
+    "\x2C\x45\x47\x41\x4D\x49\x00\x44\x49\x00\x53\x41\x4E\x47\x55\x45\xFF";
+static char D_psp_092A30B8[] =
+    "\x34\x4F\x43\x43\x41\x54\x41\x00\x46\x49\x4E\x41\x4C\x45\xFF";
+static char D_psp_092A30C8[] =
+    "\x29\x4C\x00\x4E\x45\x52\x4F\x00\x42\x41\x4E\x43\x48\x45\x54\x54\x4F\xFF";
+static char D_psp_092A30E0[] =
+    "\x34\x52\x41\x47\x49\x43\x41\x00\x53\x45\x52\x45\x4E\x41\x54\x41\xFF";
+static char* D_psp_092A30F8[] = {
+    D_psp_092A2E50, D_psp_092A2E60, D_psp_092A2E78, D_psp_092A2E88,
+    D_psp_092A2EA0, D_psp_092A2EB0, D_psp_092A2EC8, D_psp_092A2EE0,
+    D_psp_092A2EF0, D_psp_092A2F10, D_psp_092A2F30, D_psp_092A2F48,
+    D_psp_092A2F60, D_psp_092A2F78, D_psp_092A2F90, D_psp_092A2FA8,
+    D_psp_092A2FC8, D_psp_092A2FD8, D_psp_092A2FF0, D_psp_092A3000,
+    D_psp_092A3010, D_psp_092A3028, D_psp_092A3040, D_psp_092A3058,
+    D_psp_092A3070, D_psp_092A3088, D_psp_092A30A0, D_psp_092A30B8,
+    D_psp_092A30C8, D_psp_092A30E0};
+static char D_psp_092A3170[] =
+    "\x33\x4C\x4F\x47\x52\x41\x00\x45\x00\x27\x41\x49\x42\x4F\x4E\xFF";
+static char D_psp_092A3188[] = "\x29\x50\x50\x4F\x47\x52\x49\x46\x4F\xFF";
+static char D_psp_092A3198[] = "\x33\x43\x49\x4C\x4C\x41\xFF";
+static char D_psp_092A31A0[] =
+    "\x2D\x49\x4E\x4F\x54\x0E\x00\x45\x00\x2C\x49\x43\x41\x4E\x54\x52\x0E\xFF";
+static char D_psp_092A31B8[] = "\x23\x45\x52\x42\x45\x52\x4F\xFF";
+static char D_psp_092A31C8[] =
+    "\x30\x49\x50\x49\x53\x54\x52\x2F\x53\x43\x55\x52\x4F\xFF";
+static char D_psp_092A31D8[] =
+    "\x2C\x41\x00\x23\x52\x45\x41\x54\x55\x52\x41\xFF";
+static char D_psp_092A31E8[] = "\x2D\x4F\x52\x54\x45\xFF";
+static char D_psp_092A31F0[] = "\x22\x45\x4C\x5A\x45\x42\xAC\xFF";
+static char D_psp_092A3200[] =
+    "\x36\x45\x52\x4F\x00\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char* D_psp_092A3210[] = {
+    D_psp_092A1E38, D_psp_092A3170, D_psp_092A1E58, D_psp_092A3188,
+    D_psp_092A3198, D_psp_092A31A0, D_psp_092A1E98, D_psp_092A1EA8,
+    D_psp_092A31B8, D_psp_092A1EC8, D_psp_092A1ED0, D_psp_092A1EE0,
+    D_psp_092A1EF0, D_psp_092A31C8, D_psp_092A1F18, D_psp_092A1F28,
+    D_psp_092A31D8, D_psp_092A31E8, D_psp_092A1F48, D_psp_092A1F58,
+    D_psp_092A31F0, D_psp_092A1F80, D_psp_092A1F90, D_psp_092A3200};
+static char D_psp_092A3270[] = "Mappa del castello di Dracula.";
+static char D_psp_092A3290[] = "Contiene ”Metamorfosi Oscura”";
+static char D_psp_092A32B0[] = "Contiene ”Evoca Spirito”";
+static char D_psp_092A32D0[] = "Contiene ”Fuoco Infernale”";
+static char D_psp_092A32F0[] = "Contiene ”Quattro Spiriti”";
+static char D_psp_092A3310[] = "Contiene ”Furto d'Anima”";
+static char D_psp_092A3330[] = "Contiene ”Attacco del Lupo”";
+static char D_psp_092A3350[] = "Contiene ”L'Ala che Spezza”";
+static char D_psp_092A3370[] = "Contiene ”Fratelli di Spada”";
+static char* D_psp_092A3390[] = {
+    D_psp_092A3270, D_psp_092A3290, D_psp_092A32B0,
+    D_psp_092A32D0, D_psp_092A32F0, D_psp_092A3310,
+    D_psp_092A3330, D_psp_092A3350, D_psp_092A3370};
+static char D_psp_092A33B8[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x2F, 0x32, 0x2F};
+static char* D_psp_092A33C0[] = {"ATT", "DEF"};
+static char D_psp_092A33C8[] = "\x02\x41\x63\x68\x74\x20\x69\x74\x65\x6D\x00";
+static char D_psp_092A33D8[] = "\x02\x54\x61\x63\x74\x69\x71\x75\x65\x73\x00";
+static char D_psp_092A33E8[] = "\x02\x45\x6E\x6E\x65\x6D\x69\x73";
+static char D_psp_092A33F8[] = "\x02\x51\x75\x69\x74\x74\x65\x72";
+static char D_psp_092A3408[] = "\x02\x56\x64\x72\x65\x20\x69\x74\x65\x6D\x00";
+static char D_psp_092A3418[] = "\x02\x54\x65\x73\x74\x20\x73\x6F\x6E\x00";
+static char* D_psp_092A3428[] = {
+    D_psp_092A33C8,
+    D_psp_092A33D8,
+    D_psp_092A33E8,
+    "\002"
+    "",
+    D_psp_092A33F8,
+    D_psp_092A3408,
+    D_psp_092A3418};
+static char D_psp_092A3448[] =
+    "\x33\x34\x2F\x23\x2B\x00\x25\x30\x35\x29\x33\x25\xFF";
+static char D_psp_092A3458[] =
+    "\x2A\x4F\x59\x41\x55\x00\x4F\x55\x56\x45\x52\x54\x0E\xFF";
+static char* D_psp_092A3468[] = {D_psp_092A3458};
+static char D_psp_092A3470[] =
+    "\x23\x41\x52\x54\x45\x00\x43\x48\x9C\x54\x45\x41\x55\xFF";
+static char D_psp_092A3480[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x11\xFF";
+static char D_psp_092A3490[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x12\xFF";
+static char D_psp_092A34A0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x13\xFF";
+static char D_psp_092A34B0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x14\xFF";
+static char D_psp_092A34C0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x15\xFF";
+static char D_psp_092A34D0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x16\xFF";
+static char D_psp_092A34E0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x17\xFF";
+static char D_psp_092A34F0[] =
+    "\x30\x41\x52\x43\x48\x0E\x00\x4D\x41\x47\x49\x45\x00\x18\xFF";
+static char* D_psp_092A3500[] = {
+    D_psp_092A3470, D_psp_092A3480, D_psp_092A3490,
+    D_psp_092A34A0, D_psp_092A34B0, D_psp_092A34C0,
+    D_psp_092A34D0, D_psp_092A34E0, D_psp_092A34F0};
+static char D_psp_092A3528[] = "\x32\x49\x45\x4E\xFF";
+static char D_psp_092A3530[] = "\x27\x52\x41\x4E\x44\x00\x43\xB1\x55\x52\xFF";
+static char D_psp_092A3540[] =
+    "\x23\xB1\x55\x52\x00\x45\x4E\x00\x50\x4C\x55\x53\xFF";
+static char D_psp_092A3550[] = "\x36\x49\x41\x4E\x44\x45\xFF";
+static char D_psp_092A3558[] = "\x23\x4F\x55\x54\x45\x41\x55\xFF";
+static char D_psp_092A3568[] = "\x28\x41\x43\x48\x45\xFF";
+static char D_psp_092A3570[] = "\x23\x52\x4F\x49\x58\xFF";
+static char D_psp_092A3578[] = "\x25\x41\x55\x00\x42\xA0\x4E\x49\x54\x45\xFF";
+static char D_psp_092A3588[] = "\x2D\x4F\x4E\x54\x52\x45\xFF";
+static char D_psp_092A3590[] =
+    "\x2C\x49\x56\x52\x45\x00\x53\x41\x43\x52\xA0\xFF";
+static char D_psp_092A35A0[] =
+    "\x30\x49\x45\x52\x52\x45\x32\x45\x42\x4F\x4E\x44\xFF";
+static char D_psp_092A35B0[] =
+    "\x36\x49\x45\x00\x45\x4E\x00\x50\x4C\x55\x53\xFF";
+static char* D_psp_092A35C0[] = {
+    D_psp_092A3528, D_psp_092A3530, D_psp_092A22C0, D_psp_092A22C8,
+    D_psp_092A22D0, D_psp_092A22D8, D_psp_092A22E0, D_psp_092A22E8,
+    D_psp_092A22F0, D_psp_092A22F8, D_psp_092A2300, D_psp_092A2308,
+    D_psp_092A3540, D_psp_092A3550, D_psp_092A3558, D_psp_092A3568,
+    D_psp_092A3570, D_psp_092A3578, D_psp_092A3588, D_psp_092A3590,
+    D_psp_092A35A0, D_psp_092A1970, D_psp_092A1978, D_psp_092A35B0};
+static char D_psp_092A3620[] =
+    "\x26\x4F\x52\x54\x00\x43\x4F\x4E\x54\x52\x45\xFF";
+static char D_psp_092A3630[] = "\x29\x4D\x4D\x55\x4E\x49\x53\x45\xFF";
+static char D_psp_092A3640[] =
+    "\x26\x41\x49\x42\x4C\x45\x00\x43\x4F\x4E\x54\x52\x45\xFF";
+static char* D_psp_092A3650[] = {
+    D_psp_092A3620, D_psp_092A3630, D_psp_092A3640, D_psp_092A2418};
+static char D_psp_092A3660[] = "\x26\x2F\x29\xFF";
+static char D_psp_092A3668[] = "\x34\x25\x2E\xFF";
+static char D_psp_092A3670[] = "\x26\x25\x35\xFF";
+static char D_psp_092A3678[] = "\x26\x24\x32\xFF";
+static char D_psp_092A3680[] = "\x27\x2C\x21\xFF";
+static char D_psp_092A3688[] = "\x25\x21\x35\xFF";
+static char D_psp_092A3690[] = "\x32\x2F\x23\xFF";
+static char D_psp_092A3698[] = "\x30\x2F\x29\xFF";
+static char D_psp_092A36A0[] = "\x2D\x21\x2C\xFF";
+static char D_psp_092A36A8[] = "\x23\x30\x32\xFF";
+static char D_psp_092A36B0[] = "\x24\x25\x27\xFF";
+static char* D_psp_092A36B8[] = {
+    D_psp_092A3660, D_psp_092A3668, D_psp_092A3670, D_psp_092A3678,
+    D_psp_092A3680, D_psp_092A3688, D_psp_092A3690, D_psp_092A3698,
+    D_psp_092A36A0, D_psp_092A36A8, D_psp_092A36B0};
+static char D_psp_092A36E8[] = "\x21\x55\x43\x55\x4E\xFF";
+static char D_psp_092A36F0[] = "\x30\x36\xFF";
+static char D_psp_092A36F8[] =
+    "\x29\x54\x45\x4D\x53\x00\x4C\x41\x49\x53\x53\xA0\x53\xFF";
+static char* D_psp_092A3708[] = {
+    D_psp_092A24C0, D_psp_092A36F0, D_psp_092A1AD0, D_psp_092A1AD8,
+    D_psp_092A36F8, D_psp_092A24E0, D_psp_092A1AF8};
+static char D_psp_092A3728[] =
+    "\x26\x2F\x32\x23\x2F\x2E\x29\x2E\x34\x23\x28\x21";
+static char D_psp_092A3738[] = "\x2E\x4F\x4D\x42\x52\x45\xFF";
+static char D_psp_092A3740[] = "\x25\x51\x55\x49\x50\xA0\xFF";
+static char D_psp_092A3748[] = "\x2E\x4F\x4E\x00\xA0\x51\x55\x49\x50\xA0\xFF";
+static char* D_psp_092A3758[] = {
+    D_psp_092A3738, D_psp_092A3740, D_psp_092A3748, D_psp_092A1B58};
+static char D_psp_092A3768[] = "\x24\x41\x4E\x53\x45\x00\x44\x45\x53\x00\x49"
+                               "\x4C\x4C\x55\x53\x49\x4F\x4E\x53\xFF";
+static char D_psp_092A3780[] = "\x30\x52\x49\x9F\x52\x45\xFF";
+static char D_psp_092A3788[] = "\x23\x48\x9C\x54\x45\x41\x55\x00\x44\x45\x00"
+                               "\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char D_psp_092A37A0[] =
+    "\x24\x41\x4E\x53\x45\x00\x44\x45\x00\x4C\x07\x4F\x52\xFF";
+static char D_psp_092A37B0[] =
+    "\x27\x41\x4C\x45\x52\x49\x45\x00\x45\x4E\x00\x4D\x41\x52\x42\x52\x45\xFF";
+static char D_psp_092A37C8[] =
+    "\x34\x4F\x55\x52\x00\x44\x45\x00\x42\x52\x55\x4D\x45\xFF";
+static char D_psp_092A37D8[] =
+    "\x30\x41\x52\x54\x49\x54\x41\x00\x47\x52\x41\x56\xA0\x45\x00\x44\x41\x4E"
+    "\x53\x00\x4C\x45\x00\x42\x4F\x49\x53\xFF";
+static char D_psp_092A37F8[] =
+    "\x30\x4F\x52\x54\x45\x00\x44\x45\x53\x00\x45\x53\x50\x52\x49\x54\x53\x00"
+    "\x53\x41\x43\x52\xA0\x53\xFF";
+static char D_psp_092A3818[] =
+    "\x26\x45\x53\x54\x49\x56\x41\x4C\x00\x44\x45\x53\x00\x53\x45\x52\x56\x49"
+    "\x54\x45\x55\x52\x53\xFF";
+static char D_psp_092A3838[] = "\x34\x45\x52\x52\x45\x00\x44\x45\x00\x42\xA0"
+                               "\x4E\xA0\x44\x49\x43\x54\x49\x4F\x4E\xFF";
+static char D_psp_092A3850[] =
+    "\x32\x45\x51\x55\x49\x45\x4D\x00\x50\x4F\x55\x52\x00\x4C\x45\x53\x00\x44"
+    "\x49\x45\x55\x58\xFF";
+static char D_psp_092A3868[] =
+    "\x2C\x41\x52\x4D\x45\x53\x00\x44\x45\x00\x43\x52\x49\x53\x54\x41\x4C\xFF";
+static char D_psp_092A3880[] =
+    "\x30\x55\x49\x54\x00\x41\x42\x41\x4E\x44\x4F\x4E\x4E\xA0\xFF";
+static char D_psp_092A3890[] = "\x23\x49\x4D\x45\x54\x49\x9F\x52\x45\x00\x41"
+                               "\x52\x43\x0D\x45\x4E\x0D\x43\x49\x45\x4C\xFF";
+static char D_psp_092A38A8[] =
+    "\x30\x45\x49\x4E\x54\x55\x52\x45\x00\x50\x45\x52\x44\x55\x45\xFF";
+static char D_psp_092A38C0[] =
+    "\x24\x41\x4E\x53\x45\x00\x44\x45\x00\x30\x41\x4C\x45\x53\xFF";
+static char D_psp_092A38D0[] =
+    "\x2C\x49\x45\x55\x00\x4D\x41\x55\x44\x49\x54\xFF";
+static char D_psp_092A38E0[] =
+    "\x22\x41\x4E\x51\x55\x45\x54\x00\x45\x4E\x43\x48\x41\x4E\x54\xA0\xFF";
+static char D_psp_092A38F8[] =
+    "\x26\x41\x4E\x54\xAA\x4D\x45\x53\x00\x45\x52\x52\x41\x4E\x54\x53\xFF";
+static char D_psp_092A3910[] = "\x2C\x45\x00\x50\x52\x49\x4E\x43\x45\x00\x54"
+                               "\x52\x41\x47\x49\x51\x55\x45\xFF";
+static char D_psp_092A3928[] =
+    "\x30\x4F\x52\x54\x45\x00\x56\x45\x52\x53\x00\x4C\x45\x53\x00\x21\x42\x59"
+    "\x53\x53\x45\x53\xFF";
+static char D_psp_092A3940[] =
+    "\x30\x4F\x52\x54\x45\x53\x00\x44\x55\x00\x30\x41\x52\x41\x44\x49\x53\xFF";
+static char D_psp_092A3958[] = "\x22\x41\x4C\x4C\x41\x44\x45\x00\x44\x45\x00"
+                               "\x4C\x41\x00\x2D\x4F\x52\x54\xFF";
+static char D_psp_092A3970[] =
+    "\x2C\x49\x45\x4E\x53\x00\x44\x55\x00\x53\x41\x4E\x47\xFF";
+static char D_psp_092A3980[] =
+    "\x22\x41\x4E\x51\x55\x45\x54\x00\x4E\x4F\x49\x52\xFF";
+static char D_psp_092A3990[] =
+    "\x33\xA0\x52\xA0\x4E\x41\x44\x45\x00\x46\x55\x4E\x9F\x42\x52\x45\xFF";
+static char* D_psp_092A39A8[] = {
+    D_psp_092A1B70, D_psp_092A3768, D_psp_092A3780, D_psp_092A3788,
+    D_psp_092A37A0, D_psp_092A37B0, D_psp_092A37C8, D_psp_092A1BE8,
+    D_psp_092A37D8, D_psp_092A37F8, D_psp_092A3818, D_psp_092A3838,
+    D_psp_092A3850, D_psp_092A3868, D_psp_092A3880, D_psp_092A3890,
+    D_psp_092A1CB0, D_psp_092A38A8, D_psp_092A38C0, D_psp_092A38D0,
+    D_psp_092A38E0, D_psp_092A38F8, D_psp_092A3910, D_psp_092A3928,
+    D_psp_092A3940, D_psp_092A3958, D_psp_092A3970, D_psp_092A30B8,
+    D_psp_092A3980, D_psp_092A3990};
+static char D_psp_092A3A20[] =
+    "\x28\x49\x50\x50\x4F\x47\x52\x59\x50\x48\x45\xFF";
+static char D_psp_092A3A30[] =
+    "\x2D\x49\x4E\x4F\x54\x0E\x06\x2C\x4F\x55\x50\x0D\x47\x41\x52\x4F\x55\xFF";
+static char D_psp_092A3A48[] = "\x33\x55\x43\x43\x55\x42\x45\xFF";
+static char D_psp_092A3A58[] = "\x23\x45\x52\x42\x9F\x52\x45\xFF";
+static char D_psp_092A3A68[] =
+    "\x23\x48\x56\x0D\x53\x52\x49\x53\x00\x54\xA0\x4E\x9F\x42\x52\x45\x53\xFF";
+static char D_psp_092A3A80[] = "\x2D\xA0\x44\x55\x53\x45\xFF";
+static char D_psp_092A3A88[] =
+    "\x2C\x41\x00\x23\x52\xA0\x41\x54\x55\x52\x45\xFF";
+static char D_psp_092A3A98[] = "\x2C\x41\x00\x2D\x4F\x52\x54\xFF";
+static char D_psp_092A3AA8[] = "\x22\x45\x4C\x5A\xA0\x42\x55\x54\x48\xFF";
+static char D_psp_092A3AB8[] =
+    "\x36\x52\x41\x49\x00\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char* D_psp_092A3AC8[] = {
+    D_psp_092A1E38, D_psp_092A1E48, D_psp_092A1E58, D_psp_092A3A20,
+    D_psp_092A1E78, D_psp_092A3A30, D_psp_092A1E98, D_psp_092A3A48,
+    D_psp_092A3A58, D_psp_092A1EC8, D_psp_092A1ED0, D_psp_092A1EE0,
+    D_psp_092A1EF0, D_psp_092A3A68, D_psp_092A1F18, D_psp_092A3A80,
+    D_psp_092A3A88, D_psp_092A3A98, D_psp_092A1F48, D_psp_092A1F58,
+    D_psp_092A3AA8, D_psp_092A1F80, D_psp_092A1F90, D_psp_092A3AB8};
+static char D_psp_092A3B28[] = "Carte basique du chﾍt. Dracula";
+static char D_psp_092A3B48[] = "Contient ”Mﾑtamorphose noire”";
+static char D_psp_092A3B68[] = "Contient ”Esprit invoquﾑ”";
+static char D_psp_092A3B88[] = "Contient ”Feu de l’enfer”";
+static char D_psp_092A3BA8[] = "Contient ”Esprit Tetra”";
+static char D_psp_092A3BC8[] = "Contient ”Charge de Loup”";
+static char D_psp_092A3BE8[] = "Contient ”Capture de l’ﾍme”";
+static char D_psp_092A3C08[] = "Contient ”Frappe ailﾑe”";
+static char D_psp_092A3C28[] = "Contient ”Frﾐres spadassins”";
+static char* D_psp_092A3C48[] = {
+    D_psp_092A3B28, D_psp_092A3B48, D_psp_092A3B68,
+    D_psp_092A3B88, D_psp_092A3BA8, D_psp_092A3BC8,
+    D_psp_092A3BE8, D_psp_092A3C08, D_psp_092A3C28};
+static char D_psp_092A3C70[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x2F, 0x32};
+static char D_psp_092A3C78[] = "ANG";
+static char* D_psp_092A3C80[] = {D_psp_092A3C78, "DEF"};
+static char D_psp_092A3C88[] = "\x02\x4F\x2E\x20\x6B\x61\x75\x66\x65\x6E";
+static char D_psp_092A3C98[] = "\x02\x54\x61\x6B\x74\x69\x6B";
+static char D_psp_092A3CA0[] = "\x02\x46\x65\x69\x6E\x64\x65";
+static char D_psp_092A3CA8[] = "\x02\x56\x65\x72\x6C\x61\x73\x73\x65\x6E";
+static char D_psp_092A3CB8[] = "\x02\x53\x74\x65\x69\x6E\x20\x76\x6B\x2E";
+static char D_psp_092A3CC8[] = "\x02\x41\x75\x64\x69\x6F\x74\x65\x73\x74";
+static char* D_psp_092A3CD8[] = {
+    D_psp_092A3C88,
+    D_psp_092A3C98,
+    D_psp_092A3CA0,
+    "\002"
+    "",
+    D_psp_092A3CA8,
+    D_psp_092A3CB8,
+    D_psp_092A3CC8};
+static char D_psp_092A3CF8[] =
+    "\x21\x35\x33\x36\x25\x32\x2B\x21\x35\x26\x34\xFF";
+static char D_psp_092A3D08[] =
+    "\x94\x46\x46\x4E\x55\x4E\x47\x53\x4A\x55\x57\x45\x4C\xFF";
+static char* D_psp_092A3D18[] = {D_psp_092A3D08};
+static char D_psp_092A3D20[] =
+    "\x33\x43\x48\x4C\x4F\x53\x53\x4B\x41\x52\x54\x45\xFF";
+static char D_psp_092A3D30[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x11\xFF";
+static char D_psp_092A3D40[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x12\xFF";
+static char D_psp_092A3D50[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x13\xFF";
+static char D_psp_092A3D60[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x14\xFF";
+static char D_psp_092A3D70[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x15\xFF";
+static char D_psp_092A3D80[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x16\xFF";
+static char D_psp_092A3D90[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x17\xFF";
+static char D_psp_092A3DA0[] =
+    "\x2D\x41\x47\x49\x45\x50\x45\x52\x47\x41\x4D\x0E\x00\x18\xFF";
+static char* D_psp_092A3DB0[] = {
+    D_psp_092A3D20, D_psp_092A3D30, D_psp_092A3D40,
+    D_psp_092A3D50, D_psp_092A3D60, D_psp_092A3D70,
+    D_psp_092A3D80, D_psp_092A3D90, D_psp_092A3DA0};
+static char D_psp_092A3DD8[] = "\x2E\x49\x43\x48\x54\x53\xFF";
+static char D_psp_092A3DE0[] =
+    "\x27\x52\x4F\x99\x45\x53\x00\x28\x45\x52\x5A\xFF";
+static char D_psp_092A3DF0[] = "\x28\x45\x52\x5A\x00\x30\x4C\x55\x53\xFF";
+static char D_psp_092A3E00[] = "\x26\x4C\x45\x49\x53\x43\x48\xFF";
+static char D_psp_092A3E10[] = "\x2D\x45\x53\x53\x45\x52\xFF";
+static char D_psp_092A3E18[] = "\x21\x58\x54\xFF";
+static char D_psp_092A3E20[] = "\x2B\x52\x45\x55\x5A\xFF";
+static char D_psp_092A3E28[] = "\x37\x45\x49\x48\x57\x41\x53\x53\x45\x52\xFF";
+static char D_psp_092A3E38[] = "\x35\x48\x52\xFF";
+static char D_psp_092A3E40[] =
+    "\x28\x45\x49\x4C\x49\x47\x0E\x00\x22\x55\x43\x48\xFF";
+static char D_psp_092A3E50[] =
+    "\x2E\x45\x55\x42\x55\x4E\x44\x53\x54\x45\x49\x4E\xFF";
+static char D_psp_092A3E60[] = "\x2C\x45\x42\x45\x4E\x00\x30\x4C\x55\x53\xFF";
+static char* D_psp_092A3E70[] = {
+    D_psp_092A3DD8, D_psp_092A3DE0, D_psp_092A18B8, D_psp_092A18C0,
+    D_psp_092A18C8, D_psp_092A18D0, D_psp_092A18D8, D_psp_092A18E0,
+    D_psp_092A18E8, D_psp_092A18F0, D_psp_092A18F8, D_psp_092A1900,
+    D_psp_092A3DF0, D_psp_092A3E00, D_psp_092A3E10, D_psp_092A3E18,
+    D_psp_092A3E20, D_psp_092A3E28, D_psp_092A3E38, D_psp_092A3E40,
+    D_psp_092A3E50, D_psp_092A1970, D_psp_092A1978, D_psp_092A3E60};
+static char D_psp_092A3ED0[] =
+    "\x33\x54\x41\x52\x4B\x00\x47\x45\x47\x45\x4E\xFF";
+static char D_psp_092A3EE0[] = "\x29\x4D\x4D\x55\x4E\xFF";
+static char D_psp_092A3EE8[] =
+    "\x33\x43\x48\x57\x41\x43\x48\x00\x47\x45\x47\x45\x4E\xFF";
+static char D_psp_092A3EF8[] =
+    "\x21\x42\x53\x4F\x52\x42\x49\x45\x52\x45\x4E\xFF";
+static char* D_psp_092A3F08[] = {
+    D_psp_092A3ED0, D_psp_092A3EE0, D_psp_092A3EE8, D_psp_092A3EF8};
+static char D_psp_092A3F18[] = "\x28\x2C\x27\xFF";
+static char D_psp_092A3F20[] = "\x24\x2B\x2C\xFF";
+static char D_psp_092A3F28[] = "\x24\x2F\x2E\xFF";
+static char D_psp_092A3F30[] = "\x25\x29\x33\xFF";
+static char D_psp_092A3F38[] = "\x27\x29\x26\xFF";
+static char D_psp_092A3F40[] = "\x26\x2C\x35\xFF";
+static char D_psp_092A3F48[] = "\x2D\x25\x33\xFF";
+static char D_psp_092A3F50[] = "\x34\x32\x26\xFF";
+static char* D_psp_092A3F58[] = {
+    D_psp_092A3F18, D_psp_092A3F20, D_psp_092A3670, D_psp_092A3F28,
+    D_psp_092A3F30, D_psp_092A1A58, D_psp_092A1A60, D_psp_092A3F38,
+    D_psp_092A3F40, D_psp_092A3F48, D_psp_092A3F50};
+static char D_psp_092A3F88[] = "\x2E\x49\x43\x48\x54\x53\xFF";
+static char D_psp_092A3F90[] = "\x25\x52\x46\xFF";
+static char D_psp_092A3F98[] =
+    "\x2F\x42\x4A\x0E\x00\x41\x42\x4C\x45\x47\x45\x4E\xFF";
+static char D_psp_092A3FA8[] = "\x21\x4E\x5A\xFF";
+static char* D_psp_092A3FB0[] = {
+    D_psp_092A1AC0, D_psp_092A1AC8, D_psp_092A1AD0, D_psp_092A3F90,
+    D_psp_092A3F98, D_psp_092A3FA8, D_psp_092A1AF8};
+static char D_psp_092A3FD0[] =
+    "\x33\x34\x2B\x2B\x2F\x2E\x29\x2E\x34\x27\x2C\x2B";
+static char D_psp_092A3FE0[] = "\x21\x4E\x5A\x41\x48\x4C\xFF";
+static char D_psp_092A3FE8[] =
+    "\x21\x55\x53\x47\x45\x52\xAF\x53\x54\x45\x54\xFF";
+static char D_psp_092A3FF8[] =
+    "\x2E\x0E\x00\x47\x45\x52\xAF\x53\x54\x45\x54\xFF";
+static char* D_psp_092A4008[] = {
+    D_psp_092A3FE0, D_psp_092A3FE8, D_psp_092A3FF8, D_psp_092A1B58};
+static char D_psp_092A4018[] = "\x30\x52\x4F\x4C\x4F\x47\xFF";
+static char D_psp_092A4020[] = "\x34\x41\x4E\x5A\x00\x44\x45\x52\x00\x29\x4C"
+                               "\x4C\x55\x53\x49\x4F\x4E\x45\x4E\xFF";
+static char D_psp_092A4038[] = "\x27\x45\x42\x45\x54\xFF";
+static char D_psp_092A4040[] =
+    "\x24\x52\x41\x43\x55\x4C\x41\x53\x00\x33\x43\x48\x4C\x4F\x53\x53\xFF";
+static char D_psp_092A4058[] =
+    "\x34\x41\x4E\x5A\x00\x44\x45\x53\x00\x27\x4F\x4C\x44\x45\x53\xFF";
+static char D_psp_092A4070[] =
+    "\x2D\x41\x52\x4D\x4F\x52\x47\x41\x4C\x45\x52\x49\x45\xFF";
+static char D_psp_092A4080[] = "\x2E\x45\x42\x45\x4C\x54\x55\x52\x4D\xFF";
+static char D_psp_092A4090[] = "\x28\x4F\x4C\x5A\x53\x43\x48\x4E\x49\x54\x5A"
+                               "\x45\x52\x50\x41\x52\x54\x49\x54\x55\x52\xFF";
+static char D_psp_092A40A8[] =
+    "\x34\x4F\x52\x00\x44\x45\x52\x00\x48\x45\x49\x4C\x49\x47\x45\x4E\x00\x27"
+    "\x45\x49\x53\x54\x45\x52\xFF";
+static char D_psp_092A40C8[] =
+    "\x26\x45\x53\x54\x00\x44\x45\x52\x00\x24\x49\x45\x4E\x45\x52\xFF";
+static char D_psp_092A40E0[] =
+    "\x2C\x41\x4E\x44\x00\x44\x45\x52\x00\x33\x45\x47\x4E\x55\x4E\x47\xFF";
+static char D_psp_092A40F8[] =
+    "\x32\x45\x51\x55\x49\x45\x4D\x00\x46\xAF\x52\x00\x44\x49\x45\x00\x27\xAB"
+    "\x54\x54\x45\x52\xFF";
+static char D_psp_092A4110[] =
+    "\x2B\x52\x49\x53\x54\x41\x4C\x4C\x54\x52\x9D\x4E\x45\xFF";
+static char D_psp_092A4120[] =
+    "\x36\x45\x52\x4C\x41\x53\x53\x45\x4E\x44\x45\x00\x27\x52\x55\x42\x45\xFF";
+static char D_psp_092A4138[] = "\x32\x45\x47\x45\x4E\x42\x4F\x47\x45\x4E\x46"
+                               "\x52\x49\x45\x44\x48\x4F\x46\xFF";
+static char D_psp_092A4150[] = "\x33\x54\x49\x4C\x4C\x45\xFF";
+static char D_psp_092A4158[] = "\x36\x45\x52\x4C\x4F\x52\x45\x4E\x45\x53\x00"
+                               "\x27\x45\x4D\x9D\x4C\x44\x45\xFF";
+static char D_psp_092A4170[] =
+    "\x34\x41\x4E\x5A\x00\x44\x45\x52\x00\x22\x4C\x41\x53\x53\x45\x4E\xFF";
+static char D_psp_092A4188[] =
+    "\x26\x4C\x55\x43\x48\x47\x45\x42\x49\x45\x54\xFF";
+static char D_psp_092A4198[] = "\x36\x45\x52\x5A\x41\x55\x42\x45\x52\x54\x45"
+                               "\x53\x00\x22\x41\x4E\x4B\x45\x54\x54\xFF";
+static char D_psp_092A41B0[] = "\x37\x41\x4E\x44\x45\x52\x4E\x44\x45\x00\x27"
+                               "\x45\x53\x50\x45\x4E\x53\x54\x45\x52\xFF";
+static char D_psp_092A41C8[] = "\x24\x45\x52\x00\x54\x52\x41\x47\x49\x53\x43"
+                               "\x48\x45\x00\x30\x52\x49\x4E\x5A\xFF";
+static char D_psp_092A41E0[] =
+    "\x34\xAF\x52\x00\x5A\x55\x4D\x00\x21\x42\x47\x52\x55\x4E\x44\xFF";
+static char D_psp_092A41F8[] = "\x28\x49\x4D\x4D\x4C\x49\x53\x43\x48\x45\x52"
+                               "\x00\x34\x4F\x52\x42\x4F\x47\x45\x4E\xFF";
+static char D_psp_092A4210[] =
+    "\x34\x4F\x44\x45\x53\x42\x41\x4C\x4C\x41\x44\x45\xFF";
+static char D_psp_092A4220[] =
+    "\x22\x4C\x55\x54\x56\x45\x52\x57\x41\x4E\x44\x53\x43\x48\x41\x46\x54\xFF";
+static char D_psp_092A4238[] =
+    "\x25\x4E\x44\x0D\x34\x4F\x43\x43\x41\x54\x41\xFF";
+static char D_psp_092A4248[] =
+    "\x33\x43\x48\x57\x41\x52\x5A\x45\x53\x00\x22\x41\x4E\x4B\x45\x54\x54\xFF";
+static char D_psp_092A4260[] =
+    "\x34\x52\x41\x55\x45\x52\x53\x45\x52\x45\x4E\x41\x44\x45\xFF";
+static char* D_psp_092A4270[] = {
+    D_psp_092A4018, D_psp_092A4020, D_psp_092A4038, D_psp_092A4040,
+    D_psp_092A4058, D_psp_092A4070, D_psp_092A4080, D_psp_092A1BE8,
+    D_psp_092A4090, D_psp_092A40A8, D_psp_092A40C8, D_psp_092A40E0,
+    D_psp_092A40F8, D_psp_092A4110, D_psp_092A4120, D_psp_092A4138,
+    D_psp_092A4150, D_psp_092A4158, D_psp_092A4170, D_psp_092A4188,
+    D_psp_092A4198, D_psp_092A41B0, D_psp_092A41C8, D_psp_092A41E0,
+    D_psp_092A41F8, D_psp_092A4210, D_psp_092A4220, D_psp_092A4238,
+    D_psp_092A4248, D_psp_092A4260};
+static char D_psp_092A42E8[] =
+    "\x33\x4C\x4F\x47\x52\x41\x00\x06\x00\x27\x41\x49\x42\x4F\x4E\xFF";
+static char D_psp_092A4300[] =
+    "\x24\x4F\x50\x50\x45\x4C\x47\x9D\x4E\x47\x45\x52\x11\x10\xFF";
+static char D_psp_092A4310[] = "\x2D\x49\x4E\x4F\x54\x41\x55\x52\x55\x53\x06"
+                               "\x37\x45\x52\x57\x4F\x4C\x46\xFF";
+static char D_psp_092A4328[] = "\x33\x55\x4B\x4B\x55\x42\x55\x53\xFF";
+static char D_psp_092A4338[] = "\x3A\x45\x52\x42\x45\x52\x55\x53\xFF";
+static char D_psp_092A4348[] = "\x24\x55\x4E\x4B\x45\x4C\x46\x4C\xAF\x47\x45"
+                               "\x4C\x0D\x26\x4C\x0E\x4D\x0E\xFF";
+static char D_psp_092A4360[] =
+    "\x24\x49\x45\x00\x2B\x52\x45\x41\x54\x55\x52\xFF";
+static char D_psp_092A4370[] = "\x34\x4F\x44\xFF";
+static char D_psp_092A4378[] =
+    "\x24\x4F\x50\x50\x45\x4C\x47\x9D\x4E\x47\x45\x52\x14\x10\xFF";
+static char D_psp_092A4388[] =
+    "\x37\x41\x48\x52\x45\x52\x00\x24\x52\x41\x43\x55\x4C\x41\xFF";
+static char* D_psp_092A4398[] = {
+    D_psp_092A1E38, D_psp_092A42E8, D_psp_092A4300, D_psp_092A1E68,
+    D_psp_092A1E78, D_psp_092A4310, D_psp_092A1E98, D_psp_092A4328,
+    D_psp_092A4338, D_psp_092A1EC8, D_psp_092A1ED0, D_psp_092A1EE0,
+    D_psp_092A1EF0, D_psp_092A4348, D_psp_092A1F18, D_psp_092A1F28,
+    D_psp_092A4360, D_psp_092A4370, D_psp_092A4378, D_psp_092A1F58,
+    D_psp_092A1F70, D_psp_092A1F80, D_psp_092A1F90, D_psp_092A4388};
+static char D_psp_092A43F8[] = "Einf. Karte v. Dracula Schloss";
+static char D_psp_092A4418[] = "Enthﾎlt ”Dunkle Verwandlung”";
+static char D_psp_092A4438[] = "Enthﾎlt ”Geisterruf”";
+static char D_psp_092A4450[] = "Enthﾎlt ”Hﾜllenfeuer”";
+static char D_psp_092A4468[] = "Enthﾎlt ”Tetra-Geist”";
+static char D_psp_092A4480[] = "Enthﾎlt ”Seelendieb”";
+static char D_psp_092A4498[] = "Enthﾎlt ”Wolfsansturm”";
+static char D_psp_092A44B8[] = "Enthﾎlt ”Flｨgelhieb”";
+static char D_psp_092A44D0[] = "Enthﾎlt ”Schwertbrｨder”";
+static char* D_psp_092A44F0[] = {
+    D_psp_092A43F8, D_psp_092A4418, D_psp_092A4438,
+    D_psp_092A4450, D_psp_092A4468, D_psp_092A4480,
+    D_psp_092A4498, D_psp_092A44B8, D_psp_092A44D0};
+static char D_psp_092A4518[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+
 extern char** D_psp_092A5F40;
 extern char** D_psp_092A5F48;
 extern char** D_psp_092A5F58;
