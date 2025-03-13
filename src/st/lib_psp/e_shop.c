@@ -1606,78 +1606,29 @@ static char D_psp_092A17C8[] = {0x2A, 0x45, 0x57, 0x45, 0x4C, 0x00, 0x4F, 0x46,
                                 0x00, 0x2F, 0x50, 0x45, 0x4E, 0xFF, 0x00};
 static char* D_psp_092A17D8[] = {D_psp_092A17C8};
 
-extern s32 D_8C630D0;
-extern s32 D_psp_08C630DC;
-extern s32 E_ID(ID_25);
-extern s32 E_ID(ID_27);
-extern s32 E_ID(ID_28);
-extern s32 E_ID(ID_29);
-extern s32 E_ID(ID_2A);
-extern s32 E_ID(ID_2D);
-extern s32 E_ID(ID_2E);
-extern s32 E_ID(ID_2F);
-extern s32 E_ID(ID_48);
-extern s32 E_ID(ID_4F);
-extern s16 D_psp_092A4A10[];
-extern u16 D_psp_092A4A78[];
-extern s16 D_psp_092A4A88[];
-extern u16 D_psp_092A4AA0[];
-extern s16 D_psp_092A49B8[];
-extern const char* D_psp_092A4CA8[];
-extern RECT D_psp_092A4D00;
-extern RECT D_psp_092A4D48;
-extern RECT D_psp_092A4BE8;
-extern RECT D_psp_092A4BD0;
-extern RECT D_psp_092A4AF0;
-extern u16 D_us_80181978[];
-extern u16 D_psp_092A4D08[];
-extern char D_psp_092A4CC8[];
-extern const char D_psp_092A4880[];
-extern u16 D_us_801814D4[];
-extern ShopItem D_us_801814D8[];
-extern u16 D_us_80181510[];
-extern u32 D_us_801D415C[];
-extern u32 D_us_801D425C[];
-extern ShopItem D_us_801D4364[];
-extern u8 D_us_801811FC[];
-extern u8 D_us_80181204[];
-extern u8 D_us_80181210[];
-extern u8 D_us_8018121C[];
-extern u8 D_us_80181234[];
-extern u8 D_us_80181244[];
-extern u8 D_us_801812C0[];
-extern u8 D_us_801812C8[];
-extern u8 D_us_801812D0[];
-extern u8* D_us_801812D8[];
-extern u8* D_psp_092A5D38;
-extern u16 D_psp_092A4BF0[11];
-extern const char* D_psp_092A4C18[];
-extern const char* D_psp_092A4C28[];
-extern char D_psp_092A4BD8[];
-extern ShopItem D_psp_092A4AF8[24];
-extern char D_psp_092A4BB8[];
-extern char D_psp_092A4BC8[];
-extern u8* D_psp_092A54E0;
-extern const char* D_us_80181340[];
-extern s32 D_8B42058;
+static char D_psp_092A17E0[] = {
+    0x23, 0x41, 0x53, 0x54, 0x4C, 0x45, 0x00, 0x2D, 0x41, 0x50, 0xFF, 0x00};
+static char D_psp_092A17F0[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x11, 0xFF, 0x00};
+static char D_psp_092A1800[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x12, 0xFF, 0x00};
+static char D_psp_092A1810[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x13, 0xFF, 0x00};
+static char D_psp_092A1820[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x14, 0xFF, 0x00};
+static char D_psp_092A1830[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x15, 0xFF, 0x00};
+static char D_psp_092A1840[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x16, 0xFF, 0x00};
+static char D_psp_092A1850[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x17, 0xFF, 0x00};
+static char D_psp_092A1860[] = {0x2D, 0x41, 0x47, 0x49, 0x43, 0x00, 0x33, 0x43,
+                                0x52, 0x4F, 0x4C, 0x4C, 0x00, 0x18, 0xFF, 0x00};
+static char* D_psp_092A1870[] = {
+    D_psp_092A17E0, D_psp_092A17F0, D_psp_092A1800,
+    D_psp_092A1810, D_psp_092A1820, D_psp_092A1830,
+    D_psp_092A1840, D_psp_092A1850, D_psp_092A1860};
 
-void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (D_8B42058) {
-    default:
-    case LANG_EN:
-        return en;
-    case LANG_FR:
-        return fr;
-    case LANG_SP:
-        return sp;
-    case LANG_GE:
-        return ge;
-    case LANG_IT:
-        return it;
-    }
-}
-
-extern char* D_psp_092A1870[];
 extern char* D_psp_092A1990[];
 extern char* D_psp_092A1A20[];
 extern char* D_psp_092A1A88[];
@@ -1771,6 +1722,77 @@ extern char** D_us_80181528;
 extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
+
+extern s32 D_8C630D0;
+extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_25);
+extern s32 E_ID(ID_27);
+extern s32 E_ID(ID_28);
+extern s32 E_ID(ID_29);
+extern s32 E_ID(ID_2A);
+extern s32 E_ID(ID_2D);
+extern s32 E_ID(ID_2E);
+extern s32 E_ID(ID_2F);
+extern s32 E_ID(ID_48);
+extern s32 E_ID(ID_4F);
+extern s16 D_psp_092A4A10[];
+extern u16 D_psp_092A4A78[];
+extern s16 D_psp_092A4A88[];
+extern u16 D_psp_092A4AA0[];
+extern s16 D_psp_092A49B8[];
+extern const char* D_psp_092A4CA8[];
+extern RECT D_psp_092A4D00;
+extern RECT D_psp_092A4D48;
+extern RECT D_psp_092A4BE8;
+extern RECT D_psp_092A4BD0;
+extern RECT D_psp_092A4AF0;
+extern u16 D_us_80181978[];
+extern u16 D_psp_092A4D08[];
+extern char D_psp_092A4CC8[];
+extern const char D_psp_092A4880[];
+extern u16 D_us_801814D4[];
+extern ShopItem D_us_801814D8[];
+extern u16 D_us_80181510[];
+extern u32 D_us_801D415C[];
+extern u32 D_us_801D425C[];
+extern ShopItem D_us_801D4364[];
+extern u8 D_us_801811FC[];
+extern u8 D_us_80181204[];
+extern u8 D_us_80181210[];
+extern u8 D_us_8018121C[];
+extern u8 D_us_80181234[];
+extern u8 D_us_80181244[];
+extern u8 D_us_801812C0[];
+extern u8 D_us_801812C8[];
+extern u8 D_us_801812D0[];
+extern u8* D_us_801812D8[];
+extern u8* D_psp_092A5D38;
+extern u16 D_psp_092A4BF0[11];
+extern const char* D_psp_092A4C18[];
+extern const char* D_psp_092A4C28[];
+extern char D_psp_092A4BD8[];
+extern ShopItem D_psp_092A4AF8[24];
+extern char D_psp_092A4BB8[];
+extern char D_psp_092A4BC8[];
+extern u8* D_psp_092A54E0;
+extern const char* D_us_80181340[];
+extern s32 D_8B42058;
+
+void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
+    switch (D_8B42058) {
+    default:
+    case LANG_EN:
+        return en;
+    case LANG_FR:
+        return fr;
+    case LANG_SP:
+        return sp;
+    case LANG_GE:
+        return ge;
+    case LANG_IT:
+        return it;
+    }
+}
 
 void func_psp_0925D4D0(void) {
     D_us_80181528 =
