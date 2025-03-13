@@ -1,11 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
+/// An inventory item consists of a category, which affects
+/// how the other fields are interpretted, an "unlock level",
+/// which is related to the number of things which have been
+/// accomplished in the castle (beating the game unlocks all),
+/// an item ID which corresponds to known item IDs, except for
+/// Jewel of Open, and the final item, which doesn't follow
+/// the pattern and doesn't appear in the shop
+typedef struct {
+    /* 0x0 */ u8 category;
+    /* 0x1 */ u8 unlockLevel;
+    /* 0x2 */ u16 itemId;
+    /* 0x4 */ u32 price;
+} InventoryItem;
+
 typedef struct {
     /* 0x0 */ u16 category;
     /* 0x2 */ u16 itemId;
     /* 0x4 */ u32 price;
 } ShopItem;
+
+/// "documents" in the shop have their own
+/// item index, separate from other items.
+typedef enum {
+    DOC_CASTLE_MAP,
+    DOC_MAGIC_SCROLL_1,
+    DOC_MAGIC_SCROLL_2,
+    DOC_MAGIC_SCROLL_3,
+    DOC_MAGIC_SCROLL_4,
+    DOC_MAGIC_SCROLL_5,
+    DOC_MAGIC_SCROLL_6,
+    DOC_MAGIC_SCROLL_7,
+    DOC_MAGIC_SCROLL_8,
+} SHOP_DOCUMENTS;
 
 /// the first 5 inventory categories are the same as
 /// `EquipKind`. `EQUIP_RELIC` and `EQUIP_DOCUMENT` are
@@ -2391,6 +2419,96 @@ static char* D_psp_092A44F0[] = {
 static char D_psp_092A4518[] = {
     CIRCLE, SQUARE, CIRCLE, SQUARE, CH('G'), CH('O'), CH('L'), CH('D')};
 
+static u8 D_us_801811FC[] = {6, 3, 16, 4, -1, 0};
+static u8 D_us_80181204[] = {10, 5, 10, 4, 10, 5, 1, 4, -1, 0};
+static u8 D_us_80181210[] = {12, 14, 10, 15, 8, 16, 4, 17, -1, 0};
+static u8 D_us_8018121C[] = {4,  16, 53, 19, 7,  18, 7,  19, 7,  18, 7,
+                             19, 7,  18, 3,  19, 6,  16, 4,  17, -1, 0};
+static u8 D_us_80181234[] = {7, 16, 6, 19, 6, 20, 7, 21, 8, 22, 4, 23, -1, 0};
+static u8 D_us_80181244[] = {
+    4,  22, 29, 21, 4,  20, 4, 19, 3,  16, 52, 17, 6,  16,
+    10, 15, 7,  14, 10, 4,  9, 3,  52, 2,  11, 10, 7,  11,
+    8,  12, 36, 13, 6,  12, 7, 11, 7,  10, 4,  2,  -1, 0};
+static u8 D_us_80181270[] = {4, 22, 29, 21, 4, 20, 4, 19, 3, 16, 4, 17, -1, 0};
+static u8 D_us_80181280[] = {6, 16, 10, 15, 7, 14, 10, 4, 9, 3, 4, 2, -1, 0};
+static u8 D_us_80181290[] = {11, 10, 7, 11, 8, 12, 4, 13, -1, 0};
+static u8 D_us_8018129C[] = {6, 12, 7, 11, 7, 10, 4, 2, -1, 0};
+static u8 D_us_801812A8[] = {11, 2, 10, 6, 7, 7, 7, 8, 49, 9, 0, 0};
+static u8 D_us_801812B4[] = {3, 8, 7, 7, 7, 6, 4, 2, 0, 0};
+static u8 D_us_801812C0[] = {32, 4, 8, 3, 4, 2, -1, 0};
+static u8 D_us_801812C8[] = {8, 2, 8, 24, 0, 0};
+static u8 D_us_801812D0[] = {4, 41, 4, 42, -1, 0};
+static u8* D_us_801812D8[] = {
+    D_us_801811FC, D_us_80181204, D_us_80181210, D_us_8018121C, D_us_80181234,
+    D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
+    D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
+
+static char D_psp_092A4650[] = {4, 0, 5, 1, 4};
+static char D_psp_092A4658[] = {5, 0, 5, 1, 2, 4};
+static char D_psp_092A4660[] = {6, 0, 5, 1, 2, 3, 4};
+static char D_psp_092A4668[] = {6, 0, 5, 1, 2, 6, 4};
+static char* D_us_80181340[] = {D_psp_092A4650, D_psp_092A4658, D_psp_092A4660, D_psp_092A4668};
+
+static InventoryItem D_psp_092A4680[] = {
+    // clang-format off
+    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
+    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
+    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
+    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
+    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
+    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
+    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
+    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
+    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
+    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
+    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
+    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
+    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
+    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
+    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
+    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
+    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
+    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
+    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
+    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
+    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
+    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
+    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
+    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
+    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
+    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
+    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
+    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
+    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
+    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
+    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
+    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
+    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
+    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
+    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
+    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
+    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
+    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
+    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
+    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
+    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
+    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
+    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      105 },
+    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
+    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
+    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
+    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
+    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
+    { INVENTORY_DOCUMENT,  0x86, DOC_MAGIC_SCROLL_6,  4000 },
+    { INVENTORY_DOCUMENT,  0x87, DOC_MAGIC_SCROLL_7,  2000 },
+    { INVENTORY_DOCUMENT,  0x88, DOC_MAGIC_SCROLL_8,  6000 },
+    { INVENTORY_DOCUMENT,  0,    0x000A, 1000000 },
+    // clang-format on
+};
+
+/// relic index
+u16 D_us_801814D4[] = {16, 0};
+
 extern char** D_psp_092A5F40;
 extern char** D_psp_092A5F48;
 extern char** D_psp_092A5F58;
@@ -2443,16 +2561,6 @@ extern u16 D_us_80181510[];
 extern u32 D_us_801D415C[];
 extern u32 D_us_801D425C[];
 extern ShopItem D_us_801D4364[];
-extern u8 D_us_801811FC[];
-extern u8 D_us_80181204[];
-extern u8 D_us_80181210[];
-extern u8 D_us_8018121C[];
-extern u8 D_us_80181234[];
-extern u8 D_us_80181244[];
-extern u8 D_us_801812C0[];
-extern u8 D_us_801812C8[];
-extern u8 D_us_801812D0[];
-extern u8* D_us_801812D8[];
 extern u8* D_psp_092A5D38;
 extern u16 D_psp_092A4BF0[11];
 extern const char* D_psp_092A4C18[];
@@ -2462,7 +2570,6 @@ extern ShopItem D_psp_092A4AF8[24];
 extern char D_psp_092A4BB8[];
 extern char D_psp_092A4BC8[];
 extern u8* D_psp_092A54E0;
-extern const char* D_us_80181340[];
 extern s32 D_8B42058;
 
 void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
@@ -3100,7 +3207,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    const char* ptr;
+    char* ptr;
     s16 pad;
 
     switch (self->step) {
