@@ -959,6 +959,620 @@ static char* D_psp_0929DBD0[] = {
     "",
     "Padre di Alucard．"};
 
+static char D_psp_0929DE20[] = "Eliminﾑ par Richter ";
+static char D_psp_0929DE38[] = "Revit grﾍce ﾋ ses os";
+static char D_psp_0929DE50[] = "Crﾍne indestructible tournant";
+static char D_psp_0929DE70[] = "Cadavre frais.";
+static char D_psp_0929DE80[] = "Chauve-souris vampires.";
+static char D_psp_0929DE98[] = "Loups qui gardent l’entrﾑe";
+static char D_psp_0929DEB8[] = "Squelette contrﾛlﾑ par";
+static char D_psp_0929DED0[] = "\"Crﾑature\" lﾑgendaire.";
+static char D_psp_0929DEE8[] = "Squelette ﾋ quatre jambes.";
+static char D_psp_0929DF08[] = "Fﾑroce spadassin squelette.";
+static char D_psp_0929DF28[] = "Triton cracheur de boules de";
+static char D_psp_0929DF48[] = "Chevalier de bas niveau";
+static char D_psp_0929DF60[] = "Squelette lanﾏant des os.";
+static char D_psp_0929DF80[] = "Soldats de l’Eglise d’Orient";
+static char D_psp_0929DFA0[] = "Plante dotﾑe de feuilles";
+static char D_psp_0929DFC0[] = "Table ouija possﾑdﾑe.";
+static char D_psp_0929DFD8[] = "Squelette maniant";
+static char D_psp_0929DFF0[] = "Dﾑmon volant cracheur de feu.";
+static char D_psp_0929E010[] = "Fantﾛmes enflammﾑs";
+static char D_psp_0929E028[] = "Dﾑmon muni d’une lance";
+static char D_psp_0929E040[] = "Poupﾑe dﾑmoniaque venue";
+static char D_psp_0929E058[] = "Bﾒte repoussante ﾋ deux tﾒtes.";
+static char D_psp_0929E078[] = "Des cheveux de la Mﾑduse.";
+static char D_psp_0929E098[] = "Crﾑature ﾑtrange ﾋ forme";
+static char D_psp_0929E0B8[] = "Squelettes ﾑquipﾑs";
+static char D_psp_0929E0D0[] = "Novice dans le combat";
+static char D_psp_0929E0E8[] = "Chevalier avec une lourde";
+static char D_psp_0929E108[] = "Plante mutante.";
+static char D_psp_0929E118[] = "Dﾑmon du feu et de la glace.";
+static char D_psp_0929E138[] = "Archer squelette ﾑquipﾑ";
+static char D_psp_0929E150[] = "Guerrier avec une armure";
+static char D_psp_0929E170[] = "Serpent rattachﾑ ﾋ Scylla.";
+static char D_psp_0929E190[] = "Singe squelette animﾑ.";
+static char D_psp_0929E1A8[] = "Dﾑmon capable de changer";
+static char D_psp_0929E1C8[] = "Tﾒte de soldat exﾑcutﾑ.";
+static char D_psp_0929E1E0[] = "Guerrier squelette volant";
+static char D_psp_0929E200[] = "Livre de sortilﾐges";
+static char D_psp_0929E218[] = "Hibou de la basse-cour locale";
+static char D_psp_0929E238[] = "Pilier construit ﾋ partir d’un";
+static char D_psp_0929E258[] = "Chevalier armﾑ d’une";
+static char D_psp_0929E270[] = "Manifestation phys. d’une ﾍme";
+static char D_psp_0929E290[] = "Crapaud devenu gﾑant suite";
+static char D_psp_0929E2B0[] = "Guerrier mort-vivant ﾑquipﾑ";
+static char D_psp_0929E2D0[] = "Garde avec une armure. Fort";
+static char D_psp_0929E2F0[] = "Squelette sans tﾒte.";
+static char D_psp_0929E308[] = "Grenouille vivant dans";
+static char D_psp_0929E320[] = "Esprit fﾑminin maniant";
+static char D_psp_0929E338[] = "Esprit d’un crﾍne gﾑant.";
+static char D_psp_0929E358[] = "Livre sur les armes anciennes.";
+static char D_psp_0929E378[] = "Squelette ﾑquipﾑ d’un flﾑau";
+static char D_psp_0929E398[] = "Homme-puce chevauchant une";
+static char D_psp_0929E3B8[] = "Corbeau dﾑvorant la chair.";
+static char D_psp_0929E3D8[] = "Esprit d’un Corbeau bleu";
+static char D_psp_0929E3F8[] = "Epﾑe dﾑmon malﾑfique.";
+static char D_psp_0929E410[] = "Monstre des mers";
+static char D_psp_0929E428[] = "Seigneur maniant une ﾑpﾑe";
+static char D_psp_0929E448[] = "Chevalier lourdement protﾑgﾑ.";
+static char D_psp_0929E468[] = "Esprit de chasseuse invisible.";
+static char D_psp_0929E488[] = "Golem de boue animﾑ.";
+static char D_psp_0929E4A0[] = "Homme-puce armﾑ d’une hache";
+static char D_psp_0929E4C0[] = "Monstre gluant.";
+static char D_psp_0929E4D0[] = "Squelette gﾑant.";
+static char D_psp_0929E4E8[] = "Mi-cheval， mi-lion";
+static char D_psp_0929E500[] = "Maﾖtre du combat ﾋ";
+static char D_psp_0929E518[] = "Squelette de panthﾐre-garou.";
+static char D_psp_0929E538[] = "Mi-homme, mi-loup.";
+static char D_psp_0929E550[] = "Gardien des tombes.";
+static char D_psp_0929E568[] = "Crﾑature avec une tﾒte de";
+static char D_psp_0929E588[] = "Mi-homme, mi-taureau.";
+static char D_psp_0929E5A0[] = "Gremlin pyromane.";
+static char D_psp_0929E5B8[] = "Chev. zombie assoiffﾑ de sang";
+static char D_psp_0929E5D8[] = "Relique d’un crﾍne transportﾑe";
+static char D_psp_0929E5F8[] = "Sorciﾐres fantﾛmes de Salem.";
+static char D_psp_0929E618[] = "Fouille parmi les tombes et a";
+static char D_psp_0929E638[] = "Gardien formﾑ de tﾒtes";
+static char D_psp_0929E650[] = "Mystﾑrieux spadassin";
+static char D_psp_0929E668[] = "Petit dﾑmon maniant la magie.";
+static char D_psp_0929E688[] = "Frﾐre gﾑant.";
+static char D_psp_0929E698[] = "Frﾐre gﾑant. Utilise un";
+static char D_psp_0929E6B0[] = "L’aﾖnﾑ des Frﾐres gﾑants.";
+static char D_psp_0929E6D0[] = "Monstre formﾑ d’une substance";
+static char D_psp_0929E6F0[] = "Chevalier avec une armure.";
+static char D_psp_0929E710[] = "Seigneur malﾑfique";
+static char D_psp_0929E728[] = "Dﾑmon contrﾛlant la foudre.";
+static char D_psp_0929E748[] = "Chien de garde des Enfers";
+static char D_psp_0929E768[] = "Arrosﾑe avec du sang humain.";
+static char D_psp_0929E788[] = "Vampire maﾖtrisant la magie.";
+static char D_psp_0929E7A8[] = "Maﾖtre Tﾒte de poisson.";
+static char D_psp_0929E7C0[] = "Pierres tombales possﾑdﾑes pa";
+static char D_psp_0929E7E0[] = "Dﾑmon fﾑminin. S’immisce";
+static char D_psp_0929E800[] = "Homme empalﾑ ﾋ la recherche";
+static char D_psp_0929E820[] = "Lion peureux.";
+static char D_psp_0929E830[] = "Monstre surnommﾑ \"Schmoo\".";
+static char D_psp_0929E850[] = "Homme de fer sans cｪur.";
+static char D_psp_0929E868[] = "Crﾑature cauchemardesque.";
+static char D_psp_0929E888[] = "Squelette poursuivant";
+static char D_psp_0929E8A0[] = "Renferme un nombre infini";
+static char D_psp_0929E8C0[] = "Chevalier avec une armure";
+static char D_psp_0929E8E0[] = "Zombies continuant d’attaquer,";
+static char D_psp_0929E900[] = "Expert dans le lancer d’armes.";
+static char D_psp_0929E920[] = "Insecte mutant. Seuls les";
+static char D_psp_0929E940[] = "Archer diaboliquement prﾑcis.";
+static char D_psp_0929E960[] = "Lycanthrope capable de";
+static char D_psp_0929E978[] = "Wyrm contrﾛlﾑ par";
+static char D_psp_0929E990[] = "Manie une arme tirant";
+static char D_psp_0929E9A8[] = "Crﾑature liquide. Prend la";
+static char D_psp_0929E9C8[] = "Squelette animﾑ d’un";
+static char D_psp_0929E9E0[] = "Dragon blanc chevauchﾑ par";
+static char D_psp_0929EA00[] = "Monstre ﾋ tﾒte de taureau.";
+static char D_psp_0929EA20[] = "Enorme chauve-souris";
+static char D_psp_0929EA38[] = "Ange archer.";
+static char D_psp_0929EA48[] = "Loup crachant des boules";
+static char D_psp_0929EA68[] = "Squelette effectuant";
+static char D_psp_0929EA80[] = "Squelette chevauchant";
+static char D_psp_0929EA98[] = "Pieuvre mutante et malﾑfique.";
+static char D_psp_0929EAB8[] = "Bﾒte de combat protﾑgﾑe";
+static char D_psp_0929EAD0[] = "Homo Sapiens suﾏant le sang";
+static char D_psp_0929EAF0[] = "Dﾑmon enflammﾑ.";
+static char D_psp_0929EB00[] = "Dﾑmon terrifiant venu";
+static char D_psp_0929EB18[] = "Formﾑe des corps de puissants";
+static char D_psp_0929EB38[] = "Herbe de Vﾑnus dﾑveloppﾑe.";
+static char D_psp_0929EB58[] = "Ancienne momie ﾑgyptienne.";
+static char D_psp_0929EB78[] = "Femme-dﾑmon aux cheveux de";
+static char D_psp_0929EB98[] = "Petit dﾑmon espiﾐgle.";
+static char D_psp_0929EBB0[] = "Zombie prenant l’apparence";
+static char D_psp_0929EBD0[] = "Seigneur des mouches.";
+static char D_psp_0929EBE8[] = "Jeune sorciﾐre.";
+static char D_psp_0929EBF8[] = "Bourreau des Enfers.";
+static char D_psp_0929EC10[] = "Esprit de la glace travesti.";
+static char D_psp_0929EC30[] = "Chasseuse de vamp. Utilise 4";
+static char D_psp_0929EC50[] = "Maﾖtre chasseur de vampires.";
+static char D_psp_0929EC70[] = "Oiseau rare. S’enfuit";
+static char D_psp_0929EC88[] = "Etre magique voulant rﾑgner";
+static char D_psp_0929ECA8[] = "Puissant Seigneur ﾋ armure.";
+static char D_psp_0929ECC8[] = "Confidente de Dracula.";
+static char D_psp_0929ECE0[] = "Prﾒtre malﾑfique de Dracula.";
+static char D_psp_0929ED00[] = "Seigneur de Valachie.";
+static char* D_psp_0929ED18[] = {
+    D_psp_0929DE20, D_psp_0929DE38, D_psp_0929DE50, D_psp_0929DE70,
+    D_psp_0929DE80, D_psp_0929DE98, D_psp_0929DEB8, D_psp_0929DED0,
+    D_psp_0929DEE8, D_psp_0929DF08, D_psp_0929DF28, D_psp_0929DF48,
+    D_psp_0929DF60, D_psp_0929DF80, D_psp_0929DFA0, D_psp_0929DFC0,
+    D_psp_0929DFD8, D_psp_0929DFF0, D_psp_0929E010, D_psp_0929E028,
+    D_psp_0929E040, D_psp_0929E058, D_psp_0929E078, D_psp_0929E098,
+    D_psp_0929E0B8, D_psp_0929E0D0, D_psp_0929E0E8, D_psp_0929E078,
+    D_psp_0929E108, D_psp_0929E0E8, D_psp_0929E118, D_psp_0929E138,
+    D_psp_0929E150, D_psp_0929E170, D_psp_0929E190, D_psp_0929E1A8,
+    D_psp_0929E1C8, D_psp_0929E1E0, D_psp_0929E200, D_psp_0929E218,
+    D_psp_0929E238, D_psp_0929E258, D_psp_0929E270, D_psp_0929E290,
+    D_psp_0929E2B0, D_psp_0929E2D0, D_psp_0929E2F0, D_psp_0929E308,
+    D_psp_0929E320, D_psp_0929E338, D_psp_0929E358, D_psp_0929E378,
+    D_psp_0929E398, D_psp_0929E3B8, D_psp_0929E3D8, D_psp_0929E3F8,
+    D_psp_0929DFA0, D_psp_0929E410, D_psp_0929DFD8, D_psp_0929E428,
+    D_psp_0929E448, D_psp_0929E468, D_psp_0929E488, D_psp_0929E3F8,
+    D_psp_0929E4A0, D_psp_0929E4C0, D_psp_0929E4D0, D_psp_0929E4E8,
+    D_psp_0929E500, D_psp_0929E518, D_psp_0929E538, D_psp_0929E550,
+    D_psp_0929E568, D_psp_0929E588, D_psp_0929E5A0, D_psp_0929E5B8,
+    D_psp_0929E5D8, D_psp_0929E5F8, D_psp_0929E618, D_psp_0929E638,
+    D_psp_0929E650, D_psp_0929E668, D_psp_0929E688, D_psp_0929E698,
+    D_psp_0929E6B0, D_psp_0929E6D0, D_psp_0929E6F0, D_psp_0929E710,
+    D_psp_0929E728, D_psp_0929E748, D_psp_0929E768, D_psp_0929E788,
+    D_psp_0929E7A8, D_psp_0929E7C0, D_psp_0929E7E0, D_psp_0929E800,
+    D_psp_0929E820, D_psp_0929E830, D_psp_0929E850, D_psp_0929E868,
+    D_psp_0929E888, D_psp_0929E8A0, D_psp_0929E8C0, D_psp_0929E8E0,
+    D_psp_0929E900, D_psp_0929E920, D_psp_0929E940, D_psp_0929E960,
+    D_psp_0929E978, D_psp_0929E990, D_psp_0929E9A8, D_psp_0929E9C8,
+    D_psp_0929E9E0, D_psp_0929EA00, D_psp_0929EA20, D_psp_0929EA38,
+    D_psp_0929EA48, D_psp_0929E3F8, D_psp_0929E6F0, D_psp_0929EA68,
+    D_psp_0929EA80, D_psp_0929EA98, D_psp_0929EAB8, D_psp_0929EAD0,
+    D_psp_0929EAF0, D_psp_0929EB00, D_psp_0929E1A8, D_psp_0929EB18,
+    D_psp_0929EB38, D_psp_0929EB58, D_psp_0929EB78, D_psp_0929EB98,
+    D_psp_0929EBB0, D_psp_0929EBB0, D_psp_0929EBB0, D_psp_0929EBD0,
+    D_psp_0929EBE8, D_psp_0929EBF8, D_psp_0929EC10, D_psp_0929EC30,
+    D_psp_0929EC50, D_psp_0929EC70, D_psp_0929EC88, D_psp_0929ECA8,
+    D_psp_0929ECC8, D_psp_0929ECE0, D_psp_0929ED00};
+static char D_psp_0929EF68[] = "en １７９２．（５ ans plus tﾛt）";
+static char D_psp_0929EF90[] = "couverts de sang.";
+static char D_psp_0929EFA8[] = "sur lui-mﾒme.";
+static char D_psp_0929EFB8[] = "Contrﾛlﾑ par la magie.";
+static char D_psp_0929EFD0[] = "Redoutﾑs serviteurs du diable.";
+static char D_psp_0929EFF0[] = "du chﾍteau.";
+static char D_psp_0929F000[] = "la magie.";
+static char D_psp_0929F010[] = "Attaque tous les intrus.";
+static char D_psp_0929F030[] = "Dﾑgouline de poison.";
+static char D_psp_0929F048[] = "feu. Le + grand de son espﾐce.";
+static char D_psp_0929F068[] = "ﾑquipﾑ d’une hache.";
+static char D_psp_0929F080[] = "envoyﾑs il y a ３００ ans.";
+static char D_psp_0929F0A0[] = "coupantes comme un rasoir.";
+static char D_psp_0929F0C0[] = "un boomerang.";
+static char D_psp_0929F0D0[] = "de bas niveau.";
+static char D_psp_0929F0E0[] = "magique.";
+static char D_psp_0929F0F0[] = "des Enfers.";
+static char D_psp_0929F100[] = "Mais laquelle est la tﾒte ?";
+static char D_psp_0929F120[] = "humaine. Saute comme une puce.";
+static char D_psp_0929F140[] = "de fusils.";
+static char D_psp_0929F150[] = "ﾋ deux ﾑpﾑes.";
+static char D_psp_0929F160[] = "armure et une boule de fer.";
+static char D_psp_0929F180[] = "Peut pﾑtrifier.";
+static char D_psp_0929F190[] = "Ses graines pﾑtrifient.";
+static char D_psp_0929F1A8[] = "armure et une hache.";
+static char D_psp_0929F1C0[] = "Semble rﾑticent ﾋ combattre.";
+static char D_psp_0929F1E0[] = "d’un arc.";
+static char D_psp_0929F1F0[] = "et une naginata.";
+static char D_psp_0929F208[] = "Lance des tonneaux en bois.";
+static char D_psp_0929F228[] = "d'apparence.";
+static char D_psp_0929F238[] = "A soif de vengeance.";
+static char D_psp_0929F250[] = "lentement.";
+static char D_psp_0929F260[] = "pour novices.";
+static char D_psp_0929F270[] = "devenu mutant avec le chﾍteau.";
+static char D_psp_0929F290[] = "crﾍne de dragon blanchi.";
+static char D_psp_0929F2B0[] = "Grande ﾑpﾑe.";
+static char D_psp_0929F2C0[] = "tourmentﾑe errant sans corps.";
+static char D_psp_0929F2E0[] = "ﾋ un rite malﾑfique.";
+static char D_psp_0929F2F8[] = "d’une lourde armure.";
+static char D_psp_0929F310[] = "dans les zones pﾑrilleuses.";
+static char D_psp_0929F330[] = "Manie une rapiﾐre.";
+static char D_psp_0929F348[] = "les grottes.";
+static char D_psp_0929F358[] = "la glace.";
+static char D_psp_0929F368[] = "en fer avec des piques.";
+static char D_psp_0929F380[] = "oie spﾑcialement entraﾖnﾑe.";
+static char D_psp_0929F3A0[] = "mort depuis longtemps.";
+static char D_psp_0929F3B8[] = "mythologique.";
+static char D_psp_0929F3C8[] = "une naginata.";
+static char D_psp_0929F3D8[] = "mﾒme aprﾐs avoir ﾑtﾑ banni.";
+static char D_psp_0929F3F8[] = "Attaque avec un hibou domptﾑ.";
+static char D_psp_0929F418[] = "et d’un bouclier.";
+static char D_psp_0929F430[] = "et mi-aigle.";
+static char D_psp_0929F440[] = "deux ﾑpﾑes.";
+static char D_psp_0929F450[] = "Maﾖtre du combat sans armes.";
+static char D_psp_0929F470[] = "femme et un corps d’oiseau.";
+static char D_psp_0929F490[] = "et condamnﾑ au combat ﾑternel.";
+static char D_psp_0929F4B0[] = "par des prﾒtres squelettes.";
+static char D_psp_0929F4D0[] = "d’inestimables connaissances.";
+static char D_psp_0929F4F0[] = "de poisson.";
+static char D_psp_0929F500[] = "portant une cape.";
+static char D_psp_0929F518[] = "Invoque des alliﾑs malﾑfiques.";
+static char D_psp_0929F538[] = "Manie un couteau gurkha.";
+static char D_psp_0929F558[] = "ﾑnorme marteau en acier.";
+static char D_psp_0929F578[] = "Manie deux grandes dagues.";
+static char D_psp_0929F598[] = "gluante.";
+static char D_psp_0929F5A8[] = "Manie un disque.";
+static char D_psp_0929F5C0[] = "des corbeaux.";
+static char D_psp_0929F5D0[] = "Appelﾑ \"Musicien des Enfers\".";
+static char D_psp_0929F5F0[] = "Rﾐgne sur le haut du chﾍteau.";
+static char D_psp_0929F610[] = "r l’esprit malﾑfique des morts.";
+static char D_psp_0929F638[] = "dans les rﾒves des hommes.";
+static char D_psp_0929F658[] = "de cerveaux.";
+static char D_psp_0929F668[] = "Forme un ensemble.";
+static char D_psp_0929F680[] = "ﾑternellement son crﾍne.";
+static char D_psp_0929F6A0[] = "de graines empoisonnﾑes.";
+static char D_psp_0929F6C0[] = "lanﾏant des bombes.";
+static char D_psp_0929F6D8[] = "mﾒme une fois coupﾑs en deux.";
+static char D_psp_0929F6F8[] = "magiciens peuvent le voir.";
+static char D_psp_0929F718[] = "changer de forme.";
+static char D_psp_0929F730[] = "un Homme-puce.";
+static char D_psp_0929F740[] = "de redoutables rayons.";
+static char D_psp_0929F758[] = "forme d’une panthﾐre noire.";
+static char D_psp_0929F778[] = "ﾑnorme dragon.";
+static char D_psp_0929F788[] = "vampire.";
+static char D_psp_0929F798[] = "A occis Amalaric des Goths.";
+static char D_psp_0929F7B8[] = "de feu.";
+static char D_psp_0929F7C0[] = "Lance des pierres.";
+static char D_psp_0929F7D8[] = "un saut d’attaque.";
+static char D_psp_0929F7F0[] = "un ouargue.";
+static char D_psp_0929F800[] = "par une armure.";
+static char D_psp_0929F810[] = "grﾍce ﾋ sa grande langue.";
+static char D_psp_0929F830[] = "de forme.";
+static char D_psp_0929F840[] = "guerriers.";
+static char D_psp_0929F850[] = "Nourrie avec du sang de dﾑmon.";
+static char D_psp_0929F870[] = "serpents et au regard pﾑtrif.";
+static char D_psp_0929F890[] = "de Grant.";
+static char D_psp_0929F8A0[] = "de Trevor.";
+static char D_psp_0929F8B0[] = "de Sypha.";
+static char D_psp_0929F8C0[] = "Serviteur de Galamoth.";
+static char D_psp_0929F8D8[] = "bﾒtes lﾑgend. Recher. Richter.";
+static char D_psp_0929F8F8[] = "quand il voit quelqu’un.";
+static char D_psp_0929F918[] = "sur le monde des tﾑnﾐbres.";
+static char D_psp_0929F938[] = "Pﾐre d’Alucard.";
+static char* D_psp_0929F950[] = {
+    D_psp_0929EF68, D_psp_0929EF90, D_psp_0929EFA8, D_psp_0929EFB8,
+    D_psp_0929EFD0, D_psp_0929EFF0, D_psp_0929F000, D_psp_0929F010,
+    D_psp_0929F030, "", D_psp_0929F048, D_psp_0929F068,
+    "", D_psp_0929F080, D_psp_0929F0A0, "",
+    D_psp_0929F0C0, "", D_psp_0929F0D0, D_psp_0929F0E0,
+    D_psp_0929F0F0, D_psp_0929F100, "", D_psp_0929F120,
+    D_psp_0929F140, D_psp_0929F150, D_psp_0929F160, D_psp_0929F180,
+    D_psp_0929F190, D_psp_0929F1A8, D_psp_0929F1C0, D_psp_0929F1E0,
+    D_psp_0929F1F0, "", D_psp_0929F208, D_psp_0929F228,
+    D_psp_0929F238, D_psp_0929F250, D_psp_0929F260, D_psp_0929F270,
+    D_psp_0929F290, D_psp_0929F2B0, D_psp_0929F2C0, D_psp_0929F2E0,
+    D_psp_0929F2F8, D_psp_0929F310, D_psp_0929F330, D_psp_0929F348,
+    D_psp_0929F358, "", "", D_psp_0929F368,
+    D_psp_0929F380, "", D_psp_0929F3A0, "",
+    D_psp_0929F0A0, D_psp_0929F3B8, D_psp_0929F3C8, D_psp_0929F3D8,
+    D_psp_0929F3F8, "", "", "",
+    D_psp_0929F418, "", "", D_psp_0929F430,
+    D_psp_0929F440, "", "", D_psp_0929F450,
+    D_psp_0929F470, "", "", D_psp_0929F490,
+    D_psp_0929F4B0, "", D_psp_0929F4D0, D_psp_0929F4F0,
+    D_psp_0929F500, D_psp_0929F518, D_psp_0929F538, D_psp_0929F558,
+    D_psp_0929F578, D_psp_0929F598, D_psp_0929F5A8, D_psp_0929F5C0,
+    D_psp_0929F5D0, "", "", D_psp_0929F5F0,
+    "", D_psp_0929F610, D_psp_0929F638, D_psp_0929F658,
+    "", "", "", D_psp_0929F668,
+    D_psp_0929F680, D_psp_0929F6A0, D_psp_0929F6C0, D_psp_0929F6D8,
+    "", D_psp_0929F6F8, "", D_psp_0929F718,
+    D_psp_0929F730, D_psp_0929F740, D_psp_0929F758, D_psp_0929F778,
+    D_psp_0929F730, "", D_psp_0929F788, D_psp_0929F798,
+    D_psp_0929F7B8, "", D_psp_0929F7C0, D_psp_0929F7D8,
+    D_psp_0929F7F0, "", D_psp_0929F800, D_psp_0929F810,
+    "", D_psp_0929F0F0, D_psp_0929F830, D_psp_0929F840,
+    D_psp_0929F850, "", D_psp_0929F870, "",
+    D_psp_0929F890, D_psp_0929F8A0, D_psp_0929F8B0, "",
+    "", "", D_psp_0929F8C0, D_psp_0929F8D8,
+    "", D_psp_0929F8F8, D_psp_0929F918, "",
+    "", "", D_psp_0929F938};
+static char D_psp_0929FBA0[] = "Von Richter vernichtet";
+static char D_psp_0929FBB8[] = "Wiedererweckt mit blut-";
+static char D_psp_0929FBD0[] = "Unzerstﾜrbarer Wirbelschﾎdel.";
+static char D_psp_0929FBF0[] = "Frische Leichen.";
+static char D_psp_0929FC08[] = "Vampirfledermﾎuse.";
+static char D_psp_0929FC20[] = "Wﾜlfe, die den Zugang zum";
+static char D_psp_0929FC40[] = "Magisch beseeltes Skelett.";
+static char D_psp_0929FC60[] = "Legendﾎres Wesen.";
+static char D_psp_0929FC78[] = "Vierbeiniges Skelett.";
+static char D_psp_0929FC90[] = "Gefﾎhrlicher Skelett-";
+static char D_psp_0929FCA8[] = "Feuerspuckender Wassergeist.";
+static char D_psp_0929FCC8[] = "Niederer Axtritter.";
+static char D_psp_0929FCE0[] = "Knochenwerfendes Skelett.";
+static char D_psp_0929FD00[] = "Kirchensoldaten des Ostens,";
+static char D_psp_0929FD20[] = "Pflanze mit rasiermesser-";
+static char D_psp_0929FD40[] = "Besessener Ouijatisch.";
+static char D_psp_0929FD58[] = "Bumerangwerfendes Skelett.";
+static char D_psp_0929FD78[] = "Feuerspeiender Flugdﾎmon.";
+static char D_psp_0929FD98[] = "Niedere Flammengeister.";
+static char D_psp_0929FDB0[] = "Dﾎmon mit verzaubertem Speer.";
+static char D_psp_0929FDD0[] = "Dﾎmonische Puppe aus ";
+static char D_psp_0929FDE8[] = "Ekelerregende, zweikﾜpfige";
+static char D_psp_0929FE08[] = "Aus Medusenhaar.";
+static char D_psp_0929FE20[] = "Seltsames, menschenﾎhnliches";
+static char D_psp_0929FE40[] = "Skelette mit";
+static char D_psp_0929FE50[] = "Novize im Kampf mit";
+static char D_psp_0929FE68[] = "Schwer gepanzerter Ritter";
+static char D_psp_0929FE88[] = "Mutierte Pflanze.";
+static char D_psp_0929FEA0[] = "Gut gerｨsteter Axtritter.";
+static char D_psp_0929FEC0[] = "Feuer- und Eisdﾎmon.";
+static char D_psp_0929FED8[] = "Skelettbogenschｨtze";
+static char D_psp_0929FEF0[] = "Krieger, bewaffnet mit";
+static char D_psp_0929FF08[] = "Schlange, Parasit Scyllas.";
+static char D_psp_0929FF28[] = "Beseeltes Affenskelett.";
+static char D_psp_0929FF40[] = "Gestaltwandelnder Dﾎmon.";
+static char D_psp_0929FF60[] = "Kopf eines hingerichteten";
+static char D_psp_0929FF80[] = "Langsam fliegender ";
+static char D_psp_0929FF98[] = "Zauberbuch fｨr Anfﾎnger.";
+static char D_psp_0929FFB8[] = "Heimische Eule, die durch das";
+static char D_psp_0929FFD8[] = "Sﾎule aus einem gebleichten";
+static char D_psp_0929FFF8[] = "Ritter mit";
+static char D_psp_092A0008[] = "Kﾜrperliche Manifestationen";
+static char D_psp_092A0028[] = "Magisch vergrﾜﾊerte Krﾜte";
+static char D_psp_092A0048[] = "Schwer gepanzerter, untoter";
+static char D_psp_092A0068[] = "Gepanzerter Wﾎchter.";
+static char D_psp_092A0080[] = "Kopfloses Skelett.";
+static char D_psp_092A0098[] = "Hﾜhlenfrosch.";
+static char D_psp_092A00A8[] = "Eisbewaffneter, weiblicher";
+static char D_psp_092A00C8[] = "Riesiger Schﾎdelgeist.";
+static char D_psp_092A00E0[] = "Buch antiker Waffen.";
+static char D_psp_092A00F8[] = "Skelett mit";
+static char D_psp_092A0108[] = "Flohmann auf trainierter";
+static char D_psp_092A0128[] = "Fleischfressender Rabe.";
+static char D_psp_092A0140[] = "Geist eines lang toten";
+static char D_psp_092A0158[] = "Bﾜses Dﾎmonenschwert. Ruft";
+static char D_psp_092A0178[] = "Mythologisches Meeresmonster.";
+static char D_psp_092A0198[] = "Naginateschwingendes Skelett.";
+static char D_psp_092A01B8[] = "Der Schwertlord schwingt sein";
+static char D_psp_092A01D8[] = "Schwer gepanzerter Ritter.";
+static char D_psp_092A01F8[] = "Unsichtbarer Geist einer";
+static char D_psp_092A0218[] = "Animierter Schlammgolem.";
+static char D_psp_092A0238[] = "Flohmann mit Axt und";
+static char D_psp_092A0250[] = "Monster aus Gel und Schleim.";
+static char D_psp_092A0270[] = "Riesiges Skelett.";
+static char D_psp_092A0288[] = "In Teilen Pferd, Lﾜwe und";
+static char D_psp_092A02A8[] = "Meister im Kampf mit";
+static char D_psp_092A02C0[] = "Skelett eines Werpanters.";
+static char D_psp_092A02E0[] = "Halb Mensch, halb Wolf.";
+static char D_psp_092A02F8[] = "Grabwﾎchter.";
+static char D_psp_092A0308[] = "Wesen mit Frauenkopf und";
+static char D_psp_092A0328[] = "Halb Mensch, halb Stier.";
+static char D_psp_092A0348[] = "Pyromanischer Gremlin.";
+static char D_psp_092A0360[] = "Blutdurstiger, untoter Ritter,";
+static char D_psp_092A0380[] = "Tragbarer Schﾎdelschrein,";
+static char D_psp_092A03A0[] = "Geiserhexen aus Salem.";
+static char D_psp_092A03B8[] = "Durchsucht Grﾎber und";
+static char D_psp_092A03D0[] = "Fischkopfwﾎchter.";
+static char D_psp_092A03E8[] = "Geheimnisvoll verhｨllter";
+static char D_psp_092A0408[] = "Kleiner, magiekundiger Dﾎmon.";
+static char D_psp_092A0428[] = "Groﾊer Bruder.";
+static char D_psp_092A0438[] = "ｷltester groﾊer Bruder.";
+static char D_psp_092A0450[] = "Monster aus schleimiger";
+static char D_psp_092A0468[] = "Scheibenschwingender,";
+static char D_psp_092A0480[] = "Dﾎmonenlord der Raben.";
+static char D_psp_092A0498[] = "Donnerwerfender Dﾎmon.";
+static char D_psp_092A04B0[] = "Wachhund der Hﾜlle.";
+static char D_psp_092A04C8[] = "Mit Menschenblut gegossen.";
+static char D_psp_092A04E8[] = "Magiekundiger Vampir. Herrscht";
+static char D_psp_092A0508[] = "Fischkopfmeister.";
+static char D_psp_092A0520[] = "Grabsteine, beseelt von bﾜsen";
+static char D_psp_092A0540[] = "Weiblicher Dﾎmon.";
+static char D_psp_092A0558[] = "Gepfﾎhlter Mann auf der Suche";
+static char D_psp_092A0578[] = "Der feige Lﾜwe.";
+static char D_psp_092A0588[] = "Ein Monster namens  Schmu .";
+static char D_psp_092A05A8[] = "Herzloser Zinnmann.";
+static char D_psp_092A05C0[] = "Albtraumkreatur.";
+static char D_psp_092A05D8[] = "Skelett, das auf ewig seinen";
+static char D_psp_092A05F8[] = "Steckt voller Giftsamen.";
+static char D_psp_092A0618[] = "Bombenwerfender, gepanzerter";
+static char D_psp_092A0638[] = "Zombies, die auch angreifen,";
+static char D_psp_092A0658[] = "Meister mit Wurfgeschossen.";
+static char D_psp_092A0678[] = "Mutiertes Insekt.";
+static char D_psp_092A0690[] = "Erschreckend zielgenauer";
+static char D_psp_092A06B0[] = "Gestaltwandelnder Lykanthop.";
+static char D_psp_092A06D0[] = "Vom Flohmann beherrschter";
+static char D_psp_092A06F0[] = "Schwingt eine fｨrchterliche";
+static char D_psp_092A0710[] = "Flｨssiges Wesen. Tritt in Form";
+static char D_psp_092A0730[] = "Beseeltes Skelett eines ";
+static char D_psp_092A0750[] = "Vom Flohmann gerittener";
+static char D_psp_092A0768[] = "Stierkﾜpfiges Monster.";
+static char D_psp_092A0780[] = "Riesige Vampirfledermaus.";
+static char D_psp_092A07A0[] = "Engelsbogenschｨtze. Hat Amalar";
+static char D_psp_092A07C0[] = "Feuerspuckender Wolf.";
+static char D_psp_092A07D8[] = "Felsenwerfender, gepanzerter";
+static char D_psp_092A07F8[] = "Skelett mit Sprungangriff.";
+static char D_psp_092A0818[] = "Ein wargreitendes Skelett.";
+static char D_psp_092A0838[] = "Bﾜser, mutierter Oktopus.";
+static char D_psp_092A0858[] = "Geharnischtes Kriegstier.";
+static char D_psp_092A0878[] = "Wenig intelligenter Blutsauger";
+static char D_psp_092A0898[] = "Flammendﾎmon.";
+static char D_psp_092A08A8[] = "Schrecklicher Dﾎmon aus ";
+static char D_psp_092A08C8[] = "Besteht aus den Kﾜrperteilen";
+static char D_psp_092A08E8[] = "Mﾎchtige Venusranke.";
+static char D_psp_092A0900[] = "Uralte ﾎgyptische Mumie.";
+static char D_psp_092A0920[] = "Schlangenkﾜpfige Dﾎmonin";
+static char D_psp_092A0940[] = "Boshafter kleiner Dﾎmon.";
+static char D_psp_092A0960[] = "Zombie, der sich als Grant";
+static char D_psp_092A0980[] = "Zombie, der sich als Trevor";
+static char D_psp_092A09A0[] = "Zombie, der sich als Sypha";
+static char D_psp_092A09C0[] = "Beelzebub, Herr der Fliegen.";
+static char D_psp_092A09E0[] = "Junge Hexe.";
+static char D_psp_092A09F0[] = "Henker der Hﾜlle.";
+static char D_psp_092A0A08[] = "Transvestiten-Eisgeist.";
+static char D_psp_092A0A20[] = "Vampirjﾎger. Nutzt 4 legendﾎre";
+static char D_psp_092A0A40[] = "Meistervampirjﾎger.";
+static char D_psp_092A0A58[] = "Seltener Vogel.";
+static char D_psp_092A0A68[] = "Magisches Geschﾜpf, das die";
+static char D_psp_092A0A88[] = "Mﾎchtiger Rｨstungslord.";
+static char D_psp_092A0AA0[] = "Draculas Vertrauter.";
+static char D_psp_092A0AB8[] = "Dunkler Priester des Dracula.";
+static char D_psp_092A0AD8[] = "Herr von Wallachia.";
+static char* D_psp_092A0AF0[] = {
+    D_psp_0929FBA0, D_psp_0929FBB8, D_psp_0929FBD0, D_psp_0929FBF0,
+    D_psp_0929FC08, D_psp_0929FC20, D_psp_0929FC40, D_psp_0929FC60,
+    D_psp_0929FC78, D_psp_0929FC90, D_psp_0929FCA8, D_psp_0929FCC8,
+    D_psp_0929FCE0, D_psp_0929FD00, D_psp_0929FD20, D_psp_0929FD40,
+    D_psp_0929FD58, D_psp_0929FD78, D_psp_0929FD98, D_psp_0929FDB0,
+    D_psp_0929FDD0, D_psp_0929FDE8, D_psp_0929FE08, D_psp_0929FE20,
+    D_psp_0929FE40, D_psp_0929FE50, D_psp_0929FE68, D_psp_0929FE08,
+    D_psp_0929FE88, D_psp_0929FEA0, D_psp_0929FEC0, D_psp_0929FED8,
+    D_psp_0929FEF0, D_psp_0929FF08, D_psp_0929FF28, D_psp_0929FF40,
+    D_psp_0929FF60, D_psp_0929FF80, D_psp_0929FF98, D_psp_0929FFB8,
+    D_psp_0929FFD8, D_psp_0929FFF8, D_psp_092A0008, D_psp_092A0028,
+    D_psp_092A0048, D_psp_092A0068, D_psp_092A0080, D_psp_092A0098,
+    D_psp_092A00A8, D_psp_092A00C8, D_psp_092A00E0, D_psp_092A00F8,
+    D_psp_092A0108, D_psp_092A0128, D_psp_092A0140, D_psp_092A0158,
+    D_psp_0929FD20, D_psp_092A0178, D_psp_092A0198, D_psp_092A01B8,
+    D_psp_092A01D8, D_psp_092A01F8, D_psp_092A0218, D_psp_092A0158,
+    D_psp_092A0238, D_psp_092A0250, D_psp_092A0270, D_psp_092A0288,
+    D_psp_092A02A8, D_psp_092A02C0, D_psp_092A02E0, D_psp_092A02F8,
+    D_psp_092A0308, D_psp_092A0328, D_psp_092A0348, D_psp_092A0360,
+    D_psp_092A0380, D_psp_092A03A0, D_psp_092A03B8, D_psp_092A03D0,
+    D_psp_092A03E8, D_psp_092A0408, D_psp_092A0428, D_psp_092A0428,
+    D_psp_092A0438, D_psp_092A0450, D_psp_092A0468, D_psp_092A0480,
+    D_psp_092A0498, D_psp_092A04B0, D_psp_092A04C8, D_psp_092A04E8,
+    D_psp_092A0508, D_psp_092A0520, D_psp_092A0540, D_psp_092A0558,
+    D_psp_092A0578, D_psp_092A0588, D_psp_092A05A8, D_psp_092A05C0,
+    D_psp_092A05D8, D_psp_092A05F8, D_psp_092A0618, D_psp_092A0638,
+    D_psp_092A0658, D_psp_092A0678, D_psp_092A0690, D_psp_092A06B0,
+    D_psp_092A06D0, D_psp_092A06F0, D_psp_092A0710, D_psp_092A0730,
+    D_psp_092A0750, D_psp_092A0768, D_psp_092A0780, D_psp_092A07A0,
+    D_psp_092A07C0, D_psp_092A0158, D_psp_092A07D8, D_psp_092A07F8,
+    D_psp_092A0818, D_psp_092A0838, D_psp_092A0858, D_psp_092A0878,
+    D_psp_092A0898, D_psp_092A08A8, D_psp_0929FF40, D_psp_092A08C8,
+    D_psp_092A08E8, D_psp_092A0900, D_psp_092A0920, D_psp_092A0940,
+    D_psp_092A0960, D_psp_092A0980, D_psp_092A09A0, D_psp_092A09C0,
+    D_psp_092A09E0, D_psp_092A09F0, D_psp_092A0A08, D_psp_092A0A20,
+    D_psp_092A0A40, D_psp_092A0A58, D_psp_092A0A68, D_psp_092A0A88,
+    D_psp_092A0AA0, D_psp_092A0AB8, D_psp_092A0AD8};
+static char D_psp_092A0D40[] = "im Jahre １７９２ (vor ５ Jahren).";
+static char D_psp_092A0D68[] = "getrﾎnkten Knochen.";
+static char D_psp_092A0D80[] = "Magisch beseelt.";
+static char D_psp_092A0D98[] = "Gefｨrchtete Diener des Bﾜsen.";
+static char D_psp_092A0DB8[] = "Schloss bewachen.";
+static char D_psp_092A0DD0[] = "Greift alle Eindringlinge an.";
+static char D_psp_092A0DF0[] = "Trieft vor Gift.";
+static char D_psp_092A0E08[] = "schwertkﾎmpfer.";
+static char D_psp_092A0E18[] = "Grﾜﾊter Wassergeist.";
+static char D_psp_092A0E30[] = "seit 300 Jahren unterwegs.";
+static char D_psp_092A0E50[] = "scharfen Blﾎttern.";
+static char D_psp_092A0E68[] = "der Hﾜlle.";
+static char D_psp_092A0E78[] = "Bestie. Was ist der Kopf?";
+static char D_psp_092A0E98[] = "Wesen, springt wie ein Floh.";
+static char D_psp_092A0EB8[] = "Gewehren.";
+static char D_psp_092A0EC8[] = "zwei Klingen.";
+static char D_psp_092A0ED8[] = "mit Eisenkugel.";
+static char D_psp_092A0EE8[] = "Kann Feinde versteinern.";
+static char D_psp_092A0F08[] = "Die Samen versteinern.";
+static char D_psp_092A0F20[] = "Geht Kﾎmpfen aus dem Weg.";
+static char D_psp_092A0F40[] = "Naginata.";
+static char D_psp_092A0F50[] = "Schleudert Holzfﾎsser.";
+static char D_psp_092A0F68[] = "Soldaten. Sinnt auf Rache.";
+static char D_psp_092A0F88[] = "Skelettkrieger.";
+static char D_psp_092A0F98[] = "Schloss mutiert ist.";
+static char D_psp_092A0FB0[] = "Drachenschﾎdel.";
+static char D_psp_092A0FC0[] = "Breitschwert.";
+static char D_psp_092A0FD0[] = "gepeinigter Seelen.";
+static char D_psp_092A0FE8[] = "(dﾎmonisch getauft).";
+static char D_psp_092A1000[] = "Krieger.";
+static char D_psp_092A1010[] = "Stark i.gefﾎhrlichen Gebieten.";
+static char D_psp_092A1030[] = "Schwingt ein Rapier.";
+static char D_psp_092A1048[] = "Geist.";
+static char D_psp_092A1050[] = "Eisennagelflegel.";
+static char D_psp_092A1068[] = "Kriegsgans.";
+static char D_psp_092A1078[] = "blauen Raben.";
+static char D_psp_092A1088[] = "Poltergeister.";
+static char D_psp_092A1098[] = "Schwert auch unter Bann.";
+static char D_psp_092A10B8[] = "Greift m. trainierter Eule an.";
+static char D_psp_092A10D8[] = "Jﾎgerin.";
+static char D_psp_092A10E8[] = "Schild.";
+static char D_psp_092A10F0[] = "Adler.";
+static char D_psp_092A10F8[] = "Meister im Kampf ohne Waffen.";
+static char D_psp_092A1118[] = "Vogelkﾜrper.";
+static char D_psp_092A1128[] = "der ewig den Kampf sucht.";
+static char D_psp_092A1148[] = "getragen von Skelettpriestern.";
+static char D_psp_092A1168[] = "steckt voller Wissen.";
+static char D_psp_092A1180[] = "Schwertkﾎmpfer.";
+static char D_psp_092A1190[] = "Ruft dﾎmonische Helfer.";
+static char D_psp_092A11A8[] = "Schwingt ein Gurkha-Messer.";
+static char D_psp_092A11C8[] = "Benutzt einen Stahlhammer.";
+static char D_psp_092A11E8[] = "Schwingt 2 gewaltige Dolche.";
+static char D_psp_092A1208[] = "Gelmasse.";
+static char D_psp_092A1218[] = "gepanzerter Ritter.";
+static char D_psp_092A1230[] = "Genannt \"Musiker der Hﾜlle\".";
+static char D_psp_092A1250[] = "ｨb. d.oberen Teil d.Schlosses.";
+static char D_psp_092A1270[] = "Geistern der Toten.";
+static char D_psp_092A1288[] = "Dringt in Mﾎnnertrﾎume ein.";
+static char D_psp_092A12A8[] = "nach Intelligenz.";
+static char D_psp_092A12C0[] = "Besteht aus Vielen.";
+static char D_psp_092A12D8[] = "eigenen Schﾎdel jagt.";
+static char D_psp_092A12F0[] = "Ritter.";
+static char D_psp_092A12F8[] = "wenn sie zerschnitten sind.";
+static char D_psp_092A1318[] = "Nur fｨr Magier sichtbar.";
+static char D_psp_092A1338[] = "Bogenschｨtze.";
+static char D_psp_092A1348[] = "Wyrm.";
+static char D_psp_092A1350[] = "Strahlenwaffe.";
+static char D_psp_092A1360[] = "eines schwarzen Panters auf.";
+static char D_psp_092A1380[] = "gewaltigen Drachens.";
+static char D_psp_092A1398[] = "weiﾊer Drache.";
+static char D_psp_092A13A8[] = "von den Goth erschlagen.";
+static char D_psp_092A13C8[] = "mit langer Saugzunge.";
+static char D_psp_092A13E0[] = "mﾎchtiger Krieger.";
+static char D_psp_092A13F8[] = "Mit Dﾎmonenblut gegossen.";
+static char D_psp_092A1418[] = "mit versteinerndem Blick.";
+static char D_psp_092A1438[] = "ausgibt.";
+static char D_psp_092A1448[] = "Diener von Galamoth.";
+static char D_psp_092A1460[] = "Tiere. Sucht Richter.";
+static char D_psp_092A1478[] = "Lﾎuft vor Menschen davon.";
+static char D_psp_092A1498[] = "Unterwelt regieren will.";
+static char D_psp_092A14B8[] = "Vater von Alucard.";
+static char* D_psp_092A14D0[] = {
+    D_psp_092A0D40, D_psp_092A0D68, "", D_psp_092A0D80,
+    D_psp_092A0D98, D_psp_092A0DB8, "", D_psp_092A0DD0,
+    D_psp_092A0DF0, D_psp_092A0E08, D_psp_092A0E18, "",
+    "", D_psp_092A0E30, D_psp_092A0E50, "",
+    "", "", "", "",
+    D_psp_092A0E68, D_psp_092A0E78, "", D_psp_092A0E98,
+    D_psp_092A0EB8, D_psp_092A0EC8, D_psp_092A0ED8, D_psp_092A0EE8,
+    D_psp_092A0F08, "", D_psp_092A0F20, "",
+    D_psp_092A0F40, "", D_psp_092A0F50, "",
+    D_psp_092A0F68, D_psp_092A0F88, "", D_psp_092A0F98,
+    D_psp_092A0FB0, D_psp_092A0FC0, D_psp_092A0FD0, D_psp_092A0FE8,
+    D_psp_092A1000, D_psp_092A1010, D_psp_092A1030, "",
+    D_psp_092A1048, "", "", D_psp_092A1050,
+    D_psp_092A1068, "", D_psp_092A1078, D_psp_092A1088,
+    D_psp_092A0E50, "", "", D_psp_092A1098,
+    D_psp_092A10B8, D_psp_092A10D8, "", D_psp_092A1088,
+    D_psp_092A10E8, "", "", D_psp_092A10F0,
+    D_psp_092A0EC8, "", "", D_psp_092A10F8,
+    D_psp_092A1118, "", "", D_psp_092A1128,
+    D_psp_092A1148, "", D_psp_092A1168, "",
+    D_psp_092A1180, D_psp_092A1190, D_psp_092A11A8, D_psp_092A11C8,
+    D_psp_092A11E8, D_psp_092A1208, D_psp_092A1218, "",
+    D_psp_092A1230, "", "", D_psp_092A1250,
+    "", D_psp_092A1270, D_psp_092A1288, D_psp_092A12A8,
+    "", "", "", D_psp_092A12C0,
+    D_psp_092A12D8, "", D_psp_092A12F0, D_psp_092A12F8,
+    "", D_psp_092A1318, D_psp_092A1338, "",
+    D_psp_092A1348, D_psp_092A1350, D_psp_092A1360, D_psp_092A1380,
+    D_psp_092A1398, "", "", D_psp_092A13A8,
+    "", D_psp_092A1088, D_psp_092A12F0, "",
+    "", "", "", D_psp_092A13C8,
+    "", D_psp_092A0E68, "", D_psp_092A13E0,
+    D_psp_092A13F8, "", D_psp_092A1418, "",
+    D_psp_092A1438, D_psp_092A1438, D_psp_092A1438, "",
+    "", "", D_psp_092A1448, D_psp_092A1460,
+    "", D_psp_092A1478, D_psp_092A1498, "",
+    "", "", D_psp_092A14B8};
 extern s32 D_8C630D0;
 extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_25);
