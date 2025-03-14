@@ -119,8 +119,8 @@
 | lib    | SetCutsceneEnd                      |       19 |          1 |        |                                 |       |
 | st0    | SetDisplayBufferColorsToBlack       |       19 |          1 |        |                                 |       |
 | st0    | SetGameState                        |       19 |          1 |        |                                 |       |
-| st0    | SetCutsceneEnd                      |       19 |          1 |        |                                 |       |
 | st0    | func_pspeu_09242A20                 |       19 |          1 |        | https://decomp.me/scratch/lu9cB | 1.0   |
+| st0    | SetCutsceneEnd                      |       19 |          1 |        |                                 |       |
 | dra    | func_8012CFF0                       |       19 |          2 |        |                                 |       |
 | lib    | UpdateFacingDirection               |       19 |          2 |        |                                 |       |
 | dra    | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
@@ -491,7 +491,7 @@
 | ric    | func_pspeu_092B06F8                 |       49 |          8 |        |                                 |       |
 | dra    | PerformDarkMetamorphosis            |       49 |         10 |        |                                 |       |
 | dra    | func_psp_0910BC78                   |       50 |          3 |        |                                 |       |
-| dra    | func_800EA538                       |       50 |          5 |        |                                 |       |
+| dra    | func_800EA538                       |       50 |          5 |        | https://decomp.me/scratch/BfS3i | 0.997 |
 | dra    | func_8010E7AC                       |       50 |          6 |        |                                 |       |
 | dra    | func_psp_0910E2D0                   |       50 |          7 |        |                                 |       |
 | dra    | func_psp_0913D890                   |       50 |          8 |        |                                 |       |
@@ -512,7 +512,7 @@
 | ric    | func_pspeu_092ACE78                 |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib    | GetLang                             |       51 |         10 |        |                                 |       |
-| lib    | func_psp_0925D430                   |       51 |         10 |        |                                 |       |
+| lib    | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
 | no4    | func_psp_0925DDC0                   |       51 |         10 |        |                                 |       |
 | st0    | GetLang                             |       51 |         10 |        |                                 |       |
 | dra    | func_800EDD9C                       |       52 |          6 |        |                                 |       |
@@ -1132,7 +1132,7 @@
 | dra    | func_psp_090F6430                   |      258 |         36 |        |                                 |       |
 | no4    | func_psp_09240CD0                   |      261 |         21 |        |                                 |       |
 | st0    | func_801A8328                       |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
-| lib    | func_psp_0925D4D0                   |      263 |         19 |        |                                 |       |
+| lib    | func_psp_0925D4D0                   |      263 |         19 |        | https://decomp.me/scratch/1G4Sk | 1.0   |
 | ric    | RicHandleStand                      |      263 |         51 |        |                                 |       |
 | dra    | func_8010BFFC                       |      264 |         28 |        |                                 |       |
 | ric    | func_801641A0                       |      265 |         13 |        |                                 |       |
@@ -1434,7 +1434,7 @@
 | no4    | func_psp_0924E5D0                   |     1159 |         87 | Yes    |                                 |       |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/caTmz | 0.977 |
-| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.969 |
+| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.971 |
 | lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
