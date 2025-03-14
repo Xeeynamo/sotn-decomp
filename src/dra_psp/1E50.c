@@ -2,7 +2,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-
 extern SVECTOR* D_800A34C0[][3];
 
 extern SVECTOR D_801379C8;
@@ -23,7 +22,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
     s32 nclip_result;
 
     RotMatrix(&D_801379C8, &D_80137E00);
-    
+
     for (i = 0, prim = &g_PrimBuf[D_80137E44]; i < 18; i++, prim = prim->next) {
         if (arg0 == 0) {
             prim->drawMode = DRAW_HIDE;
@@ -40,11 +39,12 @@ static void func_80105078(s32 arg0, s32 arg1) {
             func_80017008(&vec, &unkSvectors[j]);
         }
         nclip_result = RotAverageNclip3(
-            &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0, (s32*)&prim->x1,
-            (s32*)&prim->x2, &interp, &otz, &unused_flag);
+            &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0,
+            (s32*)&prim->x1, (s32*)&prim->x2, &interp, &otz, &unused_flag);
         if (nclip_result < 0) {
-            RotAverage3(&rotVecs[0], &rotVecs[2], &rotVecs[1], (s32*)&prim->x0,
-                        (s32*)&prim->x2, (s32*)&prim->x1, &interp, &unused_flag);
+            RotAverage3(
+                &rotVecs[0], &rotVecs[2], &rotVecs[1], (s32*)&prim->x0,
+                (s32*)&prim->x2, (s32*)&prim->x1, &interp, &unused_flag);
         }
         prim->type = PRIM_LINE_G2;
         if (otz < 0xF0) {
@@ -55,17 +55,18 @@ static void func_80105078(s32 arg0, s32 arg1) {
             }
             if (arg1 != 0) {
                 if (arg1 & 0x80) {
-                    PGREY(prim,0) = PGREY(prim,1) = arg1 & 0x7F;
+                    PGREY(prim, 0) = PGREY(prim, 1) = arg1 & 0x7F;
                 } else if (arg1 < 0x11) {
-                    PGREY(prim,0) = (u16)((0x10 - arg1) * 8);
+                    PGREY(prim, 0) = (u16)((0x10 - arg1) * 8);
                 } else if (arg1 < 0x21) {
-                    PGREY(prim,1) = (u16)((0x20 - arg1) * 8);
+                    PGREY(prim, 1) = (u16)((0x20 - arg1) * 8);
                 } else {
                     prim->drawMode = DRAW_HIDE;
                     continue;
                 }
             }
-            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         }
     }
 }
@@ -79,7 +80,7 @@ extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 
 void func_80105428(void) {
-    #define PAD_MASK (PAD_START | PAD_SQUARE)
+#define PAD_MASK (PAD_START | PAD_SQUARE)
     s32 temp_s0;
     s32 temp_result;
     s32 timer_temp;
@@ -138,12 +139,11 @@ void func_80105428(void) {
             D_80137EE4 += 4;
         }
         func_80104790(0, D_80137EE4, 0);
-        if (D_801379B8 <
-             ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
+        if (D_801379B8 < ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
             (g_GameTimer != 0)) {
             D_801379B8++;
         }
-        if(abs(PLAYER.posX.i.hi - 0x80) < 3){
+        if (abs(PLAYER.posX.i.hi - 0x80) < 3) {
             PLAYER.posX.i.hi = 0x80;
         }
         if (PLAYER.posX.i.hi < 0x7F) {
@@ -152,8 +152,8 @@ void func_80105428(void) {
         } else if (PLAYER.posX.i.hi > 0x80) {
             g_Player.padSim = PAD_LEFT;
             g_Player.D_80072EFC = 1;
-        } else if (D_801379B8 ==
-                   ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
+        } else if (
+            D_801379B8 == ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
             func_80105408();
             D_80137EE8 = 8;
             if (D_80137EE0 != 0) {
@@ -227,7 +227,8 @@ void func_80105428(void) {
     case 0x101:
         D_801379C8.vy = temp_s3 + (s16)D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
-        if((g_pads[0].pressed & (((D_psp_08B42050 | PAD_MASK) | D_psp_08B42054)))) {
+        if (g_pads[0].pressed &
+            ((D_psp_08B42050 | PAD_MASK) | D_psp_08B42054)) {
             D_80097924 = D_80137EF0;
             D_8006C378 = D_80137EF4;
             g_Player.padSim = 0;
@@ -290,7 +291,8 @@ void func_80105428(void) {
             break;
         }
         if ((D_80137E4C >= 6) || (D_80137EE0 != 0)) {
-            if ((D_801379C8.vy & 0xFFF) >= 0x100 && (D_801379C8.vy & 0xFFF) < 0x180) {
+            if ((D_801379C8.vy & 0xFFF) >= 0x100 &&
+                (D_801379C8.vy & 0xFFF) < 0x180) {
                 D_801379BC++;
             }
         }
@@ -330,7 +332,6 @@ void func_80105428(void) {
                     func_80102EB8();
                     D_801379BC++;
                 }
-                
             }
         }
         break;
@@ -463,17 +464,18 @@ void func_80105428(void) {
         }
         func_80104790(3, D_80137EE4, D_80137EEC);
         D_80137EEC -= 2;
-        if (g_Player.D_80072EFC == 0){
-            if((g_pads[0].pressed & (PAD_MASK | D_psp_08B42050 | D_psp_08B42054))) {
+        if (g_Player.D_80072EFC == 0) {
+            if (g_pads[0].pressed &
+                (PAD_MASK | D_psp_08B42050 | D_psp_08B42054)) {
                 g_Player.padSim = 0;
                 g_Player.D_80072EFC = 1;
                 if (D_80137EEC <= 0) {
                     D_80137EEC = 0;
                 }
-            break;
+                break;
             }
         }
-            
+
         if (D_80137EEC <= 0) {
             if (D_801379BC == 0x30) {
                 D_80137E54 = 0;
@@ -507,7 +509,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/1E50", func_psp_090DFC80);
 
 void func_800EA538(s32 arg0) {
     u16 v1;
-    s32 i,j;
+    s32 i, j;
     u16 unk8;
 
     v1 = (0x8000 >> (arg0 - 1));
