@@ -212,7 +212,6 @@ static char* D_psp_09299A18[] = {
     "Dracula’s close friend．",
     "Dark Priest of Dracula．",
     "Lord of Wallachia．"};
-
 extern char* D_psp_0929A320[] = {
     "in １７９２．（５ years ago）",
     "bones．",
@@ -361,7 +360,6 @@ extern char* D_psp_0929A320[] = {
     "",
     "",
     "Father of Alucard．"};
-
 static char* D_psp_0929B4A0[] = {
     "Destruido por Richter ",
     "Resucita gracias a huesos",
@@ -510,7 +508,6 @@ static char* D_psp_0929B4A0[] = {
     "Amiga ﾕntima de Dracula.",
     "Sacerdote oscuro de Dracula.",
     "Seﾘor de Wallachia."};
-
 static char* D_psp_0929BFF0[] = {
     "en １７９２ （hace ５ aﾘos）.",
     "empapados de sangre.",
@@ -659,185 +656,154 @@ static char* D_psp_0929BFF0[] = {
     "",
     "",
     "Padre de Alucard."};
-
-static char D_psp_0929C240[] = "Distrutto da Richter";
-static char D_psp_0929C258[] = "Rivive bagnando le ossa";
-static char D_psp_0929C270[] = "Durissimo teschio rotante.";
-static char D_psp_0929C290[] = "Corpi freschi.";
-static char D_psp_0929C2A0[] = "Pipistrelli vampiri.";
-static char D_psp_0929C2B8[] = "Lupi a guardia dell'entrata";
-static char D_psp_0929C2D8[] = "Scheletro animato magicamente.";
-static char D_psp_0929C2F8[] = "Creatura leggendaria.";
-static char D_psp_0929C310[] = "Scheletro a quattro zampe.";
-static char D_psp_0929C330[] = "Feroce scheletro";
-static char D_psp_0929C348[] = "Tritone sputa-fuoco.";
-static char D_psp_0929C360[] = "Asciere di basso livello.";
-static char D_psp_0929C380[] = "Scheletro lancia-ossa.";
-static char D_psp_0929C398[] = "Soldati della Chiesa Orientale";
-static char D_psp_0929C3B8[] = "Pianta con foglie affilate";
-static char D_psp_0929C3D8[] = "Tavola Ouija posseduta.";
-static char D_psp_0929C3F0[] = "Scheletro armato di boomerang.";
-static char D_psp_0929C410[] = "Demone volante sputa-fuoco.";
-static char D_psp_0929C430[] = "Spettri di fuoco minori. ";
-static char D_psp_0929C450[] = "Demone con lancia incantata.";
-static char D_psp_0929C470[] = "Demoniaco burattino infernale.";
-static char D_psp_0929C490[] = "Nauseabonda bestia a due";
-static char D_psp_0929C4B0[] = "Dai capelli di Medusa.";
-static char D_psp_0929C4C8[] = "Strana creatura antropomorfa.";
-static char D_psp_0929C4E8[] = "Scheletri armati di";
-static char D_psp_0929C500[] = "Un pivello del combattimento";
-static char D_psp_0929C520[] = "Cavaliere con pesante armatura";
-static char D_psp_0929C540[] = "Pianta mutata.";
-static char D_psp_0929C550[] = "Asciere ben armato.";
-static char D_psp_0929C568[] = "Demone di fuoco e ghiaccio.";
-static char D_psp_0929C588[] = "Scheletro arciere armato";
-static char D_psp_0929C5A8[] = "Guerriero armato";
-static char D_psp_0929C5C0[] = "Serpente parassita di Scilla.";
-static char D_psp_0929C5E0[] = "Scheletro di scimmia animato.";
-static char D_psp_0929C600[] = "Demone mutaforma.";
-static char D_psp_0929C618[] = "Testa di soldato giustiziato.";
-static char D_psp_0929C638[] = "Scheletro guerriero volante.";
-static char D_psp_0929C658[] = "Libro di incantesimi di base.";
-static char D_psp_0929C678[] = "Gufo del cortile locale";
-static char D_psp_0929C690[] = "Pilastro ricavato da un";
-static char D_psp_0929C6A8[] = "Guerriero armato con";
-static char D_psp_0929C6C0[] = "Manifestazioni fisiche di";
-static char D_psp_0929C6E0[] = "Rospo magicamente ingrandito";
-static char D_psp_0929C700[] = "Guerriero non morto";
-static char D_psp_0929C718[] = "Guardia con armatura.";
-static char D_psp_0929C730[] = "Scheletro senza testa armato";
-static char D_psp_0929C750[] = "Rana che vive nelle grotte.";
-static char D_psp_0929C770[] = "Spirito femminile del gelo.";
-static char D_psp_0929C790[] = "Gigantesco spirito teschio.";
-static char D_psp_0929C7B0[] = "Libro delle armi antiche.";
-static char D_psp_0929C7D0[] = "Scheletro armato di mazza";
-static char D_psp_0929C7F0[] = "Uomo-Pulce che cavalca";
-static char D_psp_0929C808[] = "Corvo carnivoro.";
-static char D_psp_0929C820[] = "Spirito di un corvo blu";
-static char D_psp_0929C838[] = "Maligna spada demoniaca.";
-static char D_psp_0929C858[] = "Mitologico mostro marino.";
-static char D_psp_0929C878[] = "Scheletro armato di naginata.";
-static char D_psp_0929C898[] = "Spadaccino che rimane";
-static char D_psp_0929C8B0[] = "Cavaliere con pesante armatura.";
-static char D_psp_0929C8D0[] = "Invisib. spirito di cacciatr.";
-static char D_psp_0929C8F0[] = "Golem di fango animato.";
-static char D_psp_0929C908[] = "Uomo-Pulce armato con";
-static char D_psp_0929C920[] = "Mostro fatto di gelatina.";
-static char D_psp_0929C940[] = "Scheletro gigante.";
-static char D_psp_0929C958[] = "Cavallo, leone e aquila.";
-static char D_psp_0929C978[] = "Maestro del combattimento";
-static char D_psp_0929C998[] = "Scheletro di pantera mannara.";
-static char D_psp_0929C9B8[] = "Metﾋ uomo e metﾋ lupo.";
-static char D_psp_0929C9D0[] = "Camposantiere. Maestro del";
-static char D_psp_0929C9F0[] = "Creatura con testa di";
-static char D_psp_0929CA08[] = "Metﾋ uomo e metﾋ toro.";
-static char D_psp_0929CA20[] = "Gremlin piromane.";
-static char D_psp_0929CA38[] = "Guerriero non morto assetato";
-static char D_psp_0929CA58[] = "Sacrario di teschio portato";
-static char D_psp_0929CA78[] = "Streghe fantasma di Salem．";
-static char D_psp_0929CA98[] = "Cerca tra le tombe ed ﾐ";
-static char D_psp_0929CAB0[] = "Guardiano con testa di pesce.";
-static char D_psp_0929CAD0[] = "Misterioso spadaccino";
-static char D_psp_0929CAE8[] = "Piccolo demone magico.";
-static char D_psp_0929CB00[] = "Fratello Gigante.";
-static char D_psp_0929CB18[] = "Primo dei fratelli Giganti.";
-static char D_psp_0929CB38[] = "Mostro fatto di viscida ";
-static char D_psp_0929CB58[] = "Cavaliere in armatura ";
-static char D_psp_0929CB70[] = "Demoniaco signore dei corvi.";
-static char D_psp_0929CB90[] = "Demone armato di lampo.";
-static char D_psp_0929CBA8[] = "Cane da guardia degli Inferi.";
-static char D_psp_0929CBC8[] = "Innaffiata con sangue umano.";
-static char D_psp_0929CBE8[] = "Vampiro magico. Governa";
-static char D_psp_0929CC00[] = "Un pesce grosso.";
-static char D_psp_0929CC18[] = "Lapidi possedute dagli";
-static char D_psp_0929CC30[] = "Demone femmina.";
-static char D_psp_0929CC40[] = "Uomo impalato a caccia";
-static char D_psp_0929CC58[] = "Il leone codardo.";
-static char D_psp_0929CC70[] = "Mostro chiamato schmoo ．";
-static char D_psp_0929CC90[] = "Uomo di latta senza cuore.";
-static char D_psp_0929CCB0[] = "Creatura da incubo.";
-static char D_psp_0929CCC8[] = "Scheletro che rincorre sempre";
-static char D_psp_0929CCE8[] = "Contiene infiniti semi velenosi.";
-static char D_psp_0929CD10[] = "Zombie che attacca";
-static char D_psp_0929CD28[] = "Esperto di armi da lancio.";
-static char D_psp_0929CD48[] = "Insetto mutato.";
-static char D_psp_0929CD58[] = "Arciere micidialmente preciso.";
-static char D_psp_0929CD78[] = "Licantropo mutaforma.";
-static char D_psp_0929CD90[] = "Wyrm controllato dall'Uomo-Pulce.";
-static char D_psp_0929CDB8[] = "ｹ armato di una temibile";
-static char D_psp_0929CDD8[] = "Creatura liquida.";
-static char D_psp_0929CDF0[] = "Scheletro animato di un";
-static char D_psp_0929CE08[] = "Drago bianco cavalcato ";
-static char D_psp_0929CE20[] = "Mostro con testa di toro.";
-static char D_psp_0929CE40[] = "Pipistrello vampiro gigante.";
-static char D_psp_0929CE60[] = "Angelo arciere.";
-static char D_psp_0929CE70[] = "Lupo che sputa palle di fuoco.";
-static char D_psp_0929CE90[] = "Scheletro con attacco con salto.";
-static char D_psp_0929CEB8[] = "Scheletro che cavalca un Warg.";
-static char D_psp_0929CED8[] = "Malvagio polpo mutato.";
-static char D_psp_0929CEF0[] = "Bestia da guerra corazzata.";
-static char D_psp_0929CF10[] = "Tutto istinto, poco cervello.";
-static char D_psp_0929CF30[] = "Demone del fuoco.";
-static char D_psp_0929CF48[] = "Orribile demone infernale.";
-static char D_psp_0929CF68[] = "Fatto di parti del corpo";
-static char D_psp_0929CF88[] = "Erba Venere avanzata.";
-static char D_psp_0929CFA0[] = "Mummia dell'antico Egitto.";
-static char D_psp_0929CFC0[] = "Demone con testa di serpente.";
-static char D_psp_0929CFE0[] = "Piccolo demone malizioso.";
-static char D_psp_0929D000[] = "Zombie che impersona Grant．";
-static char D_psp_0929D020[] = "Zombie che impersona Trevor．";
-static char D_psp_0929D040[] = "Zombie che impersona Sypha．";
-static char D_psp_0929D060[] = "Belzebｦ, Signore delle Mosche．";
-static char D_psp_0929D080[] = "Giovane strega.";
-static char D_psp_0929D090[] = "Boia infernale.";
-static char D_psp_0929D0A0[] = "Spirito di ghiaccio androgino.";
-static char D_psp_0929D0C0[] = "Cacciatrice di vampiri. Usa 4";
-static char D_psp_0929D0E0[] = "Esperto cacciatore di vampiri.";
-static char D_psp_0929D100[] = "Uccello raro.";
-static char D_psp_0929D110[] = "Creatura magica che intende";
-static char D_psp_0929D130[] = "ArmaDuro di alto livello.";
-static char D_psp_0929D150[] = "Intimo amico di Dracula.";
-static char D_psp_0929D170[] = "Il prete oscuro di Dracula.";
-static char D_psp_0929D190[] = "Signore della Valacchia．";
 static char* D_psp_0929D1B0[] = {
-    D_psp_0929C240, D_psp_0929C258, D_psp_0929C270, D_psp_0929C290,
-    D_psp_0929C2A0, D_psp_0929C2B8, D_psp_0929C2D8, D_psp_0929C2F8,
-    D_psp_0929C310, D_psp_0929C330, D_psp_0929C348, D_psp_0929C360,
-    D_psp_0929C380, D_psp_0929C398, D_psp_0929C3B8, D_psp_0929C3D8,
-    D_psp_0929C3F0, D_psp_0929C410, D_psp_0929C430, D_psp_0929C450,
-    D_psp_0929C470, D_psp_0929C490, D_psp_0929C4B0, D_psp_0929C4C8,
-    D_psp_0929C4E8, D_psp_0929C500, D_psp_0929C520, D_psp_0929C4B0,
-    D_psp_0929C540, D_psp_0929C550, D_psp_0929C568, D_psp_0929C588,
-    D_psp_0929C5A8, D_psp_0929C5C0, D_psp_0929C5E0, D_psp_0929C600,
-    D_psp_0929C618, D_psp_0929C638, D_psp_0929C658, D_psp_0929C678,
-    D_psp_0929C690, D_psp_0929C6A8, D_psp_0929C6C0, D_psp_0929C6E0,
-    D_psp_0929C700, D_psp_0929C718, D_psp_0929C730, D_psp_0929C750,
-    D_psp_0929C770, D_psp_0929C790, D_psp_0929C7B0, D_psp_0929C7D0,
-    D_psp_0929C7F0, D_psp_0929C808, D_psp_0929C820, D_psp_0929C838,
-    D_psp_0929C3B8, D_psp_0929C858, D_psp_0929C878, D_psp_0929C898,
-    D_psp_0929C8B0, D_psp_0929C8D0, D_psp_0929C8F0, D_psp_0929C838,
-    D_psp_0929C908, D_psp_0929C920, D_psp_0929C940, D_psp_0929C958,
-    D_psp_0929C978, D_psp_0929C998, D_psp_0929C9B8, D_psp_0929C9D0,
-    D_psp_0929C9F0, D_psp_0929CA08, D_psp_0929CA20, D_psp_0929CA38,
-    D_psp_0929CA58, D_psp_0929CA78, D_psp_0929CA98, D_psp_0929CAB0,
-    D_psp_0929CAD0, D_psp_0929CAE8, D_psp_0929CB00, D_psp_0929CB00,
-    D_psp_0929CB18, D_psp_0929CB38, D_psp_0929CB58, D_psp_0929CB70,
-    D_psp_0929CB90, D_psp_0929CBA8, D_psp_0929CBC8, D_psp_0929CBE8,
-    D_psp_0929CC00, D_psp_0929CC18, D_psp_0929CC30, D_psp_0929CC40,
-    D_psp_0929CC58, D_psp_0929CC70, D_psp_0929CC90, D_psp_0929CCB0,
-    D_psp_0929CCC8, D_psp_0929CCE8, D_psp_0929CB58, D_psp_0929CD10,
-    D_psp_0929CD28, D_psp_0929CD48, D_psp_0929CD58, D_psp_0929CD78,
-    D_psp_0929CD90, D_psp_0929CDB8, D_psp_0929CDD8, D_psp_0929CDF0,
-    D_psp_0929CE08, D_psp_0929CE20, D_psp_0929CE40, D_psp_0929CE60,
-    D_psp_0929CE70, D_psp_0929C838, D_psp_0929CB58, D_psp_0929CE90,
-    D_psp_0929CEB8, D_psp_0929CED8, D_psp_0929CEF0, D_psp_0929CF10,
-    D_psp_0929CF30, D_psp_0929CF48, D_psp_0929C600, D_psp_0929CF68,
-    D_psp_0929CF88, D_psp_0929CFA0, D_psp_0929CFC0, D_psp_0929CFE0,
-    D_psp_0929D000, D_psp_0929D020, D_psp_0929D040, D_psp_0929D060,
-    D_psp_0929D080, D_psp_0929D090, D_psp_0929D0A0, D_psp_0929D0C0,
-    D_psp_0929D0E0, D_psp_0929D100, D_psp_0929D110, D_psp_0929D130,
-    D_psp_0929D150, D_psp_0929D170, D_psp_0929D190};
-
+    "Distrutto da Richter",
+    "Rivive bagnando le ossa",
+    "Durissimo teschio rotante.",
+    "Corpi freschi.",
+    "Pipistrelli vampiri.",
+    "Lupi a guardia dell'entrata",
+    "Scheletro animato magicamente.",
+    "Creatura leggendaria.",
+    "Scheletro a quattro zampe.",
+    "Feroce scheletro",
+    "Tritone sputa-fuoco.",
+    "Asciere di basso livello.",
+    "Scheletro lancia-ossa.",
+    "Soldati della Chiesa Orientale",
+    "Pianta con foglie affilate",
+    "Tavola Ouija posseduta.",
+    "Scheletro armato di boomerang.",
+    "Demone volante sputa-fuoco.",
+    "Spettri di fuoco minori. ",
+    "Demone con lancia incantata.",
+    "Demoniaco burattino infernale.",
+    "Nauseabonda bestia a due",
+    "Dai capelli di Medusa.",
+    "Strana creatura antropomorfa.",
+    "Scheletri armati di",
+    "Un pivello del combattimento",
+    "Cavaliere con pesante armatura",
+    "Dai capelli di Medusa.",
+    "Pianta mutata.",
+    "Asciere ben armato.",
+    "Demone di fuoco e ghiaccio.",
+    "Scheletro arciere armato",
+    "Guerriero armato",
+    "Serpente parassita di Scilla.",
+    "Scheletro di scimmia animato.",
+    "Demone mutaforma.",
+    "Testa di soldato giustiziato.",
+    "Scheletro guerriero volante.",
+    "Libro di incantesimi di base.",
+    "Gufo del cortile locale",
+    "Pilastro ricavato da un",
+    "Guerriero armato con",
+    "Manifestazioni fisiche di",
+    "Rospo magicamente ingrandito",
+    "Guerriero non morto",
+    "Guardia con armatura.",
+    "Scheletro senza testa armato",
+    "Rana che vive nelle grotte.",
+    "Spirito femminile del gelo.",
+    "Gigantesco spirito teschio.",
+    "Libro delle armi antiche.",
+    "Scheletro armato di mazza",
+    "Uomo-Pulce che cavalca",
+    "Corvo carnivoro.",
+    "Spirito di un corvo blu",
+    "Maligna spada demoniaca.",
+    "Pianta con foglie affilate",
+    "Mitologico mostro marino.",
+    "Scheletro armato di naginata.",
+    "Spadaccino che rimane",
+    "Cavaliere con pesante armatura.",
+    "Invisib. spirito di cacciatr.",
+    "Golem di fango animato.",
+    "Maligna spada demoniaca.",
+    "Uomo-Pulce armato con",
+    "Mostro fatto di gelatina.",
+    "Scheletro gigante.",
+    "Cavallo, leone e aquila.",
+    "Maestro del combattimento",
+    "Scheletro di pantera mannara.",
+    "Metﾋ uomo e metﾋ lupo.",
+    "Camposantiere. Maestro del",
+    "Creatura con testa di",
+    "Metﾋ uomo e metﾋ toro.",
+    "Gremlin piromane.",
+    "Guerriero non morto assetato",
+    "Sacrario di teschio portato",
+    "Streghe fantasma di Salem．",
+    "Cerca tra le tombe ed ﾐ",
+    "Guardiano con testa di pesce.",
+    "Misterioso spadaccino",
+    "Piccolo demone magico.",
+    "Fratello Gigante.",
+    "Fratello Gigante.",
+    "Primo dei fratelli Giganti.",
+    "Mostro fatto di viscida ",
+    "Cavaliere in armatura ",
+    "Demoniaco signore dei corvi.",
+    "Demone armato di lampo.",
+    "Cane da guardia degli Inferi.",
+    "Innaffiata con sangue umano.",
+    "Vampiro magico. Governa",
+    "Un pesce grosso.",
+    "Lapidi possedute dagli",
+    "Demone femmina.",
+    "Uomo impalato a caccia",
+    "Il leone codardo.",
+    "Mostro chiamato schmoo ．",
+    "Uomo di latta senza cuore.",
+    "Creatura da incubo.",
+    "Scheletro che rincorre sempre",
+    "Contiene infiniti semi velenosi.",
+    "Cavaliere in armatura ",
+    "Zombie che attacca",
+    "Esperto di armi da lancio.",
+    "Insetto mutato.",
+    "Arciere micidialmente preciso.",
+    "Licantropo mutaforma.",
+    "Wyrm controllato dall'Uomo-Pulce.",
+    "ｹ armato di una temibile",
+    "Creatura liquida.",
+    "Scheletro animato di un",
+    "Drago bianco cavalcato ",
+    "Mostro con testa di toro.",
+    "Pipistrello vampiro gigante.",
+    "Angelo arciere.",
+    "Lupo che sputa palle di fuoco.",
+    "Maligna spada demoniaca.",
+    "Cavaliere in armatura ",
+    "Scheletro con attacco con salto.",
+    "Scheletro che cavalca un Warg.",
+    "Malvagio polpo mutato.",
+    "Bestia da guerra corazzata.",
+    "Tutto istinto, poco cervello.",
+    "Demone del fuoco.",
+    "Orribile demone infernale.",
+    "Demone mutaforma.",
+    "Fatto di parti del corpo",
+    "Erba Venere avanzata.",
+    "Mummia dell'antico Egitto.",
+    "Demone con testa di serpente.",
+    "Piccolo demone malizioso.",
+    "Zombie che impersona Grant．",
+    "Zombie che impersona Trevor．",
+    "Zombie che impersona Sypha．",
+    "Belzebｦ, Signore delle Mosche．",
+    "Giovane strega.",
+    "Boia infernale.",
+    "Spirito di ghiaccio androgino.",
+    "Cacciatrice di vampiri. Usa 4",
+    "Esperto cacciatore di vampiri.",
+    "Uccello raro.",
+    "Creatura magica che intende",
+    "ArmaDuro di alto livello.",
+    "Intimo amico di Dracula.",
+    "Il prete oscuro di Dracula.",
+    "Signore della Valacchia．"};
 static char* D_psp_0929DBD0[] = {
     "nel １７９２．（Cinque anni fa）",
     "nel sangue.",
@@ -986,7 +952,6 @@ static char* D_psp_0929DBD0[] = {
     "",
     "",
     "Padre di Alucard．"};
-
 static char* D_psp_0929ED18[] = {
     "Eliminﾑ par Richter ",
     "Revit grﾍce ﾋ ses os",
@@ -1135,7 +1100,6 @@ static char* D_psp_0929ED18[] = {
     "Confidente de Dracula.",
     "Prﾒtre malﾑfique de Dracula.",
     "Seigneur de Valachie."};
-
 static char* D_psp_0929F950[] = {
     "en １７９２．（５ ans plus tﾛt）",
     "couverts de sang.",
@@ -1284,7 +1248,6 @@ static char* D_psp_0929F950[] = {
     "",
     "",
     "Pﾐre d’Alucard."};
-
 static char* D_psp_092A0AF0[] = {
     "Von Richter vernichtet",
     "Wiedererweckt mit blut-",
@@ -1433,7 +1396,6 @@ static char* D_psp_092A0AF0[] = {
     "Draculas Vertrauter.",
     "Dunkler Priester des Dracula.",
     "Herr von Wallachia."};
-
 static char* D_psp_092A14D0[] = {
     "im Jahre １７９２ (vor ５ Jahren).",
     "getrﾎnkten Knochen.",
@@ -1582,7 +1544,6 @@ static char* D_psp_092A14D0[] = {
     "",
     "",
     "Vater von Alucard."};
-
 static char* D_psp_092A1730[] = {"ATT", "DEF"};
 static char* D_psp_092A1798[] = {
     "\002"
