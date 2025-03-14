@@ -112,7 +112,7 @@
 | dra    | SetGPUBuffRGBZero                   |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090F1BC8                   |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C00                   |       19 |          1 |        |                                 |       |
-| dra    | func_800EA5AC                       |       19 |          1 |        |                                 |       |
+| dra    | func_800EA5AC                       |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
 | dra    | func_psp_0913D5D8                   |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090E8620                   |       19 |          1 |        |                                 |       |
 | ric    | func_8015CC28                       |       19 |          1 |        |                                 |       |
