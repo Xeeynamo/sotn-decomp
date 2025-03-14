@@ -987,181 +987,154 @@ static char* D_psp_0929DBD0[] = {
     "",
     "Padre di Alucard．"};
 
-static char D_psp_0929DE20[] = "Eliminﾑ par Richter ";
-static char D_psp_0929DE38[] = "Revit grﾍce ﾋ ses os";
-static char D_psp_0929DE50[] = "Crﾍne indestructible tournant";
-static char D_psp_0929DE70[] = "Cadavre frais.";
-static char D_psp_0929DE80[] = "Chauve-souris vampires.";
-static char D_psp_0929DE98[] = "Loups qui gardent l’entrﾑe";
-static char D_psp_0929DEB8[] = "Squelette contrﾛlﾑ par";
-static char D_psp_0929DED0[] = "\"Crﾑature\" lﾑgendaire.";
-static char D_psp_0929DEE8[] = "Squelette ﾋ quatre jambes.";
-static char D_psp_0929DF08[] = "Fﾑroce spadassin squelette.";
-static char D_psp_0929DF28[] = "Triton cracheur de boules de";
-static char D_psp_0929DF48[] = "Chevalier de bas niveau";
-static char D_psp_0929DF60[] = "Squelette lanﾏant des os.";
-static char D_psp_0929DF80[] = "Soldats de l’Eglise d’Orient";
-static char D_psp_0929DFA0[] = "Plante dotﾑe de feuilles";
-static char D_psp_0929DFC0[] = "Table ouija possﾑdﾑe.";
-static char D_psp_0929DFD8[] = "Squelette maniant";
-static char D_psp_0929DFF0[] = "Dﾑmon volant cracheur de feu.";
-static char D_psp_0929E010[] = "Fantﾛmes enflammﾑs";
-static char D_psp_0929E028[] = "Dﾑmon muni d’une lance";
-static char D_psp_0929E040[] = "Poupﾑe dﾑmoniaque venue";
-static char D_psp_0929E058[] = "Bﾒte repoussante ﾋ deux tﾒtes.";
-static char D_psp_0929E078[] = "Des cheveux de la Mﾑduse.";
-static char D_psp_0929E098[] = "Crﾑature ﾑtrange ﾋ forme";
-static char D_psp_0929E0B8[] = "Squelettes ﾑquipﾑs";
-static char D_psp_0929E0D0[] = "Novice dans le combat";
-static char D_psp_0929E0E8[] = "Chevalier avec une lourde";
-static char D_psp_0929E108[] = "Plante mutante.";
-static char D_psp_0929E118[] = "Dﾑmon du feu et de la glace.";
-static char D_psp_0929E138[] = "Archer squelette ﾑquipﾑ";
-static char D_psp_0929E150[] = "Guerrier avec une armure";
-static char D_psp_0929E170[] = "Serpent rattachﾑ ﾋ Scylla.";
-static char D_psp_0929E190[] = "Singe squelette animﾑ.";
-static char D_psp_0929E1A8[] = "Dﾑmon capable de changer";
-static char D_psp_0929E1C8[] = "Tﾒte de soldat exﾑcutﾑ.";
-static char D_psp_0929E1E0[] = "Guerrier squelette volant";
-static char D_psp_0929E200[] = "Livre de sortilﾐges";
-static char D_psp_0929E218[] = "Hibou de la basse-cour locale";
-static char D_psp_0929E238[] = "Pilier construit ﾋ partir d’un";
-static char D_psp_0929E258[] = "Chevalier armﾑ d’une";
-static char D_psp_0929E270[] = "Manifestation phys. d’une ﾍme";
-static char D_psp_0929E290[] = "Crapaud devenu gﾑant suite";
-static char D_psp_0929E2B0[] = "Guerrier mort-vivant ﾑquipﾑ";
-static char D_psp_0929E2D0[] = "Garde avec une armure. Fort";
-static char D_psp_0929E2F0[] = "Squelette sans tﾒte.";
-static char D_psp_0929E308[] = "Grenouille vivant dans";
-static char D_psp_0929E320[] = "Esprit fﾑminin maniant";
-static char D_psp_0929E338[] = "Esprit d’un crﾍne gﾑant.";
-static char D_psp_0929E358[] = "Livre sur les armes anciennes.";
-static char D_psp_0929E378[] = "Squelette ﾑquipﾑ d’un flﾑau";
-static char D_psp_0929E398[] = "Homme-puce chevauchant une";
-static char D_psp_0929E3B8[] = "Corbeau dﾑvorant la chair.";
-static char D_psp_0929E3D8[] = "Esprit d’un Corbeau bleu";
-static char D_psp_0929E3F8[] = "Epﾑe dﾑmon malﾑfique.";
-static char D_psp_0929E410[] = "Monstre des mers";
-static char D_psp_0929E428[] = "Seigneur maniant une ﾑpﾑe";
-static char D_psp_0929E448[] = "Chevalier lourdement protﾑgﾑ.";
-static char D_psp_0929E468[] = "Esprit de chasseuse invisible.";
-static char D_psp_0929E488[] = "Golem de boue animﾑ.";
-static char D_psp_0929E4A0[] = "Homme-puce armﾑ d’une hache";
-static char D_psp_0929E4C0[] = "Monstre gluant.";
-static char D_psp_0929E4D0[] = "Squelette gﾑant.";
-static char D_psp_0929E4E8[] = "Mi-cheval， mi-lion";
-static char D_psp_0929E500[] = "Maﾖtre du combat ﾋ";
-static char D_psp_0929E518[] = "Squelette de panthﾐre-garou.";
-static char D_psp_0929E538[] = "Mi-homme, mi-loup.";
-static char D_psp_0929E550[] = "Gardien des tombes.";
-static char D_psp_0929E568[] = "Crﾑature avec une tﾒte de";
-static char D_psp_0929E588[] = "Mi-homme, mi-taureau.";
-static char D_psp_0929E5A0[] = "Gremlin pyromane.";
-static char D_psp_0929E5B8[] = "Chev. zombie assoiffﾑ de sang";
-static char D_psp_0929E5D8[] = "Relique d’un crﾍne transportﾑe";
-static char D_psp_0929E5F8[] = "Sorciﾐres fantﾛmes de Salem.";
-static char D_psp_0929E618[] = "Fouille parmi les tombes et a";
-static char D_psp_0929E638[] = "Gardien formﾑ de tﾒtes";
-static char D_psp_0929E650[] = "Mystﾑrieux spadassin";
-static char D_psp_0929E668[] = "Petit dﾑmon maniant la magie.";
-static char D_psp_0929E688[] = "Frﾐre gﾑant.";
-static char D_psp_0929E698[] = "Frﾐre gﾑant. Utilise un";
-static char D_psp_0929E6B0[] = "L’aﾖnﾑ des Frﾐres gﾑants.";
-static char D_psp_0929E6D0[] = "Monstre formﾑ d’une substance";
-static char D_psp_0929E6F0[] = "Chevalier avec une armure.";
-static char D_psp_0929E710[] = "Seigneur malﾑfique";
-static char D_psp_0929E728[] = "Dﾑmon contrﾛlant la foudre.";
-static char D_psp_0929E748[] = "Chien de garde des Enfers";
-static char D_psp_0929E768[] = "Arrosﾑe avec du sang humain.";
-static char D_psp_0929E788[] = "Vampire maﾖtrisant la magie.";
-static char D_psp_0929E7A8[] = "Maﾖtre Tﾒte de poisson.";
-static char D_psp_0929E7C0[] = "Pierres tombales possﾑdﾑes pa";
-static char D_psp_0929E7E0[] = "Dﾑmon fﾑminin. S’immisce";
-static char D_psp_0929E800[] = "Homme empalﾑ ﾋ la recherche";
-static char D_psp_0929E820[] = "Lion peureux.";
-static char D_psp_0929E830[] = "Monstre surnommﾑ \"Schmoo\".";
-static char D_psp_0929E850[] = "Homme de fer sans cｪur.";
-static char D_psp_0929E868[] = "Crﾑature cauchemardesque.";
-static char D_psp_0929E888[] = "Squelette poursuivant";
-static char D_psp_0929E8A0[] = "Renferme un nombre infini";
-static char D_psp_0929E8C0[] = "Chevalier avec une armure";
-static char D_psp_0929E8E0[] = "Zombies continuant d’attaquer,";
-static char D_psp_0929E900[] = "Expert dans le lancer d’armes.";
-static char D_psp_0929E920[] = "Insecte mutant. Seuls les";
-static char D_psp_0929E940[] = "Archer diaboliquement prﾑcis.";
-static char D_psp_0929E960[] = "Lycanthrope capable de";
-static char D_psp_0929E978[] = "Wyrm contrﾛlﾑ par";
-static char D_psp_0929E990[] = "Manie une arme tirant";
-static char D_psp_0929E9A8[] = "Crﾑature liquide. Prend la";
-static char D_psp_0929E9C8[] = "Squelette animﾑ d’un";
-static char D_psp_0929E9E0[] = "Dragon blanc chevauchﾑ par";
-static char D_psp_0929EA00[] = "Monstre ﾋ tﾒte de taureau.";
-static char D_psp_0929EA20[] = "Enorme chauve-souris";
-static char D_psp_0929EA38[] = "Ange archer.";
-static char D_psp_0929EA48[] = "Loup crachant des boules";
-static char D_psp_0929EA68[] = "Squelette effectuant";
-static char D_psp_0929EA80[] = "Squelette chevauchant";
-static char D_psp_0929EA98[] = "Pieuvre mutante et malﾑfique.";
-static char D_psp_0929EAB8[] = "Bﾒte de combat protﾑgﾑe";
-static char D_psp_0929EAD0[] = "Homo Sapiens suﾏant le sang";
-static char D_psp_0929EAF0[] = "Dﾑmon enflammﾑ.";
-static char D_psp_0929EB00[] = "Dﾑmon terrifiant venu";
-static char D_psp_0929EB18[] = "Formﾑe des corps de puissants";
-static char D_psp_0929EB38[] = "Herbe de Vﾑnus dﾑveloppﾑe.";
-static char D_psp_0929EB58[] = "Ancienne momie ﾑgyptienne.";
-static char D_psp_0929EB78[] = "Femme-dﾑmon aux cheveux de";
-static char D_psp_0929EB98[] = "Petit dﾑmon espiﾐgle.";
-static char D_psp_0929EBB0[] = "Zombie prenant l’apparence";
-static char D_psp_0929EBD0[] = "Seigneur des mouches.";
-static char D_psp_0929EBE8[] = "Jeune sorciﾐre.";
-static char D_psp_0929EBF8[] = "Bourreau des Enfers.";
-static char D_psp_0929EC10[] = "Esprit de la glace travesti.";
-static char D_psp_0929EC30[] = "Chasseuse de vamp. Utilise 4";
-static char D_psp_0929EC50[] = "Maﾖtre chasseur de vampires.";
-static char D_psp_0929EC70[] = "Oiseau rare. S’enfuit";
-static char D_psp_0929EC88[] = "Etre magique voulant rﾑgner";
-static char D_psp_0929ECA8[] = "Puissant Seigneur ﾋ armure.";
-static char D_psp_0929ECC8[] = "Confidente de Dracula.";
-static char D_psp_0929ECE0[] = "Prﾒtre malﾑfique de Dracula.";
-static char D_psp_0929ED00[] = "Seigneur de Valachie.";
 static char* D_psp_0929ED18[] = {
-    D_psp_0929DE20, D_psp_0929DE38, D_psp_0929DE50, D_psp_0929DE70,
-    D_psp_0929DE80, D_psp_0929DE98, D_psp_0929DEB8, D_psp_0929DED0,
-    D_psp_0929DEE8, D_psp_0929DF08, D_psp_0929DF28, D_psp_0929DF48,
-    D_psp_0929DF60, D_psp_0929DF80, D_psp_0929DFA0, D_psp_0929DFC0,
-    D_psp_0929DFD8, D_psp_0929DFF0, D_psp_0929E010, D_psp_0929E028,
-    D_psp_0929E040, D_psp_0929E058, D_psp_0929E078, D_psp_0929E098,
-    D_psp_0929E0B8, D_psp_0929E0D0, D_psp_0929E0E8, D_psp_0929E078,
-    D_psp_0929E108, D_psp_0929E0E8, D_psp_0929E118, D_psp_0929E138,
-    D_psp_0929E150, D_psp_0929E170, D_psp_0929E190, D_psp_0929E1A8,
-    D_psp_0929E1C8, D_psp_0929E1E0, D_psp_0929E200, D_psp_0929E218,
-    D_psp_0929E238, D_psp_0929E258, D_psp_0929E270, D_psp_0929E290,
-    D_psp_0929E2B0, D_psp_0929E2D0, D_psp_0929E2F0, D_psp_0929E308,
-    D_psp_0929E320, D_psp_0929E338, D_psp_0929E358, D_psp_0929E378,
-    D_psp_0929E398, D_psp_0929E3B8, D_psp_0929E3D8, D_psp_0929E3F8,
-    D_psp_0929DFA0, D_psp_0929E410, D_psp_0929DFD8, D_psp_0929E428,
-    D_psp_0929E448, D_psp_0929E468, D_psp_0929E488, D_psp_0929E3F8,
-    D_psp_0929E4A0, D_psp_0929E4C0, D_psp_0929E4D0, D_psp_0929E4E8,
-    D_psp_0929E500, D_psp_0929E518, D_psp_0929E538, D_psp_0929E550,
-    D_psp_0929E568, D_psp_0929E588, D_psp_0929E5A0, D_psp_0929E5B8,
-    D_psp_0929E5D8, D_psp_0929E5F8, D_psp_0929E618, D_psp_0929E638,
-    D_psp_0929E650, D_psp_0929E668, D_psp_0929E688, D_psp_0929E698,
-    D_psp_0929E6B0, D_psp_0929E6D0, D_psp_0929E6F0, D_psp_0929E710,
-    D_psp_0929E728, D_psp_0929E748, D_psp_0929E768, D_psp_0929E788,
-    D_psp_0929E7A8, D_psp_0929E7C0, D_psp_0929E7E0, D_psp_0929E800,
-    D_psp_0929E820, D_psp_0929E830, D_psp_0929E850, D_psp_0929E868,
-    D_psp_0929E888, D_psp_0929E8A0, D_psp_0929E8C0, D_psp_0929E8E0,
-    D_psp_0929E900, D_psp_0929E920, D_psp_0929E940, D_psp_0929E960,
-    D_psp_0929E978, D_psp_0929E990, D_psp_0929E9A8, D_psp_0929E9C8,
-    D_psp_0929E9E0, D_psp_0929EA00, D_psp_0929EA20, D_psp_0929EA38,
-    D_psp_0929EA48, D_psp_0929E3F8, D_psp_0929E6F0, D_psp_0929EA68,
-    D_psp_0929EA80, D_psp_0929EA98, D_psp_0929EAB8, D_psp_0929EAD0,
-    D_psp_0929EAF0, D_psp_0929EB00, D_psp_0929E1A8, D_psp_0929EB18,
-    D_psp_0929EB38, D_psp_0929EB58, D_psp_0929EB78, D_psp_0929EB98,
-    D_psp_0929EBB0, D_psp_0929EBB0, D_psp_0929EBB0, D_psp_0929EBD0,
-    D_psp_0929EBE8, D_psp_0929EBF8, D_psp_0929EC10, D_psp_0929EC30,
-    D_psp_0929EC50, D_psp_0929EC70, D_psp_0929EC88, D_psp_0929ECA8,
-    D_psp_0929ECC8, D_psp_0929ECE0, D_psp_0929ED00};
+    "Eliminﾑ par Richter ",
+    "Revit grﾍce ﾋ ses os",
+    "Crﾍne indestructible tournant",
+    "Cadavre frais.",
+    "Chauve-souris vampires.",
+    "Loups qui gardent l’entrﾑe",
+    "Squelette contrﾛlﾑ par",
+    "\"Crﾑature\" lﾑgendaire.",
+    "Squelette ﾋ quatre jambes.",
+    "Fﾑroce spadassin squelette.",
+    "Triton cracheur de boules de",
+    "Chevalier de bas niveau",
+    "Squelette lanﾏant des os.",
+    "Soldats de l’Eglise d’Orient",
+    "Plante dotﾑe de feuilles",
+    "Table ouija possﾑdﾑe.",
+    "Squelette maniant",
+    "Dﾑmon volant cracheur de feu.",
+    "Fantﾛmes enflammﾑs",
+    "Dﾑmon muni d’une lance",
+    "Poupﾑe dﾑmoniaque venue",
+    "Bﾒte repoussante ﾋ deux tﾒtes.",
+    "Des cheveux de la Mﾑduse.",
+    "Crﾑature ﾑtrange ﾋ forme",
+    "Squelettes ﾑquipﾑs",
+    "Novice dans le combat",
+    "Chevalier avec une lourde",
+    "Des cheveux de la Mﾑduse.",
+    "Plante mutante.",
+    "Chevalier avec une lourde",
+    "Dﾑmon du feu et de la glace.",
+    "Archer squelette ﾑquipﾑ",
+    "Guerrier avec une armure",
+    "Serpent rattachﾑ ﾋ Scylla.",
+    "Singe squelette animﾑ.",
+    "Dﾑmon capable de changer",
+    "Tﾒte de soldat exﾑcutﾑ.",
+    "Guerrier squelette volant",
+    "Livre de sortilﾐges",
+    "Hibou de la basse-cour locale",
+    "Pilier construit ﾋ partir d’un",
+    "Chevalier armﾑ d’une",
+    "Manifestation phys. d’une ﾍme",
+    "Crapaud devenu gﾑant suite",
+    "Guerrier mort-vivant ﾑquipﾑ",
+    "Garde avec une armure. Fort",
+    "Squelette sans tﾒte.",
+    "Grenouille vivant dans",
+    "Esprit fﾑminin maniant",
+    "Esprit d’un crﾍne gﾑant.",
+    "Livre sur les armes anciennes.",
+    "Squelette ﾑquipﾑ d’un flﾑau",
+    "Homme-puce chevauchant une",
+    "Corbeau dﾑvorant la chair.",
+    "Esprit d’un Corbeau bleu",
+    "Epﾑe dﾑmon malﾑfique.",
+    "Plante dotﾑe de feuilles",
+    "Monstre des mers",
+    "Squelette maniant",
+    "Seigneur maniant une ﾑpﾑe",
+    "Chevalier lourdement protﾑgﾑ.",
+    "Esprit de chasseuse invisible.",
+    "Golem de boue animﾑ.",
+    "Epﾑe dﾑmon malﾑfique.",
+    "Homme-puce armﾑ d’une hache",
+    "Monstre gluant.",
+    "Squelette gﾑant.",
+    "Mi-cheval， mi-lion",
+    "Maﾖtre du combat ﾋ",
+    "Squelette de panthﾐre-garou.",
+    "Mi-homme, mi-loup.",
+    "Gardien des tombes.",
+    "Crﾑature avec une tﾒte de",
+    "Mi-homme, mi-taureau.",
+    "Gremlin pyromane.",
+    "Chev. zombie assoiffﾑ de sang",
+    "Relique d’un crﾍne transportﾑe",
+    "Sorciﾐres fantﾛmes de Salem.",
+    "Fouille parmi les tombes et a",
+    "Gardien formﾑ de tﾒtes",
+    "Mystﾑrieux spadassin",
+    "Petit dﾑmon maniant la magie.",
+    "Frﾐre gﾑant.",
+    "Frﾐre gﾑant. Utilise un",
+    "L’aﾖnﾑ des Frﾐres gﾑants.",
+    "Monstre formﾑ d’une substance",
+    "Chevalier avec une armure.",
+    "Seigneur malﾑfique",
+    "Dﾑmon contrﾛlant la foudre.",
+    "Chien de garde des Enfers",
+    "Arrosﾑe avec du sang humain.",
+    "Vampire maﾖtrisant la magie.",
+    "Maﾖtre Tﾒte de poisson.",
+    "Pierres tombales possﾑdﾑes pa",
+    "Dﾑmon fﾑminin. S’immisce",
+    "Homme empalﾑ ﾋ la recherche",
+    "Lion peureux.",
+    "Monstre surnommﾑ \"Schmoo\".",
+    "Homme de fer sans cｪur.",
+    "Crﾑature cauchemardesque.",
+    "Squelette poursuivant",
+    "Renferme un nombre infini",
+    "Chevalier avec une armure",
+    "Zombies continuant d’attaquer,",
+    "Expert dans le lancer d’armes.",
+    "Insecte mutant. Seuls les",
+    "Archer diaboliquement prﾑcis.",
+    "Lycanthrope capable de",
+    "Wyrm contrﾛlﾑ par",
+    "Manie une arme tirant",
+    "Crﾑature liquide. Prend la",
+    "Squelette animﾑ d’un",
+    "Dragon blanc chevauchﾑ par",
+    "Monstre ﾋ tﾒte de taureau.",
+    "Enorme chauve-souris",
+    "Ange archer.",
+    "Loup crachant des boules",
+    "Epﾑe dﾑmon malﾑfique.",
+    "Chevalier avec une armure.",
+    "Squelette effectuant",
+    "Squelette chevauchant",
+    "Pieuvre mutante et malﾑfique.",
+    "Bﾒte de combat protﾑgﾑe",
+    "Homo Sapiens suﾏant le sang",
+    "Dﾑmon enflammﾑ.",
+    "Dﾑmon terrifiant venu",
+    "Dﾑmon capable de changer",
+    "Formﾑe des corps de puissants",
+    "Herbe de Vﾑnus dﾑveloppﾑe.",
+    "Ancienne momie ﾑgyptienne.",
+    "Femme-dﾑmon aux cheveux de",
+    "Petit dﾑmon espiﾐgle.",
+    "Zombie prenant l’apparence",
+    "Zombie prenant l’apparence",
+    "Zombie prenant l’apparence",
+    "Seigneur des mouches.",
+    "Jeune sorciﾐre.",
+    "Bourreau des Enfers.",
+    "Esprit de la glace travesti.",
+    "Chasseuse de vamp. Utilise 4",
+    "Maﾖtre chasseur de vampires.",
+    "Oiseau rare. S’enfuit",
+    "Etre magique voulant rﾑgner",
+    "Puissant Seigneur ﾋ armure.",
+    "Confidente de Dracula.",
+    "Prﾒtre malﾑfique de Dracula.",
+    "Seigneur de Valachie."};
 
 static char* D_psp_0929F950[] = {
     "en １７９２．（５ ans plus tﾛt）",
