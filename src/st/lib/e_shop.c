@@ -2415,7 +2415,8 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, const char* str, u16 length, s32 arg3) {
+Primitive* func_us_801B3FB4(
+    Primitive* prim, const char* str, u16 length, s32 arg3) {
     char ch;
     s32 i;
     u32 max;
