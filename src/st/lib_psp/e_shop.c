@@ -2233,7 +2233,7 @@ static u16 D_psp_092A4AA0[] = {
 
 static RECT D_psp_092A4AF0 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
 
-static ShopItem D_psp_092A4AF8[] = {
+static ShopItem D_us_8018173C[] = {
     {0, 0x00, 200},
     {0, 0x06, 500},
     {0, 0x02, 700},
@@ -3799,7 +3799,7 @@ void func_us_801B2BE4(Entity* self) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk82--;
             }
-        } else if (tempVar & (PAD_R1 + PAD_R2)) {
+        } else if (tempVar & (PAD_R1 | PAD_R2)) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 6;
@@ -3811,7 +3811,7 @@ void func_us_801B2BE4(Entity* self) {
                     self->ext.et_801B6F30.unk82 = self->ext.et_801B6F30.unk88;
                 }
             }
-        } else if (tempVar & (PAD_L1 + PAD_L2)) {
+        } else if (tempVar & (PAD_L1 | PAD_L2)) {
             if (self->ext.et_801B6F30.unk80 > 0) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 0;
@@ -5337,7 +5337,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
     itemIndex = arg1->ext.et_801B6F30.unk82;
     posY = 16;
     for (i = 0; i < g_CurrentEntity->ext.et_801B6F30.unk84; i++) {
-        enemyTactics = &D_psp_092A4AF8[itemIndex];
+        enemyTactics = &D_us_8018173C[itemIndex];
         itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
 #ifdef VERSION_PSP
@@ -5525,9 +5525,9 @@ void func_us_801B6324(Entity* self) {
 #ifdef VERSION_PSP
             for (i = 0; i < 24; i++) {
 #else
-            for (i = 0; i < LEN(D_psp_092A4AF8); i++) {
+            for (i = 0; i < LEN(D_us_8018173C); i++) {
 #endif
-                itemID = D_psp_092A4AF8[i].itemId;
+                itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
                 if (D_8C630D0) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
@@ -5597,17 +5597,17 @@ void func_us_801B6324(Entity* self) {
 #endif
             itemID =
                 (self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80);
-            switch (D_psp_092A4AF8[itemID].category) {
+            switch (D_us_8018173C[itemID].category) {
             case 0:
                 g_api.PlaySfx(SFX_UI_ERROR);
                 break;
 
             case 1:
-                if (g_Status.gold < D_psp_092A4AF8[itemID].price) {
+                if (g_Status.gold < D_us_8018173C[itemID].price) {
                     g_api.PlaySfx(SFX_UI_ERROR);
                 } else {
-                    g_Status.gold -= D_psp_092A4AF8[itemID].price;
-                    itemID = D_psp_092A4AF8[itemID].itemId;
+                    g_Status.gold -= D_us_8018173C[itemID].price;
+                    itemID = D_us_8018173C[itemID].itemId;
                     g_CastleFlags[(itemID >> 3) + ENEMY_TACTICS_180] |=
                         (1 << (itemID & 7));
                     SetStep(4);
@@ -5658,7 +5658,7 @@ void func_us_801B6324(Entity* self) {
         D_psp_08C630DC =
             self->ext.et_801B6F30.unk82 + self->ext.et_801B6F30.unk80;
 #endif
-        D_80097C98 = D_psp_092A4AF8[self->ext.et_801B6F30.unk82 +
+        D_80097C98 = D_us_8018173C[self->ext.et_801B6F30.unk82 +
                                     self->ext.et_801B6F30.unk80]
                          .itemId -
                      0x80000000;

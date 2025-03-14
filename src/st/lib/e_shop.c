@@ -1124,7 +1124,7 @@ void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
+static void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
     prim->x0 = otherPrim->x0;
     prim->y0 = otherPrim->y0;
     prim->x1 = otherPrim->x1;
@@ -2415,11 +2415,11 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
-    u8 ch;
+Primitive* func_us_801B3FB4(Primitive* prim, const char* str, u16 length, s32 arg3) {
+    char ch;
     s32 i;
     u32 max;
-    char* chPtr;
+    const char* chPtr;
 
     chPtr = str;
     max = 0;
@@ -2434,7 +2434,7 @@ Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
     for (i = 0; i < max; i++) {
 #endif
         ch = *str++;
-        prim->u0 = (ch & 0xF) * 8;
+        prim->u0 = (ch & 0x0F) << 3;
         prim->v0 = (ch & 0xF0) >> 1;
         if (arg3 != 0) {
             prim->drawMode = DRAW_DEFAULT;
@@ -3855,11 +3855,11 @@ void func_us_801B6324(Entity* self) {
                     prim->clut = 0x17F;
                     prim->u0 = prim->u2 = 0x58;
                     prim->u1 = prim->u3 = 0x60;
-                    prim->v0 = prim->v1 = (i - 0xB) * 8 + 0x70;
-                    prim->v2 = prim->v3 = 0x78 - (i - 0xB) * 8;
+                    prim->v0 = prim->v1 = (i - 11) * 8 + 0x70;
+                    prim->v2 = prim->v3 = 0x78 - (i - 11) * 8;
                     prim->x0 = prim->x2 = 0x7C;
                     prim->x1 = prim->x3 = prim->x0 + 8;
-                    prim->y0 = prim->y1 = (i - 0xB) * 0x60 + 0x14;
+                    prim->y0 = prim->y1 = (i - 11) * 0x60 + 0x14;
                     prim->y2 = prim->y3 = prim->y0 + 8;
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;

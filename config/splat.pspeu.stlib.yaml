@@ -17,8 +17,6 @@ options:
   find_file_boundaries: true
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
-  # data_string_guesser_level: 0
-  # data_string_encoding: SHIFT-JIS
   asm_jtbl_label_macro: jlabel
   symbol_name_format: psp_$VRAM
   nonmatchings_path: psp
