@@ -4,424 +4,258 @@
 # Reverse stage OVL options: rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp
 # Boss OVL options: bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8
 # Servant OVL options: tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006
-
 ifeq ($(VERSION),us)
-VERSION_PREFIX := PSX_US
+GAME		:= main dra ric weapon
+STAGES		:= cen chi dre lib mad no0 no1 no3 no4 np3 nz0 sel st0 wrp
+STAGES   	+= rwrp
+BOSSES		:= bo4 mar rbo3 rbo5
+SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 else ifeq ($(VERSION),hd)
-VERSION_PREFIX := PSX_HD
+GAME		:= dra ric
+STAGES		:= cen wrp
+STAGES		+= 
+BOSSES		:= 
+SERVANTS	:= tt_000
 endif
 
-PSX_US_GAME		:= main dra ric weapon
-PSX_US_STAGES	:= cen chi dre lib no0 no1 no3 np3 nz0 st0 wrp mad sel no4
-PSX_US_STAGES   += rwrp # Second line for stages for future readability
-PSX_US_BOSSES   := bo4 mar
-PSX_US_BOSSES   += rbo3 rbo5
-PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
-
-# VERSION=hd
-PSX_HD_GAME		:= dra ric
-PSX_HD_STAGES	:= cen wrp
-PSX_HD_STAGES	+= 
-PSX_HD_BOSSES	:= 
-PSX_HD_SERVANTS	:= tt_000
-
-# Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
-$(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
-# Build targets is for when the non-prefixed name is needed
-$(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
-
-# compiler
-CC1PSX          := ./bin/cc1-psx-26
+# Compiler
+CC1PSX          := $(BIN_DIR)/cc1-psx-26
 CC              := $(CC1PSX)
 AS              := $(CROSS)as
 CPP             := $(CROSS)cpp
+MASPSX			 = $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=$(if $(findstring libgpu/sys.c.o,$@),2.21,2.34)
 
-# flags
-CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
+# Flags
+CC_FLAGS        += -G0 -w -O2 $(addprefix -f,unsigned-char peephole function-cse pcc-struct-return common verbose-asm) -msoft-float -g
 CPP_FLAGS       += -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin
-CPP_FLAGS       += -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM
-CPP_FLAGS       += -D_internal_version_$(VERSION) -DSOTN_STR
+CPP_FLAGS     	+= $(addprefix -D,mips __GNUC__=2 __OPTIMIZE__ __mips__ __mips psx __psx__ __psx _PSYQ __EXTENSIONS__ _MIPSEL)
+CPP_FLAGS		+= $(addprefix -D,_LANGUAGE_C LANGUAGE_C NO_LOGS HACKS USE_INCLUDE_ASM _internal_version_$(VERSION) SOTN_STR)
 AS_FLAGS        += -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0
 PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 LD_FLAGS        := -nostdlib --no-check-sections
 
-# libs
-PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
+COMPILER		:= $(CPP) $(CPP_FLAGS) -lang-c
+COMPILER_ARGS	 = | $(SOTNSTR) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
+COMPILER_REQS	 = $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel-dirs) | $(VENV_DIR)/bin
+
+# Libs
+PSXLIBS         := libc libc2 libapi libetc libcard libgpu libgs libgte libcd libsnd libspu
+
+# Dirs
+PSXLIB_DIRS     := psxsdk/ $(addprefix psxsdk/,$(PSXLIBS))
+PSXLIB_DATA_DIRS := data/ $(addprefix data/,$(PSXLIB_DIRS))
+MAIN_ASM_DIRS   := $(ASM_DIR)/main/ $(subst //,/,$(addprefix $(ASM_DIR)/main/,$(PSXLIB_DIRS) $(PSXLIB_DATA_DIRS)))
+MAIN_SRC_DIRS   := $(SRC_DIR)/main/ $(subst //,/,$(addprefix $(SRC_DIR)/main/,$(PSXLIB_DIRS)))
 
 # Files
-PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
-PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
-MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/main/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
-MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/main/,. $(PSXLIB_DIRS))
-
-MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
-MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
+MAIN_S_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.s,$(MAIN_ASM_DIRS))))
+MAIN_C_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.c,$(MAIN_SRC_DIRS))))
 MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
-DEPENDENCIES	+= $(MASPSX_APP) 
+WEAPON0_FILES 	:= $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
+WEAPON1_FILES 	:= $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
 
-# PSX specific targets
-extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
-	make extract_assets
-	make build_assets
-extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
-	echo $(PSX_HD_EXTRACT_TARGETS)
-	make extract_assets
-	make build_assets
+DRA_SYMBOLS 	:= $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt
+STMAD_SYMBOLS 	:= $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt
+WEAPON_SYMBOLS 	:= $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
 
-extract_disk_us: extract_disk_psxus
-extract_disk_hd: extract_disk_pspeu
-extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
+US_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR)/ST/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/st/$*
+US_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR)/BOSS/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/boss/$*
+HD_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
+HD_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR:hd=pspeu)/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/boss/$*
 
-build_us: $(PSX_US_BUILD_TARGETS)
-build_hd: $(PSX_HD_BUILD_TARGETS)
+# These are a little backward, but there is something in the build chain that doesn't like them in a more straightforward way
+main-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS))
+$(call get_build_dirs,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS)): main-dirs
 
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
-	$(SPLAT) $<
-	touch $@
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
-	$(SPLAT) $<
-	touch $@
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).ric.txt | ric_dirs
-	$(SPLAT) $<
-	touch $@
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt | stmad_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
-# todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
-$(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d disks/$(VERSION)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
-build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
-	$(SPLAT) $<
-	$(GFXSTAGE) d disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
-	$(SPLAT) $<
-	touch $@
-$(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
-	$(SPLAT) $<
-	touch $@
+st%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*)
+$(call get_build_dirs,$(ASM_DIR)/st/% $(ASM_DIR)/st/%/data $(ASM_DIR)/st/%/handwritten $(SRC_DIR)/st/% $(ASSETS_DIR)/st/%): st%-dirs
 
-$(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
-	echo $(call list_o_files,dra)
-	$(call link,dra,$@)
-$(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
-	$(call link,tt_$*,$@)
+bo%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*)
+$(call get_build_dirs,$(ASM_DIR)/boss/% $(ASM_DIR)/boss/%/data $(ASM_DIR)/boss/%/handwritten $(SRC_DIR)/boss/% $(ASSETS_DIR)/boss/%): bo%-dirs
 
-$(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+tt_%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*)
+$(call get_build_dirs,$(ASM_DIR)/servant/tt_% $(ASM_DIR)/servant/tt_%/data $(SRC_DIR)/servant/tt_% $(ASSETS_DIR)/servant/tt_%): tt_%-dirs
 
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_1.animset.o: $(ASSETS_DIR)/weapon/%_1.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s -s g_Animset
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_1.animset.s
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%_2.animset.o: $(ASSETS_DIR)/weapon/%_2.animset.json
-	./tools/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s -s g_Animset2
-	$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*_2.animset.s
+weapon-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
+$(call get_build_dirs,weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon): | weapon-dirs
 
-# assembly and c files
-$(BUILD_DIR)/%.s.o: %.s
-	mkdir -p $(dir $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
+%-dirs:
+	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*)
+$(call get_build_dirs,$(ASM_DIR)/%/data $(SRC_DIR)/% $(ASSETS_DIR)/%): | %-dirs
 
-$(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
-	mkdir -p $(dir $@)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
+# Step 1/2 of extract
+# The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
+$(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) | %-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
+	$(muffle)$(SPLAT) $<; touch $@
+stage_symbols = $(if $(filter-out mad,$1),$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st$1.txt,$(STMAD_SYMBOLS))# This is only used here
+$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $$(call stage_symbols,%) | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
+	$(muffle)$(SPLAT) $<
+	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_ST)
+$(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
+	$(muffle)$(SPLAT) $<
+	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_BO)
 
-$(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
+# Step 2/2 of extract
+$(addprefix extract_,us hd): $(SOTNASSETS) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
+	$(call echo,Extracting $(VERSION) assets)
+	$(call if_version,us,$(PNG2S) bdecode $(CONFIG_DIR)/gfx.game.json $(EXTRACTED_DISK_DIR) $(ASSETS_DIR)/game)
+	$(foreach action,extract build,$(SOTNASSETS) $(action) $(CONFIG_DIR)/assets.$(VERSION).yaml;)
 
-extract_assets: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
-build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build config/assets.$(VERSION).yaml
+# Step 1/6 of build
+$(ASM_DIR)/weapon/data/w_%.s: | weapon-dirs# Create an empty file if all the data or bss has been imported
+	$(muffle)$(call echo,Creating empty file: $@,optional) touch $@
+# These are all generated by splat during extract
+# Todo: Add overlay extraction as an explicit prerequisite to create these files
+%.s:
+$(ASSETS_DIR)/weapon/%.png:
+$(ASSETS_DIR)/weapon/%.animset.json:
+$(ASSETS_DIR)/%.json:
+$(ASSETS_DIR)/%.spritesheet.json:
+$(ASSETS_DIR)/%.bin:
+$(ASSETS_DIR)/%.gfxbin:
+$(ASSETS_DIR)/%.palbin:
+$(ASSETS_DIR)/%.png:
 
-$(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
-	mkdir -p $(dir $@)
-	$(PNG2S) encode $< \
-		$(BUILD_DIR)/assets/dra/memcard_$*.png.s g_saveIcon$* \
-		$(BUILD_DIR)/assets/dra/memcard_$*.pal.s g_saveIconPal$*
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.png.o $(BUILD_DIR)/assets/dra/memcard_$*.png.s
-	rm $(BUILD_DIR)/assets/dra/memcard_$*.png.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/dra/memcard_$*.pal.o $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
-	rm $(BUILD_DIR)/assets/dra/memcard_$*.pal.s
-$(BUILD_DIR)/assets/st/sel/memcard_%.png.o: assets/st/sel/memcard_%.png
-	mkdir -p $(dir $@)
-	$(PNG2S) encode $< \
-		$(BUILD_DIR)/assets/st/sel/memcard_$*.png.s g_saveIcon$* \
-		$(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s g_saveIconPal$*
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.o $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
-	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.png.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.o $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
-	rm $(BUILD_DIR)/assets/st/sel/memcard_$*.pal.s
+# Step 2/6 of build
+$(BUILD_DIR)/%.s.o: %.s | $$(dir $$@)
+	$(muffle)$(call echo,Assembling $<,optional) $(AS) $(AS_FLAGS) -o $@ $<
+# Todo: Add overlay extraction as an explicit prerequisite. The *.c compilation requires the *.s files that come from splat
+$(BUILD_DIR)/%.c.o: %.c $(COMPILER_REQS)
+	$(muffle)$(call echo,Compiling $<,optional) $(COMPILER) $< $(call if_version,pspeu,$@) $(COMPILER_ARGS) $(call if_version,us hd,$@)
+$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(COMPILER_REQS)
+	$(muffle)$(call echo,Compiling $<,optional) $(COMPILER) -DW_$* $< $(call if_version,pspeu,$@) $(COMPILER_ARGS) $(call if_version,us hd,$@)
 
+# Handles assets
+# Todo: make sure all file dependencies are in prerequisites
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png | $(VENV_DIR)/bin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file,optional)
+	$(muffle)$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@
+$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o: $(ASSETS_DIR)/weapon/%.animset.json | $(VENV_DIR)/bin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file,optional)
+	$(muffle)$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s -s g_Animset$(subst 1,,$(lastword $(subst _, ,$*)))
+	$(muffle)$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s
+
+$(BUILD_DIR)/$(ASSETS_DIR)/%.json.o: $(ASSETS_DIR)/%.json | $(VENV_DIR)/bin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)$(PYTHON) $(TOOLS_DIR)/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json | $(VENV_DIR)/bin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)$(PYTHON) $(TOOLS_DIR)/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+
+$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)mkdir -p $(dir $@); $(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)mkdir -p $(dir $@); $(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)mkdir -p $(dir $@); $(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+
+$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
+	$(muffle)mkdir -p $(dir $@)
+	$(muffle)$(PNG2S) encode $< \
+		$(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s g_saveIcon$(lastword $(subst _, ,$*)) \
+		$(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.s g_saveIconPal$(lastword $(subst _, ,$*))
+	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.png.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s
+	$(muffle)$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.pal.s
+	$(muffle)rm $(addprefix $(BUILD_DIR)/$(ASSETS_DIR)/,$*.png.s $*.pal.s)
+
+# dra is the only folder for .dec and for now they are ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.dec.o: $(ASSETS_DIR)/dra/%.dec
+	$(muffle)touch $@
+# For now ric png.o files are ignored
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.png.o: $(ASSETS_DIR)/ric/%.png
+	$(muffle)touch $@
 # anything from MAD is an exception and it should be ignored
 $(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
-	touch $@
+	$(muffle)touch $@
 
-.PHONY: main
-main: $(MAIN_TARGET).exe
-.PHONY: %_dirs
-main_dirs:
-	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-$(MAIN_TARGET).exe: $(MAIN_TARGET).elf
-	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-	$(LD) $(LD_FLAGS) -o $@ \
-	-Map $(MAIN_TARGET).map \
-	-T $(BUILD_DIR)/main.ld \
-	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
-
-# Game category structure
-.PHONY: dra
-dra: $(BUILD_DIR)/DRA.BIN
-$(BUILD_DIR)/DRA.BIN: $(BUILD_DIR)/dra.elf
-	$(OBJCOPY) -O binary $< $@
-
-sel: $(BUILD_DIR)/SEL.BIN
-$(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
-	$(OBJCOPY) -O binary $< $@
-
-# Richter category structure
-.PHONY: ric
-ric: $(BUILD_DIR)/RIC.BIN
-$(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
-	$(call link,ric,$@)
-
-# Stage category structure
-.PHONY: cen
-cen: $(BUILD_DIR)/CEN.BIN $(BUILD_DIR)/F_CEN.BIN
-$(BUILD_DIR)/CEN.BIN: $(BUILD_DIR)/stcen.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CEN.BIN:
-	$(GFXSTAGE) e assets/st/cen $@
-
-.PHONY: chi
-chi: $(BUILD_DIR)/CHI.BIN $(BUILD_DIR)/F_CHI.BIN
-$(BUILD_DIR)/CHI.BIN: $(BUILD_DIR)/stchi.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_CHI.BIN:
-	$(GFXSTAGE) e assets/st/chi $@
-
-.PHONY: dre
-dre: $(BUILD_DIR)/DRE.BIN $(BUILD_DIR)/F_DRE.BIN
-$(BUILD_DIR)/DRE.BIN: $(BUILD_DIR)/stdre.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_DRE.BIN:
-	$(GFXSTAGE) e assets/st/dre $@
-
-.PHONY: lib
-lib: $(BUILD_DIR)/LIB.BIN $(BUILD_DIR)/F_LIB.BIN
-$(BUILD_DIR)/LIB.BIN: $(BUILD_DIR)/stlib.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_LIB.BIN:
-	$(GFXSTAGE) e assets/st/lib $@
-
-.PHONY: mad
-mad: $(BUILD_DIR)/MAD.BIN $(BUILD_DIR)/F_MAD.BIN
-$(BUILD_DIR)/MAD.BIN: $(BUILD_DIR)/stmad.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAD.BIN:
-	$(GFXSTAGE) e assets/st/mad $@
-
- PHONY: no0
-no0: $(BUILD_DIR)/NO0.BIN $(BUILD_DIR)/F_NO0.BIN
-$(BUILD_DIR)/NO0.BIN: $(BUILD_DIR)/stno0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO0.BIN:
-	$(GFXSTAGE) e assets/st/no0 $@
-
-.PHONY: no1
-no1: $(BUILD_DIR)/NO1.BIN $(BUILD_DIR)/F_NO1.BIN
-$(BUILD_DIR)/NO1.BIN: $(BUILD_DIR)/stno1.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO1.BIN:
-	$(GFXSTAGE) e assets/st/no1 $@
-
-.PHONY: no3
-no3: $(BUILD_DIR)/NO3.BIN $(BUILD_DIR)/F_NO3.BIN
-$(BUILD_DIR)/NO3.BIN: $(BUILD_DIR)/stno3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO3.BIN:
-	$(GFXSTAGE) e assets/st/no3 $@
-
-.PHONY: no4
-no4: $(BUILD_DIR)/NO4.BIN $(BUILD_DIR)/F_NO4.BIN
-$(BUILD_DIR)/NO4.BIN: $(BUILD_DIR)/stno4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NO4.BIN:
-	$(GFXSTAGE) e assets/st/no4 $@
-
-.PHONY: np3
-np3: $(BUILD_DIR)/NP3.BIN $(BUILD_DIR)/F_NP3.BIN
-$(BUILD_DIR)/NP3.BIN: $(BUILD_DIR)/stnp3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NP3.BIN:
-	$(GFXSTAGE) e assets/st/np3 $@
-
-.PHONY: nz0
-nz0: $(BUILD_DIR)/NZ0.BIN $(BUILD_DIR)/F_NZ0.BIN
-$(BUILD_DIR)/NZ0.BIN: $(BUILD_DIR)/stnz0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_NZ0.BIN:
-	$(GFXSTAGE) e assets/st/nz0 $@
-
-.PHONY: st0
-st0: $(BUILD_DIR)/ST0.BIN $(BUILD_DIR)/F_ST0.BIN
-$(BUILD_DIR)/ST0.BIN: $(BUILD_DIR)/stst0.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_ST0.BIN:
-	$(GFXSTAGE) e assets/st/st0 $@
-
-.PHONY: wrp
-wrp: $(BUILD_DIR)/WRP.BIN $(BUILD_DIR)/F_WRP.BIN
-$(BUILD_DIR)/WRP.BIN: $(BUILD_DIR)/stwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_WRP.BIN:
-	$(GFXSTAGE) e assets/st/wrp $@
-
-.PHONY: rwrp
-rwrp: $(BUILD_DIR)/RWRP.BIN $(BUILD_DIR)/F_RWRP.BIN
-$(BUILD_DIR)/RWRP.BIN: $(BUILD_DIR)/strwrp.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RWRP.BIN:
-	$(GFXSTAGE) e assets/st/rwrp $@
-
-# Boss category structure
-.PHONY: bo4
-bo4: $(BUILD_DIR)/BO4.BIN $(BUILD_DIR)/F_BO4.BIN
-$(BUILD_DIR)/BO4.BIN: $(BUILD_DIR)/bobo4.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_BO4.BIN:
-	$(GFXSTAGE) e assets/boss/bo4 $@
-
-.PHONY: mar
-mar: $(BUILD_DIR)/MAR.BIN $(BUILD_DIR)/F_MAR.BIN
-$(BUILD_DIR)/MAR.BIN: $(BUILD_DIR)/bomar.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_MAR.BIN:
-	$(GFXSTAGE) e assets/boss/mar $@
-
-.PHONY: rbo3
-rbo3: $(BUILD_DIR)/RBO3.BIN $(BUILD_DIR)/F_RBO3.BIN
-$(BUILD_DIR)/RBO3.BIN: $(BUILD_DIR)/borbo3.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RBO3.BIN:
-	$(GFXSTAGE) e assets/boss/rbo3 $@
-
-.PHONY: rbo5
-rbo5: $(BUILD_DIR)/RBO5.BIN $(BUILD_DIR)/F_RBO5.BIN
-$(BUILD_DIR)/RBO5.BIN: $(BUILD_DIR)/borbo5.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/F_RBO5.BIN:
-	$(GFXSTAGE) e assets/boss/rbo5 $@
-
-# servant (familiar) targets
-.PHONY: tt_000 tt_001 tt_002 tt_003 tt_004
-tt_000: $(BUILD_DIR)/TT_000.BIN
-tt_001: $(BUILD_DIR)/TT_001.BIN
-tt_002: $(BUILD_DIR)/TT_002.BIN
-tt_003: $(BUILD_DIR)/TT_003.BIN
-tt_004: $(BUILD_DIR)/TT_004.BIN
-
-$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
-	cp $< $@.tmp
-	truncate -c -s 40960 $@.tmp
-	mv $@.tmp $@
-$(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
-	$(OBJCOPY) -O binary $< $@
-
-mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
-		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
-
-.PHONY: %_dirs
-tt_%_dirs:
-	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-bo%_dirs:
-	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-st%_dirs:
-	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-%_dirs:
-	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
-	$(LD) $(LD_FLAGS) -o $@ \
-		-Map $(BUILD_DIR)/stmad.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
-	$(call link,stsel,$@)
-
-$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
+# Step 3/6 of build
+# Main has different prequisites
+$(BUILD_DIR)/main.elf: $(BUILD_DIR)/%.elf: $(MAIN_O_FILES) $(BUILD_DIR)/%.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).%.txt
+	$(call link,$*,$@)
+# We only want this to consider game category overlays, not including main
+$(addprefix $(BUILD_DIR:pspeu=no)/,$(addsuffix .elf,$(filter-out main,$(GAME)))): $(BUILD_DIR)/%.elf: $$(call list_o_files,%)
+	$(call link,$*,$@)
+$(BUILD_DIR)/st%.elf: $$(call list_o_files,st/%,_st) $$(call list_o_files,st,_shared)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+$(BUILD_DIR)/bo%.elf: $$(call list_o_files,boss/$$*,_st) $$(call list_o_files,boss,_shared)
 	$(call link,bo$*,$@)
+$(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%-dirs
+	$(call link,tt_$*,$@)
+$(BUILD_DIR)/weapon/f%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f$$(subst 0_,_,$$(subst 1_,_,%)).o | weapon-dirs
+	$(muffle)$(call echo,Linking weapon/f$*,optional) $(LD) -r -b binary -o $@ $<
+# weapon0.ld and weapon1.ld are not currently autogenerated
+weapon_src = $(BUILD_DIR)/$(SRC_DIR)/weapon/$$(subst 0_,_,$(subst 1_,_,%)).c.o
+weapon_data = $(BUILD_DIR)/$(ASM_DIR)/weapon/data/$$(subst 0_,_,$(subst 1_,_,%)).data.s.o
+weapon_sbss = $(BUILD_DIR)/$(ASM_DIR)/weapon/data/$$(subst 0_,_,$(subst 1_,_,%)).sbss.s.o
+$(BUILD_DIR)/weapon/%.elf: $(weapon_src) $(weapon_data) $(weapon_sbss)
+	$(muffle)$(call echo,Linking weapon/$*,optional)
+	$(muffle)$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
+		-Map $(BUILD_DIR)/weapon/$*.map \
+		-T $(firstword $(subst _, ,$(subst w,weapon,$*))).ld \
+		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
+		$^
 
-# Weapon overlays
-WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
-WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
-WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
-
-.PHONY: weapon
-weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
-$(WEAPON_DIRS):
-	@mkdir -p $@
+# Step 4/6 of build
+$(addprefix $(BUILD_DIR)/,%.BIN %.bin %_raw.bin %.exe): $(BUILD_DIR)/$$(call add_ovl_prefix,%,st,bo).elf
+	$(muffle)$(call echo,Building $(notdir $@),optional) $(OBJCOPY) -O binary $< $@
+$(addprefix $(BUILD_DIR:pspeu=no)/,F_%.BIN f_%.bin):
+	$(muffle)$(call echo,Building $(notdir $@),optional) $(GFXSTAGE) e $(ASSETS_DIR)/$(call add_ovl_prefix,$*,st/,boss/) $@
+$(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
+	$(muffle)$(call echo,Cooking $(notdir $@),optional) cp $< $@.tmp && truncate -c -s 40960 $@.tmp && mv $@.tmp $@
 $(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
-	cat $^ > $@
-$(BUILD_DIR)/weapon/f%.bin: $(BUILD_DIR)/weapon/f%.elf
-	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/weapon/w%.bin: $(BUILD_DIR)/weapon/w%.elf
-	$(OBJCOPY) -O binary $< $@
-	dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc
-$(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data has been imported
-	touch $@
-$(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
-	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w0_$*.map \
-		-T weapon0.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
-	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
-		-Map $(BUILD_DIR)/weapon/w1_$*.map \
-		-T weapon1.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
-		$^
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
-	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
-	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
-	$(LD) -r -b binary -o $@ $<
-$(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
-	$(PYTHON) ./tools/png2bin.py $< $@
+	$(muffle)$(call echo,Merging WEAPON0 files,optional) cat $^ > $@
+$(BUILD_DIR)/weapon/%.bin: $(BUILD_DIR)/weapon/%.elf
+	$(muffle)$(call echo,Building $(subst $(BUILD_DIR)/,,$@),optional) $(OBJCOPY) -O binary $< $@
+	$(muffle)$(if $(findstring w0,$*),dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc)
+
+# Step 5/6 of build
+main: $(BUILD_DIR)/main.exe
+	$(call echo,Finished building $@)
+dra ric sel: %: $(BUILD_DIR)/$$(call to_upper,%).BIN
+	$(call echo,Finished building $@)
+weapon: $(BUILD_DIR)/WEAPON0.BIN | weapon-dirs
+	$(call echo,Finished building $@)
+$(filter-out sel,$(STAGES)): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
+	$(call echo,Finished building $@)
+$(BOSSES): %: $(BUILD_DIR)/$$(call to_upper,%).BIN $(BUILD_DIR)/F_$$(call to_upper,%).BIN
+	$(call echo,Finished building $@)
+tt_00%: $(BUILD_DIR)/TT_00%.BIN
+	$(call echo,Finished building $@)
+
+# Step 6/6 of build
+build_us build_hd: $(call get_targets)
+
+# Adding psx targets to .PHONY and .SILENT
+PHONY_TARGETS += $(addprefix extract_,us hd) $(call get_targets) build_us build_hd
+MUFFLED_TARGETS += $(BUILD_DIR)/main.elf $(addprefix $(BUILD_DIR:pspeu=no)/,$(addsuffix .elf,$(filter-out main,$(GAME))))
+MUFFLED_TARGETS += $(BUILD_DIR)/WEAPON0.BIN
+# Muffled in link function: #$(BUILD_DIR)/st%.elf $(BUILD_DIR)/bo%.elf $(BUILD_DIR)/tt_%.elf
+# Not muffled: tt_00%
+# Muffled in target:
+# main-dirs tt_%-dirs bo%-dirs st%-dirs weapon-dirs %-dirs
+# $(BUILD_DIR:pspeu=no)/%.ld $(BUILD_DIR:pspeu=no)/st%.ld $(BUILD_DIR:pspeu=no)/bo%.ld
+# $(ASM_DIR)/weapon/data/w_%.s $(BUILD_DIR)/%.s.o $(BUILD_DIR)/%.c.o $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o
+# $(BUILD_DIR)/weapon/f%.elf $(BUILD_DIR)/weapon/%.elf
+# $(addprefix $(BUILD_DIR)/%,.BIN .bin _raw.bin .exe) $(addprefix $(BUILD_DIR:pspeu=no)/,F_%.BIN f_%.bin)
+# $(BUILD_DIR)/TT_%.BIN $(BUILD_DIR)/weapon/%.bin
+# $(BUILD_DIR)/$(ASSETS_DIR)/%.json.o $(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o
+# $(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o $(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o $(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o
+# $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o
+# $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o
+# $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.dec.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/%.png.o $(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o
