@@ -402,16 +402,21 @@ typedef enum {
 // same as above, but it processes a single character from CPP
 #define CH(x) ((x) - 0x20)
 
+// print buttons on screen using the 8x8 font
+#define CIRCLE 0xE8
+#define CROSS 0xE9
+#define SQUARE 0xEA
+#define TRIANGLE 0xEB
+
 #define DEMO_KEY_LEN 3
 #define DEMO_MAX_LEN 0x2000
 
-#define FONT_W 8                 // small font size used for dialogues and menu
-#define FONT_H 8                 // small font size used for dialogues and menu
-#define FONT_GAP FONT_W          // gap between the beginning of two letters
-#define FONT_SPACE 4             // gap for the space character
-#define MENUCHAR(x) ((x) - 0x20) // 8x8 characters are ASCII offset by 0x20
-#define DIAG_EOL 0xFF            // end of line
-#define DIAG_EOS 0x00            // end of string
+#define FONT_W 8        // small font size used for dialogues and menu
+#define FONT_H 8        // small font size used for dialogues and menu
+#define FONT_GAP FONT_W // gap between the beginning of two letters
+#define FONT_SPACE 4    // gap for the space character
+#define DIAG_EOL 0xFF   // end of line
+#define DIAG_EOS 0x00   // end of string
 
 // entityId: what entity to spawn based on the Entity Set
 // amount: How many entities to spawn in total

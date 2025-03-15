@@ -1,4 +1,3 @@
-D_psp_08B42060      = 0x08B42060;
 g_StageId           = 0x091CE5B8;
 g_unkGraphicsStruct = 0x091CE5F8;
 D_80097488          = 0x091CE688;
@@ -16,6 +15,7 @@ g_Tilemap           = 0x091E1628;
 g_Entities          = 0x091E1680;
 g_Clut              = 0x091F5DF8;
 g_GameTimer         = 0x091FC460;
+D_8003C730          = 0x091FC498;
 g_pads              = 0x091FC4A8;
 g_GpuBuffers        = 0x091FC4E8;
 g_randomNext        = 0x091CE6B0;
@@ -28,3 +28,4 @@ g_PlayerY           = 0x091ED290;
 g_PlayerX           = 0x091ED298;
 g_PlayerDraw        = 0x091ED2A8;
 abs                 = 0x08906AF0;
+D_psp_08C630DC      = 0x08C630DC;

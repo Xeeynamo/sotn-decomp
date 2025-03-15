@@ -20,7 +20,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
                 break;
             }
         }
-        if (ch == MENUCHAR(' ')) {
+        if (ch == CH(' ')) {
             continue;
         }
         chCount++;
@@ -40,7 +40,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     x = 0x38;
     while (prim != NULL) {
         ch = *actorName++;
-        if (ch == MENUCHAR(' ')) {
+        if (ch == CH(' ')) {
             x += FONT_SPACE;
         } else {
             prim->type = PRIM_SPRT;
