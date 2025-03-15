@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10990", func_psp_090ED310);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10990", func_psp_090ED480);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10990", MenuWindowColorsDraw);
