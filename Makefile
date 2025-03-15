@@ -181,11 +181,10 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
     }' | column --separator $$'\t' --table
 
 # Step 3/3 of expected
-expected: check $(EXPECTED_DIR)
+expected: check
 	$(call echo,Copying build files to expected/)
-	-rm -rf $(EXPECTED_DIR); cp -r $(BUILD_DIR) $(EXPECTED_DIR:$(VERSION)=)
-$(EXPECTED_DIR): 
-	mkdir -p $(EXPECTED_DIR)
+	mkdir -p expected/$(BUILD_DIR)
+	-rm -rf expected/$(BUILD_DIR); cp -r $(BUILD_DIR) $(expected/$(BUILD_DIR):$(VERSION)=)
 
 # Targets for copying the physical disk to an image file
 dump-disk: dump-disk_$(VERSION)
