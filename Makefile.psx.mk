@@ -35,21 +35,21 @@ PSXCC_FLAGS     := -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff
 LD_FLAGS        := -nostdlib --no-check-sections
 
 COMPILER		:= $(CPP) $(CPP_FLAGS) -lang-c
-COMPILER_ARGS	 = | $(SOTNSTR) | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
+COMPILER_ARGS	 = | $(SOTNSTR) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) $(if $(findstring 029,$*),-O1) | $(MASPSX) | $(AS) $(AS_FLAGS) -o
 COMPILER_REQS	 = $(MASPSX_APP) $(CC1PSX) $(if $(filter src/st/sel/,$(dir %)),src/st/sel/sel.h | stsel-dirs) | $(VENV_DIR)/bin
 
 # Libs
 PSXLIBS         := libc libc2 libapi libetc libcard libgpu libgs libgte libcd libsnd libspu
 
 # Dirs
-PSXLIB_DIRS     := $(addprefix psxsdk/,$(slash) $(PSXLIBS))
-PSXLIB_DATA_DIRS := $(addprefix data/,$(slash) $(PSXLIB_DIRS))
-MAIN_ASM_DIRS   := $(subst //,/,$(addprefix $(ASM_DIR)/main/,$(slash) $(PSXLIB_DIRS) $(PSXLIB_DATA_DIRS)))
-MAIN_SRC_DIRS   := $(subst //,/,$(addprefix $(SRC_DIR)/main/,$(slash) $(PSXLIB_DIRS)))
+PSXLIB_DIRS     := psxsdk/ $(addprefix psxsdk/,$(PSXLIBS))
+PSXLIB_DATA_DIRS := data/ $(addprefix data/,$(PSXLIB_DIRS))
+MAIN_ASM_DIRS   := $(ASM_DIR)/main/ $(subst //,/,$(addprefix $(ASM_DIR)/main/,$(PSXLIB_DIRS) $(PSXLIB_DATA_DIRS)))
+MAIN_SRC_DIRS   := $(SRC_DIR)/main/ $(subst //,/,$(addprefix $(SRC_DIR)/main/,$(PSXLIB_DIRS)))
 
 # Files
-MAIN_S_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS))))
-MAIN_C_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS))))
+MAIN_S_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.s,$(MAIN_ASM_DIRS))))
+MAIN_C_FILES    := $(subst //,/,$(wildcard $(addsuffix /*.c,$(MAIN_SRC_DIRS))))
 MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
@@ -60,7 +60,6 @@ WEAPON1_FILES 	:= $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$
 DRA_SYMBOLS 	:= $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt
 STMAD_SYMBOLS 	:= $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt
 WEAPON_SYMBOLS 	:= $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
-STAGE_SYMBOLS 	:= $(if $$(filter mad,%),$(STMAD_SYMBOLS),$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt)
 
 US_GFXSTAGE_ARGS_ST = $(EXTRACTED_DISK_DIR)/ST/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/st/$*
 US_GFXSTAGE_ARGS_BO = $(EXTRACTED_DISK_DIR)/BOSS/$(call to_upper,$*)/F_$(call to_upper,$*).BIN $(ASSETS_DIR)/boss/$*
@@ -85,8 +84,8 @@ tt_%-dirs:
 $(call get_build_dirs,$(ASM_DIR)/servant/tt_% $(ASM_DIR)/servant/tt_%/data $(SRC_DIR)/servant/tt_% $(ASSETS_DIR)/servant/tt_%): tt_%-dirs
 
 weapon-dirs:
-	$(muffle)mkdir -p $(call get_build_dirs, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
-$(call get_build_dirs, weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon): | weapon-dirs
+	$(muffle)mkdir -p $(call get_build_dirs,weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon)
+$(call get_build_dirs,weapon $(SRC_DIR)/weapon $(ASM_DIR)/weapon/data $(ASSETS_DIR)/weapon): | weapon-dirs
 
 %-dirs:
 	$(muffle)mkdir -p $(call get_build_dirs,$(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*)
@@ -96,7 +95,7 @@ $(call get_build_dirs,$(ASM_DIR)/%/data $(SRC_DIR)/% $(ASSETS_DIR)/%): | %-dirs
 # The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
 $(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) | %-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<; touch $@
-$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(STAGE_SYMBOLS) | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
+$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<
 	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_ST)
 $(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
@@ -136,10 +135,10 @@ $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(COMPILER_REQS)
 # Handles assets
 # Todo: make sure all file dependencies are in prerequisites
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png | $(VENV_DIR)/bin
-	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file, optional)
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file,optional)
 	$(muffle)$(PYTHON) $(TOOLS_DIR)/png2bin.py $< $@
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.animset.o: $(ASSETS_DIR)/weapon/%.animset.json | $(VENV_DIR)/bin
-	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file, optional)
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$<) object file,optional)
 	$(muffle)$(TOOLS_DIR)/splat_ext/animset.py gen-asm $< $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s -s g_Animset$(subst 1,,$(lastword $(subst _, ,$*)))
 	$(muffle)$(AS) $(AS_FLAGS) -o $@ $(BUILD_DIR)/$(ASSETS_DIR)/weapon/$*.animset.s
 
@@ -163,7 +162,7 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
 	$(muffle)mkdir -p $(dir $@); $(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
 
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
-	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@), optional)
+	$(muffle)$(call echo,Creating $(subst $(BUILD_DIR)/,,$@),optional)
 	$(muffle)mkdir -p $(dir $@)
 	$(muffle)$(PNG2S) encode $< \
 		$(BUILD_DIR)/$(ASSETS_DIR)/$*.png.s g_saveIcon$(lastword $(subst _, ,$*)) \
@@ -222,7 +221,7 @@ $(BUILD_DIR)/WEAPON0.BIN: $(WEAPON0_FILES)
 	$(muffle)$(call echo,Merging WEAPON0 files,optional) cat $^ > $@
 $(BUILD_DIR)/weapon/%.bin: $(BUILD_DIR)/weapon/%.elf
 	$(muffle)$(call echo,Building $(subst $(BUILD_DIR)/,,$@),optional) $(OBJCOPY) -O binary $< $@
-	$(muffle)$(if $(findstring w0, $*),dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc)
+	$(muffle)$(if $(findstring w0,$*),dd status=none if=/dev/zero of=$@ bs=1 seek=12287 count=1 conv=notrunc)
 
 # Step 5/6 of build
 main: $(BUILD_DIR)/main.exe

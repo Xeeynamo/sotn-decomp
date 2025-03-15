@@ -8,7 +8,6 @@ MUFFLED_TARGETS := # Empty variable
 VERSION		?= us
 VENV_DIR	?= .venv
 # For disambiguation/escaping of characters
-slash		:= /
 comma		:= ,
 # Allows DEBUG to unmuffle targets which can't use .SILENT
 muffle 		:= $(if $(DEBUG),,@)
@@ -34,16 +33,15 @@ SHELL 			:= $(BASH) $(BASH_FLAGS)
 # Directories
 BIN_DIR			:= bin
 ASM_DIR         := asm/$(VERSION)
-ASM_SUBDIRS 	:= $(slash) /data $(call if_version,us hd,/psxsdk /handwritten)
+ASM_SUBDIRS 	:= data/ $(call if_version,us hd,psxsdk/ handwritten/)
 SRC_DIR         := src
-SRC_SUBDIRS 	:= $(slash) $(call if_version,us hd,/psxsdk)
+SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
 INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-EXPECTED_DIR	:= expected/$(BUILD_DIR)
-PY_TOOLS_DIRS	:= $(addprefix $(TOOLS_DIR)/,$(slash) splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
+PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
@@ -52,10 +50,10 @@ BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
-FORMAT_SRC_IGNORE	:= src/pc/3rd/cJSON/cJSON.c src/pc/3rd/cJSON/cJSON.h
+FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
-FORMAT_SYMBOLS_IGNORE	:= splat.us.weapon assets.hd assets.us
-FORMAT_SYMBOLS_FILES	:= $(filter-out $(addprefix $(CONFIG_DIR)/, $(addsuffix .yaml, $(FORMAT_SYMBOLS_IGNORE))), $(wildcard $(CONFIG_DIR)/*.yaml))
+FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,$(addsuffix .yaml,splat.us.weapon assets.hd assets.us))
+FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 
 # Toolchain
 CROSS           := mipsel-linux-gnu-
@@ -73,7 +71,7 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
-SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
+SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
@@ -103,8 +101,8 @@ SOTNASSETS      := $(GOPATH)/bin/sotn-assets
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
 list_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
 define list_src_files
-	$(foreach dir,$(addprefix $(ASM_DIR)/$(1), $(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(addprefix $(SRC_DIR)/$(1), $(if $(2),/,$(SRC_SUBDIRS)/)),$(wildcard $(dir)/*.c))
+	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
+	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
 endef
 list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
@@ -181,14 +179,16 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
     }' | column --separator $$'\t' --table
 
 # Step 3/3 of expected
+# This looks a little silly, but it handles making sure that the expected/ directory exists, then clears the old data out.
+# The cp will fail if expected/ doesn't exist and it is only used here so a prerequisite doesn't really make sense.
 expected: check
 	$(call echo,Copying build files to expected/)
-	mkdir -p expected/$(BUILD_DIR)
-	-rm -rf expected/$(BUILD_DIR); cp -r $(BUILD_DIR) $(expected/$(BUILD_DIR):$(VERSION)=)
+	mkdir -p expected/$(BUILD_DIR); rm -rf expected/$(BUILD_DIR)
+	cp -r $(BUILD_DIR) expected/$(BUILD_DIR)
 
 # Targets for copying the physical disk to an image file
 dump-disk: dump-disk_$(VERSION)
-$(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
+$(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
 dump-disk_%: PHONY
 	$(error Automated dumping of $* is not supported)
 $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
@@ -260,7 +260,7 @@ $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(V
 format-license:
 	$(call echo,Checking for license line in code files)
 	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
-	$(foreach item,$(addprefix include/, game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
+	$(foreach item,$(addprefix include/,game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
 
 # Other utility targets
 force_symbols = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR)/*.elf))
@@ -431,14 +431,14 @@ dump-disk: ##@ dump a physical game disk
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all all-clean build-and-check clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_, eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
 PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin $(EXPECTED_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)# Not muffled: dump-disk_% $(BIN_DIR)/%.tar.gz $(M2CTX_APP) Muffled in target: $(BIN_DIR)/% $(GO) $(WIBO)
