@@ -95,7 +95,8 @@ $(call get_build_dirs,$(ASM_DIR)/%/data $(SRC_DIR)/% $(ASSETS_DIR)/%): | %-dirs
 # The non-stage/boss .ld targets mostly follow the same pattern, but have slight differences with the prerequisites
 $(BUILD_DIR:pspeu=no)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(if $(filter dra ric,%),$(DRA_SYMBOLS),$(if $(filter weapon,%),$(WEAPON_SYMBOLS))) | %-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<; touch $@
-$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
+stage_symbols = $(if $(filter-out mad,$1),$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st$1.txt,$(STMAD_SYMBOLS))# This is only used here
+$(BUILD_DIR:pspeu=no)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $$(call stage_symbols,%) | st%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
 	$(muffle)$(SPLAT) $<
 	$(muffle)$(GFXSTAGE) d $($(call to_upper,$(VERSION))_GFXSTAGE_ARGS_ST)
 $(BUILD_DIR:pspeu=no)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%-dirs $(EXTRACTED_DISK_DIR) $(VENV_DIR)/bin
