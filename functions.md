@@ -511,8 +511,8 @@
 | dra    | func_psp_090EAF08                   |       51 |         10 |        |                                 |       |
 | ric    | func_pspeu_092ACE78                 |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
-| lib    | GetLang                             |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
+| lib    | GetLang                             |       51 |         10 |        |                                 |       |
 | no4    | func_psp_0925DDC0                   |       51 |         10 |        |                                 |       |
 | st0    | GetLang                             |       51 |         10 |        |                                 |       |
 | dra    | func_800EDD9C                       |       52 |          6 |        |                                 |       |
@@ -1060,7 +1060,7 @@
 | dra    | func_psp_09142110                   |      208 |         24 |        |                                 |       |
 | ric    | RicDebug                            |      208 |         28 |        |                                 |       |
 | lib    | func_psp_092531A8                   |      208 |         29 |        |                                 |       |
-| dra    | func_psp_090EC9C8                   |      209 |         15 |        |                                 |       |
+| dra    | func_psp_090EC9C8                   |      209 |         15 |        | https://decomp.me/scratch/oEXNs | 0.989 |
 | dra    | func_psp_0910E758                   |      209 |         21 |        | https://decomp.me/scratch/aD9az | 0.957 |
 | no4    | func_psp_0925A720                   |      209 |         23 |        |                                 |       |
 | dra    | CheckAndDoLevelUp                   |      211 |         20 |        |                                 |       |
@@ -1278,7 +1278,7 @@
 | ric    | RicHandleJump                       |      469 |         84 |        | https://decomp.me/scratch/L7pmD | 0.995 |
 | dra    | func_800F0CD8                       |      473 |         40 |        |                                 |       |
 | lib    | EntityLockCamera                    |      473 |         53 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
-| dra    | StoreSaveData                       |      481 |         49 |        |                                 |       |
+| dra    | StoreSaveData                       |      481 |         49 |        | https://decomp.me/scratch/XT9jU | 0.997 |
 | dra    | EntitySubwpnBible                   |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra    | func_psp_0910D1F0                   |      482 |         75 |        | https://decomp.me/scratch/YkKqZ | 0.99  |
 | no4    | func_psp_09259878                   |      482 |         90 | Yes    |                                 |       |
