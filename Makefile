@@ -142,6 +142,7 @@ get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
 add_ovl_prefix = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$(or $2,st)$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$(or $3,bo)$1),$(call to_lower,$1)))
 get_ovl_from_path = $(word $(or $2,1),$(filter $(call get_targets),$(subst /, ,$1)))
 ### End new header ###
+WHICH_PYTHON	:= $(SYSTEM_PYTHON)
 
 # Directories
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
