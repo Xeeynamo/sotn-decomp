@@ -82,7 +82,8 @@ segments:
       - [0x1C930, data]
       - [0x1D830, .data, st0/2C564]
       - [0x1D978, .data, st0/2DAC8]
-      - [0x1E460, data]
+      - [0x1E460, .data, st0_psp/3101C]
+      - [0x1FCD0, data] # g_Rooms
       - [0x25278, .data, st0/3AB08]
       - [0x256E8, .data, st0/3C5C0]
       - [0x25898, data, st_init_st0]

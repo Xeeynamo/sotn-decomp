@@ -1,0 +1,27 @@
+# Non-exhaustive list of who owns what or who wants to be notified when certain
+# changes to the code base are made. Please add yourself in this.
+
+Makefile* @xeeynamo @ProjectOblivion
+.github/ @xeeynamo
+bin/ @xeeynamo
+
+src/st/dra/ @xeeynamo
+src/st/pc/ @xeeynamo
+src/st/lib/ @gamezter
+src/st/lib_psp/ @JoshSchreuder @gamezter
+src/st/mad/ @xeeynamo
+src/st/sel/ @xeeynamo
+src/st/st0_psp/ @JoshSchreuder
+src/st/wrp/ @xeeynamo
+src/st/wrp_psp/ @JoshSchreuder
+
+tools/gfxsotn/ @xeeynamo
+tools/sotn_str/ @xeeynamo
+tools/sotn-debugmodule/ @xeeynamo
+tools/sotn-disk/ @xeeynamo
+tools/sotn_permuter/ @ProjectOblivion
+tools/decompile.py @xeeynamo
+tools/gfxstage.py @xeeynamo
+tools/progress.py @xeeynamo
+tools/symbols.py @xeeynamo
+tools/sotn_diff.py @ProjectOblivion

@@ -386,6 +386,10 @@ void gte_ldtz(s16);
 #define gte_stflg(x) func_892804C();
 #define gte_SetColorMatrix(x) func_892804C();
 
+#define gte_SetGeomScreen SetGeomScreen
+#define gte_SetRotMatrix SetRotMatrix
+#define gte_SetTransMatrix SetTransMatrix
+
 #else
 
 #define gte_SetRotMatrix(r0)
