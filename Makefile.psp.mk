@@ -19,7 +19,7 @@ $(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)
 
 # Flags
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
 
 # Tools
@@ -118,7 +118,7 @@ OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	$(MWCCGAP) $< $@ --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
+	 $(SOTNSTR) -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)

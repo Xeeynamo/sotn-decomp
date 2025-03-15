@@ -882,7 +882,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
         pos = 0;
         while (*str >= 8) {
             s_8 = 0;
-#if VERSION_PSP
+#ifdef VERSION_PSP
             ch = g_api.func_ptr_91CF870((char*)str, &sp3f);
 #else
             ch = *str;
@@ -899,11 +899,12 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
                 ch = MINSCODE;
                 s_8 = 2;
             } else {
-#if VERSION_PSP
+#ifdef VERSION_PSP
                 if (sp3f > 1) {
                     str += sp3f - 1;
                 }
             }
+            chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
                 if (ch == MINSCODE) {
@@ -913,8 +914,8 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
                 str += 2;
             }
-#endif
             chPix = (u8*)g_api.func_80106A28(ch, 1);
+#endif
             while (true) {
                 if (ch == MINSCODE) {
                     break;
@@ -976,7 +977,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             break;
         }
         s_6++;
-        y += 16;
+        y += FontHeight;
         if (*str < 8) {
             str++;
         }
@@ -1123,7 +1124,7 @@ void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
+static void func_us_801B1200(Primitive* prim, Primitive* otherPrim) {
     prim->x0 = otherPrim->x0;
     prim->y0 = otherPrim->y0;
     prim->x1 = otherPrim->x1;
@@ -2414,11 +2415,12 @@ Primitive* func_us_801B3EC8(Primitive* prim, u32 number, u16 maxDigits) {
     return prim;
 }
 
-Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
-    u8 ch;
+Primitive* func_us_801B3FB4(
+    Primitive* prim, const char* str, u16 length, s32 arg3) {
+    char ch;
     s32 i;
     u32 max;
-    char* chPtr;
+    const char* chPtr;
 
     chPtr = str;
     max = 0;
@@ -2433,7 +2435,7 @@ Primitive* func_us_801B3FB4(Primitive* prim, char* str, u16 length, s32 arg3) {
     for (i = 0; i < max; i++) {
 #endif
         ch = *str++;
-        prim->u0 = (ch & 0xF) * 8;
+        prim->u0 = (ch & 0x0F) << 3;
         prim->v0 = (ch & 0xF0) >> 1;
         if (arg3 != 0) {
             prim->drawMode = DRAW_DEFAULT;
@@ -2472,15 +2474,18 @@ static u16 D_us_80181530[] = {
     -0x002, 0x032,  -0x002, -0x036, 0x006,  -0x02E, 0x006,  -0x026, 0x006,
     -0x01A, 0x006,  -0x012, 0x006,  -0x00A, 0x006,  0x006,  0x006,  0x00E,
     0x006,  0x016,  0x006,  0x022,  0x006,  0x02A,  0x006,  0x032,  0x006};
-static u8 D_us_80181650[] = {0x00, 0x00, 0x00, 0x00, 0x32, 0x2C, 0x32, 0x2C};
-static u8 D_us_80181658[] = {0xEA, 0xE8, 0xE9, 0xEB, 0x12, 0x11, 0x11, 0x12};
+static char D_us_80181650[] = {
+    CH(' '), CH(' '), CH(' '), CH(' '), CH('R'), CH('L'), CH('R'), CH('L')};
+static char D_us_80181658[] = {
+    SQUARE, CIRCLE, CROSS, TRIANGLE, CH('2'), CH('1'), CH('1'), CH('2')};
 
 #ifdef VERSION_PSP
 extern char* D_us_80181660;
 extern char* D_us_80181668;
 extern char** D_us_80181674;
 #else
-static char D_us_80181660[] = {0xE8, 0xEA, 0xE8, 0xEA, 0x27, 0x2F, 0x2C, 0x24};
+static char D_us_80181660[] = {
+    CIRCLE, SQUARE, CIRCLE, SQUARE, CH('G'), CH('O'), CH('L'), CH('D')};
 static char D_us_80181668[] = {
     // clang-format off
     CH('S'), CH('T'), CH('R'), 
@@ -3851,11 +3856,11 @@ void func_us_801B6324(Entity* self) {
                     prim->clut = 0x17F;
                     prim->u0 = prim->u2 = 0x58;
                     prim->u1 = prim->u3 = 0x60;
-                    prim->v0 = prim->v1 = (i - 0xB) * 8 + 0x70;
-                    prim->v2 = prim->v3 = 0x78 - (i - 0xB) * 8;
+                    prim->v0 = prim->v1 = (i - 11) * 8 + 0x70;
+                    prim->v2 = prim->v3 = 0x78 - (i - 11) * 8;
                     prim->x0 = prim->x2 = 0x7C;
                     prim->x1 = prim->x3 = prim->x0 + 8;
-                    prim->y0 = prim->y1 = (i - 0xB) * 0x60 + 0x14;
+                    prim->y0 = prim->y1 = (i - 11) * 0x60 + 0x14;
                     prim->y2 = prim->y3 = prim->y0 + 8;
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
@@ -4340,7 +4345,7 @@ void func_us_801B6F30(Entity* self) {
                 }
             }
         }
-        if (pads & (PAD_LEFT + PAD_RIGHT)) {
+        if (pads & (PAD_LEFT | PAD_RIGHT)) {
             if (self->ext.et_801B6F30.unk84) {
                 self->ext.et_801B6F30.unk84 = 0;
             } else {
