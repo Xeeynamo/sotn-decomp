@@ -33,7 +33,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", MenuDrawRect);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_psp_090EC968);
 
-
 extern s16 g_RelicMenuFadeTimer;
 void DrawRelicsMenu(MenuContext* ctx) {
     s32 ctx_h;
@@ -63,15 +62,15 @@ void DrawRelicsMenu(MenuContext* ctx) {
             if ((i & 2) == 0) {
                 MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
-                    func_800F548C(i/4 + 0x80), 0x1A1, 6, 1, 0, 0);
+                    func_800F548C(i / 4 + 0x80), 0x1A1, 6, 1, 0, 0);
             } else {
                 MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
-                    func_800F548C(i/4 + 0x103), 0x1A1, 7, 1, 0, 0);
+                    func_800F548C(i / 4 + 0x103), 0x1A1, 7, 1, 0, 0);
             }
         }
         // Determine the U value for the texture to use for the switch
-        if(*relic & RELIC_FLAG_ACTIVE){
+        if (*relic & RELIC_FLAG_ACTIVE) {
             u_OnOff = 0;
         } else {
             u_OnOff = 0x30;
@@ -95,8 +94,8 @@ void DrawRelicsMenu(MenuContext* ctx) {
                        switchFadeLevel + 0x1C8, 0x1F,
                        INDEXER == g_MenuNavigation.cursorRelic, 0x40, 0);
     }
-    spriteY = ctx_h + ((g_MenuNavigation.cursorRelic / 2) * 0x13 + 0x22) ;
+    spriteY = ctx_h + ((g_MenuNavigation.cursorRelic / 2) * 0x13 + 0x22);
     MenuDrawRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) + 8,
-                 spriteY -1, 0xA8, 0x12, 0x60, 0, 0);
+                 spriteY - 1, 0xA8, 0x12, 0x60, 0, 0);
 #undef INDEXER
 }

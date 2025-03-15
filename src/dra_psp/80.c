@@ -2,7 +2,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80102EB8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCBC8);
@@ -17,8 +16,8 @@ s32 MemcardParse(s32 nPort, s32 nCard);
 s32 MemcardDetectSave(s32 nPort, char* expectedSaveName, s32 block);
 s32 GetMemcardFreeBlockCount(s32 nPort);
 s32 MemcardClose(s32 nPort);
-s32 MemcardWriteFile(
-    s32 nPort, s32 nCard, char* name, void* data, s32 flags, s32 create, s32 unk);
+s32 MemcardWriteFile(s32 nPort, s32 nCard, char* name, void* data, s32 flags,
+                     s32 create, s32 unk);
 s32 func_800E9880(s32 nPort, s32 nCard);
 void func_80103ED4(void) {
     char saveFile[32];
@@ -133,7 +132,7 @@ void func_80103ED4(void) {
                 break;
             }
             D_80137E4C--;
-            break;  
+            break;
         }
         D_80137E4C = 6;
         break;
