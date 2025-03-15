@@ -2,48 +2,153 @@
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-# Preflight checks
-ifeq ($(VERSION),)
-$(info VERSION not defined, defaulting to VERSION=us)
-VERSION         ?= us
-endif
+### Begin new header ###
+PHONY_TARGETS := # Empty variable
+MUFFLED_TARGETS := # Empty variable
 
-WHICH_PYTHON != which python3
-ifeq ($(WHICH_PYTHON),)
-$(info The python3 command is required, but not found.  Run 'sudo apt-get install -y $(cat tools/requirements-debian.txt)' to install the required packages)
-endif
+# Sets VERSION and VENV_DIR if not defined
+VERSION		?= us
+VENV_DIR	?= .venv
+# For disambiguation/escaping of characters
+comma		:= ,
+# Allows DEBUG to unmuffle targets which can't use .SILENT
+muffle 		:= $(if $(DEBUG),,@)
 
-# Compilers
+# Utility functions
+rwildcard	= $(subst //,/,$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
+echo		= $(if $(and $(QUIET),$2),,echo -e "$(subst //,/,$1)";)# Allows for optional terminal messages
+to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
+to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
+if_version	= $(if $(filter $1,$(VERSION)),$2,$3)
+wget		= wget -a wget-$(or $3,$2,$1).log $(if $2,-O $2 )$1
+
+# System related variables
+OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
+SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)# Only used for installing venv
+PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
+PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3# This is slightly redundant to handle the slash
+PIP			 	:= $(VENV_DIR)/bin/pip3# Pip will always use venv
+BASH			:= $(or $(shell which bash),/usr/bin/bash)
+BASH_FLAGS	  	:= -e -o pipefail
+SHELL 			:= $(BASH) $(BASH_FLAGS)
+
+# Directories
+BIN_DIR			:= bin
+ASM_DIR         := asm/$(VERSION)
+ASM_SUBDIRS 	:= data/ $(call if_version,us hd,psxsdk/ handwritten/)
+SRC_DIR         := src
+SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
+INCLUDE_DIR     := include
+ASSETS_DIR      := assets
+CONFIG_DIR      := config
+TOOLS_DIR       := tools
+BUILD_DIR       := build/$(VERSION)
+PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
+RETAIL_DISK_DIR := disks
+EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
+BUILD_DISK_DIR  := $(BUILD_DIR)/disk
+
+# Files
+CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
+ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
+CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
+FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
+FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
+FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,$(addsuffix .yaml,splat.us.weapon assets.hd assets.us))
+FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
+
+# Toolchain
 CROSS           := mipsel-linux-gnu-
 LD              := $(CROSS)ld
 OBJCOPY         := $(CROSS)objcopy
+ALLEGREX 		:= $(BIN_DIR)/allegrex-as
+WIBO            := $(BIN_DIR)/wibo
+MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
+CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
+
+# Symbols
+BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
+
+# Other tooling
+BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
+SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
+SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py
+ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
+DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
+SHASUM          := shasum
+GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
+PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
+CLANG			:= $(BIN_DIR)/clang-format
+GOPATH          := $(HOME)/go
+GO              := $(GOPATH)/bin/go
+SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
+DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
+ASMDIFFER		:= $(TOOLS_DIR)/asm-differ/diff.py
+M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
+M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
+PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
+MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
+MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
+DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
+SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
+SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
+SOTNDISK        := $(GOPATH)/bin/sotn-disk
+SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
+SOTNASSETS      := $(GOPATH)/bin/sotn-assets
+ 
+# Build functions
+# sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
+2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
+new_list_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
+define new_list_src_files
+	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
+	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
+	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
+endef
+new_list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+
+# leverages MWCC ability to compile data and text as separate sections to allow
+# LD using --gc-sections and remove all the symbols that are unreferenced.
+# symexport.*.txt is used to enforce a specific symbol and all its dependencies
+# to be used. Refer to *.map to know which sections are being discarded by LD.
+# Use nm to retrieve the symbol name out of a object file such as the mwo_header.
+define new_link
+	$(muffle)$(call echo,Linking $1,optional)
+	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
+		$(call if_version,pspeu,--gc-sections) \
+		-Map $(BUILD_DIR)/$(1).map \
+		-T $(BUILD_DIR)/$(subst _fix,,$1).ld \
+		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
+		-T $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt \
+		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad stmad_fix,$(1)),.$(VERSION)).$(subst _fix,,$(1)).txt \
+		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad stmad_fix,$(1)),$(VERSION).)$(subst _fix,,$(1)).txt)
+endef
+define get_merged_functions 
+	$(shell $(PYTHON) -c 'import yaml;\
+	import os;\
+	yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
+	config = yaml.safe_load(yaml_file); yaml_file.close();\
+	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
+	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
+	print(" ".join(merged_functions))')
+endef
+get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
+# Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
+get_targets = $(GAME) $(if $1,$(addprefix st,$(STAGES)),$(STAGES)) $(if $1,$(addprefix bo,$(BOSSES)),$(BOSSES)) $(SERVANTS)
+get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
+# If stage then (or $2$1,st$1) else if boss then (or $3$1,bo$1), else $1
+add_ovl_prefix = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$(or $2,st)$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$(or $3,bo)$1),$(call to_lower,$1)))
+get_ovl_from_path = $(word $(or $2,1),$(filter $(call get_targets),$(subst /, ,$1)))
+### End new header ###
 
 # Directories
-ASM_DIR         := asm/$(VERSION)
-BIN_DIR         := bin
-SRC_DIR         := src
-ASSETS_DIR      := assets
-INCLUDE_DIR     := include
-BUILD_DIR       := build/$(VERSION)
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
-CONFIG_DIR      := config
-TOOLS_DIR       := tools
 
 # Symbols
 MAIN_TARGET     := $(BUILD_DIR)/main
-BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
-# Tooling
-SHELL 			 = /bin/bash -e -o pipefail
-VENV_DIR       	?= .venv
-
-ifneq ($(wildcard $(VENV_DIR)),)
-PYTHON_BIN		:= $(realpath $(VENV_DIR))/bin/
-endif
-PYTHON          := $(PYTHON_BIN)python3
-BLACK			:= $(PYTHON_BIN)black
-PIP			 	:= $(realpath .)/$(VENV_DIR)/bin/pip3
-SPLAT           := $(PYTHON_BIN)splat split
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
@@ -57,22 +162,11 @@ MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
 MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
-GO              := $(HOME)/go/bin/go
-GOPATH          := $(HOME)/go
-SOTNDISK        := $(GOPATH)/bin/sotn-disk
-SOTNASSETS      := $(GOPATH)/bin/sotn-assets
-GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
-PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
-ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
-DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
-SHASUM          := shasum
 
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
-
-CHECK_FILES := $(shell cut -d' ' -f3 config/check.$(VERSION).sha)
 
 # Functions
 define list_src_files
@@ -536,3 +630,30 @@ disks/sotn.%.bin disks/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
+
+# .PHONY and .SILENT group
+# Putting this in a separate section because if it is included with the targets as I'd prefer, it becomes very cluttered and harder to read.
+# These lists can be added to at any point since adding the lists to the actual .PHONY and .SILENT targets is the final action and order does not matter.
+# I'd prefer assigning to .PHONY and .SILENT directly without using the list, but the list allows us to have a target that displays it to the user for debugging.
+# They are grouped in the general order you will find the targets in the file.
+PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
+PHONY_TARGETS += all all-clean build-and-check clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
+PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
+PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
+PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report
+PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
+PHONY_TARGETS += help get-debug get-phony get-silent
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
+.PHONY: $(PHONY_TARGETS)
+# Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
+#$(DEBUG).SILENT: $(MUFFLED_TARGETS)
+# These are walls of text, so they're redirected to files instead of stdout for debugging
+get-debug: get-phony get-silent
+get-phony:
+	echo ".PHONY:" > make.phony.targets
+	$(foreach target,$(PHONY_TARGETS),echo $(target) >> make.phony.targets;)
+get-silent:
+	echo ".SILENT:" > make.silent.targets
+	$(foreach target,$(MUFFLED_TARGETS),echo $(target) >> make.silent.targets;)
