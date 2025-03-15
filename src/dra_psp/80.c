@@ -39,23 +39,19 @@ void func_80103ED4(void) {
             break;
         }
         if (case1_state == -1) {
-            if (--g_MemCardRetryCount == 0) {
+            if (g_MemCardRetryCount-- == 0) {
                 D_80137E4C = 7;
             }
-            break;
-        }
-        if (case1_state == -3) {
-            if (--g_MemCardRetryCount == 0) {
+        } else if (case1_state == -3) {
+            if (g_MemCardRetryCount-- == 0) {
                 D_80137E4C = 8;
             }
-            break;
-        }
-        if (case1_state == -2) {
+        } else if (case1_state == -2) {
             D_80137E4C = 9;
-            break;
+        } else {
+            MemcardInit();
+            D_80137E4C++;
         }
-        MemcardInit();
-        D_80137E4C++;
         break;
     case 2:
         if (MemcardParse(D_80097924, 0) >= 0) {
@@ -132,7 +128,7 @@ void func_80103ED4(void) {
             break;
         }
         if (memCardClose == -3) {
-            if (--g_MemCardRetryCount == 0) {
+            if (g_MemCardRetryCount-- == 0) {
                 D_80137E4C = 0;
                 break;
             }
