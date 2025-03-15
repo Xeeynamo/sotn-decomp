@@ -27,6 +27,19 @@ static SVECTOR armorLordColNormVec1 = {0, 0, 0x1000};
 static SVECTOR armorLordColNormVec2 = {0, 0x800, 0x800};
 static SVECTOR armorLordRotVec = {0, 0, 0};
 
+static u16 hitboxWidthHeights[][2] = {
+    {0, 0},  {11, 11}, {11, 11}, {13, 6},  {18, 4},  {18, 4}, {21, 4},
+    {30, 4}, {35, 9},  {35, 9},  {31, 4},  {15, 12}, {23, 4}, {17, 9},
+    {10, 9}, {10, 21}, {29, 4},  {24, 6},  {29, 4},  {22, 7}, {15, 10},
+    {9, 11}, {29, 4},  {10, 10}, {12, 10}, {24, 4},  {4, 32}};
+
+static s16 hitboxOffXYs[][2] = {
+    {0, 0},    {16, -18}, {12, -17}, {-8, -10},  {-9, 5},  {-17, 2},
+    {-23, 5},  {-36, 6},  {-45, 6},  {-45, 6},   {-36, 6}, {-22, -6},
+    {54, 6},   {39, -13}, {21, -35}, {-18, -34}, {-38, 5}, {-36, 30},
+    {-29, 19}, {-14, 21}, {-20, 29}, {-7, 27},   {-36, 7}, {-11, -6},
+    {21, -3},  {47, 3},   {-22, -4}};
+
 // Armor Lord fire wave helper
 void func_us_801D1184(Primitive* prim) {
     switch (prim->next->u2) {
@@ -147,7 +160,7 @@ void func_us_801D1388(Primitive* prim) {
             break;
         }
         if ((prim->v2 == 0xE0) && prim->next->r3) {
-            otherPrim = g_CurrentEntity->ext.armorLord.unk7C;
+            otherPrim = g_CurrentEntity->ext.armorLord.prim;
             otherPrim = FindFirstUnkPrim2(otherPrim, 2);
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
@@ -164,7 +177,7 @@ void func_us_801D1388(Primitive* prim) {
             }
         }
         if (prim->v2 > 0xFD) {
-            otherPrim = g_CurrentEntity->ext.armorLord.unk7C;
+            otherPrim = g_CurrentEntity->ext.armorLord.prim;
             otherPrim = FindFirstUnkPrim2(otherPrim, 2);
             if (otherPrim != NULL) {
                 UnkPolyFunc2(otherPrim);
@@ -212,7 +225,7 @@ void func_us_801D1388(Primitive* prim) {
             tempEntity->facingLeft = g_CurrentEntity->facingLeft;
             tempEntity->hitboxHeight = (prim->y2 - prim->y0) / 2;
             tempEntity->hitboxOffY = tempEntity->hitboxHeight + 8;
-            tempEntity->ext.armorLord.unk7C = prim;
+            tempEntity->ext.armorLord.prim = prim;
             prim->next->v2 = 1;
         }
     }
@@ -231,7 +244,7 @@ void EntityArmorLordFireWave(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.armorLord.unk7C = prim;
+            self->ext.armorLord.prim = prim;
             while (prim != NULL) {
                 prim->drawMode = DRAW_HIDE;
                 prim->p3 = 0;
@@ -241,7 +254,7 @@ void EntityArmorLordFireWave(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.armorLord.unk7C;
+        prim = self->ext.armorLord.prim;
         prim = FindFirstUnkPrim2(prim, 2);
         if (prim != NULL) {
             UnkPolyFunc2(prim);
@@ -258,7 +271,7 @@ void EntityArmorLordFireWave(Entity* self) {
         }
 
     case 1:
-        prim = self->ext.armorLord.unk7C;
+        prim = self->ext.armorLord.prim;
         while (prim != NULL) {
             if (prim->p3 & 8) {
                 if (prim->next->g3) {
@@ -289,7 +302,7 @@ void func_us_801D1A9C(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.armorLord.unk7C = prim;
+            g_CurrentEntity->ext.armorLord.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
             prim->clut = 0x161;
@@ -325,7 +338,7 @@ void func_us_801D1A9C(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.armorLord.unk7C;
+        prim = g_CurrentEntity->ext.armorLord.prim;
         LOH(prim->next->r2)++;
         LOH(prim->next->b2) += 8;
         UnkPrimHelper(prim);
@@ -339,7 +352,7 @@ void func_us_801D1A9C(void) {
         break;
 
     case 3:
-        prim = g_CurrentEntity->ext.armorLord.unk7C;
+        prim = g_CurrentEntity->ext.armorLord.prim;
         prim->next->b3 -= 8;
         UnkPrimHelper(prim);
         if (g_CurrentEntity->ext.armorLord.unk8C++ > 15) {
@@ -376,8 +389,8 @@ s32 func_us_801D1DAC(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.armorLord.unk7C = prim;
-            prim = g_CurrentEntity->ext.armorLord.unk7C;
+            g_CurrentEntity->ext.armorLord.prim = prim;
+            prim = g_CurrentEntity->ext.armorLord.prim;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0 = 0xFF;
                 prim->u1 = 0xD8;
@@ -419,7 +432,7 @@ s32 func_us_801D1DAC(void) {
             LOW(prim->r3) = LOW(prim->r1);
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
-            prim = g_CurrentEntity->ext.armorLord.unk7C;
+            prim = g_CurrentEntity->ext.armorLord.prim;
             for (i = 0; i < 3; i++) {
                 prim->tpage = 0x15;
                 prim->clut = 0x160;
@@ -473,7 +486,7 @@ s32 func_us_801D1DAC(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.armorLord.unk7C;
+        prim = g_CurrentEntity->ext.armorLord.prim;
         prim->r0 += 2;
         prim->g0 = prim->b0 = prim->r0;
         LOW(prim->r1) = LOW(prim->r0);
@@ -495,7 +508,7 @@ s32 func_us_801D1DAC(void) {
 
     case 3:
         if (g_Timer % 8 == 0) {
-            prim = g_CurrentEntity->ext.armorLord.unk7C;
+            prim = g_CurrentEntity->ext.armorLord.prim;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0--;
                 prim->u1++;
@@ -542,7 +555,7 @@ s32 func_us_801D1DAC(void) {
 
     case 5:
         if (g_Timer % 4 == 0) {
-            prim = g_CurrentEntity->ext.armorLord.unk7C;
+            prim = g_CurrentEntity->ext.armorLord.prim;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0--;
                 prim->u1++;
@@ -596,7 +609,7 @@ s32 func_us_801D1DAC(void) {
 
     case 6:
         if (g_Timer % 2 == 0) {
-            prim = g_CurrentEntity->ext.armorLord.unk7C;
+            prim = g_CurrentEntity->ext.armorLord.prim;
             prim = prim->next;
             if (g_CurrentEntity->facingLeft) {
                 prim->u0--;
@@ -624,7 +637,7 @@ s32 func_us_801D1DAC(void) {
         break;
 
     case 8:
-        prim = g_CurrentEntity->ext.armorLord.unk7C;
+        prim = g_CurrentEntity->ext.armorLord.prim;
         while (prim != NULL) {
             if (g_Timer % prim->p2 == 0) {
                 prim->y0--;
@@ -740,7 +753,7 @@ s32 func_us_801D1DAC(void) {
             if (primIndex != -1) {
                 g_CurrentEntity->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                g_CurrentEntity->ext.armorLord.unk7C = prim;
+                g_CurrentEntity->ext.armorLord.prim = prim;
                 while (prim != NULL) {
                     prim->x0 = (posX + (Random() & 3)) - 2;
                     prim->y0 = posY - 0x48 + (Random() & 0x3F);
@@ -988,7 +1001,106 @@ void EntityArmorLord(Entity* self) {
 }
 
 // Some kind of helper for the Armor Lord
-INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D348C);
+void func_us_801D348C(Entity* self) {
+    Entity* parent;
+    u8 animCurFrame;
+
+    parent = self - 1;
+
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180AE8);
+        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->animCurFrame = 0;
+        break;
+    case 1:
+        if (parent->animCurFrame == 0x10 && parent->step == 6) {
+            self->step = 2;
+            self->animCurFrame = 0x20;
+            self->unk6C = 0x60;
+            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = 0x1C8;
+            self->rotY = 0x1C8;
+        }
+        if (parent->animCurFrame == 0x15) {
+            self->step = 3;
+            self->animCurFrame = 0x21;
+            self->unk6C = 0x60;
+            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = 0x1B8;
+            self->rotY = 0x1B8;
+        }
+        self->ext.armorLord.unk80 = 3;
+        break;
+    case 2:
+        if (!--self->ext.armorLord.unk80) {
+            self->animCurFrame = 0;
+        } else {
+            self->unk6C -= 0x20;
+        }
+        if (parent->animCurFrame != 0x10) {
+            self->step = 1;
+        }
+        break;
+    case 3:
+        if (!--self->ext.armorLord.unk80) {
+            self->animCurFrame = 0;
+        } else {
+            self->unk6C -= 0x20;
+        }
+        if (parent->animCurFrame != 0x15) {
+            self->step = 1;
+        }
+        break;
+    }
+
+    animCurFrame = parent->animCurFrame;
+    if (animCurFrame == 0x1E) {
+        self->hitboxState = 3;
+    } else {
+        self->hitboxState = 1;
+    }
+
+    if (animCurFrame < 5 || animCurFrame > 30) {
+        animCurFrame = 0;
+    } else {
+        animCurFrame -= 4;
+    }
+
+    self->hitboxOffX = hitboxOffXYs[animCurFrame][0];
+    self->hitboxOffY = hitboxOffXYs[animCurFrame][1];
+    self->hitboxWidth = hitboxWidthHeights[animCurFrame][0];
+    self->hitboxHeight = hitboxWidthHeights[animCurFrame][1];
+
+    if (parent->entityId != E_ARMOR_LORD) {
+        DestroyEntity(self);
+    }
+}
 
 // Another wave attack helper
-INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D3700);
+void func_us_801D3700(Entity* self) {
+    Primitive* prim;
+    s32 height;
+    s32 offsetY;
+
+    if (!self->step) {
+        height = self->hitboxHeight;
+        offsetY = self->hitboxOffY;
+        InitializeEntity(D_us_80180AF4);
+        self->hitboxWidth = 8;
+        self->hitboxOffX = 8;
+        self->hitboxHeight = height;
+        self->hitboxOffY = offsetY;
+    }
+
+    if (self->step++ > 5) {
+        prim = self->ext.armorLord.prim;
+        prim->next->v2 = 0;
+        DestroyEntity(self);
+    }
+}
