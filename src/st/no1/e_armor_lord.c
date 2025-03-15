@@ -27,6 +27,19 @@ static SVECTOR armorLordColNormVec1 = {0, 0, 0x1000};
 static SVECTOR armorLordColNormVec2 = {0, 0x800, 0x800};
 static SVECTOR armorLordRotVec = {0, 0, 0};
 
+static u16 hitboxWidthHeights[][2] = {
+    {0, 0},  {11, 11}, {11, 11}, {13, 6},  {18, 4},  {18, 4}, {21, 4},
+    {30, 4}, {35, 9},  {35, 9},  {31, 4},  {15, 12}, {23, 4}, {17, 9},
+    {10, 9}, {10, 21}, {29, 4},  {24, 6},  {29, 4},  {22, 7}, {15, 10},
+    {9, 11}, {29, 4},  {10, 10}, {12, 10}, {24, 4},  {4, 32}};
+
+static s16 hitboxOffXYs[][2] = {
+    {0, 0},    {16, -18}, {12, -17}, {-8, -10},  {-9, 5},  {-17, 2},
+    {-23, 5},  {-36, 6},  {-45, 6},  {-45, 6},   {-36, 6}, {-22, -6},
+    {54, 6},   {39, -13}, {21, -35}, {-18, -34}, {-38, 5}, {-36, 30},
+    {-29, 19}, {-14, 21}, {-20, 29}, {-7, 27},   {-36, 7}, {-11, -6},
+    {21, -3},  {47, 3},   {-22, -4}};
+
 // Armor Lord fire wave helper
 void func_us_801D1184(Primitive* prim) {
     switch (prim->next->u2) {
@@ -988,7 +1001,86 @@ void EntityArmorLord(Entity* self) {
 }
 
 // Some kind of helper for the Armor Lord
-INCLUDE_ASM("st/no1/nonmatchings/e_armor_lord", func_us_801D348C);
+void func_us_801D348C(Entity* self) {
+    Entity* parent;
+    u8 animCurFrame;
+
+    parent = self - 1;
+
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180AE8);
+        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->animCurFrame = 0;
+        break;
+    case 1:
+        if (parent->animCurFrame == 0x10 && parent->step == 6) {
+            self->step = 2;
+            self->animCurFrame = 0x20;
+            self->unk6C = 0x60;
+            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = 0x1C8;
+            self->rotY = 0x1C8;
+        }
+        if (parent->animCurFrame == 0x15) {
+            self->step = 3;
+            self->animCurFrame = 0x21;
+            self->unk6C = 0x60;
+            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = 0x1B8;
+            self->rotY = 0x1B8;
+        }
+        self->ext.armorLord.unk80 = 3;
+        break;
+    case 2:
+        if (!--self->ext.armorLord.unk80) {
+            self->animCurFrame = 0;
+        } else {
+            self->unk6C -= 0x20;
+        }
+        if (parent->animCurFrame != 0x10) {
+            self->step = 1;
+        }
+        break;
+    case 3:
+        if (!--self->ext.armorLord.unk80) {
+            self->animCurFrame = 0;
+        } else {
+            self->unk6C -= 0x20;
+        }
+        if (parent->animCurFrame != 0x15) {
+            self->step = 1;
+        }
+        break;
+    }
+
+    animCurFrame = parent->animCurFrame;
+    if (animCurFrame == 0x1E) {
+        self->hitboxState = 3;
+    } else {
+        self->hitboxState = 1;
+    }
+
+    if (animCurFrame < 5 || animCurFrame > 30) {
+        animCurFrame = 0;
+    } else {
+        animCurFrame -= 4;
+    }
+
+    self->hitboxOffX = hitboxOffXYs[animCurFrame][0];
+    self->hitboxOffY = hitboxOffXYs[animCurFrame][1];
+    self->hitboxWidth = hitboxWidthHeights[animCurFrame][0];
+    self->hitboxHeight = hitboxWidthHeights[animCurFrame][1];
+
+    if (parent->entityId != E_ARMOR_LORD) {
+        DestroyEntity(self);
+    }
+}
 
 // Another wave attack helper
 void func_us_801D3700(Entity* self) {
