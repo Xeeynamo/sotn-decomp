@@ -9,9 +9,10 @@ extern Dialogue2 g_Dialogue;
 u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
+    s16 shift;
 
-    g_Dialogue.primIndex[0] = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
-    if (g_Dialogue.primIndex[0] != -1) {
+    g_Dialogue.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    if (g_Dialogue.primIndex != -1) {
         g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = script;
         g_Dialogue.startY = 0x216;
@@ -20,21 +21,22 @@ u8 func_801B101C(u8* script) {
         g_Dialogue.portraitAnimTimer = 0;
         g_Dialogue.unk12 = 0;
         g_Dialogue.clutIndex = 0;
-        g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[0]];
-        prim = &g_PrimBuf[g_Dialogue.primIndex[0]];
+        prim = g_Dialogue.prim = &g_PrimBuf[g_Dialogue.primIndex];
         for (i = 0; i < 0x20; i++) {
-            if (i & 1) {
+            shift = i & 1;
+            if (shift) {
                 prim->tpage = 9;
                 prim->x0 = 0x100;
             } else {
                 prim->tpage = 8;
                 prim->x0 = 0x20;
             }
-            prim->v0 = (i >> 1) * 0x10;
+            shift = i >> 1;
+            prim->v0 = shift * 0x10;
             prim->u0 = 0;
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
-            prim->y0 = (i >> 1) * 0x16 + 0xF0;
+            prim->y0 = shift * 0x16 + 0xF0;
             prim->clut = 0x221;
             prim->priority = 3;
             prim->drawMode = DRAW_DEFAULT;
@@ -43,7 +45,7 @@ u8 func_801B101C(u8* script) {
 
         return true;
     }
-    g_Dialogue.primIndex[0] = 0;
+    g_Dialogue.primIndex = 0;
     return false;
 }
 
@@ -86,24 +88,28 @@ u16* func_801B11E8(unsigned char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-extern u8 D_80182C58[];
-extern u16 D_801BEE90[][0x30];
+static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
+                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
+
+#include "prologue_cutscene_script.h"
+
+extern u16 D_801BEE90[][0x30]; // bss
 // Resembles SEL func_801B79D4
 void func_801B1298(Entity* self) {
     s32 i;
     Primitive* prim;
     u16 y;
     u16 glyphIndex;
-    u16* var_v1;
+    u16* glyphPtr;
     u16 nextChar;
     u16* glyph;
     s16 y0;
 
     switch (self->step) {
     case 0:
-        if (func_801B101C(D_80182C58)) {
+        if (func_801B101C((u8*)prologue_script_en)) {
             self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = g_Dialogue.primIndex[0];
+            self->primIndex = g_Dialogue.primIndex;
             ++self->step;
             func_801B1198(0);
             glyphIndex = 0;
@@ -118,24 +124,24 @@ void func_801B1298(Entity* self) {
                 }
                 glyph = func_801B11E8(nextChar);
                 if (glyph) {
-                    var_v1 = &D_801BEE90[glyphIndex][0];
+                    glyphPtr = D_801BEE90[glyphIndex];
                     for (i = 0; i < 0x30; ++i) {
-                        var_v1++[0] = glyph++[0];
+                        glyphPtr++[0] = glyph++[0];
                     }
                     glyph = D_801BEE90[glyphIndex];
                     y = g_Dialogue.nextLineX * 16;
                     LoadTPage(
                         (u_long*)glyph, 0, 0, g_Dialogue.startY, y, 12, 16);
                     g_Dialogue.startY += 3;
-                    y = g_Dialogue.startY - g_Dialogue.nextCharX;
-                    if (0x38 <= y && y < 0x40) {
+                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+                    if (0x38 <= nextChar && nextChar < 0x40) {
                         g_Dialogue.startY += 8;
                     }
-                    ++glyphIndex;
+                    glyphIndex++;
                 } else {
                     g_Dialogue.startY += 2;
-                    y = g_Dialogue.startY - g_Dialogue.nextCharX;
-                    if (0x38 <= y && y < 0x40) {
+                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+                    if (0x38 <= nextChar && nextChar < 0x40) {
                         g_Dialogue.startY += 8;
                     }
                 }
@@ -171,15 +177,14 @@ void func_801B1298(Entity* self) {
                     g_Dialogue.nextLineX = 0;
                 }
 
-                prim = g_Dialogue.prim[0];
+                prim = g_Dialogue.prim;
                 for (i = 0; i < g_Dialogue.nextLineX; ++i) {
                     prim = prim->next;
                     prim = prim->next;
                 }
 
                 y0 = prim->y0;
-                for (prim = g_Dialogue.prim[0]; prim != NULL;
-                     prim = prim->next) {
+                for (prim = g_Dialogue.prim; prim != NULL; prim = prim->next) {
                     if (y0 <= prim->y0) {
                         prim->y0 += 0x16;
                         prim->p1 += 0x16;
@@ -200,8 +205,8 @@ void func_801B1298(Entity* self) {
         } else {
             g_Dialogue.startY += 2;
         }
-        y = g_Dialogue.startY - g_Dialogue.nextCharX;
-        if (0x38 <= y && y < 0x40) {
+        nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
+        if (0x38 <= nextChar && nextChar < 0x40) {
             g_Dialogue.startY += 8;
         }
         break;
@@ -224,7 +229,7 @@ void func_801B1298(Entity* self) {
     }
     --g_Dialogue.unk12;
     if (!g_Dialogue.clutIndex) {
-        for (prim = g_Dialogue.prim[0], i = 0; i < 32; ++i) {
+        for (prim = g_Dialogue.prim, i = 0; i < 32; ++i) {
             prim->y0--;
             if (prim->y0 == -22) {
                 prim->y0 = g_Dialogue.portraitAnimTimer - prim->p1 + 330;
