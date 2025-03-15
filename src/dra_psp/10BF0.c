@@ -9,7 +9,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED818);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED958);
 
-void func_psp_090ED9D8(void) {}
+void MenuSoundConfigDraw(void) {}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED9E0);
 
