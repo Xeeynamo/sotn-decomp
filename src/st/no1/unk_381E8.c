@@ -334,8 +334,29 @@ void func_us_801B8B00(Entity* self) {
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 
-// entering doppleganger's room
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
+extern EInit D_us_80180A1C;
+extern u8 D_us_801813FC[];
+extern u8* D_us_80181408[];
+
+void func_us_801B8F50(Entity* self) {
+    u8* anim;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A1C);
+        self->animCurFrame = D_us_801813FC[self->params];
+        self->zPriority = 0x6A;
+        break;
+    case 1:
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
+            self->step++;
+        }
+        break;
+    case 2:
+        anim = D_us_80181408[self->params];
+        AnimateEntity(anim, self);
+        break;
+    }
+}
 
 extern u16 D_us_8018142C[];
 extern u16 D_us_80181440[];
