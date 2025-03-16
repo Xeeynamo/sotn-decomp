@@ -6,13 +6,10 @@
 PHONY_TARGETS := # Empty variable
 MUFFLED_TARGETS := # Empty variable
 
-# Sets VERSION and VENV_DIR if not defined
-VERSION		?= us
-VENV_DIR	?= .venv
-# For disambiguation/escaping of characters
-comma		:= ,
-# Allows DEBUG to unmuffle targets which can't use .SILENT
-muffle 		:= $(if $(DEBUG),,@)
+VERSION		?= us# Only when env not set
+VENV_DIR	?= .venv# Can be overriden with env
+comma		:= ,# For escaping a literal comma
+muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use .SILENT
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
@@ -109,15 +106,9 @@ define new_list_src_files
 endef
 new_list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 
-# leverages MWCC ability to compile data and text as separate sections to allow
-# LD using --gc-sections and remove all the symbols that are unreferenced.
-# symexport.*.txt is used to enforce a specific symbol and all its dependencies
-# to be used. Refer to *.map to know which sections are being discarded by LD.
-# Use nm to retrieve the symbol name out of a object file such as the mwo_header.
 define new_link
 	$(muffle)$(call echo,Linking $1,optional)
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
-		$(call if_version,pspeu,--gc-sections) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(subst _fix,,$1).ld \
 		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
@@ -128,7 +119,7 @@ endef
 define get_merged_functions 
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
-	yaml_file=open(os.path.join(os.getcwd(),"config/splat.$(VERSION).$(2)$(1).yaml"));\
+	yaml_file=open("config/splat.$(VERSION).$(2)$(1).yaml");\
 	config = yaml.safe_load(yaml_file); yaml_file.close();\
 	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
 	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
@@ -142,8 +133,7 @@ get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
 add_ovl_prefix = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$(or $2,st)$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$(or $3,bo)$1),$(call to_lower,$1)))
 get_ovl_from_path = $(word $(or $2,1),$(filter $(call get_targets),$(subst /, ,$1)))
 ### End new header ###
-WHICH_PYTHON	:= $(SYSTEM_PYTHON)
-
+### Start old header, to be removed when all targets have been transitioned ##
 # Directories
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 
@@ -242,6 +232,7 @@ define link_with_deadstrip
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
+### End old header ###
 
 ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
