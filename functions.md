@@ -945,7 +945,7 @@
 | no4    | func_psp_0925DBD8                   |      136 |         17 |        |                                 |       |
 | dra    | func_psp_09141668                   |      136 |         21 |        |                                 |       |
 | no4    | func_psp_09249560                   |      138 |         15 |        |                                 |       |
-| dra    | func_psp_090EB028                   |      139 |          2 |        | https://decomp.me/scratch/tJnoh | 0.988 |
+| dra    | func_psp_090EB028                   |      139 |          2 |        | https://decomp.me/scratch/qYY9V | 0.989 |
 | lib    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
 | no4    | func_psp_0925E338                   |      139 |          5 |        |                                 |       |
 | st0    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
