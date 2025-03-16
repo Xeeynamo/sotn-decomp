@@ -527,7 +527,7 @@ python-dependencies: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
 
 $(VENV_DIR):
-	$(WHICH_PYTHON) -m venv $(VENV_DIR)
+	$(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
