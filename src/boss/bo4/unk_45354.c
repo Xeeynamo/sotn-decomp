@@ -74,7 +74,7 @@ void SetPlayerAnim(u8 anim);
 extern s16 g_Dop_unk44[];
 
 void func_us_801C5990(void) {
-    DOPPLEGANGER.velocityY = FIX(65531.75);
+    DOPPLEGANGER.velocityY = FIX(-4.25);
     *g_Dop_unk44 |= 0x21;
     SetPlayerAnim(0x20);
     DOPPLEGANGER.step_s = 0;
