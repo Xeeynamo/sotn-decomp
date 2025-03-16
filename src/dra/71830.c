@@ -3013,8 +3013,8 @@ bool MistFormFinished(void) {
 void ControlMistForm(void) {
     s32 xSpeedDiag;
     s32 ySpeedDiag;
-    s32 ySpeedOrtho;
     s32 xSpeedOrtho;
+    s32 ySpeedOrtho;
     u32 directionsPressed;
 
     if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
@@ -3042,9 +3042,7 @@ void ControlMistForm(void) {
     case 0:
         func_800EA5E4(0x1BU);
         CheckMoveDirection();
-        g_Player.unk48 = 0;
-        g_Player.unk46 = 0;
-        g_Player.unk44 = 0;
+        g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
         func_8010FAF4();
         CreateEntFactoryFromEntity(g_CurrentEntity, 73, 0);
         if (PLAYER.velocityX > 0) {
@@ -3068,6 +3066,9 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11FU);
             CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
+        #if defined(VERSION_PSP)
+        g_SecondaryMistTimer = 16;
+        #endif
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
         if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
@@ -3208,7 +3209,7 @@ void PlayerStepUnmorphMist(void) {
         } else {
             else_cycles++;
         }
-        if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+        if (g_SensorsCeiling[i].y > g_SensorsCeilingDefault[i]) {
             g_SensorsCeiling[i].y--;
         } else {
             else_cycles++;
@@ -3217,7 +3218,7 @@ void PlayerStepUnmorphMist(void) {
         if (i != 0) {
             continue;
         }
-        if (PLAYER.step_s != 0) {
+        if (PLAYER.step_s) {
             if (D_8013AECC >= 12) {
                 continue;
             }
@@ -3240,7 +3241,7 @@ void PlayerStepUnmorphMist(void) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
         SetPlayerAnim(0xCB);
-        if (PLAYER.step_s != 0) {
+        if (PLAYER.step_s) {
             SetPlayerAnim(0xCC);
         }
         if (g_Entities[16].step < 3) {
@@ -3251,21 +3252,23 @@ void PlayerStepUnmorphMist(void) {
             PLAYER.palette = 0x8100;
             func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x5b), 0);
-            if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
                 func_8010E4D0();
                 return;
             }
             func_8010E83C(0);
             PLAYER.posY.i.hi -= 3;
             if (!(g_Player.pl_vram_flag & 0x8000)) {
-                PLAYER.velocityY = -0x10000;
+                PLAYER.velocityY = FIX(-1);
             }
+            g_Player.unk44 |= 0x100;
 #if defined(VERSION_US)
             g_Player.unk20 = 0x18;
 #elif defined(VERSION_HD)
             D_800ACEDC_hd = 0x18;
+#elif defined(VERSION_PSP)
+            D_psp_09234B68 = 0x18;
 #endif
-            g_Player.unk44 |= 0x100;
             func_80111CC0();
         }
     }

@@ -3066,7 +3066,9 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11FU);
             CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
+        #if defined(VERSION_PSP)
         g_SecondaryMistTimer = 16;
+        #endif
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
         if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
