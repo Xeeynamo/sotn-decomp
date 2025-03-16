@@ -212,8 +212,13 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
 //     Ok(())
 // }
 
-fn process_macro_with_transform(line: &str, regex: &str, transform: impl Fn(&str) -> Vec<u8>) -> String {
-    let re = Regex::new(regex).unwrap();
+lazy_static! {
+    static ref RE_S: Regex = Regex::new(r"_S\(([^()]*|(?:[^()]*\([^()]*\)[^()]*)*)\)").unwrap();
+    static ref RE_S2: Regex = Regex::new(r"_S2\((.*?)\)").unwrap();
+    static ref RE_S2_HD: Regex = Regex::new(r"_S2_HD\((.*?)\)").unwrap();
+}
+
+fn process_macro_with_transform(line: &str, re: &Regex, transform: impl Fn(&str) -> Vec<u8>) -> String {
     re.replace_all(line, |match_: &regex::Captures| {
         let s = match_.get(1).map_or("", |m| m.as_str());
         // println!("{}", s);
@@ -227,15 +232,15 @@ fn process_macro_with_transform(line: &str, regex: &str, transform: impl Fn(&str
 }
 
 fn process_s_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S\(([^()]*|(?:[^()]*\([^()]*\)[^()]*)*)\)", utf8_to_byte_literals)
+    process_macro_with_transform(line, &RE_S, utf8_to_byte_literals)
 }
 
 fn process_s2_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S2\((.*?)\)", alt_utf8_to_byte_literals)
+    process_macro_with_transform(line,&RE_S2, alt_utf8_to_byte_literals)
 }
 
 fn process_s2_hd_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S2_HD\((.*?)\)", alt_hd_utf8_to_byte_literals)
+    process_macro_with_transform(line,&RE_S2_HD, alt_hd_utf8_to_byte_literals)
 }
 
 fn do_sub(line: &str) -> String {
@@ -253,10 +258,14 @@ fn process(filename: Option<String>) -> io::Result<()> {
 
     let mut reader = BufReader::new(reader);
     let mut line = String::new();
+    let mut output = String::new();
+
     while reader.read_line(&mut line)? > 0 {
-        print!("{}", do_sub(&line));
+        output.push_str(&do_sub(&line));
         line.clear();
     }
+    
+    print!("{}", output);
 
     Ok(())
 }
