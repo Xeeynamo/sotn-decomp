@@ -894,7 +894,7 @@ loop_5:
         if (DebugUpdate() != 0) {
             UpdateGame();
         }
-        if (D_8003C0F8 == 0 && D_800973EC == 0) {
+        if (D_8003C0EC[3] == 0 && D_800973EC == 0) {
             RenderTilemap();
             RenderEntities();
             if (g_GameState == Game_Play && g_DebugEnabled) {
