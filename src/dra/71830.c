@@ -1014,14 +1014,17 @@ void PlayerStepCrouch(void) {
     }
 }
 
-void func_801139CC(s32 arg0) {
-    s32 move = PLAYER.facingLeft != 0 ? -3 : 3;
+void func_801139CC(u16 arg0) {
+    s16 move = 3;
+    if (PLAYER.facingLeft) {
+        move = -move;
+    }
 
     PLAYER.posY.i.hi -= 22;
-    PLAYER.posX.i.hi = move + PLAYER.posX.i.hi;
+    PLAYER.posX.i.hi += move;
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 1), 0);
-    PLAYER.posY.i.hi = PLAYER.posY.i.hi + 22;
-    PLAYER.posX.i.hi = PLAYER.posX.i.hi - move;
+    PLAYER.posY.i.hi += 22;
+    PLAYER.posX.i.hi -= move;
 
     if (arg0 & 1) {
         func_80102CD8(3);
@@ -1118,48 +1121,46 @@ void PlayerStepHighJump(void) {
 
 s32 func_80113D7C(s16 damageAmount) {
     DamageParam damage;
-    s32 sfx;
-    s32 temp_s0;
+    s32 handleDamageResult;
     s16 step;
-    u16 temp_s1;
+    s16 step_s;
 
-    temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, damageAmount / 2, 1);
+    damageAmount = damageAmount / 2;
+
+    handleDamageResult = HandleDamage(&damage, DAMAGEKIND_2, damageAmount, 1);
     CreateHPNumMove(damage.damageTaken, 0);
     func_800FE8F0();
-    if (temp_s0 != 4) {
-        g_Player.timers[2] = 4;
-        g_Player.unk40 = 0x8166;
-        sfx = g_SfxPainGrunts[(rand() & 1) + 3];
-        PlaySfx(sfx);
-        if (step && step) // TODO: !FAKE
-            ;
-        return 0;
+    if (handleDamageResult == 4) {
+        // Cache these values because we're going to set Player_Kill.
+        step = PLAYER.step;
+        step_s = PLAYER.step_s;
+        damage.effects = EFFECT_NONE;
+        damage.damageKind = DAMAGEKIND_0;
+        SetPlayerStep(Player_Kill);
+        PlayerStepKill(&damage, step, step_s);
+        return -1;
     }
-    step = PLAYER.step;
-    temp_s1 = PLAYER.step_s;
-    damage.effects = EFFECT_NONE;
-    damage.damageKind = DAMAGEKIND_0;
-    SetPlayerStep(Player_Kill);
-    PlayerStepKill(&damage, step, temp_s1);
-    return -1;
+    g_Player.timers[2] = 4;
+    g_Player.unk40 = 0x8166;
+    PlaySfx(g_SfxPainGrunts[(rand() & 1) + 3]);
+    return 0;
 }
 
 s32 func_80113E68(void) {
-    s16 rnd = rand();
+    s16 rnd = rand() & PSP_RANDMASK;
     PLAYER.ext.player.anim = 0x2E + (rnd % 3);
     return rnd % 16;
 }
 
 void func_80113EE0(void) {
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
     PLAYER.animSet = ANIMSET_DRA(1);
-    PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                         FLAG_BLINK | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-    PLAYER.animFrameDuration = 0;
-    PLAYER.animFrameIdx = 0;
     PLAYER.entityId = 0;
     PLAYER.drawMode = DRAW_DEFAULT;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
+    PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
+                         FLAG_BLINK | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
     PLAYER.rotZ = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_UNK_22) {
@@ -1168,44 +1169,43 @@ void func_80113EE0(void) {
 }
 
 void func_80113F7C(void) {
-    Entity* entity = PLAYER.unkB8;
+    Entity* other = PLAYER.unkB8;
+    s16 otherHitboxOffX;
+    s16 playerHitboxOffX;
     s16 posX;
-    s32 var_a0;
-    s32 var_a2;
 
-    if (entity->facingLeft != 0) {
-        var_a2 = -entity->hitboxOffX;
-    } else {
-        var_a2 = entity->hitboxOffX;
-    }
-
-    if (PLAYER.facingLeft != 0) {
-        var_a0 = -PLAYER.hitboxOffX;
-    } else {
-        var_a0 = PLAYER.hitboxOffX;
-    }
-
-    posX = var_a0 + PLAYER.posX.i.hi - entity->posX.i.hi - var_a2;
-
-    if (abs(posX) < 16) {
-        if (entity->velocityX != 0) {
-            if (entity->velocityX >= 0) {
-                PLAYER.entityRoomIndex = 1;
-                return;
-            }
-            goto block_14;
-        }
-        goto block_13;
-    }
-    // TODO: labels are !FAKE
-block_13:
-    if (posX < 0) {
-    block_14:
-        PLAYER.entityRoomIndex = 0;
+    if (other == NULL) {
         return;
     }
 
-    PLAYER.entityRoomIndex = 1;
+    if (other->facingLeft) {
+        otherHitboxOffX = -other->hitboxOffX;
+    } else {
+        otherHitboxOffX = other->hitboxOffX;
+    }
+
+    if (PLAYER.facingLeft) {
+        playerHitboxOffX = -PLAYER.hitboxOffX;
+    } else {
+        playerHitboxOffX = PLAYER.hitboxOffX;
+    }
+
+    posX = PLAYER.posX.i.hi + playerHitboxOffX - other->posX.i.hi -
+           otherHitboxOffX;
+
+    if (abs(posX) < 16 && other->velocityX != 0) {
+        if (other->velocityX < 0) {
+            PLAYER.entityRoomIndex = 0;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+        }
+    } else {
+        if (posX < 0) {
+            PLAYER.entityRoomIndex = 0;
+        } else {
+            PLAYER.entityRoomIndex = 1;
+        }
+    }
 }
 
 void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
