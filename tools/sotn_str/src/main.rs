@@ -70,10 +70,11 @@ const TABLE: [char; 256] = [
     'た',   'ち',   'つ',  'て',  'と',  'な',  'に',  'ぬ',  'ね',   'の',  'は',  'ひ',  'ふ',  'へ',  'ほ',  'ま',
     'み',   'む',   'め',  'も',  'や',  'ゆ',  'よ',  'ら',  'り',   'る',  'れ',  'ろ',  'わ',  'ん',  '指',  '輪',
     '←',    '↖',   '↑',   '↗',  '→',   '↘',  '↓',  '↙',  '○',    '×',   '□',   '△',  '名',  '刀',  '聖',  '血',
-    '0',   '1',  '2' , '3',  '4',  '5',  '6',  '7',  '8',  '9',  'a', 'b', '大',  '光',  '邪',  '月'
+    '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
 ];
 
 #[allow(dead_code)]
+#[allow(unused_assignments)]
 fn convert_j(f: &[u8]) -> String {
     let mut pos = 0;
     let mut result = String::new();
@@ -121,276 +122,8 @@ fn utf8_to_byte_literals_escaped(input: &str) -> String {
         .collect::<String>()
 }
 
-fn table_index(c: &char) -> Option<usize> {
-    match c {
-        ' ' => Some(0),
-        '!' => Some(1),
-        '\'' => Some(2),
-        '#' => Some(3),
-        '$' => Some(4),
-        '%' => Some(5),
-        '&' => Some(6),
-        '\\' => Some(7),
-        '(' => Some(8),
-        ')' => Some(9),
-        '男' => Some(10),
-        '+' => Some(11),
-        ',' => Some(12),
-        '-' => Some(13),
-        '.' => Some(14),
-        '/' => Some(15),
-        '0' => Some(16),
-        '1' => Some(17),
-        '2' => Some(18),
-        '3' => Some(19),
-        '4' => Some(20),
-        '5' => Some(21),
-        '6' => Some(22),
-        '7' => Some(23),
-        '8' => Some(24),
-        '9' => Some(25),
-        ':' => Some(26),
-        // there's two hito in the table
-        // '人' => Some(27),
-        '手' => Some(28),
-        '=' => Some(29),
-        '玉' => Some(30),
-        '?' => Some(31),
-        '石' => Some(32),
-        'A' => Some(33),
-        'B' => Some(34),
-        'C' => Some(35),
-        'D' => Some(36),
-        'E' => Some(37),
-        'F' => Some(38),
-        'G' => Some(39),
-        'H' => Some(40),
-        'I' => Some(41),
-        'J' => Some(42),
-        'K' => Some(43),
-        'L' => Some(44),
-        'M' => Some(45),
-        'N' => Some(46),
-        'O' => Some(47),
-        'P' => Some(48),
-        'Q' => Some(49),
-        'R' => Some(50),
-        'S' => Some(51),
-        'T' => Some(52),
-        'U' => Some(53),
-        'V' => Some(54),
-        'W' => Some(55),
-        'X' => Some(56),
-        'Y' => Some(57),
-        'Z' => Some(58),
-        '[' => Some(59),
-        '剣' => Some(60),
-        ']' => Some(61),
-        '盾' => Some(62),
-        '_' => Some(63),
-        '書' => Some(64),
-        'a' => Some(65),
-        'b' => Some(66),
-        'c' => Some(67),
-        'd' => Some(68),
-        'e' => Some(69),
-        'f' => Some(70),
-        'g' => Some(71),
-        'h' => Some(72),
-        'i' => Some(73),
-        'j' => Some(74),
-        'k' => Some(75),
-        'l' => Some(76),
-        'm' => Some(77),
-        'n' => Some(78),
-        'o' => Some(79),
-        'p' => Some(80),
-        'q' => Some(81),
-        'r' => Some(82),
-        's' => Some(83),
-        't' => Some(84),
-        'u' => Some(85),
-        'v' => Some(86),
-        'w' => Some(87),
-        'x' => Some(88),
-        'y' => Some(89),
-        'z' => Some(90),
-        '炎' => Some(91),
-        '氷' => Some(92),
-        '雷' => Some(93),
-        '~' => Some(94),
-        '女' => Some(95),
-        '力' => Some(96),
-        '。' => Some(97),
-        '「' => Some(98),
-        '」' => Some(99),
-        '、' => Some(100),
-        '・' => Some(101),
-        'ヲ' => Some(102),
-        'ァ' => Some(103),
-        'ィ' => Some(104),
-        'ゥ' => Some(105),
-        'ェ' => Some(106),
-        'ォ' => Some(107),
-        'ャ' => Some(108),
-        'ュ' => Some(109),
-        'ョ' => Some(110),
-        'ッ' => Some(111),
-        'ー' => Some(112),
-        'ア' => Some(113),
-        'イ' => Some(114),
-        'ウ' => Some(115),
-        'エ' => Some(116),
-        'オ' => Some(117),
-        'カ' => Some(118),
-        'キ' => Some(119),
-        'ク' => Some(120),
-        'ケ' => Some(121),
-        'コ' => Some(122),
-        'サ' => Some(123),
-        'シ' => Some(124),
-        'ス' => Some(125),
-        'セ' => Some(126),
-        'ソ' => Some(127),
-        'タ' => Some(128),
-        'チ' => Some(129),
-        'ツ' => Some(130),
-        'テ' => Some(131),
-        'ト' => Some(132),
-        'ナ' => Some(133),
-        'ニ' => Some(134),
-        'ヌ' => Some(135),
-        'ネ' => Some(136),
-        'ノ' => Some(137),
-        'ハ' => Some(138),
-        'ヒ' => Some(139),
-        'フ' => Some(140),
-        'ヘ' => Some(141),
-        'ホ' => Some(142),
-        'マ' => Some(143),
-        'ミ' => Some(144),
-        'ム' => Some(145),
-        'メ' => Some(146),
-        'モ' => Some(147),
-        'ヤ' => Some(148),
-        'ユ' => Some(149),
-        'ヨ' => Some(150),
-        'ラ' => Some(151),
-        'リ' => Some(152),
-        'ル' => Some(153),
-        'レ' => Some(154),
-        'ロ' => Some(155),
-        'ワ' => Some(156),
-        'ン' => Some(157),
-        'ﾞ' => Some(158),
-        'ﾟ' => Some(159),
-        '子' => Some(160),
-        '悪' => Some(161),
-        '魔' => Some(162),
-        '人' => Some(163),
-        '妖' => Some(164),
-        '精' => Some(165),
-        'を' => Some(166),
-        'ぁ' => Some(167),
-        'ぃ' => Some(168),
-        'ぅ' => Some(169),
-        'ぇ' => Some(170),
-        'ぉ' => Some(171),
-        'ゃ' => Some(172),
-        'ゅ' => Some(173),
-        'ょ' => Some(174),
-        'っ' => Some(175),
-        '金' => Some(176),
-        'あ' => Some(177),
-        'い' => Some(178),
-        'う' => Some(179),
-        'え' => Some(180),
-        'お' => Some(181),
-        'か' => Some(182),
-        'き' => Some(183),
-        'く' => Some(184),
-        'け' => Some(185),
-        'こ' => Some(186),
-        'さ' => Some(187),
-        'し' => Some(188),
-        'す' => Some(189),
-        'せ' => Some(190),
-        'そ' => Some(191),
-        'た' => Some(192),
-        'ち' => Some(193),
-        'つ' => Some(194),
-        'て' => Some(195),
-        'と' => Some(196),
-        'な' => Some(197),
-        'に' => Some(198),
-        'ぬ' => Some(199),
-        'ね' => Some(200),
-        'の' => Some(201),
-        'は' => Some(202),
-        'ひ' => Some(203),
-        'ふ' => Some(204),
-        'へ' => Some(205),
-        'ほ' => Some(206),
-        'ま' => Some(207),
-        'み' => Some(208),
-        'む' => Some(209),
-        'め' => Some(210),
-        'も' => Some(211),
-        'や' => Some(212),
-        'ゆ' => Some(213),
-        'よ' => Some(214),
-        'ら' => Some(215),
-        'り' => Some(216),
-        'る' => Some(217),
-        'れ' => Some(218),
-        'ろ' => Some(219),
-        'わ' => Some(220),
-        'ん' => Some(221),
-        '指' => Some(222),
-        '輪' => Some(223),
-        '←' => Some(224),
-        '↖' => Some(225),
-        '↑' => Some(226),
-        '↗' => Some(227),
-        '→' => Some(228),
-        '↘' => Some(229),
-        '↓' => Some(230),
-        '↙' => Some(231),
-        '○' => Some(232),
-        '×' => Some(233),
-        '□' => Some(234),
-        '△' => Some(235),
-        '名' => Some(236),
-        '刀' => Some(237),
-        '聖' => Some(238),
-        '血' => Some(239),
-        '0' => Some(240),
-        '1' => Some(241),
-        '2' => Some(242),
-        '3' => Some(243),
-        '4' => Some(244),
-        '5' => Some(245),
-        '6' => Some(246),
-        '7' => Some(247),
-        '8' => Some(248),
-        '9' => Some(249),
-        'a' => Some(250),
-        'b' => Some(251),
-        '大' => Some(252),
-        '光' => Some(253),
-        '邪' => Some(254),
-        '月' => Some(255),
-        _ => None, // Default case
-    }
-}
-
 fn utf8_to_byte_literals(input_str: &str) -> Vec<u8> {
     let mut bytes = Vec::new();
-        // let mut utf8_to_index = HashMap::new();
-
-    // for (index, value) in TABLE.iter().enumerate() {
-    //     utf8_to_index.insert(*value, index);
-    // }
     for char in input_str.chars() {
         if has_dakuten(&char) || has_handakuten(&char) {
             bytes.extend(dakuten_to_bytes(&char));
@@ -398,15 +131,9 @@ fn utf8_to_byte_literals(input_str: &str) -> Vec<u8> {
             bytes.push(0xFF);
             bytes.push(0xFF);
         } else {
-            // println!("{}", char);
             if let Some(index) = table_index(&char){
                 bytes.push(index as u8);
-            } else {
-                // println!("Entry not found for char: {}", char);
-                // std::process::exit(1);
-                // return; // or exit the function or loop
             }
-            // bytes.push(utf8_to_index[&char].try_into().unwrap());
         }
     }
     bytes.push(0xFF);
@@ -489,6 +216,7 @@ fn process_macro_with_transform(line: &str, regex: &str, transform: impl Fn(&str
     let re = Regex::new(regex).unwrap();
     re.replace_all(line, |match_: &regex::Captures| {
         let s = match_.get(1).map_or("", |m| m.as_str());
+        // println!("{}", s);
         let s = s.replace(r#"\\"#, "\"");
         let out = transform(&s);
         let escaped = out.iter()
@@ -499,15 +227,15 @@ fn process_macro_with_transform(line: &str, regex: &str, transform: impl Fn(&str
 }
 
 fn process_s_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S\((.*)\)", utf8_to_byte_literals)
+    process_macro_with_transform(line, r"_S\(([^()]*|(?:[^()]*\([^()]*\)[^()]*)*)\)", utf8_to_byte_literals)
 }
 
 fn process_s2_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S2\((.*)\)", alt_utf8_to_byte_literals)
+    process_macro_with_transform(line, r"_S2\((.*?)\)", alt_utf8_to_byte_literals)
 }
 
 fn process_s2_hd_macro(line: &str) -> String {
-    process_macro_with_transform(line, r"_S2_HD\((.*)\)", alt_hd_utf8_to_byte_literals)
+    process_macro_with_transform(line, r"_S2_HD\((.*?)\)", alt_hd_utf8_to_byte_literals)
 }
 
 fn do_sub(line: &str) -> String {
@@ -533,31 +261,34 @@ fn process(filename: Option<String>) -> io::Result<()> {
     Ok(())
 }
 
-// use lazy_static::lazy_static;
+use lazy_static::lazy_static;
 
-// lazy_static! {
-//     static ref ALT_UTF8_TO_INDEX: HashMap<char, usize> = {
-//         let values = "ＡＴＤＥＦ".chars().collect::<Vec<char>>();
-//         values.into_iter().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
-//     };
+lazy_static! {
+    static ref ALT_UTF8_TO_INDEX: HashMap<char, usize> = {
+        let values = "ＡＴＤＥＦ".chars().collect::<Vec<char>>();
+        values.into_iter().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+    };
 
-//     // static ref ALT_HD_UTF8_TO_INDEX: HashMap<char, usize> = {
-//     //     let values = [
-//     //         "装備技システム短剣必殺使攻撃力防",
-//     //         "御魔導器拳こ一覧棒両手食物爆弾盾",
-//     //         "投射薬ん右左武兜鎧マントその他い",
-//     //     ]
-//     //     .concat();
-//     //     values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
-//     // };
-//     static ref UTF8_TO_INDEX: HashMap<char, usize> = {
-//         let mut map = HashMap::new();
-//         for (index, value) in TABLE.iter().enumerate() {
-//             map.insert(*value, index);
-//         }
-//         map
-//     };
-// }
+    // static ref ALT_HD_UTF8_TO_INDEX: HashMap<char, usize> = {
+    //     let values = [
+    //         "装備技システム短剣必殺使攻撃力防",
+    //         "御魔導器拳こ一覧棒両手食物爆弾盾",
+    //         "投射薬ん右左武兜鎧マントその他い",
+    //     ]
+    //     .concat();
+    //     values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+    // };
+    static ref UTF8_TO_INDEX: HashMap<char, usize> = {
+        let mut map = HashMap::new();
+        for (index, value) in TABLE.iter().enumerate() {
+            map.insert(*value, index);
+        }
+        map
+    };
+}
+fn table_index(c: &char) -> Option<usize> {
+    return UTF8_TO_INDEX.get(c).copied();
+}
 
 fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
     match c {
@@ -619,7 +350,7 @@ fn alt_utf8_to_index(c: &char) -> Option<usize> {
         'Ｄ' => Some(2),
         'Ｅ' => Some(3),
         'Ｆ' => Some(4),
-        _ => None,  // Default case for when the character is not found
+        _ => None,
     }
 }
 
@@ -748,6 +479,29 @@ mod tests {
         let line = r#"{_S("たび人ぼう"), "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
         let out = do_sub(line);
         let expected = r#"{"\xC0\xCB\xFF\x9E\xA3\xCE\xFF\x9E\xB3\xFF", "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
+        assert_eq!(out, expected);
+
+        let line = r#"/* 0x18C */ {_S("Guardian"), 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
+        let out = do_sub(line);
+        let expected = r#"/* 0x18C */ {"\x27\x55\x41\x52\x44\x49\x41\x4E\xFF", 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
+        assert_eq!(out, expected);
+
+let line = r#"const char* g_goldCollectTexts[] = {
+    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
+    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+};"#;
+
+let expected = r#"const char* g_goldCollectTexts[] = {
+    "\x04\x11\xFF",   "\x04\x12\x15\xFF",  "\x04\x15\x10\xFF",   "\x04\x11\x10\x10\xFF",  "\x04\x12\x15\x10\xFF",
+    "\x04\x14\x10\x10\xFF", "\x04\x17\x10\x10\xFF", "\x04\x11\x10\x10\x10\xFF", "\x04\x12\x10\x10\x10\xFF", "\x04\x15\x10\x10\x10\xFF",
+};"#;
+
+        let out = do_sub(line);
+        assert_eq!(out, expected);
+
+        let line = r#"_S("ナイフ(サブ)"),"#;
+        let out = do_sub(line);
+        let expected = r#""\x85\x72\x8C\x08\x7B\x8C\xFF\x9E\x09\xFF","#;
         assert_eq!(out, expected);
     }
 }
