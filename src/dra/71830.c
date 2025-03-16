@@ -1798,7 +1798,8 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         func_8010E3B8(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
         PLAYER.rotZ = 0;
-        PLAYER.rotPivotX = PLAYER.rotPivotY = 0;
+        PLAYER.rotPivotY = 0;
+        PLAYER.rotPivotX = 0;
         if (damage->effects & ELEMENT_FIRE) {
             func_80118C28(3);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
@@ -1983,25 +1984,34 @@ void func_80115C50(void) {
     }
 }
 
+extern u16 D_psp_091FC4A8;
+extern u16 D_psp_091FC4AC;
+
 // Corresponding RIC function is func_8015BCD0
 void PlayerStepTeleport(void) {
-    Entity* e;
+    Entity* newEnt;
 
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
+    #if defined(VERSION_PSP)
+    D_psp_091FC4A8 = D_psp_091FC4AC = 0;
+    #endif
     g_Player.D_80072EFC = 4;
+
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
-            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 0), 0);
-            if (!e) {
+            newEnt =
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 0), 0);
+            if (newEnt == NULL) {
                 PLAYER.animFrameDuration = 2;
             }
         }
+        #if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
+        #endif
         break;
     case 1:
         if (PLAYER.animFrameDuration < 0) {
@@ -2014,14 +2024,17 @@ void PlayerStepTeleport(void) {
     case 2:
         func_80115C50();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
-            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0);
-            if (!e) {
+            newEnt =
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0);
+            if (newEnt == NULL) {
                 PLAYER.animFrameDuration = 2;
             }
         }
+        #if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
+        #endif
         break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
@@ -2034,14 +2047,17 @@ void PlayerStepTeleport(void) {
     case 4:
         func_80115C50();
         if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
-            e = CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0);
-            if (!e) {
+            newEnt =
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0);
+            if (newEnt == NULL) {
                 PLAYER.animFrameDuration = 2;
             }
         }
+        #if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
+        #endif
         break;
     case 5:
         if (PLAYER.animFrameDuration < 0) {
