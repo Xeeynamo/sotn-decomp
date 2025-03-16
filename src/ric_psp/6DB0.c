@@ -174,7 +174,113 @@ void RicInit(s16 initParam) {
 #endif
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", CheckStageCollision);
+static void CheckStageCollision(bool arg0) {
+    Collider collider;
+    s16 argX;
+    s16 argY;
+    s32 xVel;
+    s32 i;
+    s32 j;
+    s32* vram_ptr;
+    s32* unk04_ptr;
+    s32 status;
+
+    vram_ptr = &g_Player.pl_vram_flag;
+    unk04_ptr = &g_Player.unk04;
+    *unk04_ptr = *vram_ptr;
+    *vram_ptr = 0;
+    status = g_Player.status;
+
+    if (arg0) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingCrouch[i];
+            } else {
+                g_RicSensorsFloor[i].y = g_RicSensorsFloorDefault[i];
+                g_RicSensorsCeiling[i].y = g_RicSensorsCeilingDefault[i];
+            }
+        }
+        for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                g_RicSensorsWall[i].y = g_RicSensorsWallCrouch[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallCrouch[i];
+            } else {
+                g_RicSensorsWall[i].y = g_RicSensorsWallDefault[i];
+                g_RicSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_RicSensorsWallDefault[i];
+            }
+        }
+    }
+    xVel = PLAYER.velocityX;
+    if (PLAYER.velocityX < 0) {
+        if (!(*unk04_ptr & 8)) {
+            if ((*unk04_ptr & 0xF000) == 0xC000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0xD000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (!(*unk04_ptr & 4)) {
+            if ((*unk04_ptr & 0xF000) == 0x8000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0x9000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if ((PLAYER.velocityY < 0) && !(*unk04_ptr & 2)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    if ((PLAYER.velocityY > 0) && !(*unk04_ptr & 1)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsFloor[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsFloor[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
+        if (g_Player.timers[PL_T_7] &&
+            (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+            g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
+            if (!(collider.effects & EFFECT_SOLID)) {
+                g_Player.colFloor[i].effects = EFFECT_NONE;
+            }
+        }
+    }
+    RicCheckFloor();
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsCeiling[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsCeiling[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colCeiling[i], 0);
+    }
+    RicCheckCeiling();
+    if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    if ((*vram_ptr & 2) && (PLAYER.velocityY <= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
+        argX = PLAYER.posX.i.hi + g_RicSensorsWall[i].x;
+        argY = PLAYER.posY.i.hi + g_RicSensorsWall[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colWall[i], 0);
+    }
+    RicCheckWallRight();
+    RicCheckWallLeft();
+    if ((*vram_ptr & 4) && (PLAYER.velocityX > 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+    if ((*vram_ptr & 8) && (PLAYER.velocityX < 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092ADEA0);
 
@@ -240,13 +346,13 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicCheckInput);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicGetPlayerSensor);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B1CD0);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicCheckFloor);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B2590);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicCheckCeiling);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B2DD8);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicCheckWallRight);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B3118);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicCheckWallLeft);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", ReboundStoneBounce1);
 

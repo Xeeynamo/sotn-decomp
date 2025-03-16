@@ -203,12 +203,13 @@ static void CheckStageCollision(bool arg0) {
     s32 xVel;
     s32 i;
     s32 j;
+    s32* vram_ptr;
+    s32* unk04_ptr;
     s32 status;
 
-    s32* vram_ptr = &g_Player.pl_vram_flag;
-    s32* unk04_ptr = &g_Player.unk04;
-
-    g_Player.unk04 = *vram_ptr;
+    vram_ptr = &g_Player.pl_vram_flag;
+    unk04_ptr = &g_Player.unk04;
+    *unk04_ptr = *vram_ptr;
     *vram_ptr = 0;
     status = g_Player.status;
 
