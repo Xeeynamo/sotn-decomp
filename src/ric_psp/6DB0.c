@@ -282,7 +282,67 @@ static void CheckStageCollision(bool arg0) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092ADEA0);
+static void CheckBladeDashInput(void) {
+    s32 pressed;
+    s32 up;
+    s32 down;
+    s32 forward;
+    s32 down_forward;
+
+    pressed = g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (PLAYER.facingLeft == 0) {
+        down_forward = PAD_DOWN | PAD_RIGHT;
+        forward = PAD_RIGHT;
+    } else {
+        down_forward = PAD_DOWN | PAD_LEFT;
+        forward = PAD_LEFT;
+    }
+    up = PAD_UP;
+    down = PAD_DOWN;
+
+    switch (g_bladeDashButtons.buttonsCorrect) {
+    case 0:
+        if (g_Player.padTapped == up) {
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
+        }
+        break;
+    case 1:
+        if (pressed == down) {
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
+            break;
+        }
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (pressed == down_forward) {
+            g_bladeDashButtons.timer = 20;
+            g_bladeDashButtons.buttonsCorrect++;
+            break;
+        }
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
+        }
+        break;
+    case 3:
+        if (--g_bladeDashButtons.timer == 0) {
+            g_bladeDashButtons.buttonsCorrect = 0;
+        }
+        if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK ||
+            PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_JUMP ||
+            PLAYER.step == PL_S_FALL) {
+            if (g_Player.unk72) {
+                g_bladeDashButtons.buttonsCorrect = 0;
+            } else if (!g_Player.unk46 && (g_Player.padTapped & PAD_SQUARE)) {
+                RicSetBladeDash();
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092AE150);
 
@@ -318,7 +378,7 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B05A8);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicSetSlideKick);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092B06F8);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicSetBladeDash);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_8015C4AC);
 

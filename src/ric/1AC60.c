@@ -305,13 +305,20 @@ static void CheckStageCollision(bool arg0) {
 }
 
 static void CheckBladeDashInput(void) {
+    s32 pressed;
     s32 up;
     s32 down;
-    s32 temp_down = PAD_DOWN;
-    s32 directionsPressed =
-        g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    s32 forward;
+    s32 down_forward;
 
-    s32 down_forward = temp_down + (!PLAYER.facingLeft ? PAD_RIGHT : PAD_LEFT);
+    pressed = g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (PLAYER.facingLeft == 0) {
+        down_forward = PAD_DOWN | PAD_RIGHT;
+        forward = PAD_RIGHT;
+    } else {
+        down_forward = PAD_DOWN | PAD_LEFT;
+        forward = PAD_LEFT;
+    }
     up = PAD_UP;
     down = PAD_DOWN;
 
@@ -323,7 +330,7 @@ static void CheckBladeDashInput(void) {
         }
         break;
     case 1:
-        if (directionsPressed == down) {
+        if (pressed == down) {
             g_bladeDashButtons.timer = 20;
             g_bladeDashButtons.buttonsCorrect++;
             break;
@@ -333,7 +340,7 @@ static void CheckBladeDashInput(void) {
         }
         break;
     case 2:
-        if (directionsPressed == down_forward) {
+        if (pressed == down_forward) {
             g_bladeDashButtons.timer = 20;
             g_bladeDashButtons.buttonsCorrect++;
             break;
@@ -347,12 +354,11 @@ static void CheckBladeDashInput(void) {
             g_bladeDashButtons.buttonsCorrect = 0;
         }
         if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK ||
-            PLAYER.step == PL_S_CROUCH ||
-            (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP)) {
+            PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_JUMP ||
+            PLAYER.step == PL_S_FALL) {
             if (g_Player.unk72) {
                 g_bladeDashButtons.buttonsCorrect = 0;
-            } else if (
-                (g_Player.unk46 == 0) && (g_Player.padTapped & PAD_SQUARE)) {
+            } else if (!g_Player.unk46 && (g_Player.padTapped & PAD_SQUARE)) {
                 RicSetBladeDash();
             }
         }
