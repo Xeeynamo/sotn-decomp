@@ -2077,7 +2077,7 @@ void PlayerStepKillWater(void) {
     var_s2 = false;
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     plDraw = g_PlayerDraw;
-    if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s != 0) {
+    if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
@@ -2091,17 +2091,17 @@ void PlayerStepKillWater(void) {
         PLAYER.velocityX = 0;
         PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
-        PLAYER.velocityY = -0x1A000;
+        PLAYER.velocityY = FIX(-1.625);
         PLAYER.ext.player.anim = 0xC1;
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         PLAYER.rotZ = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x59), 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(49, 6), 0);
-        plDraw->r3 = plDraw->b3 = plDraw->g3 = 128;
-        plDraw->r2 = plDraw->b2 = plDraw->g2 = 128;
-        plDraw->r1 = plDraw->b1 = plDraw->g1 = 128;
-        plDraw->r0 = plDraw->b0 = plDraw->g0 = 128;
+        // Sets as RBG, not RGB.
+        plDraw->r0 = plDraw->b0 = plDraw->g0 = plDraw->r1 = plDraw->b1 =
+            plDraw->g1 = plDraw->r2 = plDraw->b2 = plDraw->g2 = plDraw->r3 =
+                plDraw->b3 = plDraw->g3 = 128;
         plDraw->enableColorBlend = true;
         PLAYER.step_s++;
         break;
@@ -2109,21 +2109,23 @@ void PlayerStepKillWater(void) {
         if (plDraw->g0 < 0xF8) {
             plDraw->g0++;
         }
-        if (plDraw->r0 >= 9) {
+        if (plDraw->r0 > 8) {
             plDraw->r0--;
         }
         plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
         plDraw->b0 = plDraw->b1 = plDraw->r1 = plDraw->b2 = plDraw->r2 =
             plDraw->b3 = plDraw->r3 = plDraw->r0;
-        PLAYER.velocityY += 0x1000;
-        if (PLAYER.velocityY > 0x4000) {
-            PLAYER.velocityY = 0x1000;
+        PLAYER.velocityY += FIX(1.0 / 16);
+        // Interesting, this isn't a normal capping function.
+        // If we get going fast enough, it drops our speed, rather than holding
+        if (PLAYER.velocityY > FIX(1.0 / 4)) {
+            PLAYER.velocityY = FIX(1.0 / 16);
         }
         if (PLAYER.animFrameDuration < 0) {
             StoreImage(&D_800AE130, D_80139A7C);
-            PLAYER.step = 0x10;
             D_80137FE4 = 0;
             D_80137FE8 = 0x40;
+            PLAYER.step = 0x10;
             g_CurrentEntity->step_s++;
         }
         break;
@@ -2147,9 +2149,9 @@ void PlayerStepBossGrab(void) {
             g_Player.unk40 = 0x8166;
             PlaySfx(SFX_VO_ALU_PAIN_E);
         }
-        PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
+        PLAYER.step_s = 1;
         g_Player.unk60 = 2;
         return;
     case 1:
@@ -2189,10 +2191,10 @@ void PlayerStepBossGrab(void) {
         }
     }
 }
-// Called in EntityAlucard when PLAYER.step is Player_SpellHellfire
+
 void PlayerStepHellfire(void) {
     // Whether we should run the last 3 function calls at the end
-    bool runFinishingBlock = 0;
+    s16 runFinishingBlock = 0;
     switch (PLAYER.step_s) {
     case 0:
         // Make factory with blueprint #33. Factory makes entities with ID 25.
@@ -2282,9 +2284,6 @@ void PlayerStepUnk48(void) {
             func_8010E570(0);
         }
         break;
-
-    default:
-        break;
     }
 }
 
@@ -2297,17 +2296,15 @@ void PlayerStepUnk49(void) {
 }
 
 void PlayerStepUnk50(void) {
-    s32* velocityX = &PLAYER.velocityX;
-    PLAYER.velocityY = 0;
-    *velocityX = 0;
+    
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
-        PLAYER.velocityY = 0;
-        *velocityX = 0;
+        
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0xCF;
-        PLAYER.animFrameIdx = 0;
-        PLAYER.animFrameDuration = 0;
+        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
     }
 }
 

@@ -2295,13 +2295,11 @@ void PlayerStepUnk49(void) {
 }
 
 void PlayerStepUnk50(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0xCF;
         PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
     }
