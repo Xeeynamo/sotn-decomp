@@ -348,7 +348,6 @@ extern s32 D_800ACEDC_hd;
 #elif defined(VERSION_PSP)
 extern s32 D_psp_09234B68;
 #endif
-extern s32 D_800ACF74;               // These two might...
 extern s32 g_AlucardChairSleepTimer; // ...be an array
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table

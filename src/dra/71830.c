@@ -232,6 +232,19 @@ bool func_8011203C(void) {
 }
 
 static s32 D_800ACF74 = 0;
+s32 g_AlucardChairSleepTimer = 0;
+
+s16 D_800ACF7C[] = {
+    1,
+    31,
+    0,
+    27,
+};
+
+s16 g_SfxPainGrunts[] = {
+    SFX_VO_ALU_YELL,   SFX_VO_ALU_SILENCE, SFX_VO_ALU_PAIN_E, SFX_VO_ALU_PAIN_D,
+    SFX_VO_ALU_PAIN_C, SFX_VO_ALU_PAIN_B,  SFX_VO_ALU_PAIN_A,
+};
 
 void PlayerStepStand(void) {
     s16 x_offset;
