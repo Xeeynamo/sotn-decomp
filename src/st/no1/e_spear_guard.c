@@ -2,7 +2,29 @@
 #include "no1.h"
 
 // Spear Guard helper
-INCLUDE_ASM("st/no1/nonmatchings/e_spear_guard", func_us_801D37A4);
+extern u8 D_us_80182F04[];
+extern u8 D_us_80182F0C[];
+
+void func_us_801D37A4(void) {
+    Entity* player = &PLAYER;
+
+    if (g_Player.status &
+        (PLAYER_STATUS_UNK1000 | PLAYER_STATUS_UNK800 | PLAYER_STATUS_UNK400)) {
+        if (GetDistanceToPlayerX() > 0x48 && Random() & 1) {
+            SetStep(9);
+        }
+    } else {
+        if (!--g_CurrentEntity->ext.spearGuard.unk7C) {
+            SetStep(D_us_80182F04[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
+            g_CurrentEntity->ext.spearGuard.unk7C = D_us_80182F0C[Random() & 3];
+            if (g_CurrentEntity->params && GetDistanceToPlayerX() > 0x50 &&
+                Random() & 1) {
+                SetStep(11);
+            }
+            g_CurrentEntity->velocityX = 0;
+        }
+    }
+}
 
 // Spear Guard helper
 void func_us_801D38E4() {
