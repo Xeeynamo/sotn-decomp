@@ -2981,14 +2981,18 @@ bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-
+    #ifndef VERSION_PSP
+    if (D_80097448[1] != 0 || 
+        g_Player.padTapped & BTN_MIST ||
+    #else
     if(g_SecondaryMistTimer != 0){
         g_SecondaryMistTimer--;
     }
-    if((D_80097448[1] != 0 || 
-        (g_SecondaryMistTimer == 0 &&
+    if(D_80097448[1] != 0 ||
+        g_SecondaryMistTimer == 0 &&
         ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
-        HandleTransformationMP(FORM_MIST, REDUCE) < 0))){
+    #endif
+        HandleTransformationMP(FORM_MIST, REDUCE) < 0){
         CheckMoveDirection();
         SetPlayerStep(Player_UnmorphMist);
         return 1;

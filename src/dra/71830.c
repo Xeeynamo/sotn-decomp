@@ -2976,17 +2976,36 @@ void PlayerStepStuck(void) {
 }
 
 extern s32 g_MistTimer; // remaining time in mist transformation
+extern s32 g_SecondaryMistTimer;
 bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-    if (D_80097448[1] != 0 || g_Player.padTapped & PAD_L1 ||
-        HandleTransformationMP(FORM_MIST, REDUCE) < 0 ||
-        (!IsRelicActive(RELIC_POWER_OF_MIST) &&
-         (g_MistTimer == 0 || --g_MistTimer == 0))) {
+    #ifndef VERSION_PSP
+    if (D_80097448[1] != 0 || 
+        g_Player.padTapped & BTN_MIST ||
+    #else
+    if(g_SecondaryMistTimer != 0){
+        g_SecondaryMistTimer--;
+    }
+    if(D_80097448[1] != 0 ||
+        g_SecondaryMistTimer == 0 &&
+        ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
+    #endif
+        HandleTransformationMP(FORM_MIST, REDUCE) < 0){
         CheckMoveDirection();
-        SetPlayerStep(0xE);
+        SetPlayerStep(Player_UnmorphMist);
         return 1;
+    }
+    if ((!IsRelicActive(RELIC_POWER_OF_MIST))) {
+        if(g_MistTimer != 0){
+            g_MistTimer--;
+        } 
+        if(g_MistTimer == 0){
+            CheckMoveDirection();
+            SetPlayerStep(Player_UnmorphMist);
+            return 1;
+        }
     }
     return 0;
 }
