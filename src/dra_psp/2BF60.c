@@ -1798,9 +1798,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         func_8010E3B8(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
         PLAYER.rotZ = 0;
-
-        PLAYER.rotPivotY = 0;
-        PLAYER.rotPivotX = 0;
+        PLAYER.rotPivotX = PLAYER.rotPivotY = 0;
         if (damage->effects & ELEMENT_FIRE) {
             func_80118C28(3);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
@@ -1974,9 +1972,7 @@ void func_80115C50(void) {
             PLAYER.posX.i.hi++;
         }
     }
-
     if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
-
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
             PLAYER.posX.i.hi--;
         }

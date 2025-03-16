@@ -1798,7 +1798,6 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         func_8010E3B8(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
         PLAYER.rotZ = 0;
-
         PLAYER.rotPivotX = PLAYER.rotPivotY = 0;
         if (damage->effects & ELEMENT_FIRE) {
             func_80118C28(3);
@@ -1874,7 +1873,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             PLAYER.velocityY = FIX(1.0 / 16);
         }
         if (PLAYER.animFrameDuration < 0) {
-            StoreImage(&D_800AE130, (u32*)&D_80139A7C);
+            StoreImage(&D_800AE130, (u_long*)&D_80139A7C);
             D_80137FE4 = 0;
             D_80137FE8 = 0x40;
             PLAYER.step_s++;
@@ -1882,7 +1881,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         break;
     case 2:
         for (i = 0; i < 4; i++) {
-            s2 = data = &D_80139A7C[0];
+            s2 = data = (u8*)&D_80139A7C[0];
             s2 += ((D_80137FE4 >> 1) & 7);
             s2 += ((D_80137FE4 & 0xFF) >> 4) << 6;
             for (j = 0; j < 0x28; j++) {
@@ -1895,7 +1894,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             D_80137FE4 += 0x23;
             D_80137FE4 &= 0xFF;
         }
-        LoadImage(&D_800AE130, data);
+        LoadImage(&D_800AE130, (u_long*)data);
         if (--D_80137FE8 == 0) {
             PLAYER.velocityY = 0;
             plDraw->enableColorBlend = 0;
