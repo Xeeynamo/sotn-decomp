@@ -232,6 +232,7 @@ bool func_8011203C(void) {
 }
 
 static s32 D_800ACF74 = 0;
+static s32 g_AlucardChairSleepTimer = 0;
 
 void PlayerStepStand(void) {
     s16 x_offset;

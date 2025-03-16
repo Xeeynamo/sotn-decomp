@@ -179,5 +179,5 @@ segments:
       - [0xEED48, .rodata, dra_psp/65790]
       - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
       - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra_psp/2BF60}
-      - {start: 0xeed80, type: bss, vram: 0x09234CB8, name: bss2}
+      - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss2}
   - [0xEED80]
