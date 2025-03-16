@@ -2,6 +2,8 @@
 #include "../ric/ric.h"
 #include <player.h>
 
+void RicDebugOff(void) { g_IsRicDebugEnter = false; }
+
 static void RicDebugEnter(void) {
     g_IsRicDebugEnter = true;
     g_RicDebugCurFrame = PLAYER.animCurFrame;
