@@ -379,7 +379,7 @@ static void CheckHighJumpInput(void) {
     }
 }
 
-static bool RicDebug(void);
+bool RicDebug(void);
 void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
 
 void RicMain(void) {
