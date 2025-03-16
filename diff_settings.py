@@ -115,5 +115,16 @@ def apply(config, args):
             apply_psx_base(config, version, name)
         else:
             apply_psx_bin(config, version, name)
+
+        # HACK: allow to watch for the 'src/*_psp' directory
+        if version.startswith("psp"):
+            source_directories = config["source_directories"]
+            new_source_directories = []
+            for source_dir in source_directories:
+                new_source_directories.append(source_dir)
+                if source_dir.startswith("src/"):
+                    new_source_directories.append(source_dir + "_psp")
+            config["source_directories"] = new_source_directories
+
         config["arch"] = "mipsel:4000" if version == "pspeu" else "mipsel"
         config["objdump_executable"] = "mipsel-linux-gnu-objdump"
