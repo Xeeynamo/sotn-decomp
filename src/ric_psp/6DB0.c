@@ -344,7 +344,47 @@ static void CheckBladeDashInput(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092AE150);
+static void CheckHighJumpInput(void) {
+    switch (D_801758E4.buttonsCorrect) {
+    case 0:
+        if (g_Player.padTapped & PAD_DOWN) {
+            if (g_Player.padHeld == 0) {
+                D_801758E4.timer = 16;
+                D_801758E4.buttonsCorrect++;
+                return;
+            }
+        }
+        break;
+    case 1:
+        if (g_Player.padTapped & PAD_UP) {
+            D_801758E4.timer = 16;
+            D_801758E4.buttonsCorrect++;
+            return;
+        }
+        if (--D_801758E4.timer == 0) {
+            D_801758E4.buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (D_801758E4.timer && --D_801758E4.timer == 0) {
+            D_801758E4.buttonsCorrect = 0;
+            return;
+        }
+        if (g_Player.padTapped & PAD_CROSS && !g_Player.unk46) {
+            if (PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_STAND ||
+                (PLAYER.step == PL_S_JUMP && PLAYER.velocityY > FIX(1)) ||
+                PLAYER.step == PL_S_FALL) {
+                if (g_Player.unk72) {
+                    D_801758E4.buttonsCorrect = 0;
+                } else {
+                    RicSetHighJump();
+                    D_801758E4.buttonsCorrect = 0;
+                }
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicMain);
 
@@ -362,7 +402,7 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicSetFall);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicSetJump);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092AF9D0);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicSetHighJump);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_pspeu_092AFA90);
 

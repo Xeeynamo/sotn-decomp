@@ -376,7 +376,7 @@ static void CheckHighJumpInput(void) {
                 return;
             }
         }
-        return;
+        break;
     case 1:
         if (g_Player.padTapped & PAD_UP) {
             D_801758E4.timer = 16;
@@ -388,18 +388,21 @@ static void CheckHighJumpInput(void) {
         }
         break;
     case 2:
-        if ((D_801758E4.timer != 0) && (--D_801758E4.timer == 0)) {
+        if (D_801758E4.timer && --D_801758E4.timer == 0) {
             D_801758E4.buttonsCorrect = 0;
             return;
         }
-        if ((g_Player.padTapped & PAD_CROSS) && (g_Player.unk46 == 0) &&
-            ((PLAYER.step == PL_S_CROUCH) || (PLAYER.step == PL_S_STAND) ||
-             ((PLAYER.step == PL_S_JUMP) && (PLAYER.velocityY > FIX(1))) ||
-             (PLAYER.step == PL_S_FALL))) {
-            if (!g_Player.unk72) {
-                RicSetHighJump();
+        if (g_Player.padTapped & PAD_CROSS && !g_Player.unk46) {
+            if (PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_STAND ||
+                (PLAYER.step == PL_S_JUMP && PLAYER.velocityY > FIX(1)) ||
+                PLAYER.step == PL_S_FALL) {
+                if (g_Player.unk72) {
+                    D_801758E4.buttonsCorrect = 0;
+                } else {
+                    RicSetHighJump();
+                    D_801758E4.buttonsCorrect = 0;
+                }
             }
-            D_801758E4.buttonsCorrect = 0;
         }
         break;
     }
