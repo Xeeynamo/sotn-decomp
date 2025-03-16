@@ -269,15 +269,15 @@ lazy_static! {
         values.into_iter().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
     };
 
-    // static ref ALT_HD_UTF8_TO_INDEX: HashMap<char, usize> = {
-    //     let values = [
-    //         "装備技システム短剣必殺使攻撃力防",
-    //         "御魔導器拳こ一覧棒両手食物爆弾盾",
-    //         "投射薬ん右左武兜鎧マントその他い",
-    //     ]
-    //     .concat();
-    //     values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
-    // };
+    static ref ALT_HD_UTF8_TO_INDEX: HashMap<char, usize> = {
+        let values = [
+            "装備技システム短剣必殺使攻撃力防",
+            "御魔導器拳こ一覧棒両手食物爆弾盾",
+            "投射薬ん右左武兜鎧マントその他い",
+        ]
+        .concat();
+        values.chars().enumerate().map(|(index, value)| (value, index)).collect::<HashMap<char, usize>>()
+    };
     static ref UTF8_TO_INDEX: HashMap<char, usize> = {
         let mut map = HashMap::new();
         for (index, value) in TABLE.iter().enumerate() {
@@ -291,67 +291,11 @@ fn table_index(c: &char) -> Option<usize> {
 }
 
 fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
-    match c {
-        '装' => Some(0),
-        '備' => Some(1),
-        '技' => Some(2),
-        'シ' => Some(3),
-        'ス' => Some(4),
-        'テ' => Some(5),
-        'ム' => Some(6),
-        '短' => Some(7),
-        '剣' => Some(8),
-        '必' => Some(9),
-        '殺' => Some(10),
-        '使' => Some(11),
-        '攻' => Some(12),
-        '撃' => Some(13),
-        '力' => Some(14),
-        '防' => Some(15),
-        '御' => Some(16),
-        '魔' => Some(17),
-        '導' => Some(18),
-        '器' => Some(19),
-        '拳' => Some(20),
-        'こ' => Some(21),
-        '一' => Some(22),
-        '覧' => Some(23),
-        '棒' => Some(24),
-        '両' => Some(25),
-        '手' => Some(26),
-        '食' => Some(27),
-        '物' => Some(28),
-        '爆' => Some(29),
-        '弾' => Some(30),
-        '盾' => Some(31),
-        '投' => Some(32),
-        '射' => Some(33),
-        '薬' => Some(34),
-        'ん' => Some(35),
-        '右' => Some(36),
-        '左' => Some(37),
-        '武' => Some(38),
-        '兜' => Some(39),
-        '鎧' => Some(40),
-        'マ' => Some(41),
-        'ン' => Some(42),
-        'ト' => Some(43),
-        '其' => Some(44),
-        '他' => Some(45),
-        'い' => Some(46),
-        _ => None,
-    }
+    return ALT_HD_UTF8_TO_INDEX.get(c).copied();
 }
 
 fn alt_utf8_to_index(c: &char) -> Option<usize> {
-    match c {
-        'Ａ' => Some(0),
-        'Ｔ' => Some(1),
-        'Ｄ' => Some(2),
-        'Ｅ' => Some(3),
-        'Ｆ' => Some(4),
-        _ => None,
-    }
+    return ALT_UTF8_TO_INDEX.get(c).copied();
 }
 
 fn alt_utf8_to_byte_literals(input_str: &str) -> Vec<u8> {
@@ -543,6 +487,16 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let line = r#"_S("ナイフ(サブ)"),"#;
         let out = do_sub(line);
         let expected = r#""\x85\x72\x8C\x08\x7B\x8C\xFF\x9E\x09\xFF","#;
+        assert_eq!(out, expected);
+
+        let line = r#"_S2_HD("その他")"#;
+        let out = do_sub(line);
+        let expected = r#""\x2C\x2D\x2E\xFF""#;
+        assert_eq!(out, expected);
+
+        let line = r#"_S2_HD("使い魔")"#;
+        let out = do_sub(line);
+        let expected = r#""\x0B\x2F\x11\xFF""#;
         assert_eq!(out, expected);
     }
 }
