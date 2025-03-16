@@ -1603,15 +1603,20 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     }
 }
 
+// rotation angles
+s16 D_800ACF94[] = {
+    0x0000, 0x0000, 0x0100, 0x0000, 0xFF00, 0x0000, 0x0100, 0x0000,
+    0xFF00, 0xFE00, 0xFF00, 0x0000, 0x0100, 0x0200, 0x0100, 0x0000,
+};
+
 void PlayerStepStoned(s32 arg0) {
     s16 animVariant;
-    s32 newlyPetrified;
-    s32 yShift;
+    bool newlyPetrified = false;
+    s32 yShift = 0;
 
-    newlyPetrified = 0;
     switch (PLAYER.step_s) {
     case 0:
-        newlyPetrified = 1;
+        newlyPetrified = true;
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
@@ -1647,9 +1652,10 @@ void PlayerStepStoned(s32 arg0) {
                 D_80137FE0 = 0x20;
                 animVariant = 2;
             }
-            if (animVariant << 0x10) {
-                PLAYER.palette = 0x819E + (animVariant & 1);
-                SetPlayerAnim(0x38 | (animVariant & 1));
+            if (animVariant) {
+                animVariant &= 1;
+                PLAYER.palette = 0x819E + animVariant;
+                SetPlayerAnim(0x38 + animVariant);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
             } else {
                 PLAYER.palette = 0x819E;
@@ -1660,15 +1666,10 @@ void PlayerStepStoned(s32 arg0) {
         }
         break;
     case 2:
-        if (D_80097448[0] >= 0x29) {
-            yShift = FIX(11.0 / 256);
-        } else {
-            yShift = FIX(44.0 / 256);
+        yShift = FIX(44.0 / 256);
+        if (D_80097448[0] > 0x28) {
+            yShift = yShift / 4;
         }
-
-        // I don't know man
-        do {
-        } while (0);
 
         if (!(g_Player.pl_vram_flag & 1)) {
             PLAYER.velocityY += yShift;
@@ -1697,12 +1698,12 @@ void PlayerStepStoned(s32 arg0) {
         // Handles wiggling out of being petrified.
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT) ||
             arg0 != 0 || D_800ACE44 != 0) {
-            PLAYER.animFrameDuration = 0x10;
             g_Player.padTapped |= (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
             // Counter for how many wiggles left until we're out
             g_Player.unk5E--;
+            PLAYER.animFrameDuration = 0x10;
             PlaySfx(SFX_STONE_MOVE_B);
-            if (g_Player.unk5E == 0) {
+            if (g_Player.unk5E <= 0) {
                 SetPlayerAnim(0x3B);
                 if (PLAYER.ext.player.anim != 0x3A) {
                     CreateEntFactoryFromEntity(
@@ -1726,7 +1727,7 @@ void PlayerStepStoned(s32 arg0) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(30, 7), 0);
             }
         }
-        PLAYER.palette = ((PLAYER.ext.player.anim + 0xFFC8) & 1) - 0x7E62;
+        PLAYER.palette = ((PLAYER.ext.player.anim - 0x38) & 1) + 0x7FFF + 0x19F;
         break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
@@ -1738,10 +1739,10 @@ void PlayerStepStoned(s32 arg0) {
             PLAYER.rotPivotX = 0;
             PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
             PLAYER.rotZ = D_800ACF94[PLAYER.animFrameDuration] >> 4;
-            if (PLAYER.rotZ == 0) {
-                PLAYER.rotPivotY = 0x18;
-            } else {
+            if (PLAYER.rotZ) {
                 PLAYER.rotPivotY = 0x14;
+            } else {
+                PLAYER.rotPivotY = 0x18;
             }
         }
         break;
@@ -1749,7 +1750,7 @@ void PlayerStepStoned(s32 arg0) {
     if (PLAYER.ext.player.anim == 0x3A) {
         func_8010E168(1, 4);
     }
-    if (newlyPetrified && (g_Player.unk72 != 0)) {
+    if (newlyPetrified && g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
 }

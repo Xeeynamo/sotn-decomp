@@ -1611,14 +1611,12 @@ s16 D_800ACF94[] = {
 
 void PlayerStepStoned(s32 arg0) {
     s16 animVariant;
-    s32 newlyPetrified;
-    s32 yShift;
+    bool newlyPetrified = false;
+    s32 yShift = 0;
 
-    newlyPetrified = 0;
-    yShift = 0;
     switch (PLAYER.step_s) {
     case 0:
-        newlyPetrified = 1;
+        newlyPetrified = true;
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
