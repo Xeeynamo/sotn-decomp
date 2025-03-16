@@ -69,7 +69,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 
     for (i = 0; i < 7; i++) {
-        buf[g_Settings.buttonConfig[i]+1] = 1;
+        buf[g_Settings.buttonConfig[i] + 1] = 1;
     }
 
     // What is the purpose of this loop?
@@ -80,7 +80,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 
     for (i = 0; i < 7; i++) {
-        g_Settings.buttonMask[i-2] = g_ButtonMask[g_Settings.buttonConfig[i]];
+        g_Settings.buttonMask[i - 2] = g_ButtonMask[g_Settings.buttonConfig[i]];
     }
 
     bitMask_Assigned = 0;
