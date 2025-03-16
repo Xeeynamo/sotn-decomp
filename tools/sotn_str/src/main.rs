@@ -1,10 +1,10 @@
-use std::env;
+// use std::env;
 use std::fs::File;
 use std::io::{self, Read, BufReader};
 use std::collections::HashMap;
 use regex::Regex;
 use std::io::BufRead;
-use std::io::Seek;
+// use std::io::Seek;
 
 #[allow(dead_code)]
 fn dakuten(chr: char, prev: char) -> Option<char> {
@@ -186,31 +186,31 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
     *table.get(utf8_char).unwrap_or(utf8_char)
 }
 
-fn parse(filename: &str, str_offset: &str) -> io::Result<()> {
-    let offset = usize::from_str_radix(str_offset, 16).unwrap();
-    let file = File::open(filename)?;
-    let mut reader = BufReader::new(file);
+// fn parse(filename: &str, str_offset: &str) -> io::Result<()> {
+//     let offset = usize::from_str_radix(str_offset, 16).unwrap();
+//     let file = File::open(filename)?;
+//     let mut reader = BufReader::new(file);
 
-    reader.seek(io::SeekFrom::Start(offset as u64))?;
+//     reader.seek(io::SeekFrom::Start(offset as u64))?;
 
-    let mut r = String::new();
-    loop {
-        let mut buffer = [0];
-        match reader.read_exact(&mut buffer) {
-            Ok(_) => {
-                let ch = buffer[0];
-                if ch == 0xFF {
-                    break;
-                }
-                r.push((ch + 0x20) as char);
-            }
-            Err(_) => break,
-        }
-    }
+//     let mut r = String::new();
+//     loop {
+//         let mut buffer = [0];
+//         match reader.read_exact(&mut buffer) {
+//             Ok(_) => {
+//                 let ch = buffer[0];
+//                 if ch == 0xFF {
+//                     break;
+//                 }
+//                 r.push((ch + 0x20) as char);
+//             }
+//             Err(_) => break,
+//         }
+//     }
 
-    println!(r#"_S("{}")"#, r);
-    Ok(())
-}
+//     println!(r#"_S("{}")"#, r);
+//     Ok(())
+// }
 
 fn process_macro_with_transform(line: &str, regex: &str, transform: impl Fn(&str) -> Vec<u8>) -> String {
     let re = Regex::new(regex).unwrap();
@@ -376,31 +376,72 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> Vec<u8> {
     bytes
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let command = if args.len() > 1 { &args[1] } else { "" };
+use clap::{Arg};
 
-    match command {
-        "parse" => {
-            if args.len() < 4 {
-                eprintln!("Usage: parse <filename> <offset>");
-                return;
-            }
-            let filename = &args[2];
-            let offset = &args[3];
-            if let Err(e) = parse(filename, offset) {
-                eprintln!("Error: {}", e);
+// fn main() {
+//     let args: Vec<String> = env::args().collect();
+//     let command = if args.len() > 1 { &args[1] } else { "" };
+
+//     match command {
+//         "parse" => {
+//             if args.len() < 4 {
+//                 eprintln!("Usage: parse <filename> <offset>");
+//                 return;
+//             }
+//             let filename = &args[2];
+//             let offset = &args[3];
+//             if let Err(e) = parse(filename, offset) {
+//                 eprintln!("Error: {}", e);
+//             }
+//         }
+//         "process" => {
+//             let filename = if args.len() > 2 { Some(args[2].clone()) } else { None };
+//             if let Err(e) = process(filename) {
+//                 eprintln!("Error: {}", e);
+//             }
+//         }
+//         _ => {
+//             eprintln!("Usage: <parse|process>");
+//         }
+//     }
+// }
+use clap::{ArgAction, Command};
+
+fn main() {
+    let matches = Command::new("string processor")
+        .version("1.0")
+        .author("Your Name <your.email@example.com>")
+        .about("String processor to interpret sequence of characters from SOTN")
+        .subcommand(
+            Command::new("process")
+                .about("process a file")
+                .arg(
+                    Arg::new("filename")
+                        .short('f')
+                        .long("filename")
+                        .help("Filename")
+                        .action(ArgAction::Set)
+                        .num_args(1),
+                )
+        )
+        .get_matches();
+
+    match matches.subcommand() {
+        // Some(("parse", sub_m)) => {
+        //     // let filename = sub_m.value_of("filename").unwrap();
+        //     // let offset = sub_m.value_of("offset").unwrap();
+        // }
+        Some(("process", sub_m)) => {
+            if sub_m.contains_id("filename") {
+                let filename = sub_m
+                .get_one::<String>("filename")
+                .expect("is present");
+                let _ = process(Some(filename.to_string()));
+            } else {
+                let _ = process(None);
             }
         }
-        "process" => {
-            let filename = if args.len() > 2 { Some(args[2].clone()) } else { None };
-            if let Err(e) = process(filename) {
-                eprintln!("Error: {}", e);
-            }
-        }
-        _ => {
-            eprintln!("Usage: <parse|process>");
-        }
+        _ => {}
     }
 }
 
