@@ -126,7 +126,6 @@ void func_us_801C7340(void) {
     D_8007630A = 1;
 }
 
-
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C7380);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C78DC);

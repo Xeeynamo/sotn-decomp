@@ -70,7 +70,7 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E6AC);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C58E4);
 
-void SetPlayerAnim(u8 anim);                                 /* extern */
+void SetPlayerAnim(u8 anim);
 extern s16 DOPPLEGANGER_step_s;
 extern s32 DOPPLEGANGER_velocityY;
 extern s16 g_Dop_unk44[];
@@ -98,7 +98,6 @@ void func_us_801C59DC(void) {
     D_800762E0 = 0;
     *g_Dop_unk44 = 0x10;
 }
-
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5A4C);
 

@@ -14,7 +14,14 @@ void func_8010E0B8(void) {
     g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4A30);
+// INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4A30);
+extern s16 D_us_801D433C[];
+
+void func_us_801C4A30(s16 a0, s16 a1) {
+    if (D_us_801D433C[0] <= a1) {
+        D_us_801D433C[0] = a1;
+    }
+}
 
 #include "../../decelerate.h"
 
