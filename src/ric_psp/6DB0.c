@@ -70,7 +70,109 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicInit);
+extern s32 D_pspeu_092D7A68;
+extern s32 D_pspeu_092CFA58;
+extern s32 D_pspeu_092D33BC;
+extern u8 D_pspeu_092D2548[]; // FR
+extern u8 D_pspeu_092CFA70[]; // SP
+extern u8 D_pspeu_092D16F8[]; // GE
+extern u8 D_pspeu_092D08B8[]; // IT
+extern s32 D_pspeu_092D33B0;
+// Similar to of DRA func_80109594
+void RicInit(s16 initParam) {
+    Entity* e;
+    s16 radius;
+    s16 intensity;
+    Primitive* prim;
+    s32 i;
+    SpriteParts** spriteptr;
+    s32* memset_ptr;
+    s32 memset_len;
+#ifndef VERSION_PSP
+    Entity* g_CurrentEntity;
+#endif
+
+    g_CurrentEntity = &PLAYER;
+    DestroyEntity(g_CurrentEntity);
+    PLAYER.posX.val = FIX(32);
+    PLAYER.posY.val = FIX(32);
+    PLAYER.animSet = ANIMSET_OVL(0x10);
+    PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
+    PLAYER.facingLeft = 0;
+    PLAYER.palette = 0x8120;
+    PLAYER.rotY = 0x100;
+    PLAYER.rotX = 0x100;
+    PLAYER.rotPivotY = 0x18;
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = (s32*)&g_Player;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+    g_Player.pl_vram_flag = g_Player.unk04 = 1;
+    RicSetStand(0);
+    PLAYER.anim = ric_anim_stand_relax;
+    g_Player.unk5C = initParam;
+    if (g_StageId == STAGE_ST0) {
+        g_IsPrologueStage = true;
+    } else {
+        g_IsPrologueStage = false;
+    }
+    g_PlayerDraw->enableColorBlend = 0;
+    RicDebugOff();
+    for (i = 0; i < LEN(D_80175958); i++) {
+        radius = (rand() & 0x3FF) + 0x100;
+        intensity = (rand() & 0xFF) + 0x100;
+        D_80175958[i] = +(((rcos(radius) << 4) * intensity) >> 8);
+        D_801759D8[i] = -(((rsin(radius) << 4) * intensity) >> 7);
+    }
+    spriteptr = g_api.o.spriteBanks;
+    spriteptr += 0x10;
+    *spriteptr = (SpriteParts*)D_801530AC;
+    spriteptr++;
+    *spriteptr = (SpriteParts*)D_80153AA0;
+    spriteptr++;
+    *spriteptr = (SpriteParts*)D_80153D24;
+    spriteptr++;
+    *spriteptr = (SpriteParts*)D_801541A8;
+    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = ANIMSET_OVL(0x10);
+        e->unk5A = i + 1;
+        e->palette = PAL_OVL(0x120);
+        e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
+    }
+    g_Entities[1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
+    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
+        prim = prim->next) {
+        prim->drawMode = DRAW_UNK_100 | DRAW_UNK02 | DRAW_HIDE;
+    }
+    if (D_80097C98 == 6) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_TELEPORT, 1), 0);
+        func_8015CC70(1);
+    }
+    if (D_80097C98 == 4) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_TELEPORT, 3), 0);
+        func_8015CC70(3);
+    }
+    if (D_80097C98 == 5) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_TELEPORT, 5), 0);
+        func_8015CC70(5);
+    }
+#ifdef VERSION_PSP
+    D_pspeu_092D7A68 = 0x1E;
+    func_91040A0(&D_pspeu_092CFA58);
+    D_pspeu_092D33BC = func_pspeu_092ACE78(
+        0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
+        D_pspeu_092D08B8);
+    if (D_pspeu_092D33BC != 0) {
+        func_91040A0(&D_pspeu_092D33B0);
+    }
+#endif
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", CheckStageCollision);
 
