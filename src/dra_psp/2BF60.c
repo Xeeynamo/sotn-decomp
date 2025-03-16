@@ -1174,9 +1174,11 @@ void func_80113F7C(void) {
     s16 playerHitboxOffX;
     s16 posX;
 
+#if defined(VERSION_PSP)
     if (other == NULL) {
         return;
     }
+#endif
 
     if (other->facingLeft) {
         otherHitboxOffX = -other->hitboxOffX;
@@ -1248,8 +1250,6 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             }
             return;
         }
-        // Unfortunate reuse of var_s0 here. case 4 and 5 treat it as a step_s
-        // offset, while others treat it as a velocity.
         func_80111CC0();
         i = 0;
         sfxIndex = 0;
