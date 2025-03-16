@@ -31,7 +31,44 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", func_80156DE4);
+static s16 func_80156DE4(void) {
+    // Variables that change during execution
+    Collider collider;
+    s32 yvar;
+    s32 collisions;
+    s32 i;
+    s32 xCenter;
+    s32 xRight;
+    s32 xLeft;
+    s32 filter;
+
+    // Values that are set once and never again (but not const for some reason)
+    filter = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    xCenter = PLAYER.posX.i.hi;
+    xRight = PLAYER.posX.i.hi + 4;
+    xLeft = PLAYER.posX.i.hi - 4;
+
+    for (i = 0; i < 3; i++) {
+        yvar = PLAYER.posY.i.hi + D_80154568[i];
+        collisions = 0;
+        g_api.CheckCollision(xCenter, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        g_api.CheckCollision(xRight, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        g_api.CheckCollision(xLeft, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
+            collisions += 1;
+        }
+        if (collisions != 0) {
+            return i + 1;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/6DB0", RicInit);
 

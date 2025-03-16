@@ -65,25 +65,30 @@ static s16 func_80156DE4(void) {
     s32 yvar;
     s32 collisions;
     s32 i;
+    s32 xCenter;
+    s32 xRight;
+    s32 xLeft;
+    s32 filter;
+
     // Values that are set once and never again (but not const for some reason)
-    s32 xpos = PLAYER.posX.i.hi;
-    s32 xp4 = xpos + 4;
-    s32 xm4 = xpos - 4;
-    s32 coll_flags = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    filter = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
+    xCenter = PLAYER.posX.i.hi;
+    xRight = PLAYER.posX.i.hi + 4;
+    xLeft = PLAYER.posX.i.hi - 4;
 
     for (i = 0; i < 3; i++) {
         yvar = PLAYER.posY.i.hi + D_80154568[i];
-        g_api.CheckCollision(xpos, yvar, &collider, 0);
         collisions = 0;
-        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+        g_api.CheckCollision(xCenter, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
             collisions += 1;
         }
-        g_api.CheckCollision(xp4, yvar, &collider, 0);
-        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+        g_api.CheckCollision(xRight, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
             collisions += 1;
         }
-        g_api.CheckCollision(xm4, yvar, &collider, 0);
-        if ((collider.effects & coll_flags) == EFFECT_SOLID) {
+        g_api.CheckCollision(xLeft, yvar, &collider, 0);
+        if ((collider.effects & filter) == EFFECT_SOLID) {
             collisions += 1;
         }
         if (collisions != 0) {
