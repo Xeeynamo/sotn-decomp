@@ -783,7 +783,7 @@ void PlayerStepCrouch(void) {
     if (func_8010FDF8(0x100C) != 0) {
         return;
     }
-    DecelerateX(0x2000);
+    DecelerateX(FIX(1.0/8));
     if (g_Player.unk48) {
         if (PLAYER.ext.player.anim == 0x11) {
             PLAYER.ext.player.anim = 0x65;
@@ -799,7 +799,7 @@ void PlayerStepCrouch(void) {
             D_800ACF74--;
         } else if (D_80097448[0] > 0x18) {
             if (!g_Player.unk48) {
-                x_offset = 0xC;
+                x_offset = 12;
                 if (PLAYER.facingLeft) {
                     x_offset = -x_offset;
                 }

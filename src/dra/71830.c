@@ -746,17 +746,17 @@ void PlayerStepFall(void) {
     if (g_Player.timers[5] && g_Player.padTapped & PAD_CROSS) {
         func_8010E83C(1);
     } else if (func_8010FDF8(0x9029) == 0) {
-        DecelerateX(0x1000);
-        if (CheckMoveDirection() != 0) {
-            SetSpeedX(0xC000);
+        DecelerateX(FIX(1.0 / 16));
+        if (CheckMoveDirection()) {
+            SetSpeedX(FIX(0.75));
         }
     }
 }
 
 void PlayerStepCrouch(void) {
     s32 i;
-    s32 x_offset;
-    u16 local_flags;
+    s16 x_offset;
+    s16 local_flags;
     bool atLedge;
 
     local_flags = 0;
@@ -766,7 +766,7 @@ void PlayerStepCrouch(void) {
         atLedge = 1;
     }
 
-    if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & PAD_LEFT)) {
+    if ((g_Player.padTapped & PAD_CROSS) && !(g_Player.unk46 & 0x8000)) {
         if (g_Player.padPressed & PAD_DOWN) {
             for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
                 if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
@@ -775,7 +775,7 @@ void PlayerStepCrouch(void) {
                 }
             }
         }
-        if (g_Player.unk72 == 0) {
+        if (!g_Player.unk72) {
             func_8010E83C(1);
             return;
         }
@@ -783,8 +783,8 @@ void PlayerStepCrouch(void) {
     if (func_8010FDF8(0x100C) != 0) {
         return;
     }
-    DecelerateX(0x2000);
-    if (g_Player.unk48 != 0) {
+    DecelerateX(FIX(1.0/8));
+    if (g_Player.unk48) {
         if (PLAYER.ext.player.anim == 0x11) {
             PLAYER.ext.player.anim = 0x65;
             PLAYER.animFrameDuration = 2;
@@ -797,18 +797,18 @@ void PlayerStepCrouch(void) {
     case 0x0:
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] >= 0x19) {
-            if (g_Player.unk48 == 0) {
-                x_offset = 0xC;
+        } else if (D_80097448[0] > 0x18) {
+            if (!g_Player.unk48) {
+                x_offset = 12;
                 if (PLAYER.facingLeft) {
-                    x_offset = -0xC;
+                    x_offset = -x_offset;
                 }
-                PLAYER.posX.i.hi = x_offset + PLAYER.posX.i.hi;
+                PLAYER.posX.i.hi += x_offset;
                 PLAYER.posY.i.hi += 2;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 13), 0);
-                D_800ACF74 = 0x60;
                 PLAYER.posY.i.hi -= 2;
                 PLAYER.posX.i.hi -= x_offset;
+                D_800ACF74 = 0x60;
             }
         }
         local_flags = 6;
@@ -843,8 +843,8 @@ void PlayerStepCrouch(void) {
             local_flags = 0x20;
         }
         break;
-    case 0x3:
     case 0x4:
+    case 0x3:
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
@@ -856,14 +856,14 @@ void PlayerStepCrouch(void) {
             func_8010E470(0, PLAYER.velocityX);
             break;
         }
-        if (g_Player.unk72 != 0) {
+        if (g_Player.unk72) {
             func_8010DFF0(1, 1);
             if (g_Player.unk72 == 1) {
                 PLAYER.animFrameIdx = 0;
                 PLAYER.animFrameDuration = 3;
                 break;
             } else if (g_Player.unk72 == 2) {
-                if (PLAYER.animFrameIdx != 0) {
+                if (PLAYER.animFrameIdx > 0) {
                     PLAYER.animFrameIdx = 1;
                     PLAYER.animFrameDuration = 3;
                 }
@@ -894,7 +894,7 @@ void PlayerStepCrouch(void) {
             if (PLAYER.animFrameIdx < 2) {
                 CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
-                    if (g_Player.unk72 == 0) {
+                    if (!g_Player.unk72) {
                         PLAYER.step = 0;
                         PLAYER.ext.player.anim = 0x24;
                     }
@@ -906,7 +906,6 @@ void PlayerStepCrouch(void) {
             if (PLAYER.animFrameIdx == 7) {
                 if (g_Player.padPressed & g_Player.D_80072EF8) {
                     PLAYER.animFrameDuration = 2;
-                    local_flags = 0xE;
                 } else {
                     local_flags = 0x2E;
                 }
@@ -930,6 +929,7 @@ void PlayerStepCrouch(void) {
     case 0x4B:
     case 0x4C:
     case 0x4D:
+    case 0x5D:
     case 0x4E:
     case 0x4F:
     case 0x50:
@@ -942,13 +942,12 @@ void PlayerStepCrouch(void) {
     case 0x5A:
     case 0x5B:
     case 0x5C:
-    case 0x5D:
         func_8010DFF0(1, 1);
         if (PLAYER.animFrameIdx < g_Player.unk54) {
             if (PLAYER.animFrameIdx < 3) {
                 CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
-                    if (g_Player.unk72 == 0) {
+                    if (!g_Player.unk72) {
                         PLAYER.ext.player.anim =
                             D_800B0608[PLAYER.step_s - 0x41] + atLedge;
                         PLAYER.step = 0;
@@ -976,7 +975,7 @@ void PlayerStepCrouch(void) {
         local_flags |= 0x8000;
     }
     if (local_flags & 2) {
-        if (g_Player.unk4C != 0) {
+        if (g_Player.unk4C) {
             SetPlayerAnim(0x14);
             PLAYER.step_s = 0;
             local_flags |= 0x8000;
@@ -991,7 +990,7 @@ void PlayerStepCrouch(void) {
     }
     if (local_flags & 1) {
         if (CheckMoveDirection()) {
-            switch ((u8)g_Player.unk72) {
+            switch (g_Player.unk72 & 0xFF) {
             case 0:
             case 3:
             case 4:
