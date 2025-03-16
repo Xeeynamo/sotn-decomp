@@ -92,7 +92,7 @@ void EntitySpearGuard(Entity* self) {
         self->ext.spearGuard.unk7C = 0x40;
         self->palette += self->params & 3;
         self->hitboxOffY = 4;
-        CreateEntityFromCurrentEntity(E_ID_50, tempEntity);
+        CreateEntityFromCurrentEntity(E_SPEAR_GUARD_SPIN_BLOCK, tempEntity);
         break;
 
     case 1:
@@ -320,5 +320,37 @@ void EntitySpearGuard(Entity* self) {
     }
 }
 
-// Spear Guard spin block
-INCLUDE_ASM("st/no1/nonmatchings/e_spear_guard", func_us_801D42EC);
+extern s16 D_us_8018307C[][2]; // hitboxOffXYs
+extern u16 D_us_80183128[][2]; // hitboxWidthHeights
+void EntitySpearGuardSpinBlock(Entity* self) {
+    Entity* parent;
+    u16 animCurFrame;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->hitboxState = 1;
+    }
+
+    if (!(self->hitFlags & 0x80) && self->hitFlags) {
+        PlaySfxPositional(SFX_METAL_CLANG_E);
+    }
+
+    parent = self - 1;
+    animCurFrame = parent->animCurFrame - 3;
+
+    if (animCurFrame > 0x2A) {
+        animCurFrame = 0;
+    }
+
+    self->hitboxOffX = D_us_8018307C[animCurFrame][0];
+    self->hitboxOffY = D_us_8018307C[animCurFrame][1];
+    self->hitboxWidth = D_us_80183128[animCurFrame][0];
+    self->hitboxHeight = D_us_80183128[animCurFrame][1];
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
+
+    if (parent->entityId != E_SPEAR_GUARD) {
+        DestroyEntity(self);
+    }
+}
