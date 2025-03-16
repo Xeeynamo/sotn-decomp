@@ -39,16 +39,13 @@ void func_us_801B81E8(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-static s32 D_us_801D637C;
-
-void func_us_801B832C(s8* msg) {
-    s32 temp_v0;
-
+// Likely copied out of DRA. This code
+// appears to go unused.
+static s32 g_DebugWaitInfoTimer;
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    temp_v0 = D_us_801D637C & 4;
-    D_us_801D637C++;
-    if (temp_v0 != 0) {
+    if (g_DebugWaitInfoTimer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -58,8 +55,12 @@ void func_us_801B832C(s8* msg) {
     FntFlush(-1);
 }
 
-// dead code
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
+static void DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        DebugShowWaitInfo(msg);
+    while (!PadRead(0))
+        DebugShowWaitInfo(msg);
+}
 
 // Baby birds in the nest
 extern AnimationFrame* D_us_80181000[];
