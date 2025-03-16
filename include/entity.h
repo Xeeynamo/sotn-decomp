@@ -2401,7 +2401,7 @@ typedef struct {
 } ET_801CE2E0;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ u8 unk84;
