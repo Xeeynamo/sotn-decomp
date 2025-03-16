@@ -2070,14 +2070,6 @@ void PlayerStepTeleport(void) {
     }
 }
 
-// BSS
-extern s32 g_WingSmashButtonCounter;
-extern s32 g_WingSmashButtonTimer;
-extern s32 g_WingSmashTimer;
-extern s32 g_BatScreechDone;
-extern s32 g_MistTimer; // remaining time in mist transformation
-extern s32 D_80138008;
-
 void PlayerStepKillWater(void) {
     PlayerDraw* plDraw;
     bool var_s2;
@@ -2352,6 +2344,11 @@ void func_8011690C(s16 arg0) {
         }
     }
 }
+
+extern s32 g_WingSmashButtonCounter;
+extern s32 g_WingSmashButtonTimer;
+extern s32 g_WingSmashTimer;
+extern s32 g_BatScreechDone;
 
 s32 CheckWingSmashInput(void) {
     u32 directionsPressed;
@@ -2978,6 +2975,8 @@ void PlayerStepStuck(void) {
     }
 }
 
+extern s32 g_MistTimer; // remaining time in mist transformation
+extern s32 D_80138008;
 bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
