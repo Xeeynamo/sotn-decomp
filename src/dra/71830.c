@@ -2277,7 +2277,6 @@ void PlayerStepUnk48(void) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x58), 0);
         PLAYER.step_s++;
         break;
-
     case 1:
         if (PLAYER.animFrameDuration < 0) {
             PlaySfx(SFX_VO_ALU_WHAT);
@@ -2296,12 +2295,10 @@ void PlayerStepUnk49(void) {
 }
 
 void PlayerStepUnk50(void) {
-    
     PLAYER.velocityX = PLAYER.velocityY = 0;
     if ((g_Player.padSim >> 16) != 2) {
         PLAYER.step = Player_AxearmorStand;
         PLAYER.step_s = 0;
-        
         PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0xCF;
         PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
@@ -2327,14 +2324,14 @@ bool BatFormFinished(void) {
     return false;
 }
 
-void func_8011690C(s16 arg0) {
+static void func_8011690C(s16 arg0) {
     if (PLAYER.rotZ < arg0) {
         PLAYER.rotZ += 16;
-        if (arg0 < PLAYER.rotZ) {
+        if (PLAYER.rotZ > arg0) {
             PLAYER.rotZ = arg0;
         }
     }
-    if (arg0 < PLAYER.rotZ) {
+    if (PLAYER.rotZ > arg0) {
         PLAYER.rotZ -= 16;
         if (PLAYER.rotZ < arg0) {
             PLAYER.rotZ = arg0;
@@ -2349,10 +2346,11 @@ extern s32 g_BatScreechDone;
 
 s32 CheckWingSmashInput(void) {
     u32 directionsPressed;
-    s32 backward;
-    s32 forward;
-    s32 up;
+
     s32 down;
+    s32 up;
+    s32 forward;
+    s32 backward;
 
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
@@ -2372,74 +2370,74 @@ s32 CheckWingSmashInput(void) {
     // timer to 20 frames.
     switch (g_WingSmashButtonCounter) {
     case 0:
-        if (directionsPressed != up) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == up) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 1:
-        if (directionsPressed != (backward + up)) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == (backward + up)) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 2:
-        if (directionsPressed != backward) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == backward) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 3:
-        if (directionsPressed != (down + backward)) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == (down + backward)) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 4:
-        if (directionsPressed != down) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == down) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 5:
-        if (directionsPressed != (down + forward)) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == (down + forward)) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 6:
-        if (directionsPressed != forward) {
-            if (--g_WingSmashButtonTimer == 0) {
-                g_WingSmashButtonCounter = 0;
-            }
+        if (directionsPressed == forward) {
+            g_WingSmashButtonCounter++;
+            g_WingSmashButtonTimer = 0x14;
             break;
         }
-        g_WingSmashButtonTimer = 0x14;
-        g_WingSmashButtonCounter++;
+        if (--g_WingSmashButtonTimer == 0) {
+            g_WingSmashButtonCounter = 0;
+        }
         break;
     case 7: // All buttons are in, nothing more to test for.
         if (--g_WingSmashButtonTimer == 0) {
@@ -2451,9 +2449,11 @@ s32 CheckWingSmashInput(void) {
     if (!(g_Player.padPressed & PAD_CROSS) && (g_WingSmashButtonCounter != 7)) {
         g_WingSmashButtonCounter = 0;
     }
-    // And then we return 7 if all 7 buttons in the input were correctly
-    // provided.
-    return g_WingSmashButtonCounter == 7;
+    // And then we return whether or not we pulled off a wing smash.
+    if (g_WingSmashButtonCounter == 7) {
+        return true;
+    }
+    return false;
 }
 
 void ControlBatForm(void) {
@@ -2841,7 +2841,7 @@ void PlayerStepUnmorphBat(void) {
             } else {
                 else_cycles++;
             }
-            if (g_SensorsCeilingDefault[i] < g_SensorsCeiling[i].y) {
+            if (g_SensorsCeiling[i].y > g_SensorsCeilingDefault[i]) {
                 g_SensorsCeiling[i].y--;
             } else {
                 else_cycles++;
@@ -2850,7 +2850,7 @@ void PlayerStepUnmorphBat(void) {
             if (i != 0) {
                 continue;
             }
-            if (g_Player.unk68 != 0) {
+            if (g_Player.unk68) {
                 if (D_8013AECC >= 12) {
                     continue;
                 }
@@ -2869,10 +2869,9 @@ void PlayerStepUnmorphBat(void) {
         }
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
-            PLAYER.rotZ = 0;
-            PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+            PLAYER.drawFlags = PLAYER.rotZ = 0;
             g_Player.unk66 = 1;
-            if (g_Player.unk68 != 0) {
+            if (g_Player.unk68) {
                 PLAYER.step_s = 2;
                 D_800AFDA4[1] = 0xC7;
             } else {
@@ -2888,13 +2887,15 @@ void PlayerStepUnmorphBat(void) {
             if (!(g_Player.pl_vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
+            g_Player.unk44 |= 0x100;
             PLAYER.palette = 0x8100;
 #if defined(VERSION_US)
             g_Player.unk20 = 0x18;
 #elif defined(VERSION_HD)
             D_800ACEDC_hd = 0x18;
+#elif defined(VERSION_PSP)
+            D_psp_09234B68 = 0x18;
 #endif
-            g_Player.unk44 |= 0x100;
             func_80111CC0();
         }
         break;
@@ -2911,20 +2912,22 @@ void PlayerStepUnmorphBat(void) {
 
 void PlayerStepStuck(void) {
     Collider collider;
-    s32 collisionCount;
+    s32 collisionCount = 0;
 
     CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    collisionCount = (s32)collider.effects & EFFECT_SOLID;
+    if(collider.effects & EFFECT_SOLID){
+        collisionCount++;
+    }
     CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    if ((s32)collider.effects & EFFECT_SOLID) {
-        collisionCount += 1;
+    if (collider.effects & EFFECT_SOLID) {
+        collisionCount++;
     }
     CheckCollision(PLAYER.posX.i.hi - 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    if ((s32)collider.effects & EFFECT_SOLID) {
-        collisionCount += 1;
+    if (collider.effects & EFFECT_SOLID) {
+        collisionCount++;
     }
     if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
-        collisionCount += 1;
+        collisionCount++;
     }
     PLAYER.rotZ = 0;
     CheckMoveDirection();
@@ -2937,7 +2940,7 @@ void PlayerStepStuck(void) {
     case 0:
         if (PLAYER.animFrameDuration < 0) {
             SetPlayerAnim(0xF6);
-            PLAYER.step_s += 1;
+            PLAYER.step_s++;
         }
         break;
     case 1:
@@ -2949,7 +2952,7 @@ void PlayerStepStuck(void) {
             PLAYER.animFrameIdx = 0;
             PLAYER.animFrameDuration = 3;
         } else if (g_Player.unk72 == 2) {
-            if (PLAYER.animFrameIdx != 0) {
+            if (PLAYER.animFrameIdx > 0) {
                 PLAYER.animFrameIdx = 1;
                 PLAYER.animFrameDuration = 3;
             }
@@ -2973,7 +2976,6 @@ void PlayerStepStuck(void) {
 }
 
 extern s32 g_MistTimer; // remaining time in mist transformation
-extern s32 D_80138008;
 bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
@@ -3276,6 +3278,7 @@ void PlayerStepSoulSteal(void) {
     }
 }
 
+extern s32 D_80138008;
 void PlayerStepSwordWarp(void) {
     if (PLAYER.step_s == 0) {
         if (g_Entities[E_WEAPON].entityId == E_NONE) {
