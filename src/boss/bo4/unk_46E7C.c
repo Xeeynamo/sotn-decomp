@@ -114,12 +114,10 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_80113E68);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C72BC);
 
-extern s16 DOPPLEGANGER_posX_i_hi;
 extern s16 D_8007630A;
-extern s16 PLAYER_posX_i_hi;
 
 void func_us_801C7340(void) {
-    if (DOPPLEGANGER_posX_i_hi <= PLAYER_posX_i_hi) {
+    if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
         D_8007630A = 0;
         return;
     }

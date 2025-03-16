@@ -71,15 +71,13 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E6AC);
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C58E4);
 
 void SetPlayerAnim(u8 anim);
-extern s16 DOPPLEGANGER_step_s;
-extern s32 DOPPLEGANGER_velocityY;
 extern s16 g_Dop_unk44[];
 
 void func_us_801C5990(void) {
-    DOPPLEGANGER_velocityY = 0xFFFBC000;
+    DOPPLEGANGER.velocityY = FIX(65531.75);
     *g_Dop_unk44 |= 0x21;
     SetPlayerAnim(0x20);
-    DOPPLEGANGER_step_s = 0;
+    DOPPLEGANGER.step_s = 0;
 }
 
 extern s32 D_800762E0;
@@ -92,7 +90,7 @@ void func_us_801C59DC(void) {
     if (D_us_801D4DC0 != 2) {
         SetPlayerAnim(0x1C);
     }
-    DOPPLEGANGER_velocityY = 0x20000;
+    DOPPLEGANGER.velocityY = FIX(2.0);
     D_us_801D4D5A = 8;
     D_us_801D4D5C = 8;
     D_800762E0 = 0;
