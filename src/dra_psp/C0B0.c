@@ -80,7 +80,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     }
 
     for (i = 0; i < 7; i++) {
-        g_Settings.buttonMask[i - 2] = g_ButtonMask[g_Settings.buttonConfig[i]];
+        g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
     }
 
     bitMask_Assigned = 0;
