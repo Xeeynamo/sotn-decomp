@@ -783,7 +783,7 @@ void PlayerStepCrouch(void) {
     if (func_8010FDF8(0x100C) != 0) {
         return;
     }
-    DecelerateX(FIX(1.0/8));
+    DecelerateX(FIX(1.0 / 8));
     if (g_Player.unk48) {
         if (PLAYER.ext.player.anim == 0x11) {
             PLAYER.ext.player.anim = 0x65;
@@ -1993,9 +1993,9 @@ void PlayerStepTeleport(void) {
 
     PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
-    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
     D_psp_091FC4A8 = D_psp_091FC4AC = 0;
-    #endif
+#endif
     g_Player.D_80072EFC = 4;
 
     switch (PLAYER.step_s) {
@@ -2007,11 +2007,11 @@ void PlayerStepTeleport(void) {
                 PLAYER.animFrameDuration = 2;
             }
         }
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        #endif
+#endif
         break;
     case 1:
         if (PLAYER.animFrameDuration < 0) {
@@ -2030,11 +2030,11 @@ void PlayerStepTeleport(void) {
                 PLAYER.animFrameDuration = 2;
             }
         }
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        #endif
+#endif
         break;
     case 3:
         if (PLAYER.animFrameDuration < 0) {
@@ -2053,11 +2053,11 @@ void PlayerStepTeleport(void) {
                 PLAYER.animFrameDuration = 2;
             }
         }
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         if (PLAYER.animFrameDuration < 0) {
             func_8010E570(0);
         }
-        #endif
+#endif
         break;
     case 5:
         if (PLAYER.animFrameDuration < 0) {
@@ -2915,7 +2915,7 @@ void PlayerStepStuck(void) {
     s32 collisionCount = 0;
 
     CheckCollision(PLAYER.posX.i.hi, PLAYER.posY.i.hi + 0x19, &collider, 0);
-    if(collider.effects & EFFECT_SOLID){
+    if (collider.effects & EFFECT_SOLID) {
         collisionCount++;
     }
     CheckCollision(PLAYER.posX.i.hi + 4, PLAYER.posY.i.hi + 0x19, &collider, 0);
@@ -2981,27 +2981,26 @@ bool MistFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return 0;
     }
-    #ifndef VERSION_PSP
-    if (D_80097448[1] != 0 || 
-        g_Player.padTapped & BTN_MIST ||
-    #else
-    if(g_SecondaryMistTimer != 0){
+#ifndef VERSION_PSP
+    if (D_80097448[1] != 0 || g_Player.padTapped & BTN_MIST ||
+#else
+    if (g_SecondaryMistTimer != 0) {
         g_SecondaryMistTimer--;
     }
-    if(D_80097448[1] != 0 ||
+    if (D_80097448[1] != 0 ||
         g_SecondaryMistTimer == 0 &&
-        ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
-    #endif
-        HandleTransformationMP(FORM_MIST, REDUCE) < 0){
+            ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
+#endif
+        HandleTransformationMP(FORM_MIST, REDUCE) < 0) {
         CheckMoveDirection();
         SetPlayerStep(Player_UnmorphMist);
         return 1;
     }
-    if ((!IsRelicActive(RELIC_POWER_OF_MIST))) {
-        if(g_MistTimer != 0){
+    if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
+        if (g_MistTimer != 0) {
             g_MistTimer--;
-        } 
-        if(g_MistTimer == 0){
+        }
+        if (g_MistTimer == 0) {
             CheckMoveDirection();
             SetPlayerStep(Player_UnmorphMist);
             return 1;
@@ -3066,9 +3065,9 @@ void ControlMistForm(void) {
             func_800EA5E4(0x11FU);
             CreateEntFactoryFromEntity(g_CurrentEntity, 83, 0);
         }
-        #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
         g_SecondaryMistTimer = 16;
-        #endif
+#endif
         // Note that this means Power of Mist doesn't make mist infinite!
         // It just lasts 100,000 :)
         if (!IsRelicActive(RELIC_POWER_OF_MIST)) {
