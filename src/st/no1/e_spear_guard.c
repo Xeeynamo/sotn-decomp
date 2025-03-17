@@ -347,9 +347,9 @@ void EntitySpearGuard(Entity* self) {
                 }
                 PlaySfxPositional(SFX_WEAPON_SCRAPE_ECHO);
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                CreateEntityFromCurrentEntity(E_ID_58, tempEntity);
+                CreateEntityFromCurrentEntity(E_THROWN_SPEAR, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
-                tempEntity->ext.spearGuardUnk.unk7C = self;
+                tempEntity->ext.thrownSpear.spearGuard = self;
             }
         }
         if (self->velocityX != 0) {
@@ -428,5 +428,49 @@ void EntitySpearGuardBlock(Entity* self) {
 
     if (parent->entityId != E_SPEAR_GUARD) {
         DestroyEntity(self);
+    }
+}
+
+void EntityThrownSpear(Entity* self) {
+    Entity* spearGuard;
+
+    spearGuard = self->ext.thrownSpear.spearGuard;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitThrownSpear);
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0;
+        break;
+
+    case 1:
+        if (spearGuard->flags & FLAG_DEAD) {
+            DestroyEntity(self);
+        }
+        self->step++;
+        break;
+
+    case 2:
+        self->posX.i.hi = spearGuard->posX.i.hi;
+        self->posY.i.hi = spearGuard->posY.i.hi - 0x10;
+        if (self->facingLeft) {
+            self->posX.i.hi += 0x28;
+            self->velocityX = FIX(6.0);
+        } else {
+            self->posX.i.hi -= 0x28;
+            self->velocityX = FIX(-6.0);
+        }
+        self->animCurFrame = 0x36;
+        self->hitboxState = 1;
+        self->step++;
+        break;
+
+    case 3:
+        self->velocityY += FIX(1.0 / 64);
+        self->rotZ = ratan2(-self->velocityY, self->velocityX) & 0xFFFF;
+        if (!self->facingLeft) {
+            self->rotZ = 0x800 - self->rotZ;
+        }
+        MoveEntity();
+        break;
     }
 }
