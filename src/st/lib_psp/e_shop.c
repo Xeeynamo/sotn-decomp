@@ -6876,7 +6876,15 @@ static char D_psp_092A4CC8[] =
                                           // 7 (1995)
 
 static u16 D_psp_092A4CF0[] = {
-    0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
+    JP_VO_OKIAYU_RYOUTAROU_MESSAGE,
+    JP_VO_YANADA_KIYOYUKI_MESSAGE,
+    JP_VO_YOKOYAMA_CHISA_MESSAGE,
+    JP_VO_WAKAMOTO_NORIO_MESSAGE,
+    JP_VO_FUKAMI_RIKA_MESSAGE,
+    JP_VO_SATOU_MASAHARU_MESSAGE,
+    JP_VO_SHIINA_HEKIRU_MESSAGE,
+    JP_VO_YANAMI_JYOUJI_MESSAGE
+};
 
 void func_psp_0926ADD8(Primitive* prim, Entity* self) {
     s16 x, y;
