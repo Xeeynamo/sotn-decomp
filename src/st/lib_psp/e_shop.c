@@ -21,6 +21,34 @@ typedef struct {
     /* 0x4 */ u32 price;
 } ShopItem;
 
+typedef enum {
+    DRACULA_TACTICS,
+    OLROX_TACTICS,
+    DOPPLEGANGER10_TACTICS,
+    GRANFALOON_TACTICS,
+    MINOTAUR_WEREWOLF_TACTICS,
+    SCYLLA_TACTICS,
+    SLO_GAI_TACTICS,
+    HIPPOGRYPH_TACTICS,
+    BEELZEBUB_TACTICS,
+    SUCCUBUS_TACTICS,
+    KARASUMAN_TACTICS,
+    TREVOR_GRANT_SYPHA_TACTICS,
+    DEATH_TACTICS,
+    CERBERUS_TACTICS,
+    RICHTER_TACTICS,
+    MEDUSA_TACTICS,
+    THE_CREATURE_TACTICS,
+    LESSER_DEMON_TACTICS,
+    DOPPLEGANGER40_TACTICS,
+    AKMODAN_II_TACTICS,
+    DARKWING_BAT_TACTICS,
+    GALAMOTH_TACTICS,
+    MARIA_TACTICS = 0x1A,
+    SHAFT_TACTICS,
+    LORD_DRACULA_TACTICS,
+} SHOP_TACTICS;
+
 /// "documents" in the shop have their own
 /// item index, separate from other items.
 typedef enum {
@@ -2234,12 +2262,32 @@ static u16 D_psp_092A4AA0[] = {
 static RECT D_psp_092A4AF0 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
 
 static ShopItem D_us_8018173C[] = {
-    {0, 0x00, 200},  {0, 0x06, 500},  {0, 0x02, 700},  {0, 0x07, 1000},
-    {0, 0x05, 1200}, {0, 0x04, 1400}, {0, 0x0A, 1800}, {0, 0x09, 2000},
-    {0, 0x0D, 2200}, {0, 0x01, 2500}, {0, 0x03, 2800}, {0, 0x1A, 3000},
-    {0, 0x0E, 3000}, {0, 0x14, 3500}, {0, 0x13, 3500}, {0, 0x0F, 3500},
-    {0, 0x10, 3500}, {0, 0x0C, 4000}, {0, 0x12, 4500}, {0, 0x0B, 5000},
-    {0, 0x08, 6000}, {0, 0x15, 7000}, {0, 0x1B, 8500}, {0, 0x1C, 10000},
+    // clang-format off
+    {0, DRACULA_TACTICS,            200},
+    {0, SLO_GAI_TACTICS,            500},
+    {0, DOPPLEGANGER10_TACTICS,     700},
+    {0, HIPPOGRYPH_TACTICS,         1000},
+    {0, SCYLLA_TACTICS,             1200},
+    {0, MINOTAUR_WEREWOLF_TACTICS,  1400},
+    {0, KARASUMAN_TACTICS,          1800},
+    {0, SUCCUBUS_TACTICS,           2000},
+    {0, CERBERUS_TACTICS,           2200},
+    {0, OLROX_TACTICS,              2500},
+    {0, GRANFALOON_TACTICS,         2800},
+    {0, MARIA_TACTICS,              3000},
+    {0, RICHTER_TACTICS,            3000},
+    {0, DARKWING_BAT_TACTICS,       3500},
+    {0, AKMODAN_II_TACTICS,         3500},
+    {0, MEDUSA_TACTICS,             3500},
+    {0, THE_CREATURE_TACTICS,       3500},
+    {0, DEATH_TACTICS,              4000},
+    {0, DOPPLEGANGER40_TACTICS,     4500},
+    {0, TREVOR_GRANT_SYPHA_TACTICS, 5000},
+    {0, BEELZEBUB_TACTICS,          6000},
+    {0, GALAMOTH_TACTICS,           7000},
+    {0, SHAFT_TACTICS,              8500},
+    {0, LORD_DRACULA_TACTICS,       10000},
+    // clang-format on
 };
 
 static char D_psp_092A4BB8[] = _S("--------------");
@@ -2431,6 +2479,7 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.D_80072EFC = 1;
 #endif
         break;
+
     case 1:
         g_Entities[1].ext.entSlot1.unk0 = 1;
         g_PauseAllowed = false;
@@ -2455,6 +2504,7 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.D_80072EFC = 1;
         SetStep(2);
         break;
+
     case 2:
         if (player->posX.i.hi > 0xE8) {
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
@@ -2491,6 +2541,7 @@ void func_us_801AFE0C(Entity* self) {
         }
         g_Player.D_80072EFC = 1;
         break;
+
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
@@ -2506,11 +2557,13 @@ void func_us_801AFE0C(Entity* self) {
         }
         g_Player.D_80072EFC = 1;
         break;
+
     case 4:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
         self->step++;
         break;
+
     case 5:
         g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
@@ -2522,10 +2575,11 @@ void func_us_801AFE0C(Entity* self) {
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
-            break;
+        } else {
+            player->posX.i.hi = 0x74;
         }
-        player->posX.i.hi = 0x74;
         break;
+
     case 8:
         self->step++;
         /* fallthrough */
@@ -2533,7 +2587,7 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi > 0xFF) {
             g_api.PlaySfx(CD_SOUND_COMMAND_7);
             DestroyEntity(self);
-            break;
+            return;
         }
         if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
@@ -2546,6 +2600,7 @@ void func_us_801AFE0C(Entity* self) {
                 self->step_s++;
                 g_CutsceneFlags |= 1;
                 break;
+
             case 1:
                 if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                     g_Player.padSim = PAD_NONE;
@@ -2572,6 +2627,7 @@ void func_us_801AFE0C(Entity* self) {
                 }
                 g_Player.D_80072EFC = 1;
                 break;
+
             case 2:
                 g_Player.padSim = PAD_NONE;
                 g_Player.D_80072EFC = 0x80;
@@ -2581,6 +2637,7 @@ void func_us_801AFE0C(Entity* self) {
             player->posX.i.hi = 0x74;
         }
         break;
+
     case 10:
         if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
@@ -2589,6 +2646,7 @@ void func_us_801AFE0C(Entity* self) {
         }
         player->posX.i.hi = 0x74;
         break;
+
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
@@ -2597,6 +2655,7 @@ void func_us_801AFE0C(Entity* self) {
             self->step = 0x10;
         }
         break;
+
     case 16:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
@@ -2606,6 +2665,7 @@ void func_us_801AFE0C(Entity* self) {
         D_80097928 = 1;
         self->step++;
         break;
+
     case 17:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
@@ -7223,9 +7283,8 @@ void func_psp_0926BE68(Entity* self) {
         }
         func_us_801B8958(prim, self);
         if (self->ext.et_801B6F30.unk7C == 0x10) {
-            g_api.PlaySfx(7);
+            g_api.PlaySfx(SET_STOP_SEQ);
             SetStep(3);
-            return;
         }
         break;
 
@@ -7381,6 +7440,6 @@ void func_psp_0926BE68(Entity* self) {
             g_api.PlaySfx(0x302);
         }
         DestroyEntity(self);
-        break;
+        return;
     }
 }

@@ -44,7 +44,8 @@ typedef enum {
     AKMODAN_II_TACTICS,
     DARKWING_BAT_TACTICS,
     GALAMOTH_TACTICS,
-    SHAFT_TACTICS = 0x1B,
+    MARIA_TACTICS = 0x1A,
+    SHAFT_TACTICS,
     LORD_DRACULA_TACTICS,
 } SHOP_TACTICS;
 
@@ -57,6 +58,9 @@ typedef enum {
     DOC_MAGIC_SCROLL_3,
     DOC_MAGIC_SCROLL_4,
     DOC_MAGIC_SCROLL_5,
+    DOC_MAGIC_SCROLL_6,
+    DOC_MAGIC_SCROLL_7,
+    DOC_MAGIC_SCROLL_8,
 } SHOP_DOCUMENTS;
 
 /// the first 5 inventory categories are the same as
@@ -319,6 +323,7 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.D_80072EFC = 1;
 #endif
         break;
+
     case 1:
         g_Entities[1].ext.entSlot1.unk0 = 1;
         g_PauseAllowed = false;
@@ -343,6 +348,7 @@ void func_us_801AFE0C(Entity* self) {
         g_Player.D_80072EFC = 1;
         SetStep(2);
         break;
+
     case 2:
         if (player->posX.i.hi > 0xE8) {
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
@@ -394,11 +400,13 @@ void func_us_801AFE0C(Entity* self) {
         }
         g_Player.D_80072EFC = 1;
         break;
+
     case 4:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
         self->step++;
         break;
+
     case 5:
         g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
@@ -410,10 +418,11 @@ void func_us_801AFE0C(Entity* self) {
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
-            break;
+        } else {
+            player->posX.i.hi = 0x74;
         }
-        player->posX.i.hi = 0x74;
         break;
+
     case 8:
         self->step++;
         /* fallthrough */
@@ -421,7 +430,7 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi > 0xFF) {
             g_api.PlaySfx(CD_SOUND_COMMAND_7);
             DestroyEntity(self);
-            break;
+            return;
         }
         if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
@@ -434,6 +443,7 @@ void func_us_801AFE0C(Entity* self) {
                 self->step_s++;
                 g_CutsceneFlags |= 1;
                 break;
+
             case 1:
                 if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                     g_Player.padSim = PAD_NONE;
@@ -460,6 +470,7 @@ void func_us_801AFE0C(Entity* self) {
                 }
                 g_Player.D_80072EFC = 1;
                 break;
+
             case 2:
                 g_Player.padSim = PAD_NONE;
                 g_Player.D_80072EFC = 0x80;
@@ -469,6 +480,7 @@ void func_us_801AFE0C(Entity* self) {
             player->posX.i.hi = 0x74;
         }
         break;
+
     case 10:
         if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
@@ -477,6 +489,7 @@ void func_us_801AFE0C(Entity* self) {
         }
         player->posX.i.hi = 0x74;
         break;
+
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
         g_Player.D_80072EFC = 1;
@@ -485,6 +498,7 @@ void func_us_801AFE0C(Entity* self) {
             self->step = 0x10;
         }
         break;
+
     case 16:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
@@ -494,6 +508,7 @@ void func_us_801AFE0C(Entity* self) {
         D_80097928 = 1;
         self->step++;
         break;
+
     case 17:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
@@ -1235,7 +1250,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    u8* ptr;
+    char* ptr;
     s16 pad;
 
     switch (self->step) {
@@ -3023,7 +3038,7 @@ void func_us_801B4830(Entity* self) {
 
     case 9:
         DestroyEntity(self);
-        break;
+        return;
     }
 }
 
@@ -4219,11 +4234,11 @@ void func_us_801B6F30(Entity* self) {
                     prim->clut = 0x17F;
                     prim->u0 = prim->u2 = 0x58;
                     prim->u1 = prim->u3 = 0x60;
-                    prim->v0 = prim->v1 = (i - 0xB) * 8 + 0x70;
-                    prim->v2 = prim->v3 = 0x78 - (i - 0xB) * 8;
+                    prim->v0 = prim->v1 = (i - 11) * 8 + 0x70;
+                    prim->v2 = prim->v3 = 0x78 - (i - 11) * 8;
                     prim->x0 = prim->x2 = 0x7C;
                     prim->x1 = prim->x3 = prim->x0 + 8;
-                    prim->y0 = prim->y1 = (i - 0xB) * 0x60 + 0x14;
+                    prim->y0 = prim->y1 = (i - 11) * 0x60 + 0x14;
                     prim->y2 = prim->y3 = prim->y0 + 8;
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
