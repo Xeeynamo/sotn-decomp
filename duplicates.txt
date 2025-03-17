@@ -2479,11 +2479,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2683,6 +2678,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -3139,6 +3138,9 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3310,6 +3312,15 @@
 | 1.00 | true     | EntitySpearGuard                    | asm/us/st/no1/matchings/e_spear_guard/EntitySpearGuard.s 
 | 1.00 | false    | func_us_801DBFAC                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DBFAC.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntitySpearGuardBlock               | asm/us/st/no1/matchings/e_spear_guard/EntitySpearGuardBlock.s 
+| 0.96 | false    | func_us_801DC824                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DC824.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityThrownSpear                   | asm/us/st/no1/matchings/e_spear_guard/EntityThrownSpear.s 
+| 1.00 | false    | func_us_801DC944                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DC944.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801D37A4                    | asm/us/st/no1/matchings/e_spear_guard/func_us_801D37A4.s 
+| 1.00 | false    | func_us_801DBCDC                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DBCDC.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D38E4                    | asm/us/st/no1/matchings/e_spear_guard/func_us_801D38E4.s 
 | 1.00 | false    | func_us_801DBE1C                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DBE1C.s 
 -------------------------------------------------------------------------------
@@ -3324,15 +3335,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801BE2C8                    | asm/us/st/no1/matchings/unk_3D8AC/func_us_801BE2C8.s 
 | 0.98 | false    | func_us_801B4A30                    | asm/us/boss/rbo5/nonmatchings/doors/func_us_801B4A30.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801D4400                    | asm/us/st/no1/matchings/unk_54400/func_us_801D4400.s 
-| 1.00 | false    | func_us_801DC944                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DC944.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D37A4                    | asm/us/st/no1/nonmatchings/e_spear_guard/func_us_801D37A4.s 
-| 1.00 | false    | func_us_801DBCDC                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DBCDC.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D42EC                    | asm/us/st/no1/nonmatchings/e_spear_guard/func_us_801D42EC.s 
-| 0.96 | false    | func_us_801DC824                    | asm/us/st/no4/nonmatchings/unk_55678/func_us_801DC824.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityWargExplosionPuffTransparent  | asm/us/st/no3/matchings/4F58C/EntityWargExplosionPuffTransparent.s 
 | 1.00 | false    | func_us_801C9460                    | asm/us/st/no4/nonmatchings/first_c_file/func_us_801C9460.s 
