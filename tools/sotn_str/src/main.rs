@@ -2,7 +2,6 @@
 use std::fs::File;
 use std::io::{self, Read, BufReader};
 use std::collections::HashMap;
-use regex::Regex;
 use std::io::BufRead;
 // use std::io::Seek;
 
@@ -212,36 +211,102 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
 //     Ok(())
 // }
 
-lazy_static! {
-    static ref RE_S: Regex = Regex::new(r"_S\(([^()]*|(?:[^()]*\([^()]*\)[^()]*)*)\)").unwrap();
-    static ref RE_S2: Regex = Regex::new(r"_S2\((.*?)\)").unwrap();
-    static ref RE_S2_HD: Regex = Regex::new(r"_S2_HD\((.*?)\)").unwrap();
-}
+// slower regex version
 
-fn process_macro_with_transform(line: &str, re: &Regex, transform: impl Fn(&str) -> Vec<u8>) -> String {
-    re.replace_all(line, |match_: &regex::Captures| {
-        let s = match_.get(1).map_or("", |m| m.as_str());
-        // println!("{}", s);
-        let s = s.replace(r#"\\"#, "\"");
-        let out = transform(&s);
-        let escaped = out.iter()
+// lazy_static! {
+//     static ref RE_S: Regex = Regex::new(r"_S\(([^()]*|(?:[^()]*\([^()]*\)[^()]*)*)\)").unwrap();
+//     static ref RE_S2: Regex = Regex::new(r"_S2\((.*?)\)").unwrap();
+//     static ref RE_S2_HD: Regex = Regex::new(r"_S2_HD\((.*?)\)").unwrap();
+// }
+
+// fn process_macro_with_transform(line: &str, re: &Regex, transform: impl Fn(&str) -> Vec<u8>) -> String {
+//     re.replace_all(line, |match_: &regex::Captures| {
+//         let s = match_.get(1).map_or("", |m| m.as_str());
+//         // println!("{}", s);
+//         let s = s.replace(r#"\\"#, "\"");
+//         let out = transform(&s);
+//         let escaped = out.iter()
+//             .map(|&c| format!("\\x{:02X}", c))
+//             .collect::<String>();
+//         format!("\"{}\"", escaped)
+//     }).to_string()
+// }
+
+// fn process_s_macro(line: &str) -> String {
+//     process_macro_with_transform(line, &RE_S, utf8_to_byte_literals)
+// }
+
+// fn process_s2_macro(line: &str) -> String {
+//     process_macro_with_transform(line,&RE_S2, alt_utf8_to_byte_literals)
+// }
+
+// fn process_s2_hd_macro(line: &str) -> String {
+//     process_macro_with_transform(line,&RE_S2_HD, alt_hd_utf8_to_byte_literals)
+// }
+fn process_macro(line: &str, macro_name: &str, transform: impl Fn(&str) -> Vec<u8>) -> String {
+    let mut result = String::new();
+    let mut last_end = 0;
+    while let Some((start, end, content)) = find_macro_content(&line, macro_name, last_end) {
+        if start > end {
+            panic!("Invalid range: start index {} cannot be greater than end index {}", start, end);
+        }
+ 
+        // Append the portion before the macro
+        result.push_str(&line[last_end..start-macro_name.len()-1]);
+
+        let processed_content = transform(&content.replace(r#"\\"#, "\""));
+        let escaped = processed_content.iter()
             .map(|&c| format!("\\x{:02X}", c))
             .collect::<String>();
-        format!("\"{}\"", escaped)
-    }).to_string()
+
+        // Append the transformed macro content
+        result.push_str(&format!("\"{}\"", escaped));
+
+        // Update last_end to continue from the end of the replaced macro content
+        last_end = end + 1;
+    }
+
+    // Append any remaining part of the line after the last macro
+    result.push_str(&line[last_end..]);
+    result
+}
+
+fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(usize, usize, String)> {
+    let start_pattern = format!("{}(", macro_name);
+    if let Some(start) = line[last_end..].find(&start_pattern) {
+        let start_idx = start + last_end + start_pattern.len();
+        let mut balance = 1;
+        let mut end_idx = start_idx;
+
+        while end_idx < line.len() {
+            match line[end_idx..].chars().next() {
+                Some('(') => balance += 1,
+                Some(')') => {
+                    balance -= 1;
+                    if balance == 0 {
+                        return Some((start_idx, end_idx, line[start_idx..end_idx].to_string()));
+                    }
+                }
+                _ => {}
+            }
+            end_idx += line[end_idx..].chars().next().unwrap_or_default().len_utf8();
+        }
+    }
+    None
 }
 
 fn process_s_macro(line: &str) -> String {
-    process_macro_with_transform(line, &RE_S, utf8_to_byte_literals)
+    process_macro(line, "_S", utf8_to_byte_literals)
 }
 
 fn process_s2_macro(line: &str) -> String {
-    process_macro_with_transform(line,&RE_S2, alt_utf8_to_byte_literals)
+    process_macro(line, "_S2", alt_utf8_to_byte_literals)
 }
 
 fn process_s2_hd_macro(line: &str) -> String {
-    process_macro_with_transform(line,&RE_S2_HD, alt_hd_utf8_to_byte_literals)
+    process_macro(line, "_S2_HD", alt_hd_utf8_to_byte_literals)
 }
+
 
 fn do_sub(line: &str) -> String {
     let mut processed = process_s_macro(line);
