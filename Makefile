@@ -52,7 +52,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-SOTNSTR         := cargo run --quiet --release --manifest-path ./tools/sotn_str/Cargo.toml process
+SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
@@ -447,6 +447,7 @@ update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
+	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
