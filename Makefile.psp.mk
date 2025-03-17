@@ -83,22 +83,22 @@ $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONF
 	$(SPLAT) $<
 
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/dra.ld $$(call get_functions,%) $$(call list_o_files_psp,dra_psp)
-	$(call link_with_deadstrip,dra,$@)
+	$(call link,dra,$@)
 
 $(BUILD_DIR)/ric.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/ric.ld $$(call get_functions,%) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
-	$(call link_with_deadstrip,ric,$@)
+	$(call link,ric,$@)
 
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
-	$(call link_with_deadstrip,tt_$*,$@)
+	$(call link,tt_$*,$@)
 
 $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stlib.ld $$(call get_functions,%,st) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
-	$(call link_with_deadstrip,stlib,$@)
+	$(call link,stlib,$@)
 $(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stno4.ld $$(call get_functions,%,st) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
-	$(call link_with_deadstrip,stno4,$@)
+	$(call link,stno4,$@)
 $(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stst0.ld $$(call get_functions,%,st) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
-	$(call link_with_deadstrip,stst0,$@)
+	$(call link,stst0,$@)
 $(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stwrp.ld $$(call get_functions,%,st) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
-	$(call link_with_deadstrip,stwrp,$@)
+	$(call link,stwrp,$@)
 
 # Recipes
 $(BUILD_DIR)/%.s.o: %.s

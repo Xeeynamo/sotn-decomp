@@ -207,22 +207,6 @@ endef
 define list_o_files_psp
 	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
 endef
-
-# leverages MWCC ability to compile data and text as separate sections to allow
-# LD using --gc-sections and remove all the symbols that are unreferenced.
-# symexport.*.txt is used to enforce a specific symbol and all its dependencies
-# to be used. Refer to *.map to know which sections are being discarded by LD.
-# Use nm to retrieve the symbol name out of a object file such as the mwo_header.
-define link_with_deadstrip
-	$(LD) $(LD_FLAGS) -o $(2) \
-		--gc-sections \
-		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
-endef
 ### End old header ###
 
 ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
