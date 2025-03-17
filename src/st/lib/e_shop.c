@@ -542,7 +542,7 @@ void EntityLibrarianChair(Entity* self) {
             // and moving upward, trigger a hit.
         } else if (self->step < 16 &&
                    ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
-                   (FIX_TO_I(player->velocityY) < 0)) {
+                   F(player->velocityY).i.hi < 0) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
@@ -871,7 +871,7 @@ extern u8* D_psp_092A54E0;
 extern u8 D_us_80183F64;
 #endif
 
-void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
+void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
     const u16 MINSCODE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
@@ -1016,7 +1016,7 @@ loop:
             ch = 0xBB;
 #endif
         }
-        rect.x = ((ch & 0xF) << 1) + 0x380;
+        rect.x = ((ch & 0x0F) << 1) + 0x380;
         rect.y = ((ch & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
@@ -1076,7 +1076,7 @@ Primitive* func_us_801B1064(
 #ifdef VERSION_PSP
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = x;
@@ -1086,7 +1086,7 @@ Primitive* func_us_801B1064(
         ch = *chPtr++;
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = x;
@@ -1101,7 +1101,7 @@ Primitive* func_us_801B1064(
 #else
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             if (ch == CH('i') || ch == CH('l') || ch == CH('f') ||
@@ -3927,11 +3927,7 @@ void func_us_801B6324(Entity* self) {
         if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             var_v1 = 0;
-#ifdef VERSION_PSP
-            for (i = 0; i < 24; i++) {
-#else
             for (i = 0; i < LEN(D_us_8018173C); i++) {
-#endif
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
                 if (D_8C630D0) {

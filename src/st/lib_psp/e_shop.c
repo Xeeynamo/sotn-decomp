@@ -2097,117 +2097,6 @@ static u8* D_us_801812D8[] = {
     D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
-static char D_psp_092A4650[] = {4, 0, 5, 1, 4};
-static char D_psp_092A4658[] = {5, 0, 5, 1, 2, 4};
-static char D_psp_092A4660[] = {6, 0, 5, 1, 2, 3, 4};
-static char D_psp_092A4668[] = {6, 0, 5, 1, 2, 6, 4};
-static char* D_us_80181340[] = {
-    D_psp_092A4650, D_psp_092A4658, D_psp_092A4660, D_psp_092A4668};
-
-static InventoryItem D_psp_092A4680[] = {
-    // clang-format off
-    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
-    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
-    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
-    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
-    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
-    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
-    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
-    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
-    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
-    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
-    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
-    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
-    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
-    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
-    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
-    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
-    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
-    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
-    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
-    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
-    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
-    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
-    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
-    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
-    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
-    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
-    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
-    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
-    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
-    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
-    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
-    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
-    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
-    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
-    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
-    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
-    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
-    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
-    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
-    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
-    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
-    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
-    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      105 },
-    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
-    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
-    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
-    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
-    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
-    { INVENTORY_DOCUMENT,  0x86, DOC_MAGIC_SCROLL_6,  4000 },
-    { INVENTORY_DOCUMENT,  0x87, DOC_MAGIC_SCROLL_7,  2000 },
-    { INVENTORY_DOCUMENT,  0x88, DOC_MAGIC_SCROLL_8,  6000 },
-    { INVENTORY_DOCUMENT,  0,    0x000A, 1000000 },
-    // clang-format on
-};
-
-/// relic index
-u16 D_us_801814D4[] = {16, 0};
-
-// sellable items
-ShopItem D_us_801814D8[] = {
-    // clang-format off
-    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
-    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
-    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
-    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
-    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
-    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
-    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
-    // clang-format on
-};
-
-// magic scroll index to spell ID
-static u16 D_us_80181510[] = {
-    // clang-format off
-    SPELL_DARK_METAMORPHOSIS,
-    SPELL_SUMMON_SPIRIT,
-    SPELL_HELLFIRE,
-    SPELL_TETRA_SPIRIT,
-    SPELL_SOUL_STEAL,
-    SPELL_WOLF_CHARGE,
-    SPELL_WING_SMASH,
-    SPELL_SWORD_BROTHERS,
-    // clang-format on
-};
-
-// these are pairs of bytes, but only the first is used.
-// these are used to determine which magic scrolls
-// should be visible. typically this is if spells are
-// known, either through magic scrolls or otherwise,
-// but a completed game save overrides that check
-// (in func_us_801B29C4).
-static u8 D_psp_092A4870[] = {
-    // clang-format off
-    0x00, 0x00,
-    0x01, 0x00,
-    0x02, 0x00,
-    0x03, 0x00,
-    0x05, 0x00,
-    0x00, 0x00,
-    // clang-format on
-};
-
 extern char** D_psp_092A5F40;
 extern char** D_psp_092A5F48;
 extern char** D_us_8018168C;
@@ -2569,7 +2458,7 @@ void EntityLibrarianChair(Entity* self) {
             // and moving upward, trigger a hit.
         } else if (self->step < 16 &&
                    ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
-                   ((*((f32*)&player->velocityY)).i.hi < 0)) {
+                   F(player->velocityY).i.hi < 0) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
@@ -2770,6 +2659,117 @@ void EntityLibrarianChair(Entity* self) {
         break;
     }
 }
+
+static char D_psp_092A4650[] = {4, 0, 5, 1, 4};
+static char D_psp_092A4658[] = {5, 0, 5, 1, 2, 4};
+static char D_psp_092A4660[] = {6, 0, 5, 1, 2, 3, 4};
+static char D_psp_092A4668[] = {6, 0, 5, 1, 2, 6, 4};
+static char* D_us_80181340[] = {
+    D_psp_092A4650, D_psp_092A4658, D_psp_092A4660, D_psp_092A4668};
+
+static InventoryItem D_psp_092A4680[] = {
+    // clang-format off
+    { INVENTORY_RELIC,     0xFF, 0x0000,              500 }, // special case: Jewel of Open
+    { INVENTORY_HAND,      0,    ITEM_POTION,         800 },
+    { INVENTORY_HAND,      3,    ITEM_HIGH_POTION,    2000 },
+    { INVENTORY_HAND,      5,    ITEM_ELIXIR,         8000 },
+    { INVENTORY_HAND,      3,    ITEM_MANNA_PRISM,    4000 },
+    { INVENTORY_HAND,      0,    ITEM_ANTIVENOM,      200 },
+    { INVENTORY_HAND,      0,    ITEM_UNCURSE,        200 },
+    { INVENTORY_HAND,      0,    ITEM_HAMMER,         200 },
+    { INVENTORY_HAND,      0,    ITEM_MAGIC_MISSILE,  300 },
+    { INVENTORY_HAND,      0,    ITEM_BWAKA_KNIFE,    400 },
+    { INVENTORY_HAND,      1,    ITEM_BOOMERANG,      500 },
+    { INVENTORY_HAND,      3,    ITEM_JAVELIN,        800 },
+    { INVENTORY_HAND,      4,    ITEM_FIRE_BOOMERANG, 1000 },
+    { INVENTORY_HAND,      4,    ITEM_SHURIKEN,       2400 },
+    { INVENTORY_HAND,      6,    ITEM_CROSS_SHURIKEN, 5000 },
+    { INVENTORY_HAND,      7,    ITEM_BUFFALO_STAR,   8000 },
+    { INVENTORY_HAND,      7,    ITEM_FLAME_STAR,     15000 },
+    { INVENTORY_HAND,      0,    ITEM_LIBRARY_CARD,   500 },
+    { INVENTORY_HAND,      8,    ITEM_MEAL_TICKET,    2000 },
+    { INVENTORY_HAND,      0,    ITEM_SABER,          1500 },
+    { INVENTORY_HAND,      0,    ITEM_MACE,           2000 },
+    { INVENTORY_HAND,      0,    ITEM_DAMASCUS_SWORD, 4000 },
+    { INVENTORY_HAND,      5,    ITEM_FIREBRAND,      10000 },
+    { INVENTORY_HAND,      5,    ITEM_ICEBRAND,       10000 },
+    { INVENTORY_HAND,      5,    ITEM_THUNDERBRAND,   10000 },
+    { INVENTORY_HAND,      5,    ITEM_HARPER,         12000 },
+    { INVENTORY_HAND,      0,    ITEM_LEATHER_SHIELD, 400 },
+    { INVENTORY_HAND,      0,    ITEM_IRON_SHIELD,    3980 },
+    { INVENTORY_HEAD,      0,    ITEM_VELVET_HAT,     400 },
+    { INVENTORY_HEAD,      0,    ITEM_LEATHER_HAT,    1000 },
+    { INVENTORY_HEAD,      0,    ITEM_CIRCLET,        4000 },
+    { INVENTORY_HEAD,      5,    ITEM_SILVER_CROWN,   12000 },
+    { INVENTORY_BODY,      0,    ITEM_IRON_CUIRASS,   1500 },
+    { INVENTORY_BODY,      0,    ITEM_STEEL_CUIRASS,  4000 },
+    { INVENTORY_BODY,      0,    ITEM_DIAMOND_PLATE,  12000 },
+    { INVENTORY_CAPE,      0,    ITEM_REVERSE_CLOAK,  2000 },
+    { INVENTORY_CAPE,      0,    ITEM_ELVEN_CLOAK,    3000 },
+    { INVENTORY_CAPE,      0,    ITEM_JOSEPHS_CLOAK,  30000 },
+    { INVENTORY_ACCESSORY, 0,    ITEM_MEDAL,          3000 },
+    { INVENTORY_ACCESSORY, 1,    ITEM_RING_OF_PALES,  4000 },
+    { INVENTORY_ACCESSORY, 4,    ITEM_GAUNTLET,       8000 },
+    { INVENTORY_ACCESSORY, 8,    ITEM_DUPLICATOR,     500000 },
+    { INVENTORY_DOCUMENT,  0x80, DOC_CASTLE_MAP,      105 },
+    { INVENTORY_DOCUMENT,  0x81, DOC_MAGIC_SCROLL_1,  500 },
+    { INVENTORY_DOCUMENT,  0x82, DOC_MAGIC_SCROLL_2,  1500 },
+    { INVENTORY_DOCUMENT,  0x83, DOC_MAGIC_SCROLL_3,  5000 },
+    { INVENTORY_DOCUMENT,  0x84, DOC_MAGIC_SCROLL_4,  8000 },
+    { INVENTORY_DOCUMENT,  0x85, DOC_MAGIC_SCROLL_5,  15000 },
+    { INVENTORY_DOCUMENT,  0x86, DOC_MAGIC_SCROLL_6,  4000 },
+    { INVENTORY_DOCUMENT,  0x87, DOC_MAGIC_SCROLL_7,  2000 },
+    { INVENTORY_DOCUMENT,  0x88, DOC_MAGIC_SCROLL_8,  6000 },
+    { INVENTORY_DOCUMENT,  0,    0x000A,              1000000 },
+    // clang-format on
+};
+
+/// relic index
+u16 D_us_801814D4[] = {16, 0};
+
+// sellable items
+ShopItem D_us_801814D8[] = {
+    // clang-format off
+    { INVENTORY_ACCESSORY, ITEM_ZIRCON,     150 },
+    { INVENTORY_ACCESSORY, ITEM_AQUAMARINE, 800 },
+    { INVENTORY_ACCESSORY, ITEM_TURQUOISE,  1500 },
+    { INVENTORY_ACCESSORY, ITEM_ONYX,       3000 },
+    { INVENTORY_ACCESSORY, ITEM_GARNET,     5000 },
+    { INVENTORY_ACCESSORY, ITEM_OPAL,       8000 },
+    { INVENTORY_ACCESSORY, ITEM_DIAMOND,    20000 },
+    // clang-format on
+};
+
+// magic scroll index to spell ID
+static u16 D_us_80181510[] = {
+    // clang-format off
+    SPELL_DARK_METAMORPHOSIS,
+    SPELL_SUMMON_SPIRIT,
+    SPELL_HELLFIRE,
+    SPELL_TETRA_SPIRIT,
+    SPELL_SOUL_STEAL,
+    SPELL_WOLF_CHARGE,
+    SPELL_WING_SMASH,
+    SPELL_SWORD_BROTHERS,
+    // clang-format on
+};
+
+// these are pairs of bytes, but only the first is used.
+// these are used to determine which magic scrolls
+// should be visible. typically this is if spells are
+// known, either through magic scrolls or otherwise,
+// but a completed game save overrides that check
+// (in func_us_801B29C4).
+static u8 D_psp_092A4870[] = {
+    // clang-format off
+    0x00, 0x00,
+    0x01, 0x00,
+    0x02, 0x00,
+    0x03, 0x00,
+    0x05, 0x00,
+    0x00, 0x00,
+    // clang-format on
+};
 
 void func_us_801B11A0(s16 x, s16 y, u16 w, u16 h) {
     RECT rect;
@@ -5759,11 +5759,7 @@ void func_us_801B6324(Entity* self) {
         if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             var_v1 = 0;
-#ifdef VERSION_PSP
-            for (i = 0; i < 24; i++) {
-#else
             for (i = 0; i < LEN(D_us_8018173C); i++) {
-#endif
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
                 if (D_8C630D0) {
