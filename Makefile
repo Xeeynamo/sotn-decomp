@@ -18,6 +18,8 @@ to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
 wget		= wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1)
+# Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
+get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
 # System related variables
 OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
@@ -54,6 +56,12 @@ FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
 FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
+
+# Active overlays
+STAGES		:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).st%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).st*.yaml))
+BOSSES   	:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).bo*.yaml))
+SERVANTS	:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml,tt_%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).tt_*.yaml))
+GAME		:= $(filter-out $(call get_targets,prefixed),$(patsubst $(CONFIG_DIR)/splat.$(VERSION).%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).*.yaml)))
 
 # Toolchain
 CROSS           := mipsel-linux-gnu-
@@ -127,8 +135,6 @@ define get_merged_functions
 	print(" ".join(merged_functions))')
 endef
 get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
-# Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
-get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
 add_ovl_prefix = $(if $(filter $(1),$(STAGES)),$(or $(2),st),$(if $(filter $(1),$(BOSSES)),$(or $(3),bo)))$(1)
