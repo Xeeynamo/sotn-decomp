@@ -6362,27 +6362,8 @@ static u16 D_us_801818A8[] = {
     ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
     ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
 
-static char* D_us_801818EC[] = {_S("????????")};
-static char* D_us_801818F0[] = {_S("????")};
-
-static char* D_psp_092A4CA8[] = {
-    "\xB5\xB7\xB1\xD5\x00\xD8\xAE\xB3\xC0\xDB\xB3\xFF",
-    "\xD4\xC5\xC0\xFF\x9E\x00\xB7\xD6\xD5\xB7\xFF",
-    "\xD6\xBA\xD4\xCF\x00\xC1\xBB\xFF",
-    "\xDC\xB6\xD3\xC4\x00\xC9\xD8\xB5\xFF",
-    "\xCC\xB6\xD0\x00\xD8\xB6\xFF",
-    "\xBB\xC4\xB3\x00\xCF\xBB\xCA\xD9\xFF",
-    "\xBC\xB2\xC5\x00\xCD\xB7\xD9\xFF",
-    "\xD4\xC5\xD0\x00\xBC\xFF\x9E\xAE\xB3\xBC\xFF\x9E\xFF"};
-
-static char D_psp_092A4CC8[] = {
-    0x95, 0xBD, 0x90, 0xAC, 0x82, 0x56, 0x94, 0x4E, 0x82, 0x57,
-    0x8C, 0x8E, 0x82, 0xC9, 0x8E, 0xFB, 0x98, 0x5E, 0x82, 0xB3,
-    0x82, 0xEA, 0x82, 0xBD, 0x82, 0xE0, 0x82, 0xCC, 0x82, 0xC5,
-    0x82, 0xB7, 0x81, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-static u16 D_psp_092A4CF0[] = {
-    0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
+static const char* D_us_801818EC[] = {_S("????????")};
+static const char* D_us_801818F0[] = {_S("????")};
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
@@ -6574,8 +6555,7 @@ loop:
     return pix;
 }
 
-static Primitive* func_us_801B7D10(
-    Primitive* prim, u16 arg1, s16 posX, s16 posY) {
+Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
     s32 x = posX;
     s16 y = 8;
     s32 i;
@@ -6880,6 +6860,25 @@ void func_us_801B8234(Entity* self) {
         break;
     }
 }
+
+static char* D_psp_092A4CA8[] = {
+    "\xB5\xB7\xB1\xD5\x00\xD8\xAE\xB3\xC0\xDB\xB3\xFF",
+    "\xD4\xC5\xC0\xFF\x9E\x00\xB7\xD6\xD5\xB7\xFF",
+    "\xD6\xBA\xD4\xCF\x00\xC1\xBB\xFF",
+    "\xDC\xB6\xD3\xC4\x00\xC9\xD8\xB5\xFF",
+    "\xCC\xB6\xD0\x00\xD8\xB6\xFF",
+    "\xBB\xC4\xB3\x00\xCF\xBB\xCA\xD9\xFF",
+    "\xBC\xB2\xC5\x00\xCD\xB7\xD9\xFF",
+    "\xD4\xC5\xD0\x00\xBC\xFF\x9E\xAE\xB3\xBC\xFF\x9E\xFF"};
+
+static char D_psp_092A4CC8[] = {
+    0x95, 0xBD, 0x90, 0xAC, 0x82, 0x56, 0x94, 0x4E, 0x82, 0x57,
+    0x8C, 0x8E, 0x82, 0xC9, 0x8E, 0xFB, 0x98, 0x5E, 0x82, 0xB3,
+    0x82, 0xEA, 0x82, 0xBD, 0x82, 0xE0, 0x82, 0xCC, 0x82, 0xC5,
+    0x82, 0xB7, 0x81, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+static u16 D_psp_092A4CF0[] = {
+    0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
 
 void func_psp_0926ADD8(Primitive* prim, Entity* self) {
     s16 x, y;

@@ -4566,16 +4566,15 @@ static u16 D_us_801818A8[] = {
 
 #ifdef VERSION_PSP
 extern const char** D_us_801818C0;
-extern const char* D_us_801818EC[];
-extern const char* D_us_801818F0[];
 #else
 static const char* D_us_801818C0[] = {
     _S("LV"),         _S("HP"),       "$EF",       _S("Exp"),
     _S("Drop Items"), _S("No."),      "\x1F\x1F",  _S("Strong VS."),
     _S("Immune"),     _S("Weak VS."), _S("Absorb")};
+#endif
+
 static const char* D_us_801818EC[] = {_S("????????")};
 static const char* D_us_801818F0[] = {_S("????")};
-#endif
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
