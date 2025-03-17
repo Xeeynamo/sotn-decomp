@@ -93,7 +93,7 @@ $(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(BASE_SYMBOLS) $(C
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.stmad.txt | stmad_dirs
+$(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/symbols.beta.txt $(CONFIG_DIR)/symbols.us.stmad.txt | stmad_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
 # todo: these should have an explicit dependency on extract disk
@@ -345,15 +345,6 @@ $(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
 $(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
 	$(OBJCOPY) -O binary $< $@
 
-mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
-		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
-
 .PHONY: %_dirs
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
@@ -369,8 +360,8 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files
 		-Map $(BUILD_DIR)/stmad.map \
 		-T $(BUILD_DIR)/stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
+		-T $(CONFIG_DIR)/undefined_syms_auto.us.stmad.txt \
+		-T $(CONFIG_DIR)/undefined_funcs_auto.us.stmad.txt
 $(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
 	$(call link,stsel,$@)
 

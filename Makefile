@@ -12,12 +12,12 @@ comma		:= ,# For escaping a literal comma
 muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use .SILENT
 
 # Utility functions
-rwildcard	= $(subst //,/,$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d)))
-echo		= $(if $(and $(QUIET),$2),,echo -e "$(subst //,/,$1)";)# Allows for optional terminal messages
+rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
+echo		= $(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
-if_version	= $(if $(filter $1,$(VERSION)),$2,$3)
-wget		= wget -a wget-$(or $3,$2,$1).log $(if $2,-O $2 )$1
+if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
+wget		= wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1)
 
 # System related variables
 OS 				:= $(subst Darwin,MacOS,$(shell uname -s))
@@ -46,12 +46,13 @@ EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
+UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
 FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
-FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,$(addsuffix .yaml,splat.us.weapon assets.hd assets.us))
+FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 
 # Toolchain
@@ -96,25 +97,25 @@ SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
 SOTNASSETS      := $(GOPATH)/bin/sotn-assets
  
 # Build functions
-# sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in list_o_files/list_src_files
-2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
-new_list_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
-define new_list_src_files
+define get_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
 	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
 endef
-new_list_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-
-define new_link
-	$(muffle)$(call echo,Linking $1,optional)
+get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+# sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in get_o_files/get_src_files
+2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
+get_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
+define link
+	$(muffle)$(call echo,Linking $(1),optional)
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(subst _fix,,$1).ld \
+		-T $(BUILD_DIR)/$(1).ld \
 		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
-		-T $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto$(if $(filter-out stmad stmad_fix,$(1)),.$(VERSION)).$(subst _fix,,$(1)).txt \
-		$(if $(filter-out main,$(1)),-T $(CONFIG_DIR)/undefined_funcs_auto.$(if $(filter-out stmad stmad_fix,$(1)),$(VERSION).)$(subst _fix,,$(1)).txt)
+		$(if $(wildcard $(CONFIG_DIR)/$(UNDEFINED_SYMS)),-T $(CONFIG_DIR)/$(UNDEFINED_SYMS)) \
+		$(if $(wildcard $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt),-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt) \
+		$(if $(wildcard $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt),-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt) \
+		$(3)
 endef
 define get_merged_functions 
 	$(shell $(PYTHON) -c 'import yaml;\
@@ -127,13 +128,12 @@ define get_merged_functions
 endef
 get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
-get_targets = $(GAME) $(if $1,$(addprefix st,$(STAGES)),$(STAGES)) $(if $1,$(addprefix bo,$(BOSSES)),$(BOSSES)) $(SERVANTS)
-get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$1)))
-# If stage then (or $2$1,st$1) else if boss then (or $3$1,bo$1), else $1
-add_ovl_prefix = $(if $(filter $(call to_lower,$1),$(STAGES)),$(call to_lower,$(or $2,st)$1),$(if $(filter $(call to_lower,$1),$(BOSSES)),$(call to_lower,$(or $3,bo)$1),$(call to_lower,$1)))
-get_ovl_from_path = $(word $(or $2,1),$(filter $(call get_targets),$(subst /, ,$1)))
+get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
+get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
+get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
+add_ovl_prefix = $(if $(filter $(1),$(STAGES)),$(or $(2),st),$(if $(filter $(1),$(BOSSES)),$(or $(3),bo)))$(1)
 ### End new header ###
-### Start old header, to be removed when all targets have been transitioned ##
+### Start old header, to be removed when all targets have been transitioned ###
 # Directories
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 
@@ -193,15 +193,6 @@ endef
 
 define list_shared_o_files
 	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define link
-	$(LD) $(LD_FLAGS) -o $(2) \
-		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt
 endef
 
 # Helper Functions
@@ -633,7 +624,7 @@ PHONY_TARGETS += all all-clean build-and-check clean $(addprefix CLEAN_,$(CLEAN_
 PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
 PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
-PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context mad_fix function-finder duplicates-report
+PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
