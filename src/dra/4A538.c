@@ -27,7 +27,7 @@ void func_800EA538(s32 arg0) {
         return;
     }
 
-    D_8003C0F8 = 0;
+    D_8003C0EC[3] = 0;
     var_v0 = &D_8006C3C4;
 
     for (i = 0; i < LEN(D_8006C3C4); i++) {

@@ -3,7 +3,7 @@
 #include "dra_bss.h"
 #include "sfx.h"
 
-u16 g_ButtonMask[] = {
+s16 g_ButtonMask[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };

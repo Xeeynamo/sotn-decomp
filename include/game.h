@@ -146,12 +146,12 @@ typedef enum {
 // PSP buttons use same order as PSX, rather than by
 // value for logical conistency between the two
 typedef enum {
-    BUTTON_COUNT = 8,
     PAD_COUNT = 2,
     PAD_NONE = 0x0000,
 // R3 button on a DS3 controller attached to PSP
 // for debug mode may not be captured in these
 #ifdef VERSION_PSP
+    BUTTON_COUNT = 7,
     PAD_L2 = 0x0002,
     PAD_R2 = 0x0400,
     PAD_L1 = 0x0100,
@@ -169,6 +169,7 @@ typedef enum {
     PAD_DOWN = 0x0040,
     PAD_LEFT = 0x0080,
 #else
+    BUTTON_COUNT = 8,
     PAD_L2 = 0x0001,
     PAD_R2 = 0x0002,
     PAD_L1 = 0x0004,
@@ -1904,7 +1905,6 @@ extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 
 extern s32 D_8003C0EC[4];
-extern s32 D_8003C0F8;
 extern s32 D_8003C100;
 extern u16 g_ClutIds[]; // array of palette VRAM offsets
 extern s32 g_CutsceneHasControl;
