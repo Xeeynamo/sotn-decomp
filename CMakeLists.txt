@@ -226,6 +226,7 @@ set(SOURCE_FILES_DRA
 set(SOURCE_FILES_RIC
     src/ric/pl_header.c
     src/ric/1AC60.c
+    src/ric/pl_debug.c
     src/ric/pl_handlers.c
     src/ric/20920.c
     src/ric/24788.c
