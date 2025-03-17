@@ -1,10 +1,82 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-// Spear Guard helper
-extern u8 D_us_80182F04[];
-extern u8 D_us_80182F0C[];
+static u8 steps[] = {6, 10, 6, 10, 9, 6, 10, 6};
+static u8 D_us_80182F0C[] = {0x40, 0x30, 0x60, 0x58};
 
+static u8 D_us_80182F10[] = {0x50, 0x30, 0x60, 0x88};
+static u8 D_us_80182F14[] = {0x3F, 0x3C, 0x38, 0x34, 0x30, 0x2C, 0x28, 0x24,
+                             0x20, 0x1C, 0x18, 0x14, 0x10, 0x0C, 0x08, 0x04};
+static s16 explosionPosXYs[][2] = {
+    {-8, -4}, {8, -6},  {-12, 4},  {-1, -7}, {6, 16},   {11, -3},
+    {10, 12}, {3, -2},  {-8, -8},  {10, -6}, {-12, 18}, {-8, -16},
+    {6, 4},   {10, 20}, {-11, 22}, {8, -2}};
+
+// Unknown data, stripped on PSP
+static s32 unused[] = {0xFFFFC800, 0xFFFFC800, 0xFFFFB000, 0xFFFFB000};
+
+static u16 frameIndexes[] = {2, 2, 2, 2};
+static s32 xVelocities[] = {0xFFFFF000, 0xFFFFFA00, 0xFFFFE000, 0xFFFFE200};
+
+// anims
+static u8 D_us_80182F8C[] = {
+    0x06, 0x01, 0x04, 0x02, 0x1C, 0x02, 0x0A, 0x03, 0x00};
+static u8 D_us_80182F98[] = {0x0E, 0x04, 0x08, 0x04, 0x08, 0x05, 0x00};
+static u8 D_us_80182FA0[] = {0x09, 0x05, 0x01, 0x05, 0x0A, 0x04, 0x00};
+static u8 D_us_80182FA8[] = {0x0B, 0x05, 0x01, 0x05, 0x0C, 0x04, 0x00};
+
+static u8 D_us_80182FB0[] = {
+    0x08, 0x04, 0x30, 0x06, 0x25, 0x07, 0x06, 0x06, 0x00};
+static u8 D_us_80182FBC[] = {
+    0x06, 0x10, 0x06, 0x11, 0x06, 0x12, 0x01, 0x15, 0x01, 0x16, 0x01,
+    0x15, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16,
+    0x01, 0x15, 0x01, 0x16, 0x06, 0x13, 0x06, 0x14, 0x00};
+static u8 D_us_80182FDC[] = {
+    0x06, 0x04, 0x06, 0x08, 0x06, 0x09, 0x08, 0x0A, 0x30, 0x0B, 0x02,
+    0x0A, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x31, 0x0F, 0x00};
+static u8 D_us_80182FF4[] = {
+    0x06, 0x04, 0x06, 0x17, 0x06, 0x18, 0x04, 0x19, 0x04, 0x1A,
+    0x30, 0x1B, 0x02, 0x1C, 0x01, 0x1D, 0x31, 0x1E, 0xFF, 0x00};
+static u8 D_us_80183008[] = {0x08, 0x3E, 0x08, 0x3F, 0x08, 0x40, 0x08, 0x3F,
+                             0x08, 0x40, 0x08, 0x3F, 0x08, 0x40, 0xFF, 0x00};
+static u8 D_us_80183018[] = {
+    0x06, 0x04, 0x06, 0x21, 0x0F, 0x22, 0x03, 0x23, 0x03,
+    0x24, 0x03, 0x25, 0x16, 0x26, 0x02, 0x25, 0x02, 0x24,
+    0x02, 0x23, 0x06, 0x22, 0x06, 0x21, 0x00};
+static u8 D_us_80183034[] = {
+    0x06, 0x04, 0x06, 0x27, 0x06, 0x28, 0x0F, 0x29, 0x03, 0x2A,
+    0x03, 0x2B, 0x03, 0x2C, 0x16, 0x2D, 0x02, 0x2C, 0x02, 0x2B,
+    0x02, 0x2A, 0x06, 0x29, 0x06, 0x28, 0x06, 0x27, 0x00};
+
+static u8* animations[] = {
+    D_us_80182F8C, D_us_80182F98, D_us_80182FA0, D_us_80182FA8};
+
+// sensors
+static s16 D_us_80183064[][2] = {{0, 24}, {8, 0}};
+static s16 D_us_8018306C[][2] = {{0, 24}, {0, 4}, {8, -4}, {-16, 0}};
+
+static s16 guardHitboxOffsetXYs[][2] = {
+    {-28, 15},  {-24, 13},  {-24, 12},  {-23, -1},  {-29, 2},   {-29, -1},
+    {-21, -24}, {1, -38},   {35, -7},   {-36, -16}, {-36, 0},   {3, 26},
+    {4, 24},    {-20, 6},   {-29, -1},  {-28, -10}, {-20, 18},  {-27, 12},
+    {-16, 0},   {-16, 0},   {-29, -1},  {-21, -24}, {1, -38},   {-6, -36},
+    {3, -27},   {-16, -34}, {-25, -17}, {-48, -72}, {-64, -72}, {-64, -72},
+    {-15, 21},  {3, 26},    {1, 38},    {1, 46},    {1, 54},    {1, 62},
+    {-25, 0},   {-23, -27}, {1, -30},   {0, -47},   {0, -54},   {0, -62},
+    {0, -70}};
+static u16 guardHitboxWidthHeights[][2] = {
+    {0, 0},  {8, 4},   {8, 4},   {16, 4},  {16, 4}, {16, 4}, {8, 8},  {4, 20},
+    {8, 4},  {12, 24}, {16, 24}, {4, 12},  {4, 12}, {16, 4}, {16, 4}, {16, 4},
+    {8, 8},  {8, 8},   {27, 25}, {27, 25}, {16, 4}, {8, 8},  {4, 20}, {4, 20},
+    {8, 8},  {12, 4},  {0, 0},   {0, 0},   {0, 0},  {0, 0},  {4, 4},  {4, 8},
+    {4, 20}, {4, 28},  {4, 36},  {4, 44},  {20, 4}, {8, 8},  {4, 8},  {4, 24},
+    {4, 32}, {4, 40},  {4, 48}};
+
+// Unknown data, stripped on PSP
+static u8 unusedTwo[] = {
+    0x06, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x06, 0x01};
+
+// Spear Guard helper
 void func_us_801D37A4(void) {
     Entity* player = &PLAYER;
 
@@ -15,12 +87,14 @@ void func_us_801D37A4(void) {
         }
     } else {
         if (!--g_CurrentEntity->ext.spearGuard.unk7C) {
-            SetStep(D_us_80182F04[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
+            SetStep(steps[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
             g_CurrentEntity->ext.spearGuard.unk7C = D_us_80182F0C[Random() & 3];
+
             if (g_CurrentEntity->params && GetDistanceToPlayerX() > 0x50 &&
                 Random() & 1) {
                 SetStep(11);
             }
+
             g_CurrentEntity->velocityX = 0;
         }
     }
@@ -34,14 +108,9 @@ void func_us_801D38E4() {
 }
 
 // Spear Guard helper
-extern u16 D_us_80182F74[];
-extern s32 D_us_80182F7C[];
-extern u8* D_us_80183054[];
-extern s16 D_us_80183064[];
-
-void func_us_801D3918(Entity* self, u8 arg1) {
+void func_us_801D3918(Entity* self, u8 animationIndex) {
     s32 xVelocity;
-    u16 animRet = AnimateEntity(D_us_80183054[arg1], self);
+    u16 animRet = AnimateEntity(animations[animationIndex], self);
     if ((animRet & 0x80) && (self->step == 7) && (self->animFrameIdx != 3)) {
         if (self->ext.spearGuard.unk88 != self->facingLeft) {
             self->velocityX = -self->velocityX;
@@ -49,19 +118,19 @@ void func_us_801D3918(Entity* self, u8 arg1) {
         self->ext.spearGuard.unk88 = self->facingLeft;
     }
     xVelocity = self->velocityX;
-    if (self->animFrameIdx >= D_us_80182F74[arg1]) {
+    if (self->animFrameIdx >= frameIndexes[animationIndex]) {
         if (xVelocity != 0) {
             if (self->ext.spearGuard.unk88) {
-                xVelocity += D_us_80182F7C[arg1];
+                xVelocity += xVelocities[animationIndex];
             } else {
-                xVelocity -= D_us_80182F7C[arg1];
+                xVelocity -= xVelocities[animationIndex];
             }
         }
     } else {
         if (self->ext.spearGuard.unk88) {
-            xVelocity -= D_us_80182F7C[arg1];
+            xVelocity -= xVelocities[animationIndex];
         } else {
-            xVelocity += D_us_80182F7C[arg1];
+            xVelocity += xVelocities[animationIndex];
         }
     }
     self->velocityX = xVelocity;
@@ -69,21 +138,6 @@ void func_us_801D3918(Entity* self, u8 arg1) {
         self->posX.val -= xVelocity;
     }
 }
-
-// Spear Guard
-extern u8 D_us_80182F10[];
-extern u8 D_us_80182F14[];
-extern s16 D_us_80182F24[][2];
-extern s16 D_us_80182F26[];
-extern u8 D_us_80182FB0[];
-extern u8 D_us_80182FBC[];
-extern u8 D_us_80182FDC[];
-extern u8 D_us_80182FF4[];
-extern u8 D_us_80183008[];
-extern u8 D_us_80183018;
-extern u8 D_us_80183034;
-extern s16 D_us_80183064[];
-extern s16 D_us_8018306C[];
 
 void EntitySpearGuard(Entity* self) {
     Entity* tempEntity;
@@ -114,7 +168,7 @@ void EntitySpearGuard(Entity* self) {
         self->ext.spearGuard.unk7C = 0x40;
         self->palette += self->params & 3;
         self->hitboxOffY = 4;
-        CreateEntityFromCurrentEntity(E_SPEAR_GUARD_SPIN_BLOCK, tempEntity);
+        CreateEntityFromCurrentEntity(E_SPEAR_GUARD_BLOCK, tempEntity);
         break;
 
     case 1:
@@ -211,9 +265,9 @@ void EntitySpearGuard(Entity* self) {
 
     case 8:
         if (self->ext.spearGuard.unk8C & 2) {
-            anim = &D_us_80183034;
+            anim = D_us_80183034;
         } else {
-            anim = &D_us_80183018;
+            anim = D_us_80183018;
         }
         tempVar = AnimateEntity(anim, self);
         tempEntity->attack = g_api.enemyDefs[94].attack;
@@ -333,8 +387,8 @@ void EntitySpearGuard(Entity* self) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
                     tempEntity->params = 2;
                     tempEntity->zPriority = self->zPriority - 1;
-                    tempEntity->posX.i.hi += D_us_80182F24[i][0];
-                    tempEntity->posY.i.hi += D_us_80182F24[i][1];
+                    tempEntity->posX.i.hi += explosionPosXYs[i][0];
+                    tempEntity->posY.i.hi += explosionPosXYs[i][1];
                 }
             }
         }
@@ -342,9 +396,9 @@ void EntitySpearGuard(Entity* self) {
     }
 }
 
-extern s16 D_us_8018307C[][2]; // hitboxOffXYs
-extern u16 D_us_80183128[][2]; // hitboxWidthHeights
-void EntitySpearGuardSpinBlock(Entity* self) {
+// Produces a hitbox which blocks attacks and plays
+// a deflected noise when hit
+void EntitySpearGuardBlock(Entity* self) {
     Entity* parent;
     u16 animCurFrame;
 
@@ -364,10 +418,10 @@ void EntitySpearGuardSpinBlock(Entity* self) {
         animCurFrame = 0;
     }
 
-    self->hitboxOffX = D_us_8018307C[animCurFrame][0];
-    self->hitboxOffY = D_us_8018307C[animCurFrame][1];
-    self->hitboxWidth = D_us_80183128[animCurFrame][0];
-    self->hitboxHeight = D_us_80183128[animCurFrame][1];
+    self->hitboxOffX = guardHitboxOffsetXYs[animCurFrame][0];
+    self->hitboxOffY = guardHitboxOffsetXYs[animCurFrame][1];
+    self->hitboxWidth = guardHitboxWidthHeights[animCurFrame][0];
+    self->hitboxHeight = guardHitboxWidthHeights[animCurFrame][1];
     self->facingLeft = parent->facingLeft;
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;

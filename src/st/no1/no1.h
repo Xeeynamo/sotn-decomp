@@ -64,7 +64,7 @@ typedef enum EntityIDs {
     /* 0x4C */ E_ARMOR_LORD_FIRE_WAVE,
     /* 0x4D */ E_ID_4D,
     /* 0x4F */ E_SPEAR_GUARD = 0x4F,
-    /* 0x50 */ E_SPEAR_GUARD_SPIN_BLOCK,
+    /* 0x50 */ E_SPEAR_GUARD_BLOCK,
     /* 0x52 */ E_ID_52 = 0x52,
     /* 0x53 */ E_SKELETON_APE,
     /* 0x54 */ E_ID_54,

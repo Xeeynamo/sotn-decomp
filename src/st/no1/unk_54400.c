@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+// Possible this might be part of e_spear_guard
 void func_us_801D4400(Entity* self) {
     Entity* tempEntity;
 
