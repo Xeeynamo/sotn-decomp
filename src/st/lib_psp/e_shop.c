@@ -6876,6 +6876,7 @@ static char D_psp_092A4CC8[] =
                                           // 7 (1995)
 
 static u16 D_psp_092A4CF0[] = {
+    // clang-format off
     JP_VO_OKIAYU_RYOUTAROU_MESSAGE,
     JP_VO_YANADA_KIYOYUKI_MESSAGE,
     JP_VO_YOKOYAMA_CHISA_MESSAGE,
@@ -6884,6 +6885,7 @@ static u16 D_psp_092A4CF0[] = {
     JP_VO_SATOU_MASAHARU_MESSAGE,
     JP_VO_SHIINA_HEKIRU_MESSAGE,
     JP_VO_YANAMI_JYOUJI_MESSAGE
+    // clang-format on
 };
 
 void func_psp_0926ADD8(Primitive* prim, Entity* self) {
