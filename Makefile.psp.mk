@@ -81,11 +81,11 @@ $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT) $<
 
-ST_DRA_MERGE = 624DC 628AC 6BF64 alu_anim 6DF70 6E42C 6FDF8 704D0 7879C 7E4BC 84B88 8A0A4 8C600 8D3E8
+ST_DRA_MERGE = 624DC 628AC 6BF64 alu_anim 6DF70 6E42C 6FDF8 704D0 71830 7879C 7E4BC 84B88 8A0A4 8C600 8D3E8
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
 	$(call link_with_deadstrip,dra,$@)
 
-RIC_MERGE = pl_handlers
+RIC_MERGE = pl_debug pl_handlers
 $(BUILD_DIR)/ric.elf: $(BUILD_DIR)/ric.ld $(addprefix $(BUILD_DIR)/src/ric/,$(addsuffix .c.o,$(RIC_MERGE))) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
 	$(call link_with_deadstrip,ric,$@)
 
