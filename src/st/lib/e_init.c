@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-void func_us_801AE4BC(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -79,9 +79,12 @@ void func_us_801D00C4(Entity* self);
 void EntityFleaMan(Entity* self);
 void EntityMudman(Entity* self);
 void func_us_801D1298(Entity* self);
+#ifdef VERSION_PSP
+void func_psp_0926BE68(Entity* self);
+#endif
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ func_us_801AE4BC,
+    /* 0x00 */ EntityBreakable,
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
@@ -158,7 +161,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4A */ func_us_801D00C4,
     /* 0x4B */ EntityFleaMan,
     /* 0x4C */ EntityMudman,
-    /* 0x4D */ func_us_801D1298};
+    /* 0x4D */ func_us_801D1298,
+#ifdef VERSION_PSP
+    /* 0x4E */ func_psp_0926BE68,
+#endif
+};
 
 EInit D_us_80180800 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x001};

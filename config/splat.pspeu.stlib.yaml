@@ -101,6 +101,8 @@ segments:
       - [0x389A8, .data, lib/st_common]
       - [0x38BA8, .data, lib/en_thornweed_corpseweed]
       - [0x38C78, data]
+      - [0x3E898, .data, lib/e_init]
+      - [0x3EC28, data]
       - [0x60AB8, .data, lib/e_chair]
       - [0x60AE8, data]
       - [0x60E50, .data, lib_psp/cutscene]
