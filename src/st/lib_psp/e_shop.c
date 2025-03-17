@@ -6869,7 +6869,8 @@ static char* D_psp_092A4CA8[] = {
     _S("ふかみ りか"),           // Fukami Rika
     _S("さとう まさはる"),       // Satou Masaharu
     _S("しいな へきる"),         // Shiina Hekiru
-    _S("やなみ じょうじ")};      // Yanami Jyouji
+    _S("やなみ じょうじ")        // Yanami Jyouji
+};
 
 static char D_psp_092A4CC8[] =
     "平成７年８月に収録されたものです。"; // It was recorded in August of Heisei
