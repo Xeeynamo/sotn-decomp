@@ -385,6 +385,7 @@ void func_us_801AFE0C(Entity* self) {
         }
         g_Player.D_80072EFC = 1;
         break;
+
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
@@ -3342,7 +3343,7 @@ void func_us_801B56E4(Entity* self) {
     ShopItem* shopItem;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
-    RECT clipRect;
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     const char* name;
     Primitive* prim;
     Primitive* prim2;
@@ -3352,7 +3353,6 @@ void func_us_801B56E4(Entity* self) {
     s32 count;
     u32 price;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     tempEntity = self - 3;
     switch (self->step) {
     case 0:
@@ -3697,7 +3697,7 @@ static const char* D_us_801816C8[] = {
 
 static ShopItem D_us_8018173C[] = {
     // clang-format off
-    {0, DRACULA_TACTICS,            200}, 
+    {0, DRACULA_TACTICS,            200},
     {0, SLO_GAI_TACTICS,            500},
     {0, DOPPLEGANGER10_TACTICS,     700},
     {0, HIPPOGRYPH_TACTICS,         1000},
@@ -3726,7 +3726,6 @@ static ShopItem D_us_8018173C[] = {
 static char D_us_801817F4[] = _S("--------------");
 static char D_us_80181804[] = {
     CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
-static char D_us_8018180C[] = _S("--------------");
 
 void func_us_801B6124(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
@@ -3804,7 +3803,6 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -3813,7 +3811,7 @@ void func_us_801B6324(Entity* self) {
     s32 var_v1;
     u16 pads;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -4115,6 +4113,8 @@ void func_us_801B6324(Entity* self) {
     }
 }
 
+static char D_us_8018180C[] = _S("--------------");
+
 void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
     u16 enemyIndex;
@@ -4154,15 +4154,8 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     }
 }
 
-#ifdef VERSION_PSP
-#define unkVal 0x43
-#else
-#define unkVal 0x42
-#endif
-
 void func_us_801B6F30(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -4171,7 +4164,7 @@ void func_us_801B6F30(Entity* self) {
     u16 pads;
     Entity* tempEntity;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -4321,7 +4314,7 @@ void func_us_801B6F30(Entity* self) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80++;
-            } else if (self->ext.et_801B6F30.unk82 < unkVal) {
+            } else if (self->ext.et_801B6F30.unk82 < 0x42) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk82++;
             }
@@ -4338,11 +4331,11 @@ void func_us_801B6F30(Entity* self) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 6;
-            } else if (self->ext.et_801B6F30.unk82 < unkVal) {
+            } else if (self->ext.et_801B6F30.unk82 < 0x42) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk82 += 7;
-                if (self->ext.et_801B6F30.unk82 > unkVal) {
-                    self->ext.et_801B6F30.unk82 = unkVal;
+                if (self->ext.et_801B6F30.unk82 > 0x42) {
+                    self->ext.et_801B6F30.unk82 = 0x42;
                 }
             }
         } else {
@@ -4413,7 +4406,7 @@ void func_us_801B6F30(Entity* self) {
             prim->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
-        if (self->ext.et_801B6F30.unk82 < unkVal) {
+        if (self->ext.et_801B6F30.unk82 < 0x42) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -4600,24 +4593,6 @@ const char* func_us_801B7C94(u16 itemId) {
     return name;
 }
 
-#ifdef VERSION_PSP
-Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
-    s32 x = posX;
-    s16 y = 8;
-    s32 i;
-    if ((arg1 & ELEMENT_ALL) == 0) {
-        prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
-    } else {
-        for (i = 0; i < LEN(D_us_801818A8); i++) {
-            if (arg1 & D_us_801818A8[i]) {
-                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
-                x += 0x20;
-            }
-        }
-    }
-    return prim;
-}
-#else
 Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     s16 x = 0x84;
     s16 y = 8;
@@ -4634,155 +4609,7 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     }
     return prim;
 }
-#endif
 
-#ifdef VERSION_PSP
-void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
-    s16 posX, posY;
-    s32 i;
-    EnemyDef* enemyDef;
-    u8 params;
-    s32 strLen;
-    s32 xOffset;
-
-    xOffset = 12;
-    enemyDef = &g_api.enemyDefs[enemyId];
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    posX = 0x14;
-    posY = 0x2C;
-    prim = func_us_801B1064(prim, posX, posY, enemyDef->name, 0x196);
-    posX = 0xB4;
-    posY = 0x2C;
-    func_us_801B3FB4(prim, D_us_801818C0[5], 3, 1); // "No."
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    func_us_801B3EC8(prim, arg1->params + 1, 3);
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x18;
-    posY = 0x38;
-    func_us_801B3FB4(prim, D_us_801818C0[0], 2, 1); // "Strong VS."
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX += 2;
-    if (arg1->params) {
-        func_us_801B3EC8(prim, enemyDef->level, 2);
-    } else {
-        func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
-    }
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        if (prim->drawMode != DRAW_HIDE) {
-            posX += 8;
-        }
-        prim = prim->next;
-    }
-    posX = 0x40;
-    posY = 0x38;
-    func_us_801B3FB4(prim, D_us_801818C0[1], 2, 1); // "HP"
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX += 2;
-    if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
-    } else {
-        func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
-    }
-    for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        if (prim->drawMode != DRAW_HIDE) {
-            posX += 8;
-        }
-        prim = prim->next;
-    }
-    posX = 0x84;
-    posY = 0xA4;
-    func_us_801B3FB4(prim, D_us_801818C0[3], 3, 1); // "Exp"
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    func_us_801B3EC8(prim, enemyDef->exp, 4);
-    for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x84;
-    posY = 0x7C;
-    strLen = 0x14;
-    func_us_801B3FB4(prim, D_us_801818C0[4], strLen, 1); // "Drop Items"
-    for (i = 0; i < strLen; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX - xOffset;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x88;
-    posY = 0x88;
-    prim = func_us_801B1064(prim, posX - xOffset, posY,
-                            func_us_801B7C94(enemyDef->uncommonItemId), 0x196);
-    posX = 0x88;
-    posY = 0x94;
-    params = arg1->params;
-    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
-         (1 << (params & 7))) ||
-        !enemyDef->rareItemId) {
-        prim = func_us_801B1064(prim, posX - xOffset, posY,
-                                func_us_801B7C94(enemyDef->rareItemId), 0x196);
-    } else {
-        prim = func_us_801B1064(
-            prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
-    }
-    for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
-                                D_us_801818C0[i + 7], 0x196);
-    }
-    prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
-    prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
-    prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x8C - xOffset, 0x64);
-    prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x8C - xOffset, 0x74);
-    while (prim != NULL) {
-        prim->drawMode = DRAW_HIDE;
-        prim = prim->next;
-    }
-}
-#else
 void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     s16 posX, posY;
     s32 i;
@@ -4832,7 +4659,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x1C;
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[0], 0x196); // "LV"
     posX += 0x12;
-    if (arg1->params != 0) {
+    if (arg1->params) {
         func_us_801B3EC8(prim, enemyDef->level, 2);
     } else {
         func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
@@ -4899,7 +4726,6 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
         prim = prim->next;
     }
 }
-#endif
 
 void func_us_801B8234(Entity* self) {
     Primitive* prim;
@@ -4909,7 +4735,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    u8* s3;
+    char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 
@@ -5065,7 +4891,7 @@ void func_us_801B8234(Entity* self) {
             enemyDef = &g_api.enemyDefs[enemyId];
             s3 = D_psp_092A5F48[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1C0, 0x6E);
-            s3 = D_psp_092A5F48[self->params];
+            s3 = D_psp_092A5F40[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1D0, 0x6E);
 #else
             s3 = D_us_80180FB4[self->params];
@@ -5284,7 +5110,6 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
 
 void func_us_801B8A00(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -5293,7 +5118,7 @@ void func_us_801B8A00(Entity* self) {
     s16 sfxIndex;
     u8* pix;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);

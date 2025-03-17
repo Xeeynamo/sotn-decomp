@@ -2208,149 +2208,19 @@ static u8 D_psp_092A4870[] = {
     // clang-format on
 };
 
-static char D_psp_092A4880[] = "kosuu %x\n";
-
-static u16 D_us_80181530[] = {
-    0xFFEE, 0xFFDE, 0xFFF6, 0xFFDE, 0xFFEE, 0xFFE6, 0xFFF6, 0xFFE6, 0xFFD2,
-    0x001A, 0xFFDA, 0x001A, 0xFFE2, 0x001A, 0xFFEA, 0x001A, 0xFFFA, 0x001A,
-    0x0002, 0x001A, 0x000A, 0x001A, 0x0012, 0x001A, 0x001A, 0x001A, 0x0022,
-    0x001A, 0x002A, 0x001A, 0x0032, 0x001A, 0x0032, 0x001A, 0x0032, 0x001A,
-    0xFFEA, 0x0010, 0xFFF2, 0x0010, 0xFFFA, 0x0010, 0x0002, 0x0010, 0x000A,
-    0x0010, 0x0012, 0x0010, 0x001A, 0x0010, 0x0022, 0x0010, 0x002A, 0x0010,
-    0x0032, 0x0010, 0x0002, 0xFFDE, 0x000A, 0xFFDE, 0x0012, 0xFFDE, 0x001A,
-    0xFFDD, 0x0022, 0xFFDE, 0x002A, 0xFFDE, 0x0032, 0xFFDE, 0x0002, 0xFFE6,
-    0x000A, 0xFFE6, 0x0012, 0xFFE6, 0x001A, 0xFFE5, 0x0022, 0xFFE6, 0x002A,
-    0xFFE6, 0x0032, 0xFFE6, 0x0002, 0xFFF2, 0x000A, 0xFFF2, 0x0012, 0xFFF2,
-    0x001A, 0xFFF1, 0x0022, 0xFFF2, 0x002A, 0xFFF2, 0x0032, 0xFFF2, 0xFFCA,
-    0xFFFE, 0xFFD2, 0xFFFE, 0xFFDA, 0xFFFE, 0xFFE6, 0xFFFE, 0xFFEE, 0xFFFE,
-    0xFFF6, 0xFFFE, 0x0006, 0xFFFE, 0x000E, 0xFFFE, 0x0016, 0xFFFE, 0x0022,
-    0xFFFE, 0x002A, 0xFFFE, 0x0032, 0xFFFE, 0xFFCA, 0x0006, 0xFFD2, 0x0006,
-    0xFFDA, 0x0006, 0xFFE6, 0x0006, 0xFFEE, 0x0006, 0xFFF6, 0x0006, 0x0006,
-    0x0006, 0x000E, 0x0006, 0x0016, 0x0006, 0x0022, 0x0006, 0x002A, 0x0006,
-    0x0032, 0x0006};
-
-static s16 D_psp_092A49B8[] = {
-    0x0002, 0xFFDE, 0x000A, 0xFFDE, 0x0012, 0xFFDE, 0x001A, 0xFFDD, 0x0022,
-    0xFFDE, 0x002A, 0xFFDE, 0x0032, 0xFFDE, 0x0002, 0xFFE6, 0x000A, 0xFFE6,
-    0x0012, 0xFFE6, 0x001A, 0xFFE5, 0x0022, 0xFFE6, 0x002A, 0xFFE6, 0x0032,
-    0xFFE6, 0x0002, 0xFFF2, 0x000A, 0xFFF2, 0x0012, 0xFFF2, 0x001A, 0xFFF1,
-    0x0022, 0xFFF2, 0x002A, 0xFFF2, 0x0032, 0xFFF2, 0x0000, 0x0000};
-
-static s16 D_psp_092A4A10[] = {
-    0xFFCA, 0xFFFE, 0xFFD2, 0xFFFE, 0xFFDA, 0xFFFE, 0xFFE6, 0xFFFE,
-    0xFFEE, 0xFFFE, 0xFFF6, 0xFFFE, 0x0006, 0xFFFE, 0x000E, 0xFFFE,
-    0x0016, 0xFFFE, 0x0022, 0xFFFE, 0x002A, 0xFFFE, 0x0032, 0xFFFE,
-    0xFFCA, 0x0006, 0xFFD2, 0x0006, 0xFFDA, 0x0006, 0xFFE6, 0x0006,
-    0xFFEE, 0x0006, 0xFFF6, 0x0006, 0x0006, 0x0006, 0x000E, 0x0006,
-    0x0016, 0x0006, 0x0022, 0x0006, 0x002A, 0x0006, 0x0032, 0x0006};
-
-static char D_us_80181658[] = {
-    SQUARE, CIRCLE, CROSS, TRIANGLE, CH('L'), CH('R'), CH('L'), CH('R')};
-
-static u16 D_psp_092A4A78[] = {
-    0xFFE4, 0x0010, 0xFFEC, 0x0010, 0xFFF4, 0x0010, 0xFFFC, 0x0010};
-
-static s16 D_psp_092A4A88[] = {4, 16, 12, 16, 20, 16, 20, 8, 36, 16, 44, 16};
-
-static u16 D_psp_092A4AA0[] = {
-    0xFFD8, 0x0010, 0xFFEC, 0x0010, 0xFFEC, 0x0008, 0xFFF4, 0x0010,
-    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
-    0x001C, 0x0010, 0x0024, 0x0010, 0xFFD4, 0x0010, 0xFFF4, 0x0010,
-    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
-    0x0024, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010};
-
-static RECT D_psp_092A4AF0 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
-
-static ShopItem D_us_8018173C[] = {
-    // clang-format off
-    {0, DRACULA_TACTICS,            200},
-    {0, SLO_GAI_TACTICS,            500},
-    {0, DOPPLEGANGER10_TACTICS,     700},
-    {0, HIPPOGRYPH_TACTICS,         1000},
-    {0, SCYLLA_TACTICS,             1200},
-    {0, MINOTAUR_WEREWOLF_TACTICS,  1400},
-    {0, KARASUMAN_TACTICS,          1800},
-    {0, SUCCUBUS_TACTICS,           2000},
-    {0, CERBERUS_TACTICS,           2200},
-    {0, OLROX_TACTICS,              2500},
-    {0, GRANFALOON_TACTICS,         2800},
-    {0, MARIA_TACTICS,              3000},
-    {0, RICHTER_TACTICS,            3000},
-    {0, DARKWING_BAT_TACTICS,       3500},
-    {0, AKMODAN_II_TACTICS,         3500},
-    {0, MEDUSA_TACTICS,             3500},
-    {0, THE_CREATURE_TACTICS,       3500},
-    {0, DEATH_TACTICS,              4000},
-    {0, DOPPLEGANGER40_TACTICS,     4500},
-    {0, TREVOR_GRANT_SYPHA_TACTICS, 5000},
-    {0, BEELZEBUB_TACTICS,          6000},
-    {0, GALAMOTH_TACTICS,           7000},
-    {0, SHAFT_TACTICS,              8500},
-    {0, LORD_DRACULA_TACTICS,       10000},
-    // clang-format on
-};
-
-static char D_psp_092A4BB8[] = _S("--------------");
-
-static char D_psp_092A4BC8[] = {
-    CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
-
-static RECT D_psp_092A4BD0 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
-
-static char D_psp_092A4BD8[] = _S("-------------");
-
-static RECT D_psp_092A4BE8 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
-
-static u16 D_psp_092A4BF0[] = {
-    ELEMENT_HOLY,  ELEMENT_DARK,  ELEMENT_FIRE,  ELEMENT_THUNDER,
-    ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
-    ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
-
-static char* D_psp_092A4C18[] = {_S("????????")};
-static char* D_psp_092A4C28[] = {_S("????")};
-
-static char* D_psp_092A4CA8[] = {
-    "\xB5\xB7\xB1\xD5\x00\xD8\xAE\xB3\xC0\xDB\xB3\xFF",
-    "\xD4\xC5\xC0\xFF\x9E\x00\xB7\xD6\xD5\xB7\xFF",
-    "\xD6\xBA\xD4\xCF\x00\xC1\xBB\xFF",
-    "\xDC\xB6\xD3\xC4\x00\xC9\xD8\xB5\xFF",
-    "\xCC\xB6\xD0\x00\xD8\xB6\xFF",
-    "\xBB\xC4\xB3\x00\xCF\xBB\xCA\xD9\xFF",
-    "\xBC\xB2\xC5\x00\xCD\xB7\xD9\xFF",
-    "\xD4\xC5\xD0\x00\xBC\xFF\x9E\xAE\xB3\xBC\xFF\x9E\xFF"};
-
-static char D_psp_092A4CC8[] = {
-    0x95, 0xBD, 0x90, 0xAC, 0x82, 0x56, 0x94, 0x4E, 0x82, 0x57,
-    0x8C, 0x8E, 0x82, 0xC9, 0x8E, 0xFB, 0x98, 0x5E, 0x82, 0xB3,
-    0x82, 0xEA, 0x82, 0xBD, 0x82, 0xE0, 0x82, 0xCC, 0x82, 0xC5,
-    0x82, 0xB7, 0x81, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
-static u16 D_psp_092A4CF0[] = {
-    0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
-
-static RECT D_psp_092A4D00 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
-
-static u16 D_psp_092A4D08[] = {
-    0x0321, 0x031F, 0x032F, 0x030F, 0x032B, 0x030D, 0x0313, 0x033C,
-    0x0309, 0x0315, 0x031D, 0x033B, 0x0305, 0x030B, 0x0319, 0x0307,
-    0x033A, 0x0301, 0x0317, 0x0303, 0x032D, 0x0323, 0x0311, 0x0325,
-    0x031B, 0x0331, 0x0333, 0x0335, 0x0337, 0x0339, 0x0000, 0x0000};
-
-static RECT D_psp_092A4D48 = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
-
 extern char** D_psp_092A5F40;
 extern char** D_psp_092A5F48;
-extern char** D_psp_092A5F58;
-extern char** D_psp_092A5F60;
-extern char** D_psp_092A5F68;
-extern char** D_psp_092A5F80;
+extern char** D_us_8018168C;
+extern char** D_us_801816C8;
+extern char** D_us_801818F4;
+extern char** D_us_801818C0;
 extern char* D_psp_092A5F88;
-extern char** D_psp_092A5F90;
+extern char** D_us_8018187C;
 extern char** D_psp_092A5F98;
-extern char** D_psp_092A5FA0;
-extern char** D_psp_092A5FA8;
-extern char** D_psp_092A5FB0;
-extern char* D_psp_092A5FB8;
+extern char** D_us_8018181C;
+extern char** D_us_801816B0;
+extern char** D_us_801816AC;
+extern char* D_us_801816A4;
 extern char** D_us_80181310;
 extern char** D_us_80181528;
 extern char* D_us_80181660;
@@ -2370,7 +2240,7 @@ extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u32 D_us_801D415C[];
-extern u32 D_us_801D425C[];
+extern u32 D_us_801D425C[64];
 extern ShopItem D_us_801D4364[];
 extern u8* D_psp_092A5D38;
 extern u8* D_psp_092A54E0;
@@ -2400,28 +2270,28 @@ void func_psp_0925D4D0(void) {
     D_us_80181310 =
         func_psp_0925D430(D_psp_092A1798, D_psp_092A3428, D_psp_092A21A8,
                           D_psp_092A3CD8, D_psp_092A2B20);
-    D_psp_092A5FB8 =
+    D_us_801816A4 =
         func_psp_0925D430(D_psp_092A17B8, D_psp_092A3448, D_psp_092A21C8,
                           D_psp_092A3CF8, D_psp_092A2B40);
-    D_psp_092A5FB0 =
+    D_us_801816AC =
         func_psp_0925D430(D_psp_092A17D8, D_psp_092A3468, D_psp_092A21E8,
                           D_psp_092A3D18, D_psp_092A2B60);
-    D_psp_092A5FA8 =
+    D_us_801816B0 =
         func_psp_0925D430(D_psp_092A1870, D_psp_092A3500, D_psp_092A2280,
                           D_psp_092A3DB0, D_psp_092A2BF8);
-    D_psp_092A5FA0 =
+    D_us_8018181C =
         func_psp_0925D430(D_psp_092A1990, D_psp_092A35C0, D_psp_092A2390,
                           D_psp_092A3E70, D_psp_092A2CB0);
     D_psp_092A5F98 =
         func_psp_0925D430(D_psp_092A1A20, D_psp_092A3650, D_psp_092A2428,
                           D_psp_092A3F08, D_psp_092A2D40);
-    D_psp_092A5F90 =
+    D_us_8018187C =
         func_psp_0925D430(D_psp_092A1A88, D_psp_092A36B8, D_psp_092A2480,
                           D_psp_092A3F58, D_psp_092A2D88);
     D_psp_092A5F88 =
         func_psp_0925D430(D_psp_092A1AB8, D_psp_092A36E8, D_psp_092A24B0,
                           D_psp_092A3F88, D_psp_092A2DB8);
-    D_psp_092A5F80 =
+    D_us_801818C0 =
         func_psp_0925D430(D_psp_092A1B00, D_psp_092A3708, D_psp_092A24E8,
                           D_psp_092A3FB0, D_psp_092A2DE8);
     D_us_80181668 =
@@ -2430,16 +2300,16 @@ void func_psp_0925D4D0(void) {
     D_us_80181674 =
         func_psp_0925D430(D_psp_092A1B60, D_psp_092A3758, D_psp_092A2540,
                           D_psp_092A4008, D_psp_092A2E40);
-    D_psp_092A5F68 =
+    D_us_801818F4 =
         func_psp_0925D430(D_psp_092A1DC0, D_psp_092A39A8, D_psp_092A27F0,
                           D_psp_092A4270, D_psp_092A30F8);
-    D_psp_092A5F58 =
+    D_us_8018168C =
         func_psp_0925D430(D_psp_092A2110, D_psp_092A3C48, D_psp_092A2A88,
                           D_psp_092A44F0, D_psp_092A3390);
     D_us_80181660 =
         func_psp_0925D430(D_psp_092A2138, D_psp_092A3C70, D_psp_092A2AB0,
                           D_psp_092A4518, D_psp_092A33B8);
-    D_psp_092A5F60 =
+    D_us_801816C8 =
         func_psp_0925D430(D_psp_092A1FA8, D_psp_092A3AC8, D_psp_092A2908,
                           D_psp_092A4398, D_psp_092A3210);
     D_psp_092A5F48 =
@@ -3760,7 +3630,7 @@ void func_us_801B2BE4(Entity* self) {
                 self->ext.et_801B6F30.unk88 = func_us_801B29C4();
                 ptr = D_us_801D4364;
             }
-            for (i = 0; i < 64; i++) {
+            for (i = 0; i < LEN(D_us_801D425C); i++) {
                 itemId = ptr->itemId;
                 switch (ptr->category) {
                 case INVENTORY_HAND:
@@ -3858,7 +3728,7 @@ void func_us_801B2BE4(Entity* self) {
 
     case 3:
         tempVar = g_pads[0].repeat;
-        FntPrint(D_psp_092A4880, self->ext.et_801B6F30.unk82);
+        FntPrint("kosuu %x\n", self->ext.et_801B6F30.unk82);
         if (tempVar & PAD_DOWN) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
@@ -4235,6 +4105,55 @@ Primitive* func_us_801B3FB4(
 #endif
     return prim;
 }
+
+static u16 D_us_80181530[] = {
+    -0x012, -0x022, -0x00A, -0x022, -0x012, -0x01A, -0x00A, -0x01A, -0x02E,
+    0x01A,  -0x026, 0x01A,  -0x01E, 0x01A,  -0x016, 0x01A,  -0x006, 0x01A,
+    0x002,  0x01A,  0x00A,  0x01A,  0x012,  0x01A,  0x01A,  0x01A,  0x022,
+    0x01A,  0x02A,  0x01A,  0x032,  0x01A,  0x032,  0x01A,  0x032,  0x01A,
+    -0x016, 0x010,  -0x00E, 0x010,  -0x006, 0x010,  0x002,  0x010,  0x00A,
+    0x010,  0x012,  0x010,  0x01A,  0x010,  0x022,  0x010,  0x02A,  0x010,
+    0x032,  0x010,  0x002,  -0x022, 0x00A,  -0x022, 0x012,  -0x022, 0x01A,
+    -0x023, 0x022,  -0x022, 0x02A,  -0x022, 0x032,  -0x022, 0x002,  -0x01A,
+    0x00A,  -0x01A, 0x012,  -0x01A, 0x01A,  -0x01B, 0x022,  -0x01A, 0x02A,
+    -0x01A, 0x032,  -0x01A, 0x002,  -0x00E, 0x00A,  -0x00E, 0x012,  -0x00E,
+    0x01A,  -0x00F, 0x022,  -0x00E, 0x02A,  -0x00E, 0x032,  -0x00E, -0x036,
+    -0x002, -0x02E, -0x002, -0x026, -0x002, -0x01A, -0x002, -0x012, -0x002,
+    -0x00A, -0x002, 0x006,  -0x002, 0x00E,  -0x002, 0x016,  -0x002, 0x022,
+    -0x002, 0x02A,  -0x002, 0x032,  -0x002, -0x036, 0x006,  -0x02E, 0x006,
+    -0x026, 0x006,  -0x01A, 0x006,  -0x012, 0x006,  -0x00A, 0x006,  0x006,
+    0x006,  0x00E,  0x006,  0x016,  0x006,  0x022,  0x006,  0x02A,  0x006,
+    0x032,  0x006};
+
+static s16 D_psp_092A49B8[] = {
+    0x0002, 0xFFDE, 0x000A, 0xFFDE, 0x0012, 0xFFDE, 0x001A, 0xFFDD, 0x0022,
+    0xFFDE, 0x002A, 0xFFDE, 0x0032, 0xFFDE, 0x0002, 0xFFE6, 0x000A, 0xFFE6,
+    0x0012, 0xFFE6, 0x001A, 0xFFE5, 0x0022, 0xFFE6, 0x002A, 0xFFE6, 0x0032,
+    0xFFE6, 0x0002, 0xFFF2, 0x000A, 0xFFF2, 0x0012, 0xFFF2, 0x001A, 0xFFF1,
+    0x0022, 0xFFF2, 0x002A, 0xFFF2, 0x0032, 0xFFF2, 0x0000, 0x0000};
+
+static s16 D_psp_092A4A10[] = {
+    0xFFCA, 0xFFFE, 0xFFD2, 0xFFFE, 0xFFDA, 0xFFFE, 0xFFE6, 0xFFFE,
+    0xFFEE, 0xFFFE, 0xFFF6, 0xFFFE, 0x0006, 0xFFFE, 0x000E, 0xFFFE,
+    0x0016, 0xFFFE, 0x0022, 0xFFFE, 0x002A, 0xFFFE, 0x0032, 0xFFFE,
+    0xFFCA, 0x0006, 0xFFD2, 0x0006, 0xFFDA, 0x0006, 0xFFE6, 0x0006,
+    0xFFEE, 0x0006, 0xFFF6, 0x0006, 0x0006, 0x0006, 0x000E, 0x0006,
+    0x0016, 0x0006, 0x0022, 0x0006, 0x002A, 0x0006, 0x0032, 0x0006};
+
+static char D_us_80181658[] = {
+    SQUARE, CIRCLE, CROSS, TRIANGLE, CH('L'), CH('R'), CH('L'), CH('R')};
+
+static u16 D_psp_092A4A78[] = {
+    0xFFE4, 0x0010, 0xFFEC, 0x0010, 0xFFF4, 0x0010, 0xFFFC, 0x0010};
+
+static s16 D_psp_092A4A88[] = {4, 16, 12, 16, 20, 16, 20, 8, 36, 16, 44, 16};
+
+static u16 D_psp_092A4AA0[] = {
+    0xFFD8, 0x0010, 0xFFEC, 0x0010, 0xFFEC, 0x0008, 0xFFF4, 0x0010,
+    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
+    0x001C, 0x0010, 0x0024, 0x0010, 0xFFD4, 0x0010, 0xFFF4, 0x0010,
+    0xFFFC, 0x0010, 0x0004, 0x0010, 0x000C, 0x0010, 0x0014, 0x0010,
+    0x0024, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010, 0x002C, 0x0010};
 
 void func_us_801B4010(u16* arg0) {
     *arg0++ = g_Status.equipment[0];
@@ -4912,7 +4831,7 @@ void func_us_801B4ED4(s16 index, u16 arg1) {
                             g_api.relicDefs[itemId].iconPalette, 0x1F);
         break;
     case INVENTORY_DOCUMENT:
-        desc = D_psp_092A5F58[itemId];
+        desc = D_us_8018168C[itemId];
         if (itemId) {
             itemId = 0x112;
         } else {
@@ -5286,7 +5205,7 @@ void func_us_801B56E4(Entity* self) {
     ShopItem* shopItem;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
-    RECT clipRect;
+    RECT clipRect = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
     const char* name;
     Primitive* prim;
     Primitive* prim2;
@@ -5296,7 +5215,6 @@ void func_us_801B56E4(Entity* self) {
     s32 count;
     u32 price;
 
-    clipRect = D_psp_092A4AF0;
     tempEntity = self - 3;
     switch (self->step) {
     case 0:
@@ -5386,10 +5304,10 @@ void func_us_801B56E4(Entity* self) {
                 name = g_api.accessoryDefs[itemId].name;
                 break;
             case INVENTORY_RELIC:
-                name = D_psp_092A5FB0[itemId];
+                name = D_us_801816AC[itemId];
                 break;
             case INVENTORY_DOCUMENT:
-                name = D_psp_092A5FA8[itemId];
+                name = D_us_801816B0[itemId];
                 break;
             default:
                 name = *D_us_80181528;
@@ -5448,9 +5366,9 @@ void func_us_801B56E4(Entity* self) {
                     posX += 8;
                 }
 #ifdef VERSION_PSP
-                func_us_801B3FB4(prim2, D_psp_092A5FB8, count, 1);
+                func_us_801B3FB4(prim2, D_us_801816A4, count, 1);
 #else
-                func_us_801B3FB4(prim2, D_psp_092A5FB8, LEN(D_psp_092A5FB8), 1);
+                func_us_801B3FB4(prim2, D_us_801816A4, LEN(D_us_801816A4), 1);
 #endif
             }
             posY += 12;
@@ -5608,6 +5526,39 @@ void func_us_801B60C8(Entity* self) {
     }
 }
 
+static ShopItem D_us_8018173C[] = {
+    // clang-format off
+    {0, DRACULA_TACTICS,            200},
+    {0, SLO_GAI_TACTICS,            500},
+    {0, DOPPLEGANGER10_TACTICS,     700},
+    {0, HIPPOGRYPH_TACTICS,         1000},
+    {0, SCYLLA_TACTICS,             1200},
+    {0, MINOTAUR_WEREWOLF_TACTICS,  1400},
+    {0, KARASUMAN_TACTICS,          1800},
+    {0, SUCCUBUS_TACTICS,           2000},
+    {0, CERBERUS_TACTICS,           2200},
+    {0, OLROX_TACTICS,              2500},
+    {0, GRANFALOON_TACTICS,         2800},
+    {0, MARIA_TACTICS,              3000},
+    {0, RICHTER_TACTICS,            3000},
+    {0, DARKWING_BAT_TACTICS,       3500},
+    {0, AKMODAN_II_TACTICS,         3500},
+    {0, MEDUSA_TACTICS,             3500},
+    {0, THE_CREATURE_TACTICS,       3500},
+    {0, DEATH_TACTICS,              4000},
+    {0, DOPPLEGANGER40_TACTICS,     4500},
+    {0, TREVOR_GRANT_SYPHA_TACTICS, 5000},
+    {0, BEELZEBUB_TACTICS,          6000},
+    {0, GALAMOTH_TACTICS,           7000},
+    {0, SHAFT_TACTICS,              8500},
+    {0, LORD_DRACULA_TACTICS,       10000},
+    // clang-format on
+};
+
+static char D_us_801817F4[] = _S("--------------");
+static char D_us_80181804[] = {
+    CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
+
 void func_us_801B6124(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
     u16 clut;
@@ -5649,16 +5600,15 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
                 clut = 0x183;
             }
 #ifdef VERSION_PSP
-            prim = func_us_801B1064(
-                prim, 8, posY, D_psp_092A5F60[itemIndex], clut);
-#else
             prim =
-                func_us_801B1064(prim, 8, posY, D_psp_092A5F60[itemId], clut);
+                func_us_801B1064(prim, 8, posY, D_us_801816C8[itemIndex], clut);
+#else
+            prim = func_us_801B1064(prim, 8, posY, D_us_801816C8[itemId], clut);
 #endif
             enemyTactics->category++;
         } else {
             clut = 0x191;
-            prim = func_us_801B1064(prim, 8, posY, D_psp_092A4BB8, 0x191);
+            prim = func_us_801B1064(prim, 8, posY, D_us_801817F4, 0x191);
         }
         posX = 0x80;
         prim2 = prim;
@@ -5672,7 +5622,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         if (enemyTactics->category) {
             func_us_801B3EC8(prim2, price, 8);
         } else {
-            func_us_801B3FB4(prim2, D_psp_092A4BC8, 8, 1);
+            func_us_801B3FB4(prim2, D_us_80181804, 8, 1);
         }
         itemIndex++;
         posY += 12;
@@ -5685,7 +5635,6 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -5694,7 +5643,7 @@ void func_us_801B6324(Entity* self) {
     s32 var_v1;
     u16 pads;
 
-    clipRect = D_psp_092A4BD0;
+    RECT clipRect = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -5996,6 +5945,8 @@ void func_us_801B6324(Entity* self) {
     }
 }
 
+static char D_us_8018180C[] = _S("-------------");
+
 void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
     u16 enemyIndex;
@@ -6024,8 +5975,7 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
                 prim = func_us_801B1064(
                     prim, posX, posY, g_api.enemyDefs[enemyId].name, 0x196);
             } else {
-                prim =
-                    func_us_801B1064(prim, posX, posY, D_psp_092A4BD8, 0x191);
+                prim = func_us_801B1064(prim, posX, posY, D_us_8018180C, 0x191);
             }
         }
         enemyIndex++;
@@ -6038,7 +5988,6 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
 
 void func_us_801B6F30(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -6047,7 +5996,7 @@ void func_us_801B6F30(Entity* self) {
     u16 pads;
     Entity* tempEntity;
 
-    clipRect = D_psp_092A4BE8;
+    RECT clipRect = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -6408,6 +6357,33 @@ void func_us_801B6F30(Entity* self) {
     }
 }
 
+static u16 D_us_801818A8[] = {
+    ELEMENT_HOLY,  ELEMENT_DARK,  ELEMENT_FIRE,  ELEMENT_THUNDER,
+    ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
+    ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
+
+static char* D_us_801818EC[] = {_S("????????")};
+static char* D_us_801818F0[] = {_S("????")};
+
+static char* D_psp_092A4CA8[] = {
+    "\xB5\xB7\xB1\xD5\x00\xD8\xAE\xB3\xC0\xDB\xB3\xFF",
+    "\xD4\xC5\xC0\xFF\x9E\x00\xB7\xD6\xD5\xB7\xFF",
+    "\xD6\xBA\xD4\xCF\x00\xC1\xBB\xFF",
+    "\xDC\xB6\xD3\xC4\x00\xC9\xD8\xB5\xFF",
+    "\xCC\xB6\xD0\x00\xD8\xB6\xFF",
+    "\xBB\xC4\xB3\x00\xCF\xBB\xCA\xD9\xFF",
+    "\xBC\xB2\xC5\x00\xCD\xB7\xD9\xFF",
+    "\xD4\xC5\xD0\x00\xBC\xFF\x9E\xAE\xB3\xBC\xFF\x9E\xFF"};
+
+static char D_psp_092A4CC8[] = {
+    0x95, 0xBD, 0x90, 0xAC, 0x82, 0x56, 0x94, 0x4E, 0x82, 0x57,
+    0x8C, 0x8E, 0x82, 0xC9, 0x8E, 0xFB, 0x98, 0x5E, 0x82, 0xB3,
+    0x82, 0xEA, 0x82, 0xBD, 0x82, 0xE0, 0x82, 0xCC, 0x82, 0xC5,
+    0x82, 0xB7, 0x81, 0x42, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+static u16 D_psp_092A4CF0[] = {
+    0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
+
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
     if (itemId >= 0x80) {
@@ -6419,7 +6395,7 @@ const char* func_us_801B7C94(u16 itemId) {
             name = g_api.accessoryDefs[itemId].name;
         }
     } else {
-        name = D_psp_092A5FA0[itemId];
+        name = D_us_8018181C[itemId];
     }
     return name;
 }
@@ -6447,7 +6423,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     prim = func_us_801B1064(prim, posX, posY, enemyDef->name, 0x196);
     posX = 0xB4;
     posY = 0x2C;
-    func_us_801B3FB4(prim, D_psp_092A5F80[5], 3, 1); // "No."
+    func_us_801B3FB4(prim, D_us_801818C0[5], 3, 1); // "No."
     for (i = 0; i < 3; i++) {
         prim->clut = 0x196;
         prim->x0 = posX;
@@ -6465,7 +6441,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX = 0x18;
     posY = 0x38;
-    func_us_801B3FB4(prim, D_psp_092A5F80[0], 2, 1); // "Strong VS."
+    func_us_801B3FB4(prim, D_us_801818C0[0], 2, 1); // "Strong VS."
     for (i = 0; i < 2; i++) {
         prim->clut = 0x196;
         prim->x0 = posX;
@@ -6477,7 +6453,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     if (arg1->params) {
         func_us_801B3EC8(prim, enemyDef->level, 2);
     } else {
-        func_us_801B3FB4(prim, D_psp_092A5F80[6], 2, 1); // "??"
+        func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
     }
     for (i = 0; i < 2; i++) {
         prim->clut = 0x196;
@@ -6490,7 +6466,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX = 0x40;
     posY = 0x38;
-    func_us_801B3FB4(prim, D_psp_092A5F80[1], 2, 1); // "HP"
+    func_us_801B3FB4(prim, D_us_801818C0[1], 2, 1); // "HP"
     for (i = 0; i < 2; i++) {
         prim->clut = 0x196;
         prim->x0 = posX;
@@ -6500,7 +6476,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX += 2;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_psp_092A4C28[0], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -6515,7 +6491,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX = 0x84;
     posY = 0xA4;
-    func_us_801B3FB4(prim, D_psp_092A5F80[3], 3, 1); // "Exp"
+    func_us_801B3FB4(prim, D_us_801818C0[3], 3, 1); // "Exp"
     for (i = 0; i < 3; i++) {
         prim->clut = 0x196;
         prim->x0 = posX;
@@ -6534,7 +6510,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x84;
     posY = 0x7C;
     strLen = 0x14;
-    func_us_801B3FB4(prim, D_psp_092A5F80[4], strLen, 1); // "Drop Items"
+    func_us_801B3FB4(prim, D_us_801818C0[4], strLen, 1); // "Drop Items"
     for (i = 0; i < strLen; i++) {
         prim->clut = 0x196;
         prim->x0 = posX - xOffset;
@@ -6556,7 +6532,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
                                 func_us_801B7C94(enemyDef->rareItemId), 0x196);
     } else {
         prim = func_us_801B1064(
-            prim, posX - xOffset, posY, D_psp_092A4C18[0], 0x196); // "????????"
+            prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
         prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
@@ -6598,17 +6574,17 @@ loop:
     return pix;
 }
 
-Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
+static Primitive* func_us_801B7D10(
+    Primitive* prim, u16 arg1, s16 posX, s16 posY) {
     s32 x = posX;
     s16 y = 8;
     s32 i;
     if ((arg1 & ELEMENT_ALL) == 0) {
         prim = func_us_801B1064(prim, posX, posY, D_psp_092A5F88, 0x196);
     } else {
-        for (i = 0; i < LEN(D_psp_092A4BF0); i++) {
-            if (arg1 & D_psp_092A4BF0[i]) {
-                prim =
-                    func_us_801B1064(prim, x, posY, D_psp_092A5F90[i], 0x196);
+        for (i = 0; i < LEN(D_us_801818A8); i++) {
+            if (arg1 & D_us_801818A8[i]) {
+                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
                 x += 0x20;
             }
         }
@@ -6624,7 +6600,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    const char* s3;
+    char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 
@@ -6927,9 +6903,8 @@ void func_psp_0926ADD8(Primitive* prim, Entity* self) {
     }
 }
 
-void func_us_801B8A00(Entity* self) {
+void func_psp_0926AED0(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -6938,7 +6913,7 @@ void func_us_801B8A00(Entity* self) {
     s16 sfxIndex;
     u8* pix;
 
-    clipRect = D_psp_092A4D00;
+    RECT clipRect = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -7345,6 +7320,12 @@ void func_us_801B8A00(Entity* self) {
     }
 }
 
+static u16 D_us_80181978[] = {
+    0x0321, 0x031F, 0x032F, 0x030F, 0x032B, 0x030D, 0x0313, 0x033C,
+    0x0309, 0x0315, 0x031D, 0x033B, 0x0305, 0x030B, 0x0319, 0x0307,
+    0x033A, 0x0301, 0x0317, 0x0303, 0x032D, 0x0323, 0x0311, 0x0325,
+    0x031B, 0x0331, 0x0333, 0x0335, 0x0337, 0x0339, 0x0000, 0x0000};
+
 void func_us_801B8958(Primitive* prim, Entity* self) {
     s16 posY;
     s32 i, j;
@@ -7352,7 +7333,7 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
     posY = 16;
     j = self->ext.et_801B6F30.unk82;
     for (i = 0; i < 7; i++, j++) {
-        prim = func_us_801B1064(prim, 16, posY, D_psp_092A5F68[j], 0x196);
+        prim = func_us_801B1064(prim, 16, posY, D_us_801818F4[j], 0x196);
         posY += 12;
     }
     while (prim != NULL) {
@@ -7361,9 +7342,8 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
     }
 }
 
-void func_psp_0926BE68(Entity* self) {
+void func_us_801B8A00(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -7371,7 +7351,7 @@ void func_psp_0926BE68(Entity* self) {
     u16 pads;
     s16 sfxIndex;
 
-    clipRect = D_psp_092A4D48;
+    RECT clipRect = {.x = 0, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -7596,7 +7576,7 @@ void func_psp_0926BE68(Entity* self) {
             if (!g_api.func_80131F68() && (g_CutsceneFlags & 0x200) == 0) {
                 sfxIndex =
                     self->ext.et_801B6F30.unk80 + self->ext.et_801B6F30.unk82;
-                g_api.PlaySfx(D_psp_092A4D08[sfxIndex]);
+                g_api.PlaySfx(D_us_80181978[sfxIndex]);
                 SetStep(3);
             }
             break;
