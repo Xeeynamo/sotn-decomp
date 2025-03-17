@@ -200,9 +200,11 @@ typedef enum {
 // PSP allows you to do the Wolf Charge spell with either square or circle.
 // This was changed from PS1, which only accepts square.
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+#define BTN_MIST (PAD_L1 | PAD_R1)
 #else
 #define BTN_WOLF PAD_R2
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+#define BTN_MIST PAD_L1
 #endif
 
 #define MAX_PRIM_COUNT 0x500
@@ -1843,7 +1845,11 @@ typedef struct {
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;
+#ifdef VERSION_PSP
+    /* 80072F6A */ u16 unk4A;
+#else
     /* 80072F6A */ s16 unk4A;
+#endif
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;
