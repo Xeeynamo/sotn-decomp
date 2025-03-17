@@ -1706,16 +1706,16 @@ static char* D_psp_092A21A8[] = {
 static char D_psp_092A21C8[] = _S("AGOTADO");
 static char* D_psp_092A21E8[] = {_S("Joya apertura")};
 static char* D_psp_092A2280[] = {
-    _S("Mapa castillo"),   _S("Perg. mロgico 1"), _S("Perg. mロgico 2"),
-    _S("Perg. mロgico 3"), _S("Perg. mロgico 4"), _S("Perg. mロgico 5"),
-    _S("Perg. mロgico 6"), _S("Perg. mロgico 7"), _S("Perg. mロgico 8")};
+    _S("Mapa castillo"),  _S("Perg. mágico 1"), _S("Perg. mágico 2"),
+    _S("Perg. mágico 3"), _S("Perg. mágico 4"), _S("Perg. mágico 5"),
+    _S("Perg. mágico 6"), _S("Perg. mágico 7"), _S("Perg. mágico 8")};
 static char* D_psp_092A2390[] = {
-    _S("Nada"),          _S("Gran corazぅn"), _S("1$"),       _S("25$"),
-    _S("50$"),           _S("100$"),          _S("250$"),     _S("400$"),
-    _S("700$"),          _S("1000$"),         _S("2000$"),    _S("5000$"),
-    _S("Mロs corazぅn"), _S("Carne"),         _S("Cuchillo"), _S("Hacha"),
-    _S("Cruz"),          _S("Agua sagrada"),  _S("Reloj"),    _S("Libro sagr."),
-    _S("P. recuper."),   _S("Bibuti"),        _S("Agunea"),   _S("Mロs vida")};
+    _S("Nada"),        _S("Gran corazón"), _S("1$"),       _S("25$"),
+    _S("50$"),         _S("100$"),         _S("250$"),     _S("400$"),
+    _S("700$"),        _S("1000$"),        _S("2000$"),    _S("5000$"),
+    _S("Más corazón"), _S("Carne"),        _S("Cuchillo"), _S("Hacha"),
+    _S("Cruz"),        _S("Agua sagrada"), _S("Reloj"),    _S("Libro sagr."),
+    _S("P. recuper."), _S("Bibuti"),       _S("Agunea"),   _S("Más vida")};
 static char* D_psp_092A2428[] = {
     _S("Fuerte contra"), _S("Inmune"), _S("Débil contra"), _S("Absorbe")};
 static char* D_psp_092A2480[] = {
@@ -1723,8 +1723,8 @@ static char* D_psp_092A2480[] = {
     _S("PIE"), _S("VEN"), _S("CUR"), _S("COR"), _S("GOL")};
 static char D_psp_092A24B0[] = _S("Ninguno");
 static char* D_psp_092A24E8[] = {
-    _S("NV"),  _S("PS"), _S("Def"), _S("Exp"), _S("Soltar objetos"),
-    _S("Nお"), _S("??")};
+    _S("NV"), _S("PS"), _S("Def"), _S("Exp"), _S("Soltar objetos"),
+    _S("Nº"), _S("??")};
 static char D_psp_092A2508[] = {
     // clang-format off
     CH('F'), CH('U'), CH('E'),
@@ -1734,31 +1734,31 @@ static char D_psp_092A2508[] = {
     // clang-format on
 };
 static char* D_psp_092A2540[] = {
-    _S("Nゅmero"), _S("Equipado"), _S("No equipado"), _S("a")};
+    _S("Número"), _S("Equipado"), _S("No equipado"), _S("a")};
 static char* D_psp_092A27F0[] = {
-    _S("Prぅlogo"),
+    _S("Prólogo"),
     _S("Baile de ilusiones"),
     _S("Plegaria"),
     _S("Castillo de Dracula"),
     _S("Baile de oro"),
-    _S("Pasillo de mロrmol"),
+    _S("Pasillo de mármol"),
     _S("Torre de niebla"),
     _S("Nocturno"),
     _S("Partita tallada en madera"),
-    _S("Puerta de esp妖ritussagrados"),
+    _S("Puerta de espíritussagrados"),
     _S("Festival de siervos"),
-    _S("Tierra de bendiciぅn"),
+    _S("Tierra de bendición"),
     _S("Réquiem de los dioses"),
-    _S("Lロgrima de cristal"),
+    _S("Lágrima de cristal"),
     _S("Pozo abandonado"),
     _S("Cementerio arco iris"),
     _S("Silencio"),
     _S("Cuadro perdido"),
     _S("Baile de los blancos"),
-    _S("Zona de maldiciぅn"),
+    _S("Zona de maldición"),
     _S("Banquete encantado"),
     _S("Fantasmas errantes"),
-    _S("El pr妖ncipe trロgico"),
+    _S("El príncipe trágico"),
     _S("Puerta al abismo"),
     _S("Puerta celestial"),
     _S("Balada de la muerte"),
@@ -1770,7 +1770,7 @@ static char* D_psp_092A2908[] = {
     _S("Dracula"),         _S("Slogra y Gaibon"),
     _S("Doppleganger10"),  _S("Hipogrifo"),
     _S("Scylla"),          _S("Minotauro y H.lobo"),
-    _S("Karasuman"),       _S("Sゅcubo"),
+    _S("Karasuman"),       _S("Súcubo"),
     _S("Cancerbero"),      _S("Olrox"),
     _S("Granfaloon"),      _S("Maria Renard"),
     _S("Richter Belmont"), _S("Murciél. ala osc."),
@@ -1823,8 +1823,8 @@ static char* D_psp_092A2D88[] = {
     _S("PIE"), _S("VEL"), _S("CUR"), _S("TAG"), _S("COL")};
 static char D_psp_092A2DB8[] = _S("Nessuno");
 static char* D_psp_092A2DE8[] = {
-    _S("LV"),  _S("PS"), _S("Dif"), _S("Esp"), _S("Lascia oggetti"),
-    _S("Nお"), _S("??")};
+    _S("LV"), _S("PS"), _S("Dif"), _S("Esp"), _S("Lascia oggetti"),
+    _S("Nº"), _S("??")};
 static char D_psp_092A2E08[] = {
     // clang-format off
     CH('P'), CH('O'), CH('T'),
@@ -1923,8 +1923,8 @@ static char* D_psp_092A36B8[] = {
     _S("ROC"), _S("POI"), _S("MAL"), _S("CPR"), _S("DEG")};
 static char D_psp_092A36E8[] = _S("Aucun");
 static char* D_psp_092A3708[] = {
-    _S("NV"),  _S("PV"), _S("Def"), _S("Exp"), _S("Items laissés"),
-    _S("Nお"), _S("??")};
+    _S("NV"), _S("PV"), _S("Def"), _S("Exp"), _S("Items laissés"),
+    _S("Nº"), _S("??")};
 static char D_psp_092A3728[] = {
     // clang-format off
     CH('F'), CH('O'), CH('R'),
