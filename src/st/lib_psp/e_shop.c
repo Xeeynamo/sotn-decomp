@@ -6862,16 +6862,18 @@ void func_us_801B8234(Entity* self) {
 }
 
 static char* D_psp_092A4CA8[] = {
-    _S("おきあゆ りょうたろう"),
-    _S("やなだ きよゆき"),
-    _S("よこやま ちさ"),
-    _S("わかもと のりお"),
-    _S("ふかみ りか"),
-    _S("さとう まさはる"),
-    _S("しいな へきる"),
-    _S("やなみ じょうじ")};
+    _S("おきあゆ りょうたろう"), // Okiayu Ryoutarou
+    _S("やなだ きよゆき"),       // Yanada Kiyoyuki
+    _S("よこやま ちさ"),         // Yokoyama Chisa
+    _S("わかもと のりお"),       // Wakamoto Norio
+    _S("ふかみ りか"),           // Fukami Rika
+    _S("さとう まさはる"),       // Satou Masaharu
+    _S("しいな へきる"),         // Shiina Hekiru
+    _S("やなみ じょうじ")};      // Yanami Jyouji
 
-static char D_psp_092A4CC8[] = "平成７年８月に収録されたものです。"; // It was recorded in August of Heisei 7 (1995)
+static char D_psp_092A4CC8[] =
+    "平成７年８月に収録されたものです。"; // It was recorded in August of Heisei
+                                          // 7 (1995)
 
 static u16 D_psp_092A4CF0[] = {
     0x0345, 0x0344, 0x0348, 0x0347, 0x0342, 0x0346, 0x0343, 0x0349};
