@@ -102,4 +102,3 @@ $(CC1_SATURN): $(CYGNUS)
 
 PHONY_TARGETS += build_saturn extract_saturn extract_saturn_pcm diff_saturn
 MUFFLED_TARGETS += $(EXTRACT_SATURN_FILES) $(BUILD_DIR)/0.BIN $(BUILD_DIR)/zero.elf $(CC1_SATURN)
-# Muffled in target: $(BUILD_DIR)/%.PRG $(BUILD_DIR)/%.elf $(BUILD_DIR)/lib/%.o $(BUILD_DIR)/%.o $(ASSETS_DIR)/SD/%.wav
