@@ -27,10 +27,10 @@
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
+| dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | EntityNull                          |        9 |          1 |        |                                 |       |
 | dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
-| dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | MemcardInit                         |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
@@ -163,12 +163,12 @@
 | dra    | 1A1A0.rodata                        |       22 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E4C18                   |       22 |          2 |        |                                 |       |
 | dra    | func_8010E3E0                       |       22 |          3 |        | https://decomp.me/scratch/OVtm6 | 0.805 |
-| dra    | DestroyAllPrimitives                |       22 |          3 |        |                                 |       |
 | dra    | PlayerStepSummonSpells              |       22 |          3 |        |                                 |       |
+| dra    | DestroyAllPrimitives                |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09140588                   |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090F54E0                   |       22 |          4 |        |                                 |       |
-| dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
 | dra    | func_80111938                       |       23 |          1 |        |                                 |       |
+| dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
 | ric    | RicDebugEnter                       |       23 |          1 |        |                                 |       |
 | ric    | func_80159BC8                       |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
@@ -190,8 +190,8 @@
 | dra    | GetEquipOrder                       |       24 |          4 |        |                                 |       |
 | dra    | func_psp_09141440                   |       24 |          4 |        |                                 |       |
 | dra    | func_psp_090E3128                   |       24 |          4 |        | https://decomp.me/scratch/uQ5zc | 0.997 |
-| dra    | func_8012CB0C                       |       25 |          1 |        |                                 |       |
 | dra    | func_8011197C                       |       25 |          1 |        | https://decomp.me/scratch/SNZbC | 0.629 |
+| dra    | func_8012CB0C                       |       25 |          1 |        |                                 |       |
 | ric    | RicDebugExit                        |       25 |          1 |        |                                 |       |
 | lib    | GetSineScaled                       |       25 |          1 |        | https://decomp.me/scratch/pKD67 | 0.995 |
 | lib    | MoveEntity                          |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -327,8 +327,8 @@
 | dra    | func_psp_09140CF0                   |       35 |          7 |        |                                 |       |
 | dra    | PlayerStepUnk50                     |       36 |          2 |        | https://decomp.me/scratch/mciVh | 0.97  |
 | no4    | func_psp_0923D428                   |       36 |          3 |        |                                 |       |
-| dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | dra    | func_80113E68                       |       36 |          4 |        |                                 |       |
+| dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | lib    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | no4    | func_psp_09243E58                   |       36 |          4 |        |                                 |       |
 | st0    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
@@ -486,8 +486,8 @@
 | wrp    | UnkEntityFunc0                      |       49 |          5 |        |                                 |       |
 | dra    | func_8010E168                       |       49 |          6 |        |                                 |       |
 | ric    | RicSetInvincibilityFrames           |       49 |          6 |        |                                 |       |
-| dra    | func_psp_090F1968                   |       49 |          8 |        |                                 |       |
 | dra    | PlayerStepSoulSteal                 |       49 |          8 |        |                                 |       |
+| dra    | func_psp_090F1968                   |       49 |          8 |        |                                 |       |
 | ric    | func_pspeu_092B06F8                 |       49 |          8 |        |                                 |       |
 | dra    | PerformDarkMetamorphosis            |       49 |         10 |        |                                 |       |
 | dra    | func_80113EE0                       |       50 |          3 |        |                                 |       |
@@ -583,7 +583,7 @@
 | no4    | func_psp_09237B20                   |       61 |         10 |        |                                 |       |
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra    | func_8012CC30                       |       61 |         12 |        |                                 |       |
-| dra    | 2BF60.rodata                        |       62 |          0 | Yes    |                                 |       |
+| dra    | 71830.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra    | GetPlayerSensor                     |       62 |          5 |        |                                 |       |
 | lib    | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                       |       62 |          5 |        |                                 |       |
