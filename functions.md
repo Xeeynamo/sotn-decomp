@@ -35,12 +35,12 @@
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
 | dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
+| ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented1            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented2            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented3            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
-| ric    | func_pspeu_092A6280                 |        9 |          1 |        |                                 |       |
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | no4    | func_psp_0923D0B8                   |        9 |          1 |        |                                 |       |
 | wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
@@ -169,8 +169,8 @@
 | dra    | func_psp_090F54E0                   |       22 |          4 |        |                                 |       |
 | dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
 | dra    | func_80111938                       |       23 |          1 |        |                                 |       |
-| ric    | func_80159BC8                       |       23 |          1 |        |                                 |       |
 | ric    | RicDebugEnter                       |       23 |          1 |        |                                 |       |
+| ric    | func_80159BC8                       |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
 | st0    | func_801B0180                       |       23 |          2 |        |                                 |       |
 | dra    | func_psp_090F5520                   |       23 |          3 |        |                                 |       |
@@ -325,7 +325,7 @@
 | dra    | func_80111CC0                       |       35 |          5 |        |                                 |       |
 | dra    | PerformSummonSpirit                 |       35 |          6 |        |                                 |       |
 | dra    | func_psp_09140CF0                   |       35 |          7 |        |                                 |       |
-| dra    | PlayerStepUnk50                     |       36 |          2 |        |                                 |       |
+| dra    | PlayerStepUnk50                     |       36 |          2 |        | https://decomp.me/scratch/mciVh | 0.97  |
 | no4    | func_psp_0923D428                   |       36 |          3 |        |                                 |       |
 | dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | dra    | func_80113E68                       |       36 |          4 |        |                                 |       |
