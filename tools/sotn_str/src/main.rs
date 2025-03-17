@@ -72,6 +72,47 @@ const TABLE: [char; 256] = [
     '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
 ];
 
+// const TABLE_PSP: [char; 256] = [
+//     //0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
+//     ' ',    '!',   '\'',  '#',   '$',   '%',   '&',   '\'',   '(',   ')',   '男',  '+',   ',',   '-',   '.',   '/',
+//     '0',    '1',   '2',   '3',   '4',   '5',   '6',   '7',   '8',   '9',   ':',   '人',  '手',  '=',   '玉',  '?',
+//     '石',   'A',   'B',   'C',   'D',   'E',   'F',   'G',   'H',   'I',   'J',   'K',   'L',   'M',   'N',   'O',
+//     'P',    'Q',   'R',   'S',   'T',   'U',   'V',   'W',   'X',   'Y',   'Z',   '[',   '剣',  ']',   '盾',  '_',
+//     '書',   'a',   'b',   'c',   'd',   'e',   'f',   'g',   'h',   'i',   'j',   'k',   'l',   'm',   'n',   'o',
+//     'p',    'q',   'r',   's',   't',   'u',   'v',   'w',   'x',   'y',   'z',   '炎',  '氷',  '雷',  '~',   '女',
+//     '力',   '。',   '「',  '」',  '、',  '・',  'ヲ',  'ァ',  'ィ',   'ゥ',  'ェ',  'ォ',  'ャ',  'ュ',  'ョ',  'ッ',
+//     'ー',   'ア',   'イ',  'ウ',  'エ',  'オ',  'カ',  'キ',  'ク',   'ケ',  'コ',  'サ',  'シ',  'ス',  'セ',  'ソ',
+//     'タ',   'チ',   'ツ',  'À',   'Á',  'Å',   'ニ',  'Ç',  'È',   'É',  'Ê',  'Ë',  'Ì',  'Í',  'Î',  'Ï',
+//     'Ñ',   'Ò',     'Ó',  'Ô',   'Ö',   'Ù',   'Ú',  'Û',  'Ü',   'ß',  'à',  'á',  'å',  'ン',  'ç',   'è',
+//     'é',   'ê',     'ë',  'ì',   'í',   'î',   'ï',  'ñ',  'ò',   'ó',  'ô',  'ö',  'ù',  'ú',  'û',  'ü',
+//     'Œ',   'œ',   'い',  'う',  'え',  'お',  'か',  'き',  'く',   'け',  'こ',  'さ',  'し',  'す',  'せ',  'そ',
+//     'た',   'ち',   'つ',  'て',  'と',  'な',  'に',  'ぬ',  'ね',   'の',  'は',  'ひ',  'ふ',  'へ',  'ほ',  'ま',
+//     'み',   'む',   'め',  'も',  'や',  'ゆ',  'よ',  'ら',  'り',   'る',  'れ',  'ろ',  'わ',  'ん',  '指',  '輪',
+//     '←',    '↖',   '↑',   '↗',  '→',   '↘',  '↓',  '↙',  '○',    '×',   '□',   '△',  '名',  '刀',  '聖',  '血',
+//     '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
+// ];
+
+const TABLE_PSP: [char; 256] = [
+    //0      1      2      3      4      5      6      7      8      9      A      B      C      D      E      F
+    ' ',    '!',   '\'',  '#',   '$',   '%',   '&',   '\'',   '(',   ')',   '男',  '+',   ',',   '-',   '.',   '/',
+    '0',    '1',   '2',   '3',   '4',   '5',   '6',   '7',   '8',   '9',   ':',   '人',  '手',  '=',   '玉',  '?',
+    '石',   'A',   'B',   'C',   'D',   'E',   'F',   'G',   'H',   'I',   'J',   'K',   'L',   'M',   'N',   'O',
+    'P',    'Q',   'R',   'S',   'T',   'U',   'V',   'W',   'X',   'Y',   'Z',   '[',   '剣',  ']',   '盾',  '_',
+    '書',   'a',   'b',   'c',   'd',   'e',   'f',   'g',   'h',   'i',   'j',   'k',   'l',   'm',   'n',   'o',
+    'p',    'q',   'r',   's',   't',   'u',   'v',   'w',   'x',   'y',   'z',   '炎',  '氷',  '雷',  '~',   '女',
+    '力',   '。',   '「',  '」',  '、',  '・',  'ヲ',  'ァ',  'ィ',   'ゥ',  'ェ',  'ォ',  'ャ',  'ュ',  'ョ',  'ッ',
+    'ー',   'ア',   'イ',  'ウ',  'エ',  'オ',  'カ',  'キ',  'ク',   'ケ',  'コ',  'サ',  'シ',  'ス',  'セ',  'ソ',
+    'タ',   'チ',   'ツ',  'テ',  'ト',  'ナ',  'ニ',  'ヌ',  'ネ',   'ノ',  'ハ',  'ヒ',  'フ',  'ヘ',  'ホ',  'マ',
+    'ミ',   'ム',   'メ',  'モ',  'ヤ',  'ユ',  'ヨ',  'ラ',  'リ',   'ル',  'レ',  'ロ',  'â',  'ン',  'ﾞ',   'è', // dakuten and handakuten are lower in the graphic than seen here and get shifted by the code upwards when printing
+    'é',   '悪',   '魔',  '人',  '妖',  '精',  'を',  'ぁ',  'ぃ',   'ぅ',  'ô',  'ぉ',  'ゃ',  'ゅ',  'ょ',  'っ',
+    '金',   'œ',   'い',  'う',  'え',  'お',  'か',  'き',  'く',   'け',  'こ',  'さ',  'し',  'す',  'せ',  'そ',
+    'た',   'ち',   'つ',  'て',  'と',  'な',  'に',  'ぬ',  'ね',   'の',  'は',  'ひ',  'ふ',  'へ',  'ほ',  'ま',
+    'み',   'む',   'め',  'も',  'や',  'ゆ',  'よ',  'ら',  'り',   'る',  'れ',  'ろ',  'わ',  'ん',  '指',  '輪',
+    '←',    '↖',   '↑',   '↗',  '→',   '↘',  '↓',  '↙',  '○',    '×',   '□',   '△',  '名',  '刀',  '聖',  '血',
+    '✈',   '★',   '☀',   '☁',  '☃',   '♂',   '♀',  '©',   '®',   '§',    '¶', '∑', '大',  '光',  '邪',  '月'
+];
+
+
 #[allow(dead_code)]
 #[allow(unused_assignments)]
 fn convert_j(f: &[u8]) -> String {
@@ -138,6 +179,25 @@ fn utf8_to_byte_literals(input_str: &str) -> Vec<u8> {
     bytes.push(0xFF);
     bytes
 }
+
+fn utf8_to_byte_literals_psp(input_str: &str) -> Vec<u8> {
+    let mut bytes = Vec::new();
+    for char in input_str.chars() {
+        if has_dakuten(&char) || has_handakuten(&char) {
+            bytes.extend(dakuten_to_bytes(&char));
+        } else if char == '月' {
+            bytes.push(0xFF);
+            bytes.push(0xFF);
+        } else {
+            if let Some(index) = table_psp_index(&char){
+                bytes.push(index as u8);
+            }
+        }
+    }
+    bytes.push(0xFF);
+    bytes
+}
+
 
 fn has_dakuten(utf8_char: &char) -> bool {
     let dakuten_chars = [
@@ -295,8 +355,15 @@ fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(
     None
 }
 
-fn process_s_macro(line: &str) -> String {
-    process_macro(line, "_S", utf8_to_byte_literals)
+fn process_s_macro(line: &str, psp: bool) -> String {
+    if(psp)
+    {
+        process_macro(line, "_S", utf8_to_byte_literals_psp)
+    }
+    else {
+        process_macro(line, "_S", utf8_to_byte_literals)
+
+    }
 }
 
 fn process_s2_macro(line: &str) -> String {
@@ -308,14 +375,14 @@ fn process_s2_hd_macro(line: &str) -> String {
 }
 
 
-fn do_sub(line: &str) -> String {
-    let mut processed = process_s_macro(line);
+fn do_sub(line: &str, psp: bool) -> String {
+    let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
     processed
 }
 
-fn process(filename: Option<String>) -> io::Result<()> {
+fn process(filename: Option<String>, psp: bool) -> io::Result<()> {
     let reader: Box<dyn Read> = match filename {
         Some(file) => Box::new(BufReader::new(File::open(file)?)),
         None => Box::new(io::stdin()),
@@ -326,7 +393,7 @@ fn process(filename: Option<String>) -> io::Result<()> {
     let mut output = String::new();
 
     while reader.read_line(&mut line)? > 0 {
-        output.push_str(&do_sub(&line));
+        output.push_str(&do_sub(&line, psp));
         line.clear();
     }
     
@@ -359,9 +426,20 @@ lazy_static! {
         }
         map
     };
+    static ref UTF8_PSP_TO_INDEX: HashMap<char, usize> = {
+        let mut map = HashMap::new();
+        for (index, value) in TABLE_PSP.iter().enumerate() {
+            map.insert(*value, index);
+        }
+        map
+    };
 }
 fn table_index(c: &char) -> Option<usize> {
     return UTF8_TO_INDEX.get(c).copied();
+}
+
+fn table_psp_index(c: &char) -> Option<usize> {
+    return UTF8_PSP_TO_INDEX.get(c).copied();
 }
 
 fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
@@ -441,6 +519,13 @@ fn main() {
                         .action(ArgAction::Set)
                         .num_args(1),
                 )
+                .arg(
+                    Arg::new("psp")
+                        .short('p')
+                        .long("psp")
+                        .help("PSP")
+                        .action(ArgAction::SetTrue)
+                )
         )
         .get_matches();
 
@@ -450,13 +535,21 @@ fn main() {
         //     // let offset = sub_m.value_of("offset").unwrap();
         // }
         Some(("process", sub_m)) => {
-            if sub_m.contains_id("filename") {
+            if sub_m.contains_id("filename") && sub_m.contains_id("psp")
+            {
                 let filename = sub_m
                 .get_one::<String>("filename")
                 .expect("is present");
-                let _ = process(Some(filename.to_string()));
-            } else {
-                let _ = process(None);
+                let _ = process(Some(filename.to_string()), true);
+            }
+            else if sub_m.contains_id("filename") {
+                let filename = sub_m
+                .get_one::<String>("filename")
+                .expect("is present");
+                let _ = process(Some(filename.to_string()), false);
+            } 
+            else {
+                let _ = process(None, false);
             }
         }
         _ => {}
@@ -491,43 +584,43 @@ mod tests {
     fn test_do_sub() {
         // Test case 1: Test _S("すで")
         let line = r#"{_S("すで"), "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#"{"\xBD\xC3\xFF\x9E\xFF", "装備なし（素手）", 0, 0, 0, 3, 255, 0, 0, 36, 42, 0, 5, 128, 0, 0, false, 8, 0, 0, 0, 0, 4, 2, 1, 1, 1, 1, 0},"#;
         assert_eq!(out, expected);
 
         // Test case 2: Test _S("")
         let line = r#"_S("")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\xFF""#;
         assert_eq!(out, expected);
 
         // // Test case 3: Test _S with symbols and quotes
         // let line = r#"_S("\"(\")")"#;
-        // let out = do_sub(line);
+        // let out = do_sub(line, false);
         // let expected = r#""\x02\x08\x02\x09\xFF""#;
         // assert_eq!(out, expected);
 
         // Test case 4: Test _S2("ＡＴＴ")
         let line = r#"_S2("ＡＴＴ")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\x00\x01\x01\xFF""#;
         assert_eq!(out, expected);
 
         // Test case 5: Test _S2("")
         let line = r#"_S2("")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\xFF""#;
         assert_eq!(out, expected);
 
         // Test case 6: Test _S2_HD("攻撃力")
         let line = r#"_S2_HD("攻撃力")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\x0C\x0D\x0E\xFF""#;
         assert_eq!(out, expected);
 
         // Test case 7: Test _S2_HD("")
         let line = r#"_S2_HD("")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\xFF""#;
         assert_eq!(out, expected);
     }
@@ -536,12 +629,12 @@ mod tests {
     fn more_do_sub()
     {
         let line = r#"{_S("たび人ぼう"), "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#"{"\xC0\xCB\xFF\x9E\xA3\xCE\xFF\x9E\xB3\xFF", "旅人の基本装備である帽子", 0, 3, 0, 0, 1, 0, 0, 0x0000, 0x0000, 0x0000, 168, 168, 0, 0},"#;
         assert_eq!(out, expected);
 
         let line = r#"/* 0x18C */ {_S("Guardian"), 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#"/* 0x18C */ {"\x27\x55\x41\x52\x44\x49\x41\x4E\xFF", 500, 50, 33, 34, 35, 0x0000, 0x0040, 0xE000, 0x0800, 60, 1500, 321, 255, 2, 1, 6, 24, 0x08403410},"#;
         assert_eq!(out, expected);
 
@@ -555,22 +648,31 @@ let expected = r#"const char* g_goldCollectTexts[] = {
     "\x04\x14\x10\x10\xFF", "\x04\x17\x10\x10\xFF", "\x04\x11\x10\x10\x10\xFF", "\x04\x12\x10\x10\x10\xFF", "\x04\x15\x10\x10\x10\xFF",
 };"#;
 
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         assert_eq!(out, expected);
 
         let line = r#"_S("ナイフ(サブ)"),"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\x85\x72\x8C\x08\x7B\x8C\xFF\x9E\x09\xFF","#;
         assert_eq!(out, expected);
 
         let line = r#"_S2_HD("その他")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\x2C\x2D\x2E\xFF""#;
         assert_eq!(out, expected);
 
         let line = r#"_S2_HD("使い魔")"#;
-        let out = do_sub(line);
+        let out = do_sub(line, false);
         let expected = r#""\x0B\x2F\x11\xFF""#;
+        assert_eq!(out, expected);
+    }
+
+    #[test]
+    fn psp()
+    {
+        let line = r#"_S("Grand cœur")"#;
+        let out = do_sub(line, true);
+        let expected = r#""\x27\x52\x41\x4E\x44\x00\x43\xB1\x55\x52\xFF""#;
         assert_eq!(out, expected);
     }
 }
