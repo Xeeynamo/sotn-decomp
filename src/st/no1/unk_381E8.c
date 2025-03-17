@@ -39,16 +39,13 @@ void func_us_801B81E8(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-static s32 D_us_801D637C;
-
-void func_us_801B832C(s8* msg) {
-    s32 temp_v0;
-
+// Likely copied out of DRA. This code
+// appears to go unused.
+static s32 g_DebugWaitInfoTimer;
+static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    temp_v0 = D_us_801D637C & 4;
-    D_us_801D637C++;
-    if (temp_v0 != 0) {
+    if (g_DebugWaitInfoTimer++ & 4) {
         FntPrint("\no\n");
     }
     DrawSync(0);
@@ -58,8 +55,12 @@ void func_us_801B832C(s8* msg) {
     FntFlush(-1);
 }
 
-// dead code
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B83CC);
+static void DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        DebugShowWaitInfo(msg);
+    while (!PadRead(0))
+        DebugShowWaitInfo(msg);
+}
 
 // Baby birds in the nest
 extern AnimationFrame* D_us_80181000[];
@@ -333,8 +334,29 @@ void func_us_801B8B00(Entity* self) {
 
 INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
 
-// entering doppleganger's room
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8F50);
+extern EInit D_us_80180A1C;
+extern u8 D_us_801813FC[];
+extern u8* D_us_80181408[];
+
+void func_us_801B8F50(Entity* self) {
+    u8* anim;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A1C);
+        self->animCurFrame = D_us_801813FC[self->params];
+        self->zPriority = 0x6A;
+        break;
+    case 1:
+        if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
+            self->step++;
+        }
+        break;
+    case 2:
+        anim = D_us_80181408[self->params];
+        AnimateEntity(anim, self);
+        break;
+    }
+}
 
 extern u16 D_us_8018142C[];
 extern u16 D_us_80181440[];
