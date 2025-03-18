@@ -1285,7 +1285,7 @@
 | no4    | func_psp_0923B378                   |      485 |         30 |        |                                 |       |
 | ric    | RicEntitySmokePuff                  |      487 |         42 |        |                                 |       |
 | ric    | RicEntitySubwpnBible                |      490 |         41 |        |                                 |       |
-| dra    | func_psp_090F06D8                   |      493 |         37 |        |                                 |       |
+| dra    | func_psp_090F06D8                   |      493 |         37 |        | https://decomp.me/scratch/66OHN | 0.933 |
 | no4    | func_psp_09254690                   |      495 |         38 |        |                                 |       |
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
 | ric    | RicEntityCrashBibleBeam             |      496 |         50 |        |                                 |       |
@@ -1422,13 +1422,13 @@
 | lib    | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4    | func_psp_09245BB8                   |     1004 |         86 |        |                                 |       |
 | wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
-| lib    | func_us_801B8A00                    |     1018 |        104 | Yes    |                                 |       |
+| lib    | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/CgyWa | 0.998 |
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
 | dra    | PlayerStepStand                     |     1045 |        179 |        |                                 |       |
 | ric    | RicHandleHit                        |     1050 |        167 | Yes    | https://decomp.me/scratch/al02E | 0.99  |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib    | func_us_801B6324                    |     1060 |        102 | Yes    |                                 |       |
-| lib    | func_psp_0926BE68                   |     1080 |        118 | Yes    | https://decomp.me/scratch/bUWNR | 0.996 |
+| lib    | func_us_801B8A00                    |     1080 |        118 | Yes    |                                 |       |
 | no4    | func_psp_09252B00                   |     1095 |        132 |        |                                 |       |
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | no4    | func_psp_0924E5D0                   |     1159 |         87 | Yes    |                                 |       |
