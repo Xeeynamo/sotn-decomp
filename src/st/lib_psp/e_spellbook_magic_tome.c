@@ -13,14 +13,12 @@ INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_09239500);
 // Spellbook helper - func_801CDC80
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_09239568);
 
-// Spellbook entity
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_09239650);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", EntitySpellbook);
 
 // Possibly Magic Tome + Spellbook death spawner for letters
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_0923A448);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_us_801D2CE0);
 
-// Magic Tome entity
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_0923A538);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", EntityMagicTome);
 
 // Unk related function for Magic Tome and Spellbook
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_psp_0923B010);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/e_spellbook_magic_tome", func_us_801D35B8);
