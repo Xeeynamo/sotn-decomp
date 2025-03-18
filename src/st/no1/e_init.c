@@ -80,7 +80,7 @@ void EntityArmorLordFireWave(Entity* self);
 void func_us_801D3700(Entity* self);
 void func_us_801D1A94(Entity* self);
 void EntitySpearGuard(Entity* self);
-void func_us_801D42EC(Entity* self);
+void EntitySpearGuardBlock(Entity* self);
 void func_us_801D4558(Entity* self);
 void func_us_801D4950(Entity* self);
 void EntitySkeletonApe(Entity* self);
@@ -88,7 +88,7 @@ void func_us_801D4F18(Entity* self);
 void EntitySkeletonApeBarrel(Entity* self);
 void func_us_801D544C(Entity* self);
 void func_us_801C0B9C(Entity* self);
-void func_us_801D4400(Entity* self);
+void EntityThrownSpear(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
@@ -176,7 +176,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4C */ func_us_801D3700,
     /* 0x4D */ func_us_801D1A94,
     /* 0x4E */ EntitySpearGuard,
-    /* 0x4F */ func_us_801D42EC,
+    /* 0x4F */ EntitySpearGuardBlock,
     /* 0x50 */ func_us_801D4558,
     /* 0x51 */ func_us_801D4950,
     /* 0x52 */ EntitySkeletonApe,
@@ -184,7 +184,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x54 */ EntitySkeletonApeBarrel,
     /* 0x55 */ func_us_801D544C,
     /* 0x56 */ func_us_801C0B9C,
-    /* 0x57 */ func_us_801D4400,
+    /* 0x57 */ EntityThrownSpear,
     /* 0x58 */ EntityMedusaHeadSpawner,
     /* 0x59 */ EntityMedusaHeadBlue,
     /* 0x5A */ EntityMedusaHeadYellow,
@@ -231,7 +231,7 @@ EInit g_EInitArmorLord = {ANIMSET_OVL(0x0B), 0x01, 0x52, 0x21C, 0x022};
 EInit D_us_80180AE8 = {ANIMSET_OVL(0x0B), 0x00, 0x52, 0x21C, 0x023};
 EInit D_us_80180AF4 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x000, 0x024};
 EInit g_EInitSpearGuard = {ANIMSET_OVL(0x0C), 0x01, 0x53, 0x222, 0x05D};
-EInit D_us_80180B0C = {ANIMSET_OVL(0x0C), 0x00, 0x53, 0x222, 0x060};
+EInit g_EInitThrownSpear = {ANIMSET_OVL(0x0C), 0x00, 0x53, 0x222, 0x060};
 EInit D_us_80180B18 = {ANIMSET_OVL(0x0D), 0x01, 0x50, 0x228, 0x0B1};
 EInit g_EInitSkeletonApe = {ANIMSET_OVL(0x0E), 0x01, 0x4F, 0x225, 0x053};
 EInit D_us_80180B30 = {ANIMSET_OVL(0x0E), 0x28, 0x4F, 0x225, 0x054};
