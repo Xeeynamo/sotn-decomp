@@ -202,7 +202,6 @@ set(SOURCE_FILES_DRA
     src/dra/704D0.c
     src/dra/71830.c
     src/dra/7879C.c
-    src/dra/d_CF74.c
     src/dra/7E4BC.c
     src/dra/d_DBD4.c
     src/dra/d_E294.c
@@ -227,6 +226,7 @@ set(SOURCE_FILES_DRA
 set(SOURCE_FILES_RIC
     src/ric/pl_header.c
     src/ric/1AC60.c
+    src/ric/pl_debug.c
     src/ric/pl_handlers.c
     src/ric/20920.c
     src/ric/24788.c
