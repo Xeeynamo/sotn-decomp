@@ -448,7 +448,7 @@
 |        | CalculateAngleToEntity              |       45 |          2 |        |                                 |       |
 | dra    | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
-| lib    | func_psp_0925A798                   |       45 |          6 |        |                                 |       |
+| lib    | func_us_801BED48                    |       45 |          6 |        |                                 |       |
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
@@ -568,7 +568,7 @@
 | no4    | func_psp_0925B740                   |       60 |          6 |        |                                 |       |
 | ric    | RicEntityCrashReboundStoneParticles |       60 |          8 |        |                                 |       |
 | ric    | RicEntityStopwatchCrashLightning    |       60 |          8 |        |                                 |       |
-| lib    | func_psp_09254C00                   |       60 |          8 |        |                                 |       |
+| lib    | func_us_801AE84C                    |       60 |          8 |        |                                 |       |
 | dra    | func_8010E4D0                       |       60 |         11 |        |                                 |       |
 | dra    | func_8013493C                       |       61 |          1 |        |                                 |       |
 | dra    | func_8011690C                       |       61 |          5 |        | https://decomp.me/scratch/U8Zb8 | 0.739 |
@@ -639,8 +639,8 @@
 | dra    | DecrementStatBuffTimers             |       68 |          6 | Yes    |                                 |       |
 | ric    | RicCreateEntFactoryFromEntity       |       68 |          6 |        |                                 |       |
 | lib    | CutsceneSkip                        |       68 |          8 |        |                                 |       |
-| lib    | func_psp_09254B18                   |       68 |         10 |        |                                 |       |
-| lib    | func_psp_0923A448                   |       68 |         11 |        |                                 |       |
+| lib    | func_us_801AE7AC                    |       68 |         10 |        |                                 |       |
+| lib    | func_us_801D2CE0                    |       68 |         11 |        |                                 |       |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
@@ -784,7 +784,7 @@
 |        | CreateAdditionalBats                |       93 |          8 |        |                                 |       |
 | ric    | func_80161EF8                       |       93 |         13 |        |                                 |       |
 | ric    | RicHandleBladeDash                  |       93 |         17 |        |                                 |       |
-| lib    | func_psp_0924C6C0                   |       94 |          8 |        |                                 |       |
+| lib    | func_us_801D1298                    |       94 |          8 |        |                                 |       |
 | lib    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
 | no4    | func_psp_09237FB0                   |       95 |          8 |        |                                 |       |
 | ric    | RicEntitySlideKick                  |       95 |          9 |        |                                 |       |
@@ -872,7 +872,7 @@
 | lib    | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
 | no4    | func_psp_0924DBE0                   |      109 |          3 |        |                                 |       |
 | wrp    | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
-| lib    | func_psp_0923D8A0                   |      109 |          9 |        | https://decomp.me/scratch/BKgXI | 0.996 |
+| lib    | func_us_801CC6B0                    |      109 |          9 |        |                                 |       |
 | dra    | func_800F24F4                       |      109 |         19 |        |                                 |       |
 | no4    | func_psp_09242940                   |      111 |         14 |        |                                 |       |
 | lib    | InitializeEntity                    |      112 |          2 |        |                                 |       |
@@ -960,7 +960,7 @@
 | dra    | AddToInventory                      |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | dra    | GetStatusAilmentTimer               |      145 |         15 | Yes    |                                 |       |
 | dra    | func_80132A04                       |      145 |         15 |        |                                 |       |
-| lib    | func_psp_092420E0                   |      146 |         18 |        |                                 |       |
+| lib    | func_us_801CD9EC                    |      146 |         18 |        |                                 |       |
 | ric    | func_pspeu_092AE150                 |      148 |         25 |        |                                 |       |
 | dra    | func_8011F074                       |      149 |         13 |        |                                 |       |
 | ric    | RicEntityHitByDark                  |      149 |         13 |        |                                 |       |
@@ -1015,7 +1015,7 @@
 | dra    | CalcAttack                          |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | lib    | EntityBloodDrips                    |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra    | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
-| lib    | func_psp_0923DA30                   |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
+| lib    | func_us_801CC7BC                    |      178 |         16 |        |                                 |       |
 | st0    | EntityDraculaGlass                  |      179 |         30 |        | https://decomp.me/scratch/2FUOR | 0.998 |
 | lib    | func_us_801BB8DC                    |      181 |         19 |        |                                 |       |
 | no4    | func_psp_09242FB8                   |      182 |         22 |        |                                 |       |
@@ -1059,7 +1059,7 @@
 | dra    | EntityHolyWater                     |      206 |         24 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | dra    | func_psp_09142110                   |      208 |         24 |        |                                 |       |
 | ric    | RicDebug                            |      208 |         28 |        |                                 |       |
-| lib    | func_psp_092531A8                   |      208 |         29 |        |                                 |       |
+| lib    | EntityBackgroundFurniture           |      208 |         29 |        |                                 |       |
 | dra    | DrawRelicsMenu                      |      209 |         15 |        |                                 |       |
 | dra    | PlayerStepKillWater                 |      209 |         21 |        |                                 |       |
 | no4    | func_psp_0925A720                   |      209 |         23 |        |                                 |       |
@@ -1088,14 +1088,14 @@
 | ric    | func_pspeu_092B2DD8                 |      224 |         28 |        |                                 |       |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
 | lib    | func_us_801BC28C                    |      225 |         18 |        |                                 |       |
-| lib    | func_psp_09252E70                   |      227 |         29 |        | https://decomp.me/scratch/heQmR | 0.995 |
+| lib    | EntityBackgroundBookcase            |      227 |         29 |        |                                 |       |
 | ric    | func_pspeu_092B3118                 |      228 |         29 |        |                                 |       |
 | lib    | func_us_801B12D0                    |      231 |         11 |        |                                 |       |
 | dra    | PlayerStepHighJump                  |      232 |         32 |        |                                 |       |
 | dra    | func_800F4994                       |      233 |         18 |        | https://decomp.me/scratch/iweZP | 0.984 |
 | no4    | func_psp_09255640                   |      233 |         25 |        |                                 |       |
 | dra    | func_801119C4                       |      235 |         31 |        |                                 |       |
-| lib    | func_psp_09253498                   |      236 |         29 |        |                                 |       |
+| lib    | EntityBackgroundShadow              |      236 |         29 |        |                                 |       |
 | ric    | func_pspeu_092AFDA8                 |      236 |         46 |        |                                 |       |
 | ric    | func_80162604                       |      238 |         17 |        |                                 |       |
 | no4    | func_psp_0923D9E0                   |      238 |         26 |        |                                 |       |
@@ -1162,7 +1162,7 @@
 | dra    | EntityPlayerPinkEffect              |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | no4    | func_psp_09237700                   |      285 |         47 |        |                                 |       |
-| lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
+| lib    | func_us_801D35B8                    |      287 |         30 |        |                                 |       |
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
 | ric    | func_pspeu_092B0A10                 |      288 |         19 |        |                                 |       |
@@ -1212,7 +1212,7 @@
 | dra    | func_800FE044                       |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
 | ric    | RicEntityApplyMariaPowerAnim        |      346 |         27 |        |                                 |       |
 | ric    | RicEntityCrashHydroStorm            |      346 |         37 |        |                                 |       |
-| lib    | func_psp_09241180                   |      348 |         34 |        |                                 |       |
+| lib    | func_us_801CCF6C                    |      348 |         34 |        |                                 |       |
 | ric    | RicEntityCrashVibhuti               |      349 |         43 |        |                                 |       |
 | dra    | CheckSwordBrothersInput             |      350 |         56 |        |                                 |       |
 | no4    | func_psp_09254DE8                   |      352 |         30 |        |                                 |       |
@@ -1221,7 +1221,7 @@
 | dra    | UpdatePlayerEntities                |      356 |         51 |        |                                 |       |
 | lib    | func_us_801B0C40                    |      357 |         45 |        |                                 |       |
 | ric    | RicEntityCrashReboundStoneExplosion |      358 |         37 |        |                                 |       |
-| lib    | func_psp_092576C8                   |      359 |         33 |        | https://decomp.me/scratch/MdGXE | 0.999 |
+| lib    | func_us_801BCC10                    |      359 |         33 |        |                                 |       |
 | lib    | func_us_801BB200                    |      363 |         31 | Yes    |                                 |       |
 | lib    | EntitySoulStealOrb                  |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | no4    | func_psp_0924B288                   |      364 |         33 |        |                                 |       |
@@ -1285,7 +1285,7 @@
 | no4    | func_psp_0923B378                   |      485 |         30 |        |                                 |       |
 | ric    | RicEntitySmokePuff                  |      487 |         42 |        |                                 |       |
 | ric    | RicEntitySubwpnBible                |      490 |         41 |        |                                 |       |
-| dra    | func_psp_090F06D8                   |      493 |         37 |        | https://decomp.me/scratch/66OHN | 0.933 |
+| dra    | func_psp_090F06D8                   |      493 |         37 |        | https://decomp.me/scratch/66OHN | 0.972 |
 | no4    | func_psp_09254690                   |      495 |         38 |        |                                 |       |
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
 | ric    | RicEntityCrashBibleBeam             |      496 |         50 |        |                                 |       |
@@ -1301,7 +1301,7 @@
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
-| lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
+| lib    | func_us_801CC984                    |      532 |         57 |        |                                 |       |
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
 | no4    | func_psp_09258E30                   |      540 |         51 | Yes    |                                 |       |
@@ -1322,7 +1322,7 @@
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
 | dra    | RenderTilemap                       |      570 |         35 |        |                                 |       |
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
-| lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
+| lib    | EntityFlyingZombie1                 |      580 |         75 | Yes    |                                 |       |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
@@ -1339,7 +1339,7 @@
 | no4    | func_psp_0923BB30                   |      621 |         50 |        |                                 |       |
 | ric    | RicEntityAguneaLightning            |      624 |         46 | Yes    |                                 |       |
 | no4    | func_psp_092483A0                   |      624 |         88 | Yes    |                                 |       |
-| lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
+| lib    | EntityDhuron                        |      630 |        109 | Yes    |                                 |       |
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra    | HandleSaveMenu                      |      639 |        101 |        |                                 |       |
@@ -1361,7 +1361,7 @@
 | wrp    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | ric    | RicCheckInput                       |      687 |        124 |        |                                 |       |
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
-| lib    | func_psp_09241690                   |      691 |         73 |        | https://decomp.me/scratch/ClZtd | 0.998 |
+| lib    | func_us_801CD318                    |      691 |         73 |        |                                 |       |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
 | ric    | RicEntitySubwpnAxe                  |      694 |         57 |        |                                 |       |
 | dra    | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
@@ -1385,11 +1385,11 @@
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
-| lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
+| lib    | EntityMagicTome                     |      768 |        100 | Yes    |                                 |       |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | ric    | RicEntitySubwpnDagger               |      786 |         53 |        |                                 |       |
-| lib    | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
+| lib    | EntityFlyingZombie2                 |      787 |        114 |        |                                 |       |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | ric    | RicEntityHitByIce                   |      802 |         82 |        |                                 |       |
 | lib    | func_us_801B8234                    |      803 |         77 | Yes    |                                 |       |
@@ -1403,7 +1403,7 @@
 | no4    | func_psp_0925CD90                   |      859 |        137 | Yes    |                                 |       |
 | st0    | func_801BC5C0                       |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0    | func_801AF774                       |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| lib    | func_psp_09255068                   |      883 |         80 |        | https://decomp.me/scratch/Kzc5r | 0.973 |
+| lib    | func_us_801AE8E8                    |      883 |         80 |        |                                 |       |
 | lib    | func_us_801B420C                    |      884 |         74 | Yes    |                                 |       |
 | st0    | EntityBackgroundVortex              |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
 | dra    | func_8012F894                       |      893 |        109 | Yes    | https://decomp.me/scratch/2sJGm | 0.992 |
@@ -1414,7 +1414,7 @@
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 | no4    | func_psp_0924CC60                   |      948 |        120 | Yes    |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
-| lib    | func_psp_09239650                   |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
+| lib    | EntitySpellbook                     |      965 |        124 | Yes    |                                 |       |
 | lib    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4    | func_psp_092449B0                   |      979 |        177 |        |                                 |       |
@@ -1439,7 +1439,7 @@
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
 | tt_000 | UpdateServantDefault                |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
-| lib    | func_psp_0924B568                   |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
+| lib    | EntityMudman                        |     1202 |        112 | Yes    |                                 |       |
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
 | ric    | RicMain                             |     1221 |        208 | Yes    |                                 |       |
@@ -1467,7 +1467,7 @@
 | ric    | RicEntityWhip                       |     1741 |        169 |        |                                 |       |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
-| lib    | func_psp_09258B50                   |     1920 |        313 |        | https://decomp.me/scratch/FlhkE | 0.994 |
+| lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    |                                 |       |
 | dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/mSd2P | 0.664 |
