@@ -202,7 +202,6 @@ set(SOURCE_FILES_DRA
     src/dra/704D0.c
     src/dra/71830.c
     src/dra/7879C.c
-    src/dra/d_CF74.c
     src/dra/7E4BC.c
     src/dra/d_DBD4.c
     src/dra/d_E294.c
