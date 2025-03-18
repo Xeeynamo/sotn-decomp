@@ -127,7 +127,7 @@
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
-| lib    | 8658.rodata                         |       20 |          0 | Yes    |                                 |       |
+| lib    | e_flying_zombie.rodata              |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
 | dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
@@ -578,7 +578,7 @@
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | ric    | func_pspeu_092BE628                 |       61 |          8 |        |                                 |       |
 | dra    | func_psp_09106008                   |       61 |          9 |        |                                 |       |
-| lib    | func_psp_09253D58                   |       61 |         10 |        |                                 |       |
+| lib    | func_psp_09253D58                   |       61 |         10 |        | https://decomp.me/scratch/9xgRU | 1.0   |
 | no4    | func_psp_0923D4A0                   |       61 |         10 |        |                                 |       |
 | no4    | func_psp_09237B20                   |       61 |         10 |        |                                 |       |
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
@@ -785,7 +785,7 @@
 | ric    | func_80161EF8                       |       93 |         13 |        |                                 |       |
 | ric    | RicHandleBladeDash                  |       93 |         17 |        |                                 |       |
 | lib    | func_us_801D1298                    |       94 |          8 |        |                                 |       |
-| lib    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
+| lib    | func_psp_09254120                   |       95 |          8 |        | https://decomp.me/scratch/PCsoI | 1.0   |
 | no4    | func_psp_09237FB0                   |       95 |          8 |        |                                 |       |
 | ric    | RicEntitySlideKick                  |       95 |          9 |        |                                 |       |
 | lib    | func_us_801B3FB4                    |       95 |          9 |        |                                 |       |
@@ -1322,7 +1322,7 @@
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
 | dra    | RenderTilemap                       |      570 |         35 |        |                                 |       |
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
-| lib    | EntityFlyingZombie1                 |      580 |         75 | Yes    |                                 |       |
+| lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
@@ -1389,7 +1389,7 @@
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | ric    | RicEntitySubwpnDagger               |      786 |         53 |        |                                 |       |
-| lib    | EntityFlyingZombie2                 |      787 |        114 |        |                                 |       |
+| lib    | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | ric    | RicEntityHitByIce                   |      802 |         82 |        |                                 |       |
 | lib    | func_us_801B8234                    |      803 |         77 | Yes    |                                 |       |
