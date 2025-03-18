@@ -126,8 +126,8 @@
 | dra    | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
-| lib    | 8658.rodata                         |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
+| lib    | 8658.rodata                         |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
 | dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
@@ -872,7 +872,7 @@
 | lib    | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
 | no4    | func_psp_0924DBE0                   |      109 |          3 |        |                                 |       |
 | wrp    | BlinkItem                           |      109 |          3 |        | https://decomp.me/scratch/3HtTU | 1.0   |
-| lib    | func_us_801CC6B0                    |      109 |          9 |        |                                 |       |
+| lib    | func_psp_0923D8A0                   |      109 |          9 |        | https://decomp.me/scratch/BKgXI | 0.996 |
 | dra    | func_800F24F4                       |      109 |         19 |        |                                 |       |
 | no4    | func_psp_09242940                   |      111 |         14 |        |                                 |       |
 | lib    | InitializeEntity                    |      112 |          2 |        |                                 |       |
@@ -1015,7 +1015,7 @@
 | dra    | CalcAttack                          |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | lib    | EntityBloodDrips                    |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra    | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
-| lib    | func_us_801CC7BC                    |      178 |         16 |        |                                 |       |
+| lib    | func_psp_0923DA30                   |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
 | st0    | EntityDraculaGlass                  |      179 |         30 |        | https://decomp.me/scratch/2FUOR | 0.998 |
 | lib    | func_us_801BB8DC                    |      181 |         19 |        |                                 |       |
 | no4    | func_psp_09242FB8                   |      182 |         22 |        |                                 |       |
@@ -1301,7 +1301,7 @@
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
-| lib    | func_us_801CC984                    |      532 |         57 |        |                                 |       |
+| lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
 | no4    | func_psp_09258E30                   |      540 |         51 | Yes    |                                 |       |
@@ -1339,7 +1339,7 @@
 | no4    | func_psp_0923BB30                   |      621 |         50 |        |                                 |       |
 | ric    | RicEntityAguneaLightning            |      624 |         46 | Yes    |                                 |       |
 | no4    | func_psp_092483A0                   |      624 |         88 | Yes    |                                 |       |
-| lib    | EntityDhuron                        |      630 |        109 | Yes    |                                 |       |
+| lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra    | HandleSaveMenu                      |      639 |        101 |        |                                 |       |
