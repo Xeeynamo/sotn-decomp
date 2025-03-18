@@ -379,12 +379,43 @@ void func_us_801B9028(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
-
 extern s16 D_us_80181454[];
 extern s16 D_us_80181464[];
-extern s32 D_psp_091CE570;
+u8 func_us_801B9184(Primitive* prim) {
+    UnkPrimHelper(prim);
 
+    switch (prim->next->u2) {
+    case 0:
+        prim->drawMode = DRAW_HIDE;
+        break;
+
+    case 1:
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        LOW(prim->next->u0) = -(D_us_80181454[prim->next->r3] << 0x10) / 16;
+        prim->next->u2++;
+        // fallthrough
+
+    case 2:
+        prim->next->b3 += 8;
+        LOH(prim->next->u1) -= 64;
+        if (LOH(prim->next->u1) <= 0) {
+            LOH(prim->next->u1) = 0;
+            LOW(prim->next->u0) = 0;
+            prim->next->x1 = D_us_80181464[prim->next->r3];
+            prim->next->u2++;
+
+            prim->priority = 0xB0;
+            prim->drawMode = DRAW_DEFAULT;
+        }
+        break;
+
+    case 3:
+        return 1;
+    }
+    return 0;
+}
+
+extern s32 D_psp_091CE570;
 void func_us_801B9304(Entity* self) {
     Primitive* prim;
     s32 primIndex;
