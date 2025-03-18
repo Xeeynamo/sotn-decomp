@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
+extern s32 D_8C630D0;
+extern s32 D_psp_08C630DC;
+extern s32 E_ID(ID_25);
+extern s32 E_ID(ID_27);
+extern s32 E_ID(ID_28);
+extern s32 E_ID(ID_29);
+extern s32 E_ID(ID_2A);
+extern s32 E_ID(ID_2D);
+extern s32 E_ID(ID_2E);
+extern s32 E_ID(ID_2F);
+extern s32 E_ID(ID_48);
+extern s32 E_ID(ID_4F);
+extern u8* D_psp_092A54E0;
+extern s32 D_8B42058;
+
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
 /// which is related to the number of things which have been
@@ -2097,44 +2112,30 @@ static u8* D_us_801812D8[] = {
     D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
-extern char** D_psp_092A5F40;
-extern char** D_psp_092A5F48;
-extern char** D_us_8018168C;
-extern char** D_us_801816C8;
-extern char** D_us_801818F4;
-extern char** D_us_801818C0;
-extern char* D_psp_092A5F88;
-extern char** D_us_8018187C;
-extern char** D_psp_092A5F98;
-extern char** D_us_8018181C;
-extern char** D_us_801816B0;
-extern char** D_us_801816AC;
-extern char* D_us_801816A4;
-extern char** D_us_80181310;
-extern char** D_us_80181528;
-extern char* D_us_80181660;
-extern char* D_us_80181668;
-extern char** D_us_80181674;
-
-extern s32 D_8C630D0;
-extern s32 D_psp_08C630DC;
-extern s32 E_ID(ID_25);
-extern s32 E_ID(ID_27);
-extern s32 E_ID(ID_28);
-extern s32 E_ID(ID_29);
-extern s32 E_ID(ID_2A);
-extern s32 E_ID(ID_2D);
-extern s32 E_ID(ID_2E);
-extern s32 E_ID(ID_2F);
-extern s32 E_ID(ID_48);
-extern s32 E_ID(ID_4F);
-extern u32 D_us_801D415C[];
-extern u32 D_us_801D425C[64];
-extern ShopItem D_us_801D4364[];
-extern u8* D_psp_092A5D38;
-extern u8* D_psp_092A54E0;
-extern s32 D_8B42058;
-extern char D_us_80181650[];
+//bss
+static u32 D_us_801D415C[64];
+static u32 D_us_801D425C[64];
+static char** D_us_80181528;
+static char** D_us_80181310;
+static char* D_us_801816A4;
+static char** D_us_801816AC;
+static char** D_us_801816B0;
+static char** D_us_8018181C;
+static char** D_psp_092A5F98;
+static char** D_us_8018187C;
+static char* D_psp_092A5F88;
+static char** D_us_801818C0;
+static char* D_us_80181668;
+static char** D_us_80181674;
+static char** D_us_801818F4;
+static char** D_us_801816C8;
+static char** D_us_8018168C;
+static char* D_us_80181660;
+static char** D_psp_092A5F48;
+static char** D_psp_092A5F40;
+static ShopItem D_us_801D4364[64];
+static u8* D_psp_092A5D38;
+static char D_us_80181650[4];
 
 void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
     switch (D_8B42058) {
@@ -6869,8 +6870,7 @@ static char* D_psp_092A4CA8[] = {
 };
 
 static char D_psp_092A4CC8[] =
-    "平成７年８月に収録されたものです。"; // It was recorded in August of Heisei
-                                          // 7 (1995)
+    "平成７年８月に収録されたものです。"; // It was recorded in August of 1995
 
 static u16 D_psp_092A4CF0[] = {
     // clang-format off
