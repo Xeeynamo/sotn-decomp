@@ -471,8 +471,8 @@ void RicMain(void) {
         }
     }
     g_Player.padHeld = g_Player.padPressed;
-    if (g_Player.D_80072EFC) {
-        g_Player.D_80072EFC--;
+    if (g_Player.pl_demo_timer) {
+        g_Player.pl_demo_timer--;
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;

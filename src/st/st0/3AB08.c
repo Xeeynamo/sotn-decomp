@@ -511,7 +511,7 @@ void EntityCutscenePhotograph(Entity* self) {
     s32 newColor;
     s32 limit;
 
-    g_Player.D_80072EFC = 4;
+    g_Player.pl_demo_timer = 4;
     g_Player.padSim = 0;
     g_PauseAllowed = false;
     switch (self->step) {
