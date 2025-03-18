@@ -101,8 +101,8 @@ segments:
       - [0xCFDC, .data, alu_anim]
       - [0xD010, .data, 6E42C]
       - [0xD030, .data, 70394]
-      - [0xD038, .data, d_CF74]
-      - [0xD188, .data, 7879C] # D_800AD0C4
+      - [0xD038, .data, 71830]
+      - [0xD158, .data, 7879C] # D_800AD0C4
       - [0xD298, assets, factory_blueprint, g_FactoryBlueprints]
       - [0xD57C, .data, 7E4BC]
       - [0xDC98, .data, d_DBD4]
