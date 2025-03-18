@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
-#include <player.h>
+#include "ric.h"
+
+void RicDebugOff() { g_IsRicDebugEnter = false; }
 
 static void RicDebugEnter(void) {
     g_IsRicDebugEnter = true;

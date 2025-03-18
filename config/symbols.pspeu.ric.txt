@@ -1,3 +1,4 @@
+RicDebugOff = 0x092A6280;
 RicDebugEnter = 0x092A6290;
 RicDebugExit = 0x092A62D8;
 RicDebug = 0x092A6328;

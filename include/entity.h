@@ -2572,7 +2572,7 @@ typedef struct {
     /* 0x81 */ u8 : 8;
     /* 0x82 */ u8 : 8;
     /* 0x83 */ u8 : 8;
-    /* 0x84 */ u8 : 8;
+    /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 : 8;
@@ -2588,8 +2588,8 @@ typedef struct {
 } ET_SpearGuard;
 
 typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
-} ET_SpearGuardUnk;
+    /* 0x7C */ struct Entity* spearGuard;
+} ET_ThrownSpear;
 
 typedef struct {
     /* 0x7C */ struct Entity* unk7C;
@@ -2667,10 +2667,6 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
     /* 0xB2 */ u16 unkB2;
 } ET_LesserDemon;
-
-typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
-} ET_801D4400;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -3115,7 +3111,7 @@ typedef union { // offset=0x7C
     ET_BoneArcher boneArcher;
     ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
-    ET_SpearGuardUnk spearGuardUnk;
+    ET_ThrownSpear thrownSpear;
     ET_801B84E4 et_801B84E4;
     ET_801BF3F4 et_801BF3F4;
     ET_801BFB40 et_801BFB40;
@@ -3124,7 +3120,6 @@ typedef union { // offset=0x7C
     ET_801B9BE4 et_801B9BE4;
     ET_Chair chair;
     ET_LesserDemon lesserDemon;
-    ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
     ET_801BE880 et_801BE880;
     ET_801B7D34 et_801B7D34;
