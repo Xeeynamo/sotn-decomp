@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09252E70);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", EntityBackgroundBookcase);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_092531A8);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", EntityBackgroundFurniture);
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253498);
+INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", EntityBackgroundShadow);
 
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_us_801AFA80);
 
