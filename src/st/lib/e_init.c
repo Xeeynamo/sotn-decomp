@@ -80,7 +80,7 @@ void EntityFleaMan(Entity* self);
 void EntityMudman(Entity* self);
 void func_us_801D1298(Entity* self);
 #ifdef VERSION_PSP
-void func_psp_0926BE68(Entity* self);
+void func_psp_0926AED0(Entity* self);
 #endif
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -155,7 +155,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x44 */ EntitySkeletonPieces,
     /* 0x45 */ EntityChair,
     /* 0x46 */ func_us_801AE84C,
+#ifdef VERSION_PSP
+    /* 0x47 */ func_psp_0926AED0,
+#else
     /* 0x47 */ func_us_801B8A00,
+#endif
     /* 0x48 */ EntityMistDoor,
     /* 0x49 */ EntityFleaArmor,
     /* 0x4A */ func_us_801D00C4,
@@ -163,7 +167,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4C */ EntityMudman,
     /* 0x4D */ func_us_801D1298,
 #ifdef VERSION_PSP
-    /* 0x4E */ func_psp_0926BE68,
+    /* 0x4E */ func_us_801B8A00,
 #endif
 };
 
