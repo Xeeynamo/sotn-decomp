@@ -2112,7 +2112,7 @@ static u8* D_us_801812D8[] = {
     D_us_80181270, D_us_80181280, D_us_80181290, D_us_8018129C, D_us_801812A8,
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
-//bss
+// bss
 static u32 D_us_801D415C[64];
 static u32 D_us_801D425C[64];
 static char** D_us_80181528;
