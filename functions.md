@@ -626,7 +626,7 @@
 | dra    | func_8012D178                       |       66 |         15 |        |                                 |       |
 | dra    | func_psp_090F2038                   |       67 |          6 |        |                                 |       |
 | ric    | func_80160F0C                       |       67 |          6 |        |                                 |       |
-| lib    | func_psp_09239568                   |       67 |          6 |        |                                 |       |
+| lib    | func_psp_09239568                   |       67 |          6 |        | https://decomp.me/scratch/vnLIX | 1.0   |
 | no4    | func_psp_092482B0                   |       67 |          6 |        |                                 |       |
 | st0    | SetTitleDisplayBuffer               |       67 |          6 |        |                                 |       |
 | dra    | func_8012CED4                       |       67 |          8 |        |                                 |       |
@@ -640,7 +640,7 @@
 | ric    | RicCreateEntFactoryFromEntity       |       68 |          6 |        |                                 |       |
 | lib    | CutsceneSkip                        |       68 |          8 |        |                                 |       |
 | lib    | func_us_801AE7AC                    |       68 |         10 |        |                                 |       |
-| lib    | func_us_801D2CE0                    |       68 |         11 |        |                                 |       |
+| lib    | func_us_801D2CE0                    |       68 |         11 |        | https://decomp.me/scratch/ESwuS | 1.0   |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
@@ -964,7 +964,7 @@
 | ric    | func_pspeu_092AE150                 |      148 |         25 |        |                                 |       |
 | dra    | func_8011F074                       |      149 |         13 |        |                                 |       |
 | ric    | RicEntityHitByDark                  |      149 |         13 |        |                                 |       |
-| no4    | func_psp_09239568                   |      149 |         19 |        |                                 |       |
+| no4    | func_psp_09239568                   |      149 |         19 |        | https://decomp.me/scratch/vnLIX | 1.0   |
 | dra    | func_8010EB5C                       |      149 |         27 |        |                                 |       |
 | ric    | RicHandleHighJump                   |      149 |         28 |        | https://decomp.me/scratch/t33jn | 0.992 |
 | lib    | InitRoomEntities                    |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
@@ -1166,7 +1166,7 @@
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
 | ric    | func_pspeu_092B0A10                 |      288 |         19 |        |                                 |       |
-| lib    | func_psp_09238EC8                   |      290 |         42 |        |                                 |       |
+| lib    | func_psp_09238EC8                   |      290 |         42 |        | https://decomp.me/scratch/9ZS8x | 0.999 |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
 | no4    | func_psp_09241410                   |      294 |         16 |        |                                 |       |
