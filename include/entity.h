@@ -2785,13 +2785,8 @@ typedef struct {
     /* 0x97 */ u8 : 8;
     /* 0x98 */ s16 : 16;
     /* 0x9A */ s16 : 16;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
+    /* 0x9C */ SVECTOR unk9C;
+    /* 0xA4 */ SVECTOR unkA4;
 } ET_SpellbookMagicTome;
 
 typedef struct {

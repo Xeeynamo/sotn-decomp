@@ -69,6 +69,7 @@ segments:
       - [0x2D78, data]
       - [0x2DE4, .data, e_flea_man]
       - [0x2E3C, data]
+      - [0x2F44, .data, e_spellbook_magic_tome]
       - [0x319C, .data, e_life_up]
       - [0x31F0, data]
       - [0x2B938, .rodata, first_c_file]
