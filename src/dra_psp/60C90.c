@@ -13,7 +13,16 @@ void MemcardInfoInit(void) {
     g_MemcardInfo[1].nBlockUsed = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardParse);
+s32 MemcardParse(s32 arg0, s32 arg1) {
+    s32 var_s0 = 0;
+
+    if (arg0 == 0) {
+        var_s0 = func_8919278();
+    }
+    g_MemcardInfo[arg0].nBlockUsed = BLOCK_PER_CARD - var_s0;
+    g_MemcardInfo[arg0].nFreeBlock = var_s0;
+    return g_MemcardInfo[arg0].nFreeBlock;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", GetMemcardFreeBlockCount);
 
