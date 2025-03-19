@@ -51,7 +51,27 @@ s32 IsMemcardBlockUsed(s32 cardNum, s32 blockNum) {
     return g_MemcardInfo[cardNum].blocks[blockNum];
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_psp_0913D7D8);
+s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
+    s32 len;
+    s32 ret;
+
+    if (nPort != 0) {
+        return -1;
+    }
+    if (nCard != 0) {
+        return -1;
+    }
+    len = nblock * CARD_BLOCK_SIZE;
+    if (nblock == 0) {
+        len = 0x238;
+    }
+    if (func_89194E4(data, name, len) > 0) {
+        ret = 0;
+    } else {
+        ret = -1;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardWriteFile);
 

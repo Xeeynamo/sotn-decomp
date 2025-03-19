@@ -6,7 +6,7 @@ EXTERN(func_psp_090E4C68);
 EXTERN(func_psp_090E4C90);
 EXTERN(func_psp_090FFAB8);
 EXTERN(IsMemcardBlockUsed);
-EXTERN(func_psp_0913D7D8);
+EXTERN(MemcardReadFile);
 EXTERN(func_psp_0913D930);
 EXTERN(func_psp_09141860);
 EXTERN(func_psp_09141878);
