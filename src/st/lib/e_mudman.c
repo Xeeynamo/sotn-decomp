@@ -2,11 +2,20 @@
 #include "lib.h"
 
 extern s32 D_us_80181ACC;
-extern u8 D_us_80182E3C[];
-extern u8 D_us_80182E4C[];
-extern s16 D_us_80182E70[];
-extern s16 D_us_80182E80[];
-extern s32 D_us_80182E88[][2];
+
+static u8 D_us_80182E3C[] = {21, 1, 15, 2, 15, 3, 15, 4, 21, 5, 15, 6, 0, 0};
+static u8 D_us_80182E4C[] = {
+    8,  1, 5,  7, 20, 8, 4,  9, 4,  10, 8,  11, 1,  12, 1, 13, 1,
+    14, 4, 15, 1, 14, 1, 13, 1, 12, 4,  11, 5,  10, 5,  9, -1, 0};
+static s16 D_us_80182E70[] = {0, 21, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80182E80[] = {0, 21, 4, 0};
+static s32 D_us_80182E88[][2] = {
+    {FIX(-1.0), FIX(-3.5)},
+    {FIX(-0.5), FIX(-4.0)},
+    {FIX(3.0 / 8), FIX(-33.0 / 8)},
+    {FIX(1.0), FIX(-27.0 / 8)}};
+static s16 D_us_80182EA8[][2] = {{0, 0}, {-15, -13}, {-26, -13}};
+static u16 D_us_80182EB4[][2] = {{0, 0}, {7, 3}, {18, 3}};
 
 void EntityMudman(Entity* self) {
     Entity* tempEntity;
@@ -379,5 +388,29 @@ void EntityMudman(Entity* self) {
     }
 }
 
-// Mudman related sub-entity
-INCLUDE_ASM("st/lib/nonmatchings/e_mudman", func_us_801D1298);
+void func_us_801D1298(Entity* self) {
+    Entity* tempEntity;
+    s32 curFrame;
+
+    if (!self->step) {
+        InitializeEntity(D_us_801809EC);
+    }
+    tempEntity = self->ext.mudman.unk9C;
+    curFrame = tempEntity->animCurFrame;
+    if (curFrame == 14 || curFrame == 15) {
+        curFrame -= 13;
+    } else {
+        curFrame = 0;
+    }
+    self->hitboxOffX = D_us_80182EA8[curFrame][0];
+    self->hitboxOffY = D_us_80182EA8[curFrame][1];
+    self->hitboxWidth = D_us_80182EB4[curFrame][0];
+    self->hitboxHeight = D_us_80182EB4[curFrame][1];
+    self->facingLeft = tempEntity->facingLeft;
+    self->hitboxState = tempEntity->hitboxState;
+    self->posX.i.hi = tempEntity->posX.i.hi;
+    self->posY.i.hi = tempEntity->posY.i.hi;
+    if (tempEntity->entityId != E_ID_4D) {
+        DestroyEntity(self);
+    }
+}
