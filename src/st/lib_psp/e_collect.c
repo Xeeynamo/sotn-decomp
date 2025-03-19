@@ -150,7 +150,8 @@ static u8* g_ExplosionAnimations[] = {
 static
 #include "../blink_item.h"
 
-    u16 g_ItemIconSlots[ICON_SLOT_NUM];
+    char* obtainedStr;
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "../entity_equip_item_drop.h"
 
