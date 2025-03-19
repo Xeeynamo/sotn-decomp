@@ -73,7 +73,22 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
     return ret;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardWriteFile);
+s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data, s32 flags, s32 unused, s32 create) {
+    s32 ret;
+
+    if (nPort != 0) {
+        return -2;
+    }
+    if (nCard != 0) {
+        return -2;
+    }
+    if (func_89193D4(data, name, flags << 0xD, create) > 0) {
+        ret = 0;
+    } else {
+        ret = -1;
+    }
+    return ret;
+}
 
 s32 func_psp_0913D930(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg0 != 0) {
