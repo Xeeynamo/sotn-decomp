@@ -26,9 +26,26 @@ s32 MemcardParse(s32 nPort, s32 nCard) {
     return g_MemcardInfo[nPort].nFreeBlock;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", GetMemcardFreeBlockCount);
+s32 GetMemcardFreeBlockCount(s32 nPort) {
+    return g_MemcardInfo[nPort].nFreeBlock;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardDetectSave);
+s32 MemcardDetectSave(s32 nPort, s32 expectedSaveName, s32 block) {
+    bool result;
+    bool found;
+
+    result = false;
+    if (nPort == 0) {
+        if (func_8919188(expectedSaveName) >= 0) {
+            found = true;
+        } else {
+            found = false;
+        }
+        result = found;
+    }
+    g_MemcardInfo[nPort].blocks[block] = result;
+    return result;
+}
 
 s32 IsMemcardBlockUsed(s32 cardNum, s32 blockNum) {
     return g_MemcardInfo[cardNum].blocks[blockNum];
