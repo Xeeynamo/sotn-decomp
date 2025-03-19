@@ -604,6 +604,7 @@ D_80138438 = 0x09236758;
 D_80138430 = 0x09236760;
 D_8013842C = 0x09236768;
 D_8013AE9C = 0x09236770;
+g_MemcardStep = 0x09236778;
 g_sfxRingBufferWritePos = 0x09236b80;
 g_SfxRingBuffer = 0x09236b90;
 g_SoundCommandRingBufferWritePos = 0x09237190;
