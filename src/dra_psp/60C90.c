@@ -52,3 +52,18 @@ s32 IsMemcardBlockUsed(s32 cardNum, s32 blockNum) {
 }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_psp_0913D7D8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardWriteFile);
+
+s32 func_psp_0913D930(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    if (arg0 != 0) {
+        return -1;
+    }
+    if (arg1 != 0) {
+        return -1;
+    }
+    return func_89192EC(arg2, arg3);
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardClose);
+

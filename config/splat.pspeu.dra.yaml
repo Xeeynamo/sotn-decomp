@@ -109,7 +109,6 @@ segments:
       - [0x5AF80, c, dra/8D3E8]
       - [0x60C28, c, dra_psp/60C28]
       - [0x60C90, c, dra_psp/60C90]
-      - [0x60F10, c, dra_psp/60F10] # O0
       - [0x61030, c, dra_psp/61030]
       - [0x61F30, c, dra_psp/61F30] # O4
       - [0x62FE0, c, dra_psp/62FE0]
