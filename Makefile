@@ -236,6 +236,7 @@ format-tools:
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
+	$(BLACK) diff_settings.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
