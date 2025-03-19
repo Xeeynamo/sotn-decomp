@@ -351,7 +351,7 @@ void EntityMudman(Entity* self) {
         for (i = 0; i < 4; i++) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
-                MakeEntityFromId(E_ID_4D, self, tempEntity);
+                MakeEntityFromId(E_MUDMAN, self, tempEntity);
                 tempEntity->animCurFrame = (Random() & 1) + 0x10;
                 tempEntity->step = 11;
                 tempEntity->velocityX = D_us_80182E88[i][0];
@@ -410,7 +410,7 @@ void func_us_801D1298(Entity* self) {
     self->hitboxState = tempEntity->hitboxState;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi;
-    if (tempEntity->entityId != E_ID_4D) {
+    if (tempEntity->entityId != E_MUDMAN) {
         DestroyEntity(self);
     }
 }
