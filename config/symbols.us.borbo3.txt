@@ -45,3 +45,4 @@ EntitySoulStealOrb = 0x8019D5B4;
 EntityEnemyBlood = 0x8019D948;
 EntityRoomForeground = 0x8019DDF8;
 EntityLifeUpSpawn = 0x8019EA44;
+EntityClouds = 0x8019F2F8;
