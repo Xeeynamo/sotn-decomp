@@ -14,13 +14,15 @@ void MemcardInfoInit(void) {
 }
 
 s32 MemcardParse(s32 nPort, s32 nCard) {
-    s32 var_s0 = 0;
+    s32 blocksFree = 0;
 
     if (nPort == 0) {
-        var_s0 = func_8919278();
+        // Presumably func_8919278 is something like
+        // getNumFreeBlocks, but I don't know the SDK function set.
+        blocksFree = func_8919278();
     }
-    g_MemcardInfo[nPort].nBlockUsed = BLOCK_PER_CARD - var_s0;
-    g_MemcardInfo[nPort].nFreeBlock = var_s0;
+    g_MemcardInfo[nPort].nBlockUsed = BLOCK_PER_CARD - blocksFree;
+    g_MemcardInfo[nPort].nFreeBlock = blocksFree;
     return g_MemcardInfo[nPort].nFreeBlock;
 }
 
