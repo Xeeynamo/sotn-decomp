@@ -494,7 +494,7 @@
 | dra    | func_800EA538                       |       50 |          5 |        | https://decomp.me/scratch/BfS3i | 0.997 |
 | dra    | func_8010E7AC                       |       50 |          6 |        |                                 |       |
 | dra    | PlayerStepUnk17                     |       50 |          7 |        |                                 |       |
-| dra    | MemcardWriteFile                    |       50 |          8 |        |                                 |       |
+| dra    | MemcardWriteFile                    |       50 |          8 |        | https://decomp.me/scratch/8JopV | 0.211 |
 | dra    | func_psp_09142830                   |       50 |          9 |        |                                 |       |
 | dra    | func_psp_09144BD8                   |       50 |         12 |        |                                 |       |
 | ric    | RicHandleFall                       |       50 |         13 |        |                                 |       |
@@ -547,7 +547,7 @@
 | st0    | CutsceneUnk4                        |       57 |          2 |        |                                 |       |
 | ric    | DisableAfterImage                   |       57 |          5 |        |                                 |       |
 | dra    | func_8011203C                       |       57 |          9 |        | https://decomp.me/scratch/yEXZW | 0.99  |
-| dra    | func_psp_0913D7D8                   |       57 |          9 |        |                                 |       |
+| dra    | func_psp_0913D7D8                   |       57 |          9 |        | https://decomp.me/scratch/nDrct | 1.0   |
 | dra    | func_psp_090E80E0                   |       57 |         15 |        |                                 |       |
 | st0    | CollectHeart                        |       58 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | dra    | func_8012CA64                       |       58 |          6 |        |                                 |       |
