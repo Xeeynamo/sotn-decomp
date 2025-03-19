@@ -353,6 +353,7 @@ func_801309B4 = 0x0913BAE0;
 func_80130E94 = 0x0913C160;
 func_8013136C = 0x0913C788;
 EntityGiantSpinningCross = 0x0913CAC0;
+func_801073C0 = 0x0913D5A8;
 MemcardInit = 0x0913D618;
 MemcardParse = 0x0913D640;
 GetMemcardFreeBlockCount = 0x0913D6D0;

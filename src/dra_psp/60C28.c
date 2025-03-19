@@ -2,6 +2,9 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C28", func_psp_0913D5A8);
+void func_801073C0(void) {
+    CdReadyCallback(NULL);
+    CdDataCallback(NULL);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C28", func_psp_0913D5D8);
