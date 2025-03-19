@@ -19,7 +19,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", GetMemcardFreeBlockCount);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardDetectSave);
 
-s32 func_psp_0913D798(s32 cardNum, s32 blockNum) {
+s32 IsMemcardBlockUsed(s32 cardNum, s32 blockNum) {
     return g_MemcardInfo[cardNum].blocks[blockNum];
 }
 

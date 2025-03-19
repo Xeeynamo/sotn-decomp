@@ -360,6 +360,7 @@ MemcardInfoInit = 0x0913D628;
 MemcardParse = 0x0913D640;
 GetMemcardFreeBlockCount = 0x0913D6D0;
 MemcardDetectSave = 0x0913D700;
+IsMemcardBlockUsed = 0x0913D798;
 MemcardWriteFile = 0x0913D890;
 MemcardClose = 0x0913D998;
 func_800E9880 = 0x0913D9B0;
