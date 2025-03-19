@@ -50,7 +50,7 @@
 | dra    | func_psp_090F67E8                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
-| dra    | func_psp_0913D628                   |       11 |          1 |        |                                 |       |
+| dra    | func_psp_0913D628                   |       11 |          1 |        | https://decomp.me/scratch/EksTS | 1.0   |
 | dra    | MemcardClose                        |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091405C8                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_09141F38                   |       11 |          1 |        |                                 |       |
@@ -92,7 +92,7 @@
 | dra    | GiveStatBuff                        |       17 |          1 |        |                                 |       |
 | dra    | func_800FF0A0                       |       17 |          1 |        |                                 |       |
 | dra    | SetPrimRect                         |       17 |          1 |        |                                 |       |
-| dra    | GetMemcardFreeBlockCount            |       17 |          1 |        |                                 |       |
+| dra    | GetMemcardFreeBlockCount            |       17 |          1 |        | https://decomp.me/scratch/Z1la2 | 0.761 |
 | dra    | func_psp_09140BF8                   |       17 |          1 |        | https://decomp.me/scratch/uWRH2 | 0.329 |
 | dra    | func_80131F68                       |       17 |          2 |        | https://decomp.me/scratch/eERF0 | 0.38  |
 | dra    | func_psp_0913D5A8                   |       17 |          3 |        |                                 |       |
@@ -113,7 +113,7 @@
 | dra    | func_800EA5AC                       |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
 | dra    | func_psp_090F1BC8                   |       19 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C00                   |       19 |          1 |        |                                 |       |
-| dra    | func_psp_0913D5D8                   |       19 |          1 |        |                                 |       |
+| dra    | func_psp_0913D5D8                   |       19 |          1 |        | https://decomp.me/scratch/HLTgc | 1.0   |
 | dra    | func_psp_090E8620                   |       19 |          1 |        |                                 |       |
 | ric    | func_8015CC28                       |       19 |          1 |        |                                 |       |
 | lib    | SetCutsceneEnd                      |       19 |          1 |        |                                 |       |
@@ -416,7 +416,7 @@
 | lib    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | wrp    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED1B8                   |       42 |          3 |        |                                 |       |
-| dra    | MemcardParse                        |       42 |          3 |        |                                 |       |
+| dra    | MemcardParse                        |       42 |          3 |        | https://decomp.me/scratch/wkv7d | 1.0   |
 | dra    | func_80102628                       |       42 |          4 |        |                                 |       |
 | lib    | FindFirstEntityBelow                |       42 |          5 |        |                                 |       |
 | lib    | FindFirstEntityToTheLeft            |       42 |          5 |        |                                 |       |
@@ -456,7 +456,7 @@
 | no4    | func_psp_0924C6E8                   |       46 |          4 |        |                                 |       |
 | wrp    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | dra    | func_psp_090FA790                   |       46 |          5 |        |                                 |       |
-| dra    | MemcardDetectSave                   |       46 |          5 |        |                                 |       |
+| dra    | MemcardDetectSave                   |       46 |          5 |        | https://decomp.me/scratch/MybKX | 1.0   |
 | ric    | DestroyEntity                       |       46 |          5 |        |                                 |       |
 |        | DestroyEntity                       |       46 |          5 |        |                                 |       |
 | lib    | DestroyEntity                       |       46 |          5 |        |                                 |       |
@@ -578,7 +578,7 @@
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | ric    | func_pspeu_092BE628                 |       61 |          8 |        |                                 |       |
 | dra    | func_psp_09106008                   |       61 |          9 |        |                                 |       |
-| lib    | func_psp_09253D58                   |       61 |         10 |        | https://decomp.me/scratch/9xgRU | 1.0   |
+| lib    | func_psp_09253D58                   |       61 |         10 |        |                                 |       |
 | no4    | func_psp_0923D4A0                   |       61 |         10 |        |                                 |       |
 | no4    | func_psp_09237B20                   |       61 |         10 |        |                                 |       |
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
@@ -785,7 +785,7 @@
 | ric    | func_80161EF8                       |       93 |         13 |        |                                 |       |
 | ric    | RicHandleBladeDash                  |       93 |         17 |        |                                 |       |
 | lib    | func_us_801D1298                    |       94 |          8 |        |                                 |       |
-| lib    | func_psp_09254120                   |       95 |          8 |        | https://decomp.me/scratch/PCsoI | 1.0   |
+| lib    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
 | no4    | func_psp_09237FB0                   |       95 |          8 |        |                                 |       |
 | ric    | RicEntitySlideKick                  |       95 |          9 |        |                                 |       |
 | lib    | func_us_801B3FB4                    |       95 |          9 |        |                                 |       |
@@ -1147,7 +1147,7 @@
 | ric    | func_80161C2C                       |      270 |         27 |        |                                 |       |
 | no4    | func_psp_0923E690                   |      272 |         23 |        |                                 |       |
 | ric    | RicEntityRevivalColumn              |      273 |         26 |        |                                 |       |
-| lib    | func_us_801B29C4                    |      274 |         43 |        |                                 |       |
+| lib    | func_us_801B29C4                    |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
 | st0    | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra    | func_psp_090F1078                   |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                       |      277 |         20 |        |                                 |       |
@@ -1285,7 +1285,7 @@
 | no4    | func_psp_0923B378                   |      485 |         30 |        |                                 |       |
 | ric    | RicEntitySmokePuff                  |      487 |         42 |        |                                 |       |
 | ric    | RicEntitySubwpnBible                |      490 |         41 |        |                                 |       |
-| dra    | func_psp_090F06D8                   |      493 |         37 |        | https://decomp.me/scratch/66OHN | 0.972 |
+| dra    | func_psp_090F06D8                   |      493 |         37 |        | https://decomp.me/scratch/66OHN | 0.988 |
 | no4    | func_psp_09254690                   |      495 |         38 |        |                                 |       |
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
 | ric    | RicEntityCrashBibleBeam             |      496 |         50 |        |                                 |       |
