@@ -848,22 +848,7 @@ static u16 D_us_80181510[] = {
     // clang-format on
 };
 
-// these are pairs of bytes, but only the first is used.
-// these are used to determine which magic scrolls
-// should be visible. typically this is if spells are
-// known, either through magic scrolls or otherwise,
-// but a completed game save overrides that check
-// (in func_us_801B29C4).
-static u8 D_us_8018151C[] = {
-    // clang-format off
-    0x00, 0x00,
-    0x01, 0x00,
-    0x02, 0x00,
-    0x05, 0x00,
-    0x06, 0x00,
-    0x00, 0x00,
-    // clang-format on
-};
+static u16 D_us_8018151C[] = {0, 1, 2, 5, 6};
 
 #ifdef VERSION_PSP
 extern u8* D_psp_092A54E0;
@@ -1869,12 +1854,113 @@ void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
     }
 }
 
-/// Determines which items are available to buy
-/// and returns the number of buyable items, that are
-/// off screen (number of buyable items minus 7).
-///
-/// Buyable items are copied to `D_us_801D4364`.
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B29C4);
+u16 func_us_801B29C4(void) {
+    InventoryItem* currentItem;
+    ShopItem* shopItem;
+    u8 itemLevel;
+    u16 unlockLevel;
+    u8 itemCount;
+    s32 i;
+    u8 spellIndex;
+
+    shopItem = D_us_801D4364;
+    currentItem = D_us_8018134C;
+    unlockLevel = 0;
+    if (g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[RICHTER_CS_AFTER_M_AND_W]) {
+        unlockLevel++;
+    }
+    if (g_Status.relics[RELIC_SOUL_OF_BAT] & 1) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[MET_MARIA_IN_CEN]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[DEATH_FIGHT_CS]) {
+        unlockLevel++;
+    }
+    if (g_api.TimeAttackController(
+            TIMEATTACK_EVENT_GALAMOTH_DEFEAT, TIMEATTACK_GET_RECORD)) {
+        unlockLevel++;
+    }
+    if (g_IsTimeAttackUnlocked) {
+        unlockLevel = 8;
+    }
+    itemCount = 0;
+    for (i = 0; i < LEN(D_us_8018134C) - 1; i++) {
+        itemLevel = currentItem->unlockLevel;
+        switch (itemLevel) {
+        case 0xFF:
+            if ((g_Status.relics[RELIC_JEWEL_OF_OPEN] & 1) == 0) {
+                itemLevel = 0;
+            }
+            break;
+
+        case 0x80:
+            if (!g_CastleFlags[BOUGHT_CASTLE_MAP]) {
+                itemLevel = 0;
+            }
+            break;
+
+#ifdef VERSION_PSP
+        case 0x86:
+        case 0x87:
+        case 0x88:
+            if (itemLevel == 0x86) {
+                if ((g_Status.relics[RELIC_SOUL_OF_WOLF] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+                if ((g_Status.relics[RELIC_SKILL_OF_WOLF] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            } else if (itemLevel == 0x87) {
+                if ((g_Status.relics[RELIC_SOUL_OF_BAT] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            } else if (itemLevel == 0x88) {
+                if ((g_Status.relics[RELIC_SWORD_CARD] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+                if (g_Status.statsFamiliars[FAM_STATS_SWORD].level < 50) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            }
+#endif
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x85:
+            itemLevel -= 0x81;
+            spellIndex = D_us_80181510[itemLevel];
+            if (g_Status.spellsLearnt & (1 << spellIndex)) {
+                itemLevel = 0xFF;
+            } else {
+                itemLevel = D_us_8018151C[itemLevel];
+            }
+            break;
+        }
+        if (itemLevel <= unlockLevel) {
+            shopItem->category = currentItem->category;
+            shopItem->itemId = currentItem->itemId;
+            shopItem->price = currentItem->price;
+            shopItem++;
+            itemCount++;
+        }
+        currentItem++;
+    }
+    return itemCount - 7;
+}
 
 void func_us_801B2BE4(Entity* self) {
     Primitive* prim;
