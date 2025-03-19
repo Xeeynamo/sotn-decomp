@@ -1162,7 +1162,7 @@
 | dra    | EntityPlayerPinkEffect              |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | no4    | func_psp_09237700                   |      285 |         47 |        |                                 |       |
-| lib    | func_us_801D35B8                    |      287 |         30 |        |                                 |       |
+| lib    | func_us_801D35B8                    |      287 |         30 |        | https://decomp.me/scratch/VnyUs | 1.0   |
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
 | ric    | func_pspeu_092B0A10                 |      288 |         19 |        |                                 |       |
