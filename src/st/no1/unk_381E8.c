@@ -384,12 +384,7 @@ void func_us_801B8D30(Entity* self) {
         if (abs(posX) < 16) {
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_UNK02 | DRAW_TRANSP;
-#ifdef VERSION_PSP
-            self->ext.et_801B8D30.unk80 = posX << 6;
-#else
-            self->ext.et_801B8D30.unk80 =
-                (posX < 0 ? (-((u32)posX)) : posX) << 6;
-#endif
+            self->ext.et_801B8D30.unk80 = posX * 64;
         }
         break;
     }
