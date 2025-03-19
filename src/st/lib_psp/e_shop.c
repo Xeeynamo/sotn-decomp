@@ -1706,25 +1706,25 @@ static char* D_psp_092A21A8[] = {
 static char D_psp_092A21C8[] = _S("AGOTADO");
 static char* D_psp_092A21E8[] = {_S("Joya apertura")};
 static char* D_psp_092A2280[] = {
-    _S("Mapa castillo"),  _S("Perg. mágico 1"), _S("Perg. mágico 2"),
-    _S("Perg. mágico 3"), _S("Perg. mágico 4"), _S("Perg. mágico 5"),
-    _S("Perg. mágico 6"), _S("Perg. mágico 7"), _S("Perg. mágico 8")};
+    _S("Mapa castillo"),   _S("Perg. mロgico 1"), _S("Perg. mロgico 2"),
+    _S("Perg. mロgico 3"), _S("Perg. mロgico 4"), _S("Perg. mロgico 5"),
+    _S("Perg. mロgico 6"), _S("Perg. mロgico 7"), _S("Perg. mロgico 8")};
 static char* D_psp_092A2390[] = {
-    _S("Nada"),        _S("Gran corazón"), _S("1$"),       _S("25$"),
-    _S("50$"),         _S("100$"),         _S("250$"),     _S("400$"),
-    _S("700$"),        _S("1000$"),        _S("2000$"),    _S("5000$"),
-    _S("Más corazón"), _S("Carne"),        _S("Cuchillo"), _S("Hacha"),
-    _S("Cruz"),        _S("Agua sagrada"), _S("Reloj"),    _S("Libro sagr."),
-    _S("P. recuper."), _S("Bibuti"),       _S("Agunea"),   _S("Más vida")};
+    _S("Nada"),          _S("Gran corazぅn"), _S("1$"),       _S("25$"),
+    _S("50$"),           _S("100$"),          _S("250$"),     _S("400$"),
+    _S("700$"),          _S("1000$"),         _S("2000$"),    _S("5000$"),
+    _S("Mロs corazぅn"), _S("Carne"),         _S("Cuchillo"), _S("Hacha"),
+    _S("Cruz"),          _S("Agua sagrada"),  _S("Reloj"),    _S("Libro sagr."),
+    _S("P. recuper."),   _S("Bibuti"),        _S("Agunea"),   _S("Mロs vida")};
 static char* D_psp_092A2428[] = {
-    _S("Fuerte contra"), _S("Inmune"), _S("Débil contra"), _S("Absorbe")};
+    _S("Fuerte contra"), _S("Inmune"), _S("D子bil contra"), _S("Absorbe")};
 static char* D_psp_092A2480[] = {
     _S("SAG"), _S("OSC"), _S("FUE"), _S("TRU"), _S("HIE"), _S("H2O"),
     _S("PIE"), _S("VEN"), _S("CUR"), _S("COR"), _S("GOL")};
 static char D_psp_092A24B0[] = _S("Ninguno");
 static char* D_psp_092A24E8[] = {
-    _S("NV"), _S("PS"), _S("Def"), _S("Exp"), _S("Soltar objetos"),
-    _S("Nº"), _S("??")};
+    _S("NV"),  _S("PS"), _S("Def"), _S("Exp"), _S("Soltar objetos"),
+    _S("Nお"), _S("??")};
 static char D_psp_092A2508[] = {
     // clang-format off
     CH('F'), CH('U'), CH('E'),
@@ -1734,31 +1734,31 @@ static char D_psp_092A2508[] = {
     // clang-format on
 };
 static char* D_psp_092A2540[] = {
-    _S("Número"), _S("Equipado"), _S("No equipado"), _S("a")};
+    _S("Nゅmero"), _S("Equipado"), _S("No equipado"), _S("a")};
 static char* D_psp_092A27F0[] = {
-    _S("Prólogo"),
+    _S("Prぅlogo"),
     _S("Baile de ilusiones"),
     _S("Plegaria"),
     _S("Castillo de Dracula"),
     _S("Baile de oro"),
-    _S("Pasillo de mármol"),
+    _S("Pasillo de mロrmol"),
     _S("Torre de niebla"),
     _S("Nocturno"),
     _S("Partita tallada en madera"),
-    _S("Puerta de espíritussagrados"),
+    _S("Puerta de esp妖ritussagrados"),
     _S("Festival de siervos"),
-    _S("Tierra de bendición"),
-    _S("Réquiem de los dioses"),
-    _S("Lágrima de cristal"),
+    _S("Tierra de bendiciぅn"),
+    _S("R子quiem de los dioses"),
+    _S("Lロgrima de cristal"),
     _S("Pozo abandonado"),
     _S("Cementerio arco iris"),
     _S("Silencio"),
     _S("Cuadro perdido"),
     _S("Baile de los blancos"),
-    _S("Zona de maldición"),
+    _S("Zona de maldiciぅn"),
     _S("Banquete encantado"),
     _S("Fantasmas errantes"),
-    _S("El príncipe trágico"),
+    _S("El pr妖ncipe trロgico"),
     _S("Puerta al abismo"),
     _S("Puerta celestial"),
     _S("Balada de la muerte"),
@@ -1770,15 +1770,15 @@ static char* D_psp_092A2908[] = {
     _S("Dracula"),         _S("Slogra y Gaibon"),
     _S("Doppleganger10"),  _S("Hipogrifo"),
     _S("Scylla"),          _S("Minotauro y H.lobo"),
-    _S("Karasuman"),       _S("Súcubo"),
+    _S("Karasuman"),       _S("Sゅcubo"),
     _S("Cancerbero"),      _S("Olrox"),
     _S("Granfaloon"),      _S("Maria Renard"),
-    _S("Richter Belmont"), _S("Murciél. ala osc."),
+    _S("Richter Belmont"), _S("Murci子l. ala osc."),
     _S("Akmodan II"),      _S("Medusa"),
     _S("La Criatura"),     _S("Muerte"),
     _S("Doppleganger40"),  _S("Trevor Grant Sypha"),
     _S("Beelzebub"),       _S("Galamoth"),
-    _S("Shaft"),           _S("Dracula auténtico")};
+    _S("Shaft"),           _S("Dracula aut子ntico")};
 static char* D_psp_092A2A88[] = {
     "Mapa bﾌsico del castillo.",  "Contiene ”Metamorfosis oscura”",
     "Contiene ”Invoca-espﾕritu”", "Contiene ”Fuego del infierno”",
@@ -1823,8 +1823,8 @@ static char* D_psp_092A2D88[] = {
     _S("PIE"), _S("VEL"), _S("CUR"), _S("TAG"), _S("COL")};
 static char D_psp_092A2DB8[] = _S("Nessuno");
 static char* D_psp_092A2DE8[] = {
-    _S("LV"), _S("PS"), _S("Dif"), _S("Esp"), _S("Lascia oggetti"),
-    _S("Nº"), _S("??")};
+    _S("LV"),  _S("PS"), _S("Dif"), _S("Esp"), _S("Lascia oggetti"),
+    _S("Nお"), _S("??")};
 static char D_psp_092A2E08[] = {
     // clang-format off
     CH('P'), CH('O'), CH('T'),
@@ -1877,7 +1877,7 @@ static char* D_psp_092A3210[] = {
     _S("Akmodan II"),      _S("Medusa"),
     _S("La Creatura"),     _S("Morte"),
     _S("Doppleganger40"),  _S("Trevor Grant Sypha"),
-    _S("Belzebù"),         _S("Galamoth"),
+    _S("Belzebゃ"),        _S("Galamoth"),
     _S("Shaft"),           _S("Vero Dracula")};
 static char* D_psp_092A3390[] = {
     "Mappa del castello di Dracula.", "Contiene ”Metamorfosi Oscura”",
@@ -1906,16 +1906,16 @@ static char* D_psp_092A3428[] = {
 static char D_psp_092A3448[] = _S("STOCK EPUISE");
 static char* D_psp_092A3468[] = {_S("Joyau ouvert.")};
 static char* D_psp_092A3500[] = {
-    _S("Carte château"),  _S("Parch. magie 1"), _S("Parch. magie 2"),
+    _S("Carte chワteau"), _S("Parch. magie 1"), _S("Parch. magie 2"),
     _S("Parch. magie 3"), _S("Parch. magie 4"), _S("Parch. magie 5"),
     _S("Parch. magie 6"), _S("Parch. magie 7"), _S("Parch. magie 8")};
 static char* D_psp_092A35C0[] = {
-    _S("Rien"),         _S("Grand cœur"), _S("1$"),      _S("25$"),
-    _S("50$"),          _S("100$"),       _S("250$"),    _S("400$"),
-    _S("700$"),         _S("1000$"),      _S("2000$"),   _S("5000$"),
-    _S("Cœur en plus"), _S("Viande"),     _S("Couteau"), _S("Hache"),
-    _S("Croix"),        _S("Eau bénite"), _S("Montre"),  _S("Livre sacré"),
-    _S("PierreRebond"), _S("Bibuti"),     _S("Agunea"),  _S("Vie en plus")};
+    _S("Rien"),          _S("Grand cあur"), _S("1$"),      _S("25$"),
+    _S("50$"),           _S("100$"),        _S("250$"),    _S("400$"),
+    _S("700$"),          _S("1000$"),       _S("2000$"),   _S("5000$"),
+    _S("Cあur en plus"), _S("Viande"),      _S("Couteau"), _S("Hache"),
+    _S("Croix"),         _S("Eau b子nite"), _S("Montre"),  _S("Livre sacr子"),
+    _S("PierreRebond"),  _S("Bibuti"),      _S("Agunea"),  _S("Vie en plus")};
 static char* D_psp_092A3650[] = {
     _S("Fort contre"), _S("Immunise"), _S("Faible contre"), _S("Absorbe")};
 static char* D_psp_092A36B8[] = {
@@ -1923,8 +1923,8 @@ static char* D_psp_092A36B8[] = {
     _S("ROC"), _S("POI"), _S("MAL"), _S("CPR"), _S("DEG")};
 static char D_psp_092A36E8[] = _S("Aucun");
 static char* D_psp_092A3708[] = {
-    _S("NV"), _S("PV"), _S("Def"), _S("Exp"), _S("Items laissés"),
-    _S("Nº"), _S("??")};
+    _S("NV"),  _S("PV"), _S("Def"), _S("Exp"), _S("Items laiss子s"),
+    _S("Nお"), _S("??")};
 static char D_psp_092A3728[] = {
     // clang-format off
     CH('F'), CH('O'), CH('R'),
@@ -1934,30 +1934,30 @@ static char D_psp_092A3728[] = {
     // clang-format on
 };
 static char* D_psp_092A3758[] = {
-    _S("Nombre"), _S("Equipé"), _S("Non équipé"), _S("a")};
+    _S("Nombre"), _S("Equip子"), _S("Non 子quip子"), _S("a")};
 static char* D_psp_092A39A8[] = {
     _S("Prologue"),
     _S("Danse des illusions"),
-    _S("Prière"),
-    _S("Château de Dracula"),
+    _S("Priﾟre"),
+    _S("Chワteau de Dracula"),
     _S("Danse de l'or"),
     _S("Galerie en marbre"),
     _S("Tour de brume"),
     _S("Nocturne"),
-    _S("Partita gravée dans le bois"),
-    _S("Porte des esprits sacrés"),
+    _S("Partita grav子e dans le bois"),
+    _S("Porte des esprits sacr子s"),
     _S("Festival des serviteurs"),
-    _S("Terre de bénédiction"),
+    _S("Terre de b子n子diction"),
     _S("Requiem pour les dieux"),
     _S("Larmes de cristal"),
-    _S("Puit abandonné"),
-    _S("Cimetière arc-en-ciel"),
+    _S("Puit abandonn子"),
+    _S("Cimetiﾟre arc-en-ciel"),
     _S("Silence"),
     _S("Peinture perdue"),
     _S("Danse de Pales"),
     _S("Lieu maudit"),
-    _S("Banquet enchanté"),
-    _S("Fantômes errants"),
+    _S("Banquet enchant子"),
+    _S("Fantぇmes errants"),
     _S("Le prince tragique"),
     _S("Porte vers les Abysses"),
     _S("Portes du Paradis"),
@@ -1965,19 +1965,19 @@ static char* D_psp_092A39A8[] = {
     _S("Liens du sang"),
     _S("Toccata finale"),
     _S("Banquet noir"),
-    _S("Sérénade funèbre")};
+    _S("S子r子nade funﾟbre")};
 static char* D_psp_092A3AC8[] = {
     _S("Dracula"),         _S("Slogra&Gaibon"),
     _S("Doppleganger10"),  _S("Hippogryphe"),
     _S("Scylla"),          _S("Minot.&Loup-garou"),
     _S("Karasuman"),       _S("Succube"),
-    _S("Cerbère"),         _S("Olrox"),
+    _S("Cerbﾟre"),         _S("Olrox"),
     _S("Granfaloon"),      _S("Maria Renard"),
-    _S("Richter Belmont"), _S("Chv-sris ténèbres"),
-    _S("Akmodan II"),      _S("Méduse"),
-    _S("La Créature"),     _S("La Mort"),
+    _S("Richter Belmont"), _S("Chv-sris t子nﾟbres"),
+    _S("Akmodan II"),      _S("M子duse"),
+    _S("La Cr子ature"),    _S("La Mort"),
     _S("Doppleganger40"),  _S("Trevor Grant Sypha"),
-    _S("Belzébuth"),       _S("Galamoth"),
+    _S("Belz子buth"),      _S("Galamoth"),
     _S("Shaft"),           _S("Vrai Dracula")};
 static char* D_psp_092A3C48[] = {
     "Carte basique du chﾍt. Dracula", "Contient ”Mﾑtamorphose noire”",
@@ -2004,18 +2004,18 @@ static char* D_psp_092A3CD8[] = {
     "\002"
     "Audiotest"};
 static char D_psp_092A3CF8[] = _S("AUSVERKAUFT");
-static char* D_psp_092A3D18[] = {_S("Öffnungsjuwel")};
+static char* D_psp_092A3D18[] = {_S("ヤffnungsjuwel")};
 static char* D_psp_092A3DB0[] = {
     _S("Schlosskarte"),   _S("Magiepergam. 1"), _S("Magiepergam. 2"),
     _S("Magiepergam. 3"), _S("Magiepergam. 4"), _S("Magiepergam. 5"),
     _S("Magiepergam. 6"), _S("Magiepergam. 7"), _S("Magiepergam. 8")};
 static char* D_psp_092A3E70[] = {
-    _S("Nichts"),       _S("Großes Herz"), _S("$1"),     _S("$25"),
-    _S("$50"),          _S("$100"),        _S("$250"),   _S("$400"),
-    _S("$700"),         _S("$1000"),       _S("$2000"),  _S("$5000"),
-    _S("Herz Plus"),    _S("Fleisch"),     _S("Messer"), _S("Axt"),
-    _S("Kreuz"),        _S("Weihwasser"),  _S("Uhr"),    _S("Heilig. Buch"),
-    _S("Neubundstein"), _S("Bibuti"),      _S("Agunea"), _S("Leben Plus")};
+    _S("Nichts"),       _S("Groルes Herz"), _S("$1"),     _S("$25"),
+    _S("$50"),          _S("$100"),         _S("$250"),   _S("$400"),
+    _S("$700"),         _S("$1000"),        _S("$2000"),  _S("$5000"),
+    _S("Herz Plus"),    _S("Fleisch"),      _S("Messer"), _S("Axt"),
+    _S("Kreuz"),        _S("Weihwasser"),   _S("Uhr"),    _S("Heilig. Buch"),
+    _S("Neubundstein"), _S("Bibuti"),       _S("Agunea"), _S("Leben Plus")};
 static char* D_psp_092A3F08[] = {
     _S("Stark gegen"), _S("Immun"), _S("Schwach gegen"), _S("Absorbieren")};
 static char* D_psp_092A3F58[] = {
@@ -2034,7 +2034,7 @@ static char D_psp_092A3FD0[] = {
     // clang-format on
 };
 static char* D_psp_092A4008[] = {
-    _S("Anzahl"), _S("Ausgerüstet"), _S("N. gerüstet"), _S("a")};
+    _S("Anzahl"), _S("Ausgerっstet"), _S("N. gerっstet"), _S("a")};
 static char* D_psp_092A4270[] = {
     _S("Prolog"),
     _S("Tanz der Illusionen"),
@@ -2048,18 +2048,18 @@ static char* D_psp_092A4270[] = {
     _S("Tor der heiligen Geister"),
     _S("Fest der Diener"),
     _S("Land der Segnung"),
-    _S("Requiem für die Gぉtter"),
-    _S("Kristallträne"),
+    _S("Requiem fっr die Gぉtter"),
+    _S("Kristalltrンne"),
     _S("Verlassende Grube"),
     _S("Regenbogenfriedhof"),
     _S("Stille"),
-    _S("Verlorenes Gemälde"),
+    _S("Verlorenes Gemンlde"),
     _S("Tanz der Blassen"),
     _S("Fluchgebiet"),
     _S("Verzaubertes Bankett"),
     _S("Wandernde Gespenster"),
     _S("Der tragische Prinz"),
-    _S("Tür zum Abgrund"),
+    _S("Tっr zum Abgrund"),
     _S("Himmlischer Torbogen"),
     _S("Todesballade"),
     _S("Blutverwandschaft"),
@@ -2068,15 +2068,15 @@ static char* D_psp_092A4270[] = {
     _S("Trauerserenade")};
 static char* D_psp_092A4398[] = {
     _S("Dracula"),         _S("Slogra & Gaibon"),
-    _S("Doppelgänger10"),  _S("Hippogryph"),
+    _S("Doppelgンnger10"), _S("Hippogryph"),
     _S("Scylla"),          _S("Minotaurus&Werwolf"),
     _S("Karasuman"),       _S("Sukkubus"),
     _S("Zerberus"),        _S("Olrox"),
     _S("Granfaloon"),      _S("Maria Renard"),
-    _S("Richter Belmont"), _S("Dunkelflügel-Fl.m."),
+    _S("Richter Belmont"), _S("Dunkelflっgel-Fl.m."),
     _S("Akmodan II"),      _S("Medusa"),
     _S("Die Kreatur"),     _S("Tod"),
-    _S("Doppelgänger40"),  _S("Trevor Grant Sypha"),
+    _S("Doppelgンnger40"), _S("Trevor Grant Sypha"),
     _S("Beelzebub"),       _S("Galamoth"),
     _S("Shaft"),           _S("Wahrer Dracula")};
 static char* D_psp_092A44F0[] = {
