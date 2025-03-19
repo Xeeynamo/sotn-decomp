@@ -872,7 +872,7 @@ void EntityVenusWeedFlower(Entity* self) {
         if (self->ext.venusWeedFlower.clutOffset) {
             entity = self - 1; // Root
             entity->ext.venusWeed.triggerAttack = true;
-            if (!(self->palette & 0x8000)) {
+            if (!(self->palette & PAL_OVL_FLAG)) {
                 self->palette += self->ext.venusWeedFlower.clutOffset;
                 if (self->palette > PAL_DRA(0x219)) {
                     self->palette = PAL_DRA(0x219);
@@ -1231,7 +1231,7 @@ void EntityVenusWeedDart(Entity* self) {
         break;
 
     case DECAY:
-        if (!(self->palette & 0x8000)) {
+        if (!(self->palette & PAL_OVL_FLAG)) {
             self->ext.venusWeedDart.clutIndex++;
             self->palette = self->ext.venusWeedDart.clutIndex + PAL_DRA(0x20A);
 

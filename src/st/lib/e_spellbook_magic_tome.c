@@ -113,7 +113,7 @@ void func_us_801D1BCC(void) {
             } else {
                 gte_ldv3(vecPtr[0], vecPtr[1], vecPtr[2]);
                 gte_rtpt();
-                if (g_CurrentEntity->palette & 0x8000) {
+                if (g_CurrentEntity->palette & PAL_OVL_FLAG) {
                     prim->clut = g_CurrentEntity->palette & 0xFFF;
                 } else {
                     prim->clut = g_CurrentEntity->palette;
