@@ -52,7 +52,7 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
+SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
@@ -235,6 +235,7 @@ format-tools:
 	$(BLACK) tools/*.py
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
+	$(BLACK) tools/sotn_str/*.py
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
 	$(BLACK) diff_settings.py
 format-symbols:
@@ -448,7 +449,6 @@ update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
-	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
 
 bin/%: bin/%.tar.gz
