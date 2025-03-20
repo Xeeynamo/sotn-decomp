@@ -2886,8 +2886,8 @@ typedef struct {
     /* 0x88 */ s32 unk88;
     /* 0x8C */ s32 unk8C;
     /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
     /* 0x9C */ f32 unk9C;
     /* 0xA0 */ f32 unkA0;
 } ET_Clouds;
