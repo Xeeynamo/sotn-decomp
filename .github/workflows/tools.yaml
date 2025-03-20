@@ -65,7 +65,7 @@ jobs:
         run: go test .
       - name: Test sotn string
         working-directory: tools/sotn_str
-        run: python3 ./test.py
+        run: cargo test
       - name: Test linter
         working-directory: tools/lints/sotn-lint
         run: cargo test

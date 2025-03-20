@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09252E70);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_092531A8);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253498);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_us_801AFA80);
-
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253D58);
 
 extern s32 E_ID(ID_11);
