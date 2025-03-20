@@ -114,7 +114,13 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_80113E68);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C68CC);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6950);
+void func_us_801C6950(void) {
+    if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
+        DOPPLEGANGER.entityRoomIndex = 0;
+        return;
+    }
+    DOPPLEGANGER.entityRoomIndex = 1;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6990);
 
