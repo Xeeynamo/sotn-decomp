@@ -488,7 +488,7 @@
 | ric    | RicSetInvincibilityFrames           |       49 |          6 |        |                                 |       |
 | dra    | PlayerStepSoulSteal                 |       49 |          8 |        |                                 |       |
 | dra    | func_psp_090F1968                   |       49 |          8 |        |                                 |       |
-| ric    | func_pspeu_092B06F8                 |       49 |          8 |        |                                 |       |
+| ric    | RicSetBladeDash                     |       49 |          8 |        |                                 |       |
 | dra    | PerformDarkMetamorphosis            |       49 |         10 |        |                                 |       |
 | dra    | func_80113EE0                       |       50 |          3 |        |                                 |       |
 | dra    | func_800EA538                       |       50 |          5 |        | https://decomp.me/scratch/BfS3i | 0.997 |
@@ -525,7 +525,7 @@
 | dra    | func_psp_09105200                   |       53 |          8 |        |                                 |       |
 | dra    | func_psp_090EF380                   |       54 |          4 |        |                                 |       |
 | ric    | func_pspeu_092BA540                 |       54 |          5 |        |                                 |       |
-| ric    | func_pspeu_092AF9D0                 |       54 |          8 |        |                                 |       |
+| ric    | RicSetHighJump                      |       54 |          8 |        |                                 |       |
 | ric    | RicSetWalk                          |       54 |          9 |        |                                 |       |
 | dra    | func_psp_090DCC60                   |       55 |          1 |        |                                 |       |
 | dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
@@ -961,7 +961,7 @@
 | dra    | GetStatusAilmentTimer               |      145 |         15 | Yes    |                                 |       |
 | dra    | func_80132A04                       |      145 |         15 |        |                                 |       |
 | lib    | func_us_801CD9EC                    |      146 |         18 |        |                                 |       |
-| ric    | func_pspeu_092AE150                 |      148 |         25 |        |                                 |       |
+| ric    | CheckHighJumpInput                  |      148 |         25 |        |                                 |       |
 | dra    | func_8011F074                       |      149 |         13 |        |                                 |       |
 | ric    | RicEntityHitByDark                  |      149 |         13 |        |                                 |       |
 | no4    | func_psp_09239568                   |      149 |         19 |        | https://decomp.me/scratch/vnLIX | 1.0   |
@@ -1035,7 +1035,7 @@
 | no4    | func_psp_09241870                   |      187 |         21 |        |                                 |       |
 | dra    | MainMenuHandler                     |      187 |         28 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnBibleTrail           |      188 |         14 |        |                                 |       |
-| ric    | func_pspeu_092ADEA0                 |      189 |         29 |        |                                 |       |
+| ric    | CheckBladeDashInput                 |      189 |         29 |        |                                 |       |
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        | https://decomp.me/scratch/y31mz | 0.997 |
 | no4    | func_psp_09249FA0                   |      193 |         24 |        |                                 |       |
@@ -1085,11 +1085,11 @@
 | no4    | func_psp_092409A8                   |      222 |         25 |        |                                 |       |
 | no4    | func_psp_09240350                   |      223 |         22 |        |                                 |       |
 | dra    | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
-| ric    | func_pspeu_092B2DD8                 |      224 |         28 |        |                                 |       |
+| ric    | RicCheckWallRight                   |      224 |         28 |        |                                 |       |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
 | lib    | func_us_801BC28C                    |      225 |         18 |        |                                 |       |
 | lib    | EntityBackgroundBookcase            |      227 |         29 |        |                                 |       |
-| ric    | func_pspeu_092B3118                 |      228 |         29 |        |                                 |       |
+| ric    | RicCheckWallLeft                    |      228 |         29 |        |                                 |       |
 | lib    | func_us_801B12D0                    |      231 |         11 |        |                                 |       |
 | dra    | PlayerStepHighJump                  |      232 |         32 |        |                                 |       |
 | dra    | func_800F4994                       |      233 |         18 |        | https://decomp.me/scratch/iweZP | 0.984 |
@@ -1316,7 +1316,7 @@
 | st0    | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
 | no4    | func_psp_09249760                   |      559 |         92 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnCross                |      560 |         53 | Yes    |                                 |       |
-| ric    | func_pspeu_092B2590                 |      562 |         55 |        |                                 |       |
+| ric    | RicCheckCeiling                     |      562 |         55 |        |                                 |       |
 | no4    | func_psp_0924DD78                   |      562 |         67 | Yes    |                                 |       |
 | dra    | func_8012F178                       |      564 |         35 |        |                                 |       |
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
@@ -1327,7 +1327,7 @@
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/F4s7g | 0.925 |
-| ric    | func_pspeu_092B1CD0                 |      590 |         56 |        |                                 |       |
+| ric    | RicCheckFloor                       |      590 |         56 |        |                                 |       |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
