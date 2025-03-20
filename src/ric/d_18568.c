@@ -33,11 +33,11 @@ Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2] = {
     {7, 23},  {7, 16},  {7, 8},  {7, 0},  {7, -8},  {7, -8},  {7, -15},
     {-7, 23}, {-7, 16}, {-7, 8}, {-7, 0}, {-7, -8}, {-7, -8}, {-7, -15},
 };
-u16 g_RicSensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-16, -16, -16, -16};
-u16 g_RicSensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {28, 24, 24, 24};
-u16 g_RicSensorsWallDefault[NUM_VERTICAL_SENSORS] = {23, 16, 8, 0, -8, -8, -15};
-u16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
-u16 g_RicSensorsWallCrouch[NUM_VERTICAL_SENSORS] = {23, 16, 8, 4, 4, 1, 1};
+s16 g_RicSensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-16, -16, -16, -16};
+s16 g_RicSensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {28, 24, 24, 24};
+s16 g_RicSensorsWallDefault[NUM_VERTICAL_SENSORS] = {23, 16, 8, 0, -8, -8, -15};
+s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
+s16 g_RicSensorsWallCrouch[NUM_VERTICAL_SENSORS] = {23, 16, 8, 4, 4, 1, 1};
 u8 D_80154674[][4] = {{16, 127, 63, 0},
                       {16, 127, 0, 0},
                       {16, 63, 63, 127},

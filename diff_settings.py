@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import os
+import re
 
 
 def add_custom_arguments(parser):
     parser.add_argument(
         "--version",
-        default=None,
+        default=os.getenv("VERSION") or "us",
         dest="version",
         help="Decide what version of the game to use (us, jp12, pspeu, etc.)",
     )
@@ -14,106 +15,100 @@ def add_custom_arguments(parser):
         "--overlay",
         default="dra",
         dest="overlay",
-        help="Defines which overlay to use for the diff (main, dra, st/mad, etc.)",
+        help="Defines which overlay to use for the diff (main, dra, mad, etc.)",
     )
 
 
-def apply_psx_base(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"{name}.bin").upper()
-    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
-    config["mapfile"] = f"build/{version}/{name}.map"
-    config["source_directories"] = [f"src/{name}", "include", f"asm/{version}/{name}"]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_psx_bin(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"BIN/{name}.BIN").upper()
-    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
-    config["mapfile"] = f"build/{version}/{name}.map"
-    config["source_directories"] = [f"src/{name}", "include", f"asm/{version}/{name}"]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_psx_servant(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"SERVANT/{name}.bin").upper()
-    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
-    config["mapfile"] = f"build/{version}/{name}.map"
-    config["source_directories"] = [
-        f"src/servant/{name}",
-        "include",
-        f"asm/{version}/servant/{name}",
-    ]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_psx_weapon(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"SERVANT/{name}.bin").upper()
-    config["myimg"] = f"build/{version}/weapon/w0_{name[2:]}.bin"
-    config["mapfile"] = f"build/{version}/weapon/w0_{name[2:]}.map"
-    config["source_directories"] = [
-        f"src/weapon/{name}",
-        "include",
-        f"asm/{version}/weapon/{name}",
-    ]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_psx_stage(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"ST/{name}/{name}.BIN").upper()
-    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
-    config["mapfile"] = f"build/{version}/st{name}.map"
-    config["source_directories"] = [
-        f"src/st/{name}",
-        f"src/st/{name}_psp",
-        "include",
-        f"asm/{version}/st/{name}",
-    ]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_psx_boss(config, version, name):
-    config["baseimg"] = f"disks/{version}/" + (f"BOSS/{name}/{name}.BIN").upper()
-    config["myimg"] = f"build/{version}/" + (f"{name}.bin").upper()
-    config["mapfile"] = f"build/{version}/bo{name}.map"
-    config["source_directories"] = [
-        f"src/boss/{name}",
-        f"src/boss/{name}_psp",
-        "include",
-        f"asm/{version}/boss/{name}",
-    ]
-    config["objdump_executable"] = "mipsel-linux-gnu-objdump"
-
-
-def apply_saturn(config, name):
-    config["arch"] = "sh2"
-    config["baseimg"] = f"disks/saturn" + (f"/{name}.PRG").upper()
-    config["myimg"] = f"build/saturn" + (f"/{name}.PRG").upper()
-    config["mapfile"] = f"build/saturn/{name}.map"
-    config["source_directories"] = [f"src/saturn/"]
-    config["objdump_executable"] = "sh-elf-objdump"
-
-
 def apply(config, args):
-    version = args.version or os.getenv("VERSION") or "us"
-    if version == "saturn":
-        apply_saturn(config, args.overlay)
+    version = args.version
+    name = re.sub(
+        r"^(?:st|bos?s?)/?(?=[a-z])",
+        "",
+        f"{args.overlay.lower() if version == 'pspeu' else args.overlay.upper()}",
+        flags=re.IGNORECASE,
+    )
+
+    baseimgRoot = {
+        "us": "disks/us",
+        "hd": "disks/hd/PSP_GAME/USRDIR/res/ps/hdbin",
+        "pspeu": "disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN",
+        "saturn": "disks/saturn",
+    }
+    binaryExt = {"us": "BIN", "hd": "bin", "pspeu": "bin", "saturn": "PRG"}
+    path_prefix = ""
+    name_prefix = ""
+
+    if name.lower().startswith("w_"):
+        name = name.lower().replace("w_", "w0_")
+        path_prefix = "BIN" if version == "us" else ""
+        name_prefix = "weapon/"
+        config["myimg"] = os.path.join(f"build/{version}", f"{name_prefix}{name}.bin")
+        config["source_directories"] = (
+            [f"src/saturn/"]
+            if version == "saturn"
+            else [
+                "include",
+                "src/weapon",
+                f"asm/{version}/weapon/data",
+            ]
+        )
     else:
-        name = args.overlay or "dra"
-        if name.startswith("st/"):
-            apply_psx_stage(config, version, name[3:])
-        elif name.startswith("st"):
-            apply_psx_stage(config, version, name[2:])
-        elif name.startswith("bo/"):
-            apply_psx_boss(config, version, name[3:])
-        elif name.startswith("bo"):
-            apply_psx_boss(config, version, name[2:])
-        elif name.startswith("tt_"):
-            apply_psx_servant(config, version, name)
-        elif name.startswith("w_"):
-            apply_psx_weapon(config, version, name)
-        elif name == "dra" or name == "main":
-            apply_psx_base(config, version, name)
+        if name.lower() in os.listdir("src/st"):
+            name_prefix = "st"
+            path_prefix = f"ST/{name}" if version == "us" else ""
+        elif name.lower() in os.listdir("src/boss"):
+            name_prefix = "bo"
+            path_prefix = f"BOSS/{name}" if version == "us" else ""
+        elif version == "us" and name.lower() in os.listdir("src/servant"):
+            path_prefix = "SERVANT"
+        elif version == "us" and f"{name}.BIN" in os.listdir(f"disks/us/BIN"):
+            path_prefix = "BIN"
+
+        config["myimg"] = os.path.join(
+            f"build/{version}", f"{name}.{binaryExt[version]}"
+        )
+        if version == "saturn":
+            config["source_directories"] = [f"src/saturn/"]
         else:
-            apply_psx_bin(config, version, name)
-        config["arch"] = "mipsel:4000" if version == "pspeu" else "mipsel"
-        config["objdump_executable"] = "mipsel-linux-gnu-objdump"
+            config["source_directories"] = [
+                "include",
+                os.path.join(
+                    "src",
+                    name_prefix.replace("bo", "boss"),
+                    name.lower().replace("tt_", "servant/tt_"),
+                ),
+                os.path.join(
+                    f"asm/{version}",
+                    name_prefix.replace("bo", "boss").replace("tt_", "servant/tt_"),
+                    name.lower().replace("tt_", "servant/tt_"),
+                ),
+            ]
+            if version == "pspeu" and not name.startswith("tt_"):
+                config["source_directories"].append(
+                    os.path.join(
+                        "src", name_prefix.replace("bo", "boss"), f"{name}_psp"
+                    )
+                )
+
+    config["mapfile"] = os.path.join(
+        f"build/{version}", f"{name_prefix}{name.lower()}.map"
+    )
+
+    if version == "us" or version == "saturn":
+        name = re.sub(r"w0_\d{3}", "WEAPON0", name)
+
+    config["baseimg"] = os.path.join(
+        baseimgRoot[version],
+        path_prefix,
+        f"{name.lower() if version == 'hd' else name}.{binaryExt[version]}",
+    )
+
+    config["objdump_executable"] = (
+        "sh-elf-objdump" if version == "saturn" else "mipsel-linux-gnu-objdump"
+    )
+    config["arch"] = {
+        "us": "mipsel",
+        "hd": "mipsel",
+        "pspeu": "mipsel:4000",
+        "saturn": "sh2",
+    }[version]

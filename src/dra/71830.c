@@ -25,7 +25,7 @@ extern s32 D_80137FDC;
 bool func_801119C4(void) {
     if (!D_801396EA) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.D_80072EFC == 0) {
+            if (g_Player.pl_demo_timer == 0) {
                 func_80111938();
                 return true;
             }
@@ -34,7 +34,7 @@ bool func_801119C4(void) {
         return false;
     }
 
-    if (g_Player.D_80072EFC != 0) {
+    if (g_Player.pl_demo_timer != 0) {
         func_8011197C();
         return false;
     }
@@ -1996,7 +1996,7 @@ void PlayerStepTeleport(void) {
 #if defined(VERSION_PSP)
     D_psp_091FC4A8 = D_psp_091FC4AC = 0;
 #endif
-    g_Player.D_80072EFC = 4;
+    g_Player.pl_demo_timer = 4;
 
     switch (PLAYER.step_s) {
     case 0:
@@ -2715,7 +2715,7 @@ void ControlBatForm(void) {
             func_80102CD8(2);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
-            g_Player.D_80072EFC = 0x20;
+            g_Player.pl_demo_timer = 32;
             g_Player.padSim = 0;
             break;
         }
@@ -2723,7 +2723,7 @@ void ControlBatForm(void) {
         if (--g_WingSmashTimer == 0) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
-            g_Player.D_80072EFC = 0x20;
+            g_Player.pl_demo_timer = 32;
             g_Player.padSim = 0;
         } else {
             if (directionsPressed & PAD_UP) {
