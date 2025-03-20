@@ -126,7 +126,7 @@ define link
 		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
 		$(3)
 endef
-define get_merged_functions 
+define get_conf_merged
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
 	yaml_file=open("config/splat.$(VERSION).$(2)$(1).yaml");\
@@ -135,7 +135,8 @@ define get_merged_functions
 	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
 	print(" ".join(merged_functions))')
 endef
-get_functions = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_merged_functions,$(1),$(2))))
+get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
+get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
 add_ovl_prefix = $(if $(filter $(1),$(STAGES)),$(or $(2),st),$(if $(filter $(1),$(BOSSES)),$(or $(3),bo)))$(1)
