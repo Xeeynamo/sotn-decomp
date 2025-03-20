@@ -30,7 +30,7 @@ void func_us_801B3690(Entity* self) {
     s32 tangent;    // s5
     s16 angle;      // s6
 
-    FntPrint("pl_demo_timer:%02x\n", g_Player.D_80072EFC);
+    FntPrint("pl_demo_timer:%02x\n", g_Player.pl_demo_timer);
     FntPrint("step:%02x\n", self->step);
 
     switch (self->step) {
@@ -56,7 +56,7 @@ void func_us_801B3690(Entity* self) {
 
     case 1:
         if (GetDistanceToPlayerX() < 64) {
-            g_Player.D_80072EFC = 2;
+            g_Player.pl_demo_timer = 2;
             if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
 #ifdef VERSION_PSP
                 g_Player.padSim = PAD_NONE;
@@ -72,7 +72,7 @@ void func_us_801B3690(Entity* self) {
             } else if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_R1;
             } else {
-                g_Player.D_80072EFC = 0x240;
+                g_Player.pl_demo_timer = 0x240;
                 g_Player.padSim = 0;
                 self->step = 3;
             }
