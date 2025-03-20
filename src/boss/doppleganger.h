@@ -21,11 +21,20 @@ typedef enum {
 
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
+    /* 0x17 */ E_ID_17 = 0x17,
+    /* 0x19 */ E_ID_19 = 0x19,
+    /* 0x1A */ E_ID_1A,
+    /* 0x1C */ E_ID_1C = 0x1C,
+    /* 0x1D */ E_ID_1D,
 } EntityIDs;
 
 typedef enum {
+    Dop_Stand = 1,
+    Dop_Walk = 2,
+    Dop_Fall = 4,
     Dop_Jump = 5,
     Dop_MorphBat = 6,
+    Dop_UnmorphBat = 10,
     Dop_Hit = 11,
     Dop_Kill = 17,
 } Doppleganger_Steps;
