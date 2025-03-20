@@ -6948,6 +6948,18 @@ void func_us_801B8234(Entity* self) {
     }
 }
 
+// these strings are incompatible with the psp character map
+#ifdef VERSION_PSP
+static char* D_psp_092A4CA8[] = {
+    "\xB5\xB7\xB1\xD5\x00\xD8\xAE\xB3\xC0\xDB\xB3\xFF",
+    "\xD4\xC5\xC0\xFF\x9E\x00\xB7\xD6\xD5\xB7\xFF",
+    "\xD6\xBA\xD4\xCF\x00\xC1\xBB\xFF",
+    "\xDC\xB6\xD3\xC4\x00\xC9\xD8\xB5\xFF",
+    "\xCC\xB6\xD0\x00\xD8\xB6\xFF",
+    "\xBB\xC4\xB3\x00\xCF\xBB\xCA\xD9\xFF",
+    "\xBC\xB2\xC5\x00\xCD\xB7\xD9\xFF",
+    "\xD4\xC5\xD0\x00\xBC\xFF\x9E\xAE\xB3\xBC\xFF\x9E\xFF"};
+#else
 static char* D_psp_092A4CA8[] = {
     _S("おきあゆ りょうたろう"), // Okiayu Ryoutarou
     _S("やなだ きよゆき"),       // Yanada Kiyoyuki
@@ -6958,6 +6970,7 @@ static char* D_psp_092A4CA8[] = {
     _S("しいな へきる"),         // Shiina Hekiru
     _S("やなみ じょうじ")        // Yanami Jyouji
 };
+#endif
 
 static char D_psp_092A4CC8[] =
     "平成７年８月に収録されたものです。"; // It was recorded in August of 1995
