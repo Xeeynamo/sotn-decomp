@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
+extern PlayerState g_Dop;
+
 // n.b.! this file is the same as bo4/unk_45354.c
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4954);
@@ -14,17 +16,13 @@ void func_8010E0B8(void) {
     g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-extern s16 D_us_801D433C[];
-
 void func_us_801C4A30(s16 a0, s16 a1) {
-    if (D_us_801D433C[0] <= a1) {
-        D_us_801D433C[0] = a1;
+    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= a1) {
+        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = a1;
     }
 }
 
 #include "../../decelerate.h"
-
-extern PlayerState g_Dop;
 
 s32 CheckMoveDirection(void) {
     if (g_Dop.unk44 & 2) {
@@ -70,9 +68,24 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_8010E6AC);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4EE4);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4F90);
+void func_us_801C4F90(void) {
+    DOPPLEGANGER.velocityY = FIX(-4.25);
+    g_Dop.unk44 |= 0x21;
+    SetPlayerAnim(0x20);
+    DOPPLEGANGER.step_s = 0;
+}
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C4FDC);
+void func_us_801C4FDC(void) {
+    SetPlayerStep(4);
+    if (g_Dop.prev_step != 2) {
+        SetPlayerAnim(0x1C);
+    }
+    DOPPLEGANGER.velocityY = FIX(2.0);
+    g_Dop.timers[ALU_T_5] = 8;
+    g_Dop.timers[ALU_T_6] = 8;
+    DOPPLEGANGER.velocityX = 0;
+    g_Dop.unk44 = 0x10;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C504C);
 
