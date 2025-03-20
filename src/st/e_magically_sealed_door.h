@@ -139,7 +139,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             if (self->params & 0x100) {
                 self->ext.magicallySealedDoor.angle = 0x800;
             }
-            g_Player.D_80072EFC = 0x18;
+            g_Player.pl_demo_timer = 24;
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
             self->animCurFrame = 0;
@@ -194,7 +194,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             }
             self->animCurFrame = 0;
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 2;
+            g_Player.pl_demo_timer = 2;
             self->ext.magicallySealedDoor.sideToPlayer =
                 (GetSideToPlayer() & 1) ^ 1;
             g_api.PlaySfx(SFX_DOOR_OPEN);
@@ -203,7 +203,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         break;
     case 2:
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 0x18;
+        g_Player.pl_demo_timer = 24;
         if (!(self->params & 0x100)) {
             self->ext.magicallySealedDoor.angle += 0x20;
             if (self->ext.magicallySealedDoor.angle >= 0x1000) {
@@ -223,7 +223,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         }
         break;
     case 3:
-        if (g_Player.D_80072EFC >= 4) {
+        if (g_Player.pl_demo_timer >= 4) {
             return;
         }
         if (self->ext.magicallySealedDoor.sideToPlayer != 0) {
@@ -231,7 +231,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         } else {
             g_Player.padSim = PAD_RIGHT;
         }
-        g_Player.D_80072EFC = 3;
+        g_Player.pl_demo_timer = 3;
         self->step++;
         break;
     case 4:
@@ -240,16 +240,16 @@ void EntityMagicallySealedDoor(Entity* self) {
         } else {
             g_Player.padSim = PAD_LEFT;
         }
-        g_Player.D_80072EFC = 4;
+        g_Player.pl_demo_timer = 4;
         if (MagicallySealedDoorIsNearPlayer(self) == 0) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
-            g_Player.D_80072EFC = 0;
+            g_Player.pl_demo_timer = 0;
         }
         break;
     case 5:
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 4;
+        g_Player.pl_demo_timer = 4;
         if (!(self->params & 0x100)) {
             self->ext.magicallySealedDoor.angle -= 0x20;
             if (self->ext.magicallySealedDoor.angle < 0xC01) {

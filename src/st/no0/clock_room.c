@@ -235,7 +235,7 @@ void EntityClockRoomController(Entity* self) {
         g_Statues[RIGHT_STATUE] = false;
         g_Statues[LEFT_STATUE] = false;
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
 #ifdef VERSION_PSP
