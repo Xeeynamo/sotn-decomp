@@ -784,7 +784,7 @@
 |        | CreateAdditionalBats                |       93 |          8 |        |                                 |       |
 | ric    | func_80161EF8                       |       93 |         13 |        |                                 |       |
 | ric    | RicHandleBladeDash                  |       93 |         17 |        |                                 |       |
-| lib    | func_us_801D1298                    |       94 |          8 |        |                                 |       |
+| lib    | func_psp_0924C6C0                   |       94 |          8 |        |                                 |       |
 | lib    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
 | no4    | func_psp_09237FB0                   |       95 |          8 |        |                                 |       |
 | ric    | RicEntitySlideKick                  |       95 |          9 |        |                                 |       |
@@ -1439,7 +1439,7 @@
 | wrp    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
 | tt_000 | UpdateServantDefault                |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
-| lib    | EntityMudman                        |     1202 |        112 | Yes    |                                 |       |
+| lib    | func_psp_0924B568                   |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
 | ric    | RicMain                             |     1221 |        208 | Yes    |                                 |       |
@@ -1474,7 +1474,7 @@
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
-| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.73  |
+| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.903 |
 | no4    | func_psp_09256330                   |     2559 |        253 | Yes    |                                 |       |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/7l1WU | 0.795 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
