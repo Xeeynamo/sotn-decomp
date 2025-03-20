@@ -858,6 +858,7 @@ extern u8 D_us_80183F64;
 
 void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
     const u16 DOUBLE_SPACE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
     const int FontHeight = 16;
@@ -911,7 +912,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
                     s_8 = 2;
                 }
             }
-            if (ch == '”') {
+            if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
                 str += 2;
             }
             chPix = (u8*)g_api.func_80106A28(ch, 1);

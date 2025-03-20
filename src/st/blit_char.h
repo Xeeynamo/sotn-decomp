@@ -10,6 +10,7 @@
 
 char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     const u16 DOUBLE_SPACE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
     const int FontHeight = 16;
@@ -42,7 +43,7 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
         }
     }
 
-    if (ch == '”') {
+    if (ch == RIGHT_DOUBLE_QUOTATION_MARK) {
         str += 2;
     }
 

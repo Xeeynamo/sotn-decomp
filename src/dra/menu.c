@@ -2313,6 +2313,7 @@ void func_800F98AC(const char* str, u32 arg1) {
 void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
+    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
     const int FontHeight = 16;
@@ -2367,7 +2368,7 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
             // load var_a0 as a big-endian value corresponding with shift-jis
             var_a0 = (var_s0 << 8);
             var_a0 += *var_s1++;
-            if (var_a0 == '”') {
+            if (var_a0 == RIGHT_DOUBLE_QUOTATION_MARK) {
                 var_s1 += 2;
             }
             if (var_a0 == DOUBLE_SPACE) {
