@@ -604,7 +604,7 @@ INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCFD4);
 #ifdef VERSION_PSP
 extern s32 E_ID(ID_37);
 extern s32 E_ID(SKELETON);
-extern s32 E_ID(ID_4D);
+extern s32 E_ID(MUDMAN);
 #endif
 
 // Lesser Demon minion spawn?
@@ -728,7 +728,7 @@ void func_us_801BD268(void) {
                     switch (Random() & 3) {
                     case 0:
                     case 1:
-                        entityId = E_ID(ID_4D);
+                        entityId = E_ID(MUDMAN);
                         break;
 
                     case 2:

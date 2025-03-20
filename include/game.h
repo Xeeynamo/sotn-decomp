@@ -146,12 +146,12 @@ typedef enum {
 // PSP buttons use same order as PSX, rather than by
 // value for logical conistency between the two
 typedef enum {
-    BUTTON_COUNT = 8,
     PAD_COUNT = 2,
     PAD_NONE = 0x0000,
 // R3 button on a DS3 controller attached to PSP
 // for debug mode may not be captured in these
 #ifdef VERSION_PSP
+    BUTTON_COUNT = 7,
     PAD_L2 = 0x0002,
     PAD_R2 = 0x0400,
     PAD_L1 = 0x0100,
@@ -169,6 +169,7 @@ typedef enum {
     PAD_DOWN = 0x0040,
     PAD_LEFT = 0x0080,
 #else
+    BUTTON_COUNT = 8,
     PAD_L2 = 0x0001,
     PAD_R2 = 0x0002,
     PAD_L1 = 0x0004,
@@ -199,9 +200,11 @@ typedef enum {
 // PSP allows you to do the Wolf Charge spell with either square or circle.
 // This was changed from PS1, which only accepts square.
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+#define BTN_MIST (PAD_L1 | PAD_R1)
 #else
 #define BTN_WOLF PAD_R2
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+#define BTN_MIST PAD_L1
 #endif
 
 #define MAX_PRIM_COUNT 0x500
@@ -1346,7 +1349,7 @@ typedef enum {
 
 typedef struct Collider {
     /* 0x00 */ u32 effects;
-    /* 0x04 */ s32 unk4;
+    /* 0x04 */ s32 unk4; // possibly an x offset
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
@@ -1807,8 +1810,8 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 D_80072EFC; // stun timer
-    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
+    /* 80072EFC */ s32 pl_demo_timer; // player frozen timer
+    /* 80072F00 */ s16 timers[16];    /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
@@ -1842,7 +1845,11 @@ typedef struct {
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;
+#ifdef VERSION_PSP
+    /* 80072F6A */ u16 unk4A;
+#else
     /* 80072F6A */ s16 unk4A;
+#endif
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;

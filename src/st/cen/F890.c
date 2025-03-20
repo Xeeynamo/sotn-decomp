@@ -128,7 +128,7 @@ void EntityPlatform(Entity* self) {
                 g_Player.padSim = 0;
             }
             g_Entities[1].ext.entSlot1.unk0 = 0;
-            g_Player.D_80072EFC = 1;
+            g_Player.pl_demo_timer = 1;
             self->step++;
         }
         break;
@@ -155,7 +155,7 @@ void EntityPlatform(Entity* self) {
                 self->step++;
             }
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 3:
@@ -175,12 +175,12 @@ void EntityPlatform(Entity* self) {
             tilemap->height = ((s16)tilemap->scrollY.i.hi + 0x100);
             func_8018F8EC(0);
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 4:
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         player->posX.i.hi = 384 - tilemap->scrollX.i.hi;
         if (temp_v0 > 496) {
             self->posY.i.hi--;
@@ -200,7 +200,7 @@ void EntityPlatform(Entity* self) {
     case 5:
         func_8018F890(0x200);
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
 
         if (g_CutsceneFlags & 8) {
             CreateEntityFromCurrentEntity(E_EQUIP_ITEM_DROP, &g_Entities[204]);
@@ -217,7 +217,7 @@ void EntityPlatform(Entity* self) {
             g_api.PlaySfx(SFX_METAL_CLANG_A);
         }
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 7:
@@ -236,7 +236,7 @@ void EntityPlatform(Entity* self) {
         }
         func_8018F890(0x300);
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 8:
@@ -464,7 +464,7 @@ void EntityElevatorStationary(Entity* self) {
             if (g_pads[0].pressed & PAD_UP) {
                 if (abs(posX) < 8) {
                     g_Entities[1].ext.entSlot1.unk0 = 1;
-                    g_Player.D_80072EFC = 2;
+                    g_Player.pl_demo_timer = 2;
                     g_Player.padSim = 0;
                     PLAYER.velocityX = 0;
                     PLAYER.velocityY = 0;
@@ -475,7 +475,7 @@ void EntityElevatorStationary(Entity* self) {
         break;
 
     case 3:
-        g_Player.D_80072EFC = 2;
+        g_Player.pl_demo_timer = 2;
         g_Player.padSim = 0;
         switch (self->step_s) {
         case 0:
@@ -505,7 +505,7 @@ void EntityElevatorStationary(Entity* self) {
         break;
 
     case 2:
-        g_Player.D_80072EFC = self->step;
+        g_Player.pl_demo_timer = self->step;
         g_Player.padSim = 0;
 
         switch (self->step_s) {
@@ -651,7 +651,7 @@ void EntityMovingElevator(Entity* self) {
         break;
 
     case 3:
-        g_Player.D_80072EFC = 2;
+        g_Player.pl_demo_timer = 2;
         g_Player.padSim = 0;
         self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
@@ -659,7 +659,7 @@ void EntityMovingElevator(Entity* self) {
         break;
 
     case 2:
-        g_Player.D_80072EFC = self->step;
+        g_Player.pl_demo_timer = self->step;
         g_Player.padSim = 0;
         self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
