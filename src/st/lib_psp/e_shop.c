@@ -2237,7 +2237,7 @@ void func_us_801AFE0C(Entity* self) {
         }
 #ifdef VERSION_PSP
         g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
 #endif
         break;
 
@@ -2246,7 +2246,7 @@ void func_us_801AFE0C(Entity* self) {
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
@@ -2262,7 +2262,7 @@ void func_us_801AFE0C(Entity* self) {
             g_Player.padSim = PAD_R2;
 #endif
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         SetStep(2);
         break;
 
@@ -2300,7 +2300,7 @@ void func_us_801AFE0C(Entity* self) {
             player->posX.i.hi = 0xE8;
             self->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 3:
@@ -2316,12 +2316,12 @@ void func_us_801AFE0C(Entity* self) {
         } else {
             player->posX.i.hi = 0xE8;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         break;
 
     case 4:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         self->step++;
         break;
 
@@ -2329,7 +2329,7 @@ void func_us_801AFE0C(Entity* self) {
         g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         self->step++;
         /* fallthrough */
     case 6:
@@ -2357,7 +2357,7 @@ void func_us_801AFE0C(Entity* self) {
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;
-                g_Player.D_80072EFC = 0x10;
+                g_Player.pl_demo_timer = 16;
                 self->step_s++;
                 g_CutsceneFlags |= 1;
                 break;
@@ -2386,12 +2386,12 @@ void func_us_801AFE0C(Entity* self) {
                     g_Player.padSim = PAD_LEFT;
                     self->step_s++;
                 }
-                g_Player.D_80072EFC = 1;
+                g_Player.pl_demo_timer = 1;
                 break;
 
             case 2:
                 g_Player.padSim = PAD_NONE;
-                g_Player.D_80072EFC = 0x80;
+                g_Player.pl_demo_timer = 128;
                 SetStep(10);
                 break;
             }
@@ -2400,9 +2400,9 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 10:
-        if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
+        if (!g_Player.pl_demo_timer && (g_Player.pl_vram_flag & 1)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-            g_Player.D_80072EFC = 1;
+            g_Player.pl_demo_timer = 1;
             self->step++;
         }
         player->posX.i.hi = 0x74;
@@ -2410,7 +2410,7 @@ void func_us_801AFE0C(Entity* self) {
 
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.pl_demo_timer = 1;
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
@@ -2421,7 +2421,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        g_Player.D_80072EFC = 0x20;
+        g_Player.pl_demo_timer = 32;
         g_Player.padSim = PAD_RIGHT;
         D_80097928 = 1;
         self->step++;
@@ -2431,7 +2431,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        if (!g_Player.D_80072EFC) {
+        if (!g_Player.pl_demo_timer) {
 #ifdef VERSION_PSP
             g_PauseAllowed = true;
 #endif

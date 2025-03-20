@@ -21,14 +21,14 @@ static void RicDebugExit(void) {
 bool RicDebug(void) {
     if (!g_IsRicDebugEnter) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.D_80072EFC == 0) {
+            if (g_Player.pl_demo_timer == 0) {
                 RicDebugEnter();
                 return true;
             }
         }
         return false;
     }
-    if (g_Player.D_80072EFC) {
+    if (g_Player.pl_demo_timer) {
         RicDebugExit();
         return false;
     }
