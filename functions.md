@@ -563,7 +563,7 @@
 | dra    | HandlePrologueEnd                   |       59 |         14 |        |                                 |       |
 | dra    | 29760.rodata                        |       60 |          0 | Yes    |                                 |       |
 | st0    | cutscene.rodata                     |       60 |          0 | Yes    |                                 |       |
-| dra    | func_psp_0913F960                   |       60 |          5 |        |                                 |       |
+| dra    | func_psp_0913F960                   |       60 |          5 |        | https://decomp.me/scratch/pLSIN | 0.062 |
 | lib    | EntityExplosionSpawn                |       60 |          6 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | no4    | func_psp_0925B740                   |       60 |          6 |        |                                 |       |
 | ric    | RicEntityCrashReboundStoneParticles |       60 |          8 |        |                                 |       |
