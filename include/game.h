@@ -1810,7 +1810,7 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 pl_demo_timer; // player frozen timer
+    /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16];    /// Indexed with AluTimers
 
     // 0x01: touching the ground
@@ -1822,7 +1822,7 @@ typedef struct {
     // 0x1000: standing on a slightly ascending or descending slope
     // 0x4000: standing on a raising slope
     // 0x8000: standing on any slope
-    /* 80072F20 */ s32 pl_vram_flag;
+    /* 80072F20 */ s32 vram_flag;
 
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
@@ -1841,7 +1841,7 @@ typedef struct {
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
     /* 80072F60 */ u16 unk40;
-    /* 80072F62 */ u16 pl_high_jump_timer;
+    /* 80072F62 */ u16 high_jump_timer;
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;

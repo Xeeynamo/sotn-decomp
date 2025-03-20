@@ -382,7 +382,7 @@ void RicEntitySmokePuff(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.pl_vram_flag & 0x8000) {
+            if (g_Player.vram_flag & 0x8000) {
                 posX /= 2;
             }
         }

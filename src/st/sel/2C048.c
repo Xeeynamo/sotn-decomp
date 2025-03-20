@@ -2409,9 +2409,6 @@ void func_801B1FD8(u8* arg0, s32 arg1) {
 // Variant of func_800F99B8, with the third argument stripped
 void func_801B2108(const char* str, s32 arg1) {
     // See src/st/blit_char.h
-    const u16 MINSCODE = 0x8140;
-    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
-
     const int FontWidth = 12;
     const int FontHeight = 16;
     const int FontStride = FontWidth / 2;
@@ -2455,16 +2452,16 @@ void func_801B2108(const char* str, s32 arg1) {
         } else if ('A' <= var_s0 && var_s0 <= 'Z') {
             var_a0 = var_s0 + 0x821F;
         } else if (var_s0 == ' ') {
-            var_a0 = MINSCODE;
+            var_a0 = '　';
             var_s2 = 2;
         } else {
             // load var_a0 as a big-endian value corresponding with shift-jis
             var_a0 = (var_s0 << 8);
             var_a0 += *var_s1++;
-            if (var_a0 == RIGHT_DOUBLE_QUOTATION_MARK) {
+            if (var_a0 == '”') {
                 var_s1 += 2;
             }
-            if (var_a0 == MINSCODE) {
+            if (var_a0 == '　') {
                 var_s0 = ' ';
                 var_s2 = 2;
             }

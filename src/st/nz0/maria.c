@@ -45,7 +45,7 @@ void func_801B8E0C(Entity* self) {
         if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 1:
@@ -62,7 +62,7 @@ void func_801B8E0C(Entity* self) {
                 g_Player.padSim = PAD_LEFT;
             }
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 2:
@@ -74,7 +74,7 @@ void func_801B8E0C(Entity* self) {
             DestroyEntity(self);
         }
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
     }
 }

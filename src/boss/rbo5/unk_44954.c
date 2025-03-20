@@ -64,7 +64,7 @@ void func_8010E570(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
-    if (g_Dop.pl_vram_flag & 0x20) {
+    if (g_Dop.vram_flag & 0x20) {
         atLedge = true;
     }
 

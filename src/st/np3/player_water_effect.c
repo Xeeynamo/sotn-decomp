@@ -261,9 +261,9 @@ void EntityAlucardWaterEffect(Entity* arg0) {
                             var_s1 = (var_s1 * var_s3) / 80;
                         }
                         if (((var_s1 < 0) &&
-                             ((g_Player.pl_vram_flag & 8) == 0)) ||
+                             ((g_Player.vram_flag & 8) == 0)) ||
                             ((var_s1 > 0) &&
-                             ((g_Player.pl_vram_flag & 4) == 0))) {
+                             ((g_Player.vram_flag & 4) == 0))) {
                             player->posX.val += var_s1 << 4;
                         }
                     }

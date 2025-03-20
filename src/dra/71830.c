@@ -25,7 +25,7 @@ extern s32 D_80137FDC;
 bool func_801119C4(void) {
     if (!D_801396EA) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.pl_demo_timer == 0) {
+            if (g_Player.demo_timer == 0) {
                 func_80111938();
                 return true;
             }
@@ -34,7 +34,7 @@ bool func_801119C4(void) {
         return false;
     }
 
-    if (g_Player.pl_demo_timer != 0) {
+    if (g_Player.demo_timer != 0) {
         func_8011197C();
         return false;
     }
@@ -240,7 +240,7 @@ void PlayerStepStand(void) {
     s32 atLedge;
 
     atLedge = 0;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = 1;
     }
 
@@ -431,7 +431,7 @@ void PlayerStepStand(void) {
         func_8010DFF0(1, 1);
         local_flags = 0;
         if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
-            (g_Player.pl_vram_flag & 1) && (g_GameTimer & 1)) {
+            (g_Player.vram_flag & 1) && (g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
         if (PLAYER.animFrameIdx >= g_Player.unk54) {
@@ -442,7 +442,7 @@ void PlayerStepStand(void) {
             local_flags = 0xF;
         }
         if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
-            !(g_Player.pl_vram_flag & 1)) {
+            !(g_Player.vram_flag & 1)) {
             PLAYER.animFrameIdx = 5;
             PLAYER.ext.player.anim = 0x6C;
             PLAYER.step = 4;
@@ -577,7 +577,7 @@ void PlayerStepJump(void) {
                 !(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-1);
             }
-            if (g_Player.pl_vram_flag & 2) {
+            if (g_Player.vram_flag & 2) {
                 PLAYER.velocityY = FIX(-0.25);
                 g_Player.unk44 |= 0x20;
             }
@@ -762,7 +762,7 @@ void PlayerStepCrouch(void) {
     local_flags = 0;
 
     atLedge = 0;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = 1;
     }
 
@@ -1046,7 +1046,7 @@ void PlayerStepHighJump(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             func_801139CC(3);
             if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
@@ -1068,7 +1068,7 @@ void PlayerStepHighJump(void) {
         break;
 
     case 1:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
@@ -1447,16 +1447,16 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         break;
     case 15:
     case 2:
-        if ((g_Player.unk04 & 0x8000) && !(g_Player.pl_vram_flag & 0x8000)) {
+        if ((g_Player.unk04 & 0x8000) && !(g_Player.vram_flag & 0x8000)) {
             goto deepcond;
         }
-        if ((g_Player.pl_vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+        if ((g_Player.vram_flag & 0x8000) && !(g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 10), 0);
         }
-        if (!(g_Player.pl_vram_flag & 0xE)) {
+        if (!(g_Player.vram_flag & 0xE)) {
             break;
         }
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             func_801139CC(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
@@ -1549,12 +1549,12 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 5:
         DecelerateX(FIX(1.0 / 8));
         if (g_Player.timers[8]) {
-            if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
+            if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_801139CC(0);
             }
             break;
-        } else if (g_Player.pl_vram_flag & 0xC) {
-            if (!(g_Player.pl_vram_flag & 0xFF03)) {
+        } else if (g_Player.vram_flag & 0xC) {
+            if (!(g_Player.vram_flag & 0xFF03)) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -1586,7 +1586,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 6:
     case 7:
         DecelerateX(FIX(1.0 / 8));
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.vram_flag & 1)) {
             func_8010E7AC();
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -1620,7 +1620,7 @@ void PlayerStepStoned(s32 arg0) {
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.vram_flag & 1)) {
             PLAYER.velocityY = FIX(-2);
         }
         func_8010E3B8(FIX(-1.25));
@@ -1671,7 +1671,7 @@ void PlayerStepStoned(s32 arg0) {
             yShift = yShift / 4;
         }
 
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.vram_flag & 1)) {
             PLAYER.velocityY += yShift;
             if (PLAYER.velocityY > FIX(7)) {
                 PLAYER.velocityY = FIX(7);
@@ -1952,7 +1952,7 @@ void PlayerStepUnk17(void) {
     PLAYER.animFrameDuration = 4;
 
     if (g_unkGraphicsStruct.unk20 == 0) {
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.vram_flag & 1) {
             func_8010E570(0);
         } else {
             func_8010E7AC();
@@ -1996,7 +1996,7 @@ void PlayerStepTeleport(void) {
 #if defined(VERSION_PSP)
     D_psp_091FC4A8 = D_psp_091FC4AC = 0;
 #endif
-    g_Player.pl_demo_timer = 4;
+    g_Player.demo_timer = 4;
 
     switch (PLAYER.step_s) {
     case 0:
@@ -2594,7 +2594,7 @@ void ControlBatForm(void) {
             DecelerateX(0x1200);
             break;
         case PAD_DOWN:
-            if (g_Player.pl_vram_flag & 1) {
+            if (g_Player.vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2668,7 +2668,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_DOWN:
-            if (g_Player.pl_vram_flag & 1) {
+            if (g_Player.vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2687,7 +2687,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_DOWN:
-            if (g_Player.pl_vram_flag & 1) {
+            if (g_Player.vram_flag & 1) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2708,14 +2708,14 @@ void ControlBatForm(void) {
         }
         break;
     case 3:
-        if (!PLAYER.facingLeft && (g_Player.pl_vram_flag & 4) ||
-            PLAYER.facingLeft && (g_Player.pl_vram_flag & 8)) {
+        if (!PLAYER.facingLeft && (g_Player.vram_flag & 4) ||
+            PLAYER.facingLeft && (g_Player.vram_flag & 8)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
             PlaySfx(SFX_WALL_DEBRIS_B);
             PLAYER.velocityX = 0;
-            g_Player.pl_demo_timer = 32;
+            g_Player.demo_timer = 32;
             g_Player.padSim = 0;
             break;
         }
@@ -2723,7 +2723,7 @@ void ControlBatForm(void) {
         if (--g_WingSmashTimer == 0) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
-            g_Player.pl_demo_timer = 32;
+            g_Player.demo_timer = 32;
             g_Player.padSim = 0;
         } else {
             if (directionsPressed & PAD_UP) {
@@ -2739,15 +2739,15 @@ void ControlBatForm(void) {
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
                 DecelerateY(0x2000);
             }
-            if (g_Player.pl_vram_flag & 0x800) {
-                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x400) ||
-                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x400)) {
+            if (g_Player.vram_flag & 0x800) {
+                if (PLAYER.facingLeft && (g_Player.vram_flag & 0x400) ||
+                    !PLAYER.facingLeft && !(g_Player.vram_flag & 0x400)) {
                     PLAYER.velocityY = FIX(6);
                 }
             }
-            if (g_Player.pl_vram_flag & 0x8000) {
-                if (PLAYER.facingLeft && (g_Player.pl_vram_flag & 0x4000) ||
-                    !PLAYER.facingLeft && !(g_Player.pl_vram_flag & 0x4000)) {
+            if (g_Player.vram_flag & 0x8000) {
+                if (PLAYER.facingLeft && (g_Player.vram_flag & 0x4000) ||
+                    !PLAYER.facingLeft && !(g_Player.vram_flag & 0x4000)) {
                     PLAYER.velocityY = FIX(-6);
                 }
             }
@@ -2759,11 +2759,11 @@ void ControlBatForm(void) {
             }
             if (g_GameTimer % 3 == 0) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, 65, 0);
-                if (g_Player.pl_vram_flag & 1) {
+                if (g_Player.vram_flag & 1) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(69, 9), 0);
                 }
-                if (g_Player.pl_vram_flag & 2) {
+                if (g_Player.vram_flag & 2) {
                     x_offset = 3;
                     if (PLAYER.facingLeft) {
                         x_offset = -x_offset;
@@ -2827,7 +2827,7 @@ void PlayerStepUnmorphBat(void) {
 
     PLAYER.drawFlags = FLAG_DRAW_ROTZ;
     DecelerateX(0x2000);
-    if (g_Player.pl_vram_flag & 3) {
+    if (g_Player.vram_flag & 3) {
         PLAYER.velocityY = 0;
     }
     DecelerateY(0x2000);
@@ -2856,13 +2856,13 @@ void PlayerStepUnmorphBat(void) {
                 }
                 D_8013AECC++;
             } else {
-                if (g_Player.pl_vram_flag & 0x8000) {
+                if (g_Player.vram_flag & 0x8000) {
                     PLAYER.posY.i.hi--;
                 }
             }
         }
 
-        if ((g_Player.pl_vram_flag & 3) == 3) {
+        if ((g_Player.vram_flag & 3) == 3) {
             g_Player.unk68 = 1;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
@@ -2884,7 +2884,7 @@ void PlayerStepUnmorphBat(void) {
         if (g_Player.unk66 == 3) {
             func_8010E83C(0);
             PLAYER.posY.i.hi -= 3;
-            if (!(g_Player.pl_vram_flag & 0x8000)) {
+            if (!(g_Player.vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
@@ -2926,7 +2926,7 @@ void PlayerStepStuck(void) {
     if (collider.effects & EFFECT_SOLID) {
         collisionCount++;
     }
-    if ((g_Player.pl_vram_flag & 0x41) == 0x41) {
+    if ((g_Player.vram_flag & 0x41) == 0x41) {
         collisionCount++;
     }
     PLAYER.rotZ = 0;
@@ -3193,10 +3193,10 @@ void PlayerStepUnmorphMist(void) {
     s32 i;
     s32 else_cycles;
 
-    if ((g_Player.pl_vram_flag & 1) && (PLAYER.velocityY > 0)) {
+    if ((g_Player.vram_flag & 1) && (PLAYER.velocityY > 0)) {
         PLAYER.velocityY = 0;
     }
-    if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < 0)) {
+    if ((g_Player.vram_flag & 2) && (PLAYER.velocityY < 0)) {
         PLAYER.velocityY = 0;
     }
     DecelerateX(0x200);
@@ -3223,12 +3223,12 @@ void PlayerStepUnmorphMist(void) {
             }
             D_8013AECC++;
         } else {
-            if (g_Player.pl_vram_flag & 0x8000) {
+            if (g_Player.vram_flag & 0x8000) {
                 PLAYER.posY.i.hi--;
             }
         }
     }
-    if ((g_Player.pl_vram_flag & 3) == 3) {
+    if ((g_Player.vram_flag & 3) == 3) {
         PLAYER.step_s = 1;
         PLAYER.velocityY = 0;
         PLAYER.velocityX = 0;
@@ -3257,7 +3257,7 @@ void PlayerStepUnmorphMist(void) {
             }
             func_8010E83C(0);
             PLAYER.posY.i.hi -= 3;
-            if (!(g_Player.pl_vram_flag & 0x8000)) {
+            if (!(g_Player.vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
