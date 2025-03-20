@@ -2312,6 +2312,8 @@ void func_800F98AC(const char* str, u32 arg1) {
 #if defined(VERSION_US)
 void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
+    const u16 DOUBLE_SPACE = 0x8140;
+
     const int FontWidth = 12;
     const int FontHeight = 16;
     const int FontStride = FontWidth / 2;
@@ -2359,7 +2361,7 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
         } else if ('A' <= var_s0 && var_s0 <= 'Z') {
             var_a0 = var_s0 + 0x821F;
         } else if (var_s0 == ' ') {
-            var_a0 = '　';
+            var_a0 = DOUBLE_SPACE;
             var_s2 = 2;
         } else {
             // load var_a0 as a big-endian value corresponding with shift-jis
@@ -2368,7 +2370,7 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
             if (var_a0 == '”') {
                 var_s1 += 2;
             }
-            if (var_a0 == '　') {
+            if (var_a0 == DOUBLE_SPACE) {
                 var_s0 = ' ';
                 var_s2 = 2;
             }

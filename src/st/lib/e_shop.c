@@ -857,6 +857,8 @@ extern u8 D_us_80183F64;
 #endif
 
 void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
+    const u16 DOUBLE_SPACE = 0x8140;
+
     const int FontWidth = 12;
     const int FontHeight = 16;
     const int FontStride = FontWidth / 2;
@@ -894,7 +896,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             } else if (ch >= 'A' && ch <= 'Z') {
                 ch = ch + 0x821F;
             } else if (ch == ' ') {
-                ch = '　';
+                ch = DOUBLE_SPACE;
                 s_8 = 2;
             } else {
 #ifdef VERSION_PSP
@@ -905,7 +907,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
-                if (ch == '　') {
+                if (ch == DOUBLE_SPACE) {
                     s_8 = 2;
                 }
             }
@@ -915,7 +917,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_80106A28(ch, 1);
 #endif
             while (true) {
-                if (ch == '　') {
+                if (ch == DOUBLE_SPACE) {
                     break;
                 }
                 for (i = 0; i < FontHeight; i++) {
