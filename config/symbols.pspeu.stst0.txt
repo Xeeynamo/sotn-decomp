@@ -180,11 +180,11 @@ D_psp_E_DRACULA_METEOR = 0x09279E48;
 D_psp_E_DRACULA_UNK1D = 0x09279E50;
 D_psp_E_DRACULA_UNK1C = 0x09279E58;
 D_psp_E_DRACULA_UNK1B = 0x09279E60;
-g_Dialogue2 = 0x0927B1C8; // size = 0x40
+g_Dialogue2 = 0x0927B1C8; // size:0x40
 D_801BEB64 = 0x0927B208;
 D_801C2578 = 0x0927B4A0;
 cutsceneUnk3Unknown = 0x0927B6A8;
-g_Dialogue = 0x0927BA58; // size = 0x44
+g_Dialogue = 0x0927BA58; // size:0x40
 g_IsCutsceneDone = 0x0927BA98;
 g_SkipCutscene = 0x0927BAA0;
 g_CutsceneFlags = 0x0927BAA8;
