@@ -56,7 +56,7 @@ segments:
       - [0x13A4, data]
       - [0x4328, .data, e_life_up]
       - [0x437C, data]
-      - [0x32BA8, .rodata, doors]
+      - [0x32B70, .rodata, doors]
       - [0x32C4C, .rodata, unk_354F0]
       - [0x32C6C, .rodata, e_red_door]
       - [0x32C84, .rodata, e_collect]

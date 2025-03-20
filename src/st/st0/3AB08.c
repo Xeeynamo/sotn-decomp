@@ -1,18 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-
-typedef struct {
-    u8* unkPtr;
-    s16 unk4;
-    u16 priority;
-} cloudData;
-
-typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-    /* 0x0C */ s32 unkC;
-} cloudStructUnk;
+#include "../../../include/cloud_struct.h"
 
 static s16 D_80182084[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
@@ -511,7 +499,7 @@ void EntityCutscenePhotograph(Entity* self) {
     s32 newColor;
     s32 limit;
 
-    g_Player.D_80072EFC = 4;
+    g_Player.pl_demo_timer = 4;
     g_Player.padSim = 0;
     g_PauseAllowed = false;
     switch (self->step) {

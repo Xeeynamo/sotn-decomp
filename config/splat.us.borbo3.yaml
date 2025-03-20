@@ -56,7 +56,8 @@ segments:
       - [0x11E0, .data, e_room_fg]
       - [0x126C, data]
       - [0x1288, .data, e_life_up]
-      - [0x12DC, data]
+      - [0x12DC, .data, e_clouds]
+      - [0x1414, data] # begin RBO3_pStObjLayoutHorizontal ptr data
       - [0x7350, pal, D_80187350]
       - [0x7550, pal, D_80187550] # unused
       - [0x7610, pal, D_80187610]
@@ -86,6 +87,7 @@ segments:
       - [0x1DEE4, c, popup]
       - [0x1E214, c, prim_helpers]
       - [0x1EA44, c, e_life_up]
+      - [0x1F2F8, c, e_clouds]
       - [0x1F978, .bss, create_entity]
       - [0x1F988, bss]
       - [0x205F0, .bss, e_collect]

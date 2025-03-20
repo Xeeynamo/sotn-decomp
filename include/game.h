@@ -1349,7 +1349,7 @@ typedef enum {
 
 typedef struct Collider {
     /* 0x00 */ u32 effects;
-    /* 0x04 */ s32 unk4;
+    /* 0x04 */ s32 unk4; // possibly an x offset
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
@@ -1810,8 +1810,8 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 D_80072EFC; // stun timer
-    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
+    /* 80072EFC */ s32 pl_demo_timer; // player frozen timer
+    /* 80072F00 */ s16 timers[16];    /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
