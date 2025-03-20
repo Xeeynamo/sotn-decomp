@@ -1,26 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #if defined(VERSION_PSP)
-static char alucard_mist_ENG[] = "\xBC\x10Mist could pass.\x00";
-static char alucard_mist_ES[] =
-    "\xBC\x10La niebla pasar\xD5"
-    "a.\x00";
-static char alucard_mist_IT[] = "\xBC\x10La nebbia pu\xD9 passare.\x00";
+static char alucard_mist_ENG[] = "\xBC\x10Mist could pass.";
+static char alucard_mist_ES[] = "\xBC\x10La niebla pasar\xD5a.";
+static char alucard_mist_IT[] = "\xBC\x10La nebbia pu\xD9 passare.";
 static char alucard_mist_FR[] = "\xBC\x10La Brume a pu passer.";
-static char alucard_mist_DE[] = "\xBC\x10Nebel k\xCEme vorbei.\x00";
+static char alucard_mist_DE[] = "\xBC\x10Nebel k\xCEme vorbei.";
 
-static char richter_mist_ENG[] = "\xB8\x10Not important to me.\x00";
-static char richter_mist_ES[] = "\xB8\x10No me importa.\x00";
-static char richter_mist_IT[] = "\xB8\x10Non importante per me.\x00";
-static char richter_mist_FR[] =
-    "\xB8\x10\xB8"
-    "a ne me sert \xCB rien.";
-static char richter_mist_DE[] = "\xB8\x10Geht mich nichts an.\x00";
+static char richter_mist_ENG[] = "\xB8\x10Not important to me.";
+static char richter_mist_ES[] = "\xB8\x10No me importa.";
+static char richter_mist_IT[] = "\xB8\x10Non importante per me.";
+static char richter_mist_FR[] = "\xB8\x10\xB8a ne me sert \xCB rien.";
+static char richter_mist_DE[] = "\xB8\x10Geht mich nichts an.";
 
-static char maria_mist_ENG[] = "\xB8\x10I can't get through.\x00";
-static char maria_mist_ES[] = "\xB8\x10No puedo pasar.\x00";
+static char maria_mist_ENG[] = "\xB8\x10I can't get through.";
+static char maria_mist_ES[] = "\xB8\x10No puedo pasar.";
 static char maria_mist_IT[] = "\xB8\x10Non riesco a passare.";
-static char maria_mist_FR[] = "\xB8\x10Je ne peux pas passer.\x00";
-static char maria_mist_DE[] = "\xB8\x10Ich komme nicht durch.\x00";
+static char maria_mist_FR[] = "\xB8\x10Je ne peux pas passer.";
+static char maria_mist_DE[] = "\xB8\x10Ich komme nicht durch.";
 
 static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss

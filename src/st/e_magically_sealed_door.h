@@ -20,14 +20,10 @@ static u16 g_eBlueDoorTiles[][8] = {
     {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000},
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000}};
 
+static char D_80182710[] = "\x7C\x0EMagically sealed．";
 // NZ0 has an extra .word in data vs NO0
-static char D_80182710[] = {
-    0x7C, 0x0E, 'M', 'a', 'g', 'i',  'c',  'a',  'l',  'l',  'y', ' ', 's',
-    'e',  'a',  'l', 'e', 'd', 0x81, 0x44, 0x00, 0x00, 0x00, 0x00
-#if defined(STAGE_IS_NO0)
-};
-#else
-    , 0x00, 0x00, 0x00, 0x00 };
+#if defined(STAGE_IS_NZ0)
+STATIC_PAD_DATA(4);
 #endif
 
 static s32 MagicallySealedDoorIsNearPlayer(Entity* e) {
