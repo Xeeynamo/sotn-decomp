@@ -354,7 +354,7 @@ void func_8012D28C(bool exitEarly) {
     func_80102CD8(2);
     PlaySfx(SFX_WALL_DEBRIS_B);
     PLAYER.velocityX = 0;
-    g_Player.D_80072EFC = 0x20;
+    g_Player.pl_demo_timer = 32;
     g_Player.padSim = 0;
     // Odd logic, if we exit early, we force an R2-tap. Strange!
     if (exitEarly) {

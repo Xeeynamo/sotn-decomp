@@ -92,7 +92,7 @@ $(BUILD_DIR)/ric.elf: $(BUILD_DIR)/ric.ld $(addprefix $(BUILD_DIR)/src/ric/,$(ad
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link_with_deadstrip,tt_$*,$@)
 
-ST_LIB_MERGE = collision e_chair st_update create_entity e_red_door e_room_fg st_common prim_helpers e_bloody_zombie e_misc en_thornweed_corpseweed e_skeleton e_life_up e_flea_man e_mist_door e_flea_armor e_candle_table st_debug e_lock_camera unk_3B200 unk_3B53C e_init e_dhuron e_flying_zombie e_library_bg e_spellbook_magic_tome
+ST_LIB_MERGE = collision e_chair st_update create_entity e_red_door e_room_fg st_common prim_helpers e_bloody_zombie e_misc en_thornweed_corpseweed e_skeleton e_life_up e_flea_man e_mist_door e_flea_armor e_candle_table st_debug e_lock_camera unk_3B200 unk_3B53C e_init e_dhuron e_flying_zombie e_library_bg e_mudman e_spellbook_magic_tome
 $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
 	$(call link_with_deadstrip,stlib,$@)
 ST_NO4_MERGE =
@@ -118,7 +118,7 @@ OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	 $(SOTNSTR) -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
+	 $(SOTNSTR) -p -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)

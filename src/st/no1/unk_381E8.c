@@ -945,7 +945,7 @@ void func_us_801BA290(Entity* self) {
 
     if (self->step > 1 && self->step < 7) {
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 2;
+        g_Player.pl_demo_timer = 2;
         g_api.func_8010DFF0(0, 1);
         g_api.func_8010E168(1, 0x20);
     }
@@ -978,7 +978,7 @@ void func_us_801BA290(Entity* self) {
             (g_Player.status == PLAYER_STATUS_UNK10000000)) {
 #endif
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 2;
+            g_Player.pl_demo_timer = 2;
             g_PauseAllowed = false;
             g_api.PlaySfx(SFX_TINK_JINGLE);
             self->step++;

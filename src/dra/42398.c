@@ -1061,10 +1061,10 @@ void func_800E414C(void) {
         PlaySfx(0x80);
         D_80097928 = 1;
         if (D_8003C708.flags == FLAG_UNK_40) {
-            g_Player.D_80072EFC = 0x18;
+            g_Player.pl_demo_timer = 24;
             g_Player.padSim = PAD_LEFT;
         } else {
-            g_Player.D_80072EFC = 0x18;
+            g_Player.pl_demo_timer = 24;
             g_Player.padSim = PAD_RIGHT;
         }
         D_8003C708.unk2++;

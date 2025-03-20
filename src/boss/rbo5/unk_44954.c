@@ -58,7 +58,52 @@ void func_8010E3B8(s32 velocityX) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_8010E470);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_8010E570);
+extern u8 D_us_801813AC[];
+
+void func_8010E570(s32 arg0) {
+    s32 anim = 0;
+    bool atLedge = false;
+
+    if (g_Dop.pl_vram_flag & 0x20) {
+        atLedge = true;
+    }
+
+    DOPPLEGANGER.velocityX = arg0;
+    DOPPLEGANGER.velocityY = 0;
+    SetPlayerStep(Dop_Stand);
+    if (g_Dop.unk48) {
+        DOPPLEGANGER.step_s = 2;
+        atLedge = false;
+    }
+
+    switch (g_Dop.prev_step) {
+    case Dop_UnmorphBat:
+        anim = 4;
+        break;
+    case Dop_Walk:
+        anim = 4;
+        if (DOPPLEGANGER.ext.player.anim == 9) {
+            DOPPLEGANGER.ext.player.anim = D_us_801813AC[2 + atLedge];
+            return;
+        }
+        if (DOPPLEGANGER.ext.player.anim == 7) {
+            anim = 0;
+        }
+        break;
+    case Dop_Jump:
+    case Dop_Fall:
+        anim = 6;
+        if (abs(DOPPLEGANGER.velocityX) > FIX(2.5)) {
+            anim = 4;
+        }
+        break;
+    default:
+        anim = 8;
+        break;
+    }
+    anim += atLedge;
+    SetPlayerAnim(D_us_801813AC[anim]);
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_8010E6AC);
 
@@ -88,7 +133,14 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_80111CC0);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C5C64);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", PlayerStepWalk);
+void PlayerStepWalk(void) {
+    if (func_us_801C5650(0x4301C) == 0) {
+        SetSpeedX(0x18000);
+        if (CheckMoveDirection() == 0) {
+            func_8010E570(0);
+        }
+    }
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_44954", func_us_801C5EE0);
 

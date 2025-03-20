@@ -2881,8 +2881,8 @@ typedef struct {
     /* 0x88 */ s32 unk88;
     /* 0x8C */ s32 unk8C;
     /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
     /* 0x9C */ f32 unk9C;
     /* 0xA0 */ f32 unkA0;
 } ET_Clouds;
@@ -2897,6 +2897,19 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
 } ET_801C0B9C;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u32 : 24;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s16 unk9C;
+} ET_unkDoor;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3149,6 +3162,7 @@ typedef union { // offset=0x7C
     ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
     ET_801C0B9C et_801C0B9C;
+    ET_unkDoor unkDoor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
