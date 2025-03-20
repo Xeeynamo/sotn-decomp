@@ -83,7 +83,7 @@ typedef enum EntityIDs {
     /* 0x4A */ E_ID_4A,
     /* 0x4B */ E_ID_4B,
     /* 0x4C */ E_ID_4C,
-    /* 0x4D */ E_ID_4D,
+    /* 0x4D */ E_MUDMAN,
     /* 0x4E */ E_ID_4E,
     /* 0x4F */ E_ID_4F,
 } EntityIDs;
@@ -134,7 +134,7 @@ extern EInit g_EInitFleaArmor;
 extern EInit D_us_801809C8;
 extern EInit g_EInitFleaMan;
 extern EInit g_EInitMudman;
-// extern EInit D_us_801809EC;
+extern EInit D_us_801809EC;
 
 extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
