@@ -49,6 +49,7 @@ BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
 UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
+AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
@@ -121,8 +122,8 @@ define link
 		-T $(BUILD_DIR)/$(1).ld \
 		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
 		$(if $(wildcard $(CONFIG_DIR)/$(UNDEFINED_SYMS)),-T $(CONFIG_DIR)/$(UNDEFINED_SYMS)) \
-		$(if $(wildcard $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt),-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).$(1).txt) \
-		$(if $(wildcard $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt),-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).$(1).txt) \
+		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)) \
+		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
 		$(3)
 endef
 define get_merged_functions 
