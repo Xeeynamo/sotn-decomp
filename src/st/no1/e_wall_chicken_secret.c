@@ -404,7 +404,7 @@ void func_us_801BF3F4(Entity* self) {
             collision = GetPlayerCollisionWith(self, 16, 8 - self->params, 4);
             if (collision) {
                 g_Player.padSim = 0;
-                g_Player.pl_demo_timer = 2;
+                g_Player.demo_timer = 2;
                 self->step = 6;
                 for (i = 6; i < 8; i++) {
                     tilePos = D_us_801815F4[i];
@@ -419,7 +419,7 @@ void func_us_801BF3F4(Entity* self) {
         if (collision && (GetDistanceToPlayerX() < 6)) {
             if (!--self->ext.et_801BF3F4.unk88) {
                 g_Player.padSim = 0;
-                g_Player.pl_demo_timer = 2;
+                g_Player.demo_timer = 2;
                 self->step++;
             }
         } else {
@@ -435,14 +435,14 @@ void func_us_801BF3F4(Entity* self) {
             }
         }
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 2;
+        g_Player.demo_timer = 2;
         D_us_80181664 = 1;
         g_api.PlaySfx(0x7B6);
         self->step++;
         break;
 
     case 3:
-        g_Player.pl_demo_timer = 2;
+        g_Player.demo_timer = 2;
         self->posY.i.hi++;
         if (collision) {
             player->posY.i.hi++;
@@ -455,7 +455,7 @@ void func_us_801BF3F4(Entity* self) {
             g_api.CheckCollision(posX, posY, &collider, 0);
             FntPrint("vram %x\n", collider.effects);
             if (collider.effects & EFFECT_SOLID) {
-                g_Player.pl_demo_timer = 0;
+                g_Player.demo_timer = 0;
                 self->step++;
             }
         }
@@ -475,7 +475,7 @@ void func_us_801BF3F4(Entity* self) {
     case 5:
         if (collision && GetDistanceToPlayerX() < 6) {
             g_api.func_8010DFF0(0, 1);
-            g_Player.pl_demo_timer = 2;
+            g_Player.demo_timer = 2;
             g_Player.padSim = 0;
             player->posY.i.hi--;
             D_80097488.y.i.hi -= 1;
@@ -493,7 +493,7 @@ void func_us_801BF3F4(Entity* self) {
         break;
 
     case 6:
-        g_Player.pl_demo_timer = 2;
+        g_Player.demo_timer = 2;
         self->posY.i.hi--;
         if (collision) {
             player->posY.i.hi--;
