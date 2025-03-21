@@ -471,7 +471,9 @@ enum BlueprintKind {
 #define CARD_BLOCK_SIZE (8192)
 
 typedef struct {
+#ifndef VERSION_PSP
     /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
+#endif
     /* 0x258 */ u32 unk258;
     /* 0x25C */ u32 unk25C;
     /* 0x260 */ u32 nBlockUsed;
@@ -481,7 +483,7 @@ typedef struct {
 
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
-#elif defined(VERSION_HD)
+#else
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
 
@@ -1176,10 +1178,10 @@ typedef struct {
     /* 0x00 */ u8 Magic[2];
     /* 0x02 */ u8 Type;
     /* 0x03 */ u8 BlockEntry;
-    /* 0x04 */ u8 Title[64];
+    /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
-    /* 0x80 */ u8 Icon[3][128];
+    /* 0x80 */ u8 Icon[3 * 128];
 } MemcardHeader; /* size=0x200 */
 
 typedef struct {
@@ -1810,8 +1812,8 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 pl_demo_timer; // player frozen timer
-    /* 80072F00 */ s16 timers[16];    /// Indexed with AluTimers
+    /* 80072EFC */ s32 demo_timer; // player frozen timer
+    /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
     // 0x02: touching the ceiling
@@ -1822,7 +1824,7 @@ typedef struct {
     // 0x1000: standing on a slightly ascending or descending slope
     // 0x4000: standing on a raising slope
     // 0x8000: standing on any slope
-    /* 80072F20 */ s32 pl_vram_flag;
+    /* 80072F20 */ s32 vram_flag;
 
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
@@ -1841,7 +1843,7 @@ typedef struct {
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
     /* 80072F60 */ u16 unk40;
-    /* 80072F62 */ u16 pl_high_jump_timer;
+    /* 80072F62 */ u16 high_jump_timer;
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;

@@ -20,14 +20,10 @@ static u16 g_eBlueDoorTiles[][8] = {
     {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000},
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000}};
 
+static char D_80182710[] = "\x7C\x0EMagically sealed．";
 // NZ0 has an extra .word in data vs NO0
-static char D_80182710[] = {
-    0x7C, 0x0E, 'M', 'a', 'g', 'i',  'c',  'a',  'l',  'l',  'y', ' ', 's',
-    'e',  'a',  'l', 'e', 'd', 0x81, 0x44, 0x00, 0x00, 0x00, 0x00
-#if defined(STAGE_IS_NO0)
-};
-#else
-    , 0x00, 0x00, 0x00, 0x00 };
+#if defined(STAGE_IS_NZ0)
+STATIC_PAD_DATA(4);
 #endif
 
 static s32 MagicallySealedDoorIsNearPlayer(Entity* e) {
@@ -139,7 +135,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             if (self->params & 0x100) {
                 self->ext.magicallySealedDoor.angle = 0x800;
             }
-            g_Player.pl_demo_timer = 24;
+            g_Player.demo_timer = 24;
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
             self->animCurFrame = 0;
@@ -194,7 +190,7 @@ void EntityMagicallySealedDoor(Entity* self) {
             }
             self->animCurFrame = 0;
             g_Player.padSim = 0;
-            g_Player.pl_demo_timer = 2;
+            g_Player.demo_timer = 2;
             self->ext.magicallySealedDoor.sideToPlayer =
                 (GetSideToPlayer() & 1) ^ 1;
             g_api.PlaySfx(SFX_DOOR_OPEN);
@@ -203,7 +199,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         break;
     case 2:
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 24;
+        g_Player.demo_timer = 24;
         if (!(self->params & 0x100)) {
             self->ext.magicallySealedDoor.angle += 0x20;
             if (self->ext.magicallySealedDoor.angle >= 0x1000) {
@@ -223,7 +219,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         }
         break;
     case 3:
-        if (g_Player.pl_demo_timer >= 4) {
+        if (g_Player.demo_timer >= 4) {
             return;
         }
         if (self->ext.magicallySealedDoor.sideToPlayer != 0) {
@@ -231,7 +227,7 @@ void EntityMagicallySealedDoor(Entity* self) {
         } else {
             g_Player.padSim = PAD_RIGHT;
         }
-        g_Player.pl_demo_timer = 3;
+        g_Player.demo_timer = 3;
         self->step++;
         break;
     case 4:
@@ -240,16 +236,16 @@ void EntityMagicallySealedDoor(Entity* self) {
         } else {
             g_Player.padSim = PAD_LEFT;
         }
-        g_Player.pl_demo_timer = 4;
+        g_Player.demo_timer = 4;
         if (MagicallySealedDoorIsNearPlayer(self) == 0) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
-            g_Player.pl_demo_timer = 0;
+            g_Player.demo_timer = 0;
         }
         break;
     case 5:
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 4;
+        g_Player.demo_timer = 4;
         if (!(self->params & 0x100)) {
             self->ext.magicallySealedDoor.angle -= 0x20;
             if (self->ext.magicallySealedDoor.angle < 0xC01) {

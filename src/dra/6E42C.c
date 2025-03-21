@@ -52,7 +52,7 @@ void func_8010E570(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = true;
     }
 
@@ -96,7 +96,7 @@ void func_8010E6AC(bool forceAnim13) {
     bool atLedge;
 
     atLedge = 0;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = 1;
     }
 
@@ -274,7 +274,7 @@ static s32 func_8010EB5C(void) {
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = 1;
     }
     subWpnId = func_800FE3C4(&subWpn, 0, false);
@@ -386,7 +386,7 @@ bool func_8010EDB8(void) {
     var_s7 = false;
 
     atLedge = false;
-    if (g_Player.pl_vram_flag & 0x20) {
+    if (g_Player.vram_flag & 0x20) {
         atLedge = true;
     }
     attBtnsPressed = g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE);
@@ -466,8 +466,8 @@ block_32:
     var_s2 = equipped_item->specialMove;
     if (!var_s2 ||
         // Sword of Dawn
-        ((equipped_id == 0x11) && ((g_Player.pl_vram_flag & 0x41) != 1)) ||
-        !(g_Player.pl_vram_flag & 1)) {
+        ((equipped_id == 0x11) && ((g_Player.vram_flag & 0x41) != 1)) ||
+        !(g_Player.vram_flag & 1)) {
         goto block_38c;
     }
     // Load up the item's special move as the new "virtual" equipped item since
@@ -648,7 +648,7 @@ block_45:
         PLAYER.velocityX >>= 1;
         PlaySfx(SFX_VO_ALU_ATTACK_B);
         animVariant = atLedge;
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.vram_flag & 1) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
         } else {

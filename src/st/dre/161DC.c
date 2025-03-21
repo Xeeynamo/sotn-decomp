@@ -29,7 +29,7 @@ void EntityCSMoveAlucard(Entity* self) {
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = 1;
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (g_DemoMode != Demo_None) {
             self->ext.utimer.t = 64;
         } else {
@@ -56,7 +56,7 @@ void EntityCSMoveAlucard(Entity* self) {
             self->step++;
             g_Player.padSim = 0x2000;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 2: // Alucard walks forward
@@ -72,12 +72,12 @@ void EntityCSMoveAlucard(Entity* self) {
             player->posX.i.hi = 288 - currentRoomTileLayout->scrollX.i.hi;
             self->step++;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 3: // Alucard stops walking
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         func_801961DC(0x20);
         if (g_CutsceneFlags & 2) {
             self->step++;
@@ -99,18 +99,18 @@ void EntityCSMoveAlucard(Entity* self) {
             self->step++;
         }
         g_unkGraphicsStruct.unkC = posX - 256;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 5: // Conversation with fake lisa
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (g_CutsceneFlags & 8) {
             SetStep(6);
         }
         break;
 
     case 6: // Alucard's reaction to realizing she's not his mother
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (AnimateEntity(D_80180944, self) == 0) {
             SetStep(7);
         } else {
@@ -119,7 +119,7 @@ void EntityCSMoveAlucard(Entity* self) {
         break;
 
     case 7:
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (g_CutsceneFlags & 0x200) {
             SetStep(8);
         }
@@ -135,7 +135,7 @@ void EntityCSMoveAlucard(Entity* self) {
             DestroyEntity(self);
         }
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
     }
 }
@@ -159,7 +159,7 @@ void EntityUnkId23(Entity* self) {
         } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
             g_Player.padSim = PAD_R2;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 1:
@@ -174,7 +174,7 @@ void EntityUnkId23(Entity* self) {
                     g_Player.padSim = PAD_R2;
                 }
             }
-        } else if ((g_Player.pl_vram_flag & 1) && (g_CutsceneFlags & 2)) {
+        } else if ((g_Player.vram_flag & 1) && (g_CutsceneFlags & 2)) {
             diff = player->posX.i.hi - ent->posX.i.hi;
             if (diff < -0x50) {
                 g_Player.padSim = PAD_RIGHT;
@@ -192,7 +192,7 @@ void EntityUnkId23(Entity* self) {
                 self->step += 2;
             }
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 2:
@@ -203,7 +203,7 @@ void EntityUnkId23(Entity* self) {
             D_801816C0 = 1;
             self->step += 2;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 3:
@@ -214,12 +214,12 @@ void EntityUnkId23(Entity* self) {
             D_801816C0 = 0;
             self->step++;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 4:
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         g_CutsceneFlags |= 1;
         if (g_CutsceneFlags & 0x20) {
             self->step++;
@@ -233,7 +233,7 @@ void EntityUnkId23(Entity* self) {
         }
         player->posY.i.hi = player->posY.i.hi + 0x100;
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
     }
 }
