@@ -1384,7 +1384,7 @@
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.509 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
