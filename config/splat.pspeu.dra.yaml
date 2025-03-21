@@ -109,7 +109,7 @@ segments:
       - [0x5AF80, c, dra/8D3E8]
       - [0x60C28, c, dra_psp/cd]
       - [0x60C90, c, dra_psp/memcard]
-      - [0x61B78, c, dra_psp/61B78]
+      - [0x61B78, c, dra/pads]
       - [0x61E38, c, dra_psp/61E38]
       - [0x61F30, c, dra_psp/61F30] # O4
       - [0x62FE0, c, dra_psp/62FE0] # O4
