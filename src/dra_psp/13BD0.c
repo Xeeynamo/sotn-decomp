@@ -10,7 +10,7 @@ extern s32 D_80137954;
 
 void func_800F99B8(char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
-    const u16 MINSCODE = 0x8140;
+    const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
@@ -57,14 +57,14 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
         } else if ('A' <= var_s2 && var_s2 <= 'Z') {
             var_a0 = var_s2 + 0x821F;
         } else if (var_s2 == ' ') {
-            var_a0 = MINSCODE;
+            var_a0 = DOUBLE_SPACE;
             sp54 = 2;
         } else {
             sp54 = sp5f;
             if (sp5f > 1) {
                 str += (sp5f - 1);
             }
-            if (var_a0 == MINSCODE) {
+            if (var_a0 == DOUBLE_SPACE) {
                 var_s2 = ' ';
             }
         }
