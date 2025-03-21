@@ -73,7 +73,8 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
     return ret;
 }
 
-s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data, s32 flags, s32 unused, s32 create) {
+s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
+                     s32 flags, s32 unused, s32 create) {
     s32 ret;
 
     if (nPort != 0) {
@@ -100,17 +101,15 @@ s32 MemcardEraseFile(s32 nPort, s32 nCard, s32 arg2, s32 arg3) {
     return func_89192EC(arg2, arg3);
 }
 
-s32 MemcardClose(s32 nPort) {
-    return 1;
-}
+s32 MemcardClose(s32 nPort) { return 1; }
 
 s32 func_800E9880(s32 nPort, s32 nCard) {
     if ((nPort != 0) || (nCard != 0)) {
         return -1;
     }
-    switch(func_8919770(4)){
-        case 2:
-            return -1;
+    switch (func_8919770(4)) {
+    case 2:
+        return -1;
     }
     return 1;
 }
@@ -154,7 +153,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     MemcardHeader h;
     SaveData* dst2;
     char saveTitle[64];
-    
+
     PlayerStatus* dstStatus;
     MenuNavigation* dstNav;
     GameSettings* dstSettings;
@@ -163,8 +162,6 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     SaveData* dst;
     s32 j;
     s32 i;
-
-
 
     saveRaw = (u32*)save;
     for (i = 0; i < 0x800; i++) {
@@ -313,14 +310,13 @@ s32 LoadSaveData(SaveData* save) {
     srcStatus = &savePtr->status;
     srcNav = &savePtr->menuNavigation;
     settings = &savePtr->settings;
-    
+
     g_StageId = savePtr->info.stage;
     g_IsTimeAttackUnlocked = savePtr->info.endGameFlags;
     g_PlayableCharacter = savePtr->info.character;
     g_RoomCount = savePtr->info.nRoomsExplored;
     g_Tilemap.left = savePtr->info.roomX;
     g_Tilemap.top = savePtr->info.roomY;
-
 
     g_Status = *srcStatus;
     D_psp_091FC410 = g_Status.timerHours;

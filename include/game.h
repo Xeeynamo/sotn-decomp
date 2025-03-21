@@ -469,9 +469,9 @@ enum BlueprintKind {
 #define CARD_BLOCK_SIZE (8192)
 
 typedef struct {
-    #ifndef VERSION_PSP
+#ifndef VERSION_PSP
     /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
-    #endif
+#endif
     /* 0x258 */ u32 unk258;
     /* 0x25C */ u32 unk25C;
     /* 0x260 */ u32 nBlockUsed;
