@@ -608,11 +608,11 @@ mod tests {
     #[test]
     fn test_utf8_to_byte_literals_escaped()
     {
-        // assert_eq!(utf8_to_byte_literals_escaped("すで"), "\\xBD\\xC3\\xFF\\x9E\\xFF");
-        // assert_eq!(utf8_to_byte_literals_escaped("あかつきの剣"), "\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF");
-        // assert_eq!(utf8_to_byte_literals_escaped("聖なるめがね"), "\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF");
-        // assert_eq!(utf8_to_byte_literals_escaped("バルザイのえん月刀"), "\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF");
-        // assert_eq!(utf8_to_byte_literals_escaped("Str. potion"), "\\x33\\x54\\x52\\x0E\\x00\\x50\\x4F\\x54\\x49\\x4F\\x4E\\xFF");
+        assert_eq!(utf8_to_byte_literals_escaped("すで"), "\"\"\\xBD\\xC3\\xFF\\x9E\\xFF\"\"");
+        assert_eq!(utf8_to_byte_literals_escaped("あかつきの剣"), "\"\"\\xB1\\xB6\\xC2\\xB7\\xC9\\x3C\\xFF\"\"");
+        assert_eq!(utf8_to_byte_literals_escaped("聖なるめがね"), "\"\"\\xEE\\xC5\\xD9\\xD2\\xB6\\xFF\\x9E\\xC8\\xFF\"\"");
+        assert_eq!(utf8_to_byte_literals_escaped("バルザイのえん月刀"), "\"\"\\x8A\\xFF\\x9E\\x99\\x7B\\xFF\\x9E\\x72\\xC9\\xB4\\xDD\\xFF\\xFF\\xED\\xFF\"\"");
+        assert_eq!(utf8_to_byte_literals_escaped("Str. potion"), "\"\"\\x33\\x54\\x52\\x0E\\x00\\x50\\x4F\\x54\\x49\\x4F\\x4E\\xFF\"\"");
     }
 
     #[test]
