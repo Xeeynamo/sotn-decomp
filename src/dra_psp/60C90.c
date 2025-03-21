@@ -90,11 +90,11 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data, s32 fla
     return ret;
 }
 
-s32 func_psp_0913D930(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    if (arg0 != 0) {
+s32 MemcardEraseFile(s32 nPort, s32 nCard, s32 arg2, s32 arg3) {
+    if (nPort != 0) {
         return -1;
     }
-    if (arg1 != 0) {
+    if (nCard != 0) {
         return -1;
     }
     return func_89192EC(arg2, arg3);
