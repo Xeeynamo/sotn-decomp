@@ -481,7 +481,7 @@ typedef struct {
 
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
-#elif defined(VERSION_HD)
+#else
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
 

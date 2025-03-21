@@ -327,7 +327,7 @@ s32 LoadSaveData(SaveData* save) {
     D_psp_091FC408 = g_Status.timerMinutes;
     D_psp_091FC400 = g_Status.timerSeconds;
     D_psp_091FC3F8 = g_Status.timerFrames;
-    
+
     g_MenuNavigation = *srcNav;
 
     prevCompletionFlags1 = g_Settings.D_8003CB00;
@@ -348,4 +348,8 @@ s32 LoadSaveData(SaveData* save) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MakeMemcardPath);
+void MakeMemcardPath(char* dstSaveName, s32 block) {
+    STRCPY(dstSaveName, MEMCARD_ID);
+    dstSaveName[0x10] += block / 10;
+    dstSaveName[0x11] += block % 10;
+}
