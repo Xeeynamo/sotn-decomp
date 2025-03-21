@@ -246,7 +246,7 @@ void func_us_801BCB34(Entity* self) {
                     break;
                 }
 #ifndef VERSION_PSP
-                g_Player.D_80072EFC = 2;
+                g_Player.demo_timer = 2;
                 g_Player.padSim = 0;
                 PLAYER.velocityX = 0;
                 PLAYER.velocityY = 0;
@@ -276,7 +276,7 @@ void func_us_801BCB34(Entity* self) {
             g_api.func_8010DFF0(0, 1);
             g_api.func_8010E168(1, 0x20);
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 0x40;
+            g_Player.demo_timer = 64;
         }
         if (AnimateEntity(D_us_80181550, self) == 0) {
             PlaySfxPositional(0x7B5);
@@ -310,8 +310,8 @@ void func_us_801BCB34(Entity* self) {
             g_api.func_8010DFF0(0, 1);
             g_api.func_8010E168(1, 0x20);
             g_Player.padSim = 0x4000;
-            g_Player.D_80072EFC = 2;
-            g_Player.pl_vram_flag |= 0x41;
+            g_Player.demo_timer = 2;
+            g_Player.vram_flag |= 0x41;
         } else {
             MoveEntity();
         }
@@ -408,7 +408,7 @@ void func_us_801BCB34(Entity* self) {
             g_api.func_8010DFF0(0, 1);
             g_api.func_8010E168(1, 0x20);
             g_Player.padSim = 0x4000;
-            g_Player.D_80072EFC = 2;
+            g_Player.demo_timer = 2;
         } else {
             MoveEntity();
         }
@@ -528,7 +528,7 @@ void func_us_801BCB34(Entity* self) {
                 g_api.func_8010DFF0(0, 1);
                 g_api.func_8010E168(1, 0x20);
                 g_Player.padSim = 0;
-                g_Player.D_80072EFC = 2;
+                g_Player.demo_timer = 2;
             }
             if (AnimateEntity(D_us_8018155C, self) == 0) {
                 self->animFrameIdx = 0;

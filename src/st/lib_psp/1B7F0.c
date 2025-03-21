@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09252E70);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_092531A8);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253498);
-
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_us_801AFA80);
-
 INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253D58);
 
 extern s32 E_ID(ID_11);
@@ -71,7 +63,7 @@ extern s32 E_ID(ID_49);
 extern s32 E_ID(ID_4A);
 extern s32 E_ID(ID_4B);
 extern s32 E_ID(ID_4C);
-extern s32 E_ID(ID_4D);
+extern s32 E_ID(MUDMAN);
 extern s32 E_ID(ID_4E);
 extern s32 E_ID(ID_4F);
 
@@ -136,7 +128,7 @@ void func_psp_09253E20(void) {
     E_ID(ID_4A) = 0x4A;
     E_ID(ID_4B) = 0x4B;
     E_ID(ID_4C) = 0x4C;
-    E_ID(ID_4D) = 0x4D;
+    E_ID(MUDMAN) = 0x4D;
     E_ID(ID_4E) = 0x4E;
     E_ID(ID_4F) = 0x4F;
 }

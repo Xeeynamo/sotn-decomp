@@ -44,7 +44,8 @@ typedef enum {
     AKMODAN_II_TACTICS,
     DARKWING_BAT_TACTICS,
     GALAMOTH_TACTICS,
-    SHAFT_TACTICS = 0x1B,
+    MARIA_TACTICS = 0x1A,
+    SHAFT_TACTICS,
     LORD_DRACULA_TACTICS,
 } SHOP_TACTICS;
 
@@ -57,6 +58,9 @@ typedef enum {
     DOC_MAGIC_SCROLL_3,
     DOC_MAGIC_SCROLL_4,
     DOC_MAGIC_SCROLL_5,
+    DOC_MAGIC_SCROLL_6,
+    DOC_MAGIC_SCROLL_7,
+    DOC_MAGIC_SCROLL_8,
 } SHOP_DOCUMENTS;
 
 /// the first 5 inventory categories are the same as
@@ -316,15 +320,16 @@ void func_us_801AFE0C(Entity* self) {
         }
 #ifdef VERSION_PSP
         g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
 #endif
         break;
+
     case 1:
         g_Entities[1].ext.entSlot1.unk0 = 1;
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
@@ -340,9 +345,10 @@ void func_us_801AFE0C(Entity* self) {
             g_Player.padSim = PAD_R2;
 #endif
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         SetStep(2);
         break;
+
     case 2:
         if (player->posX.i.hi > 0xE8) {
             if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
@@ -377,8 +383,9 @@ void func_us_801AFE0C(Entity* self) {
             player->posX.i.hi = 0xE8;
             self->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
+
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
@@ -392,28 +399,31 @@ void func_us_801AFE0C(Entity* self) {
         } else {
             player->posX.i.hi = 0xE8;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
+
     case 4:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         self->step++;
         break;
+
     case 5:
         g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         self->step++;
         /* fallthrough */
     case 6:
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
-            break;
+        } else {
+            player->posX.i.hi = 0x74;
         }
-        player->posX.i.hi = 0x74;
         break;
+
     case 8:
         self->step++;
         /* fallthrough */
@@ -421,7 +431,7 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi > 0xFF) {
             g_api.PlaySfx(CD_SOUND_COMMAND_7);
             DestroyEntity(self);
-            break;
+            return;
         }
         if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
@@ -430,10 +440,11 @@ void func_us_801AFE0C(Entity* self) {
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;
-                g_Player.D_80072EFC = 0x10;
+                g_Player.demo_timer = 16;
                 self->step_s++;
                 g_CutsceneFlags |= 1;
                 break;
+
             case 1:
                 if (g_Player.status & PLAYER_STATUS_TRANSFORM) {
                     g_Player.padSim = PAD_NONE;
@@ -458,47 +469,52 @@ void func_us_801AFE0C(Entity* self) {
                     g_Player.padSim = PAD_LEFT;
                     self->step_s++;
                 }
-                g_Player.D_80072EFC = 1;
+                g_Player.demo_timer = 1;
                 break;
+
             case 2:
                 g_Player.padSim = PAD_NONE;
-                g_Player.D_80072EFC = 0x80;
+                g_Player.demo_timer = 128;
                 SetStep(10);
                 break;
             }
             player->posX.i.hi = 0x74;
         }
         break;
+
     case 10:
-        if (!g_Player.D_80072EFC && (g_Player.pl_vram_flag & 1)) {
+        if (!g_Player.demo_timer && (g_Player.vram_flag & 1)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-            g_Player.D_80072EFC = 1;
+            g_Player.demo_timer = 1;
             self->step++;
         }
         player->posX.i.hi = 0x74;
         break;
+
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
         }
         break;
+
     case 16:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        g_Player.D_80072EFC = 0x20;
+        g_Player.demo_timer = 32;
         g_Player.padSim = PAD_RIGHT;
         D_80097928 = 1;
         self->step++;
         break;
+
     case 17:
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        if (!g_Player.D_80072EFC) {
+        if (!g_Player.demo_timer) {
 #ifdef VERSION_PSP
             g_PauseAllowed = true;
 #endif
@@ -526,7 +542,7 @@ void EntityLibrarianChair(Entity* self) {
             // and moving upward, trigger a hit.
         } else if (self->step < 16 &&
                    ((player->posY.i.hi + tilemap->scrollY.i.hi) < 201) &&
-                   (FIX_TO_I(player->velocityY) < 0)) {
+                   F(player->velocityY).i.hi < 0) {
             SetStep(16);
             if (PLAYER.step == Player_HighJump) {
                 g_Player.unk4A = 0x1C;
@@ -586,7 +602,7 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0x80;
     }
     // If the player touches the ground, reset the frames airborne.
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         self->ext.libraryChair.consecutiveHits = 0;
     }
     switch (self->step) {
@@ -832,22 +848,7 @@ static u16 D_us_80181510[] = {
     // clang-format on
 };
 
-// these are pairs of bytes, but only the first is used.
-// these are used to determine which magic scrolls
-// should be visible. typically this is if spells are
-// known, either through magic scrolls or otherwise,
-// but a completed game save overrides that check
-// (in func_us_801B29C4).
-static u8 D_us_8018151C[] = {
-    // clang-format off
-    0x00, 0x00,
-    0x01, 0x00,
-    0x02, 0x00,
-    0x05, 0x00,
-    0x06, 0x00,
-    0x00, 0x00,
-    // clang-format on
-};
+static u16 D_us_8018151C[] = {0, 1, 2, 5, 6};
 
 #ifdef VERSION_PSP
 extern u8* D_psp_092A54E0;
@@ -855,8 +856,8 @@ extern u8* D_psp_092A54E0;
 extern u8 D_us_80183F64;
 #endif
 
-void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
-    const u16 MINSCODE = 0x8140;
+void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
+    const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
@@ -896,7 +897,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             } else if (ch >= 'A' && ch <= 'Z') {
                 ch = ch + 0x821F;
             } else if (ch == ' ') {
-                ch = MINSCODE;
+                ch = DOUBLE_SPACE;
                 s_8 = 2;
             } else {
 #ifdef VERSION_PSP
@@ -907,7 +908,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
-                if (ch == MINSCODE) {
+                if (ch == DOUBLE_SPACE) {
                     s_8 = 2;
                 }
             }
@@ -917,7 +918,7 @@ void* func_us_801B0C40(u8* pix, u8* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_80106A28(ch, 1);
 #endif
             while (true) {
-                if (ch == MINSCODE) {
+                if (ch == DOUBLE_SPACE) {
                     break;
                 }
                 for (i = 0; i < FontHeight; i++) {
@@ -1000,7 +1001,7 @@ loop:
             ch = 0xBB;
 #endif
         }
-        rect.x = ((ch & 0xF) << 1) + 0x380;
+        rect.x = ((ch & 0x0F) << 1) + 0x380;
         rect.y = ((ch & 0xF0) >> 1) + 0xF0;
         rect.w = 2;
         rect.h = 8;
@@ -1060,7 +1061,7 @@ Primitive* func_us_801B1064(
 #ifdef VERSION_PSP
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = x;
@@ -1070,7 +1071,7 @@ Primitive* func_us_801B1064(
         ch = *chPtr++;
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             prim->x0 = x;
@@ -1085,7 +1086,7 @@ Primitive* func_us_801B1064(
 #else
         if (ch) {
             prim->clut = clut;
-            prim->u0 = (s8)((ch & 0xF) * 8);
+            prim->u0 = (s8)((ch & 0x0F) << 3);
             prim->v0 = (s8)((ch & 0xF0) >> 1);
             prim->drawMode = DRAW_DEFAULT;
             if (ch == CH('i') || ch == CH('l') || ch == CH('f') ||
@@ -1235,7 +1236,7 @@ void func_us_801B15C0(Entity* self) {
     s16 tempVar;
     s32 i;
     u16 tempVar2;
-    u8* ptr;
+    char* ptr;
     s16 pad;
 
     switch (self->step) {
@@ -1853,12 +1854,113 @@ void func_us_801B245C(Primitive* arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4,
     }
 }
 
-/// Determines which items are available to buy
-/// and returns the number of buyable items, that are
-/// off screen (number of buyable items minus 7).
-///
-/// Buyable items are copied to `D_us_801D4364`.
-INCLUDE_ASM("st/lib/nonmatchings/e_shop", func_us_801B29C4);
+u16 func_us_801B29C4(void) {
+    InventoryItem* currentItem;
+    ShopItem* shopItem;
+    u8 itemLevel;
+    u16 unlockLevel;
+    u8 itemCount;
+    s32 i;
+    u8 spellIndex;
+
+    shopItem = D_us_801D4364;
+    currentItem = D_us_8018134C;
+    unlockLevel = 0;
+    if (g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[RICHTER_CS_AFTER_M_AND_W]) {
+        unlockLevel++;
+    }
+    if (g_Status.relics[RELIC_SOUL_OF_BAT] & 1) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[MET_MARIA_IN_CEN]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[INVERTED_CASTLE_UNLOCKED]) {
+        unlockLevel++;
+    }
+    if (g_CastleFlags[DEATH_FIGHT_CS]) {
+        unlockLevel++;
+    }
+    if (g_api.TimeAttackController(
+            TIMEATTACK_EVENT_GALAMOTH_DEFEAT, TIMEATTACK_GET_RECORD)) {
+        unlockLevel++;
+    }
+    if (g_IsTimeAttackUnlocked) {
+        unlockLevel = 8;
+    }
+    itemCount = 0;
+    for (i = 0; i < LEN(D_us_8018134C) - 1; i++) {
+        itemLevel = currentItem->unlockLevel;
+        switch (itemLevel) {
+        case 0xFF:
+            if ((g_Status.relics[RELIC_JEWEL_OF_OPEN] & 1) == 0) {
+                itemLevel = 0;
+            }
+            break;
+
+        case 0x80:
+            if (!g_CastleFlags[BOUGHT_CASTLE_MAP]) {
+                itemLevel = 0;
+            }
+            break;
+
+#ifdef VERSION_PSP
+        case 0x86:
+        case 0x87:
+        case 0x88:
+            if (itemLevel == 0x86) {
+                if ((g_Status.relics[RELIC_SOUL_OF_WOLF] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+                if ((g_Status.relics[RELIC_SKILL_OF_WOLF] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            } else if (itemLevel == 0x87) {
+                if ((g_Status.relics[RELIC_SOUL_OF_BAT] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            } else if (itemLevel == 0x88) {
+                if ((g_Status.relics[RELIC_SWORD_CARD] & 1) == 0) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+                if (g_Status.statsFamiliars[FAM_STATS_SWORD].level < 50) {
+                    itemLevel = 0xFF;
+                    break;
+                }
+            }
+#endif
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x85:
+            itemLevel -= 0x81;
+            spellIndex = D_us_80181510[itemLevel];
+            if (g_Status.spellsLearnt & (1 << spellIndex)) {
+                itemLevel = 0xFF;
+            } else {
+                itemLevel = D_us_8018151C[itemLevel];
+            }
+            break;
+        }
+        if (itemLevel <= unlockLevel) {
+            shopItem->category = currentItem->category;
+            shopItem->itemId = currentItem->itemId;
+            shopItem->price = currentItem->price;
+            shopItem++;
+            itemCount++;
+        }
+        currentItem++;
+    }
+    return itemCount - 7;
+}
 
 void func_us_801B2BE4(Entity* self) {
     Primitive* prim;
@@ -3023,7 +3125,7 @@ void func_us_801B4830(Entity* self) {
 
     case 9:
         DestroyEntity(self);
-        break;
+        return;
     }
 }
 
@@ -3327,7 +3429,7 @@ void func_us_801B56E4(Entity* self) {
     ShopItem* shopItem;
     DRAWENV drawEnv;
     DR_ENV* dr_env;
-    RECT clipRect;
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     const char* name;
     Primitive* prim;
     Primitive* prim2;
@@ -3337,7 +3439,6 @@ void func_us_801B56E4(Entity* self) {
     s32 count;
     u32 price;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     tempEntity = self - 3;
     switch (self->step) {
     case 0:
@@ -3682,7 +3783,7 @@ static const char* D_us_801816C8[] = {
 
 static ShopItem D_us_8018173C[] = {
     // clang-format off
-    {0, DRACULA_TACTICS,            200}, 
+    {0, DRACULA_TACTICS,            200},
     {0, SLO_GAI_TACTICS,            500},
     {0, DOPPLEGANGER10_TACTICS,     700},
     {0, HIPPOGRYPH_TACTICS,         1000},
@@ -3711,7 +3812,6 @@ static ShopItem D_us_8018173C[] = {
 static char D_us_801817F4[] = _S("--------------");
 static char D_us_80181804[] = {
     CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-'), CH('-')};
-static char D_us_8018180C[] = _S("--------------");
 
 void func_us_801B6124(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
@@ -3789,7 +3889,6 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
 
 void func_us_801B6324(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -3798,7 +3897,7 @@ void func_us_801B6324(Entity* self) {
     s32 var_v1;
     u16 pads;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -3914,11 +4013,7 @@ void func_us_801B6324(Entity* self) {
         if (g_CutsceneFlags & 0x400) {
             SetStep(2);
             var_v1 = 0;
-#ifdef VERSION_PSP
-            for (i = 0; i < 24; i++) {
-#else
             for (i = 0; i < LEN(D_us_8018173C); i++) {
-#endif
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
                 if (D_8C630D0) {
@@ -4100,6 +4195,8 @@ void func_us_801B6324(Entity* self) {
     }
 }
 
+static char D_us_8018180C[] = _S("--------------");
+
 void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     s16 posX, posY;
     u16 enemyIndex;
@@ -4139,15 +4236,8 @@ void func_us_801B6E20(Primitive* prim, Entity* arg1) {
     }
 }
 
-#ifdef VERSION_PSP
-#define unkVal 0x43
-#else
-#define unkVal 0x42
-#endif
-
 void func_us_801B6F30(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -4156,7 +4246,7 @@ void func_us_801B6F30(Entity* self) {
     u16 pads;
     Entity* tempEntity;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);
@@ -4219,11 +4309,11 @@ void func_us_801B6F30(Entity* self) {
                     prim->clut = 0x17F;
                     prim->u0 = prim->u2 = 0x58;
                     prim->u1 = prim->u3 = 0x60;
-                    prim->v0 = prim->v1 = (i - 0xB) * 8 + 0x70;
-                    prim->v2 = prim->v3 = 0x78 - (i - 0xB) * 8;
+                    prim->v0 = prim->v1 = (i - 11) * 8 + 0x70;
+                    prim->v2 = prim->v3 = 0x78 - (i - 11) * 8;
                     prim->x0 = prim->x2 = 0x7C;
                     prim->x1 = prim->x3 = prim->x0 + 8;
-                    prim->y0 = prim->y1 = (i - 0xB) * 0x60 + 0x14;
+                    prim->y0 = prim->y1 = (i - 11) * 0x60 + 0x14;
                     prim->y2 = prim->y3 = prim->y0 + 8;
                     prim->priority = 0x1FC;
                     prim->drawMode = DRAW_HIDE;
@@ -4306,7 +4396,7 @@ void func_us_801B6F30(Entity* self) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80++;
-            } else if (self->ext.et_801B6F30.unk82 < unkVal) {
+            } else if (self->ext.et_801B6F30.unk82 < 0x42) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk82++;
             }
@@ -4323,11 +4413,11 @@ void func_us_801B6F30(Entity* self) {
             if (self->ext.et_801B6F30.unk80 < 6) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk80 = 6;
-            } else if (self->ext.et_801B6F30.unk82 < unkVal) {
+            } else if (self->ext.et_801B6F30.unk82 < 0x42) {
                 g_api.PlaySfx(SFX_UI_MOVE);
                 self->ext.et_801B6F30.unk82 += 7;
-                if (self->ext.et_801B6F30.unk82 > unkVal) {
-                    self->ext.et_801B6F30.unk82 = unkVal;
+                if (self->ext.et_801B6F30.unk82 > 0x42) {
+                    self->ext.et_801B6F30.unk82 = 0x42;
                 }
             }
         } else {
@@ -4398,7 +4488,7 @@ void func_us_801B6F30(Entity* self) {
             prim->drawMode = DRAW_HIDE;
         }
         prim = prim->next;
-        if (self->ext.et_801B6F30.unk82 < unkVal) {
+        if (self->ext.et_801B6F30.unk82 < 0x42) {
             prim->drawMode = DRAW_DEFAULT;
         } else {
             prim->drawMode = DRAW_HIDE;
@@ -4558,16 +4648,15 @@ static u16 D_us_801818A8[] = {
 
 #ifdef VERSION_PSP
 extern const char** D_us_801818C0;
-extern const char* D_us_801818EC[];
-extern const char* D_us_801818F0[];
 #else
 static const char* D_us_801818C0[] = {
     _S("LV"),         _S("HP"),       "$EF",       _S("Exp"),
     _S("Drop Items"), _S("No."),      "\x1F\x1F",  _S("Strong VS."),
     _S("Immune"),     _S("Weak VS."), _S("Absorb")};
+#endif
+
 static const char* D_us_801818EC[] = {_S("????????")};
 static const char* D_us_801818F0[] = {_S("????")};
-#endif
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
@@ -4585,24 +4674,6 @@ const char* func_us_801B7C94(u16 itemId) {
     return name;
 }
 
-#ifdef VERSION_PSP
-Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posX, s16 posY) {
-    s32 x = posX;
-    s16 y = 8;
-    s32 i;
-    if ((arg1 & ELEMENT_ALL) == 0) {
-        prim = func_us_801B1064(prim, posX, posY, D_us_8018181C[0], 0x196);
-    } else {
-        for (i = 0; i < LEN(D_us_801818A8); i++) {
-            if (arg1 & D_us_801818A8[i]) {
-                prim = func_us_801B1064(prim, x, posY, D_us_8018187C[i], 0x196);
-                x += 0x20;
-            }
-        }
-    }
-    return prim;
-}
-#else
 Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     s16 x = 0x84;
     s16 y = 8;
@@ -4619,155 +4690,7 @@ Primitive* func_us_801B7D10(Primitive* prim, u16 arg1, s16 posY) {
     }
     return prim;
 }
-#endif
 
-#ifdef VERSION_PSP
-void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
-    s16 posX, posY;
-    s32 i;
-    EnemyDef* enemyDef;
-    u8 params;
-    s32 strLen;
-    s32 xOffset;
-
-    xOffset = 12;
-    enemyDef = &g_api.enemyDefs[enemyId];
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    prim->drawMode = DRAW_DEFAULT;
-    prim = prim->next;
-    posX = 0x14;
-    posY = 0x2C;
-    prim = func_us_801B1064(prim, posX, posY, enemyDef->name, 0x196);
-    posX = 0xB4;
-    posY = 0x2C;
-    func_us_801B3FB4(prim, D_us_801818C0[5], 3, 1); // "No."
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    func_us_801B3EC8(prim, arg1->params + 1, 3);
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x18;
-    posY = 0x38;
-    func_us_801B3FB4(prim, D_us_801818C0[0], 2, 1); // "Strong VS."
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX += 2;
-    if (arg1->params) {
-        func_us_801B3EC8(prim, enemyDef->level, 2);
-    } else {
-        func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
-    }
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        if (prim->drawMode != DRAW_HIDE) {
-            posX += 8;
-        }
-        prim = prim->next;
-    }
-    posX = 0x40;
-    posY = 0x38;
-    func_us_801B3FB4(prim, D_us_801818C0[1], 2, 1); // "HP"
-    for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX += 2;
-    if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
-    } else {
-        func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
-    }
-    for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        if (prim->drawMode != DRAW_HIDE) {
-            posX += 8;
-        }
-        prim = prim->next;
-    }
-    posX = 0x84;
-    posY = 0xA4;
-    func_us_801B3FB4(prim, D_us_801818C0[3], 3, 1); // "Exp"
-    for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    func_us_801B3EC8(prim, enemyDef->exp, 4);
-    for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x84;
-    posY = 0x7C;
-    strLen = 0x14;
-    func_us_801B3FB4(prim, D_us_801818C0[4], strLen, 1); // "Drop Items"
-    for (i = 0; i < strLen; i++) {
-        prim->clut = 0x196;
-        prim->x0 = posX - xOffset;
-        prim->y0 = posY;
-        prim = prim->next;
-        posX += 8;
-    }
-    posX = 0x88;
-    posY = 0x88;
-    prim = func_us_801B1064(prim, posX - xOffset, posY,
-                            func_us_801B7C94(enemyDef->uncommonItemId), 0x196);
-    posX = 0x88;
-    posY = 0x94;
-    params = arg1->params;
-    if ((g_CastleFlags[(params >> 3) + ENEMY_LIST_RAREDROP_1B0] &
-         (1 << (params & 7))) ||
-        !enemyDef->rareItemId) {
-        prim = func_us_801B1064(prim, posX - xOffset, posY,
-                                func_us_801B7C94(enemyDef->rareItemId), 0x196);
-    } else {
-        prim = func_us_801B1064(
-            prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
-    }
-    for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
-                                D_us_801818C0[i + 7], 0x196);
-    }
-    prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
-    prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
-    prim = func_us_801B7D10(prim, enemyDef->weaknesses, 0x8C - xOffset, 0x64);
-    prim = func_us_801B7D10(prim, enemyDef->absorbs, 0x8C - xOffset, 0x74);
-    while (prim != NULL) {
-        prim->drawMode = DRAW_HIDE;
-        prim = prim->next;
-    }
-}
-#else
 void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     s16 posX, posY;
     s32 i;
@@ -4817,7 +4740,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posX = 0x1C;
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[0], 0x196); // "LV"
     posX += 0x12;
-    if (arg1->params != 0) {
+    if (arg1->params) {
         func_us_801B3EC8(prim, enemyDef->level, 2);
     } else {
         func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
@@ -4884,7 +4807,6 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
         prim = prim->next;
     }
 }
-#endif
 
 void func_us_801B8234(Entity* self) {
     Primitive* prim;
@@ -4894,7 +4816,7 @@ void func_us_801B8234(Entity* self) {
     u16 enemyId;
     u16 pads;
     u8* pix;
-    u8* s3;
+    char* s3;
     EnemyDef* enemyDef;
     s32 pad[12];
 
@@ -5050,7 +4972,7 @@ void func_us_801B8234(Entity* self) {
             enemyDef = &g_api.enemyDefs[enemyId];
             s3 = D_psp_092A5F48[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1C0, 0x6E);
-            s3 = D_psp_092A5F48[self->params];
+            s3 = D_psp_092A5F40[self->params];
             func_us_801B0C40(pix, s3, 0, 0x1D0, 0x6E);
 #else
             s3 = D_us_80180FB4[self->params];
@@ -5269,7 +5191,6 @@ void func_us_801B8958(Primitive* prim, Entity* self) {
 
 void func_us_801B8A00(Entity* self) {
     DRAWENV drawEnv;
-    RECT clipRect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 primIndex;
@@ -5278,7 +5199,7 @@ void func_us_801B8A00(Entity* self) {
     s16 sfxIndex;
     u8* pix;
 
-    clipRect = (RECT){.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
+    RECT clipRect = {.x = 0x100, .y = 0x100, .w = 0x100, .h = 0x100};
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x140);

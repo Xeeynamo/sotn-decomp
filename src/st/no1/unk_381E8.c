@@ -332,7 +332,82 @@ void func_us_801B8B00(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B8D30);
+extern SVECTOR D_us_8018138C;
+extern SVECTOR D_us_80181394;
+extern SVECTOR D_us_8018139C;
+extern SVECTOR D_us_801813A4;
+void func_us_801B8D30(Entity* self) {
+    s32 primIndex;
+    Primitive* prim;
+    Entity* player;
+    s32 p;
+    s32 flag;
+    s16 posX, posY;
+    SVECTOR vector;
+    VECTOR vector2;
+    MATRIX matrix;
+
+    player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+        self->animCurFrame = 0;
+
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801B8D30.prim = prim;
+            PGREY(prim, 0) = 0x80;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = 0x60;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 1:
+        posX = self->posX.i.hi - player->posX.i.hi;
+        posY = self->posY.i.hi - player->posY.i.hi;
+        posX -= 80;
+        prim = self->ext.et_801B8D30.prim;
+        prim->drawMode = DRAW_HIDE;
+
+        if (abs(posX) < 16) {
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            self->ext.et_801B8D30.unk80 = posX * 64;
+        }
+        break;
+    }
+
+    prim = self->ext.et_801B8D30.prim;
+    SetGeomScreen(0x200);
+    vector.vx = 0;
+    vector.vy = self->ext.et_801B8D30.unk80;
+    vector.vz = 0x180;
+    RotMatrixYXZ(&vector, &matrix);
+
+    vector2.vx = 0;
+    vector2.vy = 0;
+    vector2.vz = 0x200;
+    TransMatrix(&matrix, &vector2);
+    SetRotMatrix(&matrix);
+    SetTransMatrix(&matrix);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+    RotAverage4(
+        &D_us_8018138C, &D_us_80181394, &D_us_8018139C, &D_us_801813A4,
+        (long*)&LOW(prim->x0), (long*)&LOW(prim->x1), (long*)&LOW(prim->x2),
+        (long*)&LOW(prim->x3), (long*)&p, (long*)&flag);
+}
 
 extern EInit D_us_80180A1C;
 extern u8 D_us_801813FC[];
@@ -379,12 +454,43 @@ void func_us_801B9028(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no1/nonmatchings/unk_381E8", func_us_801B9184);
-
 extern s16 D_us_80181454[];
 extern s16 D_us_80181464[];
-extern s32 D_psp_091CE570;
+u8 func_us_801B9184(Primitive* prim) {
+    UnkPrimHelper(prim);
 
+    switch (prim->next->u2) {
+    case 0:
+        prim->drawMode = DRAW_HIDE;
+        break;
+
+    case 1:
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        LOW(prim->next->u0) = -(D_us_80181454[prim->next->r3] << 0x10) / 16;
+        prim->next->u2++;
+        // fallthrough
+
+    case 2:
+        prim->next->b3 += 8;
+        LOH(prim->next->u1) -= 64;
+        if (LOH(prim->next->u1) <= 0) {
+            LOH(prim->next->u1) = 0;
+            LOW(prim->next->u0) = 0;
+            prim->next->x1 = D_us_80181464[prim->next->r3];
+            prim->next->u2++;
+
+            prim->priority = 0xB0;
+            prim->drawMode = DRAW_DEFAULT;
+        }
+        break;
+
+    case 3:
+        return 1;
+    }
+    return 0;
+}
+
+extern s32 D_psp_091CE570;
 void func_us_801B9304(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -839,7 +945,7 @@ void func_us_801BA290(Entity* self) {
 
     if (self->step > 1 && self->step < 7) {
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 2;
+        g_Player.demo_timer = 2;
         g_api.func_8010DFF0(0, 1);
         g_api.func_8010E168(1, 0x20);
     }
@@ -872,7 +978,7 @@ void func_us_801BA290(Entity* self) {
             (g_Player.status == PLAYER_STATUS_UNK10000000)) {
 #endif
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 2;
+            g_Player.demo_timer = 2;
             g_PauseAllowed = false;
             g_api.PlaySfx(SFX_TINK_JINGLE);
             self->step++;

@@ -73,22 +73,9 @@ static u8* g_MariaSubweaponAnimPrizeDrop[] = {
     D_80180C94,     D_80180C94,     D_80180C94,     D_80180DD0,
 };
 
-static char D_psp_09246458[] = {0x04, 0x11, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00};
-static u32 D_psp_09246460[] = {0xFF151204, 0x00000000};
-static u32 D_psp_09246468[] = {0xFF101504, 0x00000000};
-static u32 D_psp_09246470[] = {0x10101104, 0x000000FF};
-static u32 D_psp_09246478[] = {0x10151204, 0x000000FF};
-static u32 D_psp_09246480[] = {0x10101404, 0x000000FF};
-static u32 D_psp_09246488[] = {0x10101704, 0x000000FF};
-static u32 D_psp_09246490[] = {0x10101104, 0x0000FF10};
-static u32 D_psp_09246498[] = {0x10101204, 0x0000FF10};
-static u32 D_psp_092464A0[] = {0x10101504, 0x0000FF10};
 static const char* g_goldCollectTexts[] = {
-    (const char*)D_psp_09246458, (const char*)D_psp_09246460,
-    (const char*)D_psp_09246468, (const char*)D_psp_09246470,
-    (const char*)D_psp_09246478, (const char*)D_psp_09246480,
-    (const char*)D_psp_09246488, (const char*)D_psp_09246490,
-    (const char*)D_psp_09246498, (const char*)D_psp_092464A0,
+    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
+    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
 
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};

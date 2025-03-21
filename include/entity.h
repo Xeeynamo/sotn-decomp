@@ -2572,7 +2572,7 @@ typedef struct {
     /* 0x81 */ u8 : 8;
     /* 0x82 */ u8 : 8;
     /* 0x83 */ u8 : 8;
-    /* 0x84 */ u8 : 8;
+    /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 : 8;
@@ -2588,8 +2588,8 @@ typedef struct {
 } ET_SpearGuard;
 
 typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
-} ET_SpearGuardUnk;
+    /* 0x7C */ struct Entity* spearGuard;
+} ET_ThrownSpear;
 
 typedef struct {
     /* 0x7C */ struct Entity* unk7C;
@@ -2667,10 +2667,6 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
     /* 0xB2 */ u16 unkB2;
 } ET_LesserDemon;
-
-typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
-} ET_801D4400;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -2789,13 +2785,8 @@ typedef struct {
     /* 0x97 */ u8 : 8;
     /* 0x98 */ s16 : 16;
     /* 0x9A */ s16 : 16;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
+    /* 0x9C */ SVECTOR unk9C;
+    /* 0xA4 */ SVECTOR unkA4;
 } ET_SpellbookMagicTome;
 
 typedef struct {
@@ -2890,11 +2881,35 @@ typedef struct {
     /* 0x88 */ s32 unk88;
     /* 0x8C */ s32 unk8C;
     /* 0x90 */ s32 unk90;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 unk98;
     /* 0x9C */ f32 unk9C;
     /* 0xA0 */ f32 unkA0;
 } ET_Clouds;
+
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 unk80;
+} ET_801B8D30;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_801C0B9C;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u32 : 24;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s16 unk9C;
+} ET_unkDoor;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3115,7 +3130,7 @@ typedef union { // offset=0x7C
     ET_BoneArcher boneArcher;
     ET_801C10F4 et_801C10F4;
     ET_SpearGuard spearGuard;
-    ET_SpearGuardUnk spearGuardUnk;
+    ET_ThrownSpear thrownSpear;
     ET_801B84E4 et_801B84E4;
     ET_801BF3F4 et_801BF3F4;
     ET_801BFB40 et_801BFB40;
@@ -3124,7 +3139,6 @@ typedef union { // offset=0x7C
     ET_801B9BE4 et_801B9BE4;
     ET_Chair chair;
     ET_LesserDemon lesserDemon;
-    ET_801D4400 et_801D4400;
     ET_801D4558 et_801D4558;
     ET_801BE880 et_801BE880;
     ET_801B7D34 et_801B7D34;
@@ -3145,7 +3159,10 @@ typedef union { // offset=0x7C
     ET_801B56E4 et_801B56E4;
     ET_801CD318 et_801CD318;
     ET_801BB200 et_801BB200;
+    ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
+    ET_801C0B9C et_801C0B9C;
+    ET_unkDoor unkDoor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

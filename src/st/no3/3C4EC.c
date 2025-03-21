@@ -12,7 +12,7 @@ void EntityPushAlucard(Entity* entity) {
         InitializeEntity(g_EInitSpawner);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 255;
+        g_Player.demo_timer = 255;
         player->posX.i.hi = 0;
         g_unkGraphicsStruct.unkC = 0;
         player->animCurFrame = 0;
@@ -27,7 +27,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->step++;
         }
         player->animCurFrame = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
         break;
 
@@ -38,7 +38,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->ext.alucardController.unk80 = FIX(4.5);
             entity->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
         break;
 
@@ -53,7 +53,7 @@ void EntityPushAlucard(Entity* entity) {
         if (entity->ext.alucardController.unk80 == FIX(4.5)) {
             entity->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
         break;
 
@@ -65,7 +65,7 @@ void EntityPushAlucard(Entity* entity) {
             entity->ext.alucardController.unk7C = false;
             entity->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
         break;
 
@@ -78,7 +78,7 @@ void EntityPushAlucard(Entity* entity) {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
         g_api.func_8010E0A8();
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         player->posX.val += FIX(4.5);
     }
 }
@@ -96,14 +96,14 @@ void EntityCastleDoorTransition(Entity* entity) {
         InitializeEntity(g_EInitSpawner);
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = PAD_RIGHT;
-        g_Player.D_80072EFC = 0xFF;
+        g_Player.demo_timer = 255;
         player->posX.i.hi = 8;
         entity->ext.castleDoorTransition.playerVelocity = 0x28000;
         break;
 
     case 1:
         player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         if ((player->posX.i.hi + g_Tilemap.scrollX.i.hi) > 120) {
             g_Player.padSim = 0;
             entity->step++;
@@ -120,7 +120,7 @@ void EntityCastleDoorTransition(Entity* entity) {
             entity->step++;
         }
         player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
     }
 }
@@ -600,13 +600,13 @@ void EntityCastleBridge(Entity* self) {
                         (xOffset < player->posY.i.hi + 30)) {
                         player->posY.i.hi = xOffset - 30;
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                        g_Player.pl_vram_flag |= 0x41;
+                        g_Player.vram_flag |= 0x41;
                         self->step_s++;
                     }
                     break;
                 case 2:
                     player->posY.i.hi = xOffset - 30;
-                    g_Player.pl_vram_flag |= 0x41;
+                    g_Player.vram_flag |= 0x41;
                     break;
                 }
             }

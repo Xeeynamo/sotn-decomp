@@ -81,18 +81,18 @@ $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT) $<
 
-ST_DRA_MERGE = 624DC 628AC 6BF64 alu_anim 6DF70 6E42C 6FDF8 704D0 7879C 7E4BC 84B88 8A0A4 8C600 8D3E8
+ST_DRA_MERGE = 624DC 628AC 6BF64 alu_anim 6DF70 6E42C 6FDF8 704D0 71830 7879C 7E4BC 84B88 8A0A4 8C600 8D3E8
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
 	$(call link_with_deadstrip,dra,$@)
 
-RIC_MERGE = pl_handlers
+RIC_MERGE = pl_debug pl_handlers
 $(BUILD_DIR)/ric.elf: $(BUILD_DIR)/ric.ld $(addprefix $(BUILD_DIR)/src/ric/,$(addsuffix .c.o,$(RIC_MERGE))) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
 	$(call link_with_deadstrip,ric,$@)
 
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link_with_deadstrip,tt_$*,$@)
 
-ST_LIB_MERGE = collision e_chair st_update create_entity e_red_door e_room_fg st_common prim_helpers e_bloody_zombie e_misc en_thornweed_corpseweed e_skeleton e_life_up e_flea_man e_mist_door e_flea_armor e_candle_table st_debug e_lock_camera unk_3B200 unk_3B53C
+ST_LIB_MERGE = collision e_chair st_update create_entity e_red_door e_room_fg st_common prim_helpers e_bloody_zombie e_misc en_thornweed_corpseweed e_skeleton e_life_up e_flea_man e_mist_door e_flea_armor e_candle_table st_debug e_lock_camera unk_3B200 unk_3B53C e_init e_dhuron e_flying_zombie e_library_bg e_mudman e_spellbook_magic_tome
 $(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
 	$(call link_with_deadstrip,stlib,$@)
 ST_NO4_MERGE =
@@ -113,12 +113,13 @@ $(BUILD_DIR)/%.s.o: %.s
 # Most of PSP is compiled with -O0, except part of DRA. This block selects the proper flag.
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 # Allow override. Any file in this list will get O4.
-OPT_HI_OVERRIDES = 80.c.o 1E50.c.o 33F0.c.o A710.c.o C0B0.c.o EC60.c.o F4D0.c.o 13BD0.c.o 186E8.c.o 61F30.c.o 624DC.c.o 628AC.c.o 63C90.c.o 64EE0.c.o
+
+OPT_HI_OVERRIDES = 80.c.o 1E50.c.o 33F0.c.o A710.c.o C0B0.c.o EC60.c.o F4D0.c.o 13BD0.c.o 186E8.c.o 61F30.c.o 624DC.c.o 628AC.c.o 62FE0.c.o 63C90.c.o 64EE0.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	 $(SOTNSTR) -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
+	 $(SOTNSTR) -p -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)

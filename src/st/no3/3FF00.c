@@ -22,7 +22,7 @@ void EntityRoomTransition2(Entity* self) {
         tilemap->y = 0xFC;
         g_Player.padSim = PAD_RIGHT;
         g_PauseAllowed = false;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         g_CutsceneFlags |= 0x100;
         break;
 
@@ -36,7 +36,7 @@ void EntityRoomTransition2(Entity* self) {
             g_CutsceneFlags |= 0x80;
             self->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 2:
@@ -55,7 +55,7 @@ void EntityRoomTransition2(Entity* self) {
             self->ext.roomTransition2.timer = 16;
             self->step++;
         }
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 3:
@@ -79,7 +79,7 @@ void EntityRoomTransition2(Entity* self) {
             }
         }
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 4:
@@ -93,7 +93,7 @@ void EntityRoomTransition2(Entity* self) {
             g_api.PlaySfx(0x30F);
         }
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 5:
@@ -108,7 +108,7 @@ void EntityRoomTransition2(Entity* self) {
             CreateEntityFromCurrentEntity(E_BG_LIGHTNING, gents);
         }
         g_Player.padSim = 0;
-        g_Player.D_80072EFC = 1;
+        g_Player.demo_timer = 1;
         break;
     }
 }

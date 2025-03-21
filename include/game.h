@@ -200,9 +200,11 @@ typedef enum {
 // PSP allows you to do the Wolf Charge spell with either square or circle.
 // This was changed from PS1, which only accepts square.
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
+#define BTN_MIST (PAD_L1 | PAD_R1)
 #else
 #define BTN_WOLF PAD_R2
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
+#define BTN_MIST PAD_L1
 #endif
 
 #define MAX_PRIM_COUNT 0x500
@@ -1349,7 +1351,7 @@ typedef enum {
 
 typedef struct Collider {
     /* 0x00 */ u32 effects;
-    /* 0x04 */ s32 unk4;
+    /* 0x04 */ s32 unk4; // possibly an x offset
     /* 0x08 */ s32 unk8;
     /* 0x0C */ s32 unkC;
     /* 0x10 */ s32 unk10;
@@ -1810,7 +1812,7 @@ typedef struct {
     /* 80072EF0 */ s32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
     /* 80072EF8 */ s32 D_80072EF8;
-    /* 80072EFC */ s32 D_80072EFC; // stun timer
+    /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 
     // 0x01: touching the ground
@@ -1822,7 +1824,7 @@ typedef struct {
     // 0x1000: standing on a slightly ascending or descending slope
     // 0x4000: standing on a raising slope
     // 0x8000: standing on any slope
-    /* 80072F20 */ s32 pl_vram_flag;
+    /* 80072F20 */ s32 vram_flag;
 
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
@@ -1841,11 +1843,15 @@ typedef struct {
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
     /* 80072F60 */ u16 unk40;
-    /* 80072F62 */ u16 pl_high_jump_timer;
+    /* 80072F62 */ u16 high_jump_timer;
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;
     /* 80072F68 */ u16 unk48;
+#ifdef VERSION_PSP
+    /* 80072F6A */ u16 unk4A;
+#else
     /* 80072F6A */ s16 unk4A;
+#endif
     /* 80072F6C */ u16 unk4C;
     /* 80072F6E */ u16 unk4E;
     /* 80072F70 */ u16 prev_step;

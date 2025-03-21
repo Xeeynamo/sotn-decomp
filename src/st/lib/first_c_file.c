@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801AE4BC);
+INCLUDE_ASM("st/lib/nonmatchings/first_c_file", EntityBreakable);
 
 INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801AE7AC);
 
@@ -140,7 +140,7 @@ void func_us_801AE8E8(Entity* self) {
                 if (dx >= 0) {
                     player->posX.i.hi -= dx;
                     D_80097488.x.i.hi -= dx;
-                    g_Player.pl_vram_flag |= 0x44;
+                    g_Player.vram_flag |= 0x44;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
                             break;
@@ -161,7 +161,7 @@ void func_us_801AE8E8(Entity* self) {
                 if (dx <= 0) {
                     player->posX.i.hi -= dx;
                     D_80097488.x.i.hi -= dx;
-                    g_Player.pl_vram_flag |= 0x48;
+                    g_Player.vram_flag |= 0x48;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
                             break;

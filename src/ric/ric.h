@@ -312,11 +312,11 @@ extern u8 D_801545D4[16];
 extern Point16 g_RicSensorsCeiling[];
 extern Point16 g_RicSensorsFloor[];
 extern Point16 g_RicSensorsWall[];
-extern u16 g_RicSensorsCeilingDefault[];
-extern u16 g_RicSensorsFloorDefault[];
-extern u16 g_RicSensorsWallDefault[];
-extern u16 g_RicSensorsCeilingCrouch[];
-extern u16 g_RicSensorsWallCrouch[];
+extern s16 g_RicSensorsCeilingDefault[];
+extern s16 g_RicSensorsFloorDefault[];
+extern s16 g_RicSensorsWallDefault[];
+extern s16 g_RicSensorsCeilingCrouch[];
+extern s16 g_RicSensorsWallCrouch[];
 
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];

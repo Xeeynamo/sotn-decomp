@@ -411,6 +411,6 @@ void EntityStageTitleCard(Entity* self) {
         }
         break;
     }
-    g_Player.D_80072EFC = 4;
+    g_Player.demo_timer = 4;
     g_Player.padSim = 0;
 }

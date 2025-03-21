@@ -113,7 +113,7 @@ void func_80103ED4(void) {
             D_80097924 = D_80137EF0;
             D_8006C378 = D_80137EF4;
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 1;
+            g_Player.demo_timer = 1;
             D_80137E4C = 6;
         } else {
             g_MemCardRetryCount = 10;

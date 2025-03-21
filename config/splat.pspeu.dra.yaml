@@ -93,7 +93,7 @@ segments:
       - [0x26948, c, dra_psp/26948]
       - [0x29420, c, dra_psp/29420]
       - [0x29760, c, dra_psp/29760]
-      - [0x2BF60, c, dra_psp/2BF60]
+      - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra_psp/35238]
       - [0x353B0, c, dra/704D0] # O0
       - [0x373F8, c, dra/6E42C]
@@ -111,7 +111,7 @@ segments:
       - [0x60C90, c, dra_psp/memcard]
       - [0x61B78, c, dra_psp/61B78]
       - [0x61F30, c, dra_psp/61F30] # O4
-      - [0x62FE0, c, dra_psp/62FE0]
+      - [0x62FE0, c, dra_psp/62FE0] # O4
       - [0x63C90, c, dra_psp/63C90] # O4
       - [0x63E60, c, dra_psp/63E60]
       - [0x63FE0, c, dra_psp/63FE0]
@@ -135,14 +135,16 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
+      - [0xA6820, .data, dra/71830]
+      - [0xA6888, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/alu_anim]
       - [0xA6920, data]
       - [0xA6B30, .data, dra/84B88] # "light_timer:%02x\n" for hellfire
       - [0xA6B48, data]
-      - [0xA6E78, .data, dra/7879C]
-      - [0xA6FD8, data]
+      - [0xA6C38, .data, dra/7879C]
+      - [0xA6FD8, data] # Factory blueprints
       - [0xA72C0, .data, dra/7E4BC]
       - [0xA79D0, data]
       - [0xA8120, .data, dra/8D3E8]
@@ -151,6 +153,8 @@ segments:
       - [0xA88D8, data]
       - [0xAA3B0, .data, dra_psp/memcard]
       - [0xAA578, data]
+      - [0xAA6E8, .data, dra_psp/62FE0]
+      - [0xAA8A0, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
@@ -169,7 +173,7 @@ segments:
       - [0xEE680, .rodata, dra_psp/23FE0]
       - [0xEE6C8, .rodata, dra_psp/26948]
       - [0xEE708, .rodata, dra_psp/29760]
-      - [0xEE7B0, .rodata, dra_psp/2BF60]
+      - [0xEE7B0, .rodata, dra/71830]
       - [0xEE840, .rodata, dra/704D0]
       - [0xEE898, .rodata, dra/84B88]
       - [0xEE8B8, .rodata, dra/8A0A4]
@@ -177,5 +181,7 @@ segments:
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/65790]
-      - { type: bss, vram: 0x91CB700 }
+      - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
+      - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
+      - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss2}
   - [0xEED80]

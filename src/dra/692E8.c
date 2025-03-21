@@ -210,7 +210,7 @@ void func_80109594() {
     }
 
     g_Player.unk04 = 1;
-    g_Player.pl_vram_flag = 1;
+    g_Player.vram_flag = 1;
     func_8010E570(0);
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
@@ -233,7 +233,7 @@ void func_80109594() {
 
 #if defined(VERSION_US)
     g_Player.unk20 = 0x10;
-    g_Player.D_80072EFC = 0x10;
+    g_Player.demo_timer = 16;
     g_Player.padSim = 0;
     D_80137FB8 = 0;
     D_80137FBC = 1;
@@ -324,7 +324,7 @@ static void CheckStageCollision(s32 isTransformed) {
         g_Entities[0x10].entityId == 0x22) {
         mist = mist + 1;
     }
-    pl_vram = &g_Player.pl_vram_flag;
+    pl_vram = &g_Player.vram_flag;
     pl_04 = &g_Player.unk04;
     *pl_04 = *pl_vram;
     *pl_vram = 0;
@@ -409,7 +409,7 @@ static void CheckStageCollision(s32 isTransformed) {
             !(g_Player.colCeiling[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
             g_Player.colFloor[1].effects & 1 &&
             !(g_Player.colFloor[1].effects & EFFECT_SOLID_FROM_BELOW)) {
-            g_Player.pl_vram_flag = 3;
+            g_Player.vram_flag = 3;
             PLAYER.posX.val -= speed;
             return;
         }
@@ -476,7 +476,7 @@ void func_8010A234(s32 arg0) {
             // Alucard says "WHAT?!" when first putting on Axe Lord Armor
             PlaySfx(SFX_VO_ALU_WHAT);
             g_Player.padSim = 0;
-            g_Player.D_80072EFC = 0x20;
+            g_Player.demo_timer = 32;
             func_8010FAF4();
             weapon = D_8017A000.EntityWeaponAttack;
             weapon();
@@ -498,7 +498,7 @@ void func_8010A234(s32 arg0) {
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
-        if (g_Player.pl_vram_flag & 1) {
+        if (g_Player.vram_flag & 1) {
             func_8010E570(0);
         } else {
             func_8010E7AC();
@@ -629,7 +629,7 @@ void EntityAlucard(void) {
                         PLAYER.palette = g_Player.unk40;
                         break;
                     case 3:
-                        PLAYER.palette = g_Player.pl_high_jump_timer;
+                        PLAYER.palette = g_Player.high_jump_timer;
                         g_Player.timers[15] = 12;
                         break;
                     case 4: {
@@ -715,10 +715,10 @@ void EntityAlucard(void) {
                 D_800ACDFC--;
             }
             g_Player.padHeld = g_Player.padPressed;
-            if (g_Player.D_80072EFC != 0) {
-                g_Player.D_80072EFC--;
+            if (g_Player.demo_timer != 0) {
+                g_Player.demo_timer--;
 #ifdef VERSION_US
-                if (g_Player.D_80072EFC == 0) {
+                if (g_Player.demo_timer == 0) {
                     D_80137FBC = 1;
                 }
 #endif
@@ -816,7 +816,7 @@ void EntityAlucard(void) {
                                 func_8010E168(1, 0xC);
                                 break;
                             case 1:
-                                g_Player.pl_high_jump_timer = 0x8166;
+                                g_Player.high_jump_timer = 0x8166;
                                 g_Player.unk18 = damage.effects;
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
@@ -829,7 +829,7 @@ void EntityAlucard(void) {
                                     g_CurrentEntity, FACTORY(0x73, 0), 0);
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2C, 0x58), 0);
-                                g_Player.pl_high_jump_timer = 0x8166;
+                                g_Player.high_jump_timer = 0x8166;
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
                                 break;
@@ -1262,7 +1262,7 @@ block_160:
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
         }
-        temp_s1 = g_Player.pl_vram_flag;
+        temp_s1 = g_Player.vram_flag;
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_WOLF_FORM |
                PLAYER_STATUS_UNK400000 | PLAYER_STATUS_UNK40000000))) {

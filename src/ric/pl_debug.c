@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
-#include <player.h>
+#include "ric.h"
+
+void RicDebugOff() { g_IsRicDebugEnter = false; }
 
 static void RicDebugEnter(void) {
     g_IsRicDebugEnter = true;
@@ -20,14 +21,14 @@ static void RicDebugExit(void) {
 bool RicDebug(void) {
     if (!g_IsRicDebugEnter) {
         if (g_Player.padTapped & PAD_L2) {
-            if (g_Player.D_80072EFC == 0) {
+            if (g_Player.demo_timer == 0) {
                 RicDebugEnter();
                 return true;
             }
         }
         return false;
     }
-    if (g_Player.D_80072EFC) {
+    if (g_Player.demo_timer) {
         RicDebugExit();
         return false;
     }

@@ -2,7 +2,7 @@
 #include "lib.h"
 
 static SVECTOR D_us_80180DC0 = {0, 0, 512};
-static SVECTOR D_us_80180DC8 = {0, 0, 0};
+static SVECTOR D_us_80180DC8 = {0};
 
 // parallax book cases
 void EntityBackgroundBookcase(Entity* self) {
@@ -93,7 +93,7 @@ void EntityBackgroundBookcase(Entity* self) {
 }
 
 static SVECTOR D_us_80180DD0 = {0, 0, 256};
-static SVECTOR D_us_80180DD8 = {0, 0, 0};
+static SVECTOR D_us_80180DD8 = {0};
 
 // parallax desk & chairs
 void EntityBackgroundFurniture(Entity* self) {
@@ -178,7 +178,7 @@ void EntityBackgroundFurniture(Entity* self) {
 }
 
 static SVECTOR D_us_80180DE0 = {0, 0, 448};
-static SVECTOR D_us_80180DE8 = {0, 0, 0};
+static SVECTOR D_us_80180DE8 = {0};
 
 // parallax column shadow
 void EntityBackgroundShadow(Entity* self) {
@@ -201,12 +201,12 @@ void EntityBackgroundShadow(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->ext.libraryShadow.prim = prim;
             while (prim != NULL) {
-                last = prim;
                 prim->u0 = 24;
                 prim->v0 = 64;
                 prim->r0 = prim->g0 = prim->b0 = 0;
                 prim->priority = 0x60;
                 prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+                last = prim;
                 prim = prim->next;
             }
             prim = last;
@@ -308,7 +308,7 @@ static u8* D_us_80180E68[] = {
 
 static Point16 D_us_80180E78[] = {
     {0x000, 0x000}, {0x420, 0x1E0}, {0x0B0, 0x280}, {0x080, 0x1A0}};
-static SVECTOR D_us_80180E88 = {0, 0, 0};
+static SVECTOR D_us_80180E88 = {0};
 
 void func_us_801AFA80(Entity* self) {
     long p, flag;

@@ -39,7 +39,7 @@ void PlayerStepHighJump(void) {
 
     switch (DOPPLEGANGER.step_s) {
     case 0:
-        if (g_Dop.pl_vram_flag & 2) {
+        if (g_Dop.vram_flag & 2) {
             func_us_801C6E7C(3);
             if (g_Dop.unk4A > 4) {
                 DOPPLEGANGER.step_s = 2;
@@ -60,7 +60,7 @@ void PlayerStepHighJump(void) {
         break;
 
     case 1:
-        if (g_Dop.pl_vram_flag & 2) {
+        if (g_Dop.vram_flag & 2) {
             DOPPLEGANGER.step_s = 2;
             func_us_801C6E7C(3);
         } else {
@@ -114,7 +114,13 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_80113E68);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C72BC);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C7340);
+void func_us_801C7340(void) {
+    if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
+        DOPPLEGANGER.entityRoomIndex = 0;
+        return;
+    }
+    DOPPLEGANGER.entityRoomIndex = 1;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C7380);
 
@@ -545,7 +551,7 @@ void DopEntityHitByLightning(Entity* self) {
             -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
         self->posX.val = xOffset + DOPPLEGANGER.posX.val;
         self->posY.val = yOffset + DOPPLEGANGER.posY.val;
-        if ((self->ext.hitbylightning.unk92) && (g_Dop.pl_vram_flag & 0xE)) {
+        if ((self->ext.hitbylightning.unk92) && (g_Dop.vram_flag & 0xE)) {
             var_s0 = true;
         }
         if (var_s0) {
@@ -694,7 +700,7 @@ void EntityHitByIce(Entity* self) {
         // Could rewrite as a series of && and || but that would probably reduce
         // readability
         if (self->ext.hitbyice.unk7E) {
-            if (g_Dop.pl_vram_flag & 0xC) {
+            if (g_Dop.vram_flag & 0xC) {
                 sp18 = true;
             }
             if (DOPPLEGANGER.step == Dop_Hit && DOPPLEGANGER.step_s == 5) {
@@ -789,7 +795,113 @@ void EntityHitByIce(Entity* self) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CE9EC);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CEA30);
+#include "../../dra/mist.h"
+
+extern Primitive D_us_801D3F00[8];
+extern u32 D_us_80181F98[8];
+extern u32 D_us_80181FB8[8];
+extern mistStruct D_us_801D3DA0[16];
+
+Primitive* func_us_801CEA30(
+    bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+    s32 primU0;
+    s32 tempU;
+    s32 tempV;
+    s32 primU1;
+    s32 primV0;
+    s32 primV1;
+    s16 angle1;
+    s16 angle2;
+    Primitive* prim;
+    s32 i;
+
+    if (arg0 == false) {
+        if (facingLeft) {
+            prim = &D_us_801D3F00[D_us_80181F98[arg1 >> 1]];
+            primU0 = prim->u0;
+            tempU = prim->u1;
+            primV0 = prim->v0;
+            tempV = prim->v1;
+        } else {
+            prim = &D_us_801D3F00[D_us_80181FB8[arg1 >> 1]];
+            primU0 = prim->u1;
+            tempU = prim->u0;
+            primV0 = prim->v1;
+            tempV = prim->v0;
+        }
+
+        primU1 = (prim->u0 + prim->u1) / 2;
+        primV1 = (prim->v0 + prim->v1) / 2;
+
+        if (arg1 & 1) {
+            primU0 = primU1;
+            primU1 = tempU;
+            primV0 = primV1;
+            primV1 = tempV;
+        }
+        arg2->u0 = primU0;
+        arg2->v0 = primV0;
+        arg2->u1 = primU1;
+        arg2->v1 = primV1;
+        arg2->u3 = arg2->u2 = prim->u2;
+        arg2->v3 = arg2->v2 = prim->v2;
+        if (DOPPLEGANGER.animSet == 0xF) {
+            arg2->tpage = 0x118;
+        } else {
+#ifdef VERSION_PSP
+            arg2->tpage = 0x18;
+#else
+            arg2->tpage = 0x10;
+#endif
+        }
+        arg2->clut = 0x20F;
+        arg2->priority = DOPPLEGANGER.zPriority + 2;
+        arg2->drawMode = DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        arg2 = arg2->next;
+    } else {
+        angle1 = D_us_801D3DA0[arg1].angle1;
+        angle2 = D_us_801D3DA0[(arg1 + 1) % 16].angle1;
+
+        for (i = 0; i < 4; i++) {
+            // nb: the cos/sin arguments seem to be invariant, could've been
+            // extracted outside the loop
+            arg2->u0 = 0x60 + ((((rcos(angle1) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->v0 = 0xA0 - ((((rsin(angle1) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->u1 = 0x60 + ((((rcos(angle2) >> 4) * 8) * (i + 1)) >> 8);
+            arg2->v1 = 0xA0 - ((((rsin(angle2) >> 4) * 8) * (i + 1)) >> 8);
+
+            if (i == 3) {
+                if (arg2->u0 < 4) {
+                    arg2->u0 = -1;
+                }
+                if (arg2->u1 < 4) {
+                    arg2->u1 = -1;
+                }
+                if (arg2->v0 < 4) {
+                    arg2->v0 = -1;
+                }
+                if (arg2->v1 < 4) {
+                    arg2->v1 = -1;
+                }
+            }
+
+            arg2->u2 = 0x60 + ((((rcos(angle1) >> 4) * 8) * i) >> 8);
+            arg2->v2 = 0xA0 - ((((rsin(angle1) >> 4) * 8) * i) >> 8);
+            arg2->u3 = 0x60 + ((((rcos(angle2) >> 4) * 8) * i) >> 8);
+            arg2->v3 = 0xA0 - ((((rsin(angle2) >> 4) * 8) * i) >> 8);
+
+            arg2->tpage = 0x18;
+            arg2->clut = 0x20F;
+            arg2->priority = DOPPLEGANGER.zPriority + 4;
+            arg2->drawMode =
+                DRAW_UNK_400 | DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            arg2 = arg2->next;
+        }
+    }
+    return arg2;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", EntityMist);
 
