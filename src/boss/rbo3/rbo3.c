@@ -138,7 +138,7 @@ void func_us_80191438(Entity* self) {
     }
 }
 
-extern EInit D_us_80180480;
+extern EInit g_EInitMedusa;
 extern u8 RBO3_PrizeDrops[];
 extern u8 D_us_801805FC[];
 extern u8 D_us_8018060C[];
@@ -167,7 +167,7 @@ void EntityMedusa(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180480);
+        InitializeEntity(g_EInitMedusa);
         self->animCurFrame = 1;
         self->hitboxState = 0;
         CreateEntityFromEntity(UNK_ENTITY_25, self, self + 1);
