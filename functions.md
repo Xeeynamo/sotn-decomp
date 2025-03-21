@@ -276,7 +276,7 @@
 | st0    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | wrp    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | dra    | func_800FF460                       |       31 |          3 |        |                                 |       |
-| dra    | func_psp_0913E4F8                   |       31 |          3 |        |                                 |       |
+| dra    | func_psp_0913E4F8                   |       31 |          3 |        | https://decomp.me/scratch/LLSQQ | 0.505 |
 | lib    | SetEntityVelocityFromAngle          |       31 |          3 |        | https://decomp.me/scratch/IrMtS | 1.0   |
 | no4    | func_psp_092428E0                   |       31 |          3 |        |                                 |       |
 | no4    | func_psp_092432C0                   |       31 |          3 |        |                                 |       |
@@ -643,7 +643,7 @@
 | lib    | func_psp_0923A448                   |       68 |         11 |        |                                 |       |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
-| dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
+| dra    | func_psp_0913E6D0                   |       69 |          9 |        | https://decomp.me/scratch/7Xoqu | 0.97  |
 | dra    | PlayerStepUnk48                     |       70 |         11 |        |                                 |       |
 | dra    | InitSoundVars3                      |       71 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
 | lib    | PrimResetNext                       |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
@@ -676,7 +676,7 @@
 | dra    | func_800EA720                       |       73 |          1 |        |                                 |       |
 | lib    | MakeEntityFromId                    |       73 |          4 |        |                                 |       |
 | dra    | func_psp_090ECD78                   |       73 |          7 |        |                                 |       |
-| dra    | func_psp_0913E558                   |       73 |          7 |        |                                 |       |
+| dra    | func_psp_0913E558                   |       73 |          7 |        | https://decomp.me/scratch/UBHSj | 0.479 |
 | lib    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
 | no4    | func_psp_0925B5B8                   |       73 |          7 |        |                                 |       |
 | wrp    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
