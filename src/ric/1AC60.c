@@ -130,7 +130,7 @@ void RicInit(s16 initParam) {
     for (i = 0; i < memset_len; i++) {
         *memset_ptr++ = 0;
     }
-    g_Player.pl_vram_flag = g_Player.unk04 = 1;
+    g_Player.vram_flag = g_Player.unk04 = 1;
     RicSetStand(0);
     PLAYER.anim = ric_anim_stand_relax;
     g_Player.unk5C = initParam;
@@ -207,7 +207,7 @@ static void CheckStageCollision(bool arg0) {
     s32* unk04_ptr;
     s32 status;
 
-    vram_ptr = &g_Player.pl_vram_flag;
+    vram_ptr = &g_Player.vram_flag;
     unk04_ptr = &g_Player.unk04;
     *unk04_ptr = *vram_ptr;
     *vram_ptr = 0;
@@ -500,8 +500,8 @@ void RicMain(void) {
         }
     }
     g_Player.padHeld = g_Player.padPressed;
-    if (g_Player.pl_demo_timer) {
-        g_Player.pl_demo_timer--;
+    if (g_Player.demo_timer) {
+        g_Player.demo_timer--;
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
@@ -758,7 +758,7 @@ void RicMain(void) {
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
     playerY = &PLAYER.posY.i;
-    temp_s0 = g_Player.pl_vram_flag;
+    temp_s0 = g_Player.vram_flag;
     if ((abs(PLAYER.velocityY) > FIX(2)) || (abs(PLAYER.velocityX) > FIX(2))) {
         PLAYER.velocityY = PLAYER.velocityY >> 2;
         PLAYER.velocityX = PLAYER.velocityX >> 2;

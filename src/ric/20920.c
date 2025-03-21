@@ -272,7 +272,7 @@ void RicSetHighJump(void) {
     PLAYER.velocityX = 0;
     RicSetSpeedX(FIX(1.25));
     PLAYER.velocityY = FIX(-7.5);
-    g_Player.pl_high_jump_timer = 0;
+    g_Player.high_jump_timer = 0;
     RicSetAnimation(ric_anim_high_jump);
     func_8015CC28();
     RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);

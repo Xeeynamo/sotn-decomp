@@ -320,7 +320,7 @@ void func_us_801AFE0C(Entity* self) {
         }
 #ifdef VERSION_PSP
         g_Player.padSim = PAD_LEFT | PAD_SIM_UNK20000;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
 #endif
         break;
 
@@ -329,7 +329,7 @@ void func_us_801AFE0C(Entity* self) {
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
             g_Player.padSim = PAD_R1;
         } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
@@ -345,7 +345,7 @@ void func_us_801AFE0C(Entity* self) {
             g_Player.padSim = PAD_R2;
 #endif
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         SetStep(2);
         break;
 
@@ -383,7 +383,7 @@ void func_us_801AFE0C(Entity* self) {
             player->posX.i.hi = 0xE8;
             self->step++;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 3:
@@ -399,12 +399,12 @@ void func_us_801AFE0C(Entity* self) {
         } else {
             player->posX.i.hi = 0xE8;
         }
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         break;
 
     case 4:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         self->step++;
         break;
 
@@ -412,7 +412,7 @@ void func_us_801AFE0C(Entity* self) {
         g_CastleFlags[MET_LIBRARIAN] = 1;
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_MEET_MASTER_LIBRARIAN, TIMEATTACK_SET_RECORD);
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         self->step++;
         /* fallthrough */
     case 6:
@@ -440,7 +440,7 @@ void func_us_801AFE0C(Entity* self) {
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;
-                g_Player.pl_demo_timer = 16;
+                g_Player.demo_timer = 16;
                 self->step_s++;
                 g_CutsceneFlags |= 1;
                 break;
@@ -469,12 +469,12 @@ void func_us_801AFE0C(Entity* self) {
                     g_Player.padSim = PAD_LEFT;
                     self->step_s++;
                 }
-                g_Player.pl_demo_timer = 1;
+                g_Player.demo_timer = 1;
                 break;
 
             case 2:
                 g_Player.padSim = PAD_NONE;
-                g_Player.pl_demo_timer = 128;
+                g_Player.demo_timer = 128;
                 SetStep(10);
                 break;
             }
@@ -483,9 +483,9 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 10:
-        if (!g_Player.pl_demo_timer && (g_Player.pl_vram_flag & 1)) {
+        if (!g_Player.demo_timer && (g_Player.vram_flag & 1)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-            g_Player.pl_demo_timer = 1;
+            g_Player.demo_timer = 1;
             self->step++;
         }
         player->posX.i.hi = 0x74;
@@ -493,7 +493,7 @@ void func_us_801AFE0C(Entity* self) {
 
     case 11:
         g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         if (g_CutsceneFlags & 0x100) {
             g_CutsceneFlags |= 0x2000;
             self->step = 0x10;
@@ -504,7 +504,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        g_Player.pl_demo_timer = 32;
+        g_Player.demo_timer = 32;
         g_Player.padSim = PAD_RIGHT;
         D_80097928 = 1;
         self->step++;
@@ -514,7 +514,7 @@ void func_us_801AFE0C(Entity* self) {
 #ifdef VERSION_PSP
         g_PauseAllowed = false;
 #endif
-        if (!g_Player.pl_demo_timer) {
+        if (!g_Player.demo_timer) {
 #ifdef VERSION_PSP
             g_PauseAllowed = true;
 #endif
@@ -602,7 +602,7 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0x80;
     }
     // If the player touches the ground, reset the frames airborne.
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         self->ext.libraryChair.consecutiveHits = 0;
     }
     switch (self->step) {
@@ -857,7 +857,7 @@ extern u8 D_us_80183F64;
 #endif
 
 void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
-    const u16 MINSCODE = 0x8140;
+    const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
@@ -897,7 +897,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             } else if (ch >= 'A' && ch <= 'Z') {
                 ch = ch + 0x821F;
             } else if (ch == ' ') {
-                ch = MINSCODE;
+                ch = DOUBLE_SPACE;
                 s_8 = 2;
             } else {
 #ifdef VERSION_PSP
@@ -908,7 +908,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
-                if (ch == MINSCODE) {
+                if (ch == DOUBLE_SPACE) {
                     s_8 = 2;
                 }
             }
@@ -918,7 +918,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
             chPix = (u8*)g_api.func_80106A28(ch, 1);
 #endif
             while (true) {
-                if (ch == MINSCODE) {
+                if (ch == DOUBLE_SPACE) {
                     break;
                 }
                 for (i = 0; i < FontHeight; i++) {
