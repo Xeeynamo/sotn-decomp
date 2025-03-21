@@ -100,5 +100,6 @@ s32 MemcardEraseFile(s32 nPort, s32 nCard, s32 arg2, s32 arg3) {
     return func_89192EC(arg2, arg3);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MemcardClose);
-
+s32 MemcardClose(s32 nPort) {
+    return 1;
+}
