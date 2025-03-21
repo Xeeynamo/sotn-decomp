@@ -350,7 +350,7 @@
 | st0    | CutsceneUnk3                        |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090ED958                   |       37 |          4 |        |                                 |       |
 | dra    | func_8010FD88                       |       37 |          5 |        |                                 |       |
-| dra    | func_psp_0913E658                   |       37 |          5 |        |                                 |       |
+| dra    | func_psp_0913E658                   |       37 |          5 |        | https://decomp.me/scratch/Asls2 | 0.927 |
 | dra    | func_psp_09141570                   |       37 |          5 |        |                                 |       |
 | ric    | func_pspeu_092AF600                 |       37 |          5 |        |                                 |       |
 | dra    | PerformTetraSpirit                  |       37 |          6 |        |                                 |       |
@@ -563,7 +563,7 @@
 | dra    | HandlePrologueEnd                   |       59 |         14 |        |                                 |       |
 | dra    | 29760.rodata                        |       60 |          0 | Yes    |                                 |       |
 | st0    | cutscene.rodata                     |       60 |          0 | Yes    |                                 |       |
-| dra    | func_psp_0913F960                   |       60 |          5 |        | https://decomp.me/scratch/pLSIN | 0.972 |
+| dra    | func_psp_0913F960                   |       60 |          5 |        | https://decomp.me/scratch/pLSIN | 1.0   |
 | lib    | EntityExplosionSpawn                |       60 |          6 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | no4    | func_psp_0925B740                   |       60 |          6 |        |                                 |       |
 | ric    | RicEntityCrashReboundStoneParticles |       60 |          8 |        |                                 |       |
@@ -987,7 +987,7 @@
 | dra    | func_psp_091411F8                   |      158 |         10 |        |                                 |       |
 | no4    | func_psp_092398B8                   |      159 |         18 |        |                                 |       |
 | dra    | func_8012CCE4                       |      159 |         21 |        |                                 |       |
-| dra    | LoadSaveData                        |      160 |         10 |        |                                 |       |
+| dra    | LoadSaveData                        |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
 | ric    | RicEntitySubwpnCrossTrail           |      160 |         11 |        |                                 |       |
 | ric    | func_pspeu_092AFB68                 |      160 |         30 |        |                                 |       |
 | ric    | func_pspeu_092BEA38                 |      161 |          5 |        |                                 |       |
