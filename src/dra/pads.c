@@ -2,10 +2,11 @@
 #include "dra.h"
 
 // BSS
-extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
+// This could have been BUTTON_COUNT * PAD_COUNT but nope, 16 on psp
+extern u8 g_PadsRepeatTimer[16];
 
-void ResetPadsRepeat(void) {
-    s8* ptr;
+static void ResetPadsRepeat(void) {
+    u8* ptr;
     s32 i;
 
     g_pads[0].repeat = 0;
@@ -16,11 +17,11 @@ void ResetPadsRepeat(void) {
     }
 }
 
-void UpdatePadsRepeat(void) {
+static void UpdatePadsRepeat(void) {
     u16 button = 1;
-    u16 repeat = 0;
     u16 unk = g_pads[0].tapped;
     u16 pressed = g_pads[0].pressed;
+    u16 repeat = 0;
     u8* timers = g_PadsRepeatTimer;
     s32 i = 0;
 
@@ -30,7 +31,7 @@ void UpdatePadsRepeat(void) {
                 repeat |= button;
                 timers[0] = 0x10;
             } else {
-                if (--timers[0] == 0xFF) {
+                if (!timers[0]--) {
                     repeat |= button;
                     timers[0] = 5;
                 }
@@ -49,25 +50,35 @@ void InitializePads(void) {
 
     PadInit(0);
     for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
-        pad->tapped = 0;
-        pad->previous = 0;
-        pad->pressed = 0;
+        pad->pressed = pad->previous = pad->tapped = 0;
     }
     ResetPadsRepeat();
 }
 
 void ReadPads(void) {
+    u32 padData;
+    u32 rawPadRead;
     Pad* pad;
     s32 i;
-    u_long padd;
 
     for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
         pad->previous = pad->pressed;
-        padd = PadRead(i >> 1);
-        if (!(i & 1))
-            pad->pressed = padd;
-        else
-            pad->pressed = padd >> 0x10;
+#ifdef VERSION_PSP
+        if (i == 0) {
+            rawPadRead = PadRead_PSP();
+        } else {
+            rawPadRead = 0;
+        }
+        padData = rawPadRead;
+#else
+        padData = PadRead(i >> 1);
+#endif
+        if (!(i & 1)) {
+            pad->pressed = padData & 0xFFFF;
+        } else {
+            pad->pressed = padData >> 0x10;
+        }
+
         pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
     }
     UpdatePadsRepeat();

@@ -474,7 +474,6 @@ void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
 s32 LoadFileSim(s32 id, SimFileType type);
-void ResetPadsRepeat(void);
 void func_800E8DF0(void);
 s32 _peek_event(void);
 s32 _card_event_x(void);
