@@ -640,7 +640,7 @@
 | ric    | RicCreateEntFactoryFromEntity       |       68 |          6 |        |                                 |       |
 | lib    | CutsceneSkip                        |       68 |          8 |        |                                 |       |
 | lib    | func_us_801AE7AC                    |       68 |         10 |        |                                 |       |
-| lib    | func_us_801D2CE0                    |       68 |         11 |        | https://decomp.me/scratch/ESwuS | 1.0   |
+| lib    | func_psp_0923A448                   |       68 |         11 |        |                                 |       |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
 | dra    | func_psp_0913E6D0                   |       69 |          9 |        |                                 |       |
@@ -1162,7 +1162,7 @@
 | dra    | EntityPlayerPinkEffect              |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
 | dra    | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
 | no4    | func_psp_09237700                   |      285 |         47 |        |                                 |       |
-| lib    | func_us_801D35B8                    |      287 |         30 |        | https://decomp.me/scratch/VnyUs | 1.0   |
+| lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
 | ric    | func_pspeu_092B0A10                 |      288 |         19 |        |                                 |       |
@@ -1385,7 +1385,7 @@
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        |                                 |       |
-| lib    | EntityMagicTome                     |      768 |        100 | Yes    |                                 |       |
+| lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
 | ric    | RicEntitySubwpnDagger               |      786 |         53 |        |                                 |       |
@@ -1414,7 +1414,7 @@
 | dra    | DrawHudSubweapon                    |      934 |         73 |        |                                 |       |
 | no4    | func_psp_0924CC60                   |      948 |        120 | Yes    |                                 |       |
 |        | UpdateBatBlueTrailEntities          |      963 |         44 |        |                                 |       |
-| lib    | EntitySpellbook                     |      965 |        124 | Yes    |                                 |       |
+| lib    | func_psp_09239650                   |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
 | lib    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp    | EntityPrizeDrop                     |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4    | func_psp_092449B0                   |      979 |        177 |        |                                 |       |
