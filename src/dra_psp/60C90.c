@@ -293,6 +293,59 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->rng = g_randomNext;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", LoadSaveData);
+extern s32 D_psp_091FC3F8;
+extern s32 D_psp_091FC400;
+extern s32 D_psp_091FC408;
+extern s32 D_psp_091FC410;
+
+s32 LoadSaveData(SaveData* save) {
+    s32 i;
+    u32 prevCompletionFlags1;
+    u32 prevCompletionFlags2;
+    PlayerStatus* srcStatus;
+    MenuNavigation* srcNav;
+    GameSettings* settings;
+    SaveData* savePtr = save;
+
+    if (savePtr->info.saveSize != (sizeof(SaveData))) {
+        return -1;
+    }
+    srcStatus = &savePtr->status;
+    srcNav = &savePtr->menuNavigation;
+    settings = &savePtr->settings;
+    
+    g_StageId = savePtr->info.stage;
+    g_IsTimeAttackUnlocked = savePtr->info.endGameFlags;
+    g_PlayableCharacter = savePtr->info.character;
+    g_RoomCount = savePtr->info.nRoomsExplored;
+    g_Tilemap.left = savePtr->info.roomX;
+    g_Tilemap.top = savePtr->info.roomY;
+
+
+    g_Status = *srcStatus;
+    D_psp_091FC410 = g_Status.timerHours;
+    D_psp_091FC408 = g_Status.timerMinutes;
+    D_psp_091FC400 = g_Status.timerSeconds;
+    D_psp_091FC3F8 = g_Status.timerFrames;
+    
+    g_MenuNavigation = *srcNav;
+
+    prevCompletionFlags1 = g_Settings.D_8003CB00;
+    prevCompletionFlags2 = g_Settings.D_8003CB04;
+    g_Settings = *settings;
+    g_Settings.D_8003CB00 |= prevCompletionFlags1;
+    g_Settings.D_8003CB04 |= prevCompletionFlags2;
+
+    for (i = 0; i < LEN(g_CastleFlags); i++) {
+        g_CastleFlags[i] = savePtr->castleFlags[i];
+    }
+
+    for (i = 0; i < LEN(g_CastleMap); i++) {
+        g_CastleMap[i] = savePtr->castleMap[i];
+    }
+
+    g_randomNext = savePtr->rng;
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MakeMemcardPath);
