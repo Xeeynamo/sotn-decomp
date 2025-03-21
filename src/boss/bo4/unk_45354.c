@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
+extern PlayerState g_Dop;
+
 // n.b.! this file is the same as rbo5/unk_44954.c
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5354);
@@ -14,11 +16,13 @@ void func_8010E0B8(void) {
     g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5430);
+void func_us_801C5430(s16 a0, s16 a1) {
+    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= a1) {
+        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = a1;
+    }
+}
 
 #include "../../decelerate.h"
-
-extern PlayerState g_Dop;
 
 s32 CheckMoveDirection(void) {
     if (g_Dop.unk44 & 2) {
@@ -58,15 +62,75 @@ void func_8010E3B8(s32 velocityX) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E470);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E570);
+extern u8 D_us_80181320[];
+
+void func_8010E570(s32 arg0) {
+    s32 anim = 0;
+    bool atLedge = false;
+
+    if (g_Dop.pl_vram_flag & 0x20) {
+        atLedge = true;
+    }
+
+    DOPPLEGANGER.velocityX = arg0;
+    DOPPLEGANGER.velocityY = 0;
+    SetPlayerStep(Dop_Stand);
+    if (g_Dop.unk48) {
+        DOPPLEGANGER.step_s = 2;
+        atLedge = false;
+    }
+
+    switch (g_Dop.prev_step) {
+    case Dop_UnmorphBat:
+        anim = 4;
+        break;
+    case Dop_Walk:
+        anim = 4;
+        if (DOPPLEGANGER.ext.player.anim == 9) {
+            DOPPLEGANGER.ext.player.anim = D_us_80181320[2 + atLedge];
+            return;
+        }
+        if (DOPPLEGANGER.ext.player.anim == 7) {
+            anim = 0;
+        }
+        break;
+    case Dop_Jump:
+    case Dop_Fall:
+        anim = 6;
+        if (abs(DOPPLEGANGER.velocityX) > FIX(2.5)) {
+            anim = 4;
+        }
+        break;
+    default:
+        anim = 8;
+        break;
+    }
+    anim += atLedge;
+    SetPlayerAnim(D_us_80181320[anim]);
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E6AC);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C58E4);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5990);
+void func_us_801C5990(void) {
+    DOPPLEGANGER.velocityY = FIX(-4.25);
+    g_Dop.unk44 |= 0x21;
+    SetPlayerAnim(0x20);
+    DOPPLEGANGER.step_s = 0;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C59DC);
+void func_us_801C59DC(void) {
+    SetPlayerStep(4);
+    if (g_Dop.prev_step != 2) {
+        SetPlayerAnim(0x1C);
+    }
+    DOPPLEGANGER.velocityY = FIX(2.0);
+    g_Dop.timers[ALU_T_5] = 8;
+    g_Dop.timers[ALU_T_6] = 8;
+    DOPPLEGANGER.velocityX = 0;
+    g_Dop.unk44 = 0x10;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5A4C);
 
@@ -88,7 +152,14 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80111CC0);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C6654);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", PlayerStepWalk);
+void PlayerStepWalk(void) {
+    if (func_us_801C6040(0x4301C) == 0) {
+        SetSpeedX(0x18000);
+        if (CheckMoveDirection() == 0) {
+            func_8010E570(0);
+        }
+    }
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C68D0);
 
