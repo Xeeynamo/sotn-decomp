@@ -39,7 +39,7 @@ void PlayerStepHighJump(void) {
 
     switch (DOPPLEGANGER.step_s) {
     case 0:
-        if (g_Dop.pl_vram_flag & 2) {
+        if (g_Dop.vram_flag & 2) {
             func_us_801C648C(3);
             if (g_Dop.unk4A > 4) {
                 DOPPLEGANGER.step_s = 2;
@@ -60,7 +60,7 @@ void PlayerStepHighJump(void) {
         break;
 
     case 1:
-        if (g_Dop.pl_vram_flag & 2) {
+        if (g_Dop.vram_flag & 2) {
             DOPPLEGANGER.step_s = 2;
             func_us_801C648C(3);
         } else {
@@ -551,7 +551,7 @@ void DopEntityHitByLightning(Entity* self) {
             -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
         self->posX.val = xOffset + DOPPLEGANGER.posX.val;
         self->posY.val = yOffset + DOPPLEGANGER.posY.val;
-        if ((self->ext.hitbylightning.unk92) && (g_Dop.pl_vram_flag & 0xE)) {
+        if ((self->ext.hitbylightning.unk92) && (g_Dop.vram_flag & 0xE)) {
             var_s0 = true;
         }
         if (var_s0) {
@@ -700,7 +700,7 @@ void EntityHitByIce(Entity* self) {
         // Could rewrite as a series of && and || but that would probably reduce
         // readability
         if (self->ext.hitbyice.unk7E) {
-            if (g_Dop.pl_vram_flag & 0xC) {
+            if (g_Dop.vram_flag & 0xC) {
                 sp18 = true;
             }
             if (DOPPLEGANGER.step == Dop_Hit && DOPPLEGANGER.step_s == 5) {

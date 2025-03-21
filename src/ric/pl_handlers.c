@@ -146,7 +146,7 @@ void RicHandleRun(void) {
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
             if (g_Player.timers[PL_T_RUN] == 0) {
-                if (!(g_Player.pl_vram_flag & 0xC)) {
+                if (!(g_Player.vram_flag & 0xC)) {
                     RicSetAnimation(ric_anim_stop_run);
                     RicCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
@@ -172,7 +172,7 @@ void RicHandleJump(void) {
         !(g_Player.unk44 & 0x40) && !(g_Player.padPressed & PAD_CROSS)) {
         PLAYER.velocityY = FIX(-1);
     }
-    if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+    if ((g_Player.vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-0.25);
         g_Player.unk44 |= 0x20;
     }
@@ -357,7 +357,7 @@ void RicHandleCrouch(void) {
             D_8015459C = 0x60;
         }
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
+            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
             RicSetAnimation(D_801554E0);
             PLAYER.step_s = 2;
             return;
@@ -365,7 +365,7 @@ void RicHandleCrouch(void) {
         break;
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((!g_Player.unk72) || !(g_Player.pl_vram_flag & 0x40))) {
+            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
             if (RicCheckFacing()) {
                 RicSetWalk(0);
                 return;
@@ -384,7 +384,7 @@ void RicHandleCrouch(void) {
         PLAYER.step_s = 0;
         break;
     case 0x2:
-        if (!g_Player.unk72 || !(g_Player.pl_vram_flag & 0x40)) {
+        if (!g_Player.unk72 || !(g_Player.vram_flag & 0x40)) {
             if (RicCheckFacing()) {
                 RicSetWalk(0);
                 return;
@@ -658,7 +658,7 @@ void RicHandleHit(
         }
         break;
     case 1:
-        if ((g_Player.pl_vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+        if ((g_Player.vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
             PLAYER.velocityY = FIX(-1);
         }
         if (RicCheckInput(
@@ -667,17 +667,17 @@ void RicHandleHit(
         }
         break;
     case 2:
-        if ((g_Player.unk04 & 0x8000) && !(g_Player.pl_vram_flag & 0x8000)) {
+        if ((g_Player.unk04 & 0x8000) && !(g_Player.vram_flag & 0x8000)) {
             goto block_6dc;
         }
-        if ((g_Player.pl_vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+        if ((g_Player.vram_flag & 0x8000) && !(g_GameTimer & 1)) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SMOKE_PUFF_2, 10), 0);
         }
-        if (!(g_Player.pl_vram_flag & 0xE)) {
+        if (!(g_Player.vram_flag & 0xE)) {
             break;
         }
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             func_80158B04(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
@@ -768,12 +768,12 @@ void RicHandleHit(
     case 5:
         RicDecelerateX(0x2000);
         if (ric_hit_stun_timer) {
-            if ((g_Player.pl_vram_flag & 2) && !(g_GameTimer & 3)) {
+            if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
             }
             break;
-        } else if (g_Player.pl_vram_flag & 0xC) {
-            if (!(g_Player.pl_vram_flag & (u16)~0xFC)) {
+        } else if (g_Player.vram_flag & 0xC) {
+            if (!(g_Player.vram_flag & (u16)~0xFC)) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -790,7 +790,7 @@ void RicHandleHit(
         break;
     case 6:
         RicDecelerateX(0x2000);
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.vram_flag & 1)) {
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -807,7 +807,7 @@ void RicHandleHit(
         break;
     case 7:
         RicDecelerateX(0x2000);
-        if (!(g_Player.pl_vram_flag & 1)) {
+        if (!(g_Player.vram_flag & 1)) {
             RicSetFall();
         }
         if (PLAYER.animFrameDuration < 0) {
@@ -1086,7 +1086,7 @@ void RicHandleEnableFlameWhip(void) {
         g_Player.timers[PL_T_POISON] = 0x800;
     }
 
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.vram_flag & 1)) {
         RicSetFall();
         g_Player.unk46 = 0;
         RicCreateEntFactoryFromEntity(
@@ -1101,7 +1101,7 @@ void RicHandleHydrostorm(void) {
         g_Player.unk46 = 0;
     }
 
-    if ((g_Player.pl_vram_flag & 1) == 0) {
+    if ((g_Player.vram_flag & 1) == 0) {
         RicSetFall();
         g_Player.unk46 = 0;
     }
@@ -1113,7 +1113,7 @@ void RicHandleGenericSubwpnCrash(void) {
         g_Player.unk46 = 0;
     }
 
-    if ((g_Player.pl_vram_flag & 1) == 0) {
+    if ((g_Player.vram_flag & 1) == 0) {
         RicSetFall();
         g_Player.unk46 = 0;
     }
@@ -1142,7 +1142,7 @@ void RicHandleThrowDaggers(void) {
         g_Player.unk4E = 1;
         throw_dagger_timer = 0;
     }
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.vram_flag & 1)) {
         RicSetFall();
         g_Player.unk46 = 0;
         g_Player.unk4E = 1;
@@ -1278,10 +1278,10 @@ void RicHandleDeadPrologue(void) {
 void RicHandleSlide(void) {
     s32 isTouchingGround = 0;
 
-    if (PLAYER.facingLeft == 0 && g_Player.pl_vram_flag & 4) {
+    if (PLAYER.facingLeft == 0 && g_Player.vram_flag & 4) {
         isTouchingGround = 1;
     }
-    if (PLAYER.facingLeft && g_Player.pl_vram_flag & 8) {
+    if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
         isTouchingGround = 1;
     }
     if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
@@ -1374,7 +1374,7 @@ void func_8015BCD0(void) {
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     g_Player.padSim = 0;
-    g_Player.pl_demo_timer = 4;
+    g_Player.demo_timer = 4;
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
@@ -1460,7 +1460,7 @@ void RicHandleSlideKick(void) {
     RicDecelerateX(0x1000);
     PLAYER.velocityY += 0x1000;
 
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         g_CurrentEntity->velocityX /= 2;
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         PLAYER.facingLeft++;
@@ -1469,14 +1469,14 @@ void RicHandleSlideKick(void) {
         g_api.PlaySfx(SFX_STOMP_SOFT_A);
         return;
     }
-    if (g_Player.pl_vram_flag & 0xC) {
+    if (g_Player.vram_flag & 0xC) {
         PLAYER.velocityX = 0;
     }
     if (PLAYER.velocityX < 0) {
         if (g_Player.padPressed & PAD_RIGHT) {
             RicDecelerateX(0x2000);
         }
-        if (PLAYER.velocityX > FIX(-3) || (g_Player.pl_vram_flag & 8)) {
+        if (PLAYER.velocityX > FIX(-3) || (g_Player.vram_flag & 8)) {
             PLAYER.facingLeft++;
             PLAYER.facingLeft &= 1;
             PLAYER.velocityX /= 2;
@@ -1490,7 +1490,7 @@ void RicHandleSlideKick(void) {
         if (g_Player.padPressed & PAD_LEFT) {
             RicDecelerateX(0x2000);
         }
-        if (PLAYER.velocityX < FIX(3) || (g_Player.pl_vram_flag & 4)) {
+        if (PLAYER.velocityX < FIX(3) || (g_Player.vram_flag & 4)) {
             PLAYER.facingLeft++;
             PLAYER.facingLeft &= 1;
             PLAYER.velocityX /= 2;
@@ -1508,18 +1508,18 @@ void RicHandleBladeDash(void) {
     if (PLAYER.animFrameDuration < 0) {
         g_Player.unk46 = 0;
         RicSetStand(0);
-    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.pl_vram_flag & 1)) {
+    } else if (PLAYER.animFrameIdx >= 0x12 && !(g_Player.vram_flag & 1)) {
         g_Player.unk46 = 0;
         RicSetFall();
     } else {
         if (!(g_GameTimer & 3) && PLAYER.animFrameIdx < 0x12 &&
-            g_Player.pl_vram_flag & 1) {
+            g_Player.vram_flag & 1) {
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
 
         if (PLAYER.animFrameIdx == 18 && PLAYER.animFrameDuration == 1 &&
-            (g_Player.pl_vram_flag & 1)) {
+            (g_Player.vram_flag & 1)) {
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         }
     }
@@ -1529,12 +1529,12 @@ void RicHandleHighJump(void) {
     bool loadAnim;
 
 #if defined(VERSION_US)
-    FntPrint("pl_vram_flag:%04x\n", g_Player.pl_vram_flag);
-    FntPrint("pl_high_jump_timer:%04x\n", g_Player.pl_high_jump_timer);
+    FntPrint("pl_vram_flag:%04x\n", g_Player.vram_flag);
+    FntPrint("pl_high_jump_timer:%04x\n", g_Player.high_jump_timer);
     FntPrint("pl_step_s:%02x\n", PLAYER.step_s);
 #endif
     loadAnim = false;
-    g_Player.pl_high_jump_timer++;
+    g_Player.high_jump_timer++;
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
@@ -1551,20 +1551,20 @@ void RicHandleHighJump(void) {
             RicDecelerateX(0x1000);
         }
 
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             func_80158B04(3);
-            g_Player.pl_high_jump_timer = 0;
+            g_Player.high_jump_timer = 0;
             PLAYER.step_s = 2;
-        } else if (g_Player.pl_high_jump_timer > 0x1C) {
+        } else if (g_Player.high_jump_timer > 0x1C) {
             PLAYER.step_s = 1;
             PLAYER.velocityY = -0x60000;
         }
         break;
     case 1:
-        if (g_Player.pl_vram_flag & 2) {
+        if (g_Player.vram_flag & 2) {
             PLAYER.step_s = 2;
             func_80158B04(3);
-            g_Player.pl_high_jump_timer = 0;
+            g_Player.high_jump_timer = 0;
         } else {
             PLAYER.velocityY += 0x6000;
             if (PLAYER.velocityY > 0x8000) {
@@ -1573,7 +1573,7 @@ void RicHandleHighJump(void) {
         }
         break;
     case 2:
-        if (g_Player.pl_high_jump_timer > 4) {
+        if (g_Player.high_jump_timer > 4) {
             loadAnim = true;
         }
         break;

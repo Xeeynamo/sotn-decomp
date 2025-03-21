@@ -776,7 +776,7 @@ void RicEntityHitByIce(Entity* self) {
         if (self->ext.hitbyice.unk80 && !--self->ext.hitbyice.unk82) {
             sp18 = true;
         }
-        if ((self->ext.hitbyice.unk7E) && (g_Player.pl_vram_flag & 0xC)) {
+        if ((self->ext.hitbyice.unk7E) && (g_Player.vram_flag & 0xC)) {
             sp18 = true;
         }
         if (sp18) {
@@ -947,7 +947,7 @@ void RicEntityHitByLightning(Entity* self) {
         self->posX.val = xOffset + PLAYER.posX.val;
         self->posY.val = yOffset + PLAYER.posY.val;
         if ((self->ext.hitbylightning.unk92 != 0) &&
-            (g_Player.pl_vram_flag & 0xE)) {
+            (g_Player.vram_flag & 0xE)) {
             var_s0 = true;
         }
         if (var_s0) {

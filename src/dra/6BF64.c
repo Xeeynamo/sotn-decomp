@@ -26,7 +26,7 @@ void func_8010BFFC(void) {
     bool collided = false;
     s16 original_Y = PLAYER.posY.i.hi;
 
-    if ((g_Player.pl_vram_flag & 1) || D_801396EA) {
+    if ((g_Player.vram_flag & 1) || D_801396EA) {
         return;
     }
 #ifdef VERSION_US
@@ -122,7 +122,7 @@ void CheckFloor(void) {
     s32 i = 0;
     s16* yPosPtr = &PLAYER.posY.i.hi;
     s16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
     s32 sp30;
 
     if (g_unkGraphicsStruct.unk18) {
@@ -296,7 +296,7 @@ void CheckCeiling(void) {
 
     s16* yPosPtr = &PLAYER.posY.i.hi;
     s16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     if (g_unkGraphicsStruct.unk18) {
         return;
@@ -464,7 +464,7 @@ void CheckWallRight(void) {
 
     s16* yPosPtr = &PLAYER.posY.i.hi;
     s16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     if (((g_StageId == STAGE_BO6) || (g_StageId == STAGE_RBO6) ||
          (g_StageId == STAGE_DRE)) &&
@@ -545,7 +545,7 @@ void CheckWallLeft(void) {
 
     s16* yPosPtr = &PLAYER.posY.i.hi;
     s16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     if (((g_StageId == STAGE_BO6) || (g_StageId == STAGE_RBO6) ||
          (g_StageId == STAGE_DRE)) &&

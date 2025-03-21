@@ -235,7 +235,7 @@ void EntityClockRoomController(Entity* self) {
         g_Statues[RIGHT_STATUE] = false;
         g_Statues[LEFT_STATUE] = false;
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 1;
+        g_Player.demo_timer = 1;
         entity = &PLAYER;
         posX = entity->posX.i.hi;
 #ifdef VERSION_PSP
@@ -274,7 +274,7 @@ void EntityClockRoomController(Entity* self) {
 
             break;
         case 1:
-            if (g_Player.pl_vram_flag & 1) {
+            if (g_Player.vram_flag & 1) {
                 self->step_s++;
                 if (posX < 73 && posX > 183) {
                     self->step_s++;
@@ -286,7 +286,7 @@ void EntityClockRoomController(Entity* self) {
                 g_Player.padSim = PAD_LEFT | PAD_CROSS;
             } else if (posX >= 128 && posX < 192) {
                 g_Player.padSim = PAD_RIGHT | PAD_CROSS;
-            } else if (g_Player.pl_vram_flag & 1) {
+            } else if (g_Player.vram_flag & 1) {
                 self->step_s++;
             }
 

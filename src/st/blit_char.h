@@ -9,7 +9,7 @@
 #include <stage.h>
 
 char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
-    const u16 MINSCODE = 0x8140;
+    const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
     const int FontWidth = 12;
@@ -33,11 +33,11 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
         ch += 0x821F;
     } else {
         if (ch == ' ') {
-            ch = MINSCODE;
+            ch = DOUBLE_SPACE;
             var_s3 = 2;
         } else {
             ch = *str++ | (ch << 8);
-            if (ch == MINSCODE) {
+            if (ch == DOUBLE_SPACE) {
                 var_s3 = 2;
             }
         }
@@ -50,7 +50,7 @@ char* BlitChar(char* str, u16* xOffset, u8* pix, u16 stride) {
     // use the converted Shift-JIS character to retrieve the font data
     chPix = g_api.func_80106A28(ch, 1);
     while (true) {
-        if (ch == MINSCODE) {
+        if (ch == DOUBLE_SPACE) {
             break;
         }
 

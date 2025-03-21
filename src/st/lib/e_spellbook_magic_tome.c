@@ -1,22 +1,229 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-// Spellbook helper
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D1BCC);
+typedef struct {
+    EInit* unk0;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    u8 unkC;
+} unkBookStruct;
 
-// Spellbook helper
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D1F50);
+static SVECTOR D_us_80182F44 = {4, 0, 16};
+static SVECTOR D_us_80182F4C = {0, 0, 16};
+static SVECTOR D_us_80182F54 = {4, 28, 16};
+static SVECTOR D_us_80182F5C = {0, 28, 16};
+static SVECTOR D_us_80182F64 = {0, 0, -16};
+static SVECTOR D_us_80182F6C = {4, 0, -16};
+static SVECTOR D_us_80182F74 = {0, 28, -16};
+static SVECTOR D_us_80182F7C = {4, 28, -16};
+static SVECTOR D_us_80182F84 = {0, 0, 16};
+static SVECTOR D_us_80182F8C = {-4, 0, 16};
+static SVECTOR D_us_80182F94 = {0, 28, 16};
+static SVECTOR D_us_80182F9C = {-4, 28, 16};
+static SVECTOR D_us_80182FA4 = {-4, 0, -16};
+static SVECTOR D_us_80182FAC = {0, 0, -16};
+static SVECTOR D_us_80182FB4 = {-4, 28, -16};
+static SVECTOR D_us_80182FBC = {0, 28, -16};
+static SVECTOR D_us_80182FC4 = {0, 28, 0};
+static SVECTOR* D_us_80182FCC[] = {
+    &D_us_80182F44, &D_us_80182F54, &D_us_80182F6C, &D_us_80182F7C,
+    &D_us_80182F4C, &D_us_80182F44, &D_us_80182F64, &D_us_80182F6C,
+    &D_us_80182F54, &D_us_80182F5C, &D_us_80182F7C, &D_us_80182F74,
+    &D_us_80182F44, &D_us_80182F4C, &D_us_80182F54, &D_us_80182F5C,
+    &D_us_80182F64, &D_us_80182F6C, &D_us_80182F74, &D_us_80182F7C,
+    &D_us_80182F5C, &D_us_80182F4C, &D_us_80182F74, &D_us_80182F64,
+    &D_us_80182F9C, &D_us_80182F8C, &D_us_80182FB4, &D_us_80182FA4,
+    &D_us_80182F8C, &D_us_80182F84, &D_us_80182FA4, &D_us_80182FAC,
+    &D_us_80182F94, &D_us_80182F9C, &D_us_80182FBC, &D_us_80182FB4,
+    &D_us_80182F84, &D_us_80182F8C, &D_us_80182F94, &D_us_80182F9C,
+    &D_us_80182FA4, &D_us_80182FAC, &D_us_80182FB4, &D_us_80182FBC,
+    &D_us_80182F84, &D_us_80182F94, &D_us_80182FAC, &D_us_80182FBC};
+static u8 D_us_8018308C[] = {0x0A, 0x04, 0x25, 0x23};
+static u8 D_us_80183090[] = {0x2A, 0x2C, 0x45, 0x4B};
+static u8 D_us_80183094[] = {0x02, 0x04, 0x05, 0x23};
+static u8 D_us_80183098[] = {0x4A, 0x2C, 0x4D, 0x4B};
+static u8 D_us_8018309C[] = {0x5A, 0x2C, 0x75, 0x4B};
+static u8 D_us_801830A0[] = {0x52, 0x54, 0x6D, 0x73};
+static u8 D_us_801830A4[] = {0x52, 0x2C, 0x55, 0x4B};
+static u8 D_us_801830A8[] = {0x72, 0x54, 0x75, 0x73};
+static u8 D_us_801830AC[] = {0x0A, 0x54, 0x2D, 0x73};
+static u8 D_us_801830B0[] = {0x2A, 0x54, 0x45, 0x73};
+static u8 D_us_801830B4[] = {0x02, 0x54, 0x05, 0x73};
+static u8 D_us_801830B8[] = {0x4A, 0x54, 0x4D, 0x73};
+static u8 D_us_801830BC[] = {0x52, 0x04, 0x6D, 0x23};
+static u8 D_us_801830C0[] = {0x4A, 0x04, 0x4D, 0x23};
+static u8 D_us_801830C4[] = {0x02, 0x2C, 0x1D, 0x4B};
+static u8 D_us_801830C8[] = {0x22, 0x2C, 0x25, 0x4B};
+static u8 D_us_801830CC[] = {0x2A, 0x02, 0x45, 0x05};
+static u8 D_us_801830D0[] = {0x2A, 0x0A, 0x45, 0x0D};
+static u8 D_us_801830D4[] = {0x2A, 0x12, 0x45, 0x15};
+static u8 D_us_801830D8[] = {0x2A, 0x1A, 0x45, 0x1D};
+static u8* D_us_801830DC[] = {
+    D_us_8018308C, D_us_80183094, D_us_801830C0, D_us_801830C0,
+    D_us_801830C0, D_us_801830BC, D_us_80183090, D_us_80183098,
+    D_us_801830C8, D_us_801830C8, D_us_801830C8, D_us_801830C4};
+static u8* D_us_8018310C[] = {
+    D_us_8018309C, D_us_801830A4, D_us_801830C0, D_us_801830C0,
+    D_us_801830C0, D_us_801830BC, D_us_801830A0, D_us_801830A8,
+    D_us_801830C8, D_us_801830C8, D_us_801830C8, D_us_801830C4};
+static u8* unused[] = {
+    D_us_801830AC, D_us_801830B4, D_us_801830C0, D_us_801830C0,
+    D_us_801830C0, D_us_801830BC, D_us_801830B0, D_us_801830B8,
+    D_us_801830C8, D_us_801830C8, D_us_801830C8, D_us_801830C4};
+static unkBookStruct D_us_8018316C[] = {
+    {&D_us_80180920, 0xF500, 0xF5C0, 0x0024, 0x000E, 0x15},
+    {&D_us_80180938, 0xF600, 0xF660, 0x0030, 0x000E, 0x16},
+    {&D_us_80180950, 0xF600, 0xF640, 0x001C, 0x0014, 0x17}};
 
-// Spellbook helper
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2108);
+void func_us_801D1BCC(void) {
+    SVECTOR rot;
+    VECTOR trans;
+    MATRIX m;
+    SVECTOR** vecPtr;
+    Primitive* prim;
+    s32 i, j;
+    s32* scratchpad1;
+    long* scratchpad2;
 
-// Spellbook helper
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2148);
+    SetGeomScreen(0x200);
+    SetGeomOffset(g_CurrentEntity->posX.i.hi, g_CurrentEntity->posY.i.hi);
+    rot.vx = g_CurrentEntity->ext.spellbookMagicTome.unk9C.vx;
+    rot.vy = g_CurrentEntity->ext.spellbookMagicTome.unk9C.vy;
+    rot.vz = g_CurrentEntity->ext.spellbookMagicTome.unk9C.vz;
+    rot.vz -= g_CurrentEntity->ext.spellbookMagicTome.unk82 / 2;
+    RotMatrix(&rot, &m);
+    SetRotMatrix(&m);
+    trans.vx = 0;
+    trans.vy = 0;
+    trans.vz = g_CurrentEntity->ext.spellbookMagicTome.unk8A + 0x200;
+    TransMatrix(&m, &trans);
+    SetTransMatrix(&m);
+    scratchpad1 = SPAD(0);
+    scratchpad2 = (long*)SPAD(1);
+    vecPtr = D_us_80182FCC;
+    prim = g_CurrentEntity->ext.spellbookMagicTome.unk7C;
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 6; j++) {
+            if ((j == 5) && !g_CurrentEntity->ext.spellbookMagicTome.unk82) {
+                vecPtr += 4;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            } else {
+                gte_ldv3(vecPtr[0], vecPtr[1], vecPtr[2]);
+                gte_rtpt();
+                if (g_CurrentEntity->palette & PAL_OVL_FLAG) {
+                    prim->clut = g_CurrentEntity->palette & 0xFFF;
+                } else {
+                    prim->clut = g_CurrentEntity->palette;
+                    if (j > 1) {
+                        prim->clut++;
+                    }
+                }
+                gte_stsxy3_gt3(prim);
+                gte_nclip();
+                gte_stopz(scratchpad1);
+                if (*scratchpad1 < 0) {
+                    prim->drawMode = DRAW_HIDE;
+                } else {
+                    prim->drawMode = DRAW_UNK02;
+                }
+                gte_ldv0(vecPtr[3]);
+                gte_rtps();
+                gte_stsxy((long*)&prim->x3);
+                gte_avsz4();
+                gte_stotz(scratchpad2);
+                prim->priority =
+                    ((g_CurrentEntity->ext.spellbookMagicTome.unk8A + 0x200) /
+                         4 -
+                     *scratchpad2) +
+                    0x90;
+                vecPtr += 4;
+                prim = prim->next;
+            }
+        }
+        rot.vz += g_CurrentEntity->ext.spellbookMagicTome.unk82;
+        RotMatrix(&rot, &m);
+        SetRotMatrix(&m);
+    }
+    rot.vz = g_CurrentEntity->ext.spellbookMagicTome.unk9C.vz;
+    RotMatrix(&rot, &m);
+    SetRotMatrix(&m);
+    gte_ldv0(&D_us_80182FC4);
+    gte_rtps();
+    gte_stsxy((long*)&g_CurrentEntity->ext.spellbookMagicTome.unk84);
+    g_CurrentEntity->ext.spellbookMagicTome.unk84 -= g_CurrentEntity->posX.i.hi;
+    g_CurrentEntity->ext.spellbookMagicTome.unk86 -= g_CurrentEntity->posY.i.hi;
+    gte_stszotz(scratchpad2);
+    g_CurrentEntity->ext.spellbookMagicTome.unk88 =
+        ((g_CurrentEntity->ext.spellbookMagicTome.unk8A + 0x200) / 4 -
+         *scratchpad2) +
+        0x90;
+}
 
-// Spellbook helper
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_801CDC80);
+void func_us_801D1F50(RECT* rect) {
+    SVECTOR* temp_s1 = &g_CurrentEntity->ext.spellbookMagicTome.unk9C;
+    SVECTOR* temp_s0 = &g_CurrentEntity->ext.spellbookMagicTome.unkA4;
+    temp_s0->vx = rect->x - temp_s1->vx;
+    temp_s0->vy = rect->y - temp_s1->vy;
+    temp_s0->vz = rect->w - temp_s1->vz;
+    temp_s0->vx = (temp_s0->vx + 0x2000) % 0x1000;
+    if (temp_s0->vx > 0x800) {
+        temp_s0->vx -= 0x1000;
+    }
+    temp_s0->vy = (temp_s0->vy + 0x2000) % 0x1000;
+    if (temp_s0->vy > 0x800) {
+        temp_s0->vy -= 0x1000;
+    }
+    temp_s0->vz = (temp_s0->vz + 0x2000) % 0x1000;
+    if (temp_s0->vz > 0x800) {
+        temp_s0->vz -= 0x1000;
+    }
+    temp_s0->vx /= rect->h;
+    temp_s0->vy /= rect->h;
+    temp_s0->vz /= rect->h;
+}
 
-extern u8* D_us_801830DC[];
+void func_us_801D2108(void) {
+    SVECTOR* temp_s1 = &g_CurrentEntity->ext.spellbookMagicTome.unk9C;
+    SVECTOR* temp_s0 = &g_CurrentEntity->ext.spellbookMagicTome.unkA4;
+    temp_s1->vx += temp_s0->vx;
+    temp_s1->vy += temp_s0->vy;
+    temp_s1->vz += temp_s0->vz;
+}
+
+bool func_us_801D2148(RECT* rects) {
+    RECT* rect;
+
+    rect = &rects[g_CurrentEntity->animFrameIdx];
+    if (g_CurrentEntity->animFrameDuration == 0) {
+        if (!rect->h) {
+            return false;
+        }
+        func_us_801D1F50(rect);
+        g_CurrentEntity->animFrameDuration = rect->h;
+    }
+    if (!--g_CurrentEntity->animFrameDuration) {
+        g_CurrentEntity->animFrameIdx++;
+    }
+    func_us_801D2108();
+    return true;
+}
+
+bool func_801CDC80(s16* val, s16 target, s16 step) {
+    if (abs(*val - target) < step) {
+        *val = target;
+        return true;
+    }
+    if (*val > target) {
+        *val -= step;
+    }
+    if (*val < target) {
+        *val += step;
+    }
+    return false;
+}
 
 void EntitySpellbook(Entity* self) {
     s32 dx, dy;
@@ -68,7 +275,7 @@ void EntitySpellbook(Entity* self) {
         tempEntity = self + 1;
         CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
         tempEntity->params = 0;
-        self->ext.spellbookMagicTome.unk9C = 0x400;
+        self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
         SetStep(2);
         break;
@@ -112,9 +319,9 @@ void EntitySpellbook(Entity* self) {
         self->ext.spellbookMagicTome.unk90 = mag;
         if (!self->ext.spellbookMagicTome.unk80) {
             self->ext.spellbookMagicTome.unk80 = 0x40;
-            self->ext.spellbookMagicTome.unkA4 = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA6 = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA8 = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz = (Random() & 0x1F) - 0x10;
         } else {
             self->ext.spellbookMagicTome.unk80--;
         }
@@ -190,9 +397,9 @@ void EntitySpellbook(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            self->ext.spellbookMagicTome.unkA4 = 0x40;
-            self->ext.spellbookMagicTome.unkA6 = 0x40;
-            self->ext.spellbookMagicTome.unkA8 = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vx = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vy = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vz = 0x40;
             self->ext.spellbookMagicTome.unk80 = 0x80;
             self->hitboxState = 0;
             self->step_s++;
@@ -245,22 +452,22 @@ void EntitySpellbook(Entity* self) {
             }
         }
         if (g_pads[1].pressed & PAD_TRIANGLE) {
-            self->ext.spellbookMagicTome.unk9C += 0x10;
+            self->ext.spellbookMagicTome.unk9C.vx += 0x10;
         }
         if (g_pads[1].pressed & PAD_CROSS) {
-            self->ext.spellbookMagicTome.unk9C -= 0x10;
+            self->ext.spellbookMagicTome.unk9C.vx -= 0x10;
         }
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            self->ext.spellbookMagicTome.unk9E += 0x10;
+            self->ext.spellbookMagicTome.unk9C.vy += 0x10;
         }
         if (g_pads[1].pressed & PAD_SQUARE) {
-            self->ext.spellbookMagicTome.unk9E -= 0x10;
+            self->ext.spellbookMagicTome.unk9C.vy -= 0x10;
         }
         if (g_pads[1].pressed & PAD_RIGHT) {
-            self->ext.spellbookMagicTome.unkA0 += 0x10;
+            self->ext.spellbookMagicTome.unk9C.vz += 0x10;
         }
         if (g_pads[1].pressed & PAD_LEFT) {
-            self->ext.spellbookMagicTome.unkA0 -= 0x10;
+            self->ext.spellbookMagicTome.unk9C.vz -= 0x10;
         }
         if (g_pads[1].pressed & PAD_UP) {
             self->ext.spellbookMagicTome.unk82 += 0x10;
@@ -275,14 +482,14 @@ void EntitySpellbook(Entity* self) {
             self->ext.spellbookMagicTome.unk8A -= 0x10;
         }
         if (g_pads[1].pressed & PAD_SELECT) {
-            self->ext.spellbookMagicTome.unk9C = 0;
-            self->ext.spellbookMagicTome.unk9E = 0;
-            self->ext.spellbookMagicTome.unkA0 = 0;
+            self->ext.spellbookMagicTome.unk9C.vx = 0;
+            self->ext.spellbookMagicTome.unk9C.vy = 0;
+            self->ext.spellbookMagicTome.unk9C.vz = 0;
             self->ext.spellbookMagicTome.unk82 = 0;
         }
-        FntPrint("x:%4x\n", self->ext.spellbookMagicTome.unk9C);
-        FntPrint("y:%4x\n", self->ext.spellbookMagicTome.unk9E);
-        FntPrint("z:%4x\n", self->ext.spellbookMagicTome.unkA0);
+        FntPrint("x:%4x\n", self->ext.spellbookMagicTome.unk9C.vx);
+        FntPrint("y:%4x\n", self->ext.spellbookMagicTome.unk9C.vy);
+        FntPrint("z:%4x\n", self->ext.spellbookMagicTome.unk9C.vz);
         FntPrint("hz:%4x\n", self->ext.spellbookMagicTome.unk8A);
         FntPrint("w:%4x\n", self->ext.spellbookMagicTome.unk82);
         break;
@@ -292,10 +499,25 @@ void EntitySpellbook(Entity* self) {
     self->hitboxOffY = self->ext.spellbookMagicTome.unk86 / 2;
 }
 
-// Possibly Magic Tome + Spellbook death spawner for letters
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D2CE0);
+void func_us_801D2CE0(Entity* self) {
+    s16 rotZ;
 
-extern u8* D_us_8018310C[];
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180908);
+        self->animCurFrame = (Random() & 0xF) + 1;
+        rotZ = self->rotZ;
+        rotZ += Random() * 2 - 0x100;
+        self->velocityX = rcos(rotZ) << 5;
+        self->velocityY = rsin(rotZ) << 5;
+        break;
+
+    case 1:
+        MoveEntity();
+        self->velocityY += FIX(0.125);
+        break;
+    }
+}
 
 void EntityMagicTome(Entity* self) {
     RECT rect;
@@ -346,7 +568,7 @@ void EntityMagicTome(Entity* self) {
         tempEntity = self + 1;
         CreateEntityFromCurrentEntity(E_ID_3E, tempEntity);
         tempEntity->params = 2;
-        self->ext.spellbookMagicTome.unk9C = 0x400;
+        self->ext.spellbookMagicTome.unk9C.vx = 0x400;
         self->ext.spellbookMagicTome.unk8A = 0x300;
         SetStep(2);
         break;
@@ -391,9 +613,9 @@ void EntityMagicTome(Entity* self) {
                     self->velocityY = FIX(-2.0);
                 }
             }
-            self->ext.spellbookMagicTome.unkA4 = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA6 = (Random() & 0x1F) - 0x10;
-            self->ext.spellbookMagicTome.unkA8 = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vx = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vy = (Random() & 0x1F) - 0x10;
+            self->ext.spellbookMagicTome.unkA4.vz = (Random() & 0x1F) - 0x10;
             self->ext.spellbookMagicTome.unk80 = 0x40;
             self->step_s++;
             /* fallthrough */
@@ -473,9 +695,9 @@ void EntityMagicTome(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            self->ext.spellbookMagicTome.unkA4 = 0x40;
-            self->ext.spellbookMagicTome.unkA6 = 0x40;
-            self->ext.spellbookMagicTome.unkA8 = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vx = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vy = 0x40;
+            self->ext.spellbookMagicTome.unkA4.vz = 0x40;
             self->ext.spellbookMagicTome.unk80 = 0x80;
             self->hitboxState = 0;
             self->step_s++;
@@ -523,5 +745,86 @@ void EntityMagicTome(Entity* self) {
     self->hitboxOffY = self->ext.spellbookMagicTome.unk86 / 2;
 }
 
-// Unk related function for Magic Tome and Spellbook
-INCLUDE_ASM("st/lib/nonmatchings/e_spellbook_magic_tome", func_us_801D35B8);
+void func_us_801D35B8(Entity* self) {
+    Entity* tempEntity;
+    s32 x, y;
+    s16 rotZ;
+    s32 temp_s5;
+    unkBookStruct* ptr;
+
+    ptr = &D_us_8018316C[self->params];
+    switch (self->step) {
+    case 0:
+        InitializeEntity(*ptr->unk0);
+        self->hitboxWidth = self->hitboxHeight = ptr->unkA;
+        break;
+
+    case 1:
+        self->hitboxState = 0;
+        if (self->ext.spellbookMagicTome.unk94) {
+            PlaySfxPositional(0x78E);
+            SetStep(2);
+        }
+        tempEntity = self - 1;
+        if (!tempEntity->entityId || tempEntity->flags & FLAG_DEAD) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+
+    case 2:
+        switch (self->step_s) {
+        case 0:
+            tempEntity = self - 1;
+            x = tempEntity->ext.spellbookMagicTome.unk84;
+            y = tempEntity->ext.spellbookMagicTome.unk86;
+            self->posX.i.hi = tempEntity->posX.i.hi + x / 2;
+            self->posY.i.hi = tempEntity->posY.i.hi + y / 2;
+            rotZ = ratan2(y, x);
+            self->animCurFrame = ptr->unkC;
+            self->rotZ = rotZ + ptr->unk4;
+            self->zPriority = tempEntity->ext.spellbookMagicTome.unk88;
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = self->rotY = 0;
+            self->step_s++;
+            /* fallthrough */
+        case 1:
+            tempEntity = self - 1;
+            self->zPriority = tempEntity->ext.spellbookMagicTome.unk88;
+            self->rotX = self->rotY += 8;
+            if (self->rotX >= 0x120) {
+                self->step_s = 2;
+            }
+            if (self->rotX > 0x80) {
+                self->hitboxState = 1;
+                rotZ = self->rotZ - ptr->unk6;
+                temp_s5 = ptr->unk8;
+                x = (temp_s5 * self->rotX * rcos(rotZ)) >> 0x14;
+                y = (temp_s5 * self->rotX * rsin(rotZ)) >> 0x14;
+                self->hitboxOffX = x;
+                self->hitboxOffY = y;
+            }
+            tempEntity = self - 1;
+            if (tempEntity->flags & FLAG_DEAD) {
+                self->hitboxState = 0;
+                self->step_s = 2;
+            }
+            break;
+
+        case 2:
+            self->hitboxState = 0;
+            self->rotX = self->rotY -= 4;
+            tempEntity = self - 1;
+            if (tempEntity->flags & FLAG_DEAD) {
+                self->rotX = self->rotY -= 16;
+            }
+            if (self->rotX & 0xF000) {
+                self->animCurFrame = 0;
+                self->ext.spellbookMagicTome.unk94 = 0;
+                SetStep(1);
+            }
+            break;
+        }
+        break;
+    }
+}

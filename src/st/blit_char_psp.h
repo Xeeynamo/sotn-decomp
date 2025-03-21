@@ -23,8 +23,7 @@ void func_psp_0923C390(s32 arg0, s32 arg1) {
 u8 func_psp_0923C2F8(u8 arg0);
 
 char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
-    const u16 MINSCODE = 0x8140;
-    const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
+    const u16 DOUBLE_SPACE = 0x8140;
 
     const int FontWidth = 12;
     const int FontHeight = 16;
@@ -74,8 +73,8 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
                 ch16 = ch + 0x8220;
             } else if (ch >= 'A' && ch <= 'Z') {
                 ch16 = ch + 0x821F;
-            } else if (ch == 0x20) {
-                ch16 = 0x8140;
+            } else if (ch == ' ') {
+                ch16 = DOUBLE_SPACE;
                 sp38 = 2;
             } else {
                 if (sp3f > 1) {
@@ -83,15 +82,15 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
                 }
                 sp38 = sp3f;
 
-                if (ch16 == 0x8140) {
-                    ch = 0x20;
+                if (ch16 == DOUBLE_SPACE) {
+                    ch = ' ';
                 }
             }
 
             chPix = (u8*)g_api.func_ptr_91CF86C(ch16, 0);
 
             while (true) {
-                if (ch == 0x20) {
+                if (ch == ' ') {
                     break;
                 }
 

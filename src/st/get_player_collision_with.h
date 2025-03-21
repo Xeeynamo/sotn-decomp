@@ -72,10 +72,10 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
             if (flags & 4 && checks ^ 2 && pl->velocityY >= 0 && y < 8) {
                 pl->posY.i.hi -= y;
 #if STAGE == STAGE_ST0
-                g_Player.pl_vram_flag |= 0x41;
+                g_Player.vram_flag |= 0x41;
 #else
                 D_80097488.y.i.hi -= y;
-                g_Player.pl_vram_flag |= 0x41;
+                g_Player.vram_flag |= 0x41;
                 if (plStatus &
                     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
                     return 0;
@@ -92,10 +92,10 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 if (y < 0x10) {
                     pl->posY.i.hi += y;
 #if STAGE == STAGE_ST0
-                    g_Player.pl_vram_flag |= 0x42;
+                    g_Player.vram_flag |= 0x42;
 #else
                     D_80097488.y.i.hi += y;
-                    g_Player.pl_vram_flag |= 0x42;
+                    g_Player.vram_flag |= 0x42;
                     if (plStatus &
                         (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
                         return 0;
@@ -116,7 +116,7 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 pl->posX.i.hi += x;
 #if STAGE != STAGE_ST0
                 D_80097488.x.i.hi += x;
-                g_Player.pl_vram_flag |= 0x48;
+                g_Player.vram_flag |= 0x48;
 #endif
                 return 1;
             } else {
@@ -127,7 +127,7 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 #if STAGE != STAGE_ST0
 
                 D_80097488.x.i.hi -= x;
-                g_Player.pl_vram_flag |= 0x44;
+                g_Player.vram_flag |= 0x44;
 #endif
                 return 1;
             }
