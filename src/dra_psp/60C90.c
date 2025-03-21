@@ -103,3 +103,15 @@ s32 MemcardEraseFile(s32 nPort, s32 nCard, s32 arg2, s32 arg3) {
 s32 MemcardClose(s32 nPort) {
     return 1;
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_800E9880);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_psp_0913DA28);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_psp_0913DAA8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", StoreSaveData);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", LoadSaveData);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", MakeMemcardPath);
