@@ -258,6 +258,10 @@ extern long ratan2(long y, long x);
     __asm__ volatile("nop;"                                                    \
                      "nop;"                                                    \
                      ".word 0x4B58002D")
+#define gte_avsz4()                                                            \
+    __asm__ volatile("nop;"                                                    \
+                     "nop;"                                                    \
+                     ".word 0x4B68002E")
 
 #define gte_stsxy(r0)                                                          \
     __asm__ volatile("swc2	$14, 0( %0 )" : : "r"(r0) : "memory")
@@ -307,6 +311,9 @@ extern long ratan2(long y, long x);
         :                                                                      \
         : "r"(r0)                                                              \
         : "$12", "memory")
+
+#define gte_stotz(r0)                                                          \
+    __asm__ volatile("swc2   $7, 0( %0 )" : : "r"(r0) : "memory")
 
 #define gte_stszotz(r0)                                                        \
     __asm__ volatile(                                                          \
