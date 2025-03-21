@@ -1179,7 +1179,7 @@ typedef struct {
     /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
-    /* 0x80 */ u8 Icon[3][128];
+    /* 0x80 */ u8 Icon[3 * 128];
 } MemcardHeader; /* size=0x200 */
 
 typedef struct {

@@ -115,9 +115,31 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return 1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", GetSavePalette);
+extern u16 g_saveIconPal0[0x10][0x10];
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", GetSaveIcon);
+void GetSavePalette(u8* dst, s32 palIdx) {
+    u16* dst_u16 = (u16*)dst;
+    s32 i;
+    u16* src = g_saveIconPal0[0];
+
+    src += palIdx * 16;
+    for (i = 0; i < COLORS_PER_PAL; i++) {
+        *dst_u16++ = *src++;
+    }
+}
+
+extern u8* g_saveIconTexture[0x10];
+
+void GetSaveIcon(u8* dst, s32 iconIdx) {
+    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
+    s32 i;
+    u8* src;
+
+    src = g_saveIconTexture[iconIdx];
+    for (i = 0; i < IconSize; i++) {
+        *dst++ = *src++;
+    }
+}
 
 extern char** g_SaveAreaNames;
 extern char g_AsciiSet[];
