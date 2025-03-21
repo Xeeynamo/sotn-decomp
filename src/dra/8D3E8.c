@@ -34,7 +34,7 @@ void func_8012D3E8(void) {
         func_8012CCE4();
         return;
     }
-    if (!(g_Player.pl_vram_flag & 1) && (D_800B0914 != 4)) {
+    if (!(g_Player.vram_flag & 1) && (D_800B0914 != 4)) {
         func_8012CED4();
         return;
     }
@@ -119,18 +119,18 @@ void func_8012D3E8(void) {
                 PLAYER.velocityX = FIX(-3);
             }
         }
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if (((g_Player.vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(1);
             break;
         }
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if (((g_Player.vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(0);
             break;
         }
-        if ((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > 0 ||
-            (g_Player.pl_vram_flag & 8) && PLAYER.velocityX < 0 ||
+        if ((g_Player.vram_flag & 4) && PLAYER.velocityX > 0 ||
+            (g_Player.vram_flag & 8) && PLAYER.velocityX < 0 ||
             (directionsPressed & (PAD_LEFT | PAD_RIGHT)) == 0) {
             PLAYER.ext.player.anim = 0xE0;
             // Set the state to 3, and the timer to 24. Note that in case 3,
@@ -219,7 +219,7 @@ void func_8012DBBC(void) {
         (!PLAYER.facingLeft && !(g_Player.padPressed & PAD_RIGHT))) {
         DecelerateX(FIX(4.0 / 128));
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         if (D_800B0914 == 1) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
@@ -244,18 +244,18 @@ void func_8012DBBC(void) {
         CheckMoveDirection();
         break;
     case 1:
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if (((g_Player.vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(1);
             return;
         }
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if (((g_Player.vram_flag & 4) && PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(0);
             return;
         }
-        if (((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(2.5))) ||
-            ((g_Player.pl_vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
+        if (((g_Player.vram_flag & 4) && (PLAYER.velocityX > FIX(2.5))) ||
+            ((g_Player.vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
             DecelerateX(FIX(0.125));
         }
         if (PLAYER.animFrameIdx == 3) {
@@ -290,7 +290,7 @@ void func_8012DF04(void) {
     if (g_Player.padTapped & WOLF_CHARGE_ATK_BTN) {
         func_8012CC30(1);
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         PlaySfx(SFX_STOMP_SOFT_B);
         if (PLAYER.velocityY > FIX(6.875)) {
             PLAYER.step_s = 3;
@@ -314,7 +314,7 @@ void func_8012E040(void) {
         var_s0 = false;
         DecelerateX(FIX(16.0 / 128));
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         if (D_800B0914 == 2) {
             PLAYER.step_s = 2;
             D_800B0914 = 2;
@@ -336,7 +336,7 @@ void func_8012E040(void) {
         PLAYER.velocityY = 0;
         return;
     }
-    if ((PLAYER.velocityY < FIX(-1)) && (g_Player.pl_vram_flag & 2)) {
+    if ((PLAYER.velocityY < FIX(-1)) && (g_Player.vram_flag & 2)) {
         if (PLAYER.velocityY < FIX(-5)) {
             xOffset = 3;
             if (PLAYER.facingLeft) {
@@ -383,19 +383,19 @@ void func_8012E040(void) {
         }
         break;
     case 2:
-        if (((g_Player.pl_vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if (((g_Player.vram_flag & 4) && PLAYER.velocityX > FIX(5.5)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(1);
             return;
         }
-        if ((g_Player.pl_vram_flag & 4) && (PLAYER.velocityX > FIX(4)) ||
-            ((g_Player.pl_vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
+        if ((g_Player.vram_flag & 4) && (PLAYER.velocityX > FIX(4)) ||
+            ((g_Player.vram_flag & 8) && PLAYER.velocityX < FIX(-5.5))) {
             func_8012D28C(0);
             return;
         }
         // This is a silly way to write this
-        if ((g_Player.pl_vram_flag & 8 && PLAYER.velocityX > 0) ||
-            (g_Player.pl_vram_flag & 8 && PLAYER.velocityX < 0)) {
+        if ((g_Player.vram_flag & 8 && PLAYER.velocityX > 0) ||
+            (g_Player.vram_flag & 8 && PLAYER.velocityX < 0)) {
             D_800B0914 = 1;
         }
         if (abs(PLAYER.velocityX) < FIX(1)) {
@@ -453,7 +453,7 @@ void func_8012E550(void) {
         func_8012CCE4();
         return;
     }
-    if (!(g_Player.pl_vram_flag & 1)) {
+    if (!(g_Player.vram_flag & 1)) {
         func_8012CED4();
         return;
     }
@@ -595,7 +595,7 @@ void PlayerStepUnmorphWolf(void) {
     s32 else_cycles;
 
     DecelerateX(FIX(0.125));
-    if (g_Player.pl_vram_flag & 3) {
+    if (g_Player.vram_flag & 3) {
         PLAYER.velocityY = 0;
     }
     DecelerateY(FIX(0.125));
@@ -609,7 +609,7 @@ void PlayerStepUnmorphWolf(void) {
                 else_cycles++;
             }
         }
-        if ((g_Player.pl_vram_flag & 3) == 3) {
+        if ((g_Player.vram_flag & 3) == 3) {
             g_Player.unk68 = 1;
             PLAYER.velocityY = 0;
             PLAYER.velocityX = 0;
@@ -632,7 +632,7 @@ void PlayerStepUnmorphWolf(void) {
     case 1:
         if (g_Player.unk66 == 3) {
             func_8010E83C(0);
-            if (!(g_Player.pl_vram_flag & 0x8000)) {
+            if (!(g_Player.vram_flag & 0x8000)) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
@@ -666,7 +666,7 @@ void func_8012ED30(void) {
         D_80138440 = 0x10;
         return;
     }
-    if (g_Player.pl_vram_flag & 1) {
+    if (g_Player.vram_flag & 1) {
         func_8012CA64();
         return;
     }
@@ -1100,7 +1100,7 @@ void func_8012F894(Entity* self) {
 
     playerX = PLAYER.posX.i.hi;
     playerY = PLAYER.posY.i.hi + 25;
-    if (!(g_Player.pl_vram_flag & 1) || (PLAYER.step_s == 7)) {
+    if (!(g_Player.vram_flag & 1) || (PLAYER.step_s == 7)) {
         angle = D_80138430;
         if (PLAYER.facingLeft) {
             angle = 0x800 - D_80138430;
@@ -1181,7 +1181,7 @@ void func_8012F894(Entity* self) {
                 continue;
             }
 
-            vram_flag_F000 = g_Player.pl_vram_flag & 0xF000;
+            vram_flag_F000 = g_Player.vram_flag & 0xF000;
             angle = 0x800;
             if (vram_flag_F000 == 0xE000) {
                 angle = 0x760;
@@ -1355,7 +1355,7 @@ void func_80130264(Entity* self) {
             self->posY.i.hi += var_v1;
             break;
         }
-        if (g_Player.pl_vram_flag & 0x8000) {
+        if (g_Player.vram_flag & 0x8000) {
             self->posY.i.hi += 2;
         }
         break;

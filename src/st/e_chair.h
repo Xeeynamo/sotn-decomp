@@ -36,7 +36,7 @@ void EntityChair(Entity* self) {
 
     case 1:
         if (func_us_801BEDD8(self) != 0) {
-            g_Player.pl_demo_timer = 10;
+            g_Player.demo_timer = 10;
             g_Player.padSim = PAD_UP;
             g_Player.unk14 = self->params;
 

@@ -338,12 +338,12 @@ bool RicCheckInput(s32 checks) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if ((checks & CHECK_80) && (g_Player.pl_vram_flag & 2) &&
+    if ((checks & CHECK_80) && (g_Player.vram_flag & 2) &&
         (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-1);
     }
     if (PLAYER.velocityY >= 0) {
-        if ((checks & CHECK_GROUND) && (g_Player.pl_vram_flag & 1)) {
+        if ((checks & CHECK_GROUND) && (g_Player.vram_flag & 1)) {
             switch (g_Player.unk46) {
             case 0:
             default:
@@ -431,7 +431,7 @@ bool RicCheckInput(s32 checks) {
                 return true;
             }
         } else if (
-            checks & CHECK_GROUND_AFTER_HIT && (g_Player.pl_vram_flag & 1)) {
+            checks & CHECK_GROUND_AFTER_HIT && (g_Player.vram_flag & 1)) {
             RicSetCrouch(1, PLAYER.velocityX);
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
             if (g_Player.unk5C && (g_Status.hp < 2)) {
@@ -444,7 +444,7 @@ bool RicCheckInput(s32 checks) {
             return true;
         }
     }
-    if (checks & CHECK_FALL && !(g_Player.pl_vram_flag & 1)) {
+    if (checks & CHECK_FALL && !(g_Player.vram_flag & 1)) {
         if (g_Player.unk46 != 0) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;
@@ -533,7 +533,7 @@ void func_8015E484(void) {
     s32 collision = 0;
     s16 startingPosY = PLAYER.posY.i.hi;
 
-    if (g_Player.pl_vram_flag & 1 || g_IsRicDebugEnter || g_Player.unk78 == 1) {
+    if (g_Player.vram_flag & 1 || g_IsRicDebugEnter || g_Player.unk78 == 1) {
         return;
     }
     if (PLAYER.posY.i.hi < 0x30) {
@@ -623,7 +623,7 @@ void RicCheckFloor(void) {
 
     u16* yPosPtr = &PLAYER.posY.i.hi;
     u16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     var_s5 = 0;
     i = 0;
@@ -798,7 +798,7 @@ void RicCheckCeiling(void) {
 
     u16* yPosPtr = &PLAYER.posY.i.hi;
     u16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
     // weird thing where i has to get initialized first
     i = 1;
 
@@ -963,7 +963,7 @@ void RicCheckWallRight(void) {
 
     u16* yPosPtr = &PLAYER.posY.i.hi;
     u16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     if (g_unkGraphicsStruct.unk18) {
         return;
@@ -1036,7 +1036,7 @@ void RicCheckWallLeft(void) {
 
     u16* yPosPtr = &PLAYER.posY.i.hi;
     u16* xPosPtr = &PLAYER.posX.i.hi;
-    s32* vram_ptr = &g_Player.pl_vram_flag;
+    s32* vram_ptr = &g_Player.vram_flag;
 
     if (g_unkGraphicsStruct.unk18) {
         return;

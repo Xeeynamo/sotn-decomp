@@ -108,7 +108,7 @@ void RicInit(s16 initParam) {
     for (i = 0; i < memset_len; i++) {
         *memset_ptr++ = 0;
     }
-    g_Player.pl_vram_flag = g_Player.unk04 = 1;
+    g_Player.vram_flag = g_Player.unk04 = 1;
     RicSetStand(0);
     PLAYER.anim = ric_anim_stand_relax;
     g_Player.unk5C = initParam;
@@ -185,7 +185,7 @@ static void CheckStageCollision(bool arg0) {
     s32* unk04_ptr;
     s32 status;
 
-    vram_ptr = &g_Player.pl_vram_flag;
+    vram_ptr = &g_Player.vram_flag;
     unk04_ptr = &g_Player.unk04;
     *unk04_ptr = *vram_ptr;
     *vram_ptr = 0;

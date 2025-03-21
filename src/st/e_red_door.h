@@ -142,7 +142,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             self->step = 4;
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
-            g_Player.pl_demo_timer = 24;
+            g_Player.demo_timer = 24;
 #ifdef STAGE_IS_NO1
             if (self->ext.redDoor.unk88 && self->step == 3) {
                 PLAYER.zPriority = 0x5C;
@@ -196,13 +196,13 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             }
             self->animCurFrame = 0;
             g_Player.padSim = 0;
-            g_Player.pl_demo_timer = 2;
+            g_Player.demo_timer = 2;
             self->step++;
         }
         break;
     case 2:
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 24;
+        g_Player.demo_timer = 24;
         if (!(self->params & 0x100)) {
             self->ext.redDoor.angle += 0x20;
             if (self->ext.redDoor.angle >= 0x1000) {
@@ -229,7 +229,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
 #endif
         break;
     case 3:
-        if (g_Player.pl_demo_timer >= 4) {
+        if (g_Player.demo_timer >= 4) {
             return;
         }
         if (!(self->params & 0x100)) {
@@ -237,7 +237,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         } else {
             g_Player.padSim = PAD_RIGHT;
         }
-        g_Player.pl_demo_timer = 3;
+        g_Player.demo_timer = 3;
 #ifdef STAGE_IS_NO1
         if (PLAYER.posX.i.hi < 0x64 && self->ext.redDoor.unk88) {
             g_Tilemap.left++;
@@ -256,7 +256,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         } else {
             g_Player.padSim = PAD_LEFT;
         }
-        g_Player.pl_demo_timer = 4;
+        g_Player.demo_timer = 4;
         if (EntityIsNearPlayer(self) == 0) {
 #ifdef STAGE_IS_NO1
             if (self->ext.redDoor.unk88) {
@@ -264,7 +264,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             }
             self->step++;
 #ifdef VERSION_PSP
-            g_Player.pl_demo_timer = 0;
+            g_Player.demo_timer = 0;
 #endif
 #else
             self->step++;
@@ -273,7 +273,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         break;
     case 5:
         g_Player.padSim = 0;
-        g_Player.pl_demo_timer = 4;
+        g_Player.demo_timer = 4;
         if (!(self->params & 0x100)) {
             self->ext.redDoor.angle -= 0x20;
             if (self->ext.redDoor.angle < 0xC01) {

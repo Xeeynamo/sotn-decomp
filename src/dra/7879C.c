@@ -1121,7 +1121,7 @@ void EntityGuardText(Entity* self) {
         self->step++;
         return;
     case 1:
-        if ((g_Player.pl_vram_flag & 1) || (g_Player.unk04 & 1)) {
+        if ((g_Player.vram_flag & 1) || (g_Player.unk04 & 1)) {
             self->step++;
         }
         return;
@@ -2216,7 +2216,7 @@ void func_8011B5A4(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.pl_vram_flag & 0x8000) {
+            if (g_Player.vram_flag & 0x8000) {
                 posX /= 2;
             }
         }
