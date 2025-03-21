@@ -1176,7 +1176,7 @@ typedef struct {
     /* 0x00 */ u8 Magic[2];
     /* 0x02 */ u8 Type;
     /* 0x03 */ u8 BlockEntry;
-    /* 0x04 */ u8 Title[64];
+    /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
     /* 0x80 */ u8 Icon[3][128];
