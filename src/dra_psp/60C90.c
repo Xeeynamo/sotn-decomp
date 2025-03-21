@@ -104,7 +104,16 @@ s32 MemcardClose(s32 nPort) {
     return 1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_800E9880);
+s32 func_800E9880(s32 nPort, s32 nCard) {
+    if ((nPort != 0) || (nCard != 0)) {
+        return -1;
+    }
+    switch(func_8919770(4)){
+        case 2:
+            return -1;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/60C90", func_psp_0913DA28);
 
