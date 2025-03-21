@@ -23,6 +23,7 @@ CdDataCallback = 0x8926114;
 CdReadyCallback = 0x892614C;
 SsSetMVol = 0x89261B4;
 SsUtSetReverbDepth = 0x89261D4;
+PadInit = 0x8926280;
 PadRead = 0x8926290;
 CdControl = 0x8926320;
 CdSync = 0x8926334;

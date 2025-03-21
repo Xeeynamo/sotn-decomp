@@ -4,7 +4,7 @@
 // BSS
 extern u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
 
-void ResetPadsRepeat(void) {
+static void ResetPadsRepeat(void) {
     s8* ptr;
     s32 i;
 

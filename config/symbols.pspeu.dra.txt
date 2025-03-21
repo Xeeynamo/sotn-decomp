@@ -373,6 +373,7 @@ LoadSaveData = 0x0913e220;
 MakeMemcardPath = 0x0913E468;
 ResetPadsRepeat = 0x0913E4F8;
 UpdatePadsRepeat = 0x0913E558;
+InitializePads = 0x0913E658;
 DestroyEntity = 0x0913E7B8;
 DrawEntitiesHitbox = 0x0913e8b0;
 func_80106A28 = 0x0913EC20;

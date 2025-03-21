@@ -4,7 +4,7 @@
 // This could have been BUTTON_COUNT * PAD_COUNT but nope, 16 on psp
 extern u8 g_PadsRepeatTimer[16];
 
-void ResetPadsRepeat(void) {
+static void ResetPadsRepeat(void) {
     u8* ptr;
     s32 i;
 
@@ -43,6 +43,15 @@ void UpdatePadsRepeat(void) {
     g_pads[0].repeat = repeat;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61B78", func_psp_0913E658);
+void InitializePads(void) {
+    Pad* pad;
+    s32 i;
+
+    PadInit(0);
+    for (pad = g_pads, i = 0; i < PAD_COUNT; i++, pad++) {
+        pad->pressed = pad->previous = pad->tapped = 0;
+    }
+    ResetPadsRepeat();
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61B78", func_psp_0913E6D0);
