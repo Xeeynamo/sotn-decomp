@@ -259,7 +259,7 @@ typedef struct {
     u8 u0, v0, u1, v1, u2, v2;
     u16 clut;
 } ClockTowerData;
-static ClockTowerData D_80182184[] = {
+static ClockTowerData s_RoofTextureData[] = {
     {0x10, 0x29, 0x02, 0x44, 0x1E, 0x44, 0x40},
     {0x30, 0x29, 0x22, 0x44, 0x3E, 0x44, 0x40},
     {0x15, 0x49, 0x02, 0x6F, 0x26, 0x6F, 0x3E},
@@ -269,13 +269,17 @@ typedef struct {
     u8 u, v, w, h;
     u16 clut;
 } ClockTowerData2;
-static ClockTowerData2 D_8018219C[] = {
+static ClockTowerData2 s_TowerTextureData[] = {
     {0x01, 0x01, 0x3D, 0x25, 0x3E}, {0x41, 0x01, 0x3D, 0x75, 0x44},
     {0x81, 0x01, 0x3D, 0x75, 0x44}, {0x01, 0x71, 0x3D, 0x0D, 0x44},
     {0x01, 0x71, 0x3D, 0x0D, 0x45}, {0xC1, 0x01, 0x25, 0x3D, 0x44},
     {0xC1, 0x41, 0x25, 0x3D, 0x44},
 };
 
+// these are unique sets of vertexes which are used to build
+// the clock tower. each contains all of the points needed to
+// build one "feature" of the clock tower (one of 5 roof sections,
+// clock section, tower, etc.)
 static SVECTOR D_801821C8[] = {
     {0, -182, 65},  {0, -182, -65}, {-65, -99, -65},
     {-65, -99, 65}, {65, -99, 65},  {65, -99, -65},
@@ -311,20 +315,89 @@ static SVECTOR D_80182358[] = {
     {-65, 450, 65}, {-65, 283, 65}, {-65, 283, -65}, {-65, 450, -65},
     {65, 283, -65}, {65, 450, -65}, {65, 283, 65},   {65, 450, 65},
 };
-u8 D_80182398[] = {
-    0x80, 0x01, 0x01, 0x00, 0x03, 0x01, 0x01, 0x00, 0x00, 0x04, 0x03, 0x00,
-    0x80, 0x02, 0x01, 0x00, 0x03, 0x01, 0x01, 0x00, 0x00, 0x04, 0x03, 0x00,
-    0x80, 0x03, 0x01, 0x00, 0x03, 0x01, 0x04, 0x00, 0x00, 0x01, 0x02, 0x03,
-    0x80, 0x04, 0x01, 0x00, 0x03, 0x01, 0x00, 0x00, 0x00, 0x01, 0x02, 0x00,
-    0x80, 0x00, 0x02, 0x01, 0x05, 0x02, 0x02, 0xFF};
-u8 D_801823D0[] = {
-    0x80, 0x00, 0x00, 0x00, 0x01, 0x03, 0x02, 0x02, 0x80, 0x05, 0x02, 0x02,
-    0x04, 0x03, 0x05, 0x05, 0x01, 0x01, 0x02, 0x00, 0x03, 0x05, 0x80, 0x06,
-    0x03, 0x00, 0x01, 0x04, 0x05, 0x05, 0x04, 0x01, 0x02, 0x05, 0x06, 0x05,
-    0x80, 0x07, 0x06, 0x02, 0x04, 0x03, 0x05, 0x05, 0x05, 0x01, 0x02, 0x00,
-    0x03, 0x05, 0x80, 0x08, 0x06, 0x02, 0x04, 0x03, 0x05, 0x05, 0x05, 0x01,
-    0x02, 0x00, 0x03, 0x05, 0xFF, 0x00, 0x00, 0x00};
-SVECTOR* D_80182414[] = {
+
+// The clocktower defines two types of drawing "scripts" - the first for
+// the pyramid roof sections and the second for quad clock faces and
+// tower. These have slightly different structure, but work the same
+// way. An `SVECTOR` array is chosen from an array of pointers
+// (`s_ClockVertexSets`) using the special value `0x80`. The next value
+// will be used to choose the vector array that subsequent vertexes will
+// be chosen from. After the vertex array selection, one or more polygon
+// definitions follows. These polygons are always of the same type
+// and have the same size.
+//
+// Each entry consits of a `textureIndex`, followed by the vertexes
+// necessary to build the polygon. After the vertexes comes a priority
+// which is added to a constant value.
+//
+// A value of 0xFF is used to denote the end of the script.
+
+// declares which vertex array will be used for subsequent polygons
+#define VINDEX_MARKER 0x80
+#define VINDEX(i) VINDEX_MARKER, (i)
+
+// indicates the end of the drawing script
+#define OBJ_END 0xFF
+
+// Sets up a triangle for drawing. `textureIndex` is
+// an index into a texture lookup table. Each vertex is an
+// index into the table defined by the previous `VINDEX`
+// declaration. `priority` is the `Primitive` priority
+// plus a constant defined by the consumer.
+#define DRAW_TRIANGLE(textureIndex, v1, v2, v3, priority)                      \
+    (textureIndex), (v1), (v2), (v3), (priority)
+
+// clocktower roof
+static u8 s_ClockRoofScript[] = {
+    // clang-format off
+    VINDEX(1),
+    DRAW_TRIANGLE(1, 0, 3, 1, 1),
+    DRAW_TRIANGLE(0, 0, 4, 3, 0),
+    VINDEX(2),
+    DRAW_TRIANGLE(1, 0, 3, 1, 1),
+    DRAW_TRIANGLE(0, 0, 4, 3, 0),
+    VINDEX(3),
+    DRAW_TRIANGLE(1, 0, 3, 1, 4),
+    DRAW_TRIANGLE(0, 0, 1, 2, 3),
+    VINDEX(4),
+    DRAW_TRIANGLE(1, 0, 3, 1, 0),
+    DRAW_TRIANGLE(0, 0, 1, 2, 0),
+    VINDEX(0),
+    DRAW_TRIANGLE(2, 1, 5, 2, 2),
+    OBJ_END,
+    // clang-format on
+};
+
+// Quads are defined by declaring vertexes in the
+// order top-left, top-right, bottom-left, bottom-right.
+// Often the sets list the quads in clockwise order, so
+// the `QUAD` macro reflects the difference in expected
+// order.
+#define DRAW_QUAD(textureIndex, v1, v2, v4, v3, priority)                      \
+    (textureIndex), (v1), (v2), (v4), (v3), (priority)
+
+// clocktower clock and base
+static u8 s_ClockTowerScript[] = {
+    // clang-format off
+    VINDEX(0),
+    DRAW_QUAD(0, 0, 1, 3, 2, 2),
+    VINDEX(5),
+    DRAW_QUAD(2, 2, 4, 3, 5, 5),
+    DRAW_QUAD(1, 1, 2, 0, 3, 5),
+    VINDEX(6),
+    DRAW_QUAD(3, 0, 1, 4, 5, 5),
+    DRAW_QUAD(4, 1, 2, 5, 6, 5),
+    VINDEX(7),
+    DRAW_QUAD(6, 2, 4, 3, 5, 5),
+    DRAW_QUAD(5, 1, 2, 0, 3, 5),
+    VINDEX(8),
+    DRAW_QUAD(6, 2, 4, 3, 5, 5),
+    DRAW_QUAD(5, 1, 2, 0, 3, 5),
+    OBJ_END,
+    // clang-format on
+};
+
+SVECTOR* s_ClockVertexSets[] = {
     D_801821C8, D_801821F8, D_80182220, D_80182248, D_80182270,
     D_80182298, D_801822D8, D_80182318, D_80182358};
 
@@ -344,7 +417,7 @@ void EntityClockTower3D(Entity* self) {
     SVECTOR* vectors;
     ClockTowerData2* var_s3;
     ClockTowerData* var_s2;
-    u8* var_s1; // not a struct, weird state machine sort of
+    u8* script; // not a struct, script for creating polygons
     Primitive* prim;
 
     if (!self->step) {
@@ -397,14 +470,14 @@ void EntityClockTower3D(Entity* self) {
     unusedScratch4 = (s32)SP(sizeof(s32));
 
     prim = self->ext.clockTower.prim;
-    var_s1 = D_80182398;
-    while (*var_s1 != 0xFF) {
-        if (*var_s1 & 0x80) {
-            vectors = D_80182414[var_s1[1]];
-            var_s1 += 2;
+    script = s_ClockRoofScript;
+    while (*script != OBJ_END) {
+        if (*script & VINDEX_MARKER) {
+            vectors = s_ClockVertexSets[script[1]];
+            script += 2;
         }
-        var_s2 = &D_80182184[0];
-        var_s2 += *var_s1++;
+        var_s2 = &s_RoofTextureData[0];
+        var_s2 += *script++;
         prim->u0 = var_s2->u0;
         prim->v0 = var_s2->v0;
         prim->u1 = var_s2->u1;
@@ -413,37 +486,37 @@ void EntityClockTower3D(Entity* self) {
         prim->v2 = var_s2->v2;
         prim->clut = var_s2->clut;
         prim->type = PRIM_GT3;
-        gte_ldv3(&vectors[var_s1[0]], &vectors[var_s1[1]], &vectors[var_s1[2]]);
+        gte_ldv3(&vectors[script[0]], &vectors[script[1]], &vectors[script[2]]);
         gte_rtpt();
         gte_stsxy3_gt3(prim);
         prim->drawMode = DRAW_UNK02;
-        prim->priority = var_s1[3] + 0x40;
-        var_s1 += 4;
+        prim->priority = script[3] + 0x40;
+        script += 4;
         prim = prim->next;
     }
-    var_s1 = D_801823D0;
-    while (*var_s1 != 0xFF) {
-        if (*var_s1 & 0x80) {
-            vectors = D_80182414[var_s1[1]];
-            var_s1 += 2;
+    script = s_ClockTowerScript;
+    while (*script != OBJ_END) {
+        if (*script & VINDEX_MARKER) {
+            vectors = s_ClockVertexSets[script[1]];
+            script += 2;
         }
-        var_s3 = &D_8018219C[0];
-        var_s3 += (*var_s1++);
+        var_s3 = &s_TowerTextureData[0];
+        var_s3 += (*script++);
         prim->u0 = prim->u2 = var_s3->u;
         prim->v0 = prim->v1 = var_s3->v;
         prim->u1 = prim->u3 = var_s3->u + var_s3->w;
         prim->v2 = prim->v3 = var_s3->v + var_s3->h;
         prim->clut = var_s3->clut;
         prim->type = PRIM_GT4;
-        gte_ldv3(&vectors[var_s1[0]], &vectors[var_s1[1]], &vectors[var_s1[2]]);
+        gte_ldv3(&vectors[script[0]], &vectors[script[1]], &vectors[script[2]]);
         gte_rtpt();
         gte_stsxy3_gt3(prim);
-        gte_ldv0(&vectors[var_s1[3]]);
+        gte_ldv0(&vectors[script[3]]);
         gte_rtps();
         gte_stsxy((long*)&prim->x3);
-        prim->priority = var_s1[4] + 0x40;
+        prim->priority = script[4] + 0x40;
         prim->drawMode = DRAW_UNK02;
-        var_s1 += 5;
+        script += 5;
         prim = prim->next;
     }
     while (prim != NULL) {
