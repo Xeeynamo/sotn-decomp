@@ -515,12 +515,12 @@ typedef enum {
 } GameEngineStep;
 
 typedef enum {
-    PASSAGE_NONE,
-    PASSAGE_CEILING,
-    PASSAGE_LEFT,
-    PASSAGE_FLOOR,
-    PASSAGE_RIGHT,
-} PassageDirection;
+    WALL_NONE,
+    WALL_TOP,
+    WALL_LEFT,
+    WALL_BOTTOM,
+    WALL_RIGHT,
+} WallSide;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -797,14 +797,6 @@ typedef struct {
                         // through CD Room but change your mind and go back out.
     /* 0x8 */ u16 stageId;
 } RoomTeleport; // size = 0xA
-
-typedef struct {
-    /* 0x0 */ u8 mapX;
-    /* 0x1 */ u8 mapY;
-    /* 0x2 */ u8 passageDirection;
-    /* 0x3 */ u8 castleFlag;
-    /* 0x4 */ u8 reverseCastleFlag;
-} SecretMapPassage; /* size=0x5 */
 
 typedef struct {
     /* 0x00 */ s32 x;
@@ -1704,7 +1696,7 @@ extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, s16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
-extern void (*g_api_revealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
+extern void (*g_api_func_800F1FC4)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);

@@ -177,23 +177,23 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
-SecretMapPassage D_800A2BC0[] = {
-    {12, 34, PASSAGE_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN},
-    {12, 34, PASSAGE_FLOOR, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN},
-    {32, 40, PASSAGE_RIGHT, CHI_DEMON_SWITCH, RCHI_DEMON_SWITCH},
-    {37, 41, PASSAGE_LEFT, CHI_SECRET_WALL_OPEN, RCHI_SECRET_WALL_OPEN},
-    {43, 11, PASSAGE_LEFT, NZ1_LOWER_WALL_OPEN, RNZ1_UPPER_WALL_OPEN},
-    {50, 11, PASSAGE_RIGHT, NZ1_UPPER_WALL_OPEN, RNZ1_LOWER_WALL_OPEN},
-    {11, 41, PASSAGE_LEFT, JEWEL_SWORD_ROOM_OPEN, JEWEL_ROOM_OPEN},
-    {21, 22, PASSAGE_FLOOR, ARE_ELEVATOR_ACTIVATED, RARE_ELEVATOR_ACTIVATED},
-    {20, 21, PASSAGE_CEILING, ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN},
-    {29, 22, PASSAGE_RIGHT, NO2_SECRET_WALL_OPEN, RNO2_SECRET_WALL_OPEN},
-    {19, 19, PASSAGE_CEILING, NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN},
-    {35, 8, PASSAGE_CEILING, TOP_SECRET_STAIRS, RTOP_SECRET_STAIRS},
-    {39, 39, PASSAGE_FLOOR, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN},
-    {36, 27, PASSAGE_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN},
-    {32, 26, PASSAGE_FLOOR, CEN_OPEN, RCEN_OPEN},
-    0x00, // terminator
+u8 D_800A2BC0[] = {
+    12, 34, WALL_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN, //
+    12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN, //
+    32, 40, WALL_RIGHT, CHI_DEMON_SWITCH, RCHI_DEMON_SWITCH, //
+    37, 41, WALL_LEFT, CHI_SECRET_WALL_OPEN, RCHI_SECRET_WALL_OPEN, //
+    43, 11, WALL_LEFT, NZ1_LOWER_WALL_OPEN, RNZ1_UPPER_WALL_OPEN, //
+    50, 11, WALL_RIGHT, NZ1_UPPER_WALL_OPEN, RNZ1_LOWER_WALL_OPEN, //
+    11, 41, WALL_LEFT, JEWEL_SWORD_ROOM_OPEN, JEWEL_ROOM_OPEN, //
+    21, 22, WALL_BOTTOM, ARE_ELEVATOR_ACTIVATED, RARE_ELEVATOR_ACTIVATED, //
+    20, 21, WALL_TOP, ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN, //
+    29, 22, WALL_RIGHT, NO2_SECRET_WALL_OPEN, RNO2_SECRET_WALL_OPEN, //
+    19, 19, WALL_TOP, NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN, //
+    35, 8, WALL_TOP, TOP_SECRET_STAIRS, RTOP_SECRET_STAIRS, //
+    39, 39, WALL_BOTTOM, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN, //
+    36, 27, WALL_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN, //
+    32, 26, WALL_BOTTOM, CEN_OPEN, RCEN_OPEN, //
+    0x00,      // terminator
 };
 
 u8 D_800A2C0C[] = {
@@ -783,28 +783,28 @@ void drawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     rect.h = 5;
     StoreImage(&rect, bitmap);
     DrawSync(0);
-    if (direction == PASSAGE_CEILING) {
+    if (direction == WALL_TOP) {
         func_800F1770(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
     }
-    if (direction == PASSAGE_LEFT) {
+    if (direction == WALL_LEFT) {
         func_800F1770(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
     }
-    if (direction == PASSAGE_FLOOR) {
+    if (direction == WALL_BOTTOM) {
         func_800F1770(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
     }
-    if (direction == PASSAGE_RIGHT) {
+    if (direction == WALL_RIGHT) {
         func_800F1770(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
     }
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
 void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
-    u8 mapX;
-    u8 mapY;
-    u8 passageDirection;
-    u8 castleFlagId;
-    u8 reverseCastleFlagId;
-    u8* secretMapPassages; // see struct SecretMapPassage[]
+    s32 mapX;
+    s32 mapY;
+    s32 passageDirection;
+    s32 castleFlagId;
+    s32 reverseCastleFlagId;
+    u8* secretMapPassages;
 
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         playerMapX = 63 - playerMapX;
@@ -838,7 +838,7 @@ void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
 
 void revealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
     revealSecretPassageOnMap((g_PlayerX >> 8) + g_Tilemap.left,
-                  (g_PlayerY >> 8) + g_Tilemap.top, castleFlagId);
+                             (g_PlayerY >> 8) + g_Tilemap.top, castleFlagId);
 }
 
 void func_800F2014(void) {

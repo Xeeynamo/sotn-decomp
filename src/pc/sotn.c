@@ -200,7 +200,8 @@ bool InitGame(struct InitGameParams* params) {
     api.func_800F53A4 = NULL;
     api.CheckEquipmentItemCount = CheckEquipmentItemCount;
     api.GetPlayerSensor = GetPlayerSensor;
-    api.revealSecretPassageAtPlayerPositionOnMap = revealSecretPassageAtPlayerPositionOnMap;
+    api.revealSecretPassageAtPlayerPositionOnMap =
+        revealSecretPassageAtPlayerPositionOnMap;
     api.func_800F2288 = func_800F2288;
     api.GetServantStats = GetServantStats;
     api.func_800FF460 = func_800FF460;
