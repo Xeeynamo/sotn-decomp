@@ -338,7 +338,7 @@ void EntityBreakableWall(Entity* self) {
         // Update the map "explored" state
         // This is read from an array of data in DRA, and in
         // this case results in exploring the room to the left
-        g_api.func_800F1FC4(CHI_SECRET_WALL_OPEN);
+        g_api.revealSecretPassageAtPlayerPositionOnMap(CHI_SECRET_WALL_OPEN);
         DestroyEntity(self);
         return;
 
