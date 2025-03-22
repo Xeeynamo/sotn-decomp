@@ -52,7 +52,7 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance);
 void func_800F53A4(void);
 u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
 void GetPlayerSensor(Collider* col);
-void func_800F1FC4(s32 arg0);
+void revealSecretPassageAtPlayerPositionOnMap(s32 arg0);
 void func_800F2288(void); // unknown signature
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
 s32 func_800FF460(s32 arg0);
@@ -115,7 +115,7 @@ GameApi g_ApiInit = {
     func_800F53A4,
     CheckEquipmentItemCount,
     GetPlayerSensor,
-    func_800F1FC4,
+    revealSecretPassageAtPlayerPositionOnMap,
     func_800F2288,
     GetServantStats,
     func_800FF460,

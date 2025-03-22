@@ -177,23 +177,23 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
-u8 D_800A2BC0[] = {
-    0x0C, 0x22, 0x02, 0x81, 0x88, //
-    0x0C, 0x22, 0x03, 0x82, 0x89, //
-    0x20, 0x28, 0x04, 0x50, 0x58, //
-    0x25, 0x29, 0x02, 0x51, 0x59, //
-    0x2B, 0x0B, 0x02, 0xA1, 0xA9, //
-    0x32, 0x0B, 0x04, 0xA2, 0xAA, //
-    0x0B, 0x29, 0x02, 0x3A, 0x3D, //
-    0x15, 0x16, 0x03, 0xB2, 0xB9, //
-    0x14, 0x15, 0x01, 0xB3, 0xB8, //
-    0x1D, 0x16, 0x04, 0x20, 0x28, //
-    0x13, 0x13, 0x01, 0x21, 0x29, //
-    0x23, 0x08, 0x01, 0x94, 0x9B, //
-    0x27, 0x27, 0x03, 0xC4, 0xCA, //
-    0x24, 0x1B, 0x02, 0xC6, 0xCB, //
-    0x20, 0x1A, 0x03, 0x00, 0xE4, //
-    0x00,                         // terminator
+SecretMapPassage D_800A2BC0[] = {
+    {12, 34, PASSAGE_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN},
+    {12, 34, PASSAGE_FLOOR, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN},
+    {32, 40, PASSAGE_RIGHT, CHI_DEMON_SWITCH, RCHI_DEMON_SWITCH},
+    {37, 41, PASSAGE_LEFT, CHI_SECRET_WALL_OPEN, RCHI_SECRET_WALL_OPEN},
+    {43, 11, PASSAGE_LEFT, NZ1_LOWER_WALL_OPEN, RNZ1_UPPER_WALL_OPEN},
+    {50, 11, PASSAGE_RIGHT, NZ1_UPPER_WALL_OPEN, RNZ1_LOWER_WALL_OPEN},
+    {11, 41, PASSAGE_LEFT, JEWEL_SWORD_ROOM_OPEN, JEWEL_ROOM_OPEN},
+    {21, 22, PASSAGE_FLOOR, ARE_ELEVATOR_ACTIVATED, RARE_ELEVATOR_ACTIVATED},
+    {20, 21, PASSAGE_CEILING, ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN},
+    {29, 22, PASSAGE_RIGHT, NO2_SECRET_WALL_OPEN, RNO2_SECRET_WALL_OPEN},
+    {19, 19, PASSAGE_CEILING, NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN},
+    {35, 8, PASSAGE_CEILING, TOP_SECRET_STAIRS, RTOP_SECRET_STAIRS},
+    {39, 39, PASSAGE_FLOOR, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN},
+    {36, 27, PASSAGE_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN},
+    {32, 26, PASSAGE_FLOOR, CEN_OPEN, RCEN_OPEN},
+    0x00, // terminator
 };
 
 u8 D_800A2C0C[] = {
@@ -589,6 +589,7 @@ s32 func_800F16D0(void) {
 }
 
 void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
+    // Pixels are stored 2 per byte
     s32 index = (x / 2) + (y * 4);
 
     if (!(x & 1)) {
@@ -769,7 +770,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-void func_800F1D54(s32 x, s32 y, s32 arg2) {
+void drawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     const int VramPosX = 0x340;
     const int VramPosY = 0x100;
     RECT rect;
@@ -782,60 +783,62 @@ void func_800F1D54(s32 x, s32 y, s32 arg2) {
     rect.h = 5;
     StoreImage(&rect, bitmap);
     DrawSync(0);
-    if (arg2 == 1) {
+    if (direction == PASSAGE_CEILING) {
         func_800F1770(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
     }
-    if (arg2 == 2) {
+    if (direction == PASSAGE_LEFT) {
         func_800F1770(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
     }
-    if (arg2 == 3) {
+    if (direction == PASSAGE_FLOOR) {
         func_800F1770(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
     }
-    if (arg2 == 4) {
+    if (direction == PASSAGE_RIGHT) {
         func_800F1770(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
     }
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-void func_800F1EB0(s32 playerX, s32 playerY, s32 arg2) {
-    s32 x;
-    s32 y;
-    s32 data_2;
-    s32 data_3;
-    s32 data_4;
-    u8* ptr;
+void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
+    u8 mapX;
+    u8 mapY;
+    u8 passageDirection;
+    u8 castleFlagId;
+    u8 reverseCastleFlagId;
+    u8* secretMapPassages; // see struct SecretMapPassage[]
 
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-        playerX = 0x3F - playerX;
-        playerY = 0x3F - playerY;
+        playerMapX = 63 - playerMapX;
+        playerMapY = 63 - playerMapY;
     }
-    ptr = D_800A2BC0;
-    while (*ptr != 0) {
-        x = *ptr++;
-        y = *ptr++;
-        data_2 = *ptr++;
-        data_3 = *ptr++;
-        data_4 = *ptr++;
+    secretMapPassages = D_800A2BC0;
+    while (*secretMapPassages != 0) {
+        mapX = *secretMapPassages++;
+        mapY = *secretMapPassages++;
+        passageDirection = *secretMapPassages++;
+        castleFlagId = *secretMapPassages++;
+        reverseCastleFlagId = *secretMapPassages++;
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-            data_3 = data_4;
+            // Use the equivalent flag in Reverse Castle instead
+            castleFlagId = reverseCastleFlagId;
         }
-        if (data_3 != 0xFF) {
-            if (arg2 != 0xFFFF) {
-                if (arg2 == data_3) {
-                    func_800F1D54(x, y, data_2);
+        if (castleFlagId != 0xFF) {
+            if (flagId != 0xFFFF) {
+                if (flagId == castleFlagId) {
+                    drawSecretPassageOnMap(mapX, mapY, passageDirection);
                 }
             } else {
-                if (x == playerX && y == playerY && g_CastleFlags[data_3]) {
-                    func_800F1D54(x, y, data_2);
+                if (mapX == playerMapX && mapY == playerMapY &&
+                    g_CastleFlags[castleFlagId]) {
+                    drawSecretPassageOnMap(mapX, mapY, passageDirection);
                 }
             }
         }
     }
 }
 
-void func_800F1FC4(s32 arg0) {
-    func_800F1EB0((g_PlayerX >> 8) + g_Tilemap.left,
-                  (g_PlayerY >> 8) + g_Tilemap.top, arg0);
+void revealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
+    revealSecretPassageOnMap((g_PlayerX >> 8) + g_Tilemap.left,
+                  (g_PlayerY >> 8) + g_Tilemap.top, castleFlagId);
 }
 
 void func_800F2014(void) {
@@ -858,7 +861,7 @@ void func_800F2014(void) {
             g_CastleMap[idx] = currMapRect | subMap;
             g_RoomCount++;
             func_800F1B08(x, y, 0);
-            func_800F1EB0(x, y, 0xFFFF);
+            revealSecretPassageOnMap(x, y, 0xFFFF);
         }
     }
 }
@@ -889,7 +892,7 @@ void func_800F2120(void) {
             // 0x55 is 0b1010101
             if (currMapRect & 0x55 & subMap) {
                 func_800F1B08(x, y, 0);
-                func_800F1EB0(x, y, 0xFFFF);
+                revealSecretPassageOnMap(x, y, 0xFFFF);
                 // 0xAA is 0b10101010
             } else if (currMapRect & 0xAA & subMap) {
                 func_800F1B08(x, y, 1);

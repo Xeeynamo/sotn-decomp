@@ -144,7 +144,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
         if (self->ext.nz0311c0.unk84 == 3) {
             g_CastleFlags[NZ0_SECRET_WALL_OPEN] = 1;
-            g_api.func_800F1FC4(0x81);
+            g_api.revealSecretPassageAtPlayerPositionOnMap(NZ0_SECRET_WALL_OPEN);
 
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -226,7 +226,7 @@ void EntityBottomSecretRoomFloor(
 
         if (self->ext.nz0311c0.unk84 == 3) {
             g_CastleFlags[NZ0_SECRET_FLOOR_OPEN] = 1;
-            g_api.func_800F1FC4(0x82);
+            g_api.revealSecretPassageAtPlayerPositionOnMap(NZ0_SECRET_FLOOR_OPEN);
             DestroyEntity(self);
         }
         break;
