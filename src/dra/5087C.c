@@ -177,6 +177,7 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
+// clang-format off
 u8 D_800A2BC0[] = {
     12, 34, WALL_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN, //
     12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN, //
@@ -193,8 +194,9 @@ u8 D_800A2BC0[] = {
     39, 39, WALL_BOTTOM, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN, //
     36, 27, WALL_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN, //
     32, 26, WALL_BOTTOM, CEN_OPEN, RCEN_OPEN, //
-    0x00,      // terminator
+    0x00, // terminator
 };
+// clang-format on
 
 u8 D_800A2C0C[] = {
     0x00, 0x06, 0x08, 0x26, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00,
@@ -804,19 +806,19 @@ void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
     s32 passageDirection;
     s32 castleFlagId;
     s32 reverseCastleFlagId;
-    u8* secretMapPassages;
+    u8* secretMapWallEntry;
 
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
         playerMapX = 63 - playerMapX;
         playerMapY = 63 - playerMapY;
     }
-    secretMapPassages = D_800A2BC0;
-    while (*secretMapPassages != 0) {
-        mapX = *secretMapPassages++;
-        mapY = *secretMapPassages++;
-        passageDirection = *secretMapPassages++;
-        castleFlagId = *secretMapPassages++;
-        reverseCastleFlagId = *secretMapPassages++;
+    secretMapWallEntry = D_800A2BC0;
+    while (*secretMapWallEntry != 0) {
+        mapX = *secretMapWallEntry++;
+        mapY = *secretMapWallEntry++;
+        passageDirection = *secretMapWallEntry++;
+        castleFlagId = *secretMapWallEntry++;
+        reverseCastleFlagId = *secretMapWallEntry++;
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             // Use the equivalent flag in Reverse Castle instead
             castleFlagId = reverseCastleFlagId;
