@@ -1615,7 +1615,7 @@ typedef struct {
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
-    /* 8003C86C */ void (*revealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
+    /* 8003C86C */ void (*RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);

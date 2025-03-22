@@ -379,7 +379,7 @@ void EntityClockRoomController(Entity* self) {
         case 9:
             if (!(--self->ext.clockRoom.unk88)) {
                 g_CastleFlags[CEN_OPEN] = 1;
-                g_api.revealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
+                g_api.RevealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
                 SetStep(3);
                 self->ext.clockRoom.unk88 = 0x140;
             }

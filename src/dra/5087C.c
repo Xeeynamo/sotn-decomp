@@ -772,7 +772,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-void drawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
+void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     const int VramPosX = 0x340;
     const int VramPosY = 0x100;
     RECT rect;
@@ -800,7 +800,7 @@ void drawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
+void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
     s32 mapX;
     s32 mapY;
     s32 passageDirection;
@@ -826,20 +826,20 @@ void revealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
         if (castleFlagId != 0xFF) {
             if (flagId != 0xFFFF) {
                 if (flagId == castleFlagId) {
-                    drawSecretPassageOnMap(mapX, mapY, passageDirection);
+                    DrawSecretPassageOnMap(mapX, mapY, passageDirection);
                 }
             } else {
                 if (mapX == playerMapX && mapY == playerMapY &&
                     g_CastleFlags[castleFlagId]) {
-                    drawSecretPassageOnMap(mapX, mapY, passageDirection);
+                    DrawSecretPassageOnMap(mapX, mapY, passageDirection);
                 }
             }
         }
     }
 }
 
-void revealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
-    revealSecretPassageOnMap((g_PlayerX >> 8) + g_Tilemap.left,
+void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
+    RevealSecretPassageOnMap((g_PlayerX >> 8) + g_Tilemap.left,
                              (g_PlayerY >> 8) + g_Tilemap.top, castleFlagId);
 }
 
@@ -863,7 +863,7 @@ void func_800F2014(void) {
             g_CastleMap[idx] = currMapRect | subMap;
             g_RoomCount++;
             func_800F1B08(x, y, 0);
-            revealSecretPassageOnMap(x, y, 0xFFFF);
+            RevealSecretPassageOnMap(x, y, 0xFFFF);
         }
     }
 }
@@ -894,7 +894,7 @@ void func_800F2120(void) {
             // 0x55 is 0b1010101
             if (currMapRect & 0x55 & subMap) {
                 func_800F1B08(x, y, 0);
-                revealSecretPassageOnMap(x, y, 0xFFFF);
+                RevealSecretPassageOnMap(x, y, 0xFFFF);
                 // 0xAA is 0b10101010
             } else if (currMapRect & 0xAA & subMap) {
                 func_800F1B08(x, y, 1);

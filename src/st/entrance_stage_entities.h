@@ -1681,7 +1681,7 @@ void EntityJewelSwordDoor(Entity* self) {
         }
 
         g_CastleFlags[JEWEL_SWORD_ROOM_OPEN] |= 1;
-        g_api.revealSecretPassageAtPlayerPositionOnMap(JEWEL_SWORD_ROOM_OPEN);
+        g_api.RevealSecretPassageAtPlayerPositionOnMap(JEWEL_SWORD_ROOM_OPEN);
         self->step++;
         break;
     }
