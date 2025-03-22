@@ -345,15 +345,6 @@ $(BUILD_DIR)/TT_%.BIN: $(BUILD_DIR)/tt_%_raw.bin
 $(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
 	$(OBJCOPY) -O binary $< $@
 
-mad_fix: stmad_dirs $$(call list_o_files,st/mad) $$(call list_o_files,st)
-	$(LD) $(LD_FLAGS) -o $(BUILD_DIR)/stmad_fix.elf \
-		-Map $(BUILD_DIR)/stmad_fix.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-	$(OBJCOPY) -O binary $(BUILD_DIR)/stmad_fix.elf $(BUILD_DIR)/MAD.BIN
-
 .PHONY: %_dirs
 tt_%_dirs:
 	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))

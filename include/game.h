@@ -471,7 +471,9 @@ enum BlueprintKind {
 #define CARD_BLOCK_SIZE (8192)
 
 typedef struct {
+#ifndef VERSION_PSP
     /* 0x000 */ struct DIRENTRY entries[BLOCK_PER_CARD];
+#endif
     /* 0x258 */ u32 unk258;
     /* 0x25C */ u32 unk25C;
     /* 0x260 */ u32 nBlockUsed;
@@ -481,7 +483,7 @@ typedef struct {
 
 #if defined(VERSION_US)
 #define MEMCARD_ID "BASLUS-00067DRAX00"
-#elif defined(VERSION_HD)
+#else
 #define MEMCARD_ID "BISLPM-86023DRAX00"
 #endif
 
@@ -808,7 +810,7 @@ typedef struct {
 
 typedef struct {
     /* 0x0 */ u16 pressed;
-    /* 0x2 */ s16 previous;
+    /* 0x2 */ u16 previous;
     /* 0x4 */ u16 tapped;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
@@ -1184,10 +1186,10 @@ typedef struct {
     /* 0x00 */ u8 Magic[2];
     /* 0x02 */ u8 Type;
     /* 0x03 */ u8 BlockEntry;
-    /* 0x04 */ u8 Title[64];
+    /* 0x04 */ char Title[64];
     /* 0x44 */ u8 reserve[28];
     /* 0x60 */ u8 Clut[32];
-    /* 0x80 */ u8 Icon[3][128];
+    /* 0x80 */ u8 Icon[3 * 128];
 } MemcardHeader; /* size=0x200 */
 
 typedef struct {
