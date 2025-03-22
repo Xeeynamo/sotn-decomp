@@ -275,8 +275,8 @@
 | no4    | func_psp_0925C8A8                   |       31 |          2 |        |                                 |       |
 | st0    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | wrp    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
+| dra    | ResetPadsRepeat                     |       31 |          3 |        |                                 |       |
 | dra    | func_800FF460                       |       31 |          3 |        |                                 |       |
-| dra    | func_psp_0913E4F8                   |       31 |          3 |        | https://decomp.me/scratch/LLSQQ | 0.505 |
 | lib    | SetEntityVelocityFromAngle          |       31 |          3 |        | https://decomp.me/scratch/IrMtS | 1.0   |
 | no4    | func_psp_092428E0                   |       31 |          3 |        |                                 |       |
 | no4    | func_psp_092432C0                   |       31 |          3 |        |                                 |       |
@@ -350,7 +350,7 @@
 | st0    | CutsceneUnk3                        |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090ED958                   |       37 |          4 |        |                                 |       |
 | dra    | func_8010FD88                       |       37 |          5 |        |                                 |       |
-| dra    | func_psp_0913E658                   |       37 |          5 |        | https://decomp.me/scratch/Asls2 | 0.927 |
+| dra    | InitializePads                      |       37 |          5 |        |                                 |       |
 | dra    | func_psp_09141570                   |       37 |          5 |        |                                 |       |
 | ric    | func_pspeu_092AF600                 |       37 |          5 |        |                                 |       |
 | dra    | PerformTetraSpirit                  |       37 |          6 |        |                                 |       |
@@ -643,7 +643,7 @@
 | lib    | func_psp_0923A448                   |       68 |         11 |        |                                 |       |
 | dra    | func_psp_090EDA78                   |       69 |          6 |        |                                 |       |
 |        | CreateEventEntity                   |       69 |          6 |        |                                 |       |
-| dra    | func_psp_0913E6D0                   |       69 |          9 |        | https://decomp.me/scratch/7Xoqu | 0.97  |
+| dra    | ReadPads                            |       69 |          9 |        |                                 |       |
 | dra    | PlayerStepUnk48                     |       70 |         11 |        |                                 |       |
 | dra    | InitSoundVars3                      |       71 |          1 |        | https://decomp.me/scratch/wDtJk | 0.951 |
 | lib    | PrimResetNext                       |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
@@ -675,8 +675,8 @@
 | dra    | func_8012C97C                       |       72 |         14 |        |                                 |       |
 | dra    | func_800EA720                       |       73 |          1 |        |                                 |       |
 | lib    | MakeEntityFromId                    |       73 |          4 |        |                                 |       |
+| dra    | UpdatePadsRepeat                    |       73 |          7 |        |                                 |       |
 | dra    | func_psp_090ECD78                   |       73 |          7 |        |                                 |       |
-| dra    | func_psp_0913E558                   |       73 |          7 |        | https://decomp.me/scratch/UBHSj | 0.479 |
 | lib    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
 | no4    | func_psp_0925B5B8                   |       73 |          7 |        |                                 |       |
 | wrp    | GetNormalizedAngle                  |       73 |          7 |        |                                 |       |
@@ -1384,7 +1384,7 @@
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.509 |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.54  |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
@@ -1476,5 +1476,5 @@
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.903 |
 | no4    | func_psp_09256330                   |     2559 |        253 | Yes    |                                 |       |
-| dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/7l1WU | 0.795 |
+| dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
