@@ -10,7 +10,22 @@ void func_801092E8(s32 arg0) {
     g_Clut[0x100A] = D_800ACE48[arg0 * 2];
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_80109328);
+void func_80109328(void) {
+    g_Player.unk66 = 0;
+
+    if (PLAYER.rotZ == 0x800 && PLAYER.step == Player_HighJump) {
+        PLAYER.rotZ = 0;
+        PLAYER.animCurFrame = 0x9D;
+        PLAYER.facingLeft += 1;
+        PLAYER.facingLeft &= 1;
+    }
+
+    if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
+        g_Player.timers[ALU_T_DARKMETAMORPH] = 0;
+        func_801092E8(0);
+    }
+    PLAYER.drawMode = DRAW_DEFAULT;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_801093C4);
 
