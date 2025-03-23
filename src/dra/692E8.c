@@ -108,7 +108,7 @@ extern s32 D_80137FBC;
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
     D_800A37D8[1] = D_800ACE48[arg0 * 2 + 1];
-    D_8006EBE0 = D_800ACE48[arg0 * 2];
+    g_Clut[0x100A] = D_800ACE48[arg0 * 2];
 }
 
 void func_80109328(void) {
