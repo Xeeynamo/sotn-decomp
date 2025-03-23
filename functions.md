@@ -126,6 +126,7 @@
 | dra    | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
+| ric    | 9250.rodata                         |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata              |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
@@ -450,6 +451,7 @@
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
 | lib    | func_us_801BED48                    |       45 |          6 |        |                                 |       |
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
+| ric    | 6DB0.rodata                         |       46 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
 | lib    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
@@ -524,7 +526,7 @@
 | dra    | PlayerStepSwordWarp                 |       53 |          7 |        |                                 |       |
 | dra    | func_psp_09105200                   |       53 |          8 |        |                                 |       |
 | dra    | func_psp_090EF380                   |       54 |          4 |        |                                 |       |
-| ric    | func_pspeu_092BA540                 |       54 |          5 |        |                                 |       |
+| ric    | AguneaShuffleParams                 |       54 |          5 |        |                                 |       |
 | ric    | RicSetHighJump                      |       54 |          8 |        |                                 |       |
 | ric    | RicSetWalk                          |       54 |          9 |        |                                 |       |
 | dra    | func_psp_090DCC60                   |       55 |          1 |        |                                 |       |
@@ -729,6 +731,7 @@
 | no4    | func_psp_09259648                   |       80 |         10 |        |                                 |       |
 | no4    | func_psp_09242D08                   |       81 |          5 |        |                                 |       |
 | dra    | func_80102D70                       |       81 |         11 | Yes    |                                 |       |
+| ric    | D268.rodata                         |       82 |          0 | Yes    |                                 |       |
 | no4    | func_psp_09238CF0                   |       82 |          8 |        |                                 |       |
 | dra    | func_psp_090F76D0                   |       82 |          9 |        |                                 |       |
 | lib    | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
@@ -801,7 +804,7 @@
 | st0    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | wrp    | CreateEntitiesToTheLeft             |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dra    | func_psp_091060E0                   |       96 |         16 |        |                                 |       |
-| ric    | GetTeleportToOtherCastle            |       96 |         16 |        |                                 |       |
+| ric    | GetTeleportToOtherCastle            |       96 |         16 |        | https://decomp.me/scratch/NiZ7a | 0.929 |
 | no4    | func_psp_09243320                   |       96 |         19 |        |                                 |       |
 | st0    | func_pspeu_092469A0                 |       97 |          1 |        | https://decomp.me/scratch/DhW59 | 0.859 |
 | dra    | UpdateUnarmedAnim                   |       97 |          6 |        | https://decomp.me/scratch/3r6LM | 0.998 |
@@ -900,6 +903,7 @@
 | lib    | func_us_801B3EC8                    |      113 |         14 |        |                                 |       |
 | dra    | func_psp_090F0E48                   |      113 |         18 |        |                                 |       |
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
+| ric    | 182C8.rodata                        |      114 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
 | dra    | CreateEntFactoryFromEntity          |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra    | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
@@ -956,7 +960,7 @@
 | lib    | func_psp_09239308                   |      140 |         13 |        |                                 |       |
 | dra    | func_80118B18                       |      141 |         14 |        |                                 |       |
 | dra    | func_psp_090F1418                   |      142 |         13 |        |                                 |       |
-| ric    | func_pspeu_092BA338                 |      142 |         19 |        |                                 |       |
+| ric    | GetAguneaLightningAngle             |      142 |         19 |        |                                 |       |
 | dra    | AddToInventory                      |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | dra    | GetStatusAilmentTimer               |      145 |         15 | Yes    |                                 |       |
 | dra    | func_80132A04                       |      145 |         15 |        |                                 |       |
@@ -1108,7 +1112,6 @@
 | lib    | CutsceneRun                         |      243 |         18 |        |                                 |       |
 | st0    | CutsceneRun                         |      243 |         18 |        |                                 |       |
 | no4    | func_psp_09241098                   |      243 |         25 |        |                                 |       |
-| ric    | 6DB0.rodata                         |      244 |          0 | Yes    |                                 |       |
 | no4    | func_psp_092457E8                   |      244 |         31 |        |                                 |       |
 | dra    | func_8013136C                       |      245 |         26 | Yes    |                                 |       |
 | dra    | func_psp_090FA828                   |      245 |         39 | Yes    |                                 |       |
@@ -1165,7 +1168,7 @@
 | lib    | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | dra    | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra    | func_8010D800                       |      288 |         19 |        |                                 |       |
-| ric    | func_pspeu_092B0A10                 |      288 |         19 |        |                                 |       |
+| ric    | func_8015C6D4                       |      288 |         19 |        |                                 |       |
 | lib    | func_psp_09238EC8                   |      290 |         42 |        | https://decomp.me/scratch/9ZS8x | 0.999 |
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
