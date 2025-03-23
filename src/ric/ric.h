@@ -298,8 +298,8 @@ extern s32 func_8016840C(s16 x, s16 y);
 
 extern s16 D_80154568[];
 extern s32 g_IsPrologueStage;
-extern s16 D_80154574[];
-extern s16 D_80154594[];
+extern u16 D_80154574[];
+extern u16 D_80154594[];
 extern s32 D_8015459C;
 extern RECT D_801545A0;
 extern s16 g_DeadPrologueTimer;
