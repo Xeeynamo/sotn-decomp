@@ -1170,6 +1170,9 @@ void EntityHellfireHandler(Entity* self) {
     }
 }
 
+AnimationFrame D_800B0798[] = {
+    {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {0, 0}};
+
 // The fireball produced by Hellfire, when you do NOT press up
 void EntityHellfireNormalFireball(Entity* self) {
     switch (self->step) {

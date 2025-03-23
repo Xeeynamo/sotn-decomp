@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-AnimationFrame D_800B0798[] = {
-    {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {0, 0}};
-
 // no known usages
 AnimationFrame D_800B07BC[] = {{2, 9}, {1, 16}, {0, 0}};
 
