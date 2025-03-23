@@ -456,7 +456,26 @@ void func_8010A234(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_8010A3F0);
+void func_8010A3F0(void) {
+    s32 (*getID)(void);
+    s32 id;
+    getID = D_8017A000.GetWeaponId;
+    id = getID();
+    if (id == 0x38){
+        getID = D_8017D000.GetWeaponId;
+        id = getID();
+        if (id == 0x38){
+            if (g_Player.timers[ALU_T_DARKMETAMORPH] == 0) {
+            func_801092E8(1);
+            }
+            g_Player.timers[ALU_T_DARKMETAMORPH] = 0x20;
+            if (g_Player.unk10 && g_Status.D_80097C40 < -1) {
+                g_Status.D_80097C40++;
+            }
+        }
+    }
+    g_Player.unk10 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", GetTeleportToOtherCastle);
 
