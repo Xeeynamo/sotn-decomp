@@ -281,7 +281,7 @@ void PlayerStepStand(void) {
     switch (PLAYER.step_s) {
     case Player_Stand_0:
         break;
-    case Player_Stand_1:
+    case Player_Stand_PressUp:
         local_flags = 1;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
@@ -513,7 +513,7 @@ void PlayerStepStand(void) {
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
         !g_Player.unk48) {
         SetPlayerAnim(atLedge);
-        PLAYER.step_s = 1;
+        PLAYER.step_s = Player_Stand_PressUp;
         local_flags |= 0x8000;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
@@ -535,7 +535,7 @@ void PlayerStepStand(void) {
                 PLAYER.facingLeft = 1;
                 break;
             }
-            PLAYER.step_s = 4;
+            PLAYER.step_s = Player_Stand_ChairSit;
             local_flags |= 0x8000;
             g_AlucardChairSleepTimer = 0x1800;
         }

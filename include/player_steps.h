@@ -46,7 +46,7 @@ typedef enum {
 
 typedef enum {
     Player_Stand_0,
-    Player_Stand_1,
+    Player_Stand_PressUp,
     Player_Stand_2,
     Player_Stand_3,
     Player_Stand_ChairSit
