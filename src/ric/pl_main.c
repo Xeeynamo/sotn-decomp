@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
+#include "ric.h"
 #include <player.h>
 
 #include "../destroy_entity.h"
@@ -415,7 +415,10 @@ void RicMain(void) {
     FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
 #endif
 #endif
+
+#if defined(VERSION_PC) || defined(VERSION_PSP)
     damageEffects = 0;
+#endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
         if (!g_Player.timers[i]) {
             continue;
@@ -438,7 +441,7 @@ void RicMain(void) {
             PLAYER.palette = g_Player.unk40;
             break;
         case PL_T_4: {
-            angle = (g_GameTimer & 0xF) << 8;
+            angle = (g_GameTimer & 0xF) * 256;
             draw->r0 = draw->b0 = draw->g0 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
             draw->r1 = draw->b1 = draw->g1 = (rsin(angle) + 0x1000) / 64 + 0x60;
