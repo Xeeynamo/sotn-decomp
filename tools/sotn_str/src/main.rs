@@ -448,6 +448,7 @@ lazy_static! {
 fn fix_se(chr: char) -> char {
     match chr {
         'á' => 'ﾌ',
+        'ó' => 'ﾚ',
         _ => chr,
     }
 }
