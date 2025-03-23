@@ -2,6 +2,8 @@
 #include "../ric/ric.h"
 #include <player.h>
 
+#include "../destroy_entity.h"
+
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
