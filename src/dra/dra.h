@@ -490,6 +490,7 @@ void HideAllBackgroundLayers(void);
 void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
 s32 func_800EDAE4(void);
+DR_ENV* func_800EDB08(Primitive* prim);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);

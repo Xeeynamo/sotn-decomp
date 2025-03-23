@@ -27,7 +27,58 @@ void func_80109328(void) {
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_801093C4);
+extern RECT D_800ACE60;
+
+void func_801093C4(void) {
+    DR_ENV* dr_env;
+    DRAWENV drawEnv;
+    Primitive* prim;
+    s32 i;
+
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    for (i = 0; i < 6; i++) {
+        prim = prim->next;
+    }
+    switch (g_Player.unk6A) {
+    case 0:
+        dr_env = func_800EDB08(prim);
+        if (dr_env == NULL) {
+            break;
+        }
+        prim->type = PRIM_ENV;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        dr_env = func_800EDB08(prim);
+        if (prim == NULL) {
+            break;
+        }
+        prim->type = PRIM_ENV;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        g_Player.unk6A++;
+        break;
+    case 1:
+        drawEnv = g_CurrentBuffer->draw;
+        drawEnv.isbg = false;
+        if (g_Player.status & PLAYER_STATUS_UNK4000000) {
+            drawEnv.isbg = true;
+        }
+        drawEnv.r0 = drawEnv.g0 = drawEnv.b0 = 0;
+        drawEnv.ofs[0] = 0x200;
+        drawEnv.clip = D_800ACE60;
+        drawEnv.ofs[1] = 0x1C0;
+        dr_env = *(DR_ENV**)&prim->r1;
+        if(dr_env == NULL){
+            return;
+        }
+        SetDrawEnv(dr_env, &drawEnv);
+        prim->priority = 0x190;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+        prim->priority = 0x1B0;
+        prim->drawMode = DRAW_UNK_800;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_psp_09104C80);
 
