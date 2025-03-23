@@ -451,7 +451,7 @@
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
 | lib    | func_us_801BED48                    |       45 |          6 |        |                                 |       |
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
-| ric    | 6DB0.rodata                         |       46 |          0 | Yes    |                                 |       |
+| ric    | pl_main.rodata                      |       46 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
 | lib    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
