@@ -214,7 +214,18 @@ void func_80109594() {
 
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_80109990);
+void func_80109990(void) {
+    if (D_80137FB4 == 0) {
+        if (g_Status.mp == g_Status.mpMax &&
+            !(g_Player.status & PLAYER_STATUS_UNK100000)) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, 40, 0);
+            PlaySfx(SFX_UI_MP_FULL);
+            D_80137FB4++;
+        }
+    } else if (g_Status.mp != g_Status.mpMax) {
+        D_80137FB4 = 0;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", CheckStageCollision);
 
