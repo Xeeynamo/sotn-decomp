@@ -98,8 +98,14 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-void RicDebugOff();
-
+extern s32 D_pspeu_092D7A68;
+extern s32 D_pspeu_092CFA58;
+extern s32 D_pspeu_092D33BC;
+extern u8 D_pspeu_092D2548[]; // FR
+extern u8 D_pspeu_092CFA70[]; // SP
+extern u8 D_pspeu_092D16F8[]; // GE
+extern u8 D_pspeu_092D08B8[]; // IT
+extern s32 D_pspeu_092D33B0;
 // Similar to of DRA func_80109594
 void RicInit(s16 initParam) {
     Entity* e;
@@ -188,8 +194,8 @@ void RicInit(s16 initParam) {
     D_pspeu_092D7A68 = 0x1E;
     func_91040A0(&D_pspeu_092CFA58);
     D_pspeu_092D33BC = func_pspeu_092ACE78(
-        0, &D_pspeu_092D2548, &D_pspeu_092CFA70, &D_pspeu_092D16F8,
-        &D_pspeu_092D08B8);
+        0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
+        D_pspeu_092D08B8);
     if (D_pspeu_092D33BC != 0) {
         func_91040A0(&D_pspeu_092D33B0);
     }
@@ -408,23 +414,22 @@ static void CheckHighJumpInput(void) {
     }
 }
 
-bool RicDebug(void);
-void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
-
+extern s32 D_pspeu_092D7A68;
+extern s32 D_8C630C4;
 void RicMain(void) {
-    s16 psp_s1;
-    s32 i;             // s2
-    s32 newStatus;     // s3
-    s32 damageEffects; // s6
-    s16 playerStep;    // s5
-    s16 playerStepS;   // s4
-    s32 damageKind;    // s7
+    s16 angle;
+    s32 i;
+    s32 newStatus;
+    s32 damageEffects;
+    s16 playerStep;
+    s16 playerStepS;
+    s32 damageKind;
     bool isDamageTakenDeadly;
-    s32 temp_s0; // s8
+    s32 vramFlag;
     PlayerDraw* draw;
     DamageParam damage;
-    int sp38; // unused
-    int sp34; // unused
+    int posX;
+    int posY;
 
     g_CurrentEntity = &PLAYER;
     draw = &g_PlayerDraw[0];
@@ -462,18 +467,14 @@ void RicMain(void) {
             PLAYER.palette = g_Player.unk40;
             break;
         case PL_T_4: {
-            psp_s1 = (g_GameTimer & 0xF) * 256;
-            draw->r0 = draw->b0 = draw->g0 =
-                (rsin(psp_s1) + 0x1000) / 64 + 0x60;
-            psp_s1 += 0x200;
-            draw->r1 = draw->b1 = draw->g1 =
-                (rsin(psp_s1) + 0x1000) / 64 + 0x60;
-            psp_s1 += 0x200;
-            draw->r3 = draw->b3 = draw->g3 =
-                (rsin(psp_s1) + 0x1000) / 64 + 0x60;
-            psp_s1 += 0x200;
-            draw->r2 = draw->b2 = draw->g2 =
-                (rsin(psp_s1) + 0x1000) / 64 + 0x60;
+            angle = (g_GameTimer & 0xF) * 256;
+            draw->r0 = draw->b0 = draw->g0 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r1 = draw->b1 = draw->g1 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r3 = draw->b3 = draw->g3 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r2 = draw->b2 = draw->g2 = (rsin(angle) + 0x1000) / 64 + 0x60;
             draw->enableColorBlend = 1;
             break;
         }
@@ -794,9 +795,9 @@ void RicMain(void) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
-    sp38 = PLAYER.posX.val;
-    sp34 = PLAYER.posY.val;
-    temp_s0 = g_Player.vram_flag;
+    posX = PLAYER.posX.val;
+    posY = PLAYER.posY.val;
+    vramFlag = g_Player.vram_flag;
     if (abs(PLAYER.velocityY) > FIX(2) || abs(PLAYER.velocityX) > FIX(2)) {
         PLAYER.velocityX >>= 2;
         PLAYER.velocityY >>= 2;
@@ -820,7 +821,7 @@ void RicMain(void) {
     } else {
         CheckStageCollision(1);
     }
-    g_Player.unk04 = temp_s0;
+    g_Player.unk04 = vramFlag;
     if (*D_80097448 > 0x28 && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;

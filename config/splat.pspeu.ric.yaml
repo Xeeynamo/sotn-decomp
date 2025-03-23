@@ -45,7 +45,7 @@ segments:
       - [0x80, c, ric/pl_debug]
       - [0x410, c, ric/pl_handlers]
       - [0x4B60, c, ric_psp/4B60]
-      - [0x6D18, c, ric_psp/6D18]
+      - [0x6D18, c, ric_psp/pl_main]
       - [0x9250, c, ric_psp/9250]
       - [0xA5A8, c, ric_psp/A5A8]
       - [0xB070, c, ric_psp/B070]
@@ -55,7 +55,7 @@ segments:
       - [0x28410, .data, ric/pl_handlers]
       - [0x28438, data]
       - [0x30100, .rodata, ric/pl_handlers]
-      - [0x30158, .rodata, ric_psp/6D18]
+      - [0x30158, .rodata, ric_psp/pl_main]
       - [0x301D8, .rodata, ric_psp/9250]
       - [0x30200, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
       # - [0x30220, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
