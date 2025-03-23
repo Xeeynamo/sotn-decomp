@@ -1387,7 +1387,7 @@
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.696 |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.689 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
@@ -1445,7 +1445,7 @@
 | lib    | func_psp_0924B568                   |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
 | dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
-| ric    | RicMain                             |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.87  |
+| ric    | RicMain                             |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.993 |
 | no4    | func_psp_09246B58                   |     1226 |        112 | Yes    |                                 |       |
 | lib    | func_us_801B6F30                    |     1229 |        132 | Yes    |                                 |       |
 | lib    | LIB_EntityRedDoor                   |     1247 |        112 | Yes    |                                 |       |
