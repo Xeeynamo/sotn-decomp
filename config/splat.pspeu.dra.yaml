@@ -141,8 +141,7 @@ segments:
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/alu_anim]
       - [0xA6920, .data, dra_psp/27FD8]
-      - [0xA69C8, data]
-      - [0xA6B30, .data, dra/84B88] # "light_timer:%02x\n" for hellfire
+      - [0xA69C8, .data, dra/84B88]
       - [0xA6B48, data]
       - [0xA6C38, .data, dra/7879C]
       - [0xA6FD8, data] # Factory blueprints
