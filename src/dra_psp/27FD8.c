@@ -227,7 +227,172 @@ void func_80109990(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", CheckStageCollision);
+s16 g_SensorsCeilingBat[NUM_HORIZONTAL_SENSORS] = {-8, -8, -8, -8};
+s16 g_SensorsFloorBat[NUM_HORIZONTAL_SENSORS] = {8, 8, 8, 8};
+s16 g_SensorsWallBat[NUM_VERTICAL_SENSORS] = {7, 0, 0, 0, 0, 0, -7};
+s16 g_SensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-22, -22, -22, -22};
+s16 g_SensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {29, 25, 25, 25};
+s16 g_SensorsWallDefault[NUM_VERTICAL_SENSORS] = {24, 17, 9, 1, -7, -14, -21};
+static s16 g_SensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
+s16 g_SensorsWallCrouch[NUM_VERTICAL_SENSORS] = {24, 17, 9, 5, 5, 1, 1};
+
+static void CheckStageCollision(s32 isTransformed) {
+    s32 i;
+    s32 psp_s2;
+    s32 status;
+    s32 mist;
+    s32* pl_vram;
+    s32 speed;
+    s32 psp_fp;
+
+    Collider sp10;
+    s32* pl_04;
+    s16 x, y;
+
+    mist = 0;
+    if (g_Player.status & PLAYER_STATUS_MIST_FORM ||
+        g_Entities[0x10].entityId == 0x22) {
+        mist = mist + 1;
+    }
+    pl_vram = &g_Player.vram_flag;
+    pl_04 = &g_Player.unk04;
+    *pl_04 = *pl_vram;
+    *pl_vram = 0;
+    status = g_Player.status;
+    if (isTransformed) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                g_SensorsFloor[i].y = g_SensorsFloorBat[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingBat[i];
+            } else if (
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
+                g_SensorsFloor[i].y = g_SensorsFloorDefault[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingCrouch[i];
+            } else {
+                g_SensorsFloor[i].y = g_SensorsFloorDefault[i];
+                g_SensorsCeiling[i].y = g_SensorsCeilingDefault[i];
+            }
+        }
+        for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+            if (status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
+                g_SensorsWall[i].y = g_SensorsWallBat[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y = g_SensorsWallBat[i];
+            } else if (
+                status & (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_CROUCH)) {
+                g_SensorsWall[i].y = g_SensorsWallCrouch[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_SensorsWallCrouch[i];
+            } else {
+                g_SensorsWall[i].y = g_SensorsWallDefault[i];
+                g_SensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_SensorsWallDefault[i];
+            }
+        }
+    }
+    speed = PLAYER.velocityX;
+    psp_fp = *pl_04 & 0xF000;
+    if (PLAYER.velocityX < 0 && !(*pl_04 & 8)) {
+        if (psp_fp == 0xC000) {
+            speed = speed * 10 / 16;
+        }
+        if (psp_fp == 0xD000) {
+            speed = speed * 13 / 16;
+        }
+        PLAYER.posX.val += speed;
+    }
+    if (PLAYER.velocityX > 0 && !(*pl_04 & 4)) {
+        if (psp_fp == 0x8000) {
+            speed = speed * 10 / 16;
+        }
+        if (psp_fp == 0x9000) {
+            speed = speed * 13 / 16;
+        }
+        PLAYER.posX.val += speed;
+    }
+
+    PLAYER.posY.val += PLAYER.velocityY;
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        x = PLAYER.posX.i.hi + g_SensorsFloor[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsFloor[i].y;
+        CheckCollision(x, y, &g_Player.colFloor[i], 0);
+        if (g_Player.timers[7] &&
+            g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            CheckCollision(x, y + 12, &sp10, 0);
+            if (!(sp10.effects & EFFECT_SOLID)) {
+                g_Player.colFloor[i].effects = EFFECT_NONE;
+            }
+        }
+        if (mist && g_Player.colFloor[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colFloor[i].effects = EFFECT_NONE;
+        }
+        if (PLAYER.step == Player_MorphBat || PLAYER.step == Player_MorphMist) {
+            if (g_Player.colFloor[i].effects &
+                (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) {
+                g_Player.colFloor[i].effects = EFFECT_NONE;
+            }
+        }
+    }
+    CheckFloor();
+    if (PLAYER.step == Player_UnmorphBat || PLAYER.step == Player_UnmorphMist ||
+        PLAYER.step == Player_UnmorphWolf) {
+        if (g_Player.colCeiling[1].effects & 1 &&
+            !(g_Player.colCeiling[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
+            g_Player.colFloor[1].effects & 1 &&
+            !(g_Player.colFloor[1].effects & EFFECT_SOLID_FROM_BELOW)) {
+            g_Player.vram_flag = 3;
+            PLAYER.posX.val -= speed;
+            return;
+        }
+    }
+
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        x = PLAYER.posX.i.hi + g_SensorsCeiling[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsCeiling[i].y;
+        CheckCollision(x, y, &g_Player.colCeiling[i], 0);
+        if (mist && g_Player.colCeiling[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colCeiling[i].effects = EFFECT_NONE;
+        }
+        if (PLAYER.step == Player_MorphBat || PLAYER.step == Player_MorphMist) {
+            if (g_Player.colCeiling[i].effects &
+                (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID_FROM_BELOW)) {
+                g_Player.colCeiling[i].effects = EFFECT_NONE;
+            }
+        }
+    }
+    CheckCeiling();
+    if (*pl_vram & 1 && PLAYER.velocityY >= 0) {
+        PLAYER.posY.i.lo = 0;
+    }
+    if (*pl_vram & 2 && PLAYER.velocityY <= 0) {
+        PLAYER.posY.i.lo = 0;
+    }
+
+    for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
+        x = PLAYER.posX.i.hi + g_SensorsWall[i].x;
+        y = PLAYER.posY.i.hi + g_SensorsWall[i].y;
+        CheckCollision(x, y, &g_Player.colWall[i], 0);
+        if (mist && g_Player.colWall[i].effects & EFFECT_MIST_ONLY) {
+            g_Player.colWall[i].effects = EFFECT_NONE;
+        }
+    }
+    CheckWallRight();
+    CheckWallLeft();
+    if (*pl_vram & 4 && PLAYER.velocityX > 0) {
+        PLAYER.posX.i.lo = 0;
+    }
+    if (*pl_vram & 8 && PLAYER.velocityX < 0) {
+        PLAYER.posX.i.lo = 0;
+    }
+
+    if (*pl_vram & 0x8000) {
+        *pl_vram |= 0x20;
+    }
+    if (!(g_Player.colFloor[1].effects & EFFECT_SOLID) ||
+        !(g_Player.colFloor[2].effects & EFFECT_SOLID) ||
+        !(g_Player.colFloor[3].effects & EFFECT_SOLID)) {
+        *pl_vram |= 0x20;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_8010A234);
 

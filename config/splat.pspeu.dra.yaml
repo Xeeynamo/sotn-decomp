@@ -140,7 +140,8 @@ segments:
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/alu_anim]
-      - [0xA6920, data]
+      - [0xA6920, .data, dra_psp/27FD8]
+      - [0xA6970, data]
       - [0xA6B30, .data, dra/84B88] # "light_timer:%02x\n" for hellfire
       - [0xA6B48, data]
       - [0xA6C38, .data, dra/7879C]
@@ -184,4 +185,6 @@ segments:
       - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
       - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
       - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss2}
+      - {start: 0xeed80, type: .bss, vram: 0x09234DB0, name: dra_psp/27FD8}
+      - {start: 0xeed80, type: bss, vram: 0x09234DB8, name: bss3}
   - [0xEED80]
