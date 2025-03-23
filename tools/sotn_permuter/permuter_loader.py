@@ -205,7 +205,7 @@ if __name__ == "__main__":
                             if isinstance(x, list)
                             and len(x) > 1
                             and x[1] == "c"
-                            and x[-1].endswith(args.source)
+                            and str(x[-1]).endswith(args.source)
                         ]
                     )
             if subsegments and len(subsegments) == 1:
