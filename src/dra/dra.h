@@ -326,9 +326,15 @@ extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
 extern Vram g_Vram;
 extern s32 D_800ACE44;
+extern s16 g_SensorsCeilingBat[];
+extern s16 g_SensorsFloorBat[];
+extern s16 g_SensorsWallBat[];
 extern s16 g_SensorsCeilingDefault[];
 extern s16 g_SensorsFloorDefault[];
 extern s16 g_SensorsWallDefault[];
+extern s16 g_SensorsCeilingCrouch[];
+extern s16 g_SensorsWallCrouch[];
+
 extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
