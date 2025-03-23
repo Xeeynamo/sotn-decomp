@@ -211,7 +211,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
     }
 }
 
-//clang-format off
+// clang-format off
 static u8 D_800B0628[] = {
     0x4F, 0x4F, 0x4F, 0x00, 
     0x4F, 0x4F, 0x4F, 0x00, 
@@ -226,7 +226,7 @@ static u8 D_800B0628[] = {
 #ifndef VERSION_PSP
 static u16 dirty_data_10650[] = {16, 0, -1, 0};
 #endif
-//clang-format on
+// clang-format on
 
 // axe thrown when using subweapon
 // near-duplicate of RicEntitySubwpnAxe
@@ -685,7 +685,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
 
 // Used as Point32, but data is raw, not struct.
 s32 D_800B0688[16] = {28, 0, 28, 16, 28, 32, 28, 48,
-    60, 0, 60, 16, 60, 32, 60, 48};
+                      60, 0, 60, 16, 60, 32, 60, 48};
 
 // green flame when holy water explodes
 void EntityHolyWaterFlame(Entity* self) {
