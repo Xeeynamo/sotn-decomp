@@ -1237,7 +1237,7 @@
 | no4    | func_psp_0924A870                   |      374 |         35 |        |                                 |       |
 | st0    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | wrp    | func_psp_0923AD68                   |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
-| dra    | func_psp_09104C80                   |      374 |         48 |        |                                 |       |
+| dra    | func_psp_09104C80                   |      374 |         48 |        | https://decomp.me/scratch/FUiGu | 0.995 |
 | no4    | func_psp_09243478                   |      378 |         56 | Yes    |                                 |       |
 | dra    | func_80121F58                       |      381 |         27 |        |                                 |       |
 | lib    | EntityBloodSplatter                 |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
@@ -1292,7 +1292,7 @@
 | dra    | func_8010FDF8                       |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
 | ric    | RicEntityFactory                    |      504 |         41 | Yes    |                                 |       |
 | ric    | RicHandleDead                       |      508 |         59 |        | https://decomp.me/scratch/m1ZHK | 0.989 |
-| ric    | CheckStageCollision                 |      509 |         51 |        |                                 |       |
+| ric    | CheckStageCollision                 |      509 |         51 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | lib    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | no4    | func_psp_0924F8D8                   |      511 |         41 |        |                                 |       |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
@@ -1384,7 +1384,7 @@
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.54  |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.607 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
