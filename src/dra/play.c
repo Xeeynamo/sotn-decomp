@@ -92,8 +92,10 @@ void HandlePlay(void) {
             for (i = 0; i < LEN(g_CastleFlags); i++) {
                 g_CastleFlags[i] = 0;
             }
-            g_CastleFlags[INTRO_VIDEO] = 1;
-            g_CastleFlags[ST0_STAGE_FLAG] = 1;
+            // The Elevator in Reverse Colosseum and the Hidden Stairs in
+            // Reverse Keep are always activated
+            g_CastleFlags[RARE_ELEVATOR_ACTIVATED] = 1;
+            g_CastleFlags[RTOP_SECRET_STAIRS] = 1;
             if (g_PlayableCharacter != 0) {
                 g_CastleFlags[IVE_BEEN_ROBBED] = 1;
                 g_CastleFlags[MET_MARIA_AFTER_HIPPOGRYPH] = 1;

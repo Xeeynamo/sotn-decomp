@@ -516,6 +516,14 @@ typedef enum {
     Engine_0x70 = 0x70
 } GameEngineStep;
 
+typedef enum {
+    WALL_NONE,
+    WALL_TOP,
+    WALL_LEFT,
+    WALL_BOTTOM,
+    WALL_RIGHT,
+} WallSide;
+
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 typedef enum {
@@ -1609,7 +1617,7 @@ typedef struct {
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
-    /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
+    /* 8003C86C */ void (*RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);

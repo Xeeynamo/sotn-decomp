@@ -76,7 +76,7 @@ void EntityDemonSwitch(Entity* self) {
             // Update the map "explored" state
             // This is read from an array of data in DRA, and in
             // this case results in exploring the room to the right
-            g_api.func_800F1FC4(CHI_DEMON_SWITCH);
+            g_api.RevealSecretPassageAtPlayerPositionOnMap(CHI_DEMON_SWITCH);
             self->animCurFrame = 4;
             self->step++; // Inactive
         }
