@@ -165,7 +165,10 @@ void RicInit(s16 initParam) {
         func_8015CC70(5);
     }
 #ifdef VERSION_PSP
-    D_pspeu_092D7A68 = 0x1E;
+    // new to PSP: block input for half a second when the Prologue stage starts
+    // or after loading a save. Not sure if a bugfix or QOL.
+    D_pspeu_092D7A68 = 30;
+
     func_91040A0(&D_pspeu_092CFA58);
     D_pspeu_092D33BC = func_pspeu_092ACE78(
         0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
@@ -388,8 +391,6 @@ static void CheckHighJumpInput(void) {
     }
 }
 
-extern s32 D_pspeu_092D7A68;
-extern s32 D_8C630C4;
 void RicMain(void) {
     s16 angle;
     s32 i;
@@ -466,11 +467,11 @@ void RicMain(void) {
         case PL_T_POISON:
         case PL_T_5:
         case PL_T_7:
-        case 8:
-        case 9:
-        case 10:
-        case 12:
-        case 14:
+        case PL_T_8:
+        case PL_T_ATTACK:
+        case PL_T_10:
+        case PL_T_12:
+        case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
             PLAYER.palette = 0x8120;
@@ -638,6 +639,7 @@ void RicMain(void) {
     }
     g_Player.unk08 = g_Player.status;
 #if defined(VERSION_PC) || defined(VERSION_PSP)
+    // uninitialized on PSX, it was a coincidence it worked
     newStatus = 0;
 #endif
     switch (PLAYER.step) {
