@@ -223,6 +223,9 @@ static u8 D_800B0628[] = {
     0x2F, 0x2F, 0x6F, 0x00, 
     0x1F, 0x1F, 0x7F, 0x00,
     0x1F, 0x1F, 0x7F, 0x00};
+#ifndef VERSION_PSP
+static u16 dirty_data_10650[] = {16, 0, -1, 0};
+#endif
 //clang-format on
 
 // axe thrown when using subweapon

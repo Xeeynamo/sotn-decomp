@@ -112,6 +112,7 @@ segments:
       - [0xD4B8, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
       - [0xE294, .data, d_E294]
+      - [0x10628, .data, 84B88]
       - [0x10798, .data, d_10798]
       - [0x10924, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
