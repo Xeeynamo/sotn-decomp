@@ -3,6 +3,9 @@
 #include "../dra/dra_bss.h"
 #include "player.h"
 
+static s32 D_800ACDF8 = 0;
+static s32 D_800ACDFC = 0;
+
 extern s32 D_800ACE48[];
 
 void func_801092E8(s32 arg0) {
@@ -498,8 +501,6 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 
 extern bool D_8C630C4;
 
-extern s32 D_800ACDF8;
-extern s32 D_800ACDFC;
 extern s32 D_800ACE00[];
 extern s16 D_800ACE20[];
 
