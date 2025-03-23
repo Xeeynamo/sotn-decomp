@@ -1807,11 +1807,11 @@ typedef struct {
     /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
     /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
     /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
-    /* 80072EE8 */ s32 padPressed;
-    /* 80072EEC */ s32 padTapped;
-    /* 80072EF0 */ s32 padHeld;
+    /* 80072EE8 */ u32 padPressed;
+    /* 80072EEC */ u32 padTapped;
+    /* 80072EF0 */ u32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions
-    /* 80072EF8 */ s32 D_80072EF8;
+    /* 80072EF8 */ u32 D_80072EF8;
     /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
 

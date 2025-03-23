@@ -2,6 +2,11 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// Forward declaration. EntityAlucard needs to not know these args are s16.
+// But 80113D7C (in this file, but before PlayerStepKill) needs to know
+// the proper s16 args. So we put it to the top of this file.
+void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2);
+
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
