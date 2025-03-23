@@ -135,7 +135,8 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
-      - [0xA6800, .data, dra_psp/27FD8]
+      - [0xA0578, .data, dra_psp/27FD8]
+      - [0xA05A0, data]
       - [0xA6820, .data, dra/71830]
       - [0xA6888, data]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers

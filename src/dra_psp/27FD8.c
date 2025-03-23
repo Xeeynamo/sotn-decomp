@@ -3,13 +3,18 @@
 #include "../dra/dra_bss.h"
 #include "player.h"
 
+s16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+
 static s32 D_800ACDF8 = 0;
 static s32 D_800ACDFC = 0;
 
-s32 D_800ACE00[] = {
-    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
-    PAD_L1,     PAD_R1,    BTN_MIST,
-};
+//s32 D_800ACE00[] = {
+//    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+//    PAD_L1,     PAD_R1,    BTN_MIST,
+//};
 
 extern s32 D_800ACE48[];
 
