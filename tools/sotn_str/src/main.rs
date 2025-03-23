@@ -360,7 +360,7 @@ fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(
 }
 
 fn process_s_macro(line: &str, psp: bool) -> String {
-    if(psp)
+    if psp
     {
         process_macro(line, "_S", utf8_to_byte_literals_psp)
     }
@@ -378,8 +378,8 @@ fn process_s2_hd_macro(line: &str) -> String {
     process_macro(line, "_S2_HD", alt_hd_utf8_to_byte_literals)
 }
 
-fn process_s3_macro(line: &str) -> String {
-    process_macro(line, "_S3", s3_utf8_to_byte_literals)
+fn process_se_macro(line: &str) -> String {
+    process_macro(line, "_SE", s3_utf8_to_byte_literals)
 }
 
 
@@ -388,7 +388,7 @@ fn do_sub(line: &str, psp: bool) -> String {
     let mut processed = process_s_macro(line, psp);
     processed = process_s2_macro(&processed);
     processed = process_s2_hd_macro(&processed);
-    processed = process_s3_macro(&processed);
+    processed = process_se_macro(&processed);
     processed
 }
 
@@ -445,8 +445,8 @@ lazy_static! {
     };
 }
 
-fn fix_s3(chr: char) -> char {
-    match (chr) {
+fn fix_se(chr: char) -> char {
+    match chr {
         'á' => 'ﾌ',
         _ => chr,
     }
@@ -502,7 +502,7 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> String {
 fn s3_utf8_to_byte_literals(input_str: &str) -> String {
     let mut out = String::new();
     for char in input_str.chars() {
-        out.push(fix_s3(char));
+        out.push(fix_se(char));
     }
     out
 }
@@ -710,7 +710,7 @@ let expected = r#"const char* g_goldCollectTexts[] = {
         let expected = r#""\x27\x52\x41\x4E\x44\x00\x43\xB1\x55\x52\xFF""#;
         assert_eq!(out, expected);
 
-        let line = r#"_S3("Cadáveres frescos."),"#;
+        let line = r#"_SE("Cadáveres frescos."),"#;
         let out = do_sub(line, true);
         let expected = r#""Cadﾌveres frescos.","#;
         assert_eq!(out, expected);
