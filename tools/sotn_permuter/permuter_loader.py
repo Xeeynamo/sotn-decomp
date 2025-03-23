@@ -202,7 +202,8 @@ if __name__ == "__main__":
                         [
                             x[-1]
                             for x in segment["subsegments"]
-                            if len(x) > 1
+                            if isinstance(x, list)
+                            and len(x) > 1
                             and x[1] == "c"
                             and x[-1].endswith(args.source)
                         ]
@@ -226,7 +227,7 @@ if __name__ == "__main__":
             else:
                 srcPath = os.path.join(os.getcwd(), splatConfig["options"]["src_path"])
 
-            cFilename = os.path.join(srcPath, f"{args.source}.c")
+            cFilename = os.path.join(srcPath, f"{subsegments[0]}.c")
             sys.argv = [cFilename if a == args.source else a for a in sys.argv]
 
             sFilename = os.path.join(
