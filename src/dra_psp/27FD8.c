@@ -3,7 +3,6 @@
 #include "../dra/dra_bss.h"
 #include "player.h"
 
-
 extern s32 D_800ACE48[];
 
 void func_801092E8(s32 arg0) {
@@ -70,7 +69,7 @@ void func_801093C4(void) {
         drawEnv.clip = D_800ACE60;
         drawEnv.ofs[1] = 0x1C0;
         dr_env = *(DR_ENV**)&prim->r1;
-        if(dr_env == NULL){
+        if (dr_env == NULL) {
             return;
         }
         SetDrawEnv(dr_env, &drawEnv);
@@ -102,7 +101,6 @@ extern s32 D_psp_0918315C;
 extern s32 D_psp_09183168;
 extern s32 D_psp_09183174;
 
-
 void func_80109594() {
     Entity* e;
     Primitive* prim;
@@ -122,11 +120,11 @@ void func_80109594() {
     PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
     PLAYER.palette = 0x8100;
-    
+
     PLAYER.rotY = PLAYER.rotX = 0x100;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
-    memset_ptr = (s32*) &g_Player;
+    memset_ptr = (s32*)&g_Player;
     for (i = 0; i < memset_len; i++) {
         *memset_ptr++ = 0;
     }
@@ -160,7 +158,7 @@ void func_80109594() {
     g_Player.unk20 = 0x10;
 #elif defined(VERSION_PSP)
     D_psp_09234B68 = 0x10;
-#endif    
+#endif
     g_Player.padSim = 0;
     g_Player.demo_timer = 16;
     D_80137FB8 = 0;
@@ -207,13 +205,15 @@ void func_80109594() {
         }
     }
     func_psp_091040A0(&D_psp_09183138);
-    D_psp_0918315C = func_psp_091048B8(&D_psp_0917DCA8,&D_psp_09180EC0,&D_psp_0917ED60,&D_psp_09182028, &D_psp_0917FF10);
+    D_psp_0918315C =
+        func_psp_091048B8(&D_psp_0917DCA8, &D_psp_09180EC0, &D_psp_0917ED60,
+                          &D_psp_09182028, &D_psp_0917FF10);
     func_psp_091040A0(&D_psp_09183150);
-    D_psp_09183174 = func_psp_091048B8(0,&D_psp_09149550,&D_psp_09148C10,&D_psp_091499F0, &D_psp_091490B0);
-    if(D_psp_09183174 != 0){
+    D_psp_09183174 = func_psp_091048B8(
+        0, &D_psp_09149550, &D_psp_09148C10, &D_psp_091499F0, &D_psp_091490B0);
+    if (D_psp_09183174 != 0) {
         func_psp_091040A0(&D_psp_09183168);
     }
-
 }
 
 void func_80109990(void) {
@@ -406,7 +406,8 @@ void func_8010A234(s32 arg0) {
     weapon = D_8017A000.GetWeaponId;
     weaponID = weapon();
     // Wearing Axe Lord Armor! This is probably when you initially put it on.
-    if ((weaponID == 0x2D) && CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
+    if ((weaponID == 0x2D) &&
+        CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
         // If we already have the flag set, exit.
         if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
             return;
@@ -450,8 +451,8 @@ void func_8010A234(s32 arg0) {
         if (arg0 != 0) {
             PlayAnimation(D_800B0130, D_800B01B8);
         }
-        for(i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++ ){
-            if(ent->palette == 0x110 && ent->unk5A == 100){
+        for (i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++) {
+            if (ent->palette == 0x110 && ent->unk5A == 100) {
                 ent->animSet = 0;
             }
         }
@@ -463,12 +464,12 @@ void func_8010A3F0(void) {
     s32 id;
     getID = D_8017A000.GetWeaponId;
     id = getID();
-    if (id == 0x38){
+    if (id == 0x38) {
         getID = D_8017D000.GetWeaponId;
         id = getID();
-        if (id == 0x38){
+        if (id == 0x38) {
             if (g_Player.timers[ALU_T_DARKMETAMORPH] == 0) {
-            func_801092E8(1);
+                func_801092E8(1);
             }
             g_Player.timers[ALU_T_DARKMETAMORPH] = 0x20;
             if (g_Player.unk10 && g_Status.D_80097C40 < -1) {
@@ -521,7 +522,7 @@ void EntityAlucard() {
     s32 sp5c;
     s32 sp58;
     s32 sp54;
-    DamageParam damage; //sp44
+    DamageParam damage; // sp44
     s32 sp40 = 0;
     unkstr_800cfe48* sp3c;
     s32 sp38;
@@ -537,7 +538,6 @@ void EntityAlucard() {
     s32 i;
     s16 playerHitPoints;
 
-
     g_CurrentEntity = &PLAYER;
     if (D_800ACE44 != 0) {
         D_800ACE44--;
@@ -552,10 +552,10 @@ void EntityAlucard() {
     var_s6 = 0;
     var_s5 = 0;
     var_s8 = 0;
-    PLAYER.drawFlags = 0;
+    PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
     g_Player.unk18 = 0;
     g_Player.unk70 = 0;
-    
+
     g_Player.unk72 = func_80110394();
     if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
         i = GetTeleportToOtherCastle();
@@ -619,13 +619,17 @@ void EntityAlucard() {
                     case 4: {
                         var_s3 = ((g_GameTimer & 0xF) << 8);
                         draw = g_PlayerDraw;
-                        draw->r0 = draw->b0 = draw->g0 = (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        draw->r0 = draw->b0 = draw->g0 =
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
                         var_s3 += 0x200;
-                        draw->r1 = draw->b1 = draw->g1 = (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        draw->r1 = draw->b1 = draw->g1 =
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
                         var_s3 += 0x200;
-                        draw->r3 = draw->b3 = draw->g3 = (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        draw->r3 = draw->b3 = draw->g3 =
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
                         var_s3 += 0x200;
-                        draw->r2 = draw->b2 = draw->g2 = (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        draw->r2 = draw->b2 = draw->g2 =
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
                         draw->enableColorBlend = 1;
                         break;
                     }
@@ -637,7 +641,6 @@ void EntityAlucard() {
                             func_801092E8(1);
                         }
                         break;
-
                     }
                     if (--g_Player.timers[i] == 0) {
                         switch (i) {
@@ -648,7 +651,7 @@ void EntityAlucard() {
                         case 10:
                         case 12:
                         case 14:
-                            break;    
+                            break;
                         case 0:
                             if (!(g_Player.status & (PLAYER_STATUS_STONE |
                                                      PLAYER_STATUS_CURSE))) {
@@ -733,9 +736,12 @@ void EntityAlucard() {
                     break;
                 }
             } else {
-                g_Player.padPressed = g_pads[0].pressed & ~(PAD_SQUARE | PAD_CROSS | PAD_TRIANGLE | PAD_CIRCLE | PAD_L1 | PAD_R1);
+                g_Player.padPressed = g_pads[0].pressed &
+                                      ~(PAD_SQUARE | PAD_CROSS | PAD_TRIANGLE |
+                                        PAD_CIRCLE | PAD_L1 | PAD_R1);
                 for (i = 0; i < 6; i++) {
-                    if (g_Settings.buttonMask[i] == (g_pads[0].pressed & g_Settings.buttonMask[i])) {
+                    if (g_Settings.buttonMask[i] ==
+                        (g_pads[0].pressed & g_Settings.buttonMask[i])) {
                         g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
@@ -770,13 +776,12 @@ void EntityAlucard() {
                             var_s5 = PLAYER.step_s;
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
-                            if(D_8C630C4){
+                            if (D_8C630C4) {
                                 PLAYER.hitPoints = 0;
                                 i = 0;
                             }
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
-                                ((i == 1) || (i == 8) ||
-                                 (i == 7))) {
+                                ((i == 1) || (i == 8) || (i == 7))) {
                                 i = 3;
                                 damage.damageKind = DAMAGEKIND_1;
                             }
@@ -855,26 +860,28 @@ void EntityAlucard() {
                     }
                 specialmove:
                     CheckSpecialMoveInputs();
-                    if (D_psp_09234B68 != 0){
+                    if (D_psp_09234B68 != 0) {
                         D_psp_09234B68--;
                     }
-                    if(D_psp_09234B68 == 0) {
+                    if (D_psp_09234B68 == 0) {
                         var_s7 = g_Player.padPressed;
-                        if(sp40 != 0 || PLAYER.step == Player_MorphMist || PLAYER.step == Player_MorphWolf || PLAYER.step == Player_MorphBat){
-                                    D_psp_09234B88 = 0;
-                                    D_psp_09234B90 = g_Player.padTapped;
+                        if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
+                            PLAYER.step == Player_MorphWolf ||
+                            PLAYER.step == Player_MorphBat) {
+                            D_psp_09234B88 = 0;
+                            D_psp_09234B90 = g_Player.padTapped;
                         } else {
-                            if(var_s7 & 0x300){
+                            if (var_s7 & 0x300) {
                                 D_psp_09234B90 |= (var_s7 & 0x300);
                                 D_psp_09234B88++;
-                                if(D_psp_09234B88 <= 5){
+                                if (D_psp_09234B88 <= 5) {
                                     g_Player.padTapped = var_s7 & ~0x300;
                                 }
-                                if(D_psp_09234B88 == 6){
+                                if (D_psp_09234B88 == 6) {
                                     g_Player.padTapped |= D_psp_09234B90;
                                 }
                             } else {
-                                if(D_psp_09234B88 != 0){
+                                if (D_psp_09234B88 != 0) {
                                     D_psp_09234B88 = 0;
                                     g_Player.padTapped = D_psp_09234B90;
                                 } else {
@@ -883,60 +890,64 @@ void EntityAlucard() {
                                 }
                             }
                         }
-                        
+
                         if (D_80097448[1] == 0) {
                             if (((g_Player.padTapped & BTN_MIST) == BTN_MIST) &&
                                 (HandleTransformationMP(
                                      FORM_MIST, CHECK_ONLY) == 0) &&
-                                ((PLAYER.step == Player_Stand) || 
+                                ((PLAYER.step == Player_Stand) ||
                                  (PLAYER.step == Player_Walk) ||
-                                 (PLAYER.step == Player_Crouch) || 
+                                 (PLAYER.step == Player_Crouch) ||
                                  (PLAYER.step == Player_Fall) ||
-                                 (PLAYER.step == Player_Jump) || 
+                                 (PLAYER.step == Player_Jump) ||
                                  (PLAYER.step == Player_AlucardStuck) ||
                                  (PLAYER.step == Player_HighJump) ||
-                                 ((PLAYER.step == Player_MorphBat) && (PLAYER.step_s)) ||
-                                 ((PLAYER.step == Player_MorphWolf) && (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
+                                 ((PLAYER.step == Player_MorphBat) &&
+                                  (PLAYER.step_s)) ||
+                                 ((PLAYER.step == Player_MorphWolf) &&
+                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
                                 func_80109328();
                                 SetPlayerStep(Player_MorphMist);
                                 PlaySfx(SFX_TRANSFORM_LOW);
                                 goto block_159;
                             }
                             if (((g_Player.padTapped & BTN_MIST) == PAD_R1) &&
-                                (HandleTransformationMP(
-                                    FORM_BAT, CHECK_ONLY) == 0) &&
-                                ((PLAYER.step == Player_Stand) || 
+                                (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
+                                 0) &&
+                                ((PLAYER.step == Player_Stand) ||
                                  (PLAYER.step == Player_Walk) ||
-                                 (PLAYER.step == Player_Crouch) || 
+                                 (PLAYER.step == Player_Crouch) ||
                                  (PLAYER.step == Player_Fall) ||
-                                 (PLAYER.step == Player_Jump) || 
+                                 (PLAYER.step == Player_Jump) ||
                                  (PLAYER.step == Player_AlucardStuck) ||
                                  (PLAYER.step == Player_HighJump) ||
                                  (PLAYER.step == Player_MorphMist) ||
-                                 ((PLAYER.step == Player_MorphWolf) && (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
-                                    if (PLAYER.step == 6 || PLAYER.step == 2) {
-                                        D_8013AECC = 0xC;
-                                    }
-                                    func_80109328();
-                                    SetPlayerStep(Player_MorphBat);
-                                    PlaySfx(SFX_TRANSFORM_LOW);
-                                    goto block_160;
+                                 ((PLAYER.step == Player_MorphWolf) &&
+                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
+                                if (PLAYER.step == 6 || PLAYER.step == 2) {
+                                    D_8013AECC = 0xC;
                                 }
+                                func_80109328();
+                                SetPlayerStep(Player_MorphBat);
+                                PlaySfx(SFX_TRANSFORM_LOW);
+                                goto block_160;
+                            }
                         }
                         if (((g_Player.padTapped & BTN_MIST) == PAD_L1) &&
-                            (HandleTransformationMP(
-                                FORM_WOLF, CHECK_ONLY) == 0) &&
+                            (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
+                             0) &&
                             ((D_80097448[1] == 0) ||
                              IsRelicActive(RELIC_HOLY_SYMBOL)) &&
-                            ((PLAYER.step == Player_Stand) || 
+                            ((PLAYER.step == Player_Stand) ||
                              (PLAYER.step == Player_Walk) ||
-                             (PLAYER.step == Player_Crouch) || 
+                             (PLAYER.step == Player_Crouch) ||
                              (PLAYER.step == Player_Fall) ||
-                             (PLAYER.step == Player_Jump) || 
+                             (PLAYER.step == Player_Jump) ||
                              (PLAYER.step == Player_AlucardStuck) ||
                              (PLAYER.step == Player_HighJump) ||
-                            (PLAYER.step == Player_MorphMist) || 
-                            ((PLAYER.step == Player_MorphBat) && (PLAYER.step_s)))) {
+                             (PLAYER.step == Player_MorphMist) ||
+                             ((PLAYER.step == Player_MorphBat) &&
+                              (PLAYER.step_s)))) {
                             func_80109328();
                             SetPlayerStep(0x18);
                             PlaySfx(SFX_TRANSFORM);
@@ -952,7 +963,7 @@ block_160:
     g_Player.prev_step_s = PLAYER.step_s;
     D_800ACDF8 = g_Player.timers[ALU_T_DARKMETAMORPH];
     switch (PLAYER.step) {
-case Player_Stand:
+    case Player_Stand:
         PlayerStepStand();
         break;
     case Player_Walk:
@@ -1064,7 +1075,7 @@ case Player_Stand:
     newStatus_s2 = 0;
     g_Status.D_80097BF8 &= ~1;
     switch (PLAYER.step) {
-    case Player_Crouch:               
+    case Player_Crouch:
         if (PLAYER.step_s != 2) {
             newStatus_s2 = PLAYER_STATUS_CROUCH;
         }
@@ -1116,7 +1127,7 @@ case Player_Stand:
         func_8010E168(1, 4);
         newStatus_s2 = 0x38000000;
         break;
-    case Player_Hit:  
+    case Player_Hit:
     case Player_Unk48:
     case Player_Unk49:
         newStatus_s2 = 0x38110000;
@@ -1130,7 +1141,7 @@ case Player_Stand:
         func_8010E168(1, 12);
         break;
     case Player_Kill:
-    case Player_KillWater:  
+    case Player_KillWater:
         newStatus_s2 = 0x18150000;
         if (PLAYER.step_s == 0x80) {
             newStatus_s2 |= PLAYER_STATUS_UNK80000;
@@ -1145,14 +1156,14 @@ case Player_Stand:
         newStatus_s2 = 0x18100000;
         func_8010E168(1, 12);
         break;
-    case Player_SpellSummonSpirit: 
-    case Player_SpellTetraSpirit:  
+    case Player_SpellSummonSpirit:
+    case Player_SpellTetraSpirit:
     case Player_SpellSwordBrothers:
         func_8010E168(1, 0x10);
         newStatus_s2 = 0x38000200 | PLAYER_STATUS_CROUCH;
         break;
-    case Player_SpellSoulSteal:  
-    case Player_SpellHellfire:         
+    case Player_SpellSoulSteal:
+    case Player_SpellHellfire:
     case Player_SpellDarkMetamorphosis:
         func_8010E168(1, 0x10);
         newStatus_s2 = 0x38000200;
@@ -1161,9 +1172,9 @@ case Player_Stand:
         func_8010E168(1, 0x14);
         /* fallthrough */
     case Player_AxearmorStand:
-    case Player_AxearmorWalk: 
-    case Player_AxearmorJump: 
-    case Player_Unk50:   
+    case Player_AxearmorWalk:
+    case Player_AxearmorJump:
+    case Player_Unk50:
         newStatus_s2 = 0x29100000;
         PLAYER.unk5A = 0x64;
         break;
@@ -1239,7 +1250,7 @@ case Player_Stand:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-        
+
         PLAYER.hitboxState = PLAYER.hitParams = 0;
     } else {
         PLAYER.hitboxState = 1;
@@ -1321,9 +1332,7 @@ case Player_Stand:
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
             sp3c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
-            sp3c->unk4 =
-                D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
+            sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
     }
 }
-
