@@ -80,7 +80,139 @@ void func_801093C4(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_psp_09104C80);
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+extern s32 D_80137FBC;
+
+extern s32 D_psp_09148C10;
+extern s32 D_psp_091490B0;
+extern s32 D_psp_09149550;
+extern s32 D_psp_091499F0;
+
+extern s32 D_psp_0917DCA8;
+extern s32 D_psp_0917ED60;
+extern s32 D_psp_0917FF10;
+extern s32 D_psp_09180EC0;
+extern s32 D_psp_09182028;
+extern s32 D_psp_09183138;
+extern s32 D_psp_09183150;
+extern s32 D_psp_0918315C;
+extern s32 D_psp_09183168;
+extern s32 D_psp_09183174;
+
+
+void func_80109594() {
+    Entity* e;
+    Primitive* prim;
+    s16 radius;
+    s16 intensity;
+    s32 i;
+    s32 memset_len;
+    s32* memset_ptr;
+    s32 (*weapon)();
+
+    g_Player.unk6A = 0;
+    g_CurrentEntity = &PLAYER;
+    DestroyEntity(g_CurrentEntity);
+    PLAYER.posX.val = FIX(32);
+    PLAYER.posY.val = FIX(32);
+    PLAYER.animSet = ANIMSET_DRA(1);
+    PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter;
+    PLAYER.facingLeft = 0;
+    PLAYER.palette = 0x8100;
+    
+    PLAYER.rotY = PLAYER.rotX = 0x100;
+
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = (s32*) &g_Player;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+
+    for (i = 0; i < LEN(g_ButtonCombo); i++) {
+        g_ButtonCombo[i].buttonsCorrect = 0;
+        g_ButtonCombo[i].timer = 0;
+    }
+
+    g_Player.vram_flag = g_Player.unk04 = 1;
+    func_8010E570(0);
+
+    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = ANIMSET_DRA(1);
+        e->unk5A = i + 1;
+        e->palette = PAL_OVL(0x100);
+        e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
+    }
+
+    g_Entities[1].primIndex = AllocPrimitives(PRIM_TILE, 8);
+    g_Entities[1].flags |= FLAG_HAS_PRIMS;
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    for (i = 0; i < 6; i++) {
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
+        prim = prim->next;
+    }
+    func_801093C4();
+
+#if defined(VERSION_US)
+    g_Player.unk20 = 0x10;
+#elif defined(VERSION_PSP)
+    D_psp_09234B68 = 0x10;
+#endif    
+    g_Player.padSim = 0;
+    g_Player.demo_timer = 16;
+    D_80137FB8 = 0;
+
+    if (g_Status.mp != g_Status.mpMax) {
+        D_80137FB4 = 0;
+    } else {
+        D_80137FB4 = 1;
+    }
+    g_PlayerDraw->enableColorBlend = 0;
+    func_800EA5E4(0x16);
+    func_801092E8(0);
+    for (i = 0; i < LEN(D_801396F8); i++) {
+        radius = (rand() & 0x3FF) + 0x100;
+        intensity = (rand() & 0xFF) + 0x100;
+        D_801396F8[i] = +((rcos(radius) * 0x10 * intensity) >> 8);
+        D_80139778[i] = -((rsin(radius) * 0x10 * intensity) >> 7);
+    }
+    func_80111928();
+    if (D_80097C98 == 6) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 1), 0);
+        func_8010E42C(1);
+    }
+    if (D_80097C98 == 4) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 3), 0);
+        func_8010E42C(3);
+    }
+    if (D_80097C98 == 5) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 5), 0);
+        func_8010E42C(5);
+    }
+
+    g_CurrentEntity = &PLAYER;
+    weapon = (int (*)())D_8017A000.GetWeaponId;
+    i = weapon();
+    if (i == 0x2D) {
+        if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR) != 0) {
+            func_8010FAF4();
+            weapon = (int (*)())D_8017A000.EntityWeaponAttack;
+            weapon();
+            g_Player.status |= PLAYER_STATUS_AXEARMOR;
+            func_8010DFF0(1, 10);
+            func_80109328();
+        }
+    }
+    func_psp_091040A0(&D_psp_09183138);
+    D_psp_0918315C = func_psp_091048B8(&D_psp_0917DCA8,&D_psp_09180EC0,&D_psp_0917ED60,&D_psp_09182028, &D_psp_0917FF10);
+    func_psp_091040A0(&D_psp_09183150);
+    D_psp_09183174 = func_psp_091048B8(0,&D_psp_09149550,&D_psp_09148C10,&D_psp_091499F0, &D_psp_091490B0);
+    if(D_psp_09183174 != 0){
+        func_psp_091040A0(&D_psp_09183168);
+    }
+
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/27FD8", func_80109990);
 
