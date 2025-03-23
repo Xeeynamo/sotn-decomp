@@ -2,6 +2,9 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// Bat sensors are also use by the Mist form
+// Crouch sensors are also used by the Wolf form
+// Default sensors are a copy of Alucard sensors to reset modified sensors
 s16 g_SensorsCeilingBat[NUM_HORIZONTAL_SENSORS] = {-8, -8, -8, -8};
 s16 g_SensorsFloorBat[NUM_HORIZONTAL_SENSORS] = {8, 8, 8, 8};
 s16 g_SensorsWallBat[NUM_VERTICAL_SENSORS] = {7, 0, 0, 0, 0, 0, -7};
