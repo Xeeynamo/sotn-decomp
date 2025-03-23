@@ -52,7 +52,7 @@ segments:
       - [0x19D94, .data, 2C4C4]
       - [0x19EE0, .data, 319C4]
       - [0x19EFC, .data, e_giant_spinning_cross]
-      - [0x1A444, .rodata, 1AC60] # UpdateEntityRichter
+      - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
       - [0x1A5E0, .rodata, pl_debug]
       - [0x1A5F0, .rodata, pl_handlers]
       - [0x1A7A8, .rodata, pl_handlers] # func_8015BCD0 and onwards
@@ -72,7 +72,7 @@ segments:
       - [0x1AB38, .rodata, 319C4]
       - [0x1AB68, .rodata, e_giant_spinning_cross]
       - [0x1AC50, .rodata, e_giant_spinning_cross]
-      - [0x1AC60, c, 1AC60]
+      - [0x1AC60, c, pl_main]
       - [0x1C7C0, c, pl_debug]
       - [0x1CB04, c, pl_handlers]
       - [0x204AC, c, 204AC]

@@ -2059,6 +2059,7 @@ extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
+extern s32 D_8C630C4;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
