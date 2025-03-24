@@ -27,6 +27,7 @@ PadRead = 0x8926290;
 CdControl = 0x8926320;
 CdSync = 0x8926334;
 main_ = 0x08926994;
+Krom2RawAdd = 0x892728C;
 ScaleMatrix = 0x892752C;
 CompMatrix = 0x8927678;
 NormalClip = 0x089278D4;

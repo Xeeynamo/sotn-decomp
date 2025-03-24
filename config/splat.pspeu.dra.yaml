@@ -153,7 +153,7 @@ segments:
       - [0xA88D8, data]
       - [0xAA3B0, .data, dra_psp/memcard]
       - [0xAA578, data]
-      - [0xAA6E8, .data, dra_psp/62FE0]
+      - [0xAA578, .data, dra_psp/62FE0]
       - [0xAA8A0, data]
       - [0xEE380, .rodata, dra_psp/80]
       - [0xEE3A0, .rodata, dra/624DC]
