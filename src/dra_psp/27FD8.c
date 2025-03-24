@@ -3,6 +3,31 @@
 #include "../dra/dra_bss.h"
 #include "player.h"
 
+// data order is slightly different between US and HD
+// maybe this suggests a file split
+
+#if defined(VERSION_US)
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+
+s16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+
+s32 D_800ACE44 = 0;
+
+s32 D_800ACE48[] = {
+    0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
+};
+
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+#else
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
@@ -12,21 +37,31 @@ s32 D_800ACEDC_hd = 0;
 
 s32 D_800ACE44 = 0;
 
+#ifndef VERSION_PSP
+s32 D_800ACE48[] = {
+    0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
+};
+#else
 s32 D_800ACE48[] = {
     0x8000, 0x8000, 0x8000, 0x801F, 0x81FF, 0x81FF,
 };
+#endif
 
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
-static s32 D_800ACDF8 = 0;
-static s32 D_800ACDFC = 0;
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
 
-//s32 D_800ACE00[] = {
-//    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
-//    PAD_L1,     PAD_R1,    BTN_MIST,
-//};
+// PSP has a whole bunch more data here, and then D_800ACE00.
+// Other data not yet imported.
+#ifndef VERSION_PSP
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+};
+#endif
 
-extern s32 D_800ACE48[];
+#endif
 
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
