@@ -430,8 +430,40 @@ bool RicDoCrash(void) {
 
 void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlide);
+void RicSetSlide(void) {
+    RicCheckFacing();
+    RicSetStep(PL_S_SLIDE);
+    RicSetAnimation(D_80155750);
+    g_CurrentEntity->velocityY = 0;
+    RicSetSpeedX(FIX(5.5));
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    g_api.PlaySfx(SFX_RIC_SLIDE_SKID);
+    g_Player.timers[PL_T_12] = 4;
+}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlideKick);
+void RicSetSlideKick(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_SLIDE_KICK);
+    RicSetAnimation(D_8015577C);
+    g_CurrentEntity->velocityY = FIX(-2);
+    RicSetSpeedX(FIX(5.5));
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
+    g_Player.timers[PL_T_12] = 4;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_31, 0);
+}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetBladeDash);
+void RicSetBladeDash(void) {
+    RicSetStep(PL_S_BLADEDASH);
+    RicSetAnimation(ric_anim_blade_dash);
+    g_CurrentEntity->velocityY = 0;
+    RicSetSpeedX(FIX(5.5));
+    g_Player.unk46 = 5;
+    g_Player.timers[PL_T_12] = 4;
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
+    func_8015CC28();
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
+    g_api.PlaySfx(SFX_RIC_SLIDE_SKID);
+}
