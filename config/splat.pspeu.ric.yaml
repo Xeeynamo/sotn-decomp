@@ -46,7 +46,7 @@ segments:
       - [0x410, c, ric/pl_handlers]
       - [0x4B60, c, ric_psp/4B60]
       - [0x6D18, c, ric/pl_main]
-      - [0x9250, c, ric_psp/9250]
+      - [0x9250, c, ric_psp/pl_setstep]
       - [0xA5A8, c, ric_psp/A5A8]
       - [0xB070, c, ric_psp/B070]
       - [0xD268, c, ric_psp/D268]
@@ -56,7 +56,7 @@ segments:
       - [0x28438, data]
       - [0x30100, .rodata, ric/pl_handlers]
       - [0x30158, .rodata, ric/pl_main]
-      - [0x301D8, .rodata, ric_psp/9250]
+      - [0x301D8, .rodata, ric_psp/pl_setstep]
       - [0x30200, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
       # - [0x30220, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
       # - [0x30248, .rodata, ric_psp/D268] # RicEntityCrashStopwatch
