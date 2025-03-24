@@ -192,7 +192,7 @@ void RicSetWalk(s32 arg0) {
 
 #ifdef VERSION_US
 void RicSetRun(void) {
-    if (g_Player.unk7A != 0) {
+    if (!g_Player.unk7A) {
         RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;

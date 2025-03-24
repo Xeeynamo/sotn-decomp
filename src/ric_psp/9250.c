@@ -71,6 +71,23 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
+#ifdef VERSION_US
+void RicSetRun(void) {
+    if (!g_Player.unk7A) {
+        RicSetWalk(0);
+    } else {
+        g_Player.unk44 = 0;
+        RicSetStep(PL_S_RUN);
+        RicSetAnimation(ric_anim_run);
+        RicSetSpeedX(FIX(2.25));
+        g_Player.timers[PL_T_RUN] = 40;
+        PLAYER.velocityY = 0;
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+    }
+}
+#endif
+
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetFall);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetJump);
