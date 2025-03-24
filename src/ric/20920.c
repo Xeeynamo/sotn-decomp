@@ -192,7 +192,7 @@ void RicSetWalk(s32 arg0) {
 
 #ifdef VERSION_US
 void RicSetRun(void) {
-    if (!g_Player.unk7A) {
+    if (g_Player.unk7A) {
         RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;
@@ -208,22 +208,13 @@ void RicSetRun(void) {
 #endif
 
 void RicSetFall(void) {
-    /**
-     * TODO: labels are !FAKE
-     */
     if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
         PLAYER.velocityX = 0;
     }
-    if (g_Player.prev_step != PL_S_WALK) {
-        if (g_Player.prev_step != PL_S_RUN) {
-            RicSetAnimation(D_80155534);
-            goto block_6;
-        }
-        goto block_7;
+    if (g_Player.prev_step != PL_S_WALK && g_Player.prev_step != PL_S_RUN) {
+        RicSetAnimation(D_80155534);
     }
-block_6:
     if (g_Player.prev_step == PL_S_RUN) {
-    block_7:
         g_Player.unk44 = 0x10;
     }
     RicSetStep(PL_S_FALL);
@@ -233,8 +224,7 @@ block_6:
     g_Player.timers[PL_T_CURSE] = 0;
     g_Player.timers[PL_T_8] = 0;
     if (g_Player.prev_step == PL_S_SLIDE) {
-        g_Player.timers[PL_T_6] = 0;
-        g_Player.timers[PL_T_5] = 0;
+        g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
         PLAYER.animFrameIdx = 2;
         PLAYER.animFrameDuration = 0x10;
         PLAYER.velocityX /= 2;

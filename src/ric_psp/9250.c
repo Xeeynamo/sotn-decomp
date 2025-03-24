@@ -73,7 +73,7 @@ void RicSetWalk(s32 arg0) {
 
 #ifdef VERSION_US
 void RicSetRun(void) {
-    if (!g_Player.unk7A) {
+    if (g_Player.unk7A) {
         RicSetWalk(0);
     } else {
         g_Player.unk44 = 0;
@@ -88,7 +88,29 @@ void RicSetRun(void) {
 }
 #endif
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetFall);
+void RicSetFall(void) {
+    if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
+        PLAYER.velocityX = 0;
+    }
+    if (g_Player.prev_step != PL_S_WALK && g_Player.prev_step != PL_S_RUN) {
+        RicSetAnimation(D_80155534);
+    }
+    if (g_Player.prev_step == PL_S_RUN) {
+        g_Player.unk44 = 0x10;
+    }
+    RicSetStep(PL_S_FALL);
+    PLAYER.velocityY = 0x20000;
+    g_Player.timers[PL_T_5] = 8;
+    g_Player.timers[PL_T_6] = 8;
+    g_Player.timers[PL_T_CURSE] = 0;
+    g_Player.timers[PL_T_8] = 0;
+    if (g_Player.prev_step == PL_S_SLIDE) {
+        g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
+        PLAYER.animFrameIdx = 2;
+        PLAYER.animFrameDuration = 0x10;
+        PLAYER.velocityX /= 2;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetJump);
 
