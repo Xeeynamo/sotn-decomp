@@ -187,18 +187,15 @@ static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-// func_8015D250
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFB68);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_8015D250);
 
-// RicDoAttack
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFDA8);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoAttack);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoCrash);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetDeadPrologue);
 
-// RicSetSlide
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092B05A8);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlide);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlideKick);
 
