@@ -139,9 +139,12 @@ void func_801093C4(void) {
     }
 }
 
+// BSS
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
+#if !defined(VERSION_HD)
 extern s32 D_80137FBC;
+#endif
 
 extern s32 D_psp_09148C10;
 extern s32 D_psp_091490B0;
@@ -159,6 +162,7 @@ extern s32 D_psp_0918315C;
 extern s32 D_psp_09183168;
 extern s32 D_psp_09183174;
 
+// Duplicate of RIC func_80156F40
 void func_80109594() {
     Entity* e;
     Primitive* prim;

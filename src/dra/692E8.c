@@ -143,7 +143,7 @@ void func_801093C4(void) {
 // BSS
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
-#if defined(VERSION_US)
+#if !defined(VERSION_HD)
 extern s32 D_80137FBC;
 #endif
 
@@ -159,19 +159,19 @@ void func_80109594() {
     s32 (*weapon)();
 
     g_Player.unk6A = 0;
-    g_CurrentEntity = g_Entities;
+    g_CurrentEntity = &PLAYER;
     DestroyEntity(g_CurrentEntity);
-    PLAYER.posX.val = 0x200000;
-    PLAYER.posY.val = 0x200000;
+    PLAYER.posX.val = FIX(32);
+    PLAYER.posY.val = FIX(32);
     PLAYER.animSet = ANIMSET_DRA(1);
-    PLAYER.palette = 0x8100;
-    PLAYER.facingLeft = 0;
-    PLAYER.rotX = 0x100;
-    PLAYER.rotY = 0x100;
     PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter;
+    PLAYER.facingLeft = 0;
+    PLAYER.palette = 0x8100;
+
+    PLAYER.rotY = PLAYER.rotX = 0x100;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
-    memset_ptr = &g_Player;
+    memset_ptr = (s32*)&g_Player;
     for (i = 0; i < memset_len; i++) {
         *memset_ptr++ = 0;
     }
@@ -181,8 +181,7 @@ void func_80109594() {
         g_ButtonCombo[i].timer = 0;
     }
 
-    g_Player.unk04 = 1;
-    g_Player.vram_flag = 1;
+    g_Player.vram_flag = g_Player.unk04 = 1;
     func_8010E570(0);
 
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
