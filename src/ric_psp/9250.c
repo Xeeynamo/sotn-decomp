@@ -244,7 +244,79 @@ s32 func_8015D250() {
     return 0;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoAttack);
+bool RicDoAttack(void) {
+    s32 i;
+    s16 poisoned;
+    s16 sfxGrunt;
+
+    sfxGrunt = rand() % 6;
+    if (func_8015D250() == 0) {
+        if (sfxGrunt == 0) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
+        }
+        if (sfxGrunt == 1) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
+        }
+        if (sfxGrunt == 2) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
+        }
+        return true;
+    }
+    if (g_Player.timers[PL_T_POISON]) {
+        poisoned = true;
+    } else {
+        poisoned = false;
+    }
+    for (i = 16; i < 31; i++) {
+        DestroyEntity(&g_Entities[i]);
+    }
+    if (RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_WHIP, poisoned), 0)) {
+        if (poisoned) {
+            g_api.PlaySfx(SFX_RIC_FLAME_WHIP);
+        } else {
+            g_api.PlaySfx(SFX_RIC_WHIP_ATTACK);
+        }
+        if (sfxGrunt == 0) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
+        }
+        if (sfxGrunt == 1) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_B);
+        }
+        if (sfxGrunt == 2) {
+            g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
+        }
+        switch (PLAYER.step) {
+        case Player_Stand:
+        case Player_Walk:
+            PLAYER.step = PL_S_STAND;
+            RicSetAnimation(D_80155588);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case PL_S_RUN:
+            PLAYER.step = PL_S_STAND;
+            RicSetAnimation(D_80155588);
+            RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+            break;
+        case Player_Crouch:
+            RicSetAnimation(D_801555A8);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case Player_Fall:
+        case Player_Jump:
+            PLAYER.step = PL_S_JUMP;
+            RicSetAnimation(D_801555C8);
+            break;
+        default:
+            return false;
+        }
+        g_Player.unk46 = 1;
+        PLAYER.step_s = 0x40;
+        g_Player.timers[PL_T_ATTACK] = 4;
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoCrash);
 

@@ -94,9 +94,9 @@ s32 func_8015D250() {
 bool RicDoAttack(void) {
     s32 i;
     s16 poisoned;
-    s32 temp_rand = rand();
-    s16 sfxGrunt = temp_rand % 6;
+    s16 sfxGrunt;
 
+    sfxGrunt = rand() % 6;
     if (func_8015D250() == 0) {
         if (sfxGrunt == 0) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
@@ -109,7 +109,11 @@ bool RicDoAttack(void) {
         }
         return true;
     }
-    poisoned = g_Player.timers[PL_T_POISON] != 0;
+    if (g_Player.timers[PL_T_POISON]) {
+        poisoned = true;
+    } else {
+        poisoned = false;
+    }
     for (i = 16; i < 31; i++) {
         DestroyEntity(&g_Entities[i]);
     }
@@ -130,8 +134,6 @@ bool RicDoAttack(void) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
         }
         switch (PLAYER.step) {
-        default:
-            return false;
         case Player_Stand:
         case Player_Walk:
             PLAYER.step = PL_S_STAND;
@@ -152,6 +154,8 @@ bool RicDoAttack(void) {
             PLAYER.step = PL_S_JUMP;
             RicSetAnimation(D_801555C8);
             break;
+        default:
+            return false;
         }
         g_Player.unk46 = 1;
         PLAYER.step_s = 0x40;
