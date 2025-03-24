@@ -112,7 +112,32 @@ void RicSetFall(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetJump);
+void RicSetJump(void) {
+    if (g_Player.unk72) {
+        RicSetFall();
+        return;
+    }
+    if (RicCheckFacing() != 0 || PLAYER.step == Player_Slide) {
+        RicSetAnimation(D_8015550C);
+        if (PLAYER.step == PL_S_RUN) {
+            RicSetSpeedX(FIX(2.25));
+            g_Player.unk44 = 0x10;
+        } else {
+            RicSetSpeedX(FIX(1.25));
+            g_Player.unk44 = 0;
+        }
+    } else {
+        RicSetAnimation(D_801554F0);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+    RicSetStep(PL_S_JUMP);
+    if (g_IsPrologueStage) {
+        PLAYER.velocityY = -FIX(4.6875);
+    } else {
+        PLAYER.velocityY = -FIX(5.4375);
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetHighJump);
 
