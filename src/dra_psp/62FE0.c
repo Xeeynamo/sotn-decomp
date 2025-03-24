@@ -312,6 +312,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         val2 |= b0 * 3 + b1;
         val1 |= (b1 * 2 + b2 * 2) << 0xC;
         val1 |= (b2 + b3 * 3) << 0x8;
+        dest = val1; // fake
 
         *srcPtr++ = val0;
         *srcPtr++ = val1;
