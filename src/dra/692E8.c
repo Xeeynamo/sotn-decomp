@@ -151,14 +151,12 @@ extern s32 D_80137FBC;
 void func_80109594() {
     Entity* e;
     Primitive* prim;
-    s32 radius;
-    s32 intensity;
-    s32 primIndex;
+    s16 radius;
+    s16 intensity;
     s32 i;
-    s32 val;
     s32 memset_len;
     s32* memset_ptr;
-    s32 (*weapon)(void);
+    s32 (*weapon)();
 
     g_Player.unk6A = 0;
     g_CurrentEntity = g_Entities;
@@ -195,10 +193,9 @@ void func_80109594() {
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
-    primIndex = AllocPrimitives(PRIM_TILE, 8);
-    prim = &g_PrimBuf[primIndex];
-    g_Entities[1].primIndex = primIndex;
+    g_Entities[1].primIndex = AllocPrimitives(PRIM_TILE, 8);
     g_Entities[1].flags |= FLAG_HAS_PRIMS;
+    prim = &g_PrimBuf[g_Entities[1].primIndex];
     for (i = 0; i < 6; i++) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
@@ -226,10 +223,8 @@ void func_80109594() {
     for (i = 0; i < LEN(D_801396F8); i++) {
         radius = (rand() & 0x3FF) + 0x100;
         intensity = (rand() & 0xFF) + 0x100;
-        val = rcos(radius) * 0x10;
-        D_801396F8[i] = +((val * intensity) >> 8);
-        val = rsin(radius) * 0x10;
-        D_80139778[i] = -((val * intensity) >> 7);
+        D_801396F8[i] = +(((rcos(radius) << 4) * intensity) >> 8);
+        D_80139778[i] = -(((rsin(radius) << 4) * intensity) >> 7);
     }
     func_80111928();
     if (D_80097C98 == 6) {

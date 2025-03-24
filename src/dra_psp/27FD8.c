@@ -232,8 +232,8 @@ void func_80109594() {
     for (i = 0; i < LEN(D_801396F8); i++) {
         radius = (rand() & 0x3FF) + 0x100;
         intensity = (rand() & 0xFF) + 0x100;
-        D_801396F8[i] = +((rcos(radius) * 0x10 * intensity) >> 8);
-        D_80139778[i] = -((rsin(radius) * 0x10 * intensity) >> 7);
+        D_801396F8[i] = +(((rcos(radius) << 4) * intensity) >> 8);
+        D_80139778[i] = -(((rsin(radius) << 4) * intensity) >> 7);
     }
     func_80111928();
     if (D_80097C98 == 6) {
