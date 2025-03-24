@@ -237,7 +237,9 @@ u16 func_psp_0913F960(char* str, u8* type) {
     return ret;
 }
 
-#define ExtractBit(x) x & 1; x >>= 1
+#define ExtractBit(x)                                                          \
+    x & 1;                                                                     \
+    x >>= 1
 
 u16* func_psp_0913FA28(u16 ch, u16 kind) {
     u8* bitmap;
@@ -249,7 +251,8 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     u16 dest, dest2;
     u8 row;
 
-    //Krom2RawAdd returns a pointer to 30 bytes: 15 rows of 2 bytes for a bitmap of size 16x15.
+    // Krom2RawAdd returns a pointer to 30 bytes: 15 rows of 2 bytes for a
+    // bitmap of size 16x15.
     bitmap = (u8*)Krom2RawAdd(ch);
     if (bitmap == (u8*)-1) {
         srcPtr = D_psp_09186EF8;
@@ -263,17 +266,13 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
             bitmap = (u8*)Krom2RawAdd(ch);
         }
     }
-    
+
     srcPtr = D_psp_092367D0;
     for (i = 0; i < 15; i++) {
-        // this stretches 2 bytes into 6 bytes and inverts the bits at the same time
-        // 0 1 2 3 4 5 6 7 | 8 9 A B C D E F
-        // becomes
-        // 76 76 76 - - 65 65 - | 54 54 54 - 32 32 32 - | - 21 21 - 10 10 10 - | FE FE FE - - ED ED - | DC DC DC - BA BA BA - | - A9 A9 - 98 98 98 - |
         val0 = val2 = val1 = 0;
 
         row = *bitmap;
-        
+
         b0 = ExtractBit(row);
         b1 = ExtractBit(row);
         b2 = ExtractBit(row);
@@ -295,7 +294,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         bitmap++;
 
         row = *bitmap;
-        
+
         b0 = ExtractBit(row);
         b1 = ExtractBit(row);
         b2 = ExtractBit(row);
@@ -304,7 +303,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         val2 |= (b0 * 3 + b1) << 0xC;
         val2 |= (b1 * 2 + b2 * 2) << 0x8;
         val2 |= (b2 + b3 * 3) << 0x4;
-        
+
         b0 = ExtractBit(row);
         b1 = ExtractBit(row);
         b2 = ExtractBit(row);
@@ -320,7 +319,6 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         bitmap++;
     }
 
-    // next step goes over 4 bits at a time. D_psp_09187040 is a LUT for ceil(index / 2)
     destPtr = D_psp_092367D0;
     srcPtr = D_psp_092367D0;
     switch (kind) {
@@ -346,15 +344,27 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
                     val0 = *srcPtr;
                     srcPtr += 3;
                     val2 = *srcPtr;
-                    dest = D_psp_09187040[((val0 >> 0xC & 0xF) * k + (val2 >> 0xC & 0xF) * (8 - k)) / 2] << 0xC;
-                    dest |= D_psp_09187040[((val0 >> 0x8 & 0xF) * k + (val2 >> 0x8 & 0xF) * (8 - k)) / 2] << 0x8;
-                    dest |= D_psp_09187040[((val0 >> 0x4 & 0xF) * k + (val2 >> 0x4 & 0xF) * (8 - k)) / 2] << 0x4;
-                    dest |= D_psp_09187040[((val0 >> 0x0 & 0xF) * k + (val2 >> 0x0 & 0xF) * (8 - k)) / 2] << 0x0;
+                    dest = D_psp_09187040[((val0 >> 0xC & 0xF) * k +
+                                           (val2 >> 0xC & 0xF) * (8 - k)) /
+                                          2]
+                           << 0xC;
+                    dest |= D_psp_09187040[((val0 >> 0x8 & 0xF) * k +
+                                            (val2 >> 0x8 & 0xF) * (8 - k)) /
+                                           2]
+                            << 0x8;
+                    dest |= D_psp_09187040[((val0 >> 0x4 & 0xF) * k +
+                                            (val2 >> 0x4 & 0xF) * (8 - k)) /
+                                           2]
+                            << 0x4;
+                    dest |= D_psp_09187040[((val0 >> 0x0 & 0xF) * k +
+                                            (val2 >> 0x0 & 0xF) * (8 - k)) /
+                                           2]
+                            << 0x0;
                     *destPtr = dest;
                     destPtr += 3;
                 }
                 srcPtr -= 20;
-                destPtr -= 20; 
+                destPtr -= 20;
             }
             srcPtr += 21;
             destPtr += 18;
@@ -371,10 +381,18 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
                     val0 = *srcPtr;
                     srcPtr += 3;
                     val2 = *srcPtr;
-                    dest = D_psp_09187040[(val0 >> 0xC & 0xF) * k + (val2 >> 0xC & 0xF) * (4 - k)] << 0xC;
-                    dest |= D_psp_09187040[(val0 >> 0x8 & 0xF) * k + (val2 >> 0x8 & 0xF) * (4 - k)] << 0x8;
-                    dest |= D_psp_09187040[(val0 >> 0x4 & 0xF) * k + (val2 >> 0x4 & 0xF) * (4 - k)] << 0x4;
-                    dest |= D_psp_09187040[(val0 >> 0x0 & 0xF) * k + (val2 >> 0x0 & 0xF) * (4 - k)] << 0x0;
+                    dest = D_psp_09187040[(val0 >> 0xC & 0xF) * k +
+                                          (val2 >> 0xC & 0xF) * (4 - k)]
+                           << 0xC;
+                    dest |= D_psp_09187040[(val0 >> 0x8 & 0xF) * k +
+                                           (val2 >> 0x8 & 0xF) * (4 - k)]
+                            << 0x8;
+                    dest |= D_psp_09187040[(val0 >> 0x4 & 0xF) * k +
+                                           (val2 >> 0x4 & 0xF) * (4 - k)]
+                            << 0x4;
+                    dest |= D_psp_09187040[(val0 >> 0x0 & 0xF) * k +
+                                           (val2 >> 0x0 & 0xF) * (4 - k)]
+                            << 0x0;
                     *destPtr = dest;
                     destPtr += 3;
                 }
@@ -391,7 +409,9 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     }
     if (kind == 3) {
         for (i = 0; i < 0x42; i++) {
-            dest2 = D_psp_092367D0[i]; // for each 4 bits, if 3rd bit is set and next group of 4 bits is empty, set first bit in next group of 4 bits
+            dest2 = D_psp_092367D0[i]; // for each 4 bits, if 3rd bit is set and
+                                       // next group of 4 bits is empty, set
+                                       // first bit in next group of 4 bits
             if (dest2 & 4) {
                 if ((D_psp_092367D0[i] & 0xF0) == 0) {
                     D_psp_092367D0[i] |= 0x10;
