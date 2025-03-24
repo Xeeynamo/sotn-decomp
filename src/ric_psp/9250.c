@@ -99,7 +99,7 @@ void RicSetFall(void) {
         g_Player.unk44 = 0x10;
     }
     RicSetStep(PL_S_FALL);
-    PLAYER.velocityY = 0x20000;
+    PLAYER.velocityY = FIX(2);
     g_Player.timers[PL_T_5] = 8;
     g_Player.timers[PL_T_6] = 8;
     g_Player.timers[PL_T_CURSE] = 0;
