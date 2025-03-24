@@ -2896,10 +2896,8 @@ void PlayerStepUnmorphBat(void) {
             PLAYER.palette = 0x8100;
 #if defined(VERSION_US)
             g_Player.unk20 = 0x18;
-#elif defined(VERSION_HD)
+#else
             D_800ACEDC_hd = 0x18;
-#elif defined(VERSION_PSP)
-            D_psp_09234B68 = 0x18;
 #endif
             func_80111CC0();
         }
@@ -3268,10 +3266,8 @@ void PlayerStepUnmorphMist(void) {
             g_Player.unk44 |= 0x100;
 #if defined(VERSION_US)
             g_Player.unk20 = 0x18;
-#elif defined(VERSION_HD)
+#else
             D_800ACEDC_hd = 0x18;
-#elif defined(VERSION_PSP)
-            D_psp_09234B68 = 0x18;
 #endif
             func_80111CC0();
         }

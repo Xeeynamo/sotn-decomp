@@ -8,6 +8,10 @@ s16 D_800ACE20[] = {
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
 
+s32 D_800ACEDC_hd = 0;
+
+s32 D_800ACE44 = 0;
+
 static s32 D_800ACDF8 = 0;
 static s32 D_800ACDFC = 0;
 
@@ -170,7 +174,7 @@ void func_80109594() {
 #if defined(VERSION_US)
     g_Player.unk20 = 0x10;
 #elif defined(VERSION_PSP)
-    D_psp_09234B68 = 0x10;
+    D_800ACEDC_hd = 0x10;
 #endif
     g_Player.padSim = 0;
     g_Player.demo_timer = 16;
@@ -516,7 +520,7 @@ extern s16 D_800ACE20[];
 
 extern s32 D_80137FB8;
 
-extern s32 D_psp_09234B68;
+extern s32 D_800ACEDC_hd;
 extern s32 D_psp_09234B88;
 extern s32 D_psp_09234B90;
 
@@ -862,10 +866,10 @@ void EntityAlucard() {
                     }
                 specialmove:
                     CheckSpecialMoveInputs();
-                    if (D_psp_09234B68 != 0) {
-                        D_psp_09234B68--;
+                    if (D_800ACEDC_hd != 0) {
+                        D_800ACEDC_hd--;
                     }
-                    if (D_psp_09234B68 == 0) {
+                    if (D_800ACEDC_hd == 0) {
                         var_s7 = g_Player.padPressed;
                         if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
                             PLAYER.step == Player_MorphWolf ||

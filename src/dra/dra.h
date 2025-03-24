@@ -339,11 +339,8 @@ extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
 
-// These appear to be the same variable.
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
 extern s32 D_800ACEDC_hd;
-#elif defined(VERSION_PSP)
-extern s32 D_psp_09234B68;
 #endif
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
