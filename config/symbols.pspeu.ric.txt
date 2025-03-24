@@ -144,6 +144,7 @@ ric_anim_press_up = 0x092CE660;
 ric_anim_stop_run = 0x092CE668;
 ric_anim_stand = 0x092CE688;
 ric_anim_stand_relax = 0x092CE750;
+ric_anim_walk = 0x092CE758;
 ric_anim_crouch_from_stand2 = 0x092CE780;
 ric_anim_crouch = 0x092CE790;
 ric_anim_land_from_air_run = 0x092CE798;

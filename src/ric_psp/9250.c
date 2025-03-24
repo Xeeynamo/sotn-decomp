@@ -54,7 +54,22 @@ void RicSetRun(void) {
 }
 #endif
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetWalk);
+void RicSetWalk(s32 arg0) {
+    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
+        RicSetRun();
+        return;
+    }
+    g_Player.timers[PL_T_CURSE] = 8;
+    if (g_Player.timers[PL_T_CURSE]) {
+        g_Player.timers[PL_T_8] = 12;
+    }
+    g_Player.timers[PL_T_CURSE] = 12;
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_WALK);
+    RicSetAnimation(ric_anim_walk);
+    RicSetSpeedX(FIX(1.25));
+    PLAYER.velocityY = 0;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetFall);
 

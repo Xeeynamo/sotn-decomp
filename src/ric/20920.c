@@ -179,7 +179,9 @@ void RicSetWalk(s32 arg0) {
         return;
     }
     g_Player.timers[PL_T_CURSE] = 8;
-    g_Player.timers[PL_T_8] = 12;
+    if (g_Player.timers[PL_T_CURSE]) {
+        g_Player.timers[PL_T_8] = 12;
+    }
     g_Player.timers[PL_T_CURSE] = 12;
     g_Player.unk44 = 0;
     RicSetStep(PL_S_WALK);
