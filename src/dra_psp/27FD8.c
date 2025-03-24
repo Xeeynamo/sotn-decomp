@@ -554,15 +554,15 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
+static s32 D_psp_09234B88 = 0;
+
 extern bool D_8C630C4;
 
 extern s32 D_800ACE00[];
-extern s16 D_800ACE20[];
 
 extern s32 D_80137FB8;
 
 extern s32 D_800ACEDC_hd;
-extern s32 D_psp_09234B88;
 extern s32 D_psp_09234B90;
 
 void EntityAlucard() {
