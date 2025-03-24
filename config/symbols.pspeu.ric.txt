@@ -46,6 +46,7 @@ RicSetWalk = 0x092AF680;
 RicSetFall = 0x092AF738;
 RicSetJump = 0x092AF898;
 RicSetHighJump = 0x092AF9D0;
+RicCheckSubwpnChainLimit = 0x092AFA90;
 RicDoCrash = 0x092B00F0;
 RicSetDeadPrologue = 0x092B0580;
 RicSetSlideKick = 0x092B0640;

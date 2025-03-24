@@ -155,16 +155,49 @@ void RicSetHighJump(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFA90);
+static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
 
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
+
+// func_8015D250
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFB68);
 
+// RicDoAttack
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFDA8);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoCrash);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetDeadPrologue);
 
+// RicSetSlide
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092B05A8);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlideKick);
