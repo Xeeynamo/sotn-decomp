@@ -72,7 +72,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-#ifdef VERSION_US
+#if defined(VERSION_US) && !defined(VERSION_PC)
 void RicSetRun(void) {
     if (g_Player.unk7A) {
         RicSetWalk(0);
