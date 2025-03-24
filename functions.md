@@ -334,7 +334,7 @@
 | no4    | func_psp_09243E58                   |       36 |          4 |        |                                 |       |
 | st0    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | wrp    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
-| dra    | func_psp_091040A0                   |       36 |          5 |        |                                 |       |
+| dra    | func_psp_091040A0                   |       36 |          5 |        | https://decomp.me/scratch/WO6Th | 1.0   |
 | dra    | func_801071CC                       |       36 |          5 |        |                                 |       |
 | dra    | func_psp_090F2178                   |       37 |          2 |        |                                 |       |
 | lib    | GetAngleBetweenEntities             |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
@@ -901,7 +901,7 @@
 | wrp    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
 | wrp    | CheckFieldCollision                 |      113 |         13 |        |                                 |       |
 | lib    | func_us_801B3EC8                    |      113 |         14 |        |                                 |       |
-| dra    | func_psp_090F0E48                   |      113 |         18 |        |                                 |       |
+| dra    | func_psp_090F0E48                   |      113 |         18 |        | https://decomp.me/scratch/TGpMR | 0.999 |
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
 | ric    | 182C8.rodata                        |      114 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
@@ -1387,7 +1387,7 @@
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 0.689 |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
