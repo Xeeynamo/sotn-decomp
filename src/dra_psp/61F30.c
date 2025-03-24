@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", DrawEntitiesHitbox);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_80106A28);
+INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", func_psp_0913EC20);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/61F30", LoadMonsterLibrarianPreview);
 

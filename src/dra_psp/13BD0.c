@@ -68,8 +68,7 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
                 var_s2 = ' ';
             }
         }
-        // var_a2 = (u8*)func_80106A28(var_a0, 0);
-        var_a2 = (u8*)func_psp_0913FA28(var_a0, 0);
+        var_a2 = (u8*)func_80106A28(var_a0, 0);
         while (1) {
             if (var_s2 == ' ') {
                 break;
