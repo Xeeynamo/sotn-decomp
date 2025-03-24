@@ -187,7 +187,62 @@ static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_8015D250);
+s32 func_8015D250() {
+    SubweaponDef subweapon;
+    s16 subweaponId;
+    s16 chainLimit;
+    s16 unused;
+
+    unused = 0;
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+
+    subweaponId = func_8015FB84(&subweapon, false, false);
+    if (subweaponId <= 0) {
+        return 1;
+    }
+    if (subweapon.blueprintNum == 0) {
+        return 4;
+    }
+    chainLimit = subweapon.chainLimit;
+    if (RicCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
+        return 2;
+    }
+    subweaponId = func_8015FB84(&subweapon, false, true);
+    if (subweaponId <= 0) {
+        return 3;
+    }
+    if (g_Player.unk72) {
+        return 5;
+    }
+
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
+    g_Player.timers[PL_T_10] = 4;
+
+    switch (PLAYER.step) {
+    case PL_S_RUN:
+        PLAYER.step = PL_S_STAND;
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        RicSetAnimation(D_801555E8);
+        break;
+    case PL_S_STAND:
+    case PL_S_WALK:
+    case PL_S_CROUCH:
+        PLAYER.step = PL_S_STAND;
+        RicSetAnimation(D_801555E8);
+        break;
+    case PL_S_FALL:
+    case PL_S_JUMP:
+        PLAYER.step = PL_S_JUMP;
+        RicSetAnimation(D_80155638);
+        break;
+    }
+    g_Player.unk46 = 3;
+    PLAYER.step_s = 0x42;
+    g_Player.timers[PL_T_10] = 4;
+    return 0;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoAttack);
 

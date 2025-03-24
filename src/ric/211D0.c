@@ -34,10 +34,13 @@ static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-s32 func_8015D250(s32 unused_arg) {
+s32 func_8015D250() {
     SubweaponDef subweapon;
     s16 subweaponId;
+    s16 chainLimit;
+    s16 unused;
 
+    unused = 0;
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
@@ -49,7 +52,8 @@ s32 func_8015D250(s32 unused_arg) {
     if (subweapon.blueprintNum == 0) {
         return 4;
     }
-    if (RicCheckSubwpnChainLimit(subweaponId, subweapon.chainLimit) < 0) {
+    chainLimit = subweapon.chainLimit;
+    if (RicCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
         return 2;
     }
     subweaponId = func_8015FB84(&subweapon, false, true);
@@ -93,7 +97,7 @@ bool RicDoAttack(void) {
     s32 temp_rand = rand();
     s16 sfxGrunt = temp_rand % 6;
 
-    if (func_8015D250(temp_rand / 6) == 0) {
+    if (func_8015D250() == 0) {
         if (sfxGrunt == 0) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }
