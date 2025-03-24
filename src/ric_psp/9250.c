@@ -2,7 +2,16 @@
 #include "../ric/ric.h"
 #include <player.h>
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_8015CC70);
+void func_8015CC70(s32 step_s) {
+    PLAYER.step = PL_S_INIT;
+    PLAYER.step_s = step_s;
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
+    if (step_s & 1) {
+        PLAYER.anim = D_80155950;
+    } else {
+        PLAYER.anim = D_8015591C;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetCrouch);
 

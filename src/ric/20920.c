@@ -121,12 +121,11 @@ void func_8015CC28(void) {
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
-void func_8015CC70(s16 arg0) {
-    PLAYER.step_s = arg0;
+void func_8015CC70(s32 step_s) {
     PLAYER.step = PL_S_INIT;
-    PLAYER.animFrameDuration = 0;
-    PLAYER.animFrameIdx = 0;
-    if (arg0 & 1) {
+    PLAYER.step_s = step_s;
+    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
+    if (step_s & 1) {
         PLAYER.anim = D_80155950;
     } else {
         PLAYER.anim = D_8015591C;
