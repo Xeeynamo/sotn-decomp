@@ -428,7 +428,7 @@ bool RicDoCrash(void) {
     return 1;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetDeadPrologue);
+void RicSetDeadPrologue() { RicSetStep(PL_S_DEAD_PROLOGUE); }
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetSlide);
 
