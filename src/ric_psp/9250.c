@@ -13,7 +13,24 @@ void func_8015CC70(s32 step_s) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetCrouch);
+void RicSetCrouch(s32 kind, s32 velocityX) {
+    RicSetStep(PL_S_CROUCH);
+    RicSetAnimation(ric_anim_crouch);
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    if (kind == 1) {
+        PLAYER.anim = ric_anim_crouch_from_stand2;
+        PLAYER.step_s = 4;
+    }
+    if (kind == 2) {
+        PLAYER.anim = ric_anim_crouch_from_stand;
+        PLAYER.step_s = 1;
+    }
+    if (kind == 3) {
+        PLAYER.anim = ric_anim_land_from_air_run;
+        PLAYER.step_s = 4;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetStand);
 
