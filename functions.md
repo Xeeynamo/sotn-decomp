@@ -126,7 +126,7 @@
 | dra    | func_psp_090EDB70                   |       19 |          3 |        |                                 |       |
 | dra    | func_psp_090DDAA8                   |       19 |          4 |        |                                 |       |
 | dra    | 1DCE0.rodata                        |       20 |          0 | Yes    |                                 |       |
-| ric    | 9250.rodata                         |       20 |          0 | Yes    |                                 |       |
+| ric    | pl_setstep.rodata                   |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata              |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
@@ -353,7 +353,7 @@
 | dra    | func_8010FD88                       |       37 |          5 |        |                                 |       |
 | dra    | InitializePads                      |       37 |          5 |        |                                 |       |
 | dra    | func_psp_09141570                   |       37 |          5 |        |                                 |       |
-| ric    | func_pspeu_092AF600                 |       37 |          5 |        |                                 |       |
+| ric    | RicSetRun                           |       37 |          5 |        |                                 |       |
 | dra    | PerformTetraSpirit                  |       37 |          6 |        |                                 |       |
 | lib    | AllocEntity                         |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | no4    | func_psp_0925B420                   |       37 |          6 |        |                                 |       |
@@ -440,7 +440,7 @@
 | dra    | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra    | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
 | dra    | func_8010DF70                       |       43 |          8 |        |                                 |       |
-| ric    | func_pspeu_092B05A8                 |       43 |          8 |        |                                 |       |
+| ric    | RicSetSlide                         |       43 |          8 |        |                                 |       |
 | dra    | DebugInputWait                      |       43 |          9 |        |                                 |       |
 | dra    | PlayerStepFall                      |       43 |         11 |        |                                 |       |
 | dra    | func_psp_09142E48                   |       44 |          3 |        | https://decomp.me/scratch/H7rD7 | 0.992 |
@@ -624,7 +624,7 @@
 | st0    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | wrp    | EntityIsNearPlayer                  |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | dra    | CheckSubwpnChainLimit               |       66 |         10 |        |                                 |       |
-| ric    | func_pspeu_092AFA90                 |       66 |         10 |        |                                 |       |
+| ric    | RicCheckSubwpnChainLimit            |       66 |         10 |        |                                 |       |
 | dra    | func_8012D178                       |       66 |         15 |        |                                 |       |
 | dra    | func_psp_090F2038                   |       67 |          6 |        |                                 |       |
 | ric    | func_80160F0C                       |       67 |          6 |        |                                 |       |
@@ -920,7 +920,7 @@
 | dra    | func_psp_090ED658                   |      120 |         11 |        |                                 |       |
 | dra    | GetEquipProperties                  |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
 | dra    | func_psp_090E8EC0                   |      120 |         21 | Yes    |                                 |       |
-| ric    | func_pspeu_092BE888                 |      121 |         11 |        |                                 |       |
+| ric    | func_8015FB84                       |      121 |         11 |        |                                 |       |
 | dra    | func_80102EB8                       |      121 |         13 |        |                                 |       |
 | dra    | LoadPendingGfx                      |      123 |         14 |        |                                 |       |
 | ric    | RicEntityCrashReboundStone          |      124 |         11 | Yes    |                                 |       |
@@ -993,7 +993,7 @@
 | dra    | func_8012CCE4                       |      159 |         21 |        |                                 |       |
 | dra    | LoadSaveData                        |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
 | ric    | RicEntitySubwpnCrossTrail           |      160 |         11 |        |                                 |       |
-| ric    | func_pspeu_092AFB68                 |      160 |         30 |        |                                 |       |
+| ric    | func_8015D250                       |      160 |         30 |        |                                 |       |
 | ric    | func_pspeu_092BEA38                 |      161 |          5 |        |                                 |       |
 | dra    | EntityBatFireball                   |      161 |         14 |        | https://decomp.me/scratch/u4uRW | 0.997 |
 | dra    | EntityHellfireBigFireball           |      161 |         19 |        | https://decomp.me/scratch/WSXa9 | 0.998 |
@@ -1100,7 +1100,7 @@
 | no4    | func_psp_09255640                   |      233 |         25 |        |                                 |       |
 | dra    | func_801119C4                       |      235 |         31 |        |                                 |       |
 | lib    | EntityBackgroundShadow              |      236 |         29 |        |                                 |       |
-| ric    | func_pspeu_092AFDA8                 |      236 |         46 |        |                                 |       |
+| ric    | RicDoAttack                         |      236 |         46 |        |                                 |       |
 | ric    | func_80162604                       |      238 |         17 |        |                                 |       |
 | no4    | func_psp_0923D9E0                   |      238 |         26 |        |                                 |       |
 | no4    | func_psp_09238118                   |      238 |         35 |        |                                 |       |
