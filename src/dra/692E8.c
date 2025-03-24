@@ -88,6 +88,7 @@ void func_80109328(void) {
 }
 
 void func_801093C4(void) {
+    DR_ENV* dr_env;
     DRAWENV drawEnv;
     Primitive* prim;
     s32 i;
@@ -98,22 +99,23 @@ void func_801093C4(void) {
     }
     switch (g_Player.unk6A) {
     case 0:
-        if (func_800EDB08(prim) != 0) {
-            prim->type = PRIM_ENV;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-            func_800EDB08(prim);
-            if (prim != NULL) {
-                prim->type = PRIM_ENV;
-                prim->drawMode = DRAW_HIDE;
-                g_Player.unk6A++;
-            }
+        dr_env = func_800EDB08(prim);
+        if (dr_env == NULL) {
+            break;
         }
+        prim->type = PRIM_ENV;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        dr_env = func_800EDB08(prim);
+        if (prim == NULL) {
+            break;
+        }
+        prim->type = PRIM_ENV;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        g_Player.unk6A++;
         break;
     case 1:
-        if (g_Player.unk6A != 1) {
-            return;
-        }
         drawEnv = g_CurrentBuffer->draw;
         drawEnv.isbg = false;
         if (g_Player.status & PLAYER_STATUS_UNK4000000) {
@@ -123,7 +125,13 @@ void func_801093C4(void) {
         drawEnv.ofs[0] = 0x200;
         drawEnv.clip = D_800ACE60;
         drawEnv.ofs[1] = 0x1C0;
-        SetDrawEnv(*(DR_ENV**)&prim->r1, &drawEnv);
+        dr_env = *(DR_ENV**)&prim->r1;
+        #if defined(VERSION_PSP)
+        if (dr_env == NULL) {
+            return;
+        }
+        #endif
+        SetDrawEnv(dr_env, &drawEnv);
         prim->priority = 0x190;
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;

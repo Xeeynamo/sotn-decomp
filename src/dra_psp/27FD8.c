@@ -86,8 +86,6 @@ void func_80109328(void) {
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
-extern RECT D_800ACE60;
-
 void func_801093C4(void) {
     DR_ENV* dr_env;
     DRAWENV drawEnv;
@@ -127,9 +125,11 @@ void func_801093C4(void) {
         drawEnv.clip = D_800ACE60;
         drawEnv.ofs[1] = 0x1C0;
         dr_env = *(DR_ENV**)&prim->r1;
+        #if defined(VERSION_PSP)
         if (dr_env == NULL) {
             return;
         }
+        #endif
         SetDrawEnv(dr_env, &drawEnv);
         prim->priority = 0x190;
         prim->drawMode = DRAW_DEFAULT;
