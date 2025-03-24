@@ -32,7 +32,14 @@ void RicSetCrouch(s32 kind, s32 velocityX) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetStand);
+// Corresponding DRA function is func_8010E570 (much more complex)
+void RicSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_STAND);
+    RicSetAnimation(ric_anim_stand);
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AF600);
 
