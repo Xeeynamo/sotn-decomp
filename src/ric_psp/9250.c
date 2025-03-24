@@ -318,7 +318,115 @@ bool RicDoAttack(void) {
     return false;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicDoCrash);
+bool RicDoCrash(void) {
+    SubweaponDef subWpn;
+    Entity* subWpnEnt;
+    s16 subWpnID;
+
+    subWpnID = func_8015FB84(&subWpn, true, false);
+    if (subWpnID < 0) {
+        return 0;
+    }
+    if (subWpnID == PL_W_HOLYWATER && g_Player.timers[PL_T_3]) {
+        return 0;
+    }
+#if defined(VERSION_US)
+    if (subWpnID == PL_W_STOPWATCH && g_unkGraphicsStruct.D_800973FC) {
+        return 0;
+    }
+#endif
+    if (subWpn.blueprintNum) {
+        if (subWpnID == 1) {
+            subWpnEnt = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(subWpn.blueprintNum, 1), 0);
+        } else {
+            subWpnEnt = RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(subWpn.blueprintNum, 0), 0);
+        }
+    }
+    if (subWpnEnt == NULL) {
+        return 0;
+    }
+    if (subWpnEnt == NULL) {
+        return 0;
+    }
+    subWpnID = func_8015FB84(&subWpn, true, true);
+    g_Player.unk46 = 4;
+    g_Player.unk4E = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    switch (subWpnID) {
+    case SUBWPN_NONE:
+        RicSetStep(PL_S_FLAME_WHIP);
+        RicSetAnimation(ric_anim_flame_whip);
+        RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_36, 1), 0);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
+        break;
+    case SUBWPN_DAGGER:
+        RicSetStep(PL_S_THROW_DAGGERS);
+        RicSetAnimation(ric_anim_throw_daggers);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
+        break;
+    case SUBWPN_AXE:
+        RicSetStep(PL_S_STAND_IN_AIR);
+        RicSetAnimation(ric_anim_stand_in_air);
+        PLAYER.velocityY = FIX(-4.6875);
+        if (g_Player.unk72) {
+            PLAYER.velocityY = 0;
+        }
+        func_8015CC28();
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
+        break;
+    case SUBWPN_HOLYWATER:
+        RicSetStep(PL_S_HYDROSTORM);
+        RicSetAnimation(ric_anim_point_finger_up);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
+        g_api.PlaySfx(SFX_VO_RIC_HYDRO_STORM);
+        break;
+    case SUBWPN_REBNDSTONE:
+    case SUBWPN_VIBHUTI:
+    case SUBWPN_AGUNEA:
+        RicSetStep(PL_S_SUBWPN_CRASH);
+        RicSetAnimation(ric_anim_point_finger_up);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
+        break;
+    case SUBWPN_BIBLE:
+    case SUBWPN_STOPWATCH:
+        RicSetStep(PL_S_SUBWPN_CRASH);
+        RicSetAnimation(D_801558E4);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x40), 0);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x47), 0);
+        g_api.PlaySfx(SFX_VO_RIC_ATTACK_YELL);
+        break;
+    case SUBWPN_CROSS:
+        RicSetStep(PL_S_STAND_IN_AIR);
+        RicSetAnimation(ric_anim_stand_in_air);
+        PLAYER.velocityY = FIX(-4.6875);
+        if (g_Player.unk72) {
+            PLAYER.velocityY = 0;
+        }
+        func_8015CC28();
+        g_api.PlaySfx(SFX_VO_RIC_PAIN_A);
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 2), 0);
+        break;
+    }
+    g_Player.timers[PL_T_12] = 4;
+    return 1;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetDeadPrologue);
 

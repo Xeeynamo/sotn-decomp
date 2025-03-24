@@ -194,6 +194,9 @@ bool RicDoCrash(void) {
     if (subWpnEnt == NULL) {
         return 0;
     }
+    if (subWpnEnt == NULL) {
+        return 0;
+    }
     subWpnID = func_8015FB84(&subWpn, true, true);
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
