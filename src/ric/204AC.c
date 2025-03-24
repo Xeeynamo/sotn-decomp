@@ -8,7 +8,7 @@ void func_8015C4AC(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.entSlot1.unk0 != 0) {
+    if (g_Entities[1].ext.entSlot1.unk0) {
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
@@ -25,19 +25,21 @@ void func_8015C4AC(void) {
             g_Entities[1].ext.entSlot1.unk3 =
                 D_801545B0[g_Entities[1].ext.entSlot1.unk2];
         }
-        if (!(--g_Entities[1].ext.entSlot1.unk3 & 0xFF)) {
+        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
             g_Entities[1].ext.entSlot1.unk2++;
             g_Entities[1].ext.entSlot1.unk3 =
                 D_801545B0[g_Entities[1].ext.entSlot1.unk2];
         }
     }
-    if (g_Entities[1].animFrameIdx != 0) {
+    if (g_Entities[1].animFrameIdx) {
         g_Entities[1].animFrameIdx--;
         return;
     }
+#if !defined(VERSION_PSP)
     prim = &g_PrimBuf[g_Entities[1].primIndex];
-    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL;
-         prim = prim->next, i++) {
+#endif
+    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
+        prim = prim->next) {
         if (i == g_Entities[1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = PLAYER.posX.i.hi;
