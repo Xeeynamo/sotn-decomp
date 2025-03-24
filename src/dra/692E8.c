@@ -64,13 +64,6 @@ s32 D_800ACE00[] = {
 
 #endif
 
-// BSS
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-#if defined(VERSION_US)
-extern s32 D_80137FBC;
-#endif
-
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
     D_800A37D8[1] = D_800ACE48[arg0 * 2 + 1];
@@ -78,13 +71,13 @@ void func_801092E8(s32 arg0) {
 }
 
 void func_80109328(void) {
-    s16* player_unk1E = &PLAYER.rotZ;
-
     g_Player.unk66 = 0;
-    if (*player_unk1E == 0x800 && PLAYER.step == 8) {
+
+    if (PLAYER.rotZ == 0x800 && PLAYER.step == Player_HighJump) {
         PLAYER.rotZ = 0;
         PLAYER.animCurFrame = 0x9D;
-        PLAYER.facingLeft = (PLAYER.facingLeft + 1) & 1;
+        PLAYER.facingLeft += 1;
+        PLAYER.facingLeft &= 1;
     }
 
     if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
@@ -138,6 +131,13 @@ void func_801093C4(void) {
         prim->drawMode = DRAW_UNK_800;
     }
 }
+
+// BSS
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+#if defined(VERSION_US)
+extern s32 D_80137FBC;
+#endif
 
 // Duplicate of RIC func_80156F40
 void func_80109594() {
