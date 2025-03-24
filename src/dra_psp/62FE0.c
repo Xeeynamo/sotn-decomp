@@ -409,9 +409,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     }
     if (kind == 3) {
         for (i = 0; i < 0x42; i++) {
-            dest2 = D_psp_092367D0[i]; // for each 4 bits, if 3rd bit is set and
-                                       // next group of 4 bits is empty, set
-                                       // first bit in next group of 4 bits
+            dest2 = D_psp_092367D0[i];
             if (dest2 & 4) {
                 if ((D_psp_092367D0[i] & 0xF0) == 0) {
                     D_psp_092367D0[i] |= 0x10;
