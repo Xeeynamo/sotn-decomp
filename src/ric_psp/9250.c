@@ -41,7 +41,18 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AF600);
+#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
+void RicSetRun(void) {
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_RUN);
+    RicSetAnimation(ric_anim_run);
+    RicSetSpeedX(FIX(2.25));
+    g_Player.timers[PL_T_RUN] = 40;
+    PLAYER.velocityY = 0;
+    RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SMOKE_PUFF, 5), 0);
+}
+#endif
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetWalk);
 
