@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "ric.h"
-#include "sfx.h"
+#include "../ric/ric.h"
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
@@ -43,7 +42,7 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
 void RicSetRun(void) {
     g_Player.unk44 = 0;
     RicSetStep(PL_S_RUN);
