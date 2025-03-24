@@ -12,7 +12,7 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_8015FA5C);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicSetSubweaponParams);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092BE888);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_8015FB84);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092BEA38);
 

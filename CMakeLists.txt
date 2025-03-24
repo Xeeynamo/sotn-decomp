@@ -229,6 +229,8 @@ set(SOURCE_FILES_RIC
     src/ric/pl_debug.c
     src/ric/pl_handlers.c
     src/ric/20920.c
+    src/ric/pl_setstep.c
+    src/ric/21B00.c
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
