@@ -241,7 +241,7 @@ u16 func_psp_0913F960(char* str, u8* type) {
     x & 1;                                                                     \
     x >>= 1
 
-u16* func_80106A28(u16 ch, u16 kind) {
+u16* func_psp_0913FA28(u16 ch, u16 kind) {
     u8* bitmap;
     u16* srcPtr;
     u16* destPtr;
