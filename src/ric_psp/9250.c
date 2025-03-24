@@ -139,7 +139,21 @@ void RicSetJump(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", RicSetHighJump);
+void RicSetHighJump(void) {
+    RicSetStep(PL_S_HIGHJUMP);
+    PLAYER.velocityX = 0;
+    RicSetSpeedX(FIX(1.25));
+    PLAYER.velocityY = FIX(-7.5);
+    g_Player.high_jump_timer = 0;
+    RicSetAnimation(ric_anim_high_jump);
+    func_8015CC28();
+    RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_HIGH_JUMP, 0);
+    g_api.PlaySfx(SFX_VO_RIC_ATTACK_C);
+    g_Player.timers[PL_T_12] = 4;
+    if (g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/9250", func_pspeu_092AFA90);
 
