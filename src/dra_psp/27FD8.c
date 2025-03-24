@@ -12,6 +12,12 @@ s32 D_800ACEDC_hd = 0;
 
 s32 D_800ACE44 = 0;
 
+s32 D_800ACE48[] = {
+    0x8000, 0x8000, 0x8000, 0x801F, 0x81FF, 0x81FF,
+};
+
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
 static s32 D_800ACDF8 = 0;
 static s32 D_800ACDFC = 0;
 
