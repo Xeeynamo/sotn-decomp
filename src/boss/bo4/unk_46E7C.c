@@ -110,9 +110,28 @@ void PlayerStepHighJump(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_80113E68);
+s32 func_80113E68(void) {
+    s16 rnd = rand() & PSP_RANDMASK;
+    DOPPLEGANGER.ext.player.anim = 0x2E + (rnd % 3);
+    return rnd % 16;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C72BC);
+void func_8010FAF4();
+
+void func_us_801C72BC(void) {
+    DOPPLEGANGER.animSet = -0x7FFF;
+    DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                              FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+    DOPPLEGANGER.animFrameDuration = 0;
+    DOPPLEGANGER.animFrameIdx = 0;
+    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    g_Dop.unk44 = 0;
+    g_Dop.unk46 = 0;
+    DOPPLEGANGER.rotZ = 0;
+    if (g_Entities[STAGE_ENTITY_START + 16].entityId == 0x22) {
+        func_8010FAF4();
+    }
+}
 
 void func_us_801C7340(void) {
     if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
@@ -204,7 +223,49 @@ void func_80118C28(s32 arg0) {
     D_us_801D3D58 = D_us_8018136C[arg0].rawBytes[3];
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C9BC0);
+extern u8 D_us_801813A0[];
+
+static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
+    s16 right;
+    s16 size;
+    u8* idx;
+
+    // D_us_801813A0 is a read-only array of bytes in 8-byte groups.
+    // These are sets of 4 pairs of u,v values.
+    // the ->b0 value is very likely fake.
+    idx = D_us_801813A0;
+    idx += prim->b0 * 8;
+    if (prim->b0 >= 3) {
+        size = 4;
+    } else {
+        size = 6;
+    }
+    if (prim->b0 == 6) {
+        return -1;
+    }
+    prim->x0 = xCenter - size;
+    prim->y0 = yCenter - size;
+    prim->x1 = xCenter + size;
+    prim->y1 = yCenter - size;
+    prim->x2 = xCenter - size;
+    prim->y2 = yCenter + size;
+    prim->x3 = xCenter + size;
+    prim->y3 = yCenter + size;
+
+    prim->u0 = *idx++;
+    prim->v0 = *idx++;
+    prim->u1 = *idx++;
+    prim->v1 = *idx++;
+    prim->u2 = *idx++;
+    prim->v2 = *idx++;
+    prim->u3 = *idx++;
+    prim->v3 = *idx;
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
+        prim->b0++;
+    }
+    return 0;
+}
 
 extern Point16 D_us_801D3D5C[16];
 
@@ -271,7 +332,7 @@ void DopEntityHitByHoly(Entity* self) {
         case 1:
             hitboxX = D_us_801D3D5C[i].x;
             hitboxY = D_us_801D3D5C[i].y;
-            shouldHide = func_us_801C9BC0(prim, hitboxX, hitboxY);
+            shouldHide = func_80119E78(prim, hitboxX, hitboxY);
             D_us_801D3D5C[i].y--;
             if (shouldHide < 0) {
                 prim->drawMode |= DRAW_HIDE;
@@ -362,7 +423,263 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CB020);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CB07C);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", EntityPlayerOutline);
+extern s16* D_us_801B0A78[];
+extern s16 D_us_80181B74[24][5];
+extern u8* D_us_8018435C[];
+
+void EntityPlayerOutline(Entity* self) {
+    s16* animFramePtr;
+    u8* spritesheetPtr;
+    s16 xOffset;
+    s16 yOffset;
+    s16 width;
+    Primitive* prim;
+    s16 spriteIdx;
+    s32 i;
+    s16 upperparams;
+    u8 spriteX;
+    s16* primData;
+    s16 xVar;
+    s16 yVar;
+    u8 four;
+    u8 one;
+    s16 height;
+    u8 spriteY;
+    s16 selfX;
+    s16 selfY;
+
+    if ((g_Dop.status & (PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_TRANSFORM)) ||
+        !DOPPLEGANGER.animSet || !(DOPPLEGANGER.animCurFrame & INT16_MAX)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    upperparams = (self->params & 0x7F00) >> 8;
+    self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+    self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    animFramePtr = D_us_801B0A78[DOPPLEGANGER.animCurFrame & INT16_MAX];
+    spriteIdx = *animFramePtr++;
+    spriteIdx &= 0x7FFF;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    spritesheetPtr = ((u8**)D_us_8018435C)[spriteIdx];
+    four = 4;
+    one = 1;
+    spriteX = four + spritesheetPtr[0];
+    spriteY = one + spritesheetPtr[1];
+    width = spriteX - four;
+    height = spriteY - one;
+    xOffset = animFramePtr[0] + spritesheetPtr[2];
+    yOffset = animFramePtr[1] + spritesheetPtr[3];
+    self->rotZ = DOPPLEGANGER.rotZ;
+    self->drawFlags =
+        DOPPLEGANGER.drawFlags | (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+    primData = D_us_80181B74[upperparams];
+    switch (self->step) {
+    case 0: // Initialization
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        // This is just not a for-loop, that's weird
+        for (i = 0; i < 1; i++) {
+            prim->tpage = 0x10;
+            prim->clut = primData[3]; // Always 259
+            prim->priority = DOPPLEGANGER.zPriority + 2;
+            // primData[4] is always 49; DRAW_UNK_40 | DRAW_HIDE | DRAW_TRANSP
+            prim->drawMode = primData[4] + (DRAW_COLORS | DRAW_UNK02);
+            prim = prim->next;
+        }
+        switch (upperparams) {
+        case 0: // MP refill
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 17: // Dark Metamorphosis
+        case 18:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+            self->ext.playerOutline.brightness = 0x80;
+            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = DOPPLEGANGER.rotPivotY;
+            self->rotPivotX = DOPPLEGANGER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 2: // Agunea
+            self->ext.playerOutline.brightness = 0xC0;
+            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = DOPPLEGANGER.rotPivotY;
+            self->rotPivotX = DOPPLEGANGER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 1: // Curse attack
+            self->ext.playerOutline.brightness = 0x100;
+            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
+            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->rotPivotY = DOPPLEGANGER.rotPivotY;
+            self->rotPivotX = DOPPLEGANGER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 15:
+        case 16:
+        case 19:
+        case 21: // Sword Warp Spell (#2)
+            self->ext.playerOutline.brightness = 0x80;
+            self->rotX = DOPPLEGANGER.rotX + 0x60;
+            self->rotY = DOPPLEGANGER.rotY + 0x60;
+            self->rotPivotY = DOPPLEGANGER.rotPivotY;
+            self->rotPivotX = DOPPLEGANGER.rotPivotX;
+            self->ext.playerOutline.timer = 8;
+            break;
+        }
+        self->step++;
+        break;
+
+    case 1: // 8 frames at constant size
+        switch (upperparams) {
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 15:
+        case 16:
+        case 18:
+        case 21: // Sword Warp Spell (#2)
+            self->ext.playerOutline.brightness += 16;
+        case 0: // MP refill
+        case 1: // Curse attack
+        case 2: // Agunea
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 17: // Dark Metamorphosis
+        case 19:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+            if (--self->ext.playerOutline.timer == 0) {
+                self->step++;
+            }
+        }
+        break;
+    case 2: // Outline grows/shrinks, and dims
+        switch (upperparams) {
+        case 0: // MP refill
+        case 2: // Agunea
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 15:
+        case 16:
+        case 17: // Dark Metamorphosis
+        case 18:
+        case 20: // Sword Warp Spell (#1)
+        case 22: // Soul Steal
+            self->rotX += 8;
+            self->rotY += 8;
+            self->ext.playerOutline.brightness -= 5;
+            if (self->ext.playerOutline.brightness < 0) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 1: // Curse attack, grows slower and dims faster
+            self->rotX += 2;
+            self->rotY += 2;
+            self->ext.playerOutline.brightness -= 16;
+            if (self->ext.playerOutline.brightness < 0) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 14:
+        case 19:
+        case 21: // Sword Warp Spell (#2)
+            // Shrinks inward, and when at size 0x100, holds there for 8 frames
+            // in step 3
+            self->rotX -= 8;
+            self->rotY -= 8;
+            if (self->rotX <= 0x100) {
+                self->rotY = self->rotX = 0x100;
+                self->ext.playerOutline.timer = 8;
+                self->step++;
+            }
+        }
+        break;
+    case 3: // Outline continues static until done
+        if (--self->ext.playerOutline.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (self->facingLeft) {
+        selfX = selfX - xOffset;
+    } else {
+        selfX = selfX + xOffset;
+    }
+    selfY = selfY + yOffset;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i <= 0; i++) {
+        if (self->facingLeft) {
+            prim->x0 = prim->x2 = (selfX - width) + 1;
+            prim->x1 = prim->x3 = selfX + 1;
+        } else {
+            prim->x0 = prim->x2 = selfX;
+            prim->x1 = prim->x3 = selfX + width;
+        }
+
+        prim->y0 = prim->y1 = selfY;
+        prim->y2 = prim->y3 = selfY + height;
+        if (self->facingLeft) {
+            prim->u0 = prim->u2 = spriteX - 1;
+            prim->u1 = prim->u3 = four - 1;
+        } else {
+            prim->u0 = prim->u2 = four;
+            prim->u1 = prim->u3 = spriteX;
+        }
+        prim->v0 = prim->v1 = one;
+        prim->v2 = prim->v3 = one + height;
+        g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
+                            self->drawFlags, prim, (u16)self->facingLeft);
+        prim->r0 = prim->r1 = prim->r2 = prim->r3 =
+            primData[0] * self->ext.playerOutline.brightness / 256;
+        prim->g0 = prim->g1 = prim->g2 = prim->g3 =
+            primData[1] * self->ext.playerOutline.brightness / 256;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
+            primData[2] * self->ext.playerOutline.brightness / 256;
+        prim->priority = DOPPLEGANGER.zPriority + 2;
+        prim = prim->next;
+    }
+    func_us_801C5354(1, 1);
+}
 
 void EntityGravityBootBeam(Entity* self) {
     Primitive* prim;
@@ -793,9 +1110,19 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CE9EC);
-
 #include "../../dra/mist.h"
+
+extern mistStruct D_us_801D3DA0[16];
+
+void func_80121F14(s32 velocityX, s32 velocityY) {
+    mistStruct* ptr = D_us_801D3DA0;
+    s32 i;
+
+    for (i = 0; i < LEN(D_us_801D3DA0); i++, ptr++) {
+        ptr->posX.val += velocityX;
+        ptr->posY.val += velocityY;
+    }
+}
 
 extern Primitive D_us_801D3F00[8];
 extern u32 D_us_80181F98[8];
