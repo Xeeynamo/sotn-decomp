@@ -850,7 +850,7 @@
 | lib    | EntityExplosionVariantsSpawner      |      104 |          5 |        |                                 |       |
 | dra    | func_psp_090EF200                   |      104 |         10 |        |                                 |       |
 | ric    | func_80160D2C                       |      104 |         10 |        |                                 |       |
-| wrp    | EntityBreakable                     |      104 |         11 |        |                                 |       |
+| wrp    | EntityBreakable                     |      104 |         11 |        | https://decomp.me/scratch/qUJKx | 0.995 |
 | dra    | func_psp_09142B40                   |      104 |         14 |        |                                 |       |
 | dra    | SetRoomForegroundLayer              |      105 |          2 |        |                                 |       |
 | lib    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
@@ -1173,7 +1173,7 @@
 | dra    | func_psp_090F4B90                   |      292 |         59 |        | https://decomp.me/scratch/jPf4U | 0.993 |
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
 | no4    | func_psp_09241410                   |      294 |         16 |        |                                 |       |
-| lib    | EntityBreakable                     |      294 |         47 |        |                                 |       |
+| lib    | EntityBreakable                     |      294 |         47 |        | https://decomp.me/scratch/qUJKx | 0.995 |
 | dra    | HandleEnding                        |      298 |         60 |        |                                 |       |
 | no4    | func_psp_0923EA80                   |      300 |         26 |        |                                 |       |
 | dra    | func_psp_09144280                   |      303 |         47 |        |                                 |       |
@@ -1330,7 +1330,7 @@
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/F4s7g | 0.925 |
-| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/ax9NY | 0.757 |
+| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/ax9NY | 0.987 |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
@@ -1386,8 +1386,8 @@
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 1.0   |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_psp_09253B00                   |      785 |         68 |        |                                 |       |
@@ -1477,7 +1477,7 @@
 | dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
-| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.903 |
+| st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.895 |
 | no4    | func_psp_09256330                   |     2559 |        253 | Yes    |                                 |       |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
