@@ -13,7 +13,7 @@ muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use 
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
-echo		= $(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
+echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
@@ -42,14 +42,12 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
+PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
-UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
-AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
@@ -71,16 +69,16 @@ OBJCOPY         := $(CROSS)objcopy
 ALLEGREX 		:= $(BIN_DIR)/allegrex-as
 WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
-MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
 # Symbols
-BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
+BASE_SYMBOLS	 = symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
+UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
+AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
-SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
@@ -91,7 +89,8 @@ GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
-ASMDIFFER		:= $(TOOLS_DIR)/asm-differ/diff.py
+SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
+ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
@@ -114,7 +113,7 @@ endef
 get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in get_o_files/get_src_files
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
-get_o_files = $(subst //,/,$(foreach file,$(call list$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
+get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
 define link
 	$(muffle)$(call echo,Linking $(1),optional)
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
@@ -129,7 +128,7 @@ endef
 define get_conf_merged
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
-	yaml_file=open("config/splat.$(VERSION).$(2)$(1).yaml");\
+	yaml_file=open("$(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml");\
 	config = yaml.safe_load(yaml_file); yaml_file.close();\
 	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
 	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
@@ -137,9 +136,10 @@ define get_conf_merged
 endef
 get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
 get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
+get_psp_o_files = $(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(subst //,/,$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
-add_ovl_prefix = $(if $(filter $(1),$(STAGES)),$(or $(2),st),$(if $(filter $(1),$(BOSSES)),$(or $(3),bo)))$(1)
+add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
 ### End new header ###
 ### Start old header, to be removed when all targets have been transitioned ###
 # Directories
@@ -149,7 +149,6 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 MAIN_TARGET     := $(BUILD_DIR)/main
 
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
-ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2CTX           := $(PYTHON) $(M2CTX_APP)
 M2C_DIR         := $(TOOLS_DIR)/m2c
@@ -201,19 +200,6 @@ endef
 define list_shared_o_files
 	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
 endef
-
-# Helper Functions
-# These will eventually be merged with the equivalent PSX functions
-define list_src_files_psp
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
-endef
-
-define list_o_files_psp
-	$(foreach file,$(call list_src_files_psp,$(1)),$(BUILD_DIR)/$(file).o)
-endef
 ### End old header ###
 
 ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
@@ -257,7 +243,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 ##@ Misc Targets
 ##@
 
-# this help target will find targets which are followed by a comment beging with '#' '#' '@' and
+# this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
 # will act as section dividers.
 .PHONY: help
@@ -417,6 +403,17 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
+
+# Targets to extract the data from the disk image
+extract-disk: $(EXTRACTED_DISK_DIR)
+$(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
+	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
+	mkdir -p $(EXTRACTED_DISK_DIR)
+	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
+$(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
+	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
+	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
 
 .PHONY: extract_%
 extract_disk: ##@ Extract game files from a disc image.
