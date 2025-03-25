@@ -57,7 +57,7 @@ segments:
       - [0x1A5F0, .rodata, pl_handlers]
       - [0x1A7A8, .rodata, pl_handlers] # func_8015BCD0 and onwards
       - [0x1A7C0, .rodata, pl_handlers] # RicHandleHighJump
-      - [0x1A800, .rodata, 20920]
+      - [0x1A800, .rodata, pl_utils]
       - [0x1A80C, .rodata, pl_setstep]
       - [0x1A880, .rodata, 21B00] # offset approximate
       - [0x1A918, .rodata, 24788]
@@ -76,8 +76,7 @@ segments:
       - [0x1AC60, c, pl_main]
       - [0x1C7C0, c, pl_debug]
       - [0x1CB04, c, pl_handlers]
-      - [0x204AC, c, 204AC]
-      - [0x20920, c, 20920]
+      - [0x204AC, c, pl_utils]
       - [0x20C50, c, pl_setstep]
       - [0x21B6C, c, 21B00]
       - [0x24788, c, 24788]
