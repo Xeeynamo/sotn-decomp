@@ -102,9 +102,7 @@ typedef enum {
     /* 0x98 */ RTOP_SECRET_WALL_1_BROKEN = 152, // Lower right of large room
     /* 0x99 */ RTOP_SECRET_WALL_2_BROKEN = 153, // Upper right of large room
 
-    // Since 0x9B and 0xB9 are set at the same time, this goes by code order for
-    // what they likely are
-    /* 0x9B */ ST0_STAGE_FLAG = 155,
+    /* 0x9B */ RTOP_SECRET_STAIRS = 155,
     /* 0xA0 */ NZ1_STAGE_FLAG = 160,
     /* 0xA1 */ NZ1_LOWER_WALL_OPEN = 161, // Lower left wall of the long room
     /* 0xA2 */ NZ1_UPPER_WALL_OPEN = 162, // Top of the left gear room
@@ -130,9 +128,7 @@ typedef enum {
     /* 0xB4 */ RICHTER_CS_AFTER_M_AND_W = 180,
     /* 0xB8 */ RARE_SECRET_FLOOR_OPEN = 184,
 
-    // Since 0x9B and 0xB9 are set at the same time, this goes by code order for
-    // what they likely are
-    /* 0xB9 */ INTRO_VIDEO = 185,
+    /* 0xB9 */ RARE_ELEVATOR_ACTIVATED = 185,
     /* 0xC0 */ NO4_STAGE_FLAG = 192,
 
     // Offset 0xC1 is set by blocking the water with the crate in NO4

@@ -202,29 +202,29 @@ if __name__ == "__main__":
                         [
                             x[-1]
                             for x in segment["subsegments"]
-                            if len(x) > 1
+                            if isinstance(x, list)
+                            and len(x) > 1
                             and x[1] == "c"
-                            and x[-1].endswith(args.source)
+                            and str(x[-1]).endswith(args.source)
                         ]
                     )
             if subsegments and len(subsegments) == 1:
                 ssPath = [x for x in subsegments[0].split("/") if x != args.source]
                 if ssPath:
                     nonmatchingsPath = os.path.join(nonmatchingsPath, ssPath[0])
+                    srcPath = os.path.join(
+                        os.getcwd(), splatConfig["options"]["src_path"], ssPath[0]
+                    )
+                else:
+                    srcPath = os.path.join(
+                        os.getcwd(), splatConfig["options"]["src_path"]
+                    )
             elif len(subsegments) > 1:
                 print(f"Multiple subsegments found with {args.source}\n{subsegments}")
                 exit(1)
             else:
                 print(f"No subsegments were found with {args.source}")
                 exit(1)
-
-            if args.version == "pspeu":
-                srcPath = os.path.join(
-                    os.getcwd(),
-                    splatConfig["options"]["src_path"],
-                )
-            else:
-                srcPath = os.path.join(os.getcwd(), splatConfig["options"]["src_path"])
 
             cFilename = os.path.join(srcPath, f"{args.source}.c")
             sys.argv = [cFilename if a == args.source else a for a in sys.argv]

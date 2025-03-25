@@ -396,7 +396,7 @@ typedef enum {
 #define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
 
 #ifndef SOTN_STR
-// Decorator to re-encode strings with tools/sotn_str/sotn_str.py when building
+// Decorator to re-encode strings with ./tools/sotn_str when building
 // the game. Certain strings in SOTN do not follow the ASCII encoding and each
 // character is offseted by 0x20. This is only for strings that use the 8x8
 // font. e.g. _S("I am a Symphony of the Night encoded string")
@@ -515,6 +515,14 @@ typedef enum {
     Engine_Map = 20,
     Engine_0x70 = 0x70
 } GameEngineStep;
+
+typedef enum {
+    WALL_NONE,
+    WALL_TOP,
+    WALL_LEFT,
+    WALL_BOTTOM,
+    WALL_RIGHT,
+} WallSide;
 
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
@@ -802,7 +810,7 @@ typedef struct {
 
 typedef struct {
     /* 0x0 */ u16 pressed;
-    /* 0x2 */ s16 previous;
+    /* 0x2 */ u16 previous;
     /* 0x4 */ u16 tapped;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
@@ -1609,7 +1617,7 @@ typedef struct {
     /* 8003C860 */ void (*func_800F53A4)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
-    /* 8003C86C */ void (*func_800F1FC4)(s32 arg0);
+    /* 8003C86C */ void (*RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
     /* 8003C870 */ void (*func_800F2288)(s32 arg0);
     /* 8003C874 */ void (*GetServantStats)(
         Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
@@ -2051,6 +2059,7 @@ extern s32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
+extern s32 D_8C630C4;
 extern s32 D_800987B4;
 extern s32 D_800987C8;
 extern s32 g_DebugPlayer;

@@ -9,5 +9,3 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/4B60", RicEntityCrashAxe);
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/4B60", RicEntitySubwpnDagger);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/4B60", func_pspeu_092ACE78);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/4B60", DestroyEntity);

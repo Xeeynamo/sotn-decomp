@@ -1,34 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include "player.h"
+#include <player.h>
 
 #include "../destroy_entity.h"
-
-void RicHandleStand(void);
-void RicHandleWalk(void);
-void RicHandleCrouch(void);
-void RicHandleFall(void);
-void RicHandleJump(void);
-void RicHandleRun(void);
-void RicHandleBossGrab(void);
-void RicHandleStandInAir(void);
-void RicHandleEnableFlameWhip(void);
-void RicHandleHydrostorm(void);
-void RicHandleGenericSubwpnCrash(void);
-void RicHandleThrowDaggers(void);
-void RicHandleDeadPrologue(void);
-void RicHandleSlide(void);
-void RicHandleSlideKick(void);
-void RicHandleHighJump(void);
-void RicSetDeadPrologue(void);
-void func_8015BCD0(void);
-int RicDoCrash(void);
-void DisableAfterImage(s32 resetAnims, s32 arg1);
-void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames);
-void RicHandleHit(
-    s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS);
-void RicHandleDead(
-    s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
@@ -98,8 +72,14 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-void RicDebugOff();
-
+extern s32 D_pspeu_092D7A68;
+extern s32 D_pspeu_092CFA58;
+extern s32 D_pspeu_092D33BC;
+extern u8 D_pspeu_092D2548[]; // FR
+extern u8 D_pspeu_092CFA70[]; // SP
+extern u8 D_pspeu_092D16F8[]; // GE
+extern u8 D_pspeu_092D08B8[]; // IT
+extern s32 D_pspeu_092D33B0;
 // Similar to of DRA func_80109594
 void RicInit(s16 initParam) {
     Entity* e;
@@ -185,11 +165,14 @@ void RicInit(s16 initParam) {
         func_8015CC70(5);
     }
 #ifdef VERSION_PSP
-    D_pspeu_092D7A68 = 0x1E;
+    // new to PSP: block input for half a second when the Prologue stage starts
+    // or after loading a save. Not sure if a bugfix or QOL.
+    D_pspeu_092D7A68 = 30;
+
     func_91040A0(&D_pspeu_092CFA58);
     D_pspeu_092D33BC = func_pspeu_092ACE78(
-        0, &D_pspeu_092D2548, &D_pspeu_092CFA70, &D_pspeu_092D16F8,
-        &D_pspeu_092D08B8);
+        0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
+        D_pspeu_092D08B8);
     if (D_pspeu_092D33BC != 0) {
         func_91040A0(&D_pspeu_092D33B0);
     }
@@ -408,29 +391,34 @@ static void CheckHighJumpInput(void) {
     }
 }
 
-bool RicDebug(void);
-void RicHandleDead(s32 damageEffects, s32 arg1, s32 arg2, s32 arg3);
-
 void RicMain(void) {
-    DamageParam damage;
-    s32 temp_s0;
+    s16 angle;
+    s32 i;
     s32 newStatus;
-    s32 damageKind;
     s32 damageEffects;
     s16 playerStep;
     s16 playerStepS;
-    s32 i;
+    s32 damageKind;
     bool isDamageTakenDeadly;
-    f32* playerY;
-
-    PlayerDraw* playerDraw = g_PlayerDraw;
+    s32 vramFlag;
+    PlayerDraw* draw;
+    DamageParam damage;
+    int posX;
+    int posY;
 
     g_CurrentEntity = &PLAYER;
+    draw = &g_PlayerDraw[0];
     g_Player.unk4C = 0;
     g_Player.unk72 = func_80156DE4();
+#ifndef VERSION_PSP
     FntPrint("pl_head_f:%02x\n", g_Player.unk72);
 #if defined(VERSION_HD)
     FntPrint("run_disable_f:%02x\n", g_Player.unk7A);
+#endif
+#endif
+
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    damageEffects = 0;
 #endif
     for (i = 0; i < LEN(g_Player.timers); i++) {
         if (!g_Player.timers[i]) {
@@ -454,16 +442,15 @@ void RicMain(void) {
             PLAYER.palette = g_Player.unk40;
             break;
         case PL_T_4: {
-            s32 temp_s0 = (g_GameTimer & 0xF) << 8;
-            playerDraw->r0 = playerDraw->b0 = playerDraw->g0 =
-                (rsin((s16)temp_s0) + 0x1000) / 64 + 0x60;
-            playerDraw->r1 = playerDraw->b1 = playerDraw->g1 =
-                (rsin(temp_s0 + 0x200) + 0x1000) / 64 + 0x60;
-            playerDraw->r3 = playerDraw->b3 = playerDraw->g3 =
-                (rsin(temp_s0 + 0x400) + 0x1000) / 64 + 0x60;
-            playerDraw->r2 = playerDraw->b2 = playerDraw->g2 =
-                (rsin(temp_s0 + 0x600) + 0x1000) / 64 + 0x60;
-            playerDraw->enableColorBlend = 1;
+            angle = (g_GameTimer & 0xF) * 256;
+            draw->r0 = draw->b0 = draw->g0 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r1 = draw->b1 = draw->g1 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r3 = draw->b3 = draw->g3 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r2 = draw->b2 = draw->g2 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->enableColorBlend = 1;
             break;
         }
         case PL_T_INVINCIBLE_SCENE:
@@ -473,23 +460,30 @@ void RicMain(void) {
             DisableAfterImage(0, 0);
             break;
         }
-        if (--g_Player.timers[i]) {
+        if (--g_Player.timers[i] != 0) {
             continue;
         }
         switch (i) {
         case PL_T_POISON:
+        case PL_T_5:
+        case PL_T_7:
+        case PL_T_8:
+        case PL_T_ATTACK:
+        case PL_T_10:
+        case PL_T_12:
+        case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
             PLAYER.palette = 0x8120;
             break;
         case PL_T_4:
-            playerDraw->enableColorBlend = 0;
+            draw->enableColorBlend = 0;
             break;
         case PL_T_INVINCIBLE_SCENE:
             RicSetInvincibilityFrames(1, 16);
             break;
         case PL_T_6:
-            if ((PLAYER.step == PL_S_FALL) && (PLAYER.anim != D_80155534)) {
+            if (PLAYER.step == PL_S_FALL && PLAYER.anim != D_80155534) {
                 RicSetAnimation(D_80155534);
                 g_Player.unk44 &= ~0x10;
             }
@@ -505,9 +499,15 @@ void RicMain(void) {
         g_Player.padPressed = g_Player.padSim;
     } else {
         g_Player.padPressed = g_pads[0].pressed;
+#ifdef VERSION_PSP
+        if (D_pspeu_092D7A68 > 0) {
+            D_pspeu_092D7A68--;
+            g_Player.padPressed = 0;
+        }
+#endif
     }
     g_Player.padTapped =
-        (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
+        g_Player.padPressed & (g_Player.padHeld ^ g_Player.padPressed);
     if (PLAYER.step != PL_S_DEAD) {
         // Reuse the i variable here even though we aren't iterating
         i = GetTeleportToOtherCastle();
@@ -520,7 +520,7 @@ void RicMain(void) {
                 return;
             }
             if (
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_PSP)
                 !(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
                   g_Player.timers[PL_T_INVINCIBLE]) &&
 #endif
@@ -529,7 +529,7 @@ void RicMain(void) {
                     playerStep = PLAYER.step;
                     playerStepS = PLAYER.step_s;
                     RicSetStep(PL_S_BOSS_GRAB);
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_PSP)
                     goto check_input_combo;
 #endif
                 } else if (
@@ -542,12 +542,17 @@ void RicMain(void) {
                     playerStepS = PLAYER.step_s;
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
+#ifdef VERSION_PSP
+                    if (D_8C630C4) {
+                        PLAYER.hitPoints = 0;
+                    }
+#endif
                     damage.damageTaken = PLAYER.hitPoints;
                     isDamageTakenDeadly = g_api.CalcPlayerDamage(&damage);
                     damageKind = damage.damageKind;
                     damageEffects = damage.effects;
                     if (isDamageTakenDeadly) {
-                        if (!g_Player.unk5C) {
+                        if (g_Player.unk5C == 0) {
                             RicSetStep(PL_S_DEAD);
                         } else {
                             g_Status.hp = 1;
@@ -633,11 +638,14 @@ void RicMain(void) {
         break;
     }
     g_Player.unk08 = g_Player.status;
-#ifdef VERSION_PC
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    // uninitialized on PSX, it was a coincidence it worked
     newStatus = 0;
 #endif
     switch (PLAYER.step) {
     case PL_S_STAND:
+        newStatus = NO_AFTERIMAGE;
+        break;
     case PL_S_WALK:
         newStatus = NO_AFTERIMAGE;
         break;
@@ -648,6 +656,8 @@ void RicMain(void) {
         }
         break;
     case PL_S_FALL:
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
+        break;
     case PL_S_JUMP:
         newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
         break;
@@ -656,7 +666,6 @@ void RicMain(void) {
         break;
     case PL_S_HIT:
         newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
-    case PL_S_STAND_IN_AIR:
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_BOSS_GRAB:
@@ -671,9 +680,20 @@ void RicMain(void) {
     case PL_S_DEAD:
         newStatus = NO_AFTERIMAGE | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
-            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK80000 |
-                        PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
+            newStatus |= PLAYER_STATUS_UNK80000;
         }
+        RicSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_FLAME_WHIP:
+    case PL_S_HYDROSTORM:
+    case PL_S_THROW_DAGGERS:
+    case PL_S_SUBWPN_CRASH:
+        newStatus = 0x08000000;
+    case PL_S_STAND_IN_AIR:
+        RicSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_DEAD_PROLOGUE:
+        newStatus = NO_AFTERIMAGE;
         RicSetInvincibilityFrames(1, 16);
         break;
     case PL_S_SLIDE:
@@ -683,11 +703,6 @@ void RicMain(void) {
     case PL_S_RUN:
     case PL_S_BLADEDASH:
         break;
-    case PL_S_FLAME_WHIP:
-    case PL_S_HYDROSTORM:
-    case PL_S_THROW_DAGGERS:
-    case PL_S_DEAD_PROLOGUE:
-    case PL_S_SUBWPN_CRASH:
     case PL_S_INIT:
         newStatus = NO_AFTERIMAGE;
         RicSetInvincibilityFrames(1, 16);
@@ -707,18 +722,17 @@ void RicMain(void) {
     }
     newStatus |= PLAYER_STATUS_UNK10000000;
     g_Player.status = newStatus;
-    if (g_Player.unk08 & PLAYER_STATUS_UNK10000) {
-        if (!(newStatus & PLAYER_STATUS_UNK10000)) {
-            if (g_Player.unk5C != 0) {
-                if (g_Status.hp < 2) {
-                    RicSetDeadPrologue();
-                    RicSetInvincibilityFrames(1, 16);
-                }
-            } else {
+    if (g_Player.unk08 & PLAYER_STATUS_UNK10000 &&
+        !(g_Player.status & PLAYER_STATUS_UNK10000)) {
+        if (g_Player.unk5C) {
+            if (g_Status.hp < 2) {
+                RicSetDeadPrologue();
                 RicSetInvincibilityFrames(1, 16);
-                g_Player.timers[PL_T_4] = 0x10;
-                PLAYER.palette = 0x8120;
             }
+        } else {
+            RicSetInvincibilityFrames(1, 16);
+            g_Player.timers[PL_T_4] = 0x10;
+            PLAYER.palette = 0x8120;
         }
     }
     if (newStatus & NO_AFTERIMAGE) {
@@ -728,7 +742,7 @@ void RicMain(void) {
         g_Player.timers[PL_T_INVINCIBLE]) {
         g_Player.status |= PLAYER_STATUS_UNK100;
     }
-    g_api.UpdateAnim(D_80155964, D_8015538C);
+    g_api.UpdateAnim(D_80155964, (AnimationFrame**)D_8015538C);
     PLAYER.hitboxState = 1;
     PLAYER.hitParams = 0;
     PLAYER.hitPoints = 0;
@@ -743,7 +757,7 @@ void RicMain(void) {
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_PSP)
         PLAYER.posX.val += PLAYER.velocityX;
         PLAYER.posY.val += PLAYER.velocityY;
         return;
@@ -753,20 +767,29 @@ void RicMain(void) {
         return;
     }
     func_8015C4AC();
-    if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
-    playerY = &PLAYER.posY.i;
-    temp_s0 = g_Player.vram_flag;
-    if ((abs(PLAYER.velocityY) > FIX(2)) || (abs(PLAYER.velocityX) > FIX(2))) {
-        PLAYER.velocityY = PLAYER.velocityY >> 2;
-        PLAYER.velocityX = PLAYER.velocityX >> 2;
-        if ((playerY->i.hi < 0) ||
-            (CheckStageCollision(1), (playerY->i.hi < 0)) ||
-            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
-            (CheckStageCollision(0), (playerY->i.hi < 0)) ||
-            (CheckStageCollision(0), (playerY->i.hi < 0))) {
+    posX = PLAYER.posX.val;
+    posY = PLAYER.posY.val;
+    vramFlag = g_Player.vram_flag;
+    if (abs(PLAYER.velocityY) > FIX(2) || abs(PLAYER.velocityX) > FIX(2)) {
+        PLAYER.velocityX >>= 2;
+        PLAYER.velocityY >>= 2;
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(1);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi < 0) {
             PLAYER.posY.val = FIX(-1);
         }
         PLAYER.velocityX *= 4;
@@ -774,8 +797,8 @@ void RicMain(void) {
     } else {
         CheckStageCollision(1);
     }
-    g_Player.unk04 = temp_s0;
-    if ((*D_80097448 >= 0x29) && (g_CurrentEntity->nFramesInvincibility == 0)) {
+    g_Player.unk04 = vramFlag;
+    if (*D_80097448 > 0x28 && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }

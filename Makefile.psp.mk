@@ -21,6 +21,7 @@ $(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 MWLDPSP_FLAGS   := -partial -nostdlib -msgstyle gcc -sym full,elf -g
+LD_FLAGS		:= --gc-sections
 
 # Tools
 ALLEGREX_AS     := $(BIN_DIR)/allegrex-as
@@ -37,6 +38,8 @@ MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
 DEPENDENCIES	+= $(ALLEGREX_AS)
+
+AUTO_MERGE_FILES	:= e_init.c
 
 # PSP specific targets
 build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
@@ -81,29 +84,23 @@ $(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG
 $(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT) $<
 
-ST_DRA_MERGE = 624DC 628AC 6BF64 alu_anim 6DF70 6E42C 6FDF8 704D0 71830 7879C 7E4BC 84B88 8A0A4 8C600 8D3E8
-$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/dra.ld $(addprefix $(BUILD_DIR)/src/dra/,$(addsuffix .c.o,$(ST_DRA_MERGE))) $$(call list_o_files_psp,dra_psp)
-	$(call link_with_deadstrip,dra,$@)
+$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/dra.ld $$(call get_merged_o_files,%) $$(call list_o_files_psp,dra_psp)
+	$(call link,dra,$@)
 
-RIC_MERGE = pl_debug pl_handlers
-$(BUILD_DIR)/ric.elf: $(BUILD_DIR)/ric.ld $(addprefix $(BUILD_DIR)/src/ric/,$(addsuffix .c.o,$(RIC_MERGE))) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
-	$(call link_with_deadstrip,ric,$@)
+$(BUILD_DIR)/ric.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/ric.ld $$(call get_merged_o_files,%) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
+	$(call link,ric,$@)
 
 $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
-	$(call link_with_deadstrip,tt_$*,$@)
+	$(call link,tt_$*,$@)
 
-ST_LIB_MERGE = collision e_chair st_update create_entity e_red_door e_room_fg st_common prim_helpers e_bloody_zombie e_misc en_thornweed_corpseweed e_skeleton e_life_up e_flea_man e_mist_door e_flea_armor e_candle_table st_debug e_lock_camera unk_3B200 unk_3B53C e_init e_dhuron e_flying_zombie e_library_bg e_mudman e_spellbook_magic_tome
-$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/stlib.ld $(addprefix $(BUILD_DIR)/src/st/lib/,$(addsuffix .c.o,$(ST_LIB_MERGE))) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
-	$(call link_with_deadstrip,stlib,$@)
-ST_NO4_MERGE =
-$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/stno4.ld $(addprefix $(BUILD_DIR)/src/st/no4/,$(addsuffix .c.o,$(ST_NO4_MERGE))) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
-	$(call link_with_deadstrip,stno4,$@)
-ST_ST0_MERGE = prologue_scroll title_card popup e_room_fg st_common collision e_lock_camera st_update e_red_door create_entity st_debug 2A218 e_particles e_collect prim_helpers e_bg_vortex e_misc 2805C 2A8DC 3AB08 3C5C0 3D8F0 2C564 2DAC8
-$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/stst0.ld $(addprefix $(BUILD_DIR)/src/st/st0/,$(addsuffix .c.o,$(ST_ST0_MERGE))) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
-	$(call link_with_deadstrip,stst0,$@)
-ST_WRP_MERGE = st_update e_particles e_room_fg st_common st_debug e_breakable popup warp e_red_door create_entity prim_helpers collision e_stage_name
-$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/stwrp.ld $(addprefix $(BUILD_DIR)/src/st/wrp/,$(addsuffix .c.o,$(ST_WRP_MERGE))) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
-	$(call link_with_deadstrip,stwrp,$@)
+$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stlib.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
+	$(call link,stlib,$@)
+$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stno4.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
+	$(call link,stno4,$@)
+$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stst0.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
+	$(call link,stst0,$@)
+$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stwrp.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
+	$(call link,stwrp,$@)
 
 # Recipes
 $(BUILD_DIR)/%.s.o: %.s
@@ -119,7 +116,7 @@ OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	@mkdir -p $(dir $@)
-	 $(SOTNSTR) -p -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
+	$(SOTNSTR) -p -f $< | $(MWCCGAP) $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPTIMIZATION) -opt nointrinsics
 
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	@mkdir -p $(dir $@)

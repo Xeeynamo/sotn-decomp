@@ -1984,9 +1984,6 @@ void func_80115C50(void) {
     }
 }
 
-extern u16 D_psp_091FC4A8;
-extern u16 D_psp_091FC4AC;
-
 // Corresponding RIC function is func_8015BCD0
 void PlayerStepTeleport(void) {
     Entity* newEnt;
@@ -1994,7 +1991,7 @@ void PlayerStepTeleport(void) {
     PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
 #if defined(VERSION_PSP)
-    D_psp_091FC4A8 = D_psp_091FC4AC = 0;
+    g_pads->pressed = g_pads->tapped = 0;
 #endif
     g_Player.demo_timer = 4;
 

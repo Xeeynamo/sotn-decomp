@@ -45,11 +45,28 @@ segments:
       - [0x80, c, ric/pl_debug]
       - [0x410, c, ric/pl_handlers]
       - [0x4B60, c, ric_psp/4B60]
-      - [0x6DB0, c, ric_psp/6DB0]
+      - [0x6D18, c, ric/pl_main]
+      - [0x9250, c, ric/pl_setstep]
+      - [0xA5A8, c, ric_psp/A5A8]
+      - [0xB070, c, ric_psp/B070]
+      - [0xD268, c, ric_psp/D268]
+      - [0x182C8, c, ric_psp/182C8]
       - [0x28400, .data, ric/pl_debug]
       - [0x28410, .data, ric/pl_handlers]
       - [0x28438, data]
       - [0x30100, .rodata, ric/pl_handlers]
-      - [0x30158, .rodata, ric_psp/6DB0]
+      - [0x30158, .rodata, ric/pl_main]
+      - [0x301D8, .rodata, ric/pl_setstep]
+      - [0x30200, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
+      # - [0x30220, .rodata, ric_psp/D268] # RicEntityCrashReboundStone
+      # - [0x30248, .rodata, ric_psp/D268] # RicEntityCrashStopwatch
+      # - [0x30270, .rodata, ric_psp/D268] # RicEntityAguneaLightning
+      # - [0x30290, .rodata, ric_psp/D268] # RicEntityAguneaCircle
+      # - [0x302B0, .rodata, ric_psp/D268] # RicEntitySubwpnStopwatch
+      - [0x302D0, .rodata, ric_psp/182C8] # RicEntityFactory
+      # - [0x30320, .rodata, ric_psp/182C8] # RicEntityHitByCutBlood
+      # - [0x30370, .rodata, ric_psp/182C8] # RicEntityPlayerBlinkWhite
+      # - [0x303B0, .rodata, ric_psp/182C8] # RicEntitySubwpnHolyWater
+      # - [0x303C8, .rodata, ric_psp/182C8] # RicEntitySubwpnCross
       - {type: bss, vram: 0x92D6600}
   - [0x30400]
