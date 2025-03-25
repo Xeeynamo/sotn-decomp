@@ -11,10 +11,13 @@ bool RicCheckInput(s32 checks) {
             RicCheckFacing();
         }
     }
-    velYChange = (checks & CHECK_GRAVITY_FALL) ? FIX(28.0 / 128) : 0;
+    velYChange = 0;
+    if (checks & CHECK_GRAVITY_FALL) {
+        velYChange = FIX(28.0 / 128);
+    }
     if (checks & CHECK_GRAVITY_JUMP) {
-        if (FIX(-1.0 / 8) < PLAYER.velocityY &&
-            PLAYER.velocityY < FIX(3.0 / 8) && !(g_Player.unk44 & 0x20) &&
+        if (PLAYER.velocityY < FIX(3.0 / 8) &&
+            PLAYER.velocityY > FIX(-1.0 / 8) && !(g_Player.unk44 & 0x20) &&
             (g_Player.padPressed & PAD_CROSS)) {
             // Note that 5.6 is precisely 1/5 of 28.
             velYChange = FIX(5.6 / 128);
@@ -23,14 +26,14 @@ bool RicCheckInput(s32 checks) {
         }
     }
     if (checks & CHECK_GRAVITY_HIT) {
-        if (FIX(-1.0 / 8) < PLAYER.velocityY &&
-            PLAYER.velocityY < FIX(3.0 / 8)) {
+        if (PLAYER.velocityY < FIX(3.0 / 8) &&
+            PLAYER.velocityY > FIX(-1.0 / 8)) {
             velYChange = FIX(14.0 / 128);
         } else {
             velYChange = FIX(28.0 / 128);
         }
     }
-    if (*D_80097448 >= 0x29) {
+    if (*D_80097448 > 0x28) {
         velYChange /= 4;
     }
     PLAYER.velocityY += velYChange;
@@ -82,12 +85,12 @@ bool RicCheckInput(s32 checks) {
                 } else {
                     PLAYER.step = PL_S_STAND;
                     PLAYER.anim = D_80155588;
-                    if (g_Player.unk44 & 8) {
+                    if (!(g_Player.unk44 & 8)) {
+                        PLAYER.velocityX = 0;
+                    } else {
                         RicCreateEntFactoryFromEntity(
                             g_CurrentEntity, BP_SKID_SMOKE, 0);
                         g_api.PlaySfx(SFX_STOMP_HARD_B);
-                    } else {
-                        PLAYER.velocityX = 0;
                     }
                 }
                 PLAYER.velocityY = 0;
@@ -144,7 +147,7 @@ bool RicCheckInput(s32 checks) {
         }
     }
     if (checks & CHECK_FALL && !(g_Player.vram_flag & 1)) {
-        if (g_Player.unk46 != 0) {
+        if (g_Player.unk46) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;
                 PLAYER.step = PL_S_JUMP;
@@ -168,28 +171,23 @@ bool RicCheckInput(s32 checks) {
             return true;
         }
     }
-    if (g_Player.unk46 != 0) {
+    if (g_Player.unk46) {
         return false;
     }
     if (checks & CHECK_CRASH && (g_Player.padTapped & PAD_TRIANGLE) &&
         RicDoCrash()) {
         return true;
     }
-    if (checks & CHECK_SLIDE) {
-        if (!PLAYER.facingLeft) {
-            effects = g_Player.colFloor[2].effects & EFFECT_UNK_8000;
-        } else {
-            effects = g_Player.colFloor[3].effects & EFFECT_UNK_8000;
-        }
-        if (!effects) {
-            if (((PLAYER.posX.i.hi <= (u8)-5) || PLAYER.facingLeft) &&
-                ((PLAYER.posX.i.hi >= 5) || !PLAYER.facingLeft) &&
-                (g_Player.padPressed & PAD_DOWN) &&
-                (g_Player.padTapped & PAD_CROSS)) {
-                RicSetSlide();
-                return true;
-            }
-        }
+    if (checks & CHECK_SLIDE &&
+        !(PLAYER.facingLeft == 0 &&
+          g_Player.colFloor[2].effects & EFFECT_UNK_8000) &&
+        !(PLAYER.facingLeft &&
+          g_Player.colFloor[3].effects & EFFECT_UNK_8000) &&
+        (PLAYER.posX.i.hi < (u8)-4 || PLAYER.facingLeft != 0) &&
+        (PLAYER.posX.i.hi >= 5 || !PLAYER.facingLeft) &&
+        g_Player.padPressed & PAD_DOWN && g_Player.padTapped & PAD_CROSS) {
+        RicSetSlide();
+        return true;
     }
     if (checks & CHECK_JUMP && (g_Player.padTapped & PAD_CROSS)) {
         RicSetJump();
