@@ -184,6 +184,11 @@ int CdInit(void) {
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};
+u16* func_80106A28(u32 arg0, u16 kind) {
+    NOT_IMPLEMENTED;
+    return g_FontCharData;
+}
+
 void gte_stsxy01c() { NOT_IMPLEMENTED; }
 void gte_stsxy3_gt3() { NOT_IMPLEMENTED; }
 void gte_ldv01c() { NOT_IMPLEMENTED; }
