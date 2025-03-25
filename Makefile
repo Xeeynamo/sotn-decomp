@@ -80,7 +80,7 @@ BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
-SOTNSTR         := $(PYTHON) $(TOOLS_DIR)/sotn_str/sotn_str.py
+SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
@@ -104,7 +104,7 @@ SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
 SOTNASSETS      := $(GOPATH)/bin/sotn-assets
- 
+
 # Build functions
 define get_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
@@ -156,7 +156,6 @@ M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
 M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
-SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
@@ -236,11 +235,11 @@ endif
 all: ##@ (Default) build and check
 all: build check
 
-.PHONY: extract 
+.PHONY: extract
 extract: ##@ split game files into assets and assembly
 extract: extract_$(VERSION)
 
-.PHONY: build 
+.PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
 
