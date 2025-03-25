@@ -112,7 +112,10 @@ void func_8015C6D4(void) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/A5A8", RicSetStep);
+void RicSetStep(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/A5A8", RicSetAnimation);
 

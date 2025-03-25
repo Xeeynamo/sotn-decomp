@@ -112,7 +112,7 @@ void func_8015C6D4(void) {
     }
 }
 
-void RicSetStep(int step) {
+void RicSetStep(s16 step) {
     PLAYER.step = step;
     PLAYER.step_s = 0;
 }
