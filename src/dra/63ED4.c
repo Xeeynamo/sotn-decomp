@@ -1576,6 +1576,8 @@ extern u16 D_80137EF8[];
     x & 1;                                                                     \
     x >>= 1
 
+#ifndef VERSION_PC
+
 u16* func_80106A28(u16 ch, u16 kind) {
     u8* bitmap;
     u16* srcPtr;
@@ -1770,6 +1772,8 @@ u16* func_80106A28(u16 ch, u16 kind) {
     }
     return D_80137EF8;
 }
+
+#endif
 
 bool LoadMonsterLibrarianPreview(s32 monsterId) {
     if (g_IsUsingCd)
