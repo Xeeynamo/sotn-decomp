@@ -401,6 +401,12 @@ typedef enum {
 // character is offseted by 0x20. This is only for strings that use the 8x8
 // font. e.g. _S("I am a Symphony of the Night encoded string")
 #define _S(x) (x)
+
+// Decorator to re-encode strings with ./tools/sotn_str when building
+// the game. PSP uses a variant of Shift-JIS that replaces half-width katakana
+// characters with accent characters for european languages. e.g. _SE("Eliminé
+// par Richter ")
+#define _SE(x) (x)
 #endif
 // same as above, but it processes a single character from CPP
 #define CH(x) ((x) - 0x20)
