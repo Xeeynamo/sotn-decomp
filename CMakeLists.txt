@@ -228,14 +228,13 @@ set(SOURCE_FILES_RIC
     src/ric/pl_main.c
     src/ric/pl_debug.c
     src/ric/pl_handlers.c
-    src/ric/20920.c
+    src/ric/pl_utils.c
     src/ric/pl_setstep.c
     src/ric/21B00.c
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
     src/ric/spriteparts.c
-    src/ric/204AC.c
     src/ric/211D0.c
     src/ric/26C84.c
     src/ric/2C4C4.c

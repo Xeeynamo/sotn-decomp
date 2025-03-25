@@ -47,7 +47,7 @@ segments:
       - [0x4B60, c, ric_psp/4B60]
       - [0x6D18, c, ric/pl_main]
       - [0x9250, c, ric/pl_setstep]
-      - [0xA5A8, c, ric_psp/A5A8]
+      - [0xA5A8, c, ric/pl_utils]
       - [0xB070, c, ric_psp/B070]
       - [0xD268, c, ric_psp/D268]
       - [0x182C8, c, ric_psp/182C8]

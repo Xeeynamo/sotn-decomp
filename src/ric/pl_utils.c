@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../ric/ric.h"
-#include <player.h>
+#include "sfx.h"
 
 // Same function in DRA is func_8010D59C
 void func_8015C4AC(void) {
