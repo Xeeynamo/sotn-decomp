@@ -93,10 +93,9 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 #endif
     if (resetAnims) {
         g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
-        g_Entities[UNK_ENTITY_3].animCurFrame = 0;
-        g_Entities[UNK_ENTITY_2].animCurFrame = 0;
-        g_Entities[UNK_ENTITY_1].animCurFrame = 0;
-
+        g_Entities[UNK_ENTITY_1].animCurFrame =
+            g_Entities[UNK_ENTITY_2].animCurFrame =
+                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
         prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
         while (prim) {
             prim->x1 = 0;
@@ -111,10 +110,8 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 }
 
 void func_8015CC28(void) {
-    Entity* entity = &g_Entities[UNK_ENTITY_1];
-
-    entity->ext.entSlot1.unk3 = 0;
-    entity->ext.entSlot1.unk2 = 0;
-    entity->ext.entSlot1.unk1 = 0;
-    entity->ext.entSlot1.unk0 = 0;
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
+        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
+            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
+                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
 }
