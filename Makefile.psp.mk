@@ -21,7 +21,7 @@ extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,pref
 $(BUILD_DIR)/%.s.o: %.s $(AS)
 	$(call echo,Assembling $<,optional) mkdir -p $(dir $@)
 	$(muffle)$(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) | $(VENV_DIR)
+$(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
 	$(call echo,Compiling $<,optional) mkdir -p $(dir $@)
 	$(muffle)$(COMPILER) $(COMPILER_ARGS) $(call if_version,us hd,$@)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
