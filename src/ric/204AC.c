@@ -60,23 +60,22 @@ void func_8015C4AC(void) {
 // Extremely similar to func_8010D800
 void func_8015C6D4(void) {
     byte pad[0x28];
-    PlayerDraw* plDraw;
     Primitive* prim;
-    s32 entNum;
+    PlayerDraw* draw;
     s32 i;
-    u8 temp_t0;
-    u8 temp_t1;
-    u8 temp_t2;
+    u8 var_s3;
+    u8 var_s5;
+    u8 resetAnim;
 
+    resetAnim = g_Entities[1].ext.entSlot1.unk1;
     prim = &g_PrimBuf[g_Entities[1].primIndex];
-    temp_t2 = g_Entities[1].ext.entSlot1.unk1;
-    temp_t1 = D_801545C4[g_Entities[1].ext.entSlot1.unk2];
-    temp_t0 = D_801545D4[g_Entities[1].ext.entSlot1.unk2];
-
-    plDraw = &g_PlayerDraw[1];
-    for (i = 0; prim != NULL; prim = prim->next, i++) {
-        if (temp_t0 < prim->r0) {
-            prim->r0 -= temp_t1;
+    i = 0;
+    draw = &g_PlayerDraw[1];
+    var_s5 = D_801545C4[g_Entities[1].ext.entSlot1.unk2];
+    var_s3 = D_801545D4[g_Entities[1].ext.entSlot1.unk2];
+    while (prim != NULL) {
+        if (prim->r0 > var_s3) {
+            prim->r0 -= var_s5;
         }
         if (prim->r0 < 112 && prim->b0 < 240) {
             prim->b0 += 6;
@@ -86,31 +85,30 @@ void func_8015C6D4(void) {
         } else {
             prim->y1 = 0;
         }
-        if (temp_t0 >= prim->r0) {
+        if (prim->r0 <= var_s3) {
             prim->x1 = 0;
         }
-        if (!((i ^ g_Timer) & 1)) {
-            continue;
-        }
+        if ((i ^ g_Timer) & 1) {
+            g_Entities[i / 2 + 1].posX.i.hi = prim->x0;
+            g_Entities[i / 2 + 1].posY.i.hi = prim->y0;
+            g_Entities[i / 2 + 1].animCurFrame = prim->x1;
+            g_Entities[i / 2 + 1].drawMode = prim->y1;
+            g_Entities[i / 2 + 1].facingLeft = prim->x2;
+            g_Entities[i / 2 + 1].palette = prim->y2;
+            g_Entities[i / 2 + 1].zPriority = PLAYER.zPriority - 2;
+            if (resetAnim) {
+                g_Entities[i / 2 + 1].animCurFrame = 0;
+                prim->x1 = 0;
+            }
 
-        entNum = (i / 2) + 1;
-        g_Entities[entNum].posX.i.hi = prim->x0;
-        g_Entities[entNum].posY.i.hi = prim->y0;
-        g_Entities[entNum].animCurFrame = prim->x1;
-        g_Entities[entNum].drawMode = prim->y1;
-        g_Entities[entNum].facingLeft = prim->x2;
-        g_Entities[entNum].palette = prim->y2;
-        g_Entities[entNum].zPriority = PLAYER.zPriority - 2;
-        if (temp_t2) {
-            g_Entities[entNum].animCurFrame = 0;
-            prim->x1 = 0;
+            draw->r0 = draw->r1 = draw->r2 = draw->r3 = draw->b0 = draw->b1 =
+                draw->b2 = draw->b3 = prim->r0;
+            draw->g0 = draw->g1 = draw->g2 = draw->g3 = prim->b0;
+            draw->enableColorBlend = true;
+            draw++;
         }
-
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
-            plDraw->b1 = plDraw->b2 = plDraw->b3 = prim->r0;
-        plDraw->g0 = plDraw->g1 = plDraw->g2 = plDraw->g3 = prim->b0;
-        plDraw->enableColorBlend = true;
-        plDraw++;
+        i++;
+        prim = prim->next;
     }
 }
 
