@@ -35,6 +35,7 @@ CC1PSX          := ./bin/cc1-psx-26
 CC              := $(CC1PSX)
 AS              := $(CROSS)as
 CPP             := $(CROSS)cpp
+SOTNSTR			:= $(SOTNSTR_APP) process
 
 # flags
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
@@ -85,11 +86,11 @@ $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
+$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.$(VERSION).dra.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).dra.txt | dra_dirs
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).ric.txt | ric_dirs
+$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.$(VERSION).ric.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).ric.txt | ric_dirs
 	$(SPLAT) $<
 	touch $@
 # todo: these should have an explicit dependency on extract disk
@@ -97,24 +98,23 @@ $(BUILD_DIR)/stmad.ld: $(CONFIG_DIR)/splat.$(VERSION).stmad.yaml $(CONFIG_DIR)/s
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/ST/MAD/F_MAD.BIN $(ASSETS_DIR)/st/mad
 # todo: these should have an explicit dependency on extract disk
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
+$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/ST/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/st/$*
-$(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
+$(BUILD_DIR)/bo%.ld: $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).bo%.txt | bo%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/$(VERSION)/BOSS/$$(echo '$*' | tr '[:lower:]' '[:upper:]')/F_$$(echo '$*' | tr '[:lower:]' '[:upper:]').BIN $(ASSETS_DIR)/boss/$*
-build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
+build/hd/st%.ld: $(CONFIG_DIR)/splat.$(VERSION).st%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).st%.txt | st%_dirs
 	$(SPLAT) $<
 	$(GFXSTAGE) d disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_$*.bin $(ASSETS_DIR)/st/$*
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
+$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).tt_%.txt | tt_%_dirs
 	$(SPLAT) $<
 	touch $@
-$(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
+$(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt $(CONFIG_DIR)/symbols.$(VERSION).weapon.txt.in
 	$(SPLAT) $<
 	touch $@
 
 $(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
-	echo $(call list_o_files,dra)
 	$(call link,dra,$@)
 $(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
 	$(call link,tt_$*,$@)
@@ -364,7 +364,6 @@ $(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
 $(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
 	$(call link,stsel,$@)
-
 $(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
 	$(call link,st$*,$@)
 $(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
