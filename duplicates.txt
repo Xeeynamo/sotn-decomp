@@ -2131,8 +2131,8 @@
 | 1.00 | true     | DecelerateY                         | asm/us/boss/rbo5/matchings/unk_44954/DecelerateY.s 
 | 1.00 | true     | DecelerateX                         | asm/us/dra/matchings/6DF70/DecelerateX.s 
 | 1.00 | true     | DecelerateY                         | asm/us/dra/matchings/6DF70/DecelerateY.s 
-| 1.00 | true     | DecelerateY                         | asm/us/ric/matchings/20920/DecelerateY.s 
-| 1.00 | true     | RicDecelerateX                      | asm/us/ric/matchings/20920/RicDecelerateX.s 
+| 1.00 | true     | DecelerateY                         | asm/us/ric/matchings/pl_utils/DecelerateY.s 
+| 1.00 | true     | RicDecelerateX                      | asm/us/ric/matchings/pl_utils/RicDecelerateX.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk1.s 
@@ -2343,27 +2343,27 @@
 | 1.00 | true     | SetPlayerStep                       | asm/us/boss/bo4/matchings/dop_anim/SetPlayerStep.s 
 | 1.00 | true     | SetPlayerStep                       | asm/us/boss/rbo5/matchings/dop_anim/SetPlayerStep.s 
 | 1.00 | true     | SetPlayerStep                       | asm/us/dra/matchings/alu_anim/SetPlayerStep.s 
-| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/204AC/RicSetStep.s 
+| 1.00 | true     | RicSetStep                          | asm/us/ric/matchings/pl_utils/RicSetStep.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA2C                       | asm/us/boss/bo4/matchings/dop_anim/func_8010DA2C.s 
 | 1.00 | true     | func_8010DA2C                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010DA2C.s 
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/alu_anim/func_8010DA2C.s 
-| 1.00 | true     | RicSetAnimation                     | asm/us/ric/matchings/20920/RicSetAnimation.s 
+| 1.00 | true     | RicSetAnimation                     | asm/us/ric/matchings/pl_utils/RicSetAnimation.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/bo4/matchings/unk_45354/CheckMoveDirection.s 
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/rbo5/matchings/unk_44954/CheckMoveDirection.s 
 | 1.00 | true     | CheckMoveDirection                  | asm/us/dra/matchings/6DF70/CheckMoveDirection.s 
-| 1.00 | true     | RicCheckFacing                      | asm/us/ric/matchings/20920/RicCheckFacing.s 
+| 1.00 | true     | RicCheckFacing                      | asm/us/ric/matchings/pl_utils/RicCheckFacing.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetSpeedX                           | asm/us/boss/bo4/matchings/unk_45354/SetSpeedX.s 
 | 1.00 | true     | SetSpeedX                           | asm/us/boss/rbo5/matchings/unk_44954/SetSpeedX.s 
 | 1.00 | true     | SetSpeedX                           | asm/us/dra/matchings/6DF70/SetSpeedX.s 
-| 1.00 | true     | RicSetSpeedX                        | asm/us/ric/matchings/20920/RicSetSpeedX.s 
+| 1.00 | true     | RicSetSpeedX                        | asm/us/ric/matchings/pl_utils/RicSetSpeedX.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010E3B8                       | asm/us/boss/bo4/matchings/unk_45354/func_8010E3B8.s 
 | 1.00 | true     | func_8010E3B8                       | asm/us/boss/rbo5/matchings/unk_44954/func_8010E3B8.s 
 | 1.00 | true     | func_8010E3B8                       | asm/us/dra/matchings/6DF70/func_8010E3B8.s 
-| 1.00 | true     | func_8015CAAC                       | asm/us/ric/matchings/20920/func_8015CAAC.s 
+| 1.00 | true     | func_8015CAAC                       | asm/us/ric/matchings/pl_utils/func_8015CAAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DopEntityHitByDark                  | asm/us/boss/bo4/matchings/unk_46E7C/DopEntityHitByDark.s 
 | 1.00 | true     | DopEntityHitByDark                  | asm/us/boss/rbo5/matchings/unk_4648C/DopEntityHitByDark.s 
@@ -2480,6 +2480,11 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2546,7 +2551,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010D800                       | asm/us/boss/bo4/matchings/dop_anim/func_8010D800.s 
 | 1.00 | true     | func_8010D800                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010D800.s 
-| 1.00 | true     | func_8015C6D4                       | asm/us/ric/matchings/204AC/func_8015C6D4.s 
+| 1.00 | true     | func_8015C6D4                       | asm/us/ric/matchings/pl_utils/func_8015C6D4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010DA70                       | asm/us/boss/bo4/matchings/dop_anim/func_8010DA70.s 
 | 1.00 | true     | func_8010DA70                       | asm/us/boss/rbo5/matchings/dop_anim/func_8010DA70.s 
@@ -2683,10 +2688,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2963,7 +2964,7 @@
 | 1.00 | true     | CheckWallRight                      | asm/us/dra/matchings/6BF64/CheckWallRight.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8010E168                       | asm/us/dra/matchings/6DF70/func_8010E168.s 
-| 1.00 | true     | RicSetInvincibilityFrames           | asm/us/ric/matchings/20920/RicSetInvincibilityFrames.s 
+| 1.00 | true     | RicSetInvincibilityFrames           | asm/us/ric/matchings/pl_utils/RicSetInvincibilityFrames.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckSubwpnChainLimit               | asm/us/dra/matchings/6E42C/CheckSubwpnChainLimit.s 
 | 1.00 | true     | RicCheckSubwpnChainLimit            | asm/us/ric/matchings/pl_setstep/RicCheckSubwpnChainLimit.s 
@@ -3138,9 +3139,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
