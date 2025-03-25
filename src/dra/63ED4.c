@@ -1593,7 +1593,7 @@ u16* func_80106A28(u16 ch, u16 kind) {
             }
         }
         if (bitmap == (u8*)-1) {
-            ch = 0x819A;
+            ch = '★';
             bitmap = (u8*)Krom2RawAdd(ch);
         }
     }

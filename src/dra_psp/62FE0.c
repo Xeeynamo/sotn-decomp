@@ -262,7 +262,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
             }
         }
         if (bitmap == (u8*)-1) {
-            ch = 0x819A;
+            ch = '★';
             bitmap = (u8*)Krom2RawAdd(ch);
         }
     }
