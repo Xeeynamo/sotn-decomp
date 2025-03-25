@@ -1564,7 +1564,11 @@ void DrawEntitiesHitbox(s32 drawMode) {
 }
 
 extern u16 D_800AC910[];
+#ifdef VERSION_HD
+extern u8 D_800AC914[10][30];
+#else
 extern u8 D_800AC914[1][30];
+#endif
 extern u16 D_800AC934[]; // LUT of ceil(index / 2)
 extern u16 D_80137EF8[];
 
@@ -1587,7 +1591,7 @@ u16* func_80106A28(u16 ch, u16 kind) {
     bitmap = (u8*)Krom2RawAdd(ch);
     if (bitmap == (u8*)-1) {
         srcPtr = D_800AC910;
-        for (i = 0; i < 1; i++) {
+        for (i = 0; i < LEN(D_800AC914); i++) {
             if (ch == *srcPtr++) {
                 bitmap = D_800AC914[i];
             }
