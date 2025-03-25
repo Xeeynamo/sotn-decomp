@@ -63,8 +63,7 @@ segments:
       - [0x2954, .data, e_dhuron]
       - [0x2AE0, data]
       - [0x2B80, .data, en_thornweed_corpseweed]
-      - [0x2C38, data] # unused data?
-      - [0x2C48, .data, e_skeleton]
+      - [0x2C38, .data, e_skeleton]
       - [0x2D38, .data, e_mist_door]
       - [0x2D78, data]
       - [0x2DE4, .data, e_flea_man]
