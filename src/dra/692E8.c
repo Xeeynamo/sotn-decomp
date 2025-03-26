@@ -587,17 +587,20 @@ void EntityAlucard(void) {
     s32 sp58;
     s32 sp54;
     DamageParam damage;
+    s32 sp40 = 0;
+    unkstr_800cfe48* sp3c;
+    s32 sp38;
     s32 (*weapon_func)(void);
-    s32 var_fp;
     PlayerDraw* draw;
 
-    s32 temp_v0;
-    u16 temp_v0_2;
-    s32 temp_a0;
-    s32 temp_v1;
-    s32 newStatus;
+    s32 var_s8;
+    s32 var_s7;
     s16 var_s6;
-    s16 var_s7;
+    s16 var_s5;
+    s16 var_s3;
+    u32 newStatus_s2;
+    s32 i;
+    s16 playerHitPoints;
 
     g_CurrentEntity = &PLAYER;
     if (D_800ACE44 != 0) {
@@ -606,17 +609,17 @@ void EntityAlucard(void) {
     if (g_unkGraphicsStruct.D_800973FC != 0 && D_80137FB8 == 0) {
         CreateEntFactoryFromEntity(g_Entities, 0x78, 0);
     }
-    var_fp = 0;
+    var_s8 = 0;
     var_s6 = 0;
     g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C =
         FLAG_DRAW_DEFAULT;
     D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
-    var_s7 = 0;
+    var_s5 = 0;
     g_Player.unk72 = func_80110394();
     if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-        newStatus = GetTeleportToOtherCastle();
-        if (newStatus != 0) {
-            func_8010E42C(newStatus);
+        i = GetTeleportToOtherCastle();
+        if (i != 0) {
+            func_8010E42C(i);
         }
         if (PLAYER.step != 0x12) {
             func_8010A234(0);
@@ -645,14 +648,14 @@ void EntityAlucard(void) {
                 }
                 g_Player.unk56 = 0;
             }
-            newStatus = CheckAndDoLevelUp();
-            if (newStatus != 0) {
+            i = CheckAndDoLevelUp();
+            if (i != 0) {
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(0x19, newStatus - 1), 0);
+                    g_CurrentEntity, FACTORY(0x19, i - 1), 0);
             }
-            for (newStatus = 0; newStatus < 16; newStatus++) {
-                if (g_Player.timers[newStatus]) {
-                    switch (newStatus) {
+            for (i = 0; i < 16; i++) {
+                if (g_Player.timers[i]) {
+                    switch (i) {
                     case 2:
                         PLAYER.palette = g_Player.unk40;
                         break;
@@ -685,8 +688,8 @@ void EntityAlucard(void) {
                     case 0:
                         break;
                     }
-                    if (!--g_Player.timers[newStatus]) {
-                        switch (newStatus) {
+                    if (!--g_Player.timers[i]) {
+                        switch (i) {
                         case 0:
                             if (!(g_Player.status & (PLAYER_STATUS_STONE |
                                                      PLAYER_STATUS_CURSE))) {
@@ -772,9 +775,9 @@ void EntityAlucard(void) {
             } else {
                 g_Player.padPressed = g_pads[0].pressed;
                 g_Player.padPressed = g_Player.padPressed & 0xFF00;
-                for (newStatus = 0; newStatus < 8; newStatus++) {
-                    if (g_pads[0].pressed & g_Settings.buttonMask[newStatus]) {
-                        g_Player.padPressed |= D_800ACE00[newStatus];
+                for (i = 0; i < 8; i++) {
+                    if (g_pads[0].pressed & g_Settings.buttonMask[i]) {
+                        g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
 #ifdef VERSION_US
@@ -813,7 +816,7 @@ void EntityAlucard(void) {
             if (g_Player.unk60 < 2) {
                 if (g_Player.unk60 == 1) {
                     var_s6 = PLAYER.step;
-                    var_s7 = PLAYER.step_s;
+                    var_s5 = PLAYER.step_s;
                     SetPlayerStep(Player_BossGrab);
                 } else {
 #if defined(VERSION_US)
@@ -823,16 +826,16 @@ void EntityAlucard(void) {
 #endif
                         if (PLAYER.hitParams) {
                             var_s6 = PLAYER.step;
-                            var_s7 = PLAYER.step_s;
-                            newStatus = HandleDamage(
+                            var_s5 = PLAYER.step_s;
+                            i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
-                                ((newStatus == 1) || (newStatus == 7) ||
-                                 (newStatus == 8))) {
-                                newStatus = 3;
+                                ((i == 1) || (i == 7) ||
+                                 (i == 8))) {
+                                i = 3;
                                 damage.damageKind = DAMAGEKIND_1;
                             }
-                            switch (newStatus) {
+                            switch (i) {
                             case 0:
                                 CreateEntFactoryFromEntity(
                                     g_CurrentEntity, FACTORY(0x2F, 0), 0);
@@ -889,7 +892,7 @@ void EntityAlucard(void) {
                             case 8:
                                 g_Player.unk18 = damage.effects;
                                 CreateHPNumMove(damage.damageTaken, 0);
-                                var_fp = 1;
+                                var_s8 = 1;
                                 break;
                             case 9:
                                 CreateEntFactoryFromEntity(
@@ -1021,16 +1024,16 @@ block_160:
         PlayerStepSwordWarp();
         break;
     case Player_Hit:
-        AlucardHandleDamage(&damage, var_s6, var_s7);
+        AlucardHandleDamage(&damage, var_s6, var_s5);
         break;
     case Player_StatusStone:
-        PlayerStepStoned(var_fp);
+        PlayerStepStoned(var_s8);
         break;
     case Player_BossGrab:
         PlayerStepBossGrab();
         break;
     case Player_Kill:
-        PlayerStepKill(&damage, var_s6, var_s7);
+        PlayerStepKill(&damage, var_s6, var_s5);
         break;
     case Player_Unk17:
         PlayerStepUnk17();
@@ -1081,7 +1084,7 @@ block_160:
     runweapon:
         weapon_func();
     }
-    newStatus = 0;
+    i = 0;
     g_unkGraphicsStruct.unk1C &= ~2;
     g_Player.status &= ~PLAYER_STATUS_UNK8;
     g_Player.unk08 = g_Player.status;
@@ -1089,46 +1092,46 @@ block_160:
     switch (PLAYER.step) { /* switch 5 */
     case Player_Crouch:    /* switch 5 */
         if (PLAYER.step_s != 2) {
-            newStatus = PLAYER_STATUS_CROUCH;
+            i = PLAYER_STATUS_CROUCH;
         }
-        newStatus |= 0x10000000;
+        i |= 0x10000000;
         break;
     case Player_Walk: /* switch 5 */
-        newStatus = 0x04000000;
+        i = 0x04000000;
         /* fallthrough */
     case Player_Stand: /* switch 5 */
-        newStatus |= 0x10000000;
+        i |= 0x10000000;
         if (PLAYER.step_s == 4) {
-            newStatus |= 0x08100000;
+            i |= 0x08100000;
         }
         break;
     case Player_Fall: /* switch 5 */
     case Player_Jump: /* switch 5 */
-        newStatus = 0x10002000;
+        i = 0x10002000;
         break;
     case Player_MorphBat: /* switch 5 */
         if (PLAYER.step_s == 3) {
             func_8010E168(1, 4);
             g_unkGraphicsStruct.unk1C |= 2;
         }
-        newStatus = 0x28100001;
+        i = 0x28100001;
         break;
     case Player_MorphMist: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x28100002;
+        i = 0x28100002;
         PLAYER.palette = 0x810D;
         break;
     case Player_UnmorphMist:
-        newStatus = 0x28900002;
+        i = 0x28900002;
         PLAYER.palette = 0x810D;
         func_8010E168(1, 4);
         break;
     case Player_AlucardStuck: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x18100010 | PLAYER_STATUS_CROUCH;
+        i = 0x18100010 | PLAYER_STATUS_CROUCH;
         break;
     case Player_UnmorphBat: /* switch 5 */
-        newStatus = 0x28500001;
+        i = 0x28500001;
         if (PLAYER.step_s == 0) {
             PLAYER.animSet = 0xD;
             PLAYER.unk5A = 0;
@@ -1137,48 +1140,48 @@ block_160:
         break;
     case Player_HighJump: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x38000000;
+        i = 0x38000000;
         break;
     case Player_Hit:   /* switch 5 */
     case Player_Unk48: /* switch 5 */
     case Player_Unk49: /* switch 5 */
-        newStatus = 0x38110000;
+        i = 0x38110000;
         func_8010E168(1, 12);
         break;
     case Player_StatusStone: /* switch 5 */
-        newStatus = 0x38110080;
+        i = 0x38110080;
         break;
     case Player_BossGrab: /* switch 5 */
-        newStatus = 0x38110040;
+        i = 0x38110040;
         func_8010E168(1, 12);
         break;
     case Player_KillWater: /* switch 5 */
     case Player_Kill:      /* switch 5 */
-        newStatus = 0x18150000;
+        i = 0x18150000;
         if (PLAYER.step_s == 0x80) {
-            newStatus = 0x181D0000;
+            i = 0x181D0000;
         }
         func_8010E168(1, 12);
         break;
     case Player_Unk17: /* switch 5 */
-        newStatus = 0x18150000;
+        i = 0x18150000;
         func_8010E168(1, 12);
         break;
     case Player_Teleport: /* switch 5 */
-        newStatus = 0x18100000;
+        i = 0x18100000;
         func_8010E168(1, 12);
         break;
     case Player_SpellSummonSpirit:  /* switch 5 */
     case Player_SpellTetraSpirit:   /* switch 5 */
     case Player_SpellSwordBrothers: /* switch 5 */
         func_8010E168(1, 0x10);
-        newStatus = 0x38000200 | PLAYER_STATUS_CROUCH;
+        i = 0x38000200 | PLAYER_STATUS_CROUCH;
         break;
     case Player_SpellDarkMetamorphosis: /* switch 5 */
     case Player_SpellHellfire:          /* switch 5 */
     case Player_SpellSoulSteal:         /* switch 5 */
         func_8010E168(1, 0x10);
-        newStatus = 0x38000200;
+        i = 0x38000200;
         break;
     case Player_AxearmorHit: /* switch 5 */
         func_8010E168(1, 0x14);
@@ -1188,10 +1191,10 @@ block_160:
     case Player_AxearmorJump:  /* switch 5 */
     case Player_Unk50:         /* switch 5 */
         PLAYER.unk5A = 0x64;
-        newStatus = 0x29100000;
+        i = 0x29100000;
         break;
     case Player_SwordWarp: /* switch 5 */
-        newStatus = 0x18100000;
+        i = 0x18100000;
         func_8010E168(4, 0xC);
         PLAYER.palette = 0x810D;
         break;
@@ -1200,49 +1203,49 @@ block_160:
         if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }
-        newStatus = 0x2C100204;
+        i = 0x2C100204;
         if ((PLAYER.step_s == 0) || (PLAYER.step_s == 8)) {
-            newStatus = 0x6C100204;
+            i = 0x6C100204;
         }
         if (PLAYER.step_s == 3) {
-            newStatus |= PLAYER_STATUS_CROUCH;
+            i |= PLAYER_STATUS_CROUCH;
         }
         break;
     case Player_UnmorphWolf: /* switch 5 */
-        newStatus = 0x68100000;
+        i = 0x68100000;
         func_8010E168(1, 4);
         break;
     }
     if (g_Player.timers[9]) {
-        newStatus |= 0x400;
+        i |= 0x400;
     }
     if (g_Player.timers[10]) {
-        newStatus |= 0x800;
+        i |= 0x800;
     }
     if (g_Player.timers[12]) {
-        newStatus |= 0x1000;
+        i |= 0x1000;
     }
     if (g_Player.timers[0]) {
-        newStatus |= 0x28104000;
+        i |= 0x28104000;
     }
     if (g_Player.timers[1]) {
-        newStatus |= 0x28108000;
+        i |= 0x28108000;
     }
     if (*D_80097448 != 0) {
-        newStatus |= 0x08020000;
+        i |= 0x08020000;
     }
     if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
-        newStatus |= 0x02000000;
+        i |= 0x02000000;
     }
-    g_Player.status = newStatus;
-    if ((newStatus & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
+    g_Player.status = i;
+    if ((i & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
         func_8010DFF0(1, 1);
     }
-    if (newStatus & 0x10000000) {
+    if (i & 0x10000000) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
     }
-    if (newStatus & 0x20000000) {
+    if (i & 0x20000000) {
         g_Status.D_80097BF8 |= 1;
     }
     if (g_Player.timers[13] | g_Player.timers[14]) {
@@ -1313,7 +1316,7 @@ block_160:
                     CheckStageCollision(1);
                 }
             }
-            for (newStatus = 0; newStatus < 7; newStatus++) {
+            for (i = 0; i < 7; i++) {
                 if (PLAYER.posY.i.hi >= 0) {
                     CheckStageCollision(0);
                 }
@@ -1343,8 +1346,8 @@ block_160:
         g_CurrentEntity->nFramesInvincibility = 0;
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
-            D_800CFE48[PLAYER.animCurFrame & 0x7FFF]->unk4 =
-                D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
+            sp3c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+            sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
 #ifdef VERSION_US
         FntPrint("step:%04x\n", PLAYER.step);
