@@ -245,21 +245,31 @@ void func_80109594() {
         func_8010E42C(5);
     }
 
-    g_CurrentEntity = g_Entities;
-    weapon = D_8017A000.GetWeaponId;
-    if (weapon() != 0x2D) {
-        return;
+    g_CurrentEntity = &PLAYER;
+    weapon = (int (*)())D_8017A000.GetWeaponId;
+    i = weapon();
+    if (i == 0x2D) {
+        if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR) != 0) {
+            func_8010FAF4();
+            weapon = (int (*)())D_8017A000.EntityWeaponAttack;
+            weapon();
+            g_Player.status |= PLAYER_STATUS_AXEARMOR;
+            func_8010DFF0(1, 10);
+            func_80109328();
+        }
     }
-    if (CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR) == 0) {
-        return;
+    #ifdef VERSION_PSP
+    func_psp_091040A0(&D_psp_09183138);
+    D_psp_0918315C =
+        func_psp_091048B8(&D_psp_0917DCA8, &D_psp_09180EC0, &D_psp_0917ED60,
+                          &D_psp_09182028, &D_psp_0917FF10);
+    func_psp_091040A0(&D_psp_09183150);
+    D_psp_09183174 = func_psp_091048B8(
+        0, &D_psp_09149550, &D_psp_09148C10, &D_psp_091499F0, &D_psp_091490B0);
+    if (D_psp_09183174 != 0) {
+        func_psp_091040A0(&D_psp_09183168);
     }
-    func_8010FAF4();
-
-    weapon = D_8017A000.EntityWeaponAttack;
-    weapon();
-    g_Player.status |= PLAYER_STATUS_AXEARMOR;
-    func_8010DFF0(1, 10);
-    func_80109328();
+    #endif
 }
 
 void func_80109990(void) {

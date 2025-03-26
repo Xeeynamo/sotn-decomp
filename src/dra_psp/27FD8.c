@@ -273,6 +273,7 @@ void func_80109594() {
             func_80109328();
         }
     }
+    #ifdef VERSION_PSP
     func_psp_091040A0(&D_psp_09183138);
     D_psp_0918315C =
         func_psp_091048B8(&D_psp_0917DCA8, &D_psp_09180EC0, &D_psp_0917ED60,
@@ -283,6 +284,7 @@ void func_80109594() {
     if (D_psp_09183174 != 0) {
         func_psp_091040A0(&D_psp_09183168);
     }
+    #endif
 }
 
 void func_80109990(void) {
