@@ -6,7 +6,7 @@ CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
 OPT_HI_LIST		:= 80 1E50 33F0 A710 C0B0 EC60 F4D0 13BD0 186E8 61F30 624DC 628AC 62FE0 63C90 64EE0# Split to two lines for readability
 OPT_HI_LIST		:= $(addsuffix .c.o, $(OPT_HI_LIST))# These objects will get -O4,p instead of -Op
 OPT_LEVEL		 = $(if $(filter $(notdir $@),$(OPT_HI_LIST)),-O4$(comma)p,-Op)
-COMPILER		 = $(SOTNSTR_APP) process -f $< | $(PYTHON) $(MWCCGAP_APP)
+COMPILER		 = $(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP)
 COMPILER_REQS	:= $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)/bin
 COMPILER_ARGS	 = $@ --src-dir $(dir $<) --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL) -opt nointrinsics
 AUTO_MERGE_FILES	:= e_init.c
