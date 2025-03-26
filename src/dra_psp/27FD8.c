@@ -551,7 +551,7 @@ void func_8010A3F0(void) {
 
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
-    if (PLAYER.step != Player_Stand || PLAYER.step_s != 1) {
+    if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_PressUp) {
         return TELEPORT_CHECK_NONE;
     }
 

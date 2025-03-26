@@ -534,28 +534,24 @@ void func_8010A3F0(void) {
     g_Player.unk10 = 0;
 }
 
-TeleportCheck GetTeleportToOtherCastle(void) {
+static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
-    if (PLAYER.step != 0 || PLAYER.step_s != 1) {
+    if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_PressUp) {
         return TELEPORT_CHECK_NONE;
     }
 
     // Check for X/Y boundaries in TOP
     if (g_StageId == STAGE_TOP) {
-        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8000) < 4 &&
-            abs(g_Tilemap.top * 256 + g_PlayerY - 2127) < 4) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX - 8000) < 4 &&
+            abs((g_Tilemap.top << 8) + g_PlayerY - 2127) < 4) {
             return TELEPORT_CHECK_TO_RTOP;
         }
     }
 
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
-        if (abs(g_Tilemap.left * 256 + g_PlayerX - 8384) < 4 &&
-#if defined(VERSION_US)
-            abs(g_Tilemap.top * 256 + g_PlayerY - 14407) < 4) {
-#elif defined(VERSION_HD)
-            abs(g_Tilemap.top * 256 + g_PlayerY) - 14407 < 4) {
-#endif
+        if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
+            abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
             return TELEPORT_CHECK_TO_TOP;
         }
     }
