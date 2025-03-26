@@ -30,11 +30,12 @@ typedef enum {
 
 typedef enum {
     Dop_Stand = 1,
-    Dop_Walk = 2,
-    Dop_Fall = 4,
-    Dop_Jump = 5,
-    Dop_MorphBat = 6,
+    Dop_Walk,
+    Dop_Crouch,
+    Dop_Fall,
+    Dop_Jump,
+    Dop_MorphBat,
     Dop_UnmorphBat = 10,
-    Dop_Hit = 11,
+    Dop_Hit,
     Dop_Kill = 17,
 } Doppleganger_Steps;

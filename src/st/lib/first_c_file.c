@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", EntityBreakable);
-
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801AE7AC);
-
-INCLUDE_ASM("st/lib/nonmatchings/first_c_file", func_us_801AE84C);
-
 extern SVECTOR* D_us_80180C88[];
 extern SVECTOR* D_us_80180D28[];
 extern s32 D_us_80180D48[];
