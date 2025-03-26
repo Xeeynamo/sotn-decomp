@@ -449,29 +449,40 @@ static void CheckStageCollision(s32 isTransformed) {
 }
 
 void func_8010A234(s32 arg0) {
+    s32 weaponID;
     s32 (*weapon)(void);
+    s32 i;
+    Entity* ent;
 
     g_CurrentEntity = &PLAYER;
     weapon = D_8017A000.GetWeaponId;
+    weaponID = weapon();
     // Wearing Axe Lord Armor! This is probably when you initially put it on.
-    if ((weapon() == 0x2D) &&
+    if ((weaponID == 0x2D) &&
         CheckEquipmentItemCount(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR)) {
-        if (!(g_Player.status & PLAYER_STATUS_AXEARMOR)) {
-            // Alucard says "WHAT?!" when first putting on Axe Lord Armor
-            PlaySfx(SFX_VO_ALU_WHAT);
-            g_Player.padSim = 0;
-            g_Player.demo_timer = 32;
-            func_8010FAF4();
-            weapon = D_8017A000.EntityWeaponAttack;
-            weapon();
-            g_Player.status |= PLAYER_STATUS_AXEARMOR;
-            func_8010DFF0(1, 0xA);
-            func_80109328();
-            if (arg0 != 0) {
-                PlayAnimation(D_800B0130, D_800B01B8);
-            }
+        // If we already have the flag set, exit.
+        if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
+            return;
         }
-    } else if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
+        // Alucard says "WHAT?!" when first putting on Axe Lord Armor
+        PlaySfx(SFX_VO_ALU_WHAT);
+        g_Player.padSim = 0;
+        g_Player.demo_timer = 32;
+        func_8010FAF4();
+        weapon = (int (*)())D_8017A000.EntityWeaponAttack;
+        weapon();
+        g_Player.status |= PLAYER_STATUS_AXEARMOR;
+        func_8010DFF0(1, 0xA);
+        func_80109328();
+        if (arg0 == 0) {
+            return;
+        }
+        PlayAnimation(D_800B0130, D_800B01B8);
+        return;
+    }
+    // Detect opposite case: If we're not wearing it, but status is set
+    // Means we need to run a routine to get back into normal mode.
+    if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
         PLAYER.palette = 0x8100;
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
@@ -492,6 +503,13 @@ void func_8010A234(s32 arg0) {
         if (arg0 != 0) {
             PlayAnimation(D_800B0130, D_800B01B8);
         }
+        #if defined(VERSION_PSP)
+        for (i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++) {
+            if (ent->palette == 0x110 && ent->unk5A == 100) {
+                ent->animSet = 0;
+            }
+        }
+        #endif
     }
 }
 
