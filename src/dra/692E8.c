@@ -143,7 +143,7 @@ void func_801093C4(void) {
 // BSS
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
-#if !defined(VERSION_HD)
+#if defined(VERSION_US)
 extern s32 D_80137FBC;
 #endif
 
@@ -203,12 +203,18 @@ void func_80109594() {
 
 #if defined(VERSION_US)
     g_Player.unk20 = 0x10;
-    g_Player.demo_timer = 16;
+#elif defined(VERSION_PSP)
+    D_800ACEDC_hd = 0x10;
+#endif
+
+#if !defined(VERSION_HD)
     g_Player.padSim = 0;
+    g_Player.demo_timer = 16;
+#endif
     D_80137FB8 = 0;
+
+#if defined(VERSION_US)
     D_80137FBC = 1;
-#elif defined(VERSION_HD)
-    D_80137FB8 = 0;
 #endif
 
     if (g_Status.mp != g_Status.mpMax) {
