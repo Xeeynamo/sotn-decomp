@@ -1,6 +1,6 @@
 e_laydef_c = 0x80180864;
 NO4_pStObjLayoutVertical = 0x80180938;
-D_80180A90 = 0x80180A08;
+NO4_EntityUpdates = 0x80180A0C;
 g_EInitObtainable = 0x80180B98;
 g_EInitParticle = 0x80180BA4;
 g_EInitDamageNum = 0x80180BEC;
@@ -140,3 +140,4 @@ g_LayoutObjHorizontal = 0x801DEB70;
 g_LayoutObjVertical = 0x801DEB74;
 g_LayoutObjPosHorizontal = 0x801DEB78;
 g_LayoutObjPosVertical = 0x801DEB7C;
+g_ItemIconSlots = 0x801DF81C;

@@ -23,7 +23,46 @@ typedef enum EntityIDs {
     // /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
+    // /* 0x11 */ E_ID_11 = 0x11,
+    // /* 0x12 */ E_ID_12,
+    // /* 0x13 */ E_ID_13,
+    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x15 */ E_GREY_PUFF,
 } EntityIDs;
+
+extern void EntityExplosionVariants(Entity* entity);
+extern void EntityGreyPuff(Entity* entity);
+
+//extern EInit D_us_80180B8C;
+//extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+//extern EInit D_us_80180BB0;
+//extern EInit D_us_80180BBC;
+extern EInit g_EInitUnkId13;
+//extern EInit D_us_80180BD4;
+//extern EInit D_us_80180BE0;
+//extern EInit g_EInitDamageNum;
+//extern EInit D_us_80180BF8;
+//extern EInit D_us_80180C04;
+//extern EInit D_us_80180C10;
+//extern EInit D_us_80180C1C;
+//extern EInit D_us_80180C28;
+//extern EInit D_us_80180C34;
+//extern EInit D_us_80180C40;
+//extern EInit D_us_80180C4C;
+//extern EInit D_us_80180C58;
+//extern EInit D_us_80180C64;
+//extern EInit D_us_80180C70;
+//extern EInit D_us_80180C7C;
+//extern EInit D_us_80180C88;
+//extern EInit D_us_80180C94;
+//extern EInit D_us_80180CA0;
+//extern EInit D_us_80180CAC;
+//extern EInit D_us_80180CB8;
+//extern EInit D_us_80180CC4;
+//extern EInit D_us_80180CD0;
+//extern EInit D_us_80180CDC;
+//extern EInit D_us_80180CE8;
 
 extern s16 D_us_801DF788;
 extern s16 D_us_801DF78A;
