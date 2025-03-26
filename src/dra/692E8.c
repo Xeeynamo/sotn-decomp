@@ -147,6 +147,22 @@ extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 #endif
 
+extern s32 D_psp_09148C10;
+extern s32 D_psp_091490B0;
+extern s32 D_psp_09149550;
+extern s32 D_psp_091499F0;
+
+extern s32 D_psp_0917DCA8;
+extern s32 D_psp_0917ED60;
+extern s32 D_psp_0917FF10;
+extern s32 D_psp_09180EC0;
+extern s32 D_psp_09182028;
+extern s32 D_psp_09183138;
+extern s32 D_psp_09183150;
+extern s32 D_psp_0918315C;
+extern s32 D_psp_09183168;
+extern s32 D_psp_09183174;
+
 // Duplicate of RIC func_80156F40
 void func_80109594() {
     Entity* e;
@@ -558,6 +574,13 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 
     return TELEPORT_CHECK_NONE;
 }
+
+#if defined(VERSION_PSP)
+static s32 D_psp_09234B88 = 0;
+static s32 D_psp_09234B90 = 0;
+extern bool D_8C630C4;
+extern s32 D_800ACE00[];
+#endif
 
 void EntityAlucard(void) {
     DamageParam damage;
