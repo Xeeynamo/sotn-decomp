@@ -42,7 +42,11 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, bat]
-      - [0x4C80, data]
+      - [0x4C80, .data, servant_clutdata]
+      - [0x4CE0, .data, servant_spriteparts]
+      - [0x5168, .data, bat_animation_data]
+      - [0x52D0, .data, bat_data]
+      - [0x5428, .data, servant_events]
+      - [0x5D60, data]
       - [0x5E00, .rodata, bat]
-      - { type: bss, vram: 0x092ed480 }
   - [0x5E80]
