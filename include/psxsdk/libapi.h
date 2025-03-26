@@ -60,7 +60,6 @@ extern long format(char* fs // File system name
 extern struct DIRENTRY* firstfile(char*, struct DIRENTRY*);
 extern struct DIRENTRY* nextfile(struct DIRENTRY*);
 extern long erase(char*);
-extern long Krom2RawAdd(unsigned long);
 extern void ChangeClearPAD(long);
 extern void StopPAD(void);
 int PAD_init(s32 /*??*/, s32* /*??*/);

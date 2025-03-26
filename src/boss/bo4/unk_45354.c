@@ -109,7 +109,40 @@ void func_8010E570(s32 arg0) {
     SetPlayerAnim(D_us_80181320[anim]);
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E6AC);
+void func_8010E6AC(bool forceAnim13) {
+    bool atLedge;
+
+    atLedge = 0;
+    if (g_Dop.vram_flag & 0x20) {
+        atLedge = 1;
+    }
+
+    SetSpeedX(FIX(1.5));
+    DOPPLEGANGER.velocityY = 0;
+    SetPlayerStep(Dop_Walk);
+
+    if (forceAnim13) {
+        if (DOPPLEGANGER.ext.player.anim != 13) {
+            SetPlayerAnim(13);
+        }
+    } else {
+        SetPlayerAnim(7);
+        // Factory blueprint 1 has child 2, which is func_8011B5A4
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
+    }
+
+    if (g_Dop.unk4C) {
+        DOPPLEGANGER.ext.player.anim = 9;
+    }
+
+    if ((DOPPLEGANGER.ext.player.anim == 7) && atLedge) {
+        DOPPLEGANGER.animFrameIdx = 1;
+    }
+
+    if (g_Dop.prev_step == Dop_Crouch) {
+        DOPPLEGANGER.animFrameIdx = 4;
+    }
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C58E4);
 

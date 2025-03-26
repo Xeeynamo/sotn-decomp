@@ -1,3 +1,4 @@
+Krom2RawAdd         = 0x80015218;
 g_CastleFlags       = 0x8003BDEC;
 D_8003C908          = 0x8003C908;
 g_EquippedWeaponIds = 0x8003C90C;
@@ -24,6 +25,8 @@ g_pads              = 0x80097490;
 g_Status            = 0x80097964;
 D_80097C98          = 0x80097C98;
 g_PlayerDraw        = 0x80097D1C;
+
+D_80137EF8          = 0x80137EF8;
 
 g_ServantDesc       = 0x80170000;
 

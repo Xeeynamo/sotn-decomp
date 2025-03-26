@@ -25,7 +25,7 @@ void func_800EA538(s32 arg0);
 void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
 void func_801027C4(u32 arg0);
 void func_800EB758(
-    s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u8 flipX);
+    s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, s8 flipX);
 Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s16 arg2);
 bool func_80131F68(void);
 DR_ENV* func_800EDB08(POLY_GT4* poly);
