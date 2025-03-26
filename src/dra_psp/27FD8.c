@@ -300,6 +300,11 @@ void func_80109990(void) {
     }
 }
 
+void CheckFloor(void);
+void CheckCeiling(void);
+void CheckWallRight(void);
+void CheckWallLeft(void);
+
 static void CheckStageCollision(s32 isTransformed) {
     s32 i;
     s32 psp_s2;
