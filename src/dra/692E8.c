@@ -583,6 +583,9 @@ extern s32 D_800ACE00[];
 #endif
 
 void EntityAlucard(void) {
+    s32 sp5c;
+    s32 sp58;
+    s32 sp54;
     DamageParam damage;
     s32 (*weapon_func)(void);
     s32 var_fp;
@@ -590,7 +593,6 @@ void EntityAlucard(void) {
 
     s32 temp_v0;
     u16 temp_v0_2;
-    s32 temp_s1;
     s32 temp_a0;
     s32 temp_v1;
     s32 newStatus;
@@ -659,16 +661,16 @@ void EntityAlucard(void) {
                         g_Player.timers[15] = 12;
                         break;
                     case 4: {
-                        s32 temp_s1 = ((g_GameTimer & 0xF) << 8);
+                        s32 sp5c = ((g_GameTimer & 0xF) << 8);
                         draw = g_PlayerDraw;
                         draw->r0 = draw->b0 = draw->g0 =
-                            (rsin((s16)temp_s1) + 0x1000) / 64 + 0x60;
+                            (rsin((s16)sp5c) + 0x1000) / 64 + 0x60;
                         draw->r1 = draw->b1 = draw->g1 =
-                            (rsin(temp_s1 + 0x200) + 0x1000) / 64 + 0x60;
+                            (rsin(sp5c + 0x200) + 0x1000) / 64 + 0x60;
                         draw->r3 = draw->b3 = draw->g3 =
-                            (rsin(temp_s1 + 0x400) + 0x1000) / 64 + 0x60;
+                            (rsin(sp5c + 0x400) + 0x1000) / 64 + 0x60;
                         draw->r2 = draw->b2 = draw->g2 =
-                            (rsin(temp_s1 + 0x600) + 0x1000) / 64 + 0x60;
+                            (rsin(sp5c + 0x600) + 0x1000) / 64 + 0x60;
                         draw->enableColorBlend = 1;
                         break;
                     }
@@ -1288,7 +1290,9 @@ block_160:
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
         }
-        temp_s1 = g_Player.vram_flag;
+        sp58 = PLAYER.posX.val;
+        sp54 = PLAYER.posY.val;
+        sp5c = g_Player.vram_flag;
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_WOLF_FORM |
                PLAYER_STATUS_UNK400000 | PLAYER_STATUS_UNK40000000))) {
@@ -1328,7 +1332,7 @@ block_160:
             }
         }
     post_oddblock:
-        g_Player.unk04 = temp_s1;
+        g_Player.unk04 = sp5c;
         if (((*D_80097448 >= 0x29) ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
               (*D_80097448 >= 0xD))) &&

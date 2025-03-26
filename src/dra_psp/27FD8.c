@@ -585,7 +585,7 @@ void EntityAlucard() {
     s32 sp5c;
     s32 sp58;
     s32 sp54;
-    DamageParam damage; // sp44
+    DamageParam damage;
     s32 sp40 = 0;
     unkstr_800cfe48* sp3c;
     s32 sp38;
