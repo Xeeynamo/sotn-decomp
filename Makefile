@@ -105,15 +105,7 @@ SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
 SOTNASSETS      := $(GOPATH)/bin/sotn-assets
 
 # Build functions
-define get_src_files
-	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
-endef
-get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-# sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in get_o_files/get_src_files
-2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
-get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
+list_files		 = $(addprefix $(BUILD_DIR)/,$(shell $(PYTHON) $(TOOLS_DIR)/sotn_build/get_file_list.py list $(1) o_files -c splat))
 define link
 	$(muffle)$(call echo,Linking $(1),optional)
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
@@ -125,18 +117,6 @@ define link
 		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
 		$(3)
 endef
-define get_conf_merged
-	$(shell $(PYTHON) -c 'import yaml;\
-	import os;\
-	yaml_file=open("$(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml");\
-	config = yaml.safe_load(yaml_file); yaml_file.close();\
-	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
-	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
-	print(" ".join(merged_functions))')
-endef
-get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
-get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
-get_psp_o_files = $(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(subst //,/,$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
 add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
@@ -164,42 +144,6 @@ DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) pyth
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
-
-# Functions
-define list_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/handwritten,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
-endef
-define list_st_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_801*.bin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.gfxbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.palbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/cutscene_*.bin))
-endef
-
-define list_o_files
-	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define list_st_o_files
-	$(foreach file,$(call list_st_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define list_shared_src_files
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-endef
-
-define list_shared_o_files
-	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
 ### End old header ###
 
 ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
@@ -291,6 +235,7 @@ format-tools:
 	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
 	$(BLACK) diff_settings.py
+	$(BLACK) tools/sotn_build/*.py
 format-symbols:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort

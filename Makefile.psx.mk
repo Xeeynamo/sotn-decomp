@@ -114,9 +114,9 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(CONFIG_DIR)
 	$(SPLAT) $<
 	touch $@
 
-$(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
+$(BUILD_DIR)/dra.elf: $$(call list_files,dra)
 	$(call link,dra,$@)
-$(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
+$(BUILD_DIR)/tt_%.elf: $$(call list_files,tt_%) | tt_%_dirs
 	$(call link,tt_$*,$@)
 
 $(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
@@ -199,7 +199,7 @@ $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 ric: $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
+$(BUILD_DIR)/ric.elf: $$(call list_files,ric)
 	$(call link,ric,$@)
 
 # Stage category structure
@@ -355,18 +355,9 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
-	$(LD) $(LD_FLAGS) -o $@ \
-		-Map $(BUILD_DIR)/stmad.map \
-		-T $(BUILD_DIR)/stmad.ld \
-		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
-		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
-		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
-	$(call link,stsel,$@)
-$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/st%.elf: $$(call list_files,%)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+$(BUILD_DIR)/bo%.elf: $$(call list_files,%)
 	$(call link,bo$*,$@)
 
 # Weapon overlays

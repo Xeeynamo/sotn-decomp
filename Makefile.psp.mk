@@ -30,14 +30,14 @@ $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(muffle)$(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
-$(foreach target,$(filter-out main,$(GAME)),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_psp_o_files,%)
+$(foreach target,$(filter-out main,$(GAME)),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call list_files,%)
 	$(call link,$*,$@)
-$(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call get_psp_o_files,%,st)
+$(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call list_files,%)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $(BUILD_DIR)/bo%.ld $$(call get_psp_o_files,%,bo)
+$(BUILD_DIR)/bo%.elf: $(BUILD_DIR)/bo%.ld $$(call list_files,%)
 	$(call link,st$*,$@)
 # All servant files are merged
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_files,tt_%)
 	$(call link,tt_$*,$@)
 
 # Step 3/5 of build
