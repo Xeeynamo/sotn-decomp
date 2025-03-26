@@ -771,14 +771,23 @@ void EntityAlucard() {
                 D_800ACDFC--;
             }
             g_Player.padHeld = g_Player.padPressed;
+
+            #if defined(VERSION_PSP)
             if (g_Player.demo_timer != 0) {
                 sp38 = 1;
             } else {
                 sp38 = 0;
             }
             sp40 = sp38;
+            #endif
+
             if (g_Player.demo_timer != 0) {
                 g_Player.demo_timer--;
+#ifdef VERSION_US
+                if (g_Player.demo_timer == 0) {
+                    D_80137FBC = 1;
+                }
+#endif
                 g_Player.padPressed = g_Player.padSim & 0xFFFF;
                 switch (g_Player.padSim >> 0x10) { /* switch 6; irregular */
                 case 1:                            /* switch 6 */

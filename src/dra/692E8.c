@@ -582,7 +582,7 @@ extern bool D_8C630C4;
 extern s32 D_800ACE00[];
 #endif
 
-void EntityAlucard(void) {
+void EntityAlucard() {
     s32 sp5c;
     s32 sp58;
     s32 sp54;
@@ -772,6 +772,16 @@ void EntityAlucard(void) {
                 D_800ACDFC--;
             }
             g_Player.padHeld = g_Player.padPressed;
+
+            #if defined(VERSION_PSP)
+            if (g_Player.demo_timer != 0) {
+                sp38 = 1;
+            } else {
+                sp38 = 0;
+            }
+            sp40 = sp38;
+            #endif
+
             if (g_Player.demo_timer != 0) {
                 g_Player.demo_timer--;
 #ifdef VERSION_US
@@ -780,15 +790,15 @@ void EntityAlucard(void) {
                 }
 #endif
                 g_Player.padPressed = g_Player.padSim & 0xFFFF;
-                switch (g_Player.padSim >> 0x10) { /* switch 6; irregular */
-                case 1:                            /* switch 6 */
+                switch (g_Player.padSim >> 0x10) {
+                case 1:
                     if (PLAYER.step != Player_Unk48) {
                         func_8010E168(1, 4);
                         SetPlayerStep(Player_Unk48);
                         g_unkGraphicsStruct.pauseEnemies = 1;
                     }
                     break;
-                case 2: /* switch 6 */
+                case 2:
                     func_8010E168(1, 4);
                     if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
                         SetPlayerStep(Player_Unk50);
