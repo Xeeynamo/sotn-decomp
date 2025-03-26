@@ -625,7 +625,7 @@ void EntityAlucard() {
         if (i != 0) {
             func_8010E42C(i);
         }
-        if (PLAYER.step != 0x12) {
+        if (PLAYER.step != Player_Teleport) {
             func_8010A234(0);
             func_8010A3F0();
             func_80109990();
@@ -680,7 +680,7 @@ void EntityAlucard() {
                         g_Player.timers[15] = 12;
                         break;
                     case 4: {
-                        var_s3 = ((g_GameTimer & 0xF) << 8);
+                        var_s3 = ((g_GameTimer & 0xF) * 256);
                         draw = g_PlayerDraw;
                         draw->r0 = draw->b0 = draw->g0 =
                             (rsin(var_s3) + 0x1000) / 64 + 0x60;

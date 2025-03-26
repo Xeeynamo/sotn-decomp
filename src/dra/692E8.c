@@ -590,7 +590,7 @@ void EntityAlucard(void) {
     s32 sp40 = 0;
     unkstr_800cfe48* sp3c;
     s32 sp38;
-    s32 (*weapon_func)(void);
+    void (*weapon_func)();
     PlayerDraw* draw;
 
     s32 var_s8;
@@ -607,25 +607,30 @@ void EntityAlucard(void) {
         D_800ACE44--;
     }
     if (g_unkGraphicsStruct.D_800973FC != 0 && D_80137FB8 == 0) {
-        CreateEntFactoryFromEntity(g_Entities, 0x78, 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, 0x78, 0);
     }
+    D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
+    g_Player.unk4C = 0;
+
     var_s8 = 0;
     var_s6 = 0;
-    g_Player.unk70 = g_Player.unk18 = PLAYER.drawFlags = g_Player.unk4C =
-        FLAG_DRAW_DEFAULT;
-    D_80137FB8 = g_unkGraphicsStruct.D_800973FC;
     var_s5 = 0;
+    var_s8 = 0;
+    PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+    g_Player.unk18 = 0;
+    g_Player.unk70 = 0;
+
     g_Player.unk72 = func_80110394();
     if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
         i = GetTeleportToOtherCastle();
         if (i != 0) {
             func_8010E42C(i);
         }
-        if (PLAYER.step != 0x12) {
+        if (PLAYER.step != Player_Teleport) {
             func_8010A234(0);
             func_8010A3F0();
             func_80109990();
-            if (g_Player.unk56 != 0) {
+            if (g_Player.unk56) {
                 g_Status.hp += g_Player.unk58;
                 func_800FE8F0();
                 CreateHPNumMove(g_Player.unk58, 1);
@@ -656,6 +661,18 @@ void EntityAlucard(void) {
             for (i = 0; i < 16; i++) {
                 if (g_Player.timers[i]) {
                     switch (i) {
+                    case 0:
+                    case 1:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 12:
+                    case 13:
+                    case 14:
+                        break;
                     case 2:
                         PLAYER.palette = g_Player.unk40;
                         break;
@@ -664,16 +681,19 @@ void EntityAlucard(void) {
                         g_Player.timers[15] = 12;
                         break;
                     case 4: {
-                        s32 sp5c = ((g_GameTimer & 0xF) << 8);
+                        var_s3 = ((g_GameTimer & 0xF) * 256);
                         draw = g_PlayerDraw;
                         draw->r0 = draw->b0 = draw->g0 =
-                            (rsin((s16)sp5c) + 0x1000) / 64 + 0x60;
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        var_s3 += 0x200;
                         draw->r1 = draw->b1 = draw->g1 =
-                            (rsin(sp5c + 0x200) + 0x1000) / 64 + 0x60;
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        var_s3 += 0x200;
                         draw->r3 = draw->b3 = draw->g3 =
-                            (rsin(sp5c + 0x400) + 0x1000) / 64 + 0x60;
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                        var_s3 += 0x200;
                         draw->r2 = draw->b2 = draw->g2 =
-                            (rsin(sp5c + 0x600) + 0x1000) / 64 + 0x60;
+                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
                         draw->enableColorBlend = 1;
                         break;
                     }
@@ -685,11 +705,17 @@ void EntityAlucard(void) {
                             func_801092E8(1);
                         }
                         break;
-                    case 0:
-                        break;
                     }
-                    if (!--g_Player.timers[i]) {
+                    if (--g_Player.timers[i] == 0) {
                         switch (i) {
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 12:
+                        case 14:
+                            break;
                         case 0:
                             if (!(g_Player.status & (PLAYER_STATUS_STONE |
                                                      PLAYER_STATUS_CURSE))) {
