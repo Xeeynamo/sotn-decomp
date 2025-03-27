@@ -154,12 +154,10 @@ $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 
 # Targets for performing various automated formatting tasks
-%.run.prep:# Ensures temp dir exists and removes any existing run file that might exist
-	mkdir -p $(dir $*.run) && rm $*.run > /dev/null 2>&1 || true
+format-%.run.prep:# Ensures temp dir exists and removes any existing run file that might exist
+	mkdir -p $(TEMP_DIR) && rm format-$*.run > /dev/null 2>&1 || true
 
-$(TEMP_DIR)/format-src.run: $(TEMP_DIR)/format-src.run.prep
-# This is redundant, but is needed for passing CI checks
-	mkdir -p $(TEMP_DIR)
+$(TEMP_DIR)/format-src.run: format-src.run.prep
 	$(call echo,Running clang to format src/* and include/* (this may take some time))
 $(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(TEMP_DIR)/format-src.run $(CLANG)
 	echo "$*" >> $<; $(CLANG) -i $*
@@ -171,9 +169,7 @@ $(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 
-$(TEMP_DIR)/format-symbols.run: $(TEMP_DIR)/format-symbols.run.prep
-# This is redundant, but is needed for passing CI checks
-	mkdir -p $(TEMP_DIR)
+$(TEMP_DIR)/format-symbols.run: format-symbols.run.prep
 	$(call echo,Removing orphan symbols using splat configs)
 $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: $(TEMP_DIR)/format-symbols.run | $(VENV_DIR)
 	echo "$*" >> $<; $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
