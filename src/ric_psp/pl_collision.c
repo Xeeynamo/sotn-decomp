@@ -204,6 +204,98 @@ bool RicCheckInput(s32 checks) {
     return false;
 }
 
+extern s32 debug_wait_info_timer;
+static void DebugShowWaitInfo(const char* msg) {
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint(msg);
+    if (debug_wait_info_timer++ & 4) {
+        FntPrint("\no\n");
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
+
+static void DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        DebugShowWaitInfo(msg);
+    while (PadRead(0) == 0)
+        DebugShowWaitInfo(msg);
+}
+
+void func_8015E484(void) {
+    s32 i;
+    s32 collision = 0;
+    s16 startingPosY = PLAYER.posY.i.hi;
+
+    if (g_Player.vram_flag & 1 || g_IsRicDebugEnter || g_Player.unk78 == 1) {
+        return;
+    }
+    if (PLAYER.posY.i.hi < 0x30) {
+        PLAYER.posY.i.hi -= 0x10;
+        while (true) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; ++i) {
+                g_api.CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + g_RicSensorsFloor[i].x),
+                    (s16)(PLAYER.posY.i.hi + g_RicSensorsFloor[i].y),
+                    &g_Player.colFloor[i], 0);
+            }
+
+            if ((g_Player.colFloor[1].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1 ||
+                (g_Player.colFloor[2].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1 ||
+                (g_Player.colFloor[3].effects &
+                 (EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID)) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi -= 1;
+                collision = 1;
+            } else if (collision == 0) {
+                PLAYER.posY.i.hi += 8;
+                if (PLAYER.posY.i.hi >= 0x30) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            } else {
+                return;
+            }
+        }
+
+    } else if (PLAYER.posY.i.hi >= 0xB1) {
+        PLAYER.posY.i.hi += 0x20;
+        while (true) {
+            for (i = 0; i < NUM_HORIZONTAL_SENSORS; ++i) {
+                g_api.CheckCollision(
+                    (s16)(PLAYER.posX.i.hi + g_RicSensorsCeiling[i].x),
+                    (s16)(PLAYER.posY.i.hi + g_RicSensorsCeiling[i].y),
+                    &g_Player.colCeiling[i], 0);
+            }
+
+            if ((g_Player.colCeiling[1].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1 ||
+                (g_Player.colCeiling[2].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1 ||
+                (g_Player.colCeiling[3].effects &
+                 (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) == 1) {
+                PLAYER.velocityY = 0;
+                PLAYER.posY.i.hi += 1;
+                collision = 1;
+            } else if (collision != 0) {
+                PLAYER.posY.i.hi -= 1;
+                return;
+            } else {
+                PLAYER.posY.i.hi -= 8;
+                if (PLAYER.posY.i.hi < 0xB1) {
+                    PLAYER.posY.i.hi = startingPosY;
+                    return;
+                }
+            }
+        }
+    }
+}
+
 void RicGetPlayerSensor(Collider* col) {
     col->unk14 = g_RicSensorsWall[0].x;
     col->unk1C = g_RicSensorsWall[0].y;
