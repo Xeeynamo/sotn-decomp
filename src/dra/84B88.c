@@ -1488,11 +1488,9 @@ void EntitySubwpnReboundStone(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
         for (prim = (PrimLineG2*)&g_PrimBuf[self->primIndex], i = 0;
              prim != NULL; i++, prim = prim->next) {
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                0xFF;
+            PGREY(prim, 0) = PGREY(prim, 1) = 0xFF;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -1501,7 +1499,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             }
             prim->x0 = prim->x1 = playerX;
             prim->y0 = prim->y1 = playerY;
-            prim->timer = 0x14;
+            prim->timer = 20;
         }
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -1523,10 +1521,9 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
         }
-        self->step += 1;
+        self->step++;
         PlaySfx(SFX_WEAPON_SWISH_C);
         break;
-
     case 1:
         deltaX = rcos(self->ext.reboundStone.stoneAngle) * 0x10;
         deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
