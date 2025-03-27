@@ -2344,13 +2344,17 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
     }
 }
 
+#if defined(VERSION_PSP)
+extern s32 crash_vibhuti_timer;
+#else
 static s32 crash_vibhuti_timer;
+#endif
 void RicEntityCrashVibhuti(Entity* self) {
     FakePrim* prim;
-    s32 magnitude;
     s32 angle;
+    s32 magnitude;
     s32 i;
-    s32 unk7E;
+    s32 facing;
 
     switch (self->step) {
     case 0:
@@ -2362,7 +2366,7 @@ void RicEntityCrashVibhuti(Entity* self) {
         }
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {
             prim->r0 = prim->g0 = prim->b0 = 0xFF;
             prim->w = prim->h = 1;
@@ -2372,50 +2376,53 @@ void RicEntityCrashVibhuti(Entity* self) {
         }
         crash_vibhuti_timer = 0;
         self->step++;
-        return;
+        break;
     case 1:
         // Weird fake stuff to load unk7E a second time
         self->ext.vibhutiCrash.unk7E++;
-        unk7E = self->ext.vibhutiCrash.unk7E;
-        if (!(unk7E & 1)) {
-            if (self->ext.vibhutiCrash.timer < 8) {
-                self->ext.vibhutiCrash.timer++;
-                self->ext.vibhutiCrash.unk80++;
-                if (self->ext.vibhutiCrash.unk80 >= 0x30) {
-                    self->step += 1;
-                }
-                prim = &g_PrimBuf[self->primIndex];
-                for (i = 0; i < 9; i++) {
-                    if (prim->drawMode & DRAW_HIDE) {
-                        break;
-                    }
-                    prim = prim->next;
-                }
-                prim->posX.val = PLAYER.posX.val;
-                prim->posY.val = PLAYER.posY.val + FIX(-24);
-                angle = rand() % 0x200 + 0x300;
-                magnitude = (rand() % 24) + 0x20;
-                prim->velocityX.val = (rcos(angle) * magnitude);
-                prim->velocityY.val = -(rsin(angle) * magnitude);
-                prim->delay = 0x10;
-                prim->drawMode &= ~DRAW_HIDE;
+        if (!(self->ext.vibhutiCrash.unk7E % 2) &&
+            self->ext.vibhutiCrash.timer < 8) {
+            self->ext.vibhutiCrash.timer++;
+            self->ext.vibhutiCrash.unk80++;
+            if (self->ext.vibhutiCrash.unk80 >= 0x30) {
+                self->step++;
             }
+            prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+            for (i = 0; i < 9; i++) {
+                if (prim->drawMode & DRAW_HIDE) {
+                    break;
+                }
+                prim = prim->next;
+            }
+            prim->posX.val = PLAYER.posX.val;
+            prim->posY.val = PLAYER.posY.val + FIX(-24);
+            angle = rand() % 0x200 + 0x300;
+            magnitude = (rand() % 24) + 0x20;
+            prim->velocityX.val = (rcos(angle) * magnitude);
+            prim->velocityY.val = -(rsin(angle) * magnitude);
+            prim->drawMode &= ~DRAW_HIDE;
+            prim->delay = 0x10;
         }
-        /* fallthrough */
+        // fallthrough
     case 2:
-        if (!(++crash_vibhuti_timer & 7)) {
+        crash_vibhuti_timer++;
+        if (!(crash_vibhuti_timer % 8)) {
             g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
         }
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
         for (i = 0; i < 9; i++) {
             if (!(prim->drawMode & DRAW_HIDE)) {
-                if (--prim->delay == 0) {
+                if (!--prim->delay) {
                     prim->drawMode |= DRAW_HIDE;
                     self->ext.vibhutiCrash.timer--;
                     self->ext.vibhutiCrash.x = prim->posX.val;
                     self->ext.vibhutiCrash.y = prim->posY.val;
-                    self->ext.vibhutiCrash.facing = prim->velocityX.val < 1;
-                    // Creates RicEntityVibhutiCrashCloud
+                    if (prim->velocityX.val > 0) {
+                        facing = false;
+                    } else {
+                        facing = true;
+                    }
+                    self->ext.vibhutiCrash.facing = facing;
                     RicCreateEntFactoryFromEntity(
                         self, BP_VITHUBI_CRASH_CLOUD, 0);
                 } else {
@@ -2428,11 +2435,12 @@ void RicEntityCrashVibhuti(Entity* self) {
             }
             prim = prim->next;
         }
-        if ((self->step == 2) && (self->ext.vibhutiCrash.timer == 0)) {
+        if (self->step == 2 && !self->ext.vibhutiCrash.timer) {
             self->step++;
         }
-        return;
+        break;
     case 3:
+        g_Player.unk4E = 1;
         g_Player.unk4E = 1;
         DestroyEntity(self);
         break;
