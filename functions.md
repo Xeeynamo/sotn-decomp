@@ -1390,7 +1390,7 @@
 | ric    | RicEntityCrashBible                 |      742 |         48 | Yes    |                                 |       |
 | ric    | RicEntityCrashCrossBeam             |      743 |         63 |        |                                 |       |
 | dra    | func_80109A44                       |      746 |         77 |        |                                 |       |
-| dra    | CheckCollision                      |      748 |         90 |        | https://decomp.me/scratch/v9jx3 | 0.94  |
+| dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
