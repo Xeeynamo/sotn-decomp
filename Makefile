@@ -40,7 +40,7 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
+PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
@@ -222,7 +222,7 @@ force-extract-disk:
 force_symbols_ovls = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
 $(addprefix FORCE_,$(force_symbols_ovls)): FORCE_%: | $(VENV_DIR)
-	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
+	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
 force-symbols: $(addprefix FORCE_,$(force_symbols_ovls))
 
 context: $(M2CTX_APP) | $(VENV_DIR)
