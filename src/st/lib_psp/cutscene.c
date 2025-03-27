@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../../st/lib/lib.h"
+#include "../lib/lib.h"
 
 // clang-format off
 static u16 actor_names_en[] = {
