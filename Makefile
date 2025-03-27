@@ -237,7 +237,7 @@ $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
 	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
 $(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
 	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
-	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
+	7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR) || true
 extract-disk: $(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
@@ -319,10 +319,10 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 dependencies_saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR):
 	git submodule update --init $(SATURN_SPLITTER_DIR)
-$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
-	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml
-$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
-	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml
+$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
+	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
+$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
+	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 $(DOSEMU_DIR):
 	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
 $(TOOLS_DIR)/dosemu.make.chkpt: $(DOSEMU_DIR)
