@@ -413,7 +413,7 @@ void func_us_801B4A30(Entity* self) {
             lastPrim->x1 = lastPrim->x3 = 0;
             lastPrim->y0 = lastPrim->y1 = 0;
             lastPrim->y2 = lastPrim->y3 = 0;
-            lastPrim->r0 = lastPrim->g0 = lastPrim->b0 = 0xFF;
+            PGREY(lastPrim, 0) = 0xFF;
             LOW(lastPrim->r1) = LOW(lastPrim->r0);
             LOW(lastPrim->r2) = LOW(lastPrim->r0);
             LOW(lastPrim->r3) = LOW(lastPrim->r0);
