@@ -38,23 +38,13 @@ MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
 DEPENDENCIES	+= $(ALLEGREX_AS)
-
+SOTNSTR			:= $(SOTNSTR_APP) process
 AUTO_MERGE_FILES	:= e_init.c
 
 # PSP specific targets
 build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
 
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_EXTRACT_TARGETS)))
-
-$(WIBO):
-	wget -O $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
-	sha256sum --check $(WIBO).sha256
-	chmod +x $(WIBO)
-$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
-
-$(MWCCGAP_APP):
-	git submodule init $(MWCCGAP_DIR)
-	git submodule update $(MWCCGAP_DIR)
 
 dra_psp: $(BUILD_DIR)/dra.bin
 ric_psp: $(BUILD_DIR)/ric.bin
@@ -75,31 +65,31 @@ $(BUILD_DIR)/st0.bin: $(BUILD_DIR)/stst0.elf
 $(BUILD_DIR)/wrp.bin: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
+$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.pspeu.ric.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.ric.txt
+$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.pspeu.ric.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.ric.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
+$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
+$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT) $<
 
-$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/dra.ld $$(call get_merged_o_files,%) $$(call list_o_files_psp,dra_psp)
+$(BUILD_DIR)/dra.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/dra.ld $$(call get_psp_o_files,%)
 	$(call link,dra,$@)
 
-$(BUILD_DIR)/ric.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/ric.ld $$(call get_merged_o_files,%) $$(call list_o_files_psp,ric_psp) $(BUILD_DIR)/assets/ric/mwo_header.bin.o
+$(BUILD_DIR)/ric.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/ric.ld $$(call get_psp_o_files,%)
 	$(call link,ric,$@)
 
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_o_files_psp,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
-$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stlib.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/lib_psp) $(BUILD_DIR)/assets/st/lib/mwo_header.bin.o
+$(BUILD_DIR)/stlib.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stlib.ld $$(call get_psp_o_files,%,st)
 	$(call link,stlib,$@)
-$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stno4.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/no4_psp) $(BUILD_DIR)/assets/st/no4/mwo_header.bin.o
+$(BUILD_DIR)/stno4.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stno4.ld $$(call get_psp_o_files,%,st)
 	$(call link,stno4,$@)
-$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stst0.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/st0_psp) $(BUILD_DIR)/assets/st/st0/mwo_header.bin.o
+$(BUILD_DIR)/stst0.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stst0.ld $$(call get_psp_o_files,%,st)
 	$(call link,stst0,$@)
-$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stwrp.ld $$(call get_merged_o_files,%,st) $$(call list_o_files_psp,st/wrp_psp) $(BUILD_DIR)/assets/st/wrp/mwo_header.bin.o
+$(BUILD_DIR)/stwrp.elf: $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/stwrp.ld $$(call get_psp_o_files,%,st)
 	$(call link,stwrp,$@)
 
 # Recipes
