@@ -1,0 +1,15 @@
+# Matches in tools or any subdirectory
+!.gitignore
+go
+out
+*.map
+permute.me/
+target/
+!sotn-debugmodule/sotn-debugmodule.ld
+
+# Dependency installation checkpoints
+*.make.chkpt
+
+# Matches in tools only
+/sotn-disk/sotn-disk
+/sotn-assets/sotn-assets

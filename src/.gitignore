@@ -1,3 +1,5 @@
+# Matches in src or any subdirectory
+!.gitignore
 rooms.c
 sprites.c
 e_laydef.c
@@ -9,3 +11,6 @@ sprite_banks.h
 tilemap_*.h
 tiledef_*.h
 cutscene_data.h
+
+weapon/w_*_1.h
+weapon/w_*_2.h
