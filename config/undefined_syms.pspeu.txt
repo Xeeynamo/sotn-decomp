@@ -29,3 +29,6 @@ g_PlayerX           = 0x091ED298;
 g_PlayerDraw        = 0x091ED2A8;
 abs                 = 0x08906AF0;
 D_psp_08C630DC      = 0x08C630DC;
+D_psp_09186EF8      = 0x09186EF8;
+D_psp_09186F10      = 0x09186F10;
+D_psp_09187040      = 0x09187040;

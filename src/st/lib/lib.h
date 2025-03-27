@@ -93,7 +93,7 @@ extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-// extern EInit D_us_80180800;
+extern EInit D_us_80180800;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_80180824;
