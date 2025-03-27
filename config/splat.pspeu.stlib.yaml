@@ -63,7 +63,7 @@ segments:
       - [0x11A88, c, lib/collision]
       - [0x13C60, c, lib/e_mist_door]
       - [0x13EE8, c, lib/e_mudman]
-      - [0x15190, c, lib_psp/popup]
+      - [0x15190, c, lib/popup]
       - [0x15788, c, lib/e_flea_man]
       - [0x15E00, c, lib/e_room_fg]
       - [0x15F18, c, lib/e_flea_armor]

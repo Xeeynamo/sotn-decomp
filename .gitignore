@@ -1,41 +1,25 @@
-main.exe
-DRA.BIN
-BIN/ARC_F.BIN
-BIN/RIC.BIN
-ST/
-
+# Matches globally
 ctx.c
 ctx.c.m2c
-*.map
-*auto.*.txt
-generated.symbols.*.txt
+sotn_calltree.txt
 __pycache__
-
+.idea/
+.venv/
 asm/
-/assets/
 build/
 expected/
 disks/
-
+nonmatchings/
 .vscode/settings.json
-.idea/
-.venv/
-tools/go
 
-!tools/sotn-debugmodule/sotn-debugmodule.ld
-tools/saturn_toolchain/GCCSH
-config/saturn/game_syms.txt
-config/saturn/stage_02_syms.txt
-config/saturn/t_bat_syms.txt
-config/saturn/zero_syms.txt
-
-sotn_calltree.txt
+# Unsure if these are directories or files
 function_calls
-
 gmon.out
 
-nonmatchings/
-tools/sotn_permuter/permute.me/
-tools/sotn_str/target/
+# Temporary files that are used during make format-src and make format-symbols respectively
+format-src.run
+format-symbols.run
 
-*.make.chkpt
+# Matches in repo root folder only
+/*.map
+/assets/

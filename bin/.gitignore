@@ -1,3 +1,4 @@
+# Matches in bin or any subdirectory
 *
 !.gitignore
 !*.sha256
