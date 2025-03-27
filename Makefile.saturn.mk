@@ -117,8 +117,7 @@ $(CC1_SATURN): $(SATURN_TOOLCHAIN)
 	touch $(CC1_SATURN)
 
 $(SATURN_SPLITTER_APP):
-	git submodule init $(SATURN_SPLITTER_DIR)
-	git submodule update $(SATURN_SPLITTER_DIR)
+	git submodule update --init $(SATURN_SPLITTER_DIR)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 	cd $(SATURN_SPLITTER_DIR)/adpcm-extract && cargo build --release
 
