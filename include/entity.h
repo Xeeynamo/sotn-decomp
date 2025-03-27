@@ -1446,9 +1446,9 @@ typedef struct {
     u16 unk7E;
     s16 unk80;
     s16 pad82;
-    s32 unk84;
-    s32 unk88;
-    u16 unk8C;
+    s32 x;
+    s32 y;
+    s16 facing;
 } ET_VibhutiCrash;
 typedef struct {
 #ifdef PLATFORM_64BIT

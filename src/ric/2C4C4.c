@@ -2301,44 +2301,40 @@ static AnimationFrame D_80155EA8[] = {
     {3, FRAME(9, 0)},  {3, FRAME(10, 0)}, {3, FRAME(11, 0)}, {3, FRAME(12, 0)},
     {3, FRAME(13, 0)}, A_LOOP_AT(0)};
 void RicEntityVibhutiCrashCloud(Entity* entity) {
-    s16 primIndex;
-    s32 newVelocity;
+    s32 angle;
 
     switch (entity->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = primIndex;
-        if (primIndex != -1) {
-            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-            entity->posX.val =
-                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk84;
-            entity->posY.val =
-                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk88;
-            entity->facingLeft =
-                entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.unk8C;
-            entity->ext.vibCrashCloud.subweaponId = PL_W_CRASH_VIBHUTI;
-            RicSetSubweaponParams(entity);
-            entity->unk5A = 0x79;
-            entity->animSet = ANIMSET_DRA(14);
-            entity->palette = PAL_OVL(0x19E);
-            entity->anim = D_80155EA8;
-            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-            entity->drawFlags = FLAG_DRAW_UNK8;
-            entity->unk6C = 0x60;
-            entity->hitboxWidth = 8;
-            entity->hitboxHeight = 8;
-            entity->flags |= FLAG_UNK_100000;
-            newVelocity = (rand() % 512) + 0x300;
-            entity->velocityX = rcos(newVelocity) * 32;
-            entity->velocityY = -(rsin(newVelocity) * 32);
-            entity->step++;
-        } else {
+        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (entity->primIndex == -1) {
             DestroyEntity(entity);
+            return;
         }
+        entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        entity->posX.val = entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.x;
+        entity->posY.val = entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.y;
+        entity->facingLeft =
+            entity->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
+        entity->ext.vibCrashCloud.subweaponId = PL_W_CRASH_VIBHUTI;
+        RicSetSubweaponParams(entity);
+        entity->flags |= FLAG_UNK_100000;
+        entity->unk5A = 0x79;
+        entity->animSet = ANIMSET_DRA(14);
+        entity->palette = PAL_OVL(0x19E);
+        entity->anim = D_80155EA8;
+        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->drawFlags = FLAG_DRAW_UNK8;
+        entity->unk6C = 0x60;
+        entity->hitboxWidth = 8;
+        entity->hitboxHeight = 8;
+        angle = (rand() % 512) + 0x300;
+        entity->velocityX = rcos(angle) * 32;
+        entity->velocityY = -(rsin(angle) * 32);
+        entity->step++;
         break;
-
     case 1:
-        if (++entity->ext.vibCrashCloud.unk7C >= 39) {
+        entity->ext.vibCrashCloud.unk7C++;
+        if (entity->ext.vibCrashCloud.unk7C >= 39) {
             DestroyEntity(entity);
         } else {
             entity->posX.val += entity->velocityX;
@@ -2416,9 +2412,9 @@ void RicEntityCrashVibhuti(Entity* self) {
                 if (--prim->delay == 0) {
                     prim->drawMode |= DRAW_HIDE;
                     self->ext.vibhutiCrash.timer--;
-                    self->ext.vibhutiCrash.unk84 = prim->posX.val;
-                    self->ext.vibhutiCrash.unk88 = prim->posY.val;
-                    self->ext.vibhutiCrash.unk8C = prim->velocityX.val < 1;
+                    self->ext.vibhutiCrash.x = prim->posX.val;
+                    self->ext.vibhutiCrash.y = prim->posY.val;
+                    self->ext.vibhutiCrash.facing = prim->velocityX.val < 1;
                     // Creates RicEntityVibhutiCrashCloud
                     RicCreateEntFactoryFromEntity(
                         self, BP_VITHUBI_CRASH_CLOUD, 0);

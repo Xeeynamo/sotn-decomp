@@ -54,6 +54,8 @@ segments:
       - [0x28400, .data, ric/pl_debug]
       - [0x28410, .data, ric/pl_handlers]
       - [0x28438, data]
+      - [0x2D2B0, .data, ric_psp/D268]
+      - [0x2D2E8, data]
       - [0x30100, .rodata, ric/pl_handlers]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]
