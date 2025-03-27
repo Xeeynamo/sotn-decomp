@@ -341,6 +341,9 @@ extern Point16 g_SensorsWall[];
 
 #if !defined(VERSION_US)
 extern s32 D_800ACEDC_hd;
+#define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
+#else
+#define TRANSFORM_LOCKOUT_TIMER g_Player.unk20
 #endif
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table

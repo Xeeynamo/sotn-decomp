@@ -638,12 +638,7 @@ void PlayerStepUnmorphWolf(void) {
             g_Player.unk44 |= 0x100;
             PLAYER.palette = 0x8100;
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
-#if defined(VERSION_US)
-            g_Player.unk20 = 0x18;
-#else
-            D_800ACEDC_hd = 0x18;
-#endif
-
+            TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
         break;

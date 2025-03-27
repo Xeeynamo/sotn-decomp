@@ -216,12 +216,7 @@ void func_80109594() {
         prim = prim->next;
     }
     func_801093C4();
-
-#if defined(VERSION_US)
-    g_Player.unk20 = 0x10;
-#elif defined(VERSION_PSP)
-    D_800ACEDC_hd = 0x10;
-#endif
+    TRANSFORM_LOCKOUT_TIMER = 0x10;
 
 #if !defined(VERSION_HD)
     g_Player.padSim = 0;
@@ -955,11 +950,10 @@ void EntityAlucard() {
                     }
                 specialmove:
                     CheckSpecialMoveInputs();
-#if defined(VERSION_US)
-                    if (g_Player.unk20 == 0 || --g_Player.unk20 == 0) {
-#elif defined(VERSION_HD)
-                    if (D_800ACEDC_hd == 0 || --D_800ACEDC_hd == 0) {
-#endif
+                    if (TRANSFORM_LOCKOUT_TIMER != 0) {
+                        TRANSFORM_LOCKOUT_TIMER--;
+                    }
+                    if (TRANSFORM_LOCKOUT_TIMER == 0) {
                         if (D_80097448[1] == 0) {
                             if ((g_Player.padTapped & PAD_L1) &&
                                 (HandleTransformationMP(

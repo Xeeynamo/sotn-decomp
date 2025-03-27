@@ -2894,11 +2894,7 @@ void PlayerStepUnmorphBat(void) {
             }
             g_Player.unk44 |= 0x100;
             PLAYER.palette = 0x8100;
-#if defined(VERSION_US)
-            g_Player.unk20 = 0x18;
-#else
-            D_800ACEDC_hd = 0x18;
-#endif
+            TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
         break;
@@ -3264,11 +3260,7 @@ void PlayerStepUnmorphMist(void) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
-#if defined(VERSION_US)
-            g_Player.unk20 = 0x18;
-#else
-            D_800ACEDC_hd = 0x18;
-#endif
+            TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
     }

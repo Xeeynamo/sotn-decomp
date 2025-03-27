@@ -216,11 +216,7 @@ void func_80109594() {
     }
     func_801093C4();
 
-#if defined(VERSION_US)
-    g_Player.unk20 = 0x10;
-#elif defined(VERSION_PSP)
-    D_800ACEDC_hd = 0x10;
-#endif
+    TRANSFORM_LOCKOUT_TIMER = 0x10;
 
 #if !defined(VERSION_HD)
     g_Player.padSim = 0;
@@ -954,10 +950,10 @@ void EntityAlucard() {
                     }
                 specialmove:
                     CheckSpecialMoveInputs();
-                    if (D_800ACEDC_hd != 0) {
-                        D_800ACEDC_hd--;
+                    if (TRANSFORM_LOCKOUT_TIMER != 0) {
+                        TRANSFORM_LOCKOUT_TIMER--;
                     }
-                    if (D_800ACEDC_hd == 0) {
+                    if (TRANSFORM_LOCKOUT_TIMER == 0) {
                         var_s7 = g_Player.padPressed;
                         if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
                             PLAYER.step == Player_MorphWolf ||
