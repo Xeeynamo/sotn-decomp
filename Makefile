@@ -163,17 +163,17 @@ format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
 # Redirecting sotn-lint stdout because even if there was sometshing useful, you'd never see it because of the output spam
 	$(SOTNLINT) 1>/dev/null; rm $@.run
 
-$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)/bin
+$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 
 format-symbols.run:
 	rm $@ > /dev/null 2>&1 || true
 	$(call echo,Removing orphan symbols using splat configs)
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)/bin
+$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
 	echo "$*" >> format-symbols.run
 	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
-$(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)/bin
+$(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
 	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
 format-symbols: $(addprefix format-symbols_,us pspeu hd saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
 	rm $@.run > /dev/null 2>&1 || true
@@ -218,11 +218,11 @@ force-extract:
 # Other utility targets
 force_symbols_ovls = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
-$(addprefix FORCE_,$(force_symbols_ovls)): FORCE_%: | $(VENV_DIR)/bin
+$(addprefix FORCE_,$(force_symbols_ovls)): FORCE_%: | $(VENV_DIR)
 	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols.us.$*.txt
 force-symbols: $(addprefix FORCE_,$(force_symbols_ovls))
 
-context: $(M2CTX_APP) | $(VENV_DIR)/bin
+context: $(M2CTX_APP) | $(VENV_DIR)
 ifndef SOURCE
 	$(error SOURCE environment variable must be set to generate context)
 endif
@@ -276,7 +276,7 @@ dump-disk_%: PHONY# Last resort
 	$(error Automated dumping of $* is not supported)
 dump-disk: dump-disk_$(VERSION)
 
-function-finder: graphviz | $(VENV_DIR)/bin
+function-finder: graphviz | $(VENV_DIR)
 	$(MAKE) clean
 	$(MAKE) force-symbols
 	$(MAKE) force-extract 
@@ -290,7 +290,7 @@ function-finder: graphviz | $(VENV_DIR)/bin
 	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
 	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
 
-duplicates-report: | $(VENV_DIR)/bin
+duplicates-report: | $(VENV_DIR)
 	$(MAKE) clean
 	$(MAKE) force-symbols
 	$(MAKE) force-extract
@@ -353,10 +353,6 @@ $(GO):
 $(VENV_DIR):
 	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(MAKE) python-dependencies
-# Used when an explicit make restart is needed after venv is created
-$(VENV_DIR)/bin:
-	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
-	$(MAKE) python-dependencies && echo "Build environment has changed due to venv install, please restart Make" && exit 1
 $(TOOLS_DIR)/python-dependencies.make.chkpt: $(TOOLS_DIR)/requirements-python.txt | $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && touch $@
 python-dependencies: $(TOOLS_DIR)/python-dependencies.make.chkpt
@@ -443,7 +439,7 @@ PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extrac
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
-MUFFLED_TARGETS += $(DOSEMU_DIR) $(TOOLS_DIR)/dosemu.make.chkpt $(TOOLS_DIR)/python-dependencies.make.chkpt $(TOOLS_DIR)/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
+MUFFLED_TARGETS += $(DOSEMU_DIR) $(TOOLS_DIR)/dosemu.make.chkpt $(TOOLS_DIR)/python-dependencies.make.chkpt $(TOOLS_DIR)/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)
