@@ -88,6 +88,7 @@ GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
+MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
 SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
 ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
@@ -139,6 +140,7 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 # Symbols
 MAIN_TARGET     := $(BUILD_DIR)/main
 
+MIPSMATCH_DIR   := $(TOOLS_DIR)/mipsmatch
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2CTX           := $(PYTHON) $(M2CTX_APP)
@@ -151,7 +153,7 @@ MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
 MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
 
-DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
+DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) $(MIPSMATCH_APP) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
@@ -538,6 +540,14 @@ $(M2C_APP):
 $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
+
+$(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSMATCH_DIR)/src $(MIPSMATCH_DIR)/Cargo.* -type f)
+	git submodule init $(MIPSMATCH_DIR)
+	git submodule update $(MIPSMATCH_DIR)
+	cd $(MIPSMATCH_DIR) ; \
+	    cargo build --release
+$(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
+	cp $< $@
 $(GO):
 	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
