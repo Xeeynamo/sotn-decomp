@@ -15,12 +15,12 @@ echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allo
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
-wget		= $(let log,/tmp/wget-$(or $(3),$(2),$(1)).log,if wget -a $(log) $(if $(2),-O $(2) )$(1); then rm $(log) || true; else cat $(log) && exit 1; fi)
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
 # System related variables
-OS 				:= $(subst Darwin,macOS,$(shell uname -s))
+OS 				:= $(call to_lower,$(shell uname -s))
+ARCH			:= $(subst x86_64,amd64,$(shell uname -m))
 SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)# Only used for installing venv
 PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
 PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3# This is slightly redundant to handle the slash
@@ -40,7 +40,6 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-TEMP_DIR		:= /tmp/sotn-decomp# Used for force-extract, format-src and format-symbols
 PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
@@ -155,12 +154,12 @@ clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 
 # Targets for performing various automated formatting tasks
 format-%.run.prep:# Ensures temp dir exists and removes any existing run file that might exist
-	mkdir -p $(TEMP_DIR) && rm format-$*.run > /dev/null 2>&1 || true
+	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/format-$*.run > /dev/null 2>&1 || true
 
-$(TEMP_DIR)/format-src.run: format-src.run.prep
+format-src.run: format-src.run.prep
 	$(call echo,Running clang to format src/* and include/* (this may take some time))
-$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(TEMP_DIR)/format-src.run $(CLANG)
-	echo "$*" >> $<; $(CLANG) -i $*
+$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: format-src.run $(CLANG)
+	echo "$*" >> /tmp/sotn-decomp/$<; $(CLANG) -i $*
 format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
 # Redirecting sotn-lint stdout because even if there was something useful, you'd never see it because of the output spam
 	$(SOTNLINT) 1>/dev/null
@@ -169,9 +168,9 @@ $(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 
-$(TEMP_DIR)/format-symbols.run: format-symbols.run.prep
+format-symbols.run: format-symbols.run.prep
 	$(call echo,Removing orphan symbols using splat configs)
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: $(TEMP_DIR)/format-symbols.run | $(VENV_DIR)
+$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
 	echo "$*" >> $<; $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
 $(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
 	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
@@ -210,10 +209,11 @@ expected: check
 
 # Force targets
 force-extract:
-	@rm -rf $(TEMP_DIR)/src || true; mv src $(TEMP_DIR)/src
+	mkdir -p /tmp/sotn-decomp
+	rm -rf /tmp/sotn-decomp/src || true; mv src /tmp/sotn-decomp/src
 	find $(BUILD_DIR) -type f -name "*.ld" -delete || true
 	$(MAKE) extract
-	rm -rf $(SRC_DIR); mv $(TEMP_DIR)/src $(SRC_DIR)
+	rm -rf $(SRC_DIR); mv /tmp/sotn-decomp/src $(SRC_DIR)
 force-extract-disk:
 	@rm -rf $(EXTRACTED_DISK_DIR) || true
 	$(MAKE) extract-disk
@@ -314,7 +314,7 @@ dependencies.pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
 $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
-	$(call wget,https://github.com/decompals/wibo/releases/download/0.6.13/wibo,$@,wibo)
+	curl -sSf -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
@@ -337,8 +337,6 @@ $(M2C_APP): $(TOOLS_DIR)/python-dependencies.make.chkpt | $(VENV_DIR)
 	git submodule update --init $(dir $(M2C_APP))
 $(PERMUTER_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(PERMUTER_APP))
-$(M2CTX_APP): | $(VENV_DIR)
-	$(call wget,https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py,$@,m2ctx_app)
 
 $(SOTNSTR_APP): $(TOOLS_DIR)/sotn_str/Cargo.toml $(wildcard $(TOOLS_DIR)/sotn_str/src/*)
 	cargo build --release --manifest-path $(TOOLS_DIR)/sotn_str/Cargo.toml
@@ -347,8 +345,8 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR) && $(GO) build
 $(GO):
-	$(call wget,https://go.dev/dl/go1.22.4.linux-amd64.tar.gz,go1.22.4.linux-amd64.tar.gz,go)
-	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz; rm go1.22.4.linux-amd64.tar.gz
+	curl -sSf -o go.tar.gz https://go.dev/dl/go1.22.4.$(OS)-$(ARCH).amd64.tar.gz
+	tar -C $(HOME) -xzf go.tar.gz; rm go.tar.gz
 
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
 $(VENV_DIR):
@@ -363,7 +361,7 @@ $(TOOLS_DIR)/graphviz.make.chkpt: $(TOOLS_DIR)/python-dependencies.make.chkpt
 graphviz: $(TOOLS_DIR)/graphviz.make.chkpt
 
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
-	$(call wget,https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz,$@,$*) 
+	curl -sSf -o $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
 	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
@@ -434,8 +432,8 @@ dump-disk: ##@ dump a physical game disk
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
 PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
-PHONY_TARGETS += format-src $(TEMP_DIR)/format-src.run $(TEMP_DIR)/format-src.run.prep $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-PHONY_TARGETS += format-symbols $(TEMP_DIR)/format-symbols.run $(TEMP_DIR)/format-symbols.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
+PHONY_TARGETS += format-src format-src.run format-src.run.prep $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
+PHONY_TARGETS += format-symbols format-symbols.runformat-symbol s.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
