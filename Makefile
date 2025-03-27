@@ -319,9 +319,9 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 dependencies_saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR):
 	git submodule update --init $(SATURN_SPLITTER_DIR)
-$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
+$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
 	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml
-$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
+$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
 	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml
 $(DOSEMU_DIR):
 	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
