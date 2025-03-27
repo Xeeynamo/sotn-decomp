@@ -1443,7 +1443,7 @@ typedef struct {
 } ET_SubwpnAxe;
 typedef struct {
     s16 timer;
-    u16 unk7E;
+    s16 unk7E;
     s16 unk80;
     s16 pad82;
     s32 x;

@@ -835,7 +835,108 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashVibhuti);
+#if defined(VERSION_PSP)
+extern s32 crash_vibhuti_timer;
+#else
+static s32 crash_vibhuti_timer;
+#endif
+void RicEntityCrashVibhuti(Entity* self) {
+    FakePrim* prim;
+    s32 angle;
+    s32 magnitude;
+    s32 i;
+    s32 facing;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 9);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        for (i = 0; i < 9; i++) {
+            prim->r0 = prim->g0 = prim->b0 = 0xFF;
+            prim->w = prim->h = 1;
+            prim->priority = PLAYER.zPriority + 8;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+            prim = prim->next;
+        }
+        crash_vibhuti_timer = 0;
+        self->step++;
+        break;
+    case 1:
+        // Weird fake stuff to load unk7E a second time
+        self->ext.vibhutiCrash.unk7E++;
+        if (!(self->ext.vibhutiCrash.unk7E % 2) &&
+            self->ext.vibhutiCrash.timer < 8) {
+            self->ext.vibhutiCrash.timer++;
+            self->ext.vibhutiCrash.unk80++;
+            if (self->ext.vibhutiCrash.unk80 >= 0x30) {
+                self->step++;
+            }
+            prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+            for (i = 0; i < 9; i++) {
+                if (prim->drawMode & DRAW_HIDE) {
+                    break;
+                }
+                prim = prim->next;
+            }
+            prim->posX.val = PLAYER.posX.val;
+            prim->posY.val = PLAYER.posY.val + FIX(-24);
+            angle = rand() % 0x200 + 0x300;
+            magnitude = (rand() % 24) + 0x20;
+            prim->velocityX.val = (rcos(angle) * magnitude);
+            prim->velocityY.val = -(rsin(angle) * magnitude);
+            prim->drawMode &= ~DRAW_HIDE;
+            prim->delay = 0x10;
+        }
+        // fallthrough
+    case 2:
+        crash_vibhuti_timer++;
+        if (!(crash_vibhuti_timer % 8)) {
+            g_api.PlaySfx(SFX_NOISE_SWEEP_DOWN_A);
+        }
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        for (i = 0; i < 9; i++) {
+            if (!(prim->drawMode & DRAW_HIDE)) {
+                if (!--prim->delay) {
+                    prim->drawMode |= DRAW_HIDE;
+                    self->ext.vibhutiCrash.timer--;
+                    self->ext.vibhutiCrash.x = prim->posX.val;
+                    self->ext.vibhutiCrash.y = prim->posY.val;
+                    if (prim->velocityX.val > 0) {
+                        facing = false;
+                    } else {
+                        facing = true;
+                    }
+                    self->ext.vibhutiCrash.facing = facing;
+                    RicCreateEntFactoryFromEntity(
+                        self, BP_VITHUBI_CRASH_CLOUD, 0);
+                } else {
+                    prim->posX.val += prim->velocityX.val;
+                    prim->posY.val += prim->velocityY.val;
+                    prim->velocityY.val += FIX(0.25);
+                    prim->x0 = prim->posX.i.hi;
+                    prim->y0 = prim->posY.i.hi;
+                }
+            }
+            prim = prim->next;
+        }
+        if (self->step == 2 && !self->ext.vibhutiCrash.timer) {
+            self->step++;
+        }
+        break;
+    case 3:
+        g_Player.unk4E = 1;
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 // clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashReboundStoneParticles);
