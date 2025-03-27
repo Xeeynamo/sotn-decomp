@@ -144,16 +144,7 @@ get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
 add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
 
-ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
-include Makefile.psx.mk
-else ifeq ($(VERSION),pspeu)
-include Makefile.psp.mk
-else ifeq ($(VERSION),saturn)
-include Makefile.saturn.mk
-endif
-
 all: build check
-
 extract: extract_$(VERSION)
 build: build_$(VERSION)
 
@@ -309,7 +300,7 @@ duplicates-report: | $(VENV_DIR)/bin
 
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS)
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP)
 	git clean -fdq $(BIN_DIR)/
 update-dependencies-all: update-dependencies $(addprefix dependencies_,us pspeu hd saturn)
 
@@ -328,9 +319,9 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 dependencies_saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR):
 	git submodule update --init $(SATURN_SPLITTER_DIR)
-$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR)
+$(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
 	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml
-$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR)
+$(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
 	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml
 $(DOSEMU_DIR):
 	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
@@ -348,7 +339,7 @@ $(M2CTX_APP): | $(VENV_DIR)
 	$(call wget,https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py,$@,m2ctx_app)
 	$(muffle)rm wget-m2ctx_app.log
 
-$(SOTNSTR_APP):
+$(SOTNSTR_APP): $(TOOLS_DIR)/sotn_str/Cargo.toml $(wildcard $(TOOLS_DIR)/sotn_str/src/*)
 	cargo build --release --manifest-path $(TOOLS_DIR)/sotn_str/Cargo.toml
 $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 	cd $(SOTNDISK_DIR) && $(GO) build
@@ -380,6 +371,14 @@ $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
 	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
 	$(muffle)touch $@; rm wget-$*.log
+
+ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
+include Makefile.psx.mk
+else ifeq ($(VERSION),pspeu)
+include Makefile.psp.mk
+else ifeq ($(VERSION),saturn)
+include Makefile.saturn.mk
+endif
 
 # this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
