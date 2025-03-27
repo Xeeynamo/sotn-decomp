@@ -209,12 +209,15 @@ expected: check
 	mkdir -p expected/$(BUILD_DIR); rm -rf expected/$(BUILD_DIR)
 	cp -r $(BUILD_DIR) expected/$(BUILD_DIR)
 
+# Force targets
 force-extract:
 	@rm -rf /tmp/src_tmp || true; mv src /tmp/src_tmp
 	find $(BUILD_DIR) -type f -name "*.ld" -delete || true
 	$(MAKE) extract
 	rm -rf src/; mv /tmp/src_tmp src
-
+force-extract-disk:
+	@rm -rf $(EXTRACTED_DISK_DIR) || true
+	$(MAKE) extract-disk
 # Other utility targets
 force_symbols_ovls = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
@@ -233,8 +236,8 @@ endif
 $(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
 	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
 $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
-	mkdir -p $(EXTRACTED_DISK_DIR)
-	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
+	mkdir -p $(EXTRACTED_DISK_DIR) $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
+	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
 $(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
 	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
 	7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR) || true
