@@ -789,15 +789,15 @@ void EntityAlucard() {
                 }
 #endif
                 g_Player.padPressed = g_Player.padSim & 0xFFFF;
-                switch (g_Player.padSim >> 0x10) { /* switch 6; irregular */
-                case 1:                            /* switch 6 */
+                switch (g_Player.padSim >> 0x10) {
+                case 1:
                     if (PLAYER.step != Player_Unk48) {
                         func_8010E168(1, 4);
                         SetPlayerStep(Player_Unk48);
                         g_unkGraphicsStruct.pauseEnemies = 1;
                     }
                     break;
-                case 2: /* switch 6 */
+                case 2:
                     func_8010E168(1, 4);
                     if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
                         SetPlayerStep(Player_Unk50);
@@ -808,15 +808,24 @@ void EntityAlucard() {
                     break;
                 }
             } else {
-                g_Player.padPressed = g_pads[0].pressed &
-                                      ~(PAD_SQUARE | PAD_CROSS | PAD_TRIANGLE |
-                                        PAD_CIRCLE | PAD_L1 | PAD_R1);
+                g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
+#if defined(VERSION_PSP)
                 for (i = 0; i < 6; i++) {
                     if (g_Settings.buttonMask[i] ==
+#else
+                for (i = 0; i < 8; i++) {
+                    if(
+#endif
                         (g_pads[0].pressed & g_Settings.buttonMask[i])) {
                         g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
+#ifdef VERSION_US
+                if (D_80137FBC != 0) {
+                    D_80137FBC = 0;
+                    g_Player.padHeld = g_Player.padPressed;
+                }
+#endif
             }
             g_Player.padTapped =
                 (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
@@ -825,6 +834,10 @@ void EntityAlucard() {
                 g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
             }
             if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
+#ifdef VERSION_US
+                FntPrint("step:%04x\n", PLAYER.step);
+                FntPrint("bat_i_step:%04x\n", g_Player.unk66);
+#endif
                 return;
             }
             if ((D_80097448[1] != 0) &&
@@ -833,25 +846,34 @@ void EntityAlucard() {
                 PLAYER.hitParams = 6;
             }
 
+// US uses a different ordering than HD/PSP
+#if !defined(VERSION_US)
             if (g_Player.timers[13] | g_Player.timers[14]) {
                 goto specialmove;
             }
+#endif
             if (g_Player.unk60 < 2) {
                 if (g_Player.unk60 == 1) {
                     var_s6 = PLAYER.step;
                     var_s5 = PLAYER.step_s;
                     SetPlayerStep(Player_BossGrab);
                 } else {
+#if defined(VERSION_US)
+                    if (!(g_Player.timers[13] | g_Player.timers[14])) {
+#else
                     if (1) { // to make curly braces match
+#endif
                         if (PLAYER.hitParams) {
                             var_s6 = PLAYER.step;
                             var_s5 = PLAYER.step_s;
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
+                            #if defined(VERSION_PSP)
                             if (D_8C630C4) {
                                 PLAYER.hitPoints = 0;
                                 i = 0;
                             }
+                            #endif
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
                                 ((i == 1) || (i == 8) || (i == 7))) {
                                 i = 3;

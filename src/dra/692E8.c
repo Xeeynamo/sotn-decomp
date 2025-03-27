@@ -809,10 +809,15 @@ void EntityAlucard() {
                     break;
                 }
             } else {
-                g_Player.padPressed = g_pads[0].pressed;
-                g_Player.padPressed = g_Player.padPressed & 0xFF00;
+                g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
+#if defined(VERSION_PSP)
+                for (i = 0; i < 6; i++) {
+                    if (g_Settings.buttonMask[i] ==
+#else
                 for (i = 0; i < 8; i++) {
-                    if (g_pads[0].pressed & g_Settings.buttonMask[i]) {
+                    if(
+#endif
+                        (g_pads[0].pressed & g_Settings.buttonMask[i])) {
                         g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
@@ -842,9 +847,8 @@ void EntityAlucard() {
                 PLAYER.hitParams = 6;
             }
 
-// HD and US test this in slightly different places leading to this and the
-// following ifdef.
-#if defined(VERSION_HD)
+// US uses a different ordering than HD/PSP
+#if !defined(VERSION_US)
             if (g_Player.timers[13] | g_Player.timers[14]) {
                 goto specialmove;
             }
@@ -857,7 +861,7 @@ void EntityAlucard() {
                 } else {
 #if defined(VERSION_US)
                     if (!(g_Player.timers[13] | g_Player.timers[14])) {
-#elif defined(VERSION_HD)
+#else
                     if (1) { // to make curly braces match
 #endif
                         if (PLAYER.hitParams) {
@@ -865,9 +869,14 @@ void EntityAlucard() {
                             var_s5 = PLAYER.step_s;
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
+                            #if defined(VERSION_PSP)
+                            if (D_8C630C4) {
+                                PLAYER.hitPoints = 0;
+                                i = 0;
+                            }
+                            #endif
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
-                                ((i == 1) || (i == 7) ||
-                                 (i == 8))) {
+                                ((i == 1) || (i == 8) || (i == 7))) {
                                 i = 3;
                                 damage.damageKind = DAMAGEKIND_1;
                             }
@@ -883,8 +892,8 @@ void EntityAlucard() {
                                 func_8010E168(1, 0xC);
                                 break;
                             case 1:
-                                g_Player.high_jump_timer = 0x8166;
                                 g_Player.unk18 = damage.effects;
+                                g_Player.high_jump_timer = 0x8166;
                                 func_8010E168(1, 0xC);
                                 g_Player.timers[3] = 6;
                                 PlaySfx(SFX_VO_ALU_PAIN_A);

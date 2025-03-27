@@ -188,13 +188,19 @@ typedef enum {
     PAD_LEFT = 0x8000,
 #endif
     PAD_SIM_UNK20000 = 0x20000,
-    // Game Buttons unofficially refers to buttons used in playing the game.
-    // Any button except start or select.
-    GAMEBUTTONS = (~(PAD_START | PAD_SELECT)),
 } PlayerPad;
+
+// Convenience macros inheriting from PlayerPad
+
+// Game Buttons unofficially refers to buttons used in playing the game.
+// Any button except start or select.
+#define GAMEBUTTONS (~(PAD_START | PAD_SELECT))
+// Convenience macros
+#define PAD_SHAPES (PAD_SQUARE | PAD_CROSS | PAD_CIRCLE | PAD_TRIANGLE)
 
 // PSP's wolf controls are slightly different.
 #ifdef VERSION_PSP
+#define PAD_SHOULDERS (PAD_L1 | PAD_R1)
 // PSP only has one shoulder button, so it uses L1 for wolf transform.
 #define BTN_WOLF PAD_L1
 // PSP allows you to do the Wolf Charge spell with either square or circle.
@@ -202,6 +208,7 @@ typedef enum {
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE | PAD_CIRCLE)
 #define BTN_MIST (PAD_L1 | PAD_R1)
 #else
+#define PAD_SHOULDERS (PAD_L1 | PAD_R1 | PAD_L2 | PAD_R2)
 #define BTN_WOLF PAD_R2
 #define WOLF_CHARGE_ATK_BTN (PAD_SQUARE)
 #define BTN_MIST PAD_L1
