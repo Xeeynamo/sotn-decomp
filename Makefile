@@ -15,7 +15,7 @@ echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allo
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
-wget		= wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1)
+wget		= if wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1); then cat $(or $(3),$(2),$(1)).log; else rm $(or $(3),$(2),$(1)).log
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
@@ -319,7 +319,7 @@ $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
 	$(call wget,https://github.com/decompals/wibo/releases/download/0.6.13/wibo,$@,wibo)
-	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO); rm wget-wibo.log
+	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 dependencies.saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
@@ -343,7 +343,6 @@ $(PERMUTER_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(PERMUTER_APP))
 $(M2CTX_APP): | $(VENV_DIR)
 	$(call wget,https://raw.githubusercontent.com/ethteck/m2ctx/main/m2ctx.py,$@,m2ctx_app)
-	$(muffle)rm wget-m2ctx_app.log
 
 $(SOTNSTR_APP): $(TOOLS_DIR)/sotn_str/Cargo.toml $(wildcard $(TOOLS_DIR)/sotn_str/src/*)
 	cargo build --release --manifest-path $(TOOLS_DIR)/sotn_str/Cargo.toml
@@ -352,7 +351,7 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR) && $(GO) build
 $(GO):
-	$(call wget,https://go.dev/dl/go1.22.4.linux-amd64.tar.gz,go1.22.4.linux-amd64.tar.gz,go) && rm wget-go.log
+	$(call wget,https://go.dev/dl/go1.22.4.linux-amd64.tar.gz,go1.22.4.linux-amd64.tar.gz,go)
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz; rm go1.22.4.linux-amd64.tar.gz
 
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
@@ -372,7 +371,7 @@ $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
 	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
-	$(muffle)touch $@; rm wget-$*.log
+	$(muffle)touch $@
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform
 include Makefile.psx.mk
