@@ -1097,7 +1097,7 @@
 | no4    | func_pspeu_092409A8                 |      222 |         25 |        |                                 |       |
 | no4    | func_pspeu_09240350                 |      223 |         22 |        |                                 |       |
 | dra    | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
-| ric    | RicCheckWallRight                   |      224 |         28 |        |                                 |       |
+| ric    | RicCheckWallRight                   |      224 |         28 |        | https://decomp.me/scratch/JM89s | 0.999 |
 | dra    | func_800EAD7C                       |      225 |          7 |        |                                 |       |
 | lib    | func_us_801BC28C                    |      225 |         18 |        |                                 |       |
 | lib    | EntityBackgroundBookcase            |      227 |         29 |        |                                 |       |
@@ -1325,7 +1325,7 @@
 | st0    | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | st0    | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnCross                |      560 |         53 | Yes    |                                 |       |
-| ric    | RicCheckCeiling                     |      562 |         55 |        |                                 |       |
+| ric    | RicCheckCeiling                     |      562 |         55 |        | https://decomp.me/scratch/XrVFn | 0.998 |
 | dra    | func_8012F178                       |      564 |         35 |        |                                 |       |
 | no4    | func_pspeu_09258E30                 |      564 |         51 | Yes    |                                 |       |
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
@@ -1338,7 +1338,7 @@
 | no4    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/F4s7g | 0.925 |
-| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/ax9NY | 0.989 |
+| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
@@ -1390,7 +1390,7 @@
 | ric    | RicEntityCrashBible                 |      742 |         48 | Yes    |                                 |       |
 | ric    | RicEntityCrashCrossBeam             |      743 |         63 |        |                                 |       |
 | dra    | func_80109A44                       |      746 |         77 |        |                                 |       |
-| dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
+| dra    | CheckCollision                      |      748 |         90 |        | https://decomp.me/scratch/v9jx3 | 0.926 |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
