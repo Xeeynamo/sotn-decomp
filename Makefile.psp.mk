@@ -65,13 +65,13 @@ $(BUILD_DIR)/st0.bin: $(BUILD_DIR)/stst0.elf
 $(BUILD_DIR)/wrp.bin: $(BUILD_DIR)/stwrp.elf
 	$(OBJCOPY) -O binary $< $@
 
-$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
+$(BUILD_DIR)/dra.ld: $(CONFIG_DIR)/splat.pspeu.dra.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.dra.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.pspeu.ric.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.ric.txt
+$(BUILD_DIR)/ric.ld: $(CONFIG_DIR)/splat.pspeu.ric.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.ric.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
+$(BUILD_DIR)/st%.ld: $(CONFIG_DIR)/splat.pspeu.st%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.st%.txt
 	$(SPLAT) $<
-$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(CONFIG_DIR)/$(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
+$(BUILD_DIR)/tt_%.ld: $(CONFIG_DIR)/splat.pspeu.tt_%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.pspeu.tt_%.txt
 	$(SPLAT) $<
 
 $(BUILD_DIR)/dra.elf: $(BUILD_DIR)/%.elf: $(BUILD_DIR)/dra.ld $$(call get_psp_o_files,%)

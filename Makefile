@@ -15,7 +15,7 @@ echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allo
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
-wget		= if wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1); then rm $(or $(3),$(2),$(1)).log || true; else cat $(or $(3),$(2),$(1)).log && exit 1; fi
+wget		= $(let log,/tmp/wget-$(or $(3),$(2),$(1)).log,if wget -a $(log) $(if $(2),-O $(2) )$(1); then rm $(log) || true; else cat $(log) && exit 1; fi)
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
@@ -74,8 +74,8 @@ CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 CC1_SATURN		:= $(BUILD_DIR)/CC1.EXE
 
 # Symbols
-BASE_SYMBOLS	 = symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
-UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
+BASE_SYMBOLS	 = $(CONFIG_DIR)/symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
+UNDEFINED_SYMS 	 = $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
 AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 
 # Other tooling
@@ -124,7 +124,7 @@ define link
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
 		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
-		$(if $(wildcard $(CONFIG_DIR)/$(UNDEFINED_SYMS)),-T $(CONFIG_DIR)/$(UNDEFINED_SYMS)) \
+		$(if $(wildcard $(UNDEFINED_SYMS)),-T $(UNDEFINED_SYMS)) \
 		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)) \
 		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
 		$(3)
