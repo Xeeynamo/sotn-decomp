@@ -2861,12 +2861,12 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s32 unk84;
     /* 0x88 */ s32 unk88;
-    /* 0x8C */ s32 : 32;
+    /* 0x8C */ struct Entity* unk8C;
     /* 0x90 */ s16 unk90;
     /* 0x92 */ s16 unk92;
     /* 0x94 */ s16 unk94;
     /* 0x96 */ s16 unk96;
-} ET_801CD318;
+} ET_Ectoplasm;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -3157,7 +3157,7 @@ typedef union { // offset=0x7C
     ET_801AE8E8 et_801AE8E8;
     ET_FleaArmor fleaArmor;
     ET_801B56E4 et_801B56E4;
-    ET_801CD318 et_801CD318;
+    ET_Ectoplasm ectoplasm;
     ET_801BB200 et_801BB200;
     ET_801B8D30 et_801B8D30;
     ET_Clouds clouds;
