@@ -42,9 +42,9 @@ SOTNSTR			:= $(SOTNSTR_APP) process
 AUTO_MERGE_FILES	:= e_init.c
 
 # PSP specific targets
-build_pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
+build.pspeu: $(addsuffix _psp,$(PSP_EU_EXTRACT_TARGETS))
 
-extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_EXTRACT_TARGETS)))
+extract.pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSP_EU_EXTRACT_TARGETS)))
 
 dra_psp: $(BUILD_DIR)/dra.bin
 ric_psp: $(BUILD_DIR)/ric.bin

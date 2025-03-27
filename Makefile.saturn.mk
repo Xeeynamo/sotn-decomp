@@ -30,17 +30,17 @@ DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
 
 # Saturn specific targets
 .PHONY: saturn
-saturn: build_saturn check_saturn
+saturn: build.saturn check.saturn
 
-.PHONY: check_saturn
-check_saturn:
+.PHONY: check.saturn
+check.saturn:
 	sha1sum --check config/check.saturn.sha
 
-.PHONY: build_saturn
-build_saturn: $(BUILD_DIR)/0.BIN $(SATURN_BUILD_PRGS)
+.PHONY: build.saturn
+build.saturn: $(BUILD_DIR)/0.BIN $(SATURN_BUILD_PRGS)
 
-.PHONY: extract_saturn
-extract_saturn: $(SATURN_SPLITTER_APP)
+.PHONY: extract.saturn
+extract.saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
@@ -121,4 +121,4 @@ $(ASSETS_DIR)/saturn/SD/%.wav: disks/saturn/SD/%.PCM $(SATURN_SPLITTER_APP)
 	$(SATURN_ADPCM_EXTRACT_APP) $< $@
 
 # Fixes build -j breaking due to dosemu
-.NOTPARALLEL: build_saturn
+.NOTPARALLEL: build.saturn

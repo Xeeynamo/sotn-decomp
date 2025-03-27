@@ -65,17 +65,17 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 DEPENDENCIES	+= $(MASPSX_APP) 
 
 # PSX specific targets
-extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
+extract.us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 	make extract_assets
 	make build_assets
-extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
+extract.hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
 	echo $(PSX_HD_EXTRACT_TARGETS)
 	make extract_assets
 	make build_assets
 
-build_us: $(PSX_US_BUILD_TARGETS)
-build_hd: $(PSX_HD_BUILD_TARGETS)
+build.us: $(PSX_US_BUILD_TARGETS)
+build.hd: $(PSX_HD_BUILD_TARGETS)
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs

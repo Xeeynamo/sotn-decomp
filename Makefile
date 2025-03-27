@@ -40,6 +40,7 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
+TEMP_DIR		:= /tmp/sotn-decomp# Used for force-extract, format-src and format-symbols
 PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
@@ -145,38 +146,36 @@ get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, 
 add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
 
 all: build check
-extract: extract_$(VERSION)
-build: build_$(VERSION)
+extract: extract.$(VERSION)
+build: build.$(VERSION)
 
 $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 	$(call echo,Cleaning $*) git clean -fdxq $*
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 
 # Targets for performing various automated formatting tasks
-format-src.run:
-	rm $@ > /dev/null 2>&1 || true
+%.run.prep:# Ensures temp dir exists and removes any existing run file that might exist
+	mkdir -p $(dir $*.run) && rm $*.run > /dev/null 2>&1 || true
+
+$(TEMP_DIR)/format-src.run: $(TEMP_DIR)/format-src.run.prep
 	$(call echo,Running clang to format src/* and include/* (this may take some time))
-$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(CLANG) format-src.run
-	echo "$*" >> format-src.run
-	$(CLANG) -i $*
+$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: $(TEMP_DIR)/format-src.run $(CLANG)
+	echo "$*" >> $<; $(CLANG) -i $*
 format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
-# Redirecting sotn-lint stdout because even if there was sometshing useful, you'd never see it because of the output spam
-	$(SOTNLINT) 1>/dev/null; rm $@.run
+# Redirecting sotn-lint stdout because even if there was something useful, you'd never see it because of the output spam
+	$(SOTNLINT) 1>/dev/null
 
 $(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 
-format-symbols.run:
-	rm $@ > /dev/null 2>&1 || true
+$(TEMP_DIR)/format-symbols.run: $(TEMP_DIR)/format-symbols.run.prep
 	$(call echo,Removing orphan symbols using splat configs)
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
-	echo "$*" >> format-symbols.run
-	$(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
+$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: $(TEMP_DIR)/format-symbols.run | $(VENV_DIR)
+	echo "$*" >> $<; $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
 $(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
 	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
 format-symbols: $(addprefix format-symbols_,us pspeu hd saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
-	rm $@.run > /dev/null 2>&1 || true
 
 format-license:
 	$(call echo,Checking for license line in code files)
@@ -211,10 +210,10 @@ expected: check
 
 # Force targets
 force-extract:
-	@rm -rf /tmp/src_tmp || true; mv src /tmp/src_tmp
+	@rm -rf $(TEMP_DIR)/src || true; mv src $(TEMP_DIR)/src
 	find $(BUILD_DIR) -type f -name "*.ld" -delete || true
 	$(MAKE) extract
-	rm -rf src/; mv /tmp/src_tmp src
+	rm -rf $(SRC_DIR); mv $(TEMP_DIR)/src $(SRC_DIR)
 force-extract-disk:
 	@rm -rf $(EXTRACTED_DISK_DIR) || true
 	$(MAKE) extract-disk
@@ -274,10 +273,10 @@ $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-$(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
-dump-disk_%: PHONY# Last resort
+$(addprefix dump-disk,.eu .hk .jp10 .jp11 .saturn .us .usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
+dump-disk.%: PHONY# Last resort
 	$(error Automated dumping of $* is not supported)
-dump-disk: dump-disk_$(VERSION)
+dump-disk: dump-disk.$(VERSION)
 
 function-finder: graphviz | $(VENV_DIR)
 	$(MAKE) clean
@@ -288,7 +287,7 @@ function-finder: graphviz | $(VENV_DIR)
 	git checkout $(CONFIG_DIR)/
 	rm -f $(BUILD_DIR)/main.ld $(BUILD_DIR)/weapon.ld
 	$(MAKE) extract
-	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder_$(VERSION).py --no-fetch --use-call-trees > $(TOOLS_DIR)/gh-duplicates/functions.md
+	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder.$(VERSION).py --no-fetch --use-call-trees > $(TOOLS_DIR)/gh-duplicates/functions.md
 	-rm -rf $(TOOLS_DIR)/gh-duplicates/function_calls/
 	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
 	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
@@ -303,15 +302,15 @@ duplicates-report: | $(VENV_DIR)
 
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies_$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP)
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP)
 	git clean -fdq $(BIN_DIR)/
-update-dependencies-all: update-dependencies $(addprefix dependencies_,us pspeu hd saturn)
+update-dependencies-all: update-dependencies $(addprefix dependencies,.us .pspeu .hd .saturn)
 
-dependencies_us dependencies_hd: $(MASPSX_APP) 
+dependencies.us dependencies.hd: $(MASPSX_APP) 
 $(MASPSX_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MASPSX_APP))
 
-dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
+dependencies.pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
 $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
@@ -319,7 +318,7 @@ $(WIBO):
 	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO); rm wget-wibo.log
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
-dependencies_saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
+dependencies.saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR)%:
 	git submodule update --init $(SATURN_SPLITTER_DIR)
 $(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/rust-dis/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
@@ -436,8 +435,8 @@ dump-disk: ##@ dump a physical game disk
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
 PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
-PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
+PHONY_TARGETS += format-src $(TEMP_DIR)/format-src.run $(TEMP_DIR)/format-src.run.prep $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
+PHONY_TARGETS += format-symbols $(TEMP_DIR)/format-symbols.run $(TEMP_DIR)/format-symbols.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
