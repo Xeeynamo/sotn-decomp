@@ -1223,7 +1223,7 @@
 | dra    | func_800FE044                       |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
 | ric    | RicEntityApplyMariaPowerAnim        |      346 |         27 |        |                                 |       |
 | ric    | RicEntityCrashHydroStorm            |      346 |         37 |        |                                 |       |
-| lib    | func_us_801CCF6C                    |      348 |         34 |        |                                 |       |
+| lib    | func_us_801CCF6C                    |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric    | RicEntityCrashVibhuti               |      349 |         43 |        |                                 |       |
 | dra    | CheckSwordBrothersInput             |      350 |         56 |        |                                 |       |
 | no4    | func_pspeu_09254DE8                 |      352 |         30 |        |                                 |       |
@@ -1278,7 +1278,7 @@
 | ric    | RicEntitySubwpnCrashCross           |      438 |         38 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
 | ric    | RicHandleDeadPrologue               |      445 |         51 | Yes    | https://decomp.me/scratch/m1ZHK | 0.989 |
-| ric    | RicEntitySubwpnAgunea               |      445 |         51 |        |                                 |       |
+| ric    | RicEntitySubwpnAgunea               |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | dra    | func_80130E94                       |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
 | st0    | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra    | EntityHolyWaterBreakGlass           |      457 |         29 |        | https://decomp.me/scratch/umied | 0.976 |
@@ -1362,7 +1362,7 @@
 | dra    | EntityHitByLightning                |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib    | UnkRecursivePrimFunc2               |      663 |         11 |        |                                 |       |
-| ric    | RicEntityAguneaHitEnemy             |      663 |         70 |        |                                 |       |
+| ric    | RicEntityAguneaHitEnemy             |      663 |         70 |        | https://decomp.me/scratch/22nUJ | 0.999 |
 | ric    | RicEntityHitByLightning             |      670 |         62 |        |                                 |       |
 | dra    | PlayerStepKill                      |      672 |         81 |        | https://decomp.me/scratch/zQLmL | 0.989 |
 | ric    | func_8016F198                       |      675 |         75 |        |                                 |       |
