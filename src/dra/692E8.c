@@ -954,6 +954,36 @@ void EntityAlucard() {
                         TRANSFORM_LOCKOUT_TIMER--;
                     }
                     if (TRANSFORM_LOCKOUT_TIMER == 0) {
+
+                        #if defined(VERSION_PSP)
+                        var_s7 = g_Player.padPressed;
+                        if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
+                            PLAYER.step == Player_MorphWolf ||
+                            PLAYER.step == Player_MorphBat) {
+                            D_psp_09234B88 = 0;
+                            D_psp_09234B90 = g_Player.padTapped;
+                        } else {
+                            if (var_s7 & 0x300) {
+                                D_psp_09234B90 |= (var_s7 & 0x300);
+                                D_psp_09234B88++;
+                                if (D_psp_09234B88 <= 5) {
+                                    g_Player.padTapped = var_s7 & ~0x300;
+                                }
+                                if (D_psp_09234B88 == 6) {
+                                    g_Player.padTapped |= D_psp_09234B90;
+                                }
+                            } else {
+                                if (D_psp_09234B88 != 0) {
+                                    D_psp_09234B88 = 0;
+                                    g_Player.padTapped = D_psp_09234B90;
+                                } else {
+                                    D_psp_09234B88 = 0;
+                                    D_psp_09234B90 = 0;
+                                }
+                            }
+                        }
+                        #endif
+
                         if (D_80097448[1] == 0) {
                             if ((g_Player.padTapped & PAD_L1) &&
                                 (HandleTransformationMP(

@@ -954,6 +954,8 @@ void EntityAlucard() {
                         TRANSFORM_LOCKOUT_TIMER--;
                     }
                     if (TRANSFORM_LOCKOUT_TIMER == 0) {
+
+                        #if defined(VERSION_PSP)
                         var_s7 = g_Player.padPressed;
                         if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
                             PLAYER.step == Player_MorphWolf ||
@@ -980,6 +982,7 @@ void EntityAlucard() {
                                 }
                             }
                         }
+                        #endif
 
                         if (D_80097448[1] == 0) {
                             if (((g_Player.padTapped & BTN_MIST) == BTN_MIST) &&
