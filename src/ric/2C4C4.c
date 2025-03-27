@@ -1806,14 +1806,13 @@ void RicEntitySubwpnReboundStone(Entity* self) {
 
 // RIC entity #43. Blueprint 49. Subweapon 8. Vibhuti!
 void RicEntitySubwpnThrownVibhuti(Entity* self) {
-    Collider collider;
-    FakePrim* fakeprim;
-    s16 collisionOffsetX;
+    Collider col;
+    FakePrim* prim;
     s16 randomAngle;
-    s16 randomVelocity;
+    s16 x;
+    s16 y;
+    s16 temp; // used for multiple unrelated things
     s32 i;
-    u16 selfX;
-    u16 selfY;
 
     switch (self->step) {
     case 0:
@@ -1826,122 +1825,120 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
         self->ext.subweapon.subweaponId = PL_W_VIBHUTI;
         RicSetSubweaponParams(self);
         self->hitboxWidth = self->hitboxHeight = 4;
-        self->posY.i.hi -= 15;
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
         self->ext.subweapon.timer = 0x80;
-        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        self->posY.i.hi -= 15;
         if (PLAYER.facingLeft) {
             self->posX.i.hi -= 13;
         } else {
             self->posX.i.hi += 13;
         }
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
-        while (1) {
-            fakeprim->drawMode = DRAW_UNK02;
-            fakeprim->priority = PLAYER.zPriority - 1;
-            if (fakeprim->next == NULL) {
-                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
-                fakeprim->drawMode &= ~DRAW_HIDE;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        i = 0;
+        while (true) {
+            prim->drawMode = DRAW_UNK02;
+            prim->priority = PLAYER.zPriority - 1;
+            if (prim->next == NULL) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim->y0 = prim->x0 = prim->w = 0;
                 break;
             }
-            fakeprim->posX.i.hi = selfX;
-            fakeprim->posY.i.hi = selfY;
-            fakeprim->posX.i.lo = fakeprim->posY.i.lo = 0;
+            prim->posX.i.hi = x;
+            prim->posY.i.hi = y;
+            prim->posX.i.lo = prim->posY.i.lo = 0;
             randomAngle = (rand() & 0xFF) + 0x100;
-            randomVelocity = (rand() & 0xFF) + 0x80;
-            fakeprim->velocityX.val =
-                ((rcos(randomAngle) << 4) * randomVelocity >> 9) + FIX(0.5);
-            fakeprim->velocityY.val =
-                -((rsin(randomAngle) << 4) * randomVelocity >> 9);
-            fakeprim->velocityX.val = (fakeprim->velocityX.val * 3) >> 1;
+            temp = (rand() & 0xFF) + 0x80;
+            prim->velocityX.val = ((rcos(randomAngle) << 4) * temp >> 9);
+            prim->velocityX.val += FIX(0.5);
+            prim->velocityY.val = -((rsin(randomAngle) << 4) * temp >> 9);
+            prim->velocityX.val = (prim->velocityX.val * 3) >> 1;
             if (self->facingLeft) {
-                fakeprim->velocityX.val = -fakeprim->velocityX.val;
+                prim->velocityX.val = -prim->velocityX.val;
             }
-            fakeprim->delay = 1;
-            fakeprim->posY.i.hi -= 4;
-            fakeprim->b0 = fakeprim->g0 = fakeprim->r0 = 0xFF;
-            fakeprim->h = fakeprim->w = 2;
-            fakeprim->x0 = fakeprim->posX.i.hi;
-            fakeprim->y0 = fakeprim->posY.i.hi;
-            fakeprim = fakeprim->next;
+            prim->posY.i.hi -= 4;
+            prim->delay = 1;
+            prim->x0 = prim->posX.i.hi;
+            prim->y0 = prim->posY.i.hi;
+            prim->r0 = 0xFF;
+            prim->g0 = 0xFF;
+            prim->b0 = 0xFF;
+            prim->w = 2;
+            prim->h = 2;
+            i++;
+            prim = prim->next;
         }
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
         self->step++;
         break;
     case 1:
+        temp = 2;
         if (self->facingLeft) {
-            collisionOffsetX = -2;
-        } else {
-            collisionOffsetX = 2;
+            temp = -temp;
         }
-
         if (--self->ext.subweapon.timer == 0) {
             DestroyEntity(self);
             return;
         }
-        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
         i = 0;
-        while (1) {
-            if (fakeprim->next == NULL) {
-                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
-                fakeprim->drawMode &= ~DRAW_HIDE;
+        while (true) {
+            if (prim->next == NULL) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim->y0 = prim->x0 = prim->w = 0;
                 break;
             }
-            fakeprim->posX.i.hi = fakeprim->x0;
-            fakeprim->posY.i.hi = fakeprim->y0;
-            if (fakeprim->delay != 0) {
-                if (fakeprim->velocityX.val != 0) {
-                    fakeprim->posX.val += fakeprim->velocityX.val;
-                    g_api.CheckCollision(fakeprim->posX.i.hi + collisionOffsetX,
-                                         fakeprim->posY.i.hi, &collider, 0);
-                    if (collider.effects & EFFECT_UNK_0002) {
-                        fakeprim->velocityX.val = 0;
+            prim->posX.i.hi = prim->x0;
+            prim->posY.i.hi = prim->y0;
+            if (prim->delay) {
+                if (prim->velocityX.val != 0) {
+                    prim->posX.val += prim->velocityX.val;
+                    g_api.CheckCollision(
+                        prim->posX.i.hi + temp, prim->posY.i.hi, &col, 0);
+                    if (col.effects & EFFECT_UNK_0002) {
+                        prim->velocityX.val = 0;
                     }
                 }
-                fakeprim->posY.val += fakeprim->velocityY.val;
-                fakeprim->velocityY.val += FIX(12.0 / 128);
-                if (fakeprim->velocityY.val > FIX(4)) {
-                    fakeprim->velocityY.val = FIX(4);
+                prim->posY.val += prim->velocityY.val;
+                prim->velocityY.val += FIX(12.0 / 128);
+                if (prim->velocityY.val > FIX(4)) {
+                    prim->velocityY.val = FIX(4);
                 }
-                if (fakeprim->velocityY.val > 0) {
+                if (prim->velocityY.val > 0) {
                     g_api.CheckCollision(
-                        fakeprim->posX.i.hi, fakeprim->posY.i.hi, &collider, 0);
-                    if (collider.effects & EFFECT_SOLID) {
-                        fakeprim->delay = 0;
-                        fakeprim->posY.i.hi =
-                            fakeprim->posY.i.hi + collider.unk18 - (i % 3 + 1);
-                        fakeprim->w = fakeprim->h = 3;
+                        prim->posX.i.hi, prim->posY.i.hi, &col, 0);
+                    if (col.effects & EFFECT_SOLID) {
+                        prim->delay = 0;
+                        prim->posY.i.hi += col.unk18;
+                        prim->posY.i.hi -= (i % 3 + 1);
+                        prim->w = prim->h = 3;
                     }
                 }
             }
             if ((self->ext.subweapon.timer & 7) == i) {
-                self->posX.i.hi = fakeprim->posX.i.hi;
-                self->posY.i.hi = fakeprim->posY.i.hi;
-                if (fakeprim->drawMode & DRAW_HIDE) {
-                    self->hitboxHeight = 0;
-                    self->hitboxWidth = 0;
+                self->posX.i.hi = prim->posX.i.hi;
+                self->posY.i.hi = prim->posY.i.hi;
+                if (prim->drawMode & DRAW_HIDE) {
+                    self->hitboxWidth = self->hitboxHeight = 0;
                 } else {
                     self->hitboxWidth = self->hitboxHeight = 4;
                 }
-                if (fakeprim->delay != 0) {
+                if (prim->delay) {
                     self->hitboxOffY = 0;
                 } else {
                     self->hitboxOffY = -6;
                 }
             }
-            if ((self->hitFlags != 0) &&
-                (((self->ext.subweapon.timer + 1) & 7) == i)) {
-                fakeprim->drawMode = DRAW_HIDE;
+            if (self->hitFlags && ((self->ext.subweapon.timer + 1) & 7) == i) {
+                prim->drawMode = DRAW_HIDE;
             }
-            if ((self->ext.subweapon.timer - 1) == i) {
-                fakeprim->drawMode = DRAW_HIDE;
+            if (self->ext.subweapon.timer - 1 == i) {
+                prim->drawMode = DRAW_HIDE;
             }
-            fakeprim->x0 = fakeprim->posX.i.hi;
-            fakeprim->y0 = fakeprim->posY.i.hi;
-            fakeprim = fakeprim->next;
             i++;
+            prim->x0 = prim->posX.i.hi;
+            prim->y0 = prim->posY.i.hi;
+            prim = prim->next;
         }
         self->hitFlags = 0;
         break;
