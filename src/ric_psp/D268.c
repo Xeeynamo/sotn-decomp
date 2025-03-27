@@ -436,11 +436,354 @@ void RicEntitySubwpnThrownVibhuti(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", func_pspeu_092B4688);
+static u8 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    s32 i;
+    s32 j;
+    u8* colorPtr;   // points to an RGB color
+    u8* channelPtr; // points to a single channel of that color
+    u8 isEnd;
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnAgunea);
+    isEnd = 0;
+    colorPtr = &prim->r0;
+    for (i = 0; i < 4; colorPtr += OFF(Primitive, r1) - OFF(Primitive, r0),
+        i++) {
+        for (j = 0; j < 3; j++) {
+            channelPtr =
+                &colorPtr[j]; // get the red, green, blue, or pad channel
+            *channelPtr -= amount;
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityAguneaHitEnemy);
+            if (*channelPtr < 16) {
+                *channelPtr = 16;
+            } else {
+                isEnd |= 1;
+            }
+        }
+    }
+    return isEnd;
+}
+
+// RIC Entity #44. Blueprint 51. Subweapon 9. Agunea (non-crash). DRA
+// blueprint 25. DRA entity 21.
+void RicEntitySubwpnAgunea(Entity* self) {
+    Primitive* prim;
+    s32 heartCost;
+    s16 tempX;
+    s16 tempY;
+    u32 heartBroachesWorn;
+
+    if (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10000)) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->facingLeft = PLAYER.facingLeft;
+        self->ext.agunea.subweaponId = PL_W_AGUNEA;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        self->posY.i.hi = self->ext.agunea.unk82 =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+        self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->type = PRIM_LINE_G2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_TRANSP;
+        prim->r1 = 0x60;
+        prim->g1 = 0;
+        prim->b1 = 0x80;
+        RicSetSpeedX(FIX(6));
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+        self->step++;
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x20 || self->posY.i.hi > 0x120) {
+            self->step = 2;
+        }
+        if (self->hitFlags) {
+            self->ext.agunea.parent = self->unkB8;
+            self->step = 3;
+        }
+        break;
+    case 4:
+        self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if (++self->ext.agunea.unk7C < 16) {
+            break;
+        }
+        // Fallthrough
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        if (prim->r1 < 5) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 3:
+        if ((g_Player.padPressed & (PAD_UP + PAD_SQUARE)) !=
+            (PAD_UP + PAD_SQUARE)) {
+            self->step = 4;
+        }
+        if (!self->ext.agunea.parent->entityId) {
+            self->step = 2;
+            return;
+        }
+        if (self->ext.agunea.unk7C &&
+            (self->ext.agunea.parent->hitPoints > 0x7000 ||
+             !self->ext.agunea.parent->hitPoints ||
+             !self->ext.agunea.parent->hitboxState)) {
+            self->step = 2;
+            return;
+        }
+
+        tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
+        tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
+        if ((self->ext.agunea.unk7C % 12) == 0) {
+            self->posX.i.hi += (rand() & 0xF) - 8;
+            self->posY.i.hi += (rand() & 0xF) - 8;
+            if (g_Status.hearts >= 5) {
+                g_Status.hearts -= 5;
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
+                g_api.PlaySfx(SFX_THUNDER_B);
+            } else if (self->ext.agunea.unk84 == 0) {
+                RicCreateEntFactoryFromEntity(self, BP_AGUNEA_HIT_ENEMY, 0);
+                g_api.PlaySfx(SFX_THUNDER_B);
+                self->ext.agunea.unk84++;
+            } else {
+                self->step = 4;
+            }
+        }
+        self->posX.i.hi = tempX;
+        self->posY.i.hi = tempY;
+        self->ext.agunea.unk7C++;
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    if (prim->r1 >= 4) {
+        prim->r1 -= 4;
+    }
+    if (prim->g1 >= 4) {
+        prim->g1 -= 4;
+    }
+    if (prim->b1 >= 4) {
+        prim->b1 -= 4;
+    }
+    if (prim->b1 < 5) {
+        prim->drawMode |= DRAW_HIDE;
+    }
+    prim->x0 = self->ext.agunea.unk80;
+    prim->y0 = self->ext.agunea.unk82;
+    prim->x1 = self->posX.i.hi;
+    prim->y1 = self->posY.i.hi;
+}
+
+void RicEntityAguneaHitEnemy(Entity* self) {
+    Entity* parent;
+    Primitive* prim;
+    Primitive* temp_s3;
+    Primitive* var_a0;
+    s16 arctan;
+    s16 angle;
+    s16 xOffset;
+    s16 yOffset;
+    s16 temp_s2;
+    u8 var_s3;
+    s32 i;
+    u8 var_s8;
+
+    parent = self->ext.et_801291C4.parent;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
+    if (self->ext.et_801291C4.parent->entityId != 0x2C) {
+        switch (self->step) {
+        case 0:
+            DestroyEntity(self);
+            return;
+        case 1:
+        case 2:
+        case 4:
+            self->step = 3;
+        }
+    }
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            break;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->facingLeft = PLAYER.facingLeft;
+        self->ext.et_801291C4.unk84 = (rand() & 0x3FF) - 0x200;
+        if (self->facingLeft) {
+            // @bug: This should be assigned to something. As-is, does nothing.
+            self->ext.et_801291C4.unk84 + 0x800;
+        }
+        self->ext.et_801291C4.unk84 &= 0xFFF;
+        self->ext.et_801291C4.unk90 = (self->params >> 8) & 0xFF;
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.et_801291C4.prim1 = prim;
+        self->ext.et_801291C4.prim2 = prim;
+        for (i = 0; prim != NULL;) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->u0 = prim->u1 = i * 0x10 + 0x90;
+            prim->u2 = prim->u3 = prim->u0 + 0x10;
+            prim->v0 = prim->v2 = 0xD0;
+            prim->v1 = prim->v3 = 0xC0;
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            prim->x2 = self->posX.i.hi;
+            prim->y2 = self->posX.i.hi;
+            prim->r0 = prim->g0 = prim->b0 = 0xF0;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+            i++;
+            if (i > 5) {
+                i = 0;
+            }
+        }
+        prim = self->ext.et_801291C4.prim1;
+        prim->x0 = self->posX.i.hi;
+        prim->y0 = self->posY.i.hi;
+        prim->x1 = prim->x0;
+        prim->y1 = prim->y1 - 0x10;
+        prim->x2 = self->posX.i.hi;
+        prim->y2 = self->posY.i.hi;
+        prim->x3 = prim->x2;
+        prim->y3 = prim->y2 - 0x10;
+        self->ext.et_801291C4.prim2 = prim;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim->priority = self->zPriority;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.et_801291C4.unk88 = 0;
+        self->step++;
+        break;
+    case 1:
+        for (i = 0; i < 2; i++) {
+            prim = self->ext.et_801291C4.prim2;
+            temp_s2 = self->ext.et_801291C4.unk84;
+            xOffset = parent->posX.i.hi - prim->x2;
+            yOffset = parent->posY.i.hi - prim->y2;
+            if (abs(xOffset) < 8 && abs(yOffset) < 8) {
+                self->step++;
+                break;
+            }
+            if (abs(xOffset) < 0x40 && abs(yOffset) < 0x40) {
+                var_s3 = 1;
+            } else {
+                var_s3 = 0;
+            }
+            if (!self->ext.et_801291C4.unk88) {
+                self->ext.et_801291C4.unk88 = 4;
+                if (var_s3) {
+                    self->ext.et_801291C4.unk88 = 2;
+                }
+                arctan = ratan2(-yOffset, xOffset);
+                angle = arctan - temp_s2;
+                if (angle > 0x800) {
+                    angle = 0x1000 - angle;
+                }
+                if (angle < -0x800) {
+                    angle = 0x1000 + angle;
+                }
+                if (!var_s3) {
+                    angle /= 4;
+                } else {
+                    angle /= 2;
+                }
+                self->ext.et_801291C4.unk86 = angle;
+            }
+            temp_s2 += self->ext.et_801291C4.unk86;
+            if (!var_s3) {
+                temp_s2 += 0x180 - ((rand() & 3) << 8);
+            }
+            temp_s2 &= 0xFFF;
+            temp_s3 = prim->next;
+            if (temp_s3 == NULL) {
+                self->step++;
+                return;
+            }
+            LOW(temp_s3->x0) = LOW(prim->x2);
+            LOW(temp_s3->x1) = LOW(prim->x3);
+            self->ext.et_801291C4.unk84 = temp_s2;
+            self->ext.et_801291C4.prim2 = temp_s3;
+            xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
+            yOffset = -((rsin(temp_s2) * 0xC) >> 0xC);
+            temp_s3->x2 = temp_s3->x0 + xOffset;
+            temp_s3->y2 = temp_s3->y0 + yOffset;
+            angle = temp_s2 - 0x400;
+            var_s8 = 0x10 - (self->params * 4);
+            xOffset = (var_s8 * rcos(angle)) >> 0xC;
+            yOffset = -((var_s8 * rsin(angle)) >> 0xC);
+            temp_s3->x3 = temp_s3->x2 + xOffset;
+            temp_s3->y3 = temp_s3->y2 + yOffset;
+            temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
+            self->ext.et_801291C4.unk88--;
+        }
+        break;
+    case 2:
+        if (!self->step_s) {
+            prim = self->ext.et_801291C4.prim1;
+            while (prim != NULL) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            self->step_s++;
+            return;
+        }
+        prim = self->ext.et_801291C4.prim1;
+        while (prim != NULL) {
+            prim->clut = 0x194;
+            prim->r0 = prim->g0 = prim->b0 = 0x60;
+            LOW(prim->r1) = LOW(prim->r0);
+            LOW(prim->r2) = LOW(prim->r0);
+            LOW(prim->r3) = LOW(prim->r0);
+            prim = prim->next;
+        }
+        self->step_s = 0;
+        self->step++;
+        break;
+    case 3:
+        var_s8 = 1;
+        prim = self->ext.et_801291C4.prim1;
+        while (prim != NULL) {
+            var_s8 &= !PrimDecreaseBrightness(prim, 4);
+            prim = prim->next;
+        }
+        if (var_s8) {
+            prim = self->ext.et_801291C4.prim1;
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityVibhutiCrashCloud);
 

@@ -1885,7 +1885,7 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
     }
 }
 
-static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
+static u8 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
     s32 i;
     s32 j;
     u8* colorPtr;   // points to an RGB color
@@ -1914,7 +1914,6 @@ static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
 // ID #17. Created by factory blueprint #22. This is the blueprint for the
 // Agunea (lightning) subweapon.
 void EntitySubwpnAgunea(Entity* self) {
-    Entity* ent;
     Primitive* prim;
     s32 heartCost;
     s16 tempX;
@@ -1931,31 +1930,30 @@ void EntitySubwpnAgunea(Entity* self) {
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
-        } else {
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
-                          FLAG_HAS_PRIMS;
-            self->facingLeft = PLAYER.facingLeft;
-            func_8011A290(self);
-            self->hitboxWidth = self->hitboxHeight = 4;
-            self->hitboxOffX = 4;
-            self->hitboxOffY = 0;
-            self->posY.i.hi = self->ext.agunea.unk82 =
-                PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
-            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
-            prim = &g_PrimBuf[self->primIndex];
-            prim->type = PRIM_LINE_G2;
-            prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
-                             DRAW_TPAGE | DRAW_TRANSP;
-            prim->r1 = 0x60;
-            prim->g1 = 0;
-            prim->b1 = 0x80;
-            SetSpeedX(FIX(6));
-            PlaySfx(SFX_WEAPON_SWISH_C);
-            CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
-            g_Player.timers[10] = 4;
-            self->step++;
         }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->facingLeft = PLAYER.facingLeft;
+        func_8011A290(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        self->posY.i.hi = self->ext.agunea.unk82 =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+        self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->type = PRIM_LINE_G2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_TRANSP;
+        prim->r1 = 0x60;
+        prim->g1 = 0;
+        prim->b1 = 0x80;
+        SetSpeedX(FIX(6));
+        PlaySfx(SFX_WEAPON_SWISH_C);
+        CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
+        g_Player.timers[10] = 4;
+        self->step++;
         break;
     case 1:
         self->posX.val += self->velocityX;
@@ -2002,8 +2000,8 @@ void EntitySubwpnAgunea(Entity* self) {
         tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
         tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
         if ((self->ext.agunea.unk7C % 12) == 0) {
-            self->posX.i.hi += ((rand() & 0xF) - 8);
-            self->posY.i.hi += ((rand() & 0xF) - 8);
+            self->posX.i.hi += (rand() & 0xF) - 8;
+            self->posY.i.hi += (rand() & 0xF) - 8;
             if (self->ext.agunea.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, 23, 0);
                 PlaySfx(SFX_THUNDER_B);
@@ -2058,7 +2056,7 @@ void EntitySubwpnAgunea(Entity* self) {
 }
 
 void EntityAguneaHitEnemy(Entity* self) {
-    Entity* sine;
+    Entity* parent;
     Primitive* prim;
     Primitive* temp_s3;
     Primitive* var_a0;
@@ -2069,11 +2067,9 @@ void EntityAguneaHitEnemy(Entity* self) {
     s16 temp_s2;
     u8 var_s3;
     s32 i;
-    s32 randy;
-
     u8 var_s8;
 
-    sine = self->ext.et_801291C4.parent;
+    parent = self->ext.et_801291C4.parent;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
 
@@ -2096,10 +2092,8 @@ void EntityAguneaHitEnemy(Entity* self) {
             break;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-
         self->facingLeft = PLAYER.facingLeft;
-        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200);
-
+        self->ext.et_801291C4.unk84 = (rand() & 0x3FF) - 0x200;
         if (self->facingLeft) {
             // @bug: This should be assigned to something. As-is, does nothing.
             self->ext.et_801291C4.unk84 + 0x800;
@@ -2109,7 +2103,6 @@ void EntityAguneaHitEnemy(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.et_801291C4.prim1 = prim;
         self->ext.et_801291C4.prim2 = prim;
-
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
             prim->clut = 0x194;
@@ -2129,7 +2122,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            i += 1;
+            i++;
             if (i > 5) {
                 i = 0;
             }
@@ -2155,16 +2148,15 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_801291C4.unk88 = 0;
-        self->step += 1;
+        self->step++;
         break;
     case 1:
-
         for (i = 0; i < 2; i++) {
             prim = self->ext.et_801291C4.prim2;
             temp_s2 = self->ext.et_801291C4.unk84;
-            xOffset = sine->posX.i.hi - prim->x2;
-            yOffset = sine->posY.i.hi - prim->y2;
-            if ((abs(xOffset) < 8) && (abs(yOffset) < 8)) {
+            xOffset = parent->posX.i.hi - prim->x2;
+            yOffset = parent->posY.i.hi - prim->y2;
+            if (abs(xOffset) < 8 && abs(yOffset) < 8) {
                 self->step++;
                 return;
             }
@@ -2196,12 +2188,11 @@ void EntityAguneaHitEnemy(Entity* self) {
             temp_s2 += self->ext.et_801291C4.unk86;
             if (!var_s3) {
                 temp_s2 += 0x180 - ((rand() & 3) << 8);
-                ;
             }
             temp_s2 &= 0xFFF;
             temp_s3 = prim->next;
             if (temp_s3 == NULL) {
-                self->step += 1;
+                self->step++;
                 return;
             }
             LOW(temp_s3->x0) = LOW(prim->x2);
@@ -2210,7 +2201,6 @@ void EntityAguneaHitEnemy(Entity* self) {
             self->ext.et_801291C4.prim2 = temp_s3;
             xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
             yOffset = -((rsin(temp_s2) * 0xC) >> 0xC);
-
             temp_s3->x2 = temp_s3->x0 + xOffset;
             temp_s3->y2 = temp_s3->y0 + yOffset;
             angle = temp_s2 - 0x400;
@@ -2222,7 +2212,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
-        return;
+        break;
     case 2:
         if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
@@ -2230,7 +2220,7 @@ void EntityAguneaHitEnemy(Entity* self) {
                 prim->clut = 0x15F;
                 prim = prim->next;
             }
-            self->step_s += 1;
+            self->step_s++;
             return;
         }
         prim = self->ext.et_801291C4.prim1;
@@ -2243,13 +2233,13 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         self->step_s = 0;
-        self->step += 1;
+        self->step++;
         break;
     case 3:
         var_s8 = 1;
         prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
-            var_s8 &= !DraPrimDecreaseBrightness(prim, 4);
+            var_s8 &= !PrimDecreaseBrightness(prim, 4);
             prim = prim->next;
         }
         if (var_s8) {
