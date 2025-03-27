@@ -15,7 +15,7 @@ echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allo
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
-wget		= if wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1); then cat $(or $(3),$(2),$(1)).log; else rm $(or $(3),$(2),$(1)).log; fi
+wget		= if wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1); then rm $(or $(3),$(2),$(1)).log || true; else cat $(or $(3),$(2),$(1)).log && exit 1; fi
 # Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
 get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
