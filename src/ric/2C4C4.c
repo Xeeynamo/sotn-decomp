@@ -2450,7 +2450,8 @@ void RicEntityCrashReboundStoneParticles(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (++entity->ext.subweapon.timer >= 4) {
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 3) {
             DestroyEntity(entity);
         }
         break;

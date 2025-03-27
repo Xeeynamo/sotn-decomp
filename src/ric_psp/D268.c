@@ -938,9 +938,24 @@ void RicEntityCrashVibhuti(Entity* self) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashReboundStoneParticles);
-// clang-format on
+void RicEntityCrashReboundStoneParticles(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        entity->ext.subweapon.subweaponId = PL_W_CRASH_REBOUND_STONE;
+        RicSetSubweaponParams(entity);
+        entity->hitboxWidth = 4;
+        entity->hitboxHeight = 4;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.subweapon.timer++;
+        if (entity->ext.subweapon.timer > 3) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", func_8016D9C4);
 
