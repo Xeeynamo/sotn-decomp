@@ -318,7 +318,8 @@ $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 dependencies_saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR):
-	git submodule update --init $(SATURN_SPLITTER_DIR)
+	git submodule init $(SATURN_SPLITTER_DIR)
+	git submodule update $(SATURN_SPLITTER_DIR)
 $(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/rust-dis/src/*)
 	cd $(SATURN_SPLITTER_DIR)/rust-dis && cargo build --release
 $(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
