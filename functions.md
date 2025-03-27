@@ -1338,7 +1338,7 @@
 | no4    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/F4s7g | 0.925 |
-| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/ax9NY | 0.987 |
+| ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/ax9NY | 0.989 |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
