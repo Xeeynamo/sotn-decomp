@@ -2523,7 +2523,7 @@ void func_80129864(Entity* self) {
 extern RECT D_80138424;
 
 s16 D_800B0860[] = {31, 0,   31, -32, 0,  -32, -32, -32, -32,
-    0,  -32, 31, 0,   31, 31,  31,  31,  0};
+                    0,  -32, 31, 0,   31, 31,  31,  31,  0};
 
 // opens hole in backround and spirit comes out (ID 0x40)
 void EntitySummonSpirit(Entity* self) {
