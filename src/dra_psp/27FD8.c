@@ -812,14 +812,14 @@ void EntityAlucard() {
                 g_Player.padPressed =
                     g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
 #if defined(VERSION_PSP)
+#define TEST_BTN()                                                             \
+    (g_Settings.buttonMask[i] == (g_pads[0].pressed & g_Settings.buttonMask[i]))
                 for (i = 0; i < 6; i++) {
-                    if (g_Settings.buttonMask[i] ==
 #else
+#define TEST_BTN() (g_pads[0].pressed & g_Settings.buttonMask[i])
                 for (i = 0; i < 8; i++) {
-                    if (
 #endif
-                            (g_pads[0].pressed &
-                        g_Settings.buttonMask[i])) {
+                    if (TEST_BTN()) {
                         g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
@@ -1350,7 +1350,6 @@ block_160:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-
         PLAYER.hitboxState = PLAYER.hitParams = 0;
     } else {
         PLAYER.hitboxState = 1;
@@ -1434,5 +1433,9 @@ block_160:
             sp3c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
+#ifdef VERSION_US
+        FntPrint("step:%04x\n", PLAYER.step);
+        FntPrint("bat_i_step:%04x\n", g_Player.unk66);
+#endif
     }
 }
