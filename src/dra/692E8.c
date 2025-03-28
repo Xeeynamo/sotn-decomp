@@ -1063,44 +1063,52 @@ block_160:
         if (PLAYER.step_s != 2) {
             newStatus = PLAYER_STATUS_CROUCH;
         }
-        newStatus |= 0x10000000;
+        newStatus |= PLAYER_STATUS_UNK10000000;
         break;
     case Player_Walk: /* switch 5 */
-        newStatus = 0x04000000;
+        newStatus = PLAYER_STATUS_UNK4000000;
         /* fallthrough */
     case Player_Stand: /* switch 5 */
-        newStatus |= 0x10000000;
+        newStatus |= PLAYER_STATUS_UNK10000000;
         if (PLAYER.step_s == 4) {
-            newStatus |= 0x08100000;
+            newStatus |= NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         }
         break;
     case Player_Fall: /* switch 5 */
     case Player_Jump: /* switch 5 */
-        newStatus = 0x10002000;
+        newStatus = PLAYER_STATUS_UNK10000000 | PLAYER_STATUS_UNK2000;
         break;
     case Player_MorphBat: /* switch 5 */
         if (PLAYER.step_s == 3) {
             func_8010E168(1, 4);
             g_unkGraphicsStruct.unk1C |= 2;
         }
-        newStatus = 0x28100001;
+        newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_BAT_FORM;
         break;
     case Player_MorphMist: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x28100002;
-        PLAYER.palette = 0x810D;
+        newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
+        PLAYER.palette = PAL_OVL(0x10D);
         break;
     case Player_UnmorphMist:
-        newStatus = 0x28900002;
-        PLAYER.palette = 0x810D;
+        newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK800000 |
+                    PLAYER_STATUS_MIST_FORM;
+        PLAYER.palette = PAL_OVL(0x10D);
         func_8010E168(1, 4);
         break;
     case Player_AlucardStuck: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x18100010 | PLAYER_STATUS_CROUCH;
+        newStatus = PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_CROUCH |
+                    PLAYER_STATUS_UNK10;
         break;
     case Player_UnmorphBat: /* switch 5 */
-        newStatus = 0x28500001;
+        newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK400000 |
+                    PLAYER_STATUS_BAT_FORM;
         if (PLAYER.step_s == 0) {
             PLAYER.animSet = 0xD;
             PLAYER.unk5A = 0;
@@ -1109,48 +1117,64 @@ block_160:
         break;
     case Player_HighJump: /* switch 5 */
         func_8010E168(1, 4);
-        newStatus = 0x38000000;
+        newStatus = PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+                    NO_AFTERIMAGE;
         break;
     case Player_Hit:   /* switch 5 */
     case Player_Unk48: /* switch 5 */
     case Player_Unk49: /* switch 5 */
-        newStatus = 0x38110000;
+        newStatus =
+            PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+            NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000;
         func_8010E168(1, 12);
         break;
     case Player_StatusStone: /* switch 5 */
-        newStatus = 0x38110080;
+        newStatus = PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
+                    PLAYER_STATUS_UNK10000 | PLAYER_STATUS_STONE;
         break;
     case Player_BossGrab: /* switch 5 */
-        newStatus = 0x38110040;
+        newStatus = PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_UNK100000 |
+                    PLAYER_STATUS_UNK10000 | PLAYER_STATUS_UNK40;
         func_8010E168(1, 12);
         break;
     case Player_KillWater: /* switch 5 */
     case Player_Kill:      /* switch 5 */
-        newStatus = 0x18150000;
+        newStatus = PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_DEAD |
+                    PLAYER_STATUS_UNK10000;
         if (PLAYER.step_s == 0x80) {
-            newStatus = 0x181D0000;
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000000 |
+                        PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK80000 |
+                        PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
         }
         func_8010E168(1, 12);
         break;
     case Player_Unk17: /* switch 5 */
-        newStatus = 0x18150000;
+        newStatus = PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK100000 | PLAYER_STATUS_DEAD |
+                    PLAYER_STATUS_UNK10000;
         func_8010E168(1, 12);
         break;
     case Player_Teleport: /* switch 5 */
-        newStatus = 0x18100000;
+        newStatus =
+            PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(1, 12);
         break;
     case Player_SpellSummonSpirit:  /* switch 5 */
     case Player_SpellTetraSpirit:   /* switch 5 */
     case Player_SpellSwordBrothers: /* switch 5 */
         func_8010E168(1, 0x10);
-        newStatus = 0x38000200 | PLAYER_STATUS_CROUCH;
+        newStatus = PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_CROUCH | PLAYER_STATUS_UNK200;
         break;
     case Player_SpellDarkMetamorphosis: /* switch 5 */
     case Player_SpellHellfire:          /* switch 5 */
     case Player_SpellSoulSteal:         /* switch 5 */
         func_8010E168(1, 0x10);
-        newStatus = 0x38000200;
+        newStatus = PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_UNK200;
         break;
     case Player_AxearmorHit: /* switch 5 */
         func_8010E168(1, 0x14);
@@ -1160,73 +1184,83 @@ block_160:
     case Player_AxearmorJump:  /* switch 5 */
     case Player_Unk50:         /* switch 5 */
         PLAYER.unk5A = 0x64;
-        newStatus = 0x29100000;
+        newStatus = PLAYER_STATUS_AXEARMOR | PLAYER_STATUS_UNK20000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         break;
     case Player_SwordWarp: /* switch 5 */
-        newStatus = 0x18100000;
+        newStatus =
+            PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(4, 0xC);
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_OVL(0x10D);
         break;
     case Player_MorphWolf: /* switch 5 */
         g_unkGraphicsStruct.unk1C |= 2;
         if (abs(PLAYER.velocityX) > FIX(3)) {
             func_8010E168(1, 4);
         }
-        newStatus = 0x2C100204;
+        newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                    PLAYER_STATUS_UNK4000000 | PLAYER_STATUS_UNK100000 |
+                    PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_UNK200;
         if ((PLAYER.step_s == 0) || (PLAYER.step_s == 8)) {
-            newStatus = 0x6C100204;
+            newStatus = PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_UNK20000000 |
+                        NO_AFTERIMAGE | PLAYER_STATUS_UNK4000000 |
+                        PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK200 |
+                        PLAYER_STATUS_WOLF_FORM;
         }
         if (PLAYER.step_s == 3) {
             newStatus |= PLAYER_STATUS_CROUCH;
         }
         break;
     case Player_UnmorphWolf: /* switch 5 */
-        newStatus = 0x68100000;
+        newStatus = PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_UNK20000000 |
+                    NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(1, 4);
         break;
     }
     if (g_Player.timers[9]) {
-        newStatus |= 0x400;
+        newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[10]) {
-        newStatus |= 0x800;
+        newStatus |= PLAYER_STATUS_UNK800;
     }
     if (g_Player.timers[12]) {
-        newStatus |= 0x1000;
+        newStatus |= PLAYER_STATUS_UNK1000;
     }
     if (g_Player.timers[0]) {
-        newStatus |= 0x28104000;
+        newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_POISON;
     }
     if (g_Player.timers[1]) {
-        newStatus |= 0x28108000;
+        newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
+                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_CURSE;
     }
     if (*D_80097448 != 0) {
-        newStatus |= 0x08020000;
+        newStatus |= NO_AFTERIMAGE | PLAYER_STATUS_UNK20000;
     }
     if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
-        newStatus |= 0x02000000;
+        newStatus |= PLAYER_STATUS_ABSORB_BLOOD;
     }
     g_Player.status = newStatus;
-    if ((newStatus & 0x08000000) || (g_unkGraphicsStruct.D_800973FC != 0)) {
+    if ((newStatus & NO_AFTERIMAGE) || (g_unkGraphicsStruct.D_800973FC != 0)) {
         func_8010DFF0(1, 1);
     }
-    if (newStatus & 0x10000000) {
+    if (newStatus & PLAYER_STATUS_UNK10000000) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
     }
-    if (newStatus & 0x20000000) {
+    if (newStatus & PLAYER_STATUS_UNK20000000) {
         g_Status.D_80097BF8 |= 1;
     }
     if (g_Player.timers[13] | g_Player.timers[14]) {
         g_Player.status |= PLAYER_STATUS_UNK100;
     }
-    if ((g_Player.unk08 & 0x10000) &&
+    if ((g_Player.unk08 & PLAYER_STATUS_UNK10000) &&
         !(g_Player.status & (PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD))) {
         func_8010E168(1, 0xC);
         if (!(g_Player.status & (PLAYER_STATUS_POISON | PLAYER_STATUS_CURSE))) {
             g_Player.timers[4] = 0xC;
             g_Player.timers[15] = 4;
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_OVL(0x100);
         }
     }
     PlayAnimation(D_800B0130, D_800B01B8);
