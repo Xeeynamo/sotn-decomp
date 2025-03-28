@@ -578,6 +578,11 @@ extern s32 D_800ACE00[];
 #endif
 
 void EntityAlucard() {
+    #if defined(VERSION_PSP)
+    #define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
+    #else
+    #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
+    #endif
     s32 sp5c;
     s32 sp58;
     s32 sp54;
@@ -985,7 +990,7 @@ void EntityAlucard() {
                         #endif
 
                         if (D_80097448[1] == 0) {
-                            if (((g_Player.padTapped & BTN_MIST) == BTN_MIST) &&
+                            if (CHECK_SHOULDER(BTN_MIST) &&
                                 (HandleTransformationMP(
                                      FORM_MIST, CHECK_ONLY) == 0) &&
                                 ((PLAYER.step == Player_Stand) ||
@@ -1004,7 +1009,7 @@ void EntityAlucard() {
                                 PlaySfx(SFX_TRANSFORM_LOW);
                                 goto block_159;
                             }
-                            if (((g_Player.padTapped & BTN_MIST) == PAD_R1) &&
+                            if (CHECK_SHOULDER(PAD_R1) &&
                                 (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
                                  0) &&
                                 ((PLAYER.step == Player_Stand) ||
@@ -1026,7 +1031,7 @@ void EntityAlucard() {
                                 goto block_160;
                             }
                         }
-                        if (((g_Player.padTapped & BTN_MIST) == PAD_L1) &&
+                        if (CHECK_SHOULDER(PAD_L1) &&
                             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
                              0) &&
                             ((D_80097448[1] == 0) ||

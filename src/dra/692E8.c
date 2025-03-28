@@ -578,6 +578,11 @@ extern s32 D_800ACE00[];
 #endif
 
 void EntityAlucard() {
+    #if defined(VERSION_PSP)
+    #define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
+    #else
+    #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
+    #endif
     s32 sp5c;
     s32 sp58;
     s32 sp54;
@@ -985,24 +990,26 @@ void EntityAlucard() {
                         #endif
 
                         if (D_80097448[1] == 0) {
-                            if ((g_Player.padTapped & PAD_L1) &&
+                            if (CHECK_SHOULDER(BTN_MIST) &&
                                 (HandleTransformationMP(
                                      FORM_MIST, CHECK_ONLY) == 0) &&
-                                ((PLAYER.step == 0) || (PLAYER.step == 1) ||
-                                 (PLAYER.step == 2) || (PLAYER.step == 3) ||
-                                 (PLAYER.step == 4) || (PLAYER.step == 6) ||
-                                 (PLAYER.step == 8) ||
+                                ((PLAYER.step == Player_Stand) ||
+                                 (PLAYER.step == Player_Walk) ||
+                                 (PLAYER.step == Player_Crouch) ||
+                                 (PLAYER.step == Player_Fall) ||
+                                 (PLAYER.step == Player_Jump) ||
+                                 (PLAYER.step == Player_AlucardStuck) ||
+                                 (PLAYER.step == Player_HighJump) ||
                                  ((PLAYER.step == Player_MorphBat) &&
-                                  (PLAYER.step_s != 0)) ||
-                                 ((PLAYER.step == 0x18) &&
-                                  (PLAYER.step_s != 0) &&
-                                  (PLAYER.step_s != 8)))) {
+                                  (PLAYER.step_s)) ||
+                                 ((PLAYER.step == Player_MorphWolf) &&
+                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
                                 func_80109328();
                                 SetPlayerStep(Player_MorphMist);
                                 PlaySfx(SFX_TRANSFORM_LOW);
                                 goto block_159;
                             }
-                            if ((g_Player.padTapped & PAD_R1) &&
+                            if (CHECK_SHOULDER(PAD_R1) &&
                                 (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
                                  0)) {
                                 if (PLAYER.step == 0 || (PLAYER.step == 1) ||
@@ -1026,7 +1033,7 @@ void EntityAlucard() {
                                 }
                             }
                         }
-                        if ((g_Player.padTapped & PAD_R2) &&
+                        if (CHECK_SHOULDER(PAD_R2) &&
                             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
                              0) &&
                             ((D_80097448[1] == 0) ||
