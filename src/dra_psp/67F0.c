@@ -3,8 +3,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E3170);
-
 INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E31F8);
 
 extern PlayerHud g_PlayerHud;

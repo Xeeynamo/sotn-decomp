@@ -654,3 +654,6 @@ g_SpellDefs = 0x09237630;
 g_EnemyDefs = 0x09237640;
 g_AccessoryDefs = 0x09237648;
 g_EquipDefs = 0x09237650;
+UpdateCapePalette = 0x090E3030;
+RefreshCapePalette = 0x090E3128;
+func_800FF708 = 0x090E3170;
