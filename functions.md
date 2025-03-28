@@ -455,7 +455,7 @@
 |        | CalculateAngleToEntity              |       45 |          2 |        |                                 |       |
 | dra    | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
-| lib    | func_us_801BED48                    |       45 |          6 |        |                                 |       |
+| lib    | func_us_801BED48                    |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | ric    | pl_main.rodata                      |       46 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090ED248                   |       46 |          3 |        |                                 |       |
@@ -581,7 +581,7 @@
 | dra    | func_8010E4D0                       |       60 |         11 |        |                                 |       |
 | dra    | func_8013493C                       |       61 |          1 |        |                                 |       |
 | dra    | func_8011690C                       |       61 |          5 |        | https://decomp.me/scratch/U8Zb8 | 0.739 |
-| lib    | func_psp_092410A8                   |       61 |          5 |        |                                 |       |
+| lib    | func_us_801CCED0                    |       61 |          5 |        |                                 |       |
 | dra    | func_psp_090F77E8                   |       61 |          6 |        |                                 |       |
 | lib    | func_us_801B8958                    |       61 |          6 |        |                                 |       |
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
@@ -726,7 +726,7 @@
 | dra    | func_psp_09141D28                   |       78 |         13 |        |                                 |       |
 | dra    | func_psp_09141E30                   |       78 |         13 |        |                                 |       |
 | dra    | GetSpellDef                         |       79 |          5 |        |                                 |       |
-| lib    | func_psp_09258A38                   |       79 |          7 |        |                                 |       |
+| lib    | func_psp_09258A38                   |       79 |          7 |        | https://decomp.me/scratch/YDvBh | 1.0   |
 | no4    | func_pspeu_092427C8                 |       79 |          8 |        |                                 |       |
 | lib    | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | no4    | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
@@ -1064,7 +1064,7 @@
 | lib    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
 | no4    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
 | dra    | func_800F0940                       |      200 |         22 | Yes    |                                 |       |
-| lib    | func_psp_09256E08                   |      203 |         16 |        |                                 |       |
+| lib    | func_psp_09256E08                   |      203 |         16 |        | https://decomp.me/scratch/NtwwC | 0.999 |
 | ric    | RicEntityMaria                      |      203 |         27 |        |                                 |       |
 | dra    | func_80111DE8                       |      204 |         31 |        |                                 |       |
 | dra    | func_psp_090EF490                   |      205 |         22 |        |                                 |       |
@@ -1212,7 +1212,7 @@
 | lib    | GetPlayerCollisionWith              |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | no4    | GetPlayerCollisionWith              |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | ric    | RicDoCrash                          |      333 |         60 | Yes    |                                 |       |
-| lib    | func_psp_09257BF8                   |      334 |         15 |        |                                 |       |
+| lib    | func_psp_09257BF8                   |      334 |         15 |        | https://decomp.me/scratch/EXmKW | 1.0   |
 | no4    | func_pspeu_0923EED0                 |      334 |         32 |        |                                 |       |
 | dra    | CheckSoulStealInput                 |      335 |         45 | Yes    |                                 |       |
 | lib    | UnkPrimHelper                       |      338 |         36 |        |                                 |       |
@@ -1307,7 +1307,7 @@
 | lib    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | no4    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
-| ric    | func_8016D9C4                       |      512 |         68 |        |                                 |       |
+| ric    | func_8016D9C4                       |      512 |         68 |        | https://decomp.me/scratch/pF2GN | 0.994 |
 | dra    | func_psp_090EDE28                   |      517 |         73 |        |                                 |       |
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
