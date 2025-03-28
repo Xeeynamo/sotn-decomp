@@ -22,7 +22,7 @@ $(BUILD_DIR)/%.s.o: %.s $(AS)
 	$(muffle)$(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)/bin
 	$(call echo,Compiling $<,optional) mkdir -p $(dir $@)
-	$(muffle) $(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
+	$(muffle)$(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(call echo,Building $@,optional) mkdir -p $(dir $@)
 	$(muffle)$(LD) -r -b binary -o $@ $<
