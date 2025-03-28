@@ -446,11 +446,19 @@ $(VENV_DIR):
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(DEPENDENCIES)
+update-dependencies: $(DEPENDENCIES) dependencies_pspeu:
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
+
+dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
+$(MWCCGAP_APP): | $(VENV_DIR)
+	git submodule update --init $(dir $(MWCCGAP_APP))
+$(WIBO):
+	curl -sSfL -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
+	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
+$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 bin/%: bin/%.tar.gz
 	sha256sum --check $<.sha256
