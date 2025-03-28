@@ -302,7 +302,7 @@ duplicates-report: | $(VENV_DIR)
 
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP)
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP) $(CLANG) $(GO)
 	git clean -fdq $(BIN_DIR)/
 update-dependencies-all: update-dependencies $(addprefix dependencies,.us .pspeu .hd .saturn)
 
@@ -314,7 +314,7 @@ dependencies.pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
 $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
-	curl -sSf -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
+	curl -sSfL -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
@@ -344,9 +344,6 @@ $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 	cd $(SOTNDISK_DIR) && $(GO) build
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 	cd $(SOTNASSETS_DIR) && $(GO) build
-$(GO):
-	curl -sSf -o go.tar.gz https://go.dev/dl/go1.22.4.$(OS)-$(ARCH).amd64.tar.gz
-	tar -C $(HOME) -xzf go.tar.gz; rm go.tar.gz
 
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
 $(VENV_DIR):
@@ -360,8 +357,11 @@ $(TOOLS_DIR)/graphviz.make.chkpt: $(TOOLS_DIR)/python-dependencies.make.chkpt
 	sudo apt update && sudo apt-get install -y graphviz && touch $@
 graphviz: $(TOOLS_DIR)/graphviz.make.chkpt
 
+$(GO):
+	curl -sSfL -O https://go.dev/dl/go1.22.4.$(OS)-$(ARCH).tar.gz
+	$(muffle)tar -C $(HOME) -xzf go1.22.4.$(OS)-$(ARCH).tar.gz; rm go1.22.4.$(OS)-$(ARCH).tar.gz
 $(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
-	curl -sSf -o $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
+	curl -sSfL -o $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
 $(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
 	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
