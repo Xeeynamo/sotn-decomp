@@ -981,8 +981,8 @@ void func_us_801BD268(void) {
     }
 }
 
-static s16 D_us_80181C34[] = {40, 16, 0x50, 0x20};
-static s16 D_us_80181C3C[] = {24, 40, 24, 24, 0xFF, 0x00};
+static s16 D_us_80181C34[] = {0x28, 0x10, 0x50, 0x20};
+static s16 D_us_80181C3C[] = {0x18, 0x28, 0x18, 0x18, 0xFF, 0x00};
 
 u8 func_us_801BDA34(void) {
     u8 ret = 0;
