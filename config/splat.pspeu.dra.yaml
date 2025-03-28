@@ -91,7 +91,7 @@ segments:
       - [0x22A40, c, dra_psp/22A40] # O0
       - [0x23FE0, c, dra_psp/23FE0] # O0
       - [0x26948, c, dra_psp/26948]
-      - [0x27FD8, c, dra_psp/27FD8]
+      - [0x27FD8, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra_psp/35238]
       - [0x353B0, c, dra/704D0] # O0
@@ -135,7 +135,7 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
-      - [0xA0578, .data, dra_psp/27FD8]
+      - [0xA0578, .data, dra/692E8]
       - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
       - [0xA6888, data]
@@ -173,7 +173,7 @@ segments:
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra_psp/23FE0]
       - [0xEE6C8, .rodata, dra_psp/26948]
-      - [0xEE708, .rodata, dra_psp/27FD8]
+      - [0xEE708, .rodata, dra/692E8]
       - [0xEE7B0, .rodata, dra/71830]
       - [0xEE840, .rodata, dra/704D0]
       - [0xEE898, .rodata, dra/84B88]
@@ -183,7 +183,7 @@ segments:
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/65790]
       - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
-      - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra_psp/27FD8}
+      - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
       - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss2}
       - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
       - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss3}
