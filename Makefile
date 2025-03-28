@@ -520,8 +520,8 @@ dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
 $(MWCCGAP_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(MWCCGAP_APP))
 $(WIBO):
-	$(call wget,https://github.com/decompals/wibo/releases/download/0.6.13/wibo,$@,wibo)
-	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO); rm wget-wibo.log
+	curl -sSfL -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
+	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
 $(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 bin/%: bin/%.tar.gz
