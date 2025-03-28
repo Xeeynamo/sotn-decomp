@@ -13,7 +13,7 @@ muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use 
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
-echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
+echo		= $(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
@@ -42,12 +42,14 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
+PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_str/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
+UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
+AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
@@ -69,16 +71,16 @@ OBJCOPY         := $(CROSS)objcopy
 ALLEGREX 		:= $(BIN_DIR)/allegrex-as
 WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
+MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
 # Symbols
-BASE_SYMBOLS	 = symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
-UNDEFINED_SYMS 	 = undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
-AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
+BASE_SYMBOLS	:= $(CONFIG_DIR)/symbols.$(VERSION).txt
 
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
+SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
@@ -89,8 +91,7 @@ GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
-SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
-ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
+ASMDIFFER		:= $(TOOLS_DIR)/asm-differ/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
@@ -129,6 +130,7 @@ DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 MAIN_TARGET     := $(BUILD_DIR)/main
 
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
+ASMDIFFER_APP   := $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2CTX           := $(PYTHON) $(M2CTX_APP)
 M2C_DIR         := $(TOOLS_DIR)/m2c
@@ -187,7 +189,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 ##@ Misc Targets
 ##@
 
-# this help target will find targets which are followed by a comment beginning with '#' '#' '@' and
+# this help target will find targets which are followed by a comment beging with '#' '#' '@' and
 # print them in a summary form. Any comments on a line by themselves with start with `#' '#' '@'
 # will act as section dividers.
 .PHONY: help
@@ -349,17 +351,6 @@ context: ##@ create a context for decomp.me. Set the SOURCE variable prior to ca
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
 	@echo ctx.c has been updated.
 
-# Targets to extract the data from the disk image
-extract-disk: $(EXTRACTED_DISK_DIR)
-$(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
-	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
-$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
-	mkdir -p $(EXTRACTED_DISK_DIR)
-	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
-$(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
-	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
-	-7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR)
-
 .PHONY: extract_%
 extract_disk: ##@ Extract game files from a disc image.
 extract_disk: extract_disk_$(VERSION)
@@ -455,19 +446,11 @@ $(VENV_DIR):
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(DEPENDENCIES) dependencies_pspeu
+update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
-
-dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
-$(MWCCGAP_APP): | $(VENV_DIR)
-	git submodule update --init $(dir $(MWCCGAP_APP))
-$(WIBO):
-	$(call wget,https://github.com/decompals/wibo/releases/download/0.6.13/wibo,$@,wibo)
-	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO); rm wget-wibo.log
-$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
 
 bin/%: bin/%.tar.gz
 	sha256sum --check $<.sha256

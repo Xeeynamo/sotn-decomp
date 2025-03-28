@@ -289,7 +289,7 @@ def main(args: list) -> None:
         if args.list_type == "merged":
             print(" ".join(sorted(fileSegments)))
 
-    # These are currently sorted for ease of comparison/debugging, but it won't be useful once the overall logic has be validated
+    # These are currently sorted for ease of comparison/debugging, but it isn't relevant for actual function
     if args.list_type == "asm_files":
         print(" ".join(sorted(asmFiles)))
     elif args.list_type == "src_files":
