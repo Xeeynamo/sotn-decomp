@@ -101,7 +101,7 @@ void func_800FF708(s32 equipType, s32 arg1) {
             goto loop_1;
         }
     } while (g_AccessoryDefs[rnd].equipType != equipType);
-    g_Status.equipment[arg1 + 2] = rnd;
+    (g_Status.equipment + 2)[arg1] = rnd;
 }
 
 const char g_CheatLuckCode[] = {"x-x!v''q"};
