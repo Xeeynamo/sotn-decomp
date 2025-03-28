@@ -110,7 +110,7 @@ extern EInit g_EInitFlyingZombie1;
 extern EInit g_EInitDhuron;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
-extern EInit D_us_801808C0;
+extern EInit g_EInitEctoplasm;
 extern EInit g_EInitThornweed;
 // extern EInit D_us_801808D8;
 extern EInit g_EInitCorpseweed;
