@@ -238,8 +238,8 @@
 | wrp    | CollectLifeVessel                   |       27 |          4 |        | https://decomp.me/scratch/y8pEq | 0.986 |
 | st0    | func_pspeu_09246B88                 |       27 |          5 |        | https://decomp.me/scratch/b8HGJ | 1.0   |
 | dra    | func_psp_09140DB0                   |       27 |          6 |        |                                 |       |
+| lib    | e_lesser_demon.rodata               |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                     |       28 |          0 | Yes    |                                 |       |
-| lib    | unk_1D9E8.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | st_update.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | unk_1E818.rodata                    |       28 |          0 | Yes    |                                 |       |
