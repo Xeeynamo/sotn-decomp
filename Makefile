@@ -446,7 +446,7 @@ $(VENV_DIR):
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(DEPENDENCIES) dependencies_pspeu:
+update-dependencies: $(DEPENDENCIES) dependencies_pspeu
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
