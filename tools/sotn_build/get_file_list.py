@@ -31,27 +31,29 @@ SEG_TYPES: dict[tuple] = {
 }
 
 
+# This cannot handle returning only shared src files, but since there aren't any currently it isn't really worth putting time into it.
 def GetConfig(args: argparse.Namespace) -> dict:
     """Uses the supplied parameters to retrieve and return a dict of config values with version and ovl added"""
-    configDir = os.path.realpath(CONFIG_BASE_DIR)
-    configPattern = re.compile(
+    configDir: str = os.path.realpath(CONFIG_BASE_DIR)
+    configPattern: re.Pattern = re.compile(
         CONFIG_PATTERNS[args.config_type].substitute(version=args.version, ovl=args.ovl)
     )
 
     # We only care about the first match we find since there shouldn't be multiple matches
-    configPath = next(
+    configPath: str = next(
         (file for file in os.listdir(configDir) if configPattern.match(file)), None
     )
 
     if configPath:
         configPath = os.path.realpath(os.path.join(configDir, configPath))
         with open(configPath) as configFile:
-            config = yaml.safe_load(configFile)
+            config: dict = yaml.safe_load(configFile)
 
-        extraOptions = {
+        extraOptions: dict = {
             "version": args.version,
             "ovl": args.ovl,
             "ignore_hidden": args.ignore_hidden,
+            "include_shared": args.include_shared,
         }
         config["options"].update(extraOptions)
 
@@ -65,8 +67,8 @@ def GetConfig(args: argparse.Namespace) -> dict:
 def GetFileSegments(segments: list) -> list[list]:
     """Returns a list of file segments from a list of segments"""
     # Extracts segment information
-    segs = [seg for seg in segments if isinstance(seg, list)]
-    subsegs = [
+    segs: list = [seg for seg in segments if isinstance(seg, list)]
+    subsegs: list = [
         sub
         for seg in segments
         if isinstance(seg, dict) and "subsegments" in seg
@@ -125,9 +127,9 @@ def GetAsmFiles(options: dict, segments: list[list]) -> set[str]:
     return {file for file in dataFiles | asmFiles if os.path.exists(file)}
 
 
-def GetSrcFiles(options: dict, segments: list[list]) -> tuple[str]:
+def GetSrcFiles(options: dict, segments: list[list]) -> set[str]:
     """Constructs a list of source files from splat segments"""
-    srcPath = options["src_path"].rstrip("/")
+    srcPath: str = options["src_path"].rstrip("/")
 
     # We assume that if there is a data file, then there should be a c file for it
     # This is safe since we're using sets and we validate existence on the final set
@@ -136,6 +138,7 @@ def GetSrcFiles(options: dict, segments: list[list]) -> tuple[str]:
         for seg in segments
         if len(seg) >= 3 and seg[1].startswith(".")
     }
+
     cFiles: set = {
         FILENAME_TEMPLATE.substitute(
             path=srcPath,
@@ -145,6 +148,16 @@ def GetSrcFiles(options: dict, segments: list[list]) -> tuple[str]:
         for seg in segments
         if len(seg) >= 2 and seg[1] in SEG_TYPES["src"]
     }
+
+    if options["include_shared"]:
+        srcPath = srcPath.replace(f"/{options["ovl"]}", "")
+        cFiles.update(
+            {
+                os.path.join(srcPath, file)
+                for file in os.listdir(srcPath)
+                if file.endswith(".c")
+            }
+        )
 
     return {file for file in cFiles | extraFiles if os.path.exists(file)}
 
@@ -235,10 +248,10 @@ def ParseArgs(args: list):
     )
     parserList.add_argument(
         "-s",
-        "--shared",
+        "--include-shared",
         action="store_true",
         required=False,
-        help="Get shared src files instead of ovl src files",
+        help="Include shared src files with ovl src files",
     )
     parserList.add_argument(
         "-H",
@@ -265,39 +278,28 @@ def main(args: list) -> None:
     args = ParseArgs(args)
     config = GetConfig(args)
 
-    if args.shared:
-        srcPath: str = re.sub(
-            f"/{config["options"]["ovl"]}", "", config["options"]["src_path"]
-        )
-
-        asmFiles: set = set()
-        srcFiles: set = {
-            os.path.join(srcPath, file)
-            for file in os.listdir(srcPath)
-            if file.endswith(".c") and os.path.isfile(os.path.join(srcPath, file))
-        }
-        assetFiles: set = set()
-    else:
-        assetFilters: tuple = tuple(
-            tuple(aFilter.split("*")) for aFilter in NormalizeArgs(args.asset_filter)
-        )
-        fileSegments: list = GetFileSegments(config["segments"])
-        asmFiles: set = GetAsmFiles(config["options"], fileSegments)
-        srcFiles: set = GetSrcFiles(config["options"], fileSegments)
-        assetFiles: set = GetAssetFiles(config["options"], fileSegments, assetFilters)
-
-        if args.list_type == "merged":
-            print(" ".join(sorted(fileSegments)))
+    assetFilters: tuple = tuple(
+        tuple(aFilter.split("*")) for aFilter in NormalizeArgs(args.asset_filter)
+    )
+    fileSegments: list = GetFileSegments(config["segments"])
+    asmFiles: set = GetAsmFiles(config["options"], fileSegments)
+    srcFiles: set = GetSrcFiles(config["options"], fileSegments)
+    assetFiles: set = GetAssetFiles(config["options"], fileSegments, assetFilters)
 
     # These are currently sorted for ease of comparison/debugging, but it isn't relevant for actual function
-    if args.list_type == "asm_files":
-        print(" ".join(sorted(asmFiles)))
-    elif args.list_type == "src_files":
-        print(" ".join(sorted(srcFiles)))
-    elif args.list_type == "o_files":
-        print(
-            " ".join(sorted(f"{file}.o" for file in asmFiles | srcFiles | assetFiles))
-        )
+    match args.list_type:
+        case "merged":
+            print(" ".join(sorted(fileSegments)))
+        case "asm_files":
+            print(" ".join(sorted(asmFiles)))
+        case "src_files":
+            print(" ".join(sorted(srcFiles)))
+        case "o_files":
+            print(
+                " ".join(
+                    sorted(f"{file}.o" for file in asmFiles | srcFiles | assetFiles)
+                )
+            )
 
 
 if __name__ == "__main__":
