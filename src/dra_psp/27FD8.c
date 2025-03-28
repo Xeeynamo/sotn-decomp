@@ -1031,7 +1031,7 @@ void EntityAlucard() {
                                 goto block_160;
                             }
                         }
-                        if (CHECK_SHOULDER(PAD_L1) &&
+                        if (CHECK_SHOULDER(BTN_WOLF) &&
                             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
                              0) &&
                             ((D_80097448[1] == 0) ||
@@ -1047,7 +1047,7 @@ void EntityAlucard() {
                              ((PLAYER.step == Player_MorphBat) &&
                               (PLAYER.step_s)))) {
                             func_80109328();
-                            SetPlayerStep(0x18);
+                            SetPlayerStep(Player_MorphWolf);
                             PlaySfx(SFX_TRANSFORM);
                         }
                     }

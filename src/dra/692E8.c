@@ -1121,14 +1121,18 @@ block_160:
     case Player_SpellDarkMetamorphosis:
         PlayerStepDarkMetamorphosis();
         break;
+    case Player_SpellSummonSpirit:
+        PlayerStepSummonSpells();
+        break;
     case Player_SpellHellfire:
         PlayerStepHellfire();
+        break;
+    case Player_SpellTetraSpirit:
+        PlayerStepSummonSpells();
         break;
     case Player_SpellSoulSteal:
         PlayerStepSoulSteal();
         break;
-    case Player_SpellSummonSpirit:
-    case Player_SpellTetraSpirit:
     case Player_SpellSwordBrothers:
         PlayerStepSummonSpells();
         break;
@@ -1147,18 +1151,20 @@ block_160:
     case Player_AlucardStuck:
         PlayerStepStuck();
         break;
-    case Player_AxearmorStand:
+        case Player_AxearmorStand:
         weapon_func = D_8017A000.func_ptr_80170004;
-        goto runweapon;
+        weapon_func();
+        break;
     case Player_AxearmorWalk:
         weapon_func = D_8017A000.func_ptr_80170008;
-        goto runweapon;
+        weapon_func();
+        break;
     case Player_AxearmorJump:
         weapon_func = D_8017A000.func_ptr_8017000C;
-        goto runweapon;
+        weapon_func();
+        break;
     case Player_AxearmorHit:
         weapon_func = D_8017A000.func_ptr_80170010;
-    runweapon:
         weapon_func();
     }
     i = 0;
