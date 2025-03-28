@@ -809,13 +809,14 @@ void EntityAlucard() {
                     break;
                 }
             } else {
-                g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
+                g_Player.padPressed = 
+                g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
 #if defined(VERSION_PSP)
                 for (i = 0; i < 6; i++) {
                     if (g_Settings.buttonMask[i] ==
 #else
                 for (i = 0; i < 8; i++) {
-                    if(
+                    if (
 #endif
                         (g_pads[0].pressed & g_Settings.buttonMask[i])) {
                         g_Player.padPressed |= D_800ACE00[i];
