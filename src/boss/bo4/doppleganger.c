@@ -12,41 +12,47 @@ typedef enum {
     THINK_STEP_1,
     THINK_STEP_2,
     THINK_STEP_3,
-    THINK_STEP_5 = 5,
+    THINK_STEP_4,
+    THINK_STEP_5,
     THINK_STEP_6,
     THINK_STEP_7,
-    THINK_STEP_19 = 19,
+    THINK_STEP_14 = 14,
+    THINK_STEP_15,
+    THINK_STEP_GAME_OVER,
+    THINK_STEP_17,
+    THINK_STEP_BACKDASH,
+    THINK_STEP_WAIT,
 } ThinkStep;
 
-extern u32 D_us_801D3D24; // think_step
+extern s32 D_us_801D3D24; // think_step
 extern s32 D_us_801D3D28; // timer
-extern s32 D_us_801D3D2C;
+extern s32 D_us_801D3D2C; // timer
 
-void func_us_801C2DFC(void) {
-    s32 temp_s2;
+static void DopplegangerThinking(void) {
+    s32 posX;
     s32 playerDistanceX;
     u32 facingLeft;
 
-    temp_s2 = g_Tilemap.scrollX.i.hi + DOPPLEGANGER.posX.i.hi;
+    posX = g_Tilemap.scrollX.i.hi + DOPPLEGANGER.posX.i.hi;
     g_Dop.demo_timer = 2;
-    g_Dop.padSim = 0;
+    g_Dop.padSim = PAD_NONE;
 
     if (g_Player.status & PLAYER_STATUS_DEAD) {
-        D_us_801D3D24 = 0x10;
+        D_us_801D3D24 = THINK_STEP_GAME_OVER;
     }
     if (g_Dop.status & PLAYER_STATUS_UNK10000) {
-        D_us_801D3D24 = 0;
+        D_us_801D3D24 = THINK_STEP_0;
     }
     if (g_Dop.status & PLAYER_STATUS_STONE) {
-        D_us_801D3D24 = 0xF;
+        D_us_801D3D24 = THINK_STEP_15;
     }
 
     if ((g_Player.timers[ALU_T_12]) &&
-        (D_us_801D3D24 != 0x10) &&
-        !(g_Dop.status & 2)) {
+        (D_us_801D3D24 != THINK_STEP_GAME_OVER) &&
+        !(g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
         g_Dop.padSim = PAD_R2;
-        D_us_801D3D28 = 0x40;
-        D_us_801D3D24 = 0xE;
+        D_us_801D3D28 = 64;
+        D_us_801D3D24 = THINK_STEP_14;
     }
 
     facingLeft = false;
@@ -60,8 +66,8 @@ void func_us_801C2DFC(void) {
     FntPrint("think_step:%02x\n", D_us_801D3D24);
 
     switch (D_us_801D3D24) {
-    case 0:
-        if (!(g_Dop.status & 0x10000)) {
+    case THINK_STEP_0:
+        if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
             if (g_Player.timers[ALU_T_10]) {
                 if (rand() & 1) {
                     if (facingLeft) {
@@ -74,7 +80,7 @@ void func_us_801C2DFC(void) {
                 } else {
                     g_Dop.padSim |= PAD_DOWN;
                     D_us_801D3D24 = THINK_STEP_5;
-                    D_us_801D3D28 = 0x48;
+                    D_us_801D3D28 = 72;
                 }
             } else if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) > 32) {
                 if (facingLeft) {
@@ -91,12 +97,13 @@ void func_us_801C2DFC(void) {
                     g_Dop.padSim = PAD_RIGHT;
                 }
             } else {
-                D_us_801D3D28 = 0x10;
+                D_us_801D3D28 = 16;
                 D_us_801D3D24 = THINK_STEP_1;
             }
         }
         break;
-    case 1:                                         /* switch 1 */
+
+    case THINK_STEP_1:
         if (DOPPLEGANGER.facingLeft != facingLeft) {
             if (facingLeft) {
                 g_Dop.padSim = PAD_LEFT;
@@ -107,35 +114,34 @@ void func_us_801C2DFC(void) {
         if (playerDistanceX > 80) {
             D_us_801D3D24 = THINK_STEP_0;
         } else {
-            if ((temp_s2 < 96 && DOPPLEGANGER.facingLeft == false) ||
-                (temp_s2 > 416 && DOPPLEGANGER.facingLeft)) {
-                D_us_801D3D28 = 0x40;
+            if ((posX < 96 && DOPPLEGANGER.facingLeft == false) ||
+                (posX > 416 && DOPPLEGANGER.facingLeft)) {
+                D_us_801D3D28 = 64;
                 g_Dop.padSim |= PAD_R1;
                 D_us_801D3D24 = THINK_STEP_3;
                 break;
             }
 
             if ((g_Player.timers[ALU_T_9]) ||
-                ((g_Player.status & 0x20) &&
-                (rand() & 1))) {
+                ((g_Player.status & PLAYER_STATUS_CROUCH) && (rand() & 1))) {
                 switch (rand() & 7) {
                 case 0:
                 case 6:
                 case 7:
                     g_Dop.padSim |= PAD_CROSS;
                     D_us_801D3D24 = THINK_STEP_6;
-                    D_us_801D3D28 = 0x48;
+                    D_us_801D3D28 = 72;
                     break;
                 case 1:
                     g_Dop.padSim |= PAD_DOWN;
                     D_us_801D3D24 = THINK_STEP_5;
-                    D_us_801D3D28 = 0x48;
+                    D_us_801D3D28 = 72;
                     break;
                 case 2:
-                    if ((g_Player.status & 0x20)) {
+                    if (g_Player.status & PLAYER_STATUS_CROUCH) {
                         g_Dop.padSim |= PAD_DOWN;
                         D_us_801D3D24 = THINK_STEP_5;
-                        D_us_801D3D28 = 0x48;
+                        D_us_801D3D28 = 72;
                         break;
                     }
                     // fallthrough
@@ -144,7 +150,7 @@ void func_us_801C2DFC(void) {
                 case 5:
                     g_Dop.padSim |= PAD_TRIANGLE;
                     D_us_801D3D24 = THINK_STEP_2;
-                    D_us_801D3D28 = 0x20;
+                    D_us_801D3D28 = 32;
                     break;
                 }
             } else if (g_Player.timers[ALU_T_10]) {
@@ -159,39 +165,51 @@ void func_us_801C2DFC(void) {
                 } else {
                     g_Dop.padSim |= PAD_DOWN;
                     D_us_801D3D24 = THINK_STEP_5;
-                    D_us_801D3D28 = 0x48;
+                    D_us_801D3D28 = 72;
                 }
             } else {
-                if (playerDistanceX < 0x38) {
+                if (playerDistanceX < 56) {
                     if (D_us_801D3D2C) {
                         D_us_801D3D2C--;
                     } else {
+
+                        // n.b.! Doppleganger can get locked here
+                        //       if none of the preamble conditions override the
+                        //       current step. This causes him to remain in the
+                        //       crouch position attacking every 32 frames. If
+                        //       the player is near a door, elevated above
+                        //       Doppleganger, the attack will never hit, the
+                        //       distance will never change and Dop will just
+                        //       keep swinging.
+
                         g_Dop.padSim |= PAD_SQUARE;
-                        D_us_801D3D2C = 0x20;
+                        D_us_801D3D2C = 32;
                     }
                 } else if (--D_us_801D3D28 == 0) {
                     g_Dop.padSim |= PAD_UP | PAD_SQUARE;
-                    D_us_801D3D28 = 0x70;
-                    D_us_801D3D2C = 0x20;
+                    D_us_801D3D28 = 112;
+                    D_us_801D3D2C = 32;
                 }
             }
         }
         break;
-    case 2:                                         /* switch 1 */
+    case THINK_STEP_2:
         if (--D_us_801D3D28 == 0) {
             g_Dop.padSim = PAD_UP | PAD_CIRCLE;
-            D_us_801D3D24 = 0;
-            D_us_801D3D28 = 0x70;
+            D_us_801D3D24 = THINK_STEP_0;
+            D_us_801D3D28 = 112;
         }
         break;
-    case 3:                                         /* switch 1 */
+
+    case THINK_STEP_3:
         if (DOPPLEGANGER.step_s) {
             g_Dop.padSim = PAD_SQUARE;
-            D_us_801D3D28 = 0x18;
-            D_us_801D3D24 = 4;
+            D_us_801D3D28 = 24;
+            D_us_801D3D24 = THINK_STEP_4;
         }
         break;
-    case 4:                                         /* switch 1 */
+
+    case THINK_STEP_4:
         if (!(g_GameTimer % 2)) {
             g_Dop.padSim = PAD_UP;
         }
@@ -201,10 +219,11 @@ void func_us_801C2DFC(void) {
             D_us_801D3D24 = THINK_STEP_0;
         }
         break;
-    case 5:
-        if ((--D_us_801D3D28 == 0) || !(g_Dop.status & 0x20)) {
+
+    case THINK_STEP_5:
+        if ((--D_us_801D3D28 == 0) || !(g_Dop.status & PLAYER_STATUS_CROUCH)) {
             D_us_801D3D24 = THINK_STEP_0;
-            D_us_801D3D2C = 0x20;
+            D_us_801D3D2C = 32;
         }
         if (DOPPLEGANGER.facingLeft != facingLeft) {
             if (facingLeft) {
@@ -213,19 +232,19 @@ void func_us_801C2DFC(void) {
                 g_Dop.padSim = PAD_RIGHT;
             }
         }
-
         g_Dop.padSim |= PAD_DOWN;
         if (playerDistanceX < 56) {
             if (D_us_801D3D2C) {
                 D_us_801D3D2C--;
             } else {
+                // crouch attack
                 g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
-                D_us_801D3D2C = 0x20;
+                D_us_801D3D2C = 32;
             }
         }
         break;
-    case 6:                                         /* switch 1 */
-        if ((g_Dop.vram_flag & 1)) {
+    case THINK_STEP_6:
+        if (g_Dop.vram_flag & 1) {
             D_us_801D3D24 = THINK_STEP_0;
         } else {
             g_Dop.padSim |= PAD_CROSS;
@@ -234,8 +253,8 @@ void func_us_801C2DFC(void) {
             }
         }
         break;
-    case 7:
-        if ((g_Dop.vram_flag & 1)) {
+    case THINK_STEP_7:
+        if (g_Dop.vram_flag & 1) {
             D_us_801D3D24 = THINK_STEP_0;
         } else {
             if (playerDistanceX > 16) {
@@ -246,23 +265,23 @@ void func_us_801C2DFC(void) {
                 }
             }
 
-            g_Dop.padSim |= 0x40;
+            g_Dop.padSim |= PAD_CROSS;
             if (DOPPLEGANGER.velocityY > 0) {
-                if (DOPPLEGANGER.velocityY > 0x20000) {
+                if (DOPPLEGANGER.velocityY > FIX(2)) {
                     g_Dop.padSim |= PAD_DOWN | PAD_SQUARE | PAD_CROSS;
                 }
 
-                if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 0x10) {
+                if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 16) {
                     g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
                 }
             }
         }
         break;
-    case 14:                                        /* switch 1 */
+    case THINK_STEP_14:
         if (!(g_GameTimer % 8)) {
             g_Dop.padSim = PAD_UP;
         }
-        if (!(g_Dop.status & 2) && (g_GameTimer & 1)) {
+        if (!(g_Dop.status & PLAYER_STATUS_MIST_FORM) && (g_GameTimer & 1)) {
             g_Dop.padSim = PAD_R2;
         }
 
@@ -273,39 +292,41 @@ void func_us_801C2DFC(void) {
             D_us_801D3D24 = THINK_STEP_0;
         }
         break;
-    case 15:
-        if (!(g_Dop.status & 0x80)) {
+    case THINK_STEP_15:
+        if (!(g_Dop.status & PLAYER_STATUS_STONE)) {
             D_us_801D3D24 = THINK_STEP_0;
         }
         if (!(g_GameTimer & 0xF)) {
             g_Dop.padSim = PAD_UP;
         }
         break;
-    case 16:
+    case THINK_STEP_GAME_OVER:
         if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-            D_us_801D3D24 = 0;
+            D_us_801D3D24 = THINK_STEP_0;
         }
         g_Dop.padSim = PAD_UP;
-        if (g_Dop.status & 1) {
+        // transform back to doppleganger form
+        if (g_Dop.status & PLAYER_STATUS_BAT_FORM) {
             g_Dop.padSim = PAD_R1;
         }
-        if (g_Dop.status & 2) {
+        if (g_Dop.status & PLAYER_STATUS_MIST_FORM) {
             g_Dop.padSim = PAD_R2;
         }
         break;
-    case 17:
+    case THINK_STEP_17:
         if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 8) {
             D_us_801D3D24 = THINK_STEP_0;
         }
         break;
-    case 18:
+    case THINK_STEP_BACKDASH:
         if (DOPPLEGANGER.step == 1) {
+            // backdash
             g_Dop.padSim |= PAD_TRIANGLE;
-            D_us_801D3D24 = THINK_STEP_19;
-            D_us_801D3D2C = 0x40;
+            D_us_801D3D24 = THINK_STEP_WAIT;
+            D_us_801D3D2C = 64;
         }
         break;
-    case 19:                                        /* switch 1 */
+    case THINK_STEP_WAIT:
         if (--D_us_801D3D2C == 0) {
             D_us_801D3D24 = THINK_STEP_0;
         }
@@ -313,7 +334,47 @@ void func_us_801C2DFC(void) {
     }
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C37B4);
+extern EInit D_us_80180410;
+
+typedef struct {
+    u16 unk0;
+    u16 unk2;
+    u16 unk4;
+    u16 unk6;
+} Unk_Dop;
+
+extern Unk_Dop D_us_801D4DDA;
+
+void func_us_801C37B4(Entity* self) {
+    s32 i;
+    Entity* entity;
+    s16 hitPoints;
+
+    D_us_801D4DDA.unk0 = DOPPLEGANGER.hitPoints;
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180410);
+        func_us_801C1A38();
+
+        entity = &g_Entities[STAGE_ENTITY_START + 4];
+        for (i = (STAGE_ENTITY_START + 4); i < (STAGE_ENTITY_START + 80); i++,
+            entity++) {
+            DestroyEntity(entity);
+        }
+
+        D_us_801D4DDA.unk4 = D_us_801D4DDA.unk0 = D_us_801D4DDA.unk2 =
+            DOPPLEGANGER.hitPoints;
+
+        D_us_801D4DDA.unk6 = DOPPLEGANGER.hitboxState;
+        D_us_801D3D24 = THINK_STEP_BACKDASH;
+        func_us_801C5354(1, 48);
+    } else {
+        DopplegangerThinking();
+        func_us_801C2284();
+        func_us_801CA014();
+    }
+    D_us_801D4DDA.unk2 = D_us_801D4DDA.unk0;
+    FntPrint("life:%02x\n", DOPPLEGANGER.hitPoints);
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C38C0);
 
