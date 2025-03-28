@@ -32,39 +32,40 @@ SEG_TYPES: dict[tuple] = {
 
 
 # This cannot handle returning only shared src files, but since there aren't any currently it isn't really worth putting time into it.
-def GetConfig(args: argparse.Namespace) -> dict:
+# Shared source files seem to be an artifact in make that is no longer needed. Shared src files are now handled by includes in ovl src files.
+def get_config(args: argparse.Namespace) -> dict:
     """Uses the supplied parameters to retrieve and return a dict of config values with version and ovl added"""
-    configDir: str = os.path.realpath(CONFIG_BASE_DIR)
-    configPattern: re.Pattern = re.compile(
+    config_dir: str = os.path.realpath(CONFIG_BASE_DIR)
+    config_pattern: re.Pattern = re.compile(
         CONFIG_PATTERNS[args.config_type].substitute(version=args.version, ovl=args.ovl)
     )
 
     # We only care about the first match we find since there shouldn't be multiple matches
-    configPath: str = next(
-        (file for file in os.listdir(configDir) if configPattern.match(file)), None
+    config_path: str = next(
+        (file for file in os.listdir(config_dir) if config_pattern.match(file)), None
     )
 
-    if configPath:
-        configPath = os.path.realpath(os.path.join(configDir, configPath))
-        with open(configPath) as configFile:
-            config: dict = yaml.safe_load(configFile)
+    if config_path:
+        config_path = os.path.realpath(os.path.join(config_dir, config_path))
+        with open(config_path) as config_file:
+            config: dict = yaml.safe_load(config_file)
 
-        extraOptions: dict = {
+        extra_options: dict = {
             "version": args.version,
             "ovl": args.ovl,
             "ignore_hidden": args.ignore_hidden,
             "include_shared": args.include_shared,
         }
-        config["options"].update(extraOptions)
+        config["options"].update(extra_options)
 
         return config
-    else:  # Raise an exception if no configPath was found
+    else:  # Raise an exception if no config_path was found
         raise FileNotFoundError(
-            f"Could not find a {args.config_type} config for {args.version} {args.ovl} in {configDir}"
+            f"Could not find a {args.config_type} config for {args.version} {args.ovl} in {config_dir}"
         )
 
 
-def GetFileSegments(segments: list) -> list[list]:
+def get_file_segments(segments: list) -> list[list]:
     """Returns a list of file segments from a list of segments"""
     # Extracts segment information
     segs: list = [seg for seg in segments if isinstance(seg, list)]
@@ -84,7 +85,7 @@ def GetFileSegments(segments: list) -> list[list]:
     return [seg for seg in segs + subsegs if isinstance(seg, list)]
 
 
-def NormalizeArgs(arg: list[str]) -> list[str]:
+def normalize_args(arg: list[str]) -> list[str]:
     """Takes a list of items that are either a string of comma separated items or an individual item and normalizes it into a list of individual items"""
     if arg:
         return ",".join(arg).split(",")
@@ -92,14 +93,14 @@ def NormalizeArgs(arg: list[str]) -> list[str]:
         return []
 
 
-def GetAsmFiles(options: dict, segments: list[list]) -> set[str]:
+def get_asm_files(options: dict, segments: list[list]) -> set[str]:
     """Constructs a list of asm files from a given segment list"""
-    asmPath: str = options["asm_path"].rstrip("/")
-    dataPath: str = os.path.join(options["asm_path"], "data").rstrip("/")
+    asm_path: str = options["asm_path"].rstrip("/")
+    data_path: str = os.path.join(options["asm_path"], "data").rstrip("/")
 
-    asmFiles: set = {
+    asm_files: set = {
         FILENAME_TEMPLATE.substitute(
-            path=asmPath, filename=seg[2] if len(seg) >= 3 else seg[1], ext="s"
+            path=asm_path, filename=seg[2] if len(seg) >= 3 else seg[1], ext="s"
         )
         for seg in segments
         if len(seg) >= 2 and seg[1] in SEG_TYPES["asm"]
@@ -107,13 +108,13 @@ def GetAsmFiles(options: dict, segments: list[list]) -> set[str]:
 
     # A seg type is added with a leading . for each existing data seg type
     if not options["ignore_hidden"]:
-        dataSegTypes = SEG_TYPES["data"] + tuple(
+        data_seg_types = SEG_TYPES["data"] + tuple(
             f".{type}" for type in SEG_TYPES["data"]
         )
 
-    dataFiles: set = {
+    data_files: set = {
         FILENAME_TEMPLATE.substitute(
-            path=dataPath,
+            path=data_path,
             # If a segment has 3 or more elements, then it has a name
             # If it only has 1 or 2 elements, we use the memory address as the name
             filename=seg[2] if len(seg) >= 3 else f"{seg[0]:X}",
@@ -121,27 +122,27 @@ def GetAsmFiles(options: dict, segments: list[list]) -> set[str]:
             ext=f"{seg[1].lstrip('.')}.s" if len(seg) >= 2 else "bss.s",
         )
         for seg in segments
-        if (len(seg) >= 2 and seg[1] in (dataSegTypes)) or len(seg) == 1
+        if (len(seg) >= 2 and seg[1] in (data_seg_types)) or len(seg) == 1
     }
 
-    return {file for file in dataFiles | asmFiles if os.path.exists(file)}
+    return {file for file in data_files | asm_files if os.path.exists(file)}
 
 
-def GetSrcFiles(options: dict, segments: list[list]) -> set[str]:
+def get_src_files(options: dict, segments: list[list]) -> set[str]:
     """Constructs a list of source files from splat segments"""
-    srcPath: str = options["src_path"].rstrip("/")
+    src_path: str = options["src_path"].rstrip("/")
 
     # We assume that if there is a data file, then there should be a c file for it
     # This is safe since we're using sets and we validate existence on the final set
-    extraFiles: set = {
-        FILENAME_TEMPLATE.substitute(path=srcPath, filename=seg[2], ext="c")
+    extra_files: set = {
+        FILENAME_TEMPLATE.substitute(path=src_path, filename=seg[2], ext="c")
         for seg in segments
         if len(seg) >= 3 and seg[1].startswith(".")
     }
 
-    cFiles: set = {
+    c_files: set = {
         FILENAME_TEMPLATE.substitute(
-            path=srcPath,
+            path=src_path,
             filename=seg[2] if len(seg) >= 3 else f"{seg[0]:X}",
             ext=seg[1],
         )
@@ -150,46 +151,46 @@ def GetSrcFiles(options: dict, segments: list[list]) -> set[str]:
     }
 
     if options["include_shared"]:
-        srcPath = srcPath.replace(f"/{options["ovl"]}", "")
-        cFiles.update(
+        src_path = src_path.replace(f"/{options["ovl"]}", "")
+        c_files.update(
             {
-                os.path.join(srcPath, file)
-                for file in os.listdir(srcPath)
+                os.path.join(src_path, file)
+                for file in os.listdir(src_path)
                 if file.endswith(".c")
             }
         )
 
-    return {file for file in cFiles | extraFiles if os.path.exists(file)}
+    return {file for file in c_files | extra_files if os.path.exists(file)}
 
 
 # This function still needs a bit of refinement, but it is serviceable for now
-def GetAssetFiles(
-    options: dict, segments: list[list], assetFilters: tuple[tuple]
+def get_asset_files(
+    options: dict, segments: list[list], asset_filters: tuple[tuple]
 ) -> set[str]:
     """Constructs a list of asset files using a directory listing or the segments"""
-    assetPath = options["asset_path"].rstrip("/")
+    asset_path = options["asset_path"].rstrip("/")
 
     # This conditional needs to be cleaned up and probably relocated for easier code maintenance
     if (
         options["platform"] == "psx"
-        and ("st/" in assetPath or "boss/" in assetPath)
+        and ("st/" in asset_path or "boss/" in asset_path)
         and options["ovl"] != "sel"
-        and assetFilters == (("", ""),)
+        and asset_filters == (("", ""),)
     ):
-        assetFilters = tuple(
+        asset_filters = tuple(
             tuple(f.split("*"))
             for f in ("D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin")
         )
 
     # The file listing is really the only one used currently because some asset segment files are built by splat extensions
     # and the resulting files aren't directly specified in the config
-    if os.path.isdir(assetPath):
-        assetFiles = {
-            os.path.join(assetPath, file)
-            for file in os.listdir(assetPath)
+    if os.path.isdir(asset_path):
+        asset_files = {
+            os.path.join(asset_path, file)
+            for file in os.listdir(asset_path)
             if any(
-                file.startswith(sFilter) and file.endswith(eFilter)
-                for sFilter, eFilter in assetFilters
+                file.startswith(start_filter) and file.endswith(end_filter)
+                for start_filter, end_filter in asset_filters
             )
         }
     else:  # This method is included as something of a proof of concept/work in progress
@@ -203,22 +204,22 @@ def GetAssetFiles(
             "palette": "png",
             "assets": "json",
         }
-        assetFiles = {
+        asset_files = {
             FILENAME_TEMPLATE.substitute(
-                path=assetPath, filename=seg[2], ext=extension.get(seg[1], seg[1])
+                path=asset_path, filename=seg[2], ext=extension.get(seg[1], seg[1])
             )
             for seg in segments
             if len(seg) >= 3 and seg[1] in SEG_TYPES["asset"]
         }
-        # Add a .bin file for each .dec file and supplement assetFiles with a directory listing
-        assetFiles.update(
-            {file.replace("dec", "bin") for file in assetFiles if ".dec" in file}
+        # Add a .bin file for each .dec file and supplement asset_files with a directory listing
+        asset_files.update(
+            {file.replace("dec", "bin") for file in asset_files if ".dec" in file}
         )
-    return assetFiles
+    return asset_files
 
 
-# Dedicated function for ParseArgs so that this file can be imported in a module and still have the ability to parse out the proper args
-def ParseArgs(args: list):
+# Dedicated function for parsing args so that this file can be imported in a module and still have the ability to parse out the proper args
+def parse_args(args: list):
     parser = argparse.ArgumentParser(
         description="For gathering information in more complex ways than Make is meant to do"
     )
@@ -230,15 +231,15 @@ def ParseArgs(args: list):
         help="Sets game version and overrides VERSION environment variable",
     )
     subparsers = parser.add_subparsers(dest="action", help="The action to perform")
-    parserList = subparsers.add_parser("list", help="Retrieve a list of files")
-    parserList.add_argument("ovl", type=str, help="Overlay to target")
-    parserList.add_argument(
+    parser_list = subparsers.add_parser("list", help="Retrieve a list of files")
+    parser_list.add_argument("ovl", type=str, help="Overlay to target")
+    parser_list.add_argument(
         "list_type",
         type=str,
         choices=("src_files", "o_files", "merged"),
         help="What to list",
     )
-    parserList.add_argument(
+    parser_list.add_argument(
         "-c",
         "--config-type",
         type=str,
@@ -246,21 +247,21 @@ def ParseArgs(args: list):
         required=True,
         help="Type of config to reference",
     )
-    parserList.add_argument(
+    parser_list.add_argument(
         "-s",
         "--include-shared",
         action="store_true",
         required=False,
         help="Include shared src files with ovl src files",
     )
-    parserList.add_argument(
+    parser_list.add_argument(
         "-H",
         "--ignore-hidden",
         action="store_true",
         required=False,
         help='Ignore file types that begin with "dot" in splat configs',
     )
-    parserList.add_argument(
+    parser_list.add_argument(
         "-f",
         "--asset-filter",
         action="append",
@@ -275,29 +276,29 @@ def ParseArgs(args: list):
 
 # This logic is expected to be contained elsewhere if this file is imported as a module
 def main(args: list) -> None:
-    args = ParseArgs(args)
-    config = GetConfig(args)
+    args = parse_args(args)
+    config = get_config(args)
 
-    assetFilters: tuple = tuple(
-        tuple(aFilter.split("*")) for aFilter in NormalizeArgs(args.asset_filter)
+    asset_filters: tuple = tuple(
+        tuple(filter.split("*")) for filter in normalize_args(args.asset_filter)
     )
-    fileSegments: list = GetFileSegments(config["segments"])
-    asmFiles: set = GetAsmFiles(config["options"], fileSegments)
-    srcFiles: set = GetSrcFiles(config["options"], fileSegments)
-    assetFiles: set = GetAssetFiles(config["options"], fileSegments, assetFilters)
+    file_segments: list = get_file_segments(config["segments"])
+    asm_files: set = get_asm_files(config["options"], file_segments)
+    src_files: set = get_src_files(config["options"], file_segments)
+    asset_files: set = get_asset_files(config["options"], file_segments, asset_filters)
 
     # These are currently sorted for ease of comparison/debugging, but it isn't relevant for actual function
     match args.list_type:
         case "merged":
-            print(" ".join(sorted(fileSegments)))
+            print(" ".join(sorted(file_segments)))
         case "asm_files":
-            print(" ".join(sorted(asmFiles)))
+            print(" ".join(sorted(asm_files)))
         case "src_files":
-            print(" ".join(sorted(srcFiles)))
+            print(" ".join(sorted(src_files)))
         case "o_files":
             print(
                 " ".join(
-                    sorted(f"{file}.o" for file in asmFiles | srcFiles | assetFiles)
+                    sorted(f"{file}.o" for file in asm_files | src_files | asset_files)
                 )
             )
 
