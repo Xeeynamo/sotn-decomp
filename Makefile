@@ -153,10 +153,8 @@ $(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
 clean: $(addprefix CLEAN_,$(CLEAN_FILES))
 
 # Targets for performing various automated formatting tasks
-format-%.run.prep:# Ensures temp dir exists and removes any existing run file that might exist
-	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/format-$*.run > /dev/null 2>&1 || true
-
-format-src.run: format-src.run.prep
+format-src.run:
+	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
 	$(call echo,Running clang to format src/* and include/* (this may take some time))
 $(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: format-src.run $(CLANG)
 	echo "$*" >> /tmp/sotn-decomp/$<; $(CLANG) -i $*
@@ -168,7 +166,8 @@ $(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
 	$(call echo,Formatting $**.py) $(BLACK) $**.py
 format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
 
-format-symbols.run: format-symbols.run.prep
+format-symbols.run:
+	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
 	$(call echo,Removing orphan symbols using splat configs)
 $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
 	echo "$*" >> $<; $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
