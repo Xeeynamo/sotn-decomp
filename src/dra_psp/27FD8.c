@@ -125,11 +125,11 @@ void func_801093C4(void) {
         drawEnv.clip = D_800ACE60;
         drawEnv.ofs[1] = 0x1C0;
         dr_env = *(DR_ENV**)&prim->r1;
-#if defined(VERSION_PSP)
+        #if defined(VERSION_PSP)
         if (dr_env == NULL) {
             return;
         }
-#endif
+        #endif
         SetDrawEnv(dr_env, &drawEnv);
         prim->priority = 0x190;
         prim->drawMode = DRAW_DEFAULT;
@@ -269,7 +269,7 @@ void func_80109594() {
             func_80109328();
         }
     }
-#ifdef VERSION_PSP
+    #ifdef VERSION_PSP
     func_psp_091040A0(&D_psp_09183138);
     D_psp_0918315C =
         func_psp_091048B8(&D_psp_0917DCA8, &D_psp_09180EC0, &D_psp_0917ED60,
@@ -280,7 +280,7 @@ void func_80109594() {
     if (D_psp_09183174 != 0) {
         func_psp_091040A0(&D_psp_09183168);
     }
-#endif
+    #endif
 }
 
 void func_80109990(void) {
@@ -514,13 +514,13 @@ void func_8010A234(s32 arg0) {
         if (arg0 != 0) {
             PlayAnimation(D_800B0130, D_800B01B8);
         }
-#if defined(VERSION_PSP)
+        #if defined(VERSION_PSP)
         for (i = 0, ent = &g_Entities[0]; i < TOTAL_ENTITY_COUNT; i++, ent++) {
             if (ent->palette == 0x110 && ent->unk5A == 100) {
                 ent->animSet = 0;
             }
         }
-#endif
+        #endif
     }
 }
 
@@ -578,11 +578,11 @@ extern s32 D_800ACE00[];
 #endif
 
 void EntityAlucard() {
-#if defined(VERSION_PSP)
-#define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
-#else
-#define CHECK_SHOULDER(x) (g_Player.padTapped & x)
-#endif
+    #if defined(VERSION_PSP)
+    #define CHECK_SHOULDER(x) ((g_Player.padTapped & PAD_SHOULDERS) == x)
+    #else
+    #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
+    #endif
     s32 sp5c;
     s32 sp58;
     s32 sp54;
@@ -773,14 +773,14 @@ void EntityAlucard() {
             }
             g_Player.padHeld = g_Player.padPressed;
 
-#if defined(VERSION_PSP)
+            #if defined(VERSION_PSP)
             if (g_Player.demo_timer != 0) {
                 sp38 = 1;
             } else {
                 sp38 = 0;
             }
             sp40 = sp38;
-#endif
+            #endif
 
             if (g_Player.demo_timer != 0) {
                 g_Player.demo_timer--;
@@ -809,17 +809,15 @@ void EntityAlucard() {
                     break;
                 }
             } else {
-                g_Player.padPressed =
-                    g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
+                g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
 #if defined(VERSION_PSP)
                 for (i = 0; i < 6; i++) {
                     if (g_Settings.buttonMask[i] ==
 #else
                 for (i = 0; i < 8; i++) {
-                    if (
+                    if(
 #endif
-                            g_pads[0].pressed &
-                        g_Settings.buttonMask[i]) {
+                        (g_pads[0].pressed & g_Settings.buttonMask[i])) {
                         g_Player.padPressed |= D_800ACE00[i];
                     }
                 }
@@ -871,12 +869,12 @@ void EntityAlucard() {
                             var_s5 = PLAYER.step_s;
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
-#if defined(VERSION_PSP)
+                            #if defined(VERSION_PSP)
                             if (D_8C630C4) {
                                 PLAYER.hitPoints = 0;
                                 i = 0;
                             }
-#endif
+                            #endif
                             if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
                                 ((i == 1) || (i == 8) || (i == 7))) {
                                 i = 3;
@@ -962,7 +960,7 @@ void EntityAlucard() {
                     }
                     if (TRANSFORM_LOCKOUT_TIMER == 0) {
 
-#if defined(VERSION_PSP)
+                        #if defined(VERSION_PSP)
                         var_s7 = g_Player.padPressed;
                         if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
                             PLAYER.step == Player_MorphWolf ||
@@ -989,7 +987,7 @@ void EntityAlucard() {
                                 }
                             }
                         }
-#endif
+                        #endif
 
                         if (D_80097448[1] == 0) {
                             if (CHECK_SHOULDER(BTN_MIST) &&

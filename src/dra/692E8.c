@@ -216,6 +216,7 @@ void func_80109594() {
         prim = prim->next;
     }
     func_801093C4();
+
     TRANSFORM_LOCKOUT_TIMER = 0x10;
 
 #if !defined(VERSION_HD)
@@ -1350,8 +1351,7 @@ block_160:
         if (PLAYER.animFrameDuration < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
-        PLAYER.hitParams = 0;
-        PLAYER.hitboxState = 0;
+        PLAYER.hitboxState = PLAYER.hitParams = 0;
     } else {
         PLAYER.hitboxState = 1;
         PLAYER.hitParams = 0;
@@ -1373,8 +1373,8 @@ block_160:
         func_8010D59C();
         if ((*D_80097448 >= 0x29 ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              *D_80097448 >= 0xD)) &&
-            (g_CurrentEntity->nFramesInvincibility == 0)) {
+              *D_80097448 > 0xC)) &&
+            (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
         }
@@ -1423,8 +1423,8 @@ block_160:
         g_Player.unk04 = sp5c;
         if (((*D_80097448 >= 0x29) ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              (*D_80097448 >= 0xD))) &&
-            (g_CurrentEntity->nFramesInvincibility == 0)) {
+              (*D_80097448 > 0xC))) &&
+            (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 4 / 3;
             PLAYER.velocityX = PLAYER.velocityX * 4 / 3;
         }
