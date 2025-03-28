@@ -18,15 +18,11 @@ s16 g_ESoulStealOrbSprt[] = {
     0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
 };
 
-u8 g_ESoulStealOrbAnim[] = {
-    0x04, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03,
-    0x05, 0x03, 0x06, 0x03, 0x03, 0x00,
-};
+u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
 
 #ifdef VERSION_PSP
 void func_psp_0923AD68(Entity*);
 void func_psp_0923B2F0(Entity*);
-
 #endif
 
 extern u16 g_EInitObtainable[];
