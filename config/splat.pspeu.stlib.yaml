@@ -76,7 +76,7 @@ segments:
       - [0x1CC08, c, lib/unk_3B53C]
       - [0x1D050, c, lib/e_breakable]
       - [0x1D650, c, lib/e_chair]
-      - [0x1D9E8, c, lib_psp/first_c_file]
+      - [0x1D9E8, c, lib_psp/unk_1D9E8]
       - [0x1E6F8, c, lib/e_lesser_demon]
       - [0x231B0, c, lib_psp/lang]
       - [0x23250, c, lib_psp/cutscene]
