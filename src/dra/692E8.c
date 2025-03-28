@@ -1011,42 +1011,43 @@ void EntityAlucard() {
                             }
                             if (CHECK_SHOULDER(PAD_R1) &&
                                 (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
-                                 0)) {
-                                if (PLAYER.step == 0 || (PLAYER.step == 1) ||
-                                    (PLAYER.step == 2) || (PLAYER.step == 3) ||
-                                    (PLAYER.step == 4) || (PLAYER.step == 6)) {
-                                    goto block_62check;
+                                 0) &&
+                                ((PLAYER.step == Player_Stand) ||
+                                 (PLAYER.step == Player_Walk) ||
+                                 (PLAYER.step == Player_Crouch) ||
+                                 (PLAYER.step == Player_Fall) ||
+                                 (PLAYER.step == Player_Jump) ||
+                                 (PLAYER.step == Player_AlucardStuck) ||
+                                 (PLAYER.step == Player_HighJump) ||
+                                 (PLAYER.step == Player_MorphMist) ||
+                                 ((PLAYER.step == Player_MorphWolf) &&
+                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
+                                if (PLAYER.step == 6 || PLAYER.step == 2) {
+                                    D_8013AECC = 0xC;
                                 }
-                                if ((PLAYER.step == Player_MorphMist) ||
-                                    (PLAYER.step == 8) ||
-                                    (PLAYER.step == 24 &&
-                                     (PLAYER.step_s != 0 &&
-                                      PLAYER.step_s != 8))) {
-                                block_62check:
-                                    if (PLAYER.step == 6 || PLAYER.step == 2) {
-                                        D_8013AECC = 0xC;
-                                    }
-                                    func_80109328();
-                                    SetPlayerStep(Player_MorphBat);
-                                    PlaySfx(SFX_TRANSFORM_LOW);
-                                    goto block_160;
-                                }
+                                func_80109328();
+                                SetPlayerStep(Player_MorphBat);
+                                PlaySfx(SFX_TRANSFORM_LOW);
+                                goto block_160;
                             }
                         }
-                        if (CHECK_SHOULDER(PAD_R2) &&
+                        if (CHECK_SHOULDER(BTN_WOLF) &&
                             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
                              0) &&
                             ((D_80097448[1] == 0) ||
                              IsRelicActive(RELIC_HOLY_SYMBOL)) &&
-                            (PLAYER.step == 0 || (PLAYER.step == 1) ||
-                             (PLAYER.step == 2) || (PLAYER.step == 3) ||
-                             (PLAYER.step == 4) || (PLAYER.step == 6) ||
-                             ((PLAYER.step == Player_MorphMist) ||
-                              (PLAYER.step == 8)) ||
+                            ((PLAYER.step == Player_Stand) ||
+                             (PLAYER.step == Player_Walk) ||
+                             (PLAYER.step == Player_Crouch) ||
+                             (PLAYER.step == Player_Fall) ||
+                             (PLAYER.step == Player_Jump) ||
+                             (PLAYER.step == Player_AlucardStuck) ||
+                             (PLAYER.step == Player_HighJump) ||
+                             (PLAYER.step == Player_MorphMist) ||
                              ((PLAYER.step == Player_MorphBat) &&
-                              (PLAYER.step_s != 0)))) {
+                              (PLAYER.step_s)))) {
                             func_80109328();
-                            SetPlayerStep(0x18);
+                            SetPlayerStep(Player_MorphWolf);
                             PlaySfx(SFX_TRANSFORM);
                         }
                     }
