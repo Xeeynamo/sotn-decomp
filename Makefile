@@ -80,7 +80,6 @@ AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
-SOTNSTR         := ./tools/sotn_str/target/release/sotn_str process
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
