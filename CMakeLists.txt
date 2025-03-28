@@ -230,7 +230,8 @@ set(SOURCE_FILES_RIC
     src/ric/pl_handlers.c
     src/ric/pl_utils.c
     src/ric/pl_setstep.c
-    src/ric/21B00.c
+    src/ric/pl_collision.c
+    src/ric/238F8.c
     src/ric/24788.c
     src/ric/2A060.c
     src/ric/319C4.c
