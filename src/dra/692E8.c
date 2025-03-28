@@ -584,9 +584,9 @@ void EntityAlucard() {
 #else
 #define CHECK_SHOULDER(x) (g_Player.padTapped & x)
 #endif
-    s32 sp5c;
-    s32 sp58;
-    s32 sp54;
+    s32 vramFlag;
+    s32 posX;
+    s32 posY;
     DamageParam damage;
     s32 sp40 = 0;
     unkstr_800cfe48* sp3c;
@@ -596,9 +596,9 @@ void EntityAlucard() {
 
     s32 var_s8;
     s32 var_s7;
-    s16 var_s6;
-    s16 var_s5;
-    s16 var_s3;
+    s16 playerStep;
+    s16 playerStepS;
+    s16 angle;
     u32 newStatus;
     s32 i;
     s16 playerHitPoints;
@@ -614,8 +614,8 @@ void EntityAlucard() {
     g_Player.unk4C = 0;
 
     var_s8 = 0;
-    var_s6 = 0;
-    var_s5 = 0;
+    playerStep = 0;
+    playerStepS = 0;
     var_s8 = 0;
     PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
     g_Player.unk18 = 0;
@@ -682,19 +682,19 @@ void EntityAlucard() {
                         g_Player.timers[15] = 12;
                         break;
                     case 4: {
-                        var_s3 = ((g_GameTimer & 0xF) * 256);
+                        angle = ((g_GameTimer & 0xF) * 256);
                         draw = g_PlayerDraw;
                         draw->r0 = draw->b0 = draw->g0 =
-                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
-                        var_s3 += 0x200;
+                            (rsin(angle) + 0x1000) / 64 + 0x60;
+                        angle += 0x200;
                         draw->r1 = draw->b1 = draw->g1 =
-                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
-                        var_s3 += 0x200;
+                            (rsin(angle) + 0x1000) / 64 + 0x60;
+                        angle += 0x200;
                         draw->r3 = draw->b3 = draw->g3 =
-                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
-                        var_s3 += 0x200;
+                            (rsin(angle) + 0x1000) / 64 + 0x60;
+                        angle += 0x200;
                         draw->r2 = draw->b2 = draw->g2 =
-                            (rsin(var_s3) + 0x1000) / 64 + 0x60;
+                            (rsin(angle) + 0x1000) / 64 + 0x60;
                         draw->enableColorBlend = 1;
                         break;
                     }
@@ -858,8 +858,8 @@ void EntityAlucard() {
 #endif
             if (g_Player.unk60 < 2) {
                 if (g_Player.unk60 == 1) {
-                    var_s6 = PLAYER.step;
-                    var_s5 = PLAYER.step_s;
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
                     SetPlayerStep(Player_BossGrab);
                 } else {
 #if defined(VERSION_US)
@@ -868,8 +868,8 @@ void EntityAlucard() {
                     if (1) { // to make curly braces match
 #endif
                         if (PLAYER.hitParams) {
-                            var_s6 = PLAYER.step;
-                            var_s5 = PLAYER.step_s;
+                            playerStep = PLAYER.step;
+                            playerStepS = PLAYER.step_s;
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
 #if defined(VERSION_PSP)
@@ -1104,7 +1104,7 @@ block_160:
         PlayerStepSwordWarp();
         break;
     case Player_Hit:
-        AlucardHandleDamage(&damage, var_s6, var_s5);
+        AlucardHandleDamage(&damage, playerStep, playerStepS);
         break;
     case Player_StatusStone:
         PlayerStepStoned(var_s8);
@@ -1113,7 +1113,7 @@ block_160:
         PlayerStepBossGrab();
         break;
     case Player_Kill:
-        PlayerStepKill(&damage, var_s6, var_s5);
+        PlayerStepKill(&damage, playerStep, playerStepS);
         break;
     case Player_Unk17:
         PlayerStepUnk17();
@@ -1378,9 +1378,9 @@ block_160:
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
         }
-        sp58 = PLAYER.posX.val;
-        sp54 = PLAYER.posY.val;
-        sp5c = g_Player.vram_flag;
+        posX = PLAYER.posX.val;
+        posY = PLAYER.posY.val;
+        vramFlag = g_Player.vram_flag;
         if (!(g_Player.status &
               (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_WOLF_FORM |
                PLAYER_STATUS_UNK400000 | PLAYER_STATUS_UNK40000000))) {
