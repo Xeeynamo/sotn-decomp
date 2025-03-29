@@ -17,11 +17,11 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECFD8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED058);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED060);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawChar);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED0B0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED1B8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawInt);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED248);
 

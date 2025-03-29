@@ -31,7 +31,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", MenuDrawSprite);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", MenuDrawRect);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_psp_090EC968);
+INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_800F5E68);
 
 extern s16 g_RelicMenuFadeTimer;
 void DrawRelicsMenu(MenuContext* ctx) {
