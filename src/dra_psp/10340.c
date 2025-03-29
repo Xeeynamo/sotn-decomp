@@ -19,7 +19,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED058);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawChar);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED0B0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawStr);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawInt);
 
