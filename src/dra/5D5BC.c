@@ -761,8 +761,10 @@ void DecrementStatBuffTimers(void) {
         switch (i) {
         default:
         case 0:
-            // !FAKE, permuter found it. Whatever I guess. Matches on all versions.
-            if(!i){}
+            // !FAKE, permuter found it. Whatever I guess. Matches on all
+            // versions.
+            if (!i) {
+            }
         case 1:
         case 2:
         case 3:
