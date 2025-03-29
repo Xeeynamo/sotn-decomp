@@ -293,3 +293,81 @@ void DrawRelicsMenu(MenuContext* ctx) {
                  spriteY - 1, 0xA8, 0x12, 0x60, 0, 0);
 #undef INDEXER
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECCC0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECD58);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECD78);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawAlucardCloakPreview);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECF20);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6568);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6618);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED058);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawChar);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawStr);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawInt);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED248);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED2E8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuJosephsCloakDraw);
+
+extern s32 D_psp_0914A3B8;
+extern s32 D_psp_0914A3D0;
+extern s32 D_psp_0914A3C8;
+extern s32 D_psp_0914A3D8;
+extern s32 D_psp_0914A3C0;
+
+extern u8* g_ChRgb[];
+
+extern u8* func_psp_090EAF08(void*, void*, void*, void*, void*);
+
+void MenuWindowColorsDraw(MenuContext* context) {
+    s32 x = 188;
+    s32 y;
+    s32 i;
+
+    *g_ChRgb = func_psp_090EAF08(&D_psp_0914A3B8, &D_psp_0914A3D0, &D_psp_0914A3C8, &D_psp_0914A3D8, &D_psp_0914A3C0);
+
+    for (i = 0; i < 3; i++) {
+        MenuDrawChar((*g_ChRgb)[i], x + 32, (i * 12) + 80, context);
+        MenuDrawInt(g_Settings.windowColors[i], x + 72, 80 + i * 12, context);
+    }
+    func_800F5E68(
+        context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED570);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuTimeAttackDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuButtonConfigDraw);
+
+void MenuReverseCloakDraw(MenuContext* context) {
+    const int StrX = 188;
+    const int ImgW = 88;
+    char** menuStr;
+    
+    menuStr= g_MenuStr;
+    MenuDrawStr(menuStr[30], StrX, 48, context);
+    menuStr= g_MenuStr;
+    MenuDrawStr(menuStr[31], StrX, 64, context);
+    func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
+                  12, 4, 1);
+}
+
+void MenuSoundConfigDraw(void) {}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED9E0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDA78);
