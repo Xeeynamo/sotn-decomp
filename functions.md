@@ -57,8 +57,8 @@
 | dra    | func_psp_091420E0                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_091420F8                   |       11 |          1 |        |                                 |       |
 | lib    | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
-| dra    | func_80105408                       |       13 |          1 |        |                                 |       |
 | dra    | func_800FDE00                       |       13 |          1 |        |                                 |       |
+| dra    | func_80105408                       |       13 |          1 |        |                                 |       |
 | dra    | SetMaxVolume                        |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C38                   |       13 |          1 |        |                                 |       |
 | dra    | func_800EB4F8                       |       13 |          1 |        |                                 |       |
@@ -88,10 +88,10 @@
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | dra    | func_psp_091446A8                   |       16 |          1 |        |                                 |       |
 | dra    | func_800FE8F0                       |       16 |          2 |        | https://decomp.me/scratch/9U1p9 | 1.0   |
-| dra    | func_80102CD8                       |       17 |          1 |        | https://decomp.me/scratch/vel4f | 0.967 |
+| dra    | ClearStatBuff                       |       17 |          1 |        |                                 |       |
 | dra    | GetStatBuffTimer                    |       17 |          1 |        |                                 |       |
 | dra    | GiveStatBuff                        |       17 |          1 |        |                                 |       |
-| dra    | func_800FF0A0                       |       17 |          1 |        |                                 |       |
+| dra    | func_80102CD8                       |       17 |          1 |        | https://decomp.me/scratch/vel4f | 0.967 |
 | dra    | SetPrimRect                         |       17 |          1 |        |                                 |       |
 | dra    | GetMemcardFreeBlockCount            |       17 |          1 |        | https://decomp.me/scratch/Z1la2 | 0.761 |
 | dra    | func_psp_09140BF8                   |       17 |          1 |        | https://decomp.me/scratch/uWRH2 | 0.329 |
@@ -213,8 +213,8 @@
 | lib    | func_psp_0923C0C0                   |       25 |          2 |        |                                 |       |
 | no4    | func_psp_0923C0C0                   |       25 |          2 |        |                                 |       |
 | dra    | IsRelicActive                       |       25 |          3 |        | https://decomp.me/scratch/pQCWA | 0.798 |
-| dra    | PerformHellfire                     |       25 |          4 |        |                                 |       |
 | dra    | ClearStatBuffs                      |       25 |          4 |        |                                 |       |
+| dra    | PerformHellfire                     |       25 |          4 |        |                                 |       |
 | dra    | func_psp_09140E00                   |       25 |          6 |        |                                 |       |
 | dra    | 26948.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
@@ -282,8 +282,8 @@
 | no4    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | st0    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | wrp    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
-| dra    | ResetPadsRepeat                     |       31 |          3 |        |                                 |       |
 | dra    | func_800FF460                       |       31 |          3 |        |                                 |       |
+| dra    | ResetPadsRepeat                     |       31 |          3 |        |                                 |       |
 | lib    | SetEntityVelocityFromAngle          |       31 |          3 |        | https://decomp.me/scratch/IrMtS | 1.0   |
 | no4    | func_pspeu_092428E0                 |       31 |          3 |        |                                 |       |
 | no4    | func_pspeu_092432C0                 |       31 |          3 |        |                                 |       |
@@ -294,8 +294,8 @@
 | ric    | RicHandleGenericSubwpnCrash         |       31 |          5 |        |                                 |       |
 | dra    | func_800F548C                       |       31 |          6 |        | https://decomp.me/scratch/K23Yx | 0.814 |
 | dra    | IsAlucart                           |       31 |          7 |        |                                 |       |
+| dra    | 5D5BC.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra    | 1DDC0.rodata                        |       32 |          0 | Yes    |                                 |       |
-| dra    | 23FE0.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra    | func_80102D08                       |       32 |          2 |        |                                 |       |
 | dra    | func_8010E940                       |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
 | dra    | func_psp_09104810                   |       32 |          3 |        |                                 |       |
@@ -509,8 +509,8 @@
 | ric    | RicHandleFall                       |       50 |         13 |        |                                 |       |
 | dra    | func_psp_090F1DF0                   |       51 |          4 |        |                                 |       |
 | lib    | func_us_801B11A0                    |       51 |          4 |        |                                 |       |
-| dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
 | dra    | AddHearts                           |       51 |          5 |        |                                 |       |
+| dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
 | ric    | func_pspeu_092BE4C8                 |       51 |          5 |        |                                 |       |
 | ric    | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
 | dra    | func_psp_090F4FC8                   |       51 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
@@ -645,7 +645,7 @@
 | dra    | SetRoomBackgroundLayer              |       68 |          2 |        |                                 |       |
 | dra    | func_psp_090ED570                   |       68 |          5 |        |                                 |       |
 | no4    | func_pspeu_0923B288                 |       68 |          5 |        |                                 |       |
-| dra    | DecrementStatBuffTimers             |       68 |          6 | Yes    |                                 |       |
+| dra    | DecrementStatBuffTimers             |       68 |          6 | Yes    | https://decomp.me/scratch/vEngY | 1.0   |
 | ric    | RicCreateEntFactoryFromEntity       |       68 |          6 |        |                                 |       |
 | lib    | CutsceneSkip                        |       68 |          8 |        |                                 |       |
 | lib    | func_us_801AE7AC                    |       68 |         10 |        |                                 |       |
