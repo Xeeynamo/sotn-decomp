@@ -98,6 +98,7 @@ segments:
       - [0xCA20, .data, cd]
       - [0xCE48, .data, d_CD80]
       - [0xCEB8, .data, 692E8]
+      - [0xCF04, .data, 6BF64]
       - [0xCFDC, .data, alu_anim]
       - [0xD010, .data, 6E42C]
       - [0xD030, .data, 70394]

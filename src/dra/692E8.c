@@ -217,9 +217,8 @@ void func_80109594() {
     }
     func_801093C4();
 
-    TRANSFORM_LOCKOUT_TIMER = 0x10;
-
 #if !defined(VERSION_HD)
+    TRANSFORM_LOCKOUT_TIMER = 0x10;
     g_Player.padSim = 0;
     g_Player.demo_timer = 16;
 #endif
@@ -563,7 +562,11 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     // Check for X/Y boundaries in RTOP
     if (g_StageId == STAGE_RTOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX - 8384) < 4 &&
+#ifdef VERSION_HD
+            (abs((g_Tilemap.top << 8) + g_PlayerY) - 14407) < 4) {
+#else
             abs((g_Tilemap.top << 8) + g_PlayerY - 14407) < 4) {
+#endif
             return TELEPORT_CHECK_TO_TOP;
         }
     }
@@ -1420,7 +1423,7 @@ block_160:
             }
         }
     post_oddblock:
-        g_Player.unk04 = sp5c;
+        g_Player.unk04 = vramFlag;
         if (((*D_80097448 >= 0x29) ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
               (*D_80097448 > 0xC))) &&
