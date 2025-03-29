@@ -848,19 +848,20 @@ bool HandleGravityBootsMP(CallMode mode) {
     return -1;
 }
 
-void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
+void ClearStatBuff(s32 i) { g_StatBuffTimers[i] = 0; }
 
 void ClearStatBuffs(void) {
     s32 i;
 
     for (i = 0; i < LEN(g_StatBuffTimers); i++) {
-        func_800FF0A0(i);
+        ClearStatBuff(i);
     }
 }
 
-void GiveStatBuff(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
+// Gives 4096 frames of a stat buff. This is about 68 seconds.
+void GiveStatBuff(s32 i) { g_StatBuffTimers[i] = 0x1000; }
 
-s32 GetStatBuffTimer(s32 arg0) { return g_StatBuffTimers[arg0]; }
+s32 GetStatBuffTimer(s32 i) { return g_StatBuffTimers[i]; }
 
 u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];

@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
