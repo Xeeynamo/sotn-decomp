@@ -2,7 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-// Appears to be start of a file, there is zero padding before this function.
+s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
 u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
