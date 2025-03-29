@@ -49,7 +49,7 @@ segments:
       - [0x5DA0, c, dra/624DC] # O4
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra_psp/66B0]
-      - [0x67F0, c, dra_psp/67F0] # O0
+      - [0x6878, c, dra_psp/67F0] # O0
       - [0xA710, c, dra_psp/A710] # O4
       - [0xBDE0, c, dra_psp/BDE0]
       - [0xC0B0, c, dra_psp/C0B0] # O4
@@ -93,7 +93,7 @@ segments:
       - [0x26948, c, dra_psp/26948]
       - [0x27FD8, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
-      - [0x35238, c, dra_psp/35238]
+      - [0x35238, c, dra/70394]
       - [0x353B0, c, dra/704D0] # O0
       - [0x373F8, c, dra/6E42C]
       - [0x39AA8, c, dra/alu_anim]
@@ -131,7 +131,8 @@ segments:
       - [0x69600, data]
       - [0x6A818, .data, dra_psp/67F0] # DrawHud arrays
       - [0x6A8B8, .data, dra_psp/67F0] # Subwpn clut/u/v
-      - [0x6A8F8, data]
+      - [0x6A8F8, .data, dra_psp/66B0]
+      - [0x6A948, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
@@ -140,7 +141,7 @@ segments:
       - [0xA0578, .data, dra/692E8]
       - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
-      - [0xA6888, data]
+      - [0xA6888, .data, dra/70394]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
       - [0xA68C8, .data, dra/6E42C]
       - [0xA68E8, .data, dra/alu_anim]
