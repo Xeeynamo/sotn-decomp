@@ -54,7 +54,6 @@ segments:
       - [0xBDE0, c, dra_psp/BDE0]
       - [0xC0B0, c, dra_psp/C0B0] # O4
       - [0xE6A8, c, dra_psp/E6A8]
-      - [0x13080, c, dra_psp/13080]
       - [0x13BD0, c, dra_psp/13BD0]
       - [0x14490, c, dra_psp/14490]
       - [0x14F30, c, dra_psp/14F30]
@@ -155,7 +154,6 @@ segments:
       - [0xEE408, .rodata, dra_psp/A710]
       - [0xEE428, .rodata, dra_psp/C0B0]
       - [0xEE4C8, .rodata, dra_psp/E6A8]
-      - [0xEE4E8, .rodata, dra_psp/13080]
       - [0xEE538, .rodata, dra_psp/14490]
       - [0xEE550, .rodata, dra_psp/160C0]
       - [0xEE570, .rodata, dra_psp/19AB0]
