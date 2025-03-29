@@ -287,33 +287,32 @@ void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->ext.timer.t = 0x14;
         entity->step++;
-
+        entity->ext.timer.t = 0x14;
+        // fallthrough
     case 1:
-        entity->ext.timer.t--;
-        if ((entity->ext.timer.t) == 0) {
-        case 3:
-        case 5:
-            RicCreateEntFactoryFromEntity(entity, BP_57, 0);
+        if (--entity->ext.timer.t) {
+            break;
+        }
+    case 3:
+    case 5:
+        RicCreateEntFactoryFromEntity(entity, BP_57, 0);
+        entity->step++;
+    case 2:
+    case 4:
+    case 6:
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t > 10) {
+            entity->ext.timer.t = 0;
+            entity->posX.val = FIX(128.0);
+            entity->posY.val = 0;
+            RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
             entity->step++;
-        case 2:
-        case 4:
-        case 6:
-            entity->ext.timer.t++;
-            if (entity->ext.timer.t >= 11) {
-                entity->ext.timer.t = 0;
-                entity->posX.val = FIX(128.0);
-                entity->posY.val = 0;
-                RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
-                entity->step++;
-            }
         }
         break;
-
     case 7:
         entity->ext.timer.t++;
-        if (entity->ext.timer.t >= 16) {
+        if (entity->ext.timer.t > 15) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
             RicCreateEntFactoryFromEntity(
