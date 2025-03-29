@@ -389,3 +389,17 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEDF8);
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSystemDraw);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEFA8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EF1A0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F8754);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuEquipSortDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F892C);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F8990);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawLine);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawConsumableCount);
