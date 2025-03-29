@@ -1276,7 +1276,116 @@ void RicEntityCrashReboundStone(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashBibleBeam);
+#define BIBLE_PAGE_COUNT 6
+#if defined(VERSION_PSP)
+extern Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#else
+static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#endif
+void RicEntityCrashBibleBeam(Entity* self) {
+    Primitive* prim;
+    s32 i;
+    s32 var_s3;
+    s32 psp_s3;
+    s32 halfwidth;
+    s32 hitboxOffX;
+    s16 var_s7;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, BIBLE_PAGE_COUNT);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        if (self->facingLeft) {
+            self->ext.bibleBeam.unk7C = -16;
+            self->ext.bibleBeam.unk7E = -2;
+        } else {
+            self->ext.bibleBeam.unk7C = 16;
+            self->ext.bibleBeam.unk7E = 2;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+            var_s3 = i + 2;
+            if (var_s3 >= BIBLE_PAGE_COUNT) {
+                var_s3 -= 6;
+            }
+            prim->x0 = prim->x1 = bible_pages_pos[i].x;
+            prim->y0 = prim->y1 = bible_pages_pos[i].y;
+            prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
+            prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
+            prim->priority = 0xC2;
+            prim->drawMode = 0x435;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 1:
+        self->ext.bibleBeam.unk80++;
+        if (self->ext.bibleBeam.unk80 >= 0x3C) {
+            self->ext.bibleBeam.subweaponId = PL_W_BIBLE_BEAM;
+            RicSetSubweaponParams(self);
+            g_api.PlaySfx(SFX_WEAPON_APPEAR);
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.bibleBeam.unk80++;
+        self->ext.bibleBeam.unk7E += self->ext.bibleBeam.unk7C;
+        var_s3 = bible_pages_pos[1].x + self->ext.bibleBeam.unk7E;
+        if (var_s3 < -0x50 || var_s3 > 0x150) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.bibleBeam.unk80++;
+        if (self->ext.bibleBeam.unk80 >= 0x78) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    var_s7 = 0; // @bug: this is never unused
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+        var_s3 = i + 2;
+        if (var_s3 >= BIBLE_PAGE_COUNT) {
+            var_s3 -= 6;
+        }
+        psp_s3 = i * 256;
+        prim->r0 = prim->r1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 20) + psp_s3) * 96) >> 0xc);
+        prim->g0 = prim->g1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 15) + psp_s3) * 96) >> 0xc);
+        prim->b0 = prim->b1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 10) + psp_s3) * 96) >> 0xc);
+        psp_s3 = var_s3 * 256;
+        prim->r2 = prim->r3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 15) + psp_s3) * 96) >> 0xc);
+        prim->g2 = prim->g3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 10) + psp_s3) * 96) >> 0xc);
+        prim->b2 = prim->b3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 20) + psp_s3) * 96) >> 0xc);
+        prim->x1 = bible_pages_pos[i].x;
+        prim->y0 = prim->y1 = bible_pages_pos[i].y;
+        prim->x3 = bible_pages_pos[var_s3].x;
+        prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
+        prim->x0 = bible_pages_pos[i].x + self->ext.bibleBeam.unk7E;
+        prim->x2 = bible_pages_pos[var_s3].x + self->ext.bibleBeam.unk7E;
+        if (var_s7 < abs(bible_pages_pos[i].y)) {
+            var_s7 = abs(bible_pages_pos[i].y);
+        }
+        prim = prim->next;
+    }
+    self->hitboxOffX = self->facingLeft ? -(self->ext.bibleBeam.unk7E / 2)
+                                        : (self->ext.bibleBeam.unk7E / 2);
+    self->hitboxWidth = abs(self->hitboxOffX);
+    self->hitboxHeight = var_s7 - self->posY.i.hi;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashBible);
 

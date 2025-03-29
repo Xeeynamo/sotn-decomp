@@ -10,7 +10,9 @@ typedef enum {
     PRIORITY_DIALOGUE = 0x1FE,
 } PrimitivePriority;
 
-#define blendMode drawMode // maintained to easily migrate existing scratches
+// maintained to easily migrate existing scratches
+// TODO: please remove it in a separate PR
+#define blendMode drawMode
 
 // Macros for simplifying long stretches setting prim colors.
 // "prim red". Do PRED(prim) = 0x80 to set all reds to 0x80.

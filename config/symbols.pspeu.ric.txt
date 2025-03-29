@@ -229,4 +229,5 @@ D_801758E4 = 0x092D7A74;
 D_801759D8 = 0x092D7A78;
 D_80175958 = 0x092D7AF8;
 g_RicSensorsCeilingCrouch = 0x092D7B78;
+bible_pages_pos = 0x092D7BC0;
 crash_vibhuti_timer = 0x092D7BD8;
