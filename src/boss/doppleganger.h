@@ -39,3 +39,5 @@ typedef enum {
     Dop_Hit,
     Dop_Kill = 17,
 } Doppleganger_Steps;
+
+extern PlayerState g_Dop;
