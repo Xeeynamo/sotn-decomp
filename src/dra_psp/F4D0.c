@@ -25,7 +25,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_psp_090EC380);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_psp_090EC518);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_psp_090EC568);
+INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", func_800F5AE4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/F4D0", MenuDrawSprite);
 

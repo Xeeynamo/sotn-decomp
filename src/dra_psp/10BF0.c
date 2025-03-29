@@ -3,9 +3,9 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED570);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED658);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", MenuTimeAttackDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", func_psp_090ED818);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10BF0", MenuButtonConfigDraw);
 
 void MenuReverseCloakDraw(MenuContext* context) {
     const int StrX = 188;

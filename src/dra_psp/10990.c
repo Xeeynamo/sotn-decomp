@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10990", func_psp_090ED310);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10990", MenuJosephsCloakDraw);
 
 extern s32 D_psp_0914A3B8;
 extern s32 D_psp_0914A3D0;

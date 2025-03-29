@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/12820", func_psp_090EF1A0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/12820", func_psp_090EF200);
+INCLUDE_ASM("dra_psp/psp/dra_psp/12820", func_800F8754);

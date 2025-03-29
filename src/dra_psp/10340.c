@@ -7,13 +7,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECD58);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECD78);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECE88);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", MenuDrawAlucardCloakPreview);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECF20);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECF60);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_800F6568);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ECFD8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_800F6618);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/10340", func_psp_090ED058);
 
