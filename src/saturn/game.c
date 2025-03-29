@@ -430,7 +430,7 @@ s32 func_800FF064(s32 arg0) {
 }
 
 // SAT: func_06070568
-void func_800FF0A0(s32 context) { g_StatBuffTimers[context] = 0; }
+void ClearStatBuff(s32 context) { g_StatBuffTimers[context] = 0; }
 
 // probably PSX ClearStatBuffs but strange to match
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
