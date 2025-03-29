@@ -87,8 +87,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
                 if (colliderFlags & EFFECT_SOLID) {
                     colliderFlags &= 0xFF00;
                     if (deltaY > 0) {
-                        if ((colliderFlags == 0) ||
-                            (colliderFlags & EFFECT_UNK_0800)) {
+                        if (!colliderFlags || colliderFlags & EFFECT_UNK_0800) {
                             ReboundStoneBounce1(0x800);
                         }
                         if (colliderFlags == EFFECT_UNK_8000) {
@@ -157,7 +156,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
                     colliderFlags &= 0xFF00;
                     // Cases when traveling right
                     if (deltaX > 0) {
-                        if ((colliderFlags == 0) ||
+                        if (!colliderFlags ||
                             TEST_BITS(colliderFlags, 0x4800) ||
                             TEST_BITS(colliderFlags, 0xC000)) {
                             ReboundStoneBounce1(0x400);
@@ -187,9 +186,9 @@ void RicEntitySubwpnReboundStone(Entity* self) {
                     }
                     // Cases when traveling left
                     if (deltaX < 0) {
-                        if ((colliderFlags == 0) ||
-                            ((colliderFlags & 0x4800) == 0x800) ||
-                            ((colliderFlags & 0xC000) == 0x8000)) {
+                        if (!colliderFlags ||
+                            (colliderFlags & 0x4800) == 0x800 ||
+                            (colliderFlags & 0xC000) == 0x8000) {
                             ReboundStoneBounce1(0x400);
                         }
                         if (colliderFlags ==
@@ -1133,9 +1132,110 @@ void func_8016D9C4(Entity* self) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashReboundStoneExplosion);
-// clang-format on
+// RIC Entity #50. Blueprint 58. Also created by rebound stone crash. Weird!
+void RicEntityCrashReboundStoneExplosion(Entity* self) {
+    Primitive* prim;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_G4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 0x10; i++) {
+            prim->priority = 0xC2;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
+            prim->x0 = prim->x1 = 0x80;
+            prim->y0 = prim->y1 = 0;
+            prim = prim->next;
+        }
+        self->ext.reboundStoneCrashExplosion.unk7C = 0x40;
+        self->ext.reboundStoneCrashExplosion.unk7E = 0;
+        self->ext.reboundStoneCrashExplosion.unk84 = 0;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
+        self->ext.reboundStoneCrashExplosion.unk82 = 8;
+        g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+        self->step++;
+        break;
+    case 1:
+        self->ext.reboundStoneCrashExplosion.unk84 += 0x20;
+        if (self->ext.reboundStoneCrashExplosion.unk84 > 0x120) {
+            self->ext.reboundStoneCrashExplosion.subweaponId =
+                PL_W_CRASH_REBOUND_EXPLOSION;
+            RicSetSubweaponParams(self);
+            self->posX.val = FIX(128.0);
+            self->posY.val = FIX(128.0);
+            self->hitboxWidth = 0x80;
+            self->hitboxHeight = 0x80;
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.reboundStoneCrashExplosion.unk86++;
+        if (self->ext.reboundStoneCrashExplosion.unk86 == 5) {
+            self->ext.reboundStoneCrashExplosion.unk80 = -0x18;
+        } else if (self->ext.reboundStoneCrashExplosion.unk86 >= 0xF) {
+            self->ext.reboundStoneCrashExplosion.unk82 = -0x18;
+            self->step++;
+        }
+        break;
+    case 3:
+        break;
+    case 4:
+        DestroyEntity(self);
+        return;
+    }
+    self->ext.reboundStoneCrashExplosion.unk7C +=
+        self->ext.reboundStoneCrashExplosion.unk80;
+    if (self->ext.reboundStoneCrashExplosion.unk7C > 0xFF) {
+        self->ext.reboundStoneCrashExplosion.unk7C = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7C < 0) {
+        self->ext.reboundStoneCrashExplosion.unk7C =
+            self->ext.reboundStoneCrashExplosion.unk80 = 0;
+    }
+    self->ext.reboundStoneCrashExplosion.unk7E +=
+        self->ext.reboundStoneCrashExplosion.unk82;
+    if (self->ext.reboundStoneCrashExplosion.unk7E > 0xFF) {
+        self->ext.reboundStoneCrashExplosion.unk7E = 0xFF;
+        self->ext.reboundStoneCrashExplosion.unk82 = 0;
+    } else if (self->ext.reboundStoneCrashExplosion.unk7E < 0) {
+        self->ext.reboundStoneCrashExplosion.unk7E =
+            self->ext.reboundStoneCrashExplosion.unk82 = 0;
+        self->step += 1;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        prim->b0 = prim->b1 = self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->b2 = prim->b3 = self->ext.reboundStoneCrashExplosion.unk7E;
+        prim->r0 = prim->r1 = prim->g0 = prim->g1 =
+            self->ext.reboundStoneCrashExplosion.unk7C;
+        prim->r2 = prim->r3 = prim->g2 = prim->g3 =
+            self->ext.reboundStoneCrashExplosion.unk7E;
+        if (self->step < 2) {
+            prim->x2 =
+                ((rcos(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC) +
+                0x80;
+            prim->x3 = ((rcos((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC) +
+                       0x80;
+            prim->y2 =
+                ((rsin(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
+                 0xC);
+            prim->y3 = ((rsin((i + 1) << 7) *
+                         self->ext.reboundStoneCrashExplosion.unk84) >>
+                        0xC);
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashReboundStone);
 

@@ -192,7 +192,6 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
-
         for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -202,9 +201,9 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
             prim = prim->next;
         }
         self->ext.reboundStoneCrashExplosion.unk7C = 0x40;
-        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
         self->ext.reboundStoneCrashExplosion.unk7E = 0;
         self->ext.reboundStoneCrashExplosion.unk84 = 0;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
         self->ext.reboundStoneCrashExplosion.unk82 = 8;
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
@@ -223,7 +222,8 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.reboundStoneCrashExplosion.unk86 == 5) {
+        self->ext.reboundStoneCrashExplosion.unk86++;
+        if (self->ext.reboundStoneCrashExplosion.unk86 == 5) {
             self->ext.reboundStoneCrashExplosion.unk80 = -0x18;
         } else if (self->ext.reboundStoneCrashExplosion.unk86 >= 0xF) {
             self->ext.reboundStoneCrashExplosion.unk82 = -0x18;
@@ -238,21 +238,21 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
     }
     self->ext.reboundStoneCrashExplosion.unk7C +=
         self->ext.reboundStoneCrashExplosion.unk80;
-    if (self->ext.reboundStoneCrashExplosion.unk7C >= 0x100) {
+    if (self->ext.reboundStoneCrashExplosion.unk7C > 0xFF) {
         self->ext.reboundStoneCrashExplosion.unk7C = 0xFF;
         self->ext.reboundStoneCrashExplosion.unk80 = 0;
     } else if (self->ext.reboundStoneCrashExplosion.unk7C < 0) {
-        self->ext.reboundStoneCrashExplosion.unk80 = 0;
-        self->ext.reboundStoneCrashExplosion.unk7C = 0;
+        self->ext.reboundStoneCrashExplosion.unk7C =
+            self->ext.reboundStoneCrashExplosion.unk80 = 0;
     }
     self->ext.reboundStoneCrashExplosion.unk7E +=
         self->ext.reboundStoneCrashExplosion.unk82;
-    if (self->ext.reboundStoneCrashExplosion.unk7E >= 0x100) {
+    if (self->ext.reboundStoneCrashExplosion.unk7E > 0xFF) {
         self->ext.reboundStoneCrashExplosion.unk7E = 0xFF;
         self->ext.reboundStoneCrashExplosion.unk82 = 0;
     } else if (self->ext.reboundStoneCrashExplosion.unk7E < 0) {
-        self->ext.reboundStoneCrashExplosion.unk82 = 0;
-        self->ext.reboundStoneCrashExplosion.unk7E = 0;
+        self->ext.reboundStoneCrashExplosion.unk7E =
+            self->ext.reboundStoneCrashExplosion.unk82 = 0;
         self->step += 1;
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -263,7 +263,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
             self->ext.reboundStoneCrashExplosion.unk7C;
         prim->r2 = prim->r3 = prim->g2 = prim->g3 =
             self->ext.reboundStoneCrashExplosion.unk7E;
-        if (self->step < 2U) {
+        if (self->step < 2) {
             prim->x2 =
                 ((rcos(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
                  0xC) +
@@ -281,7 +281,6 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         prim = prim->next;
     }
-    return;
 }
 
 void RicEntityCrashReboundStone(Entity* entity) {
