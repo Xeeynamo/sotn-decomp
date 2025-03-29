@@ -371,3 +371,21 @@ void MenuSoundConfigDraw(void) {}
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED9E0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDA78);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDB70);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDBA0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuStatChangesDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawStats);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSpellsDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuFamiliarsDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEDF8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSystemDraw);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEFA8);
