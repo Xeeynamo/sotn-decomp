@@ -29,6 +29,7 @@ s32 func_800FD664(s32 arg0) {
     return arg0;
 }
 
+#ifdef VERSION_PSP
 // Unused. Exactly the same as CalcPlayerDamage. Pulled into g_Api.
 bool CalcPlayerDamageAgain(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
@@ -54,6 +55,7 @@ s32 func_psp_091007E0(s32 arg0) {
     }
     return arg0;
 }
+#endif
 
 ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
@@ -271,12 +273,6 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-// BSS
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-extern s32 g_LevelHPIncrease[];
-
 bool func_800FDD44(s32 itemType) {
     s32 equippedItem = g_Status.equipment[itemType];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
@@ -294,6 +290,10 @@ bool func_800FDD44(s32 itemType) {
     }
     return false;
 }
+
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
 
 void func_800FDE00(void) {
     D_80137960 = 0;
@@ -583,6 +583,7 @@ void AddHearts(s32 value) {
     }
 }
 
+// Note: Arg3 is unused, but is given in the call from func_80113D7C
 s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
@@ -590,20 +591,24 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     func_800F53A4();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
+    // Damage doubled, weakness
     if (g_Status.elementsWeakTo & damage->effects) {
         amount *= 2;
     }
+    // Damage halved, resistance
     if (g_Status.elementsResist & damage->effects) {
         amount /= 2;
     }
+    // Immune, zero damage
     if (g_Status.elementsImmune & damage->effects) {
+        // If there is a stone element, remove it
         if (g_Status.elementsImmune & damage->effects & ELEMENT_STONE) {
             damage->effects &= ~ELEMENT_STONE;
         } else {
             return 0;
         }
     }
-
+    // Absorb, hp goes up based on damage amount
     if (g_Status.elementsAbsorb & damage->effects) {
         if (amount < 1) {
             amount = 1;
@@ -736,11 +741,11 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
             (ret != 9)) {
             AddHearts(damage->damageTaken);
         }
-        // Fury Plate "DEF goes up when damage taken", that logic is not here
-        // though.
+        // Fury Plate "DEF goes up when damage taken", so here we get 0x200
+        // frames of defense stat buff.
         if (CheckEquipmentItemCount(ITEM_FURY_PLATE, EQUIP_ARMOR) != 0) {
-            if (g_StatBuffTimers[0] < 0x200) {
-                g_StatBuffTimers[0] = 0x200;
+            if (g_StatBuffTimers[SBT_DEF] < 0x200) {
+                g_StatBuffTimers[SBT_DEF] = 0x200;
             }
         }
     }
@@ -756,6 +761,8 @@ void DecrementStatBuffTimers(void) {
         switch (i) {
         default:
         case 0:
+            // !FAKE, permuter found it. Whatever I guess. Matches on all versions.
+            if(!i){}
         case 1:
         case 2:
         case 3:

@@ -6,11 +6,6 @@
 
 s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
-// BSS
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
-
 bool CalcPlayerDamage(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
@@ -35,6 +30,34 @@ s32 func_800FD664(s32 arg0) {
     }
     return arg0;
 }
+
+#ifdef VERSION_PSP
+// Unused. Exactly the same as CalcPlayerDamage. Pulled into g_Api.
+bool CalcPlayerDamageAgain(DamageParam* damage) {
+    if (damage->damageKind != DAMAGEKIND_5) {
+        if (damage->damageKind >= DAMAGEKIND_16) {
+            damage->damageTaken = g_Status.hpMax / 8;
+        } else if ((damage->damageTaken * 20) > g_Status.hpMax) {
+            damage->damageKind = DAMAGEKIND_2;
+        } else {
+            damage->damageKind = DAMAGEKIND_3;
+        }
+    }
+    if (g_Status.hp <= damage->damageTaken) {
+        g_Status.hp = 0;
+        return true;
+    }
+    g_Status.hp -= damage->damageTaken;
+    return false;
+}
+// What the heck? Repeating again? Never referenced but not dead-stripped?
+s32 func_psp_091007E0(s32 arg0) {
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        arg0 *= 2;
+    }
+    return arg0;
+}
+#endif
 
 ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
@@ -269,6 +292,10 @@ bool func_800FDD44(s32 itemType) {
     }
     return false;
 }
+
+extern s32 D_80137960;
+extern s32 D_80137964;
+extern s32 D_80137968;
 
 void func_800FDE00(void) {
     D_80137960 = 0;
@@ -727,17 +754,31 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     return ret;
 }
 
-// !FAKE: explicitly casting two pointers to s32
-// before comparing them, that's weird
 void DecrementStatBuffTimers(void) {
-    s32* p = g_StatBuffTimers;
-    do {
-        if (*p) {
-            (*p)--;
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        if (!g_StatBuffTimers[i]) {
+            continue;
         }
-        p++;
-    } while (
-        (long long)p < (long long)(g_StatBuffTimers + LEN(g_StatBuffTimers)));
+        switch (i) {
+        default:
+        case 0:
+            // !FAKE, permuter found it. Whatever I guess. Matches on all versions.
+            if(!i){}
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            g_StatBuffTimers[i]--;
+        }
+    }
 }
 
 s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
