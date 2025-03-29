@@ -192,8 +192,8 @@
 | dra    | func_psp_09104878                   |       24 |          3 |        |                                 |       |
 | dra    | GetEquipCount                       |       24 |          4 |        |                                 |       |
 | dra    | GetEquipOrder                       |       24 |          4 |        |                                 |       |
+| dra    | RefreshCapePalette                  |       24 |          4 |        |                                 |       |
 | dra    | func_psp_09141440                   |       24 |          4 |        |                                 |       |
-| dra    | func_psp_090E3128                   |       24 |          4 |        | https://decomp.me/scratch/uQ5zc | 0.997 |
 | dra    | func_8011197C                       |       25 |          1 |        | https://decomp.me/scratch/SNZbC | 0.629 |
 | dra    | func_8012CB0C                       |       25 |          1 |        |                                 |       |
 | ric    | RicDebugExit                        |       25 |          1 |        |                                 |       |
@@ -401,9 +401,9 @@
 | st0    | PreventEntityFromRespawning         |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | wrp    | PreventEntityFromRespawning         |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | lib    | func_us_801B5F18                    |       40 |          3 |        |                                 |       |
+| dra    | func_800FF708                       |       40 |          4 |        |                                 |       |
 | dra    | func_psp_090ECFD8                   |       40 |          4 |        |                                 |       |
 | dra    | func_psp_090F1D68                   |       40 |          4 |        |                                 |       |
-| dra    | func_psp_090E3170                   |       40 |          4 |        | https://decomp.me/scratch/XlTbE | 0.968 |
 | dra    | func_800E9880                       |       40 |          8 |        |                                 |       |
 | dra    | func_801092E8                       |       41 |          1 |        |                                 |       |
 | dra    | func_8010E470                       |       41 |          2 |        |                                 |       |
@@ -675,7 +675,7 @@
 | dra    | func_800FDD44                       |       71 |          8 |        |                                 |       |
 | lib    | func_psp_09254CD0                   |       71 |          9 |        |                                 |       |
 | lib    | PrimToggleVisibility                |       71 |          9 |        | https://decomp.me/scratch/8l5Dr | 1.0   |
-| dra    | func_psp_090E3030                   |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
+| dra    | UpdateCapePalette                   |       71 |         10 |        |                                 |       |
 | dra    | BatFormFinished                     |       71 |         11 |        |                                 |       |
 | dra    | func_psp_090F1F40                   |       72 |          5 |        |                                 |       |
 | dra    | func_8011B480                       |       72 |          7 |        | https://decomp.me/scratch/UO5p1 | 0.992 |
