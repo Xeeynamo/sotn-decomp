@@ -577,7 +577,6 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 #if defined(VERSION_PSP)
 static s32 D_psp_09234B88 = 0;
 static s32 D_psp_09234B90 = 0;
-extern bool D_8C630C4;
 extern s32 D_800ACE00[];
 #endif
 
