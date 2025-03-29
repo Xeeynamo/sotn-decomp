@@ -326,18 +326,24 @@ extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
 extern Vram g_Vram;
 extern s32 D_800ACE44;
+extern s16 g_SensorsCeilingBat[];
+extern s16 g_SensorsFloorBat[];
+extern s16 g_SensorsWallBat[];
 extern s16 g_SensorsCeilingDefault[];
 extern s16 g_SensorsFloorDefault[];
 extern s16 g_SensorsWallDefault[];
+extern s16 g_SensorsCeilingCrouch[];
+extern s16 g_SensorsWallCrouch[];
+
 extern Point16 g_SensorsCeiling[];
 extern Point16 g_SensorsFloor[];
 extern Point16 g_SensorsWall[];
 
-// These appear to be the same variable.
-#if defined(VERSION_HD)
+#if !defined(VERSION_US)
 extern s32 D_800ACEDC_hd;
-#elif defined(VERSION_PSP)
-extern s32 D_psp_09234B68;
+#define TRANSFORM_LOCKOUT_TIMER D_800ACEDC_hd
+#else
+#define TRANSFORM_LOCKOUT_TIMER g_Player.unk20
 #endif
 extern s16 D_800ACF7C[4];
 extern s16 g_SfxPainGrunts[8]; // Alucard's random pain sfx table
@@ -395,7 +401,6 @@ extern u16 D_800AFFB8[];
 extern s8 D_800B0130[];
 extern AnimationFrame* D_800B01B8[];
 extern u8 D_800B0608[];
-extern u8 D_800B0628[];
 extern s16 D_800B0658[4][6];
 extern s32 D_800B0688[];
 extern u32 D_800B06C8[24];
@@ -490,6 +495,7 @@ void HideAllBackgroundLayers(void);
 void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
 s32 func_800EDAE4(void);
+DR_ENV* func_800EDB08(Primitive* prim);
 s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);
@@ -574,7 +580,6 @@ bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
-void PlayerStepKill(DamageParam* damage, s16 arg1, s16 arg2);
 void func_80115C50(void);
 void func_80118894(Entity*);
 Entity* func_80118970(void);

@@ -39,15 +39,3 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104810);
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104878);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_091048B8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_801092E8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_091049E8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104AA0);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104C80);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09105200);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_80109A44);

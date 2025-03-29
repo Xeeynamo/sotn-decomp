@@ -2,6 +2,11 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// Forward declaration. EntityAlucard needs to not know these args are s16.
+// But 80113D7C (in this file, but before PlayerStepKill) needs to know
+// the proper s16 args. So we put it to the top of this file.
+void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2);
+
 void func_80111928(void) { D_801396EA = 0; }
 
 void func_80111938(void) {
@@ -276,7 +281,7 @@ void PlayerStepStand(void) {
     switch (PLAYER.step_s) {
     case Player_Stand_0:
         break;
-    case Player_Stand_1:
+    case Player_Stand_PressUp:
         local_flags = 1;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
@@ -508,7 +513,7 @@ void PlayerStepStand(void) {
     if ((local_flags & 2) && (g_Player.padPressed & PAD_UP) &&
         !g_Player.unk48) {
         SetPlayerAnim(atLedge);
-        PLAYER.step_s = 1;
+        PLAYER.step_s = Player_Stand_PressUp;
         local_flags |= 0x8000;
         if (g_Player.unk14 != 0) {
             switch (g_Player.unk14) {
@@ -530,7 +535,7 @@ void PlayerStepStand(void) {
                 PLAYER.facingLeft = 1;
                 break;
             }
-            PLAYER.step_s = 4;
+            PLAYER.step_s = Player_Stand_ChairSit;
             local_flags |= 0x8000;
             g_AlucardChairSleepTimer = 0x1800;
         }
@@ -2886,13 +2891,7 @@ void PlayerStepUnmorphBat(void) {
             }
             g_Player.unk44 |= 0x100;
             PLAYER.palette = 0x8100;
-#if defined(VERSION_US)
-            g_Player.unk20 = 0x18;
-#elif defined(VERSION_HD)
-            D_800ACEDC_hd = 0x18;
-#elif defined(VERSION_PSP)
-            D_psp_09234B68 = 0x18;
-#endif
+            TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
         break;
@@ -3258,13 +3257,7 @@ void PlayerStepUnmorphMist(void) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
-#if defined(VERSION_US)
-            g_Player.unk20 = 0x18;
-#elif defined(VERSION_HD)
-            D_800ACEDC_hd = 0x18;
-#elif defined(VERSION_PSP)
-            D_psp_09234B68 = 0x18;
-#endif
+            TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
     }
