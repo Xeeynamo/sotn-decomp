@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
+
+#if defined(VERSION_PSP)
+#include "../dra_psp/dra_psp.h"
+#endif
 
 #define HUD_NUM_SPRITES 14
 u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
