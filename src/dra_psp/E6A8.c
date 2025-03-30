@@ -591,14 +591,14 @@ void MenuDraw(void) {
             }
 
             for (j = 0; j < 7; j++) {
-                // Not sure what's going on here. Should just be j==0 || j==1
-                if (((j == 0) || (j == (0, 1))) && flag) {
+                // Equivalent (but not matching) with (j==0 || j==1) && flag
+                if (!(j != 0 && j != 1) && flag) {
                     if (j == 0) {
                         func_800F892C(j + 0x10, 0x5E, 0x20 + j * 13, menu);
                     }
-                    continue;
+                } else {
+                    func_800F892C(j + 0x10, 0x5E, 0x1a + j * 13, menu);
                 }
-                func_800F892C(j + 0x10, 0x5E, 0x1a + j * 13, menu);
             }
             func_800F6618(i, g_MenuStep != 0x40);
             break;
