@@ -102,9 +102,9 @@ void func_800FF708(s32 equipType, s32 arg1) {
     (g_Status.equipment + 2)[arg1] = rnd;
 }
 
-const char g_CheatLuckCode[] = {"x-x!v''q"};
-const char g_CheatAxearmorCode[] = {"axearmor"};
-const char* g_CheatCodes[] = {g_CheatLuckCode, g_CheatAxearmorCode};
+char* g_LuckCode = "x-x!v''q";
+char* g_AxeArmorCode = "axearmor";
+
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
@@ -387,7 +387,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 g_Status.mp = g_Status.mpMax;
 
                 // Luck mode code check! This is X-X!V''Q
-                fileName = g_CheatCodes[0];
+                fileName = (s8*)g_LuckCode;
                 for (i = 0; i < 8; i++) {
                     if (g_Status.saveName[i] != *fileName++) {
                         break;
@@ -409,7 +409,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
                 }
 
                 if (g_IsTimeAttackUnlocked) {
-                    fileName = g_CheatCodes[1];
+                    fileName = (s8*)g_AxeArmorCode;
                     for (i = 0; i < 8; i++) {
                         if (g_Status.saveName[i] != *fileName++) {
                             break;
