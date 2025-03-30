@@ -170,7 +170,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         func_800F53A4();
         return;
     }
-    
+
     // I think this zeros out all the rooms to mark as unvisited
     for (i = 0; i < 2048; i++) {
         g_CastleMap[i] = 0;
@@ -214,8 +214,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     g_Status.spellsLearnt = 0;
 
     // If playing as Richter, either in the Prologue or Richter Mode
-    if ((g_StageId == STAGE_ST0) ||
-        (g_PlayableCharacter != PLAYER_ALUCARD)) {
+    if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
 
         for (i = 0; i < LEN(g_Status.relics); i++) {
             g_Status.relics[i] = RELIC_FLAG_FOUND;
@@ -262,7 +261,6 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
         g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
         g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-
 
         // Eliminate the time attacks that Richter can't do
         if (g_StageId == STAGE_NO3) {
@@ -400,7 +398,6 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.equipment[CAPE_SLOT] = ITEM_TWILIGHT_CLOAK;
         g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NECKLACE_OF_J;
         g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-        
 
         // Luck mode code check! This is X-X!V''Q
         fileName = (s8*)g_LuckCode;
@@ -456,7 +453,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.exp = 11000;
 #if defined(VERSION_US)
         g_Status.level = 20;
-    #endif
+#endif
 #if !defined(VERSION_HD)
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
