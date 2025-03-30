@@ -287,9 +287,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-        #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
-        #endif
+#endif
         func_800F53A4();
         return;
     }
@@ -497,7 +497,11 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
         g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
         g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-
+        g_Status.timerHours = 0;
+        g_Status.timerMinutes = 0;
+        g_Status.timerSeconds = 0;
+        g_Status.timerFrames = 0;
+        g_Status.subWeapon = 0;
         g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
         g_Status.relics[RELIC_SPIRIT_ORB] = 3;
         g_Status.relics[RELIC_FAERIE_SCROLL] = 3;
@@ -562,7 +566,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
+#ifdef VERSION_PSP
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+#endif
         g_Status.subWeapon = SUBWPN_STOPWATCH;
 
         if (rand() & 3) {
@@ -594,6 +600,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         func_800FF708(3, 4);
 #endif
     }
+
     func_800F53A4();
 }
 

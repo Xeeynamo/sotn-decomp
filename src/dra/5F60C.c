@@ -288,9 +288,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-        #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
-        #endif
+#endif
         func_800F53A4();
         return;
     }
@@ -453,22 +453,23 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.statsBase[STAT_CON] = 6;
         g_Status.statsBase[STAT_INT] = 6;
         g_Status.statsBase[STAT_LCK] = 6;
-        g_Status.hpMax = 70;
-        g_Status.hp = 70;
+        g_Status.hp = g_Status.hpMax = 70;
         g_Status.hearts = 10;
-        g_Status.gold = 500000;
         g_Status.heartsMax = 50;
         g_Status.mpMax = 20;
-        g_Status.mp = 20;
+        g_Status.mp = g_Status.mpMax;
         g_Status.hearts = 1234;
         g_Status.heartsMax = 2000;
+        g_Status.gold = 500000;
         g_Status.exp = 11000;
 #if defined(VERSION_US)
         g_Status.level = 20;
+#endif
+#if !defined(VERSION_HD)
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 110000;
         }
-#elif defined(VERSION_HD)
+#else
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             g_Status.exp = 40000;
         }
@@ -488,6 +489,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         for (i = 0; i < 90; i++) {
             g_Status.equipBodyCount[i] = 1;
         }
+
 #if defined(VERSION_US)
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
@@ -560,12 +562,15 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             AddToInventory(ITEM_JAVELIN, EQUIP_HAND);
             AddToInventory(ITEM_PENTAGRAM, EQUIP_HAND);
         }
-#elif defined(VERSION_HD)
+#else
         g_Status.timerHours = 0;
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
-        g_Status.subWeapon = 6;
+#ifdef VERSION_PSP
+        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+#endif
+        g_Status.subWeapon = SUBWPN_STOPWATCH;
 
         if (rand() & 3) {
             g_Status.subWeapon = (rand() % 9) + 1;
