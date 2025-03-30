@@ -101,8 +101,9 @@ void func_800FF708(s32 equipType, s32 arg1) {
     (g_Status.equipment + 2)[arg1] = rnd;
 }
 
-extern const char* g_LuckCode;
-extern const char* g_AxeArmorCode;
+char* g_LuckCode = "x-x!v''q";
+char* g_AxeArmorCode = "axearmor";
+
 
 extern s32 D_psp_091FC3F8;
 extern s32 D_psp_091FC400;
