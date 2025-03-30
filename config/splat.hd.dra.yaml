@@ -182,6 +182,7 @@ segments:
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
       - [0x54E50, c, menu]
+      - [0x5D474, c, timeattack]
       - [0x5D570, c, 5D5BC]
       - [0x5D5C0, c, 5F60C]
       - [0x6236C, c, 624DC]
