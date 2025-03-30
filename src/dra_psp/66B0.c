@@ -4,7 +4,6 @@
 #include "../dra/dra_bss.h"
 
 #define HUD_NUM_SPRITES 14
-
 u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
     90, 90, 90, 34, 2, 31, 3, 9, 15, 21, 59, 63, 67, 71,
 };
@@ -33,7 +32,6 @@ u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
     DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
     0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
 };
-
 u16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
     0x0176, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,

@@ -33,7 +33,7 @@ u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
     DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
     0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
 };
-s16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
+u16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
     0x0176, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
 };
@@ -43,6 +43,7 @@ u8 g_HudSubwpnSpriteU[HUD_NUM_SPRITES] = {
 u8 g_HudSubwpnSpriteV[HUD_NUM_SPRITES] = {
     0x20, 0x20, 0x30, 0x30, 0x30, 0x30, 0x30,
     0x30, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40};
+
 #define CAPE_PAL_TERMINATOR -1
 s32 g_CapePaletteDefs[] = {
     ITEM_NO_CAPE,        0x409, ITEM_CLOTH_CAPE,     0x412,
@@ -51,9 +52,6 @@ s32 g_CapePaletteDefs[] = {
     ITEM_BLOOD_CLOAK,    0x40F, ITEM_JOSEPHS_CLOAK,  0x411,
     ITEM_TWILIGHT_CLOAK, 0x40A, CAPE_PAL_TERMINATOR, 0x409,
 };
-
-extern PlayerHud g_PlayerHud;
-extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
 
 void UpdateCapePalette(void) {
     s32 clut;
@@ -578,6 +576,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     }
     func_800F53A4();
 }
+
+extern PlayerHud g_PlayerHud;
+extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
 
 #ifdef VERSION_PSP
 #define RIC_HUD_NUM_SPRITES 10
