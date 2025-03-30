@@ -41,9 +41,11 @@ typedef enum {
     MENU_DG_TIME_ATTACK,
     MENU_DG_EQUIP_SORT,
     MENU_DG_FAMILIARS,
+#if defined(VERSION_PSP)
     MENU_PSP_EXTRA_1,
     MENU_PSP_EXTRA_2,
     MENU_PSP_EXTRA_3,
+#endif
     NUM_MENU,
 } MenuDialogue;
 
