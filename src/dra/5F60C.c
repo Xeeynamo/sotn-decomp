@@ -108,13 +108,13 @@ char* g_AxeArmorCode = "axearmor";
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
-    // opposite of each version's signed/unsigned char definition.
-    // a mystery to be solved.
-    #if defined(VERSION_PSP)
+// opposite of each version's signed/unsigned char definition.
+// a mystery to be solved.
+#if defined(VERSION_PSP)
     s8* fileName;
-    #else
+#else
     u8* fileName;
-    #endif
+#endif
     s32 equipId;
     s32 i;
 
@@ -170,6 +170,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         func_800F53A4();
         return;
     }
+
     // I think this zeros out all the rooms to mark as unvisited
     for (i = 0; i < 2048; i++) {
         g_CastleMap[i] = 0;
@@ -213,8 +214,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     g_Status.spellsLearnt = 0;
 
     // If playing as Richter, either in the Prologue or Richter Mode
-    if ((g_StageId == STAGE_ST0) ||
-        (g_PlayableCharacter != PLAYER_ALUCARD)) {
+    if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
 
         for (i = 0; i < LEN(g_Status.relics); i++) {
             g_Status.relics[i] = RELIC_FLAG_FOUND;
@@ -247,19 +247,22 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.hearts = 30;
         g_Status.heartsMax = 99;
         g_Status.mpMax = 20;
-        g_Status.mp = 20;
+        g_Status.mp = g_Status.mpMax;
         g_Status.statsBase[STAT_STR] = 10;
         g_Status.statsBase[STAT_CON] = 10;
         g_Status.statsBase[STAT_INT] = 10;
         g_Status.statsBase[STAT_LCK] = 10;
+        g_Status.gold = 0;
+#if defined(VERSION_PSP)
+        g_Status.D_80097C40 = 0;
+#endif
+        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+        g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
         g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
         g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
         g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-        g_Status.gold = 0;
-        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
-        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
-        g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
 
         // Eliminate the time attacks that Richter can't do
         if (g_StageId == STAGE_NO3) {
@@ -268,7 +271,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             TimeAttackController(
                 TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
             TimeAttackController(TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
-                                    TIMEATTACK_SET_RECORD);
+                                 TIMEATTACK_SET_RECORD);
             TimeAttackController(
                 TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
             TimeAttackController(

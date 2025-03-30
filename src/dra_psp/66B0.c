@@ -104,7 +104,6 @@ void func_800FF708(s32 equipType, s32 arg1) {
 char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
-
 extern s32 D_psp_091FC3F8;
 extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
@@ -113,13 +112,13 @@ extern s32 D_psp_091FC410;
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
-    // opposite of each version's signed/unsigned char definition.
-    // a mystery to be solved.
-    #if defined(VERSION_PSP)
+// opposite of each version's signed/unsigned char definition.
+// a mystery to be solved.
+#if defined(VERSION_PSP)
     s8* fileName;
-    #else
+#else
     u8* fileName;
-    #endif
+#endif
     s32 equipId;
     s32 i;
 
@@ -258,7 +257,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.statsBase[STAT_INT] = 10;
         g_Status.statsBase[STAT_LCK] = 10;
         g_Status.gold = 0;
+#if defined(VERSION_PSP)
         g_Status.D_80097C40 = 0;
+#endif
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
         g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
