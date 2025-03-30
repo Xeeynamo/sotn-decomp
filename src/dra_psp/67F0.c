@@ -3,7 +3,492 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/67F0", func_psp_090E31F8);
+extern const char* g_LuckCode;
+extern const char* g_AxeArmorCode;
+
+extern s32 D_psp_091FC3F8;
+extern s32 D_psp_091FC400;
+extern s32 D_psp_091FC408;
+extern s32 D_psp_091FC410;
+
+void InitStatsAndGear(bool isDeathTakingItems) {
+    s32 prologueBonusState;
+    s32 dracDefeatTime;
+    s8* fileName;
+    s32 equipId;
+    s32 i;
+
+    if (D_8003C730 != 0) {
+        func_800F53A4();
+        UpdateCapePalette();
+        return;
+    }
+
+    if (isDeathTakingItems == true) {
+        if (g_Status.equipment[LEFT_HAND_SLOT] == ITEM_ALUCARD_SWORD) {
+            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SWORD) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SWORD]) {
+            g_Status.equipHandCount[ITEM_ALUCARD_SWORD]--;
+        }
+
+        if (g_Status.equipment[LEFT_HAND_SLOT] == ITEM_ALUCARD_SHIELD) {
+            g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SHIELD) {
+            g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SHIELD]) {
+            g_Status.equipHandCount[ITEM_ALUCARD_SHIELD]--;
+        }
+
+        if (g_Status.equipment[HEAD_SLOT] == ITEM_DRAGON_HELM) {
+            g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+        } else if (g_Status.equipBodyCount[ITEM_DRAGON_HELM]) {
+            g_Status.equipBodyCount[ITEM_DRAGON_HELM]--;
+        }
+
+        if (g_Status.equipment[ARMOR_SLOT] == ITEM_ALUCARD_MAIL) {
+            g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
+        } else if (g_Status.equipBodyCount[ITEM_ALUCARD_MAIL]) {
+            g_Status.equipBodyCount[ITEM_ALUCARD_MAIL]--;
+        }
+
+        if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
+            g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
+            UpdateCapePalette();
+        } else if (g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]) {
+            g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]--;
+        }
+
+        if (g_Status.equipment[ACCESSORY_1_SLOT] == ITEM_NECKLACE_OF_J) {
+            g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+        } else if (g_Status.equipment[ACCESSORY_2_SLOT] == ITEM_NECKLACE_OF_J) {
+            g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
+        } else if (g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]) {
+            g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]--;
+        }
+        func_800F53A4();
+        return;
+    }
+    
+    // I think this zeros out all the rooms to mark as unvisited
+    for (i = 0; i < 2048; i++) {
+        g_CastleMap[i] = 0;
+    }
+    g_RoomCount = 0;
+
+    g_Status.D_80097BF8 = 0;
+    for (i = 0; i < 4; i++) {
+        g_Status.statsEquip[i] = 0;
+    }
+
+    g_Status.exp = 0;
+    g_Status.level = 1;
+    g_Status.killCount = 0;
+
+    for (i = 0; i < NUM_FAMILIARS; i++) {
+        g_Status.statsFamiliars[i].level = 1;
+        g_Status.statsFamiliars[i].exp = 0;
+        g_Status.statsFamiliars[i].unk8 = 0;
+    }
+
+    for (i = 0; i < 169; i++) {
+        g_Status.equipHandCount[i] = 0;
+        g_Status.equipHandOrder[i] = i;
+    }
+
+    for (i = 0; i < 90; i++) {
+        g_Status.equipBodyCount[i] = 0;
+        g_Status.equipBodyOrder[i] = i;
+    }
+
+    g_Status.equipHandCount[ITEM_EMPTY_HAND] = 1;
+    g_Status.equipBodyCount[ITEM_EMPTY_HEAD] = 1;
+    g_Status.equipBodyCount[ITEM_NO_ARMOR] = 1;
+    g_Status.equipBodyCount[ITEM_NO_CAPE] = 1;
+    g_Status.equipBodyCount[ITEM_NO_ACCESSORY] = 1;
+
+    for (i = 0; i < LEN(g_Status.spells); i++) {
+        g_Status.spells[i] = 0;
+    }
+    g_Status.spellsLearnt = 0;
+
+    // If playing as Richter, either in the Prologue or Richter Mode
+    if ((g_StageId == STAGE_ST0) ||
+        (g_PlayableCharacter != PLAYER_ALUCARD)) {
+
+        for (i = 0; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = RELIC_FLAG_FOUND;
+        }
+
+        // These relics are special for Richter
+        g_Status.relics[RELIC_CUBE_OF_ZOE] |= 2;
+        g_Status.relics[RELIC_SPIRIT_ORB] |= 2;
+        g_Status.relics[RELIC_FAERIE_SCROLL] |= 2;
+        g_Status.relics[RELIC_JEWEL_OF_OPEN] |= 2;
+
+        // Zero out all time attack records
+        for (i = 0; i < 32; i++) {
+            g_Settings.timeAttackRecords[i] = 0;
+        }
+        g_Settings.D_8003CB00 = 0;
+        g_Settings.D_8003CB04 = 0;
+
+        g_Status.subWeapon = 0;
+
+        // If this function is called outside the start of the game,
+        // Richter gets a random subweapon.
+        if ((g_StageId != STAGE_ST0) && (g_StageId != STAGE_NO3)) {
+            g_Status.subWeapon = (rand() % 9) + 1;
+        }
+
+        // Richter's stats table
+        g_Status.hp = 50;
+        g_Status.hpMax = 50;
+        g_Status.hearts = 30;
+        g_Status.heartsMax = 99;
+        g_Status.mpMax = 20;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.statsBase[STAT_STR] = 10;
+        g_Status.statsBase[STAT_CON] = 10;
+        g_Status.statsBase[STAT_INT] = 10;
+        g_Status.statsBase[STAT_LCK] = 10;
+        g_Status.gold = 0;
+        g_Status.D_80097C40 = 0;
+        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
+        g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+        g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
+        g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
+        g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+        g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
+
+
+        // Eliminate the time attacks that Richter can't do
+        if (g_StageId == STAGE_NO3) {
+            TimeAttackController(
+                TIMEATTACK_EVENT_FIRST_MARIA_MEET, TIMEATTACK_SET_RECORD);
+            TimeAttackController(
+                TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_SET_RECORD);
+            TimeAttackController(TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
+                                 TIMEATTACK_SET_RECORD);
+            TimeAttackController(
+                TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+            TimeAttackController(
+                TIMEATTACK_EVENT_DEATH_DEFEAT, TIMEATTACK_SET_RECORD);
+        }
+        g_Status.timerHours = 0;
+        g_Status.timerMinutes = 0;
+        g_Status.timerSeconds = 0;
+        g_Status.timerFrames = 0;
+        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+        func_800F53A4();
+        return;
+    }
+    // Now we are just looking at non-Richter play.
+    if (g_StageId == STAGE_NO3) {
+        g_Status.statsBase[STAT_STR] = 6;
+        g_Status.statsBase[STAT_CON] = 6;
+        g_Status.statsBase[STAT_INT] = 6;
+        g_Status.statsBase[STAT_LCK] = 6;
+        g_Status.gold = 0;
+        for (i = 0; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = RELIC_FLAG_DISABLE;
+        }
+
+        // If we died in prologue and needed Maria's rescue
+        if (D_801397FC != 0) {
+            AddToInventory(ITEM_POTION, EQUIP_HAND);
+            prologueBonusState = 3;
+            // If no damage was taken as Richter, bonus to each stat
+        } else if (g_Status.hp == g_Status.hpMax) {
+            g_Status.statsBase[STAT_STR]++;
+            g_Status.statsBase[STAT_CON]++;
+            g_Status.statsBase[STAT_INT]++;
+            g_Status.statsBase[STAT_LCK]++;
+            prologueBonusState = 0;
+            // If Richter finished over half HP, bonus to strength
+        } else if (g_Status.hp >= g_Status.hpMax / 2) {
+            g_Status.statsBase[STAT_STR]++;
+            prologueBonusState = 1;
+            // If under half HP, bonus to constitution
+        } else {
+            g_Status.statsBase[STAT_CON]++;
+            prologueBonusState = 2;
+        }
+
+        // If we ran out of hearts and didn't die, give heart refresh
+        if ((g_Status.hearts == 0) && (prologueBonusState < 3)) {
+            AddToInventory(ITEM_HEART_REFRESH, EQUIP_HAND);
+        }
+
+        // Set initial max HP to 70, unless we took no damage, then 75.
+        g_Status.hpMax = 70;
+        if (prologueBonusState == 0) {
+            g_Status.hpMax += 5;
+        }
+        g_Status.hearts = 10;
+        g_Status.heartsMax = 50;
+        g_Status.mpMax = 20;
+
+        // If we had more than 40 hearts in prologue, give neutron bomb
+        if (D_80139008 > 40) {
+            AddToInventory(ITEM_NEUTRON_BOMB, EQUIP_HAND);
+            g_Status.statsBase[STAT_INT]++;
+        } else {
+            g_Status.statsBase[STAT_STR]++;
+        }
+
+        // If we finished with the cross subweapon
+        if (g_Status.subWeapon == 4) {
+            //...and didn't die in prologue
+            if (prologueBonusState < 3) {
+                g_Status.heartsMax += 5;
+                g_Status.mpMax += 5;
+            }
+            // If we finished with the holy water subweapon
+        } else if (g_Status.subWeapon == 3) {
+            //...and finished with over half HP
+            if (prologueBonusState < 2) {
+                g_Status.heartsMax += 5;
+                g_Status.statsBase[STAT_INT]++;
+            }
+        } else {
+            // If we didn't pick up a subweapon in prologue
+            switch (prologueBonusState) {
+            // Took no damage
+            case 0:
+                g_Status.statsBase[STAT_LCK] += 5;
+                g_Status.statsBase[STAT_INT]++;
+                g_Status.statsBase[STAT_CON]++;
+            // Over half health
+            case 1:
+                g_Status.hpMax += 5;
+            // Survived
+            case 2:
+                g_Status.statsBase[STAT_STR]++;
+                break;
+            }
+        }
+        dracDefeatTime = TimeAttackController(
+            TIMEATTACK_EVENT_DRACULA_DEFEAT, TIMEATTACK_GET_RECORD);
+        // If you defeated him in less than 101 seconds
+        if (dracDefeatTime <= 100) {
+            g_Status.hpMax += 5;
+            g_Status.mpMax += 5;
+            g_Status.heartsMax += 5;
+            g_Status.statsBase[STAT_STR] += 5;
+            g_Status.statsBase[STAT_CON] += 5;
+            g_Status.statsBase[STAT_INT] += 5;
+            g_Status.statsBase[STAT_LCK] += 5;
+        } else if (dracDefeatTime <= 200) {
+            g_Status.statsBase[STAT_LCK] += 2;
+        } else if (dracDefeatTime <= 300) {
+            g_Status.statsBase[STAT_LCK]++;
+            // Strange - if you wait over 1000 you get a bonus CON
+        } else if (dracDefeatTime >= 1000) {
+            g_Status.statsBase[STAT_CON]++;
+        }
+
+        g_Status.hp = g_Status.hpMax;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.subWeapon = 0;
+        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_ALUCARD_SWORD;
+        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_ALUCARD_SHIELD;
+        g_Status.equipment[HEAD_SLOT] = ITEM_DRAGON_HELM;
+        g_Status.equipment[ARMOR_SLOT] = ITEM_ALUCARD_MAIL;
+        g_Status.equipment[CAPE_SLOT] = ITEM_TWILIGHT_CLOAK;
+        g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NECKLACE_OF_J;
+        g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
+        
+
+        // Luck mode code check! This is X-X!V''Q
+        fileName = (s8*)g_LuckCode;
+        for (i = 0; i < 8; i++) {
+            if (g_Status.saveName[i] != *fileName++) {
+                break;
+            }
+        }
+        if (i == 8) {
+            // Being after the prologue bonuses, this erases them.
+            g_Status.statsBase[STAT_STR] = 1;
+            g_Status.statsBase[STAT_CON] = 0;
+            g_Status.statsBase[STAT_INT] = 0;
+            g_Status.statsBase[STAT_LCK] = 99;
+            g_Status.hpMax = 25;
+            g_Status.hearts = 5;
+            g_Status.heartsMax = 5;
+            g_Status.mpMax = 1;
+            g_Status.hp = g_Status.hpMax;
+            g_Status.mp = g_Status.mpMax;
+            g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_LAPIS_LAZULI;
+        }
+
+        if (g_IsTimeAttackUnlocked) {
+            fileName = (s8*)g_AxeArmorCode;
+            for (i = 0; i < 8; i++) {
+                if (g_Status.saveName[i] != *fileName++) {
+                    break;
+                }
+            }
+            if (i == 8) {
+                AddToInventory(ITEM_AXE_LORD_ARMOR, EQUIP_ARMOR);
+            }
+        }
+    } else {
+        // This Else block is for this function if called outside
+        // the "Entrance (first visit)" overlay. Applies to demo mode.
+        for (i = 0; i < LEN(g_Settings.timeAttackRecords); i++) {
+            g_Settings.timeAttackRecords[i] = 0;
+        }
+        g_Status.statsBase[STAT_STR] = 6;
+        g_Status.statsBase[STAT_CON] = 6;
+        g_Status.statsBase[STAT_INT] = 6;
+        g_Status.statsBase[STAT_LCK] = 6;
+        g_Status.hp = g_Status.hpMax = 70;
+        g_Status.hearts = 10;
+        g_Status.heartsMax = 50;
+        g_Status.mpMax = 20;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.hearts = 1234;
+        g_Status.heartsMax = 2000;
+        g_Status.gold = 500000;
+        g_Status.exp = 11000;
+#if defined(VERSION_US)
+        g_Status.level = 20;
+    #endif
+#if !defined(VERSION_HD)
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            g_Status.exp = 110000;
+        }
+#else
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            g_Status.exp = 40000;
+        }
+#endif
+        for (i = 0; i < LEN(g_Status.relics); i++) {
+            g_Status.relics[i] = RELIC_FLAG_FOUND | RELIC_FLAG_ACTIVE;
+            if (g_RelicDefs[i].unk0C != 0) {
+                g_Status.relics[i] = RELIC_FLAG_FOUND;
+            }
+        }
+
+        // In Demo mode, Alucard gets 50 of everything holdable
+        for (i = 0; i < 169; i++) {
+            g_Status.equipHandCount[i] = 50;
+        }
+        // And 1 of everything wearable
+        for (i = 0; i < 90; i++) {
+            g_Status.equipBodyCount[i] = 1;
+        }
+
+#if defined(VERSION_US)
+        g_Status.equipment[LEFT_HAND_SLOT] = ITEM_SHORT_SWORD;
+        g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_LEATHER_SHIELD;
+        g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
+        g_Status.equipment[ARMOR_SLOT] = ITEM_HIDE_CUIRASS;
+        g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
+        g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
+        g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
+
+        g_Status.relics[RELIC_CUBE_OF_ZOE] = 3;
+        g_Status.relics[RELIC_SPIRIT_ORB] = 3;
+        g_Status.relics[RELIC_FAERIE_SCROLL] = 3;
+        g_Status.relics[RELIC_SOUL_OF_BAT] = 3;
+        g_Status.relics[RELIC_FIRE_OF_BAT] = 3;
+        g_Status.relics[RELIC_SOUL_OF_WOLF] = 3;
+        g_Status.relics[RELIC_POWER_OF_WOLF] = 3;
+        g_Status.relics[RELIC_SKILL_OF_WOLF] = 3;
+        g_Status.relics[RELIC_FORM_OF_MIST] = 3;
+        g_Status.relics[RELIC_GRAVITY_BOOTS] = 3;
+        g_Status.relics[RELIC_LEAP_STONE] = 3;
+
+        AddToInventory(ITEM_FIREBRAND, EQUIP_HAND);
+        AddToInventory(ITEM_THUNDERBRAND, EQUIP_HAND);
+        AddToInventory(ITEM_ICEBRAND, EQUIP_HAND);
+        AddToInventory(ITEM_CLAYMORE, EQUIP_HAND);
+        AddToInventory(ITEM_MACE, EQUIP_HAND);
+        AddToInventory(ITEM_KATANA, EQUIP_HAND);
+        AddToInventory(ITEM_KNIGHT_SHIELD, EQUIP_HAND);
+        AddToInventory(ITEM_IRON_SHIELD, EQUIP_HAND);
+        AddToInventory(ITEM_BASILARD, EQUIP_HAND);
+        AddToInventory(ITEM_RAPIER, EQUIP_HAND);
+        AddToInventory(ITEM_KNUCKLE_DUSTER, EQUIP_HAND);
+        AddToInventory(ITEM_CUTLASS, EQUIP_HAND);
+
+        AddToInventory(ITEM_CLOTH_TUNIC, EQUIP_ARMOR);
+        AddToInventory(ITEM_BRONZE_CUIRASS, EQUIP_ARMOR);
+        AddToInventory(ITEM_IRON_CUIRASS, EQUIP_ARMOR);
+        AddToInventory(ITEM_STEEL_CUIRASS, EQUIP_ARMOR);
+        AddToInventory(ITEM_SILVER_PLATE, EQUIP_ARMOR);
+        AddToInventory(ITEM_GOLD_PLATE, EQUIP_ARMOR);
+        AddToInventory(ITEM_FIRE_MAIL, EQUIP_ARMOR);
+        AddToInventory(ITEM_MIRROR_CUIRASS, EQUIP_ARMOR);
+
+        AddToInventory(ITEM_VELVET_HAT, EQUIP_HEAD);
+        AddToInventory(ITEM_LEATHER_HAT, EQUIP_HEAD);
+        AddToInventory(ITEM_STEEL_HELM, EQUIP_HEAD);
+
+        AddToInventory(ITEM_CLOTH_CAPE, EQUIP_CAPE);
+        AddToInventory(ITEM_ELVEN_CLOAK, EQUIP_CAPE);
+        AddToInventory(ITEM_ROYAL_CLOAK, EQUIP_CAPE);
+        AddToInventory(ITEM_REVERSE_CLOAK, EQUIP_CAPE);
+
+        AddToInventory(ITEM_MEDAL, EQUIP_ACCESSORY);
+        AddToInventory(ITEM_GAUNTLET, EQUIP_ACCESSORY);
+
+        for (i = 0; i < 80; i++) {
+            AddToInventory(ITEM_POTION, EQUIP_HAND);
+        }
+
+        for (i = 0; i < 10; i++) {
+            AddToInventory(ITEM_MAGIC_MISSILE, EQUIP_HAND);
+            AddToInventory(ITEM_TURKEY, EQUIP_HAND);
+            AddToInventory(ITEM_POT_ROAST, EQUIP_HAND);
+            AddToInventory(ITEM_ANTIVENOM, EQUIP_HAND);
+            AddToInventory(ITEM_BOOMERANG, EQUIP_HAND);
+            AddToInventory(ITEM_JAVELIN, EQUIP_HAND);
+            AddToInventory(ITEM_PENTAGRAM, EQUIP_HAND);
+        }
+#else
+        g_Status.timerHours = 0;
+        g_Status.timerMinutes = 0;
+        g_Status.timerSeconds = 0;
+        g_Status.timerFrames = 0;
+        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+        g_Status.subWeapon = SUBWPN_STOPWATCH;
+
+        if (rand() & 3) {
+            g_Status.subWeapon = (rand() % 9) + 1;
+        }
+
+        do {
+        loop_check_equip_id_1:
+            equipId = rand() % 169;
+            if (equipId == 216) {
+                goto loop_check_equip_id_1;
+            }
+        } while (g_EquipDefs[equipId].itemCategory > 4);
+
+        g_Status.equipment[LEFT_HAND_SLOT] = equipId;
+        do {
+        loop_check_equip_id_2:
+            equipId = rand() % 169;
+            if (equipId == 216) {
+                goto loop_check_equip_id_2;
+            }
+        } while (g_EquipDefs[equipId].itemCategory == 5);
+
+        g_Status.equipment[RIGHT_HAND_SLOT] = equipId;
+        func_800FF708(0, 0);
+        func_800FF708(1, 1);
+        func_800FF708(2, 2);
+        func_800FF708(3, 3);
+        func_800FF708(3, 4);
+#endif
+    }
+    func_800F53A4();
+}
 
 extern PlayerHud g_PlayerHud;
 extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
