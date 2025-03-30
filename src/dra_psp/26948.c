@@ -20,7 +20,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", ResetPendingGfxLoad);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadGfxAsync);
 
-typedef struct{
+typedef struct {
     s32* unk0;
     u16 unk4;
     u16 unk6;
@@ -33,16 +33,16 @@ s32 func_psp_091040A0(s32* arg0) {
     unkStr_091040A0* ptr;
     s32 i;
     s32 arg0_deref = *arg0;
-    
-    if(arg0_deref == 0){
+
+    if (arg0_deref == 0) {
         return -1;
     }
-    if(arg0_deref == -1){
+    if (arg0_deref == -1) {
         return -1;
     }
-    
-    for(i = 0, ptr = D_psp_091ED538; i < LEN(D_psp_091ED538); i++, ptr++){
-        if(ptr->unk4 == 0){
+
+    for (i = 0, ptr = D_psp_091ED538; i < LEN(D_psp_091ED538); i++, ptr++) {
+        if (ptr->unk4 == 0) {
             ptr->unk4 = arg0_deref;
             ptr->unk6 = 0;
             ptr->unk8 = 0;

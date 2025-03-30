@@ -337,7 +337,9 @@ void MenuWindowColorsDraw(MenuContext* context) {
     s32 y;
     s32 i;
 
-    *g_ChRgb = func_psp_090EAF08(&D_psp_0914A3B8, &D_psp_0914A3D0, &D_psp_0914A3C8, &D_psp_0914A3D8, &D_psp_0914A3C0);
+    *g_ChRgb =
+        func_psp_090EAF08(&D_psp_0914A3B8, &D_psp_0914A3D0, &D_psp_0914A3C8,
+                          &D_psp_0914A3D8, &D_psp_0914A3C0);
 
     for (i = 0; i < 3; i++) {
         MenuDrawChar((*g_ChRgb)[i], x + 32, (i * 12) + 80, context);
@@ -357,10 +359,10 @@ void MenuReverseCloakDraw(MenuContext* context) {
     const int StrX = 188;
     const int ImgW = 88;
     char** menuStr;
-    
-    menuStr= g_MenuStr;
+
+    menuStr = g_MenuStr;
     MenuDrawStr(menuStr[30], StrX, 48, context);
-    menuStr= g_MenuStr;
+    menuStr = g_MenuStr;
     MenuDrawStr(menuStr[31], StrX, 64, context);
     func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
                   12, 4, 1);
@@ -538,15 +540,15 @@ void MenuDraw(void) {
         prim->r0 = r0;
         prim->g0 = g0;
         prim->b0 = b0;
-        
+
         prim->r1 = r0;
         prim->g1 = g0;
         prim->b1 = b0;
-        
+
         prim->r2 = r1;
         prim->g2 = g1;
         prim->b2 = b1;
-        
+
         prim->r3 = r1;
         prim->g3 = g1;
         prim->b3 = b1;
@@ -815,9 +817,9 @@ void func_800F9E18(s32 arg0) {
         DrawSync(0);
     }
 
-    D_psp_0914A394 = func_psp_090EAF08(0, &D_psp_0914A0D0, &D_psp_09149E90, &D_psp_0914A248,
-                          &D_psp_09149FB0);
-    if(D_psp_0914A394){
+    D_psp_0914A394 = func_psp_090EAF08(
+        0, &D_psp_0914A0D0, &D_psp_09149E90, &D_psp_0914A248, &D_psp_09149FB0);
+    if (D_psp_0914A394) {
         func_psp_091040A0(&D_psp_0914A388);
     }
 
@@ -896,7 +898,3 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2A40);
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2B20);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandle);
-
-
-
-
