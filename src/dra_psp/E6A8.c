@@ -853,3 +853,52 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1968);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1A08);
 
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1B60);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1BC8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C00);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C38);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C58);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C80);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C98);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1D68);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1DF0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EA0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EC8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1F40);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2038);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2118);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2178);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F21F8);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2258);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2A40);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2B20);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandle);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4B90);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4FC8);
+
+
