@@ -105,6 +105,13 @@ void func_800FF708(s32 equipType, s32 arg1) {
 char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
+#if defined(VERSION_PSP)
+extern s32 D_psp_091FC3F8;
+extern s32 D_psp_091FC400;
+extern s32 D_psp_091FC408;
+extern s32 D_psp_091FC410;
+#endif
+
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
@@ -281,6 +288,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
+        #if defined(VERSION_PSP)
+        D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+        #endif
         func_800F53A4();
         return;
     }
@@ -324,14 +334,14 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         // Set initial max HP to 70, unless we took no damage, then 75.
         g_Status.hpMax = 70;
         if (prologueBonusState == 0) {
-            g_Status.hpMax = 75;
+            g_Status.hpMax += 5;
         }
         g_Status.hearts = 10;
         g_Status.heartsMax = 50;
         g_Status.mpMax = 20;
 
-        // If we had more than 41 hearts in prologue, give neutron bomb
-        if (D_80139008 >= 41) {
+        // If we had more than 40 hearts in prologue, give neutron bomb
+        if (D_80139008 > 40) {
             AddToInventory(ITEM_NEUTRON_BOMB, EQUIP_HAND);
             g_Status.statsBase[STAT_INT]++;
         } else {
@@ -388,16 +398,17 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         } else if (dracDefeatTime >= 1000) {
             g_Status.statsBase[STAT_CON]++;
         }
+
+        g_Status.hp = g_Status.hpMax;
+        g_Status.mp = g_Status.mpMax;
+        g_Status.subWeapon = 0;
         g_Status.equipment[LEFT_HAND_SLOT] = ITEM_ALUCARD_SWORD;
         g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_ALUCARD_SHIELD;
         g_Status.equipment[HEAD_SLOT] = ITEM_DRAGON_HELM;
         g_Status.equipment[ARMOR_SLOT] = ITEM_ALUCARD_MAIL;
         g_Status.equipment[CAPE_SLOT] = ITEM_TWILIGHT_CLOAK;
         g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NECKLACE_OF_J;
-        g_Status.subWeapon = 0;
         g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-        g_Status.hp = g_Status.hpMax;
-        g_Status.mp = g_Status.mpMax;
 
         // Luck mode code check! This is X-X!V''Q
         fileName = (s8*)g_LuckCode;

@@ -104,10 +104,12 @@ void func_800FF708(s32 equipType, s32 arg1) {
 char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
+#if defined(VERSION_PSP)
 extern s32 D_psp_091FC3F8;
 extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
+#endif
 
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
@@ -285,7 +287,9 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         g_Status.timerMinutes = 0;
         g_Status.timerSeconds = 0;
         g_Status.timerFrames = 0;
+        #if defined(VERSION_PSP)
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
+        #endif
         func_800F53A4();
         return;
     }
