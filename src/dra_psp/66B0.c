@@ -719,24 +719,43 @@ void DrawRichterHud(void) {
     }
 }
 
-extern s32 D_psp_091472F8[];
-extern s32 D_psp_09147418[];
+RicSubwpnIconParams g_ricSubwpnIcons[] = {
+    {0x9, 0x00F, 0x018, 0x010, 0x0A8, 0x0C0, 0x01E, 0x17F},
+    {0x009, 0x007, 0x018, 0x018, 0x080, 0x0C0, 0x01E, 0x17F},
+    {0x00C, 0x00D, 0x010, 0x010, 0x028, 0x070, 0x01B, 0x102},
+    {0x008, 0x00C, 0x018, 0x018, 0x038, 0x068, 0x01B, 0x102},
+    {0x00C, 0x007, 0x010, 0x018, 0x098, 0x0D8, 0x01E, 0x17F},
+    {0x00C, 0x007, 0x010, 0x018, 0x098, 0x0C0, 0x01E, 0x17F},
+    {0x00F, 0x013, 0x008, 0x008, 0x0C0, 0x0D0, 0x01E, 0x163},
+    {0x008, 0x00D, 0x018, 0x010, 0x0A8, 0x0D0, 0x01E, 0x17F},
+    {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
+
+#if defined(VERSION_PSP)
+
+extern RicSubwpnIconParams D_psp_09147418[];
+
+// Appears that the data might have just been an array of s32.
+// But that's much harder to read. This macro takes the pointer
+// and index, and treats it as if it was S32 for the sake of indexing.
+// For pointer p and index i, returns &p[i]
+#define PTR_CVT(p,i) &(((s32*)p)[(i)*(sizeof(*p)/sizeof(s32*))])
+
 
 Primitive* func_psp_090E4828(Primitive* prim) {
-    s32* ptr;
+    RicSubwpnIconParams* ptr;
 
     if (g_Status.subWeapon == 0) {
         prim->drawMode = DRAW_HIDE;
     } else {
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            ptr = &D_psp_09147418[g_Status.subWeapon * 8];
+            ptr = (RicSubwpnIconParams*)PTR_CVT(D_psp_09147418, g_Status.subWeapon);
         } else {
-            ptr = &D_psp_091472F8[(g_Status.subWeapon - 1) * 8];
+            ptr = (RicSubwpnIconParams*)PTR_CVT(g_ricSubwpnIcons, g_Status.subWeapon - 1);
         }
         SetTexturedPrimRect(
-            prim, ptr[0] + 2, ptr[1] + 22, ptr[2], ptr[3], ptr[4], ptr[5]);
-        prim->tpage = ptr[6];
-        prim->clut = ptr[7];
+            prim, ptr->x + 2, ptr->y + 22, ptr->w, ptr->h, ptr->u, ptr->v);
+        prim->tpage = ptr->tpage;
+        prim->clut = ptr->clut;
         prim->drawMode = DRAW_ABSPOS;
         if (prim->clut == 0x17F) {
             prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
@@ -753,13 +772,13 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
     s32 y;
     s32 w;
     s32 h;
-    s32* data;
+    RicSubwpnIconParams* data;
 
-    data = &D_psp_09147418[idx * 8];
-    x = (data[0] + 2 + xOffset) + (data[2] * (1.0f - xScale));
-    y = (data[1] + 22 + yOffset) + (data[3] * (1.0f - yScale));
-    w = data[2] * xScale;
-    h = data[3] * yScale;
+    data = (RicSubwpnIconParams*)PTR_CVT(D_psp_09147418, idx);
+    x = (data->x + 2 + xOffset) + (data->w * (1.0f - xScale));
+    y = (data->y + 22 + yOffset) + (data->h * (1.0f - yScale));
+    w = data->w * xScale;
+    h = data->h * yScale;
     prim->x0 = x;
     prim->y0 = y;
     prim->x1 = x + w;
@@ -768,17 +787,17 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
     prim->y2 = y + h;
     prim->x3 = x + w;
     prim->y3 = y + h;
-    prim->u0 = data[4];
-    prim->v0 = data[5];
-    prim->u1 = data[4] + data[2];
-    prim->v1 = data[5];
-    prim->u2 = data[4];
-    prim->v2 = data[5] + data[3];
-    prim->u3 = data[4] + data[2];
-    prim->v3 = data[5] + data[3];
+    prim->u0 = data->u;
+    prim->v0 = data->v;
+    prim->u1 = data->u + data->w;
+    prim->v1 = data->v;
+    prim->u2 = data->u;
+    prim->v2 = data->v + data->h;
+    prim->u3 = data->u + data->w;
+    prim->v3 = data->v + data->h;
     func_80107250(prim, arg6 & 0xFF);
-    prim->tpage = data[6];
-    prim->clut = data[7];
+    prim->tpage = data->tpage;
+    prim->clut = data->clut;
     prim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
     if (prim->clut == 0x17F) {
         prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
@@ -866,10 +885,8 @@ Primitive* func_psp_090E4CD0(Primitive* prim) {
         prim, D_psp_091CDC88, (int)sp20, (int)sp1C, sp18, sp18, temp_s0);
     return prim;
 }
+#endif
 
-// Need these for now, they might be changed later.
-extern Primitive* func_psp_090E4CD0(Primitive*);
-extern Primitive* func_psp_090E4828(Primitive*);
 void DrawRichterHudSubweapon(void) {
     s32 i;
     s32 temp_s4;
@@ -1065,11 +1082,36 @@ void DrawRichterHudSubweapon(void) {
     prim->drawMode = altPrim->drawMode;
     prim = prim->next;
 
+    #if defined(VERSION_PSP)
+
     if (g_PlayableCharacter == PLAYER_MARIA) {
         prim = func_psp_090E4CD0(prim);
     } else {
         prim = func_psp_090E4828(prim);
     }
+
+    #else
+
+    temp_subweapon = g_Status.subWeapon;
+    if (g_Status.subWeapon == 0) {
+        prim->drawMode = DRAW_HIDE;
+    } else {
+        // Convert from system where 0 is "no subweapon" to "first subweapon"
+        temp_subweapon--;
+        temp_s0 = &g_ricSubwpnIcons[temp_subweapon];
+        SetTexturedPrimRect(prim, temp_s0->x + 2, temp_s0->y + 0x16, temp_s0->w,
+                            temp_s0->h, temp_s0->u, temp_s0->v);
+        prim->tpage = temp_s0->tpage;
+        prim->clut = temp_s0->clut;
+        prim->drawMode = DRAW_ABSPOS;
+
+        if (prim->clut == 0x17F) {
+            prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE | DRAW_TRANSP;
+        }
+    }
+
+    #endif
+
     prim = prim->next;
 
     if (g_PlayerHud.unk24 == 0) {
