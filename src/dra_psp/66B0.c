@@ -113,7 +113,13 @@ extern s32 D_psp_091FC410;
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
+    // opposite of each version's signed/unsigned char definition.
+    // a mystery to be solved.
+    #if defined(VERSION_PSP)
     s8* fileName;
+    #else
+    u8* fileName;
+    #endif
     s32 equipId;
     s32 i;
 

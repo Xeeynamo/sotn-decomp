@@ -108,7 +108,13 @@ char* g_AxeArmorCode = "axearmor";
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
+    // opposite of each version's signed/unsigned char definition.
+    // a mystery to be solved.
+    #if defined(VERSION_PSP)
+    s8* fileName;
+    #else
     u8* fileName;
+    #endif
     s32 equipId;
     s32 i;
 
@@ -123,7 +129,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
         } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SWORD) {
             g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
-        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SWORD] != 0) {
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SWORD]) {
             g_Status.equipHandCount[ITEM_ALUCARD_SWORD]--;
         }
 
@@ -131,26 +137,26 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipment[LEFT_HAND_SLOT] = ITEM_EMPTY_HAND;
         } else if (g_Status.equipment[RIGHT_HAND_SLOT] == ITEM_ALUCARD_SHIELD) {
             g_Status.equipment[RIGHT_HAND_SLOT] = ITEM_EMPTY_HAND;
-        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SHIELD] != 0) {
+        } else if (g_Status.equipHandCount[ITEM_ALUCARD_SHIELD]) {
             g_Status.equipHandCount[ITEM_ALUCARD_SHIELD]--;
         }
 
         if (g_Status.equipment[HEAD_SLOT] == ITEM_DRAGON_HELM) {
             g_Status.equipment[HEAD_SLOT] = ITEM_EMPTY_HEAD;
-        } else if (g_Status.equipBodyCount[ITEM_DRAGON_HELM] != 0) {
+        } else if (g_Status.equipBodyCount[ITEM_DRAGON_HELM]) {
             g_Status.equipBodyCount[ITEM_DRAGON_HELM]--;
         }
 
         if (g_Status.equipment[ARMOR_SLOT] == ITEM_ALUCARD_MAIL) {
             g_Status.equipment[ARMOR_SLOT] = ITEM_NO_ARMOR;
-        } else if (g_Status.equipBodyCount[ITEM_ALUCARD_MAIL] != 0) {
+        } else if (g_Status.equipBodyCount[ITEM_ALUCARD_MAIL]) {
             g_Status.equipBodyCount[ITEM_ALUCARD_MAIL]--;
         }
 
         if (g_Status.equipment[CAPE_SLOT] == ITEM_TWILIGHT_CLOAK) {
             g_Status.equipment[CAPE_SLOT] = ITEM_NO_CAPE;
             UpdateCapePalette();
-        } else if (g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK] != 0) {
+        } else if (g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]) {
             g_Status.equipBodyCount[ITEM_TWILIGHT_CLOAK]--;
         }
 
@@ -158,7 +164,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipment[ACCESSORY_1_SLOT] = ITEM_NO_ACCESSORY;
         } else if (g_Status.equipment[ACCESSORY_2_SLOT] == ITEM_NECKLACE_OF_J) {
             g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_NO_ACCESSORY;
-        } else if (g_Status.equipBodyCount[ITEM_NECKLACE_OF_J] != 0) {
+        } else if (g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]) {
             g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]--;
         }
     } else {
