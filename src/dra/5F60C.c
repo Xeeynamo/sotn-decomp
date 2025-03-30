@@ -896,9 +896,8 @@ void DrawRichterHudSubweapon(void) {
     s32 temp_s2;
     Primitive* altPrim;
     Primitive* prim;
-
-    s32 temp_subweapon;
-    RicSubwpnIconParams* temp_s0;
+    RicSubwpnIconParams* ptr;
+    s32 temp_subWeapon;
 
     if (D_8003C744 == 5) {
         prim = &g_PrimBuf[g_PlayerHud.primIndex1];
@@ -1096,22 +1095,21 @@ void DrawRichterHudSubweapon(void) {
     }
 
 #else
-
-    temp_subweapon = g_Status.subWeapon;
-    if (g_Status.subWeapon == 0) {
+    // With no Maria, notice that this is just like func_psp_090E4828
+    temp_subWeapon = g_Status.subWeapon;
+    if (temp_subWeapon == 0) {
         prim->drawMode = DRAW_HIDE;
     } else {
-        // Convert from system where 0 is "no subweapon" to "first subweapon"
-        temp_subweapon--;
-        temp_s0 = &g_ricSubwpnIcons[temp_subweapon];
-        SetTexturedPrimRect(prim, temp_s0->x + 2, temp_s0->y + 0x16, temp_s0->w,
-                            temp_s0->h, temp_s0->u, temp_s0->v);
-        prim->tpage = temp_s0->tpage;
-        prim->clut = temp_s0->clut;
+        // Change from "0 is no subweapon" to "0 is first subweapon"
+        temp_subWeapon--;
+        ptr = &g_ricSubwpnIcons[temp_subWeapon];
+        SetTexturedPrimRect(
+            prim, ptr->x + 2, ptr->y + 22, ptr->w, ptr->h, ptr->u, ptr->v);
+        prim->tpage = ptr->tpage;
+        prim->clut = ptr->clut;
         prim->drawMode = DRAW_ABSPOS;
-
         if (prim->clut == 0x17F) {
-            prim->drawMode = DRAW_ABSPOS | DRAW_TPAGE | DRAW_TRANSP;
+            prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
         }
     }
 
@@ -1170,6 +1168,7 @@ void DrawRichterHudSubweapon(void) {
     }
 }
 
+// Seems to be stripped on PSP
 bool func_8010183C(s32 arg0) {
     if (arg0 == 0) {
         if (g_PlayerHud.unk24 == 0) {
@@ -1334,7 +1333,8 @@ void DrawHudSubweapon() {
 
     // Represents MP fill level in fraction of 50 (2% each)
     mpFillSteps = (g_Status.mp * 50) / g_Status.mpMax;
-    LoadTPage(D_800C52F8[10] + 4, 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
+    LoadTPage(
+        (u_long*)(D_800C52F8[10] + 4), 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
     if (mpFillSteps == 50) {
         prim->clut = 0x162;
