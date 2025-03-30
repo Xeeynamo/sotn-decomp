@@ -50,6 +50,8 @@ segments:
       - [0x19BC, .data, cutscene]
       - [0x1A68, .data, e_candle_table]
       - [0x1A90, data]
+      - [0x1AD4, .data, e_lesser_demon]
+      - [0x1C48, data]
       - [0x1C7C, .data, st_update]
       - [0x1CA8, .data, collision]
       - [0x2068, .data, e_red_door]
