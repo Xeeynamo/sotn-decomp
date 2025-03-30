@@ -10,7 +10,7 @@ COMPILER_ARGS	 = --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path
 AUTO_MERGE_FILES	:= e_init.c
 
 # Step 1/2 of extract
-$(BUILD_DIR)/%.ld assets/%/mwo_header.bin: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt | $(EXTRACTED_DISK_DIR) $(VENV_DIR)
+$(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFIG_DIR)/symbols.$(VERSION).%.txt | $(EXTRACTED_DISK_DIR) $(VENV_DIR)
 	$(muffle)$(SPLAT) $<
 
 # Step 2/2 of extract
@@ -35,7 +35,7 @@ $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call get_psp_o_files,%,st)
 $(BUILD_DIR)/bo%.elf: $(BUILD_DIR)/bo%.ld $$(call get_psp_o_files,%,bo)
 	$(call link,st$*,$@)
 # All servant files are merged
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_$$*) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_%) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
 # Step 3/5 of build
