@@ -897,8 +897,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2B20);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandle);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4B90);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4FC8);
 
 
