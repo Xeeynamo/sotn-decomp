@@ -732,7 +732,14 @@ RicSubwpnIconParams g_ricSubwpnIcons[] = {
     {0x008, 0x006, 0x018, 0x018, 0x080, 0x0D8, 0x01E, 0x17F}};
 
 #if defined(VERSION_PSP)
+
 extern RicSubwpnIconParams D_psp_09147418[];
+
+// Appears that the data might have just been an array of s32.
+// But that's much harder to read. This macro takes the pointer
+// and index, and treats it as if it was S32 for the sake of indexing.
+// For pointer p and index i, returns &p[i]
+#define PTR_CVT(p, i) &(((s32*)p)[(i) * (sizeof(*p) / sizeof(s32*))])
 
 Primitive* func_psp_090E4828(Primitive* prim) {
     RicSubwpnIconParams* ptr;
@@ -741,9 +748,11 @@ Primitive* func_psp_090E4828(Primitive* prim) {
         prim->drawMode = DRAW_HIDE;
     } else {
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            ptr = &D_psp_09147418[g_Status.subWeapon];
+            ptr = (RicSubwpnIconParams*)PTR_CVT(
+                D_psp_09147418, g_Status.subWeapon);
         } else {
-            ptr = &g_ricSubwpnIcons[(g_Status.subWeapon - 1)];
+            ptr = (RicSubwpnIconParams*)PTR_CVT(
+                g_ricSubwpnIcons, g_Status.subWeapon - 1);
         }
         SetTexturedPrimRect(
             prim, ptr->x + 2, ptr->y + 22, ptr->w, ptr->h, ptr->u, ptr->v);
@@ -765,13 +774,13 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
     s32 y;
     s32 w;
     s32 h;
-    s32* data;
+    RicSubwpnIconParams* data;
 
-    data = &D_psp_09147418[idx * 8];
-    x = (data[0] + 2 + xOffset) + (data[2] * (1.0f - xScale));
-    y = (data[1] + 22 + yOffset) + (data[3] * (1.0f - yScale));
-    w = data[2] * xScale;
-    h = data[3] * yScale;
+    data = (RicSubwpnIconParams*)PTR_CVT(D_psp_09147418, idx);
+    x = (data->x + 2 + xOffset) + (data->w * (1.0f - xScale));
+    y = (data->y + 22 + yOffset) + (data->h * (1.0f - yScale));
+    w = data->w * xScale;
+    h = data->h * yScale;
     prim->x0 = x;
     prim->y0 = y;
     prim->x1 = x + w;
@@ -780,17 +789,17 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
     prim->y2 = y + h;
     prim->x3 = x + w;
     prim->y3 = y + h;
-    prim->u0 = data[4];
-    prim->v0 = data[5];
-    prim->u1 = data[4] + data[2];
-    prim->v1 = data[5];
-    prim->u2 = data[4];
-    prim->v2 = data[5] + data[3];
-    prim->u3 = data[4] + data[2];
-    prim->v3 = data[5] + data[3];
+    prim->u0 = data->u;
+    prim->v0 = data->v;
+    prim->u1 = data->u + data->w;
+    prim->v1 = data->v;
+    prim->u2 = data->u;
+    prim->v2 = data->v + data->h;
+    prim->u3 = data->u + data->w;
+    prim->v3 = data->v + data->h;
     func_80107250(prim, arg6 & 0xFF);
-    prim->tpage = data[6];
-    prim->clut = data[7];
+    prim->tpage = data->tpage;
+    prim->clut = data->clut;
     prim->drawMode = DRAW_ABSPOS | DRAW_COLORS;
     if (prim->clut == 0x17F) {
         prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
@@ -1078,7 +1087,7 @@ void DrawRichterHudSubweapon(void) {
     prim->drawMode = altPrim->drawMode;
     prim = prim->next;
 
-    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
         prim = func_psp_090E4CD0(prim);
@@ -1086,7 +1095,7 @@ void DrawRichterHudSubweapon(void) {
         prim = func_psp_090E4828(prim);
     }
 
-    #else
+#else
 
     temp_subweapon = g_Status.subWeapon;
     if (g_Status.subWeapon == 0) {
@@ -1106,7 +1115,7 @@ void DrawRichterHudSubweapon(void) {
         }
     }
 
-    #endif
+#endif
 
     prim = prim->next;
 

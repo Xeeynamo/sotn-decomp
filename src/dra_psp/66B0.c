@@ -738,8 +738,7 @@ extern RicSubwpnIconParams D_psp_09147418[];
 // But that's much harder to read. This macro takes the pointer
 // and index, and treats it as if it was S32 for the sake of indexing.
 // For pointer p and index i, returns &p[i]
-#define PTR_CVT(p,i) &(((s32*)p)[(i)*(sizeof(*p)/sizeof(s32*))])
-
+#define PTR_CVT(p, i) &(((s32*)p)[(i) * (sizeof(*p) / sizeof(s32*))])
 
 Primitive* func_psp_090E4828(Primitive* prim) {
     RicSubwpnIconParams* ptr;
@@ -748,9 +747,11 @@ Primitive* func_psp_090E4828(Primitive* prim) {
         prim->drawMode = DRAW_HIDE;
     } else {
         if (g_PlayableCharacter == PLAYER_MARIA) {
-            ptr = (RicSubwpnIconParams*)PTR_CVT(D_psp_09147418, g_Status.subWeapon);
+            ptr = (RicSubwpnIconParams*)PTR_CVT(
+                D_psp_09147418, g_Status.subWeapon);
         } else {
-            ptr = (RicSubwpnIconParams*)PTR_CVT(g_ricSubwpnIcons, g_Status.subWeapon - 1);
+            ptr = (RicSubwpnIconParams*)PTR_CVT(
+                g_ricSubwpnIcons, g_Status.subWeapon - 1);
         }
         SetTexturedPrimRect(
             prim, ptr->x + 2, ptr->y + 22, ptr->w, ptr->h, ptr->u, ptr->v);
@@ -1082,7 +1083,7 @@ void DrawRichterHudSubweapon(void) {
     prim->drawMode = altPrim->drawMode;
     prim = prim->next;
 
-    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
 
     if (g_PlayableCharacter == PLAYER_MARIA) {
         prim = func_psp_090E4CD0(prim);
@@ -1090,7 +1091,7 @@ void DrawRichterHudSubweapon(void) {
         prim = func_psp_090E4828(prim);
     }
 
-    #else
+#else
 
     temp_subweapon = g_Status.subWeapon;
     if (g_Status.subWeapon == 0) {
@@ -1110,7 +1111,7 @@ void DrawRichterHudSubweapon(void) {
         }
     }
 
-    #endif
+#endif
 
     prim = prim->next;
 
