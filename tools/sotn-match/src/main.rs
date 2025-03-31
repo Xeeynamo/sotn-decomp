@@ -4,6 +4,11 @@ use std::io::{self,BufRead,BufWriter};
 use regex::Regex;
 use std::path::Path;
 use std::io::Write;
+use serde::{Serialize, Deserialize};
+use serde_with::{self, serde_as};
+use serde_yaml::{self};
+use serde_hex::{SerHex,StrictPfx,CompactPfx};
+use std::collections::HashMap;
 
 /*
 #[derive(Parser, Debug)]
@@ -29,14 +34,14 @@ struct Options {
     writer: Box<dyn Write>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 struct FunctionEntry {
     name: String,
     offset: usize,
     vram: usize,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 struct ObjectMap {
     object: String,
     offset: usize,
@@ -56,8 +61,147 @@ impl ObjectMap {
     }
 }
 
-fn do_match(match_file: &String, bin_file: &String, options: &mut Options) {
-    eprintln!("matching {match_file}, {bin_file}");
+#[serde_as]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+struct FunctionSignature {
+    name: String,
+    // #[serde_as(as = "serde_with::hex::Hex<serde_with::formats::Uppercase>")]
+    signature: u64,
+    size: usize,
+}
+
+#[serde_as]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+struct SegmentSignature {
+    name: String,
+    // #[serde_as(as = "serde_with::hex::Hex<serde_with::formats::Uppercase>")]
+    signature: u64,
+    size: usize,
+    functions: Vec<FunctionSignature>,
+}
+
+#[serde_as]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+struct SegmentOffset {
+    name: String,
+    offset: usize,
+    size: usize,
+    symbols: HashMap<String, usize>,
+}
+
+
+
+fn find(signature: u64, size: usize, instructions: &Vec<u32>, start: usize, end: usize, options: &mut Options) -> Option<usize> {
+
+    let mut i = start;
+    let mut found = false;
+    let mut offset = -1;
+    let mut count = 0;
+
+    let mut hash: u64 = 0;
+    let mut rm: u64 = 1;
+
+    for _ in 0..(size - 1) {
+        rm = (options.radix * rm) % options.coefficient;
+    }
+    // println!("rm {:08x} size: {}, count: {}", rm, size, count);
+
+
+    while count < size && i < end {
+        hash = ((options.radix * hash) + instructions[i] as u64) % options.coefficient;
+
+        count += 1;
+        i += 1;
+    }
+
+    // println!("count: {}", count);
+    if i >= instructions.len() {
+        return None;
+    }
+
+    while hash != signature && i < end {
+        hash = (hash + options.coefficient - (rm * instructions[i - count] as u64) % options.coefficient) % options.coefficient;
+        hash = ((options.radix * hash) + instructions[i] as u64) % options.coefficient;
+        i += 1;
+
+    }
+
+    if hash == signature {
+        Some((i - count) * 4)
+    } else {
+        // println!("sig: {} hash: {}, i: {}", signature, hash, i);
+        None
+    }
+}
+
+fn scan(match_file: &String, bin_file: &String, options: &mut Options) {
+    // eprintln!("matching {match_file}, {bin_file}");
+
+    let bytes = std::fs::read(bin_file).expect("Could not read bin file");
+
+    let instructions: Vec<u32> = bytes.chunks(4).map(|b| {
+        // TODO: make endianness optional
+        let instruction: u32 = ((b[3] as u32) << 24) |
+            ((b[2] as u32) << 16) |
+            ((b[1]  as u32) << 8) |
+            (b[0] as u32);
+
+        // mask any fields which may refer to global symbols. this will
+        // mask false positives, but keep most immediates and local vars.
+        match instruction >> 26 {
+            // r-type
+            0 => instruction,
+            // j-type
+            2 | 3 => instruction & 0xFC000000,
+            // i-type
+            _ => instruction & 0xFFFF0000
+        }
+    }).collect();
+
+
+    let f = std::fs::File::open(match_file).unwrap();
+    for document in serde_yaml::Deserializer::from_reader(io::BufReader::new(f)) {
+        let segment = SegmentSignature::deserialize(document).unwrap();
+        // println!("{:?}", segment );
+        // eprintln!("segment: {}", segment.name);
+
+        // try to find the entire object, first
+        let offset = find(segment.signature,
+                          segment.size / 4,
+                          &instructions, 0, instructions.len(), options);
+
+        // eprintln!("found: {} -> {:?}", segment.name, offset);
+
+        let Some(offset) = offset else {
+            continue;
+        };
+
+        let mut map = HashMap::new();
+
+        for function in segment.functions {
+            let function_offset = find(function.signature,
+                                       function.size / 4,
+                                       &instructions,
+                                       offset / 4,
+                                       (offset + segment.size) / 4,
+                                       options);
+            // eprintln!("    found: {} -> {:?}", function.name, function_offset);
+            if let Some(function_offset) = function_offset {
+                map.insert(function.name, function_offset);
+            }
+        }
+
+        let so = SegmentOffset {
+            name: segment.name,
+            offset: offset,
+            size: segment.size,
+            symbols: map,
+        };
+
+
+        writeln!(*options.writer, "---");
+        writeln!(*options.writer, "{}", serde_yaml::to_string(&so).expect("yaml"));
+    }
 }
 
 enum EvaluateState {
@@ -101,19 +245,18 @@ fn read_segments(map_file: &String) -> Vec<ObjectMap> {
             i += 1;
             // eprintln!("{i}: {line}");
             if let Some(capture) = romStartRE.captures(&line) {
-                eprintln!("{i}: {line}");
+                // eprintln!("{i}: {line}");
                 if let Some(address) = capture.get(1).map(|m| m.as_str().to_string()) {
                     rom_start = usize::from_str_radix(address.as_str(), 16).expect("hex string");
-                    eprintln!("rom_start {rom_start}")
+                    // eprintln!("rom_start {rom_start}")
                 }
                 continue;
             }
 
             if let Some(capture) = vramRE.captures(&line) {
-                eprintln!("{i}: {line}");
+                // eprintln!("{i}: {line}");
                 if let Some(address) = capture.get(1).map(|m| m.as_str().to_string()) {
                     vram = usize::from_str_radix(address.as_str(), 16).expect("hex string");
-                    eprintln!("vram {vram}")
                 }
                 continue;
             }
@@ -169,19 +312,19 @@ fn read_segments(map_file: &String) -> Vec<ObjectMap> {
                 16).expect("segment size base 16");
                 segment_object = parts.get(3).expect("segment object").to_string();
 
-                eprintln!("{i}: new entry {segment_object} #{segment_offset} #{segment_size}");
+                // eprintln!("{i}: new entry {segment_object} #{segment_offset} #{segment_size}");
 
                 continue;
             }
 
-            let offset = usize::from_str_radix(parts.get(0).expect("symbol offset").strip_prefix("0x").unwrap(), 16).expect("symbol offset base 16");
+            let offset = usize::from_str_radix(parts.get(0).expect("symbol offset").strip_prefix("0x").expect("symbol value"), 16).expect("symbol offset base 16");
             let function = parts.get(1).expect("symbol text");
 
             if function.ends_with(".NON_MATCHING") {
                 continue;
             }
 
-            eprintln!("    -> {function} {offset}");
+            // eprintln!("    -> {function} {offset}");
             segment_symbols.push(FunctionEntry {
                 name: function.to_string(),
                 vram: offset,
@@ -196,7 +339,7 @@ fn read_segments(map_file: &String) -> Vec<ObjectMap> {
             text_symbols: segment_symbols,
         });
 
-        eprintln!("segments: {segments:?}")
+        // eprintln!("segments: {segments:?}")
 
     }
 
@@ -204,9 +347,6 @@ fn read_segments(map_file: &String) -> Vec<ObjectMap> {
 }
 
 fn sig_for_range(bytes: &Vec<u8>, offset: usize, size: usize, options: &Options) -> u64 {
-    let q: u64 = 0xFFFFFFEF;
-    let radix: u64 = 4294967296;
-
     fn horner_hash(s: u32, acc: u64, radix: u64, q: u64) -> u64 {
         ((radix * acc) + (s as u64)) % q
     }
@@ -246,8 +386,11 @@ fn calculate_object_hashes(map: &ObjectMap, bin_file: &String, options: &mut Opt
 
     // calculate the signature of the entire object
     let object_hash = sig_for_range(&bytes, map.offset, map.size, options);
+    // eprintln!("    {}: [{}, 0x{object_hash:08x}]", map.name(), map.size / 4);
     // eprintln!("{} size: {} key: 0x{object_hash:08x}", map.name(), map.size);
-    writeln!(*options.writer, "{}:", map.name());
+    // writeln!(*options.writer, "{}:", map.name());
+
+    let mut functions = Vec::new();
 
     for i in (0..map.text_symbols.len()) {
         let segment = &map.text_symbols[i];
@@ -258,13 +401,24 @@ fn calculate_object_hashes(map: &ObjectMap, bin_file: &String, options: &mut Opt
         };
 
         let segment_hash = sig_for_range(&bytes, segment.offset, size, options);
-        writeln!(*options.writer, "    {}: [{}, 0x{segment_hash:08x}]", segment.name, size / 4);
+        // eprintln!("    {}: [{}, 0x{segment_hash:08x}]", segment.name, size / 4);
 
+        functions.push(FunctionSignature{ name: segment.name.clone(), signature: segment_hash, size: size });
     }
+
+    let sig = SegmentSignature {
+        name: map.name().to_string(),
+        signature: object_hash,
+        size: map.size,
+        functions: functions
+    };
+
+    writeln!(*options.writer, "---");
+    writeln!(*options.writer, "{}", serde_yaml::to_string(&sig).expect("yaml"));
 }
 
 fn evaluate(map_file: &String, bin_file: &String, options: &mut Options) {
-    eprintln!("evaluating {map_file}, {bin_file}");
+    // eprintln!("evaluating {map_file}, {bin_file}");
     let segments = read_segments(map_file);
 
     for map in segments {
@@ -283,15 +437,15 @@ fn main() {
             .arg(Arg::new("BIN")
                 .help("An overlay file"))
             .about("Create a match file from an existing overlay"))
-        .subcommand(Command::new("match")
+        .subcommand(Command::new("scan")
             .arg(Arg::new("granularity")
                 .short('g')
                 .help("The level match granularity should occur (segment, function)"))
-            .arg(Arg::new("MATCH"))
+            .arg(Arg::new("MATCH-CONFIG"))
             .arg(Arg::new("BIN"))
             .about("Use a match file to find offsets in a new overlay"))
         .subcommand_required(true)
-         .arg(Arg::new("output")
+        .arg(Arg::new("output")
             .long("output")
             .short('o')
             .help("Output file for match keys (default: console)")
@@ -302,7 +456,7 @@ fn main() {
             .required(false));
 
     let matches = command.get_matches();
-    eprintln!("{matches:#?}");
+    // eprintln!("{matches:#?}");
 
     let mut options = Options {
         coefficient: 0xFFFFFFEF,
@@ -315,19 +469,19 @@ fn main() {
 
     match matches.subcommand() {
         Some(("evaluate", cmd)) => {
-            eprintln!("evaluate {cmd:#?}");
+            // eprintln!("evaluate {cmd:#?}");
             let map_file = cmd.get_one::<String>("MAP").expect("required");
             let bin_file = cmd.get_one::<String>("BIN").expect("required");
-            eprintln!("map {map_file:#?}");
-            eprintln!("bin {bin_file:#?}");
+            // eprintln!("map {map_file:#?}");
+            // eprintln!("bin {bin_file:#?}");
 
             evaluate(map_file, bin_file, &mut options);
         },
-        Some(("match", cmd)) =>  {
-            eprintln!("match {cmd:#?}");
-            let match_file = cmd.get_one::<String>("MATCH").expect("required");
+        Some(("scan", cmd)) =>  {
+            // eprintln!("match {cmd:#?}");
+            let match_file = cmd.get_one::<String>("MATCH-CONFIG").expect("required");
             let bin_file = cmd.get_one::<String>("BIN").expect("required");
-            do_match(match_file, bin_file, &mut options);
+            scan(match_file, bin_file, &mut options);
         },
         _ => unreachable!("Invalid command"),
     }
