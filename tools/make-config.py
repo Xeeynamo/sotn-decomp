@@ -32,14 +32,15 @@ parser.add_argument(
     help="game version",
 )
 parser.add_argument(
+    "-s",
     "--symbol-source",
     required=False,
-    action=argparse.BooleanOptionalAction,
+    action="store_true"
     help="Include comment in symbol table describing the source of the symbol")
 
 @dataclass
 class Options:
-    show_symbol_source: bool
+    show_symbol_source: bool = False
 
 ##### GENERIC UTILITIES
 
@@ -496,7 +497,32 @@ def make_config_psx(ovl_path: str, version: str, options: Options):
     known_segments = {}
 
     # find well-known segment offsets
-    for source_name, source_bin in { "stdre": "DRE", "stnp3": "NP3", "stnz0": "NZ0", "stst0": "ST0", "stwrp": "WRP" }.items():
+    for source_name, source_bin in {
+        "stwrp": "WRP",
+        "stcen": "CEN",
+        "stno3": "NO3",
+        "stnz0": "NZ0",
+        "stno4": "NO4",
+        "tt_002": "TT_002",
+        "bomar": "MAR",
+        "tt_000": "TT_000",
+        "stst0": "ST0",
+        "stdre": "DRE",
+        "stno1": "NO1",
+        "bobo4": "BO4",
+        "tt_004": "TT_004",
+        "stmad": "MAD",
+        "stchi": "CHI",
+        "borbo5": "RBO5",
+        "borbo3": "RBO3",
+        "strwrp": "RWRP",
+        "stnp3": "NP3",
+        "tt_001": "TT_001",
+        "dra": "DRA",
+        "stno0": "NO0",
+        "tt_003": "TT_003",
+        "stlib": "LIB",
+        "ric": "RIC"  }.items():
         matches = match_existing(ovl_name, version, source_name, source_bin)
 
         for doc in matches:
@@ -886,7 +912,7 @@ def add_symbol_unique(symbol_file_name: str, name: str, offset: int, source: str
         with open(symbol_file_name, "a") as f:
             f.write(f"{name} = 0x{offset:08X};")
             if options is not None and options.show_symbol_source and source is not None:
-                f.write(f" // source-{source}:true");
+                f.write(f" // source={source}");
             f.write('\n')
 
 
@@ -957,6 +983,7 @@ def hydrate_stage_entity_table_symbols(splat_config, version: str, export_table)
             "entity symbols will not be hydrated."
         )
         return
+
     add_symbol(splat_config, version, "EntityBreakable", export_table[0])
     add_symbol(splat_config, version, "EntityExplosion", export_table[1])
     add_symbol(splat_config, version, "EntityPrizeDrop", export_table[2])
@@ -1034,6 +1061,7 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
 
     if is_stage(ovl_name):
         spinner_start("getting the entity stage table")
+
         entity_table_symbol = get_symbol_of_entity_table(splat_config)
         if (
             # entity symbol table found, we can start adding symbols
@@ -1328,14 +1356,12 @@ def make_config(ovl_name: str, version: str, options):
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_interrupt)
-    options = Options(show_symbol_source = False)
     args = parser.parse_args()
+    options = Options(args.symbol_source)
     if args.version == None:
         args.version = os.getenv("VERSION")
         if args.version == None:
             args.version = "us"
-    if args.symbol_source == True:
-        options.show_symbol_source = True
     try:
         make_config(args.input, args.version, options)
         spinner_stop(True)
