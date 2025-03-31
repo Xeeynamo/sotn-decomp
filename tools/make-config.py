@@ -35,7 +35,7 @@ parser.add_argument(
     "-s",
     "--symbol-source",
     required=False,
-    action="store_true"
+    action="store_true",
     help="Include comment in symbol table describing the source of the symbol")
 
 @dataclass
