@@ -119,7 +119,7 @@ s32 func_80113E68(void) {
 void func_8010FAF4();
 
 void func_us_801C72BC(void) {
-    DOPPLEGANGER.animSet = -0x7FFF;
+    DOPPLEGANGER.animSet = ANIMSET_OVL(1);
     DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                               FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
     DOPPLEGANGER.animFrameDuration = 0;
@@ -460,7 +460,7 @@ void EntityPlayerOutline(Entity* self) {
     self->facingLeft = DOPPLEGANGER.facingLeft;
     animFramePtr = D_us_801B0A78[DOPPLEGANGER.animCurFrame & INT16_MAX];
     spriteIdx = *animFramePtr++;
-    spriteIdx &= 0x7FFF;
+    spriteIdx &= INT16_MAX;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     spritesheetPtr = ((u8**)D_us_8018435C)[spriteIdx];
@@ -669,12 +669,9 @@ void EntityPlayerOutline(Entity* self) {
         prim->v2 = prim->v3 = one + height;
         g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
                             self->drawFlags, prim, (u16)self->facingLeft);
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 =
-            primData[0] * self->ext.playerOutline.brightness / 256;
-        prim->g0 = prim->g1 = prim->g2 = prim->g3 =
-            primData[1] * self->ext.playerOutline.brightness / 256;
-        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-            primData[2] * self->ext.playerOutline.brightness / 256;
+        PRED(prim) = primData[0] * self->ext.playerOutline.brightness / 256;
+        PGRN(prim) = primData[1] * self->ext.playerOutline.brightness / 256;
+        PBLU(prim) = primData[2] * self->ext.playerOutline.brightness / 256;
         prim->priority = DOPPLEGANGER.zPriority + 2;
         prim = prim->next;
     }

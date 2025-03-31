@@ -2,6 +2,49 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// Bat sensors are also use by the Mist form
+// Crouch sensors are also used by the Wolf form
+// Default sensors are a copy of Alucard sensors to reset modified sensors
+s16 g_SensorsCeilingBat[NUM_HORIZONTAL_SENSORS] = {-8, -8, -8, -8};
+s16 g_SensorsFloorBat[NUM_HORIZONTAL_SENSORS] = {8, 8, 8, 8};
+s16 g_SensorsWallBat[NUM_VERTICAL_SENSORS] = {7, 0, 0, 0, 0, 0, -7};
+s16 g_SensorsCeilingDefault[NUM_HORIZONTAL_SENSORS] = {-22, -22, -22, -22};
+s16 g_SensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {29, 25, 25, 25};
+s16 g_SensorsWallDefault[NUM_VERTICAL_SENSORS] = {24, 17, 9, 1, -7, -14, -21};
+s16 g_SensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
+s16 g_SensorsWallCrouch[NUM_VERTICAL_SENSORS] = {24, 17, 9, 5, 5, 1, 1};
+
+Point16 g_SensorsCeiling[NUM_HORIZONTAL_SENSORS] = {
+    {0, -22},
+    {0, -22},
+    {4, -22},
+    {-4, -22},
+};
+Point16 g_SensorsFloor[NUM_HORIZONTAL_SENSORS] = {
+    {0, 29},
+    {0, 25},
+    {4, 25},
+    {-4, 25},
+};
+Point16 g_SensorsWall[NUM_VERTICAL_SENSORS * 2] = {
+    // sensors from bottom-right to top-right
+    {7, 24},
+    {7, 17},
+    {7, 9},
+    {7, 1},
+    {7, -7},
+    {7, -14},
+    {7, -21},
+    // sensors from bottom-left to top-left
+    {-7, 24},
+    {-7, 17},
+    {-7, 9},
+    {-7, 1},
+    {-7, -7},
+    {-7, -14},
+    {-7, -21},
+};
+
 void GetPlayerSensor(Collider* col) {
     void (*theFunc)(Collider* col);
     u32 mod = 0;
