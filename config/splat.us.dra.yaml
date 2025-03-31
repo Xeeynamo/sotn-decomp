@@ -16,6 +16,7 @@ options:
   undefined_syms_auto_path:  config/undefined_syms_auto.us.dra.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
+  migrate_rodata_to_functions: false
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
   disassemble_all: true

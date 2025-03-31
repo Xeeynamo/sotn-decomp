@@ -16,7 +16,7 @@ options:
   undefined_syms_auto_path: config/undefined_syms_auto.us.stno0.txt
   find_file_boundaries: true
   use_legacy_include_asm: false
-  migrate_rodata_to_functions: true
+  migrate_rodata_to_functions: false
   asm_jtbl_label_macro: jlabel
   symbol_name_format: us_$VRAM
   disassemble_all: true
