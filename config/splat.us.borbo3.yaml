@@ -46,7 +46,7 @@ segments:
       - [0x590, data] # e_breakable
       - [0x5F0, .data, d_prize_drops]
       - [0x5FC, data]
-      - [0x750, .data, st_update]
+      - [0x730, .data, st_update]
       - [0x77C, .data, collision]
       - [0xB3C, .data, e_red_door] # e_red_door
       - [0xB54, .data, st_common] # st_common

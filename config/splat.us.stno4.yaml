@@ -41,7 +41,7 @@ segments:
       - [0x0, data]
       - [0xA0C, .data, e_init]
       - [0xCF4, data]
-      - [0x19F4, .data, st_update]
+      - [0x19D4, .data, st_update]
       - [0x1A20, .data, collision]
       - [0x1DE0, .data, e_red_door]
       - [0x1DF8, .data, st_common]
