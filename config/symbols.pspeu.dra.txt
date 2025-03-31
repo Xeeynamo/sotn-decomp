@@ -35,6 +35,7 @@ func_80102D70 = 0x090E2F60;
 UpdateCapePalette = 0x090E3030;
 RefreshCapePalette = 0x090E3128;
 func_800FF708 = 0x090E3170;
+InitStatsAndGear = 0x090E31F8;
 DrawRichterHud = 0x090E4370;
 DrawRichterHudSubweapon = 0x090E5020;
 DrawHud = 0x090E6058;
