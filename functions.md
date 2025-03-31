@@ -26,11 +26,11 @@
 |        | unused_3C14                         |        7 |          1 |        |                                 |       |
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
+| dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | EntityNull                          |        9 |          1 |        |                                 |       |
 | dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
-| dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
 | dra    | MemcardInit                         |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
@@ -65,9 +65,9 @@
 | dra    | func_psp_090F1C38                   |       13 |          1 |        |                                 |       |
 | ric    | func_pspeu_092C77B8                 |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       14 |          2 |        |                                 |       |
+| dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_801025F4                       |       15 |          1 |        |                                 |       |
 | dra    | SetPlayerStep                       |       15 |          1 |        |                                 |       |
-| dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F6408                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F0308                   |       15 |          1 |        |                                 |       |
 | dra    | func_psp_090F1C58                   |       15 |          1 |        |                                 |       |
@@ -174,8 +174,8 @@
 | ric    | func_80159BC8                       |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
 | st0    | func_801B0180                       |       23 |          2 |        |                                 |       |
-| dra    | func_psp_090F5520                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090E4C90                   |       23 |          3 |        |                                 |       |
+| dra    | func_psp_090F5520                   |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F1C98                   |       23 |          3 |        |                                 |       |
 | ric    | func_pspeu_092C8D48                 |       23 |          3 |        |                                 |       |
 | dra    | func_psp_090F6A50                   |       23 |          4 |        |                                 |       |
@@ -1384,7 +1384,7 @@
 | ric    | RicEntityCrashAxe                   |      733 |         50 |        |                                 |       |
 | lib    | EntityLibrarianChair                |      733 |        124 |        |                                 |       |
 | lib    | func_us_801B56E4                    |      739 |         81 | Yes    |                                 |       |
-| ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/qG79N | 0.997 |
+| ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/DtxEI | 0.998 |
 | ric    | RicEntityCrashCrossBeam             |      743 |         63 |        |                                 |       |
 | dra    | CheckStageCollision                 |      746 |         77 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
@@ -1448,7 +1448,7 @@
 | dra    | EntityPlayerDissolves               |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
 | tt_000 | UpdateServantDefault                |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
 | lib    | func_psp_0924B568                   |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
-| dra    | func_psp_090E31F8                   |     1203 |        134 |        | https://decomp.me/scratch/sq4r2 | 0.981 |
+| dra    | InitStatsAndGear                    |     1203 |        134 |        |                                 |       |
 | dra    | HandleNowLoading                    |     1203 |        196 |        |                                 |       |
 | ric    | RicMain                             |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.993 |
 | lib    | func_us_801B6F30                    |     1229 |        132 | Yes    |                                 |       |
@@ -1479,7 +1479,7 @@
 | ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    |                                 |       |
 | dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/mSd2P | 0.664 |
-| dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/4UV32 | 0.85  |
+| dra    | func_800F298C                       |     2166 |        297 | Yes    | https://decomp.me/scratch/WgLaG | 0.989 |
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.935 |
