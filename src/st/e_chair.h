@@ -84,3 +84,42 @@ void EntityChair(Entity* self) {
     FntPrint("pl_step:%02x,pl_step_s:%02x\n", PLAYER.step, PLAYER.step_s);
 #endif
 }
+
+static AnimationFrame D_us_80180F8C[] = {
+    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+
+void func_us_801B81E8(Entity* self) {
+    if (self->ext.et_801B81E8.unkEntity->step != 4) {
+        DestroyEntity(self);
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->velocityY = FIX(-3.0 / 8.0);
+        self->velocityX = FIX(1.0 / 4.0);
+        if (self->facingLeft) {
+            self->velocityX = FIX(-0.25);
+        }
+        self->unk5A = 0x20;
+        self->palette = PAL_OVL(0x19F);
+        self->anim = D_us_80180F8C;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->facingLeft = 0;
+        self->posY.i.hi -= 16;
+        self->posX.val += self->velocityX << 5;
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    g_api.UpdateAnim(NULL, NULL);
+}
