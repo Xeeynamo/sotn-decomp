@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc_2", EntityRelicOrb);
+#include "../entity_relic_orb.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc_2", EntityHeartDrop);
+#define HEART_DROP_CASTLE_FLAG 0x40
+#include "../entity_heart_drop.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/e_misc_2", EntityMessageBox);
+#include "../entity_message_box.h"
