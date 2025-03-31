@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <game.h>
 
 // check if "sit" has been triggered
 static s32 func_us_801BEDD8(Entity* self) {
@@ -23,8 +22,6 @@ static s32 func_us_801BEDD8(Entity* self) {
 
     return 1;
 }
-
-extern u16 g_EInitCommon[];
 
 void EntityChair(Entity* self) {
     s16 offsetX;
@@ -93,25 +90,25 @@ void func_us_801B81E8(Entity* self) {
         DestroyEntity(self);
         return;
     }
-
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(2);
         self->velocityY = FIX(-3.0 / 8.0);
-        self->velocityX = FIX(1.0 / 4.0);
+        self->velocityX = FIX(0.25);
         if (self->facingLeft) {
-            self->velocityX = FIX(-0.25);
+            self->velocityX = -self->velocityX;
         }
         self->unk5A = 0x20;
         self->palette = PAL_OVL(0x19F);
         self->anim = D_us_80180F8C;
         self->animFrameIdx = 0;
         self->animFrameDuration = 0;
-        self->facingLeft = 0;
+        self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
         break;
+
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
