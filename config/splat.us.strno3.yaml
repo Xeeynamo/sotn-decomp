@@ -1,0 +1,60 @@
+options:
+  platform: psx
+  basename: strno3
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RNO3/RNO3.BIN
+  asm_path: asm/us/st/rno3
+  asset_path: assets/st/rno3
+  src_path: src/st/rno3
+  ld_script_path: build/us/strno3.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strno3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.strno3.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.strno3.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: 85c4637f3f9b85b918583fae45ca094c7d52b914
+segments:
+  - name: strno3
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x2FF68, .rodata, us]
+      - [0x302F0, c, st_debug]
+      - [0x30580, c, us_30580]
+      - [0x33EB0, c, st_update]
+      - [0x342E4, c, collision]
+      - [0x35AA0, c, create_entity]
+      - [0x36618, c, e_red_door]
+      - [0x372C8, c, st_common]
+      - [0x38778, c, e_collect]
+      - [0x39CE4, c, blit_char]
+      - [0x39F94, c, e_misc]
+      - [0x3D484, c, e_stage_name]
+      - [0x3E2D8, c, e_particles]
+      - [0x3EB1C, c, e_room_fg]
+      - [0x3EC08, c, popup]
+      - [0x3EF38, c, us_3EF38]
+      - [0x49044, c, prim_helpers]
+      - [0x49874, sbss]
+  - [0x4A52C]
