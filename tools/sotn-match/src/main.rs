@@ -486,3 +486,102 @@ fn main() {
         _ => unreachable!("Invalid command"),
     }
 }
+
+// test
+// PSP map file
+//
+//LOAD build/pspeu/asm/pspeu/st/lib_psp/data/61218.data.s.o
+//LOAD build/pspeu/asm/pspeu/st/lib_psp/data/6D748.data.s.o
+//LOAD build/pspeu/asm/pspeu/st/lib_psp/data/6DE40.bss.s.o
+//LOAD build/pspeu/asm/pspeu/st/lib_psp/data/6DE60.bss.s.o
+//LOAD build/pspeu/asm/pspeu/st/lib_psp/data/6E0A8.bss.s.o
+//                0x0006dd80                        __romPos = 0x0
+//                0x00000000                        _gp = 0x0
+//                0x00000000                        mwo_header_ROM_START = __romPos
+//                0x00000000                        mwo_header_VRAM = ADDR (.mwo_header)
+//
+//.mwo_header     0x00000000       0x80
+// FILL mask 0x00000000
+//                0x00000000                        mwo_header_DATA_START = .
+//                0x00000000                        mwo_header_bin = .
+// build/pspeu/assets/st/lib/mwo_header.bin.o(.data)
+// .data          0x00000000       0x80 build/pspeu/assets/st/lib/mwo_header.bin.o
+//                0x00000000                _binary_assets_st_lib_mwo_header_bin_start
+//                0x00000080                _binary_assets_st_lib_mwo_header_bin_end
+//                0x00000080                        mwo_header_DATA_END = .
+//                0x00000080                        mwo_header_DATA_SIZE = ABSOLUTE ((mwo_header_DATA_END - mwo_header_DATA_START))
+//                0x0006dd80                        __romPos = (__romPos + SIZEOF (.mwo_header))
+//                0x00000080                        mwo_header_ROM_END = __romPos
+//                0x00000080                        mwo_header_VRAM_END = .
+//                0x00000080                        stlib_ROM_START = __romPos
+//                0x09237700                        stlib_VRAM = ADDR (.stlib)
+//
+//.stlib          0x09237700    0x6dd00 load address 0x00000080
+// FILL mask 0x00000000
+//                0x09237700                        stlib_TEXT_START = .
+// build/pspeu/src/st/lib/create_entity.c.o(.text)
+// .text          0x09237700      0x120 build/pspeu/src/st/lib/create_entity.c.o
+//                0x09237700                CreateEntityFromLayout
+// .text          0x09237820      0x194 build/pspeu/src/st/lib/create_entity.c.o
+//                0x09237820                CreateEntityWhenInVerticalRange
+// *fill*         0x092379b4        0x4 00000000
+// .text          0x092379b8      0x194 build/pspeu/src/st/lib/create_entity.c.o
+//                0x092379b8                CreateEntityWhenInHorizontalRange
+// *fill*         0x09237b4c        0x4 00000000
+// .text          0x09237b50       0x70 build/pspeu/src/st/lib/create_entity.c.o
+// .text          0x09237bc0       0x84 build/pspeu/src/st/lib/create_entity.c.o
+// *fill*         0x09237c44        0x4 00000000
+// .text          0x09237c48      0x140 build/pspeu/src/st/lib/create_entity.c.o
+// .text          0x09237d88      0x158 build/pspeu/src/st/lib/create_entity.c.o
+// .text          0x09237ee0       0x74 build/pspeu/src/st/lib/create_entity.c.o
+// *fill*         0x09237f54        0x4 00000000
+// .text          0x09237f58       0x88 build/pspeu/src/st/lib/create_entity.c.o
+// .text          0x09237fe0      0x144 build/pspeu/src/st/lib/create_entity.c.o
+// *fill*         0x09238124        0x4 00000000
+// .text          0x09238128      0x15c build/pspeu/src/st/lib/create_entity.c.o
+// *fill*         0x09238284        0x4 00000000
+// .text          0x09238288      0x230 build/pspeu/src/st/lib/create_entity.c.o
+//                0x09238288                InitRoomEntities
+// .text          0x092384b8       0xe0 build/pspeu/src/st/lib/create_entity.c.o
+//                0x092384b8                UpdateRoomPosition
+// .text          0x09238598       0x88 build/pspeu/src/st/lib/create_entity.c.o
+//                0x09238598                CreateEntityFromCurrentEntity
+// .text          0x09238620       0x84 build/pspeu/src/st/lib/create_entity.c.o
+//                0x09238620                CreateEntityFromEntity
+// build/pspeu/src/st/lib/e_bloody_zombie.c.o(.text)
+// *fill*         0x092386a4        0x4 00000000
+// .text          0x092386a8      0x590 build/pspeu/src/st/lib/e_bloody_zombie.c.o
+//                0x092386a8                EntityBloodSplatter
+// .text          0x09238c38      0x290 build/pspeu/src/st/lib/e_bloody_zombie.c.o
+//                0x09238c38                EntityBloodDrips
+//
+//
+//
+//
+//
+// PSX Map file
+//
+//
+// build/us/src/st/lib/blit_char.c.o(.rodata)
+// build/us/src/st/lib/e_particles.c.o(.rodata)
+// build/us/src/st/lib/popup.c.o(.rodata)
+// build/us/src/st/lib/e_mist_door.c.o(.rodata)
+//                0x801aded0                        . = ALIGN (., 0x4)
+//                0x801aded0                        stlib_RODATA_END = .
+//                0x00002598                        stlib_RODATA_SIZE = ABSOLUTE ((stlib_RODATA_END - stlib_RODATA_START))
+//                0x801aded0                        stlib_TEXT_START = .
+// build/us/src/st/lib/st_debug.c.o(.text)
+// .text          0x801aded0       0xc8 build/us/src/st/lib/st_debug.c.o
+//                0x801aded0                LIB_EntityBackgroundBlock
+// build/us/src/st/lib/e_lock_camera.c.o(.text)
+// .text          0x801adf98      0x524 build/us/src/st/lib/e_lock_camera.c.o
+//                0x801adf98                PlayerIsWithinHitbox
+//                0x801ae01c                EntityLockCamera
+// build/us/src/st/lib/e_breakable.c.o(.text)
+// .text          0x801ae4bc      0x42c build/us/src/st/lib/e_breakable.c.o
+//                0x801ae4bc                EntityBreakable
+//                0x801ae7ac                func_us_801AE7AC
+//                0x801ae84c                func_us_801AE84C
+// build/us/src/st/lib/first_c_file.c.o(.text)
+// .text          0x801ae8e8      0x998 build/us/src/st/lib/first_c_file.c.o
+//
