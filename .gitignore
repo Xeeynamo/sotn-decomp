@@ -23,4 +23,3 @@ format-symbols.run
 # Matches in repo root folder only
 /*.map
 /assets/
-psp-make-config.py
