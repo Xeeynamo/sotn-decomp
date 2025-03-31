@@ -34,7 +34,7 @@ extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 
 // extern EInit D_us_80180B8C;
-// extern EInit g_EInitObtainable;
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 // extern EInit D_us_80180BB0;
 extern EInit g_EInitInteractable;
