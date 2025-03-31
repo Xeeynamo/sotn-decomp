@@ -360,7 +360,8 @@ void RicEntityCrashBibleBeam(Entity* self) {
             prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
             prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
         }
         self->step++;
@@ -435,16 +436,19 @@ static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
 static s32 bible_pages_volume;
 void RicEntityCrashBible(Entity* self) {
     Primitive* prim;
-    s16 temp_a1_3;
-    s16 temp_v0_6;
-    s32 temp_s0_2;
-    s32 temp_s5;
-    s32 temp_s6;
-    s32 temp_v0_4;
-    s32 temp_v0_5;
     s32 i;
-    s16 temp_a0;
-    s16 temp_a1;
+    s32 psp_s2;
+    s16 psp_s4;
+    s16 psp_s3;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 sp3C;
+    s32 sp48;
+    s32 sp40;
+    long sp44;
+    long sp4C;
+    s32 psp_s8;
+    s32 psp_s7;
 
     switch (self->step) {
     case 0:
@@ -502,13 +506,15 @@ void RicEntityCrashBible(Entity* self) {
         self->posY.val += self->velocityY;
         self->velocityX -= self->ext.et_8016E9E4.unk88;
         self->velocityY -= FIX(0.5);
-        if (++self->ext.et_8016E9E4.unk82 >= 8) {
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 8) {
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_8016E9E4.unk82 >= 6) {
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 > 5) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x19F;
             prim->drawMode |=
@@ -533,17 +539,18 @@ void RicEntityCrashBible(Entity* self) {
         prim->drawMode |= DRAW_HIDE;
         self->step++;
     case 6:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
         self->ext.et_8016E9E4.unk80 += 4;
         if (self->ext.et_8016E9E4.unk80 >= 0x30) {
             self->step++;
         }
         break;
     case 7:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
-        if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x1E) {
             // create bible page beam
             RicCreateEntFactoryFromEntity(self, BP_CRASH_BIBLE_BEAM, 0);
             self->ext.et_8016E9E4.unk82 = 0;
@@ -551,16 +558,17 @@ void RicEntityCrashBible(Entity* self) {
         }
         break;
     case 8:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
-        if (++self->ext.et_8016E9E4.unk82 >= 0x60) {
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x60) {
             g_Player.unk4E = 1;
             self->step++;
         }
         break;
     case 9:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
         self->ext.et_8016E9E4.unk80 -= 2;
         if (self->ext.et_8016E9E4.unk80 <= 0) {
             DestroyEntity(self);
@@ -569,11 +577,10 @@ void RicEntityCrashBible(Entity* self) {
         break;
     }
     // FAKE, needed for reg match
-    temp_a1 = self->ext.et_8016E9E4.unk7C;
-    if ((self->ext.et_8016E9E4.unk7C == 0x100) ||
-        (self->ext.et_8016E9E4.unk7C == 0x500) ||
-        (self->ext.et_8016E9E4.unk7C == 0x900) ||
-        (self->ext.et_8016E9E4.unk7C == 0xD00)) {
+    if (self->ext.et_8016E9E4.unk7C == 0x100 ||
+        self->ext.et_8016E9E4.unk7C == 0x500 ||
+        self->ext.et_8016E9E4.unk7C == 0x900 ||
+        self->ext.et_8016E9E4.unk7C == 0xD00) {
         if (self->step < 9) {
             g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, bible_pages_volume, 0);
             if (self->step >= 5) {
@@ -585,43 +592,44 @@ void RicEntityCrashBible(Entity* self) {
         }
     }
 
-    temp_a0 = self->posX.i.hi;
-    temp_a1 = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = temp_a0 - 8;
-    prim->x1 = prim->x3 = temp_a0 + 8;
-    prim->y0 = prim->y1 = temp_a1 - 12;
-    prim->y2 = prim->y3 = temp_a1 + 12;
+    psp_s4 = self->posX.i.hi;
+    psp_s3 = self->posY.i.hi;
+    prim->x0 = prim->x2 = psp_s4 - 8;
+    prim->x1 = prim->x3 = psp_s4 + 8;
+    prim->y0 = prim->y1 = psp_s3 - 12;
+    prim->y2 = prim->y3 = psp_s3 + 12;
     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
         prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             self->ext.et_8016E9E4.unk84;
     prim = prim->next;
 
-    temp_s6 = rsin(self->ext.et_8016E9E4.unk7E);
-    temp_s5 = rcos(self->ext.et_8016E9E4.unk7E);
+    sp44 = rsin(self->ext.et_8016E9E4.unk7E);
+    sp4C = rcos(self->ext.et_8016E9E4.unk7E);
     for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
-        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
-                     self->ext.et_8016E9E4.unk80) >>
-                    0xC;
-        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
-                     self->ext.et_8016E9E4.unk80) >>
-                    0xC;
-        temp_a1_3 =
-            self->posX.i.hi + ((((temp_s6 * temp_v0_4) >> 0xC) << 9) /
-                               (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
-        temp_v0_6 =
-            self->posY.i.hi +
-            ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
-        temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
-        bible_pages_pos[i].x = temp_a1_3;
-        bible_pages_pos[i].y = temp_v0_6;
-        prim->x0 = prim->x2 = temp_a1_3 - 0x1000 / temp_v0_5;
-        prim->x1 = prim->x3 = temp_a1_3 + 0x1000 / temp_v0_5;
-        // FAKE, needed for reg match
-        temp_a0 = (prim->y1 = temp_v0_6 - 0x1000 / temp_v0_5);
-        prim->y0 = temp_a0;
-
-        prim->y2 = prim->y3 = temp_v0_6 + 0x1000 / temp_v0_5;
+        sp3C = 0;
+        sp48 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        sp40 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        psp_s6 = (sp4C * sp3C + sp44 * sp40) >> 0xC;
+        psp_s2 = (sp4C * sp40 - sp44 * sp3C) >> 0xC;
+        psp_s5 = sp48;
+        psp_s2 += 0x200;
+        psp_s6 = (psp_s6 << 9) / psp_s2;
+        psp_s5 = (psp_s5 << 9) / psp_s2;
+        psp_s4 = self->posX.i.hi + psp_s6;
+        psp_s3 = self->posY.i.hi + psp_s5;
+        bible_pages_pos[i].x = psp_s4;
+        bible_pages_pos[i].y = psp_s3;
+        psp_s8 = 0x1000 / psp_s2;
+        psp_s7 = 0x1000 / psp_s2;
+        prim->x0 = prim->x2 = psp_s4 - psp_s8;
+        prim->x1 = prim->x3 = psp_s4 + psp_s8;
+        prim->y0 = prim->y1 = psp_s3 - psp_s7;
+        prim->y2 = prim->y3 = psp_s3 + psp_s7;
         prim = prim->next;
     }
 }

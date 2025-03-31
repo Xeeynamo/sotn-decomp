@@ -1318,7 +1318,8 @@ void RicEntityCrashBibleBeam(Entity* self) {
             prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
             prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
-            prim->drawMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
         }
         self->step++;
@@ -1387,7 +1388,213 @@ void RicEntityCrashBibleBeam(Entity* self) {
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashBible);
+static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
+    0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
+};
+#if defined(VERSION_PSP)
+extern s32 bible_pages_volume;
+#else
+static s32 bible_pages_volume;
+#endif
+void RicEntityCrashBible(Entity* self) {
+    Primitive* prim;
+    s32 i;
+    s32 psp_s2;
+    s16 psp_s4;
+    s16 psp_s3;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 sp3C;
+    s32 sp48;
+    s32 sp40;
+    long sp44;
+    long sp4C;
+    s32 psp_s8;
+    s32 psp_s7;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1 + BIBLE_PAGE_COUNT);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        self->posX.val = PLAYER.posX.val;
+        self->posY.val = PLAYER.posY.val;
+        self->velocityY = FIX(-4);
+        if (self->facingLeft) {
+            self->velocityX = FIX(12);
+            self->ext.et_8016E9E4.unk88 = FIX(1.5);
+            self->ext.et_8016E9E4.unk7E = -0x200;
+        } else {
+            self->velocityX = FIX(-12);
+            self->ext.et_8016E9E4.unk88 = FIX(-1.5);
+            self->ext.et_8016E9E4.unk7E = 0x200;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1E;
+        prim->clut = 0x17F;
+        prim->u0 = prim->u2 = 0x98;
+        prim->v0 = prim->v1 = 0xD8;
+        prim->u1 = prim->u3 = 0xA8;
+        prim->v2 = prim->v3 = 0xF0;
+        prim->priority = 0xC2;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+        for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+            prim->tpage = 0x1C;
+            prim->clut = 0x1AE;
+            prim->u0 = prim->u2 = 0x20;
+            prim->u1 = prim->u3 = 0x30;
+            prim->v0 = prim->v1 = 0;
+            prim->v2 = prim->v3 = 0x10;
+            prim->priority = 0xC1;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.et_8016E9E4.unk84 = 0x40;
+        bible_pages_volume = 0x60;
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->drawMode &= ~DRAW_HIDE;
+        self->step++;
+    case 2:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityX -= self->ext.et_8016E9E4.unk88;
+        self->velocityY -= FIX(0.5);
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 8) {
+            self->ext.et_8016E9E4.unk82 = 0;
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 > 5) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim->clut = 0x19F;
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim = prim->next;
+            for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim = prim->next;
+            }
+            self->ext.et_8016E9E4.unk82 = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.et_8016E9E4.unk84 -= 4;
+        if (self->ext.et_8016E9E4.unk84 <= 0) {
+            self->step++;
+        }
+        break;
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->drawMode |= DRAW_HIDE;
+        self->step++;
+    case 6:
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk80 += 4;
+        if (self->ext.et_8016E9E4.unk80 >= 0x30) {
+            self->step++;
+        }
+        break;
+    case 7:
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x1E) {
+            // create bible page beam
+            RicCreateEntFactoryFromEntity(self, BP_CRASH_BIBLE_BEAM, 0);
+            self->ext.et_8016E9E4.unk82 = 0;
+            self->step++;
+        }
+        break;
+    case 8:
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x60) {
+            g_Player.unk4E = 1;
+            self->step++;
+        }
+        break;
+    case 9:
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk80 -= 2;
+        if (self->ext.et_8016E9E4.unk80 <= 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    // FAKE, needed for reg match
+    if (self->ext.et_8016E9E4.unk7C == 0x100 ||
+        self->ext.et_8016E9E4.unk7C == 0x500 ||
+        self->ext.et_8016E9E4.unk7C == 0x900 ||
+        self->ext.et_8016E9E4.unk7C == 0xD00) {
+        if (self->step < 9) {
+            g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, bible_pages_volume, 0);
+            if (self->step >= 5) {
+                bible_pages_volume -= 4;
+            }
+            if (bible_pages_volume < 0) {
+                bible_pages_volume = 0;
+            }
+        }
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    psp_s4 = self->posX.i.hi;
+    psp_s3 = self->posY.i.hi;
+    prim->x0 = prim->x2 = psp_s4 - 8;
+    prim->x1 = prim->x3 = psp_s4 + 8;
+    prim->y0 = prim->y1 = psp_s3 - 12;
+    prim->y2 = prim->y3 = psp_s3 + 12;
+    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
+        prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+            self->ext.et_8016E9E4.unk84;
+    prim = prim->next;
+
+    sp44 = rsin(self->ext.et_8016E9E4.unk7E);
+    sp4C = rcos(self->ext.et_8016E9E4.unk7E);
+    for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
+        sp3C = 0;
+        sp48 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        sp40 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        psp_s6 = (sp4C * sp3C + sp44 * sp40) >> 0xC;
+        psp_s2 = (sp4C * sp40 - sp44 * sp3C) >> 0xC;
+        psp_s5 = sp48;
+        psp_s2 += 0x200;
+        psp_s6 = (psp_s6 << 9) / psp_s2;
+        psp_s5 = (psp_s5 << 9) / psp_s2;
+        psp_s4 = self->posX.i.hi + psp_s6;
+        psp_s3 = self->posY.i.hi + psp_s5;
+        bible_pages_pos[i].x = psp_s4;
+        bible_pages_pos[i].y = psp_s3;
+        psp_s8 = 0x1000 / psp_s2;
+        psp_s7 = 0x1000 / psp_s2;
+        prim->x0 = prim->x2 = psp_s4 - psp_s8;
+        prim->x1 = prim->x3 = psp_s4 + psp_s8;
+        prim->y0 = prim->y1 = psp_s3 - psp_s7;
+        prim->y2 = prim->y3 = psp_s3 + psp_s7;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", func_8016F198);
 
