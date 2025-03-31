@@ -1384,7 +1384,7 @@
 | ric    | RicEntityCrashAxe                   |      733 |         50 |        |                                 |       |
 | lib    | EntityLibrarianChair                |      733 |        124 |        |                                 |       |
 | lib    | func_us_801B56E4                    |      739 |         81 | Yes    |                                 |       |
-| ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/DtxEI | 0.998 |
+| ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/O1hL7 | 1.0   |
 | ric    | RicEntityCrashCrossBeam             |      743 |         63 |        |                                 |       |
 | dra    | CheckStageCollision                 |      746 |         77 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
