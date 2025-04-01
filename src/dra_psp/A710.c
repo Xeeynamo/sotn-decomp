@@ -196,7 +196,7 @@ void RunMainEngine(void) {
     u32 tempX;
     u32 tempY;
 
-    if(D_8C630C8){
+    if (D_8C630C8) {
         g_Status.hearts = 99;
     }
     // This function is a state machine, this variable is some kind of
@@ -244,7 +244,8 @@ void RunMainEngine(void) {
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
             D_80097910 = MU_METAMORPHOSIS;
         }
-        if ((D_8003C730 == 4) || (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
+        if ((D_8003C730 == 4) ||
+            (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(D_80097910);
         }
         D_80097928 = 0;
@@ -327,7 +328,7 @@ void RunMainEngine(void) {
         if (D_8003C730 == 4) {
             D_8003C730 = 0;
             D_80097928 = 1;
-            if(D_8006C374 == 0x25){
+            if (D_8006C374 == 0x25) {
                 g_Tilemap.scrollX.i.hi = 0x640;
                 g_Tilemap.scrollY.i.hi = 0x4BF;
                 PLAYER.posX.i.hi = 0x80;
@@ -395,7 +396,7 @@ void RunMainEngine(void) {
                 D_8003C730 = 2;
                 g_GameStep = Play_PrepareNextStage;
                 return;
-            } 
+            }
             if (D_80097C98 & 0x80000000) {
                 PlaySfx(SET_STOP_SEQ);
                 StoreSaveData(&D_8D97C40, 0, 0);
@@ -564,7 +565,8 @@ void RunMainEngine(void) {
             }
             D_psp_091CE570 = 0;
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed && D_psp_091CE578) {
+                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed &&
+                    D_psp_091CE578) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||
                         (g_PlayableCharacter != PLAYER_ALUCARD)) {
@@ -583,7 +585,9 @@ void RunMainEngine(void) {
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
                     D_psp_091CE570 = 1;
-                } else if ((g_pads[0].tapped & PAD_SELECT) && (g_StageId != STAGE_ST0) && g_PauseAllowed && D_psp_091CE578) {
+                } else if ((g_pads[0].tapped & PAD_SELECT) &&
+                           (g_StageId != STAGE_ST0) && g_PauseAllowed &&
+                           D_psp_091CE578) {
                     func_801027C4(6);
                     D_800974A4 = 1;
                     g_GameEngineStep = Engine_Map;
@@ -843,11 +847,11 @@ void RunMainEngine(void) {
                             g_api.o.UpdateStageEntities();
                             func_80102D70();
                         }
-                    } else if (g_PlayableCharacter == PLAYER_RICHTER){
+                    } else if (g_PlayableCharacter == PLAYER_RICHTER) {
                         RichterUpdater = g_api.o.UpdateStageEntities;
                         RichterUpdater();
                         func_80102D70();
-                    } else if (g_unkGraphicsStruct.unk20 == 0x100){
+                    } else if (g_unkGraphicsStruct.unk20 == 0x100) {
                         RichterUpdater = g_PlOvl.D_8013C000;
                         RichterUpdater();
                         RichterUpdater = D_8CE9C48;
@@ -918,4 +922,3 @@ void RunMainEngine(void) {
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAF08);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAFA8);
-
