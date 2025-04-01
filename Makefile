@@ -276,28 +276,6 @@ dump-disk.%: PHONY# Last resort
 	$(error Automated dumping of $* is not supported)
 dump-disk: dump-disk.$(VERSION)
 
-function-finder: graphviz | $(VENV_DIR)
-	$(MAKE) clean
-	$(MAKE) force-symbols
-	$(MAKE) force-extract 
-	$(PYTHON) $(TOOLS_DIR)/analyze_calls.py --output_dir=$(TOOLS_DIR)/function_calls/
-	git clean -fdxq $(ASM_DIR)/
-	git checkout $(CONFIG_DIR)/
-	rm -f $(BUILD_DIR)/main.ld $(BUILD_DIR)/weapon.ld
-	$(MAKE) extract
-	$(PYTHON) $(TOOLS_DIR)/function_finder/function_finder.$(VERSION).py --no-fetch --use-call-trees > $(TOOLS_DIR)/gh-duplicates/functions.md
-	-rm -rf $(TOOLS_DIR)/gh-duplicates/function_calls/
-	mv $(TOOLS_DIR)/function_calls/ $(TOOLS_DIR)/gh-duplicates/
-	mv $(TOOLS_DIR)/function_graphs.md $(TOOLS_DIR)/gh-duplicates/
-
-duplicates-report: | $(VENV_DIR)
-	$(MAKE) clean
-	$(MAKE) force-symbols
-	$(MAKE) force-extract
-	$(PYTHON) $(TOOLS_DIR)/function_finder/fix_matchings.py
-	mkdir -p $(TOOLS_DIR)/gh-duplicates
-	$(DUPS)
-
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
 update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP) $(CLANG) $(GO)
