@@ -38,9 +38,8 @@ SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
 INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
-TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
-PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
+PY_TOOLS_DIRS	:= tools/ $(addprefix tools/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
@@ -81,29 +80,28 @@ AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
-DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
+DIRT_PATCHER    := $(PYTHON) tools/dirt_patcher.py
 SHASUM          := shasum
-GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
-PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
+GFXSTAGE        := $(PYTHON) tools/gfxstage.py
+PNG2S           := $(PYTHON) tools/png2s.py
 CLANG			:= $(BIN_DIR)/clang-format
 GO              := $(HOME)/go/bin/go
-SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
-DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
-SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
-ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
-M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
-M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
-PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
-MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
-MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
-DOSEMU_DIR		:= $(TOOLS_DIR)/dosemu-deb
+SOTNLINT		:= cargo run --release --manifest-path tools/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
+SOTNSTR_APP     := tools/sotn_str/target/release/sotn_str
+ASMDIFFER_APP	:= tools/asm-differ/diff.py
+M2CTX_APP       := tools/m2ctx.py
+M2C_APP         := tools/m2c/m2c.py
+PERMUTER_APP	:= tools/decomp-permuter
+MASPSX_APP      := tools/maspsx/maspsx.py
+MWCCGAP_APP     := tools/mwccgap/mwccgap.py
+DOSEMU_DIR		:= tools/dosemu-deb
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
-SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_DIR := tools/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
-SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
+SOTNDISK_DIR	:= tools/sotn-disk/
 SOTNDISK        := $(SOTNDISK_DIR)/sotn-disk
-SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
+SOTNASSETS_DIR  := tools/sotn-assets/
 SOTNASSETS      := $(SOTNASSETS_DIR)/sotn-assets
 
 # Build functions
@@ -169,15 +167,15 @@ format-symbols.run:
 	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
 	$(call echo,Removing orphan symbols using splat configs)
 $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
-	echo "$*" >> $<; $(PYTHON) $(TOOLS_DIR)/symbols.py remove-orphans $*
+	echo "$*" >> $<; $(PYTHON) tools/symbols.py remove-orphans $*
 $(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
-	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) $(TOOLS_DIR)/symbols.py sort
+	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) tools/symbols.py sort
 format-symbols: $(addprefix format-symbols_,us pspeu hd saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
 
 format-license:
 	$(call echo,Checking for license line in code files)
-	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) $(TOOLS_DIR)/lint-license.py - AGPL-3.0-or-later
-	$(foreach item,$(addprefix include/,game.h entity.h items.h lba.h memcard.h),$(PYTHON) $(TOOLS_DIR)/lint-license.py $(item) AGPL-3.0-or-later;)
+	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
+	$(foreach item,$(addprefix include/,game.h entity.h items.h lba.h memcard.h),$(PYTHON) tools/lint-license.py $(item) AGPL-3.0-or-later;)
 
 format: format-src format-tools format-symbols format-license
 
@@ -219,7 +217,7 @@ force-extract-disk:
 force_symbols_ovls = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
 $(addprefix FORCE_,$(force_symbols_ovls)): FORCE_%: | $(VENV_DIR)
-	$(call echo,Extracting symbols for $*) $(PYTHON) $(TOOLS_DIR)/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
+	$(call echo,Extracting symbols for $*) $(PYTHON) tools/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
 force-symbols: $(addprefix FORCE_,$(force_symbols_ovls))
 
 context: $(M2CTX_APP) | $(VENV_DIR)
@@ -251,7 +249,7 @@ disk-prepare: build $(SOTNDISK)
 	$(call echo,Copying main.exe as SLUS_000.67) cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
 	$(foreach item,$(disk_prepare_files),$(call echo,Copying $(item)) cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
-	cd $(TOOLS_DIR)/sotn-debugmodule && $(MAKE)
+	cd tools/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 disk: disk-prepare
@@ -302,20 +300,20 @@ $(SATURN_SPLITTER_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/rust-dis/C
 $(ADPCM_EXTRACT_APP): $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml $(wildcard $(SATURN_SPLITTER_DIR)/adpcm-extract/src/*)
 	cargo build --release --manifest-path $(SATURN_SPLITTER_DIR)/adpcm-extract/Cargo.toml
 $(DOSEMU_DIR):
-	cd $(TOOLS_DIR); git clone https://github.com/sozud/dosemu-deb.git
-$(TOOLS_DIR)/dosemu.make.chkpt: $(DOSEMU_DIR)
-	sudo dpkg -i $(TOOLS_DIR)/dosemu-deb/*.deb && touch $@
-$(DOSEMU_APP): $(TOOLS_DIR)/dosemu.make.chkpt# This is just a pseudo target because the app binary is older than the repo so it always runs without a checkpoint
+	cd tools; git clone https://github.com/sozud/dosemu-deb.git
+tools/dosemu.make.chkpt: $(DOSEMU_DIR)
+	sudo dpkg -i tools/dosemu-deb/*.deb && touch $@
+$(DOSEMU_APP): tools/dosemu.make.chkpt# This is just a pseudo target because the app binary is older than the repo so it always runs without a checkpoint
 
 $(ASMDIFFER_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(ASMDIFFER_APP))
-$(M2C_APP): $(TOOLS_DIR)/python-dependencies.make.chkpt | $(VENV_DIR)
+$(M2C_APP): tools/python-dependencies.make.chkpt | $(VENV_DIR)
 	git submodule update --init $(dir $(M2C_APP))
 $(PERMUTER_APP): | $(VENV_DIR)
 	git submodule update --init $(dir $(PERMUTER_APP))
 
-$(SOTNSTR_APP): $(TOOLS_DIR)/sotn_str/Cargo.toml $(wildcard $(TOOLS_DIR)/sotn_str/src/*)
-	cargo build --release --manifest-path $(TOOLS_DIR)/sotn_str/Cargo.toml
+$(SOTNSTR_APP): tools/sotn_str/Cargo.toml $(wildcard tools/sotn_str/src/*)
+	cargo build --release --manifest-path tools/sotn_str/Cargo.toml
 $(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
 	cd $(SOTNDISK_DIR) && $(GO) build
 $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
@@ -325,13 +323,13 @@ $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 $(VENV_DIR):
 	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(MAKE) python-dependencies
-$(TOOLS_DIR)/python-dependencies.make.chkpt: $(TOOLS_DIR)/requirements-python.txt | $(VENV_DIR)
-	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt && touch $@
-python-dependencies: $(TOOLS_DIR)/python-dependencies.make.chkpt
+tools/python-dependencies.make.chkpt: tools/requirements-python.txt | $(VENV_DIR)
+	$(PIP) install -r tools/requirements-python.txt && touch $@
+python-dependencies: tools/python-dependencies.make.chkpt
 
-$(TOOLS_DIR)/graphviz.make.chkpt: $(TOOLS_DIR)/python-dependencies.make.chkpt
+tools/graphviz.make.chkpt: tools/python-dependencies.make.chkpt
 	sudo apt update && sudo apt-get install -y graphviz && touch $@
-graphviz: $(TOOLS_DIR)/graphviz.make.chkpt
+graphviz: tools/graphviz.make.chkpt
 
 $(GO):
 	curl -sSfL -O https://go.dev/dl/go1.22.4.$(OS)-$(ARCH).tar.gz
@@ -414,7 +412,7 @@ PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extrac
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
-MUFFLED_TARGETS += $(DOSEMU_DIR) $(TOOLS_DIR)/dosemu.make.chkpt $(TOOLS_DIR)/python-dependencies.make.chkpt $(TOOLS_DIR)/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
+MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)

@@ -11,7 +11,7 @@ $(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$(
 # Build targets is for when the non-prefixed name is needed
 $(VERSION_PREFIX)_BUILD_TARGETS	:= $($(VERSION_PREFIX)_GAME) $($(VERSION_PREFIX)_STAGES) $($(VERSION_PREFIX)_BOSSES) $($(VERSION_PREFIX)_SERVANTS)
 
-SATURN_SPLITTER_DIR			:= $(TOOLS_DIR)/saturn-splitter
+SATURN_SPLITTER_DIR			:= tools/saturn-splitter
 SATURN_SPLITTER_APP 		:= $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SATURN_ASSETS_DIR := $(ASSETS_DIR)/saturn
 SATURN_LIB_TARGETS	:= lib/gfs lib/spr lib/dma lib/scl lib/csh lib/per lib/cdc lib/mth lib/bup lib/sys

@@ -33,7 +33,7 @@ CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
 MWASPSP         := $(WIBO) $(BIN_DIR)/asm_psp_elf.exe -gnu
 MWLDPSP         := $(WIBO) $(BIN_DIR)/mwldpsp.exe
 
-MWCCGAP_DIR     := $(TOOLS_DIR)/mwccgap
+MWCCGAP_DIR     := tools/mwccgap
 MWCCGAP_APP     := $(MWCCGAP_DIR)/mwccgap.py
 MWCCGAP         := $(PYTHON) $(MWCCGAP_APP)
 
