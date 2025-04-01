@@ -51,7 +51,7 @@ segments:
       - [0x90C, .data, 2C564]
       - [0xAA4, .data, 2DAC8]
       - [0x1568, .data, prologue_scroll]
-      - [0x15EC, .data, st_update]
+      - [0x15CC, .data, st_update]
       - [0x1618, .data, collision]
       - [0x1978, .data, e_red_door]
       - [0x1990, .data, st_common]
