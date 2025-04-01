@@ -91,6 +91,7 @@ typedef enum EntityIDs {
 extern void EntityBloodDrips(Entity*);
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
+extern Primitive* FindFirstUnkPrim(Primitive* prim);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit D_us_80180800;
@@ -109,7 +110,7 @@ extern EInit g_EInitFlyingZombie1;
 extern EInit g_EInitDhuron;
 extern EInit D_us_801808A8;
 extern EInit D_us_801808B4;
-extern EInit D_us_801808C0;
+extern EInit g_EInitEctoplasm;
 extern EInit g_EInitThornweed;
 // extern EInit D_us_801808D8;
 extern EInit g_EInitCorpseweed;
@@ -125,8 +126,8 @@ extern EInit D_us_80180950;
 extern EInit D_us_8018095C;
 extern EInit g_EInitLesserDemon;
 extern EInit g_EInitLesserDemonSpit;
-// extern EInit D_us_80180980;
-// extern EInit D_us_8018098C;
+extern EInit D_us_80180980;
+extern EInit D_us_8018098C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;

@@ -98,6 +98,7 @@ segments:
       - [0xCA20, .data, cd]
       - [0xCE48, .data, d_CD80]
       - [0xCEB8, .data, 692E8]
+      - [0xCF04, .data, 6BF64]
       - [0xCFDC, .data, alu_anim]
       - [0xD010, .data, 6E42C]
       - [0xD030, .data, 70394]
@@ -107,6 +108,7 @@ segments:
       - [0xD57C, .data, 7E4BC]
       - [0xDC98, .data, d_DBD4]
       - [0xE358, .data, d_E294]
+      - [0x106EE, .data, 84B88]
       - [0x1085C, .data, d_10798]
       - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
@@ -180,6 +182,7 @@ segments:
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
       - [0x54E50, c, menu]
+      - [0x5D474, c, timeattack]
       - [0x5D570, c, 5D5BC]
       - [0x5D5C0, c, 5F60C]
       - [0x6236C, c, 624DC]

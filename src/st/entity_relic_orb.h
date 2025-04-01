@@ -23,16 +23,6 @@ s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
-#if defined(VERSION_PSP) && STAGE != STAGE_ST0
-// char* obtainedStr;
-static char obtained_ENG[] = "Obtained\x00";
-static char obtained_FR[] = "Obtenu \xB1 \x00";
-static char obtained_ES[] = "Tienes\x00";
-static char obtained_DE[] = "erhalten\x00";
-static char obtained_IT[] = "Ottenuto\x00";
-static char format_str[] = "%s %s\x00";
-#endif
-
 extern u16 g_EInitObtainable[];
 extern u16 msgBoxTpage[0x600];
 
@@ -263,26 +253,26 @@ void EntityRelicOrb(Entity* self) {
         switch (D_8B42058) {
         case 1:
         default:
-            obtainedStr = obtained_ENG;
+            obtainedStr = "Obtained";
             break;
         case 2:
-            obtainedStr = obtained_FR;
+            obtainedStr = "Obtenu \xB1 ";
             break;
         case 3:
-            obtainedStr = obtained_ES;
+            obtainedStr = "Tienes";
             break;
         case 4:
-            obtainedStr = obtained_DE;
+            obtainedStr = "erhalten";
             break;
         case 5:
-            obtainedStr = obtained_IT;
+            obtainedStr = "Ottenuto";
             break;
         }
 
         if (D_8B42058 != 4) {
-            psp_sprintf(&sp34, format_str, obtainedStr, msg);
+            psp_sprintf(&sp34, "%s %s", obtainedStr, msg);
         } else {
-            psp_sprintf(&sp34, format_str, msg, obtainedStr);
+            psp_sprintf(&sp34, "%s %s", msg, obtainedStr);
         }
         // Presumably this is a strlen call?
         msgLen = func_890CAE0(sp34);

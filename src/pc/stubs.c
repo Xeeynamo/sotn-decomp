@@ -63,7 +63,6 @@ s32 D_800978C4;
 s32 D_80097C98;
 u16 g_Clut[0x3000];
 u16 D_8006EBCC[0x1000]; // part of g_Clut?
-u16 D_8006EBE0;
 Point32 D_8006C384;
 MenuNavigation g_MenuNavigation;
 GameSettings g_Settings;

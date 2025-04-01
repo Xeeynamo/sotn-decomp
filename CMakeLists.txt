@@ -184,6 +184,7 @@ set(SOURCE_FILES_DRA
     src/dra/lba_stage.c
     src/dra/config_us.c
     src/dra/menu.c
+    src/dra/timeattack.c
     src/dra/5D5BC.c
     src/dra/5F60C.c
     src/dra/d_C910.c
