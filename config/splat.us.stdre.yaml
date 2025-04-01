@@ -52,7 +52,7 @@ segments:
       - [0x770, data]
       - [0x938, .data, cutscene]
       - [0x944, data]
-      - [0x97C, .data, st_update]
+      - [0x95C, .data, st_update]
       - [0x9A8, .data, collision]
       - [0xD68, .data, e_red_door]
       - [0xD80, .data, st_common]
