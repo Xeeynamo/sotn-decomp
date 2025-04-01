@@ -697,7 +697,8 @@ void EntitySideWaterSplash(Entity* self) {
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
-        for (prim = &g_PrimBuf[primIndex]; prim != NULL; prim = prim->next) {
+        prim = &g_PrimBuf[primIndex];
+        while (prim != NULL) {
             prim->u0 = prim->u2 = 0xF0;
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0;
@@ -711,6 +712,7 @@ void EntitySideWaterSplash(Entity* self) {
             prim->priority = self->zPriority + 2;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
+            prim = prim->next;
         }
         params = self->params;
         if (!(params & 0xF)) {
