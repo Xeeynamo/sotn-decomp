@@ -7,7 +7,7 @@ MUFFLED_TARGETS := # Empty variable
 VERSION		?= us# Only when env not set
 VENV_DIR	?= .venv# Can be overriden with env
 comma		:= ,# For escaping a literal comma
-muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use .SILENT
+muffle 		:= $(if $(VERBOSE),,@)# Allows VERBOSE to unmuffle targets which can't use .SILENT
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
@@ -35,7 +35,6 @@ ASM_DIR         := asm/$(VERSION)
 ASM_SUBDIRS 	:= data/ $(call if_version,us hd,psxsdk/ handwritten/)
 SRC_DIR         := src
 SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
-INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
 BUILD_DIR       := build/$(VERSION)
@@ -45,10 +44,6 @@ BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 # Files
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
-FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
-FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
-FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
-FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 
 # Active overlays
 STAGES		:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).st%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).st*.yaml))
@@ -143,54 +138,45 @@ extract: extract.$(VERSION)
 build: build.$(VERSION)
 
 clean:
-	git clean -fdxq $(ASSETS_DIR)/
-	git clean -fdxq $(ASM_DIR)/
-	git clean -fdxq $(BUILD_DIR)/
-	git clean -fdxq $(SRC_DIR)/weapon/
-	git clean -fdxq $(CONFIG_DIR)/*$(VERSION)*
-	git clean -fdxq function_calls/
-	git clean -fdxq sotn_calltree.txt
+	git clean -fdxq $(ASSETS_DIR)/ $(ASM_DIR)/ $(BUILD_DIR)/ $(SRC_DIR)/weapon/ $(CONFIG_DIR)/*$(VERSION)*
+	git clean -fdxq function_calls/ sotn_calltree.txt
 
-# Targets for performing various automated formatting tasks
-format-src.run:
+FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
+FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ include/,*.c *.h))
+format-src.run:# For output control and progress tracking in the event of an error
 	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
 	$(call echo,Running clang to format src/* and include/* (this may take some time))
-$(addprefix FORMAT_,$(FORMAT_SRC_FILES)): FORMAT_%: format-src.run $(CLANG)
-	echo "$*" >> /tmp/sotn-decomp/$<; $(CLANG) -i $*
-format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
+$(addsuffix .format-src,$(FORMAT_SRC_FILES)): %.format-src: format-src.run $(CLANG)
+	$(muffle)echo "$*" >> /tmp/sotn-decomp/$<; $(CLANG) -i $*
+format-src: $(addsuffix .format-src,$(FORMAT_SRC_FILES))# Appends .format-src for deconfliction and runs each file individually in order to leverage the -j option
 # Redirecting sotn-lint stdout because even if there was something useful, you'd never see it because of the output spam
 	$(SOTNLINT) 1>/dev/null
 
 format-tools:
-	$(BLACK) tools/*.py
-	$(BLACK) tools/function_finder/*.py
-	$(BLACK) tools/sotn_permuter/permuter_loader.py
-	$(BLACK) tools/splat_ext/*.py
-	$(BLACK) tools/split_jpt_yaml/*.py
+	$(BLACK) *.py tools/*.py tools/sotn_permuter/permuter_loader.py tools/splat_ext/*.py tools/split_jpt_yaml/*.py
 
-format-symbols.run:
-	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
-	$(call echo,Removing orphan symbols using splat configs)
-$(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)): FORMAT_%: format-symbols.run | $(VENV_DIR)
-	echo "$*" >> $<; $(PYTHON) tools/symbols.py remove-orphans $*
-$(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
-	$(call echo,Sorting $* symbols) VERSION=$* $(PYTHON) tools/symbols.py sort
-format-symbols: $(addprefix format-symbols_,us pspeu hd saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
+FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
+FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
+$(addsuffix .format-symbols,$(FORMAT_SYMBOLS_FILES)): %.format-symbols: | $(VENV_DIR)
+	$(call echo,Removing orphan symbols using $*)$(PYTHON) tools/symbols.py remove-orphans $*
+$(addsuffix .format-symbols,us pspeu hd saturn): %.format-symbols: | $(VENV_DIR)
+	$(call echo,Sorted $* symbols)VERSION=$* $(PYTHON) tools/symbols.py sort
+format-symbols: $(addsuffix .format-symbols,us pspeu hd saturn $(FORMAT_SYMBOLS_FILES))
 
 format-license:
-	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/game.h AGPL-3.0-or-later
-	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/entity.h AGPL-3.0-or-later
-	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/items.h AGPL-3.0-or-later
-	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/lba.h AGPL-3.0-or-later
-	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/memcard.h AGPL-3.0-or-later
-	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
+	find $(SRC_DIR)/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py include/game.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py include/entity.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py include/items.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py include/lba.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py include/memcard.h AGPL-3.0-or-later
 
-format: format-src format-tools format-symbols format-license
+format: format-tools format-symbols format-license
+	$(MAKE) -j format-src
 
 # Step 1/3 of expected
 patch: $(CONFIG_DIR)/dirt.$(VERSION).json build
 	$(DIRT_PATCHER) $(CONFIG_DIR)/dirt.$(VERSION).json
-
 # Step 2/3 of expected
 check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
 	$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
@@ -202,16 +188,12 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
         system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
         printf " ]\n"; \
     }' | column --separator $$'\t' --table
-
 # Step 3/3 of expected
-# This looks a little silly, but it handles making sure that the expected/ directory exists, then clears the old data out.
-# The cp will fail if expected/ doesn't exist and it is only used here so a prerequisite doesn't really make sense.
 expected: check
-	mkdir -p expected/$(BUILD_DIR)
-	rm -rf expected/$(BUILD_DIR)
+	rm -rf expected/$(BUILD_DIR) > /dev/null 2>&1 || true
+	$(muffle)mkdir -p expected
 	cp -r $(BUILD_DIR) expected/$(BUILD_DIR)
 
-# Force targets
 force-extract:
 	mkdir -p /tmp/sotn-decomp
 	rm -rf /tmp/sotn-decomp/src || true; mv src /tmp/sotn-decomp/src
@@ -222,12 +204,10 @@ force-extract:
 force-extract-disk:
 	@rm -rf $(EXTRACTED_DISK_DIR) || true
 	$(MAKE) extract-disk
-
-# Other utility targets
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
-$(addprefix FORCE_,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))): FORCE_%.elf: | $(VENV_DIR)
+$(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))): %.elf.force-symbols: | $(VENV_DIR)
 	$(PYTHON) tools/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
-force-symbols: $(addprefix FORCE_,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf)))
+force-symbols: $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf)))
 
 context: $(M2CTX_APP) | $(VENV_DIR)
 ifndef SOURCE
@@ -236,7 +216,6 @@ endif
 	VERSION=$(VERSION) $(PYTHON) $(M2CTX_APP) $(SOURCE)
 	$(call echo,ctx.c has been updated.)
 
-# Targets to extract the data from the disk image
 disks/us: | $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
 disks/pspeu:
@@ -247,14 +226,13 @@ disks/saturn:
 	7z x disks/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR) || true
 extract-disk: $(EXTRACTED_DISK_DIR)
 
-# Targets to create a disk image from build data
 ovl_to_bin  = $(call to_upper,$(call add_ovl_prefix,$(1),ST/,BOSS/)/$(1).BIN $(call add_ovl_prefix,$(1),ST/,BOSS/)/F_$(1).BIN)
-disk_prepare_files := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
-disk_prepare_files += $(foreach target,$(filter-out sel,$(STAGES)) $(BOSSES),$(call ovl_to_bin,$(target)))
+DISK_PREPARE_FILES := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
+DISK_PREPARE_FILES += $(foreach target,$(filter-out sel,$(STAGES)) $(BOSSES),$(call ovl_to_bin,$(target)))
 disk-prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
-	$(call echo,cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/) $(foreach item,$(disk_prepare_files),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
+	$(call echo,cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/) $(foreach item,$(DISK_PREPARE_FILES),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
 	cd tools/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
@@ -411,26 +389,17 @@ dump-disk: ##@ dump a physical game disk
 # I'd prefer assigning to .PHONY and .SILENT directly without using the list, but the list allows us simply add PHONY_TARGETS to MUFFLED_TARGETS easily instead of duplicating the list.
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
-PHONY_TARGETS += all $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk
-PHONY_TARGETS += format-src format-src.run format-src.run.prep $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-PHONY_TARGETS += format-symbols format-symbols.run format-symbols.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
-PHONY_TARGETS += $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context
-PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
+PHONY_TARGETS += all extract build patch check 
+PHONY_TARGETS += dump-disk $(addprefix dump-disk.,eu hk jp10 jp11 saturn us usproto) extract-disk
+PHONY_TARGETS += format-src format-src.run $(addsuffix .format-src,$(FORMAT_SRC_FILES)) format-tools format-symbols format-license
+PHONY_TARGETS += $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))) force-extract context $(addprefix format-symbols.,us hd pspeu saturn $(FORMAT_SYMBOLS_FILES))
+PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies.,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
 MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
-.PHONY: $(PHONY_TARGETS) clean force-symbols disk disk-prepare disk-debug
-# Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
-$(DEBUG).SILENT: $(MUFFLED_TARGETS)
-# These are walls of text, so they're redirected to files instead of stdout for debugging
-get-debug: get-phony get-silent
-get-phony:
-	echo ".PHONY:" > make.phony.targets
-	$(foreach target,$(PHONY_TARGETS),echo $(target) >> make.phony.targets;)
-get-silent:
-	echo ".SILENT:" > make.silent.targets
-	$(foreach target,$(MUFFLED_TARGETS),echo $(target) >> make.silent.targets;)
+.PHONY: $(PHONY_TARGETS) expected clean force-symbols disk disk-prepare disk-debug
+# Specifying .SILENT in this manner allows us to set the VERBOSE environment variable and display everything for debugging
+$(VERBOSE).SILENT: $(MUFFLED_TARGETS)
 
 # These targets have been renamed, but need to remain usable until CI is updated with the new name.
 force_extract: force-extract
