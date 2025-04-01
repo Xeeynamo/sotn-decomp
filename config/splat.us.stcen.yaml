@@ -47,7 +47,7 @@ segments:
       - [0x5D8, .data, d_prize_drops]
       - [0x5D8, .data, cutscene]
       - [0x68C, .data, F890]
-      - [0x7B8, .data, st_update]
+      - [0x7C8, .data, st_update]
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
       - [0xBBC, .data, st_common]
