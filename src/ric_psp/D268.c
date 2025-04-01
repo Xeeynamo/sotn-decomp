@@ -1596,7 +1596,127 @@ void RicEntityCrashBible(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", func_8016F198);
+void func_8016F198(Entity* self) {
+    const int PrimCount = 16;
+#if defined(VERSION_PSP)
+    const MaxHeight = 248;
+    const HalfHeight = 128;
+#else
+    const MaxHeight = 240;
+    const HalfHeight = 120;
+#endif
+    Primitive* prim;
+    s32 i;
+    s32 tpage;
+    s32 angleX;
+    s32 angleY;
+    s16 startMod;
+    s16 endMod;
+    s16 sx;
+    s16 ex;
+    s16 sy;
+    s16 ey;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+#if !defined(VERSION_PSP)
+            g_Player.unk4E = 1;
+#endif
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->priority = 0xC2;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->step++;
+    case 2:
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C >= 0x18) {
+            self->step++;
+        }
+        break;
+    case 3:
+#if !defined(VERSION_PSP)
+        g_Player.unk4E = 1;
+#endif
+        DestroyEntity(self);
+        return;
+    }
+    if (!self->ext.factory.unk7C) {
+        return;
+    }
+    if (
+#if !defined(VERSION_PSP)
+        g_CurrentBuffer == g_GpuBuffers
+#else
+        0
+#endif
+    ) {
+        tpage = 0x104;
+    } else {
+        tpage = 0x100;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < PrimCount; i++) {
+        angleX = rsin(i << 8);
+        angleY = rcos(i << 8);
+        startMod = self->ext.factory.unk7C * 8;
+        endMod = 0;
+        if (self->ext.factory.unk7C >= 4) {
+            endMod = (self->ext.factory.unk7C - 4) * 8;
+        }
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x0 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x2 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y0 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y2 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u0 = 0xFF - prim->x0;
+        prim->u2 = 0xFF - prim->x2;
+        prim->v0 = MaxHeight - prim->y0;
+        prim->v2 = MaxHeight - prim->y2;
+
+        angleX = rsin((i + 1) << 8);
+        angleY = rcos((i + 1) << 8);
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x1 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x3 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y1 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y3 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u1 = 0xFF - prim->x1;
+        prim->u3 = 0xFF - prim->x3;
+        prim->v1 = MaxHeight - prim->y1;
+        prim->v3 = MaxHeight - prim->y3;
+#if defined(VERSION_PSP)
+        prim->u0 = prim->u0 = CLAMP(prim->u0, 1, 0xFE);
+        prim->u2 = prim->u2 = CLAMP(prim->u2, 1, 0xFE);
+        prim->u1 = prim->u1 = CLAMP(prim->u1, 1, 0xFE);
+        prim->u3 = prim->u3 = CLAMP(prim->u3, 1, 0xFE);
+#endif
+
+        prim->tpage = tpage;
+        prim = prim->next;
+    }
+}
 
 // clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashStopwatchDoneSparkle);

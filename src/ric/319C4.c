@@ -636,25 +636,33 @@ void RicEntityCrashBible(Entity* self) {
 
 void func_8016F198(Entity* self) {
     const int PrimCount = 16;
+#if defined(VERSION_PSP)
+    const MaxHeight = 248;
+    const HalfHeight = 128;
+#else
+    const MaxHeight = 240;
+    const HalfHeight = 120;
+#endif
     Primitive* prim;
-    s16 unk7C;
-    s16 temp_s6;
-    s16 temp_a0;
-    s16 temp_a1;
-    s16 temp_a2;
-    s16 temp_v1;
-    s16 var_s0_2;
-    s32 sine;
-    s32 cosine;
     s32 i;
-    u16 tpage;
+    s32 tpage;
+    s32 angleX;
+    s32 angleY;
+    s16 startMod;
+    s16 endMod;
+    s16 sx;
+    s16 ex;
+    s16 sy;
+    s16 ey;
 
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
+#if !defined(VERSION_PSP)
             g_Player.unk4E = 1;
+#endif
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -674,79 +682,76 @@ void func_8016F198(Entity* self) {
         }
         self->step++;
     case 2:
-        if (++self->ext.factory.unk7C >= 0x18) {
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C >= 0x18) {
             self->step++;
         }
         break;
     case 3:
+#if !defined(VERSION_PSP)
         g_Player.unk4E = 1;
+#endif
         DestroyEntity(self);
         return;
     }
-    if (self->ext.factory.unk7C == 0) {
+    if (!self->ext.factory.unk7C) {
         return;
     }
-    if (g_CurrentBuffer == g_GpuBuffers) {
+    if (
+#if !defined(VERSION_PSP)
+        g_CurrentBuffer == g_GpuBuffers
+#else
+        0
+#endif
+    ) {
         tpage = 0x104;
     } else {
         tpage = 0x100;
     }
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCount; i++) {
-        sine = rsin(i << 8);
-        cosine = rcos(i << 8);
-        unk7C = self->ext.factory.unk7C;
-        var_s0_2 = 0;
-        temp_s6 = unk7C * 8;
-        if (unk7C >= 4) {
-            var_s0_2 = (unk7C - 4) * 8;
+        angleX = rsin(i << 8);
+        angleY = rcos(i << 8);
+        startMod = self->ext.factory.unk7C * 8;
+        endMod = 0;
+        if (self->ext.factory.unk7C >= 4) {
+            endMod = (self->ext.factory.unk7C - 4) * 8;
         }
-        temp_a1 = ((cosine * (s16)(unk7C * 8)) >> 0xC) + 0x80;
-        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
-        temp_a0 = ((sine * (s16)(unk7C * 8)) >> 0xC) + 0x78;
-        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x0 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x2 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y0 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y2 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u0 = 0xFF - prim->x0;
+        prim->u2 = 0xFF - prim->x2;
+        prim->v0 = MaxHeight - prim->y0;
+        prim->v2 = MaxHeight - prim->y2;
 
-        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
-        prim->x0 = temp_a1;
-
-        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
-        prim->x2 = temp_v1;
-
-        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
-        prim->y0 = temp_a0;
-
-        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
-        prim->y2 = temp_a2;
-
-        prim->u0 = ~prim->x0;
-        prim->u2 = ~prim->x2;
-        prim->v0 = -0x10 - prim->y0;
-        prim->v2 = -0x10 - prim->y2;
-
-        sine = rsin((i + 1) << 8);
-        cosine = rcos((i + 1) << 8);
-        temp_a1 = ((cosine * temp_s6) >> 0xC) + 0x80;
-        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
-        temp_a0 = ((sine * temp_s6) >> 0xC) + 0x78;
-        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
-
-        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
-        prim->x1 = temp_a1;
-
-        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
-        prim->x3 = temp_v1;
-
-        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
-        prim->y1 = temp_a0;
-
-        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
-        prim->y3 = temp_a2;
+        angleX = rsin((i + 1) << 8);
+        angleY = rcos((i + 1) << 8);
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x1 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x3 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y1 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y3 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u1 = 0xFF - prim->x1;
+        prim->u3 = 0xFF - prim->x3;
+        prim->v1 = MaxHeight - prim->y1;
+        prim->v3 = MaxHeight - prim->y3;
+#if defined(VERSION_PSP)
+        prim->u0 = prim->u0 = CLAMP(prim->u0, 1, 0xFE);
+        prim->u2 = prim->u2 = CLAMP(prim->u2, 1, 0xFE);
+        prim->u1 = prim->u1 = CLAMP(prim->u1, 1, 0xFE);
+        prim->u3 = prim->u3 = CLAMP(prim->u3, 1, 0xFE);
+#endif
 
         prim->tpage = tpage;
-        prim->u1 = ~prim->x1;
-        prim->u3 = ~prim->x3;
-        prim->v1 = -0x10 - prim->y1;
-        prim->v3 = -0x10 - prim->y3;
         prim = prim->next;
     }
 }
