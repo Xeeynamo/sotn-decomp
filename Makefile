@@ -39,15 +39,12 @@ INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
 BUILD_DIR       := build/$(VERSION)
-PY_TOOLS_DIRS	:= tools/ $(addprefix tools/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader function_finder/)
-RETAIL_DISK_DIR := disks
-EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
+EXTRACTED_DISK_DIR := disks/$(VERSION:hd=pspeu)
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
 CHECK_FILES 	:= $(shell cut -d' ' -f3 $(CONFIG_DIR)/check.$(VERSION).sha)
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
-CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
 FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
 FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
@@ -99,9 +96,9 @@ DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := tools/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
-SOTNDISK_DIR	:= tools/sotn-disk/
+SOTNDISK_DIR	:= tools/sotn-disk
 SOTNDISK        := $(SOTNDISK_DIR)/sotn-disk
-SOTNASSETS_DIR  := tools/sotn-assets/
+SOTNASSETS_DIR  := tools/sotn-assets
 SOTNASSETS      := $(SOTNASSETS_DIR)/sotn-assets
 
 # Build functions
@@ -145,9 +142,14 @@ all: build check
 extract: extract.$(VERSION)
 build: build.$(VERSION)
 
-$(addprefix CLEAN_,$(CLEAN_FILES)): CLEAN_%:
-	$(call echo,Cleaning $*) git clean -fdxq $*
-clean: $(addprefix CLEAN_,$(CLEAN_FILES))
+clean:
+	git clean -fdxq $(ASSETS_DIR)/
+	git clean -fdxq $(ASM_DIR)/
+	git clean -fdxq $(BUILD_DIR)/
+	git clean -fdxq $(SRC_DIR)/weapon/
+	git clean -fdxq $(CONFIG_DIR)/*$(VERSION)*
+	git clean -fdxq function_calls/
+	git clean -fdxq sotn_calltree.txt
 
 # Targets for performing various automated formatting tasks
 format-src.run:
@@ -159,9 +161,12 @@ format-src: $(addprefix FORMAT_,$(FORMAT_SRC_FILES))
 # Redirecting sotn-lint stdout because even if there was something useful, you'd never see it because of the output spam
 	$(SOTNLINT) 1>/dev/null
 
-$(addprefix FORMAT_,$(PY_TOOLS_DIRS)): FORMAT_%: | $(VENV_DIR)
-	$(call echo,Formatting $**.py) $(BLACK) $**.py
-format-tools: $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
+format-tools:
+	$(BLACK) tools/*.py
+	$(BLACK) tools/function_finder/*.py
+	$(BLACK) tools/sotn_permuter/permuter_loader.py
+	$(BLACK) tools/splat_ext/*.py
+	$(BLACK) tools/split_jpt_yaml/*.py
 
 format-symbols.run:
 	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
@@ -173,9 +178,12 @@ $(addprefix format-symbols_,us pspeu hd saturn): format-symbols_%: | $(VENV_DIR)
 format-symbols: $(addprefix format-symbols_,us pspeu hd saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES))
 
 format-license:
-	$(call echo,Checking for license line in code files)
+	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/game.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/entity.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/items.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/lba.h AGPL-3.0-or-later
+	$(PYTHON) tools/lint-license.py $(INCLUDE_DIR)/memcard.h AGPL-3.0-or-later
 	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
-	$(foreach item,$(addprefix include/,game.h entity.h items.h lba.h memcard.h),$(PYTHON) tools/lint-license.py $(item) AGPL-3.0-or-later;)
 
 format: format-src format-tools format-symbols format-license
 
@@ -199,8 +207,8 @@ check: $(CONFIG_DIR)/check.$(VERSION).sha $(CHECK_FILES) patch
 # This looks a little silly, but it handles making sure that the expected/ directory exists, then clears the old data out.
 # The cp will fail if expected/ doesn't exist and it is only used here so a prerequisite doesn't really make sense.
 expected: check
-	$(call echo,Copying build files to expected/)
-	mkdir -p expected/$(BUILD_DIR); rm -rf expected/$(BUILD_DIR)
+	mkdir -p expected/$(BUILD_DIR)
+	rm -rf expected/$(BUILD_DIR)
 	cp -r $(BUILD_DIR) expected/$(BUILD_DIR)
 
 # Force targets
@@ -209,16 +217,17 @@ force-extract:
 	rm -rf /tmp/sotn-decomp/src || true; mv src /tmp/sotn-decomp/src
 	find $(BUILD_DIR) -type f -name "*.ld" -delete || true
 	$(MAKE) extract
-	rm -rf $(SRC_DIR); mv /tmp/sotn-decomp/src $(SRC_DIR)
+	rm -rf $(SRC_DIR)
+	mv /tmp/sotn-decomp/src $(SRC_DIR)
 force-extract-disk:
 	@rm -rf $(EXTRACTED_DISK_DIR) || true
 	$(MAKE) extract-disk
+
 # Other utility targets
-force_symbols_ovls = $(patsubst $(BUILD_DIR)/%.elf,%,$(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
-$(addprefix FORCE_,$(force_symbols_ovls)): FORCE_%: | $(VENV_DIR)
-	$(call echo,Extracting symbols for $*) $(PYTHON) tools/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
-force-symbols: $(addprefix FORCE_,$(force_symbols_ovls))
+$(addprefix FORCE_,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))): FORCE_%.elf: | $(VENV_DIR)
+	$(PYTHON) tools/symbols.py elf $(BUILD_DIR)/$*.elf > $(CONFIG_DIR)/symbols$(if $(filter-out stmad,$*),.us).$*.txt
+force-symbols: $(addprefix FORCE_,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf)))
 
 context: $(M2CTX_APP) | $(VENV_DIR)
 ifndef SOURCE
@@ -228,38 +237,36 @@ endif
 	$(call echo,ctx.c has been updated.)
 
 # Targets to extract the data from the disk image
-$(EXTRACTED_DISK_DIR:$(VERSION)=us): | $(SOTNDISK)
-	$(SOTNDISK) extract $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
-$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu) $(EXTRACTED_DISK_DIR:$(VERSION)=hd):
-	mkdir -p $(EXTRACTED_DISK_DIR) $(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
-	7z x -y $(RETAIL_DISK_DIR)/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR:$(VERSION)=pspeu)
-$(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
-	bchunk $(RETAIL_DISK_DIR)/sotn.$(VERSION).bin $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso
-	7z x $(RETAIL_DISK_DIR)/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR) || true
+disks/us: | $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+disks/pspeu:
+	mkdir -p $(EXTRACTED_DISK_DIR)
+	7z x -y disks/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
+disks/saturn:
+	bchunk disks/sotn.$(VERSION).bin disks/sotn.$(VERSION).cue disks/sotn.$(VERSION).iso
+	7z x disks/sotn.$(VERSION).iso01.iso -o$(EXTRACTED_DISK_DIR) || true
 extract-disk: $(EXTRACTED_DISK_DIR)
 
 # Targets to create a disk image from build data
-ovl_to_bin  = $(1)/$(1).BIN $(1)/F_$(1).BIN
-disk_prepare_files := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN
-disk_prepare_files += $(addprefix ST/,$(foreach target,$(filter-out sel,$(STAGES)),$(call ovl_to_bin,$(call to_upper,$(target)))))
-disk_prepare_files += $(addprefix BOSS/,$(foreach target,$(BOSSES),$(call ovl_to_bin,$(call to_upper,$(target)))))
-disk_prepare_files += $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
+ovl_to_bin  = $(call to_upper,$(call add_ovl_prefix,$(1),ST/,BOSS/)/$(1).BIN $(call add_ovl_prefix,$(1),ST/,BOSS/)/F_$(1).BIN)
+disk_prepare_files := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
+disk_prepare_files += $(foreach target,$(filter-out sel,$(STAGES)) $(BOSSES),$(call ovl_to_bin,$(target)))
 disk-prepare: build $(SOTNDISK)
-	$(call echo,Copying extracted disk files) mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
-	$(call echo,Copying main.exe as SLUS_000.67) cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
-	$(foreach item,$(disk_prepare_files),$(call echo,Copying $(item)) cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
+	mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
+	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
+	$(call echo,cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/) $(foreach item,$(disk_prepare_files),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
 	cd tools/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
 	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 disk: disk-prepare
-	$(call echo,Creating disk image) $(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
+	$(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 
 # Targets for copying the physical disk to an image file
-$(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
+$(addprefix disks/,sotn.%.bin sotn.%.cue): PHONY
 	$(muffle)( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
 	$(call echo,Dumping disk)
-	$(muffle)cd $(RETAIL_DISK_DIR) && \
+	$(muffle)cd disks && \
         DEVICE="$(shell cdrdao scanbus 2>&1 | grep -vi cdrdao | head -n1 | sed 's/ : [^:]*$$//g')" && \
         cdrdao read-cd \
             --read-raw \
@@ -269,7 +276,7 @@ $(addprefix $(RETAIL_DISK_DIR)/,sotn.%.bin sotn.%.cue): PHONY
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-$(addprefix dump-disk,.eu .hk .jp10 .jp11 .saturn .us .usproto): $(RETAIL_DISK_DIR)/sotn.$(VERSION).cue
+$(addprefix dump-disk,.eu .hk .jp10 .jp11 .saturn .us .usproto): disks/sotn.$(VERSION).cue
 dump-disk.%: PHONY# Last resort
 	$(error Automated dumping of $* is not supported)
 dump-disk: dump-disk.$(VERSION)
@@ -404,16 +411,16 @@ dump-disk: ##@ dump a physical game disk
 # I'd prefer assigning to .PHONY and .SILENT directly without using the list, but the list allows us simply add PHONY_TARGETS to MUFFLED_TARGETS easily instead of duplicating the list.
 # They are grouped in the general order you will find the targets in the file.
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
-PHONY_TARGETS += all clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
+PHONY_TARGETS += all $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch check expected
+PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk
 PHONY_TARGETS += format-src format-src.run format-src.run.prep $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-PHONY_TARGETS += format-symbols format-symbols.runformat-symbol s.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
-PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
+PHONY_TARGETS += format-symbols format-symbols.run format-symbols.run.prep $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
+PHONY_TARGETS += $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
 MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
-.PHONY: $(PHONY_TARGETS)
+.PHONY: $(PHONY_TARGETS) clean force-symbols disk disk-prepare disk-debug
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 $(DEBUG).SILENT: $(MUFFLED_TARGETS)
 # These are walls of text, so they're redirected to files instead of stdout for debugging
