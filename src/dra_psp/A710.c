@@ -78,9 +78,9 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/A710", SetNextRoomToLoad);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F0CD8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7BC0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F14CC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7DA8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F16D0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E38);
 
@@ -104,4 +104,4 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8518);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8620);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8658);
+INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2014);
