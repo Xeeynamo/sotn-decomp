@@ -1362,7 +1362,7 @@
 | ric    | RicEntityAguneaHitEnemy             |      663 |         70 |        | https://decomp.me/scratch/22nUJ | 0.999 |
 | ric    | RicEntityHitByLightning             |      670 |         62 |        |                                 |       |
 | dra    | PlayerStepKill                      |      672 |         81 |        | https://decomp.me/scratch/zQLmL | 0.989 |
-| ric    | func_8016F198                       |      675 |         75 |        |                                 |       |
+| ric    | func_8016F198                       |      675 |         75 |        | https://decomp.me/scratch/jH0M7 | 1.0   |
 | lib    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | no4    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
 | st0    | EntityDamageDisplay                 |      682 |         51 |        |                                 |       |
