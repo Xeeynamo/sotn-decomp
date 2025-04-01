@@ -28,6 +28,12 @@ typedef enum EntityIDs {
     // /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
+    // /* 0x16 */ E_ID_16,
+    /* 0x17 */ E_SPLASH_WATER = 0x17,
+    /* 0x18 */ E_SURFACING_WATER,
+    /* 0x19 */ E_SIDE_WATER_SPLASH,
+    // /* 0x1A */ E_ID_1A,
+    /* 0x1B */ E_WATER_DROP = 0x1B,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -36,7 +42,7 @@ extern void EntityGreyPuff(Entity* entity);
 // extern EInit D_us_80180B8C;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-// extern EInit D_us_80180BB0;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 // extern EInit D_us_80180BD4;
