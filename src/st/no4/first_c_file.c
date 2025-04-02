@@ -99,7 +99,7 @@ void func_us_801C7FAC(void) {
     Tilemap* tileMap = &g_Tilemap;
     s16 offset = 0x595;
     u16* unknown = &D_us_801817E8;
-    
+
     for (i = 0; i < 7; i++) {
         *(tileMap->fg + offset) = *unknown++;
         offset++;
