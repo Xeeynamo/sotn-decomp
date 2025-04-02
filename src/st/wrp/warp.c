@@ -32,11 +32,6 @@ extern s32 WarpBackgroundBrightness;
 
 #else
 
-static u16 unused_array[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
-    0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101,
-};
-
 // the room the player will be warping to
 static s32 DestinationWarpRoom;
 // the amplitude of the current background phase

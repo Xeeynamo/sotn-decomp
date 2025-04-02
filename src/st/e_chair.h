@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <game.h>
 
 // check if "sit" has been triggered
 static s32 func_us_801BEDD8(Entity* self) {
@@ -23,8 +22,6 @@ static s32 func_us_801BEDD8(Entity* self) {
 
     return 1;
 }
-
-extern u16 g_EInitCommon[];
 
 void EntityChair(Entity* self) {
     s16 offsetX;
@@ -83,4 +80,43 @@ void EntityChair(Entity* self) {
     FntPrint("obj_step:%02x\n", self->step);
     FntPrint("pl_step:%02x,pl_step_s:%02x\n", PLAYER.step, PLAYER.step_s);
 #endif
+}
+
+static AnimationFrame D_us_80180F8C[] = {
+    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+
+void func_us_801B81E8(Entity* self) {
+    if (self->ext.et_801B81E8.unkEntity->step != 4) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->velocityY = FIX(-3.0 / 8.0);
+        self->velocityX = FIX(0.25);
+        if (self->facingLeft) {
+            self->velocityX = -self->velocityX;
+        }
+        self->unk5A = 0x20;
+        self->palette = PAL_OVL(0x19F);
+        self->anim = D_us_80180F8C;
+        self->animFrameIdx = 0;
+        self->animFrameDuration = 0;
+        self->facingLeft = false;
+        self->posY.i.hi -= 16;
+        self->posX.val += self->velocityX << 5;
+        break;
+
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->animFrameDuration < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    g_api.UpdateAnim(NULL, NULL);
 }
