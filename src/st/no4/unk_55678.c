@@ -1,20 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_801C4144);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntityAlucardWaterEffect);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntitySplashWater);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntitySurfacingWater);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntitySideWaterSplash);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntitySmallWaterDrop);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", EntityWaterDrop);
-
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D798C);
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D7FAC);
