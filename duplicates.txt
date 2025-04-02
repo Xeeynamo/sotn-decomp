@@ -2179,6 +2179,15 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/62DEC/MemCardSetPort.s 
 | 1.00 | true     | func_800FAC30                       | asm/us/dra/matchings/menu/func_800FAC30.s 
 | 1.00 | true     | MemcardInfoInit                     | asm/us/dra/matchings/save_mgr/MemcardInfoInit.s 
@@ -2203,14 +2212,6 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/first_c_file/CutsceneUnk3.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2479,11 +2480,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2688,6 +2684,10 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -2736,33 +2736,33 @@
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/np3/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
 | 1.00 | true     | EntityBoneScimitarParts             | asm/us/st/nz0/matchings/e_bone_scimitar/EntityBoneScimitarParts.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntitySideWaterSplash               | asm/us/st/no3/matchings/e_merman2/EntitySideWaterSplash.s 
-| 1.00 | true     | EntitySideWaterSplash               | asm/us/st/np3/matchings/e_merman2/EntitySideWaterSplash.s 
-| 1.00 | false    | EntitySideWaterSplash               | asm/us/st/no4/nonmatchings/unk_55678/EntitySideWaterSplash.s 
+| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/no3/matchings/water_effects/EntityAlucardWaterEffect.s 
+| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/no4/matchings/water_effects/EntityAlucardWaterEffect.s 
+| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/np3/matchings/water_effects/EntityAlucardWaterEffect.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/no3/matchings/e_merman2/EntitySmallWaterDrop.s 
-| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/np3/matchings/e_merman2/EntitySmallWaterDrop.s 
-| 1.00 | false    | EntitySmallWaterDrop                | asm/us/st/no4/nonmatchings/unk_55678/EntitySmallWaterDrop.s 
+| 1.00 | true     | EntitySideWaterSplash               | asm/us/st/no3/matchings/water_effects/EntitySideWaterSplash.s 
+| 1.00 | true     | EntitySideWaterSplash               | asm/us/st/no4/matchings/water_effects/EntitySideWaterSplash.s 
+| 1.00 | true     | EntitySideWaterSplash               | asm/us/st/np3/matchings/water_effects/EntitySideWaterSplash.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntitySplashWater                   | asm/us/st/no3/matchings/e_merman2/EntitySplashWater.s 
-| 1.00 | true     | EntitySplashWater                   | asm/us/st/np3/matchings/e_merman2/EntitySplashWater.s 
-| 1.00 | false    | EntitySplashWater                   | asm/us/st/no4/nonmatchings/unk_55678/EntitySplashWater.s 
+| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/no3/matchings/water_effects/EntitySmallWaterDrop.s 
+| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/no4/matchings/water_effects/EntitySmallWaterDrop.s 
+| 1.00 | true     | EntitySmallWaterDrop                | asm/us/st/np3/matchings/water_effects/EntitySmallWaterDrop.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntitySurfacingWater                | asm/us/st/no3/matchings/e_merman2/EntitySurfacingWater.s 
-| 1.00 | true     | EntitySurfacingWater                | asm/us/st/np3/matchings/e_merman2/EntitySurfacingWater.s 
-| 1.00 | false    | EntitySurfacingWater                | asm/us/st/no4/nonmatchings/unk_55678/EntitySurfacingWater.s 
+| 1.00 | true     | EntitySplashWater                   | asm/us/st/no3/matchings/water_effects/EntitySplashWater.s 
+| 1.00 | true     | EntitySplashWater                   | asm/us/st/no4/matchings/water_effects/EntitySplashWater.s 
+| 1.00 | true     | EntitySplashWater                   | asm/us/st/np3/matchings/water_effects/EntitySplashWater.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityWaterDrop                     | asm/us/st/no3/matchings/e_merman2/EntityWaterDrop.s 
-| 1.00 | true     | EntityWaterDrop                     | asm/us/st/np3/matchings/e_merman2/EntityWaterDrop.s 
-| 1.00 | false    | EntityWaterDrop                     | asm/us/st/no4/nonmatchings/unk_55678/EntityWaterDrop.s 
+| 1.00 | true     | EntitySurfacingWater                | asm/us/st/no3/matchings/water_effects/EntitySurfacingWater.s 
+| 1.00 | true     | EntitySurfacingWater                | asm/us/st/no4/matchings/water_effects/EntitySurfacingWater.s 
+| 1.00 | true     | EntitySurfacingWater                | asm/us/st/np3/matchings/water_effects/EntitySurfacingWater.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/no3/matchings/player_water_effect/EntityAlucardWaterEffect.s 
-| 1.00 | true     | EntityAlucardWaterEffect            | asm/us/st/np3/matchings/player_water_effect/EntityAlucardWaterEffect.s 
-| 1.00 | false    | EntityAlucardWaterEffect            | asm/us/st/no4/nonmatchings/unk_55678/EntityAlucardWaterEffect.s 
+| 1.00 | true     | EntityWaterDrop                     | asm/us/st/no3/matchings/water_effects/EntityWaterDrop.s 
+| 1.00 | true     | EntityWaterDrop                     | asm/us/st/no4/matchings/water_effects/EntityWaterDrop.s 
+| 1.00 | true     | EntityWaterDrop                     | asm/us/st/np3/matchings/water_effects/EntityWaterDrop.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801D0A2C                       | asm/us/st/no3/matchings/player_water_effect/func_801D0A2C.s 
-| 1.00 | true     | func_801C4144                       | asm/us/st/np3/matchings/player_water_effect/func_801C4144.s 
-| 1.00 | false    | func_801C4144                       | asm/us/st/no4/nonmatchings/unk_55678/func_801C4144.s 
+| 1.00 | true     | func_801C4144                       | asm/us/st/no3/matchings/water_effects/func_801C4144.s 
+| 1.00 | true     | func_801C4144                       | asm/us/st/no4/matchings/water_effects/func_801C4144.s 
+| 1.00 | true     | func_801C4144                       | asm/us/st/np3/matchings/water_effects/func_801C4144.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B4BF0                    | asm/us/boss/bo4/matchings/doors/func_us_801B4BF0.s 
 | 0.93 | true     | func_us_801B3690                    | asm/us/boss/rbo5/matchings/doors/func_us_801B3690.s 
@@ -3142,6 +3142,9 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3168,9 +3171,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
