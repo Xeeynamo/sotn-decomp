@@ -111,7 +111,7 @@ $(BUILD_DIR)/%.s.o: %.s
 OPT_HIGH = -O4,p #need this because otherwise the comma breaks the if-statement
 # Allow override. Any file in this list will get O4.
 
-OPT_HI_OVERRIDES = 80.c.o 1E50.c.o 33F0.c.o A710.c.o C0B0.c.o E6A8.c.o 186E8.c.o 26948.c.o 61F30.c.o 624DC.c.o 628AC.c.o 62FE0.c.o 63C90.c.o 64EE0.c.o
+OPT_HI_OVERRIDES = 80.c.o 1E50.c.o 33F0.c.o A710.c.o E6A8.c.o 186E8.c.o 26948.c.o 61F30.c.o 624DC.c.o 628AC.c.o 62FE0.c.o 63C90.c.o 64EE0.c.o
 OPTIMIZATION = $(if $(filter $(notdir $@),$(OPT_HI_OVERRIDES)), $(OPT_HIGH), -Op)
 
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP)
