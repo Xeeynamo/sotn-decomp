@@ -27,9 +27,9 @@ INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D85A4);
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8654);
 
-//#ifndef NON_MATCHING
-//INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8D44);
-//#else
+// #ifndef NON_MATCHING
+// INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8D44);
+// #else
 
 // asm/us/st/no1/data/e_skeleton.data.s:glabel D_us_80182780
 extern u8 D_us_80182780[];
@@ -37,7 +37,7 @@ extern u8 D_us_80182780[];
 void func_us_801D8D44(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C34);
+        InitializeEntity(g_EInitSkeleton);
         if (!self->facingLeft) {
             self->velocityX = FIX(-4.0);
         } else {
@@ -47,14 +47,14 @@ void func_us_801D8D44(Entity* self) {
     case 1:
         MoveEntity();
         AnimateEntity(D_us_80182780, self);
-        if (self->flags & 0x100) {
+        if (self->flags & FLAG_DEAD) {
             self->step = 0U;
             self->pfnUpdate = EntityExplosion;
             self->params = 0x0;
         }
     }
 }
-//#endif
+// #endif
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8DF0);
 
