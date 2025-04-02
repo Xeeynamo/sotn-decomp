@@ -881,11 +881,28 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EA0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EC8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1F40);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAF44);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2038);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB004);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2118);
+typedef struct EquipMenuHelper {
+    s32 equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+extern EquipMenuHelper g_EquipMenuHelper[];
+
+extern EquipKind D_801375CC;
+extern s32 D_801375D4;
+
+void func_800FB0FC(void) {
+    EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
+    D_801375CC = helper->equipTypeFilter;
+    D_801375D4 = helper->index;
+    func_800FAF44(helper->isAccessory);
+    func_800FB004();
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2178);
 
