@@ -193,8 +193,6 @@ extern u8 D_8018142C[];
 
 // *** EntitySlogra properties END ***
 
-extern u16 g_SplashSfx;
-extern u16 g_SurfacingSfx;
 extern u8 D_801813D4[];
 extern u8 D_801813E4[];
 extern s8 D_80181454[];
@@ -207,16 +205,8 @@ extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
 extern u8 D_80182008[];
-extern s32 g_SideWaterSpeeds[];
-extern s16 g_SideWaterAngles[];
-extern s16 g_splashAspects[];
-extern s32 g_SplashYMovement[];
-extern s16 g_SurfacingYTbl[];
-extern s32 g_SmallWaterDropVel[];
-extern u8 g_MediumWaterSplashAnim[];
 extern const u8 g_explosion2anim[];
 extern u8 g_FallingObject2Anim[];
-extern u8 g_HighWaterSplashAnim[];
 extern u8 D_80182400[];
 extern u8 D_80182414[];
 extern s32 D_80182440[];
