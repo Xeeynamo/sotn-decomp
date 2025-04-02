@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#include <stage.h>
 #include "common.h"
+#include "no4.h"
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_801C4144);
 
@@ -25,7 +27,34 @@ INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D85A4);
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8654);
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8D44);
+//#ifndef NON_MATCHING
+//INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8D44);
+//#else
+
+// asm/us/st/no1/data/e_skeleton.data.s:glabel D_us_80182780
+extern u8 D_us_80182780[];
+
+void func_us_801D8D44(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180C34);
+        if (!self->facingLeft) {
+            self->velocityX = FIX(-4.0);
+        } else {
+            self->velocityX = FIX(4.0);
+        }
+        /* fallthrough */
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_us_80182780, self);
+        if (self->flags & 0x100) {
+            self->step = 0U;
+            self->pfnUpdate = EntityExplosion;
+            self->params = 0x0;
+        }
+    }
+}
+//#endif
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8DF0);
 
