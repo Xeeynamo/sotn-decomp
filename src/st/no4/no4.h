@@ -47,7 +47,7 @@ extern EInit g_EInitCommon;
 // extern EInit D_us_80180C10;
 // extern EInit D_us_80180C1C;
 // extern EInit D_us_80180C28;
-extern EInit D_us_80180C34; // unk_55678.c
+extern EInit g_EInitSkeleton;
 // extern EInit D_us_80180C40;
 // extern EInit D_us_80180C4C;
 // extern EInit D_us_80180C58;
