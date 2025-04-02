@@ -96,18 +96,17 @@ extern u16 D_us_801817E8;
 
 void func_us_801C7FAC(void) {
     s32 i;
-    Tilemap* p_tile_map = &g_Tilemap;
+    Tilemap* tileMap = &g_Tilemap;
     s16 offset = 0x595;
-    u16* p_unk = &D_us_801817E8;
+    u16* unknown = &D_us_801817E8;
     
     for (i = 0; i < 7; i++) {
-        *(p_tile_map->fg + offset) = *p_unk++;
+        *(tileMap->fg + offset) = *unknown++;
         offset++;
-        *(p_tile_map->fg + offset) = *p_unk++;
-        offset = offset + 0xCF ;
+        *(tileMap->fg + offset) = *unknown++;
+        offset = offset + 0xCF;
     }
 }
-
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C801C);
 
