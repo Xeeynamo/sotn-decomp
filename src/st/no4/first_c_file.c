@@ -98,12 +98,12 @@ void func_us_801C7FAC(void) {
     s32 i;
     Tilemap* tileMap = &g_Tilemap;
     s16 offset = 0x595;
-    u16* unknown = &D_us_801817E8;
+    u16* var_a2 = &D_us_801817E8;
 
     for (i = 0; i < 7; i++) {
-        *(tileMap->fg + offset) = *unknown++;
+        *(tileMap->fg + offset) = *var_a2++;
         offset++;
-        *(tileMap->fg + offset) = *unknown++;
+        *(tileMap->fg + offset) = *var_a2++;
         offset = offset + 0xCF;
     }
 }
