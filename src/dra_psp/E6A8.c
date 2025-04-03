@@ -960,6 +960,10 @@ static const char* D_800A2D18[] = {
     "投射薬ん右左武兜鎧マントその他い",
 };
 
+static const char* D_800A2D58[] = {
+    "再開中断終了決定戻る　　　　　　",
+};
+
 #define PAD_MENU_SELECT_ALT (D_psp_08B42050)
 #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
 #define PAD_MENU_BACK (D_psp_08B42054)
@@ -1739,3 +1743,7 @@ block_4:
         func_800F96F4();
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawHudSubweapon2);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4FC8);

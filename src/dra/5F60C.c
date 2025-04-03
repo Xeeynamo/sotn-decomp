@@ -813,6 +813,8 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
     }
 }
 
+s32 D_psp_091474B8 = -1;
+
 void func_psp_090E4C18(void) {
     if (D_psp_091474B8 < 0) {
         D_psp_091474B8 = 0;
