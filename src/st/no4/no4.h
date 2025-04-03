@@ -34,6 +34,56 @@ typedef enum EntityIDs {
     /* 0x19 */ E_SIDE_WATER_SPLASH,
     // /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_WATER_DROP = 0x1B,
+    // /* 0x1C */ E_ID_1C,
+    // /* 0x1D */ E_ID_1D,
+    // /* 0x1E */ E_ID_1E,
+    // /* 0x1F */ E_ID_1F,
+    // /* 0x20 */ E_ID_20,
+    // /* 0x21 */ E_ID_21,
+    // /* 0x22 */ E_ID_22,
+    // /* 0x23 */ E_ID_23,
+    // /* 0x24 */ E_ID_24,
+    // /* 0x25 */ E_ID_25,
+    // /* 0x26 */ E_ID_26,
+    // /* 0x27 */ E_ID_27,
+    // /* 0x28 */ E_ID_28,
+    // /* 0x29 */ E_ID_29,
+    // /* 0x2A */ E_ID_2A,
+    // /* 0x2B */ E_ID_2B,
+    // /* 0x2C */ E_ID_2C,
+    // /* 0x2D */ E_ID_2D,
+    // /* 0x2E */ E_ID_2E,
+    // /* 0x2F */ E_ID_2F,
+    // /* 0x30 */ E_ID_30,
+    // /* 0x31 */ E_ID_31,
+    // /* 0x32 */ E_ID_32,
+    // /* 0x33 */ E_ID_33,
+    // /* 0x34 */ E_ID_34,
+    // /* 0x35 */ E_ID_35,
+    // /* 0x36 */ E_ID_36,
+    // /* 0x37 */ E_ID_37,
+    // /* 0x38 */ E_ID_38,
+    // /* 0x39 */ E_ID_39,
+    // /* 0x3A */ E_ID_3A,
+    // /* 0x3B */ E_ID_3B,
+    // /* 0x3C */ E_ID_3C,
+    // /* 0x3D */ E_ID_3D,
+    // /* 0x3E */ E_ID_3E,
+    // /* 0x3F */ E_ID_3F,
+    // /* 0x40 */ E_ID_40,
+    // /* 0x41 */ E_ID_41,
+    // /* 0x42 */ E_ID_42,
+    // /* 0x43 */ E_ID_43,
+    // /* 0x44 */ E_ID_44,
+    // /* 0x45 */ E_ID_45,
+    // /* 0x46 */ E_ID_46,
+    // /* 0x47 */ E_ID_47,
+    // /* 0x48 */ E_ID_48,
+    // /* 0x49 */ E_ID_49,
+    // /* 0x4A */ E_ID_4A,
+    // /* 0x4B */ E_ID_4B,
+    /* 0x4C */ E_BONE_ARCHER = 0x4C,
+    /* 0x4D */ E_BONE_ARCHER_ARROW,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -62,8 +112,8 @@ extern EInit g_EInitUnkId3F;
 // extern EInit D_us_80180C7C;
 // extern EInit D_us_80180C88;
 // extern EInit D_us_80180C94;
-// extern EInit D_us_80180CA0;
-// extern EInit D_us_80180CAC;
+extern EInit g_EInitBoneArcher;
+extern EInit g_EInitBoneArcherArrow;
 // extern EInit D_us_80180CB8;
 // extern EInit D_us_80180CC4;
 // extern EInit D_us_80180CD0;
