@@ -65,7 +65,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB4F8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadEquipIcon);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104810);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB6B4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB720);
 

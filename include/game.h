@@ -1037,7 +1037,7 @@ typedef struct {
 #define RELIC_FLAG_ACTIVE 2
 #if defined(VERSION_US)
 #define NUM_AVAIL_RELICS (NUM_RELICS - 2)
-#elif defined(VERSION_HD)
+#else
 #define NUM_AVAIL_RELICS (NUM_RELICS)
 #endif
 typedef enum {
@@ -1154,7 +1154,9 @@ typedef struct {
     /* 80097BF4 */ s32 killCount;
     /* 80097BF8 */ u32 D_80097BF8;
     /* 80097BFC */ u32 subWeapon;
-    /* 80097C00 */ u32 equipment[7];
+    // Note: some parts of game act like these two are just equipment[7]
+    /* 80097C00 */ u32 equipment[2];
+    /* 80097C00 */ u32 wornEquipment[5];
     /* 80097C1C */ u32 attackHands[2]; // right hand, left hand
     /* 80097C24 */ s32 defenseEquip;
     /* 80097C28 */ u16 elementsWeakTo;
@@ -1488,7 +1490,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* combo;
-    /* 0x08 */ const char* description;
+    /* 0x08 */ char* description;
     /* 0x0C */ u8 mpUsage;
     /* 0x0D */ u8 nFramesInvincibility;
     /* 0x0E */ u16 stunFrames;
@@ -1502,7 +1504,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ const char* name;
-    /* 0x04 */ const char* desc;
+    /* 0x04 */ char* desc;
     /* 0x08 */ u16 unk08;
     /* 0x0A */ u16 unk0A;
     /* 0x0C */ s32 unk0C;
