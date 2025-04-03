@@ -74,7 +74,7 @@ void EntityBoneArcher(Entity* self) {
         InitializeEntity(g_EInitBoneArcher);
         if (self->params) {
             self->hitboxState = 0;
-            self->animCurFrame = self->params + 0x18;
+            self->animCurFrame = self->params + 24;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
@@ -168,7 +168,7 @@ void EntityBoneArcher(Entity* self) {
             if (tempVar & 0x80) {
                 self->animCurFrame = 1;
                 self->ext.boneArcher.unk86 = 1;
-                step = 0xA;
+                step = 10;
             }
             break;
         }
@@ -193,7 +193,7 @@ void EntityBoneArcher(Entity* self) {
             }
             self->velocityY = FIX(-4.0);
             self->step_s++;
-            self->animCurFrame = 0xE;
+            self->animCurFrame = 14;
         }
         if (UnkCollisionFunc3(D_us_80182BD8) & 1) {
             SetStep(4);
