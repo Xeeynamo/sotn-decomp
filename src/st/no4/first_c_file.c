@@ -1,10 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no4.h"
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", NO4_EntityBackgroundBlock);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityLockCamera);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C0FC8);
 
