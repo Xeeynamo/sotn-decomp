@@ -27,11 +27,6 @@ INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D85A4);
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8654);
 
-// #ifndef NON_MATCHING
-// INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8D44);
-// #else
-
-// asm/us/st/no1/data/e_skeleton.data.s:glabel D_us_80182780
 extern u8 D_us_80182780[];
 
 void func_us_801D8D44(Entity* self) {
@@ -54,7 +49,6 @@ void func_us_801D8D44(Entity* self) {
         }
     }
 }
-// #endif
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8DF0);
 
