@@ -110,7 +110,7 @@ segments:
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
       - [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       - [0x6A8F8, .data, dra/5F60C]
-      - [0x6AA98, data]
+      - [0x6AB38, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
