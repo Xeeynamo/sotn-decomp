@@ -832,7 +832,7 @@
 | no4    | AnimateEntity                       |      101 |          7 |        |                                 |       |
 | st0    | AnimateEntity                       |      101 |          7 |        |                                 |       |
 | wrp    | AnimateEntity                       |      101 |          7 |        |                                 |       |
-| ric    | RicEntityCrashStopwatch             |      101 |          8 | Yes    |                                 |       |
+| ric    | RicEntityCrashStopwatch             |      101 |          8 | Yes    | https://decomp.me/scratch/IrICT | 0.84  |
 | dra    | func_80113F7C                       |      101 |         14 |        |                                 |       |
 | ric    | func_80159C04                       |      101 |         14 |        | https://decomp.me/scratch/BsYZP | 0.967 |
 | dra    | MenuDrawRect                        |      102 |          6 |        |                                 |       |
@@ -1200,7 +1200,7 @@
 | lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
 | no4    | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
-| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.877 |
+| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.891 |
 | no4    | func_pspeu_0923F390                 |      324 |         16 |        |                                 |       |
 | st0    | func_801AF380                       |      325 |          7 |        | https://decomp.me/scratch/WwUfr | 0.998 |
 | lib    | EntityThornweed                     |      330 |         47 | Yes    |                                 |       |
@@ -1462,7 +1462,7 @@
 | dra    | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
 | dra    | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
-| ric    | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        |                                 |       |
+| ric    | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        | https://decomp.me/scratch/IrICT | 0.84  |
 | lib    | func_us_801B15C0                    |     1588 |        176 | Yes    |                                 |       |
 | lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
