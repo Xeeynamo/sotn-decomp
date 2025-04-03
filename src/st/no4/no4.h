@@ -53,7 +53,7 @@ extern EInit g_EInitCommon;
 // extern EInit D_us_80180C10;
 // extern EInit D_us_80180C1C;
 // extern EInit D_us_80180C28;
-// extern EInit D_us_80180C34;
+extern EInit g_EInitUnkId3F;
 // extern EInit D_us_80180C40;
 // extern EInit D_us_80180C4C;
 // extern EInit D_us_80180C58;

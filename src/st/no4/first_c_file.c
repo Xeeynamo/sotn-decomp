@@ -1,10 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no4.h"
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", NO4_EntityBackgroundBlock);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityLockCamera);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C0FC8);
 
@@ -92,7 +87,21 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C789C);
 
 void func_us_801C7FA4(void) {}
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C7FAC);
+extern u16 D_us_801817E8;
+
+void func_us_801C7FAC(void) {
+    s32 i;
+    Tilemap* tileMap = &g_Tilemap;
+    s16 offset = 0x595;
+    u16* var_a2 = &D_us_801817E8;
+
+    for (i = 0; i < 7; i++) {
+        *(tileMap->fg + offset) = *var_a2++;
+        offset++;
+        *(tileMap->fg + offset) = *var_a2++;
+        offset = offset + 0xCF;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C801C);
 
