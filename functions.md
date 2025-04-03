@@ -1200,7 +1200,7 @@
 | lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
 | no4    | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
-| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.792 |
+| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.877 |
 | no4    | func_pspeu_0923F390                 |      324 |         16 |        |                                 |       |
 | st0    | func_801AF380                       |      325 |          7 |        | https://decomp.me/scratch/WwUfr | 0.998 |
 | lib    | EntityThornweed                     |      330 |         47 | Yes    |                                 |       |
