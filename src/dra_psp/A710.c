@@ -4,6 +4,22 @@
 #include "servant.h"
 #include "../dra/menu.h"
 
+const char* D_800A2D10[] = {
+    "装備技システム短剣必殺使攻撃力防",
+};
+
+const char* D_800A2D14[] = {
+    "御魔導器拳こ一覧棒両手食物爆弾盾",
+};
+
+const char* D_800A2D18[] = {
+    "投射薬ん右左武兜鎧マントその他い",
+};
+
+const char* D_800A2D58[] = {
+    "再開中断終了決定戻る　　　　　　",
+};
+
 extern RoomBossTeleport D_800A297C[];
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;

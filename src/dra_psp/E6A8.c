@@ -355,7 +355,38 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", SortTimeAttackEntries);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuTimeAttackDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuButtonConfigDraw);
+u8 g_ChButtons[] = {SQUARE,  CIRCLE,  CROSS,   TRIANGLE};
+u8 g_ChLRL[] = {CH('L'), CH('R'), CH('L'), NULL};
+u8 g_ChPlus[] = {NULL, NULL, CH('+'), NULL};
+u8 g_ChNulls[] = {NULL, NULL, NULL, NULL};
+u8 g_ChPlusR[] = {NULL, NULL, CH('R'), NULL, NULL, NULL, NULL, NULL};
+void MenuButtonConfigDraw(MenuContext* ctx) {
+    s32 i;
+    s32 buttonId;
+    s32 btn1_x;
+    s32 btn2_x;
+
+    const s32 InitCursorX = 0xA4;
+    const s32 W = 0x54;
+    
+    s32 cursorX = InitCursorX;
+
+    for (i = 0; i < 7; i++) {
+        MenuDrawStr(g_MenuStr[22 + i], cursorX, 0x30 + (i * 0x10), ctx);
+        buttonId = g_Settings.buttonConfig[i];
+        btn1_x = (buttonId * 12);
+        MenuDrawChar(g_ChButtons[buttonId], 0xFC + btn1_x, 0x30 + (i * 0x10), ctx);
+        if (buttonId >= 4) {
+            MenuDrawChar(g_ChPlus[buttonId-4], 0x104 + btn1_x, 0x30 + (i * 0x10), ctx);
+            btn2_x = btn1_x + 8;
+            MenuDrawChar(g_ChPlusR[buttonId-4], 0x104 + btn2_x,
+                         0x30 + (i * 0x10), ctx);
+        }
+    }
+
+    func_800F5E68(
+        ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, W, 12, 4, 1);
+}
 
 void MenuReverseCloakDraw(MenuContext* context) {
     const int StrX = 188;
@@ -822,8 +853,7 @@ void func_800F9E18(s32 arg0) {
         DrawSync(0);
     }
 
-    D_psp_0914A394 = func_psp_090EAF08(
-        0, &D_psp_0914A0D0, &D_psp_09149E90, &D_psp_0914A248, &D_psp_09149FB0);
+    D_psp_0914A394 = func_psp_090EAF08(0, &D_psp_0914A0D0, &D_psp_09149E90, &D_psp_0914A248, &D_psp_09149FB0);
     if (D_psp_0914A394) {
         func_psp_091040A0(&D_psp_0914A388);
     }
@@ -948,22 +978,6 @@ extern s32 D_psp_091CDD40;
 extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 
-static const char* D_800A2D10[] = {
-    "装備技システム短剣必殺使攻撃力防",
-};
-
-static const char* D_800A2D14[] = {
-    "御魔導器拳こ一覧棒両手食物爆弾盾",
-};
-
-static const char* D_800A2D18[] = {
-    "投射薬ん右左武兜鎧マントその他い",
-};
-
-static const char* D_800A2D58[] = {
-    "再開中断終了決定戻る　　　　　　",
-};
-
 #define PAD_MENU_SELECT_ALT (D_psp_08B42050)
 #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
 #define PAD_MENU_BACK (D_psp_08B42054)
@@ -979,6 +993,12 @@ typedef enum {
     ENGINE_INIT_SERVANT_2,
     MENU_SAME_SERVANT
 } InitializeMode;
+
+extern const char* D_800A2D10[];
+extern const char* D_800A2D14[];
+extern const char* D_800A2D18[];
+extern const char* D_800A2D58[];
+
 
 void MenuHandle(void) {
     s32 temp_s1;
