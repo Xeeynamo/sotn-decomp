@@ -72,8 +72,8 @@ void func_us_801DBBEC(Entity* self);
 void func_us_801C86F4(Entity* self);
 void func_us_801DBFAC(Entity* self);
 void func_us_801DC944(Entity* self);
-void func_us_801DCA9C(Entity* self);
-void func_us_801DD410(Entity* self);
+void EntityBoneArcher(Entity* self);
+void EntityBoneArcherArrow(Entity* self);
 void func_us_801C801C(Entity* self);
 void func_us_801C9A54(Entity* self);
 void func_us_801C4BD8(Entity* self);
@@ -170,8 +170,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x48 */ func_us_801C86F4,
     /* 0x49 */ func_us_801DBFAC,
     /* 0x4A */ func_us_801DC944,
-    /* 0x4B */ func_us_801DCA9C,
-    /* 0x4C */ func_us_801DD410,
+    /* 0x4B */ EntityBoneArcher,
+    /* 0x4C */ EntityBoneArcherArrow,
     /* 0x4D */ func_us_801C801C,
     /* 0x4E */ func_us_801C9A54,
     /* 0x4F */ func_us_801C4BD8,
@@ -216,8 +216,8 @@ EInit D_us_80180C70 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
 EInit D_us_80180C7C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0D2};
 EInit D_us_80180C88 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
 EInit D_us_80180C94 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
-EInit D_us_80180CA0 = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
-EInit D_us_80180CAC = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
+EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
+EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
 EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
 EInit D_us_80180CC4 = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
 EInit D_us_80180CD0 = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
