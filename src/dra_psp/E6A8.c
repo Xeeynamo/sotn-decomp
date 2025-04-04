@@ -324,11 +324,15 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6A48);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuJosephsCloakDraw);
 
-extern s32 D_psp_0914A3B8;
-extern s32 D_psp_0914A3D0;
-extern s32 D_psp_0914A3C8;
-extern s32 D_psp_0914A3D8;
-extern s32 D_psp_0914A3C0;
+u8 g_ChButtons[] = {SQUARE,  CIRCLE,  CROSS,   TRIANGLE, CH('L'), CH('R'), CH('L'), NULL};
+u8 g_ChButtons2[] = {NULL, NULL, CH('+'), NULL, NULL, NULL, NULL, NULL};
+u8 g_ChButtons3[] = {NULL, NULL, CH('R'), NULL, NULL, NULL, NULL, NULL};
+
+char D_psp_0914A3B8[] = {CH('R'), CH('G'), CH('B')}; //en
+char D_psp_0914A3C0[] = {CH('R'), CH('V'), CH('B')}; //it
+char D_psp_0914A3C8[] = {CH('R'), CH('V'), CH('A')}; //sp
+char D_psp_0914A3D0[] = {CH('R'), CH('V'), CH('B')}; //fr
+char D_psp_0914A3D8[] = {CH('R'), CH('G'), CH('B')}; //ge
 
 extern u8* g_ChRgb[];
 
@@ -339,8 +343,7 @@ void MenuWindowColorsDraw(MenuContext* context) {
     s32 y;
     s32 i;
 
-    *g_ChRgb =
-        func_psp_090EAF08(&D_psp_0914A3B8, &D_psp_0914A3D0, &D_psp_0914A3C8,
+    *g_ChRgb = func_psp_090EAF08(&D_psp_0914A3B8, &D_psp_0914A3D0, &D_psp_0914A3C8,
                           &D_psp_0914A3D8, &D_psp_0914A3C0);
 
     for (i = 0; i < 3; i++) {
@@ -355,9 +358,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", SortTimeAttackEntries);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuTimeAttackDraw);
 
-u8 g_ChButtons[] = {SQUARE,  CIRCLE,  CROSS,   TRIANGLE, CH('L'), CH('R'), CH('L'), NULL};
-u8 g_ChButtons2[] = {NULL, NULL, CH('+'), NULL, NULL, NULL, NULL, NULL};
-u8 g_ChButtons3[] = {NULL, NULL, CH('R'), NULL, NULL, NULL, NULL, NULL};
 void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 i;
     s32 buttonId;
@@ -662,7 +662,9 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawConsumableCount);
 
 extern MenuData g_MenuData;
 extern s32 D_801377FC[NUM_MENU];
-extern u8 D_800A2D80[];
+
+u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
+    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
 
 void MenuDraw(void) {
     u8 padding[32];
@@ -1054,13 +1056,14 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0DD8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0E10);
 
-extern RECT D_800A2D90;
 extern u8* D_psp_0914A394;
 extern s32 D_psp_0914A0D0;
 extern s32 D_psp_09149E90;
 extern s32 D_psp_0914A248;
 extern s32 D_psp_09149FB0;
 extern s32 D_psp_0914A388;
+
+RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 
 void func_800F9E18(s32 arg0) {
     char buffer[38];
