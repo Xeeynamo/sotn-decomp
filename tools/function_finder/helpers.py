@@ -6,23 +6,26 @@ import zipfile
 from io import BytesIO
 import difflib
 
+
 def are_strings_similar(str1, str2, threshold=0.8):
     similarity = difflib.SequenceMatcher(None, str1, str2).ratio()
     return similarity >= threshold
 
+
 zip_cache = {}
+
 
 def get_asm(slug):
     if slug in zip_cache:
         return zip_cache[slug]
-    url = f'https://decomp.me/api/scratch/{slug}/export'
+    url = f"https://decomp.me/api/scratch/{slug}/export"
     response = requests.get(url)
     if response.status_code == 200:
         with zipfile.ZipFile(BytesIO(response.content)) as the_zip:
             zip_contents = the_zip.namelist()
-            if 'target.s' in zip_contents:
-                with the_zip.open('target.s') as file:
-                    target_content = file.read().decode('utf-8')
+            if "target.s" in zip_contents:
+                with the_zip.open("target.s") as file:
+                    target_content = file.read().decode("utf-8")
                 zip_cache[slug] = target_content
                 return target_content
             else:
@@ -31,7 +34,9 @@ def get_asm(slug):
         print(f"Failed to download the zip file: Status code {response.status_code}")
     return None
 
+
 result_cache = {}
+
 
 def fetch_all_results(url):
     if url in result_cache:
@@ -43,15 +48,18 @@ def fetch_all_results(url):
         response = requests.get(url)
         data = response.json()
 
-        results.extend(data.get('results', []))
+        results.extend(data.get("results", []))
 
-        url = data.get('next')
+        url = data.get("next")
 
     result_cache[url] = results
     return results
 
+
 def find_scratches(name, platform, local_asm=None, use_local=False):
-    results = fetch_all_results(f"https://decomp.me/api/scratch?search={name}&page_size=100")
+    results = fetch_all_results(
+        f"https://decomp.me/api/scratch?search={name}&page_size=100"
+    )
 
     best_result = None
     best_percent = 0
@@ -65,7 +73,7 @@ def find_scratches(name, platform, local_asm=None, use_local=False):
             continue
 
         if use_local:
-            remote_asm = get_asm(result['slug'])
+            remote_asm = get_asm(result["slug"])
 
             if not are_strings_similar(local_asm, remote_asm):
                 continue
@@ -82,6 +90,9 @@ def find_scratches(name, platform, local_asm=None, use_local=False):
             best_result = result
 
     if best_result:
-        return [f"https://decomp.me/scratch/{best_result['slug']}", round(best_percent, 3)]
+        return [
+            f"https://decomp.me/scratch/{best_result['slug']}",
+            round(best_percent, 3),
+        ]
 
     return None
