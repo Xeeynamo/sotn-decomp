@@ -107,7 +107,7 @@ get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
 get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
 define link
-	$(muffle)$(call echo,Linking $(1),optional)
+	$(muffle)echo -e "Linking $(1)"
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
@@ -144,8 +144,8 @@ clean:
 FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ include/,*.c *.h))
 format-src.run:# For output control and progress tracking in the event of an error
-	mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
-	$(call echo,Running clang to format src/* and include/* (this may take some time))
+	$(muffle)mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
+	$(muffle)echo -e "Running clang to format src/* and include/* (this may take some time)"
 $(addsuffix .format-src,$(FORMAT_SRC_FILES)): %.format-src: format-src.run $(CLANG)
 	$(muffle)echo "$*" >> /tmp/sotn-decomp/$<; $(CLANG) -i $*
 format-src: $(addsuffix .format-src,$(FORMAT_SRC_FILES))# Appends .format-src for deconfliction and runs each file individually in order to leverage the -j option
@@ -158,9 +158,11 @@ format-tools:
 FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 $(addsuffix .format-symbols,$(FORMAT_SYMBOLS_FILES)): %.format-symbols: | $(VENV_DIR)
-	$(call echo,Removing orphan symbols using $*)$(PYTHON) tools/symbols.py remove-orphans $*
+	$(muffle)echo -e "Removing orphan symbols using $*"
+	$(muffle)$(PYTHON) tools/symbols.py remove-orphans $*
 $(addsuffix .format-symbols,us pspeu hd saturn): %.format-symbols: | $(VENV_DIR)
-	$(call echo,Sorted $* symbols)VERSION=$* $(PYTHON) tools/symbols.py sort
+	$(muffle)echo -e "Sorting $* symbols"
+	$(muffle)VERSION=$* $(PYTHON) tools/symbols.py sort
 format-symbols: $(addsuffix .format-symbols,us pspeu hd saturn $(FORMAT_SYMBOLS_FILES))
 
 format-license:
@@ -214,7 +216,7 @@ ifndef SOURCE
 	$(error SOURCE environment variable must be set to generate context)
 endif
 	VERSION=$(VERSION) $(PYTHON) $(M2CTX_APP) $(SOURCE)
-	$(call echo,ctx.c has been updated.)
+	$(muffle)echo "ctx.c has been updated."
 
 disks/us: | $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
@@ -232,7 +234,7 @@ DISK_PREPARE_FILES += $(foreach target,$(filter-out sel,$(STAGES)) $(BOSSES),$(c
 disk-prepare: build $(SOTNDISK)
 	mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
-	$(call echo,cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/) $(foreach item,$(DISK_PREPARE_FILES),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
+	$(muffle)echo "cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/<OVL_PATH>"; $(foreach item,$(DISK_PREPARE_FILES),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
 	cd tools/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
@@ -243,7 +245,7 @@ disk: disk-prepare
 # Targets for copying the physical disk to an image file
 $(addprefix disks/,sotn.%.bin sotn.%.cue): PHONY
 	$(muffle)( which -s cdrdao && which -s toc2cue ) || (echo "cdrdao(1) and toc2cue(1) must be installed" && exit 1 )
-	$(call echo,Dumping disk)
+	$(muffle)echo "Dumping disk"
 	$(muffle)cd disks && \
         DEVICE="$(shell cdrdao scanbus 2>&1 | grep -vi cdrdao | head -n1 | sed 's/ : [^:]*$$//g')" && \
         cdrdao read-cd \
@@ -306,7 +308,8 @@ $(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
 
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
 $(VENV_DIR):
-	$(call echo,Creating python virtual environment) $(SYSTEM_PYTHON) -m venv $(VENV_DIR)
+	echo -e "Creating python virtual environment"
+	$(SYSTEM_PYTHON) -m venv $(VENV_DIR)
 	$(MAKE) python-dependencies
 tools/python-dependencies.make.chkpt: tools/requirements-python.txt | $(VENV_DIR)
 	$(PIP) install -r tools/requirements-python.txt && touch $@
@@ -392,12 +395,12 @@ PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to
 PHONY_TARGETS += all extract build patch check 
 PHONY_TARGETS += dump-disk $(addprefix dump-disk.,eu hk jp10 jp11 saturn us usproto) extract-disk
 PHONY_TARGETS += format-src format-src.run $(addsuffix .format-src,$(FORMAT_SRC_FILES)) format-tools format-symbols format-license
-PHONY_TARGETS += $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))) force-extract context $(addprefix format-symbols.,us hd pspeu saturn $(FORMAT_SYMBOLS_FILES))
+PHONY_TARGETS += $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))) force-extract $(addprefix format-symbols.,us hd pspeu saturn $(FORMAT_SYMBOLS_FILES))
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies.,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
 MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
-.PHONY: $(PHONY_TARGETS) expected clean force-symbols disk disk-prepare disk-debug
+.PHONY: $(PHONY_TARGETS) expected clean force-symbols disk disk-prepare disk-debug context
 # Specifying .SILENT in this manner allows us to set the VERBOSE environment variable and display everything for debugging
 $(VERBOSE).SILENT: $(MUFFLED_TARGETS)
 
