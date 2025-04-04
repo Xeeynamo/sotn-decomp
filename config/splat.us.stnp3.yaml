@@ -55,6 +55,8 @@ segments:
       - [0x1C50, .data, e_collect]
       - [0x1F40, .data, e_misc] # EntityRelicOrb
       - [0x205C, data]
+      - [0x2168, .data, water_effects]
+      - [0x2224, data]
       - [0x22B0, data]
       - [0x23D0, data]
       - [0x2400, data]
@@ -174,8 +176,8 @@ segments:
       - [0x434E4, c, e_particles]
       - [0x43D28, c, e_room_fg]
       - [0x43E14, c, popup]
-      - [0x44144, c, player_water_effect]
-      - [0x44DCC, c, e_merman2] # Merman Entities
+      - [0x44144, c, water_effects]
+      - [0x46458, c, e_merman2] # Merman Entities
       - [0x48238, c] # Merman Entities (2)
       - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c, e_bat]

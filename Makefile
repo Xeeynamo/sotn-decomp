@@ -153,7 +153,7 @@ format-src: $(addsuffix .format-src,$(FORMAT_SRC_FILES))# Appends .format-src fo
 	$(SOTNLINT) 1>/dev/null
 
 format-tools:
-	$(BLACK) *.py tools/*.py tools/sotn_permuter/permuter_loader.py tools/splat_ext/*.py tools/split_jpt_yaml/*.py
+	$(BLACK) *.py tools/*.py tools/sotn_permuter/permuter_loader.py tools/function_finder/*.py tools/splat_ext/*.py tools/split_jpt_yaml/*.py
 
 FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))

@@ -89,6 +89,7 @@ def get_asm_files(asm_path):
 
     return files
 
+
 def find_wip(o):
     result = find_scratches(o[1], "psp")
 
@@ -130,12 +131,12 @@ if __name__ == "__main__":
         else:
             ovl_name = ""
 
-            ovl_pattern = r'/([^/]+)_psp/'
+            ovl_pattern = r"/([^/]+)_psp/"
             ovl_match = re.search(ovl_pattern, name)
             if ovl_match:
                 ovl_name = ovl_match.group(1)
 
-            name_pattern = r'/([^/]+)\.s'
+            name_pattern = r"/([^/]+)\.s"
             name_match = re.search(name_pattern, name)
             if name_match:
                 func_name = name_match.group(1)
