@@ -2059,7 +2059,6 @@ extern s32 g_UseDisk;
 extern s32 D_800978B4;
 extern s32 D_800978C4;
 extern u32 g_MenuStep;
-extern char D_80097902[];
 extern s32 D_80097904;
 extern s32 g_ScrollDeltaX;
 extern s32 g_ScrollDeltaY;

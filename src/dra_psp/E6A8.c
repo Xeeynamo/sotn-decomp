@@ -1054,7 +1054,7 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0DD8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0E10);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9DD0);
 
 extern u8* D_psp_0914A394;
 extern s32 D_psp_0914A0D0;
@@ -1098,7 +1098,28 @@ void func_800F9E18(s32 arg0) {
         }
     }
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9F40);
+
+#define ShowText(str, id) func_800F99B8(str, id, 0);
+
+const char D_800DC6EC[] = {
+    "　　　　　　　　　　　　　　　　　　　　　",
+};
+
+void func_800F9F40(void) {
+    char buffer[38];
+    u8 spellId;
+    s32 i;
+
+    for (i = 0; i < NUM_SPELLS; i++) {
+        spellId = g_Status.spells[i];
+        if (spellId & 0x80) {
+            spellId ^= 0x80;
+            STRCPY(buffer, D_800DC6EC);
+            func_800F9DD0(g_SpellDefs[spellId].name, buffer);
+            ShowText(buffer, 0x80 + i);
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandleCursorInput);
 
@@ -1208,7 +1229,6 @@ extern u32 D_psp_08B42054; // psp triangle button
 #define PAD_MENU_SORT (PAD_SQUARE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
-#define ShowText(str, id) func_800F99B8(str, id, 0);
 
 s32 D_8013784C;
 typedef enum {
