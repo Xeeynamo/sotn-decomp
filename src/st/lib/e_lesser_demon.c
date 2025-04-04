@@ -1,6 +1,54 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
+extern s32 D_us_80181ACC;
+
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_22);
+extern s32 E_ID(ID_21);
+extern s32 E_ID(ID_20);
+extern s32 E_ID(ID_37);
+extern s32 E_ID(SKELETON);
+extern s32 E_ID(MUDMAN);
+#endif
+
+static s16 D_us_80181AD4[] = {0, 32, 0, 4, 8, -4, -16, 0};
+static s16 D_us_80181AE4[] = {0, 32, 8, 0};
+static s16 D_us_80181AEC[] = {0, 14, 255, 0};
+static s16 D_us_80181AF4[] = {0, 8, 10, 8, 8, 10, 8, 0};
+static u8 D_us_80181B04[] = {6, 1, 9, 2, 9, 3, 14, 4, 9, 5, 9, 6, 6, 1, 0, 0};
+static u8 D_us_80181B14[] = {6, 7,  18, 8,  1, 1, 1,  9,  1, 45, 2,  46,
+                             2, 47, 1,  45, 1, 9, 12, 11, 4, 1,  -1, 0};
+static u8 D_us_80181B2C[] = {12, 12, 4, 13, -1, 0};
+static u8 D_us_80181B34[] = {6, 14, 6, 15, 6, 16, 6, 17, 1, 18, 6, 15, 0, 0};
+static u8 D_us_80181B44[] = {4, 13, 10, 12, -1, 0};
+static u8 D_us_80181B4C[] = {5,  39, 4,  41, 4,  15, 5,  42, 3,  16, 3,  43, 2,
+                             44, 10, 40, 1,  44, 1,  16, 1,  15, 2,  41, 0,  0};
+static u8 D_us_80181B68[] = {3,  39, 2,  41, 2,  15, 3,  42, 2,  16, 2,  43, 1,
+                             44, 6,  40, 1,  44, 1,  16, 1,  15, 2,  41, 0,  0};
+static u8 D_us_80181B84[] = {4, 19, 2, 20, 2, 21, 2, 22, 10, 17, -1, 0};
+static u8 D_us_80181B90[] = {16, 7, 32, 8, 1, 1, 26, 9, 10, 1, -1, 0};
+static u8 D_us_80181B9C[] = {
+    10, 18, 16, 19, 48, 24, 10, 19, 10, 16, 10, 17, -1, 0};
+static u8 D_us_80181BAC[] = {
+    24, 1, 12, 2, 12, 3, 48, 4, 12, 5, 12, 6, 24, 1, 0, 0};
+static u8 D_us_80181BBC[] = {
+    6, 39, 6, 41, 6, 12, 6, 13, 6, 14, 6, 20, 6, 24, -1, 0};
+static u8 D_us_80181BCC[] = {1, 25, 1, 26, 1, 27, 1, 28, 0, 0};
+static u8 D_us_80181BD8[] = {
+    2, 29, 2, 30, 2, 31, 2, 32, 2, 33, 1, 34, 1, 36, -1, 0};
+static u8 D_us_80181BE8[] = {4, 37, 4, 38, -1, 0};
+static u8 D_us_80181BF0[] = {
+    1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0};
+static u8 D_us_80181C04[][3] = {
+    {0xC0, 0x80, 0xC0}, {0xC0, 0x80, 0x80}, {0xC0, 0xC0, 0x80},
+    {0x80, 0xC0, 0x80}, {0x80, 0xA0, 0xA0}, {0x80, 0x80, 0xC0},
+    {0xC0, 0x80, 0xC0}};
+static u8 D_us_80181C1C[][3] = {
+    {0x60, 0x40, 0x60}, {0x60, 0x40, 0x40}, {0x60, 0x60, 0x40},
+    {0x40, 0x60, 0x40}, {0x40, 0x60, 0x60}, {0x40, 0x40, 0x60},
+    {0x60, 0x40, 0x60}};
+
 // Seems to be related to the iframes of the ectoplasm and the skeleton spawns
 // Mudman spawn animation causes iframes for it
 void func_us_801BB8DC(s16* unkArg) {
@@ -19,12 +67,14 @@ void func_us_801BB8DC(s16* unkArg) {
             g_CurrentEntity->step_s = 2;
         }
         break;
+
     case 1:
         if (UnkCollisionFunc3(unkArg) & 1) {
             g_CurrentEntity->animCurFrame = 1;
             g_CurrentEntity->step_s++;
         }
         break;
+
     case 2:
         g_CurrentEntity->unk6C += 4;
         if (g_CurrentEntity->unk6C > 0xA0) {
@@ -34,13 +84,13 @@ void func_us_801BB8DC(s16* unkArg) {
             g_CurrentEntity->step_s++;
         }
         break;
+
     case 3:
         if (g_CurrentEntity->ext.lesserDemon.unkB0 % 2) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
         } else {
             g_CurrentEntity->palette = PAL_OVL(0x19F);
         }
-
         if (!(--g_CurrentEntity->ext.lesserDemon.unkB0)) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
             g_CurrentEntity->hitboxState = 3;
@@ -53,14 +103,12 @@ void func_us_801BB8DC(s16* unkArg) {
 // Seems to be the windup just before the spit attack
 u8 func_us_801BBAB4(void) {
     Primitive* prim;
-    Pos tempPrim;
+    Pos tempPos;
     s32 primIndex;
     s32 unkVar;
     u8 randomVal;
     u8 ret;
-#ifdef VERSION_US
-    s32 dummy[2];
-#endif
+    s32 pad[2];
 
     ret = false;
     switch (g_CurrentEntity->ext.lesserDemon.unk84) {
@@ -71,7 +119,7 @@ u8 func_us_801BBAB4(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
             g_CurrentEntity->ext.lesserDemon.unk7C = prim;
-            for (; prim != NULL; prim = prim->next) {
+            while (prim != NULL) {
                 PGREY_ALT(prim, 0, 0)
                 prim->u0 = 2;
                 prim->v0 = 2;
@@ -87,26 +135,26 @@ u8 func_us_801BBAB4(void) {
                     randomVal = randomVal + 0x40;
                 }
                 prim->x0 = (g_CurrentEntity->posX.i.hi +
-                            ((rcos((randomVal) * 0x10) * 0x60) >> 0xC) +
+                            ((rcos(randomVal * 0x10) * 0x60) >> 0xC) +
                             (Random() & 0x3F)) -
                            0x1F;
                 prim->y0 = (g_CurrentEntity->posY.i.hi +
-                            ((rsin((randomVal) * 0x10) * 0x60) >> 0xC) +
+                            ((rsin(randomVal * 0x10) * 0x60) >> 0xC) +
                             (Random() & 0x3F)) -
                            0x1F;
                 prim->x1 = 0;
                 prim->y1 = 0;
                 if (g_CurrentEntity->facingLeft) {
                     unkVar =
-                        prim->x0 - (g_CurrentEntity->posX.i.hi + 0xA) << 0x10;
+                        prim->x0 - (g_CurrentEntity->posX.i.hi + 10) << 0x10;
                 } else {
                     unkVar =
-                        prim->x0 - (g_CurrentEntity->posX.i.hi - 0xA) << 0x10;
+                        prim->x0 - (g_CurrentEntity->posX.i.hi - 10) << 0x10;
                 }
                 LOW(prim->x2) = -unkVar / 48;
-                unkVar =
-                    (prim->y0 - (g_CurrentEntity->posY.i.hi - 0xB) << 0x10);
+                unkVar = prim->y0 - (g_CurrentEntity->posY.i.hi - 11) << 0x10;
                 LOW(prim->x3) = -unkVar / 48;
+                prim = prim->next;
             }
         } else {
             ret = true;
@@ -115,20 +163,22 @@ u8 func_us_801BBAB4(void) {
         g_CurrentEntity->ext.lesserDemon.unk80 = 0;
         g_CurrentEntity->ext.lesserDemon.unk84++;
         break;
+
     case 1:
         prim = g_CurrentEntity->ext.lesserDemon.unk7C;
-        for (; prim != NULL; prim = prim->next) {
-            tempPrim.x.i.hi = prim->x0;
-            tempPrim.x.i.lo = prim->x1;
-            tempPrim.y.i.hi = prim->y0;
-            tempPrim.y.i.lo = prim->y1;
-            tempPrim.x.val += LOWU(prim->x2);
-            tempPrim.y.val += LOWU(prim->x3);
-            LOH(prim->x0) = tempPrim.x.i.hi;
-            LOH(prim->x1) = tempPrim.x.i.lo;
-            LOH(prim->y0) = tempPrim.y.i.hi;
-            LOH(prim->y1) = tempPrim.y.i.lo;
+        while (prim != NULL) {
+            tempPos.x.i.hi = prim->x0;
+            tempPos.x.i.lo = prim->x1;
+            tempPos.y.i.hi = prim->y0;
+            tempPos.y.i.lo = prim->y1;
+            tempPos.x.val += LOWU(prim->x2);
+            tempPos.y.val += LOWU(prim->x3);
+            LOH(prim->x0) = tempPos.x.i.hi;
+            LOH(prim->x1) = tempPos.x.i.lo;
+            LOH(prim->y0) = tempPos.y.i.hi;
+            LOH(prim->y1) = tempPos.y.i.lo;
             prim->r0 += 3;
+            prim = prim->next;
         }
         prim = g_CurrentEntity->ext.lesserDemon.unk7C;
         PrimToggleVisibility(prim, 0x18);
@@ -140,18 +190,13 @@ u8 func_us_801BBAB4(void) {
             g_CurrentEntity->ext.lesserDemon.unk80 = 0;
         }
         break;
+
     case 2:
         ret = true;
     }
     return ret;
 }
 
-extern Collider D_us_80181AEC[];
-extern u8 D_us_80181BCC[];
-extern u8 D_us_80181BD8[];
-extern u8 D_us_80181BE8[];
-
-// Lesser Demon aerial spit projectile
 void EntityLesserDemonSpit(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -166,6 +211,7 @@ void EntityLesserDemonSpit(Entity* self) {
         self->rotX = 0x180;
         self->rotY = 0x180;
         break;
+
     case 1:
         if (self->facingLeft) {
             self->velocityX = FIX(4.0);
@@ -175,6 +221,7 @@ void EntityLesserDemonSpit(Entity* self) {
         self->velocityY = FIX(4.0);
         self->step++;
         break;
+
     case 2:
         MoveEntity();
         AnimateEntity(D_us_80181BCC, self);
@@ -188,6 +235,7 @@ void EntityLesserDemonSpit(Entity* self) {
             self->step++;
         }
         break;
+
     case 3:
         if (!AnimateEntity(D_us_80181BD8, self)) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -219,7 +267,7 @@ void EntityLesserDemonSpit(Entity* self) {
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             } else {
                 DestroyEntity(self);
-                break;
+                return;
             }
             self->animCurFrame = 0x25;
             self->animFrameDuration = 0;
@@ -229,6 +277,7 @@ void EntityLesserDemonSpit(Entity* self) {
             self->step++;
         }
         break;
+
     case 4:
         prim = self->ext.lesserDemon.unk7C;
         if (self->ext.lesserDemon.unk80++ > 0x10) {
@@ -236,47 +285,49 @@ void EntityLesserDemonSpit(Entity* self) {
             self->ext.lesserDemon.unk80 = 0x1D;
             self->hitboxHeight = 0x40;
             self->hitboxOffY -= 0x20;
-            break;
+        } else {
+            prim->y0 -= 0x10 - self->ext.lesserDemon.unk80;
+            prim->y1 = prim->y0;
+            self->hitboxHeight = ((prim->y2 - prim->y0) / 2) - 0x10;
+            self->hitboxOffY = -self->hitboxHeight;
         }
-        prim->y0 -= 0x10 - self->ext.lesserDemon.unk80;
-        prim->y1 = prim->y0;
-        self->hitboxHeight = ((prim->y2 - prim->y0) / 2) - 0x10;
-        self->hitboxOffY = -self->hitboxHeight;
         break;
+
     case 5:
         prim = self->ext.lesserDemon.unk7C;
-
-        if (!(--self->ext.lesserDemon.unk80)) {
+        if (!--self->ext.lesserDemon.unk80) {
             self->animFrameIdx = 0;
             self->animFrameDuration = 0;
             self->hitboxState = 0;
             self->step++;
             prim->drawMode = DRAW_HIDE;
-            break;
+        } else {
+            prim->y0 += 4;
+            prim->y1 = prim->y0;
+            prim->v2 -= 2;
+            prim->v3 = prim->v2;
+            self->hitboxHeight = 8;
+            self->hitboxOffY = -4;
+            self->hitboxHeight = ((prim->y2 - prim->y0) / 2) - 0x10;
+            self->hitboxOffY = -self->hitboxHeight;
         }
-        prim->y0 += 4;
-        prim->y1 = prim->y0;
-        prim->v2 -= 2;
-        prim->v3 = prim->v2;
-        self->hitboxHeight = 8;
-        self->hitboxOffY = -4;
-        self->hitboxHeight = ((prim->y2 - prim->y0) / 2) - 0x10;
-        self->hitboxOffY = -self->hitboxHeight;
         break;
+
     case 6:
         self->rotY -= 0x20;
         if (!AnimateEntity(D_us_80181BE8, self)) {
             self->drawFlags |= FLAG_DRAW_UNK8;
             self->unk6C = 0x80;
             self->step++;
-            break;
         }
         break;
+
     case 7:
         self->rotY -= 0x10;
         self->unk6C -= 0x10;
         if (!self->unk6C) {
             DestroyEntity(self);
+            return;
         }
         break;
     }
@@ -294,7 +345,7 @@ void func_us_801BC28C(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.prim = prim;
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x13;
             prim->clut = 0x24A;
@@ -326,7 +377,8 @@ void func_us_801BC28C(void) {
             g_CurrentEntity->ext.lesserDemon.unk84 = 3;
         }
         g_CurrentEntity->ext.lesserDemon.unk84++;
-        return;
+        break;
+
     case 1:
         prim = g_CurrentEntity->ext.lesserDemon.unk7C;
         if (prim->next->r3) {
@@ -334,7 +386,6 @@ void func_us_801BC28C(void) {
         } else {
             prim->clut = 0x24A;
         }
-
         prim->next->r3 ^= 1;
         UnkPrimHelper(prim);
         LOH(prim->next->r2) += 2;
@@ -344,6 +395,7 @@ void func_us_801BC28C(void) {
             g_CurrentEntity->ext.lesserDemon.unk84++;
         }
         break;
+
     case 2:
         primIndex = g_CurrentEntity->primIndex;
         g_api.FreePrimitives(primIndex);
@@ -353,12 +405,67 @@ void func_us_801BC28C(void) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BC57C);
+void func_us_801BC57C(void) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (g_CurrentEntity->ext.lesserDemon.unk84) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x1A;
+            prim->clut = 0x169;
+            prim->u0 = prim->u2 = 0xE0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x40;
+            prim->v2 = prim->v3 = 0x5F;
+            if (g_CurrentEntity->facingLeft) {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi - 0x14;
+            } else {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi + 0x14;
+            }
+            prim->next->y0 = g_CurrentEntity->posY.i.hi + 1;
+            prim->priority = g_CurrentEntity->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->p3 |= 0x10;
+            LOH(prim->next->r2) = 0x10;
+            LOH(prim->next->b2) = 0x10;
+            prim->next->x2 = 0x100;
+            prim->next->y2 = 0x100;
+            prim->next->b3 = 0x80;
+        } else {
+            g_CurrentEntity->ext.lesserDemon.unk84 = 3;
+        }
+        PlaySfxPositional(SFX_ELECTRICITY);
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        LOH(prim->next->tpage) += 0x40;
+        prim->next->x2 += 0x40;
+        prim->next->y2 = prim->next->x2;
+        UnkPrimHelper(prim);
+        break;
+
+    case 2:
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+    }
+}
 
 void func_us_801BC814(Primitive* prim) {
     s16 angleOffset;
-    s32 posX2;
-    s32 posY2;
+    s32 posX2, posY2;
     Pos params;
     Pos offsets;
     Primitive* prim2;
@@ -423,7 +530,7 @@ void func_us_801BC814(Primitive* prim) {
 
     case 1:
         if (!--prim->v0) {
-            prim2 = g_CurrentEntity->ext.prim;
+            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
             prim2 = FindFirstUnkPrim(prim2);
             if (prim2 != NULL) {
                 if (g_CurrentEntity->facingLeft) {
@@ -477,9 +584,6 @@ void func_us_801BC814(Primitive* prim) {
         break;
     }
 }
-
-extern u16 D_us_80180980[];
-extern u8 D_us_80181BF0[];
 
 void func_us_801BCC10(Entity* self) {
     Primitive* prim;
@@ -599,13 +703,71 @@ void func_us_801BCC10(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BCFD4);
+void func_us_801BCFD4(Primitive* prim) {
+    Primitive* prim2;
 
-#ifdef VERSION_PSP
-extern s32 E_ID(ID_37);
-extern s32 E_ID(SKELETON);
-extern s32 E_ID(MUDMAN);
-#endif
+    switch (prim->u0) {
+    case 0:
+        if (prim->u1) {
+            prim->r0 = D_us_80181C04[prim->v0 - 1][0] + 0x20;
+            prim->g0 = D_us_80181C04[prim->v0 - 1][1] + 0x20;
+            prim->b0 = D_us_80181C04[prim->v0 - 1][2] + 0x20;
+            prim->r2 = D_us_80181C04[prim->v0][0] + 0x20;
+            prim->g2 = D_us_80181C04[prim->v0][1] + 0x20;
+            prim->b2 = D_us_80181C04[prim->v0][2] + 0x20;
+        } else {
+            prim->r0 = D_us_80181C04[prim->v0 - 1][0] + 0x20;
+            prim->g0 = D_us_80181C04[prim->v0 - 1][1] + 0x20;
+            prim->b0 = D_us_80181C04[prim->v0 - 1][2] + 0x20;
+            prim->r2 = D_us_80181C04[prim->v0][0] + 0x20;
+            prim->g2 = D_us_80181C04[prim->v0][1] + 0x20;
+            prim->b2 = D_us_80181C04[prim->v0][2] + 0x20;
+        }
+        prim->r1 = prim->r0;
+        prim->g1 = prim->g0;
+        prim->b1 = prim->b0;
+        prim->r3 = prim->r2;
+        prim->g3 = prim->g2;
+        prim->b3 = prim->b2;
+        prim->u0++;
+        break;
+
+    case 1:
+        if (prim->y1 < 0xF0) {
+            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = FindFirstUnkPrim(prim2);
+            if (prim2 != NULL) {
+                prim2->p3 = 2;
+                prim2->x0 = prim->x0;
+                prim2->x1 = prim->x1;
+                prim2->x2 = prim->x2;
+                prim2->x3 = prim->x3;
+                prim2->y0 = prim->y2;
+                prim2->y1 = prim->y3;
+                prim2->y2 = prim2->y0 + 0x20;
+                prim2->y3 = prim2->y1 + 0x20;
+                prim2->priority = prim->priority;
+                prim2->drawMode = prim->drawMode;
+                prim2->u1 = prim->u1;
+                prim2->v0 = prim->v0 + 1;
+                if (prim2->v0 > 6) {
+                    prim2->v0 = 1;
+                }
+            }
+            prim->u0++;
+        }
+        break;
+
+    case 2:
+        PrimDecreaseBrightness(prim, 5);
+        if (prim->y2 < 0) {
+            prim->u0 = 0;
+            prim->drawMode = DRAW_HIDE;
+            prim->p3 = 0;
+        }
+        break;
+    }
+}
 
 // Lesser Demon minion spawn?
 // Seems like the vertical tractor beam effect that spawns
@@ -819,31 +981,29 @@ void func_us_801BD268(void) {
     }
 }
 
-u8 func_us_801BDA34(void);
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BDA34);
+static s16 D_us_80181C34[] = {0x28, 0x10, 0x50, 0x20};
+static s16 D_us_80181C3C[] = {0x18, 0x28, 0x18, 0x18, 0xFF, 0x00};
 
-u8 func_us_801BBAB4(void);
+u8 func_us_801BDA34(void) {
+    u8 ret = 0;
 
-extern s32 D_us_80181ACC;
-extern s16 D_us_80181AD4[];
-extern u8 D_us_80181B04[];
-extern u8 D_us_80181B14[];
-extern u8 D_us_80181B2C[];
-extern u8 D_us_80181B34[];
-extern u8 D_us_80181B44[];
-extern u8 D_us_80181B4C[];
-extern u8 D_us_80181B68[];
-extern u8 D_us_80181B84[];
-extern u8 D_us_80181B90[];
-extern u8 D_us_80181B9C[];
-extern u8 D_us_80181BAC[];
-extern u8 D_us_80181BBC[];
-extern s16 D_us_80181C34[];
-#ifdef VERSION_PSP
-extern s32 E_ID(ID_22);
-extern s32 E_ID(ID_21);
-extern s32 E_ID(ID_20);
-#endif
+    ret = CheckColliderOffsets(D_us_80181C3C, g_CurrentEntity->facingLeft);
+    if (ret ^ 2) {
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+    if (g_CurrentEntity->animFrameDuration == 0) {
+        if (g_CurrentEntity->facingLeft) {
+            g_CurrentEntity->posX.i.hi +=
+                D_us_80181AF4[g_CurrentEntity->animFrameIdx];
+        } else {
+            g_CurrentEntity->posX.i.hi -=
+                D_us_80181AF4[g_CurrentEntity->animFrameIdx];
+        }
+    }
+    return ret;
+}
 
 void EntityLesserDemon(Entity* self) {
     Collider collider;
@@ -1397,4 +1557,16 @@ void EntityLesserDemon(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/lib/nonmatchings/e_lesser_demon", func_us_801BED48);
+void func_us_801BED48(Entity* self) {
+    FntPrint("duumy_set\n");
+    if (!self->step) {
+        InitializeEntity(D_us_8018098C);
+        self->hitboxWidth = 0x1C;
+        self->hitboxHeight = 4;
+        self->hitboxOffX = -0x14;
+        self->hitboxState = 0;
+    }
+    if (D_us_80181ACC & 2) {
+        DestroyEntity(self);
+    }
+}

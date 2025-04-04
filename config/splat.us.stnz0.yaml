@@ -52,7 +52,7 @@ segments:
       - [0x13BC, .data, d_prize_drops]
       - [0x13C8, .data, cutscene]
       - [0x1474, .data, maria]
-      - [0x1574, .data, st_update]
+      - [0x1554, .data, st_update]
       - [0x15A0, .data, collision]
       - [0x1960, .data, e_red_door]
       - [0x1978, .data, st_common]

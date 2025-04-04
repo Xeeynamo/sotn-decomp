@@ -112,9 +112,9 @@ void func_8010E570(s32 arg0) {
 void func_8010E6AC(bool forceAnim13) {
     bool atLedge;
 
-    atLedge = 0;
+    atLedge = false;
     if (g_Dop.vram_flag & 0x20) {
-        atLedge = 1;
+        atLedge = true;
     }
 
     SetSpeedX(FIX(1.5));
