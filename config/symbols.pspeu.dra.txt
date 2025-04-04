@@ -503,6 +503,7 @@ g_ChButtons = 0x0914A3A0;
 D_800A2D80 = 0x0914A3E0;
 D_800A2D90 = 0x0914A3F0;
 g_EquipMenuHelper = 0x0914A428;
+D_800A2DEC = 0x0914A480;
 g_ApiInit = 0x0914A628;
 g_ButtonMask = 0x0914C2C8;
 g_LevelHPIncrease = 0x09160B90;

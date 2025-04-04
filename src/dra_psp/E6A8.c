@@ -1101,7 +1101,7 @@ void func_800F9E18(s32 arg0) {
 
 #define ShowText(str, id) func_800F99B8(str, id, 0);
 
-const char D_800DC6EC[] = {
+char D_800DC6EC[] = {
     "　　　　　　　　　　　　　　　　　　　　　",
 };
 
@@ -1171,7 +1171,15 @@ typedef struct EquipMenuHelper {
     s32 isAccessory;
 } EquipMenuHelper;
 
-extern EquipMenuHelper g_EquipMenuHelper[];
+EquipMenuHelper g_EquipMenuHelper[] = {
+    {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
+    {EQUIP_HAND, 0, false},     // RIGHT_HAND_SLOT
+    {EQUIP_HEAD, 0, true},      // HEAD_SLOT
+    {EQUIP_ARMOR, 1, true},     // ARMOR_SLOT
+    {EQUIP_CAPE, 2, true},      // CAPE_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_1_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
+};
 
 extern EquipKind D_801375CC;
 extern s32 D_801375D4;
@@ -1188,9 +1196,67 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2178);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F21F8);
 
+s32 D_800A2DEC[] = {
+    0x1A, 0x00, 0x30, 0x39, 0x39,
+};
+
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB23C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB9BC);
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
+MenuContextInit g_MenuInit[NUM_MENU] = {
+        {142, 100, 84, 112, 0x40},  // MENU_DG_MAIN
+        {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+        {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+        {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+        {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+        {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+        {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+        {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+        {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+        {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+        {172, 44, 89, 32, 0x30},   // MENU_DG_CLOAK_LINING 6db90
+        {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
+        {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+        {12, 32, 340, 153, 0x30}, // MENU_DG_TIME_ATTACK
+        {276, 32, 77, 183, 0x50},  // MENU_DG_EQUIP_SORT
+        {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
+        {240, 180, 65, 32, 0x50},   // MENU_PSP_EXTRA_1
+        {128, 100, 88, 48, 0x1FB},   // MENU_PSP_EXTRA_2
+        {176, 180, 65, 32, 0x1FB},   // MENU_PSP_EXTRA_3
+    };
+
+void func_800FB9BC(void) {
+    const int ItemsPerRow = 2;
+
+    const int VertScrollWindow = 140;
+    const int YScrollPerElement = 15;
+
+    s32 i;
+    MenuContext* context;
+
+    context = &g_MenuData.menus[0];
+    for (i = 0; i < NUM_MENU; i++, context++) {
+        context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
+        context->cursorX += 12;
+        context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
+        context->cursorW = context->unk1.w = g_MenuInit[i].cursorW;
+        context->cursorH = context->unk1.h = g_MenuInit[i].cursorH;
+        context->unk14 = 0;
+        context->w = 0;
+        context->unk16 = 0;
+        context->h = 0;
+        context->otIdx = g_MenuInit[i].otIdx;
+        context->unk1C = 2;
+    }
+    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 = ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) / YScrollPerElement;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FBAC4);
 
