@@ -13,7 +13,6 @@ muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use 
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
-echo		= $(muffle)$(if $(and $(QUIET),$(2)),,echo -e "$(subst //,/,$(1))";)# Allows for optional terminal messages
 to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
 to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
 if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
@@ -115,7 +114,7 @@ get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
 get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
 define link
-	$(muffle)$(call echo,Linking $(1),optional)
+	$(muffle)echo -e "Linking $(1)"
 	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
 		-Map $(BUILD_DIR)/$(1).map \
 		-T $(BUILD_DIR)/$(1).ld \
