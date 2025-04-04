@@ -1266,8 +1266,8 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected);
 extern s32 D_80137614;
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
 extern s32 g_ServantPrevious;
-s32 D_801375DC;
-s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 g_IsCloakLiningUnlocked;
 extern s32 g_IsCloakColorUnlocked;
 extern s32 D_80137958;
@@ -1277,11 +1277,11 @@ extern s32 D_80137608;
 extern s32 g_IsSelectingEquipment;
 extern MenuData g_MenuData;
 extern s32 D_80137948;
-s32 g_EquipOrderType;
-s32 D_80137844[1];
-s32 D_80137848[1];
-s32 D_801375D0;
-s32* D_801375D8;
+extern s32 g_EquipOrderType;
+extern s32 D_80137844[1];
+extern s32 D_80137848[1];
+extern s32 D_801375D0;
+extern s32* D_801375D8;
 extern bool D_psp_091CDD48;
 extern s32 D_8B42058;
 extern s32 D_psp_091CDD40;
@@ -1296,7 +1296,7 @@ extern u32 D_psp_08B42054; // psp triangle button
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
 
-s32 D_8013784C;
+extern s32 D_8013784C;
 typedef enum {
     ENGINE_INIT_SERVANT_0 = 0,
     MENU_SWITCH_SERVANT,
@@ -1743,19 +1743,19 @@ block_4:
                 switch(D_8B42058){
                     default:
                     case LANG_EN:
-                        buttonAssignStr = "ENG_STR";
+                        buttonAssignStr = "Allocate all button functions";
                         break;
                     case LANG_FR:
-                        buttonAssignStr = "FR_STR";
+                        buttonAssignStr = "Attr. toutes les fonctions des touches";
                         break;
                     case LANG_SP:
-                        buttonAssignStr = "SP_STR";
+                        buttonAssignStr = "Asigna las funciones de los botones";
                         break;
                     case LANG_GE:
-                        buttonAssignStr = "GE_STR";
+                        buttonAssignStr = "Standard-Tastenbelegung";
                         break;
                     case LANG_IT:
-                        buttonAssignStr = "IT_STR";
+                        buttonAssignStr = "Assegna tutte le funzioni tasto";
                         break;
                 }
                 ShowText(buttonAssignStr, 2);
