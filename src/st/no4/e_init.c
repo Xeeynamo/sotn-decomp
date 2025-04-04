@@ -60,7 +60,7 @@ void func_us_801D798C(Entity* self);
 void func_us_801D81B4(Entity* self);
 void func_us_801D8654(Entity* self);
 void func_us_801D85A4(Entity* self);
-void func_us_801D8D44(Entity* self);
+void EntityUnkId3F(Entity* self);
 void func_us_801D8DF0(Entity* self);
 void func_us_801D93E0(Entity* self);
 void func_us_801D8FE0(Entity* self);
@@ -72,8 +72,8 @@ void func_us_801DBBEC(Entity* self);
 void func_us_801C86F4(Entity* self);
 void func_us_801DBFAC(Entity* self);
 void func_us_801DC944(Entity* self);
-void func_us_801DCA9C(Entity* self);
-void func_us_801DD410(Entity* self);
+void EntityBoneArcher(Entity* self);
+void EntityBoneArcherArrow(Entity* self);
 void func_us_801C801C(Entity* self);
 void func_us_801C9A54(Entity* self);
 void func_us_801C4BD8(Entity* self);
@@ -158,7 +158,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3C */ func_us_801D81B4,
     /* 0x3D */ func_us_801D8654,
     /* 0x3E */ func_us_801D85A4,
-    /* 0x3F */ func_us_801D8D44,
+    /* 0x3F */ EntityUnkId3F,
     /* 0x40 */ func_us_801D8DF0,
     /* 0x41 */ func_us_801D93E0,
     /* 0x42 */ func_us_801D8FE0,
@@ -170,8 +170,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x48 */ func_us_801C86F4,
     /* 0x49 */ func_us_801DBFAC,
     /* 0x4A */ func_us_801DC944,
-    /* 0x4B */ func_us_801DCA9C,
-    /* 0x4C */ func_us_801DD410,
+    /* 0x4B */ EntityBoneArcher,
+    /* 0x4C */ EntityBoneArcherArrow,
     /* 0x4D */ func_us_801C801C,
     /* 0x4E */ func_us_801C9A54,
     /* 0x4F */ func_us_801C4BD8,
@@ -196,7 +196,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit D_us_80180B8C = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
-EInit D_us_80180BB0 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180BD4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
@@ -207,7 +207,7 @@ EInit D_us_80180C04 = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06A};
 EInit D_us_80180C10 = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
 EInit D_us_80180C1C = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
 EInit D_us_80180C28 = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
-EInit D_us_80180C34 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
+EInit g_EInitUnkId3F = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
 EInit D_us_80180C40 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
 EInit D_us_80180C4C = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
 EInit D_us_80180C58 = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
@@ -216,8 +216,8 @@ EInit D_us_80180C70 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
 EInit D_us_80180C7C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0D2};
 EInit D_us_80180C88 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
 EInit D_us_80180C94 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
-EInit D_us_80180CA0 = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
-EInit D_us_80180CAC = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
+EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
+EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
 EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
 EInit D_us_80180CC4 = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
 EInit D_us_80180CD0 = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
