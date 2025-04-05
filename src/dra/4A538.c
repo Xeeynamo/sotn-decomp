@@ -615,13 +615,14 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            if (D_800705CC) { // FAKE
+            if (g_Clut[0x1D00]) { // FAKE
             }
-            D_800705CC[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
+            (&g_Clut[0x1D00])[index * 0x10 + i] =
+                g_PalEquipIcon[palette * 0x10 + i];
         }
 
-        LoadClut(D_800705CC, 0, 0xFD);
-        LoadClut(D_800705CC + 0x100, 0, 0xFE);
+        LoadClut(&g_Clut[0x1D00], 0, 0xFD);
+        LoadClut(&g_Clut[0x1E00], 0, 0xFE);
     }
     if (D_800973EC == 0) {
         D_80137478[index] = equipIcon;
