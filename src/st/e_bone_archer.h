@@ -240,25 +240,25 @@ void EntityBoneArcher(Entity* self) {
             unused = var_s2->frameA;
             switch (self->step) {
             case 7:
-                if (!self->animFrameDuration && self->animFrameIdx == 5) {
+                if (!self->animFrameDuration && self->pose == 5) {
                     PlaySfxPositional(SFX_CREAK);
                 }
                 break;
 
             case 8:
-                if (!self->animFrameDuration && self->animFrameIdx == 1) {
+                if (!self->animFrameDuration && self->pose == 1) {
                     PlaySfxPositional(SFX_CREAK);
                 }
                 break;
 
             case 10:
-                if (!self->animFrameDuration && self->animFrameIdx == 2) {
+                if (!self->animFrameDuration && self->pose == 2) {
                     PlaySfxPositional(SFX_CREAK);
                 }
                 break;
 
             case 9:
-                if (!self->animFrameDuration && self->animFrameIdx == 4) {
+                if (!self->animFrameDuration && self->pose == 4) {
                     PlaySfxPositional(SFX_CREAK);
                 }
                 break;

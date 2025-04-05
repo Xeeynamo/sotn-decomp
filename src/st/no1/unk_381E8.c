@@ -35,7 +35,7 @@ void func_us_801B8430(Entity* self) {
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
         self->animSet = ANIMSET_OVL(1);
         self->zPriority = PLAYER.zPriority + 4;
-        self->animFrameDuration = self->animFrameIdx = 0;
+        self->animFrameDuration = self->pose = 0;
         self->anim = D_us_80181000[g_CastleFlags[NO1_BIRD_CYCLE]];
     }
     g_api.UpdateAnim(NULL, NULL);
@@ -76,7 +76,7 @@ void func_us_801B84E4(Entity* self) {
             self->posY.i.hi -= 0x16;
             self->animSet = ANIMSET_OVL(1);
             self->zPriority = PLAYER.zPriority;
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181044;
         }
         break;
@@ -95,12 +95,12 @@ void func_us_801B84E4(Entity* self) {
             self->velocityX += 0x600;
         }
         if (posX <= self->ext.et_801B84E4.unk7E) {
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181060;
             self->ext.et_801B84E4.unk80 = 0x90;
             if (g_CastleFlags[NO1_BIRD_CYCLE] == 7) {
                 (self - 1)->anim = D_us_80180FE0;
-                (self - 1)->animFrameDuration = (self - 1)->animFrameIdx = 0;
+                (self - 1)->animFrameDuration = (self - 1)->pose = 0;
                 self->ext.et_801B84E4.unk80 = 0x100;
                 g_api.PlaySfx(0x7B7);
             }
@@ -116,7 +116,7 @@ void func_us_801B84E4(Entity* self) {
             if (g_CastleFlags[NO1_BIRD_CYCLE] == 7) {
                 self->velocityX = FIX(-1.375);
                 self->step = 8;
-                self->animFrameDuration = self->animFrameIdx = 0;
+                self->animFrameDuration = self->pose = 0;
                 self->anim = D_us_80181044;
                 self->zPriority = PLAYER.zPriority + 8;
                 (self - 1)->anim = D_us_80181020[g_CastleFlags[NO1_BIRD_CYCLE]];
@@ -129,7 +129,7 @@ void func_us_801B84E4(Entity* self) {
         self->posY.val += self->velocityY;
         posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (posX <= self->ext.et_801B84E4.unk7C) {
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181348[g_CastleFlags[NO1_BIRD_CYCLE]];
             self->posY.i.hi = (self - 1)->posY.i.hi;
             if (g_CastleFlags[NO1_BIRD_CYCLE] == 2 ||
@@ -150,7 +150,7 @@ void func_us_801B84E4(Entity* self) {
         }
         self->step++;
         if (D_us_80181368[g_CastleFlags[NO1_BIRD_CYCLE]] != NULL) {
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181368[g_CastleFlags[NO1_BIRD_CYCLE]];
             if (g_CastleFlags[NO1_BIRD_CYCLE]) {
                 self->zPriority = PLAYER.zPriority + 8;
@@ -162,7 +162,7 @@ void func_us_801B84E4(Entity* self) {
             g_api.PlaySfx(SFX_WING_FLAP_A);
             D_us_80181388 = 0;
             self->step++;
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181108;
             self->posY.i.hi -= 20;
             if (g_CastleFlags[NO1_BIRD_CYCLE] >= 5) {
@@ -180,7 +180,7 @@ void func_us_801B84E4(Entity* self) {
         }
         if (self->animFrameDuration < 0) {
             self->velocityX = FIX(-1.375);
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181044;
             self->step++;
         }
@@ -237,11 +237,11 @@ void func_us_801B8B00(Entity* self) {
 
             self->animSet = ANIMSET_OVL(1);
             self->zPriority = PLAYER.zPriority;
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_8018132C;
 
             if (self->params) {
-                self->animFrameIdx = 3;
+                self->pose = 3;
             }
         }
         break;
@@ -259,7 +259,7 @@ void func_us_801B8B00(Entity* self) {
 
     case 2:
         if (--self->ext.bird.timer == 0) {
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181108;
             self->posY.i.hi -= 4;
             g_api.PlaySfx(SFX_WING_FLAP_A);
@@ -270,7 +270,7 @@ void func_us_801B8B00(Entity* self) {
     case 3:
         if (self->animFrameDuration < 0) {
             self->velocityX = FIX(-1.375);
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_us_80181044;
             self->step++;
         }

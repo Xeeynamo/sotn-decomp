@@ -37,7 +37,7 @@ void EntityBigRedFireball(Entity* self) {
         self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
     }
 
-    if (self->animFrameIdx >= 13) {
+    if (self->pose >= 13) {
         self->velocityX = self->velocityX / 4 * 3;
         self->velocityY = self->velocityY / 4 * 3;
     }

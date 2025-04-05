@@ -544,14 +544,14 @@ void func_8011EDA8(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->anim != D_800AD57C)) {
+        if ((self->pose == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(paramsLo & 1) && (self->animFrameDuration == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->anim == D_800AD57C)) {
+        if ((self->pose == 16) && (self->anim == D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
         }
 

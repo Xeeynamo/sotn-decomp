@@ -136,11 +136,11 @@ void func_8010E6AC(bool forceAnim13) {
     }
 
     if ((DOPPLEGANGER.ext.player.anim == 7) && atLedge) {
-        DOPPLEGANGER.animFrameIdx = 1;
+        DOPPLEGANGER.pose = 1;
     }
 
     if (g_Dop.prev_step == Dop_Crouch) {
-        DOPPLEGANGER.animFrameIdx = 4;
+        DOPPLEGANGER.pose = 4;
     }
 }
 

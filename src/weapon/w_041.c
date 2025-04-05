@@ -288,7 +288,7 @@ void EntityWeaponAttack(Entity* self) {
         if (!self->ext.weapon.lifetime) {
             self->anim = D_123000_8017A4DC;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);

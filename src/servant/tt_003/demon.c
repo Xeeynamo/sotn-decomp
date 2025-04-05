@@ -139,7 +139,7 @@ ServantDesc demon_ServantDesc = {
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_DemonAnimationFrames[animationIndex]) {
         self->anim = g_DemonAnimationFrames[animationIndex];
-        self->animFrameIdx = 0;
+        self->pose = 0;
         self->animFrameDuration = 0;
     }
 }
@@ -1273,8 +1273,7 @@ void UpdateServantPressSwitch(Entity* self) {
             sfxEntity->step = 7;
         }
     }
-    if ((self->anim == g_DemonAnimationFrames[7]) &&
-        (self->animFrameIdx == 8)) {
+    if ((self->anim == g_DemonAnimationFrames[7]) && (self->pose == 8)) {
         D_us_801786DC = 1;
     }
     ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
@@ -1511,7 +1510,7 @@ void func_us_801765A0(Entity* self) {
         self->animSet = 0xE;
         self->unk5A = 0x79;
         self->anim = &D_us_80171CD8;
-        self->animFrameIdx = 0;
+        self->pose = 0;
         self->animFrameDuration = 0;
         self->drawFlags |= FLAG_DRAW_ROTY;
         self->rotY = 0xC0;

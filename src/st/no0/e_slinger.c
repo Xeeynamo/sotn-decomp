@@ -150,7 +150,7 @@ void EntitySlinger(Entity* self) {
                 }
 
                 self->velocityY = FIX(-3);
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             }

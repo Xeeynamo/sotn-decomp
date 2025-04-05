@@ -250,7 +250,7 @@ void PlayerStepStand(void) {
     }
 
     if (((PLAYER.step_s == 0x57) || (PLAYER.step_s == 0x5B)) &&
-        PLAYER.animFrameIdx < 5) {
+        PLAYER.pose < 5) {
         if (func_8010FDF8(0x43018) != 0) {
             return;
         }
@@ -327,10 +327,10 @@ void PlayerStepStand(void) {
         break;
     case Player_Stand_3:
         local_flags = 0;
-        if ((PLAYER.animFrameIdx >= 4) || (PLAYER.ext.player.anim == 0xE)) {
+        if ((PLAYER.pose >= 4) || (PLAYER.ext.player.anim == 0xE)) {
             local_flags = 1;
         }
-        if ((PLAYER.animFrameIdx >= 7) || (PLAYER.animFrameDuration < 0)) {
+        if ((PLAYER.pose >= 7) || (PLAYER.animFrameDuration < 0)) {
             local_flags = 7;
         }
         break;
@@ -347,8 +347,8 @@ void PlayerStepStand(void) {
     case 0x40:
     case 0x59:
         func_8010DFF0(1, 1);
-        if (PLAYER.animFrameIdx < g_Player.unk54) {
-            if (PLAYER.animFrameIdx < 2) {
+        if (PLAYER.pose < g_Player.unk54) {
+            if (PLAYER.pose < 2) {
                 CheckMoveDirection();
                 if (g_Player.padPressed & PAD_DOWN) {
                     PLAYER.step = 2;
@@ -359,7 +359,7 @@ void PlayerStepStand(void) {
         } else {
             g_Player.unk46 &= 0x7FFF;
             local_flags = 0xB;
-            if (PLAYER.animFrameIdx == 7) {
+            if (PLAYER.pose == 7) {
                 if (g_Player.padPressed & g_Player.D_80072EF8) {
                     PLAYER.animFrameDuration = 2;
                 } else {
@@ -370,8 +370,7 @@ void PlayerStepStand(void) {
         break;
     case 0x47:
     case 0x49:
-        if ((PLAYER.animFrameIdx == 6) &&
-            (g_Player.padPressed & g_Player.D_80072EF8)) {
+        if ((PLAYER.pose == 6) && (g_Player.padPressed & g_Player.D_80072EF8)) {
             PLAYER.animFrameDuration = 2;
         }
     case 0x41:
@@ -389,8 +388,8 @@ void PlayerStepStand(void) {
     case 0x4F:
     case 0x50:
         func_8010DFF0(1, 1);
-        if (PLAYER.animFrameIdx < g_Player.unk54) {
-            if (PLAYER.animFrameIdx < 3) {
+        if (PLAYER.pose < g_Player.unk54) {
+            if (PLAYER.pose < 3) {
                 CheckMoveDirection();
                 if (g_Player.padPressed & PAD_DOWN) {
                     // Note that to reach this point, our minimum case is 0x41
@@ -415,14 +414,14 @@ void PlayerStepStand(void) {
     case 0x5C:
         func_8010DFF0(1, 1);
         local_flags = 0;
-        if (PLAYER.animFrameIdx == 0) {
+        if (PLAYER.pose == 0) {
             if (--D_80139824 == 0) {
                 PLAYER.animFrameDuration = 1;
             } else {
                 PLAYER.animFrameDuration = 2;
             }
         }
-        if (PLAYER.animFrameIdx >= g_Player.unk54) {
+        if (PLAYER.pose >= g_Player.unk54) {
             g_Player.unk46 &= 0x7FFF;
             local_flags = 0x1B;
         }
@@ -435,20 +434,20 @@ void PlayerStepStand(void) {
     case 0x5B:
         func_8010DFF0(1, 1);
         local_flags = 0;
-        if ((PLAYER.animFrameIdx < (g_Player.unk54 - 6)) &&
-            (g_Player.vram_flag & 1) && (g_GameTimer & 1)) {
+        if ((PLAYER.pose < (g_Player.unk54 - 6)) && (g_Player.vram_flag & 1) &&
+            (g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
-        if (PLAYER.animFrameIdx >= g_Player.unk54) {
+        if (PLAYER.pose >= g_Player.unk54) {
             g_Player.unk46 &= 0x7FFF;
             local_flags = 0x19;
         }
         if (PLAYER.animFrameDuration < 0) {
             local_flags = 0xF;
         }
-        if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
+        if (PLAYER.pose == 4 && PLAYER.animFrameDuration == 1 &&
             !(g_Player.vram_flag & 1)) {
-            PLAYER.animFrameIdx = 5;
+            PLAYER.pose = 5;
             PLAYER.ext.player.anim = 0x6C;
             PLAYER.step = 4;
             g_Player.unk44 = 1;
@@ -459,11 +458,10 @@ void PlayerStepStand(void) {
         if (D_80139824 > 0) {
             D_80139824--;
         }
-        if (PLAYER.animFrameIdx == 4 && PLAYER.animFrameDuration == 1 &&
-            D_80139824) {
-            PLAYER.animFrameIdx = 2;
+        if (PLAYER.pose == 4 && PLAYER.animFrameDuration == 1 && D_80139824) {
+            PLAYER.pose = 2;
         }
-        if (PLAYER.animFrameIdx == 6) {
+        if (PLAYER.pose == 6) {
             PLAYER.step_s = 0x40;
         }
         if (g_Player.padTapped & PAD_DOWN) {
@@ -480,11 +478,10 @@ void PlayerStepStand(void) {
         if (D_80139824 > 0) {
             D_80139824--;
         }
-        if (PLAYER.animFrameIdx == 6 && PLAYER.animFrameDuration == 1 &&
-            D_80139824) {
+        if (PLAYER.pose == 6 && PLAYER.animFrameDuration == 1 && D_80139824) {
             PLAYER.animFrameDuration = 2;
         }
-        if (PLAYER.animFrameIdx == 0xA) {
+        if (PLAYER.pose == 0xA) {
             PLAYER.step_s = 0x50;
         }
         if (g_Player.padTapped & (PAD_DOWN | PAD_UP)) {
@@ -628,12 +625,11 @@ void PlayerStepJump(void) {
         if (D_80139824 > 0) {
             D_80139824--;
         }
-        if ((PLAYER.animFrameIdx == 3) && (PLAYER.animFrameDuration == 1) &&
+        if ((PLAYER.pose == 3) && (PLAYER.animFrameDuration == 1) &&
             (D_80139824 != 0)) {
-            PLAYER.animFrameIdx = 1;
+            PLAYER.pose = 1;
         }
-        if ((PLAYER.animFrameIdx == 4) ||
-            (g_Player.padTapped & (PAD_DOWN | PAD_UP))) {
+        if ((PLAYER.pose == 4) || (g_Player.padTapped & (PAD_DOWN | PAD_UP))) {
             PLAYER.step_s = 0x40;
         }
         break;
@@ -655,9 +651,8 @@ void PlayerStepJump(void) {
                 g_ButtonCombo[COMBO_BF].buttonsCorrect = 0xFE;
                 g_ButtonCombo[COMBO_BF].timer = 0x10;
             }
-        } else if (
-            (PLAYER.animFrameIdx == 4) && (PLAYER.animFrameDuration == 1)) {
-            PLAYER.animFrameIdx = 5;
+        } else if ((PLAYER.pose == 4) && (PLAYER.animFrameDuration == 1)) {
+            PLAYER.pose = 5;
             PLAYER.ext.player.anim = 0x6C;
         }
         break;
@@ -793,7 +788,7 @@ void PlayerStepCrouch(void) {
         if (PLAYER.ext.player.anim == 0x11) {
             PLAYER.ext.player.anim = 0x65;
             PLAYER.animFrameDuration = 2;
-            PLAYER.animFrameIdx = 3;
+            PLAYER.pose = 3;
         }
     } else if (PLAYER.ext.player.anim == 0x65) {
         SetPlayerAnim(0x11);
@@ -821,15 +816,15 @@ void PlayerStepCrouch(void) {
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN)) {
             local_flags = 1;
-            if ((PLAYER.animFrameIdx >= 4) || PLAYER.ext.player.anim == 0x65) {
+            if ((PLAYER.pose >= 4) || PLAYER.ext.player.anim == 0x65) {
                 SetPlayerAnim(0x13);
                 PLAYER.step_s = 2;
-                PLAYER.animFrameIdx = 2;
+                PLAYER.pose = 2;
                 if (g_Player.unk72 == 1) {
-                    PLAYER.animFrameIdx = 0;
+                    PLAYER.pose = 0;
                 }
                 if (g_Player.unk72 == 2) {
-                    PLAYER.animFrameIdx = 1;
+                    PLAYER.pose = 1;
                 }
                 return;
             }
@@ -843,8 +838,7 @@ void PlayerStepCrouch(void) {
         break;
     case 0x5:
         func_8010DFF0(1, 1);
-        if (g_Player.unk72 == PLAYER.animFrameIdx ||
-            PLAYER.animFrameDuration < 0) {
+        if (g_Player.unk72 == PLAYER.pose || PLAYER.animFrameDuration < 0) {
             local_flags = 0x20;
         }
         break;
@@ -864,24 +858,24 @@ void PlayerStepCrouch(void) {
         if (g_Player.unk72) {
             func_8010DFF0(1, 1);
             if (g_Player.unk72 == 1) {
-                PLAYER.animFrameIdx = 0;
+                PLAYER.pose = 0;
                 PLAYER.animFrameDuration = 3;
                 break;
             } else if (g_Player.unk72 == 2) {
-                if (PLAYER.animFrameIdx > 0) {
-                    PLAYER.animFrameIdx = 1;
+                if (PLAYER.pose > 0) {
+                    PLAYER.pose = 1;
                     PLAYER.animFrameDuration = 3;
                 }
                 break;
             } else if (g_Player.unk72 == 3) {
-                if (PLAYER.animFrameIdx >= 2) {
-                    PLAYER.animFrameIdx = 2;
+                if (PLAYER.pose >= 2) {
+                    PLAYER.pose = 2;
                     PLAYER.animFrameDuration = 3;
                 }
                 break;
             } else if (g_Player.unk72 == 4) {
-                if (PLAYER.animFrameIdx >= 3) {
-                    PLAYER.animFrameIdx = 3;
+                if (PLAYER.pose >= 3) {
+                    PLAYER.pose = 3;
                     PLAYER.animFrameDuration = 3;
                 }
                 break;
@@ -895,8 +889,8 @@ void PlayerStepCrouch(void) {
     case 0x40:
     case 0x59:
         func_8010DFF0(1, 1);
-        if (PLAYER.animFrameIdx < g_Player.unk54) {
-            if (PLAYER.animFrameIdx < 2) {
+        if (PLAYER.pose < g_Player.unk54) {
+            if (PLAYER.pose < 2) {
                 CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (!g_Player.unk72) {
@@ -908,7 +902,7 @@ void PlayerStepCrouch(void) {
         } else {
             g_Player.unk46 &= 0x7FFF;
             local_flags = 0xE;
-            if (PLAYER.animFrameIdx == 7) {
+            if (PLAYER.pose == 7) {
                 if (g_Player.padPressed & g_Player.D_80072EF8) {
                     PLAYER.animFrameDuration = 2;
                 } else {
@@ -919,8 +913,7 @@ void PlayerStepCrouch(void) {
         break;
     case 0x47:
     case 0x49:
-        if ((PLAYER.animFrameIdx == 6) &&
-            (g_Player.padPressed & g_Player.D_80072EF8)) {
+        if ((PLAYER.pose == 6) && (g_Player.padPressed & g_Player.D_80072EF8)) {
             PLAYER.animFrameDuration = 2;
         }
     case 0x41:
@@ -948,8 +941,8 @@ void PlayerStepCrouch(void) {
     case 0x5B:
     case 0x5C:
         func_8010DFF0(1, 1);
-        if (PLAYER.animFrameIdx < g_Player.unk54) {
-            if (PLAYER.animFrameIdx < 3) {
+        if (PLAYER.pose < g_Player.unk54) {
+            if (PLAYER.pose < 3) {
                 CheckMoveDirection();
                 if (!(g_Player.padPressed & PAD_DOWN)) {
                     if (!g_Player.unk72) {
@@ -1158,7 +1151,7 @@ s32 func_80113E68(void) {
 }
 
 void func_80113EE0(void) {
-    PLAYER.animFrameIdx = PLAYER.animFrameDuration = 0;
+    PLAYER.pose = PLAYER.animFrameDuration = 0;
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.entityId = 0;
     PLAYER.drawMode = DRAW_DEFAULT;
@@ -1573,7 +1566,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         }
         PLAYER.step_s = 1;
         func_80113E68();
-        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = PLAYER.pose = 0;
         break;
     case 14:
         PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
@@ -1936,8 +1929,8 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         break;
     }
     DecelerateX(FIX(1.0 / 64));
-    if (PLAYER.animFrameIdx >= 15) {
-        if ((PLAYER.animFrameIdx == 22) && (PLAYER.animFrameDuration == 1)) {
+    if (PLAYER.pose >= 15) {
+        if ((PLAYER.pose == 22) && (PLAYER.animFrameDuration == 1)) {
             PLAYER.rotZ -= 0x100;
         }
         PLAYER.rotZ -= 6;
@@ -2002,7 +1995,7 @@ void PlayerStepTeleport(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 8 && PLAYER.animFrameDuration == 1) {
             newEnt =
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 0), 0);
             if (newEnt == NULL) {
@@ -2025,7 +2018,7 @@ void PlayerStepTeleport(void) {
         break;
     case 2:
         func_80115C50();
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 8 && PLAYER.animFrameDuration == 1) {
             newEnt =
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 2), 0);
             if (newEnt == NULL) {
@@ -2048,7 +2041,7 @@ void PlayerStepTeleport(void) {
         break;
     case 4:
         func_80115C50();
-        if (PLAYER.animFrameIdx == 8 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 8 && PLAYER.animFrameDuration == 1) {
             newEnt =
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(121, 4), 0);
             if (newEnt == NULL) {
@@ -2247,7 +2240,7 @@ void PlayerStepHellfire(void) {
         }
         break;
     case 4:
-        if (PLAYER.animFrameIdx == 10 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 10 && PLAYER.animFrameDuration == 1) {
             g_Player.timers[12] = 4;
             // Make factory with blueprint 37. This creates entity with ID 28,
             // which is EntityExpandingCircle.
@@ -2303,7 +2296,7 @@ void PlayerStepUnk50(void) {
         PLAYER.step_s = 0;
         PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.ext.player.anim = 0xCF;
-        PLAYER.animFrameDuration = PLAYER.animFrameIdx = 0;
+        PLAYER.animFrameDuration = PLAYER.pose = 0;
     }
 }
 
@@ -2557,7 +2550,7 @@ void ControlBatForm(void) {
         }
         SetPlayerAnim(0xC3);
         PLAYER.animFrameDuration = 1;
-        PLAYER.animFrameIdx = 2;
+        PLAYER.pose = 2;
         PLAYER.palette = 0x8100;
         CheckMoveDirection();
         PLAYER.step_s++;
@@ -2565,7 +2558,7 @@ void ControlBatForm(void) {
     case 1:
         if (directionsPressed && !pressingCross) {
             if (PLAYER.ext.player.anim == 0xC3) {
-                PLAYER.animFrameIdx /= 3;
+                PLAYER.pose /= 3;
             }
             PLAYER.step_s++;
         } else {
@@ -2799,7 +2792,7 @@ void ControlBatForm(void) {
         DecelerateX(FIX(12.0 / 128));
         DecelerateY(FIX(28.0 / 128));
         func_8011690C(0);
-        if (PLAYER.ext.player.anim == 0xC4 && PLAYER.animFrameIdx == 8) {
+        if (PLAYER.ext.player.anim == 0xC4 && PLAYER.pose == 8) {
             PLAYER.step_s = 1;
         }
         break;
@@ -2945,23 +2938,23 @@ void PlayerStepStuck(void) {
             PlaySfx(SFX_VO_ALU_ATTACK_A);
             PLAYER.step_s = 0;
         } else if (g_Player.unk72 == 1) {
-            PLAYER.animFrameIdx = 0;
+            PLAYER.pose = 0;
             PLAYER.animFrameDuration = 3;
         } else if (g_Player.unk72 == 2) {
-            if (PLAYER.animFrameIdx > 0) {
-                PLAYER.animFrameIdx = 1;
+            if (PLAYER.pose > 0) {
+                PLAYER.pose = 1;
                 PLAYER.animFrameDuration = 3;
             }
         } else if (g_Player.unk72 == 3) {
-            if (PLAYER.animFrameIdx >= 2) {
-                PLAYER.animFrameIdx = 2;
+            if (PLAYER.pose >= 2) {
+                PLAYER.pose = 2;
                 PLAYER.animFrameDuration = 3;
                 PLAYER.step = 2;
                 PLAYER.step_s = 5;
             }
         } else if (g_Player.unk72 == 4) {
-            if (PLAYER.animFrameIdx >= 3) {
-                PLAYER.animFrameIdx = 3;
+            if (PLAYER.pose >= 3) {
+                PLAYER.pose = 3;
                 PLAYER.animFrameDuration = 3;
                 PLAYER.step = 2;
                 PLAYER.step_s = 5;
@@ -3279,7 +3272,7 @@ void PlayerStepSummonSpells(void) {
 }
 
 void PlayerStepSoulSteal(void) {
-    if (PLAYER.animFrameIdx == 7 && PLAYER.animFrameDuration == 1) {
+    if (PLAYER.pose == 7 && PLAYER.animFrameDuration == 1) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x16), 0);
         PlaySfx(SFX_UI_MP_FULL);
         CreateEntFactoryFromEntity(g_CurrentEntity, 112, 0);

@@ -884,7 +884,7 @@ typedef struct Entity {
     /* 0x49 */ u8 nFramesInvincibility;
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* anim;
-    /* 0x50 */ u16 animFrameIdx;
+    /* 0x50 */ u16 pose;
     /* 0x52 */ s16 animFrameDuration;
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;

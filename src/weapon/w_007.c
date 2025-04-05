@@ -233,16 +233,14 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if ((PLAYER.animFrameDuration == 1) &&
-        (PLAYER.animFrameIdx == anim->soundFrame)) {
+    if ((PLAYER.animFrameDuration == 1) && (PLAYER.pose == anim->soundFrame)) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
-    if (animIndex && PLAYER.animFrameDuration == 7 &&
-        PLAYER.animFrameIdx == 4) {
+    if (animIndex && PLAYER.animFrameDuration == 7 && PLAYER.pose == 4) {
         hand = (g_HandId + 1) << 0xC;
         temp = (self->ext.weapon.anim << 0x10) + 0x4A;
         g_api.CreateEntFactoryFromEntity(self, hand + temp, 0);

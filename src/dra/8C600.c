@@ -159,7 +159,7 @@ void func_8012CA64(void) {
 
 void func_8012CB0C(void) {
     PLAYER.velocityY = 0;
-    PLAYER.animFrameDuration = PLAYER.animFrameIdx = D_800B0914 = 0;
+    PLAYER.animFrameDuration = PLAYER.pose = D_800B0914 = 0;
     PLAYER.ext.player.anim = 0xDE;
     PLAYER.step_s = 7;
 }
@@ -254,7 +254,7 @@ void func_8012CED4(void) {
         D_800B0914 = 0;
         if (D_80138438 & 0x40) {
             PLAYER.velocityX = 0;
-            PLAYER.animFrameIdx = 4;
+            PLAYER.pose = 4;
             PLAYER.animFrameDuration = 1;
         }
     }

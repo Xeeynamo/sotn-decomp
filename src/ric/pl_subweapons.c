@@ -140,13 +140,13 @@ void RicEntitySubwpnThrownAxe(Entity* self) {
     }
 
     if (self->animFrameDuration == 0) {
-        graphicsTemp = self->animFrameIdx;
+        graphicsTemp = self->pose;
         self->ext.subwpnAxe.unk8C[graphicsTemp] = 0;
         self->ext.subwpnAxe.unk90[graphicsTemp] = 1;
         self->ext.subwpnAxe.unk94[graphicsTemp] = 1;
         graphicsTemp++;
         graphicsTemp &= 3;
-        self->animFrameIdx = graphicsTemp;
+        self->pose = graphicsTemp;
         self->animFrameDuration = 2;
     } else {
         self->animFrameDuration--;
@@ -333,13 +333,13 @@ void RicEntityCrashAxe(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->animFrameDuration == 0) {
-            pose = self->animFrameIdx;
+            pose = self->pose;
             self->ext.subwpnAxe.unk8C[pose] = 0;
             self->ext.subwpnAxe.unk90[pose] = 1;
             self->ext.subwpnAxe.unk94[pose] = 1;
             pose++;
             pose &= 3;
-            self->animFrameIdx = pose;
+            self->pose = pose;
             self->animFrameDuration = 2;
         } else {
             self->animFrameDuration--;

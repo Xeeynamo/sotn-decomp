@@ -352,13 +352,13 @@ void EntitySubwpnThrownAxe(Entity* self) {
     }
 
     if (self->animFrameDuration == 0) {
-        graphicsTemp = self->animFrameIdx;
+        graphicsTemp = self->pose;
         self->ext.subwpnAxe.unk8C[graphicsTemp] = 0;
         self->ext.subwpnAxe.unk90[graphicsTemp] = 1;
         self->ext.subwpnAxe.unk94[graphicsTemp] = 1;
         graphicsTemp++;
         graphicsTemp &= 3;
-        self->animFrameIdx = graphicsTemp;
+        self->pose = graphicsTemp;
         self->animFrameDuration = 2;
     } else {
         self->animFrameDuration--;
@@ -1312,7 +1312,7 @@ void EntityHellfireBigFireball(Entity* entity) {
         break;
 
     case 1:
-        if (entity->animFrameIdx >= 23) {
+        if (entity->pose >= 23) {
             if (!(g_GameTimer & 3)) {
                 entity->rotZ += 0x400;
             }

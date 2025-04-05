@@ -2043,8 +2043,7 @@ void EntityUnarmedAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if ((PLAYER.animFrameDuration == 1) &&
-        (PLAYER.animFrameIdx == anim->soundFrame)) {
+    if ((PLAYER.animFrameDuration == 1) && (PLAYER.pose == anim->soundFrame)) {
         PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {

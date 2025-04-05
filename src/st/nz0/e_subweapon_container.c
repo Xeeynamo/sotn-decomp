@@ -291,7 +291,7 @@ void func_801C7884(Entity* entity) {
             entity->entityId = E_PRIZE_DROP;
             entity->pfnUpdate = EntityPrizeDrop;
             entity->animFrameDuration = 0;
-            entity->animFrameIdx = 0;
+            entity->pose = 0;
             entity->step = 0;
             entity->hitboxState = 1;
         }

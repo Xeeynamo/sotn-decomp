@@ -88,7 +88,7 @@ void EntityBoneMusket(Entity* self) {
             if (AnimateEntity(D_us_801829B0, self) == 0) {
                 SetSubStep(2);
             }
-            if (self->animFrameIdx == 6 && !self->animFrameDuration) {
+            if (self->pose == 6 && !self->animFrameDuration) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_ID_47, self, tempEntity);
@@ -103,7 +103,7 @@ void EntityBoneMusket(Entity* self) {
                 tempEntity->ext.et_801CEB28.unk8C = 1;
                 SetSubStep(3);
             }
-            if (self->animFrameIdx == 4 && !self->animFrameDuration) {
+            if (self->pose == 4 && !self->animFrameDuration) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(E_ID_47, self, tempEntity);
@@ -202,7 +202,7 @@ void EntityBoneMusket(Entity* self) {
             if (AnimateEntity(D_us_801829E0, self) == 0) {
                 SetSubStep(2);
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 0x1C) {
+            if (!self->animFrameDuration && self->pose == 0x1C) {
                 PlaySfxPositional(SFX_GRANDFATHER_CLOCK_TICK);
             }
             break;

@@ -148,7 +148,7 @@ void EntityMerman(Entity* self) {
             if (!self->ext.merman.isUnderwater) {
                 if (UnkCollisionFunc3(&D_80183A4C) & 1) {
                     self->animFrameDuration = 0;
-                    self->animFrameIdx = 0;
+                    self->pose = 0;
                     self->step_s++;
                 }
             } else {
@@ -169,7 +169,7 @@ void EntityMerman(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
-                    newEntity->velocityX = D_80183B08[self->animFrameIdx];
+                    newEntity->velocityX = D_80183B08[self->pose];
                 }
             } else {
                 self->palette = PAL_DRA(0x2B2);
@@ -239,7 +239,7 @@ void EntityMerman(Entity* self) {
             if (AnimateEntity(D_80183A9C, self) == 0) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
-            if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
+            if (self->pose == 4 && self->animFrameDuration == 0) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
@@ -303,7 +303,7 @@ void EntityMerman(Entity* self) {
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;
                 UnkCollisionFunc3(&D_80183A4C);
-                self->animFrameIdx = 2;
+                self->pose = 2;
                 self->hitboxWidth = 5;
                 self->animFrameDuration = 0;
                 self->hitboxHeight = 17;

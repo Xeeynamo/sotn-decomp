@@ -51,7 +51,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
         self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
+        self->pose = 0;
         self->step = 3;
     }
     if (self->step != 4) {
@@ -128,10 +128,10 @@ static void EntityWeaponAttack(Entity* self) {
             /* fallthrough */
         case 26:
             anim += 2;
-            self->animFrameIdx = PLAYER.animFrameIdx;
+            self->pose = PLAYER.pose;
             break;
         default:
-            self->animFrameIdx = 0;
+            self->pose = 0;
             anim += crouchCheck;
             break;
         }
@@ -254,7 +254,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->ext.shield.unk80 = 8;
             self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->flags |= FLAG_UNK_100000;
             self->step++;
         }
@@ -263,7 +263,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (--self->ext.shield.unk80 == 0) {
             self->anim = D_C1000_8017ACB4;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->step++;
         }
         break;
@@ -292,7 +292,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->ext.shield.unk80 == 64) {
             self->anim = D_C1000_8017AC8C;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
         }
         if (--self->ext.shield.unk80 == 0) {
             self->step++;

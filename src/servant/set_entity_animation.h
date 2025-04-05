@@ -2,7 +2,7 @@
 void SetEntityAnimation(Entity* entity, AnimationFrame* anim) {
     if (entity->anim != anim) {
         entity->anim = anim;
-        entity->animFrameIdx = 0;
+        entity->pose = 0;
         entity->animFrameDuration = 0;
     }
 }

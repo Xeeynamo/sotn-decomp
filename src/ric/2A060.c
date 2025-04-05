@@ -399,11 +399,11 @@ void RicEntityWhip(Entity* self) {
             }
         } else {
             if (PLAYER.step == PL_S_CROUCH) {
-                var_s3 = D_801559C8[PLAYER.animFrameIdx].x;
-                var_s5 = D_801559C8[PLAYER.animFrameIdx].y;
+                var_s3 = D_801559C8[PLAYER.pose].x;
+                var_s5 = D_801559C8[PLAYER.pose].y;
             } else {
-                var_s3 = D_801559AC[PLAYER.animFrameIdx].x;
-                var_s5 = D_801559AC[PLAYER.animFrameIdx].y;
+                var_s3 = D_801559AC[PLAYER.pose].x;
+                var_s5 = D_801559AC[PLAYER.pose].y;
             }
             if (!PLAYER.facingLeft) {
                 var_s3 = -var_s3;
@@ -549,12 +549,12 @@ void RicEntityWhip(Entity* self) {
     case 2:
         if (lowerParams >= 8) {
             if (self->flags & FLAG_HAS_PRIMS) {
-                if (PLAYER.animFrameIdx == 5) {
+                if (PLAYER.pose == 5) {
                     g_api.FreePrimitives(self->primIndex);
                     self->flags &= ~FLAG_HAS_PRIMS;
                 }
             }
-            if (PLAYER.animFrameIdx == 6) {
+            if (PLAYER.pose == 6) {
                 if ((PLAYER.animFrameDuration >= 0xF) ||
                     (PLAYER.animFrameDuration == 0)) {
                     self->palette = PAL_OVL(0x138);
@@ -577,9 +577,9 @@ void RicEntityWhip(Entity* self) {
                 }
             }
         } else {
-            self->velocityX = D_80155AAC[PLAYER.animFrameIdx].x;
-            self->velocityY = D_80155AAC[PLAYER.animFrameIdx].y;
-            switch (PLAYER.animFrameIdx) {
+            self->velocityX = D_80155AAC[PLAYER.pose].x;
+            self->velocityY = D_80155AAC[PLAYER.pose].y;
+            switch (PLAYER.pose) {
             case 0:
                 angle = (rand() & 0x3FF) - 0x200;
                 self->velocityX = (rcos(angle) << 0xB) >> 4;
@@ -718,7 +718,7 @@ void RicEntityWhip(Entity* self) {
         prim->x1 = dumb_temp.i.hi;
         dumb_temp = self->ext.whip.unk80;
         prim->y1 = dumb_temp.i.hi;
-        if (PLAYER.animFrameIdx == 4) {
+        if (PLAYER.pose == 4) {
             prim->priority = PLAYER.zPriority + 4;
         } else {
             prim->priority = PLAYER.zPriority + 2;

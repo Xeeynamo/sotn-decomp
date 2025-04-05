@@ -196,7 +196,7 @@ void func_us_801D2108(void) {
 bool func_us_801D2148(RECT* rects) {
     RECT* rect;
 
-    rect = &rects[g_CurrentEntity->animFrameIdx];
+    rect = &rects[g_CurrentEntity->pose];
     if (g_CurrentEntity->animFrameDuration == 0) {
         if (!rect->h) {
             return false;
@@ -205,7 +205,7 @@ bool func_us_801D2148(RECT* rects) {
         g_CurrentEntity->animFrameDuration = rect->h;
     }
     if (!--g_CurrentEntity->animFrameDuration) {
-        g_CurrentEntity->animFrameIdx++;
+        g_CurrentEntity->pose++;
     }
     func_us_801D2108();
     return true;

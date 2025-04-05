@@ -68,7 +68,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->animFrameDuration < 0) {
             self->drawMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
             self->anim = D_82000_8017A6E4;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->ext.weapon.lifetime = 71;
             g_api.func_80118C28(5);

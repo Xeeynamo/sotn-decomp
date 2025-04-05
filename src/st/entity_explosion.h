@@ -10,7 +10,7 @@ extern u8* g_ExplosionAnimations[];
 void EntityExplosion(Entity* entity) {
     if (!entity->step) {
         InitializeEntity(g_EInitParticle);
-        entity->animFrameIdx = 0;
+        entity->pose = 0;
         entity->animFrameDuration = 0;
         entity->animSet = ANIMSET_DRA(2);
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;

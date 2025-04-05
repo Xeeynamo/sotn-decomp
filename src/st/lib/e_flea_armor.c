@@ -52,7 +52,7 @@ void EntityFleaArmor(Entity* self) {
             }
             self->velocityY = FIX(-0.5);
             self->ext.fleaArmor.counter = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->step = 3;
         }
@@ -77,7 +77,7 @@ void EntityFleaArmor(Entity* self) {
                 self->ext.fleaArmor.counter = 0;
                 self->velocityY = FIX(-2.0);
             } else if (GetDistanceToPlayerX() < 64) {
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s = 0;
                 self->step = 4;
@@ -87,7 +87,7 @@ void EntityFleaArmor(Entity* self) {
                 if (collision & 0xF) {
                     self->facingLeft ^= 1;
                 }
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s = 0;
                 self->step = 4;

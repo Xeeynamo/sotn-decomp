@@ -121,7 +121,7 @@ typedef struct Entity {
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
     /* 0x47 */ char pad6[0x4];
-    /* 0x4c */ u16 animFrameIdx;
+    /* 0x4c */ u16 pose;
     /* 0x4e */ s16 animFrameDuration;
     /* 0x50 */ char pad_50[0x2];
     /* 0x52 */ s16 unk52;

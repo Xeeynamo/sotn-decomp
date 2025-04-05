@@ -48,7 +48,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     if (!(handButton & g_Player.padPressed) && (self->step < 3)) {
         self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
+        self->pose = 0;
         self->step = 3;
     }
     if (self->step != 4) {
@@ -117,10 +117,10 @@ static void EntityWeaponAttack(Entity* self) {
             anim++;
         case 26:
             anim += 2;
-            self->animFrameIdx = PLAYER.animFrameIdx;
+            self->pose = PLAYER.pose;
             break;
         default:
-            self->animFrameIdx = 0;
+            self->pose = 0;
             anim = anim + unkAC_offset;
             break;
         }
@@ -298,7 +298,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         if (self->rotX <= 0) {
             self->rotX = 0;
             self->anim = D_CF000_8017AD24;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->flags |= FLAG_UNK_100000;
             self->ext.weapon.unk80 = 0x20;

@@ -404,7 +404,7 @@ static s32 func_801AC458(s16 arg0) {
         ret = 1;
         e[1].drawFlags = FLAG_DRAW_ROTY;
         e[1].rotY = 0x600;
-        e[1].animFrameIdx = 0;
+        e[1].pose = 0;
         e[1].animFrameDuration = 0;
         e[1].step = 2;
         e[1].posX.i.hi = e->posX.i.hi;
@@ -415,7 +415,7 @@ static s32 func_801AC458(s16 arg0) {
         if (AnimateEntity(D_80180964, e2) == 0) {
             ret++;
         }
-        if (e2->animFrameIdx == 6 && e2->animFrameDuration == 0) {
+        if (e2->pose == 6 && e2->animFrameDuration == 0) {
             // Using dracula ext since this function is right after dracula.
             g_CurrentEntity->ext.dracula.unkA0 = 1;
         }
@@ -514,7 +514,7 @@ void EntityDracula(Entity* self) {
                 D_8003C744 = 1;
                 SetSubStep(3);
             }
-            if (self->animFrameIdx == 2 && !self->animFrameDuration) {
+            if (self->pose == 2 && !self->animFrameDuration) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_ID(DRACULA_UNK1F), self, entity);
@@ -609,7 +609,7 @@ void EntityDracula(Entity* self) {
             if (!AnimateEntity(D_80180914, self)) {
                 entity = self + 1;
                 entity->animFrameDuration = 0;
-                entity->animFrameIdx = 0;
+                entity->pose = 0;
                 SetSubStep(1);
                 g_api.PlaySfx(NA_SE_VO_DR_HURT_1);
             }
@@ -713,7 +713,7 @@ void EntityDracula(Entity* self) {
                 self->unk5A = 0x59;
                 self->step_s++;
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 5) {
+            if (!self->animFrameDuration && self->pose == 5) {
                 g_api.func_80102CD8(2);
             }
             break;

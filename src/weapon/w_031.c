@@ -48,8 +48,7 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-        if (PLAYER.animFrameDuration == 1 &&
-            PLAYER.animFrameIdx == anim->soundFrame) {
+        if (PLAYER.animFrameDuration == 1 && PLAYER.pose == anim->soundFrame) {
             g_api.PlaySfx(anim->soundId);
         }
 
@@ -62,7 +61,7 @@ void EntityWeaponAttack(Entity* self) {
         return;
     }
 
-    if (self->ext.weapon.anim < 2 && PLAYER.animFrameIdx == 6) {
+    if (self->ext.weapon.anim < 2 && PLAYER.pose == 6) {
         self->hitboxState = 4;
     }
 

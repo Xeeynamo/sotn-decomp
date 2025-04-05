@@ -747,9 +747,9 @@ void RicMain(void) {
     PLAYER.hitPoints = 0;
     g_Player.unk7A = 0;
     if (PLAYER.anim == D_801556C4) {
-        PLAYER.palette = D_80154574[PLAYER.animFrameIdx];
+        PLAYER.palette = D_80154574[PLAYER.pose];
     }
-    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
+    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.pose == 4)) {
         PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
     }
     if (PLAYER.step == PL_S_DEAD) {

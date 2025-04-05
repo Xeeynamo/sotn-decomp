@@ -182,13 +182,13 @@ void func_us_801D8150(Entity* self) {
                 self->step = 5;
                 self->ext.stoneRose.unk86 = 0x28;
                 if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
-                    self->animFrameIdx = 0;
+                    self->pose = 0;
                     self->animFrameDuration = 0;
                     self->anim = D_us_80182280;
                 }
             } else {
                 self->ext.stoneRose.unk8A = true;
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->anim = D_us_801822B4;
                 self->step = 3;
@@ -255,7 +255,7 @@ void func_us_801D8150(Entity* self) {
         }
         self->ext.stoneRose.unk7E += 0x30;
         if (((self->ext.stoneRose.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->anim = D_us_8018228C;
             PlaySfxPositional(SFX_SEED_SPIT);
@@ -265,7 +265,7 @@ void func_us_801D8150(Entity* self) {
     case 2:
         self->ext.stoneRose.unk7E += 0x30;
         g_api.UpdateAnim(NULL, NULL);
-        if (self->animFrameIdx == 0x8 && self->animFrameDuration == 0x2F) {
+        if (self->pose == 0x8 && self->animFrameDuration == 0x2F) {
             PlaySfxPositional(SFX_SEED_BLIP);
             func_us_801D7D00(0U);
         }
@@ -283,7 +283,7 @@ void func_us_801D8150(Entity* self) {
         }
         g_api.UpdateAnim(NULL, NULL);
         if (self->animFrameDuration < 0) {
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->anim = D_us_80182300;
             PlaySfxPositional(SFX_SEED_SPIT);
@@ -326,7 +326,7 @@ void func_us_801D8150(Entity* self) {
                 self->ext.stoneRose.unk88 = 0x480;
                 self->step = self->step_s;
                 if (params == 0xB && (self->step == 2 || self->step == 1)) {
-                    self->animFrameIdx = 7;
+                    self->pose = 7;
                     self->animFrameDuration = 1;
                     self->anim = D_us_8018228C;
                     self->step = 2;

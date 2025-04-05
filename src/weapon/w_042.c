@@ -103,7 +103,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->posY.i.hi += col.unk18;
             self->anim = D_12A000_8017A684;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
@@ -169,7 +169,7 @@ s32 func_ptr_80170004(Entity* self) {
         if (self->rotX >= 0x100) {
             self->rotX = 0x100;
             self->anim = D_12A000_8017A620;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;
@@ -180,8 +180,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
     case 2:
         if (self->animFrameDuration == 1) {
-            if (self->animFrameIdx == 6 || self->animFrameIdx == 0xC ||
-                self->animFrameIdx == 0x12) {
+            if (self->pose == 6 || self->pose == 0xC || self->pose == 0x12) {
                 unk = 0x3E;
                 if (g_api.CreateEntFactoryFromEntity(
                         self, WFACTORY(unk, self->ext.weapon.unk7E), 0) !=
@@ -192,7 +191,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         if (self->animFrameDuration < 0) {
             self->anim = D_12A000_8017A6BC;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             self->step++;
         }
@@ -202,7 +201,7 @@ s32 func_ptr_80170004(Entity* self) {
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(70, 0), 0);
         }
-        if (self->animFrameIdx != 0) {
+        if (self->pose != 0) {
             self->rotX -= 4;
         }
         if (self->rotX < 0) {
@@ -261,7 +260,7 @@ static void func_ptr_80170008(Entity* self) {
             self->anim = D_12A000_8017A704;
             self->unk5A = 0;
             self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->velocityY = -FIX(0.5);
             self->step++;

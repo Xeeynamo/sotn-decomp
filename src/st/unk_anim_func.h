@@ -9,7 +9,7 @@
 #define SELF_BB (*((u8*)&self->unkB8 + 3))
 
 u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
-    u16 animFrameStart = self->animFrameIdx * 2;
+    u16 animFrameStart = self->pose * 2;
     u8* var_s1 = &frames[animFrameStart];
     s16 var_a1 = 0;
 
@@ -20,16 +20,16 @@ u8 UnkAnimFunc(u8 frames[], Entity* self, u8 arg2) {
             }
             self->animFrameDuration = *var_s1++ + SELF_BB;
             self->animCurFrame = *var_s1++;
-            self->animFrameIdx++;
+            self->pose++;
             var_a1 = 128;
         } else {
             var_s1 = frames;
-            self->animFrameIdx = 0;
+            self->pose = 0;
             self->animFrameDuration = 0;
             SELF_BB = (arg2 * Random()) >> 8;
             self->animFrameDuration = *var_s1++ + SELF_BB;
             self->animCurFrame = *var_s1;
-            self->animFrameIdx++;
+            self->pose++;
             return 0;
         }
     }

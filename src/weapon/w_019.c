@@ -84,10 +84,10 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxState = 0;
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
-        if (self->animFrameDuration == 1 && self->animFrameIdx == 3) {
+        if (self->animFrameDuration == 1 && self->pose == 3) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
-        if (self->animFrameIdx == 5) {
+        if (self->pose == 5) {
             self->unk6C = 0x80;
             self->flags &= ~FLAG_POS_PLAYER_LOCKED;
             self->drawFlags |= FLAG_DRAW_UNK8;

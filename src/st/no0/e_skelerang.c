@@ -181,7 +181,7 @@ void EntitySkelerang(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(anim_cower_crouch, self)) {
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             }
@@ -190,7 +190,7 @@ void EntitySkelerang(Entity* self) {
             // Play cower animation until player gets far enough away
             AnimateEntity(anim_cower, self);
             if (GetDistanceToPlayerX() > 80 || GetDistanceToPlayerY() > 48) {
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             }

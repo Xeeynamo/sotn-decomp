@@ -424,7 +424,7 @@ void EntityAxeKnightBlue(Entity* self) {
             }
         }
 
-        if (self->animFrameIdx == 1 || self->animFrameIdx == 4) {
+        if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
                 self->velocityX += 0x600;
             } else {
@@ -473,7 +473,7 @@ void EntityAxeKnightBlue(Entity* self) {
             }
         }
 
-        if (self->animFrameIdx == 1 || self->animFrameIdx == 4) {
+        if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
                 self->velocityX -= 0x400;
             } else {
@@ -506,7 +506,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
-        } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+        } else if ((animStatus & 0x80) && (self->pose == 7)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -538,7 +538,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 SetStep(3);
                 self->ext.axeknight.unk7C = 1;
             }
-        } else if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
+        } else if ((animStatus & 0x80) && (self->pose == 6)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -587,7 +587,7 @@ void EntityAxeKnightBlue(Entity* self) {
 
             if (!self->ext.axeknight.unk80 || GetDistanceToPlayerX() < 0x20) {
                 PlaySfxPositional(0x766);
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             } else {
@@ -650,7 +650,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 SetStep(AXE_KNIGHT_WALK_AWAY_FROM_PLAYER);
                 self->ext.axeknight.unk7C = 1;
             }
-        } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+        } else if ((animStatus & 0x80) && (self->pose == 7)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);

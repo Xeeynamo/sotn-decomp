@@ -164,7 +164,7 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
-        if (self->animFrameIdx == 7 && self->animFrameDuration == 0) {
+        if (self->pose == 7 && self->animFrameDuration == 0) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
         }
 
@@ -200,7 +200,7 @@ void EntityBoneScimitar(Entity* self) {
                 }
 
                 self->velocityY = FIX(-3);
-                self->animFrameIdx = 0;
+                self->pose = 0;
                 self->animFrameDuration = 0;
                 self->step_s++;
             }

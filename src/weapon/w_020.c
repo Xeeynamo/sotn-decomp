@@ -97,7 +97,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.CheckCollision(xVar, yVar, &sp10, 0);
         if (sp10.effects & EFFECT_SOLID) {
             self->posY.i.hi += sp10.unk18;
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             self->anim = D_90000_8017A864;
             g_api.PlaySfx(SFX_GOLD_PICKUP);
             self->step += 1;
@@ -131,13 +131,13 @@ static void EntityWeaponAttack(Entity* self) {
         }
         return;
     case 2:
-        if (((self->animFrameIdx % 8) == 5) && (self->animFrameDuration == 1)) {
+        if (((self->pose % 8) == 5) && (self->animFrameDuration == 1)) {
             g_api.PlaySfxVolPan(SFX_GOLD_PICKUP,
                                 D_90000_8017AB44[self->ext.karmacoin.unk84], 0);
             self->ext.karmacoin.unk84++;
         }
         if (self->animFrameDuration < 0) {
-            self->animFrameDuration = self->animFrameIdx = 0;
+            self->animFrameDuration = self->pose = 0;
             // This appears to be the actual Karma Coin coin-flip, deciding
             // heads/tails
             if (rand() & 1) {
@@ -151,7 +151,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         return;
     case 3:
-        if ((self->animFrameIdx == 1) && (self->animFrameDuration == 0x38)) {
+        if ((self->pose == 1) && (self->animFrameDuration == 0x38)) {
             // Useless if-statement
             if (self->anim == D_90000_8017A8C8) {
                 g_api.PlaySfx(SFX_KARMA_COIN_JINGLE);
@@ -164,7 +164,7 @@ static void EntityWeaponAttack(Entity* self) {
             if (self->anim == D_90000_8017A8D8) {
                 g_Player.timers[10] = 4;
                 self->anim = D_90000_8017A8E8;
-                self->animFrameDuration = self->animFrameIdx = 0;
+                self->animFrameDuration = self->pose = 0;
                 self->zPriority = 0x1B6;
                 self->flags &= ~FLAG_UNK_100000;
                 g_api.func_80118C28(7);
@@ -451,7 +451,7 @@ static void func_ptr_80170008(Entity* self) {
         } else {
             self->zPriority = PLAYER.zPriority;
             self->anim = D_90000_8017A954;
-            self->animFrameIdx = rand() & 0x1F;
+            self->pose = rand() & 0x1F;
             self->posX.i.hi = (D_90000_8017C238 % 3) * 10 + 148;
             self->posY.i.hi = (D_90000_8017C238 % 3) * 10 + 76;
             self->velocityX = FIX(19.0 / 256); // strange, FIX is usually /128

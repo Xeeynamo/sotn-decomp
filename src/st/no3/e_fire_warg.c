@@ -240,7 +240,7 @@ void EntityFireWarg(Entity* self) {
                 frameIdx = AnimateEntity(&D_801827DC, self);
             }
             if (!frameIdx || frameIdx & 0x80) {
-                frameIdx = (self->animFrameIdx - 1);
+                frameIdx = (self->pose - 1);
                 if (self->facingLeft) {
                     self->velocityX = D_801829EC[frameIdx];
                 } else {
@@ -249,7 +249,7 @@ void EntityFireWarg(Entity* self) {
             }
             if (var_s1 < 0x50) {
                 self->ext.fireWarg.unk7C = 1;
-                self->animFrameIdx = 7 - self->animFrameIdx;
+                self->pose = 7 - self->pose;
                 self->ext.fireWarg.unk80 = 0x10;
             }
         } else {
@@ -260,7 +260,7 @@ void EntityFireWarg(Entity* self) {
             }
 
             if (frameIdx != 1) {
-                frameIdx = self->animFrameIdx - 1;
+                frameIdx = self->pose - 1;
                 if (self->facingLeft) {
                     self->velocityX = -D_80182A04[frameIdx];
                 } else {
@@ -270,7 +270,7 @@ void EntityFireWarg(Entity* self) {
 
             if (var_s1 >= 0x79) {
                 self->ext.fireWarg.unk7C = 0;
-                self->animFrameIdx = 7 - self->animFrameIdx;
+                self->pose = 7 - self->pose;
                 self->ext.fireWarg.unk80 = 0x10;
             }
         }
@@ -436,7 +436,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s0->attack = self->attack;
             }
 
-            if ((frameIdx & 0x80) && (self->animFrameIdx == 7)) {
+            if ((frameIdx & 0x80) && (self->pose == 7)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(8.0);
                 } else {
@@ -591,7 +591,7 @@ void EntityFireWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             ent_s0->animFrameDuration = 0;
-            ent_s0->animFrameIdx = 0;
+            ent_s0->pose = 0;
             ent_s0->ext.fireWargHelper.unk7C = true;
 
             if (!(Random() & 7)) {
@@ -628,7 +628,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attack = self->attack;
             }
 
-            if ((var_s1 & 0x80) && (ent_s0->animFrameIdx == 5)) {
+            if ((var_s1 & 0x80) && (ent_s0->pose == 5)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(4.0);
                 } else {
@@ -670,7 +670,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attackElement = self->attackElement;
                 ent_s4->attack = self->attack;
             }
-            frameIdx = ent_s0->animFrameIdx;
+            frameIdx = ent_s0->pose;
             if ((var_s1 & 0x80) &&
                 ((frameIdx == 5) || (frameIdx == 9) || (frameIdx == 0xD))) {
                 if (self->facingLeft) {
@@ -780,7 +780,7 @@ void EntityUnkId30(Entity* self) {
 void EntityUnkId31(Entity* self) {
     Entity* entity;
     u16* hitboxPtr;
-    u16 animFrameIdx;
+    u16 pose;
     u16 animCurFrame;
     s16 i;
 
@@ -792,11 +792,11 @@ void EntityUnkId31(Entity* self) {
         (self + 1)->params = 1;
     }
     if (self->ext.fireWargHelper.unk7C) {
-        animFrameIdx = (self->animFrameIdx - 1) * 2;
+        pose = (self->pose - 1) * 2;
         if (entity->step_s == 1) {
-            hitboxPtr = D_80182FC8 + animFrameIdx;
+            hitboxPtr = D_80182FC8 + pose;
         } else {
-            hitboxPtr = D_80182FE8 + animFrameIdx;
+            hitboxPtr = D_80182FE8 + pose;
         }
 
         if (self->facingLeft) {

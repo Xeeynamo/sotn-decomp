@@ -33,7 +33,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
         self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
+        self->pose = 0;
         self->step = 3;
     }
     if (self->step != 4) {
@@ -110,10 +110,10 @@ static void EntityWeaponAttack(Entity* self) {
             /* fallthrough */
         case 26:
             anim1 += 2;
-            self->animFrameIdx = PLAYER.animFrameIdx;
+            self->pose = PLAYER.pose;
             break;
         default:
-            self->animFrameIdx = 0;
+            self->pose = 0;
             anim1 += anim2;
             break;
         }
@@ -630,7 +630,7 @@ static void func_ptr_80170024(Entity* self) {
         g_api.PlaySfx(SFX_CANDLE_HIT);
         self->step = 3;
         self->anim = D_51000_8017ABE8;
-        self->animFrameDuration = self->animFrameIdx = 0;
+        self->animFrameDuration = self->pose = 0;
         // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
         unusedEnt = g_api.CreateEntFactoryFromEntity(
             self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);

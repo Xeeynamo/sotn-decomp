@@ -51,8 +51,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     self->ext.weapon.anim = PLAYER.ext.weapon.anim - anim->frameStart;
 
-    if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == anim->soundFrame) {
+    if (PLAYER.animFrameDuration == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
 
@@ -65,8 +64,7 @@ static void EntityWeaponAttack(Entity* self) {
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;
 
-    if (animIndex != 0 && PLAYER.animFrameIdx == 4 &&
-        PLAYER.animFrameDuration == 1) {
+    if (animIndex != 0 && PLAYER.pose == 4 && PLAYER.animFrameDuration == 1) {
         g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
     }
 }

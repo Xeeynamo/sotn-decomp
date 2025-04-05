@@ -178,10 +178,10 @@ void RicEntitySlideKick(Entity* entity) {
             entity->step++;
         }
         entity->hitboxState = entity->ext.subweapon.timer;
-        if (PLAYER.animFrameIdx < 2) {
+        if (PLAYER.pose < 2) {
             entity->hitboxState = 0;
         }
-        if (PLAYER.animFrameIdx >= 8) {
+        if (PLAYER.pose >= 8) {
             DestroyEntity(entity);
         }
     }
@@ -242,7 +242,7 @@ void RicEntityBladeDash(Entity* self) {
             RicSetSubweaponParams(self);
             self->step++;
         }
-        if (PLAYER.animFrameIdx >= 19) {
+        if (PLAYER.pose >= 19) {
             DestroyEntity(self);
         }
     }
@@ -764,14 +764,14 @@ void func_80161C2C(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->animFrameIdx == 8) && (self->anim != anim_smoke_puff)) {
+        if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
             if (!(params & 1) && (self->animFrameDuration == step)) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
 
-        if ((self->animFrameIdx == 16) && (self->anim == anim_smoke_puff)) {
+        if ((self->pose == 16) && (self->anim == anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -798,8 +798,8 @@ void func_80161EF8(Entity* self) {
         self->step++;
         break;
     case 1:
-        if ((self->animFrameIdx == 6) &&
-            (self->animFrameDuration == self->step) && (rand() & 1)) {
+        if ((self->pose == 6) && (self->animFrameDuration == self->step) &&
+            (rand() & 1)) {
             RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
         }
         self->posY.val += self->velocityY;
@@ -1142,10 +1142,10 @@ void RicEntityMaria(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (self->animFrameIdx == 0 && self->animFrameDuration == 1) {
+        if (self->pose == 0 && self->animFrameDuration == 1) {
             g_api.PlaySfx(0x882);
         }
-        if (self->animFrameIdx == 4 && self->animFrameDuration == 1) {
+        if (self->pose == 4 && self->animFrameDuration == 1) {
             g_api.PlaySfx(0x883);
         }
 
@@ -1163,7 +1163,7 @@ void RicEntityMaria(Entity* self) {
         }
         break;
     case 2:
-        if (self->animFrameIdx == 16) {
+        if (self->pose == 16) {
             g_api.PlaySfx(0x87E);
             self->ext.ricMaria.timer = 0x80;
             self->step++;

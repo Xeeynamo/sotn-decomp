@@ -44,7 +44,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
         if ((PLAYER.animFrameDuration == 1) &&
-            (PLAYER.animFrameIdx == anim->soundFrame)) {
+            (PLAYER.pose == anim->soundFrame)) {
             g_api.PlaySfx(anim->soundId);
             g_api.PlaySfx(SFX_ANIME_SWORD_B);
         }
@@ -57,7 +57,7 @@ void EntityWeaponAttack(Entity* self) {
         return;
     }
 
-    if (PLAYER.animFrameIdx >= 6 && PLAYER.animFrameIdx < 8) {
+    if (PLAYER.pose >= 6 && PLAYER.pose < 8) {
         self->hitboxOffX = self->hitboxOffX + 7;
         self->hitboxWidth += 7;
     }
