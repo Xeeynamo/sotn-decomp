@@ -1488,11 +1488,9 @@ void EntitySubwpnReboundStone(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
         for (prim = (PrimLineG2*)&g_PrimBuf[self->primIndex], i = 0;
              prim != NULL; i++, prim = prim->next) {
-            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-                0xFF;
+            PGREY(prim, 0) = PGREY(prim, 1) = 0xFF;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
@@ -1501,7 +1499,7 @@ void EntitySubwpnReboundStone(Entity* self) {
             }
             prim->x0 = prim->x1 = playerX;
             prim->y0 = prim->y1 = playerY;
-            prim->timer = 0x14;
+            prim->timer = 20;
         }
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -1523,10 +1521,9 @@ void EntitySubwpnReboundStone(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->ext.reboundStone.unk84 = 4;
         }
-        self->step += 1;
+        self->step++;
         PlaySfx(SFX_WEAPON_SWISH_C);
         break;
-
     case 1:
         deltaX = rcos(self->ext.reboundStone.stoneAngle) * 0x10;
         deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
@@ -1756,11 +1753,11 @@ void EntitySubwpnReboundStone(Entity* self) {
 
 // ash thrown when using vibhuti subweapon
 void EntitySubwpnThrownVibhuti(Entity* self) {
-    Collider collider;
-    FakePrim* fakeprim;
+    Collider col;
+    FakePrim* prim;
     s16 randomAngle;
-    s16 fakePrimX;
-    s16 fakeprimY;
+    s16 x;
+    s16 y;
     s16 temp; // used for multiple unrelated things
     s32 i;
 
@@ -1775,38 +1772,41 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = self->hitboxHeight = 4;
         self->ext.subweapon.timer = 0x80;
-        fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        fakePrimX = self->posX.i.hi;
-        fakeprimY = self->posY.i.hi - 8;
-        for (i = 0; true; i++, fakeprim = fakeprim->next) {
-            fakeprim->drawMode = DRAW_UNK02;
-            fakeprim->priority = PLAYER.zPriority + 2;
-            if (fakeprim->next == NULL) {
-                fakeprim->drawMode &= ~DRAW_HIDE;
-                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        x = self->posX.i.hi;
+        y = self->posY.i.hi - 8;
+        i = 0;
+        while (true) {
+            prim->drawMode = DRAW_UNK02;
+            prim->priority = PLAYER.zPriority + 2;
+            if (prim->next == NULL) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim->y0 = prim->x0 = prim->w = 0;
                 break;
             }
-            fakeprim->posX.i.hi = fakePrimX;
-            fakeprim->posY.i.hi = fakeprimY;
-            fakeprim->posX.i.lo = fakeprim->posY.i.lo = 0;
+            prim->posX.i.hi = x;
+            prim->posY.i.hi = y;
+            prim->posX.i.lo = prim->posY.i.lo = 0;
             randomAngle = (rand() & 0xFF) + 0x100;
             temp = (rand() & 0xFF) + 0x80;
-            fakeprim->velocityX.val = ((rcos(randomAngle) << 4) * temp >> 9);
-            fakeprim->velocityX.val += FIX(0.5);
-            fakeprim->velocityY.val = -((rsin(randomAngle) << 4) * temp >> 9);
-            fakeprim->velocityX.val = (fakeprim->velocityX.val * 3) >> 1;
+            prim->velocityX.val = ((rcos(randomAngle) << 4) * temp >> 9);
+            prim->velocityX.val += FIX(0.5);
+            prim->velocityY.val = -((rsin(randomAngle) << 4) * temp >> 9);
+            prim->velocityX.val = (prim->velocityX.val * 3) >> 1;
             if (self->facingLeft) {
-                fakeprim->velocityX.val = -fakeprim->velocityX.val;
+                prim->velocityX.val = -prim->velocityX.val;
             }
-            fakeprim->posY.i.hi -= 4;
-            fakeprim->delay = 1;
-            fakeprim->x0 = fakeprim->posX.i.hi;
-            fakeprim->y0 = fakeprim->posY.i.hi;
-            fakeprim->r0 = 0xFF;
-            fakeprim->g0 = 0xFF;
-            fakeprim->b0 = 0xFF;
-            fakeprim->w = 2;
-            fakeprim->h = 2;
+            prim->posY.i.hi -= 4;
+            prim->delay = 1;
+            prim->x0 = prim->posX.i.hi;
+            prim->y0 = prim->posY.i.hi;
+            prim->r0 = 0xFF;
+            prim->g0 = 0xFF;
+            prim->b0 = 0xFF;
+            prim->w = 2;
+            prim->h = 2;
+            i++;
+            prim = prim->next;
         }
         PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.timers[10] = 4;
@@ -1817,76 +1817,75 @@ void EntitySubwpnThrownVibhuti(Entity* self) {
         if (self->facingLeft) {
             temp = -temp;
         }
-
         if (--self->ext.subweapon.timer == 0) {
             DestroyEntity(self);
             return;
         }
-        for (fakeprim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true;
-             fakeprim = fakeprim->next) {
-            if (fakeprim->next == NULL) {
-                fakeprim->drawMode &= ~DRAW_HIDE;
-                fakeprim->y0 = fakeprim->x0 = fakeprim->w = 0;
+        prim = (FakePrim*)&g_PrimBuf[self->primIndex];
+        i = 0;
+        while (true) {
+            if (prim->next == NULL) {
+                prim->drawMode &= ~DRAW_HIDE;
+                prim->y0 = prim->x0 = prim->w = 0;
                 break;
             }
-            fakeprim->posX.i.hi = fakeprim->x0;
-            fakeprim->posY.i.hi = fakeprim->y0;
-            if (fakeprim->delay) {
-                if (fakeprim->velocityX.val != 0) {
-                    fakeprim->posX.val += fakeprim->velocityX.val;
-                    CheckCollision(fakeprim->posX.i.hi + temp,
-                                   fakeprim->posY.i.hi, &collider, 0);
-                    if (collider.effects & EFFECT_UNK_0002) {
-                        fakeprim->velocityX.val = 0;
+            prim->posX.i.hi = prim->x0;
+            prim->posY.i.hi = prim->y0;
+            if (prim->delay) {
+                if (prim->velocityX.val != 0) {
+                    prim->posX.val += prim->velocityX.val;
+                    CheckCollision(
+                        prim->posX.i.hi + temp, prim->posY.i.hi, &col, 0);
+                    if (col.effects & EFFECT_UNK_0002) {
+                        prim->velocityX.val = 0;
                     }
                 }
-                fakeprim->posY.val += fakeprim->velocityY.val;
-                fakeprim->velocityY.val += FIX(12.0 / 128);
-                if (fakeprim->velocityY.val > FIX(4)) {
-                    fakeprim->velocityY.val = FIX(4);
+                prim->posY.val += prim->velocityY.val;
+                prim->velocityY.val += FIX(12.0 / 128);
+                if (prim->velocityY.val > FIX(4)) {
+                    prim->velocityY.val = FIX(4);
                 }
-                if (fakeprim->velocityY.val > 0) {
-                    CheckCollision(
-                        fakeprim->posX.i.hi, fakeprim->posY.i.hi, &collider, 0);
-                    if (collider.effects & EFFECT_SOLID) {
-                        fakeprim->delay = 0;
-                        fakeprim->posY.i.hi += collider.unk18;
-                        fakeprim->posY.i.hi -= (i % 3 + 1);
-                        fakeprim->w = fakeprim->h = 3;
+                if (prim->velocityY.val > 0) {
+                    CheckCollision(prim->posX.i.hi, prim->posY.i.hi, &col, 0);
+                    if (col.effects & EFFECT_SOLID) {
+                        prim->delay = 0;
+                        prim->posY.i.hi += col.unk18;
+                        prim->posY.i.hi -= (i % 3 + 1);
+                        prim->w = prim->h = 3;
                     }
                 }
             }
             if ((self->ext.subweapon.timer & 7) == i) {
-                self->posX.i.hi = fakeprim->posX.i.hi;
-                self->posY.i.hi = fakeprim->posY.i.hi;
-                if (fakeprim->drawMode & DRAW_HIDE) {
+                self->posX.i.hi = prim->posX.i.hi;
+                self->posY.i.hi = prim->posY.i.hi;
+                if (prim->drawMode & DRAW_HIDE) {
                     self->hitboxWidth = self->hitboxHeight = 0;
                 } else {
                     self->hitboxWidth = self->hitboxHeight = 4;
                 }
-                if (fakeprim->delay) {
+                if (prim->delay) {
                     self->hitboxOffY = 0;
                 } else {
                     self->hitboxOffY = -6;
                 }
             }
-            if ((self->hitFlags) &&
-                (((self->ext.subweapon.timer + 1) & 7) == i)) {
-                fakeprim->drawMode = DRAW_HIDE;
+            if (self->hitFlags && ((self->ext.subweapon.timer + 1) & 7) == i) {
+                prim->drawMode = DRAW_HIDE;
             }
-            if ((self->ext.subweapon.timer - 1) == i) {
-                fakeprim->drawMode = DRAW_HIDE;
+            if (self->ext.subweapon.timer - 1 == i) {
+                prim->drawMode = DRAW_HIDE;
             }
             i++;
-            fakeprim->x0 = fakeprim->posX.i.hi;
-            fakeprim->y0 = fakeprim->posY.i.hi;
+            prim->x0 = prim->posX.i.hi;
+            prim->y0 = prim->posY.i.hi;
+            prim = prim->next;
         }
         self->hitFlags = 0;
         break;
     }
 }
 
-static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
+static u8 PrimDecreaseBrightness(Primitive* prim, u8 amount) {
     s32 i;
     s32 j;
     u8* colorPtr;   // points to an RGB color
@@ -1915,7 +1914,6 @@ static u8 DraPrimDecreaseBrightness(Primitive* prim, u8 amount) {
 // ID #17. Created by factory blueprint #22. This is the blueprint for the
 // Agunea (lightning) subweapon.
 void EntitySubwpnAgunea(Entity* self) {
-    Entity* ent;
     Primitive* prim;
     s32 heartCost;
     s16 tempX;
@@ -1932,31 +1930,30 @@ void EntitySubwpnAgunea(Entity* self) {
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
-        } else {
-            self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
-                          FLAG_HAS_PRIMS;
-            self->facingLeft = PLAYER.facingLeft;
-            func_8011A290(self);
-            self->hitboxWidth = self->hitboxHeight = 4;
-            self->hitboxOffX = 4;
-            self->hitboxOffY = 0;
-            self->posY.i.hi = self->ext.agunea.unk82 =
-                PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
-            self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
-            prim = &g_PrimBuf[self->primIndex];
-            prim->type = PRIM_LINE_G2;
-            prim->priority = PLAYER.zPriority + 2;
-            prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
-                             DRAW_TPAGE | DRAW_TRANSP;
-            prim->r1 = 0x60;
-            prim->g1 = 0;
-            prim->b1 = 0x80;
-            SetSpeedX(FIX(6));
-            PlaySfx(SFX_WEAPON_SWISH_C);
-            CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
-            g_Player.timers[10] = 4;
-            self->step++;
         }
+        self->flags =
+            FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->facingLeft = PLAYER.facingLeft;
+        func_8011A290(self);
+        self->hitboxWidth = self->hitboxHeight = 4;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        self->posY.i.hi = self->ext.agunea.unk82 =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
+        self->posX.i.hi = self->ext.agunea.unk80 = PLAYER.posX.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->type = PRIM_LINE_G2;
+        prim->priority = PLAYER.zPriority + 2;
+        prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
+                         DRAW_TPAGE | DRAW_TRANSP;
+        prim->r1 = 0x60;
+        prim->g1 = 0;
+        prim->b1 = 0x80;
+        SetSpeedX(FIX(6));
+        PlaySfx(SFX_WEAPON_SWISH_C);
+        CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
+        g_Player.timers[10] = 4;
+        self->step++;
         break;
     case 1:
         self->posX.val += self->velocityX;
@@ -2003,8 +2000,8 @@ void EntitySubwpnAgunea(Entity* self) {
         tempX = self->posX.i.hi = self->ext.agunea.parent->posX.i.hi;
         tempY = self->posY.i.hi = self->ext.agunea.parent->posY.i.hi;
         if ((self->ext.agunea.unk7C % 12) == 0) {
-            self->posX.i.hi += ((rand() & 0xF) - 8);
-            self->posY.i.hi += ((rand() & 0xF) - 8);
+            self->posX.i.hi += (rand() & 0xF) - 8;
+            self->posY.i.hi += (rand() & 0xF) - 8;
             if (self->ext.agunea.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, 23, 0);
                 PlaySfx(SFX_THUNDER_B);
@@ -2059,7 +2056,7 @@ void EntitySubwpnAgunea(Entity* self) {
 }
 
 void EntityAguneaHitEnemy(Entity* self) {
-    Entity* sine;
+    Entity* parent;
     Primitive* prim;
     Primitive* temp_s3;
     Primitive* var_a0;
@@ -2070,11 +2067,9 @@ void EntityAguneaHitEnemy(Entity* self) {
     s16 temp_s2;
     u8 var_s3;
     s32 i;
-    s32 randy;
-
     u8 var_s8;
 
-    sine = self->ext.et_801291C4.parent;
+    parent = self->ext.et_801291C4.parent;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = (PLAYER.posY.i.hi + PLAYER.hitboxOffY) - 8;
 
@@ -2097,10 +2092,8 @@ void EntityAguneaHitEnemy(Entity* self) {
             break;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-
         self->facingLeft = PLAYER.facingLeft;
-        self->ext.et_801291C4.unk84 = ((rand() & 0x3FF) - 0x200);
-
+        self->ext.et_801291C4.unk84 = (rand() & 0x3FF) - 0x200;
         if (self->facingLeft) {
             // @bug: This should be assigned to something. As-is, does nothing.
             self->ext.et_801291C4.unk84 + 0x800;
@@ -2110,7 +2103,6 @@ void EntityAguneaHitEnemy(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         self->ext.et_801291C4.prim1 = prim;
         self->ext.et_801291C4.prim2 = prim;
-
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
             prim->clut = 0x194;
@@ -2130,7 +2122,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
-            i += 1;
+            i++;
             if (i > 5) {
                 i = 0;
             }
@@ -2156,16 +2148,15 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         self->ext.et_801291C4.unk88 = 0;
-        self->step += 1;
+        self->step++;
         break;
     case 1:
-
         for (i = 0; i < 2; i++) {
             prim = self->ext.et_801291C4.prim2;
             temp_s2 = self->ext.et_801291C4.unk84;
-            xOffset = sine->posX.i.hi - prim->x2;
-            yOffset = sine->posY.i.hi - prim->y2;
-            if ((abs(xOffset) < 8) && (abs(yOffset) < 8)) {
+            xOffset = parent->posX.i.hi - prim->x2;
+            yOffset = parent->posY.i.hi - prim->y2;
+            if (abs(xOffset) < 8 && abs(yOffset) < 8) {
                 self->step++;
                 return;
             }
@@ -2197,12 +2188,11 @@ void EntityAguneaHitEnemy(Entity* self) {
             temp_s2 += self->ext.et_801291C4.unk86;
             if (!var_s3) {
                 temp_s2 += 0x180 - ((rand() & 3) << 8);
-                ;
             }
             temp_s2 &= 0xFFF;
             temp_s3 = prim->next;
             if (temp_s3 == NULL) {
-                self->step += 1;
+                self->step++;
                 return;
             }
             LOW(temp_s3->x0) = LOW(prim->x2);
@@ -2211,7 +2201,6 @@ void EntityAguneaHitEnemy(Entity* self) {
             self->ext.et_801291C4.prim2 = temp_s3;
             xOffset = (rcos(temp_s2) * 0xC) >> 0xC;
             yOffset = -((rsin(temp_s2) * 0xC) >> 0xC);
-
             temp_s3->x2 = temp_s3->x0 + xOffset;
             temp_s3->y2 = temp_s3->y0 + yOffset;
             angle = temp_s2 - 0x400;
@@ -2223,7 +2212,7 @@ void EntityAguneaHitEnemy(Entity* self) {
             temp_s3->drawMode = DRAW_COLORS | DRAW_UNK02;
             self->ext.et_801291C4.unk88--;
         }
-        return;
+        break;
     case 2:
         if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
@@ -2231,7 +2220,7 @@ void EntityAguneaHitEnemy(Entity* self) {
                 prim->clut = 0x15F;
                 prim = prim->next;
             }
-            self->step_s += 1;
+            self->step_s++;
             return;
         }
         prim = self->ext.et_801291C4.prim1;
@@ -2244,13 +2233,13 @@ void EntityAguneaHitEnemy(Entity* self) {
             prim = prim->next;
         }
         self->step_s = 0;
-        self->step += 1;
+        self->step++;
         break;
     case 3:
         var_s8 = 1;
         prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
-            var_s8 &= !DraPrimDecreaseBrightness(prim, 4);
+            var_s8 &= !PrimDecreaseBrightness(prim, 4);
             prim = prim->next;
         }
         if (var_s8) {

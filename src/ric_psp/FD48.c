@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "ric.h"
-#include "sfx.h"
+#include "../ric/ric.h"
+#include <player.h>
 
 // RIC Entity # 49. Comes from blueprint 57. Factory call in
 // RicEntityCrashReboundStone. RicEntityCrashReboundStone is RIC Entity #48.
@@ -1256,7 +1256,11 @@ void RicEntityAguneaLightning(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         sp20 = ((self->params & 0xFF00) >> 8) * 0x200;
         sp20 += rand() % 0x200 - 0x100;
-        randomSeed = rand() & PSP_RANDMASK;
+        randomSeed = rand()
+#if defined(VERSION_PSP)
+                     & 0x7FFF
+#endif
+            ;
         for (i = 0; i < 15; i++) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
