@@ -1143,6 +1143,7 @@ void func_800F9F40(void) {
         }
     }
 }
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandleCursorInput);
 
@@ -1204,7 +1205,7 @@ EquipMenuHelper g_EquipMenuHelper[] = {
     {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
 };
 
-extern EquipKind D_801375CC;
+extern s32 D_801375CC;
 extern s32 D_801375D4;
 
 void func_800FB0FC(void) {
@@ -1222,6 +1223,25 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F21F8);
 s32 D_800A2DEC[] = {
     0x1A, 0x00, 0x30, 0x39, 0x39,
 };
+
+extern bool func_800FB1EC(u16 arg0);
+
+extern u32 D_801375D0;
+extern s32* D_801375D8;
+extern s32 D_80137844[1];
+extern s32 D_80137848[1];
+extern s32 D_80137948;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
+
+extern u32 D_psp_08B42050; // psp cross button
+extern u32 D_psp_08B42054; // psp triangle button
+
+#define PAD_MENU_SELECT_ALT (D_psp_08B42050)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_BACK (D_psp_08B42054)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
+#define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB23C);
 
@@ -1288,9 +1308,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FBAC4);
 void func_800FAEC4(
     s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
 void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette);
-s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected);
 extern s32 D_80137614;
-void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
 extern s32 g_ServantPrevious;
 extern s32 D_801375DC;
 extern s32 D_801375E0[NUM_FAMILIARS + 1];
@@ -1300,26 +1318,11 @@ extern s32 D_80137958;
 extern const char* D_800A2D64[];
 extern char** D_800A2D48;
 extern s32 D_80137608;
-extern s32 g_IsSelectingEquipment;
 extern MenuData g_MenuData;
-extern s32 D_80137948;
 extern s32 g_EquipOrderType;
-extern s32 D_80137844[1];
-extern s32 D_80137848[1];
-extern s32 D_801375D0;
-extern s32* D_801375D8;
 extern bool D_psp_091CDD48;
 extern s32 g_UserLanguage;
 extern s32 D_psp_091CDD40;
-
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
-
-#define PAD_MENU_SELECT_ALT (D_psp_08B42050)
-#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
-#define PAD_MENU_BACK (D_psp_08B42054)
-#define PAD_MENU_SORT (PAD_TRIANGLE)
-#define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
 extern s32 D_8013784C;
 typedef enum {
