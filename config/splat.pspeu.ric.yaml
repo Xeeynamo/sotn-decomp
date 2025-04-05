@@ -45,7 +45,7 @@ segments:
       - [0x80, c, ric/pl_debug]
       - [0x410, c, ric/pl_handlers]
       - [0x4B60, c, ric/pl_subweapons]
-      - [0x6C78, c, ric_psp/6C78]
+      - [0x6C78, c, ric_psp/lang]
       - [0x6D18, c, ric/pl_main]
       - [0x9250, c, ric/pl_setstep]
       - [0xA5A8, c, ric/pl_utils]
