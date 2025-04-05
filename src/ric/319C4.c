@@ -1119,7 +1119,8 @@ void RicEntityStopwatchCrashLightning(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (++self->ext.timer.t >= 5) {
+        self->ext.timer.t++;
+        if (self->ext.timer.t > 4) {
             DestroyEntity(self);
         }
         break;

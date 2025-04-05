@@ -2059,9 +2059,30 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityStopwatchCrashLightning);
-// clang-format on
+// Created by blueprint #73.
+// When Stopwatch crash ends, each of the 4 ricStopWatches shoots out a
+// lightning Each lightning can harm enemies. This entity represents the
+// attacking part of that lightning. It does not do any graphics and just has
+// the hitbox. Not clear why this is a dedicated entity rather than having one
+// entity that is graphics + hitbox for the lightning.
+void RicEntityStopwatchCrashLightning(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->ext.subweapon.subweaponId = PL_W_30;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->step++;
+        break;
+    case 1:
+        self->ext.timer.t++;
+        if (self->ext.timer.t > 4) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashStopwatch);
 
