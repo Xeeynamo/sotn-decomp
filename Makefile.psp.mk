@@ -24,7 +24,7 @@ $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)/bin
 	$(if $(VERBOSE),,@echo "Compiling $<";) $(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(muffle)mkdir -p $(dir $@)
-	$(if $(VERBOSE),,@echo "Building $<.o";) $(LD) -r -b binary -o $@ $<
+	$(if $(VERBOSE),,@echo "Building $<";) $(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
 $(foreach target,$(GAME),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_psp_o_files,%)
@@ -39,7 +39,7 @@ $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_%) $(
 
 # Step 3/5 of build
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/$$(call add_ovl_prefix,%).elf
-	$(if $(VERBOSE),,@echo "Copying objects from $*.elf to $(@:$(BUILD_DIR)/%=%)";) $(OBJCOPY) -O binary $< $@
+	$(if $(VERBOSE),,@echo "Stripping $<";) $(OBJCOPY) -O binary $< $@
 
 # Step 4/5 of build
 $(call get_targets): %: $(BUILD_DIR)/%.bin
