@@ -235,6 +235,7 @@ set(SOURCE_FILES_RIC
     src/ric/238F8.c
     src/ric/24788.c
     src/ric/2A060.c
+    src/ric/2F8E8.c
     src/ric/319C4.c
     src/ric/spriteparts.c
     src/ric/211D0.c

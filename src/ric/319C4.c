@@ -323,7 +323,11 @@ void RicEntityCrashReboundStone(Entity* entity) {
 }
 
 #define BIBLE_PAGE_COUNT 6
+#if defined(VERSION_PSP)
+extern Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#else
 static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#endif
 void RicEntityCrashBibleBeam(Entity* self) {
     Primitive* prim;
     s32 i;
@@ -433,7 +437,11 @@ void RicEntityCrashBibleBeam(Entity* self) {
 static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
     0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
 };
+#if defined(VERSION_PSP)
+extern s32 bible_pages_volume;
+#else
 static s32 bible_pages_volume;
+#endif
 void RicEntityCrashBible(Entity* self) {
     Primitive* prim;
     s32 i;
@@ -1337,7 +1345,11 @@ void RicEntityAguneaLightning(Entity* self) {
 }
 
 #define LIGHTNING_COUNT 8
+#if defined(VERSION_PSP)
+extern s32 g_AguneaParams[LIGHTNING_COUNT];
+#else
 static s32 g_AguneaParams[LIGHTNING_COUNT];
+#endif
 void RicEntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
