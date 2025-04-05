@@ -37,10 +37,10 @@
 | dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
+| ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented1            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented2            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented3            |        9 |          1 |        |                                 |       |
-| ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | no4    | func_pspeu_0923D0B8                 |        9 |          1 |        |                                 |       |
 | wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
@@ -63,7 +63,7 @@
 | dra    | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra    | UnMuteCd                            |       13 |          1 |        |                                 |       |
 | dra    | func_800FABEC                       |       13 |          1 |        |                                 |       |
-| ric    | func_pspeu_092C77B8                 |       13 |          1 |        |                                 |       |
+| ric    | func_80166024                       |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       14 |          2 |        |                                 |       |
 | dra    | func_psp_090E4C68                   |       15 |          1 |        |                                 |       |
 | dra    | func_801025F4                       |       15 |          1 |        |                                 |       |
@@ -81,6 +81,7 @@
 | st0    | CollectDummy                        |       15 |          2 |        |                                 |       |
 | wrp    | DestroyCurrentEntity                |       15 |          2 |        | https://decomp.me/scratch/aKfDL | 0.99  |
 | dra    | func_800F6A48                       |       15 |          3 |        |                                 |       |
+| ric    | pl_subweapon_holywater.rodata       |       16 |          0 | Yes    |                                 |       |
 | lib    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | no4    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
@@ -179,6 +180,7 @@
 | ric    | func_pspeu_092C8D48                 |       23 |          3 |        |                                 |       |
 | dra    | func_800E493C                       |       23 |          4 |        |                                 |       |
 | dra    | 65790.rodata                        |       24 |          0 | Yes    |                                 |       |
+| ric    | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
 | dra    | func_8010E3B8                       |       24 |          2 |        |                                 |       |
 | dra    | func_800EDAE4                       |       24 |          2 |        |                                 |       |
@@ -540,7 +542,7 @@
 | dra    | LearnSpell                          |       55 |          6 |        |                                 |       |
 | dra    | func_8010E0D0                       |       55 |          7 |        |                                 |       |
 | dra    | func_8011BD48                       |       55 |          7 |        |                                 |       |
-| ric    | func_pspeu_092C2E98                 |       55 |          7 |        |                                 |       |
+| ric    | func_80162E9C                       |       55 |          7 |        |                                 |       |
 | lib    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | no4    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | wrp    | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
@@ -716,7 +718,7 @@
 | dra    | MenuDrawStr                         |       77 |          9 |        |                                 |       |
 | dra    | A710.rodata                         |       78 |          0 | Yes    |                                 |       |
 | ric    | func_80158B04                       |       78 |          7 |        |                                 |       |
-| ric    | func_pspeu_092C9B88                 |       78 |          8 |        |                                 |       |
+| ric    | func_8016840C                       |       78 |          8 |        |                                 |       |
 | lib    | func_us_801B7D10                    |       78 |          8 |        |                                 |       |
 |        | GetTargetPositionWithDistanceBuffer |       78 |          9 |        |                                 |       |
 | dra    | func_psp_090E8518                   |       78 |         12 |        |                                 |       |
@@ -751,6 +753,7 @@
 | dra    | MenuSystemDraw                      |       84 |          7 |        |                                 |       |
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
+| ric    | 182C8.rodata                        |       86 |          0 | Yes    |                                 |       |
 | no4    | prim_helpers.rodata                 |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
 | dra    | func_psp_09141FA8                   |       86 |          9 |        |                                 |       |
@@ -908,7 +911,6 @@
 | lib    | func_us_801B3EC8                    |      113 |         14 |        |                                 |       |
 | dra    | func_800F9E18                       |      113 |         18 |        |                                 |       |
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
-| ric    | 182C8.rodata                        |      114 |          0 | Yes    |                                 |       |
 | dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
 | dra    | CreateEntFactoryFromEntity          |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra    | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
@@ -958,7 +960,7 @@
 | lib    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
 | no4    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
 | st0    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
-| ric    | func_pspeu_092C9988                 |      139 |         12 |        |                                 |       |
+| ric    | RicCheckHolyWaterCollision          |      139 |         12 |        |                                 |       |
 | dra    | func_800F14CC                       |      139 |         15 |        |                                 |       |
 | dra    | EntityUnkId24                       |      140 |         10 |        | https://decomp.me/scratch/QH3hn | 0.937 |
 | ric    | func_80169C10                       |      140 |         13 |        |                                 |       |
@@ -1163,7 +1165,7 @@
 | no4    | func_pspeu_092423C8                 |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
 | dra    | func_80124164                       |      279 |         17 |        |                                 |       |
-| ric    | func_pspeu_092C73B0                 |      279 |         17 |        |                                 |       |
+| ric    | func_80165DD8                       |      279 |         17 |        |                                 |       |
 | dra    | CheckDarkMetamorphosisInput         |      279 |         37 | Yes    |                                 |       |
 | dra    | CheckWingSmashInput                 |      279 |         38 | Yes    | https://decomp.me/scratch/ygTgB | 0.828 |
 | dra    | EntityExpandingCircle               |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
