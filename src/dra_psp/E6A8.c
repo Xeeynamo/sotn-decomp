@@ -2106,5 +2106,3 @@ block_4:
 }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawHudSubweapon2);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F4FC8);
