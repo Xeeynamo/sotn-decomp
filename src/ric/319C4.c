@@ -1201,20 +1201,19 @@ static void AguneaShuffleParams(s32 bufSize, s32* buf) {
 
 // Agunea item crash lightning, created by RicEntityAguneaCircle, blueprint 68
 void RicEntityAguneaLightning(Entity* self) {
-    u16 sp10[4];
-    s16 sp18;
-    u16 sp20;
-    s32 temp_s0;
+    s16 sp20;
     s16 angle;
-    s32 angleCos;
-    s32 angleSin;
+    s16 sp18;
+    s32 randomSeed;
+    s16 sp10[4];
     s16 xCoord;
     s16 yCoord;
-    Primitive* prim;
+    s16 psp_s6;
+    s16 psp_s5;
+    s32 psp_s4;
+    s32 psp_s3;
     s32 i;
-    s32 randomSeed;
-    s16 var_s4;
-    s16 var_s6;
+    Primitive* prim;
 
     switch (self->step) {
     case 0:
@@ -1229,55 +1228,56 @@ void RicEntityAguneaLightning(Entity* self) {
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x194;
-            prim->u0 = prim->u2 = (rand() % 5) * 0x10 - 0x70;
-            prim->u1 = prim->u3 = prim->u0 + 0x20;
-            if (rand() & 1) {
+            xCoord = (rand() % 5) * 0x10;
+            prim->u0 = prim->u2 = xCoord + 0x90;
+            prim->u1 = prim->u3 = xCoord + 0xB0;
+            if (rand() % 2) {
                 prim->v0 = prim->v1 = 0xD0;
                 prim->v2 = prim->v3 = 0xE0;
             } else {
                 prim->v0 = prim->v1 = 0xE0;
                 prim->v2 = prim->v3 = 0xD0;
             }
-            prim->priority = 0xC1;
-            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
+            prim->priority = 0xC1;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim = prim->next;
         }
         prim = &g_PrimBuf[self->primIndex];
-        temp_s0 = self->params / 0x100 * 0x200;
-        sp20 = (temp_s0)-0x100 + rand() % 0x200;
-        randomSeed = rand();
+        sp20 = ((self->params & 0xFF00) >> 8) * 0x200;
+        sp20 += rand() % 0x200 - 0x100;
+        randomSeed = rand()
+#if defined(VERSION_PSP)
+                     & 0x7FFF
+#endif
+            ;
         for (i = 0; i < 15; i++) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
             sp10[3] = self->posY.i.hi;
-            angle = GetAguneaLightningAngle(&sp10, sp20, i, &sp18);
+            angle = GetAguneaLightningAngle(sp10, sp20, i, &sp18);
             xCoord = sp10[0];
             yCoord = sp10[2];
-            var_s6 = (i == 0) ? 2 : 8;
-            var_s4 = (i < 7) ? 8 : 2;
+            psp_s6 = !i ? 2 : 8;
+            psp_s5 = (i < 7) ? 8 : 2;
 
-            angleCos = rcos(angle);
-            angleSin = rsin(angle);
-            prim->x0 = xCoord + (-(angleSin * -var_s6) >> 0xC);
-            prim->y0 = yCoord + ((angleCos * -var_s6) >> 0xC);
-            prim->x1 =
-                xCoord + ((angleCos * sp18 - (angleSin * -var_s4)) >> 0xC);
-            prim->y1 =
-                yCoord + ((angleSin * sp18 + (angleCos * -var_s4)) >> 0xC);
-            prim->x2 = xCoord + (-(angleSin * var_s6) >> 0xC);
-            prim->y2 = yCoord + ((angleCos * var_s6) >> 0xC);
-            prim->x3 =
-                xCoord + ((angleCos * sp18 - (angleSin * var_s4)) >> 0xC);
-            prim->y3 =
-                yCoord + ((angleSin * sp18 + (angleCos * var_s4)) >> 0xC);
+            psp_s4 = rcos(angle);
+            psp_s3 = rsin(angle);
+            prim->x0 = xCoord + (-(psp_s3 * -psp_s6) >> 0xC);
+            prim->y0 = yCoord + ((psp_s4 * -psp_s6) >> 0xC);
+            prim->x1 = xCoord + ((psp_s4 * sp18 - (psp_s3 * -psp_s5)) >> 0xC);
+            prim->y1 = yCoord + ((psp_s3 * sp18 + (psp_s4 * -psp_s5)) >> 0xC);
+            prim->x2 = xCoord + (-(psp_s3 * psp_s6) >> 0xC);
+            prim->y2 = yCoord + ((psp_s4 * psp_s6) >> 0xC);
+            prim->x3 = xCoord + ((psp_s4 * sp18 - (psp_s3 * psp_s5)) >> 0xC);
+            prim->y3 = yCoord + ((psp_s3 * sp18 + (psp_s4 * psp_s5)) >> 0xC);
             prim = prim->next;
         }
         self->ext.et_8017091C.unk7E = 1;
         self->step++;
-        return;
+        break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1286,22 +1286,20 @@ void RicEntityAguneaLightning(Entity* self) {
         }
         self->step++;
     case 2:
-        if (++self->ext.et_8017091C.unk7C >= 5) {
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 4) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 15; i++) {
+                prim->v0 = prim->v1 = prim->v0 - 0x10;
+                prim->v2 = prim->v3 = prim->v2 - 0x10;
                 prim->clut = 0x15F;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = 0xFF;
-                prim->v0 = prim->v1 = prim->v0 - 0x10;
-                // Seems fake but without this the registers get shuffled
-                xCoord = prim->v2;
-                prim->v2 = prim->v3 = xCoord - 0x10;
                 prim = prim->next;
             }
             self->ext.et_8017091C.unk7C = 0;
             self->step++;
-            return;
         }
         break;
     case 3:
@@ -1312,7 +1310,7 @@ void RicEntityAguneaLightning(Entity* self) {
             prim = prim->next;
         }
         self->step++;
-        return;
+        break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1320,7 +1318,7 @@ void RicEntityAguneaLightning(Entity* self) {
             prim = prim->next;
         }
         self->step++;
-        return;
+        break;
     case 6:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1329,7 +1327,8 @@ void RicEntityAguneaLightning(Entity* self) {
                     prim->b3 = 0x60 - (self->ext.et_8017091C.unk7C * 4);
             prim = prim->next;
         }
-        if (++self->ext.et_8017091C.unk7C >= 0x10) {
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 15) {
             DestroyEntity(self);
             return;
         }

@@ -2156,7 +2156,141 @@ static void AguneaShuffleParams(s32 bufSize, s32* buf) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityAguneaLightning);
+void RicEntityAguneaLightning(Entity* self) {
+    s16 sp20;
+    s16 angle;
+    s16 sp18;
+    s32 randomSeed;
+    s16 sp10[4];
+    s16 xCoord;
+    s16 yCoord;
+    s16 psp_s6;
+    s16 psp_s5;
+    s32 psp_s4;
+    s32 psp_s3;
+    s32 i;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xF);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 15; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            xCoord = (rand() % 5) * 0x10;
+            prim->u0 = prim->u2 = xCoord + 0x90;
+            prim->u1 = prim->u3 = xCoord + 0xB0;
+            if (rand() % 2) {
+                prim->v0 = prim->v1 = 0xD0;
+                prim->v2 = prim->v3 = 0xE0;
+            } else {
+                prim->v0 = prim->v1 = 0xE0;
+                prim->v2 = prim->v3 = 0xD0;
+            }
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x80;
+            prim->priority = 0xC1;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
+            prim = prim->next;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        sp20 = ((self->params & 0xFF00) >> 8) * 0x200;
+        sp20 += rand() % 0x200 - 0x100;
+        randomSeed = rand()
+#if defined(VERSION_PSP)
+                     & 0x7FFF
+#endif
+            ;
+        for (i = 0; i < 15; i++) {
+            srand(randomSeed);
+            sp10[1] = self->posX.i.hi;
+            sp10[3] = self->posY.i.hi;
+            angle = GetAguneaLightningAngle(sp10, sp20, i, &sp18);
+            xCoord = sp10[0];
+            yCoord = sp10[2];
+            psp_s6 = !i ? 2 : 8;
+            psp_s5 = (i < 7) ? 8 : 2;
+
+            psp_s4 = rcos(angle);
+            psp_s3 = rsin(angle);
+            prim->x0 = xCoord + (-(psp_s3 * -psp_s6) >> 0xC);
+            prim->y0 = yCoord + ((psp_s4 * -psp_s6) >> 0xC);
+            prim->x1 = xCoord + ((psp_s4 * sp18 - (psp_s3 * -psp_s5)) >> 0xC);
+            prim->y1 = yCoord + ((psp_s3 * sp18 + (psp_s4 * -psp_s5)) >> 0xC);
+            prim->x2 = xCoord + (-(psp_s3 * psp_s6) >> 0xC);
+            prim->y2 = yCoord + ((psp_s4 * psp_s6) >> 0xC);
+            prim->x3 = xCoord + ((psp_s4 * sp18 - (psp_s3 * psp_s5)) >> 0xC);
+            prim->y3 = yCoord + ((psp_s3 * sp18 + (psp_s4 * psp_s5)) >> 0xC);
+            prim = prim->next;
+        }
+        self->ext.et_8017091C.unk7E = 1;
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 15; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->step++;
+    case 2:
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 4) {
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 15; i++) {
+                prim->v0 = prim->v1 = prim->v0 - 0x10;
+                prim->v2 = prim->v3 = prim->v2 - 0x10;
+                prim->clut = 0x15F;
+                prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
+                    prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
+                        prim->g3 = prim->b3 = 0xFF;
+                prim = prim->next;
+            }
+            self->ext.et_8017091C.unk7C = 0;
+            self->step++;
+        }
+        break;
+    case 3:
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 15; i++) {
+            prim->clut = 0x194;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 15; i++) {
+            prim->clut = 0x15F;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 6:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 15; i++) {
+            prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
+                    prim->b3 = 0x60 - (self->ext.et_8017091C.unk7C * 4);
+            prim = prim->next;
+        }
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 15) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityAguneaCircle);
 
