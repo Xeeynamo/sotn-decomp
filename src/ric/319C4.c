@@ -637,11 +637,11 @@ void RicEntityCrashBible(Entity* self) {
 void func_8016F198(Entity* self) {
     const int PrimCount = 16;
 #if defined(VERSION_PSP)
-    const MaxHeight = 248;
-    const HalfHeight = 128;
+    const int MaxHeight = 248;
+    const int HalfHeight = 128;
 #else
-    const MaxHeight = 240;
-    const HalfHeight = 120;
+    const int MaxHeight = 240;
+    const int HalfHeight = 120;
 #endif
     Primitive* prim;
     s32 i;
@@ -1165,30 +1165,24 @@ void RicEntityCrashStopwatch(Entity* self) {
     }
 }
 
-static s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
-    s16 temp_s3;
-    s16 s3_offset = 0x80;
-    s8 arg2_copy = arg2;
-
-    temp_s3 = arg1 - s3_offset + rand() % 256;
+static s16 GetAguneaLightningAngle(s16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+    arg1 += rand() % 256 - 0x80;
     *arg3 = (rand() % 48) + 0x10;
     arg0[0] = arg0[1];
     arg0[2] = arg0[3];
-    if (arg2 != 0) {
-        arg0[1] = arg0[1] + ((rcos(temp_s3) * *arg3) >> 0xC);
-        arg0[3] = arg0[3] + ((rsin(temp_s3) * *arg3) >> 0xC);
-        if (arg2_copy & 1) {
-            return GetAguneaLightningAngle(
-                arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
+    if (arg2) {
+        arg0[1] += (rcos(arg1) * *arg3) >> 0xC;
+        arg0[3] += (rsin(arg1) * *arg3) >> 0xC;
+        if (arg2 % 2) {
+            return GetAguneaLightningAngle(arg0, arg1 - 0x140, arg2 / 2, arg3);
         } else {
             rand();
             rand();
             return GetAguneaLightningAngle(
-                arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
+                arg0, arg1 + 0x140, (arg2 - 1) / 2, arg3);
         }
-    } else {
-        return temp_s3;
     }
+    return arg1;
 }
 
 static void AguneaShuffleParams(s32 bufSize, s32* buf) {
