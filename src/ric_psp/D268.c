@@ -2984,4 +2984,138 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
     PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnBible);
+void RicEntitySubwpnBible(Entity* self) {
+    Primitive* prim;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s16 selfX;
+    s16 selfY;
+    s32 sp3C;
+    s32 psp_s8;
+    s32 psp_s7;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 psp_s4;
+    s32 psp_s3;
+    s32 psp_s2;
+    s32 psp_s1;
+
+// This variable is uninitialized. It's an error for PSP compiler.
+// Maybe they tossed this "= 0" line as a quick workaround.
+#if defined(VERSION_PSP)
+    psp_s4 = 0;
+#endif
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1E;
+        prim->clut = 0x17F;
+        prim->u0 = prim->u2 = 0x98;
+        prim->v0 = prim->v1 = 0xD8;
+        prim->u1 = prim->u3 = 0xA8;
+        prim->v2 = prim->v3 = 0xF0;
+        prim->priority = PLAYER.zPriority + 1;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
+        if (self->facingLeft) {
+            sp44 = 0x20;
+        } else {
+            sp44 = -0x20;
+        }
+        self->ext.et_BibleSubwpn.unk84 = sp44;
+        self->ext.et_BibleSubwpn.subweaponId = PL_W_BIBLE;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->drawMode &= ~DRAW_HIDE;
+        self->ext.et_BibleSubwpn.unk86++;
+        self->step++;
+    case 2:
+        self->ext.et_BibleSubwpn.unk7C++;
+        self->ext.et_BibleSubwpn.unk7E++;
+        if (self->ext.et_BibleSubwpn.unk7E >= 0x30) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
+            self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
+            if (self->facingLeft) {
+                sp40 = FIX(-12);
+            } else {
+                sp40 = FIX(12);
+            }
+            self->velocityX = sp40;
+            self->velocityY = FIX(-12);
+            g_api.PlaySfx(SFX_BIBLE_SCRAPE);
+            self->ext.et_BibleSubwpn.unk86++;
+            self->step++;
+        }
+        break;
+    }
+    switch (self->ext.et_BibleSubwpn.unk86) {
+    case 0:
+        break;
+    case 1:
+        // All this logic is a mess, could use a cleanup
+        psp_s2 = rsin(self->ext.et_BibleSubwpn.unk80);
+        psp_s1 = rcos(self->ext.et_BibleSubwpn.unk80);
+        psp_s5 = (psp_s2 * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        psp_s3 = (psp_s1 * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        psp_s7 = (psp_s1 * psp_s5 + psp_s2 * psp_s3);
+        sp48 = (psp_s1 * psp_s3 - psp_s2 * psp_s5);
+        psp_s5 = psp_s7 >> 0xC;
+        psp_s3 = sp48 >> 0xC;
+        psp_s2 = rsin(self->ext.et_BibleSubwpn.unk82);
+        psp_s1 = rcos(self->ext.et_BibleSubwpn.unk82);
+        psp_s7 = ((psp_s1 * psp_s5) + (psp_s2 * psp_s4)) >> 0xC;
+        psp_s6 = ((psp_s1 * psp_s4) - (psp_s2 * psp_s5)) >> 0xC;
+        psp_s4 = psp_s6;
+        if (self->facingLeft) {
+            psp_s6 = ((psp_s1 * psp_s4) + (psp_s2 * psp_s3)) >> 0xC;
+        } else {
+            psp_s6 = ((psp_s1 * psp_s4) - (psp_s2 * psp_s3)) >> 0xC;
+        }
+        self->ext.et_BibleSubwpn.unk80 += self->facingLeft ? 0x80 : -0x80;
+        self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
+        self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
+        if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
+            self->ext.et_BibleSubwpn.unk84 *= -1;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + psp_s7;
+        self->posY.i.hi = PLAYER.posY.i.hi + psp_s6;
+        self->zPriority = PLAYER.zPriority + (psp_s3 < 0 ? 2 : -2);
+        break;
+    case 2:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(-2);
+        break;
+    }
+    if (self->ext.et_BibleSubwpn.unk86) {
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = selfX - 8;
+        prim->x1 = prim->x3 = selfX + 8;
+        prim->y0 = prim->y1 = selfY - 12;
+        prim->y2 = prim->y3 = selfY + 12;
+        prim->priority = self->zPriority;
+        RicCreateEntFactoryFromEntity(self, BP_BIBLE_TRAIL, 0);
+        if (g_GameTimer % 10 == 0) {
+            g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
+        }
+    }
+}
