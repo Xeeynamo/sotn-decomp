@@ -515,7 +515,7 @@
 | dra    | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra    | func_psp_090EAF08                   |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | dra    | func_psp_090F4FC8                   |       51 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
-| ric    | func_pspeu_092ACE78                 |       51 |         10 |        |                                 |       |
+| ric    | GetLang                             |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib    | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
 | lib    | GetLang                             |       51 |         10 |        |                                 |       |
@@ -1371,7 +1371,7 @@
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_us_801CD318                    |      691 |         73 |        |                                 |       |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
-| ric    | RicEntitySubwpnAxe                  |      694 |         57 |        | https://decomp.me/scratch/Sfdgv | 0.999 |
+| ric    | RicEntitySubwpnThrownAxe            |      694 |         57 |        |                                 |       |
 | dra    | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | ric    | RicEntityTeleport                   |      700 |         78 |        |                                 |       |
@@ -1381,7 +1381,7 @@
 | dra    | EntitySubwpnReboundStone            |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
 | dra    | EntityGiantSpinningCross            |      729 |         63 |        | https://decomp.me/scratch/SwVao | 0.999 |
 | tt_000 | UpdateBatAttackMode                 |      730 |         65 |        |                                 |       |
-| ric    | RicEntityCrashAxe                   |      733 |         50 |        |                                 |       |
+| ric    | RicEntityCrashAxe                   |      733 |         50 |        | https://decomp.me/scratch/Vn4Gj | 0.999 |
 | lib    | EntityLibrarianChair                |      733 |        124 |        |                                 |       |
 | lib    | func_us_801B56E4                    |      739 |         81 | Yes    |                                 |       |
 | ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/O1hL7 | 1.0   |
@@ -1396,7 +1396,7 @@
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4    | func_pspeu_09253B00                 |      785 |         68 |        |                                 |       |
-| ric    | RicEntitySubwpnDagger               |      786 |         53 |        |                                 |       |
+| ric    | RicEntitySubwpnThrownDagger         |      786 |         53 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
 | st0    | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | ric    | RicEntityHitByIce                   |      802 |         82 |        |                                 |       |
