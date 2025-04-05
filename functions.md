@@ -10,7 +10,7 @@
 | dra    | SetReverbDepth                      |        7 |          1 |        |                                 |       |
 | dra    | MenuSoundConfigDraw                 |        7 |          1 |        |                                 |       |
 | dra    | func_psp_0913D610                   |        7 |          1 |        |                                 |       |
-| dra    | func_psp_090FC4D8                   |        7 |          1 |        |                                 |       |
+| dra    | LoadFileSim                         |        7 |          1 |        |                                 |       |
 | dra    | func_801072DC                       |        7 |          1 |        |                                 |       |
 | dra    | func_psp_0913F8C8                   |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090ED058                   |        7 |          1 |        |                                 |       |
@@ -48,7 +48,7 @@
 | dra    | func_psp_09141860                   |       11 |          1 |        |                                 |       |
 | dra    | MemcardClose                        |       11 |          1 |        |                                 |       |
 | dra    | MemcardInfoInit                     |       11 |          1 |        |                                 |       |
-| dra    | func_psp_090F67E8                   |       11 |          1 |        |                                 |       |
+| dra    | ClearBackbuffer                     |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
 | dra    | MuteCd                              |       11 |          1 |        |                                 |       |
@@ -216,7 +216,7 @@
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
 | dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
 | dra    | func_psp_090FA740                   |       26 |          2 |        |                                 |       |
-| dra    | func_psp_091032C8                   |       26 |          2 |        |                                 |       |
+| dra    | HideAllBackgroundLayers             |       26 |          2 |        |                                 |       |
 | ric    | RicSetSpeedX                        |       26 |          2 |        |                                 |       |
 | dra    | PlayerStepUnk49                     |       26 |          3 |        |                                 |       |
 | dra    | func_psp_090E7E90                   |       26 |          3 |        |                                 |       |
