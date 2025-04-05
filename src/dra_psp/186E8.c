@@ -549,7 +549,89 @@ extern s32 D_psp_0914C018;
 extern s32 D_psp_0914C020;
 extern s32 D_psp_0914C030;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5560);
+void func_psp_090F5560(void) {
+    g_EquipDefs = GetLang(&D_psp_09192EB0, &D_psp_091A4CE8, &D_psp_09197640, &D_psp_091A04E0, &D_psp_0919BE58);
+    g_AccessoryDefs = GetLang(&D_psp_091A8798, &D_psp_091AED90, &D_psp_091AA130, &D_psp_091AD410, &D_psp_091ABB00);
+    g_EnemyDefs = GetLang(&D_psp_091B00F0, &D_psp_091C1690, &D_psp_091B4660, &D_psp_091BD110, &D_psp_091B8BB0);
+    g_MenuStr = GetLang(&D_psp_091C59C0, &D_psp_091C7080, &D_psp_091C5F58, &D_psp_091C6AF0, &D_psp_091C6550);
+    g_SpellDefs = GetLang(&D_psp_091C7398, &D_psp_091C85F8, &D_psp_091C7828, &D_psp_091C8158, &D_psp_091C7CD8);
+    g_RelicDefs = GetLang(&D_psp_091C8E40, &D_psp_091CAB00, &D_psp_091C9560, &D_psp_091CA398, &D_psp_091C9C90);
+    g_SaveAreaNames = GetLang(&D_psp_0914A918, &D_psp_0914BBE0, &D_psp_0914ADB8, &D_psp_0914B748, &D_psp_0914B260);
+    D_psp_091CE250 = GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8, &D_psp_0914B960, &D_psp_0914B4A0);
+    switch (D_8B42058) {
+    case 1:
+    default:
+        D_psp_091CE248 = &D_psp_0914BFA0;
+        D_psp_091CE240 = &D_psp_0914BFB0;
+        D_psp_091CE238 = &D_psp_0914BFC0;
+        D_psp_091CE230 = &D_psp_0914BFD0;
+        D_psp_091CE228 = &D_psp_0914BFE8;
+        D_psp_091CE220 = &D_psp_0914BFF8;
+        D_psp_091CE218 = &D_psp_0914C000;
+        D_psp_091CE210 = &D_psp_0914C008;
+        D_psp_091CE208 = &D_psp_0914C010;
+        D_psp_091CE200 = &D_psp_0914C018;
+        D_psp_091CE1F8 = &D_psp_0914C020;
+        D_psp_091CE1F0 = &D_psp_0914C030;
+        break;
+    case 2:
+        D_psp_091CE248 = &D_psp_0914C038;
+        D_psp_091CE240 = &D_psp_0914C048;
+        D_psp_091CE238 = &D_psp_0914C060;
+        D_psp_091CE230 = &D_psp_0914C078;
+        D_psp_091CE228 = &D_psp_0914C090;
+        D_psp_091CE220 = &D_psp_0914C0A8;
+        D_psp_091CE218 = &D_psp_0914C0B0;
+        D_psp_091CE210 = &D_psp_0914C0B8;
+        D_psp_091CE208 = &D_psp_0914C0C0;
+        D_psp_091CE200 = &D_psp_0914C0C8;
+        D_psp_091CE1F8 = &D_psp_0914C0D0;
+        D_psp_091CE1F0 = &D_psp_0914C0E0;
+        break;
+    case 3:
+        D_psp_091CE248 = &D_psp_0914C0F0;
+        D_psp_091CE240 = &D_psp_0914C108;
+        D_psp_091CE238 = &D_psp_0914C120;
+        D_psp_091CE230 = &D_psp_0914C138;
+        D_psp_091CE228 = &D_psp_0914C148;
+        D_psp_091CE220 = &D_psp_0914C158;
+        D_psp_091CE218 = &D_psp_0914C000;
+        D_psp_091CE210 = &D_psp_0914C160;
+        D_psp_091CE208 = &D_psp_0914C168;
+        D_psp_091CE200 = &D_psp_0914C170;
+        D_psp_091CE1F8 = &D_psp_0914C178;
+        D_psp_091CE1F0 = &D_psp_0914C180;
+        break;
+    case 4:
+        D_psp_091CE248 = &D_psp_0914C190;
+        D_psp_091CE240 = &D_psp_0914C1A8;
+        D_psp_091CE238 = &D_psp_0914C1C0;
+        D_psp_091CE230 = &D_psp_0914C1D8;
+        D_psp_091CE228 = &D_psp_0914C1F0;
+        D_psp_091CE220 = &D_psp_0914C200;
+        D_psp_091CE218 = &D_psp_0914C208;
+        D_psp_091CE210 = &D_psp_0914C210;
+        D_psp_091CE208 = &D_psp_0914C218;
+        D_psp_091CE200 = &D_psp_0914C220;
+        D_psp_091CE1F8 = &D_psp_0914C228;
+        D_psp_091CE1F0 = &D_psp_0914C230;
+        break;
+    case 5:
+        D_psp_091CE248 = &D_psp_0914C240;
+        D_psp_091CE240 = &D_psp_0914C250;
+        D_psp_091CE238 = &D_psp_0914C268;
+        D_psp_091CE230 = &D_psp_0914C278;
+        D_psp_091CE228 = &D_psp_0914C288;
+        D_psp_091CE220 = &D_psp_0914C298;
+        D_psp_091CE218 = &D_psp_0914C000;
+        D_psp_091CE210 = &D_psp_0914C2A0;
+        D_psp_091CE208 = &D_psp_0914C2A8;
+        D_psp_091CE200 = &D_psp_0914C170;
+        D_psp_091CE1F8 = &D_psp_0914C2B0;
+        D_psp_091CE1F0 = &D_psp_0914C2C0;
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5B10);
 
