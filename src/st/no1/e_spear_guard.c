@@ -3,59 +3,44 @@
 
 static u8 steps[] = {6, 10, 6, 10, 9, 6, 10, 6};
 static u8 D_us_80182F0C[] = {0x40, 0x30, 0x60, 0x58};
-
 static u8 D_us_80182F10[] = {0x50, 0x30, 0x60, 0x88};
 static u8 D_us_80182F14[] = {0x3F, 0x3C, 0x38, 0x34, 0x30, 0x2C, 0x28, 0x24,
                              0x20, 0x1C, 0x18, 0x14, 0x10, 0x0C, 0x08, 0x04};
-static s16 explosionPosXYs[][2] = {
+static Point16 explosionPositions[] = {
     {-8, -4}, {8, -6},  {-12, 4},  {-1, -7}, {6, 16},   {11, -3},
     {10, 12}, {3, -2},  {-8, -8},  {10, -6}, {-12, 18}, {-8, -16},
     {6, 4},   {10, 20}, {-11, 22}, {8, -2}};
-
-// Unknown data, stripped on PSP
 static s32 unused[] = {0xFFFFC800, 0xFFFFC800, 0xFFFFB000, 0xFFFFB000};
-
 static u16 frameIndexes[] = {2, 2, 2, 2};
 static s32 xVelocities[] = {0xFFFFF000, 0xFFFFFA00, 0xFFFFE000, 0xFFFFE200};
 
 // anims
-static u8 D_us_80182F8C[] = {
-    0x06, 0x01, 0x04, 0x02, 0x1C, 0x02, 0x0A, 0x03, 0x00};
-static u8 D_us_80182F98[] = {0x0E, 0x04, 0x08, 0x04, 0x08, 0x05, 0x00};
-static u8 D_us_80182FA0[] = {0x09, 0x05, 0x01, 0x05, 0x0A, 0x04, 0x00};
-static u8 D_us_80182FA8[] = {0x0B, 0x05, 0x01, 0x05, 0x0C, 0x04, 0x00};
-
-static u8 D_us_80182FB0[] = {
-    0x08, 0x04, 0x30, 0x06, 0x25, 0x07, 0x06, 0x06, 0x00};
+static u8 D_us_80182F8C[] = {6, 1, 4, 2, 28, 2, 10, 3, 0, 0};
+static u8 D_us_80182F98[] = {14, 4, 8, 4, 8, 5, 0, 0};
+static u8 D_us_80182FA0[] = {9, 5, 1, 5, 10, 4, 0, 0};
+static u8 D_us_80182FA8[] = {11, 5, 1, 5, 12, 4, 0, 0};
+static u8 D_us_80182FB0[] = {8, 4, 48, 6, 37, 7, 6, 6, 0, 0};
 static u8 D_us_80182FBC[] = {
-    0x06, 0x10, 0x06, 0x11, 0x06, 0x12, 0x01, 0x15, 0x01, 0x16, 0x01,
-    0x15, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16,
-    0x01, 0x15, 0x01, 0x16, 0x06, 0x13, 0x06, 0x14, 0x00};
+    6, 16, 6, 17, 6, 18, 1, 21, 1, 22, 1, 21, 1, 22, 1, 21,
+    1, 22, 1, 21, 1, 22, 1, 21, 1, 22, 6, 19, 6, 20, 0, 0};
 static u8 D_us_80182FDC[] = {
-    0x06, 0x04, 0x06, 0x08, 0x06, 0x09, 0x08, 0x0A, 0x30, 0x0B, 0x02,
-    0x0A, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x31, 0x0F, 0x00};
+    6, 4, 6, 8, 6, 9, 8, 10, 48, 11, 2, 10, 2, 12, 2, 13, 2, 14, 49, 15, 0, 0};
 static u8 D_us_80182FF4[] = {
-    0x06, 0x04, 0x06, 0x17, 0x06, 0x18, 0x04, 0x19, 0x04, 0x1A,
-    0x30, 0x1B, 0x02, 0x1C, 0x01, 0x1D, 0x31, 0x1E, 0xFF, 0x00};
-static u8 D_us_80183008[] = {0x08, 0x3E, 0x08, 0x3F, 0x08, 0x40, 0x08, 0x3F,
-                             0x08, 0x40, 0x08, 0x3F, 0x08, 0x40, 0xFF, 0x00};
-static u8 D_us_80183018[] = {
-    0x06, 0x04, 0x06, 0x21, 0x0F, 0x22, 0x03, 0x23, 0x03,
-    0x24, 0x03, 0x25, 0x16, 0x26, 0x02, 0x25, 0x02, 0x24,
-    0x02, 0x23, 0x06, 0x22, 0x06, 0x21, 0x00};
+    6, 4, 6, 23, 6, 24, 4, 25, 4, 26, 48, 27, 2, 28, 1, 29, 49, 30, -1, 0};
+static u8 D_us_80183008[] = {
+    8, 62, 8, 63, 8, 64, 8, 63, 8, 64, 8, 63, 8, 64, -1, 0};
+static u8 D_us_80183018[] = {6,  4, 6,  33, 15, 34, 3,  35, 3,  36, 3,  37, 22,
+                             38, 2, 37, 2,  36, 2,  35, 6,  34, 6,  33, 0,  0};
 static u8 D_us_80183034[] = {
-    0x06, 0x04, 0x06, 0x27, 0x06, 0x28, 0x0F, 0x29, 0x03, 0x2A,
-    0x03, 0x2B, 0x03, 0x2C, 0x16, 0x2D, 0x02, 0x2C, 0x02, 0x2B,
-    0x02, 0x2A, 0x06, 0x29, 0x06, 0x28, 0x06, 0x27, 0x00};
-
+    6,  4, 6,  39, 6,  40, 15, 41, 3,  42, 3,  43, 3,  44, 22,
+    45, 2, 44, 2,  43, 2,  42, 6,  41, 6,  40, 6,  39, 0,  0};
 static u8* animations[] = {
     D_us_80182F8C, D_us_80182F98, D_us_80182FA0, D_us_80182FA8};
 
 // sensors
 static s16 D_us_80183064[][2] = {{0, 24}, {8, 0}};
 static s16 D_us_8018306C[][2] = {{0, 24}, {0, 4}, {8, -4}, {-16, 0}};
-
-static s16 guardHitboxOffsetXYs[][2] = {
+static Point16 guardHitboxOffsets[] = {
     {-28, 15},  {-24, 13},  {-24, 12},  {-23, -1},  {-29, 2},   {-29, -1},
     {-21, -24}, {1, -38},   {35, -7},   {-36, -16}, {-36, 0},   {3, 26},
     {4, 24},    {-20, 6},   {-29, -1},  {-28, -10}, {-20, 18},  {-27, 12},
@@ -64,17 +49,13 @@ static s16 guardHitboxOffsetXYs[][2] = {
     {-15, 21},  {3, 26},    {1, 38},    {1, 46},    {1, 54},    {1, 62},
     {-25, 0},   {-23, -27}, {1, -30},   {0, -47},   {0, -54},   {0, -62},
     {0, -70}};
-static u16 guardHitboxWidthHeights[][2] = {
+static Point16 guardHitboxSizes[] = {
     {0, 0},  {8, 4},   {8, 4},   {16, 4},  {16, 4}, {16, 4}, {8, 8},  {4, 20},
     {8, 4},  {12, 24}, {16, 24}, {4, 12},  {4, 12}, {16, 4}, {16, 4}, {16, 4},
     {8, 8},  {8, 8},   {27, 25}, {27, 25}, {16, 4}, {8, 8},  {4, 20}, {4, 20},
     {8, 8},  {12, 4},  {0, 0},   {0, 0},   {0, 0},  {0, 0},  {4, 4},  {4, 8},
     {4, 20}, {4, 28},  {4, 36},  {4, 44},  {20, 4}, {8, 8},  {4, 8},  {4, 24},
     {4, 32}, {4, 40},  {4, 48}};
-
-// Unknown data, stripped on PSP
-static u8 unusedTwo[] = {
-    0x06, 0x05, 0x06, 0x06, 0x06, 0x07, 0x06, 0x08, 0x06, 0x01};
 
 // Spear Guard helper
 void func_us_801D37A4(void) {
@@ -89,12 +70,10 @@ void func_us_801D37A4(void) {
         if (!--g_CurrentEntity->ext.spearGuard.unk7C) {
             SetStep(steps[g_CurrentEntity->ext.spearGuard.unk84++ & 7]);
             g_CurrentEntity->ext.spearGuard.unk7C = D_us_80182F0C[Random() & 3];
-
             if (g_CurrentEntity->params && GetDistanceToPlayerX() > 0x50 &&
                 Random() & 1) {
                 SetStep(11);
             }
-
             g_CurrentEntity->velocityX = 0;
         }
     }
@@ -280,6 +259,7 @@ void EntitySpearGuard(Entity* self) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
         }
         break;
+
     case 9:
         if ((g_Timer & 0x1F) == 0) {
             PlaySfxPositional(SFX_WEAPON_SWISH_A);
@@ -387,8 +367,8 @@ void EntitySpearGuard(Entity* self) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
                     tempEntity->params = 2;
                     tempEntity->zPriority = self->zPriority - 1;
-                    tempEntity->posX.i.hi += explosionPosXYs[i][0];
-                    tempEntity->posY.i.hi += explosionPosXYs[i][1];
+                    tempEntity->posX.i.hi += explosionPositions[i].x;
+                    tempEntity->posY.i.hi += explosionPositions[i].y;
                 }
             }
         }
@@ -406,26 +386,21 @@ void EntitySpearGuardBlock(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->hitboxState = 1;
     }
-
     if (!(self->hitFlags & 0x80) && self->hitFlags) {
         PlaySfxPositional(SFX_METAL_CLANG_E);
     }
-
     parent = self - 1;
     animCurFrame = parent->animCurFrame - 3;
-
     if (animCurFrame > 0x2A) {
         animCurFrame = 0;
     }
-
-    self->hitboxOffX = guardHitboxOffsetXYs[animCurFrame][0];
-    self->hitboxOffY = guardHitboxOffsetXYs[animCurFrame][1];
-    self->hitboxWidth = guardHitboxWidthHeights[animCurFrame][0];
-    self->hitboxHeight = guardHitboxWidthHeights[animCurFrame][1];
+    self->hitboxOffX = guardHitboxOffsets[animCurFrame].x;
+    self->hitboxOffY = guardHitboxOffsets[animCurFrame].y;
+    self->hitboxWidth = guardHitboxSizes[animCurFrame].x;
+    self->hitboxHeight = guardHitboxSizes[animCurFrame].y;
     self->facingLeft = parent->facingLeft;
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;
-
     if (parent->entityId != E_SPEAR_GUARD) {
         DestroyEntity(self);
     }

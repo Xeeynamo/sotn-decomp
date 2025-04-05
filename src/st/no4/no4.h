@@ -64,8 +64,8 @@ typedef enum EntityIDs {
     // /* 0x37 */ E_ID_37,
     // /* 0x38 */ E_ID_38,
     // /* 0x39 */ E_ID_39,
-    // /* 0x3A */ E_ID_3A,
-    // /* 0x3B */ E_ID_3B,
+    /* 0x3A */ E_ID_3A = 0x3A,
+    /* 0x3B */ E_ID_3B,
     // /* 0x3C */ E_ID_3C,
     // /* 0x3D */ E_ID_3D,
     // /* 0x3E */ E_ID_3E,
@@ -80,9 +80,9 @@ typedef enum EntityIDs {
     // /* 0x47 */ E_ID_47,
     // /* 0x48 */ E_ID_48,
     // /* 0x49 */ E_ID_49,
-    // /* 0x4A */ E_ID_4A,
-    // /* 0x4B */ E_ID_4B,
-    /* 0x4C */ E_BONE_ARCHER = 0x4C,
+    /* 0x4A */ E_SPEAR_GUARD = 0x4A,
+    /* 0x4B */ E_THROWN_SPEAR,
+    /* 0x4C */ E_BONE_ARCHER,
     /* 0x4D */ E_BONE_ARCHER_ARROW,
 } EntityIDs;
 
@@ -110,8 +110,8 @@ extern EInit g_EInitUnkId3F;
 // extern EInit D_us_80180C64;
 // extern EInit D_us_80180C70;
 // extern EInit D_us_80180C7C;
-// extern EInit D_us_80180C88;
-// extern EInit D_us_80180C94;
+extern EInit g_EInitSpearGuard;
+extern EInit g_EInitThrownSpear;
 extern EInit g_EInitBoneArcher;
 extern EInit g_EInitBoneArcherArrow;
 // extern EInit D_us_80180CB8;
