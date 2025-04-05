@@ -52,7 +52,11 @@ class NonMatchingFunc(object):
         self.text_offset = split[split.index("nonmatchings") + 1]
 
         assumed_path = "/".join(split[split.index("nonmatchings") + 1 : -1]) + ".c"
-        c_paths = [src for src in src_files if src.endswith(assumed_path)]
+        c_paths = [
+            src
+            for src in src_files
+            if src.endswith(assumed_path) and self.overlay_name in src.split("/")
+        ]
         assert len(c_paths) == 1
         self.src_path = c_paths[0]
 
