@@ -90,7 +90,6 @@ bool D_8003C908;
 s32 D_8003C100;
 s32 D_800978B4;
 u32 g_RoomCount;
-char D_80097902[] = "dummy";
 s32 g_EquippedWeaponIds[2] = {0};
 Tilemap g_Tilemap;
 BgLayer g_BgLayers[MAX_BG_LAYER_COUNT];
