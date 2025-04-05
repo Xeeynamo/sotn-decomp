@@ -557,7 +557,7 @@ void func_psp_090F5560(void) {
     g_SpellDefs = GetLang(&D_psp_091C7398, &D_psp_091C85F8, &D_psp_091C7828, &D_psp_091C8158, &D_psp_091C7CD8);
     g_RelicDefs = GetLang(&D_psp_091C8E40, &D_psp_091CAB00, &D_psp_091C9560, &D_psp_091CA398, &D_psp_091C9C90);
     g_SaveAreaNames = GetLang(&D_psp_0914A918, &D_psp_0914BBE0, &D_psp_0914ADB8, &D_psp_0914B748, &D_psp_0914B260);
-    D_psp_091CE250 = GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8, &D_psp_0914B960, &D_psp_0914B4A0);
+    g_SaveAreaNamesSecondPart = GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8, &D_psp_0914B960, &D_psp_0914B4A0);
     switch (D_8B42058) {
     case 1:
     default:
