@@ -168,7 +168,7 @@
 | dra    | func_psp_09140588                   |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090F54E0                   |       22 |          4 |        |                                 |       |
 | dra    | func_80111938                       |       23 |          1 |        |                                 |       |
-| dra    | func_psp_090F5B10                   |       23 |          1 |        |                                 |       |
+| dra    | func_psp_090F5B10                   |       23 |          1 |        | https://decomp.me/scratch/55U3O | 0.759 |
 | ric    | RicDebugEnter                       |       23 |          1 |        |                                 |       |
 | ric    | func_80159BC8                       |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                   |       23 |          2 |        |                                 |       |
@@ -964,7 +964,7 @@
 | lib    | func_psp_09239308                   |      140 |         13 |        |                                 |       |
 | dra    | func_80118B18                       |      141 |         14 |        |                                 |       |
 | dra    | func_psp_090F1418                   |      142 |         13 |        |                                 |       |
-| ric    | GetAguneaLightningAngle             |      142 |         19 |        |                                 |       |
+| ric    | GetAguneaLightningAngle             |      142 |         19 |        | https://decomp.me/scratch/ZAu5o | 1.0   |
 | dra    | AddToInventory                      |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | dra    | GetStatusAilmentTimer               |      145 |         15 | Yes    |                                 |       |
 | dra    | func_80132A04                       |      145 |         15 |        |                                 |       |
@@ -1196,7 +1196,7 @@
 | dra    | func_psp_09142408                   |      312 |         36 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnCrashCrossParticles  |      313 |         30 |        |                                 |       |
 | ric    | RicInit                             |      313 |         33 |        |                                 |       |
-| ric    | RicEntitySubwpnStopwatchCircle      |      314 |         24 |        |                                 |       |
+| ric    | RicEntitySubwpnStopwatchCircle      |      314 |         24 |        | https://decomp.me/scratch/kbgQU | 1.0   |
 | lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
 | no4    | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
@@ -1310,11 +1310,11 @@
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
-| dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/mrtgZ | 0.504 |
+| dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    |                                 |       |
 | dra    | func_psp_09143758                   |      546 |        139 |        |                                 |       |
-| dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/lafww | 0.982 |
+| dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_us_801B7DF8                    |      556 |         54 |        |                                 |       |
 | dra    | EntityEntFactory                    |      557 |         48 | Yes    | https://decomp.me/scratch/pklqi | 0.998 |
@@ -1344,7 +1344,7 @@
 | dra    | EntityBatEcho                       |      618 |         43 |        | https://decomp.me/scratch/ewB0M | 0.998 |
 | dra    | func_800EB758                       |      619 |         30 |        |                                 |       |
 | no4    | func_pspeu_0923BB30                 |      621 |         50 |        |                                 |       |
-| ric    | RicEntityAguneaLightning            |      624 |         46 | Yes    |                                 |       |
+| ric    | RicEntityAguneaLightning            |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
@@ -1353,7 +1353,7 @@
 | no4    | func_pspeu_092483A0                 |      644 |         88 | Yes    |                                 |       |
 | dra    | func_8012D3E8                       |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
 | lib    | func_psp_09258100                   |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
-| ric    | RicEntityAguneaCircle               |      655 |         49 | Yes    |                                 |       |
+| ric    | RicEntityAguneaCircle               |      655 |         49 | Yes    | https://decomp.me/scratch/hxWhp | 0.999 |
 | lib    | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
 | dra    | EntityHitByLightning                |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | dra    | EntityAguneaHitEnemy                |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
@@ -1476,7 +1476,7 @@
 | lib    | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    |                                 |       |
-| ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    |                                 |       |
+| ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    | https://decomp.me/scratch/kbgQU | 1.0   |
 | dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/S9Nor | 0.982 |
 | dra    | RunMainEngine                       |     2166 |        297 | Yes    |                                 |       |
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
