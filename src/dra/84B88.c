@@ -15,15 +15,15 @@ void EntitySubwpnThrownDagger(Entity* self) {
     Primitive* prim;
     s16 offsetX;
     s16 offsetY;
-    s16 angle_a;
-    s16 angle_b;
-    s16 angle_c;
-    s16 angle_d;
-    s16 selfX;
-    s16 selfY;
-    s16 var_s5;
-    s32 cosine;
-    s32 sine;
+    s16 angle1;
+    s16 angle2;
+    s16 angle3;
+    s16 angle4;
+    s16 x;
+    s16 y;
+    s16 xCol;
+    s32 modX;
+    s32 modY;
     s32 i;
 
     switch (self->step) {
@@ -65,14 +65,14 @@ void EntitySubwpnThrownDagger(Entity* self) {
         PlaySfx(SFX_WEAPON_SWISH_C);
         g_Player.timers[ALU_T_10] = 4;
         self->step++;
-        return;
+        break;
     case DAGGER_FLYING:
         self->ext.timer.t++;
         if (self->velocityX > 0) {
-            var_s5 = 8;
+            xCol = 8;
         }
         if (self->velocityX < 0) {
-            var_s5 = -8;
+            xCol = -8;
         }
         if (self->hitFlags == 1) {
             self->ext.timer.t = 4;
@@ -88,23 +88,23 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->posX.i.hi--;
             }
             CheckCollision(
-                self->posX.i.hi + var_s5, self->posY.i.hi, &collider, 0);
+                self->posX.i.hi + xCol, self->posY.i.hi, &collider, 0);
             if (self->hitFlags == 2 ||
                 collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                 self->ext.timer.t = 64;
                 self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
-                self->posX.i.hi += var_s5;
+                self->posX.i.hi += xCol;
                 CreateEntFactoryFromEntity(self, FACTORY(10, 0), 0);
-                self->posX.i.hi -= var_s5;
+                self->posX.i.hi -= xCol;
                 PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
         }
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
         offsetX = 12;
         offsetY = 8;
         if (self->facingLeft) {
@@ -112,22 +112,22 @@ void EntitySubwpnThrownDagger(Entity* self) {
             offsetY = -offsetY;
         }
         prim = &g_PrimBuf[self->primIndex];
-        prim->x0 = selfX - offsetX;
-        prim->y0 = selfY - 4;
-        prim->x1 = selfX + offsetX;
-        prim->y1 = selfY - 4;
-        prim->x2 = selfX - offsetX;
-        prim->y2 = selfY + 4;
-        prim->x3 = selfX + offsetX;
-        prim->y3 = selfY + 4;
+        prim->x0 = x - offsetX;
+        prim->y0 = y - 4;
+        prim->x1 = x + offsetX;
+        prim->y1 = y - 4;
+        prim->x2 = x - offsetX;
+        prim->y2 = y + 4;
+        prim->x3 = x + offsetX;
+        prim->y3 = y + 4;
         prim->clut = 0x1AB;
         (g_GameTimer >> 1) & 1; // no-op
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
-        prim->x0 = selfX - offsetY;
-        prim->y0 = selfY - 1;
-        prim->x1 = selfX - (offsetX * (self->ext.timer.t / 2));
-        prim->y1 = selfY - 1;
+        prim->x0 = x - offsetY;
+        prim->y0 = y - 1;
+        prim->x1 = x - (offsetX * (self->ext.timer.t / 2));
+        prim->y1 = y - 1;
         prim->drawMode &= ~DRAW_HIDE;
         if (self->step != DAGGER_FLYING) {
             prim->drawMode |= DRAW_HIDE;
@@ -149,48 +149,46 @@ void EntitySubwpnThrownDagger(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.125);
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
         offsetX = 12;
         if (self->facingLeft == 0) {
-            angle_a = 0x72E;
-            angle_b = 0xD2;
-            angle_c = 0x8D2;
-            angle_d = -0xD2;
-
+            angle1 = 0x800 - 0xD2;
+            angle2 = 0xD2;
+            angle3 = 0x800 + 0xD2;
+            angle4 = -0xD2;
             self->rotZ -= 0x80;
         } else {
-            angle_b = 0x72E;
-            angle_a = 0xD2;
-            // nb: order swapped
-            angle_d = 0x8D2;
-            angle_c = -0xD2;
+            angle2 = 0x800 - 0xD2;
+            angle1 = 0xD2;
+            angle4 = 0x800 + 0xD2;
+            angle3 = -0xD2;
             self->rotZ += 0x80;
         }
-        angle_a += self->rotZ;
-        angle_b += self->rotZ;
-        angle_c += self->rotZ;
-        angle_d += self->rotZ;
+        angle1 += self->rotZ;
+        angle2 += self->rotZ;
+        angle3 += self->rotZ;
+        angle4 += self->rotZ;
         if (self->facingLeft) {
             offsetX = -offsetX;
         }
         prim = &g_PrimBuf[self->primIndex];
-        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
-        prim->x0 = selfX + (s16)cosine;
-        prim->y0 = selfY - (s16)sine;
-        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
-        prim->x1 = selfX + (s16)cosine;
-        prim->y1 = selfY - (s16)sine;
-        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
-        prim->x2 = selfX + (s16)cosine;
-        prim->y2 = selfY - (s16)sine;
-        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
-        prim->x3 = selfX + (s16)cosine;
-        prim->y3 = selfY - (s16)sine;
+        modX = (rcos(angle1) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle1) * 0xCA0) >> 0x14;
+        prim->x0 = x + (s16)modX;
+        prim->y0 = y - (s16)modY;
+        modX = (rcos(angle2) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle2) * 0xCA0) >> 0x14;
+        prim->x1 = x + (s16)modX;
+        prim->y1 = y - (s16)modY;
+        modX = (rcos(angle3) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle3) * 0xCA0) >> 0x14;
+        prim->x2 = x + (s16)modX;
+        prim->y2 = y - (s16)modY;
+        modX = (rcos(angle4) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle4) * 0xCA0) >> 0x14;
+        prim->x3 = x + (s16)modX;
+        prim->y3 = y - (s16)modY;
         prim->clut = 0x1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
@@ -202,7 +200,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
-        return;
+        break;
     case DAGGER_HIT_ENEMY:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);

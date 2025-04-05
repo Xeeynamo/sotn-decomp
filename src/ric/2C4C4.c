@@ -1278,9 +1278,14 @@ void RicEntityCrashAxe(Entity* self) {
 // RIC Entity #38. Blueprint 43 AND 44.
 // Applies to subweapon 1, and its crash, subweapon 21. Very neat!
 // Not quite the same as the one in DRA, but close.
+#if defined(VERSION_PSP)
+extern s16 D_80155E98[];
+extern s32 D_8017588C;
+#else
 static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
 static s32 D_8017588C;
-void RicEntitySubwpnDagger(Entity* self) {
+#endif
+void RicEntitySubwpnThrownDagger(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 offsetX;
@@ -1289,11 +1294,11 @@ void RicEntitySubwpnDagger(Entity* self) {
     s16 angle_b;
     s16 angle_c;
     s16 angle_d;
-    s16 selfY;
-    s16 selfX;
-    s16 var_s1;
-    s32 cosine;
-    s32 sine;
+    s32 psp_s7;
+    s32 psp_s6;
+    s16 psp_s5;
+    s16 psp_s2;
+    s16 psp_s1;
     s32 i;
 
     switch (self->step) {
@@ -1347,10 +1352,10 @@ void RicEntitySubwpnDagger(Entity* self) {
     case 1:
         self->ext.subweapon.timer++;
         if (self->velocityX > 0) {
-            var_s1 = 8;
+            psp_s5 = 8;
         }
         if (self->velocityX < 0) {
-            var_s1 = -8;
+            psp_s5 = -8;
         }
         if (self->hitFlags == 1) {
             self->ext.subweapon.timer = 4;
@@ -1366,23 +1371,23 @@ void RicEntitySubwpnDagger(Entity* self) {
                 self->posX.i.hi--;
             }
             g_api.CheckCollision(
-                self->posX.i.hi + var_s1, self->posY.i.hi, &collider, 0);
+                self->posX.i.hi + psp_s5, self->posY.i.hi, &collider, 0);
             if ((self->hitFlags == 2) ||
                 (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002))) {
                 self->ext.subweapon.timer = 64;
+                self->velocityX = -(self->velocityX >> 3);
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
-                self->velocityX = -(self->velocityX >> 3);
-                self->posX.i.hi += var_s1;
+                self->posX.i.hi += psp_s5;
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
-                self->posX.i.hi -= var_s1;
+                self->posX.i.hi -= psp_s5;
                 g_api.PlaySfx(SFX_UI_TINK);
                 self->step++;
                 return;
             }
         }
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
+        psp_s2 = self->posX.i.hi;
+        psp_s1 = self->posY.i.hi;
         offsetX = 12;
         offsetY = 8;
         if (self->facingLeft) {
@@ -1390,22 +1395,22 @@ void RicEntitySubwpnDagger(Entity* self) {
             offsetY = -offsetY;
         }
         prim = &g_PrimBuf[self->primIndex];
-        prim->x0 = selfX - offsetX;
-        prim->y0 = selfY - 4;
-        prim->x1 = selfX + offsetX;
-        prim->y1 = selfY - 4;
-        prim->x2 = selfX - offsetX;
-        prim->y2 = selfY + 4;
-        prim->x3 = selfX + offsetX;
-        prim->y3 = selfY + 4;
+        prim->x0 = psp_s2 - offsetX;
+        prim->y0 = psp_s1 - 4;
+        prim->x1 = psp_s2 + offsetX;
+        prim->y1 = psp_s1 - 4;
+        prim->x2 = psp_s2 - offsetX;
+        prim->y2 = psp_s1 + 4;
+        prim->x3 = psp_s2 + offsetX;
+        prim->y3 = psp_s1 + 4;
         // Difference here vs DRA in how g_GameTimer works with clut
         prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
-        prim->x0 = selfX - offsetY;
-        prim->y0 = selfY - 1;
-        prim->x1 = selfX - (offsetX * (self->ext.subweapon.timer / 2));
-        prim->y1 = selfY - 1;
+        prim->x0 = psp_s2 - offsetY;
+        prim->y0 = psp_s1 - 1;
+        prim->x1 = psp_s2 - (offsetX * (self->ext.subweapon.timer / 2));
+        prim->y1 = psp_s1 - 1;
         prim->drawMode &= ~DRAW_HIDE;
         if (self->step != 1) {
             prim->drawMode |= DRAW_HIDE;
@@ -1426,10 +1431,10 @@ void RicEntitySubwpnDagger(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.125);
-        selfX = self->posX.i.hi;
-        selfY = self->posY.i.hi;
+        psp_s2 = self->posX.i.hi;
+        psp_s1 = self->posY.i.hi;
         offsetX = 12;
-        if (!self->facingLeft) {
+        if (self->facingLeft == 0) {
             angle_a = 0x72E;
             angle_b = 0xD2;
             angle_c = 0x8D2;
@@ -1453,22 +1458,22 @@ void RicEntitySubwpnDagger(Entity* self) {
             offsetX = -offsetX;
         }
         prim = &g_PrimBuf[self->primIndex];
-        cosine = (rcos(angle_a) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_a) * 0xCA0) >> 0x14;
-        prim->x0 = selfX + cosine;
-        prim->y0 = selfY - sine;
-        cosine = (rcos(angle_b) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_b) * 0xCA0) >> 0x14;
-        prim->x1 = selfX + cosine;
-        prim->y1 = selfY - sine;
-        cosine = (rcos(angle_c) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_c) * 0xCA0) >> 0x14;
-        prim->x2 = selfX + cosine;
-        prim->y2 = selfY - sine;
-        cosine = (rcos(angle_d) * 0xCA0) >> 0x14;
-        sine = -(rsin(angle_d) * 0xCA0) >> 0x14;
-        prim->x3 = selfX + cosine;
-        prim->y3 = selfY - sine;
+        psp_s7 = (rcos(angle_a) * 0xCA0) >> 0x14;
+        psp_s6 = -(rsin(angle_a) * 0xCA0) >> 0x14;
+        prim->x0 = psp_s2 + (s16)psp_s7;
+        prim->y0 = psp_s1 - (s16)psp_s6;
+        psp_s7 = (rcos(angle_b) * 0xCA0) >> 0x14;
+        psp_s6 = -(rsin(angle_b) * 0xCA0) >> 0x14;
+        prim->x1 = psp_s2 + (s16)psp_s7;
+        prim->y1 = psp_s1 - (s16)psp_s6;
+        psp_s7 = (rcos(angle_c) * 0xCA0) >> 0x14;
+        psp_s6 = -(rsin(angle_c) * 0xCA0) >> 0x14;
+        prim->x2 = psp_s2 + (s16)psp_s7;
+        prim->y2 = psp_s1 - (s16)psp_s6;
+        psp_s7 = (rcos(angle_d) * 0xCA0) >> 0x14;
+        psp_s6 = -(rsin(angle_d) * 0xCA0) >> 0x14;
+        prim->x3 = psp_s2 + (s16)psp_s7;
+        prim->y3 = psp_s1 - (s16)psp_s6;
         // same deal here with g_GameTimer
         prim->clut = ((g_GameTimer >> 1) & 1) + 0x1AB;
         if (self->ext.subweapon.timer < 0x21) {
