@@ -35,6 +35,7 @@ CC1PSX          := ./bin/cc1-psx-26
 CC              := $(CC1PSX)
 AS              := $(CROSS)as
 CPP             := $(CROSS)cpp
+MASPSX			 = $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=$(if $(findstring libgpu/sys.c.o,$@),2.21,2.34)
 
 # flags
 CC_FLAGS        += -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g
@@ -63,22 +64,17 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 DEPENDENCIES	+= $(MASPSX_APP) 
 
 # PSX specific targets
-extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
+extract.us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
 	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
 	make extract_assets
 	make build_assets
-extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
+extract.hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
 	echo $(PSX_HD_EXTRACT_TARGETS)
 	make extract_assets
 	make build_assets
 
-extract_disk_us: extract_disk_psxus
-extract_disk_hd: extract_disk_pspeu
-extract_disk_psx%: $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
-
-build_us: $(PSX_US_BUILD_TARGETS)
-build_hd: $(PSX_HD_BUILD_TARGETS)
+build.us: $(PSX_US_BUILD_TARGETS)
+build.hd: $(PSX_HD_BUILD_TARGETS)
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs
@@ -113,9 +109,9 @@ $(BUILD_DIR)/weapon.ld: $(CONFIG_DIR)/splat.$(VERSION).weapon.yaml $(BASE_SYMBOL
 	$(SPLAT) $<
 	touch $@
 
-$(BUILD_DIR)/dra.elf: $(call list_o_files,dra)
+$(BUILD_DIR)/dra.elf: $(call get_o_files,dra)
 	$(call link,dra,$@)
-$(BUILD_DIR)/tt_%.elf: $$(call list_o_files,servant/tt_$$*) | tt_%_dirs
+$(BUILD_DIR)/tt_%.elf: $$(call get_o_files,servant/tt_$$*) | tt_%_dirs
 	$(call link,tt_$*,$@)
 
 $(BUILD_DIR)/src/st/sel/%.c.o: src/st/sel/%.c $(MASPSX_APP) $(CC1PSX) src/st/sel/sel.h | stsel_dirs
@@ -138,10 +134,9 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
-	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
+	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 extract_assets: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
 	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
 build_assets: $(SOTNASSETS)
 	$(SOTNASSETS) build config/assets.$(VERSION).yaml
@@ -170,15 +165,15 @@ $(BUILD_DIR)/$(ASSETS_DIR)/st/mad/%.o:
 	touch $@
 
 .PHONY: main
-main: $(MAIN_TARGET).exe
+main: $(BUILD_DIR)/main.exe
 .PHONY: %_dirs
 main_dirs:
 	$(foreach dir,$(MAIN_ASM_DIRS) $(MAIN_SRC_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
-$(MAIN_TARGET).exe: $(MAIN_TARGET).elf
+$(BUILD_DIR)/main.exe: $(BUILD_DIR)/main.elf
 	$(OBJCOPY) -O binary $< $@
-$(MAIN_TARGET).elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
+$(BUILD_DIR)/main.elf: $(MAIN_O_FILES) $(BUILD_DIR)/main.ld $(CONFIG_DIR)/undefined_syms.$(VERSION).txt $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
 	$(LD) $(LD_FLAGS) -o $@ \
-	-Map $(MAIN_TARGET).map \
+	-Map $(BUILD_DIR)/main.map \
 	-T $(BUILD_DIR)/main.ld \
 	-T $(CONFIG_DIR)/undefined_syms.$(VERSION).txt \
 	-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).main.txt
@@ -198,7 +193,7 @@ $(BUILD_DIR)/SEL.BIN: $(BUILD_DIR)/stsel.elf
 ric: $(BUILD_DIR)/RIC.BIN
 $(BUILD_DIR)/RIC.BIN: $(BUILD_DIR)/ric.elf
 	$(OBJCOPY) -O binary $< $@
-$(BUILD_DIR)/ric.elf: $(call list_o_files,ric)
+$(BUILD_DIR)/ric.elf: $(call get_o_files,ric)
 	$(call link,ric,$@)
 
 # Stage category structure
@@ -354,18 +349,18 @@ st%_dirs:
 %_dirs:
 	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
-$(BUILD_DIR)/stmad.elf: $$(call list_o_files,st/mad) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stmad.elf: $$(call get_o_files,st/mad) $$(call get_o_files,st,shared)
 	$(LD) $(LD_FLAGS) -o $@ \
 		-Map $(BUILD_DIR)/stmad.map \
 		-T $(BUILD_DIR)/stmad.ld \
 		-T $(CONFIG_DIR)/undefined_syms.beta.txt \
 		-T $(CONFIG_DIR)/undefined_syms_auto.stmad.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.stmad.txt
-$(BUILD_DIR)/stsel.elf: $$(call list_o_files,st/sel) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/stsel.elf: $$(call get_o_files,st/sel,_st) $$(call get_o_files,st,_shared)
 	$(call link,stsel,$@)
-$(BUILD_DIR)/st%.elf: $$(call list_st_o_files,st/$$*) $$(call list_shared_o_files,st)
+$(BUILD_DIR)/st%.elf: $$(call get_o_files,st/$$*,_st) $$(call get_o_files,st,_shared)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $$(call list_st_o_files,boss/$$*) $$(call list_shared_o_files,boss)
+$(BUILD_DIR)/bo%.elf: $$(call get_o_files,boss/$$*,_st) $$(call get_o_files,boss,_shared)
 	$(call link,bo$*,$@)
 
 # Weapon overlays
@@ -414,3 +409,28 @@ $(BUILD_DIR)/weapon/f1_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o
 	$(LD) -r -b binary -o $@ $<
 $(BUILD_DIR)/$(ASSETS_DIR)/weapon/%.o: $(ASSETS_DIR)/weapon/%.png
 	$(PYTHON) ./tools/png2bin.py $< $@
+
+# Handles assets
+$(BUILD_DIR)/$(ASSETS_DIR)/%.spritesheet.json.o: $(ASSETS_DIR)/%.spritesheet.json
+	$(PYTHON) ./tools/splat_ext/spritesheet.py encode $< $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
+	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
+	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
+$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
+	mkdir -p $(dir $@)
+	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
+$(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
+# for now '.dec' files are ignored
+	touch $@
+$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
+	touch $@
