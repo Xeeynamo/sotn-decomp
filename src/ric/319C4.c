@@ -1256,11 +1256,7 @@ void RicEntityAguneaLightning(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         sp20 = ((self->params & 0xFF00) >> 8) * 0x200;
         sp20 += rand() % 0x200 - 0x100;
-        randomSeed = rand()
-#if defined(VERSION_PSP)
-                     & 0x7FFF
-#endif
-            ;
+        randomSeed = rand() & PSP_RANDMASK;
         for (i = 0; i < 15; i++) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
