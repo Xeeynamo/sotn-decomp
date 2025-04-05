@@ -2532,7 +2532,7 @@ void func_800F9F40(void) {
     s32 i;
 
     for (i = 0; i < NUM_SPELLS; i++) {
-        spellId = D_80097902[0x80 + i];
+        spellId = g_Status.spells[i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
             STRCPY(buffer, D_800DC6EC);

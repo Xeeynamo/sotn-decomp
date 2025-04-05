@@ -502,9 +502,9 @@ void HandleGameOver(void) {
             LoadImage(&g_Vram.D_800ACDD0, (u_long*)STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, (u_long*)0x80188000);
             LoadImage(&g_Vram.D_800ACDB8, (u_long*)0x80198000);
-            StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
+            StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x8019A000);
-            StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
+            StoreImage(&g_Vram.D_800ACDA8, (u_long*)&g_Clut);
         } else {
             if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
