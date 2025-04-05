@@ -411,7 +411,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDBA0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuStatChangesDraw);
 
-const char** D_800A2D68;
+extern const char** D_800A2D68;
 
 extern MenuData g_MenuData;
 
@@ -501,8 +501,8 @@ void MenuDrawStats(s32 menuDialogue) {
     } else {
         if(temp_s1 == 7){
             MenuDrawChar(g_ChButtons[temp_s1], x + 40, y, ctx);
-            MenuDrawChar(g_ChButtons2[temp_s1], x + 48, y, ctx);
-            MenuDrawChar(g_ChButtons3[4 + temp_s1], x + 56, y, ctx);
+            MenuDrawChar(g_ChButtons2[temp_s1-4], x + 48, y, ctx);
+            MenuDrawChar(g_ChButtons3[temp_s1-4], x + 56, y, ctx);
         } else {
             MenuDrawChar(g_ChButtons[temp_s1], x + 44, y, ctx);
         }
@@ -517,8 +517,8 @@ void MenuDrawStats(s32 menuDialogue) {
     } else {
         if(temp_s1 == 7){
             MenuDrawChar(g_ChButtons[temp_s1], x + 40, y + 10, ctx);
-            MenuDrawChar(g_ChButtons2[temp_s1], x + 48, y + 10, ctx);
-            MenuDrawChar(g_ChButtons3[4 + temp_s1], x + 56, y + 10, ctx);
+            MenuDrawChar(g_ChButtons2[temp_s1-4], x + 48, y + 10, ctx);
+            MenuDrawChar(g_ChButtons3[temp_s1-4], x + 56, y + 10, ctx);
         } else {
             MenuDrawChar(g_ChButtons[temp_s1], x + 44, y + 10, ctx);
         }
@@ -1271,8 +1271,8 @@ extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 g_IsCloakLiningUnlocked;
 extern s32 g_IsCloakColorUnlocked;
 extern s32 D_80137958;
-const char* D_800A2D64[];
-char** D_800A2D48;
+extern const char* D_800A2D64[];
+extern char** D_800A2D48;
 extern s32 D_80137608;
 extern s32 g_IsSelectingEquipment;
 extern MenuData g_MenuData;
