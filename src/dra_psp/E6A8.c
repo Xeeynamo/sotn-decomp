@@ -574,7 +574,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
         charNum = 0;
         yCoord = 64 + i * 16;
         // Count up how many characters are in the combo
-        for(v1 = 0; g_SpellDefs[spell].combo[v1] != 0; v1++) {
+        for(v1 = 0; (s8)g_SpellDefs[spell].combo[v1] != 0; v1++) {
             if(g_SpellDefs[spell].combo[v1] == 0xC0 && g_SpellDefs[spell].combo[v1+1] == 0xD2){
                 charNum--;
             } else {
@@ -1292,7 +1292,7 @@ extern u32 D_psp_08B42054; // psp triangle button
 #define PAD_MENU_SELECT_ALT (D_psp_08B42050)
 #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
 #define PAD_MENU_BACK (D_psp_08B42054)
-#define PAD_MENU_SORT (PAD_SQUARE)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
 
@@ -1343,7 +1343,7 @@ block_4:
             g_Status.equipment[LEFT_HAND_SLOT];
         g_PrevEquippedWeapons[RIGHT_HAND_SLOT] =
             g_Status.equipment[RIGHT_HAND_SLOT];
-        if (g_Status.wornEquipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+        if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
             g_PrevEquippedWeapons[LEFT_HAND_SLOT] = 0xD8;
             g_PrevEquippedWeapons[RIGHT_HAND_SLOT] = 0xD8;
         }
@@ -1369,10 +1369,10 @@ block_4:
         }
         g_IsCloakLiningUnlocked =
             g_Status.equipBodyCount[ITEM_REVERSE_CLOAK] |
-            g_Status.wornEquipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK;
+            g_Status.equipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK;
         g_IsCloakColorUnlocked =
             g_Status.equipBodyCount[ITEM_JOSEPHS_CLOAK] |
-            g_Status.wornEquipment[CAPE_SLOT] == ITEM_JOSEPHS_CLOAK;
+            g_Status.equipment[CAPE_SLOT] == ITEM_JOSEPHS_CLOAK;
         g_MenuStep++;
         break;
     case MENU_STEP_FADE_FROM_GAME:
@@ -1396,7 +1396,7 @@ block_4:
             func_800F98AC(*D_800A2D10, 0);
             func_800F98AC(*D_800A2D14, 0x100);
             func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D18, 0x101);
+            func_800F98AC(*D_800A2D58, 0x101);
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
             D_80137608 = 0;
@@ -1511,7 +1511,7 @@ block_4:
             break;
         }
         D_80097910 = D_80137958;
-        if (D_80097928 != 0) {
+        if (D_psp_091CDD48 != 0) {
             PlaySfx(0xB);
         } else {
             PlaySfx(SET_UNK_11);
