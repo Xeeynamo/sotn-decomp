@@ -29,10 +29,8 @@ BASH_FLAGS	  	:= -e -o pipefail
 SHELL 			:= $(BASH) $(BASH_FLAGS)
 
 # Directories
-BIN_DIR			:= bin
 ASM_DIR         := asm/$(VERSION)
 ASM_SUBDIRS 	:= data/ $(call if_version,us hd,psxsdk/ handwritten/)
-SRC_DIR         := src
 SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
@@ -55,10 +53,10 @@ CROSS			:= $(call if_version,saturn,sh-elf-,mipsel-linux-gnu-)
 LD              := $(CROSS)ld
 OBJCOPY         := $(CROSS)objcopy
 OBJDUMP			:= $(CROSS)objdump
-ALLEGREX 		:= $(BIN_DIR)/allegrex-as
-WIBO            := $(BIN_DIR)/wibo
-MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
-CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
+ALLEGREX 		:= bin/allegrex-as
+WIBO            := bin/wibo
+MWCCPSP         := bin/mwccpsp.exe
+CYGNUS			:= bin/cygnus-2.7-96Q3-bin
 CC1_SATURN		:= $(BUILD_DIR)/CC1.EXE
 
 # Symbols
@@ -77,9 +75,9 @@ DIRT_PATCHER    := $(PYTHON) tools/dirt_patcher.py
 SHASUM          := shasum
 GFXSTAGE        := $(PYTHON) tools/gfxstage.py
 PNG2S           := $(PYTHON) tools/png2s.py
-CLANG			:= $(BIN_DIR)/clang-format
+CLANG			:= bin/clang-format
 GO              := $(HOME)/go/bin/go
-SOTNLINT		:= cargo run --release --manifest-path tools/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
+SOTNLINT		:= cargo run --release --manifest-path tools/lints/sotn-lint/Cargo.toml src/
 SOTNSTR_APP     := tools/sotn_str/target/release/sotn_str
 ASMDIFFER_APP	:= tools/asm-differ/diff.py
 M2CTX_APP       := tools/m2ctx.py
@@ -100,10 +98,10 @@ SOTNASSETS      := $(SOTNASSETS_DIR)/sotn-assets
 # Build functions
 define get_src_files
 	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
+	$(foreach dir,src/$(1)/ $(addprefix src/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
 endef
-get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
+get_shared_src_files = $(foreach dir,src/$(1),$(wildcard $(dir)/*.c))
 # sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in get_o_files/get_src_files
 2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
 get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
@@ -139,11 +137,11 @@ extract: extract.$(VERSION)
 build: build.$(VERSION)
 
 clean:
-	git clean -fdxq $(ASSETS_DIR)/ $(ASM_DIR)/ $(BUILD_DIR)/ $(SRC_DIR)/weapon/ $(CONFIG_DIR)/*$(VERSION)*
+	git clean -fdxq $(ASSETS_DIR)/ $(ASM_DIR)/ $(BUILD_DIR)/ src/weapon/ $(CONFIG_DIR)/*$(VERSION)*
 	git clean -fdxq function_calls/ sotn_calltree.txt
 
 FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
-FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ include/,*.c *.h))
+FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,src/ include/,*.c *.h))
 format-src.run:# For output control and progress tracking in the event of an error
 	$(muffle)mkdir -p /tmp/sotn-decomp && rm /tmp/sotn-decomp/$@ > /dev/null 2>&1 || true
 	$(muffle)echo -e "Running clang to format src/* and include/* (this may take some time)"
@@ -167,7 +165,7 @@ $(addsuffix .format-symbols,us pspeu hd saturn): %.format-symbols: | $(VENV_DIR)
 format-symbols: $(addsuffix .format-symbols,us pspeu hd saturn $(FORMAT_SYMBOLS_FILES))
 
 format-license:
-	find $(SRC_DIR)/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
+	find src/ -type f -name "*.c" -or -name "*.h" | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) tools/lint-license.py - AGPL-3.0-or-later
 	$(PYTHON) tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) tools/lint-license.py include/entity.h AGPL-3.0-or-later
 	$(PYTHON) tools/lint-license.py include/items.h AGPL-3.0-or-later
@@ -202,10 +200,10 @@ force-extract:
 	rm -rf /tmp/sotn-decomp/src || true; mv src /tmp/sotn-decomp/src
 	find $(BUILD_DIR) -type f -name "*.ld" -delete || true
 	$(MAKE) extract
-	rm -rf $(SRC_DIR)
-	mv /tmp/sotn-decomp/src $(SRC_DIR)
+	rm -rf src/
+	mv /tmp/sotn-decomp/src src/
 force-extract-disk:
-	@rm -rf $(EXTRACTED_DISK_DIR) || true
+	rm -rf $(EXTRACTED_DISK_DIR) > /dev/null 2>&1 || true
 	$(MAKE) extract-disk
 # This is currently intentionally hard coded to us because the us symbols files are used for finding functions in other versions
 $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VERSION)=us)/*.elf))): %.elf.force-symbols: | $(VENV_DIR)
@@ -265,7 +263,7 @@ dump-disk: dump-disk.$(VERSION)
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
 update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP) $(CLANG) $(GO)
-	git clean -fdq $(BIN_DIR)/
+	git clean -fdq bin/
 update-dependencies-all: update-dependencies $(addprefix dependencies,.us .pspeu .hd .saturn)
 
 dependencies.us dependencies.hd: $(MASPSX_APP) 
@@ -278,7 +276,7 @@ $(MWCCGAP_APP): | $(VENV_DIR)
 $(WIBO):
 	curl -sSfL -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
-$(MWCCPSP): $(WIBO) $(BIN_DIR)/mwccpsp_219
+$(MWCCPSP): $(WIBO) bin/mwccpsp_219
 
 dependencies.saturn: $(SATURN_SPLITTER_APP) $(ADPCM_EXTRACT_APP) $(DOSEMU_APP) $(CYGNUS)
 $(SATURN_SPLITTER_DIR)%:
@@ -323,11 +321,11 @@ graphviz: tools/graphviz.make.chkpt
 $(GO):
 	curl -sSfL -O https://go.dev/dl/go1.22.4.$(OS)-$(ARCH).tar.gz
 	$(muffle)tar -C $(HOME) -xzf go1.22.4.$(OS)-$(ARCH).tar.gz; rm go1.22.4.$(OS)-$(ARCH).tar.gz
-$(BIN_DIR)/%.tar.gz: $(BIN_DIR)/%.tar.gz.sha256
+bin/%.tar.gz: bin/%.tar.gz.sha256
 	curl -sSfL -o $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
-$(BIN_DIR)/%: $(BIN_DIR)/%.tar.gz
+bin/%: bin/%.tar.gz
 	$(muffle)sha256sum --check $<.sha256
-	$(muffle)cd $(BIN_DIR) && tar -xzf $(notdir $<); rm $(notdir $<)
+	$(muffle)cd bin/ && tar -xzf $(notdir $<); rm $(notdir $<)
 	$(muffle)touch $@
 
 ifneq ($(filter $(VERSION),us hd),) # Both us and hd versions use the PSX platform

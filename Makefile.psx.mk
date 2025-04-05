@@ -53,7 +53,7 @@ PSXLIBS         := $(addprefix lib, c c2 api etc card gpu gs gte cd snd spu)
 PSXLIB_DIRS     := $(addprefix psxsdk/, . $(PSXLIBS))
 PSXLIB_DATA_DIRS := $(addprefix data/, . $(PSXLIB_DIRS))
 MAIN_ASM_DIRS   := $(addprefix $(ASM_DIR)/main/,. $(PSXLIB_DIRS) data $(PSXLIB_DATA_DIRS))
-MAIN_SRC_DIRS   := $(addprefix $(SRC_DIR)/main/,. $(PSXLIB_DIRS))
+MAIN_SRC_DIRS   := $(addprefix src/main/,. $(PSXLIB_DIRS))
 
 MAIN_S_FILES    := $(wildcard $(addsuffix /*.s, $(MAIN_ASM_DIRS)))
 MAIN_C_FILES    := $(wildcard $(addsuffix /*.c, $(MAIN_SRC_DIRS)))
@@ -133,7 +133,7 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 	mkdir -p $(dir $@)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
-$(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
+$(BUILD_DIR)/src/main/psxsdk/libgpu/sys.c.o: src/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 
 extract_assets: $(SOTNASSETS)
@@ -341,13 +341,13 @@ $(BUILD_DIR)/tt_%_raw.bin: $(BUILD_DIR)/tt_%.elf
 
 .PHONY: %_dirs
 tt_%_dirs:
-	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data $(SRC_DIR)/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/servant/tt_$* $(ASM_DIR)/servant/tt_$*/data src/servant/tt_$* $(ASSETS_DIR)/servant/tt_$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 bo%_dirs:
-	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten $(SRC_DIR)/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/boss/$* $(ASM_DIR)/boss/$*/data $(ASM_DIR)/boss/$*/handwritten src/boss/$* $(ASSETS_DIR)/boss/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 st%_dirs:
-	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten $(SRC_DIR)/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/st/$* $(ASM_DIR)/st/$*/data $(ASM_DIR)/st/$*/handwritten src/st/$* $(ASSETS_DIR)/st/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 %_dirs:
-	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data $(SRC_DIR)/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(ASM_DIR)/$* $(ASM_DIR)/$*/data src/$* $(ASSETS_DIR)/$*,$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 $(BUILD_DIR)/stmad.elf: $$(call get_o_files,st/mad) $$(call get_o_files,st,shared)
 	$(LD) $(LD_FLAGS) -o $@ \
@@ -366,7 +366,7 @@ $(BUILD_DIR)/bo%.elf: $$(call get_o_files,boss/$$*,_st) $$(call get_o_files,boss
 # Weapon overlays
 WEAPON0_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f0_$(num).bin $(BUILD_DIR)/weapon/w0_$(num).bin)
 WEAPON1_FILES := $(foreach num,$(shell seq -w 000 058),$(BUILD_DIR)/weapon/f1_$(num).bin $(BUILD_DIR)/weapon/w1_$(num).bin)
-WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/$(SRC_DIR)/weapon $(BUILD_DIR)/weapon
+WEAPON_DIRS   := $(BUILD_DIR)/$(ASSETS_DIR)/weapon $(BUILD_DIR)/$(ASM_DIR)/weapon/data $(BUILD_DIR)/src/weapon $(BUILD_DIR)/weapon
 
 .PHONY: weapon
 weapon: $(WEAPON_DIRS) $(BUILD_DIR)/WEAPON0.BIN
@@ -383,7 +383,7 @@ $(ASM_DIR)/weapon/data/w_%.data.s: # create a fake empty file if all the data ha
 	touch $@
 $(ASM_DIR)/weapon/data/w_%.sbss.s: # create a fake empty file if all the bss section has been imported
 	touch $@
-$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/src/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w0_$*.map \
 		-T weapon0.ld \
@@ -391,7 +391,7 @@ $(BUILD_DIR)/weapon/w0_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
+$(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/src/weapon/w_%.c.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.data.s.o $(BUILD_DIR)/$(ASM_DIR)/weapon/data/w_%.sbss.s.o
 	$(LD) $(LD_FLAGS) --no-check-sections -o $@ \
 		-Map $(BUILD_DIR)/weapon/w1_$*.map \
 		-T weapon1.ld \
@@ -399,9 +399,9 @@ $(BUILD_DIR)/weapon/w1_%.elf: $(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o $(BUILD_DIR
 		-T $(CONFIG_DIR)/undefined_syms_auto.$(VERSION).weapon.txt \
 		-T $(CONFIG_DIR)/undefined_funcs_auto.$(VERSION).weapon.txt \
 		$^
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_%.c.o: $(SRC_DIR)/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
+$(BUILD_DIR)/src/weapon/w_%.c.o: src/weapon/w_%.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_$* $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
-$(BUILD_DIR)/$(SRC_DIR)/weapon/w_029.c.o: $(SRC_DIR)/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
+$(BUILD_DIR)/src/weapon/w_029.c.o: src/weapon/w_029.c $(MASPSX_APP) $(CC1PSX) | weapon_dirs
 	$(CPP) $(CPP_FLAGS) -lang-c -DW_029 $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) -O1 | $(MASPSX) | $(AS) $(AS_FLAGS) -o $@
 $(BUILD_DIR)/weapon/f0_%.elf: $(BUILD_DIR)/$(ASSETS_DIR)/weapon/f_%.o | weapon_dirs
 	$(LD) -r -b binary -o $@ $<
