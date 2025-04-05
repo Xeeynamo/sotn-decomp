@@ -1345,6 +1345,7 @@ void RicEntityAguneaCircle(Entity* self) {
     s16 yCoord;
     s32 quarterSelfY;
     s32 i;
+    s16 psp_s4;
 
     switch (self->step) {
     case 0:
@@ -1356,9 +1357,9 @@ void RicEntityAguneaCircle(Entity* self) {
         }
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
-        prim = &g_PrimBuf[self->primIndex];
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
+        prim = &g_PrimBuf[self->primIndex];
         quarterSelfY = self->posY.i.hi / 4;
         xCoord = self->posX.i.hi;
         yCoord = 0;
@@ -1381,9 +1382,10 @@ void RicEntityAguneaCircle(Entity* self) {
                 prim->x3 = xCoord + 4;
             }
             prim->y1 = prim->y3 = yCoord;
-            prim->u0 = prim->u2 = (rand() % 6) * 0x10 - 0x70;
-            prim->u1 = prim->u3 = prim->u0 + 0x10;
-            if (rand() & 1) {
+            psp_s4 = (rand() % 6) * 0x10;
+            prim->u0 = prim->u2 = psp_s4 + 0x90;
+            prim->u1 = prim->u3 = psp_s4 + 0xA0;
+            if (rand() % 2) {
                 prim->v0 = prim->v1 = 0xD0;
                 prim->v2 = prim->v3 = 0xE0;
             } else {
@@ -1404,7 +1406,8 @@ void RicEntityAguneaCircle(Entity* self) {
             prim = prim->next;
         }
         prim->drawMode &= ~DRAW_HIDE;
-        if (++self->ext.aguneaCrash.unk7C >= 4) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C >= 4) {
             self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
@@ -1414,7 +1417,7 @@ void RicEntityAguneaCircle(Entity* self) {
         for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
-        if (self->ext.aguneaCrash.unk7C == 0) {
+        if (!self->ext.aguneaCrash.unk7C) {
             prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             prim->tpage = 0x1A;
@@ -1433,9 +1436,10 @@ void RicEntityAguneaCircle(Entity* self) {
             self->ext.aguneaCrash.unk80 += 2;
             prim->drawMode |= DRAW_HIDE;
         }
-        if (++self->ext.aguneaCrash.unk7C >= 4) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > 3) {
             // think this loop has to count down since we assign to i
-            for (i = LIGHTNING_COUNT - 1; i >= 0; i--) {
+            for (i = 0; i < LIGHTNING_COUNT; i++) {
                 g_AguneaParams[i] = i;
             }
             AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
@@ -1450,14 +1454,17 @@ void RicEntityAguneaCircle(Entity* self) {
             FACTORY(BP_CRASH_AGUNEA_THUNDER,
                     g_AguneaParams[self->ext.aguneaCrash.unk7C]),
             0);
-        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT) {
-            self->hitboxHeight = self->hitboxWidth = 0x80;
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT - 1) {
+            self->hitboxWidth = 0x80;
+            self->hitboxHeight = 0x80;
             self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 4:
-        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT + 1) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT) {
             self->step++;
         }
         break;
@@ -1465,7 +1472,8 @@ void RicEntityAguneaCircle(Entity* self) {
         self->ext.aguneaCrash.unk80 += 2;
         self->ext.aguneaCrash.unk82 -= 10;
         if (self->ext.aguneaCrash.unk82 <= 0) {
-            self->hitboxHeight = self->hitboxWidth = 0;
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
             self->step++;
         }
         break;
@@ -1474,7 +1482,7 @@ void RicEntityAguneaCircle(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->ext.aguneaCrash.unk7E != 0) {
+    if (self->ext.aguneaCrash.unk7E) {
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - self->ext.aguneaCrash.unk80;
         prim->x1 = prim->x3 = self->posX.i.hi + self->ext.aguneaCrash.unk80;
@@ -1485,7 +1493,6 @@ void RicEntityAguneaCircle(Entity* self) {
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             (self->ext.aguneaCrash.unk82 * 0xFF) / 100;
     }
-    return;
 }
 
 void RicEntitySubwpnStopwatchCircle(Entity* self) {

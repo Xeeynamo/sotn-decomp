@@ -2292,7 +2292,168 @@ void RicEntityAguneaLightning(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityAguneaCircle);
+#define LIGHTNING_COUNT 8
+#if defined(VERSION_PSP)
+extern s32 g_AguneaParams[LIGHTNING_COUNT];
+#else
+static s32 g_AguneaParams[LIGHTNING_COUNT];
+#endif
+void RicEntityAguneaCircle(Entity* self) {
+    Primitive* prim;
+    s16 rand_angle;
+    s16 xCoord;
+    s16 yCoord;
+    s32 quarterSelfY;
+    s32 i;
+    s16 psp_s4;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            g_Player.unk4E = 1;
+            return;
+        }
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
+        prim = &g_PrimBuf[self->primIndex];
+        quarterSelfY = self->posY.i.hi / 4;
+        xCoord = self->posX.i.hi;
+        yCoord = 0;
+        for (i = 0; i < 4; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x194;
+            prim->x0 = xCoord - 8;
+            prim->x2 = xCoord + 8;
+            prim->y0 = prim->y2 = yCoord;
+            if (i < 3) {
+                rand_angle = rand() % 0x100 + 0x380;
+                xCoord += ((rcos(rand_angle) * quarterSelfY) >> 0xC);
+                yCoord += ((rsin(rand_angle) * quarterSelfY) >> 0xC);
+                prim->x1 = xCoord - 8;
+                prim->x3 = xCoord + 8;
+            } else {
+                xCoord = self->posX.i.hi;
+                yCoord = self->posY.i.hi;
+                prim->x1 = xCoord - 4;
+                prim->x3 = xCoord + 4;
+            }
+            prim->y1 = prim->y3 = yCoord;
+            psp_s4 = (rand() % 6) * 0x10;
+            prim->u0 = prim->u2 = psp_s4 + 0x90;
+            prim->u1 = prim->u3 = psp_s4 + 0xA0;
+            if (rand() % 2) {
+                prim->v0 = prim->v1 = 0xD0;
+                prim->v2 = prim->v3 = 0xE0;
+            } else {
+                prim->v0 = prim->v1 = 0xE0;
+                prim->v2 = prim->v3 = 0xD0;
+            }
+            prim->priority = 0xC2;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.aguneaCrash.subweaponId = PL_W_CRASH_AGUNEA;
+        RicSetSubweaponParams(self);
+        self->step++;
+        break;
+    case 1:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
+            prim = prim->next;
+        }
+        prim->drawMode &= ~DRAW_HIDE;
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C >= 4) {
+            self->ext.aguneaCrash.unk7C = 0;
+            self->step++;
+        }
+        break;
+    case 2:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
+            prim = prim->next;
+        }
+        if (!self->ext.aguneaCrash.unk7C) {
+            prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
+            prim->tpage = 0x1A;
+            prim->clut = 0x19F;
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x3F;
+            prim->v0 = prim->v1 = 0xC0;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
+                prim->r3 = prim->g3 = 0x7F;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
+            self->ext.aguneaCrash.unk7E = 1;
+            self->ext.aguneaCrash.unk80 = 2;
+            self->ext.aguneaCrash.unk82 = 0x64;
+        } else {
+            self->ext.aguneaCrash.unk80 += 2;
+            prim->drawMode |= DRAW_HIDE;
+        }
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > 3) {
+            // think this loop has to count down since we assign to i
+            for (i = 0; i < LIGHTNING_COUNT; i++) {
+                g_AguneaParams[i] = i;
+            }
+            AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
+            self->ext.aguneaCrash.unk7C = 0;
+            g_api.PlaySfx(SFX_THUNDER_B);
+            self->step++;
+        }
+        break;
+    case 3:
+        RicCreateEntFactoryFromEntity(
+            self,
+            FACTORY(BP_CRASH_AGUNEA_THUNDER,
+                    g_AguneaParams[self->ext.aguneaCrash.unk7C]),
+            0);
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT - 1) {
+            self->hitboxWidth = 0x80;
+            self->hitboxHeight = 0x80;
+            self->ext.aguneaCrash.unk7C = 0;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT) {
+            self->step++;
+        }
+        break;
+    case 5:
+        self->ext.aguneaCrash.unk80 += 2;
+        self->ext.aguneaCrash.unk82 -= 10;
+        if (self->ext.aguneaCrash.unk82 <= 0) {
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
+            self->step++;
+        }
+        break;
+    case 6:
+        g_Player.unk4E = 1;
+        DestroyEntity(self);
+        return;
+    }
+    if (self->ext.aguneaCrash.unk7E) {
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - self->ext.aguneaCrash.unk80;
+        prim->x1 = prim->x3 = self->posX.i.hi + self->ext.aguneaCrash.unk80;
+        prim->y0 = prim->y1 = self->posY.i.hi - self->ext.aguneaCrash.unk80;
+        prim->y2 = prim->y3 = self->posY.i.hi + self->ext.aguneaCrash.unk80;
+        prim->r0 = prim->g0 = prim->r1 = prim->g1 = prim->r2 = prim->g2 =
+            prim->r3 = prim->g3 = (self->ext.aguneaCrash.unk82 * 0x7F) / 100;
+        prim->b0 = prim->b1 = prim->b2 = prim->b3 =
+            (self->ext.aguneaCrash.unk82 * 0xFF) / 100;
+    }
+}
 
 // clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnStopwatchCircle);
