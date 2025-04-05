@@ -229,9 +229,8 @@ static u16 dirty_data_10650[] = {16, 0, -1, 0};
 // clang-format on
 
 // axe thrown when using subweapon
-// near-duplicate of RicEntitySubwpnAxe
+// near-duplicate of RicEntitySubwpnThrownAxe
 typedef enum { AXE_INIT, AXE_FLYING, AXE_BOUNCE } AxeSteps;
-
 void EntitySubwpnThrownAxe(Entity* self) {
     u8 rVal;
     u8 gVal;

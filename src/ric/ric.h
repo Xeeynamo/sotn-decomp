@@ -114,7 +114,7 @@ enum RicEntities {
     E_801641A0,                      // func_801641A0
     E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
     E_80167A70,                      // func_80167A70
-    E_SUBWPN_AXE,                    // RicEntitySubwpnAxe
+    E_SUBWPN_AXE,                    // RicEntitySubwpnThrownAxe
     E_CRASH_AXE,                     // RicEntityCrashAxe
     E_SUBWPN_DAGGER,                 // RicEntitySubwpnDagger
     E_80160D2C,                      // func_80160D2C
