@@ -44,7 +44,7 @@ segments:
     subsegments:
       - [0x80, c, ric/pl_debug]
       - [0x410, c, ric/pl_handlers]
-      - [0x4B60, c, ric_psp/4B60]
+      - [0x4B60, c, ric/pl_subweapons]
       - [0x6C78, c, ric_psp/6C78]
       - [0x6D18, c, ric/pl_main]
       - [0x9250, c, ric/pl_setstep]
@@ -56,7 +56,7 @@ segments:
       - [0x28400, .data, ric/pl_debug]
       - [0x28410, .data, ric/pl_handlers]
       - [0x28438, data]
-      - [0x28AB0, .data, ric_psp/4B60]
+      - [0x28AB0, .data, ric/pl_subweapons]
       - [0x28AD8, data]
       - [0x2D2B0, .data, ric/2F8E8]
       - [0x2D2D0, .data, ric/319C4]

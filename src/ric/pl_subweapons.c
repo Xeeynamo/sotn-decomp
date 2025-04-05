@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
-#include <player.h>
+#include "ric.h"
 
 // axe thrown when using subweapon
 // near-duplicate of EntitySubwpnThrownAxe
@@ -296,8 +295,8 @@ void RicEntityCrashAxe(Entity* self) {
         angle = self->ext.subwpnAxe.angle;
         self->ext.subwpnAxe.angle += 0xC0;
         self->ext.subwpnAxe.unk7C += 0x80;
-        self->velocityX = rcos(angle) * velocity;
-        self->velocityY = -rsin(angle) * velocity;
+        self->velocityX = velocity * rcos(angle);
+        self->velocityY = velocity * -rsin(angle);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         break;
@@ -310,8 +309,8 @@ void RicEntityCrashAxe(Entity* self) {
         angle = self->ext.subwpnAxe.angle;
         self->ext.subwpnAxe.angle += 0xC0;
         self->ext.subwpnAxe.unk7C += 0x80;
-        self->velocityX = velocity * rcos(angle);
-        self->velocityY = velocity * -rsin(angle);
+        self->velocityX = rcos(angle) * velocity;
+        self->velocityY = -rsin(angle) * velocity;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         break;
@@ -422,6 +421,9 @@ void RicEntityCrashAxe(Entity* self) {
     }
 }
 
+// RIC Entity #38. Blueprint 43 AND 44.
+// Applies to subweapon 1, and its crash, subweapon 21. Very neat!
+// Not quite the same as the one in DRA, but close.
 #if defined(VERSION_PSP)
 extern s16 D_80155E98[];
 extern s32 D_8017588C;
