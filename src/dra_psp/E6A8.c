@@ -2040,9 +2040,9 @@ block_4:
         }
         break;
     case MENU_STEP_EQUIP_ACC_INIT:
-        equipId = g_Status.equipBodyOrder[D_801375D8[g_MenuNavigation.cursorEquipType[D_801375D4]]];
+        equipId = g_Status.equipBodyOrder[D_801375D8[g_MenuNavigation.cursorEquipType[1+D_801375D4]]];
         func_800FAEC4(
-            &g_MenuNavigation.cursorEquipType[D_801375D4],
+            &g_MenuNavigation.cursorEquipType[D_801375D4] + 1,
             g_Status.equipBodyCount[equipId],
             g_AccessoryDefs[equipId].description, g_AccessoryDefs[equipId].icon,
             g_AccessoryDefs[equipId].iconPalette);
@@ -2051,7 +2051,7 @@ block_4:
       isSecondAccessory = g_MenuNavigation.cursorEquip;
       isSecondAccessory = (isSecondAccessory == ACCESSORY_2_SLOT);
         i = func_800FB23C(
-            &g_MenuNavigation.cursorEquipType[D_801375D4],
+            &g_MenuNavigation.cursorEquipType[D_801375D4] + 1,
             g_Status.equipBodyOrder, 
             g_Status.equipBodyCount,
             &g_Status.wornEquipment[D_801375D4 + isSecondAccessory]);
