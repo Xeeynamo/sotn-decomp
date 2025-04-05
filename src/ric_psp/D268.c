@@ -2142,7 +2142,19 @@ static s16 GetAguneaLightningAngle(s16* arg0, s16 arg1, s16 arg2, s16* arg3) {
     return arg1;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", AguneaShuffleParams);
+static void AguneaShuffleParams(s32 bufSize, s32* buf) {
+    s32 i, idx, swapTemp;
+
+    for (i = bufSize - 1; i > 0; i--) {
+        // Pick random index
+        idx = rand() % bufSize;
+
+        // Hold swap value temporarily
+        swapTemp = buf[i];
+        buf[i] = buf[idx];
+        buf[idx] = swapTemp;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityAguneaLightning);
 
