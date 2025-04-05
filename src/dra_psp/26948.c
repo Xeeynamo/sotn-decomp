@@ -2,7 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_091032C8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", HideAllBackgroundLayers);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", RenderTilemap);
 

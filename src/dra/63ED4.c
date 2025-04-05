@@ -417,7 +417,7 @@ u_long* D_800A3B10[] = {
 u_long* D_800A3B24[] = {
     MAKE_PAL_OP(PAL_UNK_OP2, 2),
     PAL_UNK_OP2_INFO(0x10F0, 16),
-    PAL_UNK_OP2_DATA(D_8006EBCC),
+    PAL_UNK_OP2_DATA(&g_Clut[0x1000]),
     PAL_TERMINATE(),
 };
 

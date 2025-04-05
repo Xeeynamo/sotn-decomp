@@ -118,7 +118,11 @@ def sort(base_path):
     filtered_files = [
         f
         for f in files
-        if f.startswith(f"symbols.{args.version}.") and f.endswith(".txt")
+        if (
+            f.startswith(f"symbols.{args.version}.")
+            or f.startswith(f"undefined_syms.{args.version}.")
+        )
+        and f.endswith(".txt")
     ]
 
     for symbol_file_name in [os.path.join(base_path, f) for f in filtered_files]:
