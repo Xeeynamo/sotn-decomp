@@ -51,7 +51,8 @@ segments:
       - [0x66B0, c, dra/5F60C] # O0
       - [0xA710, c, dra_psp/A710] # O4
       - [0xE6A8, c, dra_psp/E6A8]
-      - [0x18648, c, dra_psp/18648]
+      - [0x18648, c, dra_psp/lang] #O0 in a sea of O4
+      - [0x186E8, c, dra_psp/186E8]
       - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/1A0D0]
       - [0x1A110, c, dra_psp/1A110]
@@ -113,8 +114,8 @@ segments:
       - [0x6B4E0, data]
       - [0x6DA20, .data, dra_psp/E6A8]
       - [0x6DCA8, data]
-      - [0x6DDE8, .data, dra_psp/18648] # "\no\n"
-      - [0x6DDF0, .data, dra_psp/18648] # func_psp_090F5188 strings
+      - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
+      - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
       - [0x84210, .data, dra/5D5BC]
       - [0x84238, data]
