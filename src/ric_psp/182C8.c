@@ -58,7 +58,7 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented4);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityMaria);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C2E98);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80162E9C);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityPlayerBlinkWhite);
 
@@ -72,52 +72,8 @@ INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByIce);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByLightning);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C73B0);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80165DD8);
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C77B8);
+INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80166024);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityTeleport);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityCrashCrossBeam);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C8D48);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented3);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80167A70);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityCrashHydroStorm);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C9988);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092C9B88);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnHolyWater);
-
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnHolyWaterFlame);
-// clang-format on
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityWhip);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityArmBrandishWhip);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80167964);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented1);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented2);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnCrashCross);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityRevivalColumn);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnCross);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80169C10);
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnCrossTrail);
-
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySubwpnCrashCrossParticles);
-// clang-format on
