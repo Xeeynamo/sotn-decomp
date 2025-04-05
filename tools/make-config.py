@@ -2,6 +2,7 @@
 
 import argparse
 import concurrent.futures
+from dataclasses import dataclass
 import hashlib
 import itertools
 import os
@@ -30,6 +31,15 @@ parser.add_argument(
     required=False,
     help="game version",
 )
+parser.add_argument(
+    "--symbol-source",
+    required=False,
+    action=argparse.BooleanOptionalAction,
+    help="Include comment in symbol table describing the source of the symbol")
+
+@dataclass
+class Options:
+    show_symbol_source: bool
 
 ##### GENERIC UTILITIES
 
@@ -440,23 +450,26 @@ def get_splat_config(
         }
     }
 
+def vram_offset(ovl_name: str):
+    if is_stage(ovl_name) or is_boss(ovl_name):
+        return 0x80180000
+    elif is_servant(ovl_name):
+        return 0x80170000
+    elif ovl_name == "dra":
+        return 0x800A0000
+    elif ovl_name == "ric":
+        return 0x8013C000
+    else:
+        omgpanic(f"unable to determine vram for '{ovl_name}'")
 
-def make_config_psx(ovl_path: str, version: str):
+
+def make_config_psx(ovl_path: str, version: str, options: Options):
     class IndentDumper(yaml.Dumper):
         def increase_indent(self, flow=False, indentless=False):
             return super(IndentDumper, self).increase_indent(flow, False)
 
     ovl_name = os.path.basename(ovl_path).split(".")[0].lower()
-    if is_stage(ovl_name) or is_boss(ovl_name):
-        vram = 0x80180000
-    elif is_servant(ovl_name):
-        vram = 0x80170000
-    elif ovl_name == "dra":
-        vram = 0x800A0000
-    elif ovl_name == "ric":
-        vram = 0x8013C000
-    else:
-        omgpanic(f"unable to determine vram for '{ovl_name}'")
+    vram = vram_offset(ovl_name)
 
     with open(ovl_path, "rb") as f:
         ovl_data = f.read()
@@ -480,6 +493,16 @@ def make_config_psx(ovl_path: str, version: str):
         ovl_name,
     )
 
+    known_segments = {}
+
+    # find well-known segment offsets
+    for source_name, source_bin in { "stdre": "DRE", "stnp3": "NP3", "stnz0": "NZ0", "stst0": "ST0", "stwrp": "WRP" }.items():
+        matches = match_existing(ovl_name, version, source_name, source_bin)
+
+        for doc in matches:
+            known_segments[doc["offset"]] = doc
+
+
     subsegments = []
     if data_off >= 0:
         subsegments.append(f"      - [0x{data_off:X}, data]\n")
@@ -490,7 +513,18 @@ def make_config_psx(ovl_path: str, version: str):
         else:
             subsegments.append(f"      - [0x{rodata_off:X}, rodata]\n")
     if text_off >= 0:
-        subsegments.append(f"      - [0x{text_off:X}, c, {version}]\n")
+        last_offset = text_off
+        for offset in sorted(known_segments.keys()):
+            if offset > last_offset:
+                subsegments.append(f"      - [0x{last_offset:X}, c, {version}_{last_offset:X}]\n")
+            segment = known_segments[offset]
+            subsegments.append(f"      - [0x{offset:X}, c, {segment["name"]}]\n")
+            last_offset = offset + segment["size"]
+        if bss_off >= 0 and last_offset != bss_off:
+            subsegments.append(f"      - [0x{text_off:X}, c, {version}_{last_offset:X}]\n")
+
+
+
     if bss_off >= 0:
         subsegments.append(f"      - [0x{bss_off:X}, sbss]\n")
 
@@ -641,6 +675,18 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
         pairs[left] = right
     return pairs
 
+def match_existing(ovl_name, version, source_name, source_bin) -> [dict]:
+    # TODO: should these be driven by splat config?
+    os.chdir("tools/sotn-match")
+    build_dir = f"../../build/{version}"
+    match_config_path = f"{build_dir}/match.{ovl_name}.yaml"
+    cargo_run("--output", match_config_path, "evaluate", f"{build_dir}/{source_name}.map", f"{build_dir}/{source_bin}.BIN")
+
+    ovl_path = make_ovl_path(ovl_name, version)
+    matches = cargo_run("scan", match_config_path, f"../../{ovl_path}")
+    os.chdir("../..")
+
+    return yaml.load_all(matches, Loader=yaml.SafeLoader)
 
 def split(splat_config_path: str, disassemble_all: bool):
     with open(splat_config_path) as f:
@@ -816,7 +862,7 @@ def get_symbol_table_from_entity_init_c(file_name: str, ovl_name: str) -> list[s
     return entities
 
 
-def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
+def add_symbol_unique(symbol_file_name: str, name: str, offset: int, source: str = None, options: Options = None):
     with open(symbol_file_name, "r") as f:
         lines = f.readlines()
     symbol_already_in_the_list = False
@@ -832,16 +878,19 @@ def add_symbol_unique(symbol_file_name: str, name: str, offset: int):
             if name.startswith("D_"):
                 return
             # replace the existing default splat symbol with the good name
-            lines[i] = f"{name} = 0x{offset:08X}"
+            lines[i] = f"{name} = 0x{offset:08X};"
             with open(symbol_file_name, "w") as f:
                 f.writelines(lines)
             return
     if not symbol_already_in_the_list:
         with open(symbol_file_name, "a") as f:
-            f.write(f"{name} = 0x{offset:08X};\n")
+            f.write(f"{name} = 0x{offset:08X};")
+            if options is not None and options.show_symbol_source and source is not None:
+                f.write(f" // source-{source}:true");
+            f.write('\n')
 
 
-def add_symbol(splat_config, version: str, name: str, offset: int):
+def add_symbol(splat_config, version: str, name: str, offset: int, source: str = None, options: Options = None):
     if offset == 0:
         return
     if is_psp(version):
@@ -862,7 +911,7 @@ def add_symbol(splat_config, version: str, name: str, offset: int):
     # add symbol to the overlay symbol list
     symbol_file_name = splat_config["options"]["symbol_addrs_path"][1]
     sym_prefix = get_symbol_prefix(splat_config)
-    add_symbol_unique(symbol_file_name, name, offset)
+    add_symbol_unique(symbol_file_name, name, offset, source, options)
     sort_symbols_from_file(symbol_file_name)
 
     # do a find & replace on the extracted C code
@@ -1016,8 +1065,59 @@ def hydrate_psp_symbols(splat_config_path: str, splat_config, version: str):
         spinner_start("updating all symbols")
         split(splat_config_path, True)
 
+def hydrate_psx_matching_symbols(splat_config, ovl_name: str, version: str, options: Options):
+    spinner_start("finding matches across overlays")
+    seen_functions = set()
 
-def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
+    # find well-known segment offsets
+    for source_name, source_bin in {
+        "stwrp": "WRP",
+        "stcen": "CEN",
+        "stno3": "NO3",
+        "stnz0": "NZ0",
+        "stno4": "NO4",
+        "tt_002": "TT_002",
+        "bomar": "MAR",
+        "tt_000": "TT_000",
+        "stst0": "ST0",
+        "stdre": "DRE",
+        "stno1": "NO1",
+        "bobo4": "BO4",
+        "tt_004": "TT_004",
+        "stmad": "MAD",
+        "stchi": "CHI",
+        "borbo5": "RBO5",
+        "borbo3": "RBO3",
+        "strwrp": "RWRP",
+        "stnp3": "NP3",
+        "tt_001": "TT_001",
+        "dra": "DRA",
+        "stno0": "NO0",
+        "tt_003": "TT_003",
+        "stlib": "LIB",
+        "ric": "RIC" }.items():
+        matches = match_existing(ovl_name, version, source_name, source_bin)
+
+        vram = vram_offset(ovl_name)
+        target_name = os.path.basename(get_asm_path(splat_config)).upper()
+
+        for doc in matches:
+            functions = doc["symbols"]
+            for function, offset in functions.items():
+                ovl_function = function.replace(f"{source_bin}_", f"{target_name}_")
+                if ovl_function not in seen_functions:
+                    add_symbol(splat_config,
+                               version,
+                               ovl_function,
+                               vram + offset,
+                               "match",
+                               options)
+                    seen_functions.add(ovl_function)
+
+    return len(seen_functions)
+
+
+def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str, options: Options):
     """
     Hydrate the symbol list by comparing the extracted functions with those already detected
     in other overlays.
@@ -1078,11 +1178,11 @@ def hydrate_psx_duplicate_symbols(splat_config, ovl_name: str, version: str):
 
         found += 1
         offset = int(left.split(func_prefix)[1], 16)
-        add_symbol(splat_config, version, right, offset)
+        add_symbol(splat_config, version, right, offset, "duplicate", options)
     return found
 
 
-def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
+def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str, options):
     """
     leverage symbols.py cross <matching> <nonmatching> to find symbols in data and bss
     """
@@ -1149,7 +1249,7 @@ def hydrate_psx_cross_ref_symbols(splat_config, ovl_name: str, version: str):
 
     spinner_start("adding cross-referenced symbol names")
     for sym in syms:
-        add_symbol(splat_config, version, sym, syms[sym])
+        add_symbol(splat_config, version, sym, syms[sym], "crossref", options)
     return len(syms)
 
 
@@ -1177,7 +1277,7 @@ def handle_interrupt(signum, frame):
     exit(1)
 
 
-def make_config(ovl_name: str, version: str):
+def make_config(ovl_name: str, version: str, options):
     assert_sotn_decomp_cwd()
     ovl_input = make_ovl_path(ovl_name, version)
 
@@ -1186,7 +1286,7 @@ def make_config(ovl_name: str, version: str):
         splat_config_path = make_config_psp(ovl_input, version)
     else:
         spinner_start("generating psx splat config")
-        splat_config_path = make_config_psx(ovl_input, version)
+        splat_config_path = make_config_psx(ovl_input, version, options)
     with open(splat_config_path) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
     for symbol_path in splat_config["options"]["symbol_addrs_path"]:
@@ -1204,12 +1304,17 @@ def make_config(ovl_name: str, version: str):
     if is_psp(version):
         hydrate_psp_symbols(splat_config_path, splat_config, version)
     else:
-        found = hydrate_psx_duplicate_symbols(splat_config, ovl_name, version)
+        found = hydrate_psx_matching_symbols(splat_config, ovl_name, version, options)
+        if found > 0:
+            spinner_start(f"renamed {found} matched functions, splitting again")
+            shutil.rmtree(get_asm_path(splat_config))
+            split(splat_config_path, False)
+        found = hydrate_psx_duplicate_symbols(splat_config, ovl_name, version, options)
         if found > 0:
             spinner_start(f"renamed {found} functions, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
-        found = hydrate_psx_cross_ref_symbols(splat_config, ovl_name, version)
+        found = hydrate_psx_cross_ref_symbols(splat_config, ovl_name, version, options)
         if found > 0:
             spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
@@ -1223,13 +1328,16 @@ def make_config(ovl_name: str, version: str):
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_interrupt)
+    options = Options(show_symbol_source = False)
     args = parser.parse_args()
     if args.version == None:
         args.version = os.getenv("VERSION")
         if args.version == None:
             args.version = "us"
+    if args.symbol_source == True:
+        options.show_symbol_source = True
     try:
-        make_config(args.input, args.version)
+        make_config(args.input, args.version, options)
         spinner_stop(True)
     except KeyboardInterrupt:
         spinner_stop(False)
