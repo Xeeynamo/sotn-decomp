@@ -598,6 +598,7 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
 
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     u8* iconGfx;
+    u16* clutPtr;
     s32 vramX;
     s32 var_t0;
     s32 i;
@@ -615,10 +616,8 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            if (g_Clut[0x1D00]) { // FAKE
-            }
-            (&g_Clut[0x1D00])[index * 0x10 + i] =
-                g_PalEquipIcon[palette * 0x10 + i];
+            clutPtr = &g_Clut[0x1D00];
+            clutPtr[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
         }
 
         LoadClut(&g_Clut[0x1D00], 0, 0xFD);
