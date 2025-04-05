@@ -1158,6 +1158,9 @@ void RicEntityCrashStopwatch(Entity* self) {
         break;
     case 8:
         DestroyEntity(self);
+#if defined(VERSION_PSP)
+        g_Player.unk4E = 1;
+#endif
         break;
     }
 }

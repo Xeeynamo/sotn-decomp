@@ -2084,7 +2084,43 @@ void RicEntityStopwatchCrashLightning(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntityCrashStopwatch);
+void RicEntityCrashStopwatch(Entity* self) {
+    // Kind of funny control flow.
+    // On odd steps, we'll create a ricStopWatch, and on evens, we wait.
+    // We end up producing the 4 individual ricStopWatches.
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->ext.stopwatchCrash.index = 0;
+        self->step++;
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+        self->ext.stopwatchCrash.index++;
+        // This value becomes ext.ricStopWatch.crashIndex for each stopwatch.
+        RicCreateEntFactoryFromEntity(
+            self, FACTORY(BP_SUBWPN_STOPWATCH, self->ext.stopwatchCrash.index),
+            0);
+        self->ext.stopwatchCrash.timer = 0;
+        self->step++;
+        break;
+    case 2:
+    case 4:
+    case 6:
+        self->ext.stopwatchCrash.timer++;
+        if (self->ext.stopwatchCrash.timer > 15) {
+            self->step++;
+        }
+        break;
+    case 8:
+        DestroyEntity(self);
+#if defined(VERSION_PSP)
+        g_Player.unk4E = 1;
+#endif
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", GetAguneaLightningAngle);
 
