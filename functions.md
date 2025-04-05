@@ -1290,7 +1290,7 @@
 | dra    | PlayerStepStoned                    |      482 |         75 |        |                                 |       |
 | no4    | func_pspeu_0923B378                 |      485 |         30 |        |                                 |       |
 | ric    | RicEntitySmokePuff                  |      487 |         42 |        |                                 |       |
-| ric    | RicEntitySubwpnBible                |      490 |         41 |        |                                 |       |
+| ric    | RicEntitySubwpnBible                |      490 |         41 |        | https://decomp.me/scratch/DjAnf | 0.998 |
 | dra    | func_800F99B8                       |      493 |         37 |        |                                 |       |
 | no4    | func_pspeu_09254690                 |      495 |         38 |        |                                 |       |
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
@@ -1370,7 +1370,7 @@
 | dra    | EntitySubwpnThrownAxe               |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_us_801CD318                    |      691 |         73 |        |                                 |       |
 | st0    | EntityClouds                        |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
-| ric    | RicEntitySubwpnAxe                  |      694 |         57 |        |                                 |       |
+| ric    | RicEntitySubwpnAxe                  |      694 |         57 |        | https://decomp.me/scratch/Sfdgv | 0.999 |
 | dra    | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
 | dra    | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | ric    | RicEntityTeleport                   |      700 |         78 |        |                                 |       |
