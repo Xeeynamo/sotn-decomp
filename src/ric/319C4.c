@@ -1496,13 +1496,14 @@ void RicEntityAguneaCircle(Entity* self) {
 }
 
 void RicEntitySubwpnStopwatchCircle(Entity* self) {
-    Primitive* prim;
     s16 temp_s0_4;
+    s16 psp_s4;
     s32 sine;
     s32 cosine;
-    s32 i;
-    s16 yCoord;
     s16 xCoord;
+    s16 yCoord;
+    Primitive* prim;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -1519,12 +1520,14 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
-            prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
-            prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
-            prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
-            prim->v1 = -((rcos((s16)((i + 1) * 0x100)) << 5) >> 0xC) - 0x21;
-            prim->v2 = prim->v3 = 0xE0;
+            psp_s4 = i * 0x100;
+            prim->u0 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
+            psp_s4 = (i + 1) * 0x100;
+            prim->u1 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
             prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
             prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
                 0x40;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
@@ -1536,7 +1539,8 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         break;
     case 1:
         self->ext.et_stopwatchCircle.size += 0x18;
-        if (++self->ext.et_stopwatchCircle.timer >= 0x1F) {
+        self->ext.et_stopwatchCircle.timer++;
+        if (self->ext.et_stopwatchCircle.timer > 0x1E) {
             DestroyEntity(self);
             return;
         }
@@ -1562,7 +1566,6 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         prim->y3 = yCoord - ((cosine * temp_s0_4) >> 0xC);
         prim = prim->next;
     }
-    return;
 }
 
 static u32 D_801758D0;

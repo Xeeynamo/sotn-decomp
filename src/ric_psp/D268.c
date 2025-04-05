@@ -2455,9 +2455,78 @@ void RicEntityAguneaCircle(Entity* self) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnStopwatchCircle);
-// clang-format on
+void RicEntitySubwpnStopwatchCircle(Entity* self) {
+    s16 temp_s0_4;
+    s16 psp_s4;
+    s32 sine;
+    s32 cosine;
+    s16 xCoord;
+    s16 yCoord;
+    Primitive* prim;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            prim->priority = self->zPriority = 0xC2;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
+            psp_s4 = i * 0x100;
+            prim->u0 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
+            psp_s4 = (i + 1) * 0x100;
+            prim->u1 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
+            prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
+            prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
+                0x40;
+            prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
+            prim->b2 = prim->b3 = 0x20;
+            prim = prim->next;
+        }
+        self->ext.et_stopwatchCircle.size = 0x20;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_stopwatchCircle.size += 0x18;
+        self->ext.et_stopwatchCircle.timer++;
+        if (self->ext.et_stopwatchCircle.timer > 0x1E) {
+            DestroyEntity(self);
+            return;
+        }
+    }
+    xCoord = self->posX.i.hi;
+    yCoord = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        sine = rsin(i * 0x100);
+        cosine = rcos(i * 0x100);
+        temp_s0_4 = self->ext.et_stopwatchCircle.size - 0x20;
+        prim->x0 = xCoord + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y0 =
+            yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->x2 = xCoord + ((sine * (temp_s0_4)) >> 0xC);
+        prim->y2 = yCoord - ((cosine * temp_s0_4) >> 0xC);
+        sine = rsin((i + 1) * 0x100);
+        cosine = rcos((i + 1) * 0x100);
+        prim->x1 = xCoord + ((sine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->y1 =
+            yCoord - ((cosine * self->ext.et_stopwatchCircle.size) >> 0xC);
+        prim->x3 = xCoord + ((sine * temp_s0_4) >> 0xC);
+        prim->y3 = yCoord - ((cosine * temp_s0_4) >> 0xC);
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnStopwatch);
 
