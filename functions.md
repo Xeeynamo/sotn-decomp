@@ -206,8 +206,8 @@
 | dra    | MenuDrawChar                        |       25 |          2 |        |                                 |       |
 | dra    | func_800F892C                       |       25 |          2 |        |                                 |       |
 | dra    | func_psp_090EC518                   |       25 |          2 |        |                                 |       |
-| lib    | func_psp_0923C0C0                   |       25 |          2 |        |                                 |       |
-| no4    | func_psp_0923C0C0                   |       25 |          2 |        |                                 |       |
+| lib    | func_psp_0923C0C0                   |       25 |          2 |        | https://decomp.me/scratch/Dg38h | 1.0   |
+| no4    | func_psp_0923C0C0                   |       25 |          2 |        | https://decomp.me/scratch/Dg38h | 1.0   |
 | dra    | IsRelicActive                       |       25 |          3 |        | https://decomp.me/scratch/pQCWA | 0.798 |
 | dra    | ClearStatBuffs                      |       25 |          4 |        |                                 |       |
 | dra    | PerformHellfire                     |       25 |          4 |        |                                 |       |
@@ -832,7 +832,7 @@
 | no4    | AnimateEntity                       |      101 |          7 |        |                                 |       |
 | st0    | AnimateEntity                       |      101 |          7 |        |                                 |       |
 | wrp    | AnimateEntity                       |      101 |          7 |        |                                 |       |
-| ric    | RicEntityCrashStopwatch             |      101 |          8 | Yes    | https://decomp.me/scratch/IrICT | 0.84  |
+| ric    | RicEntityCrashStopwatch             |      101 |          8 | Yes    | https://decomp.me/scratch/G9CWM | 1.0   |
 | dra    | func_80113F7C                       |      101 |         14 |        |                                 |       |
 | ric    | func_80159C04                       |      101 |         14 |        | https://decomp.me/scratch/BsYZP | 0.967 |
 | dra    | MenuDrawRect                        |      102 |          6 |        |                                 |       |
@@ -932,7 +932,7 @@
 |        | UpdatePrimWhenAlucardIsBat          |      126 |          5 |        |                                 |       |
 | dra    | EntityWingSmashTrail                |      126 |         10 |        |                                 |       |
 | no4    | func_pspeu_09242200                 |      126 |         15 |        |                                 |       |
-| dra    | LoadEquipIcon                       |      127 |          9 |        |                                 |       |
+| dra    | LoadEquipIcon                       |      127 |          9 |        | https://decomp.me/scratch/ACUM3 | 0.996 |
 | lib    | EntityHeartDrop                     |      127 |         11 |        |                                 |       |
 | no4    | EntityHeartDrop                     |      127 |         11 |        |                                 |       |
 | wrp    | EntityHeartDrop                     |      127 |         11 |        |                                 |       |
@@ -1178,7 +1178,7 @@
 |        | ProcessEvent                        |      293 |         42 |        |                                 |       |
 | no4    | func_pspeu_09241410                 |      294 |         16 |        |                                 |       |
 | lib    | EntityBreakable                     |      294 |         47 |        | https://decomp.me/scratch/qUJKx | 0.995 |
-| dra    | HandleEnding                        |      298 |         60 |        |                                 |       |
+| dra    | HandleEnding                        |      298 |         60 |        | https://decomp.me/scratch/9QZjQ | 0.96  |
 | no4    | func_pspeu_0923EA80                 |      300 |         26 |        |                                 |       |
 | dra    | func_psp_09144280                   |      303 |         47 |        |                                 |       |
 | dra    | func_8012C600                       |      305 |         25 |        |                                 |       |
@@ -1200,7 +1200,7 @@
 | lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
 | no4    | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
-| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.891 |
+| dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.984 |
 | no4    | func_pspeu_0923F390                 |      324 |         16 |        |                                 |       |
 | st0    | func_801AF380                       |      325 |          7 |        | https://decomp.me/scratch/WwUfr | 0.998 |
 | lib    | EntityThornweed                     |      330 |         47 | Yes    |                                 |       |
@@ -1304,7 +1304,7 @@
 | no4    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | wrp    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
 | ric    | func_8016D9C4                       |      512 |         68 |        | https://decomp.me/scratch/pF2GN | 0.994 |
-| dra    | MenuDrawStats                       |      517 |         73 |        | https://decomp.me/scratch/YxUyP | 0.997 |
+| dra    | MenuDrawStats                       |      517 |         73 |        | https://decomp.me/scratch/hp3KZ | 0.997 |
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
 | dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
@@ -1333,7 +1333,7 @@
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | no4    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | wrp    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
-| dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/YxUyP | 0.997 |
+| dra    | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/hp3KZ | 0.997 |
 | ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
@@ -1462,7 +1462,7 @@
 | dra    | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
 | dra    | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
 | dra    | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/SObUR | 0.992 |
-| ric    | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        | https://decomp.me/scratch/IrICT | 0.84  |
+| ric    | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        | https://decomp.me/scratch/G9CWM | 1.0   |
 | lib    | func_us_801B15C0                    |     1588 |        176 | Yes    |                                 |       |
 | lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
@@ -1477,7 +1477,7 @@
 | lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    |                                 |       |
 | ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    |                                 |       |
-| dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/Ao85v | 0.987 |
+| dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/S9Nor | 0.982 |
 | dra    | RunMainEngine                       |     2166 |        297 | Yes    |                                 |       |
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
