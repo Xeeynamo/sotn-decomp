@@ -633,7 +633,18 @@ void func_psp_090F5560(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5B10);
+// No idea what's going on here, none of these seem to be touched
+// outside of this function? Maybe some fake syms. Weird.
+extern EnemyDef* D_psp_091CF7CC;
+extern Equipment* D_psp_091CF7F4;
+extern Accessory* D_psp_091CF7F8;
+extern RelicDesc* D_psp_091CF814;
+void func_psp_090F5B10(void) {
+    D_psp_091CF7F4 = g_EquipDefs;
+    D_psp_091CF7F8 = g_AccessoryDefs;
+    D_psp_091CF7CC = g_EnemyDefs;
+    D_psp_091CF814 = g_RelicDefs;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", MainGame);
 
