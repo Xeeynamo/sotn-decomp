@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-extern s32 D_psp_091474B8;
 extern s32 D_psp_091893B8[];
 extern s32 D_psp_091CDC80;
 extern s32 D_psp_091CDC88;

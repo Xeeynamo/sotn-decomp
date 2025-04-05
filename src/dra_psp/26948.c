@@ -2,7 +2,7 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_091032C8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", HideAllBackgroundLayers);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", RenderTilemap);
 
@@ -65,7 +65,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB4F8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", LoadEquipIcon);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_psp_09104810);
+INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB6B4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/26948", func_800EB720);
 
