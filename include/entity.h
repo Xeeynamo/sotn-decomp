@@ -1433,8 +1433,8 @@ typedef struct {
     u8 unk90[4];
     u8 unk94[4];
     s32 unk98;
-    s32 unk9C;
-    u16 unkA0;
+    s32 velocity;
+    s16 angle;
     s16 unkA2;
     s32 : 32;
     s32 : 32;

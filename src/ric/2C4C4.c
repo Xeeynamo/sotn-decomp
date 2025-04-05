@@ -1079,32 +1079,26 @@ void RicEntitySubwpnThrownAxe(Entity* self) {
 // RIC entity #37. Comes from blueprint 41. That's subweapon 20.
 // Subweapon 20 is crash of subweapon 2, which is the axe.
 void RicEntityCrashAxe(Entity* self) {
-    s32 sp10;
-    s32 sp18;
-    Primitive* prevPrim;
+    Primitive* primFirst;
     Primitive* prim;
-    s32 temp_v1_3;
-    s16 var_s0;
-    s16 var_s1;
-    s16 var_s2;
-    s16 var_s3;
-    s16 var_v0;
-    s16 temp_s4;
-    s16 temp_s5;
-    u8 temp_v0_4;
+    s16 angle1;
+    s16 angle2;
+    s16 angle3;
+    s16 angle4;
+    s32 mod;
+    s32 i;
+    u8 r;
+    u8 g;
+    u8 b;
+    s16 angleMod;
+    s16 x;
+    s16 y;
+    s16 angle;
+    s32 pose;
+    s32 velocity;
+    s32 colorRef;
 
-    s32 temp_s1;
-    s16 temp_s0;
-
-    u8* arr0;
-    u8* arr1;
-    u8* arr2;
-    s32 twentyone;
-
-    u8 rVal;
-    u8 gVal;
-    u8 bVal;
-
+    mod = 21;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
@@ -1112,52 +1106,51 @@ void RicEntityCrashAxe(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        sp10 = 0;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->facingLeft = 0;
-        prim = &g_PrimBuf[self->primIndex];
-        self->ext.subwpnAxe.unk7C = ((u8)self->params << 9) + 0xC00;
+        self->ext.subwpnAxe.unk7C = ((self->params & 0xFF) << 9) + 0xC00;
         self->posY.i.hi -= 12;
-        if (prim != NULL) {
-            do {
-                prim->tpage = 0x1C;
-                prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
-                prim->u1 = prim->u3 = 0x18;
-                prim->v2 = prim->v3 = 0x28;
-                prim->priority = PLAYER.zPriority + 4;
-                if (sp10 != 0) {
-                    prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
-                                     DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
-                    self->ext.subwpnAxe.unk8C[sp10 - 1] = 0;
-                    self->ext.subwpnAxe.unk90[sp10 - 1] = 0;
-                    self->ext.subwpnAxe.unk94[sp10 - 1] = 0;
-                } else {
-                    prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
-                }
-                prim = prim->next;
-                sp10++;
-            } while (prim != NULL);
+        prim = &g_PrimBuf[self->primIndex];
+        i = 0;
+        while (prim) {
+            prim->tpage = 0x1C;
+            prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x18;
+            prim->v2 = prim->v3 = 0x28;
+            prim->priority = PLAYER.zPriority + 4;
+            if (i != 0) {
+                prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
+                self->ext.subwpnAxe.unk8C[i - 1] = 0;
+                self->ext.subwpnAxe.unk90[i - 1] = 0;
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
+            } else {
+                prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
+            }
+            i++;
+            prim = prim->next;
         }
         self->ext.subwpnAxe.subweaponId = PL_W_AXE;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
-        self->ext.subwpnAxe.unk9C = 16;
-        self->ext.subwpnAxe.unkA0 = (u8)self->params << 9;
+        self->ext.subwpnAxe.angle = (self->params & 0xFF) << 9;
+        self->ext.subwpnAxe.velocity = 16;
         self->step++;
         break;
     case 1:
-        temp_s1 = self->ext.subwpnAxe.unk9C;
-        if (++self->ext.subwpnAxe.unk9C >= 0x29) {
+        velocity = self->ext.subwpnAxe.velocity;
+        self->ext.subwpnAxe.velocity++;
+        if (self->ext.subwpnAxe.velocity > 0x28) {
             self->ext.subwpnAxe.unkA2 = 16;
             self->step++;
         }
-        temp_s0 = self->ext.subwpnAxe.unkA0;
-        self->ext.subwpnAxe.unkA0 += 0xC0;
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0xC0;
         self->ext.subwpnAxe.unk7C += 0x80;
-        self->velocityX = rcos(temp_s0) * temp_s1;
-        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->velocityX = velocity * rcos(angle);
+        self->velocityY = velocity * -rsin(angle);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         break;
@@ -1166,125 +1159,119 @@ void RicEntityCrashAxe(Entity* self) {
             self->ext.subwpnAxe.unkA2 = 8;
             self->step++;
         }
-        temp_s1 = self->ext.subwpnAxe.unk9C;
-        temp_s0 = self->ext.subwpnAxe.unkA0;
-        self->ext.subwpnAxe.unkA0 += 0xC0;
+        velocity = self->ext.subwpnAxe.velocity;
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0xC0;
         self->ext.subwpnAxe.unk7C += 0x80;
-        self->velocityX = rcos(temp_s0) * temp_s1;
-        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->velocityX = rcos(angle) * velocity;
+        self->velocityY = -rsin(angle) * velocity;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         break;
     case 3:
         if (--self->ext.subwpnAxe.unkA2 == 0) {
-            if ((u8)self->params == 0) {
+            if ((self->params & 0xFF) == 0) {
                 g_api.PlaySfx(SFX_TELEPORT_BANG_A);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
             g_Player.unk4E = 1;
             self->flags &= ~(FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000);
         }
-        temp_s1 = self->ext.subwpnAxe.unk9C;
-        self->ext.subwpnAxe.unk9C += 2;
-        temp_s0 = self->ext.subwpnAxe.unkA0;
-        self->ext.subwpnAxe.unkA0 += 0x28;
+        velocity = self->ext.subwpnAxe.velocity;
+        self->ext.subwpnAxe.velocity += 2;
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0x28;
         self->ext.subwpnAxe.unk7C += 0x80;
-        self->velocityX = rcos(temp_s0) * temp_s1;
-        self->velocityY = -rsin(temp_s0) * temp_s1;
+        self->velocityX = rcos(angle) * velocity;
+        self->velocityY = -rsin(angle) * velocity;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->animFrameDuration == 0) {
-            sp18 = self->animFrameIdx;
-            self->ext.subwpnAxe.unk8C[sp18] = 0;
-            self->ext.subwpnAxe.unk90[sp18] = 1;
-            self->ext.subwpnAxe.unk94[sp18] = 1;
-            sp18++;
-            sp18 &= 3;
-            self->animFrameIdx = sp18;
+            pose = self->animFrameIdx;
+            self->ext.subwpnAxe.unk8C[pose] = 0;
+            self->ext.subwpnAxe.unk90[pose] = 1;
+            self->ext.subwpnAxe.unk94[pose] = 1;
+            pose++;
+            pose &= 3;
+            self->animFrameIdx = pose;
             self->animFrameDuration = 2;
         } else {
             self->animFrameDuration--;
         }
         break;
     }
-    sp10 = 0;
     prim = &g_PrimBuf[self->primIndex];
-    prevPrim = prim;
-    sp18 = ((g_GameTimer >> 1) & 1) + 0x1AB;
+    primFirst = prim;
+    pose = ((g_GameTimer >> 1) & 1) + 0x1AB;
+    i = 0;
     while (prim != NULL) {
-        prim->clut = sp18;
-        if (sp10 == 0) {
+        prim->clut = pose;
+        if (i == 0) {
             if (self->facingLeft) {
-                var_s0 = 0x560;
-                var_s1 = 0x2A0;
-                var_s3 = 0xAA0;
-                var_v0 = 0xD60;
+                angle1 = 0x800 - 0x2A0;
+                angle2 = 0x2A0;
+                angle3 = 0x800 + 0x2A0;
+                angle4 = 0x800 + 0x800 - 0x2A0;
             } else {
-                var_s1 = 0x560;
-                var_s0 = 0x2A0;
-                var_v0 = 0xAA0;
-                var_s3 = 0xD60;
+                angle2 = 0x800 - 0x2A0;
+                angle1 = 0x2A0;
+                angle4 = 0x800 + 0x2A0;
+                angle3 = 0x800 + 0x800 - 0x2A0;
             }
-            var_s2 = self->ext.subwpnAxe.unk7C;
-            temp_s4 = self->posX.i.hi;
-            temp_s5 = self->posY.i.hi;
-            var_s0 += var_s2;
-            var_s1 += var_s2;
-            var_s3 += var_s2;
-            var_v0 += var_s2;
-            twentyone = 21;
-            prim->x0 = temp_s4 + (((rcos(var_s0) << 4) * twentyone) >> 0x10);
-            prim->y0 = temp_s5 - (((rsin(var_s0) << 4) * twentyone) >> 0x10);
-            prim->x1 = temp_s4 + (((rcos(var_s1) << 4) * twentyone) >> 0x10);
-            prim->y1 = temp_s5 - (((rsin(var_s1) << 4) * twentyone) >> 0x10);
-            prim->x2 = temp_s4 + (((rcos(var_s3) << 4) * twentyone) >> 0x10);
-            prim->y2 = temp_s5 - (((rsin(var_s3) << 4) * twentyone) >> 0x10);
-            prim->x3 = temp_s4 + (((rcos(var_v0) << 4) * twentyone) >> 0x10);
-            prim->y3 = temp_s5 - (((rsin(var_v0) << 4) * twentyone) >> 0x10);
+            x = self->posX.i.hi;
+            y = self->posY.i.hi;
+            angleMod = self->ext.subwpnAxe.unk7C;
+            angle1 += angleMod;
+            angle2 += angleMod;
+            angle3 += angleMod;
+            angle4 += angleMod;
+
+            prim->x0 = x + +(((rcos(angle1) << 4) * mod) >> 0x10);
+            prim->y0 = y + -(((rsin(angle1) << 4) * mod) >> 0x10);
+            prim->x1 = x + +(((rcos(angle2) << 4) * mod) >> 0x10);
+            prim->y1 = y + -(((rsin(angle2) << 4) * mod) >> 0x10);
+            prim->x2 = x + +(((rcos(angle3) << 4) * mod) >> 0x10);
+            prim->y2 = y + -(((rsin(angle3) << 4) * mod) >> 0x10);
+            prim->x3 = x + +(((rcos(angle4) << 4) * mod) >> 0x10);
+            prim->y3 = y + -(((rsin(angle4) << 4) * mod) >> 0x10);
             prim->drawMode &= ~DRAW_HIDE;
-        } else if (self->ext.subwpnAxe.unk90[sp10 - 1] != 0) {
-            if (self->ext.subwpnAxe.unk94[sp10 - 1] != 0) {
-                self->ext.subwpnAxe.unk94[sp10 - 1] = 0;
-                prim->x0 = prevPrim->x0;
-                prim->y0 = prevPrim->y0;
-                prim->x1 = prevPrim->x1;
-                prim->y1 = prevPrim->y1;
-                prim->x2 = prevPrim->x2;
-                prim->y2 = prevPrim->y2;
-                prim->x3 = prevPrim->x3;
-                prim->y3 = prevPrim->y3;
+        } else if (self->ext.subwpnAxe.unk90[i - 1]) {
+            if (self->ext.subwpnAxe.unk94[i - 1]) {
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
+                prim->x0 = primFirst->x0;
+                prim->y0 = primFirst->y0;
+                prim->x1 = primFirst->x1;
+                prim->y1 = primFirst->y1;
+                prim->x2 = primFirst->x2;
+                prim->y2 = primFirst->y2;
+                prim->x3 = primFirst->x3;
+                prim->y3 = primFirst->y3;
             }
-            temp_v0_4 = self->ext.subwpnAxe.unk8C[sp10 - 1];
-            self->ext.subwpnAxe.unk8C[sp10 - 1] = temp_v0_4 + 1;
-            temp_v1_3 = temp_v0_4 & 0xFF;
-            if ((temp_v1_3) < 0xA) {
-                // whyyyyyy
-                arr0 = &D_80155E70[temp_v0_4 * 4 + 0];
-                rVal = *arr0;
-                arr1 = &D_80155E70[temp_v0_4 * 4 + 1];
-                gVal = *arr1;
-                arr2 = &D_80155E70[temp_v0_4 * 4 + 2];
-                bVal = *arr2;
-                prim->r0 = rVal;
-                prim->g0 = gVal;
-                prim->b0 = bVal;
-                prim->r1 = rVal;
-                prim->g1 = gVal;
-                prim->b1 = bVal;
-                prim->r2 = rVal;
-                prim->g2 = gVal;
-                prim->b2 = bVal;
-                prim->r3 = rVal;
-                prim->g3 = gVal;
-                prim->b3 = bVal;
+            colorRef = (self->ext.subwpnAxe.unk8C[i - 1]++);
+            if (colorRef < 10) {
+                r = D_80155E70[colorRef * 4 + 0];
+                g = D_80155E70[colorRef * 4 + 1];
+                b = D_80155E70[colorRef * 4 + 2];
+                prim->r0 = r;
+                prim->g0 = g;
+                prim->b0 = b;
+                prim->r1 = r;
+                prim->g1 = g;
+                prim->b1 = b;
+                prim->r2 = r;
+                prim->g2 = g;
+                prim->b2 = b;
+                prim->r3 = r;
+                prim->g3 = g;
+                prim->b3 = b;
                 prim->drawMode &= ~DRAW_HIDE;
             } else {
-                self->ext.subwpnAxe.unk90[sp10 - 1] = 0;
+                self->ext.subwpnAxe.unk90[i - 1] = 0;
                 prim->drawMode |= DRAW_HIDE;
             }
         }
+        i++;
         prim = prim->next;
-        sp10++;
     }
 }
 
