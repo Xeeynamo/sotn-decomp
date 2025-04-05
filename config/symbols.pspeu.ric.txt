@@ -30,6 +30,7 @@ RicHandleHighJump = 0x092AAB48;
 RicEntitySubwpnThrownAxe = 0x092AAD60;
 RicEntityCrashAxe = 0x092AB7A8;
 RicEntitySubwpnThrownDagger = 0x092AC2A8;
+GetLang = 0x092ACE78;
 DestroyEntity = 0x092ACF18;
 GetTeleportToOtherCastle = 0x092ACFB0;
 func_80156DE4 = 0x092AD108;

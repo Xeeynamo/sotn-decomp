@@ -643,5 +643,3 @@ void RicEntitySubwpnThrownDagger(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/4B60", func_pspeu_092ACE78);

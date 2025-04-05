@@ -855,6 +855,8 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
     }
 }
 
+// ----------------------- CUT HERE
+
 // axe thrown when using subweapon
 // near-duplicate of EntitySubwpnThrownAxe
 // RIC entity #36. Uses RIC blueprint 67. Comes from subweapon 28.
