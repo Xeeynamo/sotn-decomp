@@ -220,6 +220,7 @@
 | ric    | RicSetSpeedX                        |       26 |          2 |        |                                 |       |
 | dra    | PlayerStepUnk49                     |       26 |          3 |        |                                 |       |
 | dra    | func_psp_090E7E90                   |       26 |          3 |        |                                 |       |
+| ric    | RicEntityCrashReboundStoneParticles |       26 |          3 |        |                                 |       |
 | no4    | func_pspeu_09258910                 |       26 |          3 |        |                                 |       |
 | dra    | func_psp_09140D68                   |       26 |          4 |        |                                 |       |
 | dra    | GetEquipItemCategory                |       27 |          1 |        |                                 |       |
@@ -383,6 +384,7 @@
 | no4    | func_pspeu_0925A0F0                 |       39 |          3 |        |                                 |       |
 | no4    | func_pspeu_0923BAB0                 |       39 |          4 |        |                                 |       |
 | dra    | LoadMonsterLibrarianPreview         |       39 |          5 |        |                                 |       |
+| ric    | func_pspeu_092B5F48                 |       39 |          5 |        |                                 |       |
 | dra    | 704D0.rodata                        |       40 |          0 | Yes    |                                 |       |
 | ric    | pl_handlers.rodata                  |       40 |          0 | Yes    |                                 |       |
 | lib    | e_spellbook_magic_tome.rodata       |       40 |          0 | Yes    |                                 |       |
@@ -570,7 +572,6 @@
 | dra    | func_psp_0913F960                   |       60 |          5 |        | https://decomp.me/scratch/pLSIN | 1.0   |
 | lib    | EntityExplosionSpawn                |       60 |          6 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | no4    | EntityExplosionSpawn                |       60 |          6 |        | https://decomp.me/scratch/CfU6H | 1.0   |
-| ric    | RicEntityCrashReboundStoneParticles |       60 |          8 |        |                                 |       |
 | ric    | RicEntityStopwatchCrashLightning    |       60 |          8 |        |                                 |       |
 | lib    | func_us_801AE84C                    |       60 |          8 |        |                                 |       |
 | dra    | func_8010E4D0                       |       60 |         11 |        |                                 |       |
@@ -734,7 +735,7 @@
 | no4    | func_pspeu_09259648                 |       80 |         10 |        |                                 |       |
 | no4    | func_pspeu_09242D08                 |       81 |          5 |        |                                 |       |
 | dra    | func_80102D70                       |       81 |         11 | Yes    |                                 |       |
-| ric    | D268.rodata                         |       82 |          0 | Yes    |                                 |       |
+| ric    | 319C4.rodata                        |       82 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09238CF0                 |       82 |          8 |        |                                 |       |
 | dra    | func_psp_090F76D0                   |       82 |          9 |        |                                 |       |
 | lib    | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
@@ -1273,8 +1274,8 @@
 | ric    | RicEntitySubwpnThrownVibhuti        |      435 |         44 |        |                                 |       |
 | ric    | RicEntitySubwpnCrashCross           |      438 |         38 |        |                                 |       |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
-| ric    | RicHandleDeadPrologue               |      445 |         51 | Yes    | https://decomp.me/scratch/m1ZHK | 0.989 |
 | ric    | RicEntitySubwpnAgunea               |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
+| ric    | RicHandleDeadPrologue               |      445 |         51 | Yes    | https://decomp.me/scratch/m1ZHK | 0.989 |
 | dra    | func_80130E94                       |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
 | st0    | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra    | EntityHolyWaterBreakGlass           |      457 |         29 |        | https://decomp.me/scratch/umied | 0.976 |
