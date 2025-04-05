@@ -715,10 +715,9 @@ void HandleEnding(void) {
             LoadImage(&g_Vram.D_800ACDE0, (u_long*)STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, (u_long*)0x80182000);
             LoadImage(&g_Vram.D_800ACDB8, (u_long*)0x80192000);
-            StoreImage(&g_Vram.D_800ACDB8, &D_80070BCC);
+            StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x80194000);
-            StoreImage(&g_Vram.D_800ACDA8, &D_80070BCC - 0x1000);
-            LoadClut(g_Clut, 0x200, 0xF0);
+            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;
@@ -735,8 +734,8 @@ void HandleEnding(void) {
             if (LoadFileSim(4, SimFileType_System) < 0) {
                 break;
             }
-            LoadClut(g_Clut, 0x200, 0xF0);
         }
+        LoadClut((u_long*)g_Clut, 0x200, 0xF0);
         g_GameStep++;
         break;
     case 2:
@@ -744,7 +743,7 @@ void HandleEnding(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
-        g_GameStep = 3;
+        g_GameStep++;
         break;
     case 3:
         if (g_UseDisk) {
@@ -756,11 +755,14 @@ void HandleEnding(void) {
                 break;
             }
         }
-        g_GameEngineStep = Engine_Init;
         g_GameStep++;
+        g_GameEngineStep = Engine_Init;
+        break;
+    case 4:
+        g_api.o.UpdateStageEntities();
         break;
     case 5:
-        g_GameStep = 6;
+        g_GameStep++;
         g_MenuStep = 0;
         break;
     case 6:
@@ -768,9 +770,9 @@ void HandleEnding(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_AlucardPrg;
         }
-        g_GameStep = 7;
+        g_GameStep++;
         if (D_800978B4 != 3 && D_800978B4 != 5) {
-            g_GameStep = 8;
+            g_GameStep++;
         }
         break;
     case 7:
@@ -788,7 +790,6 @@ void HandleEnding(void) {
         }
         g_GameStep++;
         break;
-    case 4:
     case 9:
         g_api.o.UpdateStageEntities();
         break;

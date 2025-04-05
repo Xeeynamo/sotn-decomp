@@ -902,7 +902,7 @@ void UpdateCd(void) {
             LoadImage(&g_Vram.D_800ACD98, &D_800A04CC);
             break;
         case CdCallback_1:
-            StoreImage(&g_Vram.D_800ACDA8, &D_8006EBCC);
+            StoreImage(&g_Vram.D_800ACDA8, &g_Clut[0x1000]);
             break;
         case CdCallback_StageChr:
             StoreImage(&g_Vram.D_800ACDB8, g_Clut);

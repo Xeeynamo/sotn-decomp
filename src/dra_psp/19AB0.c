@@ -3,6 +3,6 @@
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/19AB0", func_800E414C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/19AB0", func_psp_090F67E8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/19AB0", ClearBackbuffer);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/19AB0", HandleTitle);
