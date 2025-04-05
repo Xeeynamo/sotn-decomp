@@ -418,3 +418,13 @@ void func_psp_090F5520(void) {
         func_8939EB8(1);
     }
 }
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5560);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F5B10);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", MainGame);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F6368);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", SetGameState);
