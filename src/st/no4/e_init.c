@@ -55,7 +55,7 @@ void func_us_801C4738(Entity* self);
 void func_us_801C4980(Entity* self);
 void func_us_801C5518(Entity* self);
 void func_us_801C82B8(Entity* self);
-void func_us_801DC824(Entity* self);
+void EntitySpearGuardBlock(Entity* self);
 void func_us_801D798C(Entity* self);
 void func_us_801D81B4(Entity* self);
 void func_us_801D8654(Entity* self);
@@ -70,8 +70,8 @@ void func_us_801DB194(Entity* self);
 void func_us_801DB65C(Entity* self);
 void func_us_801DBBEC(Entity* self);
 void func_us_801C86F4(Entity* self);
-void func_us_801DBFAC(Entity* self);
-void func_us_801DC944(Entity* self);
+void EntitySpearGuard(Entity* self);
+void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
 void EntityBoneArcherArrow(Entity* self);
 void func_us_801C801C(Entity* self);
@@ -153,7 +153,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x37 */ func_us_801C4980,
     /* 0x38 */ func_us_801C5518,
     /* 0x39 */ func_us_801C82B8,
-    /* 0x3A */ func_us_801DC824,
+    /* 0x3A */ EntitySpearGuardBlock,
     /* 0x3B */ func_us_801D798C,
     /* 0x3C */ func_us_801D81B4,
     /* 0x3D */ func_us_801D8654,
@@ -168,8 +168,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x46 */ func_us_801DB65C,
     /* 0x47 */ func_us_801DBBEC,
     /* 0x48 */ func_us_801C86F4,
-    /* 0x49 */ func_us_801DBFAC,
-    /* 0x4A */ func_us_801DC944,
+    /* 0x49 */ EntitySpearGuard,
+    /* 0x4A */ EntityThrownSpear,
     /* 0x4B */ EntityBoneArcher,
     /* 0x4C */ EntityBoneArcherArrow,
     /* 0x4D */ func_us_801C801C,
@@ -214,8 +214,8 @@ EInit D_us_80180C58 = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
 EInit D_us_80180C64 = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x219, 0x063};
 EInit D_us_80180C70 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
 EInit D_us_80180C7C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0D2};
-EInit D_us_80180C88 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
-EInit D_us_80180C94 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
+EInit g_EInitSpearGuard = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
+EInit g_EInitThrownSpear = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
 EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};

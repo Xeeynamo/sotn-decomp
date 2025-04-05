@@ -70,7 +70,7 @@ segments:
       - [0x2BD8, .data, e_bone_archer]
       - [0x2D4C, .data, e_armor_lord]
       - [0x2F04, .data, e_spear_guard]
-      - [0x31E0, .data, unk_54400]
+      - [0x31D4, .data, unk_54400]
       - [0x3230, .data, e_skeleton_ape]
       - [0x33D0, .data, e_medusa_head]
       - [0x3448, .data, e_mist_door]

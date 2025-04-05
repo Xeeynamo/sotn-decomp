@@ -52,6 +52,7 @@ segments:
       - [0x2484, .data, e_room_fg]
       - [0x2510, .data, water_effects]
       - [0x25CC, data]
+      - [0x2B10, .data, e_spear_guard]
       - [0x2DE0, .data, e_bone_archer]
       - [0x2F54, data]
       - [0x40980, .rodata, first_c_file]
