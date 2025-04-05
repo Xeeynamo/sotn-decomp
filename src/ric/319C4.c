@@ -1984,12 +1984,10 @@ void RicEntitySubwpnStopwatch(Entity* self) {
 
 void RicEntitySubwpnBibleTrail(Entity* entity) {
     Primitive* prim;
-    s32 ret;
 
     switch (entity->step) {
     case 0:
-        ret = g_api.AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = ret;
+        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -2000,8 +1998,8 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
         prim->u0 = prim->u2 = 0x20;
-        prim->u1 = prim->u3 = 0x30;
         prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
         prim->v2 = prim->v3 = 0x10;
         prim->x0 = prim->x2 = entity->posX.i.hi - 8;
         prim->x1 = prim->x3 = entity->posX.i.hi + 8;
@@ -2013,7 +2011,8 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (++entity->ext.et_BibleSubwpn.unk7C > 5) {
+        entity->ext.et_BibleSubwpn.unk7C++;
+        if (entity->ext.et_BibleSubwpn.unk7C > 5) {
             entity->step++;
         }
         entity->ext.et_BibleSubwpn.unk7E -= 8;

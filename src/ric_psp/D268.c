@@ -2940,6 +2940,48 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
     }
 }
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnBibleTrail);
+
+void RicEntitySubwpnBibleTrail(Entity* entity) {
+    Primitive* prim;
+
+    switch (entity->step) {
+    case 0:
+        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (entity->primIndex == -1) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+        prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+        prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+        prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+        prim->priority = entity->zPriority;
+        prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        entity->ext.et_BibleSubwpn.unk7E = 0x60;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.et_BibleSubwpn.unk7C++;
+        if (entity->ext.et_BibleSubwpn.unk7C > 5) {
+            entity->step++;
+        }
+        entity->ext.et_BibleSubwpn.unk7E -= 8;
+        break;
+    case 2:
+        DestroyEntity(entity);
+        return;
+    }
+    prim = &g_PrimBuf[entity->primIndex];
+    PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/D268", RicEntitySubwpnBible);
