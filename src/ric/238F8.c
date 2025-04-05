@@ -338,9 +338,9 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void RicEntityShrinkingPowerUpRing(Entity* self);
 void func_80167A70(Entity* self);
-void RicEntitySubwpnAxe(Entity* self);
+void RicEntitySubwpnThrownAxe(Entity* self);
 void RicEntityCrashAxe(Entity* self);
-void RicEntitySubwpnDagger(Entity* self);
+void RicEntitySubwpnThrownDagger(Entity* self);
 void func_80160D2C(Entity* self);
 void RicEntityHitByIce(Entity* self);
 void RicEntityHitByLightning(Entity* self);
@@ -407,9 +407,9 @@ static PfnEntityUpdate entity_functions[] = {
     func_801641A0,
     RicEntityShrinkingPowerUpRing,
     func_80167A70,
-    RicEntitySubwpnAxe,
+    RicEntitySubwpnThrownAxe,
     RicEntityCrashAxe,
-    RicEntitySubwpnDagger,
+    RicEntitySubwpnThrownDagger,
     func_80160D2C,
     RicEntityHitByIce,
     RicEntityHitByLightning,
