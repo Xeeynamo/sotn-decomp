@@ -2,21 +2,172 @@
 #include "../ric/ric.h"
 #include <player.h>
 
-Entity* RicGetFreeEntity(s16 start, s16 end);
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicGetFreeEntity);
+Entity* RicGetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-Entity* RicGetFreeEntityReverse(s16 start, s16 end);
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicGetFreeEntityReverse);
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092BE628);
+Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_8015FA5C);
+#if defined(VERSION_PSP)
+extern s32 D_80174F80[11];
+#else
+static s32 D_80174F80[11];
+#endif
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicSetSubweaponParams);
+    if (entity < &g_Entities[32]) {
+        entity->enemyId = 1;
+        return;
+    }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_8015FB84);
+    for (i = 0;; i++) {
+        for (enemyId = 2; enemyId < LEN(D_80174F80); ++enemyId) {
+            if (D_80174F80[enemyId] == i) {
+                ++D_80174F80[enemyId];
+                entity->enemyId = enemyId;
+                return;
+            }
+        }
+    }
+}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_pspeu_092BEA38);
+#if defined(VERSION_PSP)
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+#else
+static u8 D_80174FAC;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB0;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB4;
+STATIC_PAD_BSS(3);
+static u8 D_80174FB8;
+STATIC_PAD_BSS(3);
+#endif
+void func_8015FA5C(s32 arg0) {
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
+}
+
+void RicSetSubweaponParams(Entity* entity) {
+    SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
+    if (g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
+        entity->attack = subwpn->attack * 2;
+    } else {
+        entity->attack = subwpn->attack;
+    }
+    entity->attackElement = subwpn->attackElement;
+    entity->hitboxState = subwpn->hitboxState;
+    entity->nFramesInvincibility = subwpn->nFramesInvincibility;
+    entity->stunFrames = subwpn->stunFrames;
+    entity->hitEffect = subwpn->hitEffect;
+    entity->entityRoomIndex = subwpn->entityRoomIndex;
+    entity->attack = g_api.func_800FD664(entity->attack);
+    func_8015F9F0(entity);
+}
+
+// We're playing as Richter and we used a subweapon (normal or crash)
+s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+    SubweaponDef* subwpn;
+
+    // Not an item crash. Just read the item in.
+    if (isItemCrash == 0) {
+        *actualSubwpn = D_80154688[g_Status.subWeapon];
+        if (g_Status.hearts >= actualSubwpn->heartCost) {
+            if (useHearts) {
+                g_Status.hearts -= actualSubwpn->heartCost;
+            }
+            return g_Status.subWeapon;
+        }
+        return -1;
+    }
+    // If it's a crash, load the subweapon by referencing our
+    // subweapon's crash ID and loading that.
+    subwpn = &D_80154688[g_Status.subWeapon];
+    *actualSubwpn = D_80154688[subwpn->crashId];
+    if (g_Status.hearts >= actualSubwpn->heartCost) {
+        if (useHearts) {
+            g_Status.hearts -= actualSubwpn->heartCost;
+        }
+        return g_Status.subWeapon;
+    }
+    return -1;
+}
+
+// Corresponding DRA function is func_80119E78
+u8 uv_anim_801548F4[6][8] = {
+    {0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60},
+    {0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60},
+    {0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50},
+    {0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38},
+    {0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38},
+    {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
+s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
+    s16 offset;
+    s32 ret;
+    u8* uvAnim;
+
+    ret = 0;
+    uvAnim = uv_anim_801548F4[0];
+    if (prim->b0 >= 6) {
+        prim->b0 = 0;
+        ret = -1;
+    }
+
+    uvAnim = &uvAnim[prim->b0 * 8];
+
+    if (prim->b0 >= 3) {
+        offset = 4;
+    } else {
+        offset = 6;
+    }
+
+    prim->x0 = posX - offset;
+    prim->y0 = posY - offset;
+    prim->x1 = posX + offset;
+    prim->y1 = posY - offset;
+    prim->x2 = posX - offset;
+    prim->y2 = posY + offset;
+    prim->x3 = posX + offset;
+    prim->y3 = posY + offset;
+    prim->u0 = *uvAnim++;
+    prim->v0 = *uvAnim++;
+    prim->u1 = *uvAnim++;
+    prim->v1 = *uvAnim++;
+    prim->u2 = *uvAnim++;
+    prim->v2 = *uvAnim++;
+    prim->u3 = *uvAnim++;
+    prim->v3 = *uvAnim;
+
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
+        prim->b0++;
+    }
+    return ret;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByHoly);
 

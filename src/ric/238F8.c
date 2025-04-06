@@ -25,8 +25,12 @@ Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
+#if defined(VERSION_PSP)
+extern s32 D_80174F80[11];
+#else
 static s32 D_80174F80[11];
-static void func_8015F9F0(Entity* entity) {
+#endif
+void func_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
 
@@ -46,6 +50,12 @@ static void func_8015F9F0(Entity* entity) {
     }
 }
 
+#if defined(VERSION_PSP)
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+#else
 static u8 D_80174FAC;
 STATIC_PAD_BSS(3);
 static u8 D_80174FB0;
@@ -54,6 +64,7 @@ static u8 D_80174FB4;
 STATIC_PAD_BSS(3);
 static u8 D_80174FB8;
 STATIC_PAD_BSS(3);
+#endif
 void func_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
@@ -62,16 +73,12 @@ void func_8015FA5C(s32 arg0) {
 }
 
 void RicSetSubweaponParams(Entity* entity) {
-    u16 attack;
     SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
-
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
-        attack = subwpn->attack * 2;
+        entity->attack = subwpn->attack * 2;
     } else {
-        attack = subwpn->attack;
+        entity->attack = subwpn->attack;
     }
-
-    entity->attack = attack;
     entity->attackElement = subwpn->attackElement;
     entity->hitboxState = subwpn->hitboxState;
     entity->nFramesInvincibility = subwpn->nFramesInvincibility;
@@ -83,29 +90,29 @@ void RicSetSubweaponParams(Entity* entity) {
 }
 
 // We're playing as Richter and we used a subweapon (normal or crash)
-s32 func_8015FB84(SubweaponDef* subwpn, s32 isItemCrash, s32 useHearts) {
-    s32 pad[2]; // Needed so stack pointer moves properly
-    u8 crashId;
+s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+    SubweaponDef* subwpn;
+
     // Not an item crash. Just read the item in.
     if (isItemCrash == 0) {
-        *subwpn = D_80154688[g_Status.subWeapon];
-        if (g_Status.hearts >= subwpn->heartCost) {
+        *actualSubwpn = D_80154688[g_Status.subWeapon];
+        if (g_Status.hearts >= actualSubwpn->heartCost) {
             if (useHearts) {
-                g_Status.hearts -= subwpn->heartCost;
+                g_Status.hearts -= actualSubwpn->heartCost;
             }
             return g_Status.subWeapon;
         }
-    } else {
-        // If it's a crash, load the subweapon by referencing our
-        // subweapon's crash ID and loading that.
-        crashId = D_80154688[g_Status.subWeapon].crashId;
-        *subwpn = D_80154688[crashId];
-        if (g_Status.hearts >= subwpn->heartCost) {
-            if (useHearts) {
-                g_Status.hearts -= subwpn->heartCost;
-            }
-            return g_Status.subWeapon;
+        return -1;
+    }
+    // If it's a crash, load the subweapon by referencing our
+    // subweapon's crash ID and loading that.
+    subwpn = &D_80154688[g_Status.subWeapon];
+    *actualSubwpn = D_80154688[subwpn->crashId];
+    if (g_Status.hearts >= actualSubwpn->heartCost) {
+        if (useHearts) {
+            g_Status.hearts -= actualSubwpn->heartCost;
         }
+        return g_Status.subWeapon;
     }
     return -1;
 }
@@ -124,7 +131,7 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     u8* uvAnim;
 
     ret = 0;
-    uvAnim = uv_anim_801548F4;
+    uvAnim = uv_anim_801548F4[0];
     if (prim->b0 >= 6) {
         prim->b0 = 0;
         ret = -1;
@@ -132,7 +139,7 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
 
     uvAnim = &uvAnim[prim->b0 * 8];
 
-    if (prim->b0 > 2) {
+    if (prim->b0 >= 3) {
         offset = 4;
     } else {
         offset = 6;
@@ -155,7 +162,8 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     prim->u3 = *uvAnim++;
     prim->v3 = *uvAnim;
 
-    if (!(++prim->b1 & 1)) {
+    prim->b1++;
+    if (!(prim->b1 & 1)) {
         prim->b0++;
     }
     return ret;
