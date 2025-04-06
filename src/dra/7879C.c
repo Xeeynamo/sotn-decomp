@@ -484,7 +484,7 @@ typedef struct {
 } GuardTextControl;
 
 #ifdef VERSION_PSP
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 GuardTextControl D_psp_091835F0[] = {
     0x43, 0x4A,   0x59,   0x52, 0x0185, 0x0001, 0x4E, 0x53,   0x66,
     0x5B, 0x01B1, 0x0001, 0x20, 0x53,   0x36,   0x5B, 0x01B1, 0x0001,
@@ -1049,19 +1049,19 @@ GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
     temp_s1 = &D_psp_091835F0[arg1];
     arg0->clut = temp_s1->clut;
     arg0->mode = temp_s1->mode;
-    if (D_8B42058 == 1) {
+    if (g_UserLanguage == LANG_EN) {
         arg0->left = temp_s1->left;
         arg0->top = temp_s1->top;
         arg0->right = temp_s1->right;
         arg0->bottom = temp_s1->bottom;
     } else {
-        temp_s0 = &D_psp_09183698[D_8B42058 - 2][arg1][0];
+        temp_s0 = &D_psp_09183698[g_UserLanguage - 2][arg1][0];
         arg0->left = temp_s0[0];
         arg0->top = temp_s0[1];
         arg0->right = temp_s0[0] + temp_s0[2];
         arg0->bottom = temp_s0[1] + temp_s0[3];
         if (arg1 == 6) {
-            arg0->right += D_psp_091837E8[D_8B42058 - 2][2] + 2;
+            arg0->right += D_psp_091837E8[g_UserLanguage - 2][2] + 2;
         }
     }
     return arg0;

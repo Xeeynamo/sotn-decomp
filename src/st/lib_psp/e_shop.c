@@ -14,7 +14,7 @@ extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u8* D_psp_092A54E0;
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
@@ -2141,7 +2141,7 @@ static u8* D_psp_092A5D38;
 static char D_us_80181650[4];
 
 void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (D_8B42058) {
+    switch (g_UserLanguage) {
     default:
     case LANG_EN:
         return en;
@@ -6606,8 +6606,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
-                                D_psp_092A5F98[i], 0x196);
+        prim = func_us_801B1064(
+            prim, 0x84 - xOffset, (i * 0x10) + 0x3C, D_psp_092A5F98[i], 0x196);
     }
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
