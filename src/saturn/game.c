@@ -16,6 +16,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066854, func_06066854);
 
 #define FLAG_UNK_20000 0x20000
 #define STAGE_ENTITY_START 64
+#define TOTAL_ENTITY_COUNT 256
 
 void (*func_06064684)();
 
@@ -28,7 +29,7 @@ void func_8011A9D8(void) {
     func_06064684();
 
     entity = &g_Entities[STAGE_ENTITY_START];
-    for (i = STAGE_ENTITY_START; i <= 255; i++, entity++) {
+    for (i = STAGE_ENTITY_START; i < TOTAL_ENTITY_COUNT; i++, entity++) {
         if (!(entity->flags & FLAG_UNK_20000)) {
             DestroyEntity(entity);
         }
