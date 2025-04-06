@@ -1773,10 +1773,10 @@ block_4:
                 case LANG_FR:
                     buttonAssignStr = "Attr. toutes les fonctions des touches";
                     break;
-                case LANG_ES:
+                case LANG_SP:
                     buttonAssignStr = "Asigna las funciones de los botones";
                     break;
-                case LANG_DE:
+                case LANG_GE:
                     buttonAssignStr = "Standard-Tastenbelegung";
                     break;
                 case LANG_IT:

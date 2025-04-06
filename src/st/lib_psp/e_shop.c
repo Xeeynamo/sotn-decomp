@@ -2140,17 +2140,17 @@ static ShopItem D_us_801D4364[64];
 static u8* D_psp_092A5D38;
 static char D_us_80181650[4];
 
-void* func_psp_0925D430(void* en, void* fr, void* es, void* de, void* it) {
+void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
     switch (g_UserLanguage) {
     default:
     case LANG_EN:
         return en;
     case LANG_FR:
         return fr;
-    case LANG_ES:
-        return es;
-    case LANG_DE:
-        return de;
+    case LANG_SP:
+        return sp;
+    case LANG_GE:
+        return ge;
     case LANG_IT:
         return it;
     }

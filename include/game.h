@@ -2080,8 +2080,8 @@ typedef enum {
     LANG_JP,
     LANG_EN,
     LANG_FR,
-    LANG_ES,
-    LANG_DE,
+    LANG_SP,
+    LANG_GE,
     LANG_IT,
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);

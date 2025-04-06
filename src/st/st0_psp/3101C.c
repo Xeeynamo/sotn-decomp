@@ -62,13 +62,13 @@ u8 func_801B101C(u8* script) {
             g_Dialogue2.unk20 = unk20_fr_de_it;
             g_Dialogue2.clutArrLength = 2;
             break;
-        case LANG_ES:
+        case LANG_SP:
             g_Dialogue2.startY += func_pspeu_09242F68((u8*)opening_line_es);
             g_Dialogue2.clutIndexes = clut_en_es;
             g_Dialogue2.unk20 = unk20_en_es;
             g_Dialogue2.clutArrLength = 4;
             break;
-        case LANG_DE:
+        case LANG_GE:
             g_Dialogue2.startY += func_pspeu_09242F68((u8*)opening_line_de);
             g_Dialogue2.clutIndexes = clut_fr_de_it;
             g_Dialogue2.unk20 = unk20_fr_de_it;

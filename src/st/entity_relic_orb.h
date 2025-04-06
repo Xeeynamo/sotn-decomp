@@ -258,10 +258,10 @@ void EntityRelicOrb(Entity* self) {
         case LANG_FR:
             obtainedStr = "Obtenu \xB1 ";
             break;
-        case LANG_ES:
+        case LANG_SP:
             obtainedStr = "Tienes";
             break;
-        case LANG_DE:
+        case LANG_GE:
             obtainedStr = "erhalten";
             break;
         case LANG_IT:
@@ -269,7 +269,7 @@ void EntityRelicOrb(Entity* self) {
             break;
         }
 
-        if (g_UserLanguage != LANG_DE) {
+        if (g_UserLanguage != LANG_GE) {
             psp_sprintf(&sp34, "%s %s", obtainedStr, msg);
         } else {
             psp_sprintf(&sp34, "%s %s", msg, obtainedStr);
