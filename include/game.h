@@ -2073,13 +2073,15 @@ extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
-// exclusive PSP content
+// On PSP side this is compared against g_UserLanguage / 0x08B42058
+// which is the system language of the console. Used to determine the
+// language of various strings to display in-game
 typedef enum {
     LANG_JP,
     LANG_EN,
     LANG_FR,
-    LANG_SP,
-    LANG_GE,
+    LANG_ES,
+    LANG_DE,
     LANG_IT,
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);

@@ -1309,7 +1309,7 @@ extern s32 D_80137848[1];
 extern s32 D_801375D0;
 extern s32* D_801375D8;
 extern bool D_psp_091CDD48;
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 extern s32 D_psp_091CDD40;
 
 extern u32 D_psp_08B42050; // psp cross button
@@ -1765,7 +1765,7 @@ block_4:
             } else {
             block_117:
                 func_800F9808(2);
-                switch (D_8B42058) {
+                switch (g_UserLanguage) {
                 default:
                 case LANG_EN:
                     buttonAssignStr = "Allocate all button functions";
@@ -1773,10 +1773,10 @@ block_4:
                 case LANG_FR:
                     buttonAssignStr = "Attr. toutes les fonctions des touches";
                     break;
-                case LANG_SP:
+                case LANG_ES:
                     buttonAssignStr = "Asigna las funciones de los botones";
                     break;
-                case LANG_GE:
+                case LANG_DE:
                     buttonAssignStr = "Standard-Tastenbelegung";
                     break;
                 case LANG_IT:

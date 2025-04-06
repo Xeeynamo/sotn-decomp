@@ -28,7 +28,7 @@ static char opening_line_es[] = "El Conde Dr\323cula hab\334a";
 static char opening_line_de[] = "Graf Dracula war mithilfe";
 static char opening_line_it[] = "Il Conte Dracula \xD7 risorto";
 
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 
 static void SetPrim(s32 i, Primitive* prim) { D_pspeu_0927B0C8[i].prim = prim; }
 
@@ -48,7 +48,7 @@ u8 func_801B101C(u8* script) {
         g_Dialogue2.scriptCur = script;
         g_Dialogue2.startY = g_Dialogue2.nextCharX = 0x200;
 
-        switch (D_8B42058) {
+        switch (g_UserLanguage) {
         default:
         case LANG_EN:
             g_Dialogue2.startY += func_pspeu_09242F68((u8*)opening_line_en);
@@ -62,13 +62,13 @@ u8 func_801B101C(u8* script) {
             g_Dialogue2.unk20 = unk20_fr_de_it;
             g_Dialogue2.clutArrLength = 2;
             break;
-        case LANG_SP:
+        case LANG_ES:
             g_Dialogue2.startY += func_pspeu_09242F68((u8*)opening_line_es);
             g_Dialogue2.clutIndexes = clut_en_es;
             g_Dialogue2.unk20 = unk20_en_es;
             g_Dialogue2.clutArrLength = 4;
             break;
-        case LANG_GE:
+        case LANG_DE:
             g_Dialogue2.startY += func_pspeu_09242F68((u8*)opening_line_de);
             g_Dialogue2.clutIndexes = clut_fr_de_it;
             g_Dialogue2.unk20 = unk20_fr_de_it;
