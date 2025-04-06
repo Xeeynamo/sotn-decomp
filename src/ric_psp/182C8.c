@@ -169,7 +169,90 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     return ret;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByHoly);
+// Corresponding DRA function is func_80119F70
+#if defined(VERSION_PSP)
+extern Point16 D_80174FBC[16];
+#else
+static Point16 D_80174FBC[16];
+#endif
+void RicEntityHitByHoly(Entity* entity) {
+    Primitive* prim;
+    s32 i;
+    s32 temp;
+    s16 hitboxX;
+    s16 hitboxY;
+    s16 temp_xRand;
+    s16 temp_yRand;
+
+    switch (entity->step) {
+    case 0:
+        entity->primIndex =
+            (s16)g_api.AllocPrimitives(PRIM_GT4, LEN(D_80174FBC));
+        if (entity->primIndex == -1) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->flags =
+            FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
+        hitboxX = PLAYER.posX.i.hi + PLAYER.hitboxOffX;
+        hitboxY = PLAYER.posY.i.hi + PLAYER.hitboxOffY;
+        prim = &g_PrimBuf[entity->primIndex];
+        for (i = 0; i < LEN(D_80174FBC); i++) {
+            temp_xRand = hitboxX + rand() % 24 - 12;
+            temp_yRand = hitboxY + rand() % 48 - 24;
+            D_80174FBC[i].x = temp_xRand;
+            D_80174FBC[i].y = temp_yRand;
+            prim->clut = 0x1B2;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() & 7) + 1;
+            prim->g2 = 0;
+            prim->priority = PLAYER.zPriority + 4;
+            prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_HIDE |
+                             DRAW_UNK02 | DRAW_TRANSP;
+            if (rand() & 1) {
+                prim->drawMode =
+                    DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                    DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+            }
+            prim = prim->next;
+        }
+        entity->step++;
+        break;
+    case 1:
+        if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
+            DestroyEntity(entity);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[entity->primIndex];
+    for (i = 0; i < 16; i++) {
+        switch (prim->g0) {
+        case 0:
+            if (--prim->g1 == 0) {
+                prim->g0++;
+            }
+            break;
+        case 1:
+            hitboxX = D_80174FBC[i].x;
+            hitboxY = D_80174FBC[i].y;
+            temp = func_8015FDB0(prim, hitboxX, hitboxY);
+            D_80174FBC[i].y--;
+            if (temp < 0) {
+                prim->drawMode |= DRAW_HIDE;
+                prim->g0++;
+            } else {
+                prim->drawMode &= ~DRAW_HIDE;
+            }
+            break;
+        }
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByDark);
 

@@ -170,15 +170,19 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
 }
 
 // Corresponding DRA function is func_80119F70
+#if defined(VERSION_PSP)
+extern Point16 D_80174FBC[16];
+#else
 static Point16 D_80174FBC[16];
+#endif
 void RicEntityHitByHoly(Entity* entity) {
     Primitive* prim;
-    s16 temp_xRand;
-    s32 temp_yRand;
     s32 i;
-    s16 hitboxY;
-    s16 hitboxX;
     s32 temp;
+    s16 hitboxX;
+    s16 hitboxY;
+    s16 temp_xRand;
+    s16 temp_yRand;
 
     switch (entity->step) {
     case 0:
@@ -195,9 +199,9 @@ void RicEntityHitByHoly(Entity* entity) {
         prim = &g_PrimBuf[entity->primIndex];
         for (i = 0; i < LEN(D_80174FBC); i++) {
             temp_xRand = hitboxX + rand() % 24 - 12;
-            temp_yRand = rand();
+            temp_yRand = hitboxY + rand() % 48 - 24;
             D_80174FBC[i].x = temp_xRand;
-            D_80174FBC[i].y = hitboxY + temp_yRand % 48 - 24;
+            D_80174FBC[i].y = temp_yRand;
             prim->clut = 0x1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
@@ -226,17 +230,17 @@ void RicEntityHitByHoly(Entity* entity) {
     }
 
     prim = &g_PrimBuf[entity->primIndex];
-    for (i = 0; i < 16; i += 1) {
+    for (i = 0; i < 16; i++) {
         switch (prim->g0) {
         case 0:
-            if (!(--prim->g1 & 0xFF)) {
+            if (--prim->g1 == 0) {
                 prim->g0++;
             }
             break;
         case 1:
-            hitboxY = D_80174FBC[i].x;
-            hitboxX = D_80174FBC[i].y;
-            temp = func_8015FDB0((POLY_GT4*)prim, hitboxY, hitboxX);
+            hitboxX = D_80174FBC[i].x;
+            hitboxY = D_80174FBC[i].y;
+            temp = func_8015FDB0(prim, hitboxX, hitboxY);
             D_80174FBC[i].y--;
             if (temp < 0) {
                 prim->drawMode |= DRAW_HIDE;
