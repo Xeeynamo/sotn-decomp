@@ -255,8 +255,10 @@ if __name__ == "__main__":
                 for a in sys.argv
                 if not a.startswith("--settings") and not a.endswith(".c")
             ]
-            sys.argv[1] = sys.argv[1].split("/")[-1].rstrip(".s")
-            args.function = args.function.split("/")[-1].rstrip(".s")
+            args.function = args.function.split("/")[-1]
+            if args.function.endswith(".s"):
+                args.function = args.function[-2]
+            sys.argv[1] = args.function
 
     if args.action == "permute" or (
         args.action == "import" and args.permute and args.overlay
