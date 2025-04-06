@@ -254,7 +254,60 @@ void RicEntityHitByHoly(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByDark);
+// same as DRA/func_8011F074
+static AnimationFrame anim_smoke_dark[] = {
+    {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
+    {2, FRAME(3, 0)},  {2, FRAME(4, 0)},
+    {2, FRAME(5, 0)},  {2, FRAME(6, 0)},
+    {2, FRAME(7, 0)},  {2, FRAME(8, 0)},
+    {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
+    {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
+    {2, FRAME(13, 0)}, A_END};
+#if defined(VERSION_PSP)
+extern s32 D_80174FFC;
+#else
+static s32 D_80174FFC;
+#endif
+void RicEntityHitByDark(Entity* entity) {
+    s16 x, y;
+
+    switch (entity->step) {
+    case 0:
+        entity->flags =
+            FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+        entity->unk5A = 0x79;
+        entity->animSet = ANIMSET_DRA(14);
+        entity->zPriority = PLAYER.zPriority + 2;
+        entity->palette = PAL_OVL(0x19F);
+        if (D_80174FFC & 1) {
+            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        } else {
+            entity->drawMode = DRAW_TPAGE;
+        }
+        D_80174FFC++;
+        entity->unk6C = 0xFF;
+        entity->drawFlags =
+            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        entity->rotX = entity->rotY = 0x40;
+        entity->anim = anim_smoke_dark;
+        entity->posY.i.hi += (rand() % 35) - 15;
+        entity->posX.i.hi += (rand() % 20) - 10;
+        entity->velocityY = -0x6000 - (rand() & 0x3FFF);
+        entity->step++;
+        break;
+    case 1:
+        if (entity->unk6C > 16) {
+            entity->unk6C -= 8;
+        }
+        entity->posY.val += entity->velocityY;
+        entity->rotX += 8;
+        entity->rotY += 8;
+        if (entity->poseTimer < 0) {
+            DestroyEntity(entity);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityDummy);
 
