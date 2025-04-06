@@ -2650,13 +2650,13 @@ void EntityLibrarianChair(Entity* self) {
             if (self->ext.libraryChair.debugAnimID) {
                 self->ext.libraryChair.debugAnimID--;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
             }
         } else if (g_pads[0].tapped & PAD_DOWN) {
             if (self->ext.libraryChair.debugAnimID != 0x10) {
                 self->ext.libraryChair.debugAnimID++;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
             }
         }
         AnimateEntity(D_us_801812D8[self->ext.libraryChair.debugAnimID], self);
@@ -7351,12 +7351,12 @@ void func_psp_0926AED0(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_api.PlaySfx(SET_STOP_MUSIC);
-            self->animFrameDuration = 0x30;
+            self->poseTimer = 0x30;
             self->step_s++;
             break;
 
         case 1:
-            if (!--self->animFrameDuration) {
+            if (!--self->poseTimer) {
                 self->step_s++;
             }
             break;
@@ -7672,12 +7672,12 @@ void func_us_801B8A00(Entity* self) {
         case 0:
             g_api.PlaySfx(SET_STOP_MUSIC);
             self->ext.et_801B6F30.unk86 = 1;
-            self->animFrameDuration = 0x30;
+            self->poseTimer = 0x30;
             self->step_s++;
             break;
 
         case 1:
-            if (!--self->animFrameDuration) {
+            if (!--self->poseTimer) {
                 self->step_s++;
             }
             break;

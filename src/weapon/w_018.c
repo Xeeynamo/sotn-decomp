@@ -65,11 +65,11 @@ void EntityWeaponAttack(Entity* self) {
         break;
     // image of dracula appears
     case 1:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->drawMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
             self->anim = D_82000_8017A6E4;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->ext.weapon.lifetime = 71;
             g_api.func_80118C28(5);
             g_api.func_80102CD8(3);

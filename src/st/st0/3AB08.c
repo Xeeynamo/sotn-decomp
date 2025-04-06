@@ -1031,11 +1031,11 @@ void EntityCutscenePhotograph(Entity* self) {
 #endif
         /* fallthrough */
     case 8:
-        if (self->animFrameDuration) {
-            self->animFrameDuration--;
+        if (self->poseTimer) {
+            self->poseTimer--;
             return;
         }
-        self->animFrameDuration = 4;
+        self->poseTimer = 4;
         // Ugh, this should have been a 2D array.
         newEntXY = D_8018245C;
         newEntXY = &newEntXY[self->pose * 2];

@@ -250,7 +250,7 @@ void EntityMudman(Entity* self) {
         self->hitboxState = 3;
         if (GetDistanceToPlayerX() < 0x40) {
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step = 7;
         }
         if (colRet & 0xE0) {
@@ -261,11 +261,11 @@ void EntityMudman(Entity* self) {
     case 7:
         if (AnimateEntity(D_us_80182E4C, self) == 0) {
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->ext.mudman.unk81 = 1;
             self->step = 6;
         }
-        if (!self->animFrameDuration && self->pose == 3) {
+        if (!self->poseTimer && self->pose == 3) {
             PlaySfxPositional(0x78C);
         }
         break;

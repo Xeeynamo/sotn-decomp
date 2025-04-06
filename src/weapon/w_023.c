@@ -35,7 +35,7 @@ static void EntityWeaponAttack(Entity* self) {
         attackButton = PAD_SQUARE;
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->pose = 0;
         self->step = 3;
     }
@@ -92,7 +92,7 @@ static void EntityWeaponAttack(Entity* self) {
         /* fallthrough */
     case 1:
         self->ext.shield.anim = anim2 + 10;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->step++;
         }
         break;
@@ -133,12 +133,12 @@ static void EntityWeaponAttack(Entity* self) {
             break;
         }
         self->ext.shield.anim = anim1;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
         self->ext.shield.anim = anim2 + 12;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -609,7 +609,7 @@ static void func_ptr_80170028(Entity* self) {
         // just caching the initial X position.
         self->ext.weapon.lifetime = self->posX.i.hi;
         self->pose = rand() % 5;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
         self->ext.weapon.unk7E = 0x400;
         self->ext.weapon.unk80 = (self->params & 0xFF) * 4;
         self->step++;

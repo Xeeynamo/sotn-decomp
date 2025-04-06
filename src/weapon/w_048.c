@@ -58,7 +58,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 && PLAYER.pose == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {

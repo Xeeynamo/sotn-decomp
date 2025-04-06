@@ -135,13 +135,13 @@ void func_8010D800(void) {
 // Unused; deadstripped on PSP
 void func_8010DA2C(AnimationFrame* frames) {
     g_CurrentEntity->anim = frames;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
 }
 
 void SetPlayerAnim(u8 anim) {
     g_CurrentEntity->ext.player.anim = anim;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
 }
 
@@ -196,7 +196,7 @@ u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
         g_CurrentEntity->hitboxHeight = *frameProps;
     }
     g_CurrentEntity->animCurFrame = *frameIndex & 0x1FF;
-    if (PLAYER.animFrameDuration < 0) {
+    if (PLAYER.poseTimer < 0) {
         return -1;
     } else {
         return 0;
@@ -207,28 +207,28 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
     animFrame = func_8010DA70(frames);
-    if (g_CurrentEntity->animFrameDuration != -1) {
-        if (g_CurrentEntity->animFrameDuration == 0) {
-            g_CurrentEntity->animFrameDuration = animFrame->duration;
-        } else if (--g_CurrentEntity->animFrameDuration == 0) {
+    if (g_CurrentEntity->poseTimer != -1) {
+        if (g_CurrentEntity->poseTimer == 0) {
+            g_CurrentEntity->poseTimer = animFrame->duration;
+        } else if (--g_CurrentEntity->poseTimer == 0) {
             g_CurrentEntity->pose++;
             animFrame = func_8010DA70(frames);
             // Using a switch doesn't work
             if (animFrame->duration == 0x0) {
                 g_CurrentEntity->pose = animFrame->unk2;
                 animFrame = func_8010DA70(frames);
-                g_CurrentEntity->animFrameDuration = animFrame->duration;
+                g_CurrentEntity->poseTimer = animFrame->duration;
             } else if (animFrame->duration == 0xFFFF) {
                 g_CurrentEntity->pose--;
-                g_CurrentEntity->animFrameDuration = -1;
+                g_CurrentEntity->poseTimer = -1;
                 animFrame = func_8010DA70(frames);
             } else if (animFrame->duration == 0xFFFE) {
                 g_CurrentEntity->ext.player.anim = animFrame->unk2 & 0xFF;
                 g_CurrentEntity->pose = animFrame->unk2 >> 8;
                 animFrame = func_8010DA70(frames);
-                g_CurrentEntity->animFrameDuration = animFrame->duration;
+                g_CurrentEntity->poseTimer = animFrame->duration;
             } else {
-                g_CurrentEntity->animFrameDuration = animFrame->duration;
+                g_CurrentEntity->poseTimer = animFrame->duration;
             }
         }
     }
@@ -272,29 +272,29 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
     }
 #endif
 
-    if (g_CurrentEntity->animFrameDuration == -1) {
+    if (g_CurrentEntity->poseTimer == -1) {
         ret = -1;
-    } else if (g_CurrentEntity->animFrameDuration == 0) {
-        g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+    } else if (g_CurrentEntity->poseTimer == 0) {
+        g_CurrentEntity->poseTimer = CURRANIM.duration;
         ret = 0;
-    } else if ((--g_CurrentEntity->animFrameDuration) == 0) {
+    } else if ((--g_CurrentEntity->poseTimer) == 0) {
         g_CurrentEntity->pose++;
         // Effectively a switch statement, but breaks if I actually use one.
         if (CURRANIM.duration == 0) {
             g_CurrentEntity->pose = CURRANIM.unk2;
-            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+            g_CurrentEntity->poseTimer = CURRANIM.duration;
             ret = 0;
         } else if (CURRANIM.duration == 0xFFFF) {
             g_CurrentEntity->pose--;
-            g_CurrentEntity->animFrameDuration = -1;
+            g_CurrentEntity->poseTimer = -1;
             ret = -1;
         } else if (CURRANIM.duration == 0xFFFE) {
             g_CurrentEntity->anim = anims[CURRANIM.unk2];
             g_CurrentEntity->pose = 0;
-            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+            g_CurrentEntity->poseTimer = CURRANIM.duration;
             ret = -2;
         } else {
-            g_CurrentEntity->animFrameDuration = CURRANIM.duration;
+            g_CurrentEntity->poseTimer = CURRANIM.duration;
         }
     }
     if (frameProps != NULL) {

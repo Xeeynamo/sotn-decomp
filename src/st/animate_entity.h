@@ -8,28 +8,28 @@ u8 AnimateEntity(u8 frames[], Entity* entity) {
     currentFrameIndex = entity->pose * 2;
     currentFrame = frames + currentFrameIndex;
 
-    if (!entity->animFrameDuration) {
+    if (!entity->poseTimer) {
         if (currentFrame[0]) {
             if (currentFrame[0] == 0xFF) {
                 return 0;
             }
 
-            entity->animFrameDuration = *currentFrame++;
+            entity->poseTimer = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
             entity->pose++;
             flag |= 0x80;
         } else {
             entity->pose = 0;
-            entity->animFrameDuration = 0;
+            entity->poseTimer = 0;
             currentFrame = frames;
-            entity->animFrameDuration = *currentFrame++;
+            entity->poseTimer = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
             entity->pose++;
             return 0;
         }
     }
 
-    entity->animFrameDuration--;
+    entity->poseTimer--;
     entity->animCurFrame = currentFrame[-1];
     flag |= true;
 

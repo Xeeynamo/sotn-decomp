@@ -446,7 +446,7 @@ void EntityDiplocephalus(Entity* self) {
 #else
         if (++self->ext.diplocephalus.unk9F == 1) {
 #endif
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->velocityY = 0x1B200;
         } else {
@@ -480,7 +480,7 @@ void EntityDiplocephalus(Entity* self) {
                 (self + 3)->step = 2;
                 (self + 4)->step = 2;
                 self->ext.diplocephalus.unk9D = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->pose = 0;
                 self->step_s ^= 1;
 

@@ -423,8 +423,7 @@ void EntitySalemWitch(Entity* self) {
             if (!AnimateEntity(AnimFrames_CurseReset, self)) {
                 SetStep(IDLE);
             }
-            if (!self->animFrameDuration &&
-                self->pose == CurseProjectileSpawnpose) {
+            if (!self->poseTimer && self->pose == CurseProjectileSpawnpose) {
                 PlaySfxPositional(SFX_GUNSHOT);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {

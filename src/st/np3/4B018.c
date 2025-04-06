@@ -208,7 +208,7 @@ void EntityOwl(Entity* self) {
             self->velocityY = -rsin(angle) * 0x40;
             self->animCurFrame = 4;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             PlaySfxPositional(SFX_WEAPON_SWISH_C);
             self->step_s++;
             break;
@@ -224,7 +224,7 @@ void EntityOwl(Entity* self) {
             self->velocityY -= FIX(28.0 / 128);
             if (self->velocityY < FIX(-2)) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             break;
@@ -659,7 +659,7 @@ void EntityOwlKnight(Entity* self) {
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
         }
-        if (self->animFrameDuration == 0 && self->pose == 7) {
+        if (self->poseTimer == 0 && self->pose == 7) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(SFX_SCRAPE_B);
             self->velocityX = FIX(-3);
@@ -683,7 +683,7 @@ void EntityOwlKnight(Entity* self) {
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
         }
-        if (self->animFrameDuration == 0 && self->pose == 5) {
+        if (self->poseTimer == 0 && self->pose == 5) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-6.0);
@@ -806,7 +806,7 @@ void EntityOwlKnight(Entity* self) {
         if (AnimateEntity(D_80182860, self) == 0) {
             SetStep(10);
         }
-        if (self->animFrameDuration == 0 && self->pose == 5) {
+        if (self->poseTimer == 0 && self->pose == 5) {
             PlaySfxPositional(SFX_WEAPON_SWISH_A);
         }
         UnkCollisionFunc2(D_80182768);
@@ -814,7 +814,7 @@ void EntityOwlKnight(Entity* self) {
         if (abs(self->velocityX) < FIX(0.5)) {
             self->velocityX = 0;
         }
-        if (self->animFrameDuration == 0 && self->pose == 0xB) {
+        if (self->poseTimer == 0 && self->pose == 0xB) {
             PlaySfxPositional(0x793);
             self->velocityX = FIX(-3.0);
             if (self->facingLeft) {
@@ -857,7 +857,7 @@ void EntityOwlKnight(Entity* self) {
             if ((self->facingLeft == miscTemp) &&
                 (GetDistanceToPlayerX() < 0x28)) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->velocityX = 0;
                 self->step_s++;
             }
@@ -875,7 +875,7 @@ void EntityOwlKnight(Entity* self) {
         case 3: /* switch 2 */
             if (AnimateEntity(D_8018284C, self) == 0) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 1;
             }
             UnkCollisionFunc2(D_80182768);
@@ -883,7 +883,7 @@ void EntityOwlKnight(Entity* self) {
             if (abs(self->velocityX) < FIX(0.5)) {
                 self->velocityX = 0;
             }
-            if (self->animFrameDuration == 0 && self->pose == 5) {
+            if (self->poseTimer == 0 && self->pose == 5) {
                 self->velocityX = FIX(-6.0);
                 if (self->facingLeft) {
                     self->velocityX = FIX(6.0);
@@ -892,7 +892,7 @@ void EntityOwlKnight(Entity* self) {
             break;
         case 4: /* switch 2 */
             AnimateEntity(D_801828A0, self);
-            if (self->animFrameDuration == 0 && self->pose == 2) {
+            if (self->poseTimer == 0 && self->pose == 2) {
                 PlaySfxPositional(0x794);
             }
             if (--self->ext.owl.unk82 == 0) {
@@ -940,7 +940,7 @@ void EntityOwlKnight(Entity* self) {
             if (abs(self->velocityX) < FIX(0.5)) {
                 self->velocityX = 0;
             }
-            if (self->animFrameDuration == 0 && self->pose == 5) {
+            if (self->poseTimer == 0 && self->pose == 5) {
                 PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
                 PlaySfxPositional(0x793);
                 self->velocityX = FIX(-8.0);

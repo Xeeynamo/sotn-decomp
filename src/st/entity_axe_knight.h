@@ -273,7 +273,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
@@ -319,7 +319,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (animStatus == 0) {

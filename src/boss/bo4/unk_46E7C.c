@@ -93,7 +93,7 @@ void PlayerStepHighJump(void) {
         break;
     case 4:
         DOPPLEGANGER.velocityY += 0x1000;
-        if (DOPPLEGANGER.animFrameDuration < 0) {
+        if (DOPPLEGANGER.poseTimer < 0) {
             var_s1 = 2;
         }
         break;
@@ -122,7 +122,7 @@ void func_us_801C72BC(void) {
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
     DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                               FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-    DOPPLEGANGER.animFrameDuration = 0;
+    DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.pose = 0;
     DOPPLEGANGER.drawMode = DRAW_DEFAULT;
     g_Dop.unk44 = 0;
@@ -412,7 +412,7 @@ void DopEntityHitByDark(Entity* self) {
         self->posY.val += self->velocityY;
         self->rotX += 8;
         self->rotY += 8;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;

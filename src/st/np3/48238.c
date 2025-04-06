@@ -133,7 +133,7 @@ void EntityMerman(Entity* self) {
             AnimateEntity(D_801823BC, self);
             if (!self->ext.merman.isUnderwater) {
                 if (UnkCollisionFunc3(&D_8018235C) & 1) {
-                    self->animFrameDuration = 0;
+                    self->poseTimer = 0;
                     self->pose = 0;
                     self->step_s++;
                 }
@@ -225,7 +225,7 @@ void EntityMerman(Entity* self) {
             if (AnimateEntity(D_801823AC, self) == 0) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
-            if (self->pose == 4 && self->animFrameDuration == 0) {
+            if (self->pose == 4 && self->poseTimer == 0) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
@@ -291,7 +291,7 @@ void EntityMerman(Entity* self) {
                 UnkCollisionFunc3(&D_8018235C);
                 self->pose = 2;
                 self->hitboxWidth = 5;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->hitboxHeight = 17;
                 self->step_s++;
             }
@@ -442,15 +442,15 @@ void EntityMermanExplosion(Entity* self) {
         self->step++;
         return;
     } else {
-        self->animFrameDuration++;
+        self->poseTimer++;
         self->posY.val += self->velocityY;
     }
 
-    if (!(self->animFrameDuration & 1)) {
+    if (!(self->poseTimer & 1)) {
         self->animCurFrame++;
     }
 
-    if (D_80182458[self->params] < self->animFrameDuration) {
+    if (D_80182458[self->params] < self->poseTimer) {
         DestroyEntity(self);
     }
 }

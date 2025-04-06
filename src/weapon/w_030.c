@@ -61,7 +61,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     self->ext.weapon.anim = PLAYER.ext.weapon.anim - anim->frameStart;
 
-    if ((PLAYER.animFrameDuration == 1) && (PLAYER.pose == anim->soundFrame)) {
+    if ((PLAYER.poseTimer == 1) && (PLAYER.pose == anim->soundFrame)) {
         g_api.PlaySfx(anim->soundId);
     }
 
@@ -564,18 +564,18 @@ void func_ptr_80170008(Entity* self) {
         }
         break;
     case 2:
-        if (self->animFrameDuration == 1 && self->pose == 2) {
+        if (self->poseTimer == 1 && self->pose == 2) {
             g_api.PlaySfx(SFX_CREAK);
         }
-        if (self->animFrameDuration == 1 && self->pose == 5) {
+        if (self->poseTimer == 1 && self->pose == 5) {
             g_api.PlaySfx(SFX_ARROW_SHOT_C);
             g_api.CreateEntFactoryFromEntity(
                 self, 0x46 + ((g_HandId + 1) << 0xC) + ((temp_s4 - 2) << 0x10),
                 0);
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             if (--self->ext.weapon_030.unk86 == 0) {
                 self->ext.weapon_030.unk7E = 0x18;
                 self->step = 7;
@@ -702,10 +702,10 @@ void func_ptr_80170008(Entity* self) {
         self->ext.weapon_030.unk7C--;
         break;
     case 6:
-        if (self->pose == 4 && self->animFrameDuration == 1) {
+        if (self->pose == 4 && self->poseTimer == 1) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x6A, 0), 0);
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->ext.weapon_030.unk7E = 0x18;
             self->step = 7;
         }
@@ -948,8 +948,7 @@ s32 func_ptr_80170010(Entity* self) {
             self->rotX = 0x100;
         }
         self->rotY = self->rotX;
-        if (self->ext.weapon.parent->pose == 0x20 &&
-            self->animFrameDuration == 1) {
+        if (self->ext.weapon.parent->pose == 0x20 && self->poseTimer == 1) {
             g_api.PlaySfx(SFX_EXPLODE_SMALL);
             if ((u8)self->params != 0) {
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;

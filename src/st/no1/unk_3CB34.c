@@ -255,7 +255,7 @@ void func_us_801BCB34(Entity* self) {
                 g_api.func_8010E168(1, 0x20);
                 self->ext.et_801BCB34.unk85 = dPad;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
                 self->step++;
 #ifdef VERSION_PSP
@@ -266,7 +266,7 @@ void func_us_801BCB34(Entity* self) {
         }
         if (self->ext.et_801BCB34.unk94) {
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step_s = 1;
             self->step = 3;
         }
@@ -286,7 +286,7 @@ void func_us_801BCB34(Entity* self) {
             self->ext.et_801BCB34.unk88 = 0x18;
             self->step_s = 0;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             if (self->ext.et_801BCB34.unk85 > self->ext.et_801BCB34.unk84) {
                 self->step = 4;
             } else {
@@ -532,7 +532,7 @@ void func_us_801BCB34(Entity* self) {
             }
             if (AnimateEntity(D_us_8018155C, self) == 0) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             break;

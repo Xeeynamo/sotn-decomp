@@ -155,7 +155,7 @@ void EntityWarg(Entity* self) {
         xVar = self->ext.warg.unk84 - self->posX.i.hi - gTilemap->scrollX.i.hi;
         if (self->ext.warg.unk80) {
             self->ext.warg.unk80 -= 1;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             break;
         }
         if (!self->ext.warg.unk7C) {
@@ -554,7 +554,7 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_UNK8;
         entity->pose = 0;
-        entity->animFrameDuration = 0;
+        entity->poseTimer = 0;
         entity->unk6C = 0x60;
         temp_v0 = entity->params & 0xFF00;
         if (temp_v0 != 0) {

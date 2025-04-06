@@ -6,7 +6,7 @@ void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 void func_8015CC70(s32 step_s) {
     PLAYER.step = PL_S_INIT;
     PLAYER.step_s = step_s;
-    PLAYER.pose = PLAYER.animFrameDuration = 0;
+    PLAYER.pose = PLAYER.poseTimer = 0;
     if (step_s & 1) {
         PLAYER.anim = D_80155950;
     } else {
@@ -108,7 +108,7 @@ void RicSetFall(void) {
     if (g_Player.prev_step == PL_S_SLIDE) {
         g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
         PLAYER.pose = 2;
-        PLAYER.animFrameDuration = 0x10;
+        PLAYER.poseTimer = 0x10;
         PLAYER.velocityX /= 2;
     }
 }

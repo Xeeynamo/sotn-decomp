@@ -17,14 +17,14 @@ void func_us_801BFA34(Entity* self) {
     } else {
         self->rotX += 4;
         self->rotY += 14;
-        self->animFrameDuration++;
+        self->poseTimer++;
         self->posX.val += self->velocityX;
 
-        if (!(self->animFrameDuration & 1)) {
+        if (!(self->poseTimer & 1)) {
             self->animCurFrame++;
         }
 
-        if (self->animFrameDuration >= 24) {
+        if (self->poseTimer >= 24) {
             DestroyEntity(self);
         }
     }
@@ -418,7 +418,7 @@ void func_us_801C05DC(Entity* self) {
         if (max > 0x80) {
             max = 0;
         }
-        if (self->animFrameDuration == 0 && self->pose > 1) {
+        if (self->poseTimer == 0 && self->pose > 1) {
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
 #ifdef VERSION_PSP

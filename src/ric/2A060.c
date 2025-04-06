@@ -555,24 +555,20 @@ void RicEntityWhip(Entity* self) {
                 }
             }
             if (PLAYER.pose == 6) {
-                if ((PLAYER.animFrameDuration >= 0xF) ||
-                    (PLAYER.animFrameDuration == 0)) {
+                if ((PLAYER.poseTimer >= 0xF) || (PLAYER.poseTimer == 0)) {
                     self->palette = PAL_OVL(0x138);
-                } else if ((PLAYER.animFrameDuration == 11 ||
-                            PLAYER.animFrameDuration == 12) ||
-                           (PLAYER.animFrameDuration == 13 ||
-                            PLAYER.animFrameDuration == 14)) {
+                } else if ((PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12) ||
+                           (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14)) {
                     self->palette = PAL_OVL(0x13C);
                 } else {
-// animFrameDuration can be -1 apparently.
+// poseTimer can be -1 apparently.
 // todo this should read the previous element out of bounds?
 #ifdef VERSION_PC
-                    if (PLAYER.animFrameDuration >= 0) {
-                        self->palette =
-                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    if (PLAYER.poseTimer >= 0) {
+                        self->palette = D_80155C70[PLAYER.poseTimer % 3];
                     }
 #else
-                    self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+                    self->palette = D_80155C70[PLAYER.poseTimer % 3];
 #endif
                 }
             }
@@ -593,7 +589,7 @@ void RicEntityWhip(Entity* self) {
                 break;
             case 4:
                 self->ext.whip.unk8C = 0x3C0;
-                if (PLAYER.animFrameDuration == 1) {
+                if (PLAYER.poseTimer == 1) {
                     self->velocityX = FIX(-8);
                 }
                 break;
@@ -606,34 +602,31 @@ void RicEntityWhip(Entity* self) {
                 break;
             case 6:
                 if (upperParams != 0) {
-                    if (PLAYER.animFrameDuration == D_80155C78[lowerParams]) {
+                    if (PLAYER.poseTimer == D_80155C78[lowerParams]) {
                         RicCreateEntFactoryFromEntity(self, BP_20, 0);
                     }
                 }
-                if (lowerParams == (0x10 - PLAYER.animFrameDuration)) {
+                if (lowerParams == (0x10 - PLAYER.poseTimer)) {
                     self->ext.whip.unk8C = 0x600;
                 }
                 // This very well might be a switch
-                if (PLAYER.animFrameDuration > 14) {
+                if (PLAYER.poseTimer > 14) {
                     self->palette = PAL_OVL(0x138);
-                } else if (PLAYER.animFrameDuration == 0) {
+                } else if (PLAYER.poseTimer == 0) {
                     self->palette = PAL_OVL(0x138);
-                } else if (PLAYER.animFrameDuration == 11 ||
-                           PLAYER.animFrameDuration == 12) {
+                } else if (PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12) {
                     self->palette = PAL_OVL(0x13C);
-                } else if (PLAYER.animFrameDuration == 13 ||
-                           PLAYER.animFrameDuration == 14) {
+                } else if (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14) {
                     self->palette = PAL_OVL(0x13C);
                 } else {
-// animFrameDuration can be -1 apparently.
+// poseTimer can be -1 apparently.
 // todo this should read the previous element out of bounds?
 #ifdef VERSION_PC
-                    if (PLAYER.animFrameDuration >= 0) {
-                        self->palette =
-                            D_80155C70[PLAYER.animFrameDuration % 3];
+                    if (PLAYER.poseTimer >= 0) {
+                        self->palette = D_80155C70[PLAYER.poseTimer % 3];
                     }
 #else
-                    self->palette = D_80155C70[PLAYER.animFrameDuration % 3];
+                    self->palette = D_80155C70[PLAYER.poseTimer % 3];
 #endif
                 }
                 break;
@@ -799,12 +792,11 @@ void func_80167964(Entity* entity) {
                             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         }
         if (!(entity->params & 0xFF00)) {
-            g_Entities[D_80155D30[entity->animFrameDuration]].palette =
-                PAL_OVL(0x140);
+            g_Entities[D_80155D30[entity->poseTimer]].palette = PAL_OVL(0x140);
         }
-        g_Entities[D_80155D30[entity->animFrameDuration]].ext.player.unkA4 = 4;
-        entity->animFrameDuration++;
-        if (entity->animFrameDuration == 0xF) {
+        g_Entities[D_80155D30[entity->poseTimer]].ext.player.unkA4 = 4;
+        entity->poseTimer++;
+        if (entity->poseTimer == 0xF) {
             DestroyEntity(entity);
         }
     } else {

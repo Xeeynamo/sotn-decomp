@@ -310,7 +310,7 @@ void EntitySuccubus(Entity* self) {
         }
 
         AnimateEntity(D_801806C4, self);
-        if ((self->pose == 3) && (self->animFrameDuration == 0)) {
+        if ((self->pose == 3) && (self->poseTimer == 0)) {
             PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
 
@@ -349,7 +349,7 @@ void EntitySuccubus(Entity* self) {
 
         case SUCCUBUS_FLY_1:
             AnimateEntity(D_801806E8, self);
-            if ((self->pose == 3) && (self->animFrameDuration == 0)) {
+            if ((self->pose == 3) && (self->poseTimer == 0)) {
                 PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
 
@@ -441,7 +441,7 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             AnimateEntity(D_801806E8, self);
-            if ((self->pose == 3) && (self->animFrameDuration == 0)) {
+            if ((self->pose == 3) && (self->poseTimer == 0)) {
                 PlaySfxPositional(SFX_BOSS_WING_FLAP);
             }
             MoveEntity();
@@ -719,7 +719,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_CLONE_ATTACK_ANIM_1:
             self->ext.succubus.unk85 = false;
             AnimateEntity(D_80180734, self);
-            if ((self->pose == 4) && (self->animFrameDuration == 0)) {
+            if ((self->pose == 4) && (self->poseTimer == 0)) {
                 self->step_s++;
             }
             break;
@@ -780,7 +780,7 @@ void EntitySuccubus(Entity* self) {
                 self->ext.succubus.timer = 288;
                 SetSubStep(SUCCUBUS_CLONE_ATTACK_ANIM_2);
             }
-            if ((self->pose == 4) && (self->animFrameDuration == 0)) {
+            if ((self->pose == 4) && (self->poseTimer == 0)) {
                 PlaySfxPositional(SFX_RIC_SUC_REVIVE);
 
                 for (i = 0; i < 2; i++) {
@@ -800,7 +800,7 @@ void EntitySuccubus(Entity* self) {
                     }
                 }
             }
-            if ((self->pose == 5) && (self->animFrameDuration == 0)) {
+            if ((self->pose == 5) && (self->poseTimer == 0)) {
                 PlaySfxPositional(NA_VO_SU_GRUNT_2);
                 PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
                 PlaySfxPositional(SFX_FIRE_SHOT);
@@ -1088,7 +1088,7 @@ void EntitySuccubusClone(Entity* self) {
             SetStep(3);
         }
 
-        if (self->pose == 4 && self->animFrameDuration == 0) {
+        if (self->pose == 4 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_RIC_SUC_REVIVE);
             for (i = 0; i < 2; i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -1107,7 +1107,7 @@ void EntitySuccubusClone(Entity* self) {
                 }
             }
         }
-        if (self->pose == 5 && self->animFrameDuration == 0) {
+        if (self->pose == 5 && self->poseTimer == 0) {
             PlaySfxPositional(NA_VO_SU_GRUNT_2);
             PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
             PlaySfxPositional(SFX_FIRE_SHOT);

@@ -119,7 +119,7 @@ void RicSetStep(s16 step) {
 
 void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
 }
 

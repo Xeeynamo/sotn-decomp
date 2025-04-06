@@ -125,7 +125,7 @@ void EntityDhuron(Entity* self) {
             } else {
                 self->velocityX = FIX(-3.0);
             }
-            if (!self->animFrameDuration) {
+            if (!self->poseTimer) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
         }
@@ -148,7 +148,7 @@ void EntityDhuron(Entity* self) {
                     SetSubStep(2);
                 }
             }
-            if (!self->animFrameDuration && self->pose == 6) {
+            if (!self->poseTimer && self->pose == 6) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
             break;
@@ -168,7 +168,7 @@ void EntityDhuron(Entity* self) {
                 self->ext.dhuron.unk84 = 0x20;
                 self->step_s++;
             }
-            if (self->pose == 10 && !self->animFrameDuration) {
+            if (self->pose == 10 && !self->poseTimer) {
                 PlaySfxPositional(SFX_THUNDER_B);
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -466,7 +466,7 @@ void func_us_801CC984(Entity* self) {
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->step = 3;
         break;
 

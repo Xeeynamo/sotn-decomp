@@ -50,7 +50,7 @@ void func_8012D3E8(void) {
             break;
         }
         if (PLAYER.pose >= 3) {
-            if (PLAYER.animFrameDuration < 0) {
+            if (PLAYER.poseTimer < 0) {
                 func_8012CB4C();
                 if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
                     // Evil! This function takes no arguments! This is
@@ -62,7 +62,7 @@ void func_8012D3E8(void) {
             SetSpeedX(FIX(1));
             break;
         }
-        if (PLAYER.animFrameDuration == 1 && PLAYER.pose == 2) {
+        if (PLAYER.poseTimer == 1 && PLAYER.pose == 2) {
             PLAYER.facingLeft++;
             PLAYER.facingLeft &= 1;
         }
@@ -189,7 +189,7 @@ void func_8012D3E8(void) {
         if (!(g_GameTimer % 2)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
-        if (PLAYER.animFrameDuration >= 0) {
+        if (PLAYER.poseTimer >= 0) {
             break;
         }
         if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
@@ -259,7 +259,7 @@ void func_8012DBBC(void) {
             DecelerateX(FIX(0.125));
         }
         if (PLAYER.pose == 3) {
-            PLAYER.animFrameDuration = 6;
+            PLAYER.poseTimer = 6;
         }
     }
     vel_boost = FIX(20.0 / 128);
@@ -409,13 +409,13 @@ void func_8012E040(void) {
             break;
         }
         if (PLAYER.pose == 3) {
-            PLAYER.animFrameDuration = 6;
+            PLAYER.poseTimer = 6;
         }
         break;
 
     case 3:
         if (PLAYER.pose == 3) {
-            PLAYER.animFrameDuration = 6;
+            PLAYER.poseTimer = 6;
         }
         break;
     }
@@ -444,7 +444,7 @@ void func_8012E550(void) {
                     func_8012CED4();
                     PLAYER.velocityX = 0;
                     PLAYER.pose = 4;
-                    PLAYER.animFrameDuration = 1;
+                    PLAYER.poseTimer = 1;
                     PLAYER.velocityY = FIX(2);
                     return;
                 }
@@ -469,7 +469,7 @@ void func_8012E550(void) {
             if (playerFrame == 0) {
                 PLAYER.pose = 1;
             }
-        } else if (PLAYER.animFrameDuration < 0) {
+        } else if (PLAYER.poseTimer < 0) {
             D_800B0914++;
         }
         break;
@@ -490,12 +490,12 @@ void func_8012E550(void) {
             PLAYER.pose = 1;
             break;
         }
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             func_8012CA64();
         }
         break;
     case 3:
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             func_8012CA64();
         }
         break;
@@ -543,7 +543,7 @@ void func_8012E7A4(void) {
 
     func_8012CED4();
     PLAYER.pose = 4;
-    PLAYER.animFrameDuration = 4;
+    PLAYER.poseTimer = 4;
     PLAYER.step_s = 8;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
     D_80138430 = 0x800;
@@ -576,7 +576,7 @@ void func_8012E9C0(void) {
     }
     func_8010E168(1, 4);
     PLAYER.velocityY = 0;
-    PLAYER.animFrameDuration = 4;
+    PLAYER.poseTimer = 4;
     if (g_Entities[16].entityId == 0x22) {
         if (func_8011203C() == 0) {
             return;
@@ -1533,7 +1533,7 @@ void func_801309B4(Entity* self) {
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
                       FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->animFrameDuration = 1;
+        self->poseTimer = 1;
         self->pose = 4;
         self->anim = D_800B0ABC;
         self->hitboxWidth = 10;
@@ -1631,9 +1631,9 @@ void func_801309B4(Entity* self) {
     self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s1) >> 8;
     self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s1) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
-        self->animFrameDuration == -1) {
+        self->poseTimer == -1) {
         PlaySfx(SFX_ALU_WOLF_BARK);
-        self->pose = self->animFrameDuration = 0;
+        self->pose = self->poseTimer = 0;
     }
     var_s1 = D_800B0AD4[self->pose];
     if (PLAYER.facingLeft) {
@@ -1650,7 +1650,7 @@ void func_801309B4(Entity* self) {
     } else {
         self->hitboxState = 0;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
         } else if (*D_80097448 > 0x18) {

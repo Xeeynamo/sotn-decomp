@@ -85,7 +85,7 @@ void EntitySkeletonApe(Entity* self) {
             } else {
                 self->step_s++;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
             }
         }
         break;

@@ -53,7 +53,7 @@ void EntityFleaArmor(Entity* self) {
             self->velocityY = FIX(-0.5);
             self->ext.fleaArmor.counter = 0;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step = 3;
         }
         break;
@@ -78,7 +78,7 @@ void EntityFleaArmor(Entity* self) {
                 self->velocityY = FIX(-2.0);
             } else if (GetDistanceToPlayerX() < 64) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
                 self->step = 4;
             }
@@ -88,7 +88,7 @@ void EntityFleaArmor(Entity* self) {
                     self->facingLeft ^= 1;
                 }
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
                 self->step = 4;
             }

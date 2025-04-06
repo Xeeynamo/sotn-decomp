@@ -490,12 +490,12 @@ void EntityElevatorStationary(Entity* self) {
         case 1:
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
-            if (self->pose == 4 && self->animFrameDuration == 0) {
+            if (self->pose == 4 && self->poseTimer == 0) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
         }
@@ -509,10 +509,10 @@ void EntityElevatorStationary(Entity* self) {
         case 0:
             if (AnimateEntity(D_80180768, self) == 0) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
-            if (self->pose == 4 && self->animFrameDuration == 0) {
+            if (self->pose == 4 && self->poseTimer == 0) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;
@@ -527,7 +527,7 @@ void EntityElevatorStationary(Entity* self) {
         case 2:
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 g_Entities[1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;

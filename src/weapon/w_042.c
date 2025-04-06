@@ -102,7 +102,7 @@ static void EntityWeaponAttack(Entity* self) {
         if (col.effects & EFFECT_SOLID) {
             self->posY.i.hi += col.unk18;
             self->anim = D_12A000_8017A684;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
@@ -138,7 +138,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 2:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -170,7 +170,7 @@ s32 func_ptr_80170004(Entity* self) {
             self->rotX = 0x100;
             self->anim = D_12A000_8017A620;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;
             SetWeaponProperties(self, 0);
@@ -179,7 +179,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->rotY = self->rotX;
         break;
     case 2:
-        if (self->animFrameDuration == 1) {
+        if (self->poseTimer == 1) {
             if (self->pose == 6 || self->pose == 0xC || self->pose == 0x12) {
                 unk = 0x3E;
                 if (g_api.CreateEntFactoryFromEntity(
@@ -189,10 +189,10 @@ s32 func_ptr_80170004(Entity* self) {
                 }
             }
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->anim = D_12A000_8017A6BC;
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step++;
         }
         break;
@@ -259,7 +259,7 @@ static void func_ptr_80170008(Entity* self) {
             self->palette = PAL_OVL(0x170);
             self->anim = D_12A000_8017A704;
             self->unk5A = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->velocityY = -FIX(0.5);
@@ -268,7 +268,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -288,7 +288,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posY.i.hi += 0x10;
         self->step++;
-    } else if (self->animFrameDuration < 0) {
+    } else if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
 }

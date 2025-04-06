@@ -351,7 +351,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         break;
     }
 
-    if (self->animFrameDuration == 0) {
+    if (self->poseTimer == 0) {
         graphicsTemp = self->pose;
         self->ext.subwpnAxe.unk8C[graphicsTemp] = 0;
         self->ext.subwpnAxe.unk90[graphicsTemp] = 1;
@@ -359,9 +359,9 @@ void EntitySubwpnThrownAxe(Entity* self) {
         graphicsTemp++;
         graphicsTemp &= 3;
         self->pose = graphicsTemp;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
     } else {
-        self->animFrameDuration--;
+        self->poseTimer--;
     }
     for (prim = &g_PrimBuf[self->primIndex], prevPrim = prim,
         graphicsTemp = ((g_GameTimer >> 1) & 1) + 0x1AB, i = 0;

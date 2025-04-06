@@ -338,7 +338,7 @@ static void EntityWeaponAttack(Entity* self) {
         break;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 && PLAYER.pose == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
@@ -406,7 +406,7 @@ s32 func_ptr_80170004(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (PLAYER.pose == 1 && PLAYER.animFrameDuration == 1) {
+    if (PLAYER.pose == 1 && PLAYER.poseTimer == 1) {
         g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3E, 0), 0);
     }
     self->drawFlags = PLAYER.drawFlags;

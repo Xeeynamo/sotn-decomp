@@ -50,7 +50,7 @@ static void EntityWeaponAttack(Entity* self) {
         attackButton = PAD_SQUARE;
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->pose = 0;
         self->step = 3;
     }
@@ -95,7 +95,7 @@ static void EntityWeaponAttack(Entity* self) {
         /* fallthrough */
     case 1:
         self->ext.weapon.anim = crouchCheck + 10;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->step++;
         }
         break;
@@ -136,12 +136,12 @@ static void EntityWeaponAttack(Entity* self) {
             break;
         }
         self->ext.weapon.anim = anim;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
         self->ext.weapon.anim = crouchCheck + 12;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -253,7 +253,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             self->rotY = self->rotX = 0x100;
             self->ext.shield.unk80 = 8;
             self->anim = D_C1000_8017AC8C;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->flags |= FLAG_UNK_100000;
             self->step++;
@@ -262,7 +262,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     case 2:
         if (--self->ext.shield.unk80 == 0) {
             self->anim = D_C1000_8017ACB4;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->step++;
         }
@@ -291,7 +291,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
     case 4:
         if (self->ext.shield.unk80 == 64) {
             self->anim = D_C1000_8017AC8C;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
         }
         if (--self->ext.shield.unk80 == 0) {

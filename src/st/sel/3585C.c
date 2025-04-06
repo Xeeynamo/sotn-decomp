@@ -110,7 +110,7 @@ void func_801B5A7C(void) {
         case 3:
             g_Entities[5].step = 2;
             g_Entities[5].pose = 0;
-            g_Entities[5].animFrameDuration = 0;
+            g_Entities[5].poseTimer = 0;
             g_Entities[5].facingLeft = 1;
             e->step++;
             break;

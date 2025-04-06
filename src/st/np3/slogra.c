@@ -169,7 +169,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_80181328, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
-        if (self->pose == 4 && self->animFrameDuration == 0) {
+        if (self->pose == 4 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_BOSS_WING_FLAP);
         }
         break;
@@ -292,7 +292,7 @@ void EntitySlogra(Entity* self) {
         if (AnimateEntity(D_8018139C, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
-        if (self->pose == 7 && self->animFrameDuration == 0) {
+        if (self->pose == 7 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_BONE_THROW);
         }
         break;

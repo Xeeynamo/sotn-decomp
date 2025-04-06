@@ -84,7 +84,7 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxState = 0;
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
-        if (self->animFrameDuration == 1 && self->pose == 3) {
+        if (self->poseTimer == 1 && self->pose == 3) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (self->pose == 5) {
@@ -101,7 +101,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->unk6C >= 5) {
             self->unk6C += 0xFE;
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

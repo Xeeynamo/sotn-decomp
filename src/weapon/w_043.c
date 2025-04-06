@@ -78,14 +78,14 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 && PLAYER.pose == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
-    if (PLAYER.animFrameDuration == 1 && PLAYER.pose == 3) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == 3) {
         flag = 1;
     }
     self->drawFlags = PLAYER.drawFlags;
@@ -168,7 +168,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15.0 / 32.0));
-        if (PLAYER.pose == 5 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 5 && PLAYER.poseTimer == 1) {
             self->facingLeft++;
             self->facingLeft &= 1;
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(62, 0), 0);
@@ -238,7 +238,7 @@ static void func_ptr_80170008(Entity* self) {
         } else {
             self->hitboxHeight = 0;
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

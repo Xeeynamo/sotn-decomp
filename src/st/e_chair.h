@@ -57,7 +57,7 @@ void EntityChair(Entity* self) {
 
     case 3:
         g_Player.unk14 = self->params;
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             self->ext.chair.unk0 = 0xA00;
             self->step++;
         }
@@ -103,7 +103,7 @@ void func_us_801B81E8(Entity* self) {
         self->palette = PAL_OVL(0x19F);
         self->anim = D_us_80180F8C;
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
@@ -112,7 +112,7 @@ void func_us_801B81E8(Entity* self) {
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

@@ -588,7 +588,7 @@ void EntityAxeKnightBlue(Entity* self) {
             if (!self->ext.axeknight.unk80 || GetDistanceToPlayerX() < 0x20) {
                 PlaySfxPositional(0x766);
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             } else {
                 self->ext.axeknight.unk80--;

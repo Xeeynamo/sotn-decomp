@@ -32,7 +32,7 @@ static void EntityWeaponAttack(Entity* self) {
         attackButton = PAD_SQUARE;
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->pose = 0;
         self->step = 3;
     }
@@ -77,7 +77,7 @@ static void EntityWeaponAttack(Entity* self) {
         /* fallthrough */
     case 1:
         self->ext.shield.anim = anim2 + 10;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->step++;
         }
         break;
@@ -118,12 +118,12 @@ static void EntityWeaponAttack(Entity* self) {
             break;
         }
         self->ext.shield.anim = anim1;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
         self->ext.shield.anim = anim2 + 12;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -453,7 +453,7 @@ static void func_ptr_80170024(Entity* self) {
             self->drawFlags = FLAG_DRAW_UNK8;
             self->drawMode = DRAW_TPAGE;
             self->unk6C = 0x80;
-            self->animFrameDuration = 0x18;
+            self->poseTimer = 0x18;
             self->zPriority -= 2;
             self->step = 4;
         } else {
@@ -613,14 +613,14 @@ static void func_ptr_80170024(Entity* self) {
         }
         break;
     case 3:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
         break;
     case 4:
         self->unk6C -= 2;
-        if (--self->animFrameDuration < 0) {
+        if (--self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -630,7 +630,7 @@ static void func_ptr_80170024(Entity* self) {
         g_api.PlaySfx(SFX_CANDLE_HIT);
         self->step = 3;
         self->anim = D_51000_8017ABE8;
-        self->animFrameDuration = self->pose = 0;
+        self->poseTimer = self->pose = 0;
         // Blueprint 90 is weapon entity 9, func_ptr_80170024, so ourself.
         unusedEnt = g_api.CreateEntFactoryFromEntity(
             self, ((g_HandId + 1) << 0xE) + FACTORY(90, 1), 0);

@@ -179,7 +179,7 @@ void EntityGaibon(Entity* self) {
         return;
     case GAIBON_IDLE:
         AnimateEntity(D_801814C4, self);
-        if (self->animFrameDuration == 0 && self->pose == 1) {
+        if (self->poseTimer == 0 && self->pose == 1) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if ((GetDistanceToPlayerX() < 0x60) &&
@@ -219,7 +219,7 @@ void EntityGaibon(Entity* self) {
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(D_801814C4, self);
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -234,7 +234,7 @@ void EntityGaibon(Entity* self) {
             if (!AnimateEntity(D_801814D8, self)) {
                 SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
@@ -276,7 +276,7 @@ void EntityGaibon(Entity* self) {
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
             AnimateEntity(D_8018150C, self);
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             // Reuse of speedLimit variable, unrelated to speed
@@ -320,7 +320,7 @@ void EntityGaibon(Entity* self) {
                     SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
                 }
             }
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             break;
@@ -499,7 +499,7 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
             AnimateEntity(D_80181520, self);
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             MoveEntity();
@@ -520,7 +520,7 @@ void EntityGaibon(Entity* self) {
             break;
         case GAIBON_PICKUP_SLOGRA_AIMING:
             AnimateEntity(D_80181520, self);
-            if (!self->animFrameDuration && self->pose == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             if (GetSideToPlayer() & 1) {

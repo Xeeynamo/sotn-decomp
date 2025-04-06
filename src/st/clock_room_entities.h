@@ -279,7 +279,7 @@ void EntityStatueGear(Entity* self) {
             self->step = 3;
             self->pose = 20 - self->animCurFrame;
         }
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         break;
 
     case 2:

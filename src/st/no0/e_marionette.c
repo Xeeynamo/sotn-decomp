@@ -206,7 +206,7 @@ void EntityMarionette(Entity* self) {
         }
         func_us_801D6254(D_us_80181FE8);
         self->velocityY += FIX(0.5 / 16);
-        if (self->pose == 10 && !self->animFrameDuration) {
+        if (self->pose == 10 && !self->poseTimer) {
             self->velocityY = FIX(-1.0);
         }
         break;
@@ -454,12 +454,12 @@ void EntityMarionette(Entity* self) {
             if (!--self->ext.marionette.unk84) {
                 SetSubStep(2);
                 self->pose = 5;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
             }
             if (GetDistanceToPlayerX() < 0x40) {
                 SetSubStep(3);
                 self->pose = 5;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
             }
             break;
 

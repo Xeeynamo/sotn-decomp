@@ -913,7 +913,7 @@ void EntityVenusWeedFlower(Entity* self) {
             if (AnimateEntity(AnimFrames_FlowerAttackDartsLaunch, self) == 0) {
                 self->step_s++;
             }
-            if (!self->animFrameDuration && self->pose == DartsSfxpose) {
+            if (!self->poseTimer && self->pose == DartsSfxpose) {
                 PlaySfxPositional(SFX_ARROW_SHOT_B);
 
                 // Calculate launch start pos
@@ -1091,7 +1091,7 @@ void EntityVenusWeedTendril(Entity* self) {
             if (AnimateEntity(AnimFrames_TendrilAttackCharge, self) == 0) {
                 SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
             }
-            if (!self->animFrameDuration && self->pose == SpikeSfxpose) {
+            if (!self->poseTimer && self->pose == SpikeSfxpose) {
                 PlaySfxPositional(SFX_DISSONANT_SCREECH);
             }
             break;

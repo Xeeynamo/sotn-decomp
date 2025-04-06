@@ -137,7 +137,7 @@ void EntityFlyingZombie2(Entity* self) {
             (self + 1)->step = 3;
             (self + 1)->animCurFrame = 0x10;
             (self + 1)->pose = 0;
-            (self + 1)->animFrameDuration = 0;
+            (self + 1)->poseTimer = 0;
             (self + 1)->facingLeft = self->facingLeft;
             (self + 1)->zPriority -= 8;
             (self + 1)->posY.i.hi = self->posY.i.hi - 0xA;
@@ -179,7 +179,7 @@ void EntityFlyingZombie2(Entity* self) {
     case 5:
         if (!AnimateEntity(D_us_8018288C, self)) {
             self->pose = 0;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step++;
         }
         break;
@@ -218,7 +218,7 @@ void EntityFlyingZombie2(Entity* self) {
             }
             if (!--self->ext.flyingZombie.unk7C) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             break;
@@ -227,7 +227,7 @@ void EntityFlyingZombie2(Entity* self) {
             if (!AnimateEntity(D_us_80182868, self)) {
                 self->facingLeft = Random() & 1;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
             }
             break;
@@ -280,7 +280,7 @@ void EntityFlyingZombie1(Entity* self) {
             (self - 1)->step = 4;
             (self - 1)->step_s = 0;
             (self - 1)->pose = 0;
-            (self - 1)->animFrameDuration = 0;
+            (self - 1)->poseTimer = 0;
             self->step++;
         }
         break;
@@ -374,7 +374,7 @@ void EntityFlyingZombie1(Entity* self) {
             AnimateEntity(D_us_80182848, self);
             if (!--self->ext.flyingZombie.unk7C) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
                 self->step++;
             }
@@ -406,7 +406,7 @@ void EntityFlyingZombie1(Entity* self) {
             if (!--self->ext.flyingZombie.unk7C) {
                 self->velocityY = 0;
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s = 0;
                 self->step--;
             }

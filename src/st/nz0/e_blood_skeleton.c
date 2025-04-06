@@ -58,7 +58,7 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_WALK:
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             if (self->facingLeft != 0) {
                 self->posX.i.hi += D_80182624[self->pose];
             } else {

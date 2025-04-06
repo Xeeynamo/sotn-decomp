@@ -49,12 +49,12 @@ void EntityWeaponAttack(Entity* self) {
         break;
 
     case 1:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->ext.timer.t = 16;
             self->drawFlags |= DRAW_MENU;
             self->step++;
         }
-        if (self->pose == 20 && self->animFrameDuration == 2 &&
+        if (self->pose == 20 && self->poseTimer == 2 &&
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0)) {
             g_api.PlaySfx(SFX_ARROW_SHOT_A);
         }
@@ -93,7 +93,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
     case 1:
         if (self->hitFlags == 1) {
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->anim = D_9E000_8017A760;
             self->step++;
@@ -102,7 +102,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 2:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;

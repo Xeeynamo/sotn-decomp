@@ -546,7 +546,7 @@ void func_8011EDA8(Entity* self) {
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
-            if (!(paramsLo & 1) && (self->animFrameDuration == 1)) {
+            if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
@@ -555,7 +555,7 @@ void func_8011EDA8(Entity* self) {
             self->drawMode = DRAW_TPAGE;
         }
 
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -596,7 +596,7 @@ void func_8011F074(Entity* self) {
         self->posY.val += self->velocityY;
         self->rotX += 8;
         self->rotY += 8;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -2646,7 +2646,7 @@ void EntityPlayerSleepZ(Entity* self) {
     case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;

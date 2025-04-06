@@ -865,7 +865,7 @@ void EntityArmorLord(Entity* self) {
         case 0:
             if (!AnimateEntity(D_us_80182D84, self)) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
                 self->ext.armorLord.unk80 = 0x80;
             }
@@ -875,7 +875,7 @@ void EntityArmorLord(Entity* self) {
             AnimateEntity(D_us_80182D9C, self);
             if (!--self->ext.armorLord.unk80) {
                 self->pose = 0;
-                self->animFrameDuration = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             if (self->ext.armorLord.unk80 % 7 == 0) {
@@ -897,12 +897,12 @@ void EntityArmorLord(Entity* self) {
             self->velocityY = 0;
             self->step_s++;
         }
-        if (!self->animFrameDuration && self->animCurFrame == 0x14) {
+        if (!self->poseTimer && self->animCurFrame == 0x14) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(0x751);
             g_api.func_80102CD8(4);
         }
-        if (!self->animFrameDuration && self->pose == 5) {
+        if (!self->poseTimer && self->pose == 5) {
             if (self->facingLeft) {
                 self->velocityX = FIX(4.0);
             } else {

@@ -888,14 +888,14 @@ void func_801C58A4(s32 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->pose = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
 }
 
 // SAT: func_0607B240
 void func_801C58C4(s32 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->pose = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
 }
 
 // _teki_init

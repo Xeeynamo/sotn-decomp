@@ -45,7 +45,7 @@ void EntityBat(Entity* self) {
                 self->velocityX = FIX(-0.25);
             }
             self->pose = (Random() & 3) * 3;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->step++;
         }
         break;

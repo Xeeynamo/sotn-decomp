@@ -197,14 +197,14 @@ bool func_us_801D2148(RECT* rects) {
     RECT* rect;
 
     rect = &rects[g_CurrentEntity->pose];
-    if (g_CurrentEntity->animFrameDuration == 0) {
+    if (g_CurrentEntity->poseTimer == 0) {
         if (!rect->h) {
             return false;
         }
         func_us_801D1F50(rect);
-        g_CurrentEntity->animFrameDuration = rect->h;
+        g_CurrentEntity->poseTimer = rect->h;
     }
-    if (!--g_CurrentEntity->animFrameDuration) {
+    if (!--g_CurrentEntity->poseTimer) {
         g_CurrentEntity->pose++;
     }
     func_us_801D2108();

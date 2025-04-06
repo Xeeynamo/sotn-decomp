@@ -61,7 +61,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step += 1;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if ((PLAYER.animFrameDuration == 1) && (PLAYER.pose == anim->soundFrame)) {
+    if ((PLAYER.poseTimer == 1) && (PLAYER.pose == anim->soundFrame)) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
@@ -390,7 +390,7 @@ void func_ptr_8017000C(Entity* self) {
         self->step++;
     } else {
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
     }
@@ -492,7 +492,7 @@ static s32 func_ptr_80170014(Entity* self) {
         return;
     case 1:
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
     }

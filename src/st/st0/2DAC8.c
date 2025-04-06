@@ -309,7 +309,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 SetSubStep(2);
             }
 
-            if (!self->animFrameDuration && self->pose == 5) {
+            if (!self->poseTimer && self->pose == 5) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(0.5);
                 } else {
@@ -358,7 +358,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 SetStep(2);
             }
         }
-        if (!self->animFrameDuration && self->pose == 2) {
+        if (!self->poseTimer && self->pose == 2) {
             self->facingLeft ^= 1;
         }
         break;
@@ -437,7 +437,7 @@ void EntityDraculaFinalForm(Entity* self) {
             if (!AnimateEntity(anim_80180B80, self)) {
                 SetSubStep(2);
             }
-            if (!self->animFrameDuration && self->pose == 3) {
+            if (!self->poseTimer && self->pose == 3) {
                 g_api.PlaySfx(0x866);
                 self->velocityY = FIX(-7.0);
             }

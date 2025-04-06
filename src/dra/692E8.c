@@ -1379,7 +1379,7 @@ block_160:
     }
     PlayAnimation(D_800B0130, D_800B01B8);
     if (g_Player.status & PLAYER_STATUS_DEAD) {
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
         PLAYER.hitboxState = PLAYER.hitParams = 0;

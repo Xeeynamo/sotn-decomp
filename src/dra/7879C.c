@@ -2043,7 +2043,7 @@ void EntityUnarmedAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if ((PLAYER.animFrameDuration == 1) && (PLAYER.pose == anim->soundFrame)) {
+    if ((PLAYER.poseTimer == 1) && (PLAYER.pose == anim->soundFrame)) {
         PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
@@ -2249,7 +2249,7 @@ void func_8011B5A4(Entity* self) {
     case 1:
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -2287,7 +2287,7 @@ void EntityUnkId24(Entity* self) {
         self->step++;
         return;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
     self->posY.val += self->velocityY;

@@ -91,7 +91,7 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
         self->anim = g_FaerieAnimationFrames[animationIndex];
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
     }
 }
 

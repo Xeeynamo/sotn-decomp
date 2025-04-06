@@ -387,7 +387,7 @@ void EntityDiplocephalusTail(Entity* self) {
             for (i = 0; i < self->ext.diplocephalusUnk.unk9D; i++) {
                 tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
             }
-            tempEntity->animFrameDuration = 0;
+            tempEntity->poseTimer = 0;
             tempEntity->pose = 0;
             tempEntity->step = 4;
             self->ext.diplocephalusUnk.unk9C = 0;
@@ -399,7 +399,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
     case 4:
         if (AnimateEntity(D_us_80181E30, self) == 0) {
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->step = 3;
         }
@@ -409,13 +409,13 @@ void EntityDiplocephalusTail(Entity* self) {
         if (self->ext.diplocephalusUnk.parent->ext.diplocephalus.hitParams2 !=
             0) {
             PlaySfxPositional(0x777);
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->step = 6;
             return;
         }
         if (!(Random() & 0x7F)) {
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->params = 1;
             self->step = 11;
@@ -423,7 +423,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
     case 6:
         if (AnimateEntity(D_us_80181DDC, self) == 0) {
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->step--;
         }
@@ -477,7 +477,7 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
     case 11:
         if (AnimateEntity(D_us_80181E0C, self) == 0) {
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->pose = 0;
             self->step = 5;
             return;

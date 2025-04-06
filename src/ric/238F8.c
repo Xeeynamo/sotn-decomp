@@ -292,7 +292,7 @@ void RicEntityHitByDark(Entity* entity) {
         entity->posY.val += entity->velocityY;
         entity->rotX += 8;
         entity->rotY += 8;
-        if (entity->animFrameDuration < 0) {
+        if (entity->poseTimer < 0) {
             DestroyEntity(entity);
         }
         break;

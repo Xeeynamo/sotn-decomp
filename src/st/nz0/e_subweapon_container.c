@@ -290,7 +290,7 @@ void func_801C7884(Entity* entity) {
         if (entity[-1].step != 1) {
             entity->entityId = E_PRIZE_DROP;
             entity->pfnUpdate = EntityPrizeDrop;
-            entity->animFrameDuration = 0;
+            entity->poseTimer = 0;
             entity->pose = 0;
             entity->step = 0;
             entity->hitboxState = 1;

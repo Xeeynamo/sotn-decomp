@@ -61,7 +61,7 @@ static void SetSpriteBank2(SpriteParts* animset) {
 #if !defined(W_029) && !defined(W_030) && !defined(W_044) && !defined(W_051)
 static void SetWeaponAnimation(u8 anim) {
     g_CurrentEntity->ext.weapon.anim = anim;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
 }
 #endif

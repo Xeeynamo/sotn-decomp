@@ -416,7 +416,7 @@ void RicEntitySmokePuff(Entity* self) {
         self->unk6C += 0xFE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }
@@ -766,7 +766,7 @@ void func_80161C2C(Entity* self) {
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
-            if (!(params & 1) && (self->animFrameDuration == step)) {
+            if (!(params & 1) && (self->poseTimer == step)) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
@@ -775,7 +775,7 @@ void func_80161C2C(Entity* self) {
             self->drawMode = DRAW_TPAGE;
         }
 
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -798,12 +798,12 @@ void func_80161EF8(Entity* self) {
         self->step++;
         break;
     case 1:
-        if ((self->pose == 6) && (self->animFrameDuration == self->step) &&
+        if ((self->pose == 6) && (self->poseTimer == self->step) &&
             (rand() & 1)) {
             RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
         }
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -1142,10 +1142,10 @@ void RicEntityMaria(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (self->pose == 0 && self->animFrameDuration == 1) {
+        if (self->pose == 0 && self->poseTimer == 1) {
             g_api.PlaySfx(0x882);
         }
-        if (self->pose == 4 && self->animFrameDuration == 1) {
+        if (self->pose == 4 && self->poseTimer == 1) {
             g_api.PlaySfx(0x883);
         }
 

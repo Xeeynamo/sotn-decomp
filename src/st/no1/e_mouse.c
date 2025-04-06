@@ -22,13 +22,13 @@ void EntityMouse(Entity* self) {
         self->zPriority = PLAYER.zPriority - 0x10;
         self->facingLeft = true;
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->anim = D_us_80180F48;
         break;
 
     case 1:
-        if (self->animFrameDuration < 0) {
-            self->animFrameDuration = 0;
+        if (self->poseTimer < 0) {
+            self->poseTimer = 0;
             self->pose = 0;
             self->anim = D_us_80180F6C;
             self->velocityX = D_us_80180F84[self->facingLeft];
@@ -47,7 +47,7 @@ void EntityMouse(Entity* self) {
                 if (offsetX < 0x1e0 && offsetX > 0x1a0) {
                     self->step = 3;
                     self->pose = 0;
-                    self->animFrameDuration = 0;
+                    self->poseTimer = 0;
                     self->anim = D_us_80180F7C;
                     self->ext.et_801B7D34.unk7E = 3;
                     self->velocityY = FIX(-2.75);
@@ -57,7 +57,7 @@ void EntityMouse(Entity* self) {
 
             self->step = 1;
             self->pose = 3;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             self->anim = D_us_80180F48;
 
         } else {
@@ -86,11 +86,11 @@ void EntityMouse(Entity* self) {
                 if (--self->ext.et_801B7D34.unk7E) {
                     self->velocityY = FIX(-2.75);
                     self->pose = 0;
-                    self->animFrameDuration = 0;
+                    self->poseTimer = 0;
                 } else {
                     self->step = 1;
                     self->pose = 3;
-                    self->animFrameDuration = 0;
+                    self->poseTimer = 0;
                     self->anim = D_us_80180F48;
                 }
             }

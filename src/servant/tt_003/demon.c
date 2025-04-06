@@ -140,7 +140,7 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_DemonAnimationFrames[animationIndex]) {
         self->anim = g_DemonAnimationFrames[animationIndex];
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
     }
 }
 
@@ -1511,7 +1511,7 @@ void func_us_801765A0(Entity* self) {
         self->unk5A = 0x79;
         self->anim = &D_us_80171CD8;
         self->pose = 0;
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         self->drawFlags |= FLAG_DRAW_ROTY;
         self->rotY = 0xC0;
 

@@ -229,7 +229,7 @@ void EntityFireWarg(Entity* self) {
         var_s1 = GetDistanceToPlayerX();
         if (self->ext.fireWarg.unk80) {
             --self->ext.fireWarg.unk80;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             break;
         }
 
@@ -590,7 +590,7 @@ void EntityFireWarg(Entity* self) {
         ent_s4 = self + 3;
         switch (self->step_s) {
         case 0:
-            ent_s0->animFrameDuration = 0;
+            ent_s0->poseTimer = 0;
             ent_s0->pose = 0;
             ent_s0->ext.fireWargHelper.unk7C = true;
 
