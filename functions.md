@@ -585,7 +585,7 @@
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | ric    | func_pspeu_092BE628                 |       61 |          8 |        |                                 |       |
 | dra    | func_8010A3F0                       |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
-| lib    | func_psp_09253D58                   |       61 |         10 |        |                                 |       |
+| lib    | func_psp_09253D58                   |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
 | no4    | GetLangAt                           |       61 |         10 |        |                                 |       |
 | no4    | func_pspeu_0923D4A0                 |       61 |         10 |        |                                 |       |
 | st0    | GetLangAt                           |       61 |         10 |        |                                 |       |
@@ -796,8 +796,8 @@
 | ric    | func_80161EF8                       |       93 |         13 |        |                                 |       |
 | ric    | RicHandleBladeDash                  |       93 |         17 |        |                                 |       |
 | lib    | func_psp_0924C6C0                   |       94 |          8 |        |                                 |       |
-| lib    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
-| no4    | func_psp_09254120                   |       95 |          8 |        |                                 |       |
+| lib    | func_psp_09254120                   |       95 |          8 |        | https://decomp.me/scratch/YcR3D | 0.996 |
+| no4    | func_psp_09254120                   |       95 |          8 |        | https://decomp.me/scratch/YcR3D | 0.996 |
 | ric    | RicEntitySlideKick                  |       95 |          9 |        |                                 |       |
 | lib    | func_us_801B3FB4                    |       95 |          9 |        |                                 |       |
 | dra    | func_8012E9C0                       |       95 |         11 |        |                                 |       |
