@@ -219,6 +219,7 @@ g_RicSensorsWallCrouch = 0x092D34A0;
 D_80154674 = 0x092D3508;
 D_80154688 = 0x092D3520;
 uv_anim_801548F4 = 0x092D3790;
+entity_functions = 0x092D37F8;
 g_RicFactoryBlueprints = 0x092D3918;
 entity_ranges = 0x092D3AF0;
 D_801541A8 = 0x092D42A8;

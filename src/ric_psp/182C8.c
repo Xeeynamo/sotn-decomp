@@ -309,7 +309,147 @@ void RicEntityHitByDark(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityDummy);
+static void RicEntityDummy(Entity* self) {}
+
+static void func_801603BC(void) {}
+
+void RicEntityFactory(Entity* self);
+void RicEntitySmokePuff(Entity* self);
+void RicEntitySubwpnCross(Entity* self);
+void func_80169C10(Entity* self);
+void RicEntityHitByCutBlood(Entity* self);
+void RicEntitySubwpnCrossTrail(Entity* self);
+void RicEntitySubwpnHolyWater(Entity* self);
+void RicEntitySubwpnHolyWaterFlame(Entity* self);
+void func_80161C2C(Entity* self);
+void RicEntityWhip(Entity* self);
+void RicEntityCrashHydroStorm(Entity* self);
+void RicEntityCrashCrossBeam(Entity* self);
+void RicEntitySubwpnCrashCross(Entity* self);
+void RicEntityNotImplemented1(Entity* self);
+void RicEntityNotImplemented2(Entity* self);
+void RicEntityArmBrandishWhip(Entity* self);
+void func_80167964(Entity* self);
+void RicEntityDummy(Entity* self);
+void func_80161EF8(Entity* self);
+void RicEntityNotImplemented3(Entity* self);
+void RicEntityRevivalColumn(Entity* self);
+void RicEntityApplyMariaPowerAnim(Entity* self);
+void RicEntitySlideKick(Entity* self);
+void RicEntityBladeDash(Entity* self);
+void func_801623E0(Entity* self);
+void func_80162604(Entity* self);
+void RicEntityMaria(Entity* self);
+void RicEntityMariaPowers(Entity* self);
+void func_80160F0C(Entity* self);
+void RicEntityNotImplemented4(Entity* self);
+void RicEntityPlayerBlinkWhite(Entity* self);
+void RicEntitySubwpnCrashCrossParticles(Entity* self);
+void func_801641A0(Entity* self);
+void RicEntityShrinkingPowerUpRing(Entity* self);
+void func_80167A70(Entity* self);
+void RicEntitySubwpnThrownAxe(Entity* self);
+void RicEntityCrashAxe(Entity* self);
+void RicEntitySubwpnThrownDagger(Entity* self);
+void func_80160D2C(Entity* self);
+void RicEntityHitByIce(Entity* self);
+void RicEntityHitByLightning(Entity* self);
+void RicEntitySubwpnReboundStone(Entity* self);
+void RicEntitySubwpnThrownVibhuti(Entity* self);
+void RicEntitySubwpnAgunea(Entity* self);
+void RicEntityAguneaHitEnemy(Entity* self);
+void RicEntityCrashVibhuti(Entity* self);
+void RicEntityVibhutiCrashCloud(Entity* self);
+void RicEntityCrashReboundStone(Entity* self);
+void func_8016D9C4(Entity* self);
+void RicEntityCrashReboundStoneExplosion(Entity* self);
+void RicEntityCrashBible(Entity* self);
+void RicEntityCrashBibleBeam(Entity* self);
+void RicEntitySubwpnBible(Entity* self);
+void RicEntitySubwpnBibleTrail(Entity* self);
+void RicEntitySubwpnStopwatch(Entity* self);
+void RicEntitySubwpnStopwatchCircle(Entity* self);
+void RicEntityCrashStopwatch(Entity* self);
+void func_8016F198(Entity* self);
+void RicEntityAguneaCircle(Entity* self);
+void RicEntityAguneaLightning(Entity* self);
+void RicEntityCrashReboundStoneParticles(Entity* self);
+void RicEntityHitByDark(Entity* self);
+void RicEntityHitByHoly(Entity* self);
+void RicEntityCrashStopwatchDoneSparkle(Entity* self);
+void RicEntityStopwatchCrashLightning(Entity* self);
+void RicEntityTeleport(Entity* self);
+void RicEntityDummy(Entity* self);
+PfnEntityUpdate entity_functions[] = {
+    RicEntityDummy,
+    RicEntityFactory,
+    RicEntitySmokePuff,
+    RicEntitySubwpnCross,
+    func_80169C10,
+    RicEntityHitByCutBlood,
+    RicEntitySubwpnCrossTrail,
+    RicEntitySubwpnHolyWater,
+    RicEntitySubwpnHolyWaterFlame,
+    func_80161C2C,
+    RicEntityWhip,
+    RicEntityCrashHydroStorm,
+    RicEntityCrashCrossBeam,
+    RicEntitySubwpnCrashCross,
+    RicEntityNotImplemented1,
+    RicEntityNotImplemented2,
+    RicEntityArmBrandishWhip,
+    func_80167964,
+    RicEntityDummy,
+    func_80161EF8,
+    RicEntityNotImplemented3,
+    RicEntityRevivalColumn,
+    RicEntityApplyMariaPowerAnim,
+    RicEntitySlideKick,
+    RicEntityBladeDash,
+    func_801623E0,
+    func_80162604,
+    RicEntityMaria,
+    RicEntityMariaPowers,
+    func_80160F0C,
+    RicEntityNotImplemented4,
+    RicEntityPlayerBlinkWhite,
+    RicEntitySubwpnCrashCrossParticles,
+    func_801641A0,
+    RicEntityShrinkingPowerUpRing,
+    func_80167A70,
+    RicEntitySubwpnThrownAxe,
+    RicEntityCrashAxe,
+    RicEntitySubwpnThrownDagger,
+    func_80160D2C,
+    RicEntityHitByIce,
+    RicEntityHitByLightning,
+    RicEntitySubwpnReboundStone,
+    RicEntitySubwpnThrownVibhuti,
+    RicEntitySubwpnAgunea,
+    RicEntityAguneaHitEnemy,
+    RicEntityCrashVibhuti,
+    RicEntityVibhutiCrashCloud,
+    RicEntityCrashReboundStone,
+    func_8016D9C4,
+    RicEntityCrashReboundStoneExplosion,
+    RicEntityCrashBible,
+    RicEntityCrashBibleBeam,
+    RicEntitySubwpnBible,
+    RicEntitySubwpnBibleTrail,
+    RicEntitySubwpnStopwatch,
+    RicEntitySubwpnStopwatchCircle,
+    RicEntityCrashStopwatch,
+    func_8016F198,
+    RicEntityAguneaCircle,
+    RicEntityAguneaLightning,
+    RicEntityCrashReboundStoneParticles,
+    RicEntityHitByDark,
+    RicEntityHitByHoly,
+    RicEntityCrashStopwatchDoneSparkle,
+    RicEntityStopwatchCrashLightning,
+    RicEntityTeleport,
+    RicEntityDummy};
+STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicUpdatePlayerEntities);
 
