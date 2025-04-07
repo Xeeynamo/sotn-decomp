@@ -782,7 +782,33 @@ void RicEntityFactory(Entity* self) {
     self->ext.factory.delay = self->ext.factory.tCycle;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySlideKick);
+void RicEntitySlideKick(Entity* entity) {
+    if (PLAYER.step != PL_S_SLIDE) {
+        DestroyEntity(entity);
+    } else {
+        entity->posX.i.hi = PLAYER.posX.i.hi;
+        entity->posY.i.hi = PLAYER.posY.i.hi;
+        entity->facingLeft = PLAYER.facingLeft;
+        if (entity->step == 0) {
+            entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                            FLAG_KEEP_ALIVE_OFFCAMERA;
+            entity->hitboxOffX = 0x14;
+            entity->hitboxOffY = 0xC;
+            entity->hitboxWidth = entity->hitboxHeight = 9;
+            entity->ext.subweapon.subweaponId = PL_W_KICK;
+            RicSetSubweaponParams(entity);
+            entity->ext.subweapon.timer = entity->hitboxState;
+            entity->step++;
+        }
+        entity->hitboxState = entity->ext.subweapon.timer;
+        if (PLAYER.pose < 2) {
+            entity->hitboxState = 0;
+        }
+        if (PLAYER.pose > 7) {
+            DestroyEntity(entity);
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80160D2C);
 

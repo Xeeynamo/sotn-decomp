@@ -163,8 +163,7 @@ void RicEntitySlideKick(Entity* entity) {
                             FLAG_KEEP_ALIVE_OFFCAMERA;
             entity->hitboxOffX = 0x14;
             entity->hitboxOffY = 0xC;
-            entity->hitboxHeight = 9;
-            entity->hitboxWidth = 9;
+            entity->hitboxWidth = entity->hitboxHeight = 9;
             entity->ext.subweapon.subweaponId = PL_W_KICK;
             RicSetSubweaponParams(entity);
             entity->ext.subweapon.timer = entity->hitboxState;
@@ -174,7 +173,7 @@ void RicEntitySlideKick(Entity* entity) {
         if (PLAYER.pose < 2) {
             entity->hitboxState = 0;
         }
-        if (PLAYER.pose >= 8) {
+        if (PLAYER.pose > 7) {
             DestroyEntity(entity);
         }
     }
