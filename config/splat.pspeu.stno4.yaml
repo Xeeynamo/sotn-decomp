@@ -72,8 +72,11 @@ segments:
       - [0x67200, .data, no4/e_red_door]
       - [0x67218, .data, no4/st_update]
       - [0x67248, data]
+<<<<<<< HEAD
       - [0x67498, .data, no4/e_particles]
       - [0x67518, data]
+=======
+>>>>>>> master
       - [0x67A60, .data, no4/e_misc]
       - [0x67AB0, .data, no4/collision]
       - [0x67E88, data]
