@@ -451,7 +451,73 @@ PfnEntityUpdate entity_functions[] = {
     RicEntityDummy};
 STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicUpdatePlayerEntities);
+// Corresponding DRA function is UpdatePlayerEntities
+extern AnimationFrame* g_RicEmptyAnimGroup[];
+void RicUpdatePlayerEntities(void) {
+    SubweaponDef subwpn;
+    s32 isPrologueTimeStopped;
+    s32 enemyId;
+    s32 i;
+    s32 j;
+    Entity* entity;
+
+    isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
+    entity = g_CurrentEntity = &g_Entities[4];
+    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId != 0) {
+            if (entity->step == 0) {
+                entity->pfnUpdate = entity_functions[entity->entityId];
+            }
+            if (!isPrologueTimeStopped || (entity->flags & FLAG_UNK_10000)) {
+                entity->pfnUpdate(entity);
+                entity = g_CurrentEntity;
+                if (entity->entityId != 0) {
+                    if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
+                        (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                         entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                        DestroyEntity(g_CurrentEntity);
+                    } else if (entity->flags & FLAG_UNK_100000) {
+                        g_api.UpdateAnim(0, g_RicEmptyAnimGroup);
+                    }
+                }
+            }
+        }
+    }
+    if (D_80174FAC) {
+        D_80174FAC--;
+        if (D_80174FAC & 1) {
+            g_api.g_pfn_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
+        }
+    }
+    D_80174F80[1] = D_80174F80[2] = 0;
+    if (g_Entities[16].enemyId == 1) {
+        D_80174F80[1] = 1;
+    } else if (g_Entities[16].enemyId == 2) {
+        D_80174F80[2] = 1;
+    }
+    for (j = 3; j < 11; j++) {
+        D_80174F80[j] = 0;
+    }
+    entity = &g_Entities[17];
+    for (j = 17; j < 48; entity++, j++) {
+        enemyId = entity->enemyId;
+        if (enemyId > 2) {
+            D_80174F80[enemyId]++;
+        }
+    }
+    // This IF will fire if we have enough hearts to use a subweapon crash.
+    // No idea what it's doing here.
+    if (func_8015FB84(&subwpn, true, false) >= 0) {
+        g_Player.status |= PLAYER_STATUS_UNK200000;
+    }
+    if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
+        FntPrint("dead player\n");
+        entity = &g_Entities[4];
+        for (i = 4; i < 64; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
 
 // clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicCreateEntFactoryFromEntity);

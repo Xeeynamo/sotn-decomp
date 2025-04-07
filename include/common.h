@@ -59,7 +59,7 @@
 #define __builtin_memcpy memcpy
 #endif
 
-#ifdef _MSC_VER
+#if defined(VERSION_PSP) || defined(_MSC_VER)
 #define ZERO_LEN 1
 #else
 #define ZERO_LEN 0

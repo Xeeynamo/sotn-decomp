@@ -452,62 +452,57 @@ static PfnEntityUpdate entity_functions[] = {
 STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 // Corresponding DRA function is UpdatePlayerEntities
+extern AnimationFrame* g_RicEmptyAnimGroup[];
 void RicUpdatePlayerEntities(void) {
     SubweaponDef subwpn;
-    Entity* entity;
-    s32 i;
-    s32 i2;
-    s32 i3;
     s32 isPrologueTimeStopped;
-    s32 enemy;
-    s32 enemy2;
+    s32 enemyId;
+    s32 i;
+    s32 j;
+    Entity* entity;
 
     isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
     for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
-        if (entity->entityId) {
+        if (entity->entityId != 0) {
             if (entity->step == 0) {
                 entity->pfnUpdate = entity_functions[entity->entityId];
             }
             if (!isPrologueTimeStopped || (entity->flags & FLAG_UNK_10000)) {
                 entity->pfnUpdate(entity);
                 entity = g_CurrentEntity;
-                if (entity->entityId) {
+                if (entity->entityId != 0) {
                     if (!(entity->flags & FLAG_KEEP_ALIVE_OFFCAMERA) &&
-                        (entity->posX.i.hi < -32 || entity->posX.i.hi > 288 ||
-                         entity->posY.i.hi < -16 || entity->posY.i.hi > 256)) {
-                        DestroyEntity(entity);
+                        (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                         entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                        DestroyEntity(g_CurrentEntity);
                     } else if (entity->flags & FLAG_UNK_100000) {
-                        g_api.UpdateAnim(0, D_80154674);
+                        g_api.UpdateAnim(0, g_RicEmptyAnimGroup);
                     }
                 }
             }
         }
     }
-
-    if (D_80174FAC != 0) {
-        if (--D_80174FAC & 1) {
+    if (D_80174FAC) {
+        D_80174FAC--;
+        if (D_80174FAC & 1) {
             g_api.g_pfn_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
         }
     }
-
     D_80174F80[1] = D_80174F80[2] = 0;
-    enemy = g_Entities[16].enemyId;
-    if (enemy == 1) {
+    if (g_Entities[16].enemyId == 1) {
         D_80174F80[1] = 1;
-    } else if (enemy == 2) {
+    } else if (g_Entities[16].enemyId == 2) {
         D_80174F80[2] = 1;
     }
-
-    for (i2 = 3; i2 < 11; i2++) {
-        D_80174F80[i2] = 0;
+    for (j = 3; j < 11; j++) {
+        D_80174F80[j] = 0;
     }
-
     entity = &g_Entities[17];
-    for (i3 = 17; i3 < 48; entity++, i3++) {
-        enemy2 = entity->enemyId;
-        if (enemy2 >= 3) {
-            D_80174F80[entity->enemyId]++;
+    for (j = 17; j < 48; entity++, j++) {
+        enemyId = entity->enemyId;
+        if (enemyId > 2) {
+            D_80174F80[enemyId]++;
         }
     }
     // This IF will fire if we have enough hearts to use a subweapon crash.
@@ -517,8 +512,7 @@ void RicUpdatePlayerEntities(void) {
     }
     if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
         FntPrint("dead player\n");
-        entity = &g_Entities[17]; // Weird code here. Set entity to #17 but...
-        entity -= 13; // then change to #4 before the for-loop starting with 4?
+        entity = &g_Entities[4];
         for (i = 4; i < 64; i++, entity++) {
             entity->hitboxState = 0;
         }

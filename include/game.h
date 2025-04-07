@@ -1588,7 +1588,8 @@ typedef struct {
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
-    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(
+        s32 arg0, s32 arg1, s32 arg2, s32 arg3);
     /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
