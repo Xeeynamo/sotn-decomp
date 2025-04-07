@@ -519,9 +519,30 @@ void RicUpdatePlayerEntities(void) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicCreateEntFactoryFromEntity);
-// clang-format on
+// Similar to the version in DRA but with some logic removed.
+// arg2 is unused, but needed to match other functions that call this function,
+// probably part of the code for a debug build
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2) {
+    Entity* entity = RicGetFreeEntity(8, 16);
+    if (!entity) {
+        return NULL;
+    }
+    DestroyEntity(entity);
+    entity->entityId = E_FACTORY;
+    // the parent pointer must align for anything the factory creates
+    entity->ext.factory.parent = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
+    entity->params = factoryParams & 0xFFF;
+    entity->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
+    if (source->flags & FLAG_UNK_10000) {
+        entity->flags |= FLAG_UNK_10000;
+    }
+    return entity;
+}
 
 extern u8 entity_ranges[][2];
 void RicEntityFactory(Entity* self) {

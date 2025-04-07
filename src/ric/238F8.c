@@ -613,31 +613,27 @@ FactoryBlueprint g_RicFactoryBlueprints[] = {
 STATIC_ASSERT(
     LEN(g_RicFactoryBlueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 
-// Similar to the version in DRA but with some logic removed
+// Similar to the version in DRA but with some logic removed.
+// arg2 is unused, but needed to match other functions that call this function,
+// probably part of the code for a debug build
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2) {
-    /**
-     * arg2 is unused, but needed to match other functions that call
-     * this function, probably part of the code for a debug build
-     */
     Entity* entity = RicGetFreeEntity(8, 16);
-
-    if (entity != NULL) {
-        DestroyEntity(entity);
-        entity->entityId = E_FACTORY;
-        // the parent pointer must align for anything the factory creates
-        entity->ext.factory.parent = source;
-        entity->posX.val = source->posX.val;
-        entity->posY.val = source->posY.val;
-        entity->facingLeft = source->facingLeft;
-        entity->zPriority = source->zPriority;
-        entity->params = factoryParams & 0xFFF;
-        entity->ext.factory.paramsBase = (factoryParams >> 8) & 0xFF00;
-        if (source->flags & FLAG_UNK_10000) {
-            entity->flags |= FLAG_UNK_10000;
-        }
-    } else {
+    if (!entity) {
         return NULL;
+    }
+    DestroyEntity(entity);
+    entity->entityId = E_FACTORY;
+    // the parent pointer must align for anything the factory creates
+    entity->ext.factory.parent = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
+    entity->params = factoryParams & 0xFFF;
+    entity->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
+    if (source->flags & FLAG_UNK_10000) {
+        entity->flags |= FLAG_UNK_10000;
     }
     return entity;
 }
