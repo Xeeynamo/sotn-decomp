@@ -2,14 +2,9 @@
 #include "../wrp/wrp.h"
 #include "../pfn_entity_update.h"
 
-// entity table to allocate new entities
-extern PfnEntityUpdate* PfnEntityUpdates;
-
 extern LayoutEntity* D_8D2DE7C;
 extern LayoutEntity* D_8D2DF50;
 
-// entity table to allocate new entities
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern Overlay OVL_EXPORT(Overlay);
 
 extern s32 E_ID(ID_11);
