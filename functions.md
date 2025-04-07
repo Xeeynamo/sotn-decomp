@@ -181,6 +181,7 @@
 | dra    | func_800E493C                       |       23 |          4 |        |                                 |       |
 | dra    | 65790.rodata                        |       24 |          0 | Yes    |                                 |       |
 | ric    | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
+| no4    | e_spear_guard.rodata                |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
 | dra    | func_8010E3B8                       |       24 |          2 |        |                                 |       |
 | dra    | func_800EDAE4                       |       24 |          2 |        |                                 |       |
@@ -640,6 +641,7 @@
 | dra    | func_80134B48                       |       67 |          8 |        |                                 |       |
 | dra    | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
 | lib    | SkeletonAttackCheck                 |       67 |         10 |        |                                 |       |
+| no4    | unk_26740.rodata                    |       68 |          0 | Yes    |                                 |       |
 | dra    | SetRoomBackgroundLayer              |       68 |          2 |        |                                 |       |
 | dra    | SortTimeAttackEntries               |       68 |          5 |        |                                 |       |
 | no4    | func_pspeu_0923B288                 |       68 |          5 |        |                                 |       |
@@ -754,7 +756,6 @@
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
 | ric    | 182C8.rodata                        |       86 |          0 | Yes    |                                 |       |
-| no4    | unk_25360.rodata                    |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
 | dra    | func_psp_09141FA8                   |       86 |          9 |        |                                 |       |
 | dra    | func_80113D7C                       |       86 |         11 |        |                                 |       |
@@ -1292,7 +1293,7 @@
 | dra    | EntitySubwpnBible                   |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra    | PlayerStepStoned                    |      482 |         75 |        |                                 |       |
 | no4    | func_pspeu_0923B378                 |      485 |         30 |        |                                 |       |
-| ric    | RicEntitySmokePuff                  |      487 |         42 |        |                                 |       |
+| ric    | RicEntitySmokePuff                  |      487 |         42 |        | https://decomp.me/scratch/zTa6L | 0.995 |
 | ric    | RicEntitySubwpnBible                |      490 |         41 |        | https://decomp.me/scratch/DjAnf | 0.998 |
 | dra    | func_800F99B8                       |      493 |         37 |        |                                 |       |
 | no4    | EntitySurfacingWater                |      495 |         38 |        |                                 |       |
@@ -1392,7 +1393,7 @@
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
-| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    |                                 |       |
+| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.888 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
