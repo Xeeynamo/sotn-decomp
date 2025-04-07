@@ -150,9 +150,9 @@
 | lib    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
+| no4    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | no4    | SetSubStep                          |       21 |          1 |        |                                 |       |
-| no4    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | st0    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 1.0   |
@@ -240,7 +240,7 @@
 | lib    | e_lesser_demon.rodata               |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                     |       28 |          0 | Yes    |                                 |       |
 | no4    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
-| no4    | st_update.rodata                    |       28 |          0 | Yes    |                                 |       |
+| no4    | unk_10C30.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | unk_1E818.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                   |       28 |          0 | Yes    |                                 |       |
