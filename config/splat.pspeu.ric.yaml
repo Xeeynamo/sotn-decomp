@@ -68,7 +68,7 @@ segments:
       - [0x2D2D0, .data, ric/319C4]
       - [0x2D308, data]
       - [0x2D590, .data, ric_psp/182C8]
-      - [0x2D718, data]
+      - [0x2D900, data]
       - [0x30100, .rodata, ric/pl_handlers]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]
