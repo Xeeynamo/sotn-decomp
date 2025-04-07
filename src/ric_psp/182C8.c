@@ -868,7 +868,27 @@ void RicEntityBladeDash(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80160F0C);
+void func_80160F0C(Entity* self) {
+    if (PLAYER.step != PL_S_HIGHJUMP) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (self->step == 0) {
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 0xC;
+        self->hitboxOffY = -0x1A;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        // High jump attack is a subweapon!
+        self->ext.subweapon.subweaponId = PL_W_HIGHJUMP;
+        RicSetSubweaponParams(self);
+        self->step++;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySmokePuff);
 
