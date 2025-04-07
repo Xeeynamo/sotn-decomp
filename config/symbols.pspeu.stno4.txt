@@ -103,6 +103,7 @@ g_SpriteBanks = 0x09267098;
 g_TileLayers = 0x092674F8;
 g_Cluts = 0x092676C0;
 g_EntityGfxs = 0x09267890;
+NO4_RedDoorTiles = 0x092678E0;
 NO4_EntityUpdates = 0x09267910;
 g_EInitObtainable = 0x09267AA0;
 g_EInitParticle = 0x09267AB0;
