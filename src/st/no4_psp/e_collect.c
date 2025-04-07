@@ -24,3 +24,5 @@ INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_collect", EntityExplosion);
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_collect", BlinkItem);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_collect", EntityEquipItemDrop);
+
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_collect", EntityRelicOrb);
