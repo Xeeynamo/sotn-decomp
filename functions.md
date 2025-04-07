@@ -1133,7 +1133,7 @@
 | dra    | func_80119F70                       |      255 |         29 |        | https://decomp.me/scratch/V0pmD | 0.995 |
 | dra    | MenuFamiliarsDraw                   |      256 |         24 | Yes    |                                 |       |
 | dra    | CheckWallLeft                       |      256 |         34 |        |                                 |       |
-| ric    | RicUpdatePlayerEntities             |      256 |         35 |        |                                 |       |
+| ric    | RicUpdatePlayerEntities             |      256 |         35 |        | https://decomp.me/scratch/k3yTt | 0.994 |
 | ric    | RicHandleSlide                      |      256 |         45 |        | https://decomp.me/scratch/Xvoml | 0.988 |
 | ric    | RicEntityHitByHoly                  |      257 |         29 |        |                                 |       |
 |        | FindValidTarget                     |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
@@ -1299,7 +1299,7 @@
 | dra    | EntitySubwpnAgunea                  |      495 |         59 |        | https://decomp.me/scratch/K05uj | 0.997 |
 | ric    | RicEntityCrashBibleBeam             |      496 |         50 |        | https://decomp.me/scratch/xwy9o | 0.996 |
 | dra    | func_8010FDF8                       |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
-| ric    | RicEntityFactory                    |      504 |         41 | Yes    |                                 |       |
+| ric    | RicEntityFactory                    |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
 | no4    | func_pspeu_09259878                 |      507 |         90 | Yes    |                                 |       |
 | ric    | RicHandleDead                       |      508 |         59 |        | https://decomp.me/scratch/m1ZHK | 0.989 |
 | ric    | CheckStageCollision                 |      509 |         51 |        | https://decomp.me/scratch/GmZxv | 0.995 |
