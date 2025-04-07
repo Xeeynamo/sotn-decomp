@@ -782,9 +782,10 @@ void func_80161EF8(Entity* self) {
         self->step++;
         break;
     case 1:
-        if ((self->pose == 6) && (self->poseTimer == self->step) &&
-            (rand() & 1)) {
-            RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
+        if (self->pose == 6) {
+            if (self->poseTimer == 1 && (rand() & 1)) {
+                RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
+            }
         }
         self->posY.val += self->velocityY;
         if (self->poseTimer < 0) {

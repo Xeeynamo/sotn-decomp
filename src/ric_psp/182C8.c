@@ -1397,7 +1397,34 @@ void func_80161C2C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80161EF8);
+static AnimationFrame anim_80154E38[] = {
+    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(6, 0)},
+    {2, FRAME(7, 0)}, {2, FRAME(8, 0)}, A_END};
+void func_80161EF8(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_DRA(2);
+        self->anim = anim_80154E38;
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_UNK_10000 |
+                      FLAG_POS_PLAYER_LOCKED;
+        self->zPriority = PLAYER.zPriority + 4;
+        self->velocityY = (rand() & 0x3FFF) - 0x10000;
+        self->step++;
+        break;
+    case 1:
+        if (self->pose == 6) {
+            if (self->poseTimer == 1 && (rand() & 1)) {
+                RicCreateEntFactoryFromEntity(self, BP_EMBERS, 0);
+            }
+        }
+        self->posY.val += self->velocityY;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityApplyMariaPowerAnim);
 
