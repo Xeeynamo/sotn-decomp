@@ -118,4 +118,6 @@ g_EInitThrownSpear = 0x09267BE0;
 g_EInitBoneArcher = 0x09267BF0;
 g_EInitBoneArcherArrow = 0x09267C00;
 g_Rooms = 0x09267C50;
+NO4_PrizeDrops = 0x0929CD18;
 g_ItemIconSlots = 0x092A0670;
+obtainedStr = 0x092A06B0;
