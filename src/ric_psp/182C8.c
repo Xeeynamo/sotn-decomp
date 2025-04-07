@@ -1310,7 +1310,92 @@ void RicEntityHitByCutBlood(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80161C2C);
+// DRA function is func_8011EDA8
+static AnimationFrame anim_80154DC8[] = {
+    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
+    {2, FRAME(3, 0)}, {2, FRAME(4, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)}, {1, FRAME(8, 0)}, A_END};
+static AnimationFrame anim_80154E04[] = {
+    {1, FRAME(9, 0)},
+    {2, FRAME(10, 0)},
+    {2, FRAME(11, 0)},
+    {2, FRAME(12, 0)},
+    {2, FRAME(13, 0)},
+    {2, FRAME(14, 0)},
+    {2, FRAME(15, 0)},
+    {2, FRAME(16, 0)},
+    {2, FRAME(17, 0)},
+    {2, FRAME(18, 0)},
+    {3, FRAME(19, 0)},
+    {4, FRAME(20, 0)},
+    A_END};
+void func_80161C2C(Entity* self) {
+    s16 paramsHi;
+    s16 paramsLo;
+
+    paramsLo = self->params & 0xFF;
+    paramsHi = (self->params >> 8) & 0xFF;
+    switch (self->step) {
+    case 0:
+        if (paramsHi == 1) {
+            self->rotX = 0xC0;
+            self->rotY = 0xC0;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->animSet = ANIMSET_DRA(2);
+            self->anim = anim_80154E04;
+        }
+        if (paramsHi == 0 || paramsHi == 2) {
+            if (paramsLo & 3) {
+                self->anim = anim_80154DC8;
+                self->rotX = 0x120;
+                self->rotY = 0x120;
+                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->animSet = ANIMSET_DRA(2);
+            } else {
+                self->animSet = ANIMSET_DRA(5);
+                self->anim = anim_smoke_puff;
+                self->palette = PAL_OVL(0x170);
+            }
+        }
+        self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
+        if (rand() & 3) {
+            self->zPriority = PLAYER.zPriority + 2;
+        } else {
+            self->zPriority = PLAYER.zPriority - 2;
+        }
+        if (paramsHi == 2) {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
+        }
+        self->posY.i.hi =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
+        self->velocityY = FIX(-0.5);
+        self->velocityX = PLAYER.velocityX >> 2;
+        self->step++;
+        break;
+    case 1:
+        self->rotX -= 4;
+        self->rotY -= 4;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
+            self->drawMode = DRAW_TPAGE;
+            if (!(paramsLo & 1) && self->poseTimer == 1) {
+                RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
+            }
+        }
+        if (self->pose == 16 && self->anim == anim_smoke_puff) {
+            self->drawMode = DRAW_TPAGE;
+        }
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80161EF8);
 

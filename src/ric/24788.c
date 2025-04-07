@@ -701,12 +701,12 @@ static AnimationFrame anim_80154E04[] = {
     {4, FRAME(20, 0)},
     A_END};
 void func_80161C2C(Entity* self) {
-    u16 params = self->params;
-    s16 paramsHi = self->params >> 8;
-    s32 step = self->step;
-    s32 rnd;
+    s16 paramsHi;
+    s16 paramsLo;
 
-    switch (step) {
+    paramsLo = self->params & 0xFF;
+    paramsHi = (self->params >> 8) & 0xFF;
+    switch (self->step) {
     case 0:
         if (paramsHi == 1) {
             self->rotX = 0xC0;
@@ -715,9 +715,8 @@ void func_80161C2C(Entity* self) {
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
-
-        if ((paramsHi == 0) || (paramsHi == 2)) {
-            if (params & 3) {
+        if (paramsHi == 0 || paramsHi == 2) {
+            if (paramsLo & 3) {
                 self->anim = anim_80154DC8;
                 self->rotX = 0x120;
                 self->rotY = 0x120;
@@ -730,26 +729,22 @@ void func_80161C2C(Entity* self) {
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
-
-        if (rand() % 4) {
+        if (rand() & 3) {
             self->zPriority = PLAYER.zPriority + 2;
         } else {
             self->zPriority = PLAYER.zPriority - 2;
         }
-
         if (paramsHi == 2) {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() % 44) - 22;
         } else {
             self->posX.i.hi = PLAYER.posX.i.hi + (rand() & 15) - 8;
         }
-
-        rnd = rand() & 31;
-        self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY + rnd - 16;
+        self->posY.i.hi =
+            PLAYER.posY.i.hi + PLAYER.hitboxOffY + (rand() & 31) - 16;
         self->velocityY = FIX(-0.5);
         self->velocityX = PLAYER.velocityX >> 2;
         self->step++;
         break;
-
     case 1:
         self->rotX -= 4;
         self->rotY -= 4;
@@ -757,15 +752,13 @@ void func_80161C2C(Entity* self) {
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
             self->drawMode = DRAW_TPAGE;
-            if (!(params & 1) && (self->poseTimer == step)) {
+            if (!(paramsLo & 1) && self->poseTimer == 1) {
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
-
-        if ((self->pose == 16) && (self->anim == anim_smoke_puff)) {
+        if (self->pose == 16 && self->anim == anim_smoke_puff) {
             self->drawMode = DRAW_TPAGE;
         }
-
         if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
