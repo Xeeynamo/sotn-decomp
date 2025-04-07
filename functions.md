@@ -106,7 +106,7 @@
 | dra    | 80.rodata                           |       18 |          0 | Yes    |                                 |       |
 | lib    | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
 | lib    | unk_3B53C.rodata                    |       18 |          0 | Yes    |                                 |       |
-| no4    | e_room_fg.rodata                    |       18 |          0 | Yes    |                                 |       |
+| no4    | unk_221F8.rodata                    |       18 |          0 | Yes    |                                 |       |
 | dra    | SetGPUBuffRGB                       |       19 |          1 |        |                                 |       |
 | dra    | SetGPUBuffRGBZero                   |       19 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                       |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
@@ -150,9 +150,9 @@
 | lib    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
+| no4    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | no4    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
-| no4    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 1.0   |
@@ -665,8 +665,8 @@
 | lib    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | lib    | func_us_801B0FBC                    |       71 |          7 |        |                                 |       |
-| no4    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | no4    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
+| no4    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | st0    | GetNormalizedAngle                  |       71 |          7 |        |                                 |       |
 | wrp    | ReplaceBreakableWithItemDrop        |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | wrp    | CollectGold                         |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
@@ -754,7 +754,7 @@
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
 | ric    | 182C8.rodata                        |       86 |          0 | Yes    |                                 |       |
-| no4    | prim_helpers.rodata                 |       86 |          0 | Yes    |                                 |       |
+| no4    | unk_25360.rodata                    |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
 | dra    | func_psp_09141FA8                   |       86 |          9 |        |                                 |       |
 | dra    | func_80113D7C                       |       86 |         11 |        |                                 |       |
@@ -1340,7 +1340,7 @@
 | ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
-| dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
+| dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/SH4IO | 0.951 |
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
