@@ -844,7 +844,29 @@ void func_80160D2C(Entity* self) {
     self->hitFlags = 0;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityBladeDash);
+// created from a blueprint, #24
+void RicEntityBladeDash(Entity* self) {
+    if (PLAYER.step != PL_S_BLADEDASH) {
+        DestroyEntity(self);
+    } else {
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->facingLeft = PLAYER.facingLeft;
+        if (self->step == 0) {
+            self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                          FLAG_KEEP_ALIVE_OFFCAMERA;
+            self->hitboxOffX = self->hitboxOffY = 0;
+            self->hitboxWidth = self->hitboxHeight = 20;
+            // Wow! So blade dash is treated as a subweapon!
+            self->ext.subweapon.subweaponId = PL_W_BIBLE_BEAM;
+            RicSetSubweaponParams(self);
+            self->step++;
+        }
+        if (PLAYER.pose > 18) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80160F0C);
 

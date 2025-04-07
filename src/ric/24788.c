@@ -224,16 +224,14 @@ void RicEntityBladeDash(Entity* self) {
         if (self->step == 0) {
             self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
                           FLAG_KEEP_ALIVE_OFFCAMERA;
-            self->hitboxHeight = 20;
-            self->hitboxWidth = 20;
-            self->hitboxOffY = 0;
-            self->hitboxOffX = 0;
+            self->hitboxOffX = self->hitboxOffY = 0;
+            self->hitboxWidth = self->hitboxHeight = 20;
             // Wow! So blade dash is treated as a subweapon!
             self->ext.subweapon.subweaponId = PL_W_BIBLE_BEAM;
             RicSetSubweaponParams(self);
             self->step++;
         }
-        if (PLAYER.pose >= 19) {
+        if (PLAYER.pose > 18) {
             DestroyEntity(self);
         }
     }
