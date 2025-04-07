@@ -3,14 +3,14 @@
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09252930);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09252B00);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntityAlucardWaterEffect);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09253B00);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntitySplashWater);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09254690);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntitySurfacingWater);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09254DE8);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntitySideWaterSplash);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09255310);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntitySmallWaterDrop);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", func_pspeu_09255640);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1B2B0", EntityWaterDrop);

@@ -60,6 +60,8 @@ segments:
       - [0x233A0, c, no4_psp/st_common]
       - [0x24C20, c, no4_psp/prim_helpers]
       - [0x28700, data]
+      - [0x30290, .data, no4_psp/e_init]
+      - [0x305D0, data]
       - [0x67218, .data, no4/st_update]
       - [0x67248, data]
       - [0x67AB0, .data, no4/collision]
