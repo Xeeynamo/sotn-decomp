@@ -128,7 +128,6 @@
 | ric    | pl_setstep.rodata                   |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata              |       20 |          0 | Yes    |                                 |       |
-| no4    | e_misc.rodata                       |       20 |          0 | Yes    |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
 | dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
@@ -240,7 +239,6 @@
 | dra    | func_psp_09140DB0                   |       27 |          6 |        |                                 |       |
 | lib    | e_lesser_demon.rodata               |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                     |       28 |          0 | Yes    |                                 |       |
-| no4    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | unk_10C30.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | unk_1E818.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
@@ -421,6 +419,7 @@
 | dra    | func_psp_090F6A90                   |       41 |         15 |        |                                 |       |
 |        | bat.rodata                          |       42 |          0 | Yes    |                                 |       |
 | lib    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
+| no4    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | wrp    | e_collect.rodata                    |       42 |          0 | Yes    |                                 |       |
 | dra    | MemcardParse                        |       42 |          3 |        | https://decomp.me/scratch/wkv7d | 1.0   |
 | dra    | MenuDrawInt                         |       42 |          3 |        |                                 |       |
@@ -1393,7 +1392,7 @@
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
-| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.888 |
+| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.998 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
