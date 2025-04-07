@@ -222,6 +222,7 @@ uv_anim_801548F4 = 0x092D3790;
 entity_functions = 0x092D37F8;
 g_RicFactoryBlueprints = 0x092D3918;
 entity_ranges = 0x092D3AF0;
+anim_smoke_puff = 0x092D3B38;
 D_801541A8 = 0x092D42A8;
 D_801530AC = 0x092D46D0;
 D_80153AA0 = 0x092D50C8;

@@ -890,7 +890,161 @@ void func_80160F0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntitySmokePuff);
+// Entity ID #2. Created by 6 blueprints:
+// 0, 1, 24, 74, 75, 76.
+// Matches DRA func_8011B5A4
+static s16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
+static s32 velocity_x_80154C5C[] = {
+    -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
+static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
+static AnimationFrame anim_smoke_puff[] = {
+    {1, FRAME(0x01, 0)},
+    {1, FRAME(0x02, 0)},
+    {1, FRAME(0x03, 0)},
+    {1, FRAME(0x04, 0)},
+    {1, FRAME(0x05, 0)},
+    {1, FRAME(0x06, 0)},
+    {1, FRAME(0x07, 0)},
+    {1, FRAME(0x08, 0)},
+    {1, FRAME(0x09, 0)},
+    {1, FRAME(0x0A, 0)},
+    {1, FRAME(0x0B, 0)},
+    {1, FRAME(0x0C, 0)},
+    {1, FRAME(0x0D, 0)},
+    {1, FRAME(0x0E, 0)},
+    {1, FRAME(0x0F, 0)},
+    {1, FRAME(0x10, 0)},
+    {1, FRAME(0x11, 0)},
+    {1, FRAME(0x12, 0)},
+    {1, FRAME(0x13, 0)},
+    {1, FRAME(0x14, 0)},
+    {1, FRAME(0x15, 0)},
+    {1, FRAME(0x16, 0)},
+    {1, FRAME(0x17, 0)},
+    {1, FRAME(0x18, 0)},
+    A_END};
+static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
+static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
+void RicEntitySmokePuff(Entity* self) {
+    s16 posX;
+    s32 i;
+
+    s16 paramsHi = self->params >> 8;
+    s16 paramsLo = self->params & 0xFF;
+
+    if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
+        DestroyEntity(self);
+        return;
+    }
+    switch (self->step) {
+    case 0:
+        self->animSet = 5;
+        self->anim = anim_smoke_puff;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
+        self->unk6C = 0x60;
+        posX = pos_x_80154C50[paramsLo];
+        if (paramsHi == 0) {
+            posX += 6;
+        }
+        if (paramsHi == 1) {
+            posX -= 8;
+        }
+        if (paramsHi == 2) {
+            posX -= 6;
+        }
+        if (paramsHi == 5) {
+            posX = -6;
+        }
+        if (paramsHi == 3) {
+            self->posY.i.hi -= 8;
+        }
+        if (paramsHi == 4) {
+            for (i = paramsLo * 2; i < LEN(sensors1_80154CE4); i++) {
+                if (g_Player.colWall[sensors1_80154CE4[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(sensors1_80154CE4)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi =
+                PLAYER.posX.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].x;
+            self->posY.i.hi =
+                PLAYER.posY.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].y;
+            self->velocityY = FIX(-0.25);
+            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 8) {
+            for (i = paramsLo * 2; i < LEN(sensors2_80154CF4); i++) {
+                if (g_Player.colWall[sensors2_80154CF4[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(sensors2_80154CF4)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi =
+                PLAYER.posX.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].x;
+            self->posY.i.hi =
+                PLAYER.posY.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].y;
+            self->velocityY = velocity_x_80154C5C[paramsLo];
+            self->rotX = rot_x_80154C74[paramsLo] + 0x20;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 1) {
+            if (g_Player.vram_flag & 0x8000) {
+                posX /= 2;
+            }
+        }
+        if (self->facingLeft) {
+            posX = -posX;
+        }
+        self->posX.i.hi += posX;
+        self->posY.i.hi += 0x18;
+        self->rotX = rot_x_80154C74[paramsLo] + 0x40;
+        self->velocityY = velocity_x_80154C5C[paramsLo];
+        if (paramsHi == 1) {
+            self->velocityY = FIX(-0.25);
+            RicSetSpeedX(-0x3000);
+            self->rotX = rot_x_80154C74[1] + 0x40;
+        }
+        if (paramsHi == 5) {
+            self->velocityY = velocity_x_80154C5C[4 - paramsLo * 2];
+        }
+        if (paramsHi == 2) {
+            self->velocityY = FIX(-0.5);
+            RicSetSpeedX(-0x3000);
+            self->rotX = rot_x_80154C74[1] + 0x40;
+        }
+        self->rotY = self->rotX;
+        if (paramsHi == 10) {
+            self->posY.i.hi -= 6;
+        }
+        self->step++;
+        break;
+    case 1:
+        self->unk6C -= 2;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByCutBlood);
 

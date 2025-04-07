@@ -262,10 +262,10 @@ void func_80160F0C(Entity* self) {
 // Entity ID #2. Created by 6 blueprints:
 // 0, 1, 24, 74, 75, 76.
 // Matches DRA func_8011B5A4
-static u16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
+static s16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
 static s32 velocity_x_80154C5C[] = {
     -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
-static u16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
+static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
 static AnimationFrame anim_smoke_puff[] = {
     {1, FRAME(0x01, 0)},
     {1, FRAME(0x02, 0)},
@@ -298,8 +298,8 @@ void RicEntitySmokePuff(Entity* self) {
     s16 posX;
     s32 i;
 
-    s16 paramsLo = self->params & 0xFF;
     s16 paramsHi = self->params >> 8;
+    s16 paramsLo = self->params & 0xFF;
 
     if ((g_Player.status & PLAYER_STATUS_UNK20000) && (paramsHi != 9)) {
         DestroyEntity(self);
@@ -346,7 +346,8 @@ void RicEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotY = self->rotX = rot_x_80154C74[1] + 0x40;
+            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->rotY = self->rotX;
             self->step++;
             return;
         }
@@ -366,7 +367,8 @@ void RicEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].y;
             self->velocityY = velocity_x_80154C5C[paramsLo];
-            self->rotY = self->rotX = rot_x_80154C74[paramsLo] + 0x20;
+            self->rotX = rot_x_80154C74[paramsLo] + 0x20;
+            self->rotY = self->rotX;
             self->step++;
             return;
         }
@@ -400,9 +402,9 @@ void RicEntitySmokePuff(Entity* self) {
             self->posY.i.hi -= 6;
         }
         self->step++;
-        return;
+        break;
     case 1:
-        self->unk6C += 0xFE;
+        self->unk6C -= 2;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if (self->poseTimer < 0) {
