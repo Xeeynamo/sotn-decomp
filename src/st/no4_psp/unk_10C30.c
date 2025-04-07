@@ -5,7 +5,7 @@ INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_10C30", func_pspeu_092482B0);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_10C30", func_pspeu_092483A0);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_10C30", func_pspeu_09248CB8);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_10C30", EntityUnkId3F);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_10C30", func_pspeu_09248D90);
 

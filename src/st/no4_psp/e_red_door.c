@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_red_door", EntityIsNearPlayer);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_red_door", EntityRedDoor);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/e_red_door", NO4_EntityRedDoor);

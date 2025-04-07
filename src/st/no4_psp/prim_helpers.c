@@ -15,11 +15,11 @@ INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", func_pspeu_0925CB30);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", func_pspeu_0925CB68);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", func_pspeu_0925CD90);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", EntitySpearGuard);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", func_pspeu_0925DA38);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", EntitySpearGuardBlock);
 
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", func_pspeu_0925DBD8);
+INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", EntityThrownSpear);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/prim_helpers", GetLang);
 
