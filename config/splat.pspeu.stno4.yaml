@@ -58,7 +58,7 @@ segments:
       - [0x1E320, c, no4_psp/popup]
       - [0x1E918, c, no4_psp/unk_1E818]
       - [0x220E0, c, no4_psp/e_room_fg]
-      - [0x233A0, c, no4_psp/st_common]
+      - [0x233A0, c, no4/st_common]
       - [0x24C20, c, no4_psp/prim_helpers]
       - [0x28700, data]
       - [0x30290, .data, no4_psp/e_init]
