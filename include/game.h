@@ -449,13 +449,13 @@ typedef enum {
 // f: ???
 // tDelay: how many frames to wait before starting to make the first entity
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
-               tCycle, kind, f, tDelay)                                        \
+               tCycle, kind, origin, tDelay)                                   \
     {entityId,                                                                 \
      (amount),                                                                 \
      ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
          ((!!(isNonCritical)) << 7),                                           \
      (tCycle),                                                                 \
-     ((kind) & 15) | ((f) << 4),                                               \
+     ((kind) & 15) | ((origin) << 4),                                          \
      tDelay}
 enum BlueprintKind {
     B_DECOR,      // cannot collide with any other entity, used for decoration

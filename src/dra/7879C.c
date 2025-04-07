@@ -1817,12 +1817,12 @@ Entity* CreateEntFactoryFromEntity(
     newFactory->zPriority = source->zPriority;
     newFactory->params = factoryParams & 0xFFF;
     if (factoryParams & 0x5000) {
-        newFactory->ext.factory.unkA8 = 0xE0;
+        newFactory->ext.factory.entityIdMod = 0xE0;
     }
     if (factoryParams & 0xA000) {
-        newFactory->ext.factory.unkA8 = 0xF0;
+        newFactory->ext.factory.entityIdMod = 0xF0;
     }
-    newFactory->ext.factory.unkA0 = (factoryParams & 0xFF0000) >> 8;
+    newFactory->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
     newFactory->ext.factory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
         newFactory->flags |= FLAG_UNK_10000;
@@ -1859,21 +1859,19 @@ void EntityEntFactory(Entity* self) {
 
     if (self->step == 0) {
         data_idx = (u8*)&g_FactoryBlueprints[self->params];
-        self->ext.factory.childId = *data_idx++;
-        self->ext.factory.unk94 = *data_idx++;      // index 1
-        self->ext.factory.unk96 = *data_idx & 0x3F; // index 2, lower 6 bits
-        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1; // index 2, top bit
-        self->ext.factory.unkA2 =
-            (s16)(*data_idx++ >> 6) & 1;           // index 2, 2nd-top bit
-        self->ext.factory.unk98 = *data_idx++;     // index 3
-        self->ext.factory.unk9C = *data_idx & 0xF; // index 4, lower 4 bits
-        self->ext.factory.unkA4 =
-            (s16)(*data_idx++ >> 4) & 0xF;   // index 4, upper 4 bits
-        self->ext.factory.unk9A = *data_idx; // index 5
+        self->ext.factory.newEntityId = *data_idx++;
+        self->ext.factory.amount = *data_idx++;
+        self->ext.factory.nPerCycle = *data_idx & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data_idx >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data_idx++ >> 6) & 1;
+        self->ext.factory.tCycle = *data_idx++;
+        self->ext.factory.kind = *data_idx & 0xF;
+        self->ext.factory.origin = (s16)(*data_idx++ >> 4) & 0xF;
+        self->ext.factory.delay = *data_idx;
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
         case 6:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -1888,7 +1886,7 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     } else {
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
         case 1:
         case 3:
@@ -1924,40 +1922,40 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     }
-    if (self->ext.factory.unk9A) {
-        if (--self->ext.factory.unk9A) {
+    if (self->ext.factory.delay) {
+        if (--self->ext.factory.delay) {
             return;
         }
-        self->ext.factory.unk9A = self->ext.factory.unk98;
+        self->ext.factory.delay = self->ext.factory.tCycle;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    n = self->ext.factory.unk96;
+    n = self->ext.factory.nPerCycle;
     for (i = 0; i < n; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
         data_idx = &D_800AD4B8[0];
-        data_idx += self->ext.factory.unk9C * 2;
+        data_idx += self->ext.factory.kind * 2;
 
         startIndex = *data_idx++;
         endIndex = *data_idx;
 
-        if (self->ext.factory.unk9C == 3 || self->ext.factory.unk9C == 10 ||
-            self->ext.factory.unk9C == 11 || self->ext.factory.unk9C == 12 ||
-            self->ext.factory.unk9C == 13) {
+        if (self->ext.factory.kind == 3 || self->ext.factory.kind == 10 ||
+            self->ext.factory.kind == 11 || self->ext.factory.kind == 12 ||
+            self->ext.factory.kind == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
-        } else if (self->ext.factory.unk9C == 0) {
+        } else if (self->ext.factory.kind == 0) {
             newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
-        } else if (self->ext.factory.unk9C == 8) {
-            if ((self->ext.factory.unkA6 % 3) == 0) {
+        } else if (self->ext.factory.kind == 8) {
+            if ((self->ext.factory.spawnIndex % 3) == 0) {
                 newEntity = GetFreeEntity(17, 32);
             }
-            if ((self->ext.factory.unkA6 % 3) == 1) {
+            if ((self->ext.factory.spawnIndex % 3) == 1) {
                 newEntity = GetFreeEntity(32, 48);
             }
-            if ((self->ext.factory.unkA6 % 3) == 2) {
+            if ((self->ext.factory.spawnIndex % 3) == 2) {
                 newEntity = GetFreeEntity(48, 64);
             }
         } else {
@@ -1965,18 +1963,17 @@ void EntityEntFactory(Entity* self) {
         }
 
         if (newEntity == NULL) {
-            if (self->ext.factory.unk9E == 1) {
+            if (self->ext.factory.isNonCritical == 1) {
                 self->entityId = 0;
             } else {
-                self->ext.factory.unk9A = self->ext.factory.unk98;
+                self->ext.factory.delay = self->ext.factory.tCycle;
             }
             return;
         }
         DestroyEntity(newEntity);
-        // unkA8 never gets set so is always zero
         newEntity->entityId =
-            self->ext.factory.childId + self->ext.factory.unkA8;
-        newEntity->params = self->ext.factory.unkA0;
+            self->ext.factory.newEntityId + self->ext.factory.entityIdMod;
+        newEntity->params = self->ext.factory.paramsBase;
         // The child  (newEntity) is not an ent factory, but because the factory
         // creates many entities, we can't pick a particular extension. But
         // we're not allowed to use generic, so i'll just reuse entFactory.
@@ -1990,18 +1987,18 @@ void EntityEntFactory(Entity* self) {
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (self->ext.factory.unkA2) {
-            newEntity->params += self->ext.factory.unkA6;
+        if (self->ext.factory.incParamsKind) {
+            newEntity->params += self->ext.factory.spawnIndex;
         } else {
             newEntity->params += i;
         }
-        self->ext.factory.unkA6++;
-        if (self->ext.factory.unkA6 == self->ext.factory.unk94) {
+        self->ext.factory.spawnIndex++;
+        if (self->ext.factory.spawnIndex == self->ext.factory.amount) {
             self->entityId = 0;
             return;
         }
     }
-    self->ext.factory.unk9A = self->ext.factory.unk98;
+    self->ext.factory.delay = self->ext.factory.tCycle;
 }
 
 extern WeaponAnimation D_800AD53C[];

@@ -628,7 +628,7 @@ Entity* RicCreateEntFactoryFromEntity(
         entity->facingLeft = source->facingLeft;
         entity->zPriority = source->zPriority;
         entity->params = factoryParams & 0xFFF;
-        entity->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
+        entity->ext.factory.paramsBase = (factoryParams >> 8) & 0xFF00;
         if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }
