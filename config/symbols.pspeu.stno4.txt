@@ -91,4 +91,6 @@ g_SpriteBanks = 0x09267098;
 g_TileLayers = 0x092674F8;
 g_Cluts = 0x092676C0;
 g_EntityGfxs = 0x09267890;
+g_EInitDamageNum = 0x09267B10;
 g_Rooms = 0x09267C50;
+g_ItemIconSlots = 0x092A0670;
