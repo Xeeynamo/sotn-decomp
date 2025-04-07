@@ -510,7 +510,7 @@
 | lib    | func_us_801B11A0                    |       51 |          4 |        |                                 |       |
 | dra    | AddHearts                           |       51 |          5 |        |                                 |       |
 | dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
-| ric    | func_pspeu_092BE4C8                 |       51 |          5 |        |                                 |       |
+| ric    | RicGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric    | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
 | dra    | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
 | dra    | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
@@ -538,7 +538,7 @@
 | dra    | func_psp_090DCC60                   |       55 |          1 |        |                                 |       |
 | dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
 | dra    | GetFreeEntityReverse                |       55 |          5 |        |                                 |       |
-| ric    | func_pspeu_092BE570                 |       55 |          5 |        |                                 |       |
+| ric    | RicGetFreeEntityReverse             |       55 |          5 |        |                                 |       |
 | dra    | LearnSpell                          |       55 |          6 |        |                                 |       |
 | dra    | func_8010E0D0                       |       55 |          7 |        |                                 |       |
 | dra    | func_8011BD48                       |       55 |          7 |        |                                 |       |
