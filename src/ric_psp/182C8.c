@@ -810,7 +810,39 @@ void RicEntitySlideKick(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80160D2C);
+void func_80160D2C(Entity* self) {
+    if (PLAYER.step != PL_S_SLIDE_KICK) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->facingLeft = PLAYER.facingLeft;
+    if (self->step == 0) {
+        self->flags =
+            FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 0x14;
+        self->hitboxWidth = self->hitboxHeight = 9;
+        self->ext.subweapon.subweaponId = PL_W_23;
+        RicSetSubweaponParams(self);
+        self->step++;
+    }
+
+    if (PLAYER.animCurFrame == 140) {
+        self->hitboxOffY = 0;
+    }
+
+    if (PLAYER.animCurFrame == 141) {
+        self->hitboxOffY = 12;
+    }
+
+    if (self->hitFlags) {
+        g_Player.unk44 |= 0x80;
+    } else {
+        g_Player.unk44 &= ~0x80;
+    }
+    self->hitFlags = 0;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityBladeDash);
 

@@ -191,8 +191,7 @@ void func_80160D2C(Entity* self) {
         self->flags =
             FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->hitboxOffX = 0x14;
-        self->hitboxHeight = 9;
-        self->hitboxWidth = 9;
+        self->hitboxWidth = self->hitboxHeight = 9;
         self->ext.subweapon.subweaponId = PL_W_23;
         RicSetSubweaponParams(self);
         self->step++;
