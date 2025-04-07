@@ -44,7 +44,8 @@ segments:
     subsegments:
       - [0x80, c, no4_psp/first_c_file]
       - [0xC388, c, no4/create_entity]
-      - [0xD330, c, no4_psp/unk_D330]
+      - [0xD330, c, no4/e_bone_archer]
+      - [0xE4E8, c, no4_psp/e_stage_name]
       - [0xF3F0, c, no4_psp/e_red_door]
       - [0x106F8, c, no4/st_update]
       - [0x10C30, c, no4_psp/unk_10C30]
@@ -62,6 +63,8 @@ segments:
       - [0x28700, data]
       - [0x30290, .data, no4_psp/e_init]
       - [0x305D0, data]
+      - [0x662C8, .data, no4/e_bone_archer]
+      - [0x66460, data]
       - [0x67218, .data, no4/st_update]
       - [0x67248, data]
       - [0x67AB0, .data, no4/collision]
