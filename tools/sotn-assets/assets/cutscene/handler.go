@@ -70,11 +70,22 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		op := args[0]
 		if op == "TEXT" {
 			text := args[1]
-			for i, _ := range text {
-				if text[i] == '\'' {
+			for _, r := range text {
+				if r == '\'' {
 					sb.WriteString("'\\'',")
 				} else {
-					sb.WriteString(fmt.Sprintf("'%c',", text[i]))
+					byteValue := byte(r)
+
+					// If the byte is in the PSP's upper language character position,
+					// output the hex literal
+					if os.Getenv("VERSION") == "pspeu" && byteValue >= 0xA0 && byteValue <= 0xDF {
+						// TODO: This can probably output something like _SE() which
+						// can be handled by sotn_str
+						sb.WriteString(fmt.Sprintf("'\\x%02X',", byteValue))
+					} else {
+						// Otherwise, just output the character as-is
+						sb.WriteString(fmt.Sprintf("'%c',", r))
+					}
 				}
 			}
 			sb.WriteString("\n")
@@ -212,6 +223,9 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 			script = append(script, command)
 		} else if op < 0x7F {
 			text += string([]byte{byte(op)})
+		} else if os.Getenv("VERSION") == "pspeu" && op >= 0xA0 && op <= 0xDF {
+			// PSP has multi-language support with characters that exceed the ASCII range
+			text += fmt.Sprintf("\\x%02X", byte(op))
 		} else {
 			strByte := "0x" + strconv.FormatInt(int64(op), 16)
 			script = append(script, []string{"BYTE", strByte})

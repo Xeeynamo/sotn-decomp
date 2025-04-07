@@ -14,6 +14,8 @@ $(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFI
 
 # Step 2/2 of extract
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
+	make extract_assets
+	make build_assets
 
 # Step 1/5 of build
 $(BUILD_DIR)/%.s.o: %.s $(AS)

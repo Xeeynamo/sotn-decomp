@@ -337,7 +337,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 }
                 *g_Dialogue.scriptCur--;
                 return;
-            case CSOP_UNK_11:
+            case CSOP_SCRIPT_UNKNOWN_11:
                 if (g_SkipCutscene) {
                     continue;
                 }
@@ -435,7 +435,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
             case CSOP_SCRIPT_UNKNOWN_23:
                 return;
-            case CSOP_SCRIPT_UNKNOWN_24:
+            case CSOP_WAIT_FOR_FLAG_RESET:
                 if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
                     *g_Dialogue.scriptCur--;
                     return;
