@@ -21,8 +21,8 @@ PSX_US_SERVANTS	:= tt_000 tt_001 tt_002 tt_003 tt_004
 # VERSION=hd
 PSX_HD_GAME		:= dra ric
 PSX_HD_STAGES	:= cen wrp
-PSX_HD_STAGES	+=
-PSX_HD_BOSSES	:=
+PSX_HD_STAGES	+= 
+PSX_HD_BOSSES	:= 
 PSX_HD_SERVANTS	:= tt_000
 
 # Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
@@ -60,7 +60,7 @@ MAIN_O_FILES    := $(patsubst %.s,%.s.o,$(MAIN_S_FILES))
 MAIN_O_FILES    += $(patsubst %.c,%.c.o,$(MAIN_C_FILES))
 MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 
-DEPENDENCIES	+= $(MASPSX_APP)
+DEPENDENCIES	+= $(MASPSX_APP) 
 
 # PSX specific targets
 extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
@@ -139,6 +139,12 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
+
+extract_assets: $(SOTNASSETS)
+	cd tools/sotn-assets; $(GO) install
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
+build_assets: $(SOTNASSETS)
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

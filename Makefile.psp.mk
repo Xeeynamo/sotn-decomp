@@ -13,6 +13,11 @@ $(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFI
 	$(muffle)$(SPLAT) $<
 
 # Step 2/2 of extract
+extract_assets: $(SOTNASSETS)
+	cd tools/sotn-assets; $(GO) install
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
+build_assets: $(SOTNASSETS)
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
 	make extract_assets
 	make build_assets

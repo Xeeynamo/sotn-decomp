@@ -637,9 +637,3 @@ get-phony:
 get-silent:
 	echo ".SILENT:" > make.silent.targets
 	$(foreach target,$(MUFFLED_TARGETS),echo $(target) >> make.silent.targets;)
-
-extract_assets: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
-build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build config/assets.$(VERSION).yaml
