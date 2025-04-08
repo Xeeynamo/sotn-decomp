@@ -2021,7 +2021,7 @@ typedef enum {
     UNK_ENTITY_12 = 0x12, // related to wolf?
     UNK_ENTITY_13 = 0x13,
     UNK_ENTITY_20 = 0x20,
-    UNK_ENTITY_50 = 0x50,
+    E_BOSS_WEAPON = 0x50,
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;

@@ -3291,7 +3291,7 @@ void PlayerStepSwordWarp(void) {
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {
-        PLAYER.palette = 0x8100;
+        PLAYER.palette = PAL_OVL(0x100);
         func_8010E570(0);
     }
 }
