@@ -78,17 +78,17 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5C7C);
 void func_us_801C6CEC(Entity* self) {
 
     Entity* prev = self - 1;
-    
+
     if (self->step == 0) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = -0x7FFF;
         self->animCurFrame = 0x1C;
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTZ;
         self->zPriority = 0x9A;
-        self->flags = (s32) (self->flags | 0x08000000);
+        self->flags = (s32)(self->flags | FLAG_POS_CAMERA_LOCKED);
     }
-    self->posX.i.hi = (self- 1)->posX.i.hi;
-    self->rotZ = (self- 1)->rotZ;
+    self->posX.i.hi = prev->posX.i.hi;
+    self->rotZ = prev->rotZ;
     if (self->facingLeft != 0) {
         self->posX.i.hi += 4;
     } else {
