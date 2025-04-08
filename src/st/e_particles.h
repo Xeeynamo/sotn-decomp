@@ -5,6 +5,8 @@
 static u32 padding = 0;
 #endif
 
+extern EInit g_EInitObtainable;
+
 u16 g_ESoulStealOrbAngles[] = {
     0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,
 };
@@ -21,11 +23,9 @@ s16 g_ESoulStealOrbSprt[] = {
 u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
 
 #ifdef VERSION_PSP
-void func_psp_0923AD68(Entity*);
-void func_psp_0923B2F0(Entity*);
+#include "e_particles_maria1.h"
+#include "e_particles_maria2.h"
 #endif
-
-extern u16 g_EInitObtainable[];
 
 #include "entity_soul_steal_orb.h"
 
