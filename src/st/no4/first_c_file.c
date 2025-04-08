@@ -75,7 +75,27 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5AD4);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5C7C);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C6CEC);
+void func_us_801C6CEC(Entity* self) {
+
+    Entity* prev = self - 1;
+    
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = -0x7FFF;
+        self->animCurFrame = 0x1C;
+        self->drawFlags = 4;
+        self->zPriority = 0x9A;
+        self->flags = (s32) (self->flags | 0x08000000);
+    }
+    self->posX.i.hi = (self- 1)->posX.i.hi;
+    self->rotZ = (self- 1)->rotZ;
+    if (self->facingLeft != 0) {
+        self->posX.i.hi += 4;
+    } else {
+        self->posX.i.hi -= 4;
+    }
+    self->posY.i.hi = prev->posY.i.hi;
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C6DA8);
 
