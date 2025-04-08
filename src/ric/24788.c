@@ -811,16 +811,17 @@ static Props_80161FF0 D_80154E5C[] = {
     {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
     {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
     {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
-
 void RicEntityApplyMariaPowerAnim(Entity* self) {
     Primitive* prim;
+    s16 posX;
+    s16 posY;
+    s16 params;
+    Props_80161FF0* props;
 
-    s16 posX = self->posX.i.hi;
-    s16 posY = self->posY.i.hi;
-    s16 params = self->params;
-
-    Props_80161FF0* props = &D_80154E5C[params];
-
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    params = self->params;
+    props = &D_80154E5C[params];
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -845,7 +846,6 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         self->velocityX = props->velocityX;
         self->velocityY = props->velocityY;
-
         posX = self->posX.i.hi += props->xPos;
         posY = self->posY.i.hi += props->yPos;
         self->flags =

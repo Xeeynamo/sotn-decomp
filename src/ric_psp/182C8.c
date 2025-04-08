@@ -1426,7 +1426,103 @@ void func_80161EF8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityApplyMariaPowerAnim);
+typedef struct {
+    s16 xPos;
+    s16 yPos;
+    s32 velocityX;
+    s32 velocityY;
+    s16 timerInit;
+    s16 tpage;
+    u16 clut;
+    u8 uBase;
+    u8 vBase;
+} Props_80161FF0; // size = 0x14
+static Props_80161FF0 D_80154E5C[] = {
+    {-0x40, 0, +FIX(2.5), FIX(0), 0x0060, 0x1B, 0x0118, 128, 0},
+    {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
+    {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
+    {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
+void RicEntityApplyMariaPowerAnim(Entity* self) {
+    Primitive* prim;
+    s16 posX;
+    s16 posY;
+    s16 params;
+    Props_80161FF0* props;
+
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    params = self->params;
+    props = &D_80154E5C[params];
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        g_api.PlaySfx(0x881);
+        self->ext.ricMariaPower.size = 0x100;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = props->uBase;
+        prim->v0 = props->vBase;
+        prim->u1 = props->uBase + 0x7F;
+        prim->v1 = props->vBase;
+        prim->u2 = props->uBase;
+        prim->v2 = props->vBase + 0x6F;
+        prim->u3 = props->uBase + 0x7F;
+        prim->v3 = props->vBase + 0x6F;
+        prim->tpage = props->tpage;
+        prim->clut = props->clut;
+        prim->priority = PLAYER.zPriority + 8;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        self->velocityX = props->velocityX;
+        self->velocityY = props->velocityY;
+        posX = self->posX.i.hi += props->xPos;
+        posY = self->posY.i.hi += props->yPos;
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->step++;
+        break;
+    case 1:
+        self->ext.ricMariaPower.size -= 8;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->ext.ricMariaPower.size < 25) {
+            self->ext.ricMariaPower.timer = props->timerInit;
+            self->step++;
+        }
+        break;
+    case 2:
+        if (--self->ext.ricMariaPower.timer == 0) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.ricMariaPower.size -= 2;
+        if (self->ext.ricMariaPower.size < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 =
+        posX + (((rcos(0x600) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->y0 =
+        posY - (((rsin(0x600) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->x1 =
+        posX + (((rcos(0x200) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->y1 =
+        posY - (((rsin(0x200) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->x2 =
+        posX + (((rcos(0xA00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->y2 =
+        posY - (((rsin(0xA00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->x3 =
+        posX + (((rcos(0xE00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+    prim->y3 =
+        posY - (((rsin(0xE00) >> 4) * self->ext.ricMariaPower.size) >> 8);
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_801623E0);
 
