@@ -26,6 +26,12 @@ typedef enum {
     /* 0x1A */ E_ID_1A,
     /* 0x1C */ E_ID_1C = 0x1C,
     /* 0x1D */ E_ID_1D,
+
+    /* 0x41 */ E_ID_41 = 0x41,
+    /* 0x42 */ E_ID_42 = 0x42,
+    /* 0x43 */ E_ID_43 = 0x43,
+
+    /* 0x60 */ E_ID_60 = 0x60,
 } EntityIDs;
 
 typedef enum {
@@ -41,3 +47,13 @@ typedef enum {
 } Doppleganger_Steps;
 
 extern PlayerState g_Dop;
+
+// this is similar to `WeaponAnimation` but
+// with fewer fields.
+typedef struct {
+    AnimationFrame* frames;
+    s8* frameProps;
+    u16 soundId;
+    u8 frameStart;
+    u8 soundFrame;
+} DopWeaponAnimation;

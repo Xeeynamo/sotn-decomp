@@ -312,8 +312,8 @@ void EntityMerman2(Entity* self) {
         switch (self->step_s) {
         case MERMAN2_WALKING_TO_PLAYER_SETUP:
             if (AnimateEntity(g_merman_walkanim_init, self) == 0) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             break;

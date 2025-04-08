@@ -38,7 +38,7 @@ void func_us_801BB53C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        tempEntity = &g_Entities[UNK_ENTITY_50];
+        tempEntity = &g_Entities[E_BOSS_WEAPON];
         CreateEntityFromCurrentEntity(E_ID(ID_1F), tempEntity);
         tempEntity->posX.i.hi = 0x200 - g_Tilemap.scrollX.i.hi;
         tempEntity->posY.i.hi = 0x2A0 - g_Tilemap.scrollY.i.hi;

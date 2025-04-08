@@ -5,31 +5,31 @@ u8 AnimateEntity(u8 frames[], Entity* entity) {
     u8* currentFrame;
 
     flag = 0;
-    currentFrameIndex = entity->animFrameIdx * 2;
+    currentFrameIndex = entity->pose * 2;
     currentFrame = frames + currentFrameIndex;
 
-    if (!entity->animFrameDuration) {
+    if (!entity->poseTimer) {
         if (currentFrame[0]) {
             if (currentFrame[0] == 0xFF) {
                 return 0;
             }
 
-            entity->animFrameDuration = *currentFrame++;
+            entity->poseTimer = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
+            entity->pose++;
             flag |= 0x80;
         } else {
-            entity->animFrameIdx = 0;
-            entity->animFrameDuration = 0;
+            entity->pose = 0;
+            entity->poseTimer = 0;
             currentFrame = frames;
-            entity->animFrameDuration = *currentFrame++;
+            entity->poseTimer = *currentFrame++;
             entity->animCurFrame = *currentFrame++;
-            entity->animFrameIdx++;
+            entity->pose++;
             return 0;
         }
     }
 
-    entity->animFrameDuration--;
+    entity->poseTimer--;
     entity->animCurFrame = currentFrame[-1];
     flag |= true;
 

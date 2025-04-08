@@ -351,7 +351,7 @@ void EntityBloodyZombie(Entity* self) {
 
     case BLOODY_ZOMBIE_ATTACK:
         animStatus = AnimateEntity(anim_attack, self);
-        if (animStatus & 0x80 && self->animFrameIdx == 10) {
+        if (animStatus & 0x80 && self->pose == 10) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
         }
         if (animStatus == 0) {
@@ -390,7 +390,7 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        if (self->animFrameIdx < 13) {
+        if (self->pose < 13) {
             if (!(g_Timer % 8)) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

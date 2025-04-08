@@ -333,7 +333,7 @@ void func_us_801CD9EC(Entity* self) {
 
     case 1:
         self->posY.val += self->velocityY;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

@@ -148,6 +148,7 @@ EntitySurfacingWater = 0x801D6C0C;
 EntitySideWaterSplash = 0x801D70F8;
 EntitySmallWaterDrop = 0x801D748C;
 EntityWaterDrop = 0x801D76E8;
+EntitySkeletonApe = 0x801DD688;
 UnkPrimHelper = 0x801DE2E0;
 UpdateAnimation = 0x801DE6C8;
 FindFirstUnkPrim = 0x801DE818;

@@ -260,7 +260,7 @@ void EntityMedusa(Entity* self) {
             }
         }
 
-        if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
+        if (self->pose == 4 && self->poseTimer == 0) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
                 CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
@@ -283,7 +283,7 @@ void EntityMedusa(Entity* self) {
         if (AnimateEntity(D_us_80180618, self) == 0) {
             SetStep(3);
         }
-        if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+        if (self->pose == 3 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_RBO3_UNK_7D1);
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
