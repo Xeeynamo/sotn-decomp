@@ -1220,7 +1220,7 @@
 | wrp    | UnkPrimHelper                       |      338 |         36 |        |                                 |       |
 | dra    | func_80123B40                       |      342 |         25 |        |                                 |       |
 | dra    | func_800FE044                       |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
-| ric    | RicEntityApplyMariaPowerAnim        |      346 |         27 |        |                                 |       |
+| ric    | RicEntityApplyMariaPowerAnim        |      346 |         27 |        | https://decomp.me/scratch/YzZxq | 0.999 |
 | ric    | RicEntityCrashHydroStorm            |      346 |         37 |        |                                 |       |
 | lib    | func_us_801CCF6C                    |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric    | RicEntityCrashVibhuti               |      349 |         43 |        |                                 |       |
@@ -1392,7 +1392,7 @@
 | dra    | CheckCollision                      |      748 |         90 |        |                                 |       |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
-| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.998 |
+| ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.999 |
 | dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
