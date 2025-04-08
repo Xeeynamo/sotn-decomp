@@ -93,7 +93,7 @@ void PlayerStepHighJump(void) {
         break;
     case 4:
         DOPPLEGANGER.velocityY += 0x1000;
-        if (DOPPLEGANGER.animFrameDuration < 0) {
+        if (DOPPLEGANGER.poseTimer < 0) {
             var_s1 = 2;
         }
         break;
@@ -120,8 +120,8 @@ void func_us_801C68CC(void) {
     DOPPLEGANGER.animSet = -0x7FFF;
     DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                               FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-    DOPPLEGANGER.animFrameDuration = 0;
-    DOPPLEGANGER.animFrameIdx = 0;
+    DOPPLEGANGER.poseTimer = 0;
+    DOPPLEGANGER.pose = 0;
     DOPPLEGANGER.drawMode = DRAW_DEFAULT;
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
@@ -444,7 +444,7 @@ void DopEntityHitByDark(Entity* self) {
         self->posY.val += self->velocityY;
         self->rotX += 8;
         self->rotY += 8;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -1308,8 +1308,7 @@ void func_us_801D0BD8(Entity* self) {
         self->step = 1;
     }
     self->ext.weapon.anim = DOPPLEGANGER.ext.player.anim - anim->frameStart;
-    if (DOPPLEGANGER.animFrameDuration == 1 &&
-        DOPPLEGANGER.animFrameIdx == anim->soundFrame) {
+    if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {

@@ -164,7 +164,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
     }
     self->posY.val += self->velocityY;
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
 }
@@ -452,7 +452,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->step++;
         return;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
         return;
     }
@@ -501,7 +501,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->step++;
         return;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
         return;
     }

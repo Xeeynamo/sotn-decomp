@@ -161,11 +161,11 @@ void func_8010E6AC(bool forceAnim13) {
     }
 
     if ((DOPPLEGANGER.ext.player.anim == 7) && atLedge) {
-        DOPPLEGANGER.animFrameIdx = 1;
+        DOPPLEGANGER.pose = 1;
     }
 
     if (g_Dop.prev_step == Dop_Crouch) {
-        DOPPLEGANGER.animFrameIdx = 4;
+        DOPPLEGANGER.pose = 4;
     }
 }
 
@@ -310,11 +310,10 @@ void func_us_801C5C64(void) {
             break;
         case 3:
             var_s0 = 0;
-            if (DOPPLEGANGER.animFrameIdx > 3) {
+            if (DOPPLEGANGER.pose > 3) {
                 var_s0 = 1;
             }
-            if (DOPPLEGANGER.animFrameIdx > 6 ||
-                DOPPLEGANGER.animFrameDuration < 0) {
+            if (DOPPLEGANGER.pose > 6 || DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 7;
             }
             break;
@@ -322,12 +321,12 @@ void func_us_801C5C64(void) {
         case 0x41:
         case 0x42:
             func_us_801C4954(1, 1);
-            if (DOPPLEGANGER.animFrameIdx < g_Dop.unk54) {
+            if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
                 g_Dop.unk46 &= 0x7FFF;
                 var_s0 = 0x1B;
-                if (DOPPLEGANGER.animFrameDuration < 0) {
+                if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0xF;
                 }
             }
@@ -336,7 +335,7 @@ void func_us_801C5C64(void) {
 
             func_us_801C4954(1, 1);
             var_s0 = 0;
-            if (DOPPLEGANGER.animFrameDuration < 0) {
+            if (DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 0xF;
             }
 
@@ -402,25 +401,25 @@ void func_us_801C61F8(void) {
                 var_s0 = 1;
                 SetPlayerAnim(0x13);
                 DOPPLEGANGER.step_s = 2;
-                DOPPLEGANGER.animFrameIdx = 1;
+                DOPPLEGANGER.pose = 1;
                 return;
             }
 
             if (DOPPLEGANGER.ext.player.anim == 0x65) {
                 DOPPLEGANGER.step_s = 0;
-            } else if (DOPPLEGANGER.animFrameDuration < 0) {
+            } else if (DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 0x20;
             }
             break;
         case 3:
         case 4:
-            if (DOPPLEGANGER.animFrameDuration < 0) {
+            if (DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 0x20;
             }
             break;
         case 2:
             var_s0 = 1;
-            if (DOPPLEGANGER.animFrameDuration < 0) {
+            if (DOPPLEGANGER.poseTimer < 0) {
                 func_8010E570(0);
             }
             break;
@@ -428,19 +427,19 @@ void func_us_801C61F8(void) {
         case 0x41:
         case 0x42:
             func_us_801C4954(1, 1);
-            if (DOPPLEGANGER.animFrameIdx < g_Dop.unk54) {
+            if (DOPPLEGANGER.pose < g_Dop.unk54) {
                 var_s0 = 0;
             } else {
                 g_Dop.unk46 &= 0x7FFF;
                 var_s0 = 0xE;
-                if (DOPPLEGANGER.animFrameDuration < 0) {
+                if (DOPPLEGANGER.poseTimer < 0) {
                     var_s0 = 0x2E;
                 }
             }
             break;
         case 0x51:
             func_us_801C4954(1, 1);
-            if (DOPPLEGANGER.animFrameDuration < 0) {
+            if (DOPPLEGANGER.poseTimer < 0) {
                 var_s0 = 0x2E;
             }
             break;

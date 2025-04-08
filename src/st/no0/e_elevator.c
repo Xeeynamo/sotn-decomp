@@ -146,11 +146,11 @@ void func_us_801C2184(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_80180FC0, self)) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->step_s += 1;
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 4) {
+            if (!self->poseTimer && self->pose == 4) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;
@@ -179,13 +179,13 @@ void func_us_801C2184(Entity* self) {
             break;
         case 1:
             if (!AnimateEntity(D_us_80180FD8, self)) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 4) {
+            if (!self->poseTimer && self->pose == 4) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
             }
             break;

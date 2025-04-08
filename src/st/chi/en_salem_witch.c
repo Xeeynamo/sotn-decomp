@@ -89,7 +89,7 @@ void EntitySalemWitch(Entity* self) {
     const int AttackPrepWallDetectThreshold = 0x18;
     // Curse
     const int CurseReevaluateThreshold = 0x60;
-    const int CurseProjectileSpawnAnimFrameIdx = 5;
+    const int CurseProjectileSpawnpose = 5;
     const int CurseProjectileOffsetX = 0x18;
     // Tribolt
     const int TriboltReevaluateThreshold = 0x40;
@@ -423,8 +423,7 @@ void EntitySalemWitch(Entity* self) {
             if (!AnimateEntity(AnimFrames_CurseReset, self)) {
                 SetStep(IDLE);
             }
-            if (!self->animFrameDuration &&
-                self->animFrameIdx == CurseProjectileSpawnAnimFrameIdx) {
+            if (!self->poseTimer && self->pose == CurseProjectileSpawnpose) {
                 PlaySfxPositional(SFX_GUNSHOT);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
@@ -989,7 +988,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         self->animCurFrame = self->params;
         self->hitboxState = 0;
         self->unk6C = 0x60;
-        self->animFrameIdx = self->animCurFrame;
+        self->pose = self->animCurFrame;
         // fallthrough
     case TRAIL_UPDATE:
         self->unk6C += 0xFC;

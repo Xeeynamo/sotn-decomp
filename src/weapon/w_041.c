@@ -287,8 +287,8 @@ void EntityWeaponAttack(Entity* self) {
         self->ext.weapon.lifetime--;
         if (!self->ext.weapon.lifetime) {
             self->anim = D_123000_8017A4DC;
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->poseTimer = 0;
+            self->pose = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
@@ -297,7 +297,7 @@ void EntityWeaponAttack(Entity* self) {
         break;
 
     case 2:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

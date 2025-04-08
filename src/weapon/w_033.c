@@ -43,12 +43,11 @@ void EntityWeaponAttack(Entity* self) {
         }
 
         self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-        if (PLAYER.animFrameDuration == 1 &&
-            PLAYER.animFrameIdx == anim->soundFrame) {
+        if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
             g_api.PlaySfx(anim->soundId);
         }
 
-        if (PLAYER.animFrameIdx == 12 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 12 && PLAYER.poseTimer == 1) {
             g_api.PlaySfx(anim->soundId);
             g_api.PlaySfx(SFX_WEAPON_SWISH_B);
         }
