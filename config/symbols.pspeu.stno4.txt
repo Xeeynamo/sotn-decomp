@@ -1,3 +1,4 @@
+D_80097450 = 0x091CE650;
 GetLangAt = 0x09237B20;
 func_psp_09254120 = 0x09237FB0;
 EntityBreakable = 0x09238118;
@@ -119,5 +120,8 @@ g_EInitBoneArcher = 0x09267BF0;
 g_EInitBoneArcherArrow = 0x09267C00;
 g_Rooms = 0x09267C50;
 NO4_PrizeDrops = 0x0929CD18;
+g_SplashSfx = 0x0929CD68;
+g_SurfacingSfx = 0x0929CD6A;
+g_WaterXTbl = 0x0929CD70;
 g_ItemIconSlots = 0x092A0670;
 obtainedStr = 0x092A06B0;
