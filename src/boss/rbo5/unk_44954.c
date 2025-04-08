@@ -207,7 +207,7 @@ void func_us_801C4FDC(void) {
 
 void func_us_801C504C(void) {
     if (CheckMoveDirection() != 0) {
-        SetSpeedX(0x30000);
+        SetSpeedX(FIX(3));
     } else {
         DOPPLEGANGER.velocityX = 0;
     }
