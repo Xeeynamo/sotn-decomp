@@ -3,9 +3,13 @@ extern u16 g_SplashSfx;
 extern u16 g_SurfacingSfx;
 extern s16 g_WaterXTbl[];
 
-static s16 g_splashAspects[] = {
-    0x0000, 0x0001,  0x0002,  0x0004,  -0x0001, -0x0002, -0x0004, 0x0000,
-    0x0000, -0x1000, -0x0C00, -0x0800, 0x1000,  0x0C00,  0x0800,  0x0000};
+#ifdef VERSION_PSP
+static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, -4};
+#else
+static s16 g_splashAspects[] = {0, 1, 2, 4, -1, -2, -4, 0};
+#endif
+static s16 unused[] = {
+    0x0000, -0x1000, -0x0C00, -0x0800, 0x1000, 0x0C00, 0x0800, 0x0000};
 static s32 g_SplashYMovement[] = {
     FIX(-6.5), FIX(9.0 / 32), FIX(-5.5), FIX(17.0 / 64),
     FIX(-4.5), FIX(0.25),     FIX(-3.5), FIX(15.0 / 64)};
@@ -33,7 +37,7 @@ static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {
     if (temp <= 0) {
         return 0;
     }
-    *arg3++ = temp;
+    *arg3 = temp;
 
     temp = g_splashAspects[*ptr++];
     if (temp) {
@@ -43,18 +47,20 @@ static u16 func_801C4144(s16 arg0, s16 arg1, s16 arg2, s16* arg3) {
     }
 
     temp = *ptr++ - temp;
-    if ((temp <= arg2) && (arg2 < *ptr++)) {
-        return (arg2 - 0x8000) - temp;
+    if (temp > arg2) {
+        return 0;
     }
-    return 0;
+    if (arg2 >= *ptr++) {
+        return 0;
+    }
+    return ((arg2 + 0x7FFF) + 1) - temp;
 }
 
 void EntityAlucardWaterEffect(Entity* self) {
     s16 sp10[2];
-    s16 sp18;
-    s16 sp20;
+    s16 posX, posY;
     u16 sp28;
-    Entity* var_s0;
+    Entity* tempEntity;
     s16 var_s1;
     s16 var_s3;
     s16 i;
@@ -66,7 +72,7 @@ void EntityAlucardWaterEffect(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* player = &PLAYER;
 
-    sp18 = player->posX.i.hi + tilemap->scrollX.i.hi;
+    posX = player->posX.i.hi + tilemap->scrollX.i.hi;
     status = g_Player.status;
     if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
         if (status & PLAYER_STATUS_CROUCH) {
@@ -87,12 +93,12 @@ void EntityAlucardWaterEffect(Entity* self) {
         sp4A = 0x28;
         var_s6 = 0x19;
     }
-    sp20 = var_s6 + (player->posY.i.hi + tilemap->scrollY.i.hi);
+    posY = var_s6 + (player->posY.i.hi + tilemap->scrollY.i.hi);
     var_s3 = var_s1 = self->params;
     var_s3 &= 0xFF;
     var_s1 = var_s1 >> 8;
     for (i = 0; i < var_s1; i++, var_s3++) {
-        sp28 = func_801C4144(var_s3, sp18, sp20, sp10);
+        sp28 = func_801C4144(var_s3, posX, posY, sp10);
         if (sp28) {
             sp30 = var_s3 * 8;
             break;
@@ -100,25 +106,22 @@ void EntityAlucardWaterEffect(Entity* self) {
     }
     var_s3 = sp28 & 0x7FFF;
     if (self->step) {
-        // This is significant - velocity is treated as an f32, loading with
-        // FIX_TO_I. This is one of the only places in the code where this is
-        // used, so we're keeping velocityY as an s32 (not f32) to avoid needing
-        // to say velocityY.val everywhere.
-        if (FIX_TO_I(player->velocityY) != 0 &&
-            !(status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM))) {
-            if (FIX_TO_I(player->velocityY) < 0) {
-                if (sp28 == 0) {
+        if (F(player->velocityY).i.hi &&
+            (status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) ==
+                0) {
+            if (F(player->velocityY).i.hi < 0) {
+                if (!sp28) {
                     var_s1 = self->ext.aluwater.unk7C;
-                    if (var_s1 && ((var_s1 & 0x7FFF) < 0x11)) {
+                    if (var_s1 && (var_s1 & 0x7FFF) < 17) {
                         var_s1 = self->ext.aluwater.unk88;
-                        if (self->ext.aluwater.unk8C < 0xE) {
-                            var_s7 = ((0xE - self->ext.aluwater.unk8C) << 0xB) +
+                        if (self->ext.aluwater.unk8C < 14) {
+                            var_s7 = ((14 - self->ext.aluwater.unk8C) << 11) +
                                      (g_WaterXTbl[var_s1 + 2] << 8) +
                                      (g_WaterXTbl[var_s1 + 5] << 5);
                         } else {
-                            if (self->ext.aluwater.unk8E < 0xE) {
+                            if (self->ext.aluwater.unk8E < 14) {
                                 var_s7 =
-                                    ((self->ext.aluwater.unk8E + 0xE) << 0xB) +
+                                    ((self->ext.aluwater.unk8E + 14) << 11) +
                                     (g_WaterXTbl[var_s1 + 2] << 8) +
                                     (g_WaterXTbl[var_s1 + 6] << 5);
                             } else {
@@ -126,160 +129,158 @@ void EntityAlucardWaterEffect(Entity* self) {
                             }
                         }
                         var_s1 = (var_s7 >> 8) & 7;
-                        if (var_s1 == 0 || var_s1 == 7) {
+                        if (!var_s1 || var_s1 == 7) {
                             var_s1 = (var_s7 >> 5) & 7;
-                            if (var_s1 == 0 || var_s1 == 7) {
+                            if (!var_s1 || var_s1 == 7) {
                                 var_s1 = 0;
                             }
                         }
                         if (var_s1) {
                             for (i = 0; i < 8; i++) {
-                                var_s0 = AllocEntity(
+                                tempEntity = AllocEntity(
                                     &g_Entities[224], &g_Entities[256]);
-                                if (var_s0 == NULL) {
+                                if (tempEntity == NULL) {
                                     break;
                                 }
                                 CreateEntityFromEntity(
-                                    E_SIDE_WATER_SPLASH, player, var_s0);
-                                var_s0->params =
+                                    E_SIDE_WATER_SPLASH, player, tempEntity);
+                                tempEntity->params =
                                     (u16)g_WaterXTbl[self->ext.aluwater.unk88 +
                                                      7] +
                                     (var_s1 << 4) + i;
-                                var_s0->posY.i.hi += (var_s6 - var_s3);
-                                var_s0->zPriority = player->zPriority;
+                                tempEntity->posY.i.hi += var_s6 - var_s3;
+                                tempEntity->zPriority = player->zPriority;
                             }
                         } else {
-                            var_s0 =
+                            tempEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);
-                            if (var_s0 != NULL) {
+                            if (tempEntity != NULL) {
                                 CreateEntityFromEntity(
-                                    E_SPLASH_WATER, player, var_s0);
-                                var_s0->posX.i.hi = self->ext.aluwater.unk80 -
-                                                    tilemap->scrollX.i.hi;
-                                var_s0->posY.i.hi =
-                                    (self->ext.aluwater.unk82 -
-                                     (self->ext.aluwater.unk7C & 0x7FFF)) -
+                                    E_SPLASH_WATER, player, tempEntity);
+                                tempEntity->posX.i.hi =
+                                    self->ext.aluwater.unk80 -
+                                    tilemap->scrollX.i.hi;
+                                tempEntity->posY.i.hi =
+                                    self->ext.aluwater.unk82 -
+                                    (self->ext.aluwater.unk7C & 0x7FFF) -
                                     tilemap->scrollY.i.hi;
-                                var_s0->zPriority = player->zPriority;
+                                tempEntity->zPriority = player->zPriority;
                                 if (player->velocityY > FIX(-4)) {
-                                    var_s0->params = var_s7 + 1;
+                                    tempEntity->params = var_s7 + 1;
                                 } else {
-                                    var_s0->params = var_s7;
+                                    tempEntity->params = var_s7;
                                 }
                             }
                         }
                     }
                 }
             } else if (sp28 && (var_s3 < 9) && !self->ext.aluwater.unk7C) {
-                if (sp10[0] < 0xE) {
-                    var_s7 = ((0xE - sp10[0]) << 0xB) +
-                             (g_WaterXTbl[sp30 + 2] << 8) +
-                             (g_WaterXTbl[sp30 + 5] << 5);
-                } else if (sp10[1] < 0xE) {
-                    var_s7 = ((sp10[1] + 0xE) << 0xB) +
-                             (g_WaterXTbl[sp30 + 2] << 8) +
-                             (g_WaterXTbl[sp30 + 6] << 5);
+                if (sp10[0] < 14) {
+                    var_s7 =
+                        ((14 - sp10[0]) << 11) + (g_WaterXTbl[sp30 + 2] << 8) +
+                        (g_WaterXTbl[sp30 + 5] << 5);
+                } else if (sp10[1] < 14) {
+                    var_s7 =
+                        ((sp10[1] + 14) << 11) + (g_WaterXTbl[sp30 + 2] << 8) +
+                        (g_WaterXTbl[sp30 + 6] << 5);
                 } else {
                     var_s7 = g_WaterXTbl[sp30 + 2] << 8;
                 }
                 var_s1 = (var_s7 >> 8) & 7;
-                if (var_s1 == 0 || var_s1 == 7) {
+                if (!var_s1 || var_s1 == 7) {
                     var_s1 = (var_s7 >> 5) & 7;
-                    if (var_s1 == 0 || var_s1 == 7) {
+                    if (!var_s1 || var_s1 == 7) {
                         var_s1 = 0;
                     }
                 }
                 if (var_s1) {
                     for (i = 0; i < 8; i++) {
-                        var_s0 =
+                        tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
-                        if (var_s0 == NULL) {
+                        if (tempEntity == NULL) {
                             break;
                         }
                         CreateEntityFromEntity(
-                            E_SIDE_WATER_SPLASH, player, var_s0);
-                        var_s0->params =
+                            E_SIDE_WATER_SPLASH, player, tempEntity);
+                        tempEntity->params =
                             (u16)g_WaterXTbl[sp30 + 7] + (var_s1 << 4) + i;
-                        var_s0->posY.i.hi += (var_s6 - var_s3);
-                        var_s0->zPriority = player->zPriority;
+                        tempEntity->posY.i.hi += var_s6 - var_s3;
+                        tempEntity->zPriority = player->zPriority;
                     }
                 } else {
-                    var_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                    if (var_s0 != NULL) {
-                        CreateEntityFromEntity(E_SPLASH_WATER, player, var_s0);
+                    tempEntity =
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (tempEntity != NULL) {
+                        CreateEntityFromEntity(
+                            E_SPLASH_WATER, player, tempEntity);
                         if (player->velocityY > FIX(4)) {
-                            var_s0->params = var_s7 + 1;
+                            tempEntity->params = var_s7 + 1;
                         } else {
-                            var_s0->params = var_s7 + 2;
+                            tempEntity->params = var_s7 + 2;
                         }
-                        var_s0->posY.i.hi += (var_s6 - var_s3);
-                        var_s0->params =
-                            var_s7; // this nullifies the above block!
-                        var_s0->zPriority = player->zPriority;
+                        tempEntity->params = var_s7;
+                        tempEntity->posY.i.hi += var_s6 - var_s3;
+                        tempEntity->zPriority = player->zPriority;
                     }
                 }
             }
-        } else {
-            if (!(status & PLAYER_STATUS_MIST_FORM) && sp28) {
-                if (!self->ext.aluwater.unk7E) {
-                    var_s1 = g_WaterXTbl[sp30 + 7];
-                    if (sp18 != self->ext.aluwater.unk80) {
-                        if ((var_s3 <= sp4A) && (sp10[0] >= 6) &&
-                            (sp10[1] >= 6)) {
-                            var_s0 =
-                                AllocEntity(&g_Entities[224], &g_Entities[256]);
-                            if (var_s0 != NULL) {
-                                CreateEntityFromEntity(
-                                    E_SURFACING_WATER, player, var_s0);
-                                var_s0->posY.i.hi += (var_s6 - var_s3);
-                                if (player->velocityX != 0) {
-                                    var_s0->params = ((sp4A - var_s3) >> 3);
-                                    if (var_s0->params == 5) {
-                                        var_s0->params = 4;
-                                    }
-                                } else {
-                                    var_s0->params = 0;
-                                }
-                                var_s0->params |= (g_WaterXTbl[sp30 + 2] << 8);
-                                var_s0->ext.aluwater.unk88 = sp30;
-                                var_s0->ext.aluwater.unk8A = var_s1;
-                                var_s0->zPriority = player->zPriority;
-                                self->ext.aluwater.unk7E = 8;
-                            }
-                        }
-                    } else if (var_s1 && (var_s3 <= sp4A) && (sp10[0] >= 6) &&
-                               (sp10[1] >= 6)) {
-                        var_s0 =
+        } else if ((status & PLAYER_STATUS_MIST_FORM) == 0) {
+            if (sp28 && !self->ext.aluwater.unk7E) {
+                var_s1 = g_WaterXTbl[sp30 + 7];
+                if (posX != self->ext.aluwater.unk80) {
+                    if (var_s3 <= sp4A && sp10[0] >= 6 && sp10[1] >= 6) {
+                        tempEntity =
                             AllocEntity(&g_Entities[224], &g_Entities[256]);
-                        if (var_s0 != NULL) {
+                        if (tempEntity != NULL) {
                             CreateEntityFromEntity(
-                                E_SURFACING_WATER, player, var_s0);
-                            var_s0->posY.i.hi += (var_s6 - var_s3);
-
-                            var_s0->params = g_WaterXTbl[sp30 + 2] << 8;
-                            var_s0->ext.aluwater.unk88 = sp30;
-                            var_s0->ext.aluwater.unk8A = var_s1;
-                            var_s0->zPriority = player->zPriority;
+                                E_SURFACING_WATER, player, tempEntity);
+                            tempEntity->posY.i.hi += var_s6 - var_s3;
+                            if (player->velocityX != 0) {
+                                tempEntity->params = (sp4A - var_s3) >> 3;
+                                if (tempEntity->params == 5) {
+                                    tempEntity->params = 4;
+                                }
+                            } else {
+                                tempEntity->params = 0;
+                            }
+                            tempEntity->params |= g_WaterXTbl[sp30 + 2] << 8;
+                            tempEntity->ext.aluwater.unk88 = sp30;
+                            tempEntity->ext.aluwater.unk8A = var_s1;
+                            tempEntity->zPriority = player->zPriority;
                             self->ext.aluwater.unk7E = 8;
                         }
                     }
+                } else if (
+                    var_s1 && var_s3 <= sp4A && sp10[0] >= 6 && sp10[1] >= 6) {
+                    tempEntity =
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (tempEntity != NULL) {
+                        CreateEntityFromEntity(
+                            E_SURFACING_WATER, player, tempEntity);
+                        tempEntity->posY.i.hi += var_s6 - var_s3;
+                        tempEntity->params = g_WaterXTbl[sp30 + 2] << 8;
+                        tempEntity->ext.aluwater.unk88 = sp30;
+                        tempEntity->ext.aluwater.unk8A = var_s1;
+                        tempEntity->zPriority = player->zPriority;
+                        self->ext.aluwater.unk7E = 8;
+                    }
                 }
-                if (sp28) {
-                    var_s1 = g_WaterXTbl[sp30 + 7];
-                    if (var_s1 > 0x1000 || var_s1 < -0x1000) {
-                        if (var_s3 >= sp4A) {
-                            if (status & PLAYER_STATUS_BAT_FORM) {
-                                var_s1 = var_s1 * 3 / 4;
-                            } else {
-                                var_s1 /= 2;
-                            }
+            }
+            if (sp28) {
+                var_s1 = g_WaterXTbl[sp30 + 7];
+                if (var_s1 > 0x1000 || var_s1 < -0x1000) {
+                    if (var_s3 >= sp4A) {
+                        if (status & PLAYER_STATUS_BAT_FORM) {
+                            var_s1 = var_s1 * 3 / 4;
                         } else {
-                            var_s1 = (var_s1 * var_s3) / 80;
+                            var_s1 /= 2;
                         }
-                        if ((var_s1 < 0 && (g_Player.vram_flag & 8) == 0) ||
-                            (var_s1 > 0 && (g_Player.vram_flag & 4) == 0)) {
-                            player->posX.val += var_s1 << 4;
-                        }
+                    } else {
+                        var_s1 = (var_s1 * var_s3) / 0x50;
+                    }
+                    if ((var_s1 < 0 && (g_Player.vram_flag & 8) == 0) ||
+                        (var_s1 > 0 && (g_Player.vram_flag & 4) == 0)) {
+                        player->posX.val += var_s1 << 4;
                     }
                 }
             }
@@ -287,7 +288,7 @@ void EntityAlucardWaterEffect(Entity* self) {
         if (self->ext.aluwater.unk7E) {
             self->ext.aluwater.unk7E--;
         }
-        *D_80097448 = var_s3;
+        D_80097448[0] = var_s3;
         if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
             if (status & PLAYER_STATUS_CROUCH) {
                 if (status & PLAYER_STATUS_WOLF_FORM) {
@@ -353,8 +354,8 @@ void EntityAlucardWaterEffect(Entity* self) {
         InitializeEntity(g_EInitSpawner);
     }
     self->ext.aluwater.unk7C = sp28;
-    self->ext.aluwater.unk80 = sp18;
-    self->ext.aluwater.unk82 = sp20;
+    self->ext.aluwater.unk80 = posX;
+    self->ext.aluwater.unk82 = posY;
     self->ext.aluwater.unk88 = sp30;
     self->ext.aluwater.unk8C = sp10[0];
     self->ext.aluwater.unk8E = sp10[1];
@@ -581,7 +582,11 @@ void EntitySurfacingWater(Entity* self) {
         if (!(params & 0x8000)) {
             g_api.PlaySfxVolPan(g_SurfacingSfx, 0x7F, temp_s3);
         }
+#ifdef VERSION_PSP
+        params = (params >> 5) & 0x7;
+#else
         params = (params >> 8) & 0x7F;
+#endif
         x = self->posX.i.hi;
         y = self->posY.i.hi;
         self->ext.waterEffects.unk82 = y + tilemap->scrollY.i.hi;
@@ -871,7 +876,11 @@ void EntityWaterDrop(Entity* self) {
             }
 
             prim->posX.i.lo = prim->posY.i.lo = 0;
-            prim->velocityY.val = (rand() * 8) + self->velocityY;
+#ifdef VERSION_PSP
+            prim->velocityY.val = (rand() & 0x7FFF) * 8 + self->velocityY;
+#else
+            prim->velocityY.val = rand() * 8 + self->velocityY;
+#endif
             prim->posY.i.hi = y + (rand() & 15);
             prim->posX.i.hi = x + (rand() & 31) - 16;
             prim->delay = (rand() & 15) + 32;
