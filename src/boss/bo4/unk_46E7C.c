@@ -1309,8 +1309,7 @@ void func_us_801D162C(Entity* self) {
         self->step = 1;
     }
     self->ext.weapon.anim = DOPPLEGANGER.ext.player.anim - anim->frameStart;
-    if (DOPPLEGANGER.animFrameDuration == 1 &&
-        DOPPLEGANGER.animFrameIdx == anim->soundFrame) {
+    if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
