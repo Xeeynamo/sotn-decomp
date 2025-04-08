@@ -81,11 +81,11 @@ void func_us_801C6CEC(Entity* self) {
 
     if (self->step == 0) {
         InitializeEntity(g_EInitInteractable);
-        self->animSet = -0x7FFF;
+        self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->zPriority = 0x9A;
-        self->flags = (s32)(self->flags | FLAG_POS_CAMERA_LOCKED);
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
     }
     self->posX.i.hi = prev->posX.i.hi;
     self->rotZ = prev->rotZ;
