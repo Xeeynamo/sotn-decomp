@@ -218,7 +218,8 @@ void EntityAlucardWaterEffect(Entity* self) {
                         } else {
                             tempEntity->params = var_s7 + 2;
                         }
-                        tempEntity->params = var_s7; // this nullifies the above block!
+                        tempEntity->params =
+                            var_s7; // this nullifies the above block!
                         tempEntity->posY.i.hi += var_s6 - var_s3;
                         tempEntity->zPriority = player->zPriority;
                     }
