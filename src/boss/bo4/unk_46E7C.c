@@ -197,7 +197,20 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C8F3C);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C93C4);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C95E4);
+extern s32 D_us_801D3D44;
+
+void PlayerStepSwordWarp(void) {
+    if (DOPPLEGANGER.step_s == 0) {
+        if (g_Entities[E_BOSS_WEAPON].entityId == E_NONE) {
+            D_us_801D3D44 = 0x10;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 0x15), 0);
+            DOPPLEGANGER.step_s++;
+        }
+    } else if (--D_us_801D3D44 == 0) {
+        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        func_8010E570(0);
+    }
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C9694);
 
@@ -372,7 +385,29 @@ Entity* CreateEntFactoryFromEntity(
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CA2AC);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CA748);
+extern EInit D_us_80180434;
+
+void func_us_801CA748(Entity* self) {
+    if (DOPPLEGANGER.step != 6 || DOPPLEGANGER.step_s != 3) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180434);
+        if (g_Dop.status & PLAYER_STATUS_POISON) {
+            self->attack /= 2;
+        }
+        self->hitboxOffX = 4;
+        self->step++;
+    }
+
+    self->flags =
+        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_NOT_AN_ENEMY;
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
+    self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801CA834);
 
@@ -1235,6 +1270,52 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801D0318);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801D0DE0);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801D162C);
+s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
+extern EInit D_us_80180440;
+extern EInit D_us_8018044C;
+extern DopWeaponAnimation D_us_80184278[];
+
+// Similar to DRA's EntityUnarmedAttack
+void func_us_801D162C(Entity* self) {
+    EInit* var_a0;
+    s16 animIndex;
+    DopWeaponAnimation* anim;
+
+    animIndex = (self->params & 0x7FFF) >> 8;
+    self->posX.val = DOPPLEGANGER.posX.val;
+    self->posY.val = DOPPLEGANGER.posY.val;
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    anim = &D_us_80184278[animIndex];
+
+    if (DOPPLEGANGER.ext.player.anim < anim->frameStart ||
+        DOPPLEGANGER.ext.player.anim >= (anim->frameStart + 7) ||
+        !g_Dop.unk46) {
+        DestroyEntity(self);
+        return;
+    }
+
+    if (self->step == 0) {
+        var_a0 = &D_us_80180440;
+        if (animIndex != 0) {
+            var_a0 = &D_us_8018044C;
+        }
+        InitializeEntity(*var_a0);
+        if (g_Dop.status & PLAYER_STATUS_POISON) {
+            self->attack /= 2;
+        }
+        self->zPriority = DOPPLEGANGER.zPriority - 2;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
+        self->step = 1;
+    }
+    self->ext.weapon.anim = DOPPLEGANGER.ext.player.anim - anim->frameStart;
+    if (DOPPLEGANGER.animFrameDuration == 1 &&
+        DOPPLEGANGER.animFrameIdx == anim->soundFrame) {
+        g_api.PlaySfx(anim->soundId);
+    }
+    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801D17EC);
