@@ -114,8 +114,8 @@ void EntitySwordLord(Entity* self) {
         PlaySfxPositional(0x77F);
         self->hitboxState = 0;
         (self + 1)->hitboxState = 0;
-        self->animFrameIdx = 0;
-        self->animFrameDuration = 0;
+        self->pose = 0;
+        self->poseTimer = 0;
         self->step_s = 0;
         self->step = 6;
         self->zPriority -= 1;
@@ -153,8 +153,8 @@ void EntitySwordLord(Entity* self) {
         AnimateEntity(D_us_80182B1C, self);
         self->facingLeft = GetSideToPlayer() & 1;
         if (GetDistanceToPlayerX() < 0x60) {
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->poseTimer = 0;
+            self->pose = 0;
             self->ext.et_801CF850.unk7D = D_us_80182A98[Random() & 3];
             self->step = 3;
             if (self->facingLeft) {
@@ -188,8 +188,8 @@ void EntitySwordLord(Entity* self) {
             }
         }
         if (self->ext.et_801CF850.unk7C++ > self->ext.et_801CF850.unk7D) {
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->ext.et_801CF850.unk7C = 0;
             self->velocityX = 0;
             if (Random() % 2) {
@@ -208,8 +208,8 @@ void EntitySwordLord(Entity* self) {
             self->velocityX = 0;
         }
         if (AnimateEntity(D_us_80182AAC, self) == 0) {
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->ext.et_801CF850.unk7D = D_us_80182A98[Random() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
@@ -253,8 +253,8 @@ void EntitySwordLord(Entity* self) {
         }
         self->step_s ^= 1;
         if (AnimateEntity(D_us_80182AD4, self) == 0) {
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->ext.et_801CF850.unk7D = D_us_80182A98[Random() & 3];
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
@@ -266,7 +266,7 @@ void EntitySwordLord(Entity* self) {
             self->step = 3;
         }
         if (self->animCurFrame == 0x13 && self->step_s) {
-            if (!self->animFrameDuration) {
+            if (!self->poseTimer) {
                 PlaySfxPositional(SFX_STOMP_HARD_E);
             }
             if (self->facingLeft) {
@@ -320,8 +320,8 @@ void EntitySwordLord(Entity* self) {
                     tempEntity->params = 3;
                     PlaySfxPositional(SFX_FAST_STUTTER_EXPLODE);
                 }
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             }
             break;
@@ -340,7 +340,7 @@ void EntitySwordLord(Entity* self) {
             }
 
         case 2:
-            if (!self->animFrameDuration && self->animFrameIdx == 1) {
+            if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_ANIME_SWORD_B);
             }
             if (AnimateEntity(D_us_80182B10, self) == 0) {

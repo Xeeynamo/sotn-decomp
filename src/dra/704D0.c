@@ -402,7 +402,7 @@ bool CheckHellfireInput(void) {
             g_ButtonCombo[COMBO_HELLFIRE].buttonsCorrect = 0;
             break;
         }
-        FntPrint("pl_pose:%02x\n", PLAYER.animFrameIdx);
+        FntPrint("pl_pose:%02x\n", PLAYER.pose);
         if ((g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE)) &&
             !(g_Player.unk46 & 0x8000) &&
             ((PLAYER.step == Player_Crouch) ||

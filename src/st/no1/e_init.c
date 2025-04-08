@@ -84,9 +84,9 @@ void EntitySpearGuardBlock(Entity* self);
 void func_us_801D4558(Entity* self);
 void func_us_801D4950(Entity* self);
 void EntitySkeletonApe(Entity* self);
-void func_us_801D4F18(Entity* self);
+void EntitySkeletonApePunch(Entity* self);
 void EntitySkeletonApeBarrel(Entity* self);
-void func_us_801D544C(Entity* self);
+void EntityThrownBarrel(Entity* self);
 void func_us_801C0B9C(Entity* self);
 void EntityThrownSpear(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
@@ -180,9 +180,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x50 */ func_us_801D4558,
     /* 0x51 */ func_us_801D4950,
     /* 0x52 */ EntitySkeletonApe,
-    /* 0x53 */ func_us_801D4F18,
+    /* 0x53 */ EntitySkeletonApePunch,
     /* 0x54 */ EntitySkeletonApeBarrel,
-    /* 0x55 */ func_us_801D544C,
+    /* 0x55 */ EntityThrownBarrel,
     /* 0x56 */ func_us_801C0B9C,
     /* 0x57 */ EntityThrownSpear,
     /* 0x58 */ EntityMedusaHeadSpawner,
@@ -234,7 +234,7 @@ EInit g_EInitSpearGuard = {ANIMSET_OVL(0x0C), 0x01, 0x53, 0x222, 0x05D};
 EInit g_EInitThrownSpear = {ANIMSET_OVL(0x0C), 0x00, 0x53, 0x222, 0x060};
 EInit D_us_80180B18 = {ANIMSET_OVL(0x0D), 0x01, 0x50, 0x228, 0x0B1};
 EInit g_EInitSkeletonApe = {ANIMSET_OVL(0x0E), 0x01, 0x4F, 0x225, 0x053};
-EInit D_us_80180B30 = {ANIMSET_OVL(0x0E), 0x28, 0x4F, 0x225, 0x054};
-EInit D_us_80180B3C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
+EInit g_EInitSkeletonApeBarrel = {ANIMSET_OVL(0x0E), 0x28, 0x4F, 0x225, 0x054};
+EInit g_EInitSkeletonApePunch = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
 EInit g_EInitMedusaHeadBlue = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22B, 0x12F};
 EInit g_EInitMedusaHeadYellow = {ANIMSET_OVL(0x0F), 0x00, 0x56, 0x22C, 0x130};

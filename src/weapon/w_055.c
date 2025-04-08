@@ -52,8 +52,7 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
@@ -141,14 +140,14 @@ s32 func_ptr_80170004(Entity* self) {
         self->hitboxOffY = -28;
         self->step++;
     } else {
-        if (self->animCurFrame == 1 && self->animFrameDuration == 1) {
+        if (self->animCurFrame == 1 && self->poseTimer == 1) {
             self->hitboxWidth = self->hitboxHeight = 12;
             self->hitboxOffX = 13;
             self->hitboxOffY = -28;
         }
     }
 
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
         return;
     }

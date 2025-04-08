@@ -36,8 +36,8 @@ static Point16 D_us_80182978[] = {{0, 0},    {15, -27}, {33, -33}, {35, -36},
 
 // Seems to be some kind of helper for EntityWereskeleton
 void func_us_801CDDD8(u8 step) {
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->ext.wereskeleton.unk7C = 0;
     g_CurrentEntity->ext.wereskeleton.unk7D = 0;
     g_CurrentEntity->ext.wereskeleton.unk7E = 0;
@@ -81,7 +81,7 @@ void EntityWereskeleton(Entity* self) {
     case 3:
         UnkCollisionFunc2(D_us_801828F8);
         if (self->ext.wereskeleton.unk7D) {
-            if (self->animFrameDuration == 0) {
+            if (self->poseTimer == 0) {
                 if (self->facingLeft) {
                     self->posX.i.hi += D_us_80182930[self->animCurFrame];
                 } else {
@@ -113,7 +113,7 @@ void EntityWereskeleton(Entity* self) {
 
     case 4:
         UnkCollisionFunc2(D_us_801828F8);
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             if (self->facingLeft) {
                 self->posX.i.hi -= D_us_80182940[self->animCurFrame];
             } else {
@@ -194,10 +194,10 @@ void EntityWereskeleton(Entity* self) {
         if (!AnimateEntity(D_us_80182894, self)) {
             func_us_801CDDD8(10);
         }
-        if (!self->animFrameDuration && self->animFrameIdx == 7) {
+        if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_CREAK);
         }
-        if (!self->animFrameDuration && self->animFrameIdx == 11) {
+        if (!self->poseTimer && self->pose == 11) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
         }
         break;

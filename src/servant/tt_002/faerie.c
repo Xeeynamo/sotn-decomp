@@ -90,8 +90,8 @@ ServantDesc faerie_ServantDesc = {
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
         self->anim = g_FaerieAnimationFrames[animationIndex];
-        self->animFrameIdx = 0;
-        self->animFrameDuration = 0;
+        self->pose = 0;
+        self->poseTimer = 0;
     }
 }
 
@@ -742,7 +742,7 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->step++;
         break;
     case 0x6:
-        if (self->animFrameIdx == 0xA) {
+        if (self->pose == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
                 g_api.PlaySfx(g_FaerieSfx.regeneration);
             }
@@ -865,7 +865,7 @@ void UpdateServantUseHammer(Entity* self) {
         }
         break;
     case 3:
-        if (self->animFrameIdx == 5) {
+        if (self->pose == 5) {
             g_Status.equipHandCount[ITEM_HAMMER]--;
             g_api.CreateEntFactoryFromEntity(
                 self, FACTORY(0x37, paramOffset), 0);
@@ -942,7 +942,7 @@ void UpdateServantUseUncurse(Entity* self) {
 
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        if (self->animFrameIdx == 0xB) {
+        if (self->pose == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
                 g_api.PlaySfx(g_FaerieSfx.healing);
             }
@@ -969,7 +969,7 @@ void UpdateServantUseUncurse(Entity* self) {
         break;
     case 5:
         self->facingLeft = PLAYER.facingLeft;
-        if (self->animFrameIdx == 0x20) {
+        if (self->pose == 0x20) {
             g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1033,7 +1033,7 @@ void UpdateServantUseAntivenom(Entity* self) {
 
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        if (self->animFrameIdx == 0xB) {
+        if (self->pose == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
                 g_api.PlaySfx(g_FaerieSfx.healing);
             }
@@ -1060,7 +1060,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         break;
     case 5:
         self->facingLeft = PLAYER.facingLeft;
-        if (self->animFrameIdx == 0x20) {
+        if (self->pose == 0x20) {
             g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1129,7 +1129,7 @@ void UpdateServantUseElementalResist(Entity* self) {
             temp = 1;
         self->facingLeft = temp;
 
-        if (self->animFrameIdx == 0xB) {
+        if (self->pose == 0xB) {
             for (rnd = rand() % 0x100, i = 0; true; i++) {
                 if (rnd <= g_SfxRandomizerHammerResist[i * 2]) {
                     g_api.PlaySfx(g_SfxRandomizerHammerResist[i * 2 + 1]);
@@ -1161,7 +1161,7 @@ void UpdateServantUseElementalResist(Entity* self) {
         break;
     case 5:
         self->facingLeft = PLAYER.facingLeft;
-        if (self->animFrameIdx == 0x20) {
+        if (self->pose == 0x20) {
             g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;
@@ -1231,7 +1231,7 @@ void UpdateServantUsePotion(Entity* self) {
         break;
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        if (self->animFrameIdx == 0xB) {
+        if (self->pose == 0xB) {
             g_api.PlaySfx(g_FaerieSfx.potion);
             g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
@@ -1253,7 +1253,7 @@ void UpdateServantUsePotion(Entity* self) {
         break;
     case 5:
         self->facingLeft = PLAYER.facingLeft;
-        if (self->animFrameIdx == 0x20) {
+        if (self->pose == 0x20) {
             g_api.PlaySfx(g_FaerieSfx.noMedicine);
             self->ext.faerie.frameCounter = 0;
             self->step++;

@@ -206,7 +206,7 @@ void EntityMarionette(Entity* self) {
         }
         func_us_801D6254(D_us_80181FE8);
         self->velocityY += FIX(0.5 / 16);
-        if (self->animFrameIdx == 10 && !self->animFrameDuration) {
+        if (self->pose == 10 && !self->poseTimer) {
             self->velocityY = FIX(-1.0);
         }
         break;
@@ -286,7 +286,7 @@ void EntityMarionette(Entity* self) {
                     *(&D_us_80182178[flag] + (Random() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
-                if (self->animFrameIdx > 0) {
+                if (self->pose > 0) {
                     self->velocityY = 0;
                 }
                 self->step_s++;
@@ -376,7 +376,7 @@ void EntityMarionette(Entity* self) {
                     SetStep(4);
                 } else {
                     SetStep(5);
-                    self->animFrameIdx = 10;
+                    self->pose = 10;
                 }
             }
             break;
@@ -432,7 +432,7 @@ void EntityMarionette(Entity* self) {
                     SetStep(4);
                 } else {
                     SetStep(5);
-                    self->animFrameIdx = 10;
+                    self->pose = 10;
                 }
             }
             break;
@@ -453,13 +453,13 @@ void EntityMarionette(Entity* self) {
             AnimateEntity(D_us_801820B4, self);
             if (!--self->ext.marionette.unk84) {
                 SetSubStep(2);
-                self->animFrameIdx = 5;
-                self->animFrameDuration = 0;
+                self->pose = 5;
+                self->poseTimer = 0;
             }
             if (GetDistanceToPlayerX() < 0x40) {
                 SetSubStep(3);
-                self->animFrameIdx = 5;
-                self->animFrameDuration = 0;
+                self->pose = 5;
+                self->poseTimer = 0;
             }
             break;
 

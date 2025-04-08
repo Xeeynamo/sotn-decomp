@@ -226,8 +226,8 @@ void EntityLesserDemonSpit(Entity* self) {
         MoveEntity();
         AnimateEntity(D_us_80181BCC, self);
         if (CheckColliderOffsets(D_us_80181AEC, 0)) {
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->rotX = 0x140;
             self->rotY = 0x200;
             self->hitboxWidth = 8;
@@ -270,8 +270,8 @@ void EntityLesserDemonSpit(Entity* self) {
                 return;
             }
             self->animCurFrame = 0x25;
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->poseTimer = 0;
+            self->pose = 0;
             self->ext.lesserDemon.unk80 = 0;
             PlaySfxPositional(SFX_FM_EXPLODE_B);
             self->step++;
@@ -296,8 +296,8 @@ void EntityLesserDemonSpit(Entity* self) {
     case 5:
         prim = self->ext.lesserDemon.unk7C;
         if (!--self->ext.lesserDemon.unk80) {
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->hitboxState = 0;
             self->step++;
             prim->drawMode = DRAW_HIDE;
@@ -993,13 +993,11 @@ u8 func_us_801BDA34(void) {
     } else {
         ret = 0;
     }
-    if (g_CurrentEntity->animFrameDuration == 0) {
+    if (g_CurrentEntity->poseTimer == 0) {
         if (g_CurrentEntity->facingLeft) {
-            g_CurrentEntity->posX.i.hi +=
-                D_us_80181AF4[g_CurrentEntity->animFrameIdx];
+            g_CurrentEntity->posX.i.hi += D_us_80181AF4[g_CurrentEntity->pose];
         } else {
-            g_CurrentEntity->posX.i.hi -=
-                D_us_80181AF4[g_CurrentEntity->animFrameIdx];
+            g_CurrentEntity->posX.i.hi -= D_us_80181AF4[g_CurrentEntity->pose];
         }
     }
     return ret;
@@ -1092,8 +1090,8 @@ void EntityLesserDemon(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(D_us_80181B2C, self)) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->step_s++;
                 self->velocityY = FIX(-6.0);
                 if (self->facingLeft) {
@@ -1108,8 +1106,8 @@ void EntityLesserDemon(Entity* self) {
             AnimateEntity(D_us_80181B34, self);
             if (UnkCollisionFunc3(D_us_80181AD4) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->step_s++;
             } else {
                 self->velocityY -= FIX(0.125);
@@ -1128,7 +1126,7 @@ void EntityLesserDemon(Entity* self) {
         if (!AnimateEntity(D_us_80181B4C, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
-        if (!self->animFrameDuration && self->animFrameIdx == 7) {
+        if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         MoveEntity();
@@ -1148,7 +1146,7 @@ void EntityLesserDemon(Entity* self) {
         }
         AnimateEntity(D_us_80181B4C, self);
         MoveEntity();
-        if (!self->animFrameDuration && self->animFrameIdx == 7) {
+        if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if (self->facingLeft) {
@@ -1268,10 +1266,10 @@ void EntityLesserDemon(Entity* self) {
                 SetStep(3);
                 break;
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 5) {
+            if (!self->poseTimer && self->pose == 5) {
                 PlaySfxPositional(0x78F);
             }
-            if (self->animFrameIdx > 4 && self->animFrameIdx < 11) {
+            if (self->pose > 4 && self->pose < 11) {
                 tempEntity->posX.i.hi = self->posX.i.hi;
                 tempEntity->posY.i.hi = self->posY.i.hi;
                 tempEntity->facingLeft = self->facingLeft;
@@ -1294,7 +1292,7 @@ void EntityLesserDemon(Entity* self) {
 
     case 11:
         AnimateEntity(D_us_80181B4C, self);
-        if (!self->animFrameDuration && self->animFrameIdx == 7) {
+        if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if (UnkCollisionFunc3(D_us_80181AD4) & 1) {
@@ -1311,7 +1309,7 @@ void EntityLesserDemon(Entity* self) {
         case 0:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             AnimateEntity(D_us_80181B84, self);
-            if (self->animFrameIdx == 2) {
+            if (self->pose == 2) {
                 PlaySfxPositional(0x70E);
                 self->ext.lesserDemon.unk84 = 0;
                 self->step_s++;
@@ -1356,7 +1354,7 @@ void EntityLesserDemon(Entity* self) {
             SetStep(3);
             break;
         }
-        if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+        if (self->pose == 3 && self->poseTimer == 0) {
             PlaySfxPositional(0x7D1);
             self->ext.lesserDemon.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -1365,7 +1363,7 @@ void EntityLesserDemon(Entity* self) {
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
-        if (self->animFrameIdx > 1) {
+        if (self->pose > 1) {
             func_us_801BC57C();
         }
         break;
@@ -1403,7 +1401,7 @@ void EntityLesserDemon(Entity* self) {
             }
             AnimateEntity(D_us_80181B9C, self);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            if (self->animFrameIdx == 3) {
+            if (self->pose == 3) {
                 self->ext.lesserDemon.unk84 = 0;
                 PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE);
                 self->step_s++;
@@ -1465,13 +1463,13 @@ void EntityLesserDemon(Entity* self) {
             /* fallthrough */
         case 1:
             AnimateEntity(D_us_80181B4C, self);
-            if (!self->animFrameDuration && self->animFrameIdx == 7) {
+            if (!self->poseTimer && self->pose == 7) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
             if (UnkCollisionFunc3(D_us_80181AD4) & 1) {
                 self->step_s++;
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
             } else {
                 self->velocityY -= FIX(3.5 / 16);
             }
@@ -1480,8 +1478,8 @@ void EntityLesserDemon(Entity* self) {
         case 2:
             hit = func_us_801BDA34();
             if (!AnimateEntity(D_us_80181BAC, self) || hit) {
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
                 self->drawFlags = FLAG_DRAW_UNK8;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                 self->unk6C = 0x80;

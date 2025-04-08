@@ -49,8 +49,8 @@ void func_8012D3E8(void) {
             func_8012CC30(0);
             break;
         }
-        if (PLAYER.animFrameIdx >= 3) {
-            if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.pose >= 3) {
+            if (PLAYER.poseTimer < 0) {
                 func_8012CB4C();
                 if (!(directionsPressed & (PAD_LEFT | PAD_RIGHT))) {
                     // Evil! This function takes no arguments! This is
@@ -62,7 +62,7 @@ void func_8012D3E8(void) {
             SetSpeedX(FIX(1));
             break;
         }
-        if (PLAYER.animFrameDuration == 1 && PLAYER.animFrameIdx == 2) {
+        if (PLAYER.poseTimer == 1 && PLAYER.pose == 2) {
             PLAYER.facingLeft++;
             PLAYER.facingLeft &= 1;
         }
@@ -189,7 +189,7 @@ void func_8012D3E8(void) {
         if (!(g_GameTimer % 2)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
         }
-        if (PLAYER.animFrameDuration >= 0) {
+        if (PLAYER.poseTimer >= 0) {
             break;
         }
         if (((g_Player.padPressed & PAD_RIGHT) && !PLAYER.facingLeft) ||
@@ -258,8 +258,8 @@ void func_8012DBBC(void) {
             ((g_Player.vram_flag & 8) && (PLAYER.velocityX < FIX(-2.5)))) {
             DecelerateX(FIX(0.125));
         }
-        if (PLAYER.animFrameIdx == 3) {
-            PLAYER.animFrameDuration = 6;
+        if (PLAYER.pose == 3) {
+            PLAYER.poseTimer = 6;
         }
     }
     vel_boost = FIX(20.0 / 128);
@@ -408,14 +408,14 @@ void func_8012E040(void) {
             SetSpeedX(FIX(1));
             break;
         }
-        if (PLAYER.animFrameIdx == 3) {
-            PLAYER.animFrameDuration = 6;
+        if (PLAYER.pose == 3) {
+            PLAYER.poseTimer = 6;
         }
         break;
 
     case 3:
-        if (PLAYER.animFrameIdx == 3) {
-            PLAYER.animFrameDuration = 6;
+        if (PLAYER.pose == 3) {
+            PLAYER.poseTimer = 6;
         }
         break;
     }
@@ -432,7 +432,7 @@ void func_8012E040(void) {
 
 void func_8012E550(void) {
     s32 i;
-    s16 playerFrame = PLAYER.animFrameIdx;
+    s16 playerFrame = PLAYER.pose;
     bool pressingDown = g_Player.padPressed & PAD_DOWN;
 
     DecelerateX(FIX(0.125));
@@ -443,8 +443,8 @@ void func_8012E550(void) {
                     g_Player.timers[7] = 8;
                     func_8012CED4();
                     PLAYER.velocityX = 0;
-                    PLAYER.animFrameIdx = 4;
-                    PLAYER.animFrameDuration = 1;
+                    PLAYER.pose = 4;
+                    PLAYER.poseTimer = 1;
                     PLAYER.velocityY = FIX(2);
                     return;
                 }
@@ -467,9 +467,9 @@ void func_8012E550(void) {
             SetPlayerAnim(0xE4);
             D_800B0914 = 2;
             if (playerFrame == 0) {
-                PLAYER.animFrameIdx = 1;
+                PLAYER.pose = 1;
             }
-        } else if (PLAYER.animFrameDuration < 0) {
+        } else if (PLAYER.poseTimer < 0) {
             D_800B0914++;
         }
         break;
@@ -487,15 +487,15 @@ void func_8012E550(void) {
             if (playerFrame != 0) {
                 break;
             }
-            PLAYER.animFrameIdx = 1;
+            PLAYER.pose = 1;
             break;
         }
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             func_8012CA64();
         }
         break;
     case 3:
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             func_8012CA64();
         }
         break;
@@ -542,8 +542,8 @@ void func_8012E7A4(void) {
     g_Entities[30].entityId = 60;
 
     func_8012CED4();
-    PLAYER.animFrameIdx = 4;
-    PLAYER.animFrameDuration = 4;
+    PLAYER.pose = 4;
+    PLAYER.poseTimer = 4;
     PLAYER.step_s = 8;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
     D_80138430 = 0x800;
@@ -576,7 +576,7 @@ void func_8012E9C0(void) {
     }
     func_8010E168(1, 4);
     PLAYER.velocityY = 0;
-    PLAYER.animFrameDuration = 4;
+    PLAYER.poseTimer = 4;
     if (g_Entities[16].entityId == 0x22) {
         if (func_8011203C() == 0) {
             return;
@@ -1006,7 +1006,7 @@ void func_8012F894(Entity* self) {
         return;
     }
     if (PLAYER.ext.player.anim == 0xE1) {
-        D_800B0920 = D_800B0924[PLAYER.animFrameIdx];
+        D_800B0920 = D_800B0924[PLAYER.pose];
     }
     if (!self->step) {
         self->primIndex = AllocPrimitives(PRIM_GT4, 6);
@@ -1055,10 +1055,10 @@ void func_8012F894(Entity* self) {
             break;
         case 1:
         case 3:
-            D_800B0920 -= D_800B0A3C[PLAYER.animFrameIdx];
+            D_800B0920 -= D_800B0A3C[PLAYER.pose];
             break;
         case 2:
-            D_800B0920 -= D_800B0A4C[PLAYER.animFrameIdx];
+            D_800B0920 -= D_800B0A4C[PLAYER.pose];
             break;
         case 4:
             break;
@@ -1087,7 +1087,7 @@ void func_8012F894(Entity* self) {
         }
         break;
     case 9:
-        D_800B0920 -= D_800B0A3C[PLAYER.animFrameIdx];
+        D_800B0920 -= D_800B0A3C[PLAYER.pose];
         break;
     }
 
@@ -1259,9 +1259,9 @@ void func_8012F894(Entity* self) {
         }
     }
     chosenAnimArray = D_800B09F8[chosenAnimIndex];
-    self->animCurFrame = chosenAnimArray[PLAYER.animFrameIdx];
+    self->animCurFrame = chosenAnimArray[PLAYER.pose];
     if (self->animCurFrame == -1) {
-        self->animCurFrame = (&chosenAnimArray[PLAYER.animFrameIdx])[-1];
+        self->animCurFrame = (&chosenAnimArray[PLAYER.pose])[-1];
     }
 
     f178_count = -1;
@@ -1334,17 +1334,17 @@ void func_80130264(Entity* self) {
             break;
         case 1:
         case 3:
-            var_v1 = D_800B0A5C[PLAYER.animFrameIdx];
+            var_v1 = D_800B0A5C[PLAYER.pose];
             self->posY.i.hi += var_v1;
             self->rotZ -= var_v1 << 5;
             break;
         case 2:
-            var_v1 = D_800B0A6C[PLAYER.animFrameIdx];
+            var_v1 = D_800B0A6C[PLAYER.pose];
             self->posY.i.hi += var_v1;
             self->rotZ -= var_v1 << 5;
             break;
         case 4:
-            var_v1 = D_800B0A7C[PLAYER.animFrameIdx];
+            var_v1 = D_800B0A7C[PLAYER.pose];
             self->posY.i.hi += var_v1;
             break;
         }
@@ -1446,15 +1446,15 @@ void func_80130618(Entity* self) {
             break;
         case 1:
         case 3:
-            var_v1 = D_800B0A8C[PLAYER.animFrameIdx];
+            var_v1 = D_800B0A8C[PLAYER.pose];
             self->posY.i.hi += var_v1;
             break;
         case 2:
-            var_v1 = D_800B0A9C[PLAYER.animFrameIdx];
+            var_v1 = D_800B0A9C[PLAYER.pose];
             self->posY.i.hi += var_v1;
             break;
         case 4:
-            var_v1 = D_800B0AAC[PLAYER.animFrameIdx];
+            var_v1 = D_800B0AAC[PLAYER.pose];
             self->posY.i.hi += var_v1;
             break;
         }
@@ -1533,8 +1533,8 @@ void func_801309B4(Entity* self) {
 #endif
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
                       FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->animFrameDuration = 1;
-        self->animFrameIdx = 4;
+        self->poseTimer = 1;
+        self->pose = 4;
         self->anim = D_800B0ABC;
         self->hitboxWidth = 10;
         self->hitboxHeight = 8;
@@ -1592,7 +1592,7 @@ void func_801309B4(Entity* self) {
         case 3:
             break;
         case 2:
-            var_s4 = D_800B0AEC[PLAYER.animFrameIdx];
+            var_s4 = D_800B0AEC[PLAYER.pose];
             var_s1 += var_s4;
             var_s0 -= 0x80;
             if (D_80138430 == 0xA00) {
@@ -1631,11 +1631,11 @@ void func_801309B4(Entity* self) {
     self->posX.i.hi += ((rcos(var_s0) >> 4) * var_s1) >> 8;
     self->posY.i.hi -= ((rsin(var_s0) >> 4) * var_s1) >> 8;
     if (PLAYER.step_s != 8 && PLAYER.step_s != 0 && D_80138444 != 0 &&
-        self->animFrameDuration == -1) {
+        self->poseTimer == -1) {
         PlaySfx(SFX_ALU_WOLF_BARK);
-        self->animFrameIdx = self->animFrameDuration = 0;
+        self->pose = self->poseTimer = 0;
     }
-    var_s1 = D_800B0AD4[self->animFrameIdx];
+    var_s1 = D_800B0AD4[self->pose];
     if (PLAYER.facingLeft) {
         var_s1 = -var_s1;
     }
@@ -1650,7 +1650,7 @@ void func_801309B4(Entity* self) {
     } else {
         self->hitboxState = 0;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
         } else if (*D_80097448 > 0x18) {
