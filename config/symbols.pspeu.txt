@@ -88,6 +88,7 @@ SetBackColor = 0x089297E0;
 SsUtSetVVol = 0x0892F75C;
 D_psp_08B42050 = 0x08B42050;
 D_psp_08B42054 = 0x08B42054;
+g_UserLanguage = 0x08B42058;
 D_psp_08B42060 = 0x08B42060;
 D_psp_08C630DC = 0x08C630DC;
 PfnEntityUpdates = 0x08C6BC30;

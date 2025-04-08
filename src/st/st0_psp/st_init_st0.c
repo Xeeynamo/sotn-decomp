@@ -2,14 +2,9 @@
 #include "../st0/st0.h"
 #include "../pfn_entity_update.h"
 
-// entity table to allocate new entities
-extern PfnEntityUpdate* PfnEntityUpdates;
-
 extern LayoutEntity* D_8D2DF54;
 extern LayoutEntity* D_8D2E028;
 
-// entity table to allocate new entities
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 extern Overlay OVL_EXPORT(Overlay);
 
 s32 E_ID(ID_11);

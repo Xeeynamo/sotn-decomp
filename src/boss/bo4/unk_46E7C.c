@@ -366,7 +366,7 @@ Entity* CreateEntFactoryFromEntity(
     newFactory->facingLeft = source->facingLeft;
     newFactory->zPriority = source->zPriority;
     newFactory->params = factoryParams & 0xFFF;
-    newFactory->ext.factory.unkA0 = (factoryParams & 0xFF0000) >> 8;
+    newFactory->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
     return newFactory;
 }
 

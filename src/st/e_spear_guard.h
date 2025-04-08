@@ -47,7 +47,7 @@ static Point16 guardHitboxOffsets[] = {
     {-15, 21},  {3, 26},    {1, 38},    {1, 46},    {1, 54},    {1, 62},
     {-25, 0},   {-23, -27}, {1, -30},   {0, -47},   {0, -54},   {0, -62},
     {0, -70}};
-static Point16 guardHitboxSizes[] = {
+static Size16 guardHitboxSizes[] = {
     {0, 0},  {8, 4},   {8, 4},   {16, 4},  {16, 4}, {16, 4}, {8, 8},  {4, 20},
     {8, 4},  {12, 24}, {16, 24}, {4, 12},  {4, 12}, {16, 4}, {16, 4}, {16, 4},
     {8, 8},  {8, 8},   {27, 25}, {27, 25}, {16, 4}, {8, 8},  {4, 20}, {4, 20},
@@ -394,8 +394,8 @@ void EntitySpearGuardBlock(Entity* self) {
     }
     self->hitboxOffX = guardHitboxOffsets[animCurFrame].x;
     self->hitboxOffY = guardHitboxOffsets[animCurFrame].y;
-    self->hitboxWidth = guardHitboxSizes[animCurFrame].x;
-    self->hitboxHeight = guardHitboxSizes[animCurFrame].y;
+    self->hitboxWidth = guardHitboxSizes[animCurFrame].width;
+    self->hitboxHeight = guardHitboxSizes[animCurFrame].height;
     self->facingLeft = parent->facingLeft;
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;

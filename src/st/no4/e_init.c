@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-void func_us_801C0FC8(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void NO4_EntityRedDoor(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -16,7 +16,7 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void NO4_EntityBackgroundBlock(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -82,10 +82,10 @@ void func_us_801C8CC4(Entity* self);
 void func_us_801C4D2C(Entity* self);
 void func_us_801C5020(Entity* self);
 void func_us_801C9130(Entity* self);
-void func_us_801DD688(Entity* self);
-void func_us_801DDBBC(Entity* self);
-void func_us_801DDCE4(Entity* self);
-void func_us_801DE0F0(Entity* self);
+void EntitySkeletonApe(Entity* self);
+void EntitySkeletonApePunch(Entity* self);
+void EntitySkeletonApeBarrel(Entity* self);
+void EntityThrownBarrel(Entity* self);
 void func_us_801C9460(Entity* self);
 void func_us_801C5268(Entity* self);
 void func_us_801C542C(Entity* self);
@@ -95,11 +95,11 @@ void func_us_801C8248(Entity* self);
 void func_us_801C58A0(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ func_us_801C0FC8,
+    /* 0x00 */ EntityBreakable,
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
-    /* 0x04 */ NO4_EntityRedDoor,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ EntitySoulStealOrb,
     /* 0x07 */ EntityRoomForeground,
@@ -111,7 +111,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0D */ EntityMessageBox,
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
-    /* 0x10 */ NO4_EntityBackgroundBlock,
+    /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x11 */ EntityLockCamera,
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
@@ -180,10 +180,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x52 */ func_us_801C4D2C,
     /* 0x53 */ func_us_801C5020,
     /* 0x54 */ func_us_801C9130,
-    /* 0x55 */ func_us_801DD688,
-    /* 0x56 */ func_us_801DDBBC,
-    /* 0x57 */ func_us_801DDCE4,
-    /* 0x58 */ func_us_801DE0F0,
+    /* 0x55 */ EntitySkeletonApe,
+    /* 0x56 */ EntitySkeletonApePunch,
+    /* 0x57 */ EntitySkeletonApeBarrel,
+    /* 0x58 */ EntityThrownBarrel,
     /* 0x59 */ func_us_801C9460,
     /* 0x5A */ func_us_801C5268,
     /* 0x5B */ func_us_801C542C,
@@ -219,7 +219,7 @@ EInit g_EInitThrownSpear = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
 EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
-EInit D_us_80180CC4 = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
-EInit D_us_80180CD0 = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
-EInit D_us_80180CDC = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
+EInit g_EInitSkeletonApe = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
+EInit g_EInitSkeletonApeBarrel = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
+EInit g_EInitSkeletonApePunch = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
 EInit D_us_80180CE8 = {ANIMSET_OVL(0x09), 0x01, 0x50, 0x21B, 0x15E};
