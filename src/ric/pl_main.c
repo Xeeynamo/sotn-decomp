@@ -74,7 +74,7 @@ static s16 func_80156DE4(void) {
 
 extern s32 D_pspeu_092D7A68;
 extern s32 D_pspeu_092CFA58;
-extern s32 D_pspeu_092D33BC;
+extern u8* D_pspeu_092D33BC;
 extern u8 D_pspeu_092D2548[]; // FR
 extern u8 D_pspeu_092CFA70[]; // SP
 extern u8 D_pspeu_092D16F8[]; // GE
@@ -170,9 +170,8 @@ void RicInit(s16 initParam) {
     D_pspeu_092D7A68 = 30;
 
     func_91040A0(&D_pspeu_092CFA58);
-    D_pspeu_092D33BC = func_pspeu_092ACE78(
-        0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
-        D_pspeu_092D08B8);
+    D_pspeu_092D33BC = GetLang(0, D_pspeu_092D2548, D_pspeu_092CFA70,
+                               D_pspeu_092D16F8, D_pspeu_092D08B8);
     if (D_pspeu_092D33BC != 0) {
         func_91040A0(&D_pspeu_092D33B0);
     }

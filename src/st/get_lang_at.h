@@ -3,18 +3,18 @@
 
 extern s32 g_UserLanguage;
 
-u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
+u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
     switch (g_UserLanguage) {
     default:
     case LANG_EN:
-        return en;
+        return en + idx;
     case LANG_FR:
-        return fr;
+        return fr + idx;
     case LANG_SP:
-        return sp;
+        return sp + idx;
     case LANG_GE:
-        return ge;
+        return ge + idx;
     case LANG_IT:
-        return it;
+        return it + idx;
     }
 }

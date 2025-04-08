@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-void func_us_801C0FC8(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void NO4_EntityRedDoor(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -16,7 +16,7 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void NO4_EntityBackgroundBlock(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -95,11 +95,11 @@ void func_us_801C8248(Entity* self);
 void func_us_801C58A0(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ func_us_801C0FC8,
+    /* 0x00 */ EntityBreakable,
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
-    /* 0x04 */ NO4_EntityRedDoor,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ EntitySoulStealOrb,
     /* 0x07 */ EntityRoomForeground,
@@ -111,7 +111,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0D */ EntityMessageBox,
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
-    /* 0x10 */ NO4_EntityBackgroundBlock,
+    /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x11 */ EntityLockCamera,
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,

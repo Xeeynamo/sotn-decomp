@@ -982,19 +982,19 @@ typedef struct {
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s16 childId;
+    /* 0x90 */ s16 newEntityId;
     /* 0x92 */ s16 unk92;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s16 unk98;
-    /* 0x9A */ s16 unk9A;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
+    /* 0x94 */ s16 amount;
+    /* 0x96 */ s16 nPerCycle;
+    /* 0x98 */ s16 tCycle;
+    /* 0x9A */ s16 delay;
+    /* 0x9C */ s16 kind;
+    /* 0x9E */ s16 isNonCritical;
+    /* 0xA0 */ s16 paramsBase;
+    /* 0xA2 */ s16 incParamsKind;
+    /* 0xA4 */ s16 origin;
+    /* 0xA6 */ s16 spawnIndex;
+    /* 0xA8 */ s16 entityIdMod;
     /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 unkAC;
     /* 0xAE */ s16 unkAE;
@@ -1433,8 +1433,8 @@ typedef struct {
     u8 unk90[4];
     u8 unk94[4];
     s32 unk98;
-    s32 unk9C;
-    u16 unkA0;
+    s32 velocity;
+    s16 angle;
     s16 unkA2;
     s32 : 32;
     s32 : 32;
@@ -1443,12 +1443,12 @@ typedef struct {
 } ET_SubwpnAxe;
 typedef struct {
     s16 timer;
-    u16 unk7E;
+    s16 unk7E;
     s16 unk80;
     s16 pad82;
-    s32 unk84;
-    s32 unk88;
-    u16 unk8C;
+    s32 x;
+    s32 y;
+    s16 facing;
 } ET_VibhutiCrash;
 typedef struct {
 #ifdef PLATFORM_64BIT

@@ -26,7 +26,7 @@ static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss
 static char* richter_mist_label; // bss
 
-extern s32 D_8B42058; // User's language selection?
+extern s32 g_UserLanguage;
 #else
 static char alucard_mist_label[] = "\x7C\x0EMist could pass．";
 static char richter_mist_label[] =
@@ -36,7 +36,7 @@ static char richter_mist_label[] =
 #ifdef VERSION_PSP
 static char* GetMistLabel(
     char* str_EN, char* str_FR, char* str_ES, char* str_DE, char* str_IT) {
-    switch (D_8B42058) {
+    switch (g_UserLanguage) {
     case 1:
     default:
         return str_EN;

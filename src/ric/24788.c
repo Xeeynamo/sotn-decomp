@@ -11,27 +11,26 @@ static u8 entity_ranges[][2] = {
     {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
 void RicEntityFactory(Entity* self) {
     Entity* newEntity;
-    s16 n;
+    s16 nPerCycle;
     s16 i;
-    u8 endIndex;
     s16 startIndex;
-    u8* data_idx;
+    s16 endIndex;
+    u8* data;
 
     if (self->step == 0) {
-        data_idx = &g_RicFactoryBlueprints[self->params];
-        self->ext.factory.childId = *data_idx++;
-        self->ext.factory.unk94 = *data_idx++;          // index 1
-        self->ext.factory.unk96 = *data_idx & 0x3F;     // index 2, lower 6 bits
-        self->ext.factory.unk9E = *data_idx >> 7;       // index 2, top bit
-        self->ext.factory.unkA2 = *data_idx++ >> 6 & 1; // index 2, 2nd-top bit
-        self->ext.factory.unk98 = *data_idx++;          // index 3
-        self->ext.factory.unk9C = *data_idx & 0x7;      // index 4, lower 4 bits
-        self->ext.factory.unkA4 = *data_idx++ >> 3;     // index 4, upper 4 bits
-        self->ext.factory.unk9A = *data_idx;            // index 5
+        data = (u8*)&g_RicFactoryBlueprints[self->params];
+        self->ext.factory.newEntityId = *data++;
+        self->ext.factory.amount = *data++;
+        self->ext.factory.nPerCycle = *data & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data++ >> 6) & 1;
+        self->ext.factory.tCycle = *data++;
+        self->ext.factory.kind = *data & 0x7;
+        self->ext.factory.origin = (s16)(*data++ >> 3) & 0x1F;
+        self->ext.factory.delay = *data;
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
-
         self->step++;
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
@@ -52,11 +51,11 @@ void RicEntityFactory(Entity* self) {
             break;
         }
     } else {
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
             break;
         case 9:
-            if (g_Player.unk4E != 0) {
+            if (g_Player.unk4E) {
                 DestroyEntity(self);
                 return;
             }
@@ -84,7 +83,6 @@ void RicEntityFactory(Entity* self) {
             self->posX.val = g_Entities->posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != PL_S_HIT) {
-            setIdZeroAndReturn:
                 self->entityId = 0;
                 return;
             }
@@ -95,45 +93,39 @@ void RicEntityFactory(Entity* self) {
             break;
         }
     }
-    if (self->ext.factory.unk9A != 0) {
-        self->ext.factory.unk9A--;
-        if (self->ext.factory.unk9A != 0) {
+    if (self->ext.factory.delay) {
+        if (--self->ext.factory.delay) {
             return;
         }
-        self->ext.factory.unk9A = self->ext.factory.unk98;
+        self->ext.factory.delay = self->ext.factory.tCycle;
     }
-    // Save this value so we don't have to re-fetch on every for-loop cycle
-    n = self->ext.factory.unk96;
-    for (i = 0; i < n; i++) {
-        // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
-        // instead of doing &entity_ranges followed by +=
-        data_idx = entity_ranges;
-        data_idx += self->ext.factory.unk9C * 2;
-
-        startIndex = *data_idx;
-        endIndex = *(data_idx + 1);
-
-        if (self->ext.factory.unk9C == 0) {
+    nPerCycle = self->ext.factory.nPerCycle;
+    for (i = 0; i < nPerCycle; i++) {
+        data = entity_ranges[0];
+        data += self->ext.factory.kind * 2;
+        startIndex = *data++;
+        endIndex = *data;
+        if (self->ext.factory.kind == 0) {
             newEntity = RicGetFreeEntityReverse(startIndex, endIndex + 1);
-        } else if (self->ext.factory.unk9C == 4) {
+        } else if (self->ext.factory.kind == 4) {
             newEntity = &g_Entities[31];
-        } else if (self->ext.factory.unk9C == 5) {
+        } else if (self->ext.factory.kind == 5) {
             newEntity = &g_Entities[48];
         } else {
             newEntity = RicGetFreeEntity(startIndex, endIndex + 1);
         }
-
         if (newEntity == NULL) {
-            if (self->ext.factory.unk9E == 1) {
-                goto setIdZeroAndReturn;
+            if (self->ext.factory.isNonCritical == 1) {
+                self->entityId = 0;
+            } else {
+                self->ext.factory.delay = self->ext.factory.tCycle;
             }
-            break;
+            return;
         }
         DestroyEntity(newEntity);
-        // unkA8 never gets set so is always zero
         newEntity->entityId =
-            self->ext.factory.childId + self->ext.factory.unkA8;
-        newEntity->params = self->ext.factory.unkA0;
+            self->ext.factory.newEntityId + self->ext.factory.entityIdMod;
+        newEntity->params = self->ext.factory.paramsBase;
         // The child  (newEntity) is not an ent factory, but because the
         // factory creates many entities, we can't pick a particular extension.
         // But we're not allowed to use generic, so i'll just reuse entFactory.
@@ -145,17 +137,18 @@ void RicEntityFactory(Entity* self) {
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (self->ext.factory.unkA2 != 0) {
-            newEntity->params += self->ext.factory.unkA6;
+        if (self->ext.factory.incParamsKind) {
+            newEntity->params += self->ext.factory.spawnIndex;
         } else {
             newEntity->params += i;
         }
-        if (++self->ext.factory.unkA6 == self->ext.factory.unk94) {
+        self->ext.factory.spawnIndex++;
+        if (self->ext.factory.spawnIndex == self->ext.factory.amount) {
             self->entityId = 0;
             return;
         }
     }
-    self->ext.factory.unk9A = self->ext.factory.unk98;
+    self->ext.factory.delay = self->ext.factory.tCycle;
 }
 
 void RicEntitySlideKick(Entity* entity) {

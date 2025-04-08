@@ -1,7 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09253D58);
+#include "../pfn_entity_update.h"
+
+extern LayoutEntity* D_8D2E160;
+extern LayoutEntity* D_8D2E234;
+
+extern Overlay OVL_EXPORT(Overlay);
+
+extern char D_psp_09276330[];
+extern char D_psp_09276520[];
+extern char D_psp_092766E8[];
+extern char D_psp_092768E0[];
+extern char D_psp_09276AC8[];
+
+extern u8* D_psp_092A54E0;            // bss
+extern u8* D_psp_092A54E8;            // bss
+extern u8* D_psp_092A54F0;            // bss
+extern u8* OVL_EXPORT(cutscene_data); // bss
+
+#include "../get_lang_at.h"
 
 extern s32 E_ID(ID_11);
 extern s32 E_ID(ID_12);
@@ -67,7 +85,7 @@ extern s32 E_ID(MUDMAN);
 extern s32 E_ID(ID_4E);
 extern s32 E_ID(ID_4F);
 
-void func_psp_09253E20(void) {
+void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
     E_ID(ID_12) = 0x12;
     E_ID(ID_13) = 0x13;
@@ -133,4 +151,27 @@ void func_psp_09253E20(void) {
     E_ID(ID_4F) = 0x4F;
 }
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/1B7F0", func_psp_09254120);
+void func_psp_09254120(void) {
+    OVL_EXPORT(cutscene_data) = GetLangAt(
+        8, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
+        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+
+    D_psp_092A54F0 = GetLangAt(
+        0, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
+        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+
+    D_psp_092A54E8 = GetLangAt(
+        0, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
+        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+
+    D_psp_092A54E0 = GetLangAt(
+        4, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
+        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+
+    InitEntityIds();
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = &D_8D2E160;
+    g_pStObjLayoutVertical = &D_8D2E234;
+    func_892A018();
+    memcpy((u8*)&g_api, (u8*)&OVL_EXPORT(Overlay), sizeof(Overlay));
+}
