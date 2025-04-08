@@ -218,7 +218,7 @@ void EntityAlucardWaterEffect(Entity* self) {
                         } else {
                             tempEntity->params = var_s7 + 2;
                         }
-                        tempEntity->params = var_s7;
+                        tempEntity->params = var_s7; // this nullifies the above block!
                         tempEntity->posY.i.hi += var_s6 - var_s3;
                         tempEntity->zPriority = player->zPriority;
                     }
@@ -876,11 +876,7 @@ void EntityWaterDrop(Entity* self) {
             }
 
             prim->posX.i.lo = prim->posY.i.lo = 0;
-#ifdef VERSION_PSP
-            prim->velocityY.val = (rand() & 0x7FFF) * 8 + self->velocityY;
-#else
-            prim->velocityY.val = rand() * 8 + self->velocityY;
-#endif
+            prim->velocityY.val = (rand() & PSP_RANDMASK) * 8 + self->velocityY;
             prim->posY.i.hi = y + (rand() & 15);
             prim->posX.i.hi = x + (rand() & 31) - 16;
             prim->delay = (rand() & 15) + 32;
