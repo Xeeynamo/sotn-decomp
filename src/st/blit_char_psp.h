@@ -20,8 +20,6 @@ void func_psp_0923C390(s32 arg0, s32 arg1) {
     D_psp_0924BC68 = arg1;
 }
 
-u8 func_psp_0923C2F8(u8 arg0);
-
 char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
     const u16 DOUBLE_SPACE = 0x8140;
 
