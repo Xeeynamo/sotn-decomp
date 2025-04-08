@@ -2350,6 +2350,11 @@
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/alu_anim/func_8010DA2C.s 
 | 1.00 | true     | RicSetAnimation                     | asm/us/ric/matchings/pl_utils/RicSetAnimation.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C44C8                    | asm/us/boss/bo4/matchings/doppleganger/func_us_801C44C8.s 
+| 0.97 | true     | func_us_801C4710                    | asm/us/boss/bo4/matchings/doppleganger/func_us_801C4710.s 
+| 1.00 | true     | func_us_801C3AC8                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C3AC8.s 
+| 0.97 | true     | func_us_801C3D10                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C3D10.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/bo4/matchings/unk_45354/CheckMoveDirection.s 
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/rbo5/matchings/unk_44954/CheckMoveDirection.s 
 | 1.00 | true     | CheckMoveDirection                  | asm/us/dra/matchings/6DF70/CheckMoveDirection.s 
@@ -2404,11 +2409,6 @@
 | 1.00 | true     | func_80118C28                       | asm/us/boss/rbo5/matchings/unk_4648C/func_80118C28.s 
 | 1.00 | true     | func_80118C28                       | asm/us/dra/matchings/7879C/func_80118C28.s 
 | 1.00 | true     | func_8015FA5C                       | asm/us/ric/matchings/238F8/func_8015FA5C.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C44C8                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C44C8.s 
-| 0.97 | false    | func_us_801C4710                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C4710.s 
-| 1.00 | false    | func_us_801C3AC8                    | asm/us/boss/rbo5/nonmatchings/doppleganger/func_us_801C3AC8.s 
-| 0.97 | false    | func_us_801C3D10                    | asm/us/boss/rbo5/nonmatchings/doppleganger/func_us_801C3D10.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetGPUBuffRGB                       | asm/us/dra/matchings/42398/SetGPUBuffRGB.s 
 | 1.00 | true     | SetGPUBuffRGBZero                   | asm/us/dra/matchings/42398/SetGPUBuffRGBZero.s 
@@ -2479,6 +2479,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2592,6 +2597,10 @@
 | 1.00 | true     | PlayerStepHighJump                  | asm/us/boss/rbo5/matchings/unk_4648C/PlayerStepHighJump.s 
 | 1.00 | true     | PlayerStepHighJump                  | asm/us/dra/matchings/71830/PlayerStepHighJump.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | PlayerStepSwordWarp                 | asm/us/boss/bo4/matchings/unk_46E7C/PlayerStepSwordWarp.s 
+| 1.00 | true     | PlayerStepSwordWarp                 | asm/us/boss/rbo5/matchings/unk_4648C/PlayerStepSwordWarp.s 
+| 1.00 | true     | PlayerStepSwordWarp                 | asm/us/dra/matchings/71830/PlayerStepSwordWarp.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_80113E68                       | asm/us/boss/bo4/matchings/unk_46E7C/func_80113E68.s 
 | 1.00 | true     | func_80113E68                       | asm/us/boss/rbo5/matchings/unk_4648C/func_80113E68.s 
 | 1.00 | true     | func_80113E68                       | asm/us/dra/matchings/71830/func_80113E68.s 
@@ -2652,10 +2661,6 @@
 | 1.00 | false    | func_8010FAF4                       | asm/us/boss/bo4/nonmatchings/unk_45354/func_8010FAF4.s 
 | 1.00 | false    | func_8010FAF4                       | asm/us/boss/rbo5/nonmatchings/unk_44954/func_8010FAF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | PlayerStepSwordWarp                 | asm/us/dra/matchings/71830/PlayerStepSwordWarp.s 
-| 1.00 | false    | func_us_801C95E4                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801C95E4.s 
-| 1.00 | false    | PlayerStepSwordWarp                 | asm/us/boss/rbo5/nonmatchings/unk_4648C/PlayerStepSwordWarp.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_80111CC0                       | asm/us/dra/matchings/71830/func_80111CC0.s 
 | 1.00 | false    | func_80111CC0                       | asm/us/boss/bo4/nonmatchings/unk_45354/func_80111CC0.s 
 | 1.00 | false    | func_80111CC0                       | asm/us/boss/rbo5/nonmatchings/unk_44954/func_80111CC0.s 
@@ -2683,10 +2688,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2767,14 +2768,32 @@
 | 1.00 | true     | func_us_801B4BF0                    | asm/us/boss/bo4/matchings/doors/func_us_801B4BF0.s 
 | 0.93 | true     | func_us_801B3690                    | asm/us/boss/rbo5/matchings/doors/func_us_801B3690.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C5354                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C5354.s 
+| 1.00 | true     | func_us_801C4954                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4954.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C5430                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C5430.s 
 | 1.00 | true     | func_us_801C4A30                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4A30.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C58E4                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C58E4.s 
+| 1.00 | true     | func_us_801C4EE4                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4EE4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C5990                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C5990.s 
 | 1.00 | true     | func_us_801C4F90                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4F90.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C59DC                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C59DC.s 
 | 1.00 | true     | func_us_801C4FDC                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C4FDC.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C5A4C                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C5A4C.s 
+| 1.00 | true     | func_us_801C504C                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C504C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C5B68                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C5B68.s 
+| 1.00 | true     | func_us_801C5168                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C5168.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C6654                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C6654.s 
+| 1.00 | true     | func_us_801C5C64                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C5C64.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801C6BE8                    | asm/us/boss/bo4/matchings/unk_45354/func_us_801C6BE8.s 
+| 1.00 | true     | func_us_801C61F8                    | asm/us/boss/rbo5/matchings/unk_44954/func_us_801C61F8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BatFormFinished                     | asm/us/boss/bo4/matchings/unk_46E7C/BatFormFinished.s 
 | 1.00 | true     | BatFormFinished                     | asm/us/boss/rbo5/matchings/unk_4648C/BatFormFinished.s 
@@ -2790,6 +2809,12 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C820C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C820C.s 
 | 1.00 | true     | func_us_801C781C                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C781C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CA748                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA748.s 
+| 1.00 | true     | func_us_801C9D58                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9D58.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801D162C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D162C.s 
+| 1.00 | true     | func_us_801D0BD8                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D0BD8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801B5774                    | asm/us/boss/bo4/nonmatchings/doors/func_us_801B5774.s 
 | 0.97 | false    | func_us_801B4210                    | asm/us/boss/rbo5/nonmatchings/doors/func_us_801B4210.s 
@@ -2812,20 +2837,8 @@
 | 1.00 | false    | func_us_801B65FC                    | asm/us/boss/bo4/nonmatchings/unk_365FC/func_us_801B65FC.s 
 | 0.92 | false    | func_us_801B54F0                    | asm/us/boss/rbo5/nonmatchings/unk_354F0/func_us_801B54F0.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C5354                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C5354.s 
-| 1.00 | false    | func_us_801C4954                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C4954.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801C55A8                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C55A8.s 
 | 1.00 | false    | func_us_801C4BA8                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C4BA8.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C58E4                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C58E4.s 
-| 1.00 | false    | func_us_801C4EE4                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C4EE4.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C5A4C                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C5A4C.s 
-| 1.00 | false    | func_us_801C504C                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C504C.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C5B68                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C5B68.s 
-| 1.00 | false    | func_us_801C5168                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C5168.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801C5CF8                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C5CF8.s 
 | 0.91 | false    | func_us_801C52F8                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C52F8.s 
@@ -2836,17 +2849,11 @@
 | 1.00 | false    | func_us_801C6040                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C6040.s 
 | 1.00 | false    | func_us_801C5650                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C5650.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C6654                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C6654.s 
-| 1.00 | false    | func_us_801C5C64                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C5C64.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801C68D0                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C68D0.s 
 | 1.00 | false    | func_us_801C5EE0                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C5EE0.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801C6BA0                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C6BA0.s 
 | 1.00 | false    | func_us_801C61B0                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C61B0.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C6BE8                    | asm/us/boss/bo4/nonmatchings/unk_45354/func_us_801C6BE8.s 
-| 1.00 | false    | func_us_801C61F8                    | asm/us/boss/rbo5/nonmatchings/unk_44954/func_us_801C61F8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801C7380                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801C7380.s 
 | 1.00 | false    | func_us_801C6990                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801C6990.s 
@@ -2878,9 +2885,6 @@
 | 1.00 | false    | func_us_801CA2AC                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CA2AC.s 
 | 1.00 | false    | func_us_801C98BC                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801C98BC.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801CA748                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CA748.s 
-| 1.00 | false    | func_us_801C9D58                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801C9D58.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801CB07C                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CB07C.s 
 | 1.00 | false    | func_us_801CA68C                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801CA68C.s 
 -------------------------------------------------------------------------------
@@ -2892,9 +2896,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801D0DE0                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D0DE0.s 
 | 1.00 | false    | func_us_801D038C                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801D038C.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D162C                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D162C.s 
-| 1.00 | false    | func_us_801D0BD8                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801D0BD8.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801D17EC                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D17EC.s 
 | 0.98 | false    | func_us_801D0D98                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801D0D98.s 
@@ -3141,9 +3142,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
