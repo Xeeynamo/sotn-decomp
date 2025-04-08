@@ -162,3 +162,4 @@ g_LayoutObjVertical = 0x801DEB74;
 g_LayoutObjPosHorizontal = 0x801DEB78;
 g_LayoutObjPosVertical = 0x801DEB7C;
 g_ItemIconSlots = 0x801DF81C;
+EntitySkeletonApe = 0x801DD688;
