@@ -377,9 +377,7 @@ def main(args: argparse.Namespace) -> None:
             message = f"{sotn_func.name} was successfully decompiled and matches!"
         case Status.NON_MATCHING:
             message = f"{sotn_func.name} was successfully decompiled and can be recompiled, but the resulting binary does not match.\n"
-            message += (
-                f"The following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
-            )
+            message += f"The following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
         case Status.DOES_NOT_COMPILE:
             message = f"{sotn_func.name} has been decompiled in {(sotn_func.src_path.relative_to(repo_root))} but contains errors that must be resolved before it can be compiled."
         case Status.ALREADY_DECOMPILED:
