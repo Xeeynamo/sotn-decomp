@@ -1023,7 +1023,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->r0 = prim->g0 = prim->b0 = 0;
         prim->priority = 0x1FC;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-        self->animFrameIdx = 0;
+        self->pose = 0;
         g_api.PlaySfx(NA_SE_CS_BURNING_PHOTOGRAPH);
         self->step++;
 #ifdef VERSION_PSP
@@ -1031,15 +1031,15 @@ void EntityCutscenePhotograph(Entity* self) {
 #endif
         /* fallthrough */
     case 8:
-        if (self->animFrameDuration) {
-            self->animFrameDuration--;
+        if (self->poseTimer) {
+            self->poseTimer--;
             return;
         }
-        self->animFrameDuration = 4;
+        self->poseTimer = 4;
         // Ugh, this should have been a 2D array.
         newEntXY = D_8018245C;
-        newEntXY = &newEntXY[self->animFrameIdx * 2];
-        self->animFrameIdx++;
+        newEntXY = &newEntXY[self->pose * 2];
+        self->pose++;
         if (newEntXY[0] == -1) {
             self->step++;
             return;
@@ -1047,7 +1047,7 @@ void EntityCutscenePhotograph(Entity* self) {
         newEntX = newEntXY[0];
         newEntY = newEntXY[1];
 
-        if (self->animFrameIdx & 1) {
+        if (self->pose & 1) {
             dualFlag = 0;
         } else {
             dualFlag = 1;

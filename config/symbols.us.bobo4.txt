@@ -164,6 +164,7 @@ PlayerStepHighJump = 0x801C6F74;
 func_80113E68 = 0x801C7244;
 BatFormFinished = 0x801C80D8;
 func_8011690C = 0x801C8184;
+PlayerStepSwordWarp = 0x801C95E4;
 GetFreeEntity = 0x801C9A6C;
 GetFreeEntityReverse = 0x801C9AE0;
 func_80118C28 = 0x801C9B64;

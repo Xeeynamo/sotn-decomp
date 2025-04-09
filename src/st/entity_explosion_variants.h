@@ -21,12 +21,12 @@ void EntityExplosionVariants(Entity* self) {
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
-        ++self->animFrameDuration;
-        if (!(self->animFrameDuration % 2)) {
+        ++self->poseTimer;
+        if (!(self->poseTimer % 2)) {
             self->animCurFrame++;
         }
 
-        if (self->animFrameDuration > explode_lifetime[self->params]) {
+        if (self->poseTimer > explode_lifetime[self->params]) {
             DestroyEntity(self);
         }
     }

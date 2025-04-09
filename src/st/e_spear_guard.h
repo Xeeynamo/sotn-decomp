@@ -88,14 +88,14 @@ void func_us_801D38E4() {
 void func_us_801D3918(Entity* self, u8 animationIndex) {
     s32 xVelocity;
     u16 animRet = AnimateEntity(animations[animationIndex], self);
-    if ((animRet & 0x80) && (self->step == 7) && (self->animFrameIdx != 3)) {
+    if ((animRet & 0x80) && (self->step == 7) && (self->pose != 3)) {
         if (self->ext.spearGuard.unk88 != self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
         self->ext.spearGuard.unk88 = self->facingLeft;
     }
     xVelocity = self->velocityX;
-    if (self->animFrameIdx >= frameIndexes[animationIndex]) {
+    if (self->pose >= frameIndexes[animationIndex]) {
         if (xVelocity != 0) {
             if (self->ext.spearGuard.unk88) {
                 xVelocity += xVelocities[animationIndex];
@@ -277,7 +277,7 @@ void EntitySpearGuard(Entity* self) {
             SetStep(4);
             PlaySfxPositional(0x773);
         } else if (tempVar & 0x80) {
-            tempVar = self->animFrameIdx - 6;
+            tempVar = self->pose - 6;
             if (tempVar == 3) {
                 PlaySfxPositional(0x770);
             }
@@ -316,7 +316,7 @@ void EntitySpearGuard(Entity* self) {
             SetStep(4);
             PlaySfxPositional(0x773);
         } else if (tempVar & 0x80) {
-            tempVar = self->animFrameIdx - 7;
+            tempVar = self->pose - 7;
             if (!tempVar) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(8.0);

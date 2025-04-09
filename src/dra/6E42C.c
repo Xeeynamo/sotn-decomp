@@ -119,11 +119,11 @@ void func_8010E6AC(bool forceAnim13) {
     }
 
     if ((PLAYER.ext.player.anim == 7) && atLedge) {
-        PLAYER.animFrameIdx = 1;
+        PLAYER.pose = 1;
     }
 
     if (g_Player.prev_step == Player_Crouch) {
-        PLAYER.animFrameIdx = 4;
+        PLAYER.pose = 4;
     }
 }
 

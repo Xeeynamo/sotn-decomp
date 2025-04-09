@@ -20,13 +20,13 @@ void EntityIntenseExplosion(Entity* self) {
         }
         self->zPriority += 8;
     } else {
-        self->animFrameDuration++;
+        self->poseTimer++;
         self->posY.val -= FIX(0.25);
-        if ((self->animFrameDuration % 2) == 0) {
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
 
-        if (self->animFrameDuration > 36) {
+        if (self->poseTimer > 36) {
             DestroyEntity(self);
         }
     }
