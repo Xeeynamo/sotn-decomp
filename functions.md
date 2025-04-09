@@ -1485,6 +1485,6 @@
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.935 |
-| no4    | func_pspeu_09256330                 |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.564 |
+| no4    | func_pspeu_09256330                 |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.887 |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
