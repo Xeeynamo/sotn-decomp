@@ -48,7 +48,7 @@ void EntityZombie(Entity* self) {
         if (AnimateEntity(D_80183C84, self) == 0) {
             SetStep(3);
         }
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             self->hitboxOffY -= 2;
             self->hitboxHeight += 2;
         }

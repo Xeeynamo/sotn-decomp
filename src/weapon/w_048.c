@@ -58,15 +58,14 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
-    if (D_154000_8017C3B4 == 0 && PLAYER.animFrameIdx == 1) {
+    if (D_154000_8017C3B4 == 0 && PLAYER.pose == 1) {
         inline void create(Entity * self, s32 a, s32 b) {
             g_api.CreateEntFactoryFromEntity(self, a + b, 0);
         }
@@ -81,7 +80,7 @@ void EntityWeaponAttack(Entity* self) {
         create(self, ((g_HandId + 1) << 0xC), FACTORY(0x3A, var_s0 + 2));
         create(self, ((g_HandId + 1) << 0xC), FACTORY(0x3A, var_s0 + 3));
     }
-    D_154000_8017C3B4 = PLAYER.animFrameIdx;
+    D_154000_8017C3B4 = PLAYER.pose;
     self->drawFlags = PLAYER.drawFlags;
     self->rotY = PLAYER.rotY;
     self->rotPivotY = PLAYER.rotPivotY;

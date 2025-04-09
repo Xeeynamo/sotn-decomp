@@ -549,7 +549,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (PLAYER.animFrameIdx == 1) {
+        if (PLAYER.pose == 1) {
             self->step++;
         }
         /* fallthrough */

@@ -273,13 +273,13 @@ void EntityStatueGear(Entity* self) {
     case 1:
         if (self->ext.statue.step == self->step) {
             self->step = 2;
-            self->animFrameIdx = self->animCurFrame - 17;
+            self->pose = self->animCurFrame - 17;
         }
         if (self->ext.statue.step == 2) {
             self->step = 3;
-            self->animFrameIdx = 20 - self->animCurFrame;
+            self->pose = 20 - self->animCurFrame;
         }
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         break;
 
     case 2:

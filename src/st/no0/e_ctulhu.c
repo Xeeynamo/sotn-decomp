@@ -126,7 +126,7 @@ void EntityCtulhu(Entity* self) {
             break;
         case 3:
             AnimateEntity(anim_wing_flap, self);
-            if (!self->animFrameDuration && self->animFrameIdx == 3) {
+            if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -144,7 +144,7 @@ void EntityCtulhu(Entity* self) {
         case 4:
             // Fly horizontally for a period
             AnimateEntity(anim_wing_flap, self);
-            if (!self->animFrameDuration && self->animFrameIdx == 3) {
+            if (!self->poseTimer && self->pose == 3) {
                 PlaySfxPositional(SFX_WING_FLAP_A);
             }
             colRet = UnkCollisionFunc2(sensors_unk);
@@ -254,7 +254,7 @@ void EntityCtulhu(Entity* self) {
             self->step_s = 2;
         }
 
-        if (self->animFrameIdx == 8 && !self->animFrameDuration) {
+        if (self->pose == 8 && !self->poseTimer) {
             newEntity = &PLAYER;
             posX = newEntity->posX.i.hi - self->posX.i.hi;
             posY = newEntity->posY.i.hi - self->posY.i.hi;
@@ -291,7 +291,7 @@ void EntityCtulhu(Entity* self) {
             SetStep(CTULHU_HOP);
         }
         if (GetDistanceToPlayerY() < 0x60 && self->animCurFrame == 0x24 &&
-            !self->animFrameDuration) {
+            !self->poseTimer) {
             PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
             for (i = 0; i < LEN(triple_fireball_rot_z); i++) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -314,8 +314,8 @@ void EntityCtulhu(Entity* self) {
             SetStep(CTULHU_IDLE);
         }
 
-        if (GetDistanceToPlayerY() < 0x60 && self->animFrameIdx == 0x9 &&
-            !self->animFrameDuration) {
+        if (GetDistanceToPlayerY() < 0x60 && self->pose == 0x9 &&
+            !self->poseTimer) {
             // Don't think SFX can overlap so this laugh never plays?
             PlaySfxPositional(SFX_CTULHU_LAUGH);
             PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);

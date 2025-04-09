@@ -779,7 +779,7 @@ void RenderEntities(void) {
     u8* spriteData;
     PlayerDraw* plDraw;
     u16 palette;
-    u16 animFrameIdx;
+    u16 pose;
     u8 uvLeft;
     u8 uvBottom;
     POLY_GT4* poly;
@@ -830,17 +830,17 @@ void RenderEntities(void) {
         if (r->y < -512 || r->y > 512) {
             continue;
         }
-        animFrameIdx = r->animCurFrame & 0x7FFF;
-        if (!animFrameIdx) {
+        pose = r->animCurFrame & 0x7FFF;
+        if (!pose) {
             continue;
         }
         if (r->animSet > 0) {
-            animFrame = D_800A3B70[r->animSet][animFrameIdx];
+            animFrame = D_800A3B70[r->animSet][pose];
         } else {
             spriteBank = (s16**)g_api.o.spriteBanks;
             spriteBank = &spriteBank[r->animSet & 0x7FFF];
             spriteBank = (s16**)spriteBank[0];
-            animFrame = spriteBank[animFrameIdx];
+            animFrame = spriteBank[pose];
         }
         r->spriteSheetIdx = *animFrame++;
         if (r->spriteSheetIdx & 0x8000) {

@@ -31,8 +31,8 @@ void func_8015C4AC(void) {
                 D_801545B0[g_Entities[1].ext.entSlot1.unk2];
         }
     }
-    if (g_Entities[1].animFrameIdx) {
-        g_Entities[1].animFrameIdx--;
+    if (g_Entities[1].pose) {
+        g_Entities[1].pose--;
         return;
     }
 #if !defined(VERSION_PSP)
@@ -50,7 +50,7 @@ void func_8015C4AC(void) {
             prim->y2 = PLAYER.palette;
         }
     }
-    g_Entities[1].animFrameIdx = 2;
+    g_Entities[1].pose = 2;
     g_Entities[1].entityId++;
     if (g_Entities[1].entityId >= 6) {
         g_Entities[1].entityId = 0;
@@ -119,8 +119,8 @@ void RicSetStep(s16 step) {
 
 void RicSetAnimation(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
-    g_CurrentEntity->animFrameDuration = 0;
-    g_CurrentEntity->animFrameIdx = 0;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
 }
 
 void RicDecelerateX(s32 speed) {
@@ -207,7 +207,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 1;
+        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7D = 1;
         g_Entities[UNK_ENTITY_1].animCurFrame =
             g_Entities[UNK_ENTITY_2].animCurFrame =
                 g_Entities[UNK_ENTITY_3].animCurFrame = 0;
@@ -218,7 +218,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
         }
     }
     g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk80 = 0xA;
+    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 0xA;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }

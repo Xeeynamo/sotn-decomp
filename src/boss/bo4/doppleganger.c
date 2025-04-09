@@ -380,6 +380,159 @@ INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C38C0);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C3EEC);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C44C8);
+extern Point16 D_us_801812AC[];
 
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C4710);
+void func_us_801C44C8(void) {
+    Collider collider;
+
+    s16* dopY;
+    s16* dopX;
+    s32 effects;
+    s32 i;
+    u32* pVramFlag;
+
+    s16 offsetX, offsetY;
+
+    dopY = &DOPPLEGANGER.posY.i.hi;
+    dopX = &DOPPLEGANGER.posX.i.hi;
+
+    pVramFlag = &g_Dop.vram_flag;
+    effects =
+        g_Dop.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                       EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID) ||
+        effects == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID) ||
+        effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                    EFFECT_SOLID)) {
+        *pVramFlag |= 4;
+        return;
+    }
+
+    for (i = 0; i < 7; i++) {
+        effects = g_Dop.colWall[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+
+            offsetX = *dopX + D_us_801812AC[i].x + g_Dop.colWall[i].unk4 - 1;
+            offsetY = *dopY + D_us_801812AC[i].y;
+            g_api.CheckCollision(offsetX, offsetY, &collider, 0);
+
+            if (!(collider.effects & EFFECT_SOLID)) {
+                *pVramFlag |= 4;
+                *dopX += g_Dop.colWall[i].unk4;
+                return;
+            }
+        }
+
+        if ((effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                EFFECT_UNK_8000 &&
+            i != 0 &&
+            ((g_Dop.colWall[0].effects & EFFECT_UNK_0800) ||
+             !(g_Dop.colWall[0].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *pVramFlag |= 4;
+            *dopX += g_Dop.colWall[i].unk4;
+            return;
+        }
+
+        if ((effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                EFFECT_UNK_0800 &&
+            i != 6 &&
+            ((g_Dop.colWall[6].effects & EFFECT_UNK_8000) ||
+             !(g_Dop.colWall[6].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *pVramFlag |= 4;
+            *dopX += g_Dop.colWall[i].unk4;
+            return;
+        }
+    }
+}
+
+extern Point16 D_us_801812AC[];
+
+void func_us_801C4710(void) {
+    Collider collider;
+
+    s16* dopY;
+    s16* dopX;
+    s32 effects;
+    s32 i;
+    u32* pVramFlag;
+
+    s16 offsetX, offsetY;
+    dopY = &DOPPLEGANGER.posY.i.hi;
+    dopX = &DOPPLEGANGER.posX.i.hi;
+
+    pVramFlag = &g_Dop.vram_flag;
+    effects =
+        g_Dop.unk04 &
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0800 |
+         EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                    EFFECT_SOLID) ||
+        effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_UNK_0002 |
+                    EFFECT_SOLID) ||
+        effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                    EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID)) {
+        *pVramFlag |= 8;
+        return;
+    }
+
+    for (i = 7; i < 14; i++) {
+        effects = g_Dop.colWall[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if (effects == (EFFECT_UNK_8000 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_0800 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                        EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                        EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+
+            offsetX = *dopX + D_us_801812AC[i].x + g_Dop.colWall[i].unkC + 1;
+            offsetY = *dopY + D_us_801812AC[i].y;
+            g_api.CheckCollision(offsetX, offsetY, &collider, 0);
+
+            if (!(collider.effects & EFFECT_SOLID)) {
+                *pVramFlag |= 8;
+                *dopX += g_Dop.colWall[i].unkC;
+                return;
+            }
+        }
+
+        if ((effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                (EFFECT_UNK_8000 | EFFECT_UNK_4000) &&
+            i != 7 &&
+            ((g_Dop.colWall[7].effects & EFFECT_UNK_0800) ||
+             !(g_Dop.colWall[7].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *pVramFlag |= 8;
+            *dopX += g_Dop.colWall[i].unkC;
+            return;
+        }
+
+        if (((effects &
+              (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+             (EFFECT_UNK_4000 | EFFECT_UNK_0800)) &&
+            i != 13 &&
+            ((g_Dop.colWall[13].effects & EFFECT_UNK_8000) ||
+             !(g_Dop.colWall[13].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *pVramFlag |= 8;
+            *dopX += g_Dop.colWall[i].unkC;
+            return;
+        }
+    }
+}

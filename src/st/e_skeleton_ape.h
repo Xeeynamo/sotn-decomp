@@ -85,8 +85,8 @@ void EntitySkeletonApe(Entity* self) {
                 SetStep(2);
             } else {
                 self->step_s++;
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
             }
         }
         break;
@@ -149,7 +149,7 @@ void EntitySkeletonApe(Entity* self) {
         tempVar = AnimateEntity(D_us_80183280, self);
         if (!tempVar) {
             SetStep(2);
-        } else if ((tempVar & 0x80) && self->animFrameIdx == 3) {
+        } else if ((tempVar & 0x80) && self->pose == 3) {
             PlaySfxPositional(SFX_WEAPON_STAB_A);
         }
         break;
@@ -158,7 +158,7 @@ void EntitySkeletonApe(Entity* self) {
         tempVar = AnimateEntity(D_us_80183294, self);
         if (!tempVar) {
             SetStep(2);
-        } else if ((tempVar & 0x80) && self->animFrameIdx == 2) {
+        } else if ((tempVar & 0x80) && self->pose == 2) {
             PlaySfxPositional(SFX_BONE_THROW);
         }
         break;
