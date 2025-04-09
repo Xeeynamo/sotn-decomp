@@ -73,8 +73,8 @@ void func_us_801C542C(Entity* self) {
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->rotZ = false;
     }
-    if (HIH(self->velocityY) < 8) {
-        self->velocityY += FIX(0.25);
+    if (F(self->velocityY).i.hi < 8) {
+        F(self->velocityY).val += FIX(0.25);
     }
     MoveEntity();
     self->rotZ += D_us_801815FC[params];
