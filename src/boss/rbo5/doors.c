@@ -136,7 +136,8 @@ void func_us_801B3690(Entity* self) {
         offsetX = 0x100 - g_Tilemap.scrollX.i.hi;
         offsetY = 0x80 - g_Tilemap.scrollY.i.hi;
         for (i = 0; i < 2; i++) {
-            dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            dop =
+                AllocEntity(g_Entities + 224, g_Entities + TOTAL_ENTITY_COUNT);
             if (dop != NULL) {
                 CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
@@ -155,7 +156,7 @@ void func_us_801B3690(Entity* self) {
         break;
 
     case 9:
-        dop = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        dop = AllocEntity(g_Entities + 160, g_Entities + 192);
         if (dop != NULL) {
             CreateEntityFromEntity(E_ID(ID_1D), self, dop);
             dop->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
