@@ -135,7 +135,7 @@ class SotnFunction(object):
         for i, line in enumerate(lines):
             # jr instruction followed by $ra are function returns and not jump tables
             if "jr" in line and "$ra" not in line:
-                print(f"\nJump table call found at line {i + 1}")
+                print(f"Jump table call found at line {i + 1}")
 
                 jumpreg = line.split()[-1]
                 if "nop" not in lines[i - 1]:
@@ -177,7 +177,7 @@ class SotnFunction(object):
                 for data_file in self.asm_dir.rglob("*data.s"):
                     data = data_file.read_text()
                     if jumptable_name in data:
-                        print(f"Found jump table in {data_file}")
+                        print(f"Found jump table in {data_file.relative_to(self.root)}")
                         data_lines = data.splitlines()
                         break
                 else:
@@ -196,9 +196,9 @@ class SotnFunction(object):
                         in_jumptable = True
                     # End jumptable
                     elif in_jumptable and jumptable_name in line:
-                        print(f"Writing {jumptable_name} to {self.abspath}")
+                        print(f"Writing {jumptable_name} to {self.relpath}")
                         with self.abspath.open("a") as asm_file:
-                            asm_file.writelines(table_lines + [""])
+                            asm_file.write("\n".join(table_lines) + "\n")
                         break
 
     def _run_m2c(self) -> str:
