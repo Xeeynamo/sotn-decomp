@@ -10,7 +10,7 @@ palette_def.h
 sprite_banks.h
 tilemap_*.h
 tiledef_*.h
-cutscene_data.h
+cutscene_data*.h
 
 weapon/w_*_1.h
 weapon/w_*_2.h
