@@ -2,7 +2,7 @@
 """This script is intended to make it easier for someone to decompile a function within the sotn-decomp project
 and optionally upload that function to decomp.me.
 Any questions or issues related to running it should be directed to the sotn-decomp discord #tooling channel:
-https://discord.com/channels/1079389589950705684/1135205782703570994
+https://sotn-discord.xee.dev/
 
 Use `decompile.py --help` for usage and options"""
 
@@ -19,6 +19,7 @@ import m2c.m2c.main as m2c
 from contextlib import redirect_stdout
 from pathlib import Path
 from enum import Enum
+from typing import Optional
 
 
 class Status(Enum):
@@ -38,7 +39,7 @@ class SotnFunction(object):
     def __init__(self, func_root: Path, function_path: Path, args: argparse.Namespace):
         self.name: str = function_path.stem
         self.version: str = args.version
-        self._overlay: str | None = args.overlay
+        self._overlay: str = args.overlay
 
         # These directories/paths should be considered to be specific to the function
         self.root: Path = func_root
@@ -46,16 +47,16 @@ class SotnFunction(object):
         self.src_dir: Path = func_root.joinpath("src")
         self.abspath: Path = function_path.resolve()
         self.relpath: Path = function_path.relative_to(func_root)
-        self.src_path: Path | None = self._infer_src_path()
+        self.src_path: Path = self._infer_src_path()
         self.include_asm: str = (
             f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
         )
         self.asm_code: str = self.abspath.read_text()
-        self.c_code: str | None = None
-        self._context: str | None = None
+        self.c_code: str = ""
+        self._context: str = ""
 
     @property
-    def overlay(self) -> str | None:
+    def overlay(self) -> str:
         """Attempts to infer the overlay from the asm file path or returns None if one is not found"""
         if not self._overlay:
             nonmatching_index = next(
@@ -236,7 +237,7 @@ class SotnFunction(object):
             .replace("extern ?* D_", "extern /*?*/u8* D_")
         )
 
-    def _infer_src_path(self) -> Path | None:
+    def _infer_src_path(self) -> Optional[Path]:
         inferred_c_files = (
             file
             for file in self.root.joinpath("src").rglob(f"{self.abspath.parent.name}.c")
@@ -257,7 +258,7 @@ def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
 
 def get_function_path(
     asm_dir: Path, args: argparse.Namespace
-) -> tuple[Status | None, tuple[Path, ...] | None]:
+) -> tuple[Optional[Status], Optional[tuple[Path]]]:
     """Uses the repo asm directory and the passed args to find any files matching the function name.
     Always orders the return values with all files for for the specified version, followed by any files found for the
     unspecified version(s) and returning a not found status if no files are found for the specified version.
@@ -353,9 +354,8 @@ def main(args: argparse.Namespace) -> None:
         )
         args.find_siblings = False
 
-    repo_root: Path = get_repo_root()
-    if repo_root:
-        status, function_paths = get_function_path(repo_root.joinpath("asm"), args)
+    repo_root = get_repo_root()
+    status, function_paths = get_function_path(repo_root.joinpath("asm"), args)
 
     if not status:
         # We know that if there is no status yet, then function_paths exists and index 0 is the only function matching args.version
@@ -376,25 +376,26 @@ def main(args: argparse.Namespace) -> None:
         case Status.MATCHING:
             message = f"{sotn_func.name} was successfully decompiled and matches!"
         case Status.NON_MATCHING:
-            message = f"""{sotn_func.name} was successfully decompiled and can be recompiled, but the resulting binary does not match.
-The following command can be used to look for the differences:
-{sotn_func.asm_differ_command}"""
+            message = f"{sotn_func.name} was successfully decompiled and can be recompiled, but the resulting binary does not match.\n"
+            message += (
+                f"The following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
+            )
         case Status.DOES_NOT_COMPILE:
             message = f"{sotn_func.name} has been decompiled in {(sotn_func.src_path.relative_to(repo_root))} but contains errors that must be resolved before it can be compiled."
         case Status.ALREADY_DECOMPILED:
             message = f"{sotn_func.name} seems to have already been decompiled in {(sotn_func.src_path.relative_to(repo_root))}"
             if args.upload:
-                message += f" so the existing decompiled code must be moved manually from the context tab to the source tab in decomp.me"
+                message += " so the existing decompiled code must be moved manually from the context tab to the source tab in decomp.me"
         case Status.AMBIGUOUS_FUNC:
-            message = f"""{len(function_paths)} possible files found for {args.function} in the following locations:
-{"".join(f"\t{path}\n" for path in function_paths if args.version in path.parts)}
-Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."""
+            message = f"{len(function_paths)} possible files found for {args.function} in the following locations:\n"
+            message += f"{"".join(f"\t{path}\n" for path in function_paths if args.version in path.parts)}"
+            message += "Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."
         case Status.UNHANDLED_ERROR | _:
-            message = f"""The script encountered an unhandled error, please report this in the SOTN Decomp discord #tooling channel: https://discord.com/channels/1079389589950705684/1135205782703570994"
-Copy and paste the following block, including the ```:
-    ```{sotn_func.version = } {sotn_func.overlay = } {sotn_func.name = }
-    {sotn_func.abspath = }
-    {sotn_func.src_path = }```"""
+            message = f"The script encountered an unhandled error, please report this in the SOTN Decomp discord #tooling channel: https://sotn-discord.xee.dev/\n"
+            message += "Copy and paste the following block, including the ```:\n"
+            message += f"\t```{sotn_func.version = } {sotn_func.overlay = } {sotn_func.name = }\n"
+            message += f"\t{sotn_func.abspath = }\n"
+            message += f"\t{sotn_func.src_path = }```"
 
     print(message)
 
