@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
-// hit during enter sequence
-extern s32 D_us_801805A0;
-extern s32 D_us_801805A4;
+s32 D_us_801805A0 = 0;
+s32 D_us_801805A4 = 0;
+
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
 extern EInit g_EInitInteractable;
@@ -21,14 +21,15 @@ extern s32 D_pspeu_0926BC98;
 #define E_ID(ID_1D) D_pspeu_0926BC98
 #endif
 
+// hit during enter sequence
 void func_us_801B4BF0(Entity* self) {
-    s32 i;          // s2
-    Entity* dop;    // s0
-    Entity* entity; // s1
-    s32 offsetX;    // s4
-    s32 offsetY;    // s3
-    s32 tangent;    // s5
-    s16 angle;      // s6
+    s32 i;
+    Entity* dop;
+    Entity* entity;
+    s32 offsetX;
+    s32 offsetY;
+    s32 tangent;
+    s16 angle;
 
     FntPrint("pl_demo_timer:%02x\n", g_Player.demo_timer);
     FntPrint("step:%02x\n", self->step);
@@ -177,13 +178,19 @@ void func_us_801B4BF0(Entity* self) {
 // hit during enter sequence
 extern EInit D_us_80180458;
 extern s32 D_us_80181570;
-extern s16 D_us_801805A8[];
-extern s16 D_us_801805B4[];
-extern s16 D_us_801805C0[];
-extern u8 D_us_801805CC[];
-extern u8 D_us_801805D4[];
-extern u8 D_us_801805DC[];
-extern u8 D_us_801805E4[];
+static s16 D_us_801805A8[] = {
+    0x080, 0x080, 0x100, 0x300, 0x500, 0x700,
+};
+static s16 D_us_801805B4[] = {
+    0x000C, 0x000C, 0x0012, 0x0016, 0x0020, 0x0026,
+};
+static s16 D_us_801805C0[] = {
+    0x0100, 0x0100, 0x00F8, 0x00F2, 0x00EE, 0x00EC,
+};
+static u8 D_us_801805CC[] = {1, 0x62, 0x1, 0x63, 0};
+extern u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
+extern u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
+extern u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
 
 void func_us_801B5040(Entity* self) {
     s32 flag;

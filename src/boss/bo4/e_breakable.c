@@ -32,3 +32,6 @@ static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 #endif
 
 #include "../../st/e_breakable.h"
+
+// unique to bo4?
+STATIC_PAD_DATA(4);
