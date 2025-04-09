@@ -57,7 +57,28 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5134);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5268);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C542C);
+extern s16 D_us_801815DC[]; // animCurFrame
+extern u16 D_us_801815EC[]; // facingLeft
+extern s16 D_us_801815FC[]; // rotZ
+extern s32 D_us_8018160C[]; // velocityY
+
+void func_us_801C542C(Entity* self) {
+    u16 params = self->params;
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = D_us_801815DC[params];
+        self->facingLeft = D_us_801815EC[params];
+        self->velocityY = D_us_8018160C[params];
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = false;
+    }
+    if (F(self->velocityY).i.hi < 8) {
+        F(self->velocityY).val += FIX(0.25);
+    }
+    MoveEntity();
+    self->rotZ += D_us_801815FC[params];
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5518);
 
