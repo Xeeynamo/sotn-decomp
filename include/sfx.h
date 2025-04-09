@@ -288,6 +288,9 @@ enum SfxModes {
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
 
+// BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
+#define SFX_BO4_UNK_7D7 0x7D7
+
 // BOSS RBO3 - Medusa
 #define SFX_RBO3_UNK_7C5 0x7C5
 #define SFX_RBO3_UNK_7C8 0x7C8
