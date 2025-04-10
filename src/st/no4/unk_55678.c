@@ -113,7 +113,7 @@ void func_us_801D96FC(Entity* self) {
         j = 0;
         if (self->ext.et_801D96FC.unk82 != 2) {
             if ((self->ext.et_801D96FC.unkA4 & 0x1F) == 0) {
-                PlaySfxPositional(0x6B0);
+                PlaySfxPositional(SFX_GLASS_SHARDS);
             }
             self->ext.et_801D96FC.unkA4++;
         }
@@ -608,7 +608,7 @@ void func_us_801D96FC(Entity* self) {
                     prim2->v0 = prim2->v1 = 0x40;
                     prim2->v2 = prim2->v3 = 0x40;
                     prim2->p3 = 2;
-                    g_api.PlaySfx(0x6B0);
+                    g_api.PlaySfx(SFX_GLASS_SHARDS);
                     self->animCurFrame = 0;
                     self->step_s++;
                     break;
@@ -734,7 +734,7 @@ void func_us_801D96FC(Entity* self) {
             if (++self->ext.et_801D96FC.unk8A > 0x40) {
                 self->ext.et_801D96FC.unk8A = 0;
                 self->ext.et_801D96FC.unk9C = rand() & 3;
-                PlaySfxPositional(0x6AE);
+                PlaySfxPositional(SFX_TINK_JINGLE);
                 self->step_s++;
             }
             break;
