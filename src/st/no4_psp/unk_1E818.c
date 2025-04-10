@@ -17,7 +17,6 @@ static void func_pspeu_09255F98(Primitive* prim) {
     prim->y3 = dy + (prim->u3 / 4 + 2);
 }
 
-
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_1E818", func_pspeu_09256138);
 
 extern EInit D_pspeu_09267BA0;
