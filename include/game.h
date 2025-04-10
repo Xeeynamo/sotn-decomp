@@ -31,6 +31,7 @@
 #endif
 
 #define SPAD(x) ((s32*)SP(x * sizeof(s32)))
+#define SP2(x, type) ((type*)SP(x * sizeof(void*)))
 
 typedef long Event;
 
