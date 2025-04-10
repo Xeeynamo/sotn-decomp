@@ -541,9 +541,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.primIndex[0] = -1;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
-                prim->blendMode = 0x11;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
-                prim->blendMode = 0x51;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 self->step_s++;
                 return;
             }
