@@ -104,7 +104,7 @@ void func_us_801D96FC(Entity* self) {
             self->unk6C = 0x80 - (u8)(self->ext.et_801D96FC.unk7C & 0x3F);
         }
     }
-    tempEntity = g_Entities;
+    tempEntity = &PLAYER;
     if ((self->flags & FLAG_DEAD) && (self->step != 4)) {
         SetStep(4);
     }
