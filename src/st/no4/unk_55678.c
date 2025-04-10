@@ -524,7 +524,7 @@ void func_us_801D96FC(Entity* self) {
         case 0:
             self->animCurFrame = 9;
             self->ext.et_801D96FC.unk84 = 0x10;
-            g_api.PlaySfx(0x733);
+            g_api.PlaySfx(SFX_FROZEN_SHADE_SCREAM);
             self->step_s++;
             break;
 
