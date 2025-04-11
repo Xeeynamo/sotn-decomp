@@ -10,15 +10,12 @@ import argparse
 import io
 import os
 import sys
-import subprocess
 import tempfile
 import requests
-import re
 import m2ctx
 import m2c.m2c.main as m2c
 from contextlib import redirect_stdout
 from pathlib import Path
-from enum import Enum
 from typing import Optional
 
 
@@ -26,36 +23,32 @@ class SotnFunction(object):
     """A representation of a function within sotn-decomp, including paths and code associated with the function"""
 
     def __init__(self, func_root: Path, function_path: Path, args: argparse.Namespace):
-        self.name: str = function_path.stem
+        self.name: str = args.function
         self.version: str = args.version
         self._overlay: str = args.overlay
 
         # These directories/paths should be considered to be specific to the function
         self.root: Path = func_root
         self.asm_dir: Path = func_root.joinpath("asm", args.version)
-        self.src_dir: Path = func_root.joinpath("src")
+        self.src_dir: Path = func_root.joinpath("src", "saturn" if args.version == "saturn" else "")
         self.abspath: Path = function_path.resolve()
         self.relpath: Path = function_path.relative_to(func_root)
         self.src_path: Path = self._infer_src_path()
-        self.include_asm: str = (
-            f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
-        )
+        if args.version == "saturn":
+            self.include_asm: str = f'INCLUDE_ASM("{self.abspath.relative_to(self.root).parent}", {self.relpath.stem}, {self.name});'
+        else:
+            self.include_asm: str = f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
         self.asm_code: str = self.abspath.read_text()
         self.c_code: str = ""
         self._context: str = ""
 
     @property
     def overlay(self) -> str:
-        """Attempts to infer the overlay from the asm file path or returns None if one is not found"""
+        """Attempts to infer the overlay from the asm file path or returns None if one is not found.
+        The '_psp' extension will be included if the version is psp"""
+        nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "psp" if "psp" in args.version else "nonmatchings"
         if not self._overlay:
-            nonmatching_index = next(
-                (
-                    i
-                    for i, part in enumerate(self.relpath.parts)
-                    if part == "nonmatchings" or part == "psp"
-                ),
-                None,
-            )
+            nonmatching_index = next((i for i, part in enumerate(self.relpath.parts) if part == nonmatchings_dir), None,)
             self._overlay = (
                 self.relpath.parts[nonmatching_index - 1] if nonmatching_index else None
             )
@@ -63,7 +56,7 @@ class SotnFunction(object):
 
     @property
     def asm_differ_command(self) -> str:
-        """Constructs the string to run asm-differ if the decompiled function code can be compiled"""
+        """Constructs the command string the user can enter to run asm-differ against the overlay this function resides in"""
         return f"{Path(sys.executable).name} {self.root.joinpath("tools/asm-differ/diff.py").relative_to(Path.cwd())} -mwo --overlay {self.overlay} {self.name}"
 
     @property
@@ -77,23 +70,25 @@ class SotnFunction(object):
 
     def decompile(self) -> str:
         """Leverages m2c to decompile the function and stores it so that decompilation only needs to run once"""
-        if not self.c_code:
+        if self.version != "saturn" and not self.c_code:
             self.c_code = self._guess_unknown_type(self._run_m2c())
         return self.c_code
 
     def upload_to_decompme(self) -> None:
         """Uploads the decompiled code to decomp.me using the extracted context and SotN decomp.me presets"""
         print("Loading up the catapult...")
-        # No current expectation of these changing, so hardcoding is probably fine
-        presets = {"us": 14, "pspeu": 132}
+        # No current expectation of these changing, so hardcoding instead of retrieving them from the API programmatically is probably fine
+        # The preset id's can be found at https://www.decomp.me/api/compilers, searching the page for Castlevania: Symphony of the Night
+        presets = {"us": 14, "pspeu": 132, "saturn": 21}
         payload = {
             "name": self.name,
             "target_asm": self.asm_code,
             "context": self.context,
-            "source_code": self.decompile(),
             "preset": presets[self.version],
             "diff_label": self.name,
         }
+        if self.decompile():
+            payload["source_code"] = self.decompile()
 
         try:
             print("Launching cow...")
@@ -109,7 +104,7 @@ class SotnFunction(object):
                 print(
                     f"{self.name} successfully uploaded to decomp.me and can be {"claimed" if "claim" in self.scratch_link else "accessed"} at {self.scratch_link}"
                 )
-                print("If this function had been previously decompiled, the decompiled code must be moved manually from the context tab to the source tab in decomp.me")
+                print("If this function had been previously decompiled, the decompiled code may need to be moved manually from the context tab to the source tab in decomp.me")
             else:
                 print(
                     f"Received an error when attempting to upload to decomp.me: {response_json.get("error", response.text)}"
@@ -156,11 +151,8 @@ class SotnFunction(object):
         )
 
     def _infer_src_path(self) -> Optional[Path]:
-        inferred_c_files = (
-            file
-            for file in self.root.joinpath("src").rglob(f"{self.abspath.parent.name}.c")
-            if self.overlay in file.parts
-        )
+        inferred_c_name = f"{self.abspath.parent.parent.name if self.version == "saturn" else self.abspath.parent.name}.c"
+        inferred_c_files = (file for file in self.src_dir.rglob(inferred_c_name) if self.overlay in file.parts or self.overlay in file.name)
         return next(
             (path for path in inferred_c_files if self.name in path.read_text()), None
         )
@@ -176,40 +168,31 @@ def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
 
 def get_function_path(
     asm_dir: Path, args: argparse.Namespace
-) -> Optional[tuple[Path]]:
-    """Uses the repo asm directory and the passed args to find any files matching the function name.
-    Always orders the return values with all files for for the specified version, followed by any files found for the
-    unspecified version(s).
-    """
-    candidates = tuple(file for file in asm_dir.rglob(f"{args.function}.s"))
-    matching = tuple(c for c in candidates if "matchings" in c.parts)
-    nonmatching = tuple(
-        c for c in candidates if "nonmatchings" in c.parts or "psp" in c.parts
-    )
+) -> Optional[Path]:
+    """Uses the version asm directory and the passed args to find any files matching the function name."""
+    file_name = f"{args.function.replace("func_0", "f") if args.version == "saturn" else args.function}.s"
+    matchings_dir = "f_match" if args.version == "saturn" else "matchings"
+    nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "psp" if "psp" in args.version else "nonmatchings"
+    
+    candidates = tuple(file for file in asm_dir.rglob(file_name))
+    matching = tuple(c for c in candidates if matchings_dir in c.parts)
+    nonmatching = tuple(c for c in candidates if nonmatchings_dir in c.parts and (not args.overlay or args.overlay in c.parts))
 
-    function = tuple(
-        file
-        for file in nonmatching
-        if args.version in file.parts
-        and (not args.overlay or args.overlay in file.parts)
-    )
-    siblings = tuple(file for file in nonmatching if not args.version in file.parts)
-
-    if not matching and not function:
-        f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+    if not matching and not nonmatching:
+        print(f"Could not find function {args.function}, are you sure it exists in version {args.version}?")
         return None
-    elif matching and not function:
-        f"It appears that {args.function} has already been decompiled and matched."
+    elif matching and not nonmatching:
+        print(f"It appears that {args.function} has already been decompiled and matched.")
         return None
 
-    if len(function) > 1:
-        message = f"{len(function)} possible files found for {args.function} in the following locations:\n"
-        message += f"{"\n".join(f"\t{path.relative_to(asm_dir.parent)}" for path in function)}"
+    if len(nonmatching) > 1:
+        message = f"{len(nonmatching)} possible files found for {args.function} in the following locations:\n"
+        message += f"{"\n".join(f"\t{path.relative_to(asm_dir.parent)}" for path in nonmatching)}"
         message += "Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."
         print(message)
         return None
     else:
-        return function + siblings
+        return nonmatching[0]
 
 
 def safe_write(file_path: Path, lines: list[str]) -> None:
@@ -227,8 +210,11 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None
     """Replaces the INCLUDE_ASM macro line with the decompiled code, writes it, then returns a status based on the results"""
     lines = sotn_func.src_path.read_text().splitlines()
 
-    if f"{sotn_func.include_asm}" in lines:
-        function_index = lines.index(f"{sotn_func.include_asm}")
+    # This should be removed when the remaining 4 functions in mad are decompiled
+    sotn_func.include_asm = sotn_func.include_asm.replace("st/mad", "asm/us/st/mad")
+
+    if sotn_func.include_asm in lines:
+        function_index = lines.index(sotn_func.include_asm)
 
         # Using copy() so that the lines object is not modified when new_lines is
         new_lines = lines.copy()
@@ -238,29 +224,27 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None
         print(f"{sotn_func.name} was successfully decompiled, but likely will not compile without adjustments.")
         print(f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}")
     elif [line for line in lines if sotn_func.name in line]:
-        print(f"{sotn_func.name} seems to have already been decompiled in {(sotn_func.src_path.relative_to(repo_root))}")
+        print(f"{sotn_func.name} seems to have already been decompiled in {sotn_func.src_path.relative_to(repo_root)}")
     else:
-        f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        print(f"Could not find function {args.function}, are you sure it exists in version {args.version}?")
 
 
 def main(args: argparse.Namespace) -> None:
     """Executes the decompilation workflow and gives console feedback based on the results"""
-    if args.version != "us":
-        sys.exit(
-            f"Please specify a different version, {args.version} is not yet implemented"
-        )
-    if args.find_siblings:
-        print(
-            "Warning: the -s/--find-siblings option is not yet fully implemented and is ignored"
-        )
-        args.find_siblings = False
+    if args.version == "saturn":
+        message = f"Local decompilation of saturn overlays is not currently supported"
+        if args.upload:
+            message += ", the function will only be uploaded to decomp.me"
+        else:
+            message += ", invoke the tool again with the -u/--upload option"   
+        print(message)
 
     repo_root = get_repo_root()
-    function_paths = get_function_path(repo_root.joinpath("asm"), args)
-
-    if function_paths:
-        sotn_func = SotnFunction(repo_root, function_paths[0], args)
-        if sotn_func.src_path:
+    function_path = get_function_path(repo_root.joinpath("asm", args.version), args)
+        
+    if function_path:
+        sotn_func = SotnFunction(repo_root, function_path, args)
+        if sotn_func.src_path and sotn_func.decompile():
             inject_decompiled_function(repo_root, sotn_func)
 
         if args.upload:
@@ -294,14 +278,7 @@ if __name__ == "__main__":
         action="store_true",
         required=False,
     )
-    parser.add_argument(
-        "-s",
-        "--find-siblings",
-        help="Look for the function in all game versions (not yet implemented)",
-        action="store_true",
-        required=False,
-    )
 
     args = parser.parse_args()
-
+    
     main(args)
