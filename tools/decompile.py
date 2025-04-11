@@ -28,7 +28,7 @@ class Status(Enum):
     ALREADY_DECOMPILED = 3
     ALREADY_MATCHED = 4
     DOES_NOT_COMPILE = 5
-    NON_MATCHING = 6
+    DECOMPILED = 6
     MATCHING = 7
     UNHANDLED_ERROR = -1
 
@@ -237,37 +237,11 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> Stat
         new_lines[function_index] = sotn_func.decompile()
         safe_write(sotn_func.src_path, new_lines)
 
-        compile_result = check_injected_code(repo_root, sotn_func)
-        if compile_result == Status.NON_MATCHING:
-            new_lines[function_index] = (
-                f"#ifndef NON_MATCHING\n{sotn_func.include_asm}\n#else\n{sotn_func.decompile()}\n#endif"
-            )
-            safe_write(sotn_func.src_path, new_lines)
-
-        return compile_result
+        return Status.DECOMPILED
     elif [line for line in lines if sotn_func.name in line]:
         return Status.ALREADY_DECOMPILED
     else:
         return Status.NOT_FOUND
-
-
-# check if the overlay can be compiled
-def check_injected_code(repo_root: Path, sotn_func: SotnFunction) -> Status:
-    """Uses the make build pipeline to check the decompiled code and return the relevant status"""
-    compile_result = subprocess.run(
-        f"make -j {sotn_func.overlay}",
-        cwd=repo_root,
-        shell=True,
-        check=False,
-        capture_output=True,
-    )
-    if compile_result.returncode == 0:
-        check_result = subprocess.run(
-            "make check", cwd=repo_root, shell=True, check=False, capture_output=True
-        )
-        return Status.MATCHING if check_result.returncode == 0 else Status.NON_MATCHING
-    else:
-        return Status.DOES_NOT_COMPILE
 
 
 def main(args: argparse.Namespace) -> None:
@@ -301,9 +275,9 @@ def main(args: argparse.Namespace) -> None:
             message = f"It appears that {args.function} has already been decompiled and matched."
         case Status.MATCHING:
             message = f"{sotn_func.name} was successfully decompiled and matches!"
-        case Status.NON_MATCHING:
-            message = f"{sotn_func.name} was successfully decompiled and can be recompiled, but the resulting binary does not match.\n"
-            message += f"The following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
+        case Status.DECOMPILED:
+            message = f"{sotn_func.name} was successfully decompiled, but may not compile without adjustments.\n"
+            message += f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
         case Status.DOES_NOT_COMPILE:
             message = f"{sotn_func.name} has been decompiled in {(sotn_func.src_path.relative_to(repo_root))} but contains errors that must be resolved before it can be compiled."
         case Status.ALREADY_DECOMPILED:
