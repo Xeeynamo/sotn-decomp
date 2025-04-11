@@ -894,7 +894,7 @@
 | dra    | MenuDrawImg                         |      112 |          9 |        |                                 |       |
 | ric    | func_80156DE4                       |      112 |         11 |        |                                 |       |
 | lib    | func_us_801B5F84                    |      112 |         18 |        |                                 |       |
-| no4    | func_pspeu_09255F98                 |      113 |          5 |        |                                 |       |
+| no4    | func_pspeu_09255F98                 |      113 |          5 |        | https://decomp.me/scratch/7X4yS | 1.0   |
 | no4    | EntitySpearGuardBlock               |      113 |         10 |        |                                 |       |
 | lib    | CreateEntityWhenInHorizontalRange   |      113 |         13 |        |                                 |       |
 | lib    | CreateEntityWhenInVerticalRange     |      113 |         13 |        |                                 |       |
@@ -1485,6 +1485,6 @@
 | lib    | LIB_EntityCutscene                  |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra    | EntityMist                          |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                  |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.935 |
-| no4    | func_pspeu_09256330                 |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.887 |
+| no4    | func_pspeu_09256330                 |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra    | EntityAlucard                       |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite              |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
