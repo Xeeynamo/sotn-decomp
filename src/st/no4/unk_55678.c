@@ -72,6 +72,17 @@ extern s16 D_us_8018295C[];
 extern s16 D_us_80182A54[];
 extern s16 D_us_80182A5C[];
 
+#define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
+typedef struct {
+    SVECTOR points[4];
+    Point16 sxy[4];
+    long p;
+    long flag;
+    CVECTOR primaryColor;
+    CVECTOR color;
+    MATRIX mat;
+} NO4_SCRATCHPAD;
+
 void func_us_801D96FC(Entity* self) {
     u8 u0, u1;
     s16 var_s4;
@@ -363,19 +374,19 @@ void func_us_801D96FC(Entity* self) {
                 var_s4 = self->posX.i.hi - 1;
             }
             SetGeomOffset(var_s4, self->posY.i.hi + 0xC);
-            points[0] = SP2(0, SVECTOR);
-            points[1] = SP2(2, SVECTOR);
-            points[2] = SP2(4, SVECTOR);
-            points[3] = SP2(6, SVECTOR);
-            sxy[0] = SP2(8, Point16);
-            sxy[1] = SP2(9, Point16);
-            sxy[2] = SP2(10, Point16);
-            sxy[3] = SP2(11, Point16);
-            p = SP2(12, long);
-            flag = SP2(13, long);
-            primaryColor = SP2(14, CVECTOR);
-            color = SP2(15, CVECTOR);
-            mat = SP2(16, MATRIX);
+            points[0] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[0]));
+            points[1] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[1]));
+            points[2] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[2]));
+            points[3] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[3]));
+            sxy[0] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[0]));
+            sxy[1] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[1]));
+            sxy[2] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[2]));
+            sxy[3] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[3]));
+            p = (long*)SP(offsetof(NO4_SCRATCHPAD, p));
+            flag = (long*)SP(offsetof(NO4_SCRATCHPAD, flag));
+            primaryColor = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, primaryColor));
+            color = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, color));
+            mat = (MATRIX*)SP(offsetof(NO4_SCRATCHPAD, mat));
             if (j > 0x10) {
                 var_s4 = 0x10;
             } else {
