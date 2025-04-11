@@ -63,9 +63,6 @@ CC1_SATURN		:= $(BUILD_DIR)/CC1.EXE
 BASE_SYMBOLS	 = $(CONFIG_DIR)/symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
 UNDEFINED_SYMS 	 = $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
 AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
-BASE_SYMBOLS	 = $(CONFIG_DIR)/symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
-UNDEFINED_SYMS 	 = $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
-AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
 
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
@@ -152,7 +149,7 @@ format-src: $(addsuffix .format-src,$(FORMAT_SRC_FILES))# Appends .format-src fo
 format-tools:
 	$(BLACK) *.py tools/*.py tools/sotn_permuter/permuter_loader.py tools/function_finder/*.py tools/splat_ext/*.py tools/split_jpt_yaml/*.py
 
-FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
+FORMAT_SYMBOLS_IGNORE	:= $(foreach version,us pspeu hd saturn,$(addprefix $(CONFIG_DIR)/,splat.$(version).weapon.yaml assets.$(version).yaml assets.$(version).yaml))
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 $(addsuffix .format-symbols,$(FORMAT_SYMBOLS_FILES)): %.format-symbols: | $(VENV_DIR)
 	$(muffle)echo -e "Removing orphan symbols using $*"
