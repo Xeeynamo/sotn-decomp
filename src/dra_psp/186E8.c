@@ -419,6 +419,8 @@ void func_psp_090F5520(void) {
     }
 }
 
+extern s32 g_UserLanguage;
+
 extern u8 D_psp_09192EB0;
 extern u8 D_psp_091A4CE8;
 extern u8 D_psp_09197640;
@@ -468,8 +470,6 @@ extern u8 D_psp_0914B960;
 extern u8 D_psp_0914B4A0;
 
 extern void* D_psp_091CE250;
-
-extern s32 D_8B42058;
 
 extern s32* D_psp_091CE248;
 extern s32* D_psp_091CE240;
@@ -550,15 +550,24 @@ extern s32 D_psp_0914C020;
 extern s32 D_psp_0914C030;
 
 void func_psp_090F5560(void) {
-    g_EquipDefs = GetLang(&D_psp_09192EB0, &D_psp_091A4CE8, &D_psp_09197640, &D_psp_091A04E0, &D_psp_0919BE58);
-    g_AccessoryDefs = GetLang(&D_psp_091A8798, &D_psp_091AED90, &D_psp_091AA130, &D_psp_091AD410, &D_psp_091ABB00);
-    g_EnemyDefs = GetLang(&D_psp_091B00F0, &D_psp_091C1690, &D_psp_091B4660, &D_psp_091BD110, &D_psp_091B8BB0);
-    g_MenuStr = GetLang(&D_psp_091C59C0, &D_psp_091C7080, &D_psp_091C5F58, &D_psp_091C6AF0, &D_psp_091C6550);
-    g_SpellDefs = GetLang(&D_psp_091C7398, &D_psp_091C85F8, &D_psp_091C7828, &D_psp_091C8158, &D_psp_091C7CD8);
-    g_RelicDefs = GetLang(&D_psp_091C8E40, &D_psp_091CAB00, &D_psp_091C9560, &D_psp_091CA398, &D_psp_091C9C90);
-    g_SaveAreaNames = GetLang(&D_psp_0914A918, &D_psp_0914BBE0, &D_psp_0914ADB8, &D_psp_0914B748, &D_psp_0914B260);
-    g_SaveAreaNamesSecondPart = GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8, &D_psp_0914B960, &D_psp_0914B4A0);
-    switch (D_8B42058) {
+    g_EquipDefs = GetLang(&D_psp_09192EB0, &D_psp_091A4CE8, &D_psp_09197640,
+                          &D_psp_091A04E0, &D_psp_0919BE58);
+    g_AccessoryDefs = GetLang(&D_psp_091A8798, &D_psp_091AED90, &D_psp_091AA130,
+                              &D_psp_091AD410, &D_psp_091ABB00);
+    g_EnemyDefs = GetLang(&D_psp_091B00F0, &D_psp_091C1690, &D_psp_091B4660,
+                          &D_psp_091BD110, &D_psp_091B8BB0);
+    g_MenuStr = GetLang(&D_psp_091C59C0, &D_psp_091C7080, &D_psp_091C5F58,
+                        &D_psp_091C6AF0, &D_psp_091C6550);
+    g_SpellDefs = GetLang(&D_psp_091C7398, &D_psp_091C85F8, &D_psp_091C7828,
+                          &D_psp_091C8158, &D_psp_091C7CD8);
+    g_RelicDefs = GetLang(&D_psp_091C8E40, &D_psp_091CAB00, &D_psp_091C9560,
+                          &D_psp_091CA398, &D_psp_091C9C90);
+    g_SaveAreaNames = GetLang(&D_psp_0914A918, &D_psp_0914BBE0, &D_psp_0914ADB8,
+                              &D_psp_0914B748, &D_psp_0914B260);
+    g_SaveAreaNamesSecondPart =
+        GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8,
+                &D_psp_0914B960, &D_psp_0914B4A0);
+    switch (g_UserLanguage) {
     case 1:
     default:
         D_psp_091CE248 = &D_psp_0914BFA0;
