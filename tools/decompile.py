@@ -22,17 +22,6 @@ from enum import Enum
 from typing import Optional
 
 
-class Status(Enum):
-    NOT_FOUND = 1
-    AMBIGUOUS_FUNC = 2
-    ALREADY_DECOMPILED = 3
-    ALREADY_MATCHED = 4
-    DOES_NOT_COMPILE = 5
-    DECOMPILED = 6
-    MATCHING = 7
-    UNHANDLED_ERROR = -1
-
-
 class SotnFunction(object):
     """A representation of a function within sotn-decomp, including paths and code associated with the function"""
 
@@ -120,6 +109,7 @@ class SotnFunction(object):
                 print(
                     f"{self.name} successfully uploaded to decomp.me and can be {"claimed" if "claim" in self.scratch_link else "accessed"} at {self.scratch_link}"
                 )
+                print("If this function had been previously decompiled, the decompiled code must be moved manually from the context tab to the source tab in decomp.me")
             else:
                 print(
                     f"Received an error when attempting to upload to decomp.me: {response_json.get("error", response.text)}"
@@ -186,10 +176,10 @@ def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
 
 def get_function_path(
     asm_dir: Path, args: argparse.Namespace
-) -> tuple[Optional[Status], Optional[tuple[Path]]]:
+) -> Optional[tuple[Path]]:
     """Uses the repo asm directory and the passed args to find any files matching the function name.
     Always orders the return values with all files for for the specified version, followed by any files found for the
-    unspecified version(s) and returning a not found status if no files are found for the specified version.
+    unspecified version(s).
     """
     candidates = tuple(file for file in asm_dir.rglob(f"{args.function}.s"))
     matching = tuple(c for c in candidates if "matchings" in c.parts)
@@ -206,12 +196,20 @@ def get_function_path(
     siblings = tuple(file for file in nonmatching if not args.version in file.parts)
 
     if not matching and not function:
-        return Status.NOT_FOUND, None
+        f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        return None
     elif matching and not function:
-        return Status.ALREADY_MATCHED, None
+        f"It appears that {args.function} has already been decompiled and matched."
+        return None
 
-    status = Status.AMBIGUOUS_FUNC if len(function) > 1 else None
-    return status, function + siblings
+    if len(function) > 1:
+        message = f"{len(function)} possible files found for {args.function} in the following locations:\n"
+        message += f"{"\n".join(f"\t{path.relative_to(asm_dir.parent)}" for path in function)}"
+        message += "Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."
+        print(message)
+        return None
+    else:
+        return function + siblings
 
 
 def safe_write(file_path: Path, lines: list[str]) -> None:
@@ -225,7 +223,7 @@ def safe_write(file_path: Path, lines: list[str]) -> None:
         os.replace(temp_file.name, file_path)
 
 
-def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> Status:
+def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None:
     """Replaces the INCLUDE_ASM macro line with the decompiled code, writes it, then returns a status based on the results"""
     lines = sotn_func.src_path.read_text().splitlines()
 
@@ -237,11 +235,12 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> Stat
         new_lines[function_index] = sotn_func.decompile()
         safe_write(sotn_func.src_path, new_lines)
 
-        return Status.DECOMPILED
+        print(f"{sotn_func.name} was successfully decompiled, but likely will not compile without adjustments.")
+        print(f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}")
     elif [line for line in lines if sotn_func.name in line]:
-        return Status.ALREADY_DECOMPILED
+        print(f"{sotn_func.name} seems to have already been decompiled in {(sotn_func.src_path.relative_to(repo_root))}")
     else:
-        return Status.NOT_FOUND
+        f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
 
 
 def main(args: argparse.Namespace) -> None:
@@ -257,45 +256,15 @@ def main(args: argparse.Namespace) -> None:
         args.find_siblings = False
 
     repo_root = get_repo_root()
-    status, function_paths = get_function_path(repo_root.joinpath("asm"), args)
+    function_paths = get_function_path(repo_root.joinpath("asm"), args)
 
-    if not status:
-        # We know that if there is no status yet, then function_paths exists and index 0 is the only function matching args.version
+    if function_paths:
         sotn_func = SotnFunction(repo_root, function_paths[0], args)
         if sotn_func.src_path:
-            status = inject_decompiled_function(repo_root, sotn_func)
+            inject_decompiled_function(repo_root, sotn_func)
 
         if args.upload:
             sotn_func.upload_to_decompme()
-
-    match status:
-        case Status.NOT_FOUND:
-            message = f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
-        case Status.ALREADY_MATCHED:
-            message = f"It appears that {args.function} has already been decompiled and matched."
-        case Status.MATCHING:
-            message = f"{sotn_func.name} was successfully decompiled and matches!"
-        case Status.DECOMPILED:
-            message = f"{sotn_func.name} was successfully decompiled, but may not compile without adjustments.\n"
-            message += f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
-        case Status.DOES_NOT_COMPILE:
-            message = f"{sotn_func.name} has been decompiled in {(sotn_func.src_path.relative_to(repo_root))} but contains errors that must be resolved before it can be compiled."
-        case Status.ALREADY_DECOMPILED:
-            message = f"{sotn_func.name} seems to have already been decompiled in {(sotn_func.src_path.relative_to(repo_root))}"
-            if args.upload:
-                message += " so the existing decompiled code must be moved manually from the context tab to the source tab in decomp.me"
-        case Status.AMBIGUOUS_FUNC:
-            message = f"{len(function_paths)} possible files found for {args.function} in the following locations:\n"
-            message += f"{"".join(f"\t{path}\n" for path in function_paths if args.version in path.parts)}"
-            message += "Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."
-        case Status.UNHANDLED_ERROR | _:
-            message = f"The script encountered an unhandled error, please report this in the SOTN Decomp discord #tooling channel: https://sotn-discord.xee.dev/\n"
-            message += "Copy and paste the following block, including the ```:\n"
-            message += f"\t```{sotn_func.version = } {sotn_func.overlay = } {sotn_func.name = }\n"
-            message += f"\t{sotn_func.abspath = }\n"
-            message += f"\t{sotn_func.src_path = }```"
-
-    print(message)
 
 
 if __name__ == "__main__":
