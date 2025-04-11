@@ -15,6 +15,27 @@ files:
           - [0x3F448, cutscene, cutscene_data_en]
           - [0x3F608, skip]
 
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no4.bin
+    asset_path: assets/st/no4
+    src_path: src/st/no4_psp
+    splat_config_path: config/splat.pspeu.stno4.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x30728, cutscene, cutscene_data_ferryman_right_it]
+          - [0x30770, cutscene, cutscene_data_ferryman_right_sp]
+          - [0x307B0, cutscene, cutscene_data_ferryman_right_fr]
+          - [0x307F0, cutscene, cutscene_data_ferryman_right_ge]
+          - [0x30838, cutscene, cutscene_data_ferryman_right_en]
+          - [0x30878, cutscene, cutscene_data_ferryman_left_it]
+          - [0x308D0, cutscene, cutscene_data_ferryman_left_sp]
+          - [0x30938, cutscene, cutscene_data_ferryman_left_fr]
+          - [0x309A0, cutscene, cutscene_data_ferryman_left_ge]
+          - [0x30A08, cutscene, cutscene_data_ferryman_left_en]
+          - [0x30A68, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
     src_path: src/st/st0_psp
