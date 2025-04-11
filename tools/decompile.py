@@ -30,14 +30,20 @@ class SotnFunction(object):
         # These directories/paths should be considered to be specific to the function
         self.root: Path = func_root
         self.asm_dir: Path = func_root.joinpath("asm", args.version)
-        self.src_dir: Path = func_root.joinpath("src", "saturn" if args.version == "saturn" else "")
+        self.src_dir: Path = func_root.joinpath(
+            "src", "saturn" if args.version == "saturn" else ""
+        )
         self.abspath: Path = function_path.resolve()
         self.relpath: Path = function_path.relative_to(func_root)
         self.src_path: Path = self._infer_src_path()
         if args.version == "saturn":
-            self.include_asm: str = f'INCLUDE_ASM("{self.abspath.relative_to(self.root).parent}", {self.relpath.stem}, {self.name});'
+            self.include_asm: str = (
+                f'INCLUDE_ASM("{self.abspath.relative_to(self.root).parent}", {self.relpath.stem}, {self.name});'
+            )
         else:
-            self.include_asm: str = f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
+            self.include_asm: str = (
+                f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
+            )
         self.asm_code: str = self.abspath.read_text()
         self.c_code: str = ""
         self._context: str = ""
@@ -46,9 +52,20 @@ class SotnFunction(object):
     def overlay(self) -> str:
         """Attempts to infer the overlay from the asm file path or returns None if one is not found.
         The '_psp' extension will be included if the version is psp"""
-        nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "psp" if "psp" in args.version else "nonmatchings"
+        nonmatchings_dir = (
+            "f_nonmat"
+            if args.version == "saturn"
+            else "psp" if "psp" in args.version else "nonmatchings"
+        )
         if not self._overlay:
-            nonmatching_index = next((i for i, part in enumerate(self.relpath.parts) if part == nonmatchings_dir), None,)
+            nonmatching_index = next(
+                (
+                    i
+                    for i, part in enumerate(self.relpath.parts)
+                    if part == nonmatchings_dir
+                ),
+                None,
+            )
             self._overlay = (
                 self.relpath.parts[nonmatching_index - 1] if nonmatching_index else None
             )
@@ -104,7 +121,9 @@ class SotnFunction(object):
                 print(
                     f"{self.name} successfully uploaded to decomp.me and can be {"claimed" if "claim" in self.scratch_link else "accessed"} at {self.scratch_link}"
                 )
-                print("If this function had been previously decompiled, the decompiled code may need to be moved manually from the context tab to the source tab in decomp.me")
+                print(
+                    "If this function had been previously decompiled, the decompiled code may need to be moved manually from the context tab to the source tab in decomp.me"
+                )
             else:
                 print(
                     f"Received an error when attempting to upload to decomp.me: {response_json.get("error", response.text)}"
@@ -113,7 +132,6 @@ class SotnFunction(object):
             print(
                 f"An unhandled error occurred while attempting to upload to decomp.me: {e}"
             )
-
 
     def _run_m2c(self) -> str:
         with tempfile.NamedTemporaryFile(
@@ -152,7 +170,11 @@ class SotnFunction(object):
 
     def _infer_src_path(self) -> Optional[Path]:
         inferred_c_name = f"{self.abspath.parent.parent.name if self.version == "saturn" else self.abspath.parent.name}.c"
-        inferred_c_files = (file for file in self.src_dir.rglob(inferred_c_name) if self.overlay in file.parts or self.overlay in file.name)
+        inferred_c_files = (
+            file
+            for file in self.src_dir.rglob(inferred_c_name)
+            if self.overlay in file.parts or self.overlay in file.name
+        )
         return next(
             (path for path in inferred_c_files if self.name in path.read_text()), None
         )
@@ -166,23 +188,33 @@ def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
         return get_repo_root(current_dir.parent)
 
 
-def get_function_path(
-    asm_dir: Path, args: argparse.Namespace
-) -> Optional[Path]:
+def get_function_path(asm_dir: Path, args: argparse.Namespace) -> Optional[Path]:
     """Uses the version asm directory and the passed args to find any files matching the function name."""
     file_name = f"{args.function.replace("func_0", "f") if args.version == "saturn" else args.function}.s"
     matchings_dir = "f_match" if args.version == "saturn" else "matchings"
-    nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "psp" if "psp" in args.version else "nonmatchings"
-    
+    nonmatchings_dir = (
+        "f_nonmat"
+        if args.version == "saturn"
+        else "psp" if "psp" in args.version else "nonmatchings"
+    )
+
     candidates = tuple(file for file in asm_dir.rglob(file_name))
     matching = tuple(c for c in candidates if matchings_dir in c.parts)
-    nonmatching = tuple(c for c in candidates if nonmatchings_dir in c.parts and (not args.overlay or args.overlay in c.parts))
+    nonmatching = tuple(
+        c
+        for c in candidates
+        if nonmatchings_dir in c.parts and (not args.overlay or args.overlay in c.parts)
+    )
 
     if not matching and not nonmatching:
-        print(f"Could not find function {args.function}, are you sure it exists in version {args.version}?")
+        print(
+            f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        )
         return None
     elif matching and not nonmatching:
-        print(f"It appears that {args.function} has already been decompiled and matched.")
+        print(
+            f"It appears that {args.function} has already been decompiled and matched."
+        )
         return None
 
     if len(nonmatching) > 1:
@@ -221,12 +253,20 @@ def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None
         new_lines[function_index] = sotn_func.decompile()
         safe_write(sotn_func.src_path, new_lines)
 
-        print(f"{sotn_func.name} was successfully decompiled, but likely will not compile without adjustments.")
-        print(f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}")
+        print(
+            f"{sotn_func.name} was successfully decompiled, but likely will not compile without adjustments."
+        )
+        print(
+            f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
+        )
     elif [line for line in lines if sotn_func.name in line]:
-        print(f"{sotn_func.name} seems to have already been decompiled in {sotn_func.src_path.relative_to(repo_root)}")
+        print(
+            f"{sotn_func.name} seems to have already been decompiled in {sotn_func.src_path.relative_to(repo_root)}"
+        )
     else:
-        print(f"Could not find function {args.function}, are you sure it exists in version {args.version}?")
+        print(
+            f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        )
 
 
 def main(args: argparse.Namespace) -> None:
@@ -236,12 +276,12 @@ def main(args: argparse.Namespace) -> None:
         if args.upload:
             message += ", the function will only be uploaded to decomp.me"
         else:
-            message += ", invoke the tool again with the -u/--upload option"   
+            message += ", invoke the tool again with the -u/--upload option"
         print(message)
 
     repo_root = get_repo_root()
     function_path = get_function_path(repo_root.joinpath("asm", args.version), args)
-        
+
     if function_path:
         sotn_func = SotnFunction(repo_root, function_path, args)
         if sotn_func.src_path and sotn_func.decompile():
@@ -280,5 +320,5 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    
+
     main(args)
