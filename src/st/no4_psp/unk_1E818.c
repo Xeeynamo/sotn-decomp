@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../no4/no4.h"
 
-static void func_pspeu_09255F98(Primitive* prim) {
+static void func_pspeu_09255F98(FrozenShadePrim* prim) {
     s16 dx, dy;
 
     Tilemap* tilemap = &g_Tilemap;
-    dx = LOH(prim->clut) - tilemap->scrollX.i.hi;
-    dy = LOH(prim->tpage) - tilemap->scrollY.i.hi;
+    dx = prim->posX.i.hi - tilemap->scrollX.i.hi;
+    dy = prim->posY.i.hi - tilemap->scrollY.i.hi;
 
     prim->x0 = prim->x3 = dx - 0;
     prim->x1 = dx + (prim->u3 / 16 + 2);
@@ -62,7 +62,7 @@ void func_pspeu_09256330(Entity* self) {
     long* p;
     long* flag;
     Entity* tempEntity;
-    Primitive* prim;
+    FrozenShadePrim* prim;
     Primitive* prim2;
     s16 tempVar;
     s16 i, j;
@@ -82,7 +82,7 @@ void func_pspeu_09256330(Entity* self) {
         SetStep(4);
     }
     if (self->ext.et_801D96FC.unk82) {
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
         j = 0;
         if (self->ext.et_801D96FC.unk82 != 2) {
             if ((self->ext.et_801D96FC.unkA4 & 0x1F) == 0) {
@@ -94,11 +94,11 @@ void func_pspeu_09256330(Entity* self) {
             if (!prim->v2) {
                 if (!prim->p3) {
                     if (self->facingLeft) {
-                        LOW(prim->u0) += D_pspeu_0929F610[prim->u2];
+                        prim->posX.val += D_pspeu_0929F610[prim->u2];
                     } else {
-                        LOW(prim->u0) -= D_pspeu_0929F610[prim->u2];
+                        prim->posX.val -= D_pspeu_0929F610[prim->u2];
                     }
-                    LOW(prim->u1) +=
+                    prim->posY.val +=
                         D_pspeu_0929F630[prim->u2] - (prim->u3++ << 10);
                     func_pspeu_09255F98(prim);
                     PRED(prim)--;
@@ -123,9 +123,9 @@ void func_pspeu_09256330(Entity* self) {
                         tempEntity =
                             &g_Entities[self->ext.et_801D96FC.unkA8[j]];
                         tempEntity->posX.i.hi =
-                            LOH(prim->clut) - tilemap->scrollX.i.hi;
+                            prim->posX.i.hi - tilemap->scrollX.i.hi;
                         tempEntity->posY.i.hi =
-                            LOH(prim->tpage) - tilemap->scrollY.i.hi;
+                            prim->posY.i.hi - tilemap->scrollY.i.hi;
                         tempEntity->hitboxWidth = prim->u3 / 8 + 1;
                         tempEntity->hitboxHeight = prim->u3 / 5 + 1;
                         j++;
@@ -175,13 +175,13 @@ void func_pspeu_09256330(Entity* self) {
                                      DRAW_UNK02 | DRAW_TRANSP;
                     prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 0xB;
                     prim->p3 = 0;
-                    LOW(prim->u1) =
+                    prim->posY.val =
                         (self->posY.val + tilemap->scrollY.val) - FIX(7);
                     if (self->facingLeft) {
-                        LOW(prim->u0) =
+                        prim->posX.val =
                             (self->posX.val + tilemap->scrollX.val) + FIX(14);
                     } else {
-                        LOW(prim->u0) =
+                        prim->posX.val =
                             (self->posX.val + tilemap->scrollX.val) - FIX(14);
                     }
                     func_pspeu_09255F98(prim);
@@ -222,7 +222,7 @@ void func_pspeu_09256330(Entity* self) {
         self->velocityY = FIX(0.25);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0x20);
         if (primIndex != -1) {
-            prim = &g_PrimBuf[primIndex];
+            prim = (FrozenShadePrim*)&g_PrimBuf[primIndex];
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             while (prim != NULL) {
@@ -384,7 +384,7 @@ void func_pspeu_09256330(Entity* self) {
             var_s4 = 0;
             iptr = D_pspeu_0929F6F0;
             point = D_pspeu_0929F730;
-            prim = &g_PrimBuf[self->primIndex];
+            prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
             while (prim != NULL) {
                 for (i = 0; i < 4; i++) {
                     s16* temp = D_pspeu_0929F680[*iptr];
@@ -454,7 +454,7 @@ void func_pspeu_09256330(Entity* self) {
                     ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
                 j = 1;
-                prim = &g_PrimBuf[self->primIndex];
+                prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
                 while (prim != NULL) {
                     prim->v2 = j;
                     j += 2;
@@ -633,21 +633,21 @@ void func_pspeu_09256330(Entity* self) {
             }
             var_s4 = 1;
             if (self->ext.et_801D96FC.unk84 < 0x40) {
-                prim = &g_PrimBuf[self->primIndex];
+                prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
                 while (prim != NULL) {
                     if (prim->drawMode == DRAW_HIDE) {
                         if (!prim->p3 && (prim->v2 != 0xFF)) {
                             prim = prim->next;
                             continue;
                         }
-                        LOH(prim->clut) =
+                        prim->posX.i.hi =
                             (prim2->x2 + prim2->x0) / 2 +
                             tilemap->scrollX.i.hi +
                             Random() *
                                 (prim2->x3 + prim2->x1 - prim2->x2 -
                                  prim2->x0) /
                                 0x200;
-                        LOH(prim->tpage) =
+                        prim->posY.i.hi =
                             (prim2->y2 + prim2->y1) / 2 + tilemap->scrollY.i.hi;
                         prim->p3 = 4;
                         prim->u2 = 0;
@@ -679,10 +679,10 @@ void func_pspeu_09256330(Entity* self) {
             }
             break;
         }
-        prim = &g_PrimBuf[self->primIndex];
+        prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
         while (prim != NULL) {
             if (prim->p3 == 4) {
-                LOW(prim->u1) -= 0x20000;
+                prim->posY.val -= FIX(2);
                 func_pspeu_09255F98(prim);
                 PRED(prim) -= 2;
                 PGRN(prim) -= 2;
