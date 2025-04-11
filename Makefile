@@ -18,7 +18,7 @@ if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
 get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
 # System related variables
-OS 				:= $(or $(filter $(call to_lower,$(shell uname -s),linux darwin),linux))# Default to linux if it isn't linux or darwin
+OS 				:= $(or $(filter $(call to_lower,$(shell uname -s)),linux darwin),linux)# Default to linux if it isn't linux or darwin
 ARCH			:= $(subst x86_64,amd64,$(shell uname -m))
 SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)# Only used for installing venv
 PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
