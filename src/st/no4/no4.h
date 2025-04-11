@@ -76,8 +76,8 @@ typedef enum EntityIDs {
     // /* 0x43 */ E_ID_43,
     // /* 0x44 */ E_ID_44,
     // /* 0x45 */ E_ID_45,
-    // /* 0x46 */ E_ID_46,
-    // /* 0x47 */ E_ID_47,
+    /* 0x46 */ E_ID_46 = 0x46,
+    /* 0x47 */ E_ID_47,
     // /* 0x48 */ E_ID_48,
     // /* 0x49 */ E_ID_49,
     /* 0x4A */ E_SPEAR_GUARD = 0x4A,
@@ -119,7 +119,7 @@ extern EInit g_EInitUnkId3F;
 // extern EInit D_us_80180C40;
 // extern EInit D_us_80180C4C;
 // extern EInit D_us_80180C58;
-// extern EInit D_us_80180C64;
+extern EInit D_us_80180C64;
 // extern EInit D_us_80180C70;
 // extern EInit D_us_80180C7C;
 extern EInit g_EInitSpearGuard;
