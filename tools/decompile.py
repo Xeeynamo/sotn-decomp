@@ -129,78 +129,6 @@ class SotnFunction(object):
                 f"An unhandled error occurred while attempting to upload to decomp.me: {e}"
             )
 
-    def resolve_jumptables(self) -> None:
-        """Adds any jump tables to the function asm file if they aren't already there"""
-        lines = self.asm_code.splitlines()
-        # This loop evaluates whether a line matches a jumptable call, finds the jumptable, and writes it to the function asm file if it isn't already in it
-        for i, line in enumerate(lines):
-            # jr instruction followed by $ra are function returns and not jump tables
-            if "jr" in line and "$ra" not in line:
-                print(f"Jump table call found at line {i + 1}")
-
-                jumpreg = line.split()[-1]
-                if "nop" not in lines[i - 1]:
-                    print("Instruction mismatch: no nop on line preceding jr")
-                    continue
-
-                lw_regex = rf"lw\s+{re.escape(jumpreg)}, %lo\((\w+)\)\(\$at\)"
-                lw_check = re.search(lw_regex, lines[i - 2])
-                if not lw_check:
-                    print(
-                        "Instruction mismatch: line preceding nop does not match lw pattern"
-                    )
-                    continue
-
-                jumptable_name = lw_check.group(1)
-                if f"glabel {jumptable_name}" in lines:
-                    print(f"Jump table {jumptable_name} is already in {self.relpath}")
-                    continue
-
-                print(f"Jump table: {jumptable_name}")
-                addu_regex = r"addu\s*\$at, \$at, \$"
-                addu_check = re.search(addu_regex, lines[i - 3])
-                if not addu_check:
-                    print(
-                        "Instruction mismatch: line preceding lw does not match addu pattern"
-                    )
-                    continue
-
-                lui_regex = rf"lui\s*\$at, %hi\({jumptable_name}\)"
-                lui_check = re.search(lui_regex, lines[i - 4])
-                if not lui_check:
-                    print(
-                        "Instruction mismatch: line preceding addu does not match lui pattern"
-                    )
-                    continue
-
-                # Confirmed the jump table is as expected, now to find it.
-                # Look in all rodata and data files.
-                for data_file in self.asm_dir.rglob("*data.s"):
-                    data = data_file.read_text()
-                    if jumptable_name in data:
-                        print(f"Found jump table in {data_file.relative_to(self.root)}")
-                        data_lines = data.splitlines()
-                        break
-                else:
-                    print("Could not find jump table in rodata")
-                    return
-
-                in_jumptable = False
-                for line in data_lines:
-                    # If we're in a jump table, we always want to append the line
-                    if in_jumptable:
-                        table_lines.append(line)
-
-                    # Start jumptable
-                    if line and not in_jumptable and jumptable_name in line:
-                        table_lines = ["", ".section .rodata", line]
-                        in_jumptable = True
-                    # End jumptable
-                    elif in_jumptable and jumptable_name in line:
-                        print(f"Writing {jumptable_name} to {self.relpath}")
-                        with self.abspath.open("a") as asm_file:
-                            asm_file.write("\n".join(table_lines) + "\n")
-                        break
 
     def _run_m2c(self) -> str:
         with tempfile.NamedTemporaryFile(
@@ -363,8 +291,6 @@ def main(args: argparse.Namespace) -> None:
         if sotn_func.src_path:
             status = inject_decompiled_function(repo_root, sotn_func)
 
-        if args.resolve_jumptables:
-            sotn_func.resolve_jumptables()
         if args.upload:
             sotn_func.upload_to_decompme()
 
@@ -416,13 +342,6 @@ if __name__ == "__main__":
         "--overlay",
         help="The overlay to use if there are multiple asm files that match the provided function name",
         type=str,
-        required=False,
-    )
-    parser.add_argument(
-        "-j",
-        "--resolve-jumptables",
-        help="Attempt to add any jump tables for the function to the asm file, if they're not already there (uncommon)",
-        action="store_true",
         required=False,
     )
     parser.add_argument(
