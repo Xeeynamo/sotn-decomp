@@ -71,7 +71,7 @@ void EntityClockRoomController(Entity* self) {
         prim->y2 = prim->y3 = prim->x1 = prim->x3 = 0x100;
         prim->priority = 0x1F0;
         prim->y0 = prim->y1 = prim->x0 = prim->x2 = 0;
-        prim->blendMode = 8;
+        prim->drawMode = DRAW_HIDE;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -125,7 +125,7 @@ void EntityClockRoomController(Entity* self) {
         self[shadow].zPriority = 0x40;
         self[shadow].palette = 0x804B;
         self[shadow].drawFlags = FLAG_DRAW_UNK8;
-        self[shadow].blendMode = 0x10;
+        self[shadow].drawMode = DRAW_TPAGE;
         self[shadow].flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
                              FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self[shadow].posY.i.hi += 4;
