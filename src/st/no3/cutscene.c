@@ -250,7 +250,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 }
                 *g_Dialogue.scriptCur--;
                 return;
-            case CSOP_UNK_11:
+            case CSOP_SCRIPT_UNKNOWN_11:
                 if (g_SkipCutscene) {
                     continue;
                 }
@@ -348,7 +348,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
             case CSOP_SCRIPT_UNKNOWN_23:
                 return;
-            case CSOP_SCRIPT_UNKNOWN_24:
+            case CSOP_WAIT_FOR_FLAG_RESET:
                 if (!((g_CutsceneFlags >> *g_Dialogue.scriptCur) & 1)) {
                     *g_Dialogue.scriptCur--;
                     return;
@@ -455,9 +455,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.primIndex[0] = -1;
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
-                prim->blendMode = 0x11;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
-                prim->blendMode = 0x51;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 self->step_s++;
                 return;
             }

@@ -211,7 +211,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 }
                 prim = g_Dialogue.prim[0];
                 for (j = 0; j < 5; ++j) {
-                    prim->blendMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 }
                 return;
@@ -247,7 +247,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 CutsceneUnk1();
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 DrawCutsceneActorName(j, entity);
                 g_Dialogue.portraitAnimTimer = 6;
                 entity->step = 3;
@@ -259,7 +259,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 }
                 prim = g_Dialogue.prim[0];
                 for (j = 0; j < 5; ++j) {
-                    prim->blendMode = 8;
+                    prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
                 };
                 g_api.FreePrimitives(g_Dialogue.primIndex[1]);
@@ -277,10 +277,10 @@ void SEL_EntityCutscene(Entity* entity) {
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 = g_Dialogue.startY;
-                prim->blendMode = 17;
+                prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
                 prim->y0 = g_Dialogue.startY - 1;
-                prim->blendMode = 81;
+                prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 prim->u0 = 0;
                 g_Dialogue.portraitAnimTimer = 24;
                 entity->step = 5;
@@ -442,7 +442,7 @@ void SEL_EntityCutscene(Entity* entity) {
             entity->step = 1;
             for (prim = &g_PrimBuf[g_Dialogue.primIndex[1]]; prim;
                  prim = prim->next) {
-                prim->blendMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
             }
         }
         break;
@@ -490,12 +490,12 @@ void SEL_EntityCutscene(Entity* entity) {
         } else {
             if (g_Dialogue.portraitAnimTimer == 0) {
                 entity->step = 1;
-                prim->blendMode = 8;
+                prim->drawMode = DRAW_HIDE;
             } else {
                 prim->y2 = prim->y3 = prim->y3 - 6;
             }
             prim = prim->next;
-            prim->blendMode = 8;
+            prim->drawMode = DRAW_HIDE;
         }
         break;
     case 7:
