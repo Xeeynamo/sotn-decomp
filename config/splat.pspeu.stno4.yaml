@@ -67,6 +67,8 @@ segments:
       - [0x28700, data]
       - [0x30290, .data, no4_psp/e_init]
       - [0x305D0, data]
+      - [0x30728, .data, no4_psp/cutscene_data]
+      - [0x30A68, data]
       - [0x662C8, .data, no4/e_bone_archer]
       - [0x66460, data]
       - [0x67200, .data, no4/e_red_door]

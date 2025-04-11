@@ -68,8 +68,8 @@ files:
           - [0x6C8, skip]
           - [0x2EC0, rooms, rooms]
           - [0x2F44, skip]
-          #- [0x4CE0, cutscene, cutscene_data]
-          #- [0x4E60, skip]
+          - [0x3F68, cutscene, cutscene_data]
+          - [0x4114, skip]
   - target: disks/us/ST/MAD/MAD.BIN
     asset_path: assets/st/mad
     src_path: src/st/mad

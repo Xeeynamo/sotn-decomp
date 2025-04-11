@@ -77,6 +77,8 @@ segments:
       - [0x319C, .data, e_life_up]
       - [0x31F0, .data, e_layout] # layout entries data
       - [0x3F60, data]
+      - [0x3F68, .data, cutscene_data]
+      - [0x4114, data]
       - [0x266A0, .data, sprites]
       - [0x2B938, .rodata, e_breakable]
       - [0x2B960, .rodata, e_shop]
