@@ -201,8 +201,8 @@ s32 func_97000_8017AF2C(Entity* self, s32 arg1) {
             (self->posX.i.hi < (PLAYER.posX.i.hi - 4))) {
             return 0;
         }
-        PLAYER.animFrameIdx = 3;
-        PLAYER.animFrameDuration = 8;
+        PLAYER.pose = 3;
+        PLAYER.poseTimer = 8;
         return 1;
     }
     // All other foods use this logic to tell if you've grabbed it

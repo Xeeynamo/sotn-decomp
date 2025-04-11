@@ -260,7 +260,7 @@ void EntityMedusa(Entity* self) {
             }
         }
 
-        if (self->animFrameIdx == 4 && self->animFrameDuration == 0) {
+        if (self->pose == 4 && self->poseTimer == 0) {
             entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
             if (entity != NULL) {
                 CreateEntityFromEntity(UNK_ENTITY_24, self, entity);
@@ -283,7 +283,7 @@ void EntityMedusa(Entity* self) {
         if (AnimateEntity(D_us_80180618, self) == 0) {
             SetStep(3);
         }
-        if (self->animFrameIdx == 3 && self->animFrameDuration == 0) {
+        if (self->pose == 3 && self->poseTimer == 0) {
             PlaySfxPositional(SFX_RBO3_UNK_7D1);
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
@@ -409,7 +409,7 @@ void func_us_80192020(Entity* self) {
         prim->b0 = 128;
         prim->b1 = prim->g1 = prim->r1 = 0;
         prim->priority = self->zPriority;
-        prim->blendMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         posX = PLAYER.posX.i.hi - self->posX.i.hi;
         posY = PLAYER.posY.i.hi - self->posY.i.hi;
 
@@ -705,7 +705,7 @@ void func_us_80192998(Entity* self) {
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
-        self->blendMode = obj->blendMode;
+        self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk2;
         self->ext.e_80192998.anim = obj->anim;
@@ -717,7 +717,7 @@ void func_us_80192998(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = PAL_OVL(0x19F);
-            self->blendMode = 0x10;
+            self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }
         break;

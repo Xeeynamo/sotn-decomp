@@ -484,7 +484,7 @@ typedef struct {
 } GuardTextControl;
 
 #ifdef VERSION_PSP
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 GuardTextControl D_psp_091835F0[] = {
     0x43, 0x4A,   0x59,   0x52, 0x0185, 0x0001, 0x4E, 0x53,   0x66,
     0x5B, 0x01B1, 0x0001, 0x20, 0x53,   0x36,   0x5B, 0x01B1, 0x0001,
@@ -1049,19 +1049,19 @@ GuardTextControl* func_psp_09125DB8(GuardTextControl* arg0, s32 arg1) {
     temp_s1 = &D_psp_091835F0[arg1];
     arg0->clut = temp_s1->clut;
     arg0->mode = temp_s1->mode;
-    if (D_8B42058 == 1) {
+    if (g_UserLanguage == LANG_EN) {
         arg0->left = temp_s1->left;
         arg0->top = temp_s1->top;
         arg0->right = temp_s1->right;
         arg0->bottom = temp_s1->bottom;
     } else {
-        temp_s0 = &D_psp_09183698[D_8B42058 - 2][arg1][0];
+        temp_s0 = &D_psp_09183698[g_UserLanguage - 2][arg1][0];
         arg0->left = temp_s0[0];
         arg0->top = temp_s0[1];
         arg0->right = temp_s0[0] + temp_s0[2];
         arg0->bottom = temp_s0[1] + temp_s0[3];
         if (arg1 == 6) {
-            arg0->right += D_psp_091837E8[D_8B42058 - 2][2] + 2;
+            arg0->right += D_psp_091837E8[g_UserLanguage - 2][2] + 2;
         }
     }
     return arg0;
@@ -1817,12 +1817,12 @@ Entity* CreateEntFactoryFromEntity(
     newFactory->zPriority = source->zPriority;
     newFactory->params = factoryParams & 0xFFF;
     if (factoryParams & 0x5000) {
-        newFactory->ext.factory.unkA8 = 0xE0;
+        newFactory->ext.factory.entityIdMod = 0xE0;
     }
     if (factoryParams & 0xA000) {
-        newFactory->ext.factory.unkA8 = 0xF0;
+        newFactory->ext.factory.entityIdMod = 0xF0;
     }
-    newFactory->ext.factory.unkA0 = (factoryParams & 0xFF0000) >> 8;
+    newFactory->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
     newFactory->ext.factory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
         newFactory->flags |= FLAG_UNK_10000;
@@ -1859,21 +1859,19 @@ void EntityEntFactory(Entity* self) {
 
     if (self->step == 0) {
         data_idx = (u8*)&g_FactoryBlueprints[self->params];
-        self->ext.factory.childId = *data_idx++;
-        self->ext.factory.unk94 = *data_idx++;      // index 1
-        self->ext.factory.unk96 = *data_idx & 0x3F; // index 2, lower 6 bits
-        self->ext.factory.unk9E = (s16)(*data_idx >> 7) & 1; // index 2, top bit
-        self->ext.factory.unkA2 =
-            (s16)(*data_idx++ >> 6) & 1;           // index 2, 2nd-top bit
-        self->ext.factory.unk98 = *data_idx++;     // index 3
-        self->ext.factory.unk9C = *data_idx & 0xF; // index 4, lower 4 bits
-        self->ext.factory.unkA4 =
-            (s16)(*data_idx++ >> 4) & 0xF;   // index 4, upper 4 bits
-        self->ext.factory.unk9A = *data_idx; // index 5
+        self->ext.factory.newEntityId = *data_idx++;
+        self->ext.factory.amount = *data_idx++;
+        self->ext.factory.nPerCycle = *data_idx & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data_idx >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data_idx++ >> 6) & 1;
+        self->ext.factory.tCycle = *data_idx++;
+        self->ext.factory.kind = *data_idx & 0xF;
+        self->ext.factory.origin = (s16)(*data_idx++ >> 4) & 0xF;
+        self->ext.factory.delay = *data_idx;
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
         case 6:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
@@ -1888,7 +1886,7 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     } else {
-        switch (self->ext.factory.unkA4) {
+        switch (self->ext.factory.origin) {
         case 0:
         case 1:
         case 3:
@@ -1924,40 +1922,40 @@ void EntityEntFactory(Entity* self) {
             break;
         }
     }
-    if (self->ext.factory.unk9A) {
-        if (--self->ext.factory.unk9A) {
+    if (self->ext.factory.delay) {
+        if (--self->ext.factory.delay) {
             return;
         }
-        self->ext.factory.unk9A = self->ext.factory.unk98;
+        self->ext.factory.delay = self->ext.factory.tCycle;
     }
     // Save this value so we don't have to re-fetch on every for-loop cycle
-    n = self->ext.factory.unk96;
+    n = self->ext.factory.nPerCycle;
     for (i = 0; i < n; i++) {
 
         // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
         // instead of doing &D_800AD4B8 followed by +=
         data_idx = &D_800AD4B8[0];
-        data_idx += self->ext.factory.unk9C * 2;
+        data_idx += self->ext.factory.kind * 2;
 
         startIndex = *data_idx++;
         endIndex = *data_idx;
 
-        if (self->ext.factory.unk9C == 3 || self->ext.factory.unk9C == 10 ||
-            self->ext.factory.unk9C == 11 || self->ext.factory.unk9C == 12 ||
-            self->ext.factory.unk9C == 13) {
+        if (self->ext.factory.kind == 3 || self->ext.factory.kind == 10 ||
+            self->ext.factory.kind == 11 || self->ext.factory.kind == 12 ||
+            self->ext.factory.kind == 13) {
             DestroyEntity(&g_Entities[startIndex]);
             newEntity = &g_Entities[startIndex];
             g_Player.unk48 = 0;
-        } else if (self->ext.factory.unk9C == 0) {
+        } else if (self->ext.factory.kind == 0) {
             newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
-        } else if (self->ext.factory.unk9C == 8) {
-            if ((self->ext.factory.unkA6 % 3) == 0) {
+        } else if (self->ext.factory.kind == 8) {
+            if ((self->ext.factory.spawnIndex % 3) == 0) {
                 newEntity = GetFreeEntity(17, 32);
             }
-            if ((self->ext.factory.unkA6 % 3) == 1) {
+            if ((self->ext.factory.spawnIndex % 3) == 1) {
                 newEntity = GetFreeEntity(32, 48);
             }
-            if ((self->ext.factory.unkA6 % 3) == 2) {
+            if ((self->ext.factory.spawnIndex % 3) == 2) {
                 newEntity = GetFreeEntity(48, 64);
             }
         } else {
@@ -1965,18 +1963,17 @@ void EntityEntFactory(Entity* self) {
         }
 
         if (newEntity == NULL) {
-            if (self->ext.factory.unk9E == 1) {
+            if (self->ext.factory.isNonCritical == 1) {
                 self->entityId = 0;
             } else {
-                self->ext.factory.unk9A = self->ext.factory.unk98;
+                self->ext.factory.delay = self->ext.factory.tCycle;
             }
             return;
         }
         DestroyEntity(newEntity);
-        // unkA8 never gets set so is always zero
         newEntity->entityId =
-            self->ext.factory.childId + self->ext.factory.unkA8;
-        newEntity->params = self->ext.factory.unkA0;
+            self->ext.factory.newEntityId + self->ext.factory.entityIdMod;
+        newEntity->params = self->ext.factory.paramsBase;
         // The child  (newEntity) is not an ent factory, but because the factory
         // creates many entities, we can't pick a particular extension. But
         // we're not allowed to use generic, so i'll just reuse entFactory.
@@ -1990,18 +1987,18 @@ void EntityEntFactory(Entity* self) {
         if (self->flags & FLAG_UNK_10000) {
             newEntity->flags |= FLAG_UNK_10000;
         }
-        if (self->ext.factory.unkA2) {
-            newEntity->params += self->ext.factory.unkA6;
+        if (self->ext.factory.incParamsKind) {
+            newEntity->params += self->ext.factory.spawnIndex;
         } else {
             newEntity->params += i;
         }
-        self->ext.factory.unkA6++;
-        if (self->ext.factory.unkA6 == self->ext.factory.unk94) {
+        self->ext.factory.spawnIndex++;
+        if (self->ext.factory.spawnIndex == self->ext.factory.amount) {
             self->entityId = 0;
             return;
         }
     }
-    self->ext.factory.unk9A = self->ext.factory.unk98;
+    self->ext.factory.delay = self->ext.factory.tCycle;
 }
 
 extern WeaponAnimation D_800AD53C[];
@@ -2043,8 +2040,7 @@ void EntityUnarmedAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if ((PLAYER.animFrameDuration == 1) &&
-        (PLAYER.animFrameIdx == anim->soundFrame)) {
+    if ((PLAYER.poseTimer == 1) && (PLAYER.pose == anim->soundFrame)) {
         PlaySfx(anim->soundId);
     }
     if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
@@ -2250,7 +2246,7 @@ void func_8011B5A4(Entity* self) {
     case 1:
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -2288,7 +2284,7 @@ void EntityUnkId24(Entity* self) {
         self->step++;
         return;
     }
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
     self->posY.val += self->velocityY;

@@ -20,6 +20,18 @@ segments:
       - start: 0x40
         type: c
         file: game
+        end: 0x8D3
+      - start: 0x8d4
+        type: c
+        file: game
+        end: 0x92b
+      - start: 0x92c
+        type: data
+        file: game
+        end: 0xb2f
+      - start: 0xb30
+        type: c
+        file: game
         end: 0x197b
         # misdetected function TODO
       - start: 0x197c

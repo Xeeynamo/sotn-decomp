@@ -449,13 +449,13 @@ typedef enum {
 // f: ???
 // tDelay: how many frames to wait before starting to make the first entity
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
-               tCycle, kind, f, tDelay)                                        \
+               tCycle, kind, origin, tDelay)                                   \
     {entityId,                                                                 \
      (amount),                                                                 \
      ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
          ((!!(isNonCritical)) << 7),                                           \
      (tCycle),                                                                 \
-     ((kind) & 15) | ((f) << 4),                                               \
+     ((kind) & 15) | ((origin) << 4),                                          \
      tDelay}
 enum BlueprintKind {
     B_DECOR,      // cannot collide with any other entity, used for decoration
@@ -852,12 +852,7 @@ typedef struct Entity {
     /* 0x04 */ f32 posY;
     /* 0x08 */ s32 velocityX;
     /* 0x0C */ s32 velocityY;
-#if defined(STAGE) || defined(WEAPON) || defined(SERVANT) ||                   \
-    defined(VERSION_PSP)
     /* 0x10 */ s16 hitboxOffX;
-#else // hack to match in DRA and RIC
-    /* 0x10 */ u16 hitboxOffX;
-#endif
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
@@ -889,8 +884,8 @@ typedef struct Entity {
     /* 0x49 */ u8 nFramesInvincibility;
     /* 0x4A */ s16 unk4A;
     /* 0x4C */ AnimationFrame* anim;
-    /* 0x50 */ u16 animFrameIdx;
-    /* 0x52 */ s16 animFrameDuration;
+    /* 0x50 */ u16 pose;
+    /* 0x52 */ s16 poseTimer;
     /* 0x54 */ s16 animSet;
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
@@ -2026,7 +2021,7 @@ typedef enum {
     UNK_ENTITY_12 = 0x12, // related to wolf?
     UNK_ENTITY_13 = 0x13,
     UNK_ENTITY_20 = 0x20,
-    UNK_ENTITY_50 = 0x50,
+    E_BOSS_WEAPON = 0x50,
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
@@ -2078,7 +2073,9 @@ extern s32 D_800987C8;
 extern s32 g_DebugPlayer;
 extern s32 D_80098894;
 
-// exclusive PSP content
+// On PSP side this is compared against g_UserLanguage / 0x08B42058
+// which is the system language of the console. Used to determine the
+// language of various strings to display in-game
 typedef enum {
     LANG_JP,
     LANG_EN,

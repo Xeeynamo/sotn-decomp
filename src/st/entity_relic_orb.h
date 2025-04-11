@@ -2,7 +2,7 @@
 #include "stage.h"
 
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
-extern s32 D_8B42058;     // User's language selection?
+extern s32 g_UserLanguage;
 extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {
@@ -250,26 +250,26 @@ void EntityRelicOrb(Entity* self) {
         var_s2 = 0;
         isObtainedTextStored = false;
         msg = g_api.relicDefs[relicId].name;
-        switch (D_8B42058) {
-        case 1:
+        switch (g_UserLanguage) {
+        case LANG_EN:
         default:
             obtainedStr = "Obtained";
             break;
-        case 2:
+        case LANG_FR:
             obtainedStr = "Obtenu \xB1 ";
             break;
-        case 3:
+        case LANG_SP:
             obtainedStr = "Tienes";
             break;
-        case 4:
+        case LANG_GE:
             obtainedStr = "erhalten";
             break;
-        case 5:
+        case LANG_IT:
             obtainedStr = "Ottenuto";
             break;
         }
 
-        if (D_8B42058 != 4) {
+        if (g_UserLanguage != LANG_GE) {
             psp_sprintf(&sp34, "%s %s", obtainedStr, msg);
         } else {
             psp_sprintf(&sp34, "%s %s", msg, obtainedStr);

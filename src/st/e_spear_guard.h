@@ -47,7 +47,7 @@ static Point16 guardHitboxOffsets[] = {
     {-15, 21},  {3, 26},    {1, 38},    {1, 46},    {1, 54},    {1, 62},
     {-25, 0},   {-23, -27}, {1, -30},   {0, -47},   {0, -54},   {0, -62},
     {0, -70}};
-static Point16 guardHitboxSizes[] = {
+static Size16 guardHitboxSizes[] = {
     {0, 0},  {8, 4},   {8, 4},   {16, 4},  {16, 4}, {16, 4}, {8, 8},  {4, 20},
     {8, 4},  {12, 24}, {16, 24}, {4, 12},  {4, 12}, {16, 4}, {16, 4}, {16, 4},
     {8, 8},  {8, 8},   {27, 25}, {27, 25}, {16, 4}, {8, 8},  {4, 20}, {4, 20},
@@ -88,14 +88,14 @@ void func_us_801D38E4() {
 void func_us_801D3918(Entity* self, u8 animationIndex) {
     s32 xVelocity;
     u16 animRet = AnimateEntity(animations[animationIndex], self);
-    if ((animRet & 0x80) && (self->step == 7) && (self->animFrameIdx != 3)) {
+    if ((animRet & 0x80) && (self->step == 7) && (self->pose != 3)) {
         if (self->ext.spearGuard.unk88 != self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
         self->ext.spearGuard.unk88 = self->facingLeft;
     }
     xVelocity = self->velocityX;
-    if (self->animFrameIdx >= frameIndexes[animationIndex]) {
+    if (self->pose >= frameIndexes[animationIndex]) {
         if (xVelocity != 0) {
             if (self->ext.spearGuard.unk88) {
                 xVelocity += xVelocities[animationIndex];
@@ -277,7 +277,7 @@ void EntitySpearGuard(Entity* self) {
             SetStep(4);
             PlaySfxPositional(0x773);
         } else if (tempVar & 0x80) {
-            tempVar = self->animFrameIdx - 6;
+            tempVar = self->pose - 6;
             if (tempVar == 3) {
                 PlaySfxPositional(0x770);
             }
@@ -316,7 +316,7 @@ void EntitySpearGuard(Entity* self) {
             SetStep(4);
             PlaySfxPositional(0x773);
         } else if (tempVar & 0x80) {
-            tempVar = self->animFrameIdx - 7;
+            tempVar = self->pose - 7;
             if (!tempVar) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(8.0);
@@ -394,8 +394,8 @@ void EntitySpearGuardBlock(Entity* self) {
     }
     self->hitboxOffX = guardHitboxOffsets[animCurFrame].x;
     self->hitboxOffY = guardHitboxOffsets[animCurFrame].y;
-    self->hitboxWidth = guardHitboxSizes[animCurFrame].x;
-    self->hitboxHeight = guardHitboxSizes[animCurFrame].y;
+    self->hitboxWidth = guardHitboxSizes[animCurFrame].width;
+    self->hitboxHeight = guardHitboxSizes[animCurFrame].height;
     self->facingLeft = parent->facingLeft;
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;

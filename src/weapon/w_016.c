@@ -304,7 +304,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->step += 1;
     }
     self->posY.val += self->velocityY;
-    if (self->animFrameDuration < 0) {
+    if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
 }

@@ -1,0 +1,16 @@
+files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
+    asset_path: assets/st/lib
+    src_path: src/st/lib_psp
+    splat_config_path: config/splat.pspeu.stlib.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x3ECB0, cutscene, cutscene_data_it]
+          - [0x3EEA0, cutscene, cutscene_data_sp]
+          - [0x3F068, cutscene, cutscene_data_fr]
+          - [0x3F260, cutscene, cutscene_data_ge]
+          - [0x3F448, cutscene, cutscene_data_en]
+          - [0x3F608, skip]

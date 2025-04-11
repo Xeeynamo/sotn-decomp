@@ -293,8 +293,8 @@ void HandleTitleScreen(void) {
 void SEL_SetStep(Entity* entity, s16 step) {
     entity->step = step;
     entity->step_s = 0;
-    entity->animFrameIdx = 0;
-    entity->animFrameDuration = 0;
+    entity->pose = 0;
+    entity->poseTimer = 0;
 }
 
 #ifndef HARD_LINK

@@ -679,7 +679,7 @@ void EntityVenusWeedFlower(Entity* self) {
     const int AnimFrameInit = 1;
     const int GrowSpeed = 6;
     const int GrowLimit = 0x100;
-    const int DartsSfxAnimFrameIdx = 3;
+    const int DartsSfxpose = 3;
     const int DartsLaunchPosOffsetX = 0x18;
     const int DartsLaunchPosOffsetY = 0x18;
     const int DartsAngleLeft = 0x800;
@@ -913,8 +913,7 @@ void EntityVenusWeedFlower(Entity* self) {
             if (AnimateEntity(AnimFrames_FlowerAttackDartsLaunch, self) == 0) {
                 self->step_s++;
             }
-            if (!self->animFrameDuration &&
-                self->animFrameIdx == DartsSfxAnimFrameIdx) {
+            if (!self->poseTimer && self->pose == DartsSfxpose) {
                 PlaySfxPositional(SFX_ARROW_SHOT_B);
 
                 // Calculate launch start pos
@@ -1012,7 +1011,7 @@ void EntityVenusWeedFlower(Entity* self) {
 void EntityVenusWeedTendril(Entity* self) {
     const int InitDistMinX = 0x18;
     const int InitDistRandRangeX = 0xF; // Must be a "full flags" value
-    const int SpikeSfxAnimFrameIdx = 0xA;
+    const int SpikeSfxpose = 0xA;
 
     s32 x;
     s8* hitboxData;
@@ -1092,8 +1091,7 @@ void EntityVenusWeedTendril(Entity* self) {
             if (AnimateEntity(AnimFrames_TendrilAttackCharge, self) == 0) {
                 SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
             }
-            if (!self->animFrameDuration &&
-                self->animFrameIdx == SpikeSfxAnimFrameIdx) {
+            if (!self->poseTimer && self->pose == SpikeSfxpose) {
                 PlaySfxPositional(SFX_DISSONANT_SCREECH);
             }
             break;

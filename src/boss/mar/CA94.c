@@ -122,8 +122,7 @@ void func_us_8018CA94(Entity* self) {
 
     case 13:
         pan = AnimateEntity(D_us_80180724, self);
-        if (pan & 0x80 &&
-            (self->animFrameIdx == 3 || self->animFrameIdx == 7)) {
+        if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
 
             pan = (self->posX.i.hi - 120) / 16;
 
@@ -160,8 +159,7 @@ void func_us_8018CA94(Entity* self) {
 
     case 15:
         pan = AnimateEntity(D_us_80180724, self);
-        if (pan & 0x80 &&
-            (self->animFrameIdx == 3 || self->animFrameIdx == 7)) {
+        if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
 
             pan = (self->posX.i.hi - 120) / 16;
 

@@ -74,7 +74,7 @@ static s16 func_80156DE4(void) {
 
 extern s32 D_pspeu_092D7A68;
 extern s32 D_pspeu_092CFA58;
-extern s32 D_pspeu_092D33BC;
+extern u8* D_pspeu_092D33BC;
 extern u8 D_pspeu_092D2548[]; // FR
 extern u8 D_pspeu_092CFA70[]; // SP
 extern u8 D_pspeu_092D16F8[]; // GE
@@ -170,9 +170,8 @@ void RicInit(s16 initParam) {
     D_pspeu_092D7A68 = 30;
 
     func_91040A0(&D_pspeu_092CFA58);
-    D_pspeu_092D33BC = func_pspeu_092ACE78(
-        0, D_pspeu_092D2548, D_pspeu_092CFA70, D_pspeu_092D16F8,
-        D_pspeu_092D08B8);
+    D_pspeu_092D33BC = GetLang(0, D_pspeu_092D2548, D_pspeu_092CFA70,
+                               D_pspeu_092D16F8, D_pspeu_092D08B8);
     if (D_pspeu_092D33BC != 0) {
         func_91040A0(&D_pspeu_092D33B0);
     }
@@ -748,13 +747,13 @@ void RicMain(void) {
     PLAYER.hitPoints = 0;
     g_Player.unk7A = 0;
     if (PLAYER.anim == D_801556C4) {
-        PLAYER.palette = D_80154574[PLAYER.animFrameIdx];
+        PLAYER.palette = D_80154574[PLAYER.pose];
     }
-    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.animFrameIdx == 4)) {
-        PLAYER.palette = D_80154594[PLAYER.animFrameDuration & 3];
+    if ((PLAYER.anim == ric_anim_stand_in_air) && (PLAYER.pose == 4)) {
+        PLAYER.palette = D_80154594[PLAYER.poseTimer & 3];
     }
     if (PLAYER.step == PL_S_DEAD) {
-        if (PLAYER.animFrameDuration < 0) {
+        if (PLAYER.poseTimer < 0) {
             PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
         }
 #if defined(VERSION_HD) || defined(VERSION_PSP)

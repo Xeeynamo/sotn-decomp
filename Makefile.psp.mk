@@ -13,18 +13,20 @@ $(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFI
 	$(muffle)$(SPLAT) $<
 
 # Step 2/2 of extract
-extract.pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
+extract.pspeu: $(SOTNASSETS_APP) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
+	$(SOTNASSETS_APP) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
+	$(SOTNASSETS_APP) build $(CONFIG_DIR)/assets.$(VERSION).yaml
 
 # Step 1/5 of build
 $(BUILD_DIR)/%.s.o: %.s $(AS)
 	$(muffle)mkdir -p $(dir $@)
-	$(AS) $(AS_FLAGS) -o $@ $<
+	$(if $(VERBOSE),,@echo "Assembling $<";) $(AS) $(AS_FLAGS) -o $@ $<
 $(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)/bin
 	$(muffle)mkdir -p $(dir $@)
-	$(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
+	$(if $(VERBOSE),,@echo "Compiling $<";) $(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(muffle)mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $@ $<
+	$(if $(VERBOSE),,@echo "Building $<";) $(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
 $(foreach target,$(GAME),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_psp_o_files,%)
@@ -39,7 +41,7 @@ $(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_%) $(
 
 # Step 3/5 of build
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/$$(call add_ovl_prefix,%).elf
-	$(OBJCOPY) -O binary $< $@
+	$(if $(VERBOSE),,@echo "Stripping $<";) $(OBJCOPY) -O binary $< $@
 
 # Step 4/5 of build
 $(call get_targets): %: $(BUILD_DIR)/%.bin

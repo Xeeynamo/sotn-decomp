@@ -90,10 +90,8 @@ DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := tools/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 ADPCM_EXTRACT_APP	:= $(SATURN_SPLITTER_DIR)/adpcm-extract/target/release/adpcm-extract
-SOTNDISK_DIR	:= tools/sotn-disk
-SOTNDISK        := $(SOTNDISK_DIR)/sotn-disk
-SOTNASSETS_DIR  := tools/sotn-assets
-SOTNASSETS      := $(SOTNASSETS_DIR)/sotn-assets
+SOTNDISK_APP        := tools/sotn-disk/sotn-disk
+SOTNASSETS_APP      := tools/sotn-assets/sotn-assets
 
 # Build functions
 define get_src_files
@@ -127,7 +125,7 @@ define get_conf_merged
 endef
 get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
 get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
-get_psp_o_files = $(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(subst //,/,$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
+get_psp_o_files = $(subst //,/,$(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
 get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
 get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
 add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
@@ -217,8 +215,8 @@ endif
 	VERSION=$(VERSION) $(PYTHON) $(M2CTX_APP) $(SOURCE)
 	$(muffle)echo "ctx.c has been updated."
 
-disks/us: | $(SOTNDISK)
-	$(SOTNDISK) extract disks/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
+disks/us: | $(SOTNDISK_APP)
+	$(SOTNDISK_APP) extract disks/sotn.$(VERSION).cue $(EXTRACTED_DISK_DIR)
 disks/pspeu:
 	mkdir -p $(EXTRACTED_DISK_DIR)
 	7z x -y disks/sotn.pspeu.iso -o$(EXTRACTED_DISK_DIR)
@@ -230,16 +228,16 @@ extract-disk: $(EXTRACTED_DISK_DIR)
 ovl_to_bin  = $(call to_upper,$(call add_ovl_prefix,$(1),ST/,BOSS/)/$(1).BIN $(call add_ovl_prefix,$(1),ST/,BOSS/)/F_$(1).BIN)
 DISK_PREPARE_FILES := DRA.BIN BIN/RIC.BIN ST/SEL/SEL.BIN $(addprefix SERVANT/,$(call to_upper,$(addsuffix .BIN,$(SERVANTS))))
 DISK_PREPARE_FILES += $(foreach target,$(filter-out sel,$(STAGES)) $(BOSSES),$(call ovl_to_bin,$(target)))
-disk-prepare: build $(SOTNDISK)
+disk-prepare: build $(SOTNDISK_APP)
 	mkdir -p $(BUILD_DISK_DIR); cp -r $(EXTRACTED_DISK_DIR)/* $(BUILD_DISK_DIR)
 	cp $(BUILD_DIR)/main.exe $(BUILD_DISK_DIR)/SLUS_000.67
 	$(muffle)echo "cp $(BUILD_DIR)/*.BIN $(BUILD_DISK_DIR)/<OVL_PATH>"; $(foreach item,$(DISK_PREPARE_FILES),cp $(BUILD_DIR)/$(notdir $(item)) $(BUILD_DISK_DIR)/$(item);)
 disk-debug: disk-prepare
 	cd tools/sotn-debugmodule && $(MAKE)
 	cp $(BUILD_DIR:$(VERSION)=)/sotn-debugmodule.bin $(BUILD_DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
+	$(SOTNDISK_APP) make $(BUILD_DIR:$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 disk: disk-prepare
-	$(SOTNDISK) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
+	$(SOTNDISK_APP) make $(BUILD_DIR:/$(VERSION)=)/sotn.$(VERSION).cue $(BUILD_DISK_DIR) $(CONFIG_DIR)/disk.$(VERSION).lba
 
 # Targets for copying the physical disk to an image file
 $(addprefix disks/,sotn.%.bin sotn.%.cue): PHONY
@@ -262,7 +260,7 @@ dump-disk: dump-disk.$(VERSION)
 
 # Targets that specify and/or install dependencies
 git-submodules: $(ASMDIFFER_APP) $(dir $(M2C_APP)) $(PERMUTER_APP) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR)
-update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK) $(SOTNASSETS) $(SOTNSTR_APP) $(CLANG) $(GO)
+update-dependencies: $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) python-dependencies dependencies.$(VERSION) $(SOTNDISK_APP) $(SOTNASSETS_APP) $(SOTNSTR_APP) $(CLANG) $(GO)
 	git clean -fdq bin/
 update-dependencies-all: update-dependencies $(addprefix dependencies,.us .pspeu .hd .saturn)
 
@@ -300,10 +298,10 @@ $(PERMUTER_APP): | $(VENV_DIR)
 
 $(SOTNSTR_APP): tools/sotn_str/Cargo.toml $(wildcard tools/sotn_str/src/*)
 	cargo build --release --manifest-path tools/sotn_str/Cargo.toml
-$(SOTNDISK): $(GO) $(wildcard $(SOTNDISK_DIR)/*.go)
-	cd $(SOTNDISK_DIR) && $(GO) build
-$(SOTNASSETS): $(GO) $(wildcard $(SOTNASSETS_DIR)/*.go)
-	cd $(SOTNASSETS_DIR) && $(GO) build
+$(SOTNDISK_APP): $(GO) $(wildcard $(dir $(SOTNDISK_APP))/*.go)
+	cd $(dir $(SOTNDISK_APP)) && $(GO) build
+$(SOTNASSETS_APP): $(GO) $(wildcard $(dir $(SOTNASSETS_APP))/*.go)
+	cd $(dir $(SOTNASSETS_APP)) && $(GO) build
 
 # Since venv is newly created, it can be reasonably assumed that the python requirements need to be installed
 $(VENV_DIR):
@@ -398,7 +396,7 @@ PHONY_TARGETS += $(addsuffix .force-symbols,$(notdir $(wildcard $(BUILD_DIR:$(VE
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies.,us pspeu hd saturn) python-dependencies graphviz $(DOSEMU_APP)
 PHONY_TARGETS += help get-debug get-phony get-silent
 MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR) $(ASMDIFFER_APP) $(PERMUTER_APP) $(dir $(M2C_APP)) $(M2C_APP)
-MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)
+MUFFLED_TARGETS += $(DOSEMU_DIR) tools/dosemu.make.chkpt tools/python-dependencies.make.chkpt tools/graphviz.make.chkpt $(SOTNDISK_APP) $(SOTNASSETS_APP) $(VENV_DIR) $(VENV_DIR)
 .PHONY: $(PHONY_TARGETS) expected clean force-symbols disk disk-prepare disk-debug context
 # Specifying .SILENT in this manner allows us to set the VERBOSE environment variable and display everything for debugging
 $(VERBOSE).SILENT: $(MUFFLED_TARGETS)

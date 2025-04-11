@@ -328,8 +328,8 @@ void func_801CE1E8(s16 step) {
 
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->poseTimer = 0;
     // BUG: See below.
     for (i = 0; i < 4; i++) {
         g_CurrentEntity->ext.GH_Props.unkB0[i] = 0;

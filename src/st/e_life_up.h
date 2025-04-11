@@ -233,8 +233,8 @@ void EntityLifeUpSpawn(Entity* self) {
                 if (params < 0x80) {
                     self->entityId = E_PRIZE_DROP;
                     self->pfnUpdate = EntityPrizeDrop;
-                    self->animFrameDuration = 0;
-                    self->animFrameIdx = 0;
+                    self->poseTimer = 0;
+                    self->pose = 0;
                 } else {
                     self->entityId = E_EQUIP_ITEM_DROP;
                     self->pfnUpdate = EntityEquipItemDrop;
@@ -247,8 +247,8 @@ void EntityLifeUpSpawn(Entity* self) {
             } else {
                 self->entityId = E_RELIC_ORB;
                 self->pfnUpdate = EntityRelicOrb;
-                self->animFrameDuration = 0;
-                self->animFrameIdx = 0;
+                self->poseTimer = 0;
+                self->pose = 0;
                 self->unk6D[0] = 0x10;
                 self->params = D_80182850[self->params];
                 self->step = 0;
@@ -259,8 +259,8 @@ void EntityLifeUpSpawn(Entity* self) {
             if (params < 0x80) {
                 self->entityId = E_PRIZE_DROP;
                 self->pfnUpdate = EntityPrizeDrop;
-                self->animFrameDuration = 0;
-                self->animFrameIdx = 0;
+                self->poseTimer = 0;
+                self->pose = 0;
             } else {
                 self->entityId = E_EQUIP_ITEM_DROP;
                 self->pfnUpdate = EntityEquipItemDrop;

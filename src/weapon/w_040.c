@@ -74,8 +74,8 @@ static void EntityWeaponAttack(Entity* self) {
         if (col.effects & EFFECT_SOLID) {
             self->posY.i.hi += col.unk18;
             self->anim = D_11C000_8017A7DC;
-            self->animFrameDuration = 0;
-            self->animFrameIdx = 0;
+            self->poseTimer = 0;
+            self->pose = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
@@ -110,7 +110,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 2:
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
         break;
@@ -139,8 +139,8 @@ s32 func_ptr_80170004(Entity* self) {
         if (self->rotX >= 0x100) {
             self->rotX = 0x100;
             self->anim = D_11C000_8017A748;
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;
             SetWeaponProperties(self, 0);
@@ -149,19 +149,19 @@ s32 func_ptr_80170004(Entity* self) {
         self->rotY = self->rotX;
         break;
     case 2:
-        if (self->animFrameDuration == 1) {
-            if ((self->animFrameIdx == 0xB || self->animFrameIdx == 0xF ||
-                 self->animFrameIdx == 0x13) &&
+        if (self->poseTimer == 1) {
+            if ((self->pose == 0xB || self->pose == 0xF ||
+                 self->pose == 0x13) &&
                 // TODO: FACTORY()
                 g_api.CreateEntFactoryFromEntity(self, WFACTORY(62, 0), 0) !=
                     NULL) {
                 g_api.PlaySfx(SFX_EXPLODE_B);
             }
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->anim = D_11C000_8017A80C;
-            self->animFrameIdx = 0;
-            self->animFrameDuration = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
             g_api.PlaySfx(SFX_VO_ALU_PAIN_A);
             self->step++;
         }
@@ -171,7 +171,7 @@ s32 func_ptr_80170004(Entity* self) {
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(70, 0), 0);
         }
-        if (self->animFrameIdx >= 5) {
+        if (self->pose >= 5) {
             self->rotX -= 4;
         }
         if (self->rotX < 0) {
@@ -233,7 +233,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posY.i.hi += 0x10;
         self->step++;
-    } else if (self->animFrameDuration < 0) {
+    } else if (self->poseTimer < 0) {
         DestroyEntity(self);
     }
 }

@@ -15,7 +15,7 @@ void EntityClockHands(Entity* self) {
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
         handShadow->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ;
-        handShadow->blendMode = 0x10;
+        handShadow->drawMode = DRAW_TPAGE;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
@@ -164,10 +164,8 @@ void EntityStatue(Entity* self) {
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->drawFlags = FLAG_DRAW_UNK8;
-#ifdef STAGE_IS_NO0
         entity->drawMode = DRAW_TPAGE;
-#else
-        entity->blendMode = 0x10;
+#ifndef STAGE_IS_NO0
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
                         FLAG_KEEP_ALIVE_OFFCAMERA;
 #endif
@@ -266,20 +264,20 @@ void EntityStatueGear(Entity* self) {
         prim->u0 = 12;
         prim->v0 = 32;
         prim->priority = 0x7F;
-        prim->blendMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
         self->step++;
         break;
 
     case 1:
         if (self->ext.statue.step == self->step) {
             self->step = 2;
-            self->animFrameIdx = self->animCurFrame - 17;
+            self->pose = self->animCurFrame - 17;
         }
         if (self->ext.statue.step == 2) {
             self->step = 3;
-            self->animFrameIdx = 20 - self->animCurFrame;
+            self->pose = 20 - self->animCurFrame;
         }
-        self->animFrameDuration = 0;
+        self->poseTimer = 0;
         break;
 
     case 2:
