@@ -187,10 +187,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_801042C4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80104790);
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dra/dra.h"
-#include "../dra/dra_bss.h"
-
 extern SVECTOR* D_800A34C0[][3];
 
 extern SVECTOR D_801379C8;
