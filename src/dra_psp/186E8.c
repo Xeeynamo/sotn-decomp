@@ -568,7 +568,7 @@ void func_psp_090F5560(void) {
         GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8,
                 &D_psp_0914B960, &D_psp_0914B4A0);
     switch (g_UserLanguage) {
-    case 1:
+    case LANG_EN:
     default:
         D_psp_091CE248 = &D_psp_0914BFA0;
         D_psp_091CE240 = &D_psp_0914BFB0;
@@ -583,7 +583,7 @@ void func_psp_090F5560(void) {
         D_psp_091CE1F8 = &D_psp_0914C020;
         D_psp_091CE1F0 = &D_psp_0914C030;
         break;
-    case 2:
+    case LANG_FR:
         D_psp_091CE248 = &D_psp_0914C038;
         D_psp_091CE240 = &D_psp_0914C048;
         D_psp_091CE238 = &D_psp_0914C060;
@@ -597,7 +597,7 @@ void func_psp_090F5560(void) {
         D_psp_091CE1F8 = &D_psp_0914C0D0;
         D_psp_091CE1F0 = &D_psp_0914C0E0;
         break;
-    case 3:
+    case LANG_SP:
         D_psp_091CE248 = &D_psp_0914C0F0;
         D_psp_091CE240 = &D_psp_0914C108;
         D_psp_091CE238 = &D_psp_0914C120;
@@ -611,7 +611,7 @@ void func_psp_090F5560(void) {
         D_psp_091CE1F8 = &D_psp_0914C178;
         D_psp_091CE1F0 = &D_psp_0914C180;
         break;
-    case 4:
+    case LANG_GE:
         D_psp_091CE248 = &D_psp_0914C190;
         D_psp_091CE240 = &D_psp_0914C1A8;
         D_psp_091CE238 = &D_psp_0914C1C0;
@@ -625,7 +625,7 @@ void func_psp_090F5560(void) {
         D_psp_091CE1F8 = &D_psp_0914C228;
         D_psp_091CE1F0 = &D_psp_0914C230;
         break;
-    case 5:
+    case LANG_IT:
         D_psp_091CE248 = &D_psp_0914C240;
         D_psp_091CE240 = &D_psp_0914C250;
         D_psp_091CE238 = &D_psp_0914C268;
