@@ -2,7 +2,47 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80102EB8);
+void func_80102EB8(void) {
+    Primitive *poly1, *poly2, *poly3;
+    s32 i;
+
+    D_80137E58 = AllocPrimitives(PRIM_GT4, 3);
+    poly1 = &g_PrimBuf[D_80137E58];
+
+    D_80137E5C = AllocPrimitives(PRIM_G4, 3);
+    poly2 = &g_PrimBuf[D_80137E5C];
+
+    D_80137E60 = AllocPrimitives(PRIM_LINE_G2, 12);
+    poly3 = &g_PrimBuf[D_80137E60];
+
+    for (i = 0; i < 3; i++) {
+        SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
+        func_801072DC(poly1);
+        poly1->tpage = 0x10;
+        poly1->clut = 0x1A1;
+        poly1->priority = 0x1FF;
+        poly1->drawMode = DRAW_HIDE;
+        poly1->p1 = 0;
+        SetPrimRect(poly2, 80, 79, 96, 0);
+        func_801072DC(poly2);
+        func_801071CC(poly2, 96, 0);
+        func_801071CC(poly2, 96, 1);
+        poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
+            poly2->r2 = poly2->r3 = 0;
+        poly2->tpage = 0x1F;
+        poly2->priority = 0x1FF;
+        poly2->drawMode = DRAW_HIDE;
+        poly1 = poly1->next;
+        poly2 = poly2->next;
+    }
+
+    for (i = 0; i < 12; i++) {
+        func_80107250(poly3, 255);
+        poly3->priority = 0x1FF;
+        poly3->drawMode = DRAW_HIDE;
+        poly3 = poly3->next;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCBC8);
 
