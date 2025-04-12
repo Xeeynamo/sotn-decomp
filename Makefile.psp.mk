@@ -26,7 +26,7 @@ extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,pref
 $(BUILD_DIR)/%.s.o: %.s $(AS)
 	$(muffle)mkdir -p $(dir $@)
 	$(if $(VERBOSE),,@echo "Assembling $<";) $(AS) $(AS_FLAGS) -o $@ $<
-$(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)/bin
+$(BUILD_DIR)/%.c.o: %.c $(MWCCPSP) $(MWCCGAP_APP) $(AS) | $(VENV_DIR)
 	$(muffle)mkdir -p $(dir $@)
 	$(if $(VERBOSE),,@echo "Compiling $<";) $(SOTNSTR_APP) process -p -f $< | $(PYTHON) $(MWCCGAP_APP) $@ --src-dir $(dir $<) $(COMPILER_ARGS)
 $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
@@ -34,14 +34,14 @@ $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(if $(VERBOSE),,@echo "Building $<";) $(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
-$(foreach target,$(GAME),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_psp_o_files,%)
+$(foreach target,$(GAME),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call list_files,%)
 	$(call link,$*,$@)
-$(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call get_psp_o_files,%,st)
+$(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call list_files,%)
 	$(call link,st$*,$@)
-$(BUILD_DIR)/bo%.elf: $(BUILD_DIR)/bo%.ld $$(call get_psp_o_files,%,bo)
+$(BUILD_DIR)/bo%.elf: $(BUILD_DIR)/bo%.ld $$(call list_files,%)
 	$(call link,st$*,$@)
 # All servant files are merged
-$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call get_o_files,servant/tt_%) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
+$(BUILD_DIR)/tt_%.elf: $(BUILD_DIR)/tt_%.ld $$(call list_files,tt_%) $(BUILD_DIR)/assets/servant/tt_%/mwo_header.bin.o
 	$(call link,tt_$*,$@)
 
 # Step 3/5 of build
