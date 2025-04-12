@@ -96,12 +96,14 @@ class SotnFunction(object):
         print("Loading up the catapult...")
         # No current expectation of these changing, so hardcoding instead of retrieving them from the API programmatically is probably fine
         # The preset id's can be found at https://www.decomp.me/api/compilers, searching the page for Castlevania: Symphony of the Night
-        presets = {"us": 14, "pspeu": 132, "saturn": 21}
+        preset = (
+            21 if self.version == "saturn" else 132 if "psp" in self.version else 14
+        )  # 14 is ps1 preset
         payload = {
             "name": self.name,
             "target_asm": self.asm_code,
             "context": self.context,
-            "preset": presets[self.version],
+            "preset": preset,
             "diff_label": self.name,
         }
         if self.decompile():
