@@ -512,11 +512,11 @@
 | dra    | GetFreeEntity                       |       51 |          5 |        |                                 |       |
 | ric    | RicGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric    | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
+| dra    | GetLang                             |       51 |         10 |        |                                 |       |
 | dra    | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
 | dra    | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra    | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra    | func_psp_090EAF08                   |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
-| dra    | func_psp_090F4FC8                   |       51 |         10 |        | https://decomp.me/scratch/Bs12o | 0.997 |
 | ric    | GetLang                             |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib    | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
