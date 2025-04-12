@@ -14,7 +14,9 @@ CONFIG_BASE_DIR: str = "config"
 CONFIG_PATTERNS: dict[Template] = {
     "splat": Template("splat.$version.(?:st|bo)?$ovl.yaml"),
     "saturn": Template("$ovl.(?:prg|bin).yaml"),
-    "sotn": Template("sotn.$version.(?:st|bo)?$ovl.yaml"),# For when an overlay is fully decompiled
+    "sotn": Template(
+        "sotn.$version.(?:st|bo)?$ovl.yaml"
+    ),  # For when an overlay is fully decompiled
 }
 SEG_TYPES: dict[tuple] = {
     "asm": ("asm", "header"),
@@ -41,7 +43,12 @@ def get_config(args: argparse.Namespace) -> dict:
 
     # We only care about the first match we find since there shouldn't be multiple matches
     config_path = next(
-        (file for file in Path(CONFIG_BASE_DIR).iterdir() if config_pattern.match(file.name)), None
+        (
+            file
+            for file in Path(CONFIG_BASE_DIR).iterdir()
+            if config_pattern.match(file.name)
+        ),
+        None,
     )
 
     if config_path:
@@ -94,16 +101,16 @@ def get_asm_files(options: dict, segments: list[list]) -> set[str]:
         for seg in segments
         if len(seg) >= 2 and seg[1] in SEG_TYPES["asm"]
     }
-    
+
     data_seg_types = SEG_TYPES["data"]
     # A seg type is added with a leading . for each existing data seg type if ignore_hidden is not set
     if not options["ignore_hidden"]:
-        data_seg_types += tuple(
-            f".{type}" for type in SEG_TYPES["data"]
-        )
+        data_seg_types += tuple(f".{type}" for type in SEG_TYPES["data"])
 
     data_files: set = {
-        data_path.joinpath(f"{seg[2]}" if len(seg) >= 3 else f"{seg[0]:X}").with_suffix(f".{seg[1].lstrip('.')}.s" if len(seg) >= 2 else ".bss.s")
+        data_path.joinpath(f"{seg[2]}" if len(seg) >= 3 else f"{seg[0]:X}").with_suffix(
+            f".{seg[1].lstrip('.')}.s" if len(seg) >= 2 else ".bss.s"
+        )
         for seg in segments
         if (len(seg) >= 2 and seg[1] in (data_seg_types)) or len(seg) == 1
     }
@@ -124,7 +131,9 @@ def get_src_files(options: dict, segments: list[list]) -> set[str]:
     }
 
     c_files: set = {
-        src_path.joinpath(f"{seg[2]}" if len(seg) >= 3 else f"{seg[0]:X}").with_suffix(".c")
+        src_path.joinpath(f"{seg[2]}" if len(seg) >= 3 else f"{seg[0]:X}").with_suffix(
+            ".c"
+        )
         for seg in segments
         if len(seg) >= 2 and seg[1] in SEG_TYPES["src"]
     }
@@ -146,13 +155,24 @@ def get_asset_files(
     asset_path = Path(options["asset_path"])
 
     # Stages and bosses, excluding sel, use these as default glob patterns instead of *
-    if (("st" in asset_path.parts or "boss" in asset_path.parts) and options["ovl"] != "sel"):
-        asset_filters = tuple(("D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"))
+    if ("st" in asset_path.parts or "boss" in asset_path.parts) and options[
+        "ovl"
+    ] != "sel":
+        asset_filters = tuple(
+            ["D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"]
+            + ["mwo_header.bin"]
+            if options["version"] == "pspeu"
+            else []
+        )
 
     # The file listing is really the only one used currently because some asset segment files are built by splat extensions
     # and the resulting files aren't directly specified in the config
     if asset_path.exists():
-        asset_files = {path for asset_filter in asset_filters for path in asset_path.glob(asset_filter)}
+        asset_files = {
+            path
+            for asset_filter in asset_filters
+            for path in asset_path.glob(asset_filter)
+        }
     else:  # This method is included as something of a proof of concept/work in progress
         # Splat configs have different segment type names than what these files are saved as, so we translate them with this dict
         # dict.get() can have a default value specified, so we use extension.get(seg_type,seg_type) to get the translation
@@ -165,12 +185,16 @@ def get_asset_files(
             "assets": ".json",
         }
         asset_files = {
-            asset_path.joinpath(f"{seg[2]}").with_suffix(extension.get(seg[1], f".{seg[1]}"))
+            asset_path.joinpath(f"{seg[2]}").with_suffix(
+                extension.get(seg[1], f".{seg[1]}")
+            )
             for seg in segments
             if len(seg) >= 3 and seg[1] in SEG_TYPES["asset"]
         }
-        # Add a .bin file for each .dec file 
-        asset_files.update({file.with_suffix(".bin") for file in asset_files if file.suffix == ".dec"})
+        # Add a .bin file for each .dec file
+        asset_files.update(
+            {file.with_suffix(".bin") for file in asset_files if file.suffix == ".dec"}
+        )
     return asset_files
 
 
@@ -238,7 +262,9 @@ def main(args: list) -> None:
     file_segments = get_file_segments(config["segments"])
     asm_files: set = get_asm_files(config["options"], file_segments)
     src_files: set = get_src_files(config["options"], file_segments)
-    asset_files: set = get_asset_files(config["options"], file_segments, tuple(args.asset_filter))
+    asset_files: set = get_asset_files(
+        config["options"], file_segments, tuple(args.asset_filter)
+    )
 
     # These are currently sorted for ease of comparison/debugging, but it isn't relevant for actual function
     match args.list_type:
@@ -255,12 +281,14 @@ def main(args: list) -> None:
                 )
             )
 
+
 def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
     """Steps backward from the file location to infer the root of the repo"""
     if next(current_dir.glob("src"), None) or current_dir.name == "/":
         return current_dir
     else:
         return get_repo_root(current_dir.parent)
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
