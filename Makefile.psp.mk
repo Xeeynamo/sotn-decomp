@@ -2,7 +2,7 @@ AS              := $(ALLEGREX)
 AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 LD_FLAGS		:= --gc-sections
-CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
+CCPSP           := MWCIncludes=bin/ $(WIBO) $(MWCCPSP)
 OPT_HI_LIST		:= $(addsuffix .c.o, 80 1E50 33F0 A710 C0B0 E6A8 186E8 26948 61F30 624DC 628AC 62FE0 63C90 64EE0)# These objects will get -O4,p instead of -Op
 OPT_LEVEL		 = $(if $(filter $(notdir $@),$(OPT_HI_LIST)),-O4$(comma)p,-Op)
 COMPILER_ARGS	 = --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL) -opt nointrinsics
@@ -13,14 +13,9 @@ $(BUILD_DIR)/%.ld: $(CONFIG_DIR)/splat.$(VERSION).%.yaml $(BASE_SYMBOLS) $(CONFI
 	$(muffle)$(SPLAT) $<
 
 # Step 2/2 of extract
-extract_assets: $(SOTNASSETS)
-	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
-build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build config/assets.$(VERSION).yaml
-extract_pspeu: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
-	make extract_assets
-	make build_assets
+extract.pspeu: $(SOTNASSETS_APP) $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(call get_targets,prefixed)))
+	$(SOTNASSETS_APP) extract $(CONFIG_DIR)/assets.$(VERSION).yaml
+	$(SOTNASSETS_APP) build $(CONFIG_DIR)/assets.$(VERSION).yaml
 
 # Step 1/5 of build
 $(BUILD_DIR)/%.s.o: %.s $(AS)
@@ -52,6 +47,6 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/$$(call add_ovl_prefix,%).elf
 $(call get_targets): %: $(BUILD_DIR)/%.bin
 
 # Step 5/5 of build
-build_pspeu: $(call get_targets)
+build.pspeu: $(call get_targets)
 
-.PHONY: extract_pspeu $(call get_targets) build_pspeu
+.PHONY: extract.pspeu $(call get_targets) build.pspeu
