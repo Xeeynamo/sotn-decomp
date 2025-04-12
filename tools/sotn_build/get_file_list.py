@@ -44,11 +44,7 @@ def get_config(args: argparse.Namespace) -> dict:
 
     # We only care about the first match we find since there shouldn't be multiple matches
     config_path = next(
-        (
-            file
-            for file in config_dir.iterdir()
-            if config_pattern.match(file.name)
-        ),
+        (file for file in config_dir.iterdir() if config_pattern.match(file.name)),
         None,
     )
 
@@ -156,9 +152,9 @@ def get_asset_files(
     asset_path = Path(options["asset_path"])
 
     # Stages and bosses, excluding sel, use these as default glob patterns instead of *
-    if (("st" in asset_path.parts or "boss" in asset_path.parts)
-        and options["ovl"] != "sel"
-    ):
+    if ("st" in asset_path.parts or "boss" in asset_path.parts) and options[
+        "ovl"
+    ] != "sel":
         asset_filters = tuple(("D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"))
         if options["version"] == "pspeu":
             asset_filters += tuple(("mwo_header.bin",))
