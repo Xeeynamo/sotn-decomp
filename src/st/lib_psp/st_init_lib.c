@@ -8,11 +8,11 @@ extern LayoutEntity* D_8D2E234;
 
 extern Overlay OVL_EXPORT(Overlay);
 
-extern char D_psp_09276330[];
-extern char D_psp_09276520[];
-extern char D_psp_092766E8[];
-extern char D_psp_092768E0[];
-extern char D_psp_09276AC8[];
+extern char cutscene_data_it[];
+extern char cutscene_data_sp[];
+extern char cutscene_data_fr[];
+extern char cutscene_data_ge[];
+extern char cutscene_data_en[];
 
 extern u8* D_psp_092A54E0;            // bss
 extern u8* D_psp_092A54E8;            // bss
@@ -153,20 +153,20 @@ void InitEntityIds(void) {
 
 void func_psp_09254120(void) {
     OVL_EXPORT(cutscene_data) = GetLangAt(
-        8, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
-        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+        8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
+        (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
     D_psp_092A54F0 = GetLangAt(
-        0, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
-        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+        0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
+        (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
     D_psp_092A54E8 = GetLangAt(
-        0, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
-        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+        0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
+        (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
     D_psp_092A54E0 = GetLangAt(
-        4, (u8*)D_psp_09276AC8, (u8*)D_psp_092766E8, (u8*)D_psp_09276520,
-        (u8*)D_psp_092768E0, (u8*)D_psp_09276330);
+        4, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
+        (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
     InitEntityIds();
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);

@@ -15,7 +15,7 @@ typedef enum {
     CSOP_CLOSE_DIALOG,
     CSOP_PLAY_SOUND,
     CSOP_WAIT_FOR_SOUND,
-    CSOP_UNK_11,
+    CSOP_SCRIPT_UNKNOWN_11,
     CSOP_SET_END,
     CSOP_SCRIPT_UNKNOWN_13,
     CSOP_SCRIPT_UNKNOWN_14,
@@ -28,7 +28,7 @@ typedef enum {
     CSOP_SCRIPT_UNKNOWN_21,
     CSOP_SCRIPT_UNKNOWN_22,
     CSOP_SCRIPT_UNKNOWN_23,
-    CSOP_SCRIPT_UNKNOWN_24,
+    CSOP_WAIT_FOR_FLAG_RESET,
 } CutsceneOpcode;
 
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
@@ -44,7 +44,7 @@ typedef enum {
 #define CLOSE_DIALOG() CSOP_CLOSE_DIALOG
 #define PLAY_SOUND(id) CSOP_PLAY_SOUND, script_half(id)
 #define WAIT_FOR_SOUND() CSOP_WAIT_FOR_SOUND
-#define SCRIPT_UNKNOWN_11() CSOP_UNK_11
+#define SCRIPT_UNKNOWN_11() CSOP_SCRIPT_UNKNOWN_11
 #define SET_END(x) CSOP_SET_END, script_word(x)
 #define SCRIPT_UNKNOWN_14(x, y, z)                                             \
     CSOP_SCRIPT_UNKNOWN_14, script_word(x), script_word(y), script_word(z)
@@ -53,6 +53,8 @@ typedef enum {
 #define SET_FLAG(x) CSOP_SET_FLAG, x
 #define LOAD_PORTRAIT(addr, id) CSOP_LOAD_PORTRAIT, script_word(addr), id
 #define SCRIPT_UNKNOWN_20(x) CSOP_SCRIPT_UNKNOWN_20, script_half(x)
+#define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
+#define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
 
 #endif // CUTSCENE_H
