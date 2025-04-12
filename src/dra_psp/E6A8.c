@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
+#include "../dra/menu.h"
 
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[8];
@@ -215,9 +217,9 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC0C0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC248);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC380);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawImg);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC518);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F5A90);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F5AE4);
 
@@ -294,7 +296,7 @@ void DrawRelicsMenu(MenuContext* ctx) {
 #undef INDEXER
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECCC0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawAlucardPortrait);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECD58);
 
@@ -308,7 +310,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6568);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6618);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED058);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F66BC);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawChar);
 
@@ -316,17 +318,22 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawStr);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawInt);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED248);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawTime);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED2E8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6A48);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuJosephsCloakDraw);
 
-extern s32 D_psp_0914A3B8;
-extern s32 D_psp_0914A3D0;
-extern s32 D_psp_0914A3C8;
-extern s32 D_psp_0914A3D8;
-extern s32 D_psp_0914A3C0;
+u8 g_ChButtons[] = {SQUARE,  CIRCLE,  CROSS,   TRIANGLE,
+                    CH('L'), CH('R'), CH('L'), NULL};
+u8 g_ChButtons2[] = {NULL, NULL, CH('+'), NULL, NULL, NULL, NULL, NULL};
+u8 g_ChButtons3[] = {NULL, NULL, CH('R'), NULL, NULL, NULL, NULL, NULL};
+
+char D_psp_0914A3B8[] = {CH('R'), CH('G'), CH('B')}; // en
+char D_psp_0914A3C0[] = {CH('R'), CH('V'), CH('B')}; // it
+char D_psp_0914A3C8[] = {CH('R'), CH('V'), CH('A')}; // sp
+char D_psp_0914A3D0[] = {CH('R'), CH('V'), CH('B')}; // fr
+char D_psp_0914A3D8[] = {CH('R'), CH('G'), CH('B')}; // ge
 
 extern u8* g_ChRgb[];
 
@@ -349,11 +356,39 @@ void MenuWindowColorsDraw(MenuContext* context) {
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED570);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", SortTimeAttackEntries);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuTimeAttackDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuButtonConfigDraw);
+void MenuButtonConfigDraw(MenuContext* ctx) {
+    s32 i;
+    s32 buttonId;
+    s32 btn1_x;
+    s32 btn2_x;
+
+    const s32 InitCursorX = 0xA4;
+    const s32 W = 0x54;
+
+    s32 cursorX = InitCursorX;
+
+    for (i = 0; i < 7; i++) {
+        MenuDrawStr(g_MenuStr[22 + i], cursorX, 0x30 + (i * 0x10), ctx);
+        buttonId = g_Settings.buttonConfig[i];
+        btn1_x = (buttonId * 12);
+        MenuDrawChar(
+            g_ChButtons[buttonId], 0xFC + btn1_x, 0x30 + (i * 0x10), ctx);
+        if (buttonId >= 4) {
+            MenuDrawChar(g_ChButtons2[buttonId - 4], 0x104 + btn1_x,
+                         0x30 + (i * 0x10), ctx);
+            btn2_x = btn1_x + 8;
+            MenuDrawChar(g_ChButtons3[buttonId - 4], 0x104 + btn2_x,
+                         0x30 + (i * 0x10), ctx);
+        }
+    }
+
+    func_800F5E68(
+        ctx, g_MenuNavigation.cursorButtons, cursorX - 2, 46, W, 12, 4, 1);
+}
 
 void MenuReverseCloakDraw(MenuContext* context) {
     const int StrX = 188;
@@ -380,19 +415,260 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDBA0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuStatChangesDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawStats);
+extern const char** D_800A2D68;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSpellsDraw);
+extern MenuData g_MenuData;
+
+void MenuDrawStats(s32 menuDialogue) {
+    MenuContext* ctx;
+    char* menuStr;
+    s32 temp_s1;
+    s32 temp_var;
+    s32 x;
+    s32 y;
+    s32 i;
+    s32 temp_y;
+    s32 phi_a0_5;
+
+    ctx = &g_MenuData.menus[menuDialogue];
+    func_800F53A4();
+    if (menuDialogue == MENU_DG_BG) {
+        MenuDrawAlucardPortrait(ctx);
+        if (IsAlucart()) {
+            MenuDrawStr(g_MenuStr[42], 128, 40, ctx);
+        } else {
+            MenuDrawStr(g_MenuStr[0], 128, 40, ctx);
+        }
+        MenuDrawStr(g_MenuStr[12], 96, 56, ctx);
+        MenuDrawInt(g_Status.hp, 168, 56, ctx);
+        MenuDrawChar(CH('/'), 176, 56, ctx);
+        MenuDrawInt(g_Status.hpMax, 208, 56, ctx);
+        MenuDrawStr(g_MenuStr[13], 96, 68, ctx);
+        MenuDrawInt(g_Status.mp, 168, 68, ctx);
+        MenuDrawChar(CH('/'), 176, 68, ctx);
+        MenuDrawInt(g_Status.mpMax, 208, 68, ctx);
+        MenuDrawStr(g_MenuStr[14], 96, 80, ctx);
+        MenuDrawInt(g_Status.hearts, 168, 80, ctx);
+        MenuDrawChar(CH('/'), 176, 80, ctx);
+        MenuDrawInt(g_Status.heartsMax, 208, 80, ctx);
+        MenuDrawStr(g_MenuStr[5], 32, 176, ctx);
+        MenuDrawInt(g_Status.exp, 144, 176, ctx);
+        MenuDrawStr(g_MenuStr[6], 32, 188, ctx);
+        MenuDrawInt(g_Status.level != 99
+                        ? g_ExpNext[g_Status.level + 1] - g_Status.exp
+                        : 0,
+                    144, 188, ctx);
+        MenuDrawStr(g_MenuStr[7], 32, 200, ctx);
+        MenuDrawInt(g_Status.gold, 144, 200, ctx);
+        MenuDrawStr(g_MenuStr[8], 248, 40, ctx);
+        MenuDrawInt(g_Status.level, 304, 40, ctx);
+        MenuDrawStr(g_MenuStr[15], 248, 56, ctx);
+        i = 37;
+        if (g_Player.status & PLAYER_STATUS_CURSE) {
+            i = 40;
+        }
+        if (g_Player.status & PLAYER_STATUS_POISON) {
+            i = 38;
+        }
+        if (g_Player.status & PLAYER_STATUS_STONE) {
+            i = 39;
+        }
+        if (IsAlucart()) {
+            i = 45;
+        }
+        MenuDrawStr(g_MenuStr[i], 260, 68, ctx);
+        MenuDrawStr(g_MenuStr[10], 252, 150, ctx);
+        MenuDrawInt(g_RoomCount, 340, 150, ctx);
+        MenuDrawStr(g_MenuStr[11], 252, 164, ctx);
+        MenuDrawInt(g_Status.killCount, 340, 164, ctx);
+        MenuDrawStr(g_MenuStr[9], 244, 192, ctx);
+        MenuDrawInt(g_Status.timerHours, 300, 192, ctx);
+        MenuDrawChar(CH(':'), 308, 192, ctx);
+        MenuDrawTime(g_Status.timerMinutes, 324, 192, ctx, 2);
+        MenuDrawChar(CH(':'), 332, 192, ctx);
+        MenuDrawTime(g_Status.timerSeconds, 348, 192, ctx, 2);
+    }
+
+    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
+        x = 248;
+        y = 88;
+    } else {
+        x = 232;
+        y = 80;
+    }
+    func_800F66BC(D_800A2D68[0], x, y, ctx, 1);
+
+    temp_var = g_Settings.buttonConfig[0];
+    temp_s1 = temp_var;
+    if (temp_s1 < 4) {
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y, ctx);
+    } else {
+        if (temp_s1 == 7) {
+            MenuDrawChar(g_ChButtons[temp_s1], x + 40, y, ctx);
+            MenuDrawChar(g_ChButtons2[temp_s1 - 4], x + 48, y, ctx);
+            MenuDrawChar(g_ChButtons3[temp_s1 - 4], x + 56, y, ctx);
+        } else {
+            MenuDrawChar(g_ChButtons[temp_s1], x + 44, y, ctx);
+        }
+    }
+    MenuDrawInt(g_Status.attackHands[0], x + 76, y, ctx);
+
+    temp_var = g_Settings.buttonConfig[1];
+    temp_s1 = temp_var;
+    if (temp_s1 < 4) {
+        MenuDrawChar(g_ChButtons[temp_s1], x + 44, y + 10, ctx);
+    } else {
+        if (temp_s1 == 7) {
+            MenuDrawChar(g_ChButtons[temp_s1], x + 40, y + 10, ctx);
+            MenuDrawChar(g_ChButtons2[temp_s1 - 4], x + 48, y + 10, ctx);
+            MenuDrawChar(g_ChButtons3[temp_s1 - 4], x + 56, y + 10, ctx);
+        } else {
+            MenuDrawChar(g_ChButtons[temp_s1], x + 44, y + 10, ctx);
+        }
+    }
+
+    MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
+    func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
+    MenuDrawInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
+    if (ctx == (&g_MenuData.menus[MENU_DG_BG])) {
+        x = 32;
+        y = 120;
+    } else {
+        func_800F66BC(
+            D_800A2D68[g_MenuNavigation.cursorEquip + 0x12], 15, 40, ctx, true);
+        x = 12;
+        y = 70;
+    }
+
+    for (i = 0, temp_y = y; i < 4; temp_y += 12, i++) {
+        s32* statsBase = &g_Status.statsBase[i];
+        MenuDrawStr(g_MenuStr[1 + i], x, temp_y, ctx);
+        MenuDrawInt(*statsBase, x + 44, temp_y, ctx);
+        if (g_Status.statsEquip[i] != 0) {
+            if (g_Status.statsEquip[i] > 0) {
+                MenuDrawChar(CH('+'), x + 52, temp_y, ctx);
+                phi_a0_5 = g_Status.statsEquip[i];
+            } else {
+                MenuDrawChar(CH('-'), x + 52, temp_y, ctx);
+                phi_a0_5 = -g_Status.statsEquip[i];
+            }
+            MenuDrawInt(phi_a0_5, x + 68, temp_y, ctx);
+        }
+    }
+}
+
+void MenuSpellsDraw(MenuContext* ctx) {
+    s32 buttonCFG;
+    s32 spell;
+    s32 charNum;
+    s32 i;
+    s32 colorIntensity;
+    s32 yCoord;
+    s32 v1;
+
+    const s32 startXCoord = 180;
+    func_800F66BC(D_800A2D68[2], 136, 36, ctx, 1);
+
+    for (i = 0; i < NUM_SPELLS; i++) {
+        spell = g_Status.spells[i];
+        if (!(spell & 0x80)) {
+            continue;
+        }
+        spell ^= 0x80;
+        charNum = 0;
+        yCoord = 64 + i * 16;
+        // Count up how many characters are in the combo
+        for (v1 = 0; (s8)g_SpellDefs[spell].combo[v1] != 0; v1++) {
+            if (g_SpellDefs[spell].combo[v1] == 0xC0 &&
+                g_SpellDefs[spell].combo[v1 + 1] == 0xD2) {
+                charNum--;
+            } else {
+                charNum++;
+            }
+        }
+
+        if (spell != SPELL_WING_SMASH) {
+            MenuDrawStr(g_SpellDefs[spell].combo, startXCoord, yCoord, ctx);
+            MenuDrawChar(
+                CH('+'), startXCoord + ((charNum - 1) * 8), yCoord, ctx);
+            buttonCFG = g_Settings.buttonConfig[0];
+            if (buttonCFG < 4) {
+                MenuDrawChar(g_ChButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+            } else {
+                MenuDrawChar(g_ChButtons[buttonCFG],
+                             startXCoord + (charNum * 8), yCoord, ctx);
+                if (buttonCFG == 7) {
+                    MenuDrawChar(g_ChButtons2[buttonCFG - 4],
+                                 startXCoord + (charNum * 8), yCoord, ctx);
+                    MenuDrawChar(g_ChButtons3[buttonCFG - 4],
+                                 startXCoord + 8 + (charNum * 8), yCoord, ctx);
+                    charNum++;
+                }
+            }
+            MenuDrawChar(15, startXCoord + ((charNum + 1) * 8), yCoord, ctx);
+
+            buttonCFG = g_Settings.buttonConfig[1];
+            if (buttonCFG < 4) {
+                MenuDrawChar(g_ChButtons[buttonCFG],
+                             startXCoord + ((charNum + 2) * 8), yCoord, ctx);
+            } else {
+                MenuDrawChar(g_ChButtons[buttonCFG],
+                             startXCoord + ((charNum + 2) * 8), yCoord, ctx);
+                MenuDrawChar(g_ChButtons2[buttonCFG - 4],
+                             startXCoord + ((charNum + 2) * 8), yCoord, ctx);
+                MenuDrawChar(
+                    g_ChButtons3[buttonCFG - 4],
+                    startXCoord + 8 + ((charNum + 2) * 8), yCoord, ctx);
+                if (buttonCFG == 7) {
+                    MenuDrawChar(
+                        g_ChButtons2[buttonCFG - 4],
+                        startXCoord + ((charNum + 2) * 8), yCoord, ctx);
+                    MenuDrawChar(
+                        g_ChButtons3[buttonCFG - 4],
+                        startXCoord + 8 + ((charNum + 2) * 8), yCoord, ctx);
+                }
+            }
+        } else {
+            MenuDrawChar(CH('?'), startXCoord, yCoord, ctx);
+            MenuDrawChar(CH('+'), startXCoord + 8, yCoord, ctx);
+            MenuDrawStr(
+                g_SpellDefs[spell].combo, startXCoord + 16, yCoord, ctx);
+            MenuDrawChar(
+                CH('+'), startXCoord + 16 + ((charNum - 1) * 8), yCoord, ctx);
+            MenuDrawChar(
+                CH('?'), startXCoord + 24 + ((charNum - 1) * 8), yCoord, ctx);
+        }
+        MenuDrawStr(g_MenuStr[13], 292, yCoord, ctx);
+        MenuDrawInt(g_SpellDefs[spell].mpUsage, 316, yCoord, ctx);
+    }
+    for (i = 0; i < 8; i++) {
+        if (g_Status.spells[i] & 0x80) {
+            MenuDrawImg(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
+                        func_800F548C(0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
+        }
+    }
+    // The highlighted spell glows yellow, increasing and decreasing.
+    if (g_Timer & 0x20) {
+        colorIntensity = (g_Timer & 0x1F) + 0x60;
+    } else {
+        colorIntensity = 0x7F - (g_Timer & 0x1F);
+    }
+    // The colorIntensity gets passed to the MenuRect's R and G values, making
+    // it a brighter or dimmer yellow.
+    MenuDrawRect(ctx, 26, (g_MenuNavigation.cursorSpells * 0x10) + 0x3B, 300,
+                 17, colorIntensity, colorIntensity, 0);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuFamiliarsDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEDF8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F82F4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSystemDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EEFA8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F84CC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EF1A0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F86E4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F8754);
 
@@ -408,7 +684,9 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawConsumableCount);
 
 extern MenuData g_MenuData;
 extern s32 D_801377FC[NUM_MENU];
-extern u8 D_800A2D80[];
+
+u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
+                   0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
 
 void MenuDraw(void) {
     u8 padding[32];
@@ -654,19 +932,22 @@ void MenuDraw(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F01C0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9690);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0220);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0308);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0330);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0550);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F96F4);
 
 extern u8* D_8013794C;
 extern s32 D_80137950;
 extern s32 D_80137954;
+
+static void func_800F97DC(void) {
+    D_8013794C = g_Pix[0];
+    D_80137950 = 0x180;
+    D_80137954 = 0;
+}
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9808);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F98AC);
 
 void func_800F99B8(char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
@@ -795,15 +1076,16 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0DD8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0E10);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9DD0);
 
-extern RECT D_800A2D90;
 extern u8* D_psp_0914A394;
 extern s32 D_psp_0914A0D0;
 extern s32 D_psp_09149E90;
 extern s32 D_psp_0914A248;
 extern s32 D_psp_09149FB0;
 extern s32 D_psp_0914A388;
+
+RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 
 void func_800F9E18(s32 arg0) {
     char buffer[38];
@@ -839,62 +1121,988 @@ void func_800F9E18(s32 arg0) {
         }
     }
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0FD0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1078);
+#define ShowText(str, id) func_800F99B8(str, id, 0);
+
+char D_800DC6EC[] = {
+    "　　　　　　　　　　　　　　　　　　　　　",
+};
+
+void func_800F9F40(void) {
+    char buffer[38];
+    u8 spellId;
+    s32 i;
+
+    for (i = 0; i < NUM_SPELLS; i++) {
+        spellId = g_Status.spells[i];
+        if (spellId & 0x80) {
+            spellId ^= 0x80;
+            STRCPY(buffer, D_800DC6EC);
+            func_800F9DD0(g_SpellDefs[spellId].name, buffer);
+            ShowText(buffer, 0x80 + i);
+        }
+    }
+}
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandleCursorInput);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1418);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1618);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuEquipHandlePageScroll);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F17D8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", CheckWeaponCombo);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F18B0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1968);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1A08);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", InitWeapon);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1B60);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAB1C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1BC8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHide);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C00);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuShow);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C38);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FABEC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C58);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC0C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C80);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC30);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1C98);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC48);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1D68);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAD34);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1DF0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FADC0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EA0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EC8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAEC4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1F40);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAF44);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2038);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB004);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2118);
+typedef struct EquipMenuHelper {
+    s32 equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+EquipMenuHelper g_EquipMenuHelper[] = {
+    {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
+    {EQUIP_HAND, 0, false},     // RIGHT_HAND_SLOT
+    {EQUIP_HEAD, 0, true},      // HEAD_SLOT
+    {EQUIP_ARMOR, 1, true},     // ARMOR_SLOT
+    {EQUIP_CAPE, 2, true},      // CAPE_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_1_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
+};
+
+extern s32 D_801375CC;
+extern s32 D_801375D4;
+
+void func_800FB0FC(void) {
+    EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
+    D_801375CC = helper->equipTypeFilter;
+    D_801375D4 = helper->index;
+    func_800FAF44(helper->isAccessory);
+    func_800FB004();
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2178);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F21F8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2258);
+s32 D_800A2DEC[] = {
+    0x1A, 0x00, 0x30, 0x39, 0x39,
+};
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2A40);
+extern bool func_800FB1EC(u16 arg0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2B20);
+extern u32 D_801375D0;
+extern s32* D_801375D8;
+extern s32 D_80137844[1];
+extern s32 D_80137848[1];
+extern s32 D_80137948;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandle);
+extern u32 D_psp_08B42050; // psp cross button
+extern u32 D_psp_08B42054; // psp triangle button
+
+#define PAD_MENU_SELECT_ALT (D_psp_08B42050)
+#define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
+#define PAD_MENU_BACK (D_psp_08B42054)
+#define PAD_MENU_SORT (PAD_TRIANGLE)
+#define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB23C);
+
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
+MenuContextInit g_MenuInit[NUM_MENU] = {
+    {142, 100, 84, 112, 0x40}, // MENU_DG_MAIN
+    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+    {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+    {172, 44, 89, 32, 0x30},   // MENU_DG_CLOAK_LINING 6db90
+    {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
+    {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+    {12, 32, 340, 153, 0x30},  // MENU_DG_TIME_ATTACK
+    {276, 32, 77, 183, 0x50},  // MENU_DG_EQUIP_SORT
+    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
+    {240, 180, 65, 32, 0x50},  // MENU_PSP_EXTRA_1
+    {128, 100, 88, 48, 0x1FB}, // MENU_PSP_EXTRA_2
+    {176, 180, 65, 32, 0x1FB}, // MENU_PSP_EXTRA_3
+};
+
+void func_800FB9BC(void) {
+    const int ItemsPerRow = 2;
+
+    const int VertScrollWindow = 140;
+    const int YScrollPerElement = 15;
+
+    s32 i;
+    MenuContext* context;
+
+    context = &g_MenuData.menus[0];
+    for (i = 0; i < NUM_MENU; i++, context++) {
+        context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
+        context->cursorX += 12;
+        context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
+        context->cursorW = context->unk1.w = g_MenuInit[i].cursorW;
+        context->cursorH = context->unk1.h = g_MenuInit[i].cursorH;
+        context->unk14 = 0;
+        context->w = 0;
+        context->unk16 = 0;
+        context->h = 0;
+        context->otIdx = g_MenuInit[i].otIdx;
+        context->unk1C = 2;
+    }
+    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 =
+        ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
+        YScrollPerElement;
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FBAC4);
+
+void func_800FAEC4(
+    s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
+void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette);
+extern s32 D_80137614;
+extern s32 g_ServantPrevious;
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 g_IsCloakColorUnlocked;
+extern s32 D_80137958;
+extern const char* D_800A2D64[];
+extern char** D_800A2D48;
+extern s32 D_80137608;
+extern MenuData g_MenuData;
+extern s32 g_EquipOrderType;
+extern bool D_psp_091CDD48;
+extern s32 g_UserLanguage;
+extern s32 D_psp_091CDD40;
+
+extern s32 D_8013784C;
+typedef enum {
+    ENGINE_INIT_SERVANT_0 = 0,
+    MENU_SWITCH_SERVANT,
+    ENGINE_INIT_SERVANT_2,
+    MENU_SAME_SERVANT
+} InitializeMode;
+
+extern const char* D_800A2D10[];
+extern const char* D_800A2D14[];
+extern const char* D_800A2D18[];
+extern const char* D_800A2D58[];
+
+void MenuHandle(void) {
+    s32 temp_s1;
+    s32 i;
+    s32 id;
+    s32 var_s1;
+    u8 equipId;
+    s32 isSecondAccessory;
+    char* buttonAssignStr;
+
+    D_80137614 = 1;
+    func_800F97DC();
+    if (g_MenuStep >= MENU_STEP_OPENED && g_pads[0].tapped & PAD_START) {
+        if (CheckIfAllButtonsAreAssigned()) {
+            g_MenuStep = MENU_STEP_EXIT_BEGIN;
+        } else {
+            goto block_117;
+        }
+    }
+block_4:
+    switch (g_MenuStep) {
+    case MENU_STEP_INIT:
+        if (!CdSoundCommandQueueEmpty()) {
+            break;
+        }
+        func_psp_090EAFA8();
+        PlaySfx(SET_UNK_10);
+        func_800EA5E4(0);
+        func_800FAC30();
+        func_800FB9BC();
+        g_PrevEquippedWeapons[LEFT_HAND_SLOT] =
+            g_Status.equipment[LEFT_HAND_SLOT];
+        g_PrevEquippedWeapons[RIGHT_HAND_SLOT] =
+            g_Status.equipment[RIGHT_HAND_SLOT];
+        if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+            g_PrevEquippedWeapons[LEFT_HAND_SLOT] = 0xD8;
+            g_PrevEquippedWeapons[RIGHT_HAND_SLOT] = 0xD8;
+        }
+        g_ServantPrevious = g_Servant;
+        for (i = 0; i < NUM_SPELLS; i++) {
+            if (!(g_Status.spells[i] & SPELL_FLAG_KNOWN)) {
+                break;
+            }
+        }
+        D_801375DC = i;
+        for (i = 0; i < LEN(D_801375E0); i++) {
+            D_801375E0[i] = 0;
+        }
+        for (i = 0; i < NUM_RELICS; i++) {
+            if (!(g_Status.relics[i] & RELIC_FLAG_FOUND)) {
+                continue;
+            }
+            if (g_RelicDefs[i].unk0C == 0) {
+                continue;
+            }
+            D_801375E0[g_RelicDefs[i].unk0C - 1] = 1;
+            D_801375E0[NUM_FAMILIARS] = 1;
+        }
+        g_IsCloakLiningUnlocked =
+            g_Status.equipBodyCount[ITEM_REVERSE_CLOAK] |
+            g_Status.equipment[CAPE_SLOT] == ITEM_REVERSE_CLOAK;
+        g_IsCloakColorUnlocked =
+            g_Status.equipBodyCount[ITEM_JOSEPHS_CLOAK] |
+            g_Status.equipment[CAPE_SLOT] == ITEM_JOSEPHS_CLOAK;
+        g_MenuStep++;
+        break;
+    case MENU_STEP_FADE_FROM_GAME:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        SetGPUBuffRGBZero();
+        func_80102628(0x180);
+        SetMenuDisplayBuffer();
+        func_800FAC48();
+        D_800973EC = 1;
+        g_MenuStep++;
+        break;
+    case MENU_STEP_OPENING:
+        if (func_80133950()) {
+            D_80137958 = D_80097910;
+            D_80097910 = 0;
+            func_800F6A48();
+            func_800F84CC();
+            func_801027C4(2);
+            func_800F98AC(*D_800A2D10, 0);
+            func_800F98AC(*D_800A2D14, 0x100);
+            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(*D_800A2D58, 0x101);
+            func_800FABEC(MENU_DG_MAIN);
+            func_800FABEC(MENU_DG_BG);
+            D_80137608 = 0;
+            g_IsSelectingEquipment = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_EXIT_BEGIN:
+        func_801027C4(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_4:
+        if (func_801025F4()) {
+            func_80102628(0x100);
+            SetStageDisplayBuffer();
+            func_800FAC48();
+            func_800EB6B4();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_5:
+        UpdateCapePalette();
+        LoadGfxAsync(D_80097904);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_6:
+        if (func_800EB720()) {
+            break;
+        }
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_7:
+        if (!func_psp_090F1968(LEFT_HAND_SLOT)) {
+            break;
+        }
+        if (!g_UseDisk) {
+            InitWeapon(LEFT_HAND_SLOT);
+        }
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            InitWeapon(LEFT_HAND_SLOT);
+        }
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_8:
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_9:
+        if (!func_psp_090F1968(RIGHT_HAND_SLOT)) {
+            break;
+        }
+        if (!g_UseDisk) {
+            InitWeapon(RIGHT_HAND_SLOT);
+        }
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            InitWeapon(RIGHT_HAND_SLOT);
+        }
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_10:
+        if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
+            func_800FAB1C();
+        }
+        if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
+            if (g_Servant != FAM_ACTIVE_NONE) {
+                if (g_Servant != g_ServantPrevious) {
+                    if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+                        g_Status.statsFamiliars[g_Servant - 1].unk8++;
+                    }
+                    InitializeServant(MENU_SWITCH_SERVANT);
+                } else {
+                    InitializeServant(MENU_SAME_SERVANT);
+                }
+            }
+            g_MenuStep += 2;
+        } else {
+            if (g_UseDisk) {
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_ServantChr;
+                g_LoadOvlIdx = g_Servant - 1;
+            }
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_11:
+        if (func_8932EA4()) {
+            if (g_UseDisk) {
+                if (g_IsUsingCd) {
+                    break;
+                }
+            } else {
+                func_800E6250();
+            }
+            InitializeServant(MENU_SWITCH_SERVANT);
+            g_ServantLoaded = g_Servant;
+            if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+                g_Status.statsFamiliars[g_Servant - 1].unk8++;
+            }
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_EXIT_12:
+        if (g_IsUsingCd) {
+            break;
+        }
+        if (CdSoundCommandQueueEmpty() == false) {
+            break;
+        }
+        D_80097910 = D_80137958;
+        if (D_psp_091CDD48 != 0) {
+            PlaySfx(0xB);
+        } else {
+            PlaySfx(SET_UNK_11);
+        }
+        CheckWeaponCombo();
+        func_800F53A4();
+        D_800973EC = 0;
+        func_800FAC30();
+        func_800F86E4();
+        func_8010A234(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_EXIT_13:
+        if (func_80133950() == false) {
+            break;
+        }
+        func_801027C4(2);
+        g_MenuStep++;
+        if (D_psp_091CDD48) {
+            D_psp_091CDD48 = 0;
+            SetGameState(3);
+            g_GameStep = 0x63;
+        }
+        break;
+    case MENU_STEP_RETURN_TO_GAMEPLAY:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+        PlaySfx(SET_KEY_ON_20_21);
+        PlaySfx(SET_KEY_ON_22_23);
+        g_GameEngineStep = Engine_Normal;
+        break;
+    case MENU_STEP_OPENED:
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            g_MenuStep = MENU_STEP_EXIT_BEGIN;
+            goto block_4;
+        }
+        MenuHandleCursorInput(&g_MenuNavigation.cursorMain, 7, 0);
+        if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            switch (g_MenuNavigation.cursorMain) {
+            case 0:
+                MenuShow(MENU_DG_EQUIP_OVERVIEW);
+                func_800FB0FC();
+                func_800FADC0();
+                MenuShow(MENU_DG_EQUIP_SELECTOR);
+                MenuShow(MENU_DG_INFO_BAR);
+                g_MenuStep = MENU_STEP_EQUIP;
+                break;
+            case 1:
+                if (D_801375DC) {
+                    g_MenuStep = MENU_STEP_SPELL_INIT;
+                }
+                break;
+            case 2:
+                func_800F9E18(0);
+                g_MenuStep = MENU_STEP_RELIC_INIT;
+                break;
+            case 3:
+                g_MenuStep = MENU_STEP_SYSTEM_INIT;
+                break;
+            case 4:
+                if (D_801375E0[NUM_FAMILIARS]) {
+                    g_MenuStep = MENU_STEP_FAMILIAR_INIT;
+                }
+                break;
+            case 5:
+                if (D_8006C378 < 0) {
+                    break;
+                }
+                MenuShow(0x10);
+                D_psp_091CDD40 = 1;
+                g_MenuStep = 0x80;
+                break;
+            case 6:
+                MenuShow(0x10);
+                D_psp_091CDD40 = 1;
+                g_MenuStep = 0x90;
+                break;
+            }
+            if (!(g_MenuStep == MENU_STEP_OPENED || g_MenuStep == 0x80 ||
+                  g_MenuStep == 0x90)) {
+                MenuHide(MENU_DG_MAIN);
+                MenuHide(MENU_DG_BG);
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                if (g_MenuStep == 0x80 || g_MenuStep == 0x90) {
+                    PlaySfx(SFX_UI_CONFIRM);
+                } else {
+                    PlaySfx(SFX_UI_ERROR);
+                }
+            }
+        }
+        break;
+    case 0x80:
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            PlaySfx(SFX_UI_ERROR);
+            MenuHide(0x10);
+            g_MenuStep = 0x10;
+            break;
+        }
+        MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
+        if (!(g_pads[0].tapped & PAD_MENU_SELECT)) {
+            break;
+        }
+        if (D_psp_091CDD40 == 0) {
+            PlaySfx(SFX_UI_CONFIRM);
+            func_psp_090DFC80();
+            MenuHide(0x10);
+            D_psp_091CDD48 = 1;
+            g_MenuStep = 3;
+            goto block_4;
+        }
+        PlaySfx(SFX_UI_ERROR);
+        MenuHide(0x10);
+        g_MenuStep = 0x10;
+        break;
+    case 0x90:
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            PlaySfx(SFX_UI_ERROR);
+            MenuHide(0x10);
+            g_MenuStep = 0x10;
+            break;
+        }
+        MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
+        if (!(g_pads[0].tapped & PAD_MENU_SELECT)) {
+            break;
+        }
+        if (D_psp_091CDD40 == 0) {
+            PlaySfx(SFX_UI_CONFIRM);
+            MenuHide(0x10);
+            D_psp_091CDD48 = 1;
+            g_MenuStep = 3;
+            goto block_4;
+        }
+        PlaySfx(SFX_UI_ERROR);
+        MenuHide(0x10);
+        g_MenuStep = 0x10;
+        break;
+    case MENU_STEP_FAMILIAR_INIT:
+        func_800EA5E4(0x21);
+        func_800EAEA4();
+        MenuShow(MENU_DG_FAMILIARS);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_FAMILIAR:
+        if (g_pads[0].tapped & (PAD_MENU_SELECT | PAD_MENU_BACK)) {
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            func_800EAEA4();
+            MenuHide(MENU_DG_FAMILIARS);
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_SYSTEM_INIT:
+        func_800F82F4();
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_SETTINGS);
+        g_MenuStep++;
+    case MENU_STEP_SYSTEM:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorSettings, 5, 0);
+        DrawSync(0);
+        func_800F9808(2);
+        i = g_MenuNavigation.cursorSettings + 1;
+        if (i == 2 && g_IsCloakLiningUnlocked == false) {
+            i = 0;
+        }
+        if (i == 3 && g_IsCloakColorUnlocked == false) {
+            i = 0;
+        }
+        if (i == 5 && g_IsTimeAttackUnlocked == false) {
+            i = 0;
+        }
+        ShowText(D_800A2D48[i], 2);
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_SETTINGS);
+            g_MenuStep = MENU_STEP_OPENED;
+        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            switch (g_MenuNavigation.cursorSettings) {
+            case 0:
+                MenuShow(MENU_DG_CFG_BUTTONS);
+                g_MenuStep = MENU_STEP_SYSTEM_BUTTONS;
+                break;
+            case 1:
+                if (g_IsCloakLiningUnlocked) {
+                    MenuShow(MENU_DG_CLOAK_LINING);
+                    g_MenuStep = MENU_STEP_SYSTEM_CLOAK_LINING;
+                }
+                break;
+            case 2:
+                if (g_IsCloakColorUnlocked) {
+                    func_800FABEC(MENU_DG_CLOAK_COLOR);
+                    g_MenuStep = MENU_STEP_SYSTEM_CLOAK_COLOR;
+                }
+                break;
+            case 3:
+                MenuShow(MENU_DG_WINDOW_COLORS);
+                g_MenuStep = MENU_STEP_SYSTEM_WINDOW_COLOR;
+                break;
+            case 4:
+                if (g_IsTimeAttackUnlocked) {
+                    SortTimeAttackEntries();
+                    MenuShow(MENU_DG_TIME_ATTACK);
+                    g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
+                }
+            }
+
+            if (g_MenuStep != MENU_STEP_SYSTEM) {
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
+        }
+        break;
+    case MENU_STEP_SYSTEM_BUTTONS:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorButtons, 6, 0);
+        MenuHandleCursorInput(
+            &g_Settings.buttonConfig[g_MenuNavigation.cursorButtons], 6, 5);
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
+            if (CheckIfAllButtonsAreAssigned()) {
+                PlaySfx(SFX_UI_CONFIRM);
+                MenuHide(MENU_DG_CFG_BUTTONS);
+                g_MenuStep = MENU_STEP_SYSTEM;
+            } else {
+            block_117:
+                func_800F9808(2);
+                switch (g_UserLanguage) {
+                default:
+                case LANG_EN:
+                    buttonAssignStr = "Allocate all button functions";
+                    break;
+                case LANG_FR:
+                    buttonAssignStr = "Attr. toutes les fonctions des touches";
+                    break;
+                case LANG_SP:
+                    buttonAssignStr = "Asigna las funciones de los botones";
+                    break;
+                case LANG_GE:
+                    buttonAssignStr = "Standard-Tastenbelegung";
+                    break;
+                case LANG_IT:
+                    buttonAssignStr = "Assegna tutte le funzioni tasto";
+                    break;
+                }
+                ShowText(buttonAssignStr, 2);
+                PlaySfx(SFX_UI_ERROR);
+            }
+        }
+        break;
+    case MENU_STEP_SYSTEM_CLOAK_LINING:
+        MenuHandleCursorInput(&g_Settings.isCloakLiningReversed, 2, 0);
+        if (!(g_pads[0].tapped & PAD_MENU_BACK_ALT)) {
+            break;
+        }
+        PlaySfx(SFX_UI_CONFIRM);
+        MenuHide(MENU_DG_CLOAK_LINING);
+        g_MenuStep = MENU_STEP_SYSTEM;
+        break;
+    case MENU_STEP_SYSTEM_CLOAK_COLOR:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorCloak, 6, 0);
+        MenuHandleCursorInput(
+            &g_Settings.cloakColors[g_MenuNavigation.cursorCloak], 32, 5);
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
+            PlaySfx(SFX_UI_CONFIRM);
+            func_800FAC0C(MENU_DG_CLOAK_COLOR);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_WINDOW_COLOR:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorWindowColors, 3, 0);
+        MenuHandleCursorInput(
+            &g_Settings.windowColors[g_MenuNavigation.cursorWindowColors], 16,
+            5);
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
+            PlaySfx(SFX_UI_CONFIRM);
+            MenuHide(MENU_DG_WINDOW_COLORS);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_SOUND:
+        MenuHandleCursorInput(&g_Settings.isSoundMono, 2, 0);
+        func_800E493C();
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
+            PlaySfx(SFX_UI_CONFIRM);
+            MenuHide(MENU_DG_CFG_SOUND);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_SYSTEM_TIME_ATTACK:
+        MenuHandleCursorInput(&g_MenuNavigation.cursorTimeAttack, 0x10, 3);
+        if (g_pads[0].tapped & PAD_MENU_BACK_ALT) {
+            PlaySfx(SFX_UI_CONFIRM);
+            MenuHide(MENU_DG_TIME_ATTACK);
+            g_MenuStep = MENU_STEP_SYSTEM;
+        }
+        break;
+    case MENU_STEP_RELIC_INIT:
+        func_800F9E18(1);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_RELIC_INIT_2:
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_RELICS);
+        func_800F9808(2);
+        id = g_MenuNavigation.cursorRelic;
+        if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            ShowText(g_RelicDefs[id].desc, 2);
+        }
+        func_800F9E18(2);
+        g_MenuStep++;
+        break;
+    case MENU_STEP_RELIC:
+        g_MenuData.menus[5].unk16 =
+            ((g_MenuNavigation.cursorRelic / 2) * -140) / 15;
+        var_s1 = g_MenuNavigation.cursorRelic;
+        MenuHandleCursorInput(
+            &g_MenuNavigation.cursorRelic, NUM_AVAIL_RELICS, 1);
+        id = g_MenuNavigation.cursorRelic;
+        if (g_pads[0].tapped & PAD_MENU_SELECT &&
+            g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            PlaySfx(SFX_UI_CONFIRM);
+            g_Status.relics[id] = g_Status.relics[id] ^ 2;
+            if (g_RelicDefs[id].unk0C > 0) {
+                for (i = 0; i < NUM_RELICS; i++) {
+                    if (i == id) {
+                        continue;
+                    }
+                    if (g_RelicDefs[i].unk0C <= 0) {
+                        continue;
+                    }
+                    g_Status.relics[i] &= ~RELIC_FLAG_ACTIVE;
+                }
+
+                if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
+                    i = ITEM_SWORD_FAMILIAR;
+                    g_Servant = g_RelicDefs[id].unk0C;
+                    func_8932E78(g_Servant - 1);
+                    if (g_Servant == FAM_ACTIVE_SWORD) {
+                        if (g_Status.equipment[LEFT_HAND_SLOT] == i) {
+                            g_Status.equipment[LEFT_HAND_SLOT] =
+                                ITEM_EMPTY_HAND;
+                            AddToInventory(i, 0);
+                        }
+                        if (g_Status.equipment[RIGHT_HAND_SLOT] == i) {
+                            g_Status.equipment[RIGHT_HAND_SLOT] =
+                                ITEM_EMPTY_HAND;
+                            AddToInventory(i, 0);
+                        }
+                    }
+                } else {
+                    g_Servant = FAM_ACTIVE_NONE;
+                }
+            }
+        }
+        if (var_s1 != id) {
+            func_800F9808(2);
+            if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+                ShowText(g_RelicDefs[id].desc, 2);
+            }
+        }
+
+        D_80137608 = 0;
+        if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
+            D_80137608 = 1;
+            LoadEquipIcon(g_RelicDefs[id].unk08, g_RelicDefs[id].unk0A, 0x1F);
+        }
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_RELICS);
+            D_80137608 = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+
+        break;
+    case MENU_STEP_SPELL_INIT:
+        MenuShow(MENU_DG_INFO_BAR);
+        MenuShow(MENU_DG_SPELLS);
+        func_800F9808(2);
+        func_800F9F40();
+        g_MenuStep++;
+        break;
+    case MENU_STEP_SPELL:
+        temp_s1 = g_MenuNavigation.cursorSpells;
+        MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC, 3);
+        if (1) {
+            func_800F9808(2);
+            id = g_Status.spells[g_MenuNavigation.cursorSpells];
+            id ^= SPELL_FLAG_KNOWN;
+            ShowText(g_SpellDefs[id].description, 2);
+        }
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuHide(MENU_DG_SPELLS);
+            g_MenuStep = MENU_STEP_OPENED;
+        }
+        break;
+    case MENU_STEP_UNK_32:
+        if (func_801025F4()) {
+            func_80102628(0x100);
+            SetStageDisplayBuffer();
+            func_800FAC48();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_33:
+        if (!g_IsUsingCd) {
+            g_GpuBuffers[1].draw.isbg = 0;
+            g_GpuBuffers[0].draw.isbg = 0;
+            func_801083BC();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_34:
+        func_800F5A90();
+        g_MenuStep++;
+        break;
+    case MENU_STEP_UNK_35:
+        func_800F5A90();
+        if (g_pads[0].tapped & (PAD_MENU_SELECT | PAD_MENU_BACK)) {
+            func_801073C0();
+            g_CdStep = CdStep_None;
+            SetGPUBuffRGBZero();
+            func_80102628(0x180);
+            SetMenuDisplayBuffer();
+            func_800FAC48();
+            g_MenuStep++;
+        }
+        break;
+    case MENU_STEP_UNK_36:
+        func_801027C4(2);
+        func_800F9808(2);
+        id = g_Status.spells[g_MenuNavigation.cursorSpells];
+        id ^= SPELL_FLAG_KNOWN;
+        ShowText(g_SpellDefs[id].description, 2);
+        func_800F9F40();
+        g_MenuStep++;
+        break;
+    case MENU_STEP_UNK_37:
+        if (func_801025F4() == 0) {
+            break;
+        }
+        g_MenuStep = MENU_STEP_SPELL;
+        break;
+    case MENU_STEP_EQUIP:
+        D_80137948 = 0;
+        func_800FB0FC();
+        var_s1 = g_MenuNavigation.cursorEquip;
+        MenuHandleCursorInput(&g_MenuNavigation.cursorEquip, NUM_ITEM_SLOTS, 0);
+        MenuEquipHandlePageScroll(1);
+        func_800FB0FC();
+        if (var_s1 != g_MenuNavigation.cursorEquip) {
+            func_800FADC0();
+        }
+        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
+            PlaySfx(SFX_UI_CONFIRM);
+            MenuShow(MENU_DG_EQUIP_SORT);
+            g_MenuStep = MENU_STEP_EQUIP_SORT;
+            g_EquipOrderType = 0;
+        } else if (g_pads[0].tapped & PAD_MENU_BACK) {
+            MenuHide(MENU_DG_EQUIP_OVERVIEW);
+            MenuHide(MENU_DG_EQUIP_SELECTOR);
+            MenuHide(MENU_DG_INFO_BAR);
+            MenuShow(MENU_DG_MAIN);
+            MenuShow(MENU_DG_BG);
+            *D_80137844 = 0;
+            *D_80137848 = 0;
+            D_80137608 = 0;
+            g_MenuStep = MENU_STEP_OPENED;
+        } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+            PlaySfx(SFX_UI_CONFIRM);
+        block_191:
+            func_800FB0FC();
+            if (g_MenuNavigation.cursorEquip < HEAD_SLOT) {
+                g_MenuStep = MENU_STEP_EQUIP_HAND_INIT;
+            } else {
+                g_MenuStep = MENU_STEP_EQUIP_ACC_INIT;
+            }
+        }
+        break;
+    case MENU_STEP_EQUIP_SORT:
+        func_800FB0FC();
+        MenuHandleCursorInput(&g_EquipOrderType, 11, 0);
+        MenuEquipHandlePageScroll(0);
+        if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
+            PlaySfx(SFX_UI_CONFIRM);
+            func_800FBAC4();
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+            g_MenuNavigation.cursorEquipType[0] = 0;
+            func_800FB0FC();
+        } else if (g_pads[0].tapped & PAD_MENU_BACK) {
+            MenuHide(MENU_DG_EQUIP_SORT);
+            g_MenuStep = MENU_STEP_EQUIP;
+        }
+        break;
+    case MENU_STEP_EQUIP_HAND_INIT:
+        equipId = g_Status.equipHandOrder[g_MenuNavigation.cursorEquipType[0]];
+        func_800FAEC4(
+            &g_MenuNavigation.cursorEquipType[0],
+            g_Status.equipHandCount[equipId], g_EquipDefs[equipId].description,
+            g_EquipDefs[equipId].icon, g_EquipDefs[equipId].iconPalette);
+        func_800FAF44(0);
+    case MENU_STEP_EQUIP_HAND:
+        if (g_MenuNavigation.cursorEquip == LEFT_HAND_SLOT) {
+            D_801375D0 = LEFT_HAND_SLOT;
+        } else {
+            D_801375D0 = RIGHT_HAND_SLOT;
+        }
+        i = func_800FB23C(
+            &g_MenuNavigation.cursorEquipType[0], g_Status.equipHandOrder,
+            g_Status.equipHandCount, &g_Status.equipment[D_801375D0]);
+        if (i == 2) {
+            equipId =
+                g_Status.equipHandOrder[g_MenuNavigation.cursorEquipType[0]];
+            func_800FAD34(
+                g_EquipDefs[equipId].description,
+                g_Status.equipHandCount[equipId], g_EquipDefs[equipId].icon,
+                g_EquipDefs[equipId].iconPalette);
+        } else if (i == 1) {
+            goto block_191;
+        }
+        break;
+    case MENU_STEP_EQUIP_ACC_INIT:
+        equipId =
+            g_Status.equipBodyOrder
+                [D_801375D8[g_MenuNavigation.cursorEquipType[1 + D_801375D4]]];
+        func_800FAEC4(
+            &g_MenuNavigation.cursorEquipType[D_801375D4] + 1,
+            g_Status.equipBodyCount[equipId],
+            g_AccessoryDefs[equipId].description, g_AccessoryDefs[equipId].icon,
+            g_AccessoryDefs[equipId].iconPalette);
+        func_800FAF44(1);
+    case MENU_STEP_EQUIP_ACC:
+        isSecondAccessory = g_MenuNavigation.cursorEquip;
+        isSecondAccessory = (isSecondAccessory == ACCESSORY_2_SLOT);
+        i = func_800FB23C(
+            &g_MenuNavigation.cursorEquipType[D_801375D4] + 1,
+            g_Status.equipBodyOrder, g_Status.equipBodyCount,
+            &g_Status.wornEquipment[D_801375D4 + isSecondAccessory]);
+        if (i == 2) {
+            equipId = g_Status.equipBodyOrder
+                          [D_801375D8[g_MenuNavigation
+                                          .cursorEquipType[1 + D_801375D4]]];
+            func_800FAD34(
+                g_AccessoryDefs[equipId].description,
+                g_Status.equipBodyCount[equipId], g_AccessoryDefs[equipId].icon,
+                g_AccessoryDefs[equipId].iconPalette);
+        } else if (i == 1) {
+            goto block_191;
+        }
+        break;
+    }
+    if (g_MenuStep >= MENU_STEP_OPENED || g_MenuStep == MENU_STEP_EXIT_BEGIN ||
+        g_MenuStep == MENU_STEP_EXIT_4) {
+        MenuDraw();
+        func_800F9690();
+        func_800F96F4();
+    }
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawHudSubweapon2);

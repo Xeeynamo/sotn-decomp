@@ -78,7 +78,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
                 break;
 
             case 1:
-                if (self->animFrameIdx == 5) {
+                if (self->pose == 5) {
                     self->step_s++;
                 }
                 break;
@@ -118,7 +118,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->step_s++;
         }
 
-        if (self->animFrameIdx >= 13) {
+        if (self->pose >= 13) {
             velocityX = self->velocityX;
             if (velocityX < 0) {
                 adjVelocityX = velocityX + 3;

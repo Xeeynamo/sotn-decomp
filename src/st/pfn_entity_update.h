@@ -3,6 +3,8 @@
 // NOTE: include this AFTER the stage entity is included
 // this is to ensure OVL_EXPORT is defined
 
+extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+
 #if defined(VERSION_PSP) || defined(VERSION_PC)
 
 extern PfnEntityUpdate* PfnEntityUpdates;
@@ -16,7 +18,6 @@ extern LayoutEntity** g_pStObjLayoutVertical;
 #define OBJ_LAYOUT_VERTICAL g_pStObjLayoutVertical
 #else
 
-extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 #define PfnEntityUpdates OVL_EXPORT(EntityUpdates)
 
 // A horizontally ordered array with head and tail sigils in the 1st field

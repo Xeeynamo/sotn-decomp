@@ -115,17 +115,17 @@ void EntityDhuron(Entity* self) {
         }
         if (!AnimateEntity(D_us_80182984, self)) {
             SetStep(3);
-            self->animFrameIdx = 6;
+            self->pose = 6;
         }
         UnkCollisionFunc2(D_us_80182964);
         self->velocityX -= self->velocityX / 16;
-        if (self->animFrameIdx == 5) {
+        if (self->pose == 5) {
             if (self->ext.dhuron.unk88) {
                 self->velocityX = FIX(3.0);
             } else {
                 self->velocityX = FIX(-3.0);
             }
-            if (!self->animFrameDuration) {
+            if (!self->poseTimer) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
         }
@@ -148,7 +148,7 @@ void EntityDhuron(Entity* self) {
                     SetSubStep(2);
                 }
             }
-            if (!self->animFrameDuration && self->animFrameIdx == 6) {
+            if (!self->poseTimer && self->pose == 6) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             }
             break;
@@ -168,7 +168,7 @@ void EntityDhuron(Entity* self) {
                 self->ext.dhuron.unk84 = 0x20;
                 self->step_s++;
             }
-            if (self->animFrameIdx == 10 && !self->animFrameDuration) {
+            if (self->pose == 10 && !self->poseTimer) {
                 PlaySfxPositional(SFX_THUNDER_B);
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -465,8 +465,8 @@ void func_us_801CC984(Entity* self) {
         self->unk5A = 0x4E;
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;
-        self->animFrameIdx = 0;
-        self->animFrameDuration = 0;
+        self->pose = 0;
+        self->poseTimer = 0;
         self->step = 3;
         break;
 

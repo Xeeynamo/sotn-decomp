@@ -30,8 +30,8 @@ static void EntityWeaponAttack(Entity* self) {
         attackButton = PAD_SQUARE;
     }
     if (!(attackButton & g_Player.padPressed) && (self->step < 3)) {
-        self->animFrameDuration = 0;
-        self->animFrameIdx = 0;
+        self->poseTimer = 0;
+        self->pose = 0;
         self->step = 3;
     }
     if (self->step != 4) {
@@ -75,7 +75,7 @@ static void EntityWeaponAttack(Entity* self) {
         /* fallthrough */
     case 1:
         self->ext.shield.anim = anim2 + 10;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             self->step++;
         }
         break;
@@ -108,20 +108,20 @@ static void EntityWeaponAttack(Entity* self) {
             /* fallthrough */
         case 26:
             anim1 += 2;
-            self->animFrameIdx = PLAYER.animFrameIdx;
+            self->pose = PLAYER.pose;
             break;
         default:
-            self->animFrameIdx = 0;
+            self->pose = 0;
             anim1 += anim2;
             break;
         }
         self->ext.shield.anim = anim1;
-        self->animFrameDuration = 2;
+        self->poseTimer = 2;
         break;
     case 3:
         g_Player.unk48 = 0;
         self->ext.shield.anim = anim2 + 12;
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

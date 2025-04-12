@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+static u8 unused[] = {6, 5, 6, 6, 6, 7, 6, 8, 6, 1, 0, 0};
 static u8 D_us_801831E0[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 0, 0};
 static s16 D_us_801831F4[] = {0, 3, 4, 3, 0, -3, -4, -3};
 static s16 D_us_80183204[] = {-16, -12, 0, 12, 16, 12, 0, -12};
+static u8 D_us_80183214[] = {2,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
+                             15, 2, 16, 2,  17, 2,  18, 2,  19, 2,  20, -1, 0};
 
 void func_us_801D4558(Entity* self) {
     Entity* tempEntity;
@@ -119,9 +122,6 @@ void func_us_801D4558(Entity* self) {
         }
     }
 }
-
-static u8 D_us_80183214[] = {2,  9, 2,  10, 2,  11, 2,  12, 2,  13, 2,  14, 2,
-                             15, 2, 16, 2,  17, 2,  18, 2,  19, 2,  20, -1, 0};
 
 void func_us_801D4950(Entity* self) {
     switch (self->step) {

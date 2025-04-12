@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no4.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", NO4_EntityBackgroundBlock);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityLockCamera);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C0FC8);
+INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityBreakable);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C123C);
 
@@ -62,7 +57,28 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5134);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5268);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C542C);
+extern s16 D_us_801815DC[]; // animCurFrame
+extern u16 D_us_801815EC[]; // facingLeft
+extern s16 D_us_801815FC[]; // rotZ
+extern s32 D_us_8018160C[]; // velocityY
+
+void func_us_801C542C(Entity* self) {
+    u16 params = self->params;
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = D_us_801815DC[params];
+        self->facingLeft = D_us_801815EC[params];
+        self->velocityY = D_us_8018160C[params];
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = false;
+    }
+    if (F(self->velocityY).i.hi < 8) {
+        F(self->velocityY).val += FIX(0.25);
+    }
+    MoveEntity();
+    self->rotZ += D_us_801815FC[params];
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5518);
 
@@ -80,7 +96,27 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5AD4);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5C7C);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C6CEC);
+void func_us_801C6CEC(Entity* self) {
+
+    Entity* prev = self - 1;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 0x1C;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->zPriority = 0x9A;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+    }
+    self->posX.i.hi = prev->posX.i.hi;
+    self->rotZ = prev->rotZ;
+    if (self->facingLeft != 0) {
+        self->posX.i.hi += 4;
+    } else {
+        self->posX.i.hi -= 4;
+    }
+    self->posY.i.hi = prev->posY.i.hi;
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C6DA8);
 
@@ -92,7 +128,21 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C789C);
 
 void func_us_801C7FA4(void) {}
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C7FAC);
+extern u16 D_us_801817E8;
+
+void func_us_801C7FAC(void) {
+    s32 i;
+    Tilemap* tileMap = &g_Tilemap;
+    s16 offset = 0x595;
+    u16* var_a2 = &D_us_801817E8;
+
+    for (i = 0; i < 7; i++) {
+        *(tileMap->fg + offset) = *var_a2++;
+        offset++;
+        *(tileMap->fg + offset) = *var_a2++;
+        offset = offset + 0xCF;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C801C);
 

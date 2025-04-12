@@ -37,6 +37,7 @@ SEG_TYPES: dict[tuple] = {
 # Shared source files seem to be an artifact in make that is no longer needed. Shared src files are now handled by includes in ovl src files.
 def get_config(args: argparse.Namespace) -> dict:
     """Uses the supplied parameters to retrieve and return a dict of config values with version and ovl added"""
+    config_dir = Path(CONFIG_BASE_DIR)
     config_pattern = re.compile(
         CONFIG_PATTERNS[args.config_type].substitute(version=args.version, ovl=args.ovl)
     )
@@ -45,7 +46,7 @@ def get_config(args: argparse.Namespace) -> dict:
     config_path = next(
         (
             file
-            for file in Path(CONFIG_BASE_DIR).iterdir()
+            for file in config_dir.iterdir()
             if config_pattern.match(file.name)
         ),
         None,
@@ -67,7 +68,7 @@ def get_config(args: argparse.Namespace) -> dict:
         return config
     else:  # Raise an exception if no config_path was found
         raise FileNotFoundError(
-            f"Could not find a {args.config_type} config for {args.version} {args.ovl} in {config_dir}"
+            f"Could not find a {args.config_type} config for {args.version} {args.ovl} in {config_dir}/"
         )
 
 
@@ -155,12 +156,12 @@ def get_asset_files(
     asset_path = Path(options["asset_path"])
 
     # Stages and bosses, excluding sel, use these as default glob patterns instead of *
-    if (
-        options["platform"] == "psx"
-        and ("st" in asset_path.parts or "boss" in asset_path.parts)
+    if (("st" in asset_path.parts or "boss" in asset_path.parts)
         and options["ovl"] != "sel"
     ):
-        asset_filters = tuple(["D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"])
+        asset_filters = tuple(("D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"))
+        if options["version"] == "pspeu":
+            asset_filters += tuple(("mwo_header.bin",))
 
     # The file listing is really the only one used currently because some asset segment files are built by splat extensions
     # and the resulting files aren't directly specified in the config

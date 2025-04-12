@@ -982,19 +982,19 @@ typedef struct {
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
     /* 0x8C */ struct Entity* parent;
-    /* 0x90 */ s16 childId;
+    /* 0x90 */ s16 newEntityId;
     /* 0x92 */ s16 unk92;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ s16 unk96;
-    /* 0x98 */ s16 unk98;
-    /* 0x9A */ s16 unk9A;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
-    /* 0xA0 */ s16 unkA0;
-    /* 0xA2 */ s16 unkA2;
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
+    /* 0x94 */ s16 amount;
+    /* 0x96 */ s16 nPerCycle;
+    /* 0x98 */ s16 tCycle;
+    /* 0x9A */ s16 delay;
+    /* 0x9C */ s16 kind;
+    /* 0x9E */ s16 isNonCritical;
+    /* 0xA0 */ s16 paramsBase;
+    /* 0xA2 */ s16 incParamsKind;
+    /* 0xA4 */ s16 origin;
+    /* 0xA6 */ s16 spawnIndex;
+    /* 0xA8 */ s16 entityIdMod;
     /* 0xAA */ s16 unkAA;
     /* 0xAC */ s16 unkAC;
     /* 0xAE */ s16 unkAE;
@@ -1433,8 +1433,8 @@ typedef struct {
     u8 unk90[4];
     u8 unk94[4];
     s32 unk98;
-    s32 unk9C;
-    u16 unkA0;
+    s32 velocity;
+    s16 angle;
     s16 unkA2;
     s32 : 32;
     s32 : 32;
@@ -1443,12 +1443,12 @@ typedef struct {
 } ET_SubwpnAxe;
 typedef struct {
     s16 timer;
-    u16 unk7E;
+    s16 unk7E;
     s16 unk80;
     s16 pad82;
-    s32 unk84;
-    s32 unk88;
-    u16 unk8C;
+    s32 x;
+    s32 y;
+    s16 facing;
 } ET_VibhutiCrash;
 typedef struct {
 #ifdef PLATFORM_64BIT
@@ -1821,8 +1821,8 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 unk7E;
-    /* 0x80 */ u8 unk80;
 } ET_DisableAfterImage;
 
 typedef struct {
@@ -2911,6 +2911,31 @@ typedef struct {
     /* 0x9C */ s16 unk9C;
 } ET_unkDoor;
 
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 unk82;
+    /* 0x83 */ u8 unk83;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 : 16;
+    /* 0x8A */ u16 unk8A;
+    /* 0x8C */ u32 unk8C;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ struct Primitive* unk94;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ u16 unk9C;
+    /* 0x9E */ u16 unk9E;
+    /* 0xA0 */ s16 unkA0;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 : 16;
+    /* 0xA8 */ u8 unkA8[8];
+} ET_801D96FC;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3163,6 +3188,7 @@ typedef union { // offset=0x7C
     ET_Clouds clouds;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
+    ET_801D96FC et_801D96FC;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -273,7 +273,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
@@ -289,7 +289,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+        if ((self->pose == 1) || (self->pose == 4)) {
             if (self->facingLeft == 0) {
                 self->velocityX -= 0x300;
             } else {
@@ -319,7 +319,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         animStatus = AnimateEntity(anim_walk, self);
-        if (self->animFrameDuration == 0) {
+        if (self->poseTimer == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (animStatus == 0) {
@@ -335,7 +335,7 @@ void EntityAxeKnight(Entity* self) {
             }
         }
 
-        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 4)) {
+        if ((self->pose == 1) || (self->pose == 4)) {
             if (self->facingLeft == 0) {
                 self->velocityX += 0x200;
             } else {
@@ -365,7 +365,7 @@ void EntityAxeKnight(Entity* self) {
                 SetStep(AXE_KNIGHT_WALK_TOWARDS_PLAYER);
                 self->ext.axeknight.unk7C = 0;
             }
-        } else if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+        } else if ((animStatus & 0x80) && (self->pose == 7)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
@@ -384,7 +384,7 @@ void EntityAxeKnight(Entity* self) {
     case AXE_KNIGHT_DUCKING_THROW:
         animStatus = AnimateEntity(anim_throw_duck, self);
         if (animStatus != 0) {
-            if ((animStatus & 0x80) && (self->animFrameIdx == 6)) {
+            if ((animStatus & 0x80) && (self->pose == 6)) {
                 PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
@@ -417,7 +417,7 @@ void EntityAxeKnight(Entity* self) {
             break;
         }
 
-        if ((animStatus & 0x80) && (self->animFrameIdx == 7)) {
+        if ((animStatus & 0x80) && (self->pose == 7)) {
             PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {

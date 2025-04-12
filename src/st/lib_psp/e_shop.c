@@ -14,7 +14,7 @@ extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u8* D_psp_092A54E0;
-extern s32 D_8B42058;
+extern s32 g_UserLanguage;
 
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
@@ -2141,7 +2141,7 @@ static u8* D_psp_092A5D38;
 static char D_us_80181650[4];
 
 void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (D_8B42058) {
+    switch (g_UserLanguage) {
     default:
     case LANG_EN:
         return en;
@@ -2649,14 +2649,14 @@ void EntityLibrarianChair(Entity* self) {
         if (g_pads[0].tapped & PAD_UP) {
             if (self->ext.libraryChair.debugAnimID) {
                 self->ext.libraryChair.debugAnimID--;
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
             }
         } else if (g_pads[0].tapped & PAD_DOWN) {
             if (self->ext.libraryChair.debugAnimID != 0x10) {
                 self->ext.libraryChair.debugAnimID++;
-                self->animFrameIdx = 0;
-                self->animFrameDuration = 0;
+                self->pose = 0;
+                self->poseTimer = 0;
             }
         }
         AnimateEntity(D_us_801812D8[self->ext.libraryChair.debugAnimID], self);
@@ -6606,8 +6606,8 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
-        prim = func_us_801B1064(prim, 0x84 - xOffset, ((i * 0x10) + 0x3C),
-                                D_psp_092A5F98[i], 0x196);
+        prim = func_us_801B1064(
+            prim, 0x84 - xOffset, (i * 0x10) + 0x3C, D_psp_092A5F98[i], 0x196);
     }
     prim = func_us_801B7D10(prim, enemyDef->strengths, 0x8C - xOffset, 0x44);
     prim = func_us_801B7D10(prim, enemyDef->immunes, 0x8C - xOffset, 0x54);
@@ -7351,12 +7351,12 @@ void func_psp_0926AED0(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_api.PlaySfx(SET_STOP_MUSIC);
-            self->animFrameDuration = 0x30;
+            self->poseTimer = 0x30;
             self->step_s++;
             break;
 
         case 1:
-            if (!--self->animFrameDuration) {
+            if (!--self->poseTimer) {
                 self->step_s++;
             }
             break;
@@ -7672,12 +7672,12 @@ void func_us_801B8A00(Entity* self) {
         case 0:
             g_api.PlaySfx(SET_STOP_MUSIC);
             self->ext.et_801B6F30.unk86 = 1;
-            self->animFrameDuration = 0x30;
+            self->poseTimer = 0x30;
             self->step_s++;
             break;
 
         case 1:
-            if (!--self->animFrameDuration) {
+            if (!--self->poseTimer) {
                 self->step_s++;
             }
             break;

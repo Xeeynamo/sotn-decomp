@@ -292,7 +292,7 @@ void RicEntityHitByDark(Entity* entity) {
         entity->posY.val += entity->velocityY;
         entity->rotX += 8;
         entity->rotY += 8;
-        if (entity->animFrameDuration < 0) {
+        if (entity->poseTimer < 0) {
             DestroyEntity(entity);
         }
         break;
@@ -338,9 +338,9 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void RicEntityShrinkingPowerUpRing(Entity* self);
 void func_80167A70(Entity* self);
-void RicEntitySubwpnAxe(Entity* self);
+void RicEntitySubwpnThrownAxe(Entity* self);
 void RicEntityCrashAxe(Entity* self);
-void RicEntitySubwpnDagger(Entity* self);
+void RicEntitySubwpnThrownDagger(Entity* self);
 void func_80160D2C(Entity* self);
 void RicEntityHitByIce(Entity* self);
 void RicEntityHitByLightning(Entity* self);
@@ -407,9 +407,9 @@ static PfnEntityUpdate entity_functions[] = {
     func_801641A0,
     RicEntityShrinkingPowerUpRing,
     func_80167A70,
-    RicEntitySubwpnAxe,
+    RicEntitySubwpnThrownAxe,
     RicEntityCrashAxe,
-    RicEntitySubwpnDagger,
+    RicEntitySubwpnThrownDagger,
     func_80160D2C,
     RicEntityHitByIce,
     RicEntityHitByLightning,
@@ -628,7 +628,7 @@ Entity* RicCreateEntFactoryFromEntity(
         entity->facingLeft = source->facingLeft;
         entity->zPriority = source->zPriority;
         entity->params = factoryParams & 0xFFF;
-        entity->ext.factory.unkA0 = (factoryParams >> 8) & 0xFF00;
+        entity->ext.factory.paramsBase = (factoryParams >> 8) & 0xFF00;
         if (source->flags & FLAG_UNK_10000) {
             entity->flags |= FLAG_UNK_10000;
         }

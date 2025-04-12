@@ -155,25 +155,25 @@ void EntityWarg(Entity* self) {
         xVar = self->ext.warg.unk84 - self->posX.i.hi - gTilemap->scrollX.i.hi;
         if (self->ext.warg.unk80) {
             self->ext.warg.unk80 -= 1;
-            self->animFrameDuration = 0;
+            self->poseTimer = 0;
             break;
         }
         if (!self->ext.warg.unk7C) {
             animResult = AnimateEntity(D_801830BC, self);
             if (!animResult || (animResult & 0x80)) {
-                animResult = self->animFrameIdx - 1;
+                animResult = self->pose - 1;
                 if (self->facingLeft) {
                     self->velocityX = D_8018328C[animResult];
                     if (xVar < -0x10) {
                         self->ext.warg.unk7C = 1;
-                        self->animFrameIdx = 7 - self->animFrameIdx;
+                        self->pose = 7 - self->pose;
                         self->ext.warg.unk80 = 0x10;
                     }
                 } else {
                     self->velocityX = -D_8018328C[animResult];
                     if (xVar > 0x10) {
                         self->ext.warg.unk7C = 1;
-                        self->animFrameIdx = 7 - self->animFrameIdx;
+                        self->pose = 7 - self->pose;
                         self->ext.warg.unk80 = 0x10;
                     }
                 }
@@ -181,19 +181,19 @@ void EntityWarg(Entity* self) {
         } else {
             animResult = AnimateEntity(D_801830DC, self);
             if (animResult != 1) {
-                animResult = self->animFrameIdx - 1;
+                animResult = self->pose - 1;
                 if (self->facingLeft) {
                     self->velocityX = -D_801832A4[animResult];
                     if (xVar > 0x10) {
                         self->ext.warg.unk7C = 0;
-                        self->animFrameIdx = 7 - self->animFrameIdx;
+                        self->pose = 7 - self->pose;
                         self->ext.warg.unk80 = 0x10;
                     }
                 } else {
                     self->velocityX = D_801832A4[animResult];
                     if (xVar < -0x10) {
                         self->ext.warg.unk7C = 0;
-                        self->animFrameIdx = 7 - self->animFrameIdx;
+                        self->pose = 7 - self->pose;
                         self->ext.warg.unk80 = 0x10;
                     }
                 }
@@ -248,7 +248,7 @@ void EntityWarg(Entity* self) {
                 otherEnt->attack = self->attack;
             }
 
-            if (animResult & 0x80 && self->animFrameIdx == 7) {
+            if (animResult & 0x80 && self->pose == 7) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(6.0);
                 } else {
@@ -553,8 +553,8 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->palette = 0xD0;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_UNK8;
-        entity->animFrameIdx = 0;
-        entity->animFrameDuration = 0;
+        entity->pose = 0;
+        entity->poseTimer = 0;
         entity->unk6C = 0x60;
         temp_v0 = entity->params & 0xFF00;
         if (temp_v0 != 0) {

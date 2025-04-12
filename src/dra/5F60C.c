@@ -735,7 +735,12 @@ RicSubwpnIconParams g_ricSubwpnIcons[] = {
 
 #if defined(VERSION_PSP)
 
-extern RicSubwpnIconParams D_psp_09147418[];
+RicSubwpnIconParams D_psp_09147418[] = {
+    {0x00C, 0x009, 0x010, 0x017, 0x098, 0x0D8, 0x01E, 0x17F},
+    {0x00C, 0x007, 0x00F, 0x017, 0x0D0, 0x0C0, 0x01E, 0x17F},
+    {0x005, 0x009, 0x01F, 0x017, 0x0E0, 0x0B0, 0x01E, 0x17F},
+    {0x005, 0x009, 0x01F, 0x017, 0x0E0, 0x0C8, 0x01E, 0x17F},
+    {0x004, 0x000, 0x01F, 0x01F, 0x0E0, 0x0E0, 0x01E, 0x17F}};
 
 // Appears that the data might have just been an array of s32.
 // But that's much harder to read. This macro takes the pointer
@@ -807,6 +812,8 @@ void func_psp_090E4968(Primitive* prim, s32 idx, s32 xOffset, s32 yOffset,
         prim->drawMode |= (DRAW_TPAGE | DRAW_TRANSP);
     }
 }
+
+s32 D_psp_091474B8 = -1;
 
 void func_psp_090E4C18(void) {
     if (D_psp_091474B8 < 0) {

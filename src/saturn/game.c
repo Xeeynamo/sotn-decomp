@@ -13,7 +13,31 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f60664E0, func_060664E0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60665BC, func_060665BC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60666A4, func_060666A4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066854, func_06066854);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60668D4, func_060668D4);
+
+#define FLAG_UNK_20000 0x20000
+#define STAGE_ENTITY_START 64
+#define TOTAL_ENTITY_COUNT 256
+
+void (*func_06064684)();
+
+// func_060668D4
+// similar to func_8011A9D8
+void func_8011A9D8(void) {
+    Entity* entity;
+    s32 i;
+
+    func_06064684();
+
+    entity = &g_Entities[STAGE_ENTITY_START];
+    for (i = STAGE_ENTITY_START; i < TOTAL_ENTITY_COUNT; i++, entity++) {
+        if (!(entity->flags & FLAG_UNK_20000)) {
+            DestroyEntity(entity);
+        }
+    }
+}
+
+INCLUDE_ASM("asm/saturn/game/data", d606692C, d_0606692C);
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066B30, func_06066B30);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066B74, func_06066B74);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066CE0, func_06066CE0);
@@ -887,15 +911,15 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
 void func_801C58A4(s32 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->poseTimer = 0;
 }
 
 // SAT: func_0607B240
 void func_801C58C4(s32 step_s) {
     g_CurrentEntity->step_s = step_s;
-    g_CurrentEntity->animFrameIdx = 0;
-    g_CurrentEntity->animFrameDuration = 0;
+    g_CurrentEntity->pose = 0;
+    g_CurrentEntity->poseTimer = 0;
 }
 
 // _teki_init

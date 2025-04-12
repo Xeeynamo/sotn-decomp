@@ -67,9 +67,9 @@ typedef enum EntityIDs {
     /* 0x50 */ E_SPEAR_GUARD_BLOCK,
     /* 0x52 */ E_ID_52 = 0x52,
     /* 0x53 */ E_SKELETON_APE,
-    /* 0x54 */ E_ID_54,
+    /* 0x54 */ E_SKELETON_APE_PUNCH,
     /* 0x55 */ E_SKELETON_APE_BARREL,
-    /* 0x56 */ E_ID_56,
+    /* 0x56 */ E_THROWN_BARREL,
     /* 0x57 */ E_ID_57,
     /* 0x58 */ E_THROWN_SPEAR,
     // /* 0x59 */ E_MEDUSA_HEAD_SPAWNER = 0x59,
@@ -122,7 +122,7 @@ extern EInit g_EInitSpearGuard;
 extern EInit g_EInitThrownSpear;
 extern EInit D_us_80180B18;
 extern EInit g_EInitSkeletonApe;
-extern EInit D_us_80180B30;
-extern EInit D_us_80180B3C;
+extern EInit g_EInitSkeletonApeBarrel;
+extern EInit g_EInitSkeletonApePunch;
 extern EInit g_EInitMedusaHeadBlue;
 extern EInit g_EInitMedusaHeadYellow;

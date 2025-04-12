@@ -19,11 +19,11 @@ void EntityGreyPuff(Entity* self) {
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
-        self->animFrameDuration++;
-        if (!(self->animFrameDuration % 2)) {
+        self->poseTimer++;
+        if (!(self->poseTimer % 2)) {
             self->animCurFrame++;
         }
-        if (self->animFrameDuration > 36) {
+        if (self->poseTimer > 36) {
             DestroyEntity(self);
         }
     }

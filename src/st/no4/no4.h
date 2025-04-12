@@ -28,6 +28,74 @@ typedef enum EntityIDs {
     // /* 0x13 */ E_ID_13,
     /* 0x14 */ E_ID_14 = 0x14,
     /* 0x15 */ E_GREY_PUFF,
+    // /* 0x16 */ E_ID_16,
+    /* 0x17 */ E_SPLASH_WATER = 0x17,
+    /* 0x18 */ E_SURFACING_WATER,
+    /* 0x19 */ E_SIDE_WATER_SPLASH,
+    // /* 0x1A */ E_ID_1A,
+    /* 0x1B */ E_WATER_DROP = 0x1B,
+    // /* 0x1C */ E_ID_1C,
+    // /* 0x1D */ E_ID_1D,
+    // /* 0x1E */ E_ID_1E,
+    // /* 0x1F */ E_ID_1F,
+    // /* 0x20 */ E_ID_20,
+    // /* 0x21 */ E_ID_21,
+    // /* 0x22 */ E_ID_22,
+    // /* 0x23 */ E_ID_23,
+    // /* 0x24 */ E_ID_24,
+    // /* 0x25 */ E_ID_25,
+    // /* 0x26 */ E_ID_26,
+    // /* 0x27 */ E_ID_27,
+    // /* 0x28 */ E_ID_28,
+    // /* 0x29 */ E_ID_29,
+    // /* 0x2A */ E_ID_2A,
+    // /* 0x2B */ E_ID_2B,
+    // /* 0x2C */ E_ID_2C,
+    // /* 0x2D */ E_ID_2D,
+    // /* 0x2E */ E_ID_2E,
+    // /* 0x2F */ E_ID_2F,
+    // /* 0x30 */ E_ID_30,
+    // /* 0x31 */ E_ID_31,
+    // /* 0x32 */ E_ID_32,
+    // /* 0x33 */ E_ID_33,
+    // /* 0x34 */ E_ID_34,
+    // /* 0x35 */ E_ID_35,
+    // /* 0x36 */ E_ID_36,
+    // /* 0x37 */ E_ID_37,
+    // /* 0x38 */ E_ID_38,
+    // /* 0x39 */ E_ID_39,
+    /* 0x3A */ E_UNK_NO4_SPEAR_GUARD = 0x3A,
+    /* 0x3B */ E_SPEAR_GUARD_BLOCK,
+    // /* 0x3C */ E_ID_3C,
+    // /* 0x3D */ E_ID_3D,
+    // /* 0x3E */ E_ID_3E,
+    // /* 0x3F */ E_ID_3F,
+    // /* 0x40 */ E_ID_40,
+    // /* 0x41 */ E_ID_41,
+    // /* 0x42 */ E_ID_42,
+    // /* 0x43 */ E_ID_43,
+    // /* 0x44 */ E_ID_44,
+    // /* 0x45 */ E_ID_45,
+    /* 0x46 */ E_ID_46 = 0x46,
+    /* 0x47 */ E_ID_47,
+    // /* 0x48 */ E_ID_48,
+    // /* 0x49 */ E_ID_49,
+    /* 0x4A */ E_SPEAR_GUARD = 0x4A,
+    /* 0x4B */ E_THROWN_SPEAR,
+    /* 0x4C */ E_BONE_ARCHER,
+    /* 0x4D */ E_BONE_ARCHER_ARROW,
+    // /* 0x4E */ E_ID_4E,
+    // /* 0x4F */ E_ID_4F,
+    // /* 0x50 */ E_ID_50,
+    // /* 0x51 */ E_ID_51,
+    // /* 0x52 */ E_ID_52,
+    // /* 0x53 */ E_ID_53,
+    // /* 0x54 */ E_ID_54,
+    // /* 0x55 */ E_ID_55,
+    /* 0x56 */ E_SKELETON_APE = 0x56,
+    /* 0x57 */ E_SKELETON_APE_PUNCH,
+    /* 0x58 */ E_SKELETON_APE_BARREL,
+    /* 0x59 */ E_THROWN_BARREL,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -36,7 +104,7 @@ extern void EntityGreyPuff(Entity* entity);
 // extern EInit D_us_80180B8C;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-// extern EInit D_us_80180BB0;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 // extern EInit D_us_80180BD4;
@@ -47,21 +115,21 @@ extern EInit g_EInitCommon;
 // extern EInit D_us_80180C10;
 // extern EInit D_us_80180C1C;
 // extern EInit D_us_80180C28;
-// extern EInit D_us_80180C34;
+extern EInit g_EInitUnkId3F;
 // extern EInit D_us_80180C40;
 // extern EInit D_us_80180C4C;
 // extern EInit D_us_80180C58;
-// extern EInit D_us_80180C64;
+extern EInit D_us_80180C64;
 // extern EInit D_us_80180C70;
 // extern EInit D_us_80180C7C;
-// extern EInit D_us_80180C88;
-// extern EInit D_us_80180C94;
-// extern EInit D_us_80180CA0;
-// extern EInit D_us_80180CAC;
+extern EInit g_EInitSpearGuard;
+extern EInit g_EInitThrownSpear;
+extern EInit g_EInitBoneArcher;
+extern EInit g_EInitBoneArcherArrow;
 // extern EInit D_us_80180CB8;
-// extern EInit D_us_80180CC4;
-// extern EInit D_us_80180CD0;
-// extern EInit D_us_80180CDC;
+extern EInit g_EInitSkeletonApe;
+extern EInit g_EInitSkeletonApeBarrel;
+extern EInit g_EInitSkeletonApePunch;
 // extern EInit D_us_80180CE8;
 
 extern s16 D_us_801DF788;

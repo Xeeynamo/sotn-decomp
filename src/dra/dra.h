@@ -312,6 +312,8 @@ extern Lba g_StagesLba[80];
 extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
 #if defined(VERSION_PSP)
+extern char** g_SaveAreaNamesSecondPart;
+extern char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
 extern char** g_MenuStr;

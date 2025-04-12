@@ -4,42 +4,41 @@ u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
     s32 ret;
 
     ret = 0;
-    if (self->animFrameDuration == -1) {
+    if (self->poseTimer == -1) {
         ret = -1;
-    } else if (self->animFrameDuration == 0) {
-        self->animFrameDuration = self->anim[self->animFrameIdx].duration;
-    } else if (--self->animFrameDuration == 0) {
-        self->animFrameIdx++;
-        animFrame = &self->anim[self->animFrameIdx];
+    } else if (self->poseTimer == 0) {
+        self->poseTimer = self->anim[self->pose].duration;
+    } else if (--self->poseTimer == 0) {
+        self->pose++;
+        animFrame = &self->anim[self->pose];
         // Effectively a switch statement, but breaks if I actually use one.
         if (animFrame->duration == 0) {
-            self->animFrameIdx = animFrame->unk2;
-            self->animFrameDuration = self->anim[self->animFrameIdx].duration;
+            self->pose = animFrame->unk2;
+            self->poseTimer = self->anim[self->pose].duration;
             ret = 0;
         } else if (animFrame->duration == 0xFFFF) {
-            self->animFrameIdx--;
-            self->animFrameDuration = -1;
+            self->pose--;
+            self->poseTimer = -1;
             ret = -1;
         } else if (animFrame->duration == 0xFFFE) {
             self->anim = frames[animFrame->unk2];
-            self->animFrameIdx = 0;
+            self->pose = 0;
             ret = -2;
-            self->animFrameDuration = self->anim->duration;
+            self->poseTimer = self->anim->duration;
         } else {
-            self->animFrameDuration = animFrame->duration;
+            self->poseTimer = animFrame->duration;
         }
     }
     if (frameProps != NULL) {
         // This is ugly - theoretically the type for frameProps should be
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
-        frameProps =
-            &frameProps[(self->anim[self->animFrameIdx].unk2 >> 9) << 2];
+        frameProps = &frameProps[(self->anim[self->pose].unk2 >> 9) << 2];
         self->hitboxOffX = *frameProps++;
         self->hitboxOffY = *frameProps++;
         self->hitboxWidth = *frameProps++;
         self->hitboxHeight = *frameProps++;
     }
-    self->animCurFrame = self->anim[self->animFrameIdx].unk2 & 0x1FF;
+    self->animCurFrame = self->anim[self->pose].unk2 & 0x1FF;
     return ret;
 }

@@ -78,15 +78,14 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
     }
     self->ext.weapon.anim = PLAYER.ext.player.anim - anim->frameStart;
-    if (PLAYER.animFrameDuration == 1 &&
-        PLAYER.animFrameIdx == anim->soundFrame) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
     if (g_api.UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
         return;
     }
-    if (PLAYER.animFrameDuration == 1 && PLAYER.animFrameIdx == 3) {
+    if (PLAYER.poseTimer == 1 && PLAYER.pose == 3) {
         flag = 1;
     }
     self->drawFlags = PLAYER.drawFlags;
@@ -169,7 +168,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15.0 / 32.0));
-        if (PLAYER.animFrameIdx == 5 && PLAYER.animFrameDuration == 1) {
+        if (PLAYER.pose == 5 && PLAYER.poseTimer == 1) {
             self->facingLeft++;
             self->facingLeft &= 1;
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(62, 0), 0);
@@ -180,7 +179,7 @@ s32 func_ptr_80170004(Entity* self) {
     case 2:
         self->drawMode = DRAW_DEFAULT;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
-        if (PLAYER.animFrameIdx == 0xE) {
+        if (PLAYER.pose == 0xE) {
             self->facingLeft++;
             self->facingLeft &= 1;
             SetSpeedX(FIX(-13.0));
@@ -195,7 +194,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(15.0 / 32.0));
-        if (PLAYER.animFrameIdx == 19) {
+        if (PLAYER.pose == 19) {
             DestroyEntity(self);
             return;
         }
@@ -231,7 +230,7 @@ static void func_ptr_80170008(Entity* self) {
         self->hitboxWidth = 0x23;
         self->step++;
     } else {
-        if ((self->animFrameIdx == 1) || (self->animFrameIdx == 0xB)) {
+        if ((self->pose == 1) || (self->pose == 0xB)) {
             g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
         }
         if ((u16)self->animCurFrame - 0x24U < 6) {
@@ -239,7 +238,7 @@ static void func_ptr_80170008(Entity* self) {
         } else {
             self->hitboxHeight = 0;
         }
-        if (self->animFrameDuration < 0) {
+        if (self->poseTimer < 0) {
             DestroyEntity(self);
             return;
         }

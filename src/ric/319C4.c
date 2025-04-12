@@ -9,10 +9,13 @@
 // entity spawned from the rebound stone crash.
 static s32 angles_80155EE0[] = {0x00000F80, 0x00000100, 0x00000700, 0x00000880};
 void func_8016D9C4(Entity* self) {
-    Primitive* prim;
-    PrimLineG2* primLine;
+    PrimLineG2* prim;
+    Primitive* prim2;
     s32 i;
-    s32 angleChange;
+    long angle;
+    s32 var_s6;
+    s32 var_s5;
+    s32 var_s7;
     s32 brightness;
 
     switch (self->step) {
@@ -23,49 +26,48 @@ void func_8016D9C4(Entity* self) {
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        primLine = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+        prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         for (i = 0; i < 4; i++) {
-            primLine->preciseX.val = PLAYER.posX.val;
-            primLine->preciseY.val = PLAYER.posY.val - FIX(40);
-            primLine->priority = 194;
-            primLine->drawMode = DRAW_HIDE;
-            primLine->x0 = primLine->x1 = PLAYER.posX.i.hi;
-            primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
-            primLine->r0 = primLine->g0 = primLine->b0 = 0x80;
-            primLine->r1 = primLine->g1 = primLine->b1 = 0x70;
-            primLine->angle = angles_80155EE0[i];
-            primLine->delay = 1;
-            primLine = (PrimLineG2*)primLine->next;
+            prim->preciseX.val = PLAYER.posX.val;
+            prim->preciseY.val = PLAYER.posY.val - FIX(40);
+            prim->priority = 194;
+            prim->drawMode = DRAW_HIDE;
+            prim->x0 = prim->x1 = PLAYER.posX.i.hi;
+            prim->y0 = prim->y1 = PLAYER.posY.i.hi - 0x1C;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            prim->r1 = prim->g1 = prim->b1 = 0x70;
+            prim->angle = angles_80155EE0[i];
+            prim->delay = 1;
+            prim = (PrimLineG2*)prim->next;
         }
         for (brightness = 0x80; i < 20; i++) {
-            if ((i & 3) == 0) {
+            if (!(i % 4)) {
                 brightness -= 0x10;
                 switch (i / 4) {
                 case 1:
-                    self->ext.et_8016D9C4.lines[0] = primLine;
+                    self->ext.et_8016D9C4.lines[0] = prim;
                     break;
                 case 2:
-                    self->ext.et_8016D9C4.lines[1] = primLine;
+                    self->ext.et_8016D9C4.lines[1] = prim;
                     break;
                 case 3:
-                    self->ext.et_8016D9C4.lines[2] = primLine;
+                    self->ext.et_8016D9C4.lines[2] = prim;
                     break;
                 case 4:
-                    self->ext.et_8016D9C4.lines[3] = primLine;
+                    self->ext.et_8016D9C4.lines[3] = prim;
                     break;
                 }
             }
-            primLine->priority = 0xC2;
-            primLine->drawMode = DRAW_HIDE;
-            primLine->x0 = primLine->x1 = PLAYER.posX.i.hi;
-            primLine->y0 = primLine->y1 = PLAYER.posY.i.hi - 0x1C;
-            primLine->r0 = primLine->g0 = primLine->b0 = brightness;
-            primLine->r1 = primLine->g1 = primLine->b1 = brightness - 0x10;
-            primLine = (PrimLineG2*)primLine->next;
+            prim->priority = 0xC2;
+            prim->drawMode = DRAW_HIDE;
+            prim->x0 = prim->x1 = PLAYER.posX.i.hi;
+            prim->y0 = prim->y1 = PLAYER.posY.i.hi - 0x1C;
+            prim->r0 = prim->g0 = prim->b0 = brightness;
+            prim->r1 = prim->g1 = prim->b1 = brightness - 0x10;
+            prim = (PrimLineG2*)prim->next;
         }
         self->ext.et_8016D9C4.unk90 = 4;
-        self->ext.et_8016D9C4.unk8E = 0;
-        self->ext.et_8016D9C4.unk8C = 0;
+        self->ext.et_8016D9C4.unk8C = self->ext.et_8016D9C4.unk8E = 0;
         g_api.PlaySfx(SFX_RIC_RSTONE_TINK);
         self->step++;
         break;
@@ -73,96 +75,106 @@ void func_8016D9C4(Entity* self) {
         self->ext.et_8016D9C4.unk8E = 1;
         switch (self->ext.et_8016D9C4.unk8C) {
         case 0:
-            primLine = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+            prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
             break;
         case 1:
-            primLine = self->ext.et_8016D9C4.lines[0];
+            prim = self->ext.et_8016D9C4.lines[0];
             break;
         case 2:
-            primLine = self->ext.et_8016D9C4.lines[1];
+            prim = self->ext.et_8016D9C4.lines[1];
             break;
         case 3:
-            primLine = self->ext.et_8016D9C4.lines[2];
+            prim = self->ext.et_8016D9C4.lines[2];
             break;
         case 4:
-            primLine = self->ext.et_8016D9C4.lines[3];
+            prim = self->ext.et_8016D9C4.lines[3];
             break;
         }
         for (i = 0; i < 4; i++) {
-            primLine->drawMode &= ~DRAW_HIDE;
-            primLine = (PrimLineG2*)primLine->next;
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = (PrimLineG2*)prim->next;
         }
-        if (++self->ext.et_8016D9C4.unk8C >= 5) {
+        self->ext.et_8016D9C4.unk8C++;
+        if (self->ext.et_8016D9C4.unk8C > 4) {
             self->step++;
         }
         break;
     case 2:
-        if (self->ext.et_8016D9C4.unk90 == 0) {
+        if (!self->ext.et_8016D9C4.unk90) {
             self->step++;
             break;
         }
         break;
     case 3:
-        if (++self->ext.et_8016D9C4.unk90 >= 5) {
+        self->ext.et_8016D9C4.unk90++;
+        if (self->ext.et_8016D9C4.unk90 > 4) {
             DestroyEntity(self);
             return;
         }
         break;
     }
-    if (self->ext.et_8016D9C4.unk8E == 0) {
+    if (!self->ext.et_8016D9C4.unk8E) {
         return;
     }
-    primLine = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+    prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
     for (i = 0; i < 4; i++) {
-        if (primLine->delay != 0) {
-            primLine->x1 = primLine->x0;
-            primLine->y1 = primLine->y0;
-            primLine->x0 = primLine->preciseX.i.hi;
-            primLine->y0 = primLine->preciseY.i.hi;
-            angleChange =
-                primLine->angle - (ratan2(primLine->preciseY.val,
-                                          FIX(128) - primLine->preciseX.val) &
-                                   0xFFF);
-            if (abs(angleChange) > 0x800) {
-                if (angleChange < 0) {
-                    angleChange += 0x1000;
+        if (prim->delay) {
+            prim->x1 = prim->x0;
+            prim->y1 = prim->y0;
+            prim->x0 = prim->preciseX.i.hi;
+            prim->y0 = prim->preciseY.i.hi;
+            var_s7 = ratan2(prim->preciseY.val, FIX(128) - prim->preciseX.val) &
+                     0xFFF;
+            angle = prim->angle - var_s7;
+            if (labs(angle) > 0x800) {
+                if (angle < 0) {
+                    angle += 0x1000;
                 } else {
-                    angleChange -= 0x1000;
+                    angle -= 0x1000;
                 }
             }
-            if (angleChange >= 0) {
-                if (angleChange >= 0x81) {
-                    angleChange = 0x80;
+            if (angle >= 0) {
+                if (angle > 0x80) {
+                    var_s6 = 0x80;
+                } else {
+                    var_s6 = angle;
                 }
-            } else if (angleChange < -0x80) {
-                angleChange = -0x80;
+                angle = var_s6;
+            } else {
+                if (angle < -0x80) {
+                    var_s5 = -0x80;
+                } else {
+                    var_s5 = angle;
+                }
+                angle = var_s5;
             }
-            primLine->angle = (primLine->angle - angleChange) & 0xFFF;
-            primLine->velocityX.val = (rcos(primLine->angle) << 8);
-            primLine->velocityY.val = -(rsin(primLine->angle) << 8);
-            primLine->preciseX.val += primLine->velocityX.val;
-            primLine->preciseY.val += primLine->velocityY.val;
-            self->posX.i.hi = primLine->preciseX.i.hi;
-            self->posY.i.hi = primLine->preciseY.i.hi;
+            prim->angle = prim->angle - angle;
+            prim->angle &= 0xFFF;
+            prim->velocityX.val = (rcos(prim->angle) << 4 << 4);
+            prim->velocityY.val = -(rsin(prim->angle) << 4 << 4);
+            prim->preciseX.val += prim->velocityX.val;
+            prim->preciseY.val += prim->velocityY.val;
+            self->posX.i.hi = prim->preciseX.i.hi;
+            self->posY.i.hi = prim->preciseY.i.hi;
             RicCreateEntFactoryFromEntity(
                 self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
-            if (primLine->preciseY.val < 0) {
-                primLine->delay = 0;
-                primLine->drawMode |= DRAW_HIDE;
+            if (prim->preciseY.val < 0) {
+                prim->delay = 0;
+                prim->drawMode |= DRAW_HIDE;
                 self->ext.et_8016D9C4.unk90--;
             }
         }
-        primLine = (PrimLineG2*)primLine->next;
+        prim = (PrimLineG2*)prim->next;
     }
-    primLine = self->ext.et_8016D9C4.lines[0];
-    prim = &g_PrimBuf[self->primIndex];
+    prim = self->ext.et_8016D9C4.lines[0];
+    prim2 = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 16; i++) {
-        primLine->x1 = primLine->x0;
-        primLine->y1 = primLine->y0;
-        primLine->x0 = prim->x1;
-        primLine->y0 = prim->y1;
-        primLine = (PrimLineG2*)primLine->next;
-        prim = prim->next;
+        prim->x1 = prim->x0;
+        prim->y1 = prim->y0;
+        prim->x0 = prim2->x1;
+        prim->y0 = prim2->y1;
+        prim = (PrimLineG2*)prim->next;
+        prim2 = prim2->next;
     }
 }
 
@@ -180,7 +192,6 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
-
         for (i = 0; i < 0x10; i++) {
             prim->priority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -190,9 +201,9 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
             prim = prim->next;
         }
         self->ext.reboundStoneCrashExplosion.unk7C = 0x40;
-        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
         self->ext.reboundStoneCrashExplosion.unk7E = 0;
         self->ext.reboundStoneCrashExplosion.unk84 = 0;
+        self->ext.reboundStoneCrashExplosion.unk80 = 0x10;
         self->ext.reboundStoneCrashExplosion.unk82 = 8;
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
         self->step++;
@@ -211,7 +222,8 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         break;
     case 2:
-        if (++self->ext.reboundStoneCrashExplosion.unk86 == 5) {
+        self->ext.reboundStoneCrashExplosion.unk86++;
+        if (self->ext.reboundStoneCrashExplosion.unk86 == 5) {
             self->ext.reboundStoneCrashExplosion.unk80 = -0x18;
         } else if (self->ext.reboundStoneCrashExplosion.unk86 >= 0xF) {
             self->ext.reboundStoneCrashExplosion.unk82 = -0x18;
@@ -226,21 +238,21 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
     }
     self->ext.reboundStoneCrashExplosion.unk7C +=
         self->ext.reboundStoneCrashExplosion.unk80;
-    if (self->ext.reboundStoneCrashExplosion.unk7C >= 0x100) {
+    if (self->ext.reboundStoneCrashExplosion.unk7C > 0xFF) {
         self->ext.reboundStoneCrashExplosion.unk7C = 0xFF;
         self->ext.reboundStoneCrashExplosion.unk80 = 0;
     } else if (self->ext.reboundStoneCrashExplosion.unk7C < 0) {
-        self->ext.reboundStoneCrashExplosion.unk80 = 0;
-        self->ext.reboundStoneCrashExplosion.unk7C = 0;
+        self->ext.reboundStoneCrashExplosion.unk7C =
+            self->ext.reboundStoneCrashExplosion.unk80 = 0;
     }
     self->ext.reboundStoneCrashExplosion.unk7E +=
         self->ext.reboundStoneCrashExplosion.unk82;
-    if (self->ext.reboundStoneCrashExplosion.unk7E >= 0x100) {
+    if (self->ext.reboundStoneCrashExplosion.unk7E > 0xFF) {
         self->ext.reboundStoneCrashExplosion.unk7E = 0xFF;
         self->ext.reboundStoneCrashExplosion.unk82 = 0;
     } else if (self->ext.reboundStoneCrashExplosion.unk7E < 0) {
-        self->ext.reboundStoneCrashExplosion.unk82 = 0;
-        self->ext.reboundStoneCrashExplosion.unk7E = 0;
+        self->ext.reboundStoneCrashExplosion.unk7E =
+            self->ext.reboundStoneCrashExplosion.unk82 = 0;
         self->step += 1;
     }
     prim = &g_PrimBuf[self->primIndex];
@@ -251,7 +263,7 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
             self->ext.reboundStoneCrashExplosion.unk7C;
         prim->r2 = prim->r3 = prim->g2 = prim->g3 =
             self->ext.reboundStoneCrashExplosion.unk7E;
-        if (self->step < 2U) {
+        if (self->step < 2) {
             prim->x2 =
                 ((rcos(i << 7) * self->ext.reboundStoneCrashExplosion.unk84) >>
                  0xC) +
@@ -269,40 +281,38 @@ void RicEntityCrashReboundStoneExplosion(Entity* self) {
         }
         prim = prim->next;
     }
-    return;
 }
 
 void RicEntityCrashReboundStone(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->ext.timer.t = 0x14;
         entity->step++;
-
+        entity->ext.timer.t = 0x14;
+        // fallthrough
     case 1:
-        entity->ext.timer.t--;
-        if ((entity->ext.timer.t) == 0) {
-        case 3:
-        case 5:
-            RicCreateEntFactoryFromEntity(entity, BP_57, 0);
+        if (--entity->ext.timer.t) {
+            break;
+        }
+    case 3:
+    case 5:
+        RicCreateEntFactoryFromEntity(entity, BP_57, 0);
+        entity->step++;
+    case 2:
+    case 4:
+    case 6:
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t > 10) {
+            entity->ext.timer.t = 0;
+            entity->posX.val = FIX(128.0);
+            entity->posY.val = 0;
+            RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
             entity->step++;
-        case 2:
-        case 4:
-        case 6:
-            entity->ext.timer.t++;
-            if (entity->ext.timer.t >= 11) {
-                entity->ext.timer.t = 0;
-                entity->posX.val = FIX(128.0);
-                entity->posY.val = 0;
-                RicCreateEntFactoryFromEntity(entity, FACTORY(BP_EMBERS, 1), 0);
-                entity->step++;
-            }
         }
         break;
-
     case 7:
         entity->ext.timer.t++;
-        if (entity->ext.timer.t >= 16) {
+        if (entity->ext.timer.t > 15) {
             DestroyEntity(entity);
             g_Player.unk4E = 1;
             RicCreateEntFactoryFromEntity(
@@ -313,17 +323,19 @@ void RicEntityCrashReboundStone(Entity* entity) {
 }
 
 #define BIBLE_PAGE_COUNT 6
+#if defined(VERSION_PSP)
+extern Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#else
 static Point16 bible_pages_pos[BIBLE_PAGE_COUNT];
+#endif
 void RicEntityCrashBibleBeam(Entity* self) {
     Primitive* prim;
-    s16 var_s7;
-    s16 hitboxOffX;
-    s32 temp_s0;
-    s32 temp_s0_2;
-    s32 halfwidth;
-    s32 var_s3;
     s32 i;
-    s32 temp_v1;
+    s32 var_s3;
+    s32 psp_s3;
+    s32 halfwidth;
+    s32 hitboxOffX;
+    s16 var_s7;
 
     switch (self->step) {
     case 0:
@@ -345,20 +357,22 @@ void RicEntityCrashBibleBeam(Entity* self) {
         for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             var_s3 = i + 2;
             if (var_s3 >= BIBLE_PAGE_COUNT) {
-                var_s3 = i - 4;
+                var_s3 -= 6;
             }
             prim->x0 = prim->x1 = bible_pages_pos[i].x;
             prim->y0 = prim->y1 = bible_pages_pos[i].y;
             prim->x2 = prim->x3 = bible_pages_pos[var_s3].x;
             prim->y2 = prim->y3 = bible_pages_pos[var_s3].y;
             prim->priority = 0xC2;
-            prim->blendMode = 0x435;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
         }
         self->step++;
         break;
     case 1:
-        if (++self->ext.bibleBeam.unk80 >= 0x3C) {
+        self->ext.bibleBeam.unk80++;
+        if (self->ext.bibleBeam.unk80 >= 0x3C) {
             self->ext.bibleBeam.subweaponId = PL_W_BIBLE_BEAM;
             RicSetSubweaponParams(self);
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
@@ -375,31 +389,34 @@ void RicEntityCrashBibleBeam(Entity* self) {
         }
         break;
     case 3:
-        if (++self->ext.bibleBeam.unk80 >= 0x78) {
+        self->ext.bibleBeam.unk80++;
+        if (self->ext.bibleBeam.unk80 >= 0x78) {
             DestroyEntity(self);
             return;
         }
         break;
     }
-    var_s7 = 0;
     prim = &g_PrimBuf[self->primIndex];
+    var_s7 = 0; // @bug: this is never unused
     for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
         var_s3 = i + 2;
         if (var_s3 >= BIBLE_PAGE_COUNT) {
-            var_s3 = i - 4;
+            var_s3 -= 6;
         }
-        temp_v1 = (rsin((self->ext.bibleBeam.unk80 * 20) + (i << 8)) * 96);
-        prim->r0 = prim->r1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (i << 8)) * 96;
-        prim->g0 = prim->g1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (i << 8)) * 96;
-        prim->b0 = prim->b1 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 15) + (var_s3 << 8)) * 96;
-        prim->r2 = prim->r3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 10) + (var_s3 << 8)) * 96;
-        prim->g2 = prim->g3 = abs(temp_v1 >> 0xc);
-        temp_v1 = rsin((self->ext.bibleBeam.unk80 * 20) + (var_s3 << 8)) * 96;
-        prim->b2 = prim->b3 = abs(temp_v1 >> 0xc);
+        psp_s3 = i * 256;
+        prim->r0 = prim->r1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 20) + psp_s3) * 96) >> 0xc);
+        prim->g0 = prim->g1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 15) + psp_s3) * 96) >> 0xc);
+        prim->b0 = prim->b1 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 10) + psp_s3) * 96) >> 0xc);
+        psp_s3 = var_s3 * 256;
+        prim->r2 = prim->r3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 15) + psp_s3) * 96) >> 0xc);
+        prim->g2 = prim->g3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 10) + psp_s3) * 96) >> 0xc);
+        prim->b2 = prim->b3 =
+            abs((rsin((self->ext.bibleBeam.unk80 * 20) + psp_s3) * 96) >> 0xc);
         prim->x1 = bible_pages_pos[i].x;
         prim->y0 = prim->y1 = bible_pages_pos[i].y;
         prim->x3 = bible_pages_pos[var_s3].x;
@@ -411,29 +428,35 @@ void RicEntityCrashBibleBeam(Entity* self) {
         }
         prim = prim->next;
     }
-    halfwidth = self->ext.bibleBeam.unk7E / 2;
-    hitboxOffX = !self->facingLeft ? halfwidth : -halfwidth;
-    self->hitboxOffX = hitboxOffX;
-    self->hitboxWidth = abs(hitboxOffX);
+    self->hitboxOffX = self->facingLeft ? -(self->ext.bibleBeam.unk7E / 2)
+                                        : (self->ext.bibleBeam.unk7E / 2);
+    self->hitboxWidth = abs(self->hitboxOffX);
     self->hitboxHeight = var_s7 - self->posY.i.hi;
 }
 
 static s16 bible_page_angles[BIBLE_PAGE_COUNT] = {
     0x0400, 0x06AB, 0x0955, 0x0C00, 0x0EAB, 0x1155,
 };
+#if defined(VERSION_PSP)
+extern s32 bible_pages_volume;
+#else
 static s32 bible_pages_volume;
+#endif
 void RicEntityCrashBible(Entity* self) {
     Primitive* prim;
-    s16 temp_a1_3;
-    s16 temp_v0_6;
-    s32 temp_s0_2;
-    s32 temp_s5;
-    s32 temp_s6;
-    s32 temp_v0_4;
-    s32 temp_v0_5;
     s32 i;
-    s16 temp_a0;
-    s16 temp_a1;
+    s32 psp_s2;
+    s16 psp_s4;
+    s16 psp_s3;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 sp3C;
+    s32 sp48;
+    s32 sp40;
+    long sp44;
+    long sp4C;
+    s32 psp_s8;
+    s32 psp_s7;
 
     switch (self->step) {
     case 0:
@@ -491,13 +514,15 @@ void RicEntityCrashBible(Entity* self) {
         self->posY.val += self->velocityY;
         self->velocityX -= self->ext.et_8016E9E4.unk88;
         self->velocityY -= FIX(0.5);
-        if (++self->ext.et_8016E9E4.unk82 >= 8) {
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 8) {
             self->ext.et_8016E9E4.unk82 = 0;
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_8016E9E4.unk82 >= 6) {
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 > 5) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x19F;
             prim->drawMode |=
@@ -522,17 +547,18 @@ void RicEntityCrashBible(Entity* self) {
         prim->drawMode |= DRAW_HIDE;
         self->step++;
     case 6:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
         self->ext.et_8016E9E4.unk80 += 4;
         if (self->ext.et_8016E9E4.unk80 >= 0x30) {
             self->step++;
         }
         break;
     case 7:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
-        if (++self->ext.et_8016E9E4.unk82 >= 0x1E) {
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x1E) {
             // create bible page beam
             RicCreateEntFactoryFromEntity(self, BP_CRASH_BIBLE_BEAM, 0);
             self->ext.et_8016E9E4.unk82 = 0;
@@ -540,16 +566,17 @@ void RicEntityCrashBible(Entity* self) {
         }
         break;
     case 8:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
-        if (++self->ext.et_8016E9E4.unk82 >= 0x60) {
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
+        self->ext.et_8016E9E4.unk82++;
+        if (self->ext.et_8016E9E4.unk82 >= 0x60) {
             g_Player.unk4E = 1;
             self->step++;
         }
         break;
     case 9:
-        self->ext.et_8016E9E4.unk7C =
-            (self->ext.et_8016E9E4.unk7C + 0x80) & 0xFFF;
+        self->ext.et_8016E9E4.unk7C += 0x80;
+        self->ext.et_8016E9E4.unk7C &= 0xFFF;
         self->ext.et_8016E9E4.unk80 -= 2;
         if (self->ext.et_8016E9E4.unk80 <= 0) {
             DestroyEntity(self);
@@ -558,11 +585,10 @@ void RicEntityCrashBible(Entity* self) {
         break;
     }
     // FAKE, needed for reg match
-    temp_a1 = self->ext.et_8016E9E4.unk7C;
-    if ((self->ext.et_8016E9E4.unk7C == 0x100) ||
-        (self->ext.et_8016E9E4.unk7C == 0x500) ||
-        (self->ext.et_8016E9E4.unk7C == 0x900) ||
-        (self->ext.et_8016E9E4.unk7C == 0xD00)) {
+    if (self->ext.et_8016E9E4.unk7C == 0x100 ||
+        self->ext.et_8016E9E4.unk7C == 0x500 ||
+        self->ext.et_8016E9E4.unk7C == 0x900 ||
+        self->ext.et_8016E9E4.unk7C == 0xD00) {
         if (self->step < 9) {
             g_api.PlaySfxVolPan(SFX_ARROW_SHOT_A, bible_pages_volume, 0);
             if (self->step >= 5) {
@@ -574,68 +600,77 @@ void RicEntityCrashBible(Entity* self) {
         }
     }
 
-    temp_a0 = self->posX.i.hi;
-    temp_a1 = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = temp_a0 - 8;
-    prim->x1 = prim->x3 = temp_a0 + 8;
-    prim->y0 = prim->y1 = temp_a1 - 12;
-    prim->y2 = prim->y3 = temp_a1 + 12;
+    psp_s4 = self->posX.i.hi;
+    psp_s3 = self->posY.i.hi;
+    prim->x0 = prim->x2 = psp_s4 - 8;
+    prim->x1 = prim->x3 = psp_s4 + 8;
+    prim->y0 = prim->y1 = psp_s3 - 12;
+    prim->y2 = prim->y3 = psp_s3 + 12;
     prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 = prim->r2 =
         prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             self->ext.et_8016E9E4.unk84;
     prim = prim->next;
 
-    temp_s6 = rsin(self->ext.et_8016E9E4.unk7E);
-    temp_s5 = rcos(self->ext.et_8016E9E4.unk7E);
+    sp44 = rsin(self->ext.et_8016E9E4.unk7E);
+    sp4C = rcos(self->ext.et_8016E9E4.unk7E);
     for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
-        temp_s0_2 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
-                     self->ext.et_8016E9E4.unk80) >>
-                    0xC;
-        temp_v0_4 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
-                     self->ext.et_8016E9E4.unk80) >>
-                    0xC;
-        temp_a1_3 =
-            self->posX.i.hi + ((((temp_s6 * temp_v0_4) >> 0xC) << 9) /
-                               (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
-        temp_v0_6 =
-            self->posY.i.hi +
-            ((temp_s0_2 << 9) / (((temp_s5 * temp_v0_4) >> 0xC) + 0x200));
-        temp_v0_5 = ((temp_s5 * temp_v0_4) >> 0xC) + 0x200;
-        bible_pages_pos[i].x = temp_a1_3;
-        bible_pages_pos[i].y = temp_v0_6;
-        prim->x0 = prim->x2 = temp_a1_3 - 0x1000 / temp_v0_5;
-        prim->x1 = prim->x3 = temp_a1_3 + 0x1000 / temp_v0_5;
-        // FAKE, needed for reg match
-        temp_a0 = (prim->y1 = temp_v0_6 - 0x1000 / temp_v0_5);
-        prim->y0 = temp_a0;
-
-        prim->y2 = prim->y3 = temp_v0_6 + 0x1000 / temp_v0_5;
+        sp3C = 0;
+        sp48 = (rsin(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        sp40 = (rcos(self->ext.et_8016E9E4.unk7C + bible_page_angles[i]) *
+                self->ext.et_8016E9E4.unk80) >>
+               0xC;
+        psp_s6 = (sp4C * sp3C + sp44 * sp40) >> 0xC;
+        psp_s2 = (sp4C * sp40 - sp44 * sp3C) >> 0xC;
+        psp_s5 = sp48;
+        psp_s2 += 0x200;
+        psp_s6 = (psp_s6 << 9) / psp_s2;
+        psp_s5 = (psp_s5 << 9) / psp_s2;
+        psp_s4 = self->posX.i.hi + psp_s6;
+        psp_s3 = self->posY.i.hi + psp_s5;
+        bible_pages_pos[i].x = psp_s4;
+        bible_pages_pos[i].y = psp_s3;
+        psp_s8 = 0x1000 / psp_s2;
+        psp_s7 = 0x1000 / psp_s2;
+        prim->x0 = prim->x2 = psp_s4 - psp_s8;
+        prim->x1 = prim->x3 = psp_s4 + psp_s8;
+        prim->y0 = prim->y1 = psp_s3 - psp_s7;
+        prim->y2 = prim->y3 = psp_s3 + psp_s7;
         prim = prim->next;
     }
 }
 
 void func_8016F198(Entity* self) {
     const int PrimCount = 16;
+#if defined(VERSION_PSP)
+    const int MaxHeight = 248;
+    const int HalfHeight = 128;
+#else
+    const int MaxHeight = 240;
+    const int HalfHeight = 120;
+#endif
     Primitive* prim;
-    s16 unk7C;
-    s16 temp_s6;
-    s16 temp_a0;
-    s16 temp_a1;
-    s16 temp_a2;
-    s16 temp_v1;
-    s16 var_s0_2;
-    s32 sine;
-    s32 cosine;
     s32 i;
-    u16 tpage;
+    s32 tpage;
+    s32 angleX;
+    s32 angleY;
+    s16 startMod;
+    s16 endMod;
+    s16 sx;
+    s16 ex;
+    s16 sy;
+    s16 ey;
 
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
         if (self->primIndex == -1) {
             DestroyEntity(self);
+#if !defined(VERSION_PSP)
             g_Player.unk4E = 1;
+#endif
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
@@ -655,79 +690,76 @@ void func_8016F198(Entity* self) {
         }
         self->step++;
     case 2:
-        if (++self->ext.factory.unk7C >= 0x18) {
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C >= 0x18) {
             self->step++;
         }
         break;
     case 3:
+#if !defined(VERSION_PSP)
         g_Player.unk4E = 1;
+#endif
         DestroyEntity(self);
         return;
     }
-    if (self->ext.factory.unk7C == 0) {
+    if (!self->ext.factory.unk7C) {
         return;
     }
-    if (g_CurrentBuffer == g_GpuBuffers) {
+    if (
+#if !defined(VERSION_PSP)
+        g_CurrentBuffer == g_GpuBuffers
+#else
+        0
+#endif
+    ) {
         tpage = 0x104;
     } else {
         tpage = 0x100;
     }
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCount; i++) {
-        sine = rsin(i << 8);
-        cosine = rcos(i << 8);
-        unk7C = self->ext.factory.unk7C;
-        var_s0_2 = 0;
-        temp_s6 = unk7C * 8;
-        if (unk7C >= 4) {
-            var_s0_2 = (unk7C - 4) * 8;
+        angleX = rsin(i << 8);
+        angleY = rcos(i << 8);
+        startMod = self->ext.factory.unk7C * 8;
+        endMod = 0;
+        if (self->ext.factory.unk7C >= 4) {
+            endMod = (self->ext.factory.unk7C - 4) * 8;
         }
-        temp_a1 = ((cosine * (s16)(unk7C * 8)) >> 0xC) + 0x80;
-        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
-        temp_a0 = ((sine * (s16)(unk7C * 8)) >> 0xC) + 0x78;
-        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x0 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x2 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y0 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y2 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u0 = 0xFF - prim->x0;
+        prim->u2 = 0xFF - prim->x2;
+        prim->v0 = MaxHeight - prim->y0;
+        prim->v2 = MaxHeight - prim->y2;
 
-        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
-        prim->x0 = temp_a1;
-
-        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
-        prim->x2 = temp_v1;
-
-        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
-        prim->y0 = temp_a0;
-
-        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
-        prim->y2 = temp_a2;
-
-        prim->u0 = ~prim->x0;
-        prim->u2 = ~prim->x2;
-        prim->v0 = -0x10 - prim->y0;
-        prim->v2 = -0x10 - prim->y2;
-
-        sine = rsin((i + 1) << 8);
-        cosine = rcos((i + 1) << 8);
-        temp_a1 = ((cosine * temp_s6) >> 0xC) + 0x80;
-        temp_v1 = ((cosine * var_s0_2) >> 0xC) + 0x80;
-        temp_a0 = ((sine * temp_s6) >> 0xC) + 0x78;
-        temp_a2 = ((sine * var_s0_2) >> 0xC) + 0x78;
-
-        temp_a1 = temp_a1 >= 0 ? MIN(temp_a1, 0xFF) : 0;
-        prim->x1 = temp_a1;
-
-        temp_v1 = temp_v1 >= 0 ? MIN(temp_v1, 0xFF) : 0;
-        prim->x3 = temp_v1;
-
-        temp_a0 = temp_a0 >= 0 ? MIN(temp_a0, 0xF0) : 0;
-        prim->y1 = temp_a0;
-
-        temp_a2 = temp_a2 >= 0 ? MIN(temp_a2, 0xF0) : 0;
-        prim->y3 = temp_a2;
+        angleX = rsin((i + 1) << 8);
+        angleY = rcos((i + 1) << 8);
+        sx = ((angleY * startMod) >> 0xC) + 0x80;
+        ex = ((angleY * endMod) >> 0xC) + 0x80;
+        sy = ((angleX * startMod) >> 0xC) + HalfHeight;
+        ey = ((angleX * endMod) >> 0xC) + HalfHeight;
+        prim->x1 = sx = CLAMP(sx, 0, 0xFF);
+        prim->x3 = ex = CLAMP(ex, 0, 0xFF);
+        prim->y1 = sy = CLAMP(sy, 0, MaxHeight);
+        prim->y3 = ey = CLAMP(ey, 0, MaxHeight);
+        prim->u1 = 0xFF - prim->x1;
+        prim->u3 = 0xFF - prim->x3;
+        prim->v1 = MaxHeight - prim->y1;
+        prim->v3 = MaxHeight - prim->y3;
+#if defined(VERSION_PSP)
+        prim->u0 = prim->u0 = CLAMP(prim->u0, 1, 0xFE);
+        prim->u2 = prim->u2 = CLAMP(prim->u2, 1, 0xFE);
+        prim->u1 = prim->u1 = CLAMP(prim->u1, 1, 0xFE);
+        prim->u3 = prim->u3 = CLAMP(prim->u3, 1, 0xFE);
+#endif
 
         prim->tpage = tpage;
-        prim->u1 = ~prim->x1;
-        prim->u3 = ~prim->x3;
-        prim->v1 = -0x10 - prim->y1;
-        prim->v3 = -0x10 - prim->y3;
         prim = prim->next;
     }
 }
@@ -738,21 +770,18 @@ void func_8016F198(Entity* self) {
 // disappear in a spinning sparkle. This entity represents that sparkle. 4
 // copies of this entity are made when the crash is done.
 void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
-    Primitive* prim;
-    u32 selfX;
-    u32 selfY;
-    s32 neg8cos;
-    s32 neg8sin;
-    s32 sinScaled;
-    s32 cosScalDiv8;
-    s32 sinScalDiv8;
-    s32 sine;
-    s32 cosScaled;
-    s32 cosine;
-    s32 rand_uCoord;
-    s32 var_a1;
+    s32 sp4C;
+    s32 selfX;
+    s32 selfY;
+    s32 psp_s8;
+    s32 psp_s7;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 psp_s4;
     s32 i;
-    s32 var_v1;
+    s32 psp_s1;
+    s32 psp_s2;
+    Primitive* prim;
 
     switch (self->step) {
     case 0:
@@ -763,25 +792,25 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         }
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-
         prim = &g_PrimBuf[self->primIndex];
+        prim->priority = 0xC2;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        prim->priority = 0xC2;
-        prim->u1 = prim->u3 = 0x3F;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
+        // @bug: prim->g0 is not set, instead g2 is set twice
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-            prim->g3 = 0x40;
+            prim->g2 = prim->g3 = 0x40;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
 
         prim = prim->next;
+        prim->priority = 0xC2;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS |
                          DRAW_UNK02 | DRAW_TRANSP;
-        prim->priority = 0xC2;
         prim->tpage = 0x1A;
         prim->clut = 0x19F;
         prim->u0 = prim->u2 = 0x40;
@@ -789,7 +818,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-            prim->g3 = 0x40;
+            prim->g2 = prim->g3 = 0x40;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
 
         prim = prim->next;
@@ -803,7 +832,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->v0 = prim->v1 = 0xCB;
         prim->v2 = prim->v3 = 0xF5;
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-            prim->g3 = 0xCF;
+            prim->g2 = prim->g3 = 0xCF;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
 
         prim = prim->next;
@@ -817,7 +846,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->v0 = prim->v1 = 0xCB;
         prim->v2 = prim->v3 = 0xF5;
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-            prim->g3 = 0xCF;
+            prim->g2 = prim->g3 = 0xCF;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0xFF;
 
         self->ext.et_stopWatchSparkle.unk88 = prim->next;
@@ -828,26 +857,28 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
             prim->clut = 0x194;
-            rand_uCoord = rand() % 5 * 0x10;
+            prim->u0 = prim->u2 = (rand() % 5 * 0x10) + 0x90;
+            prim->u1 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v1 = 0xC0;
             prim->v2 = prim->v3 = 0xD0;
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-                prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
-            prim->u0 = prim->u2 = rand_uCoord - 0x70;
-            prim->u1 = prim->u3 = prim->u0 + 0x10;
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
+                    prim->b3 = 0x80;
         }
         self->ext.et_stopWatchSparkle.unk7C = 4;
+        self->ext.et_stopWatchSparkle.unk7E =
+            self->ext.et_stopWatchSparkle.unk80 =
+                self->ext.et_stopWatchSparkle.unk82 = 0;
         self->ext.et_stopWatchSparkle.unk8C =
-            self->ext.et_stopWatchSparkle.unk8E =
-                self->ext.et_stopWatchSparkle.unk7E =
-                    self->ext.et_stopWatchSparkle.unk80 =
-                        self->ext.et_stopWatchSparkle.unk82 = 0;
+            self->ext.et_stopWatchSparkle.unk8E = 0;
         self->step++;
         break;
     case 1:
-        if (++self->ext.et_stopWatchSparkle.unk7C >= 0x10) {
+        self->ext.et_stopWatchSparkle.unk7C++;
+        if (self->ext.et_stopWatchSparkle.unk7C >= 0x10) {
             self->ext.et_stopWatchSparkle.unk7E = 4;
-            prim = g_PrimBuf[self->primIndex].next;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
             prim->drawMode &= ~DRAW_HIDE;
             prim = prim->next;
             prim->drawMode &= ~DRAW_HIDE;
@@ -860,7 +891,8 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         }
         break;
     case 2:
-        if (--self->ext.et_stopWatchSparkle.unk7C <= 0) {
+        self->ext.et_stopWatchSparkle.unk7C--;
+        if (self->ext.et_stopWatchSparkle.unk7C <= 0) {
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode |= DRAW_HIDE;
             prim = prim->next;
@@ -876,9 +908,9 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
             self->step++;
         }
         self->ext.et_stopWatchSparkle.unk7E += 2;
-        self->ext.et_stopWatchSparkle.unk82 =
-            (self->ext.et_stopWatchSparkle.unk82 + 0x80) & 0xFFF;
         self->ext.et_stopWatchSparkle.unk80 += 2;
+        self->ext.et_stopWatchSparkle.unk82 += 0x80;
+        self->ext.et_stopWatchSparkle.unk82 &= 0xFFF;
         break;
     case 3:
         self->ext.et_stopWatchSparkle.unk84 -= 0x10;
@@ -891,11 +923,11 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
             prim->drawMode |= DRAW_HIDE;
             self->step++;
         }
-        self->ext.et_stopWatchSparkle.unk82 =
-            (self->ext.et_stopWatchSparkle.unk82 + 0x80) & 0xFFF;
+        self->ext.et_stopWatchSparkle.unk82 += 0x80;
+        self->ext.et_stopWatchSparkle.unk82 &= 0xFFF;
         break;
     case 4:
-        if (self->ext.et_stopWatchSparkle.unk8E == 0) {
+        if (!self->ext.et_stopWatchSparkle.unk8E) {
             DestroyEntity(self);
             return;
         }
@@ -932,124 +964,122 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
             self->posY.i.hi - self->ext.et_stopWatchSparkle.unk7E;
         prim->y2 = prim->y3 =
             self->posY.i.hi + self->ext.et_stopWatchSparkle.unk7E;
-        sine = rsin(self->ext.et_stopWatchSparkle.unk82);
-        cosine = rcos(self->ext.et_stopWatchSparkle.unk82);
-        cosScaled = cosine * self->ext.et_stopWatchSparkle.unk80;
-        sinScaled = sine * self->ext.et_stopWatchSparkle.unk80;
-        cosScalDiv8 = cosine * (self->ext.et_stopWatchSparkle.unk80 / 8);
-        sinScalDiv8 = sine * (self->ext.et_stopWatchSparkle.unk80 / 8);
+        psp_s1 = rsin(self->ext.et_stopWatchSparkle.unk82);
+        psp_s2 = rcos(self->ext.et_stopWatchSparkle.unk82);
+        sp4C = psp_s2 * self->ext.et_stopWatchSparkle.unk80;
+        psp_s8 = psp_s1 * self->ext.et_stopWatchSparkle.unk80;
+        psp_s7 = psp_s2 * (self->ext.et_stopWatchSparkle.unk80 / 8);
+        psp_s6 = psp_s1 * (self->ext.et_stopWatchSparkle.unk80 / 8);
 
         prim = prim->next;
-        prim->x0 = self->posX.i.hi + ((-cosScaled - -sinScaled) >> 0xC);
-        prim->y0 = self->posY.i.hi + ((-sinScaled - cosScaled) >> 0xC);
-        prim->x1 = self->posX.i.hi + ((cosScalDiv8 - -sinScalDiv8) >> 0xC);
-        prim->y1 = self->posY.i.hi + ((sinScalDiv8 - cosScalDiv8) >> 0xC);
-        prim->x2 = self->posX.i.hi + ((-cosScalDiv8 - sinScalDiv8) >> 0xC);
-        prim->y2 = self->posY.i.hi + ((-sinScalDiv8 + cosScalDiv8) >> 0xC);
-        prim->x3 = self->posX.i.hi + ((cosScaled - sinScaled) >> 0xC);
-        prim->y3 = self->posY.i.hi + ((sinScaled + cosScaled) >> 0xC);
+        prim->x0 = self->posX.i.hi + ((-sp4C - -psp_s8) >> 0xC);
+        prim->y0 = self->posY.i.hi + ((-psp_s8 + -sp4C) >> 0xC);
+        prim->x1 = self->posX.i.hi + ((psp_s7 - -psp_s6) >> 0xC);
+        prim->y1 = self->posY.i.hi + ((psp_s6 + -psp_s7) >> 0xC);
+        prim->x2 = self->posX.i.hi + ((-psp_s7 - psp_s6) >> 0xC);
+        prim->y2 = self->posY.i.hi + ((-psp_s6 + psp_s7) >> 0xC);
+        prim->x3 = self->posX.i.hi + ((sp4C - psp_s8) >> 0xC);
+        prim->y3 = self->posY.i.hi + ((psp_s8 + sp4C) >> 0xC);
 
         prim = prim->next;
-        prim->x0 = self->posX.i.hi + ((-cosScalDiv8 - -sinScalDiv8) >> 0xC);
-        prim->y0 = self->posY.i.hi + ((-sinScalDiv8 - cosScalDiv8) >> 0xC);
-        prim->x1 = self->posX.i.hi + ((cosScaled - -sinScaled) >> 0xC);
-        prim->y1 = self->posY.i.hi + ((sinScaled - cosScaled) >> 0xC);
-        prim->x2 = self->posX.i.hi + ((-cosScaled - sinScaled) >> 0xC);
-        prim->y2 = self->posY.i.hi + ((-sinScaled + cosScaled) >> 0xC);
-        prim->x3 = self->posX.i.hi + ((cosScalDiv8 - sinScalDiv8) >> 0xC);
-        prim->y3 = self->posY.i.hi + ((sinScalDiv8 + cosScalDiv8) >> 0xC);
+        prim->x0 = self->posX.i.hi + ((-psp_s7 - -psp_s6) >> 0xC);
+        prim->y0 = self->posY.i.hi + ((-psp_s6 + -psp_s7) >> 0xC);
+        prim->x1 = self->posX.i.hi + ((sp4C - -psp_s8) >> 0xC);
+        prim->y1 = self->posY.i.hi + ((psp_s8 + -sp4C) >> 0xC);
+        prim->x2 = self->posX.i.hi + ((-sp4C - psp_s8) >> 0xC);
+        prim->y2 = self->posY.i.hi + ((-psp_s8 + sp4C) >> 0xC);
+        prim->x3 = self->posX.i.hi + ((psp_s7 - psp_s6) >> 0xC);
+        prim->y3 = self->posY.i.hi + ((psp_s6 + psp_s7) >> 0xC);
         break;
     case 3:
-        sine = rsin(self->ext.et_stopWatchSparkle.unk82);
-        cosine = rcos(self->ext.et_stopWatchSparkle.unk82);
-        cosScaled = cosine * self->ext.et_stopWatchSparkle.unk80;
-        sinScaled = sine * self->ext.et_stopWatchSparkle.unk80;
-        cosScalDiv8 = cosine * (self->ext.et_stopWatchSparkle.unk80 / 8);
-        sinScalDiv8 = sine * (self->ext.et_stopWatchSparkle.unk80 / 8);
+        psp_s1 = rsin(self->ext.et_stopWatchSparkle.unk82);
+        psp_s2 = rcos(self->ext.et_stopWatchSparkle.unk82);
+        sp4C = psp_s2 * self->ext.et_stopWatchSparkle.unk80;
+        psp_s8 = psp_s1 * self->ext.et_stopWatchSparkle.unk80;
+        psp_s7 = psp_s2 * (self->ext.et_stopWatchSparkle.unk80 / 8);
+        psp_s6 = psp_s1 * (self->ext.et_stopWatchSparkle.unk80 / 8);
         prim = prim->next;
         prim = prim->next;
 
-        prim->x0 = self->posX.i.hi + ((-cosScaled - -sinScaled) >> 0xC);
-        prim->y0 = self->posY.i.hi + ((-sinScaled - cosScaled) >> 0xC);
-        prim->x1 = self->posX.i.hi + ((cosScalDiv8 - -sinScalDiv8) >> 0xC);
-        prim->y1 = self->posY.i.hi + ((sinScalDiv8 - cosScalDiv8) >> 0xC);
-        prim->x2 = self->posX.i.hi + ((-cosScalDiv8 - sinScalDiv8) >> 0xC);
-        prim->y2 = self->posY.i.hi + ((-sinScalDiv8 + cosScalDiv8) >> 0xC);
-        prim->x3 = self->posX.i.hi + ((cosScaled - sinScaled) >> 0xC);
-        prim->y3 = self->posY.i.hi + ((sinScaled + cosScaled) >> 0xC);
+        prim->x0 = self->posX.i.hi + ((-sp4C - -psp_s8) >> 0xC);
+        prim->y0 = self->posY.i.hi + ((-psp_s8 + -sp4C) >> 0xC);
+        prim->x1 = self->posX.i.hi + ((psp_s7 - -psp_s6) >> 0xC);
+        prim->y1 = self->posY.i.hi + ((psp_s6 + -psp_s7) >> 0xC);
+        prim->x2 = self->posX.i.hi + ((-psp_s7 - psp_s6) >> 0xC);
+        prim->y2 = self->posY.i.hi + ((-psp_s6 + psp_s7) >> 0xC);
+        prim->x3 = self->posX.i.hi + ((sp4C - psp_s8) >> 0xC);
+        prim->y3 = self->posY.i.hi + ((psp_s8 + sp4C) >> 0xC);
         prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
-            prim->g3 = self->ext.et_stopWatchSparkle.unk84 - 0x20;
+            prim->g2 = prim->g3 = self->ext.et_stopWatchSparkle.unk84 - 0x20;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             self->ext.et_stopWatchSparkle.unk84;
 
         prim = prim->next;
-        prim->x0 = self->posX.i.hi + ((-cosScalDiv8 - -sinScalDiv8) >> 0xC);
-        prim->y0 = self->posY.i.hi + ((-sinScalDiv8 - cosScalDiv8) >> 0xC);
-        prim->x1 = self->posX.i.hi + ((cosScaled - -sinScaled) >> 0xC);
-        prim->y1 = self->posY.i.hi + ((sinScaled - cosScaled) >> 0xC);
-        prim->x2 = self->posX.i.hi + ((-cosScaled - sinScaled) >> 0xC);
-        prim->y2 = self->posY.i.hi + ((-sinScaled + cosScaled) >> 0xC);
-        prim->x3 = self->posX.i.hi + ((cosScalDiv8 - sinScalDiv8) >> 0xC);
-        prim->y3 = self->posY.i.hi + ((sinScalDiv8 + cosScalDiv8) >> 0xC);
-        prim->g1 = prim->g2 = prim->g3 =
+        prim->x0 = self->posX.i.hi + ((-psp_s7 - -psp_s6) >> 0xC);
+        prim->y0 = self->posY.i.hi + ((-psp_s6 + -psp_s7) >> 0xC);
+        prim->x1 = self->posX.i.hi + ((sp4C - -psp_s8) >> 0xC);
+        prim->y1 = self->posY.i.hi + ((psp_s8 + -sp4C) >> 0xC);
+        prim->x2 = self->posX.i.hi + ((-sp4C - psp_s8) >> 0xC);
+        prim->y2 = self->posY.i.hi + ((-psp_s8 + sp4C) >> 0xC);
+        prim->x3 = self->posX.i.hi + ((psp_s7 - psp_s6) >> 0xC);
+        prim->y3 = self->posY.i.hi + ((psp_s6 + psp_s7) >> 0xC);
+        prim->g1 = prim->g2 = prim->g2 = prim->g3 =
             self->ext.et_stopWatchSparkle.unk84 - 0x20;
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             self->ext.et_stopWatchSparkle.unk84;
         break;
     }
-    if (self->ext.et_stopWatchSparkle.unk8E != 0) {
-        prim = self->ext.et_stopWatchSparkle.unk88;
+    if (self->ext.et_stopWatchSparkle.unk8E) {
         self->ext.et_stopWatchSparkle.unk8E = 0;
+        prim = self->ext.et_stopWatchSparkle.unk88;
         for (i = 0; i < 16; i++) {
             if (i == self->ext.et_stopWatchSparkle.unk8C) {
-                if ((self->ext.et_stopWatchSparkle.unk90 > -0x20 &&
-                     self->ext.et_stopWatchSparkle.unk90 < 0x120) &&
-                    (self->ext.et_stopWatchSparkle.unk92 > -0x20 &&
-                     self->ext.et_stopWatchSparkle.unk92 < 0x120)) {
-                    prim->r0 = 0x80;
+                if (self->ext.et_stopWatchSparkle.unk90 < 0x120 &&
+                    self->ext.et_stopWatchSparkle.unk90 > -0x20 &&
+                    self->ext.et_stopWatchSparkle.unk92 < 0x120 &&
+                    self->ext.et_stopWatchSparkle.unk92 > -0x20) {
                     prim->drawMode &= ~DRAW_HIDE;
-                    if (!(i & 3)) {
-                        var_a1 = rand() % 0x200 + 0x200;
+                    prim->r0 = 0x80;
+                    if (!(i % 4)) {
+                        psp_s5 = rand() % 0x200 + 0x200;
                     } else {
-                        var_a1 = rand() % 0x80 + 0x80;
+                        psp_s5 = rand() % 0x80 + 0x80;
                     }
-                    var_v1 = self->ext.et_stopWatchSparkle.unk86 -
+                    psp_s4 = self->ext.et_stopWatchSparkle.unk86 -
                              self->ext.et_stopWatchSparkle.unk94;
-                    if (abs(var_v1) >= 0x801) {
-                        if (var_v1 < 0) {
-                            var_v1 += 0x1000;
+                    if (abs(psp_s4) > 0x800) {
+                        if (psp_s4 < 0) {
+                            psp_s4 += 0x1000;
                         } else {
-                            var_v1 -= 0x1000;
+                            psp_s4 -= 0x1000;
                         }
                     }
-                    if (var_v1 > 0) {
-                        var_a1 = -var_a1;
+                    if (psp_s4 > 0) {
+                        psp_s5 = -psp_s5;
                     }
-                    self->ext.et_stopWatchSparkle.unk86 =
-                        (self->ext.et_stopWatchSparkle.unk86 + var_a1) & 0xFFF;
-                    sine = rsin(self->ext.et_stopWatchSparkle.unk86);
-                    cosine = rcos(self->ext.et_stopWatchSparkle.unk86);
-                    neg8cos = -(cosine * 8);
-                    neg8sin = -(sine * 8);
-                    prim->x0 = (self->ext.et_stopWatchSparkle.unk90 +
-                                (sine * 8 >> 0xC));
-                    prim->y0 = (self->ext.et_stopWatchSparkle.unk92 +
-                                ((neg8cos) >> 0xC));
-                    prim->x1 = (self->ext.et_stopWatchSparkle.unk90 +
-                                ((cosine * 16 - neg8sin) >> 0xC));
-                    prim->y1 = (self->ext.et_stopWatchSparkle.unk92 +
-                                ((sine * 16 + neg8cos) >> 0xC));
-                    prim->x2 = (self->ext.et_stopWatchSparkle.unk90 +
-                                (neg8sin >> 0xC));
-                    prim->y2 = (self->ext.et_stopWatchSparkle.unk92 +
-                                (cosine * 8 >> 0xC));
-                    prim->x3 = (self->ext.et_stopWatchSparkle.unk90 +
-                                ((cosine * 16 - sine * 8) >> 0xC));
-                    prim->y3 = (self->ext.et_stopWatchSparkle.unk92 +
-                                ((sine * 16 + cosine * 8) >> 0xC));
+                    self->ext.et_stopWatchSparkle.unk86 += psp_s5;
+                    self->ext.et_stopWatchSparkle.unk86 &= 0xFFF;
+                    psp_s1 = rsin(self->ext.et_stopWatchSparkle.unk86);
+                    psp_s2 = rcos(self->ext.et_stopWatchSparkle.unk86);
+                    prim->x0 = self->ext.et_stopWatchSparkle.unk90 +
+                               (-(psp_s1 * -8) >> 0xC);
+                    prim->y0 = self->ext.et_stopWatchSparkle.unk92 +
+                               ((psp_s2 * -8) >> 0xC);
+                    prim->x1 = self->ext.et_stopWatchSparkle.unk90 +
+                               ((psp_s2 * 16 - psp_s1 * -8) >> 0xC);
+                    prim->y1 = self->ext.et_stopWatchSparkle.unk92 +
+                               ((psp_s1 * 16 + psp_s2 * -8) >> 0xC);
+                    prim->x2 = self->ext.et_stopWatchSparkle.unk90 +
+                               (-(psp_s1 * 8) >> 0xC);
+                    prim->y2 = self->ext.et_stopWatchSparkle.unk92 +
+                               (psp_s2 * 8 >> 0xC);
+                    prim->x3 = self->ext.et_stopWatchSparkle.unk90 +
+                               ((psp_s2 * 16 - psp_s1 * 8) >> 0xC);
+                    prim->y3 = self->ext.et_stopWatchSparkle.unk92 +
+                               ((psp_s1 * 16 + psp_s2 * 8) >> 0xC);
                     prim->r0 = 0x80;
-                    self->ext.et_stopWatchSparkle.unk90 += (cosine * 16 >> 0xC);
-                    self->ext.et_stopWatchSparkle.unk92 += (sine * 16 >> 0xC);
+                    self->ext.et_stopWatchSparkle.unk90 += (psp_s2 * 16) >> 0xC;
+                    self->ext.et_stopWatchSparkle.unk92 += (psp_s1 * 16) >> 0xC;
                     selfX = self->posX.i.hi;
                     selfY = self->posY.i.hi;
                     self->posX.i.hi = self->ext.et_stopWatchSparkle.unk90;
@@ -1063,17 +1093,18 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
                 }
             } else {
                 prim->r0 -= 8;
-                if (prim->r0 < 0x20U) {
+                if (prim->r0 < 0x20) {
                     prim->drawMode |= DRAW_HIDE;
                 }
             }
             prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 = prim->g2 =
                 prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
             self->ext.et_stopWatchSparkle.unk8E |=
-                ((prim->drawMode & DRAW_HIDE) ? 0 : 1);
+                prim->drawMode & DRAW_HIDE ? 0 : 1;
             prim = prim->next;
         }
-        if (++self->ext.et_stopWatchSparkle.unk8C >= 0x10) {
+        self->ext.et_stopWatchSparkle.unk8C++;
+        if (self->ext.et_stopWatchSparkle.unk8C >= 0x10) {
             self->ext.et_stopWatchSparkle.unk8C = 0;
         }
     }
@@ -1096,7 +1127,8 @@ void RicEntityStopwatchCrashLightning(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (++self->ext.timer.t >= 5) {
+        self->ext.timer.t++;
+        if (self->ext.timer.t > 4) {
             DestroyEntity(self);
         }
         break;
@@ -1134,34 +1166,31 @@ void RicEntityCrashStopwatch(Entity* self) {
         break;
     case 8:
         DestroyEntity(self);
+#if defined(VERSION_PSP)
+        g_Player.unk4E = 1;
+#endif
         break;
     }
 }
 
-static s16 GetAguneaLightningAngle(u16* arg0, s16 arg1, s16 arg2, s16* arg3) {
-    s16 temp_s3;
-    s16 s3_offset = 0x80;
-    s8 arg2_copy = arg2;
-
-    temp_s3 = arg1 - s3_offset + rand() % 256;
+static s16 GetAguneaLightningAngle(s16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+    arg1 += rand() % 256 - 0x80;
     *arg3 = (rand() % 48) + 0x10;
     arg0[0] = arg0[1];
     arg0[2] = arg0[3];
-    if (arg2 != 0) {
-        arg0[1] = arg0[1] + ((rcos(temp_s3) * *arg3) >> 0xC);
-        arg0[3] = arg0[3] + ((rsin(temp_s3) * *arg3) >> 0xC);
-        if (arg2_copy & 1) {
-            return GetAguneaLightningAngle(
-                arg0, (temp_s3 - 0x140), arg2 / 2, arg3);
+    if (arg2) {
+        arg0[1] += (rcos(arg1) * *arg3) >> 0xC;
+        arg0[3] += (rsin(arg1) * *arg3) >> 0xC;
+        if (arg2 % 2) {
+            return GetAguneaLightningAngle(arg0, arg1 - 0x140, arg2 / 2, arg3);
         } else {
             rand();
             rand();
             return GetAguneaLightningAngle(
-                arg0, (temp_s3 + 0x140), (arg2 - 1) / 2, arg3);
+                arg0, arg1 + 0x140, (arg2 - 1) / 2, arg3);
         }
-    } else {
-        return temp_s3;
     }
+    return arg1;
 }
 
 static void AguneaShuffleParams(s32 bufSize, s32* buf) {
@@ -1180,20 +1209,19 @@ static void AguneaShuffleParams(s32 bufSize, s32* buf) {
 
 // Agunea item crash lightning, created by RicEntityAguneaCircle, blueprint 68
 void RicEntityAguneaLightning(Entity* self) {
-    u16 sp10[4];
-    s16 sp18;
-    u16 sp20;
-    s32 temp_s0;
+    s16 sp20;
     s16 angle;
-    s32 angleCos;
-    s32 angleSin;
+    s16 sp18;
+    s32 randomSeed;
+    s16 sp10[4];
     s16 xCoord;
     s16 yCoord;
-    Primitive* prim;
+    s16 psp_s6;
+    s16 psp_s5;
+    s32 psp_s4;
+    s32 psp_s3;
     s32 i;
-    s32 randomSeed;
-    s16 var_s4;
-    s16 var_s6;
+    Primitive* prim;
 
     switch (self->step) {
     case 0:
@@ -1208,55 +1236,52 @@ void RicEntityAguneaLightning(Entity* self) {
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
             prim->clut = 0x194;
-            prim->u0 = prim->u2 = (rand() % 5) * 0x10 - 0x70;
-            prim->u1 = prim->u3 = prim->u0 + 0x20;
-            if (rand() & 1) {
+            xCoord = (rand() % 5) * 0x10;
+            prim->u0 = prim->u2 = xCoord + 0x90;
+            prim->u1 = prim->u3 = xCoord + 0xB0;
+            if (rand() % 2) {
                 prim->v0 = prim->v1 = 0xD0;
                 prim->v2 = prim->v3 = 0xE0;
             } else {
                 prim->v0 = prim->v1 = 0xE0;
                 prim->v2 = prim->v3 = 0xD0;
             }
-            prim->priority = 0xC1;
-            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                     prim->b3 = 0x80;
+            prim->priority = 0xC1;
+            prim->drawMode = DRAW_UNK_200 | DRAW_HIDE | DRAW_COLORS;
             prim = prim->next;
         }
         prim = &g_PrimBuf[self->primIndex];
-        temp_s0 = self->params / 0x100 * 0x200;
-        sp20 = (temp_s0)-0x100 + rand() % 0x200;
-        randomSeed = rand();
+        sp20 = ((self->params & 0xFF00) >> 8) * 0x200;
+        sp20 += rand() % 0x200 - 0x100;
+        randomSeed = rand() & PSP_RANDMASK;
         for (i = 0; i < 15; i++) {
             srand(randomSeed);
             sp10[1] = self->posX.i.hi;
             sp10[3] = self->posY.i.hi;
-            angle = GetAguneaLightningAngle(&sp10, sp20, i, &sp18);
+            angle = GetAguneaLightningAngle(sp10, sp20, i, &sp18);
             xCoord = sp10[0];
             yCoord = sp10[2];
-            var_s6 = (i == 0) ? 2 : 8;
-            var_s4 = (i < 7) ? 8 : 2;
+            psp_s6 = !i ? 2 : 8;
+            psp_s5 = (i < 7) ? 8 : 2;
 
-            angleCos = rcos(angle);
-            angleSin = rsin(angle);
-            prim->x0 = xCoord + (-(angleSin * -var_s6) >> 0xC);
-            prim->y0 = yCoord + ((angleCos * -var_s6) >> 0xC);
-            prim->x1 =
-                xCoord + ((angleCos * sp18 - (angleSin * -var_s4)) >> 0xC);
-            prim->y1 =
-                yCoord + ((angleSin * sp18 + (angleCos * -var_s4)) >> 0xC);
-            prim->x2 = xCoord + (-(angleSin * var_s6) >> 0xC);
-            prim->y2 = yCoord + ((angleCos * var_s6) >> 0xC);
-            prim->x3 =
-                xCoord + ((angleCos * sp18 - (angleSin * var_s4)) >> 0xC);
-            prim->y3 =
-                yCoord + ((angleSin * sp18 + (angleCos * var_s4)) >> 0xC);
+            psp_s4 = rcos(angle);
+            psp_s3 = rsin(angle);
+            prim->x0 = xCoord + (-(psp_s3 * -psp_s6) >> 0xC);
+            prim->y0 = yCoord + ((psp_s4 * -psp_s6) >> 0xC);
+            prim->x1 = xCoord + ((psp_s4 * sp18 - (psp_s3 * -psp_s5)) >> 0xC);
+            prim->y1 = yCoord + ((psp_s3 * sp18 + (psp_s4 * -psp_s5)) >> 0xC);
+            prim->x2 = xCoord + (-(psp_s3 * psp_s6) >> 0xC);
+            prim->y2 = yCoord + ((psp_s4 * psp_s6) >> 0xC);
+            prim->x3 = xCoord + ((psp_s4 * sp18 - (psp_s3 * psp_s5)) >> 0xC);
+            prim->y3 = yCoord + ((psp_s3 * sp18 + (psp_s4 * psp_s5)) >> 0xC);
             prim = prim->next;
         }
         self->ext.et_8017091C.unk7E = 1;
         self->step++;
-        return;
+        break;
     case 1:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1265,22 +1290,20 @@ void RicEntityAguneaLightning(Entity* self) {
         }
         self->step++;
     case 2:
-        if (++self->ext.et_8017091C.unk7C >= 5) {
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 4) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 15; i++) {
+                prim->v0 = prim->v1 = prim->v0 - 0x10;
+                prim->v2 = prim->v3 = prim->v2 - 0x10;
                 prim->clut = 0x15F;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = 0xFF;
-                prim->v0 = prim->v1 = prim->v0 - 0x10;
-                // Seems fake but without this the registers get shuffled
-                xCoord = prim->v2;
-                prim->v2 = prim->v3 = xCoord - 0x10;
                 prim = prim->next;
             }
             self->ext.et_8017091C.unk7C = 0;
             self->step++;
-            return;
         }
         break;
     case 3:
@@ -1291,7 +1314,7 @@ void RicEntityAguneaLightning(Entity* self) {
             prim = prim->next;
         }
         self->step++;
-        return;
+        break;
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1299,7 +1322,7 @@ void RicEntityAguneaLightning(Entity* self) {
             prim = prim->next;
         }
         self->step++;
-        return;
+        break;
     case 6:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
@@ -1308,7 +1331,8 @@ void RicEntityAguneaLightning(Entity* self) {
                     prim->b3 = 0x60 - (self->ext.et_8017091C.unk7C * 4);
             prim = prim->next;
         }
-        if (++self->ext.et_8017091C.unk7C >= 0x10) {
+        self->ext.et_8017091C.unk7C++;
+        if (self->ext.et_8017091C.unk7C > 15) {
             DestroyEntity(self);
             return;
         }
@@ -1317,7 +1341,11 @@ void RicEntityAguneaLightning(Entity* self) {
 }
 
 #define LIGHTNING_COUNT 8
+#if defined(VERSION_PSP)
+extern s32 g_AguneaParams[LIGHTNING_COUNT];
+#else
 static s32 g_AguneaParams[LIGHTNING_COUNT];
+#endif
 void RicEntityAguneaCircle(Entity* self) {
     Primitive* prim;
     s16 rand_angle;
@@ -1325,6 +1353,7 @@ void RicEntityAguneaCircle(Entity* self) {
     s16 yCoord;
     s32 quarterSelfY;
     s32 i;
+    s16 psp_s4;
 
     switch (self->step) {
     case 0:
@@ -1336,9 +1365,9 @@ void RicEntityAguneaCircle(Entity* self) {
         }
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
-        prim = &g_PrimBuf[self->primIndex];
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 0x20;
+        prim = &g_PrimBuf[self->primIndex];
         quarterSelfY = self->posY.i.hi / 4;
         xCoord = self->posX.i.hi;
         yCoord = 0;
@@ -1361,9 +1390,10 @@ void RicEntityAguneaCircle(Entity* self) {
                 prim->x3 = xCoord + 4;
             }
             prim->y1 = prim->y3 = yCoord;
-            prim->u0 = prim->u2 = (rand() % 6) * 0x10 - 0x70;
-            prim->u1 = prim->u3 = prim->u0 + 0x10;
-            if (rand() & 1) {
+            psp_s4 = (rand() % 6) * 0x10;
+            prim->u0 = prim->u2 = psp_s4 + 0x90;
+            prim->u1 = prim->u3 = psp_s4 + 0xA0;
+            if (rand() % 2) {
                 prim->v0 = prim->v1 = 0xD0;
                 prim->v2 = prim->v3 = 0xE0;
             } else {
@@ -1384,7 +1414,8 @@ void RicEntityAguneaCircle(Entity* self) {
             prim = prim->next;
         }
         prim->drawMode &= ~DRAW_HIDE;
-        if (++self->ext.aguneaCrash.unk7C >= 4) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C >= 4) {
             self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
@@ -1394,7 +1425,7 @@ void RicEntityAguneaCircle(Entity* self) {
         for (i = 0; i < self->ext.aguneaCrash.unk7C; i++) {
             prim = prim->next;
         }
-        if (self->ext.aguneaCrash.unk7C == 0) {
+        if (!self->ext.aguneaCrash.unk7C) {
             prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             prim->tpage = 0x1A;
@@ -1413,9 +1444,10 @@ void RicEntityAguneaCircle(Entity* self) {
             self->ext.aguneaCrash.unk80 += 2;
             prim->drawMode |= DRAW_HIDE;
         }
-        if (++self->ext.aguneaCrash.unk7C >= 4) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > 3) {
             // think this loop has to count down since we assign to i
-            for (i = LIGHTNING_COUNT - 1; i >= 0; i--) {
+            for (i = 0; i < LIGHTNING_COUNT; i++) {
                 g_AguneaParams[i] = i;
             }
             AguneaShuffleParams(LIGHTNING_COUNT, &g_AguneaParams[0]);
@@ -1430,14 +1462,17 @@ void RicEntityAguneaCircle(Entity* self) {
             FACTORY(BP_CRASH_AGUNEA_THUNDER,
                     g_AguneaParams[self->ext.aguneaCrash.unk7C]),
             0);
-        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT) {
-            self->hitboxHeight = self->hitboxWidth = 0x80;
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT - 1) {
+            self->hitboxWidth = 0x80;
+            self->hitboxHeight = 0x80;
             self->ext.aguneaCrash.unk7C = 0;
             self->step++;
         }
         break;
     case 4:
-        if (++self->ext.aguneaCrash.unk7C >= LIGHTNING_COUNT + 1) {
+        self->ext.aguneaCrash.unk7C++;
+        if (self->ext.aguneaCrash.unk7C > LIGHTNING_COUNT) {
             self->step++;
         }
         break;
@@ -1445,7 +1480,8 @@ void RicEntityAguneaCircle(Entity* self) {
         self->ext.aguneaCrash.unk80 += 2;
         self->ext.aguneaCrash.unk82 -= 10;
         if (self->ext.aguneaCrash.unk82 <= 0) {
-            self->hitboxHeight = self->hitboxWidth = 0;
+            self->hitboxWidth = 0;
+            self->hitboxHeight = 0;
             self->step++;
         }
         break;
@@ -1454,7 +1490,7 @@ void RicEntityAguneaCircle(Entity* self) {
         DestroyEntity(self);
         return;
     }
-    if (self->ext.aguneaCrash.unk7E != 0) {
+    if (self->ext.aguneaCrash.unk7E) {
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = prim->x2 = self->posX.i.hi - self->ext.aguneaCrash.unk80;
         prim->x1 = prim->x3 = self->posX.i.hi + self->ext.aguneaCrash.unk80;
@@ -1465,17 +1501,17 @@ void RicEntityAguneaCircle(Entity* self) {
         prim->b0 = prim->b1 = prim->b2 = prim->b3 =
             (self->ext.aguneaCrash.unk82 * 0xFF) / 100;
     }
-    return;
 }
 
 void RicEntitySubwpnStopwatchCircle(Entity* self) {
-    Primitive* prim;
     s16 temp_s0_4;
+    s16 psp_s4;
     s32 sine;
     s32 cosine;
-    s32 i;
-    s16 yCoord;
     s16 xCoord;
+    s16 yCoord;
+    Primitive* prim;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -1492,12 +1528,14 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
-            prim->u0 = ((rsin((s16)(i * 0x100)) << 5) >> 0xC) + 0x20;
-            prim->v0 = -((rcos((s16)(i * 0x100)) << 5) >> 0xC) - 0x21;
-            prim->u1 = ((rsin((s16)((i + 1) * 0x100)) << 5) >> 0xC) + 0x20;
-            prim->v1 = -((rcos((s16)((i + 1) * 0x100)) << 5) >> 0xC) - 0x21;
-            prim->v2 = prim->v3 = 0xE0;
+            psp_s4 = i * 0x100;
+            prim->u0 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v0 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
+            psp_s4 = (i + 1) * 0x100;
+            prim->u1 = ((rsin(psp_s4) << 5) >> 0xC) + 0x20;
+            prim->v1 = -((rcos(psp_s4) << 5) >> 0xC) + 0xDF;
             prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
             prim->r0 = prim->r1 = prim->g0 = prim->g1 = prim->b0 = prim->b1 =
                 0x40;
             prim->r2 = prim->r3 = prim->g2 = prim->g3 = 0;
@@ -1509,7 +1547,8 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         break;
     case 1:
         self->ext.et_stopwatchCircle.size += 0x18;
-        if (++self->ext.et_stopwatchCircle.timer >= 0x1F) {
+        self->ext.et_stopwatchCircle.timer++;
+        if (self->ext.et_stopwatchCircle.timer > 0x1E) {
             DestroyEntity(self);
             return;
         }
@@ -1535,37 +1574,28 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         prim->y3 = yCoord - ((cosine * temp_s0_4) >> 0xC);
         prim = prim->next;
     }
-    return;
 }
 
+#if defined(VERSION_PSP)
+extern u32 D_801758D0;
+extern Entity* D_801758D4[3];
+#else
 static u32 D_801758D0;
-static Entity*
-    D_801758D4[3]; // used by RicEntitySubwpnStopwatch, should never underflow
+static Entity* D_801758D4[3];
+#endif
 void RicEntitySubwpnStopwatch(Entity* self) {
+    s32 sp4C;
+    s32 psp_s6;
+    s32 psp_s5;
+    s16 psp_s4;
+    s16 psp_s3;
+    s32 psp_s2;
+    s32 psp_s1;
     Primitive* prim;
-    s16 firstmult;
-    s16 secondmult;
-    s16 var_a0;
-    s16 var_a1;
-    Entity* parent;
-    s32 sine;
-    s32 cosine;
-    s32 var_s4;
-    s32 var_s6;
-    s32 ySub;
-    s16 temp_v0;
 
-    s32 temp_t1;
-    s32 temp_a3;
-    s32 temp_t2;
-    s32 temp_a0_6;
-    s32 temp_a2_3;
-    s32 temp_a1_3;
-    s32 temp_t0;
-    s32 temp_v1_11;
     if (g_unkGraphicsStruct.pauseEnemies) {
         g_unkGraphicsStruct.D_800973FC = 0;
-        if ((self->step > 0) && (self->step < 4)) {
+        if (self->step && self->step < 4) {
             self->step = 4;
         }
     }
@@ -1608,16 +1638,19 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         // This holds the index of the ricStopWatch, when created by the crash.
         // If it's 0, then we just used a normal stopwatch.
         if (self->params & 0xFF00) {
+            sp4C = 0x185;
             RicCreateEntFactoryFromEntity(self, BP_66, 0);
-            D_801758D0 = self->ext.ricStopWatch.crashIndex = self->params >> 8;
+            D_801758D0 = self->ext.ricStopWatch.crashIndex =
+                (self->params >> 8) & 0xFF;
             if (self->ext.ricStopWatch.crashIndex < 4) {
                 D_801758D4[self->ext.ricStopWatch.crashIndex - 1] = self;
             }
-            if (self->ext.ricStopWatch.crashIndex >= 2) {
+            if (self->ext.ricStopWatch.crashIndex > 1) {
                 self->ext.ricStopWatch.unk98 =
                     D_801758D4[self->ext.ricStopWatch.crashIndex - 2];
             }
         } else {
+            sp4C = 0x186;
             RicCreateEntFactoryFromEntity(self, BP_STOPWATCH_CIRCLE, 0);
             self->ext.ricStopWatch.crashIndex = 0;
         }
@@ -1633,7 +1666,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         prim->drawMode &= ~DRAW_HIDE;
         self->ext.ricStopWatch.unk84.val += 0x18000;
-        if (self->ext.ricStopWatch.unk84.val > 0x19FFFF) {
+        if (self->ext.ricStopWatch.unk84.val >= 0x1A0000) {
             self->step++;
         }
         break;
@@ -1646,45 +1679,46 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         break;
     case 3:
-        if (++self->ext.ricStopWatch.unk7E >= 0x51) {
+        self->ext.ricStopWatch.unk7E++;
+        if (self->ext.ricStopWatch.unk7E > 0x50) {
             g_api.PlaySfx(SFX_CLOCK_TICK);
             self->ext.ricStopWatch.unk7E = 0;
             self->ext.ricStopWatch.unk90 = 1;
-            if (--self->ext.ricStopWatch.t < 0) {
+            self->ext.ricStopWatch.t--;
+            if (self->ext.ricStopWatch.t < 0) {
                 self->step++;
                 break;
             }
         }
-
         if (self->ext.ricStopWatch.t < 5) {
-            prim = g_PrimBuf[self->primIndex].next;
+            prim = &g_PrimBuf[self->primIndex];
+            prim = prim->next;
             if (self->ext.ricStopWatch.t >= 10) {
                 self->ext.ricStopWatch.unk92 = 1;
-                // MISMATCH: Not using S4 for this
-                var_s4 = 8 * (self->ext.ricStopWatch.t / 10);
-                prim->u0 = prim->u2 = var_s4 + 0x18;
-                prim->u1 = prim->u3 = var_s4 + 0x1E;
+                psp_s1 = 8 * (self->ext.ricStopWatch.t / 10);
+                prim->u0 = prim->u2 = psp_s1 + 0x18;
                 prim->v0 = prim->v1 = 0x40;
+                prim->u1 = prim->u3 = psp_s1 + 0x1E;
                 prim->v2 = prim->v3 = 0x49;
                 prim->drawMode &= ~DRAW_HIDE;
                 prim = prim->next;
             } else {
                 self->ext.ricStopWatch.unk92 = 0;
             }
-            var_s4 = 8 * (self->ext.ricStopWatch.t % 10);
-            if (var_s4 == 0) {
-                var_s4 = 0x50;
+            psp_s1 = 8 * (self->ext.ricStopWatch.t % 10);
+            if (psp_s1 == 0) {
+                psp_s1 = 0x50;
             }
-            prim->u0 = prim->u2 = var_s4 + 0x18;
-            prim->u1 = prim->u3 = var_s4 + 0x1E;
+            prim->u0 = prim->u2 = psp_s1 + 0x18;
             prim->v0 = prim->v1 = 0x40;
+            prim->u1 = prim->u3 = psp_s1 + 0x1E;
             prim->v2 = prim->v3 = 0x49;
             prim->drawMode &= ~DRAW_HIDE;
         }
         break;
     case 4:
-        prim = &g_PrimBuf[self->primIndex];
         self->flags &= ~FLAG_POS_PLAYER_LOCKED;
+        prim = &g_PrimBuf[self->primIndex];
         prim->priority = 0xC2;
         prim->drawMode &= ~DRAW_UNK_200;
         prim = prim->next;
@@ -1692,10 +1726,9 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         prim = prim->next;
         prim->drawMode |= DRAW_HIDE;
         self->posX.i.hi += self->facingLeft ? 6 : -6;
-        ySub = self->ext.ricStopWatch.unk84.i.hi;
-        self->posY.i.hi -= ySub;
+        self->posY.i.hi -= self->ext.ricStopWatch.unk84.val >> 0x10;
         self->ext.ricStopWatch.t = 0;
-        if (self->ext.ricStopWatch.crashIndex != 0) {
+        if (self->ext.ricStopWatch.crashIndex) {
             self->step = 7;
             RicCreateEntFactoryFromEntity(self, BP_AGUNEA_THUNDER, 0);
         } else {
@@ -1703,119 +1736,123 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         break;
     case 5:
-        if (++self->ext.ricStopWatch.t >= 4) {
+        self->ext.ricStopWatch.t++;
+        if (self->ext.ricStopWatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
             prim->clut = 0x15F;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->r0 = prim->r1 =
-                prim->r2 = prim->r3 = 0x40;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             prim->drawMode |= DRAW_COLORS;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
             g_api.PlaySfx(SFX_UI_TINK);
             self->step++;
         }
         break;
     case 6:
-        if (++self->ext.ricStopWatch.t >= 0xF) {
+        self->ext.ricStopWatch.t++;
+        if (self->ext.ricStopWatch.t > 14) {
             RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 7), 0);
             self->step++;
         }
         break;
     case 7:
-        if ((self->ext.ricStopWatch.crashIndex == 0) ||
-            (self->ext.ricStopWatch.crashIndex == D_801758D0)) {
+        if (self->ext.ricStopWatch.crashIndex == 0 ||
+            self->ext.ricStopWatch.crashIndex == D_801758D0) {
             g_unkGraphicsStruct.D_800973FC = 0;
         }
-        if (self->ext.ricStopWatch.crashIndex != 0) {
+        if (self->ext.ricStopWatch.crashIndex) {
             D_801758D4[self->ext.ricStopWatch.crashIndex - 1] = 0;
         }
         DestroyEntity(self);
         return;
     }
-    if (self->step == 0) {
+    if (!self->step) {
         return;
     }
     prim = &g_PrimBuf[self->primIndex];
     if (self->step < 5) {
         if (self->ext.ricStopWatch.crashIndex < 2) {
-            var_s4 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
-            var_s6 = PLAYER.posY.val + FIX(-16);
+            psp_s1 = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
+            psp_s2 = PLAYER.posY.val + FIX(-16);
         } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
-            var_s4 = self->ext.ricStopWatch.unk98->posX.val +
-                     (PLAYER.facingLeft ? FIX(16) : FIX(-16));
-            var_s6 = self->ext.ricStopWatch.unk98->posY.val + FIX(-16);
+            if (
+#if defined(VERSION_PSP)
+                self->ext.ricStopWatch.unk98
+#else
+                1
+#endif
+            ) {
+                psp_s1 = self->ext.ricStopWatch.unk98->posX.val +
+                         (PLAYER.facingLeft ? FIX(16) : FIX(-16));
+                psp_s2 = self->ext.ricStopWatch.unk98->posY.val + FIX(-16);
+            } else {
+                psp_s1 = self->posX.val;
+                psp_s2 = self->posY.val;
+            }
         } else {
-            var_s4 = self->posX.val;
-            var_s6 = self->posY.val;
+            psp_s1 = self->posX.val;
+            psp_s2 = self->posY.val;
         }
-        self->posX.val += (var_s4 - self->posX.val) / 12;
-        self->posY.val += (var_s6 - self->posY.val) / 4;
+        self->posX.val += (psp_s1 - self->posX.val) / 12;
+        self->posY.val += (psp_s2 - self->posY.val) / 4;
         if (self->ext.ricStopWatch.crashIndex < 2) {
             if (PLAYER.facingLeft != self->facingLeft) {
-                if (abs(var_s4 - self->posX.val) < FIX(1)) {
+                if (abs(psp_s1 - self->posX.val) < FIX(1)) {
                     self->facingLeft = PLAYER.facingLeft;
-                } else if (!self->facingLeft) {
-                    if (var_s4 < self->posX.val) {
-                        self->facingLeft = PLAYER.facingLeft;
-                    } else {
-                        goto block_84;
-                    }
-                } else if (self->posX.val < var_s4) {
+                } else if (!self->facingLeft && psp_s1 < self->posX.val) {
+                    self->facingLeft = PLAYER.facingLeft;
+                } else if (self->facingLeft && self->posX.val < psp_s1) {
                     self->facingLeft = PLAYER.facingLeft;
                 }
             }
         } else if (D_801758D4[self->ext.ricStopWatch.crashIndex - 2] != NULL) {
-            parent = self->ext.ricStopWatch.unk98;
-            if (parent->facingLeft != self->facingLeft) {
-                if (abs(var_s4 - self->posX.val) >= FIX(1)) {
-                    if (!self->facingLeft) {
-                        if (var_s4 < self->posX.val) {
-                            self->facingLeft = parent->facingLeft;
-                        } else {
-                            goto block_84;
-                        }
-                    } else if (self->posX.val < var_s4) {
-                        self->facingLeft = parent->facingLeft;
-                    }
-                } else {
-                    self->facingLeft = parent->facingLeft;
+            if (
+#if defined(VERSION_PSP)
+                self->ext.ricStopWatch.unk98 &&
+#endif
+                self->ext.ricStopWatch.unk98->facingLeft != self->facingLeft) {
+                if (abs(psp_s1 - self->posX.val) < FIX(1)) {
+                    self->facingLeft = self->ext.ricStopWatch.unk98->facingLeft;
+                } else if (!self->facingLeft && psp_s1 < self->posX.val) {
+                    self->facingLeft = self->ext.ricStopWatch.unk98->facingLeft;
+                } else if (self->facingLeft && self->posX.val < psp_s1) {
+                    self->facingLeft = self->ext.ricStopWatch.unk98->facingLeft;
                 }
             }
         }
         if (self->facingLeft) {
-            prim->u2 = 0x98;
-            prim->u0 = 0x98;
+            prim->u0 = prim->u2 = 0x98;
             prim->u1 = prim->u3 = 0xA8;
         } else {
         block_84:
-            prim->u2 = 0xA8;
-            prim->u0 = 0xA8;
+            prim->u0 = prim->u2 = 0xA8;
             prim->u1 = prim->u3 = 0x98;
         }
     }
     if (self->step < 3) {
-        var_s4 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
-        var_s6 = self->posY.i.hi - self->ext.ricStopWatch.unk84.i.hi;
+        psp_s1 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
+        psp_s2 = self->posY.i.hi - (self->ext.ricStopWatch.unk84.val >> 0x10);
         if (self->ext.ricStopWatch.unk82 < 0x64) {
             self->ext.ricStopWatch.unk82 += 4;
         }
         if (self->ext.ricStopWatch.unk80 < 0x1000) {
             self->ext.ricStopWatch.unk80 += 0x80;
         }
-        firstmult = (self->ext.ricStopWatch.unk82 * 8) / 100;
-        secondmult = (self->ext.ricStopWatch.unk82 * 0xC) / 100;
-        sine = rsin(self->ext.ricStopWatch.unk80);
-        cosine = rcos(self->ext.ricStopWatch.unk80);
-        prim->x0 = var_s4 + ((cosine * -firstmult - sine * -secondmult) >> 0xC);
-        prim->y0 = var_s6 + ((sine * -firstmult + cosine * -secondmult) >> 0xC);
-        prim->x1 = var_s4 + ((cosine * firstmult - sine * -secondmult) >> 0xC);
-        prim->y1 = var_s6 + ((sine * firstmult + cosine * -secondmult) >> 0xC);
-        prim->x2 = var_s4 + ((cosine * -firstmult - sine * secondmult) >> 0xC);
-        prim->x3 = var_s4 + ((cosine * firstmult - sine * secondmult) >> 0xC);
-        prim->y2 = var_s6 + ((sine * -firstmult + cosine * secondmult) >> 0xC);
-        prim->y3 = var_s6 + ((sine * firstmult + cosine * secondmult) >> 0xC);
-    } else if (self->step < 5U) {
+        psp_s4 = (self->ext.ricStopWatch.unk82 * 8) / 100;
+        psp_s3 = (self->ext.ricStopWatch.unk82 * 12) / 100;
+        psp_s6 = rsin(self->ext.ricStopWatch.unk80);
+        psp_s5 = rcos(self->ext.ricStopWatch.unk80);
+        prim->x0 = psp_s1 + ((psp_s5 * -psp_s4 - psp_s6 * -psp_s3) >> 0xC);
+        prim->y0 = psp_s2 + ((psp_s6 * -psp_s4 + psp_s5 * -psp_s3) >> 0xC);
+        prim->x1 = psp_s1 + ((psp_s5 * psp_s4 - psp_s6 * -psp_s3) >> 0xC);
+        prim->y1 = psp_s2 + ((psp_s6 * psp_s4 + psp_s5 * -psp_s3) >> 0xC);
+        prim->x2 = psp_s1 + ((psp_s5 * -psp_s4 - psp_s6 * psp_s3) >> 0xC);
+        prim->y2 = psp_s2 + ((psp_s6 * -psp_s4 + psp_s5 * psp_s3) >> 0xC);
+        prim->x3 = psp_s1 + ((psp_s5 * psp_s4 - psp_s6 * psp_s3) >> 0xC);
+        prim->y3 = psp_s2 + ((psp_s6 * psp_s4 + psp_s5 * psp_s3) >> 0xC);
+    } else if (self->step < 5) {
         if (self->ext.ricStopWatch.unk84.val <= 0x100000) {
-            if (self->ext.ricStopWatch.unk90 != 0) {
+            if (self->ext.ricStopWatch.unk90) {
                 self->ext.ricStopWatch.unk88 = (rand() % 0x40 + 0x200) * 0x100;
                 self->ext.ricStopWatch.unk90 = 0;
             } else {
@@ -1829,140 +1866,125 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         }
         self->ext.ricStopWatch.unk84.val += self->ext.ricStopWatch.unk88;
         self->ext.ricStopWatch.unk88 -= 0x4000;
-        var_s4 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
-        var_s6 = self->posY.i.hi - self->ext.ricStopWatch.unk84.i.hi;
-        sine = rsin(self->ext.ricStopWatch.unk80);
-        cosine = rcos(self->ext.ricStopWatch.unk80);
-        temp_t1 = cosine * 8;
-        temp_a3 = -temp_t1;
-        temp_t2 = sine * 0xC;
-        temp_a0_6 = -temp_t2;
-        temp_a2_3 = sine * 8;
-        temp_a1_3 = -temp_a2_3;
-        temp_t0 = cosine * 0xC;
-        temp_v1_11 = -temp_t0;
-        prim->x0 = var_s4 + ((temp_a3 - temp_a0_6) >> 0xC);
-        prim->y0 = var_s6 + ((temp_a1_3 + temp_v1_11) >> 0xC);
-        prim->x1 = var_s4 + ((temp_t1 - temp_a0_6) >> 0xC);
-        prim->y1 = var_s6 + ((temp_a2_3 + temp_v1_11) >> 0xC);
-        prim->x2 = var_s4 + ((temp_a3 - temp_t2) >> 0xC);
-        prim->y2 = var_s6 + ((temp_a1_3 + temp_t0) >> 0xC);
-        prim->x3 = var_s4 + ((temp_t1 - temp_t2) >> 0xC);
-        prim->y3 = var_s6 + ((temp_a2_3 + temp_t0) >> 0xC);
+        psp_s1 = self->posX.i.hi + (self->facingLeft ? 6 : -6);
+        psp_s2 = self->posY.i.hi - (self->ext.ricStopWatch.unk84.val >> 0x10);
+        psp_s6 = rsin(self->ext.ricStopWatch.unk80);
+        psp_s5 = rcos(self->ext.ricStopWatch.unk80);
+        prim->x0 = psp_s1 + (((psp_s5 * -8) - (psp_s6 * -12)) >> 0xC);
+        prim->y0 = psp_s2 + (((psp_s6 * -8) + (psp_s5 * -12)) >> 0xC);
+        prim->x1 = psp_s1 + (((psp_s5 * 8) - (psp_s6 * -12)) >> 0xC);
+        prim->y1 = psp_s2 + (((psp_s6 * 8) + (psp_s5 * -12)) >> 0xC);
+        prim->x2 = psp_s1 + (((psp_s5 * -8) - (psp_s6 * 12)) >> 0xC);
+        prim->y2 = psp_s2 + (((psp_s6 * -8) + (psp_s5 * 12)) >> 0xC);
+        prim->x3 = psp_s1 + (((psp_s5 * 8) - (psp_s6 * 12)) >> 0xC);
+        prim->y3 = psp_s2 + (((psp_s6 * 8) + (psp_s5 * 12)) >> 0xC);
     } else {
-        temp_v0 = 8 - self->ext.ricStopWatch.t;
-        var_a0 = temp_v0;
-        if (temp_v0 <= 0) {
-            var_a0 = 1;
+        psp_s4 = 8 - self->ext.ricStopWatch.t;
+        if (psp_s4 <= 0) {
+            psp_s4 = 1;
         }
-        var_a1 = ((self->ext.ricStopWatch.t << 0x10) >> 0xB) + 0xC;
-        if (var_a1 >= 0x80) {
-            var_a1 = 0x80;
+#if defined(VERSION_PSP)
+        psp_s3 = (self->ext.ricStopWatch.t << 5) + 0xC;
+#else
+        psp_s3 = (self->ext.ricStopWatch.t << 16 >> 11) + 0xC;
+#endif
+        if (psp_s3 >= 0x80) {
+            psp_s3 = 0x80;
         }
-        prim->x0 = prim->x2 = self->posX.i.hi - var_a0;
-        prim->x1 = prim->x3 = var_a0 + self->posX.i.hi;
-        prim->y0 = prim->y1 = self->posY.i.hi - var_a1;
-        prim->y2 = prim->y3 = var_a1 + self->posY.i.hi;
+        prim->x0 = prim->x2 = self->posX.i.hi - psp_s4;
+        prim->x1 = prim->x3 = self->posX.i.hi + psp_s4;
+        prim->y0 = prim->y1 = self->posY.i.hi - psp_s3;
+        prim->y2 = prim->y3 = self->posY.i.hi + psp_s3;
     }
     if (self->step < 4) {
-        var_s6 = self->posY.i.hi - 0xE;
-        if (self->ext.ricStopWatch.unk92 != 0) {
-            var_s4 = self->posX.i.hi + (self->facingLeft ? -10 : 4);
+        psp_s2 = self->posY.i.hi - 0xE;
+        if (self->ext.ricStopWatch.unk92) {
+            psp_s1 = self->posX.i.hi - (self->facingLeft ? 10 : -4);
             prim = prim->next;
             if (self->ext.ricStopWatch.unk7E < 8) {
                 prim->x0 = prim->x2 =
-                    var_s4 - (self->ext.ricStopWatch.unk7E / 2);
+                    psp_s1 - (self->ext.ricStopWatch.unk7E / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + (self->ext.ricStopWatch.unk7E / 2);
-                temp_t2 = 0xF;
+                    psp_s1 + (self->ext.ricStopWatch.unk7E / 2);
                 prim->y0 = prim->y1 =
-                    var_s6 + (self->ext.ricStopWatch.unk7E - temp_t2);
+                    (psp_s2 - 8) - (7 - self->ext.ricStopWatch.unk7E);
                 prim->y2 = prim->y3 =
-                    var_s6 - (self->ext.ricStopWatch.unk7E - temp_t2);
+                    (psp_s2 + 8) + (7 - self->ext.ricStopWatch.unk7E);
             } else if (self->ext.ricStopWatch.unk7E >= 0x44) {
-                var_a0 = (0x4C - self->ext.ricStopWatch.unk7E) / 2;
-                if (var_a0 < 0) {
-                    var_a0 = 0;
+                psp_s4 = (0x50 - (self->ext.ricStopWatch.unk7E + 4)) / 2;
+                if (psp_s4 < 0) {
+                    psp_s4 = 0;
                 }
-                var_a1 = self->ext.ricStopWatch.unk7E - 0x44;
-                if (var_a1 >= 9) {
-                    var_a1 = 8;
+                psp_s3 = self->ext.ricStopWatch.unk7E - 0x44;
+                if (psp_s3 > 8) {
+                    psp_s3 = 8;
                 }
-                var_a1 += 8;
-                prim->x0 = prim->x2 = var_s4 - var_a0;
-                prim->x1 = prim->x3 = var_s4 + var_a0;
-                prim->y0 = prim->y1 = var_s6 - var_a1;
-                // FAKE horrible thing needed to match, secondmult should be
-                // totally irrelevant here
-                prim->y2 = prim->y3 = (secondmult = var_s6) + var_a1;
+                prim->x0 = prim->x2 = psp_s1 - psp_s4;
+                prim->x1 = prim->x3 = psp_s1 + psp_s4;
+                prim->y0 = prim->y1 = (psp_s2 - 8) - psp_s3;
+                prim->y2 = prim->y3 = (psp_s2 + 8) + psp_s3;
             } else {
-                prim->x0 = prim->x2 = var_s4 - 4;
-                prim->x1 = prim->x3 = var_s4 + 4;
-                prim->y0 = prim->y1 = var_s6 - 8;
-                prim->y2 = prim->y3 = var_s6 + 8;
+                prim->x0 = prim->x2 = psp_s1 - 4;
+                prim->x1 = prim->x3 = psp_s1 + 4;
+                prim->y0 = prim->y1 = psp_s2 - 8;
+                prim->y2 = prim->y3 = psp_s2 + 8;
             }
-            var_s4 = self->posX.i.hi + (self->facingLeft ? -4 : 10);
+            psp_s1 = self->posX.i.hi - (self->facingLeft ? 4 : -10);
             prim = prim->next;
             if (self->ext.ricStopWatch.unk7E < 0xC) {
-                var_a0 = (self->ext.ricStopWatch.unk7E - 4) / 2;
-                if (var_a0 < 0) {
-                    var_a0 = 0;
+                psp_s4 = (self->ext.ricStopWatch.unk7E - 4) / 2;
+                if (psp_s4 < 0) {
+                    psp_s4 = 0;
                 }
-                var_a1 = 0xB - self->ext.ricStopWatch.unk7E;
-                if (var_a1 < 0) {
-                    var_a1 = 0;
+                psp_s3 = 7 - (self->ext.ricStopWatch.unk7E - 4);
+                if (psp_s3 < 0) {
+                    psp_s3 = 0;
                 }
-                var_a1 += 8;
-                prim->x0 = prim->x2 = var_s4 - var_a0;
-                prim->x1 = prim->x3 = var_s4 + var_a0;
-                prim->y0 = prim->y1 = var_s6 - var_a1;
-                // FAKE horrible thing needed to match, secondmult should be
-                // totally irrelevant here
-                prim->y2 = prim->y3 = (secondmult = var_s6) + var_a1;
-            } else if (self->ext.ricStopWatch.unk7E < 0x48) {
-                prim->x0 = prim->x2 = var_s4 - 4;
-                prim->x1 = prim->x3 = var_s4 + 4;
-                prim->y0 = prim->y1 = var_s6 - 8;
-                prim->y2 = prim->y3 = var_s6 + 8;
-            } else {
+                prim->x0 = prim->x2 = psp_s1 - psp_s4;
+                prim->x1 = prim->x3 = psp_s1 + psp_s4;
+                prim->y0 = prim->y1 = (psp_s2 - 8) - psp_s3;
+                prim->y2 = prim->y3 = (psp_s2 + 8) + psp_s3;
+            } else if (self->ext.ricStopWatch.unk7E >= 0x48) {
                 prim->x0 = prim->x2 =
-                    var_s4 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
+                    psp_s1 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
-                temp_t2 = -0x40;
+                    psp_s1 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->y0 = prim->y1 =
-                    var_s6 - (self->ext.ricStopWatch.unk7E + temp_t2);
+                    (psp_s2 - 8) - (-0x48 + self->ext.ricStopWatch.unk7E);
                 prim->y2 = prim->y3 =
-                    var_s6 + (self->ext.ricStopWatch.unk7E + temp_t2);
+                    (psp_s2 + 8) + (-0x48 + self->ext.ricStopWatch.unk7E);
+            } else {
+                prim->x0 = prim->x2 = psp_s1 - 4;
+                prim->x1 = prim->x3 = psp_s1 + 4;
+                prim->y0 = prim->y1 = psp_s2 - 8;
+                prim->y2 = prim->y3 = psp_s2 + 8;
             }
         } else {
-            var_s4 = self->posX.i.hi + (self->facingLeft ? -4 : 4);
+            psp_s1 = self->posX.i.hi - (self->facingLeft ? 4 : -4);
             prim = prim->next;
             if (self->ext.ricStopWatch.unk7E < 8) {
                 prim->x0 = prim->x2 =
-                    var_s4 - (self->ext.ricStopWatch.unk7E / 2);
+                    psp_s1 - (self->ext.ricStopWatch.unk7E / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + (self->ext.ricStopWatch.unk7E / 2);
-                temp_t2 = 0xF;
+                    psp_s1 + (self->ext.ricStopWatch.unk7E / 2);
                 prim->y0 = prim->y1 =
-                    var_s6 + (self->ext.ricStopWatch.unk7E - temp_t2);
+                    (psp_s2 - 8) - (7 - self->ext.ricStopWatch.unk7E);
                 prim->y2 = prim->y3 =
-                    var_s6 - (self->ext.ricStopWatch.unk7E - temp_t2);
+                    (psp_s2 + 8) + (7 - self->ext.ricStopWatch.unk7E);
             } else if (self->ext.ricStopWatch.unk7E >= 0x48) {
                 prim->x0 = prim->x2 =
-                    var_s4 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
+                    psp_s1 - ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->x1 = prim->x3 =
-                    var_s4 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
-                temp_t2 = -0x40;
+                    psp_s1 + ((0x50 - self->ext.ricStopWatch.unk7E) / 2);
                 prim->y0 = prim->y1 =
-                    var_s6 - (self->ext.ricStopWatch.unk7E + temp_t2);
+                    (psp_s2 - 8) - (-0x48 + self->ext.ricStopWatch.unk7E);
                 prim->y2 = prim->y3 =
-                    var_s6 + (self->ext.ricStopWatch.unk7E + temp_t2);
+                    (psp_s2 + 8) + (-0x48 + self->ext.ricStopWatch.unk7E);
             } else {
-                prim->x0 = prim->x2 = var_s4 - 5;
-                prim->x1 = prim->x3 = var_s4 + 5;
-                prim->y0 = prim->y1 = var_s6 - 8;
-                prim->y2 = prim->y3 = var_s6 + 8;
+                prim->x0 = prim->x2 = psp_s1 - 5;
+                prim->x1 = prim->x3 = psp_s1 + 5;
+                prim->y0 = prim->y1 = psp_s2 - 8;
+                prim->y2 = prim->y3 = psp_s2 + 8;
             }
         }
     }
@@ -1970,12 +1992,10 @@ void RicEntitySubwpnStopwatch(Entity* self) {
 
 void RicEntitySubwpnBibleTrail(Entity* entity) {
     Primitive* prim;
-    s32 ret;
 
     switch (entity->step) {
     case 0:
-        ret = g_api.AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = ret;
+        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (entity->primIndex == -1) {
             DestroyEntity(entity);
             return;
@@ -1986,8 +2006,8 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
         prim->u0 = prim->u2 = 0x20;
-        prim->u1 = prim->u3 = 0x30;
         prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
         prim->v2 = prim->v3 = 0x10;
         prim->x0 = prim->x2 = entity->posX.i.hi - 8;
         prim->x1 = prim->x3 = entity->posX.i.hi + 8;
@@ -1999,7 +2019,8 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (++entity->ext.et_BibleSubwpn.unk7C > 5) {
+        entity->ext.et_BibleSubwpn.unk7C++;
+        if (entity->ext.et_BibleSubwpn.unk7C > 5) {
             entity->step++;
         }
         entity->ext.et_BibleSubwpn.unk7E -= 8;
@@ -2014,28 +2035,26 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
 
 void RicEntitySubwpnBible(Entity* self) {
     Primitive* prim;
-    s16 left;
-    s16 top;
-    s16 bottom;
-    s16 right;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s16 selfX;
+    s16 selfY;
+    s32 sp3C;
+    s32 psp_s8;
+    s32 psp_s7;
+    s32 psp_s6;
+    s32 psp_s5;
+    s32 psp_s4;
+    s32 psp_s3;
+    s32 psp_s2;
+    s32 psp_s1;
 
-    s32 sine;
-    s32 cosine;
-    s32 cos_s2;
-    s32 sin_s3;
-    s32 cos_s3;
-    s32 sin_s2;
-
-    s32 temp_a3;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_a1;
-
-    s32 temp_v0;
-    // Note: Not initialized in this function! will retain
-    // value already held (due to being a saved register)
-    s32 var_s4;
-
+// This variable is uninitialized. It's an error for PSP compiler.
+// Maybe they tossed this "= 0" line as a quick workaround.
+#if defined(VERSION_PSP)
+    psp_s4 = 0;
+#endif
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -2054,7 +2073,12 @@ void RicEntitySubwpnBible(Entity* self) {
         prim->v2 = prim->v3 = 0xF0;
         prim->priority = PLAYER.zPriority + 1;
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
-        self->ext.et_BibleSubwpn.unk84 = self->facingLeft ? 0x20 : -0x20;
+        if (self->facingLeft) {
+            sp44 = 0x20;
+        } else {
+            sp44 = -0x20;
+        }
+        self->ext.et_BibleSubwpn.unk84 = sp44;
         self->ext.et_BibleSubwpn.subweaponId = PL_W_BIBLE;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 6;
@@ -2068,14 +2092,21 @@ void RicEntitySubwpnBible(Entity* self) {
         self->step++;
     case 2:
         self->ext.et_BibleSubwpn.unk7C++;
-        if (++self->ext.et_BibleSubwpn.unk7E >= 0x30) {
+        self->ext.et_BibleSubwpn.unk7E++;
+        if (self->ext.et_BibleSubwpn.unk7E >= 0x30) {
             self->step++;
         }
         break;
     case 3:
-        if (++self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
+        self->ext.et_BibleSubwpn.unk7C++;
+        if (self->ext.et_BibleSubwpn.unk7C >= 0x12C) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
-            self->velocityX = self->facingLeft ? FIX(-12) : FIX(12);
+            if (self->facingLeft) {
+                sp40 = FIX(-12);
+            } else {
+                sp40 = FIX(12);
+            }
+            self->velocityX = sp40;
             self->velocityY = FIX(-12);
             g_api.PlaySfx(SFX_BIBLE_SCRAPE);
             self->ext.et_BibleSubwpn.unk86++;
@@ -2088,39 +2119,33 @@ void RicEntitySubwpnBible(Entity* self) {
         break;
     case 1:
         // All this logic is a mess, could use a cleanup
-        sine = rsin(self->ext.et_BibleSubwpn.unk80);
-        cosine = rcos(self->ext.et_BibleSubwpn.unk80);
-        temp_s2 = (sine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        temp_s3 = (cosine * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
-        cos_s2 = cosine * temp_s2;
-        sin_s3 = sine * temp_s3;
-        cos_s3 = cosine * temp_s3;
-        temp_a1 = cos_s2 + sin_s3;
-        sin_s2 = sine * temp_s2;
-        temp_s2 = temp_a1 >> 0xC;
-        temp_s3 = (cos_s3 - sin_s2) >> 0xC;
-        sine = rsin(self->ext.et_BibleSubwpn.unk82);
-        cosine = rcos(self->ext.et_BibleSubwpn.unk82);
-        temp_a1 = ((cosine * temp_s2) + (sine * var_s4)) >> 0xC;
-        temp_a3 = ((cosine * var_s4) - (sine * temp_s2)) >> 0xC;
+        psp_s2 = rsin(self->ext.et_BibleSubwpn.unk80);
+        psp_s1 = rcos(self->ext.et_BibleSubwpn.unk80);
+        psp_s5 = (psp_s2 * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        psp_s3 = (psp_s1 * self->ext.et_BibleSubwpn.unk7E) >> 0xC;
+        psp_s7 = (psp_s1 * psp_s5 + psp_s2 * psp_s3);
+        sp48 = (psp_s1 * psp_s3 - psp_s2 * psp_s5);
+        psp_s5 = psp_s7 >> 0xC;
+        psp_s3 = sp48 >> 0xC;
+        psp_s2 = rsin(self->ext.et_BibleSubwpn.unk82);
+        psp_s1 = rcos(self->ext.et_BibleSubwpn.unk82);
+        psp_s7 = ((psp_s1 * psp_s5) + (psp_s2 * psp_s4)) >> 0xC;
+        psp_s6 = ((psp_s1 * psp_s4) - (psp_s2 * psp_s5)) >> 0xC;
+        psp_s4 = psp_s6;
         if (self->facingLeft) {
-            temp_a3 = ((cosine * temp_a3) + (sine * temp_s3)) >> 0xC;
+            psp_s6 = ((psp_s1 * psp_s4) + (psp_s2 * psp_s3)) >> 0xC;
         } else {
-            temp_a3 = ((cosine * temp_a3) - (sine * temp_s3)) >> 0xC;
+            psp_s6 = ((psp_s1 * psp_s4) - (psp_s2 * psp_s3)) >> 0xC;
         }
-
-        self->ext.et_BibleSubwpn.unk80 += (self->facingLeft ? 0x80 : -0x80);
+        self->ext.et_BibleSubwpn.unk80 += self->facingLeft ? 0x80 : -0x80;
         self->ext.et_BibleSubwpn.unk80 &= 0xFFF;
         self->ext.et_BibleSubwpn.unk82 += self->ext.et_BibleSubwpn.unk84;
         if (abs(self->ext.et_BibleSubwpn.unk82) >= 0x200) {
-            // temp_v0 needed because otherwise unk84 gets loaded with lhu
-            // instead of lh
-            temp_v0 = -self->ext.et_BibleSubwpn.unk84;
-            self->ext.et_BibleSubwpn.unk84 = temp_v0;
+            self->ext.et_BibleSubwpn.unk84 *= -1;
         }
-        self->posX.i.hi = PLAYER.posX.i.hi + temp_a1;
-        self->posY.i.hi = PLAYER.posY.i.hi + temp_a3;
-        self->zPriority = PLAYER.zPriority + (temp_s3 < 0 ? 2 : -2);
+        self->posX.i.hi = PLAYER.posX.i.hi + psp_s7;
+        self->posY.i.hi = PLAYER.posY.i.hi + psp_s6;
+        self->zPriority = PLAYER.zPriority + (psp_s3 < 0 ? 2 : -2);
         break;
     case 2:
         self->posX.val += self->velocityX;
@@ -2128,16 +2153,14 @@ void RicEntitySubwpnBible(Entity* self) {
         self->velocityY += FIX(-2);
         break;
     }
-    if (self->ext.et_BibleSubwpn.unk86 != 0) {
+    if (self->ext.et_BibleSubwpn.unk86) {
+        selfX = self->posX.i.hi;
+        selfY = self->posY.i.hi;
         prim = &g_PrimBuf[self->primIndex];
-        left = self->posX.i.hi - 8;
-        right = self->posX.i.hi + 8;
-        top = self->posY.i.hi - 12;
-        bottom = self->posY.i.hi + 12;
-        prim->x0 = prim->x2 = left;
-        prim->x1 = prim->x3 = right;
-        prim->y0 = prim->y1 = top;
-        prim->y2 = prim->y3 = bottom;
+        prim->x0 = prim->x2 = selfX - 8;
+        prim->x1 = prim->x3 = selfX + 8;
+        prim->y0 = prim->y1 = selfY - 12;
+        prim->y2 = prim->y3 = selfY + 12;
         prim->priority = self->zPriority;
         RicCreateEntFactoryFromEntity(self, BP_BIBLE_TRAIL, 0);
         if (g_GameTimer % 10 == 0) {
