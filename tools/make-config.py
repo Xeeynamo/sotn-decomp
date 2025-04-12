@@ -703,14 +703,12 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
 
 def match_existing(ovl_name, version, source_name, source_bin) -> [dict]:
     # TODO: should these be driven by splat config?
-    os.chdir("tools/sotn-match")
-    build_dir = f"../../build/{version}"
+    build_dir = f"build/{version}"
     match_config_path = f"{build_dir}/match.{ovl_name}.yaml"
-    cargo_run("--output", match_config_path, "evaluate", f"{build_dir}/{source_name}.map", f"{build_dir}/{source_bin}.BIN")
+    exec("bin/mipsmatch", "--output", match_config_path, "evaluate", f"{build_dir}/{source_name}.map", f"{build_dir}/{source_name}.elf")
 
     ovl_path = make_ovl_path(ovl_name, version)
-    matches = cargo_run("scan", match_config_path, f"../../{ovl_path}")
-    os.chdir("../..")
+    matches = exec("bin/mipsmatch", "scan", match_config_path, f"{ovl_path}")
 
     return yaml.load_all(matches, Loader=yaml.SafeLoader)
 
@@ -911,8 +909,8 @@ def add_symbol_unique(symbol_file_name: str, name: str, offset: int, source: str
     if not symbol_already_in_the_list:
         with open(symbol_file_name, "a") as f:
             f.write(f"{name} = 0x{offset:08X};")
-            if options is not None and options.show_symbol_source and source is not None:
-                f.write(f" // source={source}");
+            # if options is not None and options.show_symbol_source and source is not None:
+            #     f.write(f" // source={source}");
             f.write('\n')
 
 
