@@ -155,15 +155,12 @@ def get_asset_files(
     asset_path = Path(options["asset_path"])
 
     # Stages and bosses, excluding sel, use these as default glob patterns instead of *
-    if ("st" in asset_path.parts or "boss" in asset_path.parts) and options[
-        "ovl"
-    ] != "sel":
-        asset_filters = tuple(
-            ["D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"]
-            + ["mwo_header.bin"]
-            if options["version"] == "pspeu"
-            else []
-        )
+    if (
+        options["platform"] == "psx"
+        and ("st" in asset_path.parts or "boss" in asset_path.parts)
+        and options["ovl"] != "sel"
+    ):
+        asset_filters = tuple(["D_801*.bin", "*.gfxbin", "*.palbin", "cutscene_*.bin"])
 
     # The file listing is really the only one used currently because some asset segment files are built by splat extensions
     # and the resulting files aren't directly specified in the config
