@@ -18,6 +18,12 @@ type cueTrack struct {
 	mode string
 }
 
+func assert(condition bool, message string) {
+	if !condition {
+		panic(message)
+	}
+}
+
 func performCueAction(cuePath string, action imageAction) error {
 	tracks, err := parseTracks(cuePath)
 	if err != nil {
@@ -32,6 +38,8 @@ func performCueAction(cuePath string, action imageAction) error {
 	switch mainTrack.mode {
 	case "MODE1/2048":
 		mode = iso9660.TrackMode1_2048
+	case "MODE1/2352":
+		mode = iso9660.TrackMode1_2352
 	case "MODE2/2352":
 		mode = iso9660.TrackMode2_2352
 	default:
@@ -48,6 +56,25 @@ func performCueAction(cuePath string, action imageAction) error {
 	defer f.Close()
 
 	image, err := iso9660.OpenImage(f, mode)
+
+	// 80 	8 	Volume Space Size 	int32_LSB-MSB 	Number of Logical Blocks in which the volume is recorded. 
+	// 120 	4 	Volume Set Size 	int16_LSB-MSB 	The size of the set in this logical volume (number of disks).
+	// 124 	4 	Volume Sequence Number 	int16_LSB-MSB 	The number of this disk in the Volume Set.
+	// 128 	4 	Logical Block Size 	int16_LSB-MSB 	The size in bytes of a logical block. NB: This means that a logical block on a CD could be something other than 2 KiB!
+	// 132 	8 	Path Table Size 	int32_LSB-MSB 	The size in bytes of the path table. 
+	// 148 	4 	Location of Type-M Path Table 	int32_MSB 	LBA location of the path table. The path table pointed to contains only big-endian values.
+	// 152 	4 	Location of Optional Type-M Path Table 	int32_MSB 	LBA location of the optional path table. The path table pointed to contains only big-endian values. Zero means that no optional path table exists. 
+	assert(image.Pvd.VolumeSpaceSize.MSB == image.Pvd.VolumeSpaceSize.LSB, "VolumeSpaceSize")
+	assert(image.Pvd.VolumeSetSize.MSB == image.Pvd.VolumeSetSize.LSB, "VolumeSetSize")
+	assert(image.Pvd.VolumeSequenceNumber.MSB == image.Pvd.VolumeSequenceNumber.LSB, "VolumeSequenceNumber")
+	assert(image.Pvd.LogicalBlockSize.MSB == image.Pvd.LogicalBlockSize.LSB, "LogicalBlockSize")
+	assert(image.Pvd.PathTableSize.MSB == image.Pvd.PathTableSize.LSB, "PathTableSize")
+	fmt.Print(image.Pvd.PathMTableLocation.MSB, " ", image.Pvd.PathMTableLocation.LSB, "\n")
+
+	// this fails
+	// assert(image.Pvd.PathMTableLocation.MSB == image.Pvd.PathMTableLocation.LSB, "PathMTableLocation")
+	assert(image.Pvd.PathOptionalMTableLocation.MSB == image.Pvd.PathOptionalMTableLocation.LSB, "PathOptionalMTableLocation")
+
 	if err != nil {
 		return err
 	}
@@ -101,6 +128,12 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 			track.file = file
 			track.id = tokens[1]
 			track.mode = tokens[2]
+
+			// need to append here since there's multiple tracks in the same file
+			if track != nil {
+				tracks = append(tracks, *track)
+			}
+
 		}
 	}
 
