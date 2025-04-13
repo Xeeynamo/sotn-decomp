@@ -44,7 +44,27 @@ void func_80102EB8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCBC8);
+void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
+    s32 var_v1;
+
+    if (arg2 == arg0) {
+        if (g_Timer & 0x20) {
+            var_v1 = (g_Timer & 0x1F) + 0x60;
+        } else {
+            var_v1 = 0x7F - (g_Timer & 0x1F);
+        }
+
+        prim->r0 = prim->r1 = var_v1 - 16;
+        prim->r2 = prim->r3 = var_v1 + 16;
+        PBLU(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+    } else {
+        prim->b0 = prim->b1 = 96;
+        prim->b2 = prim->b3 = 128;
+        PRED(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_TPAGE | DRAW_TRANSP;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCC60);
 
