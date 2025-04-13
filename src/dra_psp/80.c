@@ -100,7 +100,10 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", HandleSaveMenu);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80103EAC);
+void func_80103EAC(void) {
+    D_80137E4C = 0;
+    MemcardInfoInit();
+}
 
 s32 MemcardParse(s32 nPort, s32 nCard);
 s32 MemcardDetectSave(s32 nPort, char* expectedSaveName, s32 block);
