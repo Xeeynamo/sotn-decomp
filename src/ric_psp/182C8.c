@@ -1573,7 +1573,63 @@ void func_801623E0(Entity* self) {
     prim->clut = (g_Timer & 1) + 0x13E;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80162604);
+void func_80162604(Entity* self) {
+    Primitive* prim;
+
+    self->posX.val = PLAYER.posX.val;
+    self->posY.val = PLAYER.posY.val;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.circleExpand.width = self->ext.circleExpand.height = 0;
+        prim = &g_PrimBuf[self->primIndex];
+
+        prim->u0 = prim->u2 = 0;
+        prim->v0 = prim->v1 = 192;
+        prim->u1 = prim->u3 = 63;
+        prim->v2 = prim->v3 = 255;
+        prim->tpage = 0x1A;
+
+        prim->clut = 0x162;
+        prim->priority = PLAYER.zPriority - 4;
+        prim->drawMode = DRAW_DEFAULT;
+        self->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
+    case 1:
+        self->ext.circleExpand.width += 8;
+        self->ext.circleExpand.height += 8;
+        if (self->ext.circleExpand.width >= 0x20) {
+            self->step++;
+        }
+        break;
+    case 2:
+        self->step++;
+        break;
+    case 3:
+        self->ext.circleExpand.width -= 8;
+        self->ext.circleExpand.height -= 8;
+        if (self->ext.circleExpand.width < 5) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y0 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x1 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y1 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x2 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y2 = self->posY.i.hi + self->ext.circleExpand.height;
+    prim->x3 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityMariaPowers);
 
