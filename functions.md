@@ -1160,7 +1160,7 @@
 | lib    | func_us_801B29C4                    |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
 | st0    | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra    | MenuHandleCursorInput               |      275 |         39 | Yes    |                                 |       |
-| dra    | func_801042C4                       |      277 |         20 |        |                                 |       |
+| dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/xBRHp | 0.995 |
 | no4    | func_pspeu_0923FF60                 |      277 |         31 |        |                                 |       |
 | no4    | func_pspeu_092423C8                 |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
@@ -1351,7 +1351,7 @@
 | lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
-| dra    | HandleSaveMenu                      |      639 |        101 |        | https://decomp.me/scratch/rPayV | 0.889 |
+| dra    | HandleSaveMenu                      |      639 |        101 |        | https://decomp.me/scratch/yNOg6 | 0.993 |
 | lib    | func_us_801B4830                    |      642 |         61 | Yes    |                                 |       |
 | no4    | func_pspeu_092483A0                 |      644 |         88 | Yes    |                                 |       |
 | dra    | func_8012D3E8                       |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
