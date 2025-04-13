@@ -1,0 +1,18 @@
+name: Build Docker image
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Dockerfile'
+      - 'tools/**'
+      - 'Makefile*'
+  workflow_dispatch:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build image
+        run: docker build .
