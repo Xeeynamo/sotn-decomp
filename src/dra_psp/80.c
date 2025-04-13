@@ -66,7 +66,37 @@ void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCC60);
+Primitive* func_80103148(Primitive* prim, Primitive* basis) {
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y0 - 1;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x0 - 1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y2;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+    
+    return prim;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", HandleSaveMenu);
 
