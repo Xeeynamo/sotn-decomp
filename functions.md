@@ -476,7 +476,7 @@
 | wrp    | func_psp_0923C2F8                   |       46 |          7 |        | https://decomp.me/scratch/LLr7o | 1.0   |
 | dra    | func_psp_090EDBA0                   |       47 |          1 |        |                                 |       |
 | dra    | func_8011A290                       |       47 |          3 |        |                                 |       |
-| dra    | func_psp_090DCBC8                   |       47 |          3 |        |                                 |       |
+| dra    | func_psp_090DCBC8                   |       47 |          3 |        | https://decomp.me/scratch/5Kh8l | 1.0   |
 | st0    | func_801B01F8                       |       47 |          4 |        |                                 |       |
 | dra    | DecelerateX                         |       47 |          5 |        |                                 |       |
 | dra    | DecelerateY                         |       47 |          5 |        |                                 |       |
@@ -535,7 +535,7 @@
 | ric    | AguneaShuffleParams                 |       54 |          5 |        |                                 |       |
 | ric    | RicSetHighJump                      |       54 |          8 |        |                                 |       |
 | ric    | RicSetWalk                          |       54 |          9 |        |                                 |       |
-| dra    | func_psp_090DCC60                   |       55 |          1 |        |                                 |       |
+| dra    | func_psp_090DCC60                   |       55 |          1 |        | https://decomp.me/scratch/myDl0 | 1.0   |
 | dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
 | dra    | GetFreeEntityReverse                |       55 |          5 |        |                                 |       |
 | ric    | RicGetFreeEntityReverse             |       55 |          5 |        |                                 |       |
@@ -928,7 +928,7 @@
 | dra    | GetEquipProperties                  |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
 | dra    | func_800F2860                       |      120 |         21 | Yes    |                                 |       |
 | ric    | func_8015FB84                       |      121 |         11 |        |                                 |       |
-| dra    | func_80102EB8                       |      121 |         13 |        |                                 |       |
+| dra    | func_80102EB8                       |      121 |         13 |        | https://decomp.me/scratch/PURZu | 0.491 |
 | dra    | LoadPendingGfx                      |      123 |         14 |        |                                 |       |
 | ric    | RicEntityCrashReboundStone          |      124 |         11 | Yes    |                                 |       |
 | dra    | func_8012D28C                       |      125 |         22 |        |                                 |       |
@@ -957,9 +957,9 @@
 | dra    | func_psp_09141668                   |      136 |         21 |        |                                 |       |
 | no4    | func_pspeu_09249560                 |      138 |         15 |        |                                 |       |
 | dra    | CheckIfAllButtonsAreAssigned        |      139 |          2 |        |                                 |       |
-| lib    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
-| no4    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
-| st0    | SetCutsceneScript                   |      139 |          5 |        |                                 |       |
+| lib    | SetCutsceneScript                   |      139 |          5 |        | https://decomp.me/scratch/ExoTq | 0.999 |
+| no4    | SetCutsceneScript                   |      139 |          5 |        | https://decomp.me/scratch/ExoTq | 0.999 |
+| st0    | SetCutsceneScript                   |      139 |          5 |        | https://decomp.me/scratch/ExoTq | 0.999 |
 | ric    | RicCheckHolyWaterCollision          |      139 |         12 |        |                                 |       |
 | dra    | func_800F14CC                       |      139 |         15 |        |                                 |       |
 | dra    | EntityUnkId24                       |      140 |         10 |        | https://decomp.me/scratch/QH3hn | 0.937 |
@@ -1351,7 +1351,7 @@
 | lib    | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0    | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
 | dra    | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
-| dra    | HandleSaveMenu                      |      639 |        101 |        |                                 |       |
+| dra    | HandleSaveMenu                      |      639 |        101 |        | https://decomp.me/scratch/rPayV | 0.889 |
 | lib    | func_us_801B4830                    |      642 |         61 | Yes    |                                 |       |
 | no4    | func_pspeu_092483A0                 |      644 |         88 | Yes    |                                 |       |
 | dra    | func_8012D3E8                       |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
@@ -1470,7 +1470,7 @@
 | lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | wrp    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
-| no4    | func_pspeu_09239B00                 |     1639 |        210 | Yes    |                                 |       |
+| no4    | func_pspeu_09239B00                 |     1639 |        210 | Yes    | https://decomp.me/scratch/WmZ7p | 0.806 |
 | no4    | func_pspeu_0925E548                 |     1731 |        172 | Yes    |                                 |       |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra    | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
