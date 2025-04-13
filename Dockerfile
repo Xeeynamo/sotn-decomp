@@ -17,7 +17,6 @@
 # 5. from now on, to re-use the same container execute the following:
 # docker start -ai sotn-work
 
-# make extract -j && make build -j
 FROM ubuntu:noble
 COPY /tools/requirements-debian.txt /tools/requirements-debian.txt
 RUN apt-get update && \
