@@ -14,5 +14,9 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone main repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
       - name: Build image
         run: docker build .
