@@ -4,6 +4,447 @@
 #include "objects.h"
 #include "sfx.h"
 
+void func_80102EB8(void) {
+    Primitive *poly1, *poly2, *poly3;
+    s32 i;
+
+    D_80137E58 = AllocPrimitives(PRIM_GT4, 3);
+    poly1 = &g_PrimBuf[D_80137E58];
+
+    D_80137E5C = AllocPrimitives(PRIM_G4, 3);
+    poly2 = &g_PrimBuf[D_80137E5C];
+
+    D_80137E60 = AllocPrimitives(PRIM_LINE_G2, 12);
+    poly3 = &g_PrimBuf[D_80137E60];
+
+    for (i = 0; i < 3; i++) {
+        SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
+        func_801072DC(poly1);
+        poly1->tpage = 0x10;
+        poly1->clut = 0x1A1;
+        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
+        poly1->drawMode = DRAW_HIDE;
+        poly1->p1 = 0;
+        SetPrimRect(poly2, 80, 79, 96, 0);
+        func_801072DC(poly2);
+        func_801071CC(poly2, 96, 0);
+        func_801071CC(poly2, 96, 1);
+        poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
+            poly2->r2 = poly2->r3 = 0;
+        poly2->tpage = 0x1F;
+        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
+        poly2->drawMode = DRAW_HIDE;
+        poly1 = poly1->next;
+        poly2 = poly2->next;
+    }
+
+    for (i = 0; i < 12; i++) {
+        func_80107250(poly3, 255);
+        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
+        poly3->drawMode = DRAW_HIDE;
+        poly3 = poly3->next;
+    }
+}
+
+void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
+    s32 var_v1;
+
+    if (arg2 == arg0) {
+        if (g_Timer & 0x20) {
+            var_v1 = (g_Timer & 0x1F) + 0x60;
+        } else {
+            var_v1 = 0x7F - (g_Timer & 0x1F);
+        }
+
+        poly->r0 = poly->r1 = var_v1 - 16;
+        poly->r2 = poly->r3 = var_v1 + 16;
+        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
+        poly->pad3 = 0x404;
+    } else {
+        poly->b1 = 96;
+        poly->b0 = 96;
+        poly->b3 = 128;
+        poly->b2 = 128;
+        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0;
+        poly->pad3 = 0x415;
+    }
+}
+
+POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y0 - 1;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x0 - 1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x0 - 1;
+    poly1->y0 = arg1->y2;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    poly1 = (POLY_GT4*)poly1->tag;
+
+    poly1->x0 = arg1->x1;
+    poly1->y0 = arg1->y0 - 1;
+    poly1->x1 = arg1->x1;
+    poly1->y1 = arg1->y2;
+    poly1->pad3 = 0;
+    return (POLY_GT4*)poly1->tag;
+}
+
+s32 HandleSaveMenu(s32 arg0) {
+// For some reason, US and HD have different controls for confirm and exit,
+// so we handle that with a couple of constants.
+#if defined(VERSION_US)
+    const s32 CONFIRM = PAD_CROSS;
+    const s32 EXIT = PAD_TRIANGLE;
+#elif defined(VERSION_HD)
+    const s32 CONFIRM = (PAD_START | PAD_SQUARE | PAD_CIRCLE);
+    const s32 EXIT = PAD_CROSS;
+#endif
+    Primitive* prim1;
+    Primitive* prim2;
+    Primitive* prim3;
+    u8 temp_t0;
+    s32 temp_a1;
+
+    prim2 = &g_PrimBuf[D_80137E58];
+    temp_t0 = prim2->p1;
+    prim1 = &g_PrimBuf[D_80137E5C];
+    prim3 = &g_PrimBuf[D_80137E60];
+    if (arg0 == 0) {
+        if (temp_t0 == 0) {
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            if (D_80137E4C == 6) {
+                PlaySfx(SFX_START_SLAM_B);
+            } else {
+                PlaySfx(SFX_UI_ALERT_TINK);
+            }
+            if (D_80137E4C == 6) {
+#if defined(VERSION_US)
+                func_800F9D88("Data saved．", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40("セーブしました　　　", 0, 1);
+#endif
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 7) {
+#if defined(VERSION_US)
+                func_800F9D88("Memory Card", 0, 1);
+                func_800F9D88("  not found．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40("メモリーカードが　　", 0, 1);
+                func_800F9D40("ささっていません　　", 1, 0);
+#endif
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 8) {
+#if defined(VERSION_US)
+                func_800F9D88("Memory Card", 0, 1);
+                func_800F9D88("is Defective．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40("メモリーカードが　　", 0, 1);
+                func_800F9D40("　壊れています　　　", 1, 0);
+#endif
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 9) {
+#if defined(VERSION_US)
+                func_800F9D88("Memory Card is", 0, 1);
+                func_800F9D88("not formatted．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40("　メモリーカードが　", 0, 1);
+                func_800F9D40("初期化されていません", 1, 0);
+#endif
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 10) {
+                if (D_80137E54 == 2) {
+#if defined(VERSION_US)
+                    func_800F9D88("Cannot", 0, 1);
+                    func_800F9D88("overwrite file．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40("　　上書き　　　　　", 0, 1);
+                    func_800F9D40("　できません　　　　", 1, 0);
+#endif
+                } else if (D_80137E54 == 3) {
+#if defined(VERSION_US)
+                    func_800F9D88("No game", 0, 1);
+                    func_800F9D88("data found．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40("データがないため　　", 0, 1);
+                    func_800F9D40("上書きできません　　", 1, 0);
+#endif
+                } else {
+#if defined(VERSION_US)
+                    func_800F9D88("   ０ memory", 0, 1);
+                    func_800F9D88("blocks available．", 1, 0);
+#elif defined(VERSION_HD)
+                    func_800F9D40("空きブロックが　　　", 0, 1);
+                    func_800F9D40("　足りません　　　　", 1, 0);
+#endif
+                }
+                prim2->p1 += 2;
+            }
+            if (D_80137E4C == 11) {
+#if defined(VERSION_US)
+                func_800F9D88("  Memory card", 0, 1);
+                func_800F9D88("  format error．", 1, 0);
+#elif defined(VERSION_HD)
+                func_800F9D40("　メモリーカードの　", 0, 1);
+                func_800F9D40("初期化に失敗しました　", 1, 0);
+#endif
+                prim2->p1 += 2;
+            }
+        } else {
+            if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
+                SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (
+                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
+                SetTexturedPrimRect(
+                    prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (D_80137E4C == 10 && temp_t0 < 33) {
+#if defined(VERSION_US)
+                // silly logic here. if 2 or 3, it's 0, otherwise it's -10
+                temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
+                SetTexturedPrimRect(
+                    prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                if (D_80137E54 == 2 || D_80137E54 == 3) {
+                    SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+                } else {
+                    SetPrimRect(prim1, 68, 96 - temp_t0, 120, temp_t0);
+                }
+#elif defined(VERSION_HD)
+                temp_a1 = (-(!(D_80137E54 ^ 3))) & -6;
+                SetTexturedPrimRect(
+                    prim2, temp_a1 + 86, 96 - temp_t0, 96, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+#endif
+                func_80103148(prim3, prim1);
+            } else if (temp_t0 < 17) {
+                SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
+                func_80103148(prim3, prim1);
+            } else {
+                func_80103148(prim3, prim1);
+                if (D_80137E4C == 6) {
+                    prim2->p1 += 2;
+                }
+                if ((prim2->p1 >= 224) || (g_pads[0].tapped & CONFIRM)) {
+                    FreePrimitives(D_80137E58);
+                    FreePrimitives(D_80137E5C);
+                    FreePrimitives(D_80137E60);
+                    return 1;
+                }
+            }
+        }
+        // Seems this one shouldn't be needed since the else's would send it to
+        // the end anyway?
+        return 0;
+    } else if (arg0 == 1) {
+        if (temp_t0 == 0) {
+            PlaySfx(SFX_UI_ALERT_TINK);
+            prim2->p1 += 2;
+#if defined(VERSION_US)
+            func_800F9D88("  Select the slot．", 0, 1);
+            func_800F9D88(" Slot １", 1, 0);
+            func_800F9D88(" Slot ２", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F9D40("スロットを選んで下さい　", 0, 1);
+            func_800F9D40("スロット１　", 1, 0);
+            func_800F9D40("スロット２　", 2, 0);
+#endif
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(0, prim1, D_80097924);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(1, prim1, D_80097924);
+        } else if (temp_t0 < 17) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 54, 104 - temp_t0, 64, temp_t0, 0, 16);
+            SetPrimRect(prim1, 52, 104 - temp_t0, 64, temp_t0);
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 142, 104 - temp_t0, 64, temp_t0, 0, 32);
+            SetPrimRect(prim1, 140, 104 - temp_t0, 64, temp_t0);
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & PAD_LEFT) {
+                if (D_80097924 != 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80097924 = 0;
+            }
+            if (g_pads[0].tapped & PAD_RIGHT) {
+                if (D_80097924 == 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80097924 = 1;
+            }
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & EXIT) {
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_80097924 = -1;
+                return 2;
+            }
+            if (g_pads[0].tapped & CONFIRM) {
+                PlaySfx(SFX_UI_CONFIRM);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_8006C378 = -1;
+                return 1;
+            }
+        }
+    } else {
+        if (temp_t0 == 0) {
+            PlaySfx(SFX_UI_ALERT_TINK);
+            prim2->p1 += 2;
+            if (arg0 == 2) {
+#if defined(VERSION_US)
+                func_800F9D88(" Wish to format？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40("初期化してもいいですか　", 0, 1);
+#endif
+                D_80137E6C = 1;
+            }
+            if (arg0 == 3) {
+#if defined(VERSION_US)
+                func_800F9D88(" Overwrite data？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40("　　上書きしますか　　　", 0, 1);
+#endif
+                D_80137E6C = 0;
+            }
+            if (arg0 == 4) {
+#if defined(VERSION_US)
+                func_800F9D88("   Wish to save？", 0, 1);
+#elif defined(VERSION_HD)
+                func_800F9D40("　　セーブしますか　　　", 0, 1);
+#endif
+                D_80137E6C = 0;
+            }
+#if defined(VERSION_US)
+            func_800F9D88("Yes ", 1, 0);
+            func_800F9D88("  No  ", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F9D40("はい　　", 1, 0);
+            func_800F9D40("いいえ　", 2, 0);
+
+#endif
+
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(1, prim1, D_80137E6C);
+        } else if (temp_t0 < 17) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
+            SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
+            SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & PAD_LEFT) {
+                if (D_80137E6C != 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80137E6C = 0;
+            }
+            if (g_pads[0].tapped & PAD_RIGHT) {
+                if (D_80137E6C == 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80137E6C = 1;
+            }
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & EXIT) {
+                D_80137E6C = 1;
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            } else if (g_pads[0].tapped & CONFIRM) {
+                PlaySfx(SFX_UI_CONFIRM);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+void func_80103EAC(void) {
+    D_80137E4C = 0;
+    MemcardInfoInit();
+}
+
 SVECTOR D_800A31B0 = {34, -18, -11};
 SVECTOR D_800A31B8 = {21, 18, -29};
 SVECTOR D_800A31C0 = {0, -18, -36};
@@ -1439,399 +1880,3 @@ void func_80105428(void) {
         PlaySfx(SFX_SAVE_COFFIN_SWISH);
     }
 }
-
-void DestroyEntity(Entity* entity) {
-    s32 i;
-    s32 length;
-    u32* ptr;
-
-    if (entity->flags & FLAG_HAS_PRIMS) {
-        FreePrimitives(entity->primIndex);
-    }
-
-    ptr = (u32*)entity;
-    length = sizeof(Entity) / sizeof(u32);
-    for (i = 0; i < length; i++)
-        *ptr++ = NULL;
-}
-
-void DestroyEntitiesFromIndex(s16 startIndex) {
-    Entity* pItem;
-
-    for (pItem = &g_Entities[startIndex];
-         pItem < &g_Entities[TOTAL_ENTITY_COUNT]; pItem++)
-        DestroyEntity(pItem);
-}
-
-void DrawEntitiesHitbox(s32 drawMode) {
-    DR_MODE* drMode;
-    s32 polyCount;
-    OT_TYPE* ot;
-    Entity* entity;
-    TILE* tile;
-    u32 otIdx;
-    u16 x;
-    u16 y;
-
-    ot = g_CurrentBuffer->ot;
-    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
-    drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
-    otIdx = 0x1F0;
-    for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
-        entity++) {
-        if (entity->hitboxState == 0)
-            continue;
-        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
-            break;
-        }
-
-        y = entity->posY.i.hi + g_backbufferY;
-        x = entity->posX.i.hi + g_backbufferX;
-        if (entity->facingLeft) {
-            x -= entity->hitboxOffX;
-        } else {
-            x += entity->hitboxOffX;
-        }
-        y += entity->hitboxOffY;
-
-        tile->r0 = 0xFF;
-        tile->g0 = 0xFF;
-        tile->b0 = 0xFF;
-        if (entity->hitboxState == 2) {
-            tile->r0 = 0;
-            tile->g0 = 0xFF;
-            tile->b0 = 0;
-        }
-        tile->x0 = x - entity->hitboxWidth;
-        tile->y0 = y - entity->hitboxHeight;
-        tile->w = entity->hitboxWidth * 2;
-        tile->h = entity->hitboxHeight * 2;
-        SetSemiTrans(tile, 1);
-        AddPrim(&ot[otIdx], tile);
-        tile++;
-        g_GpuUsage.tile++;
-    }
-
-    for (; polyCount < MAX_TILE_COUNT; polyCount++, entity++) {
-        if (entity->hitboxState == 0)
-            continue;
-        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
-            break;
-        }
-
-        y = entity->posY.i.hi + g_backbufferY;
-        x = entity->posX.i.hi + g_backbufferX;
-        if (entity->facingLeft) {
-            x -= entity->hitboxOffX;
-        } else {
-            x += entity->hitboxOffX;
-        }
-        y += entity->hitboxOffY;
-
-        tile->r0 = 0xFF;
-        tile->g0 = 0xFF;
-        tile->b0 = 0xFF;
-        if (entity->hitboxState == 1) {
-            tile->r0 = 0xFF;
-            tile->g0 = 0;
-            tile->b0 = 0;
-        }
-        if (entity->hitboxState == 2) {
-            tile->r0 = 0;
-            tile->g0 = 0;
-            tile->b0 = 0xFF;
-        }
-        if (entity->hitboxState == 3) {
-            tile->r0 = 0xFF;
-            tile->g0 = 0;
-            tile->b0 = 0xFF;
-        }
-        tile->x0 = x - entity->hitboxWidth;
-        tile->y0 = y - entity->hitboxHeight;
-        tile->w = entity->hitboxWidth * 2;
-        tile->h = entity->hitboxHeight * 2;
-        SetSemiTrans(tile, 1);
-        AddPrim(&ot[otIdx], tile);
-        tile++;
-        g_GpuUsage.tile++;
-    }
-
-    if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
-        SetDrawMode(drMode, 0, 0, (drawMode - 1) << 5, &g_Vram.D_800ACD80);
-        AddPrim(&ot[otIdx], drMode);
-        g_GpuUsage.drawModes++;
-    }
-}
-
-extern u16 D_800AC910[];
-#ifdef VERSION_HD
-extern u8 D_800AC914[10][30];
-#else
-extern u8 D_800AC914[1][30];
-#endif
-extern u16 D_800AC934[]; // LUT of ceil(index / 2)
-extern u16 D_80137EF8[];
-
-#define ExtractBit(x)                                                          \
-    x & 1;                                                                     \
-    x >>= 1
-
-#ifndef VERSION_PC
-
-u16* func_80106A28(u16 ch, u16 kind) {
-    u8* bitmap;
-    u16* srcPtr;
-    u16* destPtr;
-    u16 i, j, k;
-    u16 val0, val1, val2;
-    u16 b0, b1, b2, b3;
-    u16 dest, dest2;
-    u8 row;
-
-    // Krom2RawAdd returns a pointer to 30 bytes: 15 rows of 2 bytes for a
-    // bitmap of size 16x15.
-    bitmap = (u8*)Krom2RawAdd(ch);
-    if (bitmap == (u8*)-1) {
-        srcPtr = D_800AC910;
-        for (i = 0; i < LEN(D_800AC914); i++) {
-            if (ch == *srcPtr++) {
-                bitmap = D_800AC914[i];
-            }
-        }
-        if (bitmap == (u8*)-1) {
-            ch = 0x819A;
-            bitmap = (u8*)Krom2RawAdd(ch);
-        }
-    }
-
-    srcPtr = D_80137EF8;
-    for (i = 0; i < 15; i++) {
-        val0 = val2 = val1 = 0;
-
-        row = *bitmap;
-
-        b0 = ExtractBit(row);
-        b1 = ExtractBit(row);
-        b2 = ExtractBit(row);
-        b3 = ExtractBit(row);
-
-        val1 |= (b0 * 3 + b1) << 0x4;
-        val1 |= (b1 * 2 + b2 * 2);
-        val0 |= (b2 + b3 * 3) << 0xC;
-
-        b0 = ExtractBit(row);
-        b1 = ExtractBit(row);
-        b2 = ExtractBit(row);
-        b3 = ExtractBit(row);
-
-        val0 |= (b0 * 3 + b1) << 0x8;
-        val0 |= (b1 * 2 + b2 * 2) << 0x4;
-        val0 |= b2 + b3 * 3;
-
-        bitmap++;
-
-        row = *bitmap;
-
-        b0 = ExtractBit(row);
-        b1 = ExtractBit(row);
-        b2 = ExtractBit(row);
-        b3 = ExtractBit(row);
-
-        val2 |= (b0 * 3 + b1) << 0xC;
-        val2 |= (b1 * 2 + b2 * 2) << 0x8;
-        val2 |= (b2 + b3 * 3) << 0x4;
-
-        b0 = ExtractBit(row);
-        b1 = ExtractBit(row);
-        b2 = ExtractBit(row);
-        b3 = ExtractBit(row);
-
-        val2 |= b0 * 3 + b1;
-        val1 |= (b1 * 2 + b2 * 2) << 0xC;
-        val1 |= (b2 + b3 * 3) << 0x8;
-        dest = val1; // fake
-
-        *srcPtr++ = val0;
-        *srcPtr++ = val1;
-        *srcPtr++ = val2;
-        bitmap++;
-    }
-
-    destPtr = D_80137EF8;
-    srcPtr = D_80137EF8;
-    switch (kind) {
-    case 0:
-    case 3:
-        for (i = 0; i < 45; i++) {
-            val0 = *srcPtr++;
-            dest = D_800AC934[(val0 >> 0xC & 0xF) * 4] << 0xC;
-            dest |= D_800AC934[(val0 >> 0x8 & 0xF) * 4] << 0x8;
-            dest |= D_800AC934[(val0 >> 0x4 & 0xF) * 4] << 0x4;
-            dest |= D_800AC934[(val0 >> 0x0 & 0xF) * 4] << 0x0;
-            *destPtr++ = dest;
-        }
-        for (i = 0; i < 3; i++) {
-            *destPtr++ = 0;
-        }
-        break;
-
-    case 1:
-        for (i = 0; i < 2; i++) {
-            for (j = 0; j < 3; j++) {
-                for (k = 7; k > 0; k--) {
-                    val0 = *srcPtr;
-                    srcPtr += 3;
-                    val2 = *srcPtr;
-                    dest = D_800AC934[((val0 >> 0xC & 0xF) * k +
-                                       (val2 >> 0xC & 0xF) * (8 - k)) /
-                                      2]
-                           << 0xC;
-                    dest |= D_800AC934[((val0 >> 0x8 & 0xF) * k +
-                                        (val2 >> 0x8 & 0xF) * (8 - k)) /
-                                       2]
-                            << 0x8;
-                    dest |= D_800AC934[((val0 >> 0x4 & 0xF) * k +
-                                        (val2 >> 0x4 & 0xF) * (8 - k)) /
-                                       2]
-                            << 0x4;
-                    dest |= D_800AC934[((val0 >> 0x0 & 0xF) * k +
-                                        (val2 >> 0x0 & 0xF) * (8 - k)) /
-                                       2]
-                            << 0x0;
-                    *destPtr = dest;
-                    destPtr += 3;
-                }
-                srcPtr -= 20;
-                destPtr -= 20;
-            }
-            srcPtr += 21;
-            destPtr += 18;
-        }
-        for (i = 0; i < 6; i++) {
-            *destPtr++ = 0;
-        }
-        break;
-
-    case 2:
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 3; j++) {
-                for (k = 3; k > 0; k--) {
-                    val0 = *srcPtr;
-                    srcPtr += 3;
-                    val2 = *srcPtr;
-                    dest = D_800AC934[(val0 >> 0xC & 0xF) * k +
-                                      (val2 >> 0xC & 0xF) * (4 - k)]
-                           << 0xC;
-                    dest |= D_800AC934[(val0 >> 0x8 & 0xF) * k +
-                                       (val2 >> 0x8 & 0xF) * (4 - k)]
-                            << 0x8;
-                    dest |= D_800AC934[(val0 >> 0x4 & 0xF) * k +
-                                       (val2 >> 0x4 & 0xF) * (4 - k)]
-                            << 0x4;
-                    dest |= D_800AC934[(val0 >> 0x0 & 0xF) * k +
-                                       (val2 >> 0x0 & 0xF) * (4 - k)]
-                            << 0x0;
-                    *destPtr = dest;
-                    destPtr += 3;
-                }
-                srcPtr -= 8;
-                destPtr -= 8;
-            }
-            srcPtr += 9;
-            destPtr += 6;
-        }
-        for (i = 0; i < 12; i++) {
-            *destPtr++ = 0;
-        }
-        break;
-    }
-    if (kind == 3) {
-        for (i = 0; i < 0x42; i++) {
-            dest2 = D_80137EF8[i];
-            if (dest2 & 4) {
-                if ((D_80137EF8[i] & 0xF0) == 0) {
-                    D_80137EF8[i] |= 0x10;
-                }
-            }
-            if (dest2 & 0x40) {
-                if ((D_80137EF8[i] & 0xF00) == 0) {
-                    D_80137EF8[i] |= 0x100;
-                }
-            }
-            if (dest2 & 0x400) {
-                if ((D_80137EF8[i] & 0xF000) == 0) {
-                    D_80137EF8[i] |= 0x1000;
-                }
-            }
-            if ((dest2 & 0x4000) && (i < 0x41)) {
-                if ((D_80137EF8[i + 1] & 0xF) == 0) {
-                    D_80137EF8[i + 1] |= 1;
-                }
-            }
-        }
-    }
-    return D_80137EF8;
-}
-
-#endif
-
-bool LoadMonsterLibrarianPreview(s32 monsterId) {
-    if (g_IsUsingCd)
-        return false;
-
-    if (!g_UseDisk) {
-        if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
-            return false;
-        }
-    } else {
-        g_CdStep = CdStep_LoadInit;
-        g_LoadFile = CdFile_Monster;
-        g_LoadOvlIdx = monsterId;
-    }
-    return true;
-}
-
-void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
-    switch (vertexIndex) {
-    case 0:
-        prim->b0 = colorIntensity;
-        prim->g0 = colorIntensity;
-        prim->r0 = colorIntensity;
-        break;
-    case 1:
-        prim->b1 = colorIntensity;
-        prim->g1 = colorIntensity;
-        prim->r1 = colorIntensity;
-        break;
-    case 2:
-        prim->b2 = colorIntensity;
-        prim->g2 = colorIntensity;
-        prim->r2 = colorIntensity;
-        break;
-    case 3:
-        prim->b3 = colorIntensity;
-        prim->g3 = colorIntensity;
-        prim->r3 = colorIntensity;
-        break;
-    }
-}
-
-void func_80107250(Primitive* prim, s32 colorIntensity) {
-    func_801071CC(prim, (u8)colorIntensity, 0);
-    func_801071CC(prim, (u8)colorIntensity, 1);
-    func_801071CC(prim, (u8)colorIntensity, 2);
-    func_801071CC(prim, (u8)colorIntensity, 3);
-}
-
-void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
-
-void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
-
-void func_801072FC(POLY_G4* poly) {
-    setRGB0(poly, 0, 0, 0);
-    setRGB1(poly, 0, 0, 0);
-    setRGB2(poly, 0, 0, 0);
-    setRGB3(poly, 0, 0, 0);
-}
-
-#include "../set_prim_rect.h"
