@@ -434,7 +434,7 @@
 | 1.00 | true     | Ratan2                              | asm/us/st/wrp/matchings/st_common/Ratan2.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/624DC/func_801027A4.s 
-| 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/63ED4/func_801072BC.s 
+| 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/66590/func_801072BC.s 
 | 1.00 | true     | StCdInterrupt2                      | asm/us/main/matchings/psxsdk/libcd/cdread2/StCdInterrupt2.s 
 | 1.00 | true     | CdDataSync                          | asm/us/main/matchings/psxsdk/libcd/sys/CdDataSync.s 
 | 1.00 | true     | CdFlush                             | asm/us/main/matchings/psxsdk/libcd/sys/CdFlush.s 
@@ -478,7 +478,7 @@
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/boss/mar/matchings/st_common/DestroyEntitiesFromIndex.s 
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/boss/rbo3/matchings/st_common/DestroyEntitiesFromIndex.s 
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/boss/rbo5/matchings/st_common/DestroyEntitiesFromIndex.s 
-| 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/dra/matchings/63ED4/DestroyEntitiesFromIndex.s 
+| 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/dra/matchings/66590/DestroyEntitiesFromIndex.s 
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/st/cen/matchings/st_common/DestroyEntitiesFromIndex.s 
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/st/chi/matchings/ut_common/DestroyEntitiesFromIndex.s 
 | 1.00 | true     | DestroyEntitiesFromIndex            | asm/us/st/dre/matchings/st_common/DestroyEntitiesFromIndex.s 
@@ -2213,7 +2213,7 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/first_c_file/CutsceneUnk3.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/63ED4/func_801072DC.s 
+| 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/66590/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
 | 1.00 | true     | SsStart                             | asm/us/main/matchings/psxsdk/libsnd/ssstart/SsStart.s 
 | 1.00 | true     | SsUtReverbOn                        | asm/us/main/matchings/psxsdk/libsnd/ut_ron/SsUtReverbOn.s 
@@ -2623,7 +2623,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C9FEC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C9FEC.s 
 | 1.00 | true     | func_80103EAC                       | asm/us/boss/rbo5/matchings/unk_4648C/func_80103EAC.s 
-| 0.90 | true     | func_80103EAC                       | asm/us/dra/matchings/62DEC/func_80103EAC.s 
+| 0.90 | true     | func_80103EAC                       | asm/us/dra/matchings/62EB8/func_80103EAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CEA30                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CEA30.s 
 | 1.00 | true     | func_80121F58                       | asm/us/boss/rbo5/matchings/unk_4648C/func_80121F58.s 
@@ -2948,16 +2948,16 @@
 | 1.00 | true     | MemCardInitAndFormat                | asm/us/dra/matchings/62DEC/MemCardInitAndFormat.s 
 | 1.00 | true     | MemCardInitAndFormat                | asm/us/st/sel/matchings/33164/MemCardInitAndFormat.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetPrimRect                         | asm/us/dra/matchings/63ED4/SetPrimRect.s 
+| 1.00 | true     | SetPrimRect                         | asm/us/dra/matchings/66590/SetPrimRect.s 
 | 1.00 | true     | SetPrimRect                         | asm/us/st/sel/matchings/2C048/SetPrimRect.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetTexturedPrimRect                 | asm/us/dra/matchings/63ED4/SetTexturedPrimRect.s 
+| 1.00 | true     | SetTexturedPrimRect                 | asm/us/dra/matchings/66590/SetTexturedPrimRect.s 
 | 1.00 | true     | SetTexturedPrimRect                 | asm/us/st/sel/matchings/2C048/SetTexturedPrimRect.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801071CC                       | asm/us/dra/matchings/63ED4/func_801071CC.s 
+| 1.00 | true     | func_801071CC                       | asm/us/dra/matchings/66590/func_801071CC.s 
 | 1.00 | true     | SetPrimVertexGrey                   | asm/us/st/sel/matchings/2C048/SetPrimVertexGrey.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80107250                       | asm/us/dra/matchings/63ED4/func_80107250.s 
+| 1.00 | true     | func_80107250                       | asm/us/dra/matchings/66590/func_80107250.s 
 | 1.00 | true     | SetPrimGrey                         | asm/us/st/sel/matchings/2C048/SetPrimGrey.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | GetTeleportToOtherCastle            | asm/us/dra/matchings/692E8/GetTeleportToOtherCastle.s 
