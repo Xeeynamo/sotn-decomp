@@ -44,7 +44,7 @@ void func_80102EB8(void) {
     }
 }
 
-void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
+static void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
     s32 var_v1;
 
     if (arg2 == arg0) {
@@ -66,7 +66,7 @@ void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
     }
 }
 
-Primitive* func_80103148(Primitive* prim, Primitive* basis) {
+static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
     prim->x0 = basis->x0 - 1;
     prim->y0 = basis->y0 - 1;
     prim->x1 = basis->x1;
