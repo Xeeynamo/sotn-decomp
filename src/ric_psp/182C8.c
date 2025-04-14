@@ -1721,7 +1721,7 @@ void RicEntityMariaPowers(Entity* self) {
     prim->y3 = self->posY.i.hi + self->ext.et_80162870.unk80;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented4);
+void RicEntityNotImplemented4(Entity* self) {}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityMaria);
 
