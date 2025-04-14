@@ -1773,8 +1773,8 @@ typedef struct {
     /* 80073098 */ s32 unused14;
     /* 8007309C */ s32 order;
     /* 800730A0 */ u32 flags;
-    /* 800730A4 */ s32 hSize;
-    /* 800730A8 */ s32 vSize;
+    /* 800730A4 */ u32 hSize;
+    /* 800730A8 */ u32 vSize;
     /* 800730AC */ u32 hideTimer;
     /* 800730B0 */ s32 left;
     /* 800730B4 */ s32 top;
