@@ -52,23 +52,19 @@ class SotnFunction(object):
     def overlay(self) -> str:
         """Attempts to infer the overlay from the asm file path or returns None if one is not found.
         The '_psp' extension will be included if the version is psp"""
-        nonmatchings_dir = (
-            "f_nonmat"
-            if args.version == "saturn"
-            else "psp" if "psp" in args.version else "nonmatchings"
-        )
+        nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "nonmatchings"
         if not self._overlay:
             nonmatching_index = next(
                 (
                     i
                     for i, part in enumerate(self.relpath.parts)
-                    if part == nonmatchings_dir
+                    if nonmatchings_dir in part
                 ),
                 None,
             )
             self._overlay = (
                 self.relpath.parts[nonmatching_index - 1] if nonmatching_index else None
-            )
+            ).replace("_psp", "")
         return self._overlay
 
     @property
@@ -172,14 +168,14 @@ class SotnFunction(object):
 
     def _infer_src_path(self) -> Optional[Path]:
         inferred_c_name = f"{self.abspath.parent.parent.name if self.version == "saturn" else self.abspath.parent.name}.c"
-        inferred_c_files = (
-            file
-            for file in self.src_dir.rglob(inferred_c_name)
-            if self.overlay in file.parts or self.overlay in file.name
-        )
-        return next(
-            (path for path in inferred_c_files if self.name in path.read_text()), None
-        )
+        files = [file for file in self.src_dir.rglob(inferred_c_name)]
+        if len(files) > 1 and self.overlay:
+            files = [
+                file
+                for file in files
+                if self.overlay in file.parts or self.overlay in file.name
+            ]
+        return files[0]
 
 
 def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
@@ -194,11 +190,7 @@ def get_function_path(asm_dir: Path, args: argparse.Namespace) -> Optional[Path]
     """Uses the version asm directory and the passed args to find any files matching the function name."""
     file_name = f"{args.function.replace("func_0", "f") if args.version == "saturn" else args.function}.s"
     matchings_dir = "f_match" if args.version == "saturn" else "matchings"
-    nonmatchings_dir = (
-        "f_nonmat"
-        if args.version == "saturn"
-        else "psp" if "psp" in args.version else "nonmatchings"
-    )
+    nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "nonmatchings"
 
     candidates = tuple(file for file in asm_dir.rglob(file_name))
     matching = tuple(c for c in candidates if matchings_dir in c.parts)
