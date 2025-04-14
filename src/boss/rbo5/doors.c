@@ -524,6 +524,19 @@ void func_us_801B4A30(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B5004);
+extern s16 D_us_80180680[];
+extern s16 D_us_80180694[];
+void func_us_801B5004(Tilemap* map, s32 arg1) {
+    Tilemap* tmap = &g_Tilemap;
+
+    s16  var_s2 = D_us_80180680[arg1 >> 1];
+    u16* tileData = &D_us_80180694[arg1 << 2];
+    
+    s32 i;
+    for (i = 0; i < 4; i ++) {
+        tmap->fg[var_s2] = *tileData++;
+        var_s2 += tmap->hSize << 4;
+    }
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B5070);
