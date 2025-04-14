@@ -30,13 +30,3 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134D14);
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134E64);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09143758);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", ExecCdSoundCommands);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09144038);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_091441B8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09144280);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_091446A8);
