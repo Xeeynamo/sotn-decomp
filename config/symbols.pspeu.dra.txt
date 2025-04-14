@@ -498,6 +498,7 @@ func_80134B48 = 0x091433c8;
 func_80134C60 = 0x091434a8;
 func_80134D14 = 0x09143548;
 func_80134E64 = 0x09143680;
+ExecSoundCommands = 0x09143758;
 ExecCdSoundCommands = 0x09143ED8;
 PlaySfxScript = 0x09144038;
 KeyOn12_19 = 0x091441B8;

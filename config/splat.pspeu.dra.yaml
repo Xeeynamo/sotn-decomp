@@ -100,6 +100,7 @@ segments:
       - [0x65790, c, dra_psp/65790]
       - [0x65F50, c, dra_psp/65F50]
       - [0x661C0, c, dra_psp/661C0]
+      - [0x66DD8, c, dra_psp/66DD8]
       - [0x67558, c, dra_psp/67558]
       - [0x68310, c, dra/collider] # O4
       - [0x68E00, data]
