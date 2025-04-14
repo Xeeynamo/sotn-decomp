@@ -1,30 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142B40);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", CdSoundCommand8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142CA8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetReleaseRateHigh20_21);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142D10);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetReleaseRateHigh22_23);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142D78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetReleaseRateLow_20_21);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142DE0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetReleaseRateLow_22_23);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_psp_09142E48);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetVolumeCommand22_23);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", PlaySfxVolPan);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", PlaySfx);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_8013493C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", RestoreSfxScriptData);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_801349F4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", PauseSfxScripts);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134B48);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", UnpauseSfxScripts);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134C60);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", KeyOnChannels20_21);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134D14);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", KeyOnChannels22_23);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", func_80134E64);
+INCLUDE_ASM("dra_psp/psp/dra_psp/661C0", SetVolume22_23);
