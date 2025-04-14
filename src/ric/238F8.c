@@ -463,7 +463,7 @@ void RicUpdatePlayerEntities(void) {
 
     isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
-    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+    for (i = 4; i < STAGE_ENTITY_START; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {
             if (entity->step == 0) {
                 entity->pfnUpdate = entity_functions[entity->entityId];

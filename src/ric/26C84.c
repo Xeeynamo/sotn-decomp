@@ -3,17 +3,18 @@
 
 // same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {
-    s32 i = 16;
-    s16 objId = entity->entityId;
-    s16 params = entity->params;
     Entity* e;
+    s32 i;
+    s16 objId;
+    s16 params;
 
-    for (e = &g_Entities[i]; i < 64; i++, e++) {
-        if ((objId == e->entityId) && (params == e->params) && (e != entity)) {
+    objId = entity->entityId;
+    params = entity->params;
+    for (e = &g_Entities[16], i = 16; i < STAGE_ENTITY_START; e++, i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
             return true;
         }
     }
-
     return false;
 }
 

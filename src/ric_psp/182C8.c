@@ -463,7 +463,7 @@ void RicUpdatePlayerEntities(void) {
 
     isPrologueTimeStopped = g_unkGraphicsStruct.unk20;
     entity = g_CurrentEntity = &g_Entities[4];
-    for (i = 4; i < 0x40; i++, g_CurrentEntity++, entity++) {
+    for (i = 4; i < STAGE_ENTITY_START; i++, g_CurrentEntity++, entity++) {
         if (entity->entityId != 0) {
             if (entity->step == 0) {
                 entity->pfnUpdate = entity_functions[entity->entityId];
@@ -1795,7 +1795,22 @@ void RicEntityMaria(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80162E9C);
+// same as DRA/func_8011BD48
+bool func_80162E9C(Entity* entity) {
+    Entity* e;
+    s32 i;
+    s16 objId;
+    s16 params;
+
+    objId = entity->entityId;
+    params = entity->params;
+    for (e = &g_Entities[16], i = 16; i < STAGE_ENTITY_START; e++, i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
+            return true;
+        }
+    }
+    return false;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityPlayerBlinkWhite);
 
