@@ -545,12 +545,14 @@ $(M2C_APP):
 $(MASPSX_APP):
 	git submodule init $(MASPSX_DIR)
 	git submodule update $(MASPSX_DIR)
-$(MIPSMATCH_APP):
-	# git submodule init $(MIPSMATCH_DIR)
-	# git submodule update $(MIPSMATCH_DIR)
+
+$(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSMATCH_DIR)/src $(MIPSMATCH_DIR)/Cargo.* -type f)
+	git submodule init $(MIPSMATCH_DIR)
+	git submodule update $(MIPSMATCH_DIR)
 	cd $(MIPSMATCH_DIR) ; \
 	    cargo build --release
-	mv $(MIPSMATCH_DIR)/target/release/mipsmatch $@
+$(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
+	mv $< $@
 $(GO):
 	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
