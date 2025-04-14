@@ -103,7 +103,8 @@ segments:
       - [0x67D50, c, dra_psp/67D50]
       - [0x67E90, c, dra_psp/67E90]
       - [0x680C0, c, dra_psp/680C0]
-      - [0x68D80, data]
+      - [0x68310, c, dra/collider] # O4
+      - [0x68E00, data]
       - [0x69578, .data, dra/628AC]
       - [0x69600, data]
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
@@ -161,11 +162,11 @@ segments:
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/65790]
-      - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
-      - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
-      - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss2}
-      - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
-      - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss3}
-      - {start: 0xeed80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
-      - {start: 0xeed80, type: bss, vram: 0x09234DB8, name: bss4}
+      - [0xEED80, bss, bss1]
+      - [0x1581E8, .bss, dra/692E8]
+      - [0x158218, bss, bss2]
+      - [0x158330, .bss, dra/71830]
+      - [0x158340, bss, bss3]
+      - [0x158430, .bss, dra/6BF64]
+      - [0x158438, bss, bss4]
   - [0xEED80]

@@ -2,98 +2,73 @@
 #include "dra.h"
 
 typedef enum {
-    // most common block type
-    COLLISION_TYPE_SOLID = 0x03,
-
     // right slanting 45* angle (/)
-    COLLISION_TYPE_RIGHT_45_ANGLE = 0x80,
+    COLLISION_TYPE_RIGHT_45_ANGLE = 0x00,
 
     // left slanting 45* angle (\)
-    COLLISION_TYPE_LEFT_45_ANGLE = 0x83,
+    COLLISION_TYPE_LEFT_45_ANGLE = 0x03,
 
     // right slanting 45* angle on ceiling (\)
-    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x84,
+    COLLISION_TYPE_RIGHT_CEILING_45_ANGLE = 0x04,
 
     // left slanting 45* angle on ceiling (/)
-    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x87,
+    COLLISION_TYPE_LEFT_CEILING_45_ANGLE = 0x07,
 
     // 22.5* angle sloping left (/) takes two tiles to go up one tile
-    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x88,
+    COLLISION_TYPE_LEFT_225_ANGLE_1 = 0x08,
 
     // tile #2 of previous
-    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x89,
+    COLLISION_TYPE_LEFT_225_ANGLE_2 = 0x09,
 
     // flat tile you can press down + jump to drop through
-    COLLISION_TYPE_FLAT_DROP_THROUGH = 0xE7,
+    COLLISION_TYPE_FLAT_DROP_THROUGH = 0x67,
 
     // water
-    COLLISION_TYPE_WATER = 0xED
+    COLLISION_TYPE_WATER = 0x6D
 } CollisionTypes;
 
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
-    Collider sp10;
-    Collider sp38;
-    s32 temp_a0_2;
-    int new_var3;
-    s32 temp_a0_3;
-    s32 absX;
-    s32 absY;
-    s32 temp_v0_10;
-    s32 temp_v0_11;
-    int new_var;
-    s32 temp_v0_6;
-    s32 temp_v0_8;
-    s32 temp_v0_9;
-    s32 temp_v1_2;
-    int new_var2;
-    u32 var_a1;
-    s32 var_v0_2;
-    s32 temp_a0_4;
-    u32 temp_a0_5;
-    u32 temp_a0_6;
-    u32 temp_v1_3;
-    u32 temp_v1_4;
-    u32 temp_v1_7;
-    u32 var_v0;
+    Collider col0;
+    Collider col1;
+    s32 posX, posY;
+    u32 offset;
     u8 colType;
 
-    absX = x + g_Tilemap.scrollX.i.hi;
-    absY = y + g_Tilemap.scrollY.i.hi;
-    new_var = 0x10;
-    if (absX < 0 || (u32)absX >= g_Tilemap.hSize << 8 || absY < 0 ||
-        (u32)absY >= g_Tilemap.vSize << 8) {
+    posX = x + g_Tilemap.scrollX.i.hi;
+    posY = y + g_Tilemap.scrollY.i.hi;
+    if (posX < 0 || posX >= g_Tilemap.hSize << 8 || posY < 0 ||
+        posY >= g_Tilemap.vSize << 8) {
         colType = 0;
     } else {
-        u16 colTile =
-            g_Tilemap.fg[(absX >> 4) + (absY >> 4) * g_Tilemap.hSize * new_var];
+        s32 tileIdx = (posX >> 4) + (posY >> 4) * g_Tilemap.hSize * 0x10;
+        u16 colTile = g_Tilemap.fg[tileIdx];
         colType = g_Tilemap.tileDef->collision[colTile];
     }
     res->effects = EFFECT_NONE;
-    res->unk4 = res->unk14 = -(absX & 0xF);
-    res->unk8 = res->unk18 = -(absY & 0xF);
+    res->unk4 = res->unk14 = -(posX & 0xF);
     res->unkC = res->unk1C = res->unk14 + 0xF;
+    res->unk8 = res->unk18 = -(posY & 0xF);
     res->unk10 = res->unk20 = res->unk18 + 0xF;
-    if (!(colType & 0x80)) {
+    if ((colType & 0x80) == 0) {
         res->effects = colType & 3;
         return;
     }
 
-    var_a1 = 0;
-    switch (colType) {
-    case 0x81:
-    case 0x82:
-    case 0x8A:
-    case 0x8B:
-    case 0x98:
-    case 0x99:
-        if (unk == 0) {
-            CheckCollision(x, y + res->unk18 - 1, &sp10, 1);
-            if (0x8000 & sp10.effects) {
-                if (sp10.effects & EFFECT_SOLID) {
-                    new_var3 = res->unk18 - 1;
-                    res->unk18 = new_var3 + sp10.unk18;
+    offset = 0;
+    switch (colType - 0x80) {
+    case 0x01:
+    case 0x02:
+    case 0x0A:
+    case 0x0B:
+    case 0x18:
+    case 0x19:
+        if (!unk) {
+            CheckCollision(x, y + res->unk18 - 1, &col0, true);
+            if (col0.effects & EFFECT_UNK_8000) {
+                if (col0.effects & EFFECT_SOLID) {
+                    res->unk18 += col0.unk18 - 1;
                 }
-                res->effects = sp10.effects |= EFFECT_SOLID | EFFECT_UNK_0002;
+                res->effects = col0.effects |= EFFECT_SOLID | EFFECT_UNK_0002;
             } else {
                 res->effects = EFFECT_UNK_8000 | EFFECT_SOLID | EFFECT_UNK_0002;
             }
@@ -101,97 +76,95 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             res->effects = EFFECT_SOLID;
         }
         break;
+
     case COLLISION_TYPE_RIGHT_45_ANGLE:
-        temp_v1_2 = res->unk1C + res->unk20;
-        if (temp_v1_2 < 0x10) {
-            res->unk18 = temp_v1_2 - 0xF;
-            res->unk14 = temp_v1_2 - 0xF;
+        if (res->unk1C + res->unk20 < 0x10) {
+            res->unk14 = res->unk18 = res->unk1C + res->unk20 - 0xF;
             res->effects = EFFECT_UNK_8000 | EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_8000;
         }
         break;
+
     case COLLISION_TYPE_LEFT_225_ANGLE_1:
-        var_a1 = 0x10;
+        offset = 0x10;
     case COLLISION_TYPE_LEFT_225_ANGLE_2:
-        temp_v1_3 = var_a1 + res->unk1C + res->unk20 * 2;
-        if (temp_v1_3 < 0x20) {
-            res->unk14 = temp_v1_3 - 0x1F;
+        if (res->unk1C + offset + res->unk20 * 2 < 0x20) {
+            res->unk14 = res->unk1C + offset + res->unk20 * 2 - 0x1F;
+            res->unk18 = ((res->unk1C + offset) >> 1) + res->unk20 - 0xF;
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_1000 | EFFECT_SOLID;
-            res->unk18 = ((var_a1 + res->unk1C) >> 1) + res->unk20 - 0xF;
         } else {
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_1000;
         }
         break;
-    case 0x94:
-        var_a1 = 0x10;
-    case 0x95:
-        var_a1 += 0x10;
-    case 0x96:
-        var_a1 += 0x10;
-    case 0x97:
-        temp_v1_4 = var_a1 + res->unk1C + res->unk20 * 4;
-        if (temp_v1_4 < 0x40) {
-            res->unk14 = temp_v1_4 - 0x3F;
+
+    case 0x14:
+        offset = 0x10;
+    case 0x15:
+        offset += 0x10;
+    case 0x16:
+        offset += 0x10;
+    case 0x17:
+        if (res->unk1C + offset + res->unk20 * 4 < 0x40) {
+            res->unk14 = res->unk1C + offset + res->unk20 * 4 - 0x3F;
+            res->unk18 = ((res->unk1C + offset) >> 2) + res->unk20 - 0xF;
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_2000 | EFFECT_SOLID;
-            var_v0 = (var_a1 + res->unk1C) >> 2;
-            res->unk18 = var_v0 + res->unk20 - 0xF;
         } else {
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_2000;
         }
         break;
+
     case COLLISION_TYPE_LEFT_45_ANGLE:
         if (res->unk1C >= res->unk20) {
-            temp_v0_6 = res->unk20 - res->unk1C;
-            res->unk18 = temp_v0_6;
-            res->unk1C = (-temp_v0_6);
+            res->unk18 = res->unk20 - res->unk1C;
+            res->unk1C = -res->unk18;
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000;
         }
         break;
-    case 0x8C:
-        var_a1 = 0x10;
-    case 0x8D:
-        if (var_a1 + res->unk1C >= res->unk20 * 2) {
-            res->unk18 = res->unk20 - (var_a1 + res->unk1C >> 1);
+
+    case 0x0C:
+        offset = 0x10;
+    case 0x0D:
+        if (res->unk1C + offset >= res->unk20 * 2) {
+            res->unk18 = res->unk20 - (offset + res->unk1C >> 1);
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000 |
                            EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_1000;
         }
         break;
-    case 0x9A:
-        var_a1 = 0x10;
-    case 0x9B:
-        var_a1 += 0x10;
-    case 0x9C:
-        var_a1 += 0x10;
-    case 0x9D:
-        temp_a0_3 = res->unk20;
-        temp_v1_7 = var_a1 + res->unk1C;
-        if (temp_v1_7 >= temp_a0_3 * 4) {
-            res->unk18 = temp_a0_3 - (temp_v1_7 >> 2);
+
+    case 0x1A:
+        offset = 0x10;
+    case 0x1B:
+        offset += 0x10;
+    case 0x1C:
+        offset += 0x10;
+    case 0x1D:
+        if (res->unk1C + offset >= res->unk20 * 4) {
+            res->unk18 = res->unk20 - (res->unk1C + offset) / 4;
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
                            EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000;
         }
         break;
-    case 0x85:
-    case 0x86:
-    case 0x90:
-    case 0x91:
-    case 0xA2:
-    case 0xA3:
-        if (unk == 0) {
-            CheckCollision(x, y + res->unk20 + 1, &sp38, 1);
-            if (0x800 & sp38.effects) {
-                if (sp38.effects & EFFECT_SOLID) {
-                    temp_a0_2 = 1;
-                    res->unk20 = res->unk20 + temp_a0_2 + sp38.unk20;
+
+    case 0x05:
+    case 0x06:
+    case 0x10:
+    case 0x11:
+    case 0x22:
+    case 0x23:
+        if (!unk) {
+            CheckCollision(x, y + res->unk20 + 1, &col1, true);
+            if (col1.effects & EFFECT_UNK_0800) {
+                if (col1.effects & EFFECT_SOLID) {
+                    res->unk20 += col1.unk20 + 1;
                 }
-                res->effects = sp38.effects |= EFFECT_UNK_0002 | EFFECT_SOLID;
+                res->effects = col1.effects |= EFFECT_UNK_0002 | EFFECT_SOLID;
             } else {
                 res->effects = EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID;
             }
@@ -199,185 +172,194 @@ void CheckCollision(s32 x, s32 y, Collider* res, s32 unk) {
             res->effects = EFFECT_SOLID;
         }
         break;
+
     case COLLISION_TYPE_RIGHT_CEILING_45_ANGLE:
-        temp_a0_4 = res->unk1C;
-        if (res->unk20 >= temp_a0_4) {
-            temp_v0_8 = temp_a0_4 - res->unk20;
-            res->unk14 = temp_v0_8;
-            res->unk20 = -temp_v0_8;
+        if (res->unk1C <= res->unk20) {
+            res->unk14 = res->unk1C - res->unk20;
+            res->unk20 = -res->unk14;
             res->effects = EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_0800;
         }
         break;
-    case 0x8E:
-        var_a1 = 0x10;
-    case 0x8F:
-        temp_a0_5 = var_a1 + res->unk1C;
-        if (res->unk20 * 2 >= var_a1 + res->unk1C) {
-            temp_v0_9 = temp_a0_5 - res->unk20 * 2;
-            res->unk14 = temp_v0_9;
-            res->unk20 = -temp_v0_9 / 2;
+
+    case 0x0E:
+        offset = 0x10;
+    case 0x0F:
+        if (res->unk1C + offset <= res->unk20 * 2) {
+            res->unk14 = res->unk1C + offset - res->unk20 * 2;
+            res->unk20 = -res->unk14 / 2;
             res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_1000 | EFFECT_UNK_0800;
         }
         break;
-    case 0x9E:
-        var_a1 = 0x10;
-    case 0x9F:
-        var_a1 += 0x10;
-    case 0xA0:
-        var_a1 += 0x10;
-    case 0xA1:
-        temp_a0_6 = var_a1 + res->unk1C;
-        if (res->unk20 * 4 >= var_a1 + res->unk1C) {
-            temp_v0_10 = temp_a0_6 - res->unk20 * 4;
-            res->unk14 = temp_v0_10;
-            var_v0_2 = -temp_v0_10;
-            if (var_v0_2 < 0) {
-                var_v0_2 += 3;
-            }
-            res->unk20 = (s32)(var_v0_2 >> 2);
+
+    case 0x1E:
+        offset = 0x10;
+    case 0x1F:
+        offset += 0x10;
+    case 0x20:
+        offset += 0x10;
+    case 0x21:
+        if (res->unk1C + offset <= res->unk20 * 4) {
+            res->unk14 = res->unk1C + offset - res->unk20 * 4;
+            res->unk20 = -res->unk14 / 4;
             res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800 | EFFECT_SOLID;
         } else {
             res->effects = EFFECT_UNK_2000 | EFFECT_UNK_0800;
         }
         break;
+
     case COLLISION_TYPE_LEFT_CEILING_45_ANGLE:
-        if (res->unk1C + res->unk20 >= 0xF) {
+        if (res->unk1C + res->unk20 > 0xE) {
+            res->unk1C = res->unk20 = res->unk14 + 0xF + res->unk18;
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID;
-            temp_v0_11 = res->unk18 + 0xF;
-            temp_v0_11 = temp_v0_11 + res->unk14;
-            res->unk20 = temp_v0_11;
-            res->unk1C = (u32)temp_v0_11;
         } else {
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_0800;
         }
         break;
-    case 0x92:
-        var_a1 = 0x10;
-    case 0x93:
-        if (var_a1 + res->unk1C + res->unk20 * 2 >= 0x1E) {
-            temp_a0_5 = 0xF;
+
+    case 0x12:
+        offset = 0x10;
+    case 0x13:
+        if (res->unk1C + offset + res->unk20 * 2 > 0x1D) {
+            res->unk20 =
+                (((res->unk14 + offset - 0xF) >> 1) + 0xF) + res->unk18;
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_1000 | EFFECT_UNK_0800 |
                            EFFECT_SOLID;
-            res->unk20 = ((var_a1 + res->unk14 - temp_a0_5) >> 1) +
-                         (res->unk18 + temp_a0_5);
-            ;
         } else {
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_1000 | EFFECT_UNK_0800;
         }
         break;
-    case 0xA4:
-        var_a1 = 0x10;
-    case 0xA5:
-        var_a1 = var_a1 + 0x10;
-    case 0xA6:
-        var_a1 += 0x10;
-    case 0xA7:
-        new_var2 = 0xF;
-        if (var_a1 + res->unk1C + res->unk20 * 4 >= 0x3C) {
+
+    case 0x24:
+        offset = 0x10;
+    case 0x25:
+        offset += 0x10;
+    case 0x26:
+        offset += 0x10;
+    case 0x27:
+        if (res->unk1C + offset + res->unk20 * 4 > 0x3B) {
+            res->unk20 =
+                (((res->unk14 + offset - 0x2D) >> 2) + 0xF) + res->unk18;
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_0800 |
                            EFFECT_SOLID;
-            res->unk20 =
-                (((var_a1 + res->unk14) - 0x2D) >> 2) + (res->unk18 + new_var2);
         } else {
             res->effects = EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_0800;
         }
         break;
-    case 0xFF:
+
+    case 0x7F:
         if (res->unk20 < 8) {
             res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
-            res->unk18 = res->unk18 + 8;
+            res->unk18 += 8;
         }
         break;
-    case 0xFE:
+
+    case 0x7E:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
-    case 0xFD:
+
+    case 0x7D:
         if (res->unk20 < 8) {
             res->effects = EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
-    case 0xFC:
+
+    case 0x7C:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
-    case 0xFB:
+
+    case 0x7B:
         res->effects = EFFECT_QUICKSAND;
         break;
-    case 0xFA:
+
+    case 0x7A:
         if (res->unk20 < 8) {
-            if (1) {
-                res->effects = EFFECT_QUICKSAND;
-            }
+            res->effects = EFFECT_QUICKSAND;
             res->unk18 += 8;
         }
         break;
-    case 0xF9:
+
+    case 0x79:
         if (res->unk20 < 8) {
             res->effects = EFFECT_WATER;
             res->unk18 += 8;
         }
         break;
-    case 0xF8:
+
+    case 0x78:
         res->effects = EFFECT_MIST_ONLY | EFFECT_UNK_0002 | EFFECT_SOLID;
         break;
-    case 0xF4:
-    case 0xF5:
-    case 0xF6:
-    case 0xF7:
+
+    case 0x77:
+    case 0x76:
+    case 0x75:
+    case 0x74:
         res->effects = EFFECT_UNK_0020;
         break;
-    case 0xEE:
-    case 0xEF:
-    case 0xF0:
-    case 0xF1:
-    case 0xF2:
-    case 0xF3:
+
+    case 0x73:
+    case 0x72:
+    case 0x71:
+    case 0x70:
+    case 0x6F:
+    case 0x6E:
         res->effects = EFFECT_UNK_0002 | EFFECT_SOLID;
         break;
+
     case COLLISION_TYPE_WATER:
         res->effects = EFFECT_WATER;
         break;
-    case 0xEA:
+
+    case 0x6C:
+    case 0x6B:
+        break;
+
+    case 0x6A:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_WATER;
             res->unk20 -= 8;
         }
         break;
-    case 0xE9:
+
+    case 0x69:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_QUICKSAND;
             res->unk20 -= 8;
         }
         break;
-    case 0xE8:
+
+    case 0x68:
         if (res->unk20 < 8) {
             res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
+
     case COLLISION_TYPE_FLAT_DROP_THROUGH:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID;
             res->unk20 -= 8;
         }
         break;
-    case 0xE6:
+
+    case 0x66:
         if (res->unk20 < 8) {
             res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
             res->unk18 += 8;
         }
         break;
-    case 0xE5:
+
+    case 0x65:
         if (res->unk20 >= 8) {
             res->effects = EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID;
             res->unk20 -= 8;
