@@ -1631,7 +1631,95 @@ void func_80162604(Entity* self) {
     prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityMariaPowers);
+static u16 D_80154EAC[] = {0x016E, 0x0161, 0x0160, 0x0162};
+// 0xFFFF2AAB = -FIX(1. / 3)
+// 0xFFFDAAAB = -FIX(5. / 3)
+static s32 D_80154EB4[] = {FIX(5. / 3), -FIX(5. / 3), FIX(1. / 3), -0xD555};
+static s32 D_80154EC4[] = {-FIX(2), -FIX(5. / 3), -FIX(3), -0x25555};
+void RicEntityMariaPowers(Entity* self) {
+    Primitive* prim;
+    s16 params;
+
+    params = self->params;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->unk5A = 0x66;
+        self->zPriority = PLAYER.zPriority - 12;
+        self->palette = params + 0x149;
+        self->animSet = ANIMSET_OVL(0x13);
+        self->animCurFrame = params + 0x19;
+        self->velocityX = D_80154EB4[params];
+        self->velocityY = D_80154EC4[params];
+        self->ext.et_80162870.unk7C = self->ext.et_80162870.unk7E =
+            self->ext.et_80162870.unk80 = 8;
+
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
+        prim->u1 = prim->v2 = prim->u3 = prim->v3 = 0x1F;
+        prim->tpage = 0x1A;
+        prim->clut = D_80154EAC[params];
+        prim->priority = PLAYER.zPriority - 16;
+        prim->drawMode = DRAW_HIDE;
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        if (params == 3) {
+            self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
+        }
+        g_api.PlaySfx(0x881);
+        self->ext.et_80162870.unk82 = 12;
+        self->step++;
+        break;
+    case 1:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (--self->ext.et_80162870.unk82 == 0) {
+            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->rotX = self->rotY = 0x100;
+            self->ext.et_80162870.unk82 = 0x10;
+            self->step++;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        }
+        break;
+    case 2:
+        self->rotX = self->rotY = self->ext.et_80162870.unk82 * 0x10;
+        if (--self->ext.et_80162870.unk82 == 0) {
+            self->animCurFrame = 0;
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
+            self->step++;
+            self->velocityY = FIX(-9);
+        }
+        break;
+    case 3:
+        self->posY.val += self->velocityY;
+        if (self->ext.et_80162870.unk7C > 0 && !(g_Timer & 1)) {
+            self->ext.et_80162870.unk7C--;
+        }
+        if (!(g_Timer & 1)) {
+            self->ext.et_80162870.unk7E++;
+        }
+        self->ext.et_80162870.unk80 += 2;
+        if ((params == 3) && (self->posY.i.hi < -0x20)) {
+            D_801545AC = 8;
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.et_80162870.unk7C;
+    prim->y0 = self->posY.i.hi - self->ext.et_80162870.unk7E;
+    prim->x1 = self->posX.i.hi + self->ext.et_80162870.unk7C;
+    prim->y1 = self->posY.i.hi - self->ext.et_80162870.unk7E;
+    prim->x2 = self->posX.i.hi - self->ext.et_80162870.unk7C;
+    prim->y2 = self->posY.i.hi + self->ext.et_80162870.unk80;
+    prim->x3 = self->posX.i.hi + self->ext.et_80162870.unk7C;
+    prim->y3 = self->posY.i.hi + self->ext.et_80162870.unk80;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityNotImplemented4);
 

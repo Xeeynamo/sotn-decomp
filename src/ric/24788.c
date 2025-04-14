@@ -1000,7 +1000,7 @@ void func_80162604(Entity* self) {
     prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
 }
 
-static s16 D_80154EAC[] = {0x016E, 0x0161, 0x0160, 0x0162};
+static u16 D_80154EAC[] = {0x016E, 0x0161, 0x0160, 0x0162};
 // 0xFFFF2AAB = -FIX(1. / 3)
 // 0xFFFDAAAB = -FIX(5. / 3)
 static s32 D_80154EB4[] = {FIX(5. / 3), -FIX(5. / 3), FIX(1. / 3), -0xD555};
@@ -1050,8 +1050,8 @@ void RicEntityMariaPowers(Entity* self) {
             self->rotX = self->rotY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;
-            g_PrimBuf[self->primIndex].drawMode =
-                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = &g_PrimBuf[self->primIndex];
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         }
         break;
     case 2:
@@ -1059,8 +1059,8 @@ void RicEntityMariaPowers(Entity* self) {
         if (--self->ext.et_80162870.unk82 == 0) {
             self->animCurFrame = 0;
             g_api.PlaySfx(SFX_MAGIC_SWITCH);
-            self->velocityY = FIX(-9);
             self->step++;
+            self->velocityY = FIX(-9);
         }
         break;
     case 3:
