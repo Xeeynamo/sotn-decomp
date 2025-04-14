@@ -3,7 +3,7 @@
 
 extern s32 g_UserLanguage;
 
-u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it) {
+void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
     switch (g_UserLanguage) {
     default:
     case LANG_EN:

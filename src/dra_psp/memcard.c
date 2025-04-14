@@ -140,7 +140,6 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-extern char** g_SaveAreaNames;
 extern char g_AsciiSet[];
 char* g_ShiftJisSet[] = {
     "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",

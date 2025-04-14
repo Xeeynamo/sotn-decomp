@@ -191,7 +191,8 @@ set(SOURCE_FILES_DRA
     src/dra/624DC.c
     src/dra/628AC.c
     src/dra/62DEC.c
-    src/dra/63ED4.c
+    src/dra/62EB8.c
+    src/dra/66590.c
     src/dra/d_CD80.c
     src/dra/692E8.c
     src/dra/6BF64.c
