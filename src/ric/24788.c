@@ -1108,7 +1108,6 @@ static AnimationFrame anim_maria_offering_powers[] = {
     {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
     {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
     {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
-
 void RicEntityMaria(Entity* self) {
     switch (self->step) {
     case 0:

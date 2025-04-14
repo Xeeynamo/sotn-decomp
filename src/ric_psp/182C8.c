@@ -1723,7 +1723,77 @@ void RicEntityMariaPowers(Entity* self) {
 
 void RicEntityNotImplemented4(Entity* self) {}
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityMaria);
+static AnimationFrame anim_maria_walk[] = {
+    {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
+    {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
+    {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
+static AnimationFrame anim_maria_offering_powers[] = {
+    {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
+    {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
+    {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
+    {0x04, FRAME(0x0D, 0)}, {0x03, FRAME(0x0F, 0)}, {0x03, FRAME(0x0E, 0)},
+    {0x03, FRAME(0x0D, 0)}, {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0F, 0)},
+    {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0D, 0)}, {0x04, FRAME(0x0E, 0)},
+    {0x05, FRAME(0x0F, 0)}, {0x06, FRAME(0x0E, 0)}, {0x07, FRAME(0x0D, 0)},
+    {0x30, FRAME(0x0E, 0)}, {0x0C, FRAME(0x09, 0)}, {0x0D, FRAME(0x10, 0)},
+    {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
+    {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
+    {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
+void RicEntityMaria(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_10000 | FLAG_POS_CAMERA_LOCKED;
+        self->facingLeft = 1;
+        self->unk5A = 0x66;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_OVL(0x149);
+        self->animSet = ANIMSET_OVL(19);
+        RicSetAnimation(anim_maria_walk);
+        self->velocityX = FIX(-1.75);
+        self->posY.i.hi = 0xBB;
+        self->posX.i.hi = 0x148;
+        self->ext.ricMaria.boolDidSound = 0;
+        self->step++;
+        break;
+    case 1:
+        if (self->pose == 0 && self->poseTimer == 1) {
+            g_api.PlaySfx(0x882);
+        }
+        if (self->pose == 4 && self->poseTimer == 1) {
+            g_api.PlaySfx(0x883);
+        }
+
+        self->posX.val += self->velocityX;
+        if ((self->ext.ricMaria.boolDidSound == false) &&
+            (self->posX.i.hi < 256)) {
+            g_api.PlaySfx(0x87D);
+            self->ext.ricMaria.boolDidSound++;
+        }
+        if (self->posX.i.hi < 0xE0) {
+            RicSetAnimation(anim_maria_offering_powers);
+            self->step++;
+            self->velocityX = 0;
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_SKID_SMOKE, 4), 0);
+        }
+        break;
+    case 2:
+        if (self->pose == 16) {
+            g_api.PlaySfx(0x87E);
+            self->ext.ricMaria.timer = 0x80;
+            self->step++;
+        }
+        break;
+    case 3:
+        if (--self->ext.ricMaria.timer == 0) {
+            RicCreateEntFactoryFromEntity(self, BP_MARIA_POWERS_INVOKED, 0);
+            self->step++;
+        }
+        break;
+    case 4:
+        break;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80162E9C);
 
