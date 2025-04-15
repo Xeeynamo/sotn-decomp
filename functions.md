@@ -1478,7 +1478,7 @@
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
-| ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    |                                 |       |
+| ric    | RicEntityPlayerBlinkWhite           |     1985 |        164 | Yes    | https://decomp.me/scratch/e3Wuj | 0.868 |
 | ric    | RicEntitySubwpnStopwatch            |     2016 |        158 | Yes    | https://decomp.me/scratch/kbgQU | 1.0   |
 | dra    | MenuHandle                          |     2075 |        403 | Yes    | https://decomp.me/scratch/S9Nor | 0.982 |
 | dra    | RunMainEngine                       |     2166 |        297 | Yes    |                                 |       |
