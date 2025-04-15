@@ -1179,7 +1179,6 @@ void ExecCdSoundCommands(void) {
 
 void PlaySfxScript(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
-    u16 volumeMod;
     u16 calcVolume;
     s32 progId;
 
@@ -1191,14 +1190,13 @@ void PlaySfxScript(
             (1 << (channel_group * 4 + 2)) + (1 << (channel_group * 4 + 3));
     }
 
-    volumeMod = volume;
-    if (volumeMod == 0xFFFF) {
+    if (volume == 0xFFFF) {
         g_SfxScriptVolume[channel_group] =
             (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
         g_SfxScriptDistance[channel_group] = 0;
     } else {
         calcVolume = (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
-        g_SfxScriptVolume[channel_group] = (calcVolume * volumeMod) >> 7;
+        g_SfxScriptVolume[channel_group] = (calcVolume * volume) >> 7;
         g_SfxScriptDistance[channel_group] = distance;
     }
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
@@ -1230,11 +1228,11 @@ void KeyOn12_19(
 void func_8013572C(s16 arg0, u16 volume, s16 distance) {
     s32 i;
 
-    if (arg0 == 0) {
+    if (!arg0) {
         return;
     }
     if (g_SfxData[arg0].vabid == 9) {
-        if (g_SeqIsPlaying == 0) {
+        if (!g_SeqIsPlaying) {
             for (i = 0; i < 3; i++) {
                 if (arg0 == g_CurrentSfxScriptSfxId2[i]) {
                     PlaySfxScript(arg0, i, true, volume, distance);
@@ -1248,7 +1246,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
                 }
             }
             for (i = 0; i < 3; i++) {
-                if (g_SfxScriptUnk6[i] < g_SfxData[arg0].unk6) {
+                if (g_SfxData[arg0].unk6 > g_SfxScriptUnk6[i]) {
                     PlaySfxScript(arg0, i, true, volume, distance);
                     return;
                 }
@@ -1275,7 +1273,8 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             }
             g_CurSfxDistance22_23 = distance;
             KeyOnChannels22_23();
-            return;
+            break;
+
         case SFX_MODE_CHANNELS_20_21:
             g_CurSfxId20_21 = arg0;
             if (volume == 0xFFFF) {
@@ -1285,21 +1284,23 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             }
             g_CurSfxDistance20_21 = distance;
             KeyOnChannels20_21();
-            return;
+            break;
+
         case SFX_MODE_RELEASE_22_23:
             SetReleaseRateLow_22_23();
             g_CurSfxId22_23 = 0;
-            return;
+            break;
+
         case SFX_MODE_CHANNELS_12_19:
             g_CurSfxVol12_19 =
                 (g_SfxVolumeMultiplier * g_SfxData[arg0].volume) >> 7;
             if (volume == 0xFFFF) {
                 g_CurSfxDistance12_19 = 0;
             } else {
-                g_CurSfxDistance12_19 = distance;
                 g_CurSfxVol12_19 = (g_CurSfxVol12_19 * volume) >> 7;
+                g_CurSfxDistance12_19 = distance;
             }
-            if (g_SeqIsPlaying == 0) {
+            if (!g_SeqIsPlaying) {
                 for (i = 0; i < 4; i++) {
                     if (arg0 == g_CurrentSfxId12_19[i]) {
                         KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
@@ -1315,7 +1316,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
                     }
                 }
                 for (i = 0; i < 4; i++) {
-                    if (D_8013AED4[i] < g_SfxData[arg0].unk6) {
+                    if (g_SfxData[arg0].unk6 > D_8013AED4[i]) {
                         KeyOn12_19(arg0, i, true, g_CurSfxVol12_19,
                                    g_CurSfxDistance12_19);
                         return;
@@ -1333,9 +1334,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
             if (g_CurrentSfxId12_19[3] == 0) {
                 KeyOn12_19(
                     arg0, 3, false, g_CurSfxVol12_19, g_CurSfxDistance12_19);
-                return;
-            }
-            if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
+            } else if (g_SfxData[arg0].unk6 >= D_8013AED4[3]) {
                 KeyOn12_19(
                     arg0, 3, true, g_CurSfxVol12_19, g_CurSfxDistance12_19);
             }
@@ -1344,187 +1343,139 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
     }
 }
 
-s16 IncrementRingBufferPos(s16 arg0) {
-    arg0++;
-
-    if (arg0 == LEN(g_SfxRingBuffer)) {
-        arg0 = 0;
+s16 IncrementRingBufferPos(s16 sfxBufPos) {
+    if (++sfxBufPos == LEN(g_SfxRingBuffer)) {
+        sfxBufPos = 0;
     }
 
-    return arg0;
+    return sfxBufPos;
 }
 
 void ExecSfx(void) {
-    s16 sfxBufPos;
-    s32 isFound;
     s16 sndId;
+    s16 sfxBufPos;
+    bool isFound;
 
-    if (g_sfxRingBufferWritePos == g_SfxRingBufferReadPos)
+    if (g_sfxRingBufferWritePos == g_SfxRingBufferReadPos) {
         return;
+    }
     while (g_SfxRingBufferReadPos != g_sfxRingBufferWritePos) {
         sndId = g_SfxRingBuffer[g_SfxRingBufferReadPos].sndId;
         g_SfxRingBuffer[g_SfxRingBufferReadPos].sndId = 0;
-        isFound = 0;
-        for (sfxBufPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
-             sfxBufPos != g_sfxRingBufferWritePos;
-             sfxBufPos = IncrementRingBufferPos(sfxBufPos)) {
+        sfxBufPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
+        isFound = false;
+        while (sfxBufPos != g_sfxRingBufferWritePos) {
             if (sndId == g_SfxRingBuffer[sfxBufPos].sndId) {
-                isFound = 1;
+                isFound = true;
                 break;
             }
+            sfxBufPos = IncrementRingBufferPos(sfxBufPos);
         }
-        if (isFound == 0) {
+        if (!isFound) {
             func_8013572C(sndId, g_SfxRingBuffer[g_SfxRingBufferReadPos].sndVol,
                           g_SfxRingBuffer[g_SfxRingBufferReadPos].sndPan);
         }
-
         g_SfxRingBufferReadPos = IncrementRingBufferPos(g_SfxRingBufferReadPos);
     }
 }
 
 void func_80135D8C(void) {
     s32 i;
-    s8* temp_t2;
-    s8** temp_t2_2;
-    s8* temp_v1;
-    s8** temp_t3;
-    s8** temp_v1_2;
 
     s16 vab;
     s16 prog;
-    s16 note;
     s16 tone;
-    u32 volume;
-    s8 distance;
-    s8 distance2;
+    s16 note;
+    s16 volume;
+    s16 distance;
 
     if (g_SeqIsPlaying == 0) {
         for (i = 0; i < 3; i++) {
-            if (g_CurrentSfxScriptSfxId[i] != 0) {
-                if (g_SfxScriptTimer[i] == 0) {
-                    // FAKE, should just be &g_CurrentSfxScript[i]
-                    temp_v1_2 = &g_CurrentSfxScript;
-                    temp_t3 = i + temp_v1_2;
-
-                    temp_t2 = *temp_t3;
-                    *temp_t3 = temp_t2 + 1;
-                    vab = temp_t2[0];
-                    if (vab == -1) {
-                        g_CurrentSfxScriptSfxId[i] = 0;
-                        continue;
-                    }
-                    *temp_t3 = temp_t2 + 2;
-                    prog = temp_t2[1];
-                    *temp_t3 = temp_t2 + 3;
-                    note = temp_t2[2];
-                    *temp_t3 = temp_t2 + 4;
-                    tone = temp_t2[3];
-                    *temp_t3 = temp_t2 + 5;
-                    volume = g_SfxScriptVolume[i] * temp_t2[4];
-                    *temp_t3 = temp_t2 + 6;
-                    g_SfxScriptTimer[i] = temp_t2[5];
+            if (!g_CurrentSfxScriptSfxId[i]) {
+                continue;
+            }
+            if (g_SfxScriptTimer[i] == 0) {
+                vab = *g_CurrentSfxScript[i]++;
+                if (vab == -1) {
+                    g_CurrentSfxScriptSfxId[i] = 0;
+                } else {
+                    prog = *g_CurrentSfxScript[i]++;
+                    note = *g_CurrentSfxScript[i]++;
+                    tone = *g_CurrentSfxScript[i]++;
+                    volume = *g_CurrentSfxScript[i]++;
+                    volume = (g_SfxScriptVolume[i] * volume) >> 7;
+                    g_SfxScriptTimer[i] = *g_CurrentSfxScript[i]++;
                     distance = g_SfxScriptDistance[i];
                     func_80132A04(
-                        30 + i, vab, prog, tone, note, volume >> 7, distance);
-                } else {
-                    g_SfxScriptTimer[i]--;
+                        i + 30, vab, prog, tone, note, volume, distance);
                 }
+            } else {
+                g_SfxScriptTimer[i]--;
             }
         }
-    } else if (g_CurrentSfxScriptSfxId[3] != 0) {
-        if (g_SfxScriptTimer[3] == 0) {
-            temp_t2_2 = &g_CurrentSfxScript[3];
-            temp_v1 = *temp_t2_2;
-            *temp_t2_2 = temp_v1 + 1;
-            vab = temp_v1[0];
-            if (vab == -1) {
-                g_CurrentSfxScriptSfxId[3] = 0;
-                return;
+    } else {
+        if (g_CurrentSfxScriptSfxId[3] != 0) {
+            if (g_SfxScriptTimer[3] == 0) {
+                vab = *g_CurrentSfxScript[3]++;
+                if (vab == -1) {
+                    g_CurrentSfxScriptSfxId[3] = 0;
+                } else {
+                    prog = *g_CurrentSfxScript[3]++;
+                    note = *g_CurrentSfxScript[3]++;
+                    tone = *g_CurrentSfxScript[3]++;
+                    volume = *g_CurrentSfxScript[3]++;
+                    volume = (g_SfxScriptVolume[3] * volume) >> 7;
+                    g_SfxScriptTimer[3] = *g_CurrentSfxScript[3]++;
+                    distance = g_SfxScriptDistance[3];
+                    func_80132A04(33, vab, prog, tone, note, volume, distance);
+                }
+            } else {
+                g_SfxScriptTimer[3]--;
             }
-            *temp_t2_2 = temp_v1 + 2;
-            prog = temp_v1[1];
-            *temp_t2_2 = temp_v1 + 3;
-            note = temp_v1[2];
-            *temp_t2_2 = temp_v1 + 4;
-            tone = temp_v1[3];
-            distance2 = g_SfxScriptDistance[3];
-            *temp_t2_2 = temp_v1 + 5;
-            volume = g_SfxScriptVolume[3] * temp_v1[4];
-            *temp_t2_2 = temp_v1 + 6;
-            g_SfxScriptTimer[3] = temp_v1[5];
-            distance = distance2;
-            func_80132A04(33, vab, prog, tone, note, volume >> 7, distance);
-
-        } else {
-            g_SfxScriptTimer[3]--;
         }
     }
 }
 
 void func_80136010(void) {
-    s16* var_t4;
     s32 i;
-    s8* var_a0;
-    s8* var_a2;
-
-    s8* var_t0;
-    s8* var_t1;
-    s8* var_t2;
-    s8* var_t3;
-
     s8 sum;
-    s8* new_var;
-#if defined(VERSION_PC)
-    s16* fakeptr = 0;
-#else
-    s16* fakeptr;
-#endif
 
     SpuGetAllKeysStatus(g_KeyStatus);
     if (g_SeqIsPlaying == 0) {
-        var_a0 = &g_KeyStatus[12];
-        var_a2 = &g_KeyStatus[13];
         for (i = 0; i < 4; i++) {
-            sum = var_a0[i * 2] + var_a2[i * 2];
+            sum = g_KeyStatus[i * 2 + 12] + g_KeyStatus[i * 2 + 13];
             if (sum == 0) {
                 g_CurrentSfxId12_19[i] = 0;
                 D_8013AED4[i] = 0;
             }
         }
-    } else if ((s8)(g_KeyStatus[18] + g_KeyStatus[19]) == 0) {
-        g_CurrentSfxId12_19[3] = 0;
-        D_8013AED4[3] = 0;
+    } else {
+        sum = g_KeyStatus[18] + g_KeyStatus[19];
+        if (sum == 0) {
+            g_CurrentSfxId12_19[3] = 0;
+            D_8013AED4[3] = 0;
+        }
     }
     if (g_SeqIsPlaying == 0) {
-        var_t4 = g_CurrentSfxScriptSfxId2;
-        new_var = &g_KeyStatus;
-        var_t3 = &g_KeyStatus[3];
-        var_t2 = &g_KeyStatus[2];
-        var_t1 = &g_KeyStatus[1];
-        var_t0 = new_var;
-
         for (i = 0; i < 3; i++) {
             if (g_CurrentSfxScriptSfxId[i] == 0) {
-                if ((s8)(*var_t0 + *var_t1 + *var_t2 + *var_t3) == 0) {
-                    *var_t4 = 0;
-                    fakeptr = g_SfxScriptUnk6;
+                sum = g_KeyStatus[i * 4 + 0] + g_KeyStatus[i * 4 + 1] +
+                      g_KeyStatus[i * 4 + 2] + g_KeyStatus[i * 4 + 3];
+                if (sum == 0) {
+                    g_CurrentSfxScriptSfxId2[i] = 0;
                     g_SfxScriptUnk6[i] = 0;
                 }
             }
-            fakeptr++;
-            var_t4 += 1;
-            var_t3 += 4;
-            var_t2 += 4;
-            var_t1 += 4;
-            var_t0 += 4;
         }
         return;
     }
-    if ((g_CurrentSfxScriptSfxId[3] == 0) &&
-        ((s8)(g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
-              g_KeyStatus[17]) == 0)) {
-        g_CurrentSfxScriptSfxId2[3] = 0;
-        g_SfxScriptUnk6[3] = 0;
+    if (g_CurrentSfxScriptSfxId[3] == 0) {
+        sum = g_KeyStatus[14] + g_KeyStatus[15] + g_KeyStatus[16] +
+              g_KeyStatus[17];
+        if (sum == 0) {
+            g_CurrentSfxScriptSfxId2[3] = 0;
+            g_SfxScriptUnk6[3] = 0;
+        }
     }
 }
 

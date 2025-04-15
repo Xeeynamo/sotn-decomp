@@ -106,7 +106,7 @@ extern ButtonComboState g_ButtonCombo[COMBO_NUM];
 extern s16 g_sfxRingBufferWritePos; // D_80139000
 extern s16 g_VolR;                  // vol_r
 extern s32 D_80139008;
-extern s16 g_CurSfxDistance20_21;
+extern u16 g_CurSfxDistance20_21;
 extern u8 D_80139014;
 extern s8 g_SfxScriptModeCopy[4];
 extern u32 g_DebugCurPal;
@@ -125,7 +125,7 @@ extern u8 g_SeqIsPlaying;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
-extern s16 g_CurSfxDistance12_19;
+extern u16 g_CurSfxDistance12_19;
 extern s16 D_801396E0;
 extern s16 D_801396E4;
 extern s16 D_801396E6;
