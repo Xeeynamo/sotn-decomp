@@ -855,7 +855,7 @@
 | zero/f_nonmat/f60155CC.s     | func_060155CC   |      869 |         35 |                                 |       |
 | game/f_nonmat/f606CA10.s     | func_0606CA10   |      874 |         84 |                                 |       |
 | alucard/f_nonmat/f60BE888.s  | func_060BE888   |      886 |         75 |                                 |       |
-| game/f_nonmat/f607B7B4.s     | func_0607B7B4   |      888 |         93 |                                 |       |
+| game/f_nonmat/f607B7B4.s     | func_0607B7B4   |      888 |         93 | https://decomp.me/scratch/1qJfa | 0.507 |
 | alucard/f_nonmat/f60A972C.s  | func_060A972C   |      900 |         89 |                                 |       |
 | stage_02/f_nonmat/f60E4908.s | func_060E4908   |      921 |         97 |                                 |       |
 | game/f_nonmat/f60737A0.s     | func_060737A0   |      933 |        116 |                                 |       |
