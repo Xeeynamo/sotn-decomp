@@ -86,7 +86,7 @@
 | no4    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
-| dra    | func_psp_091446A8                   |       16 |          1 |        |                                 |       |
+| dra    | IncrementRingBufferPos              |       16 |          1 |        |                                 |       |
 | dra    | func_800FE8F0                       |       16 |          2 |        | https://decomp.me/scratch/9U1p9 | 1.0   |
 | dra    | ClearStatBuff                       |       17 |          1 |        |                                 |       |
 | dra    | GetStatBuffTimer                    |       17 |          1 |        |                                 |       |
@@ -270,10 +270,10 @@
 | st0    | func_801B0414                       |       30 |          5 |        |                                 |       |
 | dra    | PlayerStepWalk                      |       30 |          7 |        |                                 |       |
 | lib    | func_psp_09239500                   |       31 |          1 |        |                                 |       |
-| dra    | func_psp_09142CA8                   |       31 |          2 |        |                                 |       |
-| dra    | func_psp_09142D10                   |       31 |          2 |        |                                 |       |
-| dra    | func_psp_09142D78                   |       31 |          2 |        |                                 |       |
-| dra    | func_psp_09142DE0                   |       31 |          2 |        |                                 |       |
+| dra    | SetReleaseRateHigh20_21             |       31 |          2 |        |                                 |       |
+| dra    | SetReleaseRateHigh22_23             |       31 |          2 |        |                                 |       |
+| dra    | SetReleaseRateLow_20_21             |       31 |          2 |        |                                 |       |
+| dra    | SetReleaseRateLow_22_23             |       31 |          2 |        |                                 |       |
 | dra    | func_800F5E68                       |       31 |          2 |        |                                 |       |
 | lib    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | no4    | UnkPolyFunc2                        |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
@@ -448,9 +448,9 @@
 | ric    | RicSetSlide                         |       43 |          8 |        |                                 |       |
 | dra    | DebugInputWait                      |       43 |          9 |        |                                 |       |
 | dra    | PlayerStepFall                      |       43 |         11 |        |                                 |       |
-| dra    | func_psp_09142E48                   |       44 |          3 |        | https://decomp.me/scratch/H7rD7 | 0.992 |
+| dra    | SetVolumeCommand22_23               |       44 |          3 |        |                                 |       |
 | st0    | CollectGold                         |       44 |          3 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
-| dra    | func_80134C60                       |       45 |          1 |        |                                 |       |
+| dra    | KeyOnChannels20_21                  |       45 |          1 |        |                                 |       |
 |        | CalculateAngleToEntity              |       45 |          2 |        |                                 |       |
 | dra    | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra    | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
@@ -504,7 +504,7 @@
 | dra    | PlayerStepUnk17                     |       50 |          7 |        |                                 |       |
 | dra    | MemcardWriteFile                    |       50 |          8 |        | https://decomp.me/scratch/8JopV | 0.211 |
 | dra    | func_psp_09142830                   |       50 |          9 |        |                                 |       |
-| dra    | func_psp_09144BD8                   |       50 |         12 |        |                                 |       |
+| dra    | func_801361F8                       |       50 |         12 |        |                                 |       |
 | ric    | RicHandleFall                       |       50 |         13 |        |                                 |       |
 | dra    | func_800FADC0                       |       51 |          4 |        |                                 |       |
 | lib    | func_us_801B11A0                    |       51 |          4 |        |                                 |       |
@@ -536,7 +536,7 @@
 | ric    | RicSetHighJump                      |       54 |          8 |        |                                 |       |
 | ric    | RicSetWalk                          |       54 |          9 |        |                                 |       |
 | dra    | func_psp_090DCC60                   |       55 |          1 |        | https://decomp.me/scratch/myDl0 | 1.0   |
-| dra    | func_psp_091441B8                   |       55 |          2 |        |                                 |       |
+| dra    | KeyOn12_19                          |       55 |          2 |        |                                 |       |
 | dra    | GetFreeEntityReverse                |       55 |          5 |        |                                 |       |
 | ric    | RicGetFreeEntityReverse             |       55 |          5 |        |                                 |       |
 | dra    | LearnSpell                          |       55 |          6 |        |                                 |       |
@@ -562,7 +562,7 @@
 | dra    | func_psp_090FF548                   |       58 |          6 |        |                                 |       |
 | dra    | func_800E6250                       |       58 |          9 |        |                                 |       |
 | dra    | func_800F087C                       |       58 |         10 |        |                                 |       |
-| dra    | func_80134E64                       |       59 |          3 |        |                                 |       |
+| dra    | SetVolume22_23                      |       59 |          3 |        |                                 |       |
 | st0    | ReplaceBreakableWithItemDrop        |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | dra    | DoGravityJump                       |       59 |         10 |        |                                 |       |
 | dra    | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
@@ -577,7 +577,7 @@
 | ric    | RicEntityStopwatchCrashLightning    |       60 |          8 |        |                                 |       |
 | lib    | func_us_801AE84C                    |       60 |          8 |        |                                 |       |
 | dra    | func_8010E4D0                       |       60 |         11 |        |                                 |       |
-| dra    | func_8013493C                       |       61 |          1 |        |                                 |       |
+| dra    | RestoreSfxScriptData                |       61 |          1 |        |                                 |       |
 | dra    | func_8011690C                       |       61 |          5 |        | https://decomp.me/scratch/U8Zb8 | 0.739 |
 | lib    | func_us_801CCED0                    |       61 |          5 |        |                                 |       |
 | dra    | func_800E5498                       |       61 |          6 |        |                                 |       |
@@ -637,7 +637,7 @@
 | no4    | func_pspeu_092482B0                 |       67 |          6 |        |                                 |       |
 | st0    | SetTitleDisplayBuffer               |       67 |          6 |        |                                 |       |
 | dra    | func_8012CED4                       |       67 |          8 |        |                                 |       |
-| dra    | func_80134B48                       |       67 |          8 |        |                                 |       |
+| dra    | UnpauseSfxScripts                   |       67 |          8 |        |                                 |       |
 | dra    | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
 | lib    | SkeletonAttackCheck                 |       67 |         10 |        |                                 |       |
 | no4    | unk_26740.rodata                    |       68 |          0 | Yes    |                                 |       |
@@ -744,7 +744,7 @@
 | lib    | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
 | dra    | func_psp_090FF298                   |       82 |         11 |        |                                 |       |
 | dra    | func_psp_09141C10                   |       82 |         15 |        |                                 |       |
-| dra    | func_80134D14                       |       83 |          4 |        |                                 |       |
+| dra    | KeyOnChannels22_23                  |       83 |          4 |        |                                 |       |
 | lib    | CheckFieldCollisionY                |       83 |          7 |        |                                 |       |
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
 | dra    | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
@@ -783,7 +783,7 @@
 | st0    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp    | CreateEntitiesAbove                 |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | dra    | MistFormFinished                    |       91 |         19 |        |                                 |       |
-| dra    | func_psp_091446D0                   |       92 |         11 |        |                                 |       |
+| dra    | ExecSfx                             |       92 |         11 |        |                                 |       |
 | lib    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | no4    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
 | st0    | EntityUnkId13                       |       92 |         11 |        |                                 |       |
@@ -842,7 +842,7 @@
 | dra    | MenuDrawRect                        |      102 |          6 |        |                                 |       |
 | dra    | MenuDrawLine                        |      102 |          8 |        |                                 |       |
 | dra    | InitWeapon                          |      102 |         12 |        |                                 |       |
-| dra    | func_psp_09144038                   |      103 |          2 |        |                                 |       |
+| dra    | PlaySfxScript                       |      103 |          2 |        |                                 |       |
 | dra    | func_psp_09125DB8                   |      103 |          4 |        | https://decomp.me/scratch/ezh6e | 0.944 |
 | lib    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
 | no4    | EntityExplosionVariants             |      103 |          8 |        |                                 |       |
@@ -854,12 +854,12 @@
 | wrp    | EntityIntenseExplosion              |      103 |         11 |        | https://decomp.me/scratch/n3oKx | 1.0   |
 | st0    | func_801B0058                       |      103 |         13 |        |                                 |       |
 | dra    | 8D3E8.rodata                        |      104 |          0 | Yes    |                                 |       |
-| dra    | func_801349F4                       |      104 |          3 |        |                                 |       |
+| dra    | PauseSfxScripts                     |      104 |          3 |        |                                 |       |
 | lib    | EntityExplosionVariantsSpawner      |      104 |          5 |        |                                 |       |
 | dra    | func_800F8754                       |      104 |         10 |        |                                 |       |
 | ric    | func_80160D2C                       |      104 |         10 |        |                                 |       |
 | wrp    | EntityBreakable                     |      104 |         11 |        | https://decomp.me/scratch/qUJKx | 0.995 |
-| dra    | func_psp_09142B40                   |      104 |         14 |        |                                 |       |
+| dra    | CdSoundCommand8                     |      104 |         14 |        |                                 |       |
 | dra    | SetRoomForegroundLayer              |      105 |          2 |        |                                 |       |
 | lib    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | no4    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
@@ -918,7 +918,7 @@
 | dra    | func_8012D024                       |      115 |         27 |        |                                 |       |
 | dra    | func_800FF494                       |      116 |         14 |        |                                 |       |
 | dra    | func_8010E570                       |      116 |         18 |        | https://decomp.me/scratch/Eo8a9 | 0.988 |
-| dra    | func_psp_09144A40                   |      117 |         10 |        |                                 |       |
+| dra    | func_80136010                       |      117 |         10 |        |                                 |       |
 | dra    | PlaySfx                             |      117 |         18 |        | https://decomp.me/scratch/qLAhD | 0.992 |
 |        | IsMovementAllowed                   |      117 |         23 |        |                                 |       |
 | dra    | EntitySmallRisingHeart              |      118 |         10 |        |                                 |       |
@@ -990,7 +990,7 @@
 | dra    | func_80118970                       |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
 | dra    | UnknownEntId49                      |      154 |         11 |        |                                 |       |
 | ric    | RicEntityArmBrandishWhip            |      154 |         15 |        |                                 |       |
-| dra    | func_psp_09144810                   |      155 |         10 |        |                                 |       |
+| dra    | func_80135D8C                       |      155 |         10 |        | https://decomp.me/scratch/4iCJL | 1.0   |
 | dra    | func_80123F78                       |      155 |         14 |        | https://decomp.me/scratch/rLwSV | 0.967 |
 | dra    | func_8012ED30                       |      156 |         26 |        |                                 |       |
 | dra    | EntityHellfireNormalFireball        |      157 |         18 |        | https://decomp.me/scratch/Rzlhs | 0.996 |
@@ -1183,7 +1183,7 @@
 | lib    | EntityBreakable                     |      294 |         47 |        | https://decomp.me/scratch/qUJKx | 0.995 |
 | dra    | HandleEnding                        |      298 |         60 |        | https://decomp.me/scratch/9QZjQ | 0.96  |
 | no4    | func_pspeu_0923EA80                 |      300 |         26 |        |                                 |       |
-| dra    | func_psp_09144280                   |      303 |         47 |        |                                 |       |
+| dra    | func_8013572C                       |      303 |         47 |        |                                 |       |
 | dra    | func_8012C600                       |      305 |         25 |        |                                 |       |
 | lib    | func_psp_09242880                   |      307 |         26 |        |                                 |       |
 | no4    | func_psp_0923B2F0                   |      307 |         26 |        |                                 |       |
@@ -1316,7 +1316,7 @@
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    |                                 |       |
-| dra    | func_psp_09143758                   |      546 |        139 |        |                                 |       |
+| dra    | ExecSoundCommands                   |      546 |        139 |        |                                 |       |
 | dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_us_801B7DF8                    |      556 |         54 |        |                                 |       |
