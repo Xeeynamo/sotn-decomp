@@ -35,9 +35,9 @@
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
 | dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
-| ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
+| ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented1            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented2            |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented3            |        9 |          1 |        |                                 |       |
@@ -583,7 +583,7 @@
 | dra    | func_800E5498                       |       61 |          6 |        |                                 |       |
 | lib    | func_us_801B8958                    |       61 |          6 |        |                                 |       |
 | dra    | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
-| ric    | func_pspeu_092BE628                 |       61 |          8 |        |                                 |       |
+| ric    | func_8015F9F0                       |       61 |          8 |        |                                 |       |
 | dra    | func_8010A3F0                       |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
 | lib    | func_psp_09253D58                   |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
 | no4    | GetLangAt                           |       61 |         10 |        |                                 |       |
@@ -754,7 +754,7 @@
 | dra    | MenuSystemDraw                      |       84 |          7 |        |                                 |       |
 | dra    | SetNextRoomToLoad                   |       84 |         13 |        |                                 |       |
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
-| ric    | 182C8.rodata                        |       86 |          0 | Yes    |                                 |       |
+| ric    | pl_blueprints.rodata                |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
 | dra    | PlaySeq                             |       86 |          9 |        |                                 |       |
 | dra    | func_80113D7C                       |       86 |         11 |        |                                 |       |
@@ -859,7 +859,7 @@
 | dra    | func_800F8754                       |      104 |         10 |        |                                 |       |
 | ric    | func_80160D2C                       |      104 |         10 |        |                                 |       |
 | wrp    | EntityBreakable                     |      104 |         11 |        | https://decomp.me/scratch/qUJKx | 0.995 |
-| dra    | CdSoundCommand8                     |      104 |         14 |        |                                 |       |
+| dra    | CdSoundCommand8                     |      104 |         14 |        | https://decomp.me/scratch/hmJYM | 0.978 |
 | dra    | SetRoomForegroundLayer              |      105 |          2 |        |                                 |       |
 | lib    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
 | no4    | EntityGreyPuff                      |      105 |          8 |        |                                 |       |
@@ -1001,7 +1001,7 @@
 | dra    | LoadSaveData                        |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
 | ric    | RicEntitySubwpnCrossTrail           |      160 |         11 |        |                                 |       |
 | ric    | func_8015D250                       |      160 |         30 |        |                                 |       |
-| ric    | func_pspeu_092BEA38                 |      161 |          5 |        |                                 |       |
+| ric    | func_8015FDB0                       |      161 |          5 |        |                                 |       |
 | dra    | EntityBatFireball                   |      161 |         14 |        | https://decomp.me/scratch/u4uRW | 0.997 |
 | dra    | EntityHellfireBigFireball           |      161 |         19 |        | https://decomp.me/scratch/WSXa9 | 0.998 |
 | ric    | RicHandleBossGrab                   |      161 |         21 |        | https://decomp.me/scratch/bAfYx | 0.992 |
@@ -1160,7 +1160,7 @@
 | lib    | func_us_801B29C4                    |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
 | st0    | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra    | MenuHandleCursorInput               |      275 |         39 | Yes    |                                 |       |
-| dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/xBRHp | 0.995 |
+| dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/H4N3g | 0.995 |
 | no4    | func_pspeu_0923FF60                 |      277 |         31 |        |                                 |       |
 | no4    | func_pspeu_092423C8                 |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
@@ -1316,7 +1316,7 @@
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
 | ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    |                                 |       |
-| dra    | ExecSoundCommands                   |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.985 |
+| dra    | ExecSoundCommands                   |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_us_801B7DF8                    |      556 |         54 |        |                                 |       |
@@ -1387,7 +1387,7 @@
 | lib    | EntityLibrarianChair                |      733 |        124 |        |                                 |       |
 | lib    | func_us_801B56E4                    |      739 |         81 | Yes    |                                 |       |
 | ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/O1hL7 | 1.0   |
-| ric    | RicEntityCrashCrossBeam             |      743 |         63 |        |                                 |       |
+| ric    | RicEntityCrashCrossBeam             |      743 |         63 |        | https://decomp.me/scratch/ijdVw | 0.999 |
 | dra    | CheckStageCollision                 |      746 |         77 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
