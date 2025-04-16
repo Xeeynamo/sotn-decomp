@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
-#include <player.h>
+#include "ric.h"
 
-Entity* RicGetFreeEntity(s16 start, s16 end) {
+static Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -14,7 +13,7 @@ Entity* RicGetFreeEntity(s16 start, s16 end) {
     return NULL;
 }
 
-Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     Entity* entity = &g_Entities[end - 1];
     s16 i;
     for (i = end - 1; i >= start; i--, entity--) {
@@ -637,6 +636,8 @@ static FactoryBlueprint g_RicFactoryBlueprints[] = {
 };
 STATIC_ASSERT(
     LEN(g_RicFactoryBlueprints) == NUM_BLUEPRINTS, "bp array wrong size");
+
+// Similar to same function in DRA
 static u8 entity_ranges[][2] = {
     {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
     {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
@@ -1878,7 +1879,9 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->facingLeft = PLAYER.facingLeft;
+#if defined(VERSION_PSP)
     sp44 = D_92641C8[PLAYER.animCurFrame & 0x7FFF];
+#endif
     sp44 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
     plSpriteIndex = *sp44++;
     plSpriteIndex &= 0x7FFF;
@@ -2847,11 +2850,14 @@ static void func_80166024() {
     PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
-static void func_801660c44() {
+static void func_80166044() {
     PLAYER.palette = 0x8120;
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
+// Entity ID 66. Made by blueprint 77 (the very last one).
+// Created in 3 spots in 2 functions (total of 6 calls).
+// DRA version is very similar.
 #if defined(VERSION_PSP)
 extern Point16 D_80175000[32];
 #else

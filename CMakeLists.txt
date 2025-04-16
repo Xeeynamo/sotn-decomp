@@ -234,9 +234,7 @@ set(SOURCE_FILES_RIC
     src/ric/pl_setstep.c
     src/ric/pl_collision.c
     src/ric/211D0.c
-    src/ric/238F8.c
-    src/ric/24788.c
-    src/ric/26C84.c
+    src/ric/pl_blueprints.c
     src/ric/2A060.c
     src/ric/2C4C4.c
     src/ric/pl_subweapons.c

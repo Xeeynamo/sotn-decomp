@@ -41,12 +41,12 @@ segments:
       - [0x170AC, .data, spriteparts]
       - [0x18568, .data, d_18568]
       - [0x18688, assets, subweapondefs, D_80154688]
-      - [0x188F4, .data, 238F8]
-      - [0x1895C, .data, 238F8] # entity table
-      - [0x18A6C, .data, 238F8] # blueprints
-      - [0x18C40, .data, 24788]
-      - [0x18ED4, .data, 24788] # RicEntityMaria
-      - [0x18F7C, .data, 26C84]
+      - [0x188F4, .data, pl_blueprints]
+      - [0x1895C, .data, pl_blueprints] # entity table
+      - [0x18A6C, .data, pl_blueprints] # blueprints
+      - [0x18C40, .data, pl_blueprints]
+      - [0x18ED4, .data, pl_blueprints] # RicEntityMaria
+      - [0x18F7C, .data, pl_blueprints] # RicEntityPlayerBlinkWhite and onwards
       - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, 2A060]
       - [0x19D94, .data, pl_subweapons]
@@ -61,11 +61,11 @@ segments:
       - [0x1A800, .rodata, pl_utils]
       - [0x1A80C, .rodata, pl_setstep]
       - [0x1A904, .rodata, pl_collision]
-      - [0x1A907, .rodata, 238F8]
-      - [0x1A918, .rodata, 24788]
-      - [0x1A9D0, .rodata, 24788] # RicEntityMaria
-      - [0x1A9E8, .rodata, 26C84] # EntityPlayerBlinkWhite
-      - [0x1AA28, .rodata, 2A060]
+      - [0x1A907, .rodata, pl_blueprints]
+      - [0x1A918, .rodata, pl_blueprints] # RicEntityFactory and onwards
+      - [0x1A9D0, .rodata, pl_blueprints] # RicEntityMaria
+      - [0x1A9E8, .rodata, pl_blueprints] # RicEntityPlayerBlinkWhite
+      - [0x1AA28, .rodata, pl_blueprints] # RicEntityTeleport
       - [0x1AAA0, .rodata, 2A060]
       - [0x1AABC, .rodata, 2C4C4]
       - [0x1AAD4, .rodata, 2C4C4] # RicEntitySubwpnCrashCross
@@ -82,10 +82,8 @@ segments:
       - [0x204AC, c, pl_utils]
       - [0x20C50, c, pl_setstep]
       - [0x21B6C, c, pl_collision]
-      - [0x238F8, c, 238F8]
-      - [0x24788, c, 24788]
-      - [0x26C84, c, 26C84]
-      - [0x2A060, c, 2A060]
+      - [0x238F8, c, pl_blueprints]
+      - [0x2A784, c, 2A060]
       - [0x2C4C4, c, 2C4C4]
       - [0x2E26C, c, pl_subweapons]
       - [0x2F8E8, c, 2F8E8]
@@ -94,8 +92,8 @@ segments:
       - [0x3728C, c, e_giant_spinning_cross]
       - [0x37B64, .bss, pl_handlers]
       - [0x37F80, .bss, pl_collision]
-      - [0x37F84, .bss, 238F8]
-      - [0x38000, .bss, 2A060]
+      - [0x37F84, .bss, pl_blueprints]
+      - [0x38080, .bss, 2A060]
       - [0x38088, .bss, 2C4C4]
       - [0x3988C, .bss, pl_subweapons]
       - [0x39890, .bss, 2F8E8]
