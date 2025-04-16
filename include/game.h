@@ -236,7 +236,11 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
+#if defined(VERSION_PSP)
+#define SPRITESHEET_PTR g_PlOvlSpritesheet
+#else
+#define SPRITESHEET_PTR 0x8013C020
+#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -1954,6 +1958,7 @@ extern u32 g_GameTimer; // Increases when unpaused
 extern bool D_8003C908;
 extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
+extern s16* D_92641C8[];
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern u32 g_GameEngineStep;

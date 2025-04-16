@@ -47,54 +47,56 @@ static s16 D_80154FBC[][10] = {
     {8, 0, 8, 0x165, 0x0100, 0x0100, 0x0100, 0x7007, 0x51, 0x200},
     {0, 0, 0, 0x168, 0x7100, 0x7100, 0x0200, 0x7007, 0x31, 0x200}};
 void RicEntityPlayerBlinkWhite(Entity* self) {
-    Primitive* prim;
     u8 xMargin;
     u8 yMargin;
+    s16 angle;
     u8 wSprite;
     u8 hSprite;
-    s16 xPivot;
-    s16 yPivot;
     s16 width;
     s16 height;
     s16 selfX;
     s16 selfY;
     s32 i;
-    u16 upperParams;
-    s16* dataPtr;
-    s16 angleIdx1;
-    s16 angleIdx2;
-    s16 angleIdx3;
-    s16 angleDivide1;
-    s16 angleDivide3;
-    s16 angleDivide2;
-    s16* temp_v1;
+    Primitive* prim;
+    s16 xPivot;
+    s16 yPivot;
+    s16 plSpriteIndex;
+    s16 upperParams;
+    s16 angleRedIndex;
+    s16* sp44;
     u8* plSprite;
-    s16 rotz;
+    s16* dataPtr;
+    s16 angleGreenIndex;
+    s16 angleBlueIndex;
+    s16 redDivide;
+    s16 blueDivide;
+    s16 greenDivide;
+    void* dummy48;
 
-    if (PLAYER.animSet == 0 || (PLAYER.animCurFrame & 0x7FFF) == 0) {
+    if (!PLAYER.animSet || !(PLAYER.animCurFrame & 0x7FFF)) {
         DestroyEntity(self);
         return;
     }
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->facingLeft = PLAYER.facingLeft;
-    rotz = PLAYER.rotZ;
-    selfY = self->posY.i.hi;
+    sp44 = D_92641C8[PLAYER.animCurFrame & 0x7FFF];
+    sp44 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
+    plSpriteIndex = *sp44++;
+    plSpriteIndex &= 0x7FFF;
     selfX = self->posX.i.hi;
-    temp_v1 = D_801530AC[PLAYER.animCurFrame & 0x7FFF];
-    // Don't miss the temp_v1++ here!
-    plSprite = ((u8**)SPRITESHEET_PTR)[*temp_v1++ & 0x7FFF];
+    selfY = self->posY.i.hi;
+    plSprite = ((u8**)SPRITESHEET_PTR)[plSpriteIndex];
     xMargin = 4;
     yMargin = 1;
     wSprite = xMargin + plSprite[0];
     hSprite = yMargin + plSprite[1];
     width = wSprite - xMargin;
     height = hSprite - yMargin;
+    xPivot = sp44[0] + plSprite[2];
+    yPivot = sp44[1] + plSprite[3];
 
-    xPivot = temp_v1[0] + plSprite[2];
-    yPivot = temp_v1[1] + plSprite[3];
-
-    self->rotZ = rotz;
+    self->rotZ = PLAYER.rotZ;
     self->drawFlags = PLAYER.drawFlags;
     self->rotX = PLAYER.rotX;
     self->rotY = PLAYER.rotY;
@@ -144,12 +146,12 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
         if (dataPtr[7] >= 0x7000) {
             switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (!g_Player.timers[PL_T_POISON]) {
+                if (g_Player.timers[PL_T_POISON] == 0) {
                     self->step++;
                 }
                 break;
             case 0x7001:
-                if (!g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
+                if (g_Player.timers[PL_T_INVINCIBLE_SCENE] == 0) {
                     self->step++;
                 }
                 break;
@@ -173,7 +175,7 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             self->ext.playerBlink.unk80 = 8;
         }
         if (--self->ext.playerBlink.unk80 == 0) {
-            self->step += 1;
+            self->step++;
         }
         break;
     case 3:
@@ -186,31 +188,29 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     }
     self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
     if (self->facingLeft) {
-        selfX -= xPivot;
+        selfX = selfX - xPivot;
     } else {
-        selfX += xPivot;
+        selfX = selfX + xPivot;
     }
-    selfY += yPivot;
+    selfY = selfY + yPivot;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 8; i++) {
         if (upperParams & 0x40) {
             switch (i) {
             case 0:
-                do {
-                    if (self->facingLeft) {
-                        prim->x0 = selfX;
-                        prim->x1 = selfX - width / 2;
-                        prim->u0 = xMargin;
-                        prim->u1 = xMargin + width / 2;
-                    } else {
-                        prim->x0 = selfX;
-                        prim->x1 = selfX + width / 2;
-                        prim->u0 = xMargin;
-                        prim->u1 = xMargin + width / 2;
-                    }
-                    prim->y0 = prim->y1 = selfY;
-                    prim->v0 = prim->v1 = yMargin;
-                } while (0);
+                if (self->facingLeft) {
+                    prim->x0 = selfX;
+                    prim->x1 = selfX - width / 2;
+                    prim->u0 = xMargin;
+                    prim->u1 = xMargin + width / 2;
+                } else {
+                    prim->x0 = selfX;
+                    prim->x1 = selfX + width / 2;
+                    prim->u0 = xMargin;
+                    prim->u1 = xMargin + width / 2;
+                }
+                prim->y0 = prim->y1 = selfY;
+                prim->v0 = prim->v1 = yMargin;
                 break;
             case 1:
                 if (self->facingLeft) {
@@ -285,18 +285,26 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
                 prim->v0 = prim->v1 = yMargin + height;
                 break;
             case 6:
-
-                prim->x0 = prim->x1 = selfX;
-
-                prim->u0 = prim->u1 = xMargin;
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                } else {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                }
                 prim->y0 = selfY + height;
                 prim->y1 = selfY + height / 2;
                 prim->v0 = yMargin + height;
                 prim->v1 = yMargin + height / 2;
                 break;
             case 7:
-                prim->x0 = prim->x1 = selfX;
-                prim->u0 = prim->u1 = xMargin;
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                } else {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                }
                 prim->y0 = selfY + height / 2;
                 prim->y1 = selfY;
                 prim->v0 = yMargin + height / 2;
@@ -306,15 +314,15 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             if (self->facingLeft) {
                 prim->x2 = prim->x3 =
                     selfX - width / 2 +
-                    ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
+                    (((rcos(self->ext.playerBlink.unk82) >> 4) * 3) >> 0xC);
             } else {
                 prim->x2 = prim->x3 =
                     selfX + width / 2 +
-                    ((rcos(self->ext.playerBlink.unk82) >> 4) * 3 >> 0xC);
+                    (((rcos(self->ext.playerBlink.unk82) >> 4) * 3) >> 0xC);
             }
             prim->y2 = prim->y3 =
                 (selfY + height / 2) -
-                ((rsin(self->ext.playerBlink.unk82) >> 4) * 3 >> 7);
+                ((rsin(self->ext.playerBlink.unk82) >> 4) * 3 << 1 >> 8);
             prim->u2 = prim->u3 = xMargin + width / 2;
             prim->v2 = prim->v3 = yMargin + height / 2;
         } else {
@@ -337,36 +345,58 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
             prim->v0 = prim->v1 = yMargin + height * i / 8;
             prim->v2 = prim->v3 = yMargin + height * (i + 1) / 8;
         }
-        angleIdx1 = dataPtr[0];
-        angleIdx2 = dataPtr[2];
-        angleIdx3 = dataPtr[1];
-        angleDivide1 = dataPtr[4];
-        angleDivide2 = dataPtr[6];
-        angleDivide3 = dataPtr[5];
-        // clang-format off
+        angleRedIndex = dataPtr[0];
+        angleGreenIndex = dataPtr[2];
+        angleBlueIndex = dataPtr[1];
+        redDivide = dataPtr[4];
+        greenDivide = dataPtr[6];
+        blueDivide = dataPtr[5];
         if (upperParams & 0x40) {
-            prim->r0 = (((rsin((s16)D_80154F7C[(i + angleIdx1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
-            prim->g0 = (((rsin((s16)D_80154F7C[(i + angleIdx2) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
-            prim->b0 = (((rsin((s16)D_80154F7C[(i + angleIdx3) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
-            prim->r1 = (((rsin((s16)D_80154F7C[(i + angleIdx1 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
-            prim->g1 = (((rsin((s16)D_80154F7C[(i + angleIdx2 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
-            prim->b1 = (((rsin((s16)D_80154F7C[(i + angleIdx3 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            angle = D_80154F7C[(i + angleRedIndex) % 8];
+            prim->r0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / redDivide;
+            angle = D_80154F7C[(i + angleGreenIndex) % 8];
+            prim->g0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / greenDivide;
+            angle = D_80154F7C[(i + angleBlueIndex) % 8];
+            prim->b0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / blueDivide;
+            angle = D_80154F7C[(i + angleRedIndex + 1) % 8];
+            prim->r1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / redDivide;
+            angle = D_80154F7C[(i + angleGreenIndex + 1) % 8];
+            prim->g1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / greenDivide;
+            angle = D_80154F7C[(i + angleBlueIndex + 1) % 8];
+            prim->b1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / blueDivide;
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
             D_80154F7C[i] += self->ext.playerBlink.unk8A;
         } else {
-            prim->r0 = prim->r1 =(((rsin((s16)D_80154F7C[(i + angleIdx1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
-            prim->g0 = prim->g1 =(((rsin((s16)D_80154F7C[(i + angleIdx2) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
-            prim->b0 = prim->b1 =(((rsin((s16)D_80154F7C[(i + angleIdx3) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
-            prim->r2 = prim->r3 =(((rsin((s16)D_80154F7C[(i + angleIdx1 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide1);
-            prim->g2 = prim->g3 =(((rsin((s16)D_80154F7C[(i + angleIdx2 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide2);
-            prim->b2 = prim->b3 =(((rsin((s16)D_80154F7C[(i + angleIdx3 + 1) % 8]) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / angleDivide3);
+            angle = D_80154F7C[(i + angleRedIndex) % 8];
+            prim->r0 = prim->r1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / redDivide);
+            angle = D_80154F7C[(i + angleGreenIndex) % 8];
+            prim->g0 = prim->g1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / greenDivide);
+            angle = D_80154F7C[(i + angleBlueIndex) % 8];
+            prim->b0 = prim->b1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / blueDivide);
+            angle = D_80154F7C[(i + angleRedIndex + 1) % 8];
+            prim->r2 = prim->r3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / redDivide);
+            angle = D_80154F7C[(i + angleGreenIndex + 1) % 8];
+            prim->g2 = prim->g3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / greenDivide);
+            angle = D_80154F7C[(i + angleBlueIndex + 1) % 8];
+            prim->b2 = prim->b3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / blueDivide);
             D_80154F7C[i] += self->ext.playerBlink.unk8A;
         }
-        // clang-format on
         prim->priority = PLAYER.zPriority + 2;
         prim = prim->next;
     }
-    if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
+    if ((upperParams & 0x3F) == 0 || (upperParams & 0x3F) == 7) {
         RicSetInvincibilityFrames(1, 10);
     }
 }
