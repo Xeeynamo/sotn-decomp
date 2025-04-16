@@ -2255,9 +2255,178 @@ void func_801641A0(Entity* self) {
     PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3);
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityShrinkingPowerUpRing);
-// clang-format on
+// Entity ID # 34. Created by blueprints 36, 37, 38, 39.
+// Only difference in those blueprints is the "unk5" member of the blueprint.
+// When the factory is made, unk5 loads into ext.factory.unk9A. This appears
+// to create a delay before the factory actually creates the child.
+// So 36, 37, 38, 39 create this entity with delay of 0, 4, 8, or 12 frames.
+// All 4 are used in RicHandleDeadPrologue. 36 alone (for instant child) is used
+// when Richter does an item crash without a subweapon, in RicDoCrash.
+// Creates a large semi-transparent circle around Richter which shrinks inward.
+static s16 D_8015519C[][6] = {
+    {0x0000, 0x0000, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0000},
+    {0x0000, 0x0000, 0x0100, 0x7000, 0x7000, 0x0200},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x1000},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7000, 0x0800},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0200, 0x7100, 0x0100}};
+void RicEntityShrinkingPowerUpRing(Entity* self) {
+    s16 variant;
+    s16 rMod;
+    s16* loadedParams;
+    s16 x;
+    s16 gMod;
+    s16 bMod;
+    s16 gOffset;
+    s16 bOffset;
+    s16 angleStart;
+    s16 y;
+    s16 baseAngle;
+    s32 i;
+    s16 angle;
+    Primitive* prim1;
+    Primitive* prim2;
+
+    variant = (self->params & 0x7F00) >> 8;
+    loadedParams = D_8015519C[variant];
+    rMod = loadedParams[2];
+    gMod = loadedParams[3];
+    bMod = loadedParams[4];
+    gOffset = loadedParams[0];
+    bOffset = loadedParams[1];
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
+                      FLAG_POS_PLAYER_LOCKED | FLAG_UNK_10000;
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        prim2 = prim1 = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 16; i++) {
+            prim1 = prim1->next;
+        }
+        for (i = 0; i < 16; i++) {
+            angle = i << 8;
+            prim2->u0 = (rcos(angle) >> 4 << 5 >> 8) + 0x20;
+            prim2->v0 = -(rsin(angle) >> 4 << 5 >> 8) + 0xDF;
+            angle = (i + 1) << 8;
+            prim2->u1 = (rcos(angle) >> 4 << 5 >> 8) + 0x20;
+            prim2->v1 = -(rsin(angle) >> 4 << 5 >> 8) + 0xDF;
+            prim1->u2 = prim1->u3 = 0x20;
+            prim1->v2 = prim1->v3 = 0xDF;
+            prim2->u2 = prim1->u0 = (prim2->u0 + prim1->u2) / 2;
+            prim2->v2 = prim1->v0 = (prim2->v0 + prim1->v2) / 2;
+            prim2->u3 = prim1->u1 = (prim2->u1 + prim1->u3) / 2;
+            prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
+            prim1->tpage = prim2->tpage = 0x1A;
+            prim1->clut = prim2->clut = 0x15F;
+            prim1->priority = prim2->priority = PLAYER.zPriority + 2;
+            prim1->drawMode = prim2->drawMode =
+                DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                DRAW_TRANSP;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+        }
+        self->ext.ricPowerRing.unk80 = self->ext.ricPowerRing.unk82 = 0x280;
+        self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86 = 0x240;
+        self->ext.ricPowerRing.unk8A = loadedParams[5];
+        self->ext.ricPowerRing.unk88 = 0xC0;
+        self->step++;
+        break;
+    case 1:
+        self->ext.ricPowerRing.unk7E += 0x40;
+        self->ext.ricPowerRing.unk86 -= 10;
+        if (self->ext.ricPowerRing.unk86 < 0) {
+            self->ext.ricPowerRing.unk86 = 0;
+            self->ext.ricPowerRing.unk7C = 0x20;
+            self->step++;
+        }
+        self->ext.ricPowerRing.unk84 = self->ext.ricPowerRing.unk86;
+        self->ext.ricPowerRing.unk82 -= 5;
+        self->ext.ricPowerRing.unk80 -= 5;
+        break;
+    case 2:
+        self->ext.ricPowerRing.unk7E += 0x40;
+        self->ext.ricPowerRing.unk82 -= 3;
+        self->ext.ricPowerRing.unk80 -= 6;
+        if (--self->ext.ricPowerRing.unk7C == 0) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.ricPowerRing.unk7E += 0x40;
+        self->ext.ricPowerRing.unk82 -= 3;
+        self->ext.ricPowerRing.unk80 -= 6;
+        self->ext.ricPowerRing.unk88 -= 12;
+        if (self->ext.ricPowerRing.unk88 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    angleStart = self->ext.ricPowerRing.unk8A;
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
+    prim1 = prim2 = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        prim1 = prim1->next;
+    }
+    for (i = 0; i < 16; i++) {
+        prim2->x0 =
+            x + (prim2->u0 - 0x20) * self->ext.ricPowerRing.unk80 / 0x100;
+        prim2->y0 =
+            y + (prim2->v0 - 0xE0) * self->ext.ricPowerRing.unk82 / 0x100;
+        prim2->x1 =
+            x + (prim2->u1 - 0x20) * self->ext.ricPowerRing.unk80 / 0x100;
+        prim2->y1 =
+            y + (prim2->v1 - 0xE0) * self->ext.ricPowerRing.unk82 / 0x100;
+        prim1->x2 = x + (rcos((i + 1) << 8) >> 4 << 5 >> 8) *
+                            self->ext.ricPowerRing.unk84 / 0x100;
+        prim1->y2 = y - (rsin((i + 1) << 8) >> 4 << 5 >> 8) *
+                            self->ext.ricPowerRing.unk86 / 0x100;
+        prim1->x3 = x + (rcos((i + 2) << 8) >> 4 << 5 >> 8) *
+                            self->ext.ricPowerRing.unk84 / 0x100;
+        prim1->y3 = y - (rsin((i + 2) << 8) >> 4 << 5 >> 8) *
+                            self->ext.ricPowerRing.unk86 / 0x100;
+        prim2->x2 = prim1->x0 = (prim2->x0 + prim1->x2) / 2;
+        prim2->y2 = prim1->y0 = (prim2->y0 + prim1->y2) / 2;
+        prim2->x3 = prim1->x1 = (prim2->x1 + prim1->x3) / 2;
+        prim2->y3 = prim1->y1 = (prim2->y1 + prim1->y3) / 2;
+        baseAngle = i * angleStart;
+        angle = self->ext.ricPowerRing.unk7E + baseAngle;
+        prim1->r0 = prim2->r2 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
+        angle = self->ext.ricPowerRing.unk7E + gOffset + baseAngle;
+        prim1->g0 = prim2->g2 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
+        angle = self->ext.ricPowerRing.unk7E + bOffset + baseAngle;
+        prim1->b0 = prim2->b2 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
+        angle = self->ext.ricPowerRing.unk7E + angleStart + baseAngle;
+        prim1->r1 = prim2->r3 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
+        angle = self->ext.ricPowerRing.unk7E + gOffset + angleStart + baseAngle;
+        prim1->g1 = prim2->g3 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
+        angle = self->ext.ricPowerRing.unk7E + bOffset + angleStart + baseAngle;
+        prim1->b1 = prim2->b3 =
+            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
+        prim2->r0 = prim2->g0 = prim2->b0 = prim2->r1 = prim2->g1 = prim2->b1 =
+            0;
+        prim1->r2 = prim1->g2 = prim1->b2 = prim1->r3 = prim1->g3 = prim1->b3 =
+            0;
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityHitByIce);
 
