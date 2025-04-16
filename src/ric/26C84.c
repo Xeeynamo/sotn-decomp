@@ -632,24 +632,24 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
 // RicHandleHit.
-static Point16 D_801551FC = {0xFFFE, 0xFFE8};
-static Point16 D_80155200 = {0x0000, 0xFFF8};
-static Point16 D_80155204 = {0x0002, 0x0008};
-static Point16 D_80155208 = {0x0000, 0x0018};
-static Point16 D_8015520C = {0x0006, 0xFFF4};
-static Point16 D_80155210 = {0x0008, 0x0000};
-static Point16 D_80155214 = {0x0007, 0x000C};
-static Point16 D_80155218 = {0xFFF8, 0xFFF4};
-static Point16 D_8015521C = {0xFFF7, 0x0000};
-static Point16 D_80155220 = {0xFFF9, 0x000C};
-static Point16 D_80155224 = {0xFFF2, 0xFFFA};
-static Point16 D_80155228 = {0xFFF1, 0x0007};
-static Point16 D_8015522C = {0x000D, 0xFFF9};
-static Point16 D_80155230 = {0x0010, 0x0008};
-static Point16 D_80155234 = {0xFFF9, 0xFFEA};
-static Point16 D_80155238 = {0x0006, 0xFFEB};
-static Point16 D_8015523C = {0xFFF8, 0x0015};
-static Point16 D_80155240 = {0x0007, 0x0016};
+static Point16 D_801551FC = {-2, -24};
+static Point16 D_80155200 = {0, -8};
+static Point16 D_80155204 = {2, 8};
+static Point16 D_80155208 = {0, 24};
+static Point16 D_8015520C = {6, -12};
+static Point16 D_80155210 = {8, 0};
+static Point16 D_80155214 = {7, 12};
+static Point16 D_80155218 = {-8, -12};
+static Point16 D_8015521C = {-9, 0};
+static Point16 D_80155220 = {-7, 12};
+static Point16 D_80155224 = {-14, -6};
+static Point16 D_80155228 = {-15, 7};
+static Point16 D_8015522C = {13, -7};
+static Point16 D_80155230 = {16, 8};
+static Point16 D_80155234 = {-7, -22};
+static Point16 D_80155238 = {6, -21};
+static Point16 D_8015523C = {-8, 21};
+static Point16 D_80155240 = {7, 22};
 static Point16* D_80155244[] = {
     &D_801551FC, &D_8015520C, &D_80155200, &D_8015520C, &D_80155210,
     &D_80155200, &D_80155210, &D_80155204, &D_80155200, &D_80155210,
@@ -668,26 +668,24 @@ static Point16* D_80155244[] = {
     &D_80155240, &D_80155214};
 void RicEntityHitByIce(Entity* self) {
     const int PrimCount = LEN(D_80155244) / 3;
+    s16 x;
+    s16 y;
     s32 i;
-    Primitive* prim;
+    bool terminateFlag;
+    s16 deltaX;
+    s16 deltaY;
+    s16 yMod;
+    s32 distance;
     s16 angle;
-    s32 xShift1;
-    s32 xShift2;
-    s32 xShift3;
-    s32 yShift1;
-    s32 yShift2;
-    s32 yShift3;
-    s32 size;
-    u32 primYshift;
-    u16 selfX;
-    u16 selfY;
-    Point16* offset;
-    bool sp18 = false;
+    Point16* pos;
+    Primitive* prim;
 
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi;
-    // This is badly written but it checks if 0x10000 is unset.
-    sp18 = ((g_Player.status & PLAYER_STATUS_UNK10000) == sp18);
+    terminateFlag = 0;
+    if (!(g_Player.status & PLAYER_STATUS_UNK10000)) {
+        terminateFlag = 1;
+    }
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT3, PrimCount);
@@ -695,12 +693,11 @@ void RicEntityHitByIce(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0xF) + 0x30;
-            prim->b0 = prim->b1 = prim->b2 = prim->b3 = rand() | 0x80;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = (rand() & 0x0F) + 0x30;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = (rand() & 0x7F) + 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = (rand() & 0x1F) + 0x30;
             if (rand() & 1) {
                 prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_TPAGE2 |
@@ -718,23 +715,23 @@ void RicEntityHitByIce(Entity* self) {
             self->ext.hitbyice.unk7E = 1;
         }
         if (PLAYER.velocityY != 0) {
-            if (!PLAYER.facingLeft) {
-                self->rotZ = -0x100;
-            } else {
+            if (PLAYER.facingLeft) {
                 self->rotZ = 0x100;
+            } else {
+                self->rotZ = -0x100;
             }
         } else {
-            if (PLAYER.velocityX <= 0) {
-                self->rotZ = 0xF80;
-            } else {
+            if (PLAYER.velocityX > 0) {
                 self->rotZ = 0x80;
+            } else {
+                self->rotZ = 0xF80;
             }
         }
         if (PLAYER.step == PL_S_DEAD) {
-            if (!PLAYER.facingLeft) {
-                self->rotZ = -0x180;
-            } else {
+            if (PLAYER.facingLeft) {
                 self->rotZ = 0x180;
+            } else {
+                self->rotZ = -0x180;
             }
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x3C;
@@ -748,34 +745,34 @@ void RicEntityHitByIce(Entity* self) {
     case 1:
         if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
-                if (!PLAYER.facingLeft) {
-                    self->rotZ = -0x280;
-                } else {
+                if (PLAYER.facingLeft) {
                     self->rotZ = 0x280;
+                } else {
+                    self->rotZ = -0x280;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
-                if (!PLAYER.facingLeft) {
-                    self->rotZ = -0x380;
-                } else {
+                if (PLAYER.facingLeft) {
                     self->rotZ = 0x380;
+                } else {
+                    self->rotZ = -0x380;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
-                if (!PLAYER.facingLeft) {
-                    self->rotZ = -0x180;
-                } else {
+                if (PLAYER.facingLeft) {
                     self->rotZ = 0x180;
+                } else {
+                    self->rotZ = -0x180;
                 }
             }
         }
-        if (self->ext.hitbyice.unk80 && !--self->ext.hitbyice.unk82) {
-            sp18 = true;
+        if (self->ext.hitbyice.unk80 && --self->ext.hitbyice.unk82 == 0) {
+            terminateFlag = true;
         }
-        if ((self->ext.hitbyice.unk7E) && (g_Player.vram_flag & 0xC)) {
-            sp18 = true;
+        if (self->ext.hitbyice.unk7E && g_Player.vram_flag & 0xC) {
+            terminateFlag = true;
         }
-        if (sp18) {
+        if (terminateFlag) {
             self->ext.hitbyice.unk7C = 0x40;
             if (self->ext.hitbyice.unk80) {
                 self->ext.hitbyice.unk7C = 0x80;
@@ -784,74 +781,71 @@ void RicEntityHitByIce(Entity* self) {
         }
         break;
     case 2:
-        if (!--self->ext.hitbyice.unk7C) {
+        if (--self->ext.hitbyice.unk7C == 0) {
             DestroyEntity(self);
             return;
         }
         break;
     }
 
-    selfX = self->posX.i.hi;
-    selfY = self->posY.i.hi;
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < PrimCount; i++) {
-        offset = D_80155244[i * 3];
+        pos = D_80155244[i * 3];
         if (prim->u0 < 2) {
-            size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift1 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift1 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x0 = selfX + xShift1;
-            prim->y0 = selfY + yShift1;
+            distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
+            angle = self->rotZ + ratan2(pos->y, pos->x);
+            deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            prim->x0 = x + deltaX;
+            prim->y0 = y + deltaY;
 
-            offset = D_80155244[i * 3 + 1];
-            size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift2 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift2 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x1 = selfX + xShift2;
-            prim->y1 = selfY + yShift2;
+            pos = D_80155244[i * 3 + 1];
+            distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
+            angle = self->rotZ + ratan2(pos->y, pos->x);
+            deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            prim->x1 = x + deltaX;
+            prim->y1 = y + deltaY;
 
-            offset = D_80155244[i * 3 + 2];
-            size = SquareRoot12(
-                ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
-            xShift3 = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
-            yShift3 = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
-            prim->x2 = prim->x3 = selfX + xShift3;
-            prim->y2 = prim->y3 = selfY + yShift3;
+            pos = D_80155244[i * 3 + 2];
+            distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
+            angle = self->rotZ + ratan2(pos->y, pos->x);
+            deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
+            prim->x2 = prim->x3 = x + deltaX;
+            prim->y2 = prim->y3 = y + deltaY;
         }
-        if ((prim->u0 == 0) && (sp18 != 0)) {
+        if (prim->u0 == 0 && terminateFlag) {
             prim->u0++;
             prim->v0 = (rand() & 15) + 1;
-            if (self->ext.hitbyice.unk80 != 0) {
+            if (self->ext.hitbyice.unk80) {
                 prim->v0 = (rand() % 60) + 1;
             }
         }
         if (prim->u0 == 1) {
             if (--prim->v0 == 0) {
+                prim->u0++;
                 prim->v0 = 0x20;
                 prim->u2 = 0xF0;
-                prim->u0++;
-                if (self->ext.hitbyice.unk80 != 0) {
+                if (self->ext.hitbyice.unk80) {
                     prim->v0 = (rand() & 31) + 0x28;
                 }
             }
         }
         if (prim->u0 == 2) {
-            if ((prim->u2 < 0x70) || (prim->u2 > 0xD0)) {
+            if (prim->u2 < 0x70 || prim->u2 > 0xD0) {
                 prim->u2 += 4;
             }
-            primYshift = (s8)prim->u2 >> 4;
-            if (self->ext.hitbyice.unk80 != 0) {
-                primYshift /= 2;
+            yMod = (s8)prim->u2 >> 4;
+            if (self->ext.hitbyice.unk80) {
+                yMod = yMod >> 1;
             }
-            prim->y0 = primYshift + prim->y0;
-            prim->y1 = primYshift + prim->y1;
-            prim->y2 = primYshift + prim->y2;
-            prim->y3 = primYshift + prim->y3;
+            prim->y0 += yMod;
+            prim->y1 += yMod;
+            prim->y2 += yMod;
+            prim->y3 += yMod;
             if (prim->r3 < 4) {
                 prim->r3 -= 4;
             }
