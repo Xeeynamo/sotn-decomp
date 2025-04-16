@@ -241,7 +241,7 @@ set(SOURCE_FILES_RIC
     src/ric/2F8E8.c
     src/ric/319C4.c
     src/ric/spriteparts.c
-    src/ric/e_giant_spinning_cross.c
+    src/ric/pl_crash_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
     src/ric/pl_anims.c
