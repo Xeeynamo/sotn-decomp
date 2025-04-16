@@ -143,8 +143,6 @@ void SetReleaseRate2(void) {
 }
 
 void CdSoundCommand10(void) {
-    s32 temp;
-
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
@@ -155,12 +153,10 @@ void CdSoundCommand10(void) {
     case 1:
         g_XaFadeCounter++;
         if (g_volumeL > 0) {
-            temp = g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_volumeL = g_volumeR - (temp >> 9);
-            if (g_volumeL >> 0x10) {
+            g_volumeL =
+                g_volumeR -
+                (g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter) / 0x200;
+            if (g_volumeL < 0) {
                 g_volumeL = 0;
             }
         } else {
@@ -184,12 +180,16 @@ void CdSoundCommand10(void) {
         D_800BD1C4--;
         if (D_800BD1C4 == 0) {
             SetReleaseRate2();
-        default:
-            g_CdSoundCommandStep = 0;
-            D_801390A0 = g_CdSoundCommandStep;
             D_8013B61C = 0;
+            D_801390A0 = g_CdSoundCommandStep = 0;
             AdvanceCdSoundCommandQueue();
         }
+        break;
+
+    default:
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
         break;
     }
 }
