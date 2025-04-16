@@ -2386,11 +2386,13 @@ void EntityTeleport(Entity* self) {
     s32 xVar;
     s32 i;
     s32 result;
+    s32 upperParams;
+    bool showParticles;
+    bool var_s5;
 
-    s32 upperParams = self->params & 0xFE00;
-    bool wasCase3 = false;
-    bool var_s5 = false;
-
+    upperParams = self->params & 0xFE00;
+    showParticles = false;
+    var_s5 = false;
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
@@ -2475,7 +2477,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 3:
-        wasCase3 = true;
+        showParticles = true;
         self->ext.teleport.colorIntensity += 4;
         if (self->ext.teleport.colorIntensity >= 0x100) {
             self->ext.teleport.colorIntensity = 0x100;
@@ -2586,7 +2588,7 @@ void EntityTeleport(Entity* self) {
     func_80124164(
         prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
-    if (wasCase3) {
+    if (showParticles) {
         for (i = 0; i < LEN(D_8013839C); i++) {
             switch (prim->g0) {
             case 0:
@@ -2610,7 +2612,7 @@ void EntityTeleport(Entity* self) {
             prim = prim->next;
         }
     } else {
-        // Potential bug? Should probably be doing prim = prim->next, right?
+        // @bug: should probably be doing prim = prim->next
         for (i = 0; i < LEN(D_8013839C); i++) {
             prim->drawMode |= DRAW_HIDE;
         }

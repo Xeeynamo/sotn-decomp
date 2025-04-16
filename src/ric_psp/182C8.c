@@ -2842,14 +2842,253 @@ static void func_80165DD8(
     }
 }
 
-void func_80166024() {
+static void func_80166024() {
     PLAYER.palette = 0x815E;
     PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
-void func_80166044() {
+static void func_801660c44() {
     PLAYER.palette = 0x8120;
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityTeleport);
+#if defined(VERSION_PSP)
+extern Point16 D_80175000[32];
+#else
+static Point16 D_80175000[32];
+#endif
+void RicEntityTeleport(Entity* self) {
+    Primitive* prim;
+    s32 w;
+    s32 h;
+    s32 yVar;
+    s32 xVar;
+    s32 i;
+    s32 result;
+    s32 upperParams;
+    bool showParticles;
+    bool var_s5;
+
+    upperParams = self->params & 0xFE00;
+    FntPrint("pl_warp_flag:%02x\n", g_Player.unk1C);
+    showParticles = false;
+    var_s5 = false;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(D_80175000) + 4);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 2; i++) {
+            prim->r0 = prim->b0 = prim->g0 = 0;
+            prim->x0 = 0xC0 * i;
+            prim->y0 = 0;
+            prim->u0 = 0xC0;
+            prim->v0 = 0xF0;
+            prim->type = PRIM_TILE;
+            prim->priority = 0x1FD;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        for (i = 0; i < 2; i++) {
+            prim->type = PRIM_G4;
+            prim->priority = 0x1F8;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        for (i = 0; i < LEN(D_80175000); i++) {
+            xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
+            yVar = 0xE0 - (rand() & 0x3F);
+            D_80175000[i].x = xVar;
+            D_80175000[i].y = yVar;
+            prim->clut = 0x1B2;
+            prim->clut = 0x1B5;
+            prim->clut = 0x1BA;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() & 0x1F) + 1;
+            prim->g2 = 0;
+            prim->priority = 0x1F0;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.teleport.width = 0;
+        self->ext.teleport.height = 0x10;
+        self->ext.teleport.colorIntensity = 0x80;
+        if ((self->params & 0x100) == 0x100) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.height = 0x100;
+            self->ext.teleport.colorIntensity = 0x80;
+            self->ext.teleport.unk90 = 0xFF;
+            var_s5 = true;
+            self->step = Player_Unk20;
+#ifndef VERSION_PSP
+            g_api.PlaySfx(SFX_UNK_8BB);
+#endif
+        } else {
+            self->ext.teleport.unk90 = 0;
+            self->ext.teleport.width = 1;
+            self->ext.teleport.height = 0x10;
+            self->ext.teleport.colorIntensity = 0x80;
+            self->step = 1;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
+            g_api.PlaySfx(NA_SE_PL_TELEPORT);
+        }
+        break;
+    case 1:
+        self->ext.teleport.height += 0x20;
+        if (self->ext.teleport.height > 0x100) {
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.teleport.width++;
+        if (self->ext.teleport.width >= 0x10) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.timer = 0x80;
+            self->step++;
+        }
+        break;
+    case 3:
+        showParticles = true;
+        self->ext.teleport.colorIntensity += 4;
+        if (self->ext.teleport.colorIntensity >= 0x100) {
+            self->ext.teleport.colorIntensity = 0x100;
+        }
+        if (--self->ext.teleport.timer == 0) {
+            PLAYER.palette = PAL_OVL(0x10D);
+            self->step++;
+        }
+        break;
+    case 4:
+        func_80166024();
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width <= 0) {
+            self->ext.teleport.width = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        func_80166024();
+        var_s5 = true;
+        self->ext.teleport.unk90 += 4;
+        if (self->ext.teleport.unk90 >= 0x100) {
+            self->ext.teleport.unk90 = 0xFF;
+            self->ext.teleport.timer = 0x20;
+            self->step++;
+        }
+        break;
+    case 6:
+        func_80166024();
+        var_s5 = true;
+        if (--self->ext.teleport.timer == 0) {
+            self->ext.teleport.unk90 = 0;
+            if (upperParams == 0) {
+                D_80097C98 = 6;
+            }
+            if (upperParams == 0x200) {
+                D_80097C98 = 4;
+            }
+            if (upperParams == 0x400) {
+                D_80097C98 = 5;
+            }
+        }
+        break;
+    case 20:
+        var_s5 = true;
+        self->ext.teleport.unk90 = 0xFF;
+        self->ext.teleport.timer = 0x20;
+        self->step++;
+        break;
+    case 21:
+        var_s5 = true;
+        if (--self->ext.teleport.timer == 0) {
+#ifdef VERSION_PSP
+            g_api.PlaySfx(SFX_UNK_8BB);
+#endif
+            self->step++;
+        }
+        break;
+    case 22:
+        var_s5 = true;
+        self->ext.teleport.unk90 -= 4;
+        if (self->ext.teleport.unk90 <= 0) {
+            self->ext.teleport.unk90 = 0;
+            self->step++;
+        }
+        break;
+    case 23:
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width < 2) {
+            self->ext.teleport.width = 0;
+            self->ext.teleport.timer = 4;
+            self->step++;
+            g_Player.unk1C = 1;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    xVar = PLAYER.posX.i.hi;
+    yVar = PLAYER.posY.i.hi;
+    w = self->ext.teleport.width;
+    h = self->ext.teleport.height;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 2; prim = prim->next, i++) {
+        prim->r0 = prim->b0 = prim->g0 = self->ext.teleport.unk90;
+        prim->drawMode |= DRAW_HIDE;
+        if (var_s5) {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+    }
+
+    prim->x1 = prim->x3 = xVar;
+    prim->x0 = prim->x2 = xVar - w;
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    prim = prim->next;
+    prim->x1 = prim->x3 = xVar;
+    prim->x0 = prim->x2 = xVar + w;
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    prim = prim->next;
+    if (showParticles) {
+        for (i = 0; i < LEN(D_80175000); i++) {
+            switch (prim->g0) {
+            case 0:
+                if (--prim->g1 == 0) {
+                    prim->g0++;
+                }
+                break;
+            case 1:
+                xVar = D_80175000[i].x;
+                yVar = D_80175000[i].y;
+                result = func_8015FDB0(prim, xVar, yVar);
+                D_80175000[i].y -= 16;
+                if (result < 0) {
+                    prim->drawMode |= DRAW_HIDE;
+                    prim->g0++;
+                } else {
+                    prim->drawMode &= ~DRAW_HIDE;
+                }
+                break;
+            }
+            prim = prim->next;
+        }
+    } else {
+        // @bug: should probably be doing prim = prim->next
+        for (i = 0; i < LEN(D_80175000); i++) {
+            prim->drawMode |= DRAW_HIDE;
+        }
+    }
+}
