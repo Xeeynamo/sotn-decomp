@@ -31,10 +31,10 @@
 | dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | EntityNull                          |        9 |          1 |        |                                 |       |
 | dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
+| dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | dra    | MemcardInit                         |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
-| dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
 | ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
@@ -476,7 +476,7 @@
 | wrp    | func_psp_0923C2F8                   |       46 |          7 |        | https://decomp.me/scratch/LLr7o | 1.0   |
 | dra    | func_psp_090EDBA0                   |       47 |          1 |        |                                 |       |
 | dra    | func_8011A290                       |       47 |          3 |        |                                 |       |
-| dra    | func_psp_090DCBC8                   |       47 |          3 |        | https://decomp.me/scratch/5Kh8l | 1.0   |
+| dra    | func_801030B4                       |       47 |          3 |        |                                 |       |
 | st0    | func_801B01F8                       |       47 |          4 |        |                                 |       |
 | dra    | DecelerateX                         |       47 |          5 |        |                                 |       |
 | dra    | DecelerateY                         |       47 |          5 |        |                                 |       |
@@ -535,7 +535,7 @@
 | ric    | AguneaShuffleParams                 |       54 |          5 |        |                                 |       |
 | ric    | RicSetHighJump                      |       54 |          8 |        |                                 |       |
 | ric    | RicSetWalk                          |       54 |          9 |        |                                 |       |
-| dra    | func_psp_090DCC60                   |       55 |          1 |        | https://decomp.me/scratch/myDl0 | 1.0   |
+| dra    | func_80103148                       |       55 |          1 |        |                                 |       |
 | dra    | KeyOn12_19                          |       55 |          2 |        |                                 |       |
 | dra    | GetFreeEntityReverse                |       55 |          5 |        |                                 |       |
 | ric    | RicGetFreeEntityReverse             |       55 |          5 |        |                                 |       |
@@ -756,7 +756,7 @@
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
 | ric    | pl_blueprints.rodata                |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
-| dra    | PlaySeq                             |       86 |          9 |        | https://decomp.me/scratch/zr0i7 | 0.286 |
+| dra    | PlaySeq                             |       86 |          9 |        | https://decomp.me/scratch/zr0i7 | 0.997 |
 | dra    | func_80113D7C                       |       86 |         11 |        |                                 |       |
 | dra    | DoCdCommand                         |       86 |         12 |        |                                 |       |
 | dra    | MenuButtonConfigDraw                |       87 |          7 |        | https://decomp.me/scratch/UXNOu | 0.906 |
@@ -1389,6 +1389,7 @@
 | ric    | RicEntityCrashBible                 |      742 |         48 | Yes    | https://decomp.me/scratch/O1hL7 | 1.0   |
 | ric    | RicEntityCrashCrossBeam             |      743 |         63 |        | https://decomp.me/scratch/ijdVw | 0.999 |
 | dra    | CheckStageCollision                 |      746 |         77 |        | https://decomp.me/scratch/GmZxv | 0.995 |
+| dra    | CheckCollision                      |      748 |         90 |        | https://decomp.me/scratch/hVHDS | 0.997 |
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.999 |
@@ -1396,7 +1397,6 @@
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
-| dra    | CheckCollision                      |      780 |         91 |        | https://decomp.me/scratch/hVHDS | 0.997 |
 | no4    | EntitySplashWater                   |      785 |         68 |        |                                 |       |
 | ric    | RicEntitySubwpnThrownDagger         |      786 |         53 |        |                                 |       |
 | lib    | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
