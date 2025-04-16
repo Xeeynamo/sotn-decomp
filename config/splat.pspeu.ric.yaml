@@ -43,7 +43,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, ric/pl_debug]
-      - [0x410, c, ric/pl_handlers]
+      - [0x410, c, ric/pl_steps]
       - [0x4B60, c, ric/pl_subweapons]
       - [0x6C78, c, ric_psp/lang]
       - [0x6D18, c, ric/pl_main]
@@ -60,7 +60,7 @@ segments:
       - [0x26878, c, ric_psp/pl_subweapon_dummy]
       - [0x26898, c, ric_psp/pl_subweapon_cross]
       - [0x28400, .data, ric/pl_debug]
-      - [0x28410, .data, ric/pl_handlers]
+      - [0x28410, .data, ric/pl_steps]
       - [0x28438, data]
       - [0x28AB0, .data, ric/pl_subweapons]
       - [0x28AD8, data]
@@ -71,7 +71,7 @@ segments:
       - [0x2E0A8, data]
       - [0x2F6B8, .data, ric/pl_crash_cross]
       - [0x2FBE8, data]
-      - [0x30100, .rodata, ric/pl_handlers]
+      - [0x30100, .rodata, ric/pl_steps]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]
       - [0x30200, .rodata, ric/319C4] # RicEntityCrashReboundStone
