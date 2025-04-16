@@ -398,8 +398,8 @@ u8 D_800A3728[] = {
 
 void func_801042C4(s32 arg0) {
     VECTOR sp10;
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
     const int PrimCount = 4;
 
     D_80137EE0 = arg0;
@@ -421,7 +421,7 @@ void func_801042C4(s32 arg0) {
     D_801379D0.vz = 0x100;
     D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
     
-    for (i = 0, prim = &g_PrimBuf[D_80137E48]; i < PrimCount; prim = prim->next, i++) {
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next, i++) {
         prim->x0 = (i & 1) << 7;
         prim->y0 = (i / 2) * 0xD8;
         prim->u0 = 0x80;
