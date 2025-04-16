@@ -2842,6 +2842,14 @@ static void func_80165DD8(
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80166024);
+void func_80166024() {
+    PLAYER.palette = 0x815E;
+    PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+}
+
+void func_80166044() {
+    PLAYER.palette = 0x8120;
+    PLAYER.drawMode = DRAW_DEFAULT;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityTeleport);
