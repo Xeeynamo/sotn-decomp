@@ -98,7 +98,214 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
     return prim;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", HandleSaveMenu);
+extern s32* D_psp_091CE248;
+extern s32* D_psp_091CE240;
+extern s32* D_psp_091CE238;
+extern s32* D_psp_091CE230;
+extern s32* D_psp_091CE228;
+extern s32* D_psp_091CE220;
+extern s32* D_psp_091CE218;
+
+extern u32 D_psp_08B42050; // psp cross button
+extern u32 D_psp_08B42054; // psp triangle button
+
+s32 HandleSaveMenu(s32 arg0) {
+    // For some reason, US and HD have different controls for confirm and exit,
+    // so we handle that with a couple of constants.
+    
+        #define CONFIRM (D_psp_08B42050 | PAD_START | PAD_SQUARE)
+        #define EXIT D_psp_08B42054
+        u8 temp_t0;
+    
+        Primitive* prim2; //s1
+        Primitive* prim1; //s0
+        Primitive* prim3; //s4
+    
+        s32 temp_a1;
+    
+        prim2 = &g_PrimBuf[D_80137E58];
+        prim1 = &g_PrimBuf[D_80137E5C];
+        prim3 = &g_PrimBuf[D_80137E60];
+        temp_t0 = prim2->p1;
+    
+        if (arg0 == 0) {
+            if (!temp_t0) {
+                prim2->drawMode = DRAW_DEFAULT;
+                prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+                if (D_80137E4C == 6) {
+                    PlaySfx(SFX_START_SLAM_B);
+                } else {
+                    PlaySfx(SFX_UI_ALERT_TINK);
+                }
+                if (D_80137E4C == 6) {
+                    func_800F9D88(D_psp_091CE238, 0, 1);
+                    prim2->p1 += 2;
+                }
+                if (D_80137E4C == 7) {
+                    func_800F9D88("セーブできません　　", 0, 1);
+                    func_800F9D88("でした　　　　　　　", 1, 0);
+                    prim2->p1 += 2;
+                }
+                if (D_80137E4C == 8) {
+                    func_800F9D88("メモリーカードが　　", 0, 1);
+                    func_800F9D88("　壊れています　　　", 1, 0);
+                    prim2->p1 += 2;
+                }
+                if (D_80137E4C == 9) {
+                    func_800F9D88("　メモリーカードが　", 0, 1);
+                    func_800F9D88("初期化されていません", 1, 0);
+                    prim2->p1 += 2;
+                }
+                if (D_80137E4C == 10) {
+                    if (D_80137E54 == 2) {
+                        func_800F9D88("　　上書き　　　　　", 0, 1);
+                        func_800F9D88("　できません　　　　", 1, 0);
+                    } else if (D_80137E54 == 3) {
+                        func_800F9D88("データがないため　　", 0, 1);
+                        func_800F9D88("上書きできません　　", 1, 0);
+                    } else {
+                        func_800F9D88(D_psp_091CE230, 0, 1);
+                        func_800F9D88(D_psp_091CE228, 1, 0);
+                    }
+                    prim2->p1 += 2;
+                }
+                if (D_80137E4C == 11) {
+                    func_800F9D88("　メモリーカードの　", 0, 1);
+                    func_800F9D88("初期化に失敗しました　", 1, 0);
+                    prim2->p1 += 2;
+                }
+            } else if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
+                SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (
+                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
+                SetTexturedPrimRect(
+                    prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (D_80137E4C == 10 && temp_t0 < 33) {
+                temp_a1 = 0;
+                if(D_80137E54 == 3){
+                    temp_a1 = -6;
+                }
+                SetTexturedPrimRect(
+                    prim2, temp_a1 + 70, 96 - temp_t0, 0x90, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 56, 96 - temp_t0, 160, temp_t0);
+                func_80103148(prim3, prim1);
+            } else if (temp_t0 < 17) {
+                SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 152, temp_t0, 0, 0);
+                prim2->p1 += 2;
+                SetPrimRect(prim1, 56, 80 - temp_t0, 152, temp_t0);
+                func_80103148(prim3, prim1);
+            } else {
+                func_80103148(prim3, prim1);
+                if (D_80137E4C == 6) {
+                    prim2->p1 += 2;
+                }
+                if ((prim2->p1 >= 224) || (g_pads[0].tapped & CONFIRM)) {
+                    FreePrimitives(D_80137E58);
+                    FreePrimitives(D_80137E5C);
+                    FreePrimitives(D_80137E60);
+                    return 1;
+                }
+            }
+            return 0;
+        }
+        
+        if (arg0 == 1){
+            D_80097924 = 0;
+            D_8006C378 = -1;
+            return 1;
+        }
+        if (!temp_t0) {
+            PlaySfx(SFX_UI_ALERT_TINK);
+            prim2->p1 += 2;
+            if (arg0 == 2) {
+                func_800F9D88("初期化してもいいですか　", 0, 1);
+                D_80137E6C = 1;
+            }
+            if (arg0 == 3) {
+                func_800F9D88(D_psp_091CE240, 0, 1);
+                D_80137E6C = 0;
+            }
+            if (arg0 == 4) {
+                func_800F9D88(D_psp_091CE248, 0, 1);
+                D_80137E6C = 0;
+            }
+            func_800F9D88(D_psp_091CE220, 1, 0);
+            func_800F9D88(D_psp_091CE218, 2, 0);
+    
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(1, prim1, D_80137E6C);
+        } else if (temp_t0 < 17) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(prim2, 46, 80 - temp_t0, 184, temp_t0, 0, 0);
+            SetPrimRect(prim1, 40, 80 - temp_t0, 184, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 36, temp_t0, 0, 16);
+            SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
+            SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & PAD_LEFT) {
+                if (D_80137E6C != 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80137E6C = 0;
+            }
+            if (g_pads[0].tapped & PAD_RIGHT) {
+                if (D_80137E6C == 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80137E6C = 1;
+            }
+    
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80137E6C);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+    
+            func_801030B4(1, prim1, D_80137E6C);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & EXIT) {
+                D_80137E6C = 1;
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            } else if (g_pads[0].tapped & CONFIRM) {
+                PlaySfx(SFX_UI_CONFIRM);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
+            }
+        }
+        
+        return 0;
+    }
 
 void func_80103EAC(void) {
     D_80137E4C = 0;
@@ -773,9 +980,6 @@ static void func_80105408(void) {
     g_Player.demo_timer = 1;
 }
 
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
-
 void func_80105428(void) {
 #define PAD_MASK (PAD_START | PAD_SQUARE)
     s32 temp_s0;
@@ -924,8 +1128,7 @@ void func_80105428(void) {
     case 0x101:
         D_801379C8.vy = temp_s3 + (s16)D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
-        if (g_pads[0].pressed &
-            ((D_psp_08B42050 | PAD_MASK) | D_psp_08B42054)) {
+        if (g_pads[0].pressed & ((D_psp_08B42050 | PAD_MASK) | D_psp_08B42054)) {
             D_80097924 = D_80137EF0;
             D_8006C378 = D_80137EF4;
             g_Player.padSim = 0;

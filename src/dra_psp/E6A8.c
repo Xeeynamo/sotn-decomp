@@ -1074,7 +1074,7 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
     D_8013794C += sp4c;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F0DD8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9D88);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9DD0);
 
