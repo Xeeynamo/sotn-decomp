@@ -13,7 +13,11 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 #define SFX_START (0x600)
+#ifdef VERSION_PSP
+#define SFX_LAST (0x90B)
+#else
 #define SFX_LAST (0x8E0)
+#endif
 #define MAX_SND_COUNT (0x100)
 
 #define SEQ_TABLE_S_MAX 0x10
