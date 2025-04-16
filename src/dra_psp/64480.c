@@ -11,7 +11,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_091411F8);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141440);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141488);
+INCLUDE_ASM("dra_psp/psp/dra_psp/64480", AdvanceCdSoundCommandQueue);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141550);
 

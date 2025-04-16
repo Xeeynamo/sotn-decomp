@@ -165,7 +165,7 @@ Unkstruct_800BF554 g_SfxData[737];
 
 // sound stubs
 
-void SpuGetAllKeysStatus(char* status) { NOT_IMPLEMENTED; }
+void SpuGetAllKeysStatus(s8* status) { NOT_IMPLEMENTED; }
 
 void func_801073C0(void) { NOT_IMPLEMENTED; }
 

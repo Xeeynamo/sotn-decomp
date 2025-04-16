@@ -125,7 +125,7 @@ short SsUtSetVVol(short vc,   // Voice number (0-23)
                   short volr  // Volume right (0-127)
 );
 
-void SpuGetAllKeysStatus(char* status);
+void SpuGetAllKeysStatus(s8* status);
 
 // Specify the area of a SEQ/SEP data attribute table
 void SsSetTableSize(
