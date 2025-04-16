@@ -2805,7 +2805,42 @@ void RicEntityHitByLightning(Entity* self) {
     prim->v2 = prim->v3 = 0xCF;
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80165DD8);
+// Corresponding DRA function is func_80124164
+static s32 D_800AE270 = 255;
+static s32 D_800AE274 = 255;
+static s32 D_800AE278 = 255;
+static s32 D_800AE27C = 127;
+static s32 D_800AE280 = 127;
+static s32 D_800AE284 = 63;
+static s32 D_800AE288 = 127;
+static s32 D_800AE28C = 63;
+static s32 D_800AE290 = 127;
+static void func_80165DD8(
+    Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
+    prim->y0 = prim->y1 = y - radius;
+    prim->y2 = prim->y3 = y + radius;
+    if (prim->y0 < 0) {
+        prim->y0 = prim->y1 = 0;
+    }
+    if (prim->y0 > 240) {
+        prim->y2 = prim->y3 = 240;
+    }
+    if (arg4 == 0) {
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE27C * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE280 * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE284 * colorMul / 256;
+    } else {
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE288 * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE28C * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE290 * colorMul / 256;
+    }
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_80166024);
 

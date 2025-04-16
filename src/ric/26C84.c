@@ -1008,92 +1008,40 @@ void RicEntityHitByLightning(Entity* self) {
 }
 
 // Corresponding DRA function is func_80124164
-static s32 D_80155368[] = {255, 255, 255, 127, 127, 63, 127, 63, 127};
+static s32 D_800AE270 = 255;
+static s32 D_800AE274 = 255;
+static s32 D_800AE278 = 255;
+static s32 D_800AE27C = 127;
+static s32 D_800AE280 = 127;
+static s32 D_800AE284 = 63;
+static s32 D_800AE288 = 127;
+static s32 D_800AE28C = 63;
+static s32 D_800AE290 = 127;
 void func_80165DD8(
-    POLY_GT4* poly, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
-    s16 top = y - radius;
-    s16 bottom = y + radius;
-    s32 colorChannel;
-
-    poly->y0 = poly->y1 = top;
-    poly->y2 = poly->y3 = bottom;
-
-    if (poly->y0 < 0) {
-        poly->y0 = poly->y1 = 0;
+    Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
+    prim->y0 = prim->y1 = y - radius;
+    prim->y2 = prim->y3 = y + radius;
+    if (prim->y0 < 0) {
+        prim->y0 = prim->y1 = 0;
     }
-
-    if (poly->y0 > 240) {
-        poly->y2 = poly->y3 = 240;
+    if (prim->y0 > 240) {
+        prim->y2 = prim->y3 = 240;
     }
-
     if (arg4 == 0) {
-        colorChannel = colorIntensity * D_80155368[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r1 = poly->r3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g1 = poly->g3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b1 = poly->b3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[3];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r0 = poly->r2 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[4];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g0 = poly->g2 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[5];
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE27C * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE280 * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE284 * colorMul / 256;
     } else {
-        colorChannel = colorIntensity * D_80155368[0];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r1 = poly->r3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[1];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g1 = poly->g3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[2];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->b1 = poly->b3 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[6];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->r0 = poly->r2 = (u32)colorChannel >> 8;
-
-        colorChannel = colorIntensity * D_80155368[7];
-        if (colorChannel < 0) {
-            colorChannel += 255;
-        }
-        poly->g0 = poly->g2 = (u32)colorChannel >> 8;
-        colorChannel = colorIntensity * D_80155368[8];
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE288 * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE28C * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE290 * colorMul / 256;
     }
-    if (colorChannel < 0) {
-        colorChannel += 255;
-    }
-    poly->b0 = poly->b2 = (u32)colorChannel >> 8;
 }
 
 void func_80166024() {
