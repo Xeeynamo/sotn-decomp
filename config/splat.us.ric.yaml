@@ -52,7 +52,7 @@ segments:
       - [0x19D94, .data, pl_subweapons]
       - [0x19E98, .data, 2F8E8]
       - [0x19EE0, .data, 319C4]
-      - [0x19EFC, .data, e_giant_spinning_cross]
+      - [0x19EFC, .data, pl_crash_cross]
       - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
       - [0x1A5E0, .rodata, pl_debug]
       - [0x1A5F0, .rodata, pl_handlers]
@@ -74,8 +74,8 @@ segments:
       - [0x1AB24, .rodata, 2C4C4] # RicEntitySubwpnAgunea
       - [0x1AB24, .rodata, 2F8E8]
       - [0x1AB38, .rodata, 319C4]
-      - [0x1AB68, .rodata, e_giant_spinning_cross]
-      - [0x1AC50, .rodata, e_giant_spinning_cross]
+      - [0x1AB68, .rodata, pl_crash_cross]
+      - [0x1AC50, .rodata, pl_crash_cross]
       - [0x1AC60, c, pl_main]
       - [0x1C7C0, c, pl_debug]
       - [0x1CB04, c, pl_handlers]
@@ -89,7 +89,7 @@ segments:
       - [0x2F8E8, c, 2F8E8]
       - [0x319C4, c, 319C4]
       - [0x359A4, c, 319C4]
-      - [0x3728C, c, e_giant_spinning_cross]
+      - [0x3728C, c, pl_crash_cross]
       - [0x37B64, .bss, pl_handlers]
       - [0x37F80, .bss, pl_collision]
       - [0x37F84, .bss, pl_blueprints]
