@@ -868,30 +868,31 @@ void RicEntityHitByIce(Entity* self) {
     }
 }
 
-static s16 lightning_clut[] = {0x194, 0x199};
+static u16 lightning_clut[] = {0x194, 0x199};
 void RicEntityHitByLightning(Entity* self) {
-    Primitive* prevPrim;
-    Primitive* prim;
-    s16 temp_s0;
-    s32 temp_s2;
-    s16 xBase;
-    s16 yBase;
-
-    s16 tempAngle;
+    s16 x;
+    s16 y;
+    s16 mul2;
     s32 i;
-    s16 temp_s1_2;
-    s32 xOffset;
-    s32 yOffset;
-    bool var_s0 = false;
+    s32 xMod;
+    s32 yMod;
+    bool terminate;
+    s32 mul;
+    s16 angle;
+    Primitive* primPrev;
+    Primitive* prim;
 
+    terminate = false;
     if ((self->params & 0xFF00) == 0x100) {
-        var_s0 = (++self->ext.hitbylightning.unk9C) > 0xA8;
+        if ((++self->ext.hitbylightning.unk9C) > 0xA8) {
+            terminate = true;
+        }
     } else if ((self->params & 0xFF00) == 0x200) {
-        if (++self->ext.hitbylightning.unk9C >= 0x91) {
-            var_s0 = true;
+        if (++self->ext.hitbylightning.unk9C > 0x90) {
+            terminate = true;
         }
     } else if (PLAYER.step != PL_S_HIT) {
-        var_s0 = true;
+        terminate = true;
     }
     switch (self->step) {
     case 0:
@@ -904,7 +905,7 @@ void RicEntityHitByLightning(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x3F);
-        self->ext.hitbylightning.unk80 = rand();
+        self->ext.hitbylightning.unk80 = (rand() & PSP_RANDMASK);
         self->ext.hitbylightning.unk82 = (rand() & 0x1FF) + 0x100;
         prim = &g_PrimBuf[self->primIndex];
         while (prim != NULL) {
@@ -929,18 +930,16 @@ void RicEntityHitByLightning(Entity* self) {
     case 1:
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0x1FF);
-        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        mul = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset = ((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 12;
-        yOffset =
-            ((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * -7 << 1;
-        self->posX.val = xOffset + PLAYER.posX.val;
-        self->posY.val = yOffset + PLAYER.posY.val;
-        if ((self->ext.hitbylightning.unk92 != 0) &&
-            (g_Player.vram_flag & 0xE)) {
-            var_s0 = true;
+        xMod = ((rcos(self->ext.hitbylightning.unk7C) * mul) >> 7) * 12;
+        yMod = (-((rsin(self->ext.hitbylightning.unk7C) * mul) >> 7) * 7) << 1;
+        self->posX.val = xMod + PLAYER.posX.val;
+        self->posY.val = yMod + PLAYER.posY.val;
+        if (self->ext.hitbylightning.unk92 && g_Player.vram_flag & 0xE) {
+            terminate = true;
         }
-        if (var_s0) {
+        if (terminate) {
             self->ext.hitbylightning.unk90 = (rand() & 0xF) + 0x10;
             self->step++;
         }
@@ -955,59 +954,56 @@ void RicEntityHitByLightning(Entity* self) {
         }
         self->ext.hitbylightning.unk7C =
             ((self->params & 0xF) << 9) + (rand() & 0xFF);
-        temp_s2 = rsin(self->ext.hitbylightning.unk80);
+        mul = rsin(self->ext.hitbylightning.unk80);
         self->ext.hitbylightning.unk80 += self->ext.hitbylightning.unk82;
-        xOffset = (((rcos(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
-                   ((rand() % 8) + 8));
-        yOffset = (-((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) *
-                   ((rand() % 8) + 0xA)) +
-                  self->ext.hitbylightning.unk98;
-        self->posX.val = xOffset + PLAYER.posX.val;
-        self->posY.val = yOffset + PLAYER.posY.val;
+        xMod = ((rcos(self->ext.hitbylightning.unk7C) * mul) >> 7) *
+               ((rand() % 8) + 8);
+        yMod = -((rsin(self->ext.hitbylightning.unk7C) * mul) >> 7) *
+                   ((rand() % 8) + 10) +
+               self->ext.hitbylightning.unk98;
+        self->posX.val = PLAYER.posX.val + xMod;
+        self->posY.val = PLAYER.posY.val + yMod;
         self->ext.hitbylightning.unk98 -= 0x8000;
-
+        prim = &g_PrimBuf[self->primIndex];
         break;
     }
 
-    xBase = (self->posX.i.hi + (rand() & 7)) - 4;
-    yBase = (self->posY.i.hi + (rand() & 0x1F)) - 0x18;
-    temp_s1_2 = self->ext.hitbylightning.unk94;
-    temp_s1_2 = (temp_s1_2 * rsin(self->ext.hitbylightning.unk80)) >> 0xC;
+    x = (self->posX.i.hi + (rand() & 7)) - 4;
+    y = (self->posY.i.hi + (rand() & 0x1F)) - 0x18;
+    mul2 = self->ext.hitbylightning.unk94;
+    mul2 = (mul2 * rsin(self->ext.hitbylightning.unk80)) >> 0xC;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 5; i++) {
-        prevPrim = prim;
+        primPrev = prim;
         prim = prim->next;
-        *prevPrim = *prim;
-        prevPrim->next = prim;
-        prevPrim->u0 = prevPrim->u2 = (i * 0x10) - 0x70;
-        prevPrim->u1 = prevPrim->u3 = ((i + 1) * 0x10) - 0x70;
-        prevPrim->v0 = prevPrim->v1 = 0xC0;
-        prevPrim->v2 = prevPrim->v3 = 0xCF;
+        *primPrev = *prim;
+        primPrev->next = prim;
+        primPrev->u0 = primPrev->u2 = (i * 0x10) + 0x90;
+        primPrev->u1 = primPrev->u3 = ((i + 1) * 0x10) + 0x90;
+        primPrev->v0 = primPrev->v1 = 0xC0;
+        primPrev->v2 = primPrev->v3 = 0xCF;
     }
     prim->x0 = prim->x1;
     prim->y0 = prim->y1;
     prim->x2 = prim->x3;
     prim->y2 = prim->y3;
-    temp_s0 = self->ext.hitbylightning.unk7C + 0x400;
-    prim->x1 = xBase + (((rcos(temp_s0) >> 4) * temp_s1_2) >> 8);
-    prim->y1 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
-    temp_s0 = self->ext.hitbylightning.unk7C - 0x400;
-    prim->x3 = xBase + (((rcos(temp_s0) >> 4) * temp_s1_2) >> 8);
-    prim->y3 = yBase - (((rsin(temp_s0) >> 4) * temp_s1_2) >> 8);
-
-    // FAKE: Annoying repeat of the access and bitmask
-    tempAngle = self->ext.hitbylightning.unk80 & 0xFFF;
-    if (((tempAngle) >= 0x400) &&
-        ((self->ext.hitbylightning.unk80 & 0xFFF) < 0xC00)) {
+    angle = self->ext.hitbylightning.unk7C + 0x400;
+    prim->x1 = x + (((rcos(angle) >> 4) * mul2) >> 8);
+    prim->y1 = y - (((rsin(angle) >> 4) * mul2) >> 8);
+    angle = self->ext.hitbylightning.unk7C - 0x400;
+    prim->x3 = x + (((rcos(angle) >> 4) * mul2) >> 8);
+    prim->y3 = y - (((rsin(angle) >> 4) * mul2) >> 8);
+    angle = self->ext.hitbylightning.unk80 & 0xFFF;
+    if (angle < 0x400) {
+        prim->priority = PLAYER.zPriority + 2;
+    } else if (angle < 0xC00) {
         prim->priority = PLAYER.zPriority - 2;
     } else {
         prim->priority = PLAYER.zPriority + 2;
     }
-    prim->u0 = prim->u2 = (i << 4) - 0x70;
+    prim->u0 = prim->u2 = (i << 4) + 0x90;
+    prim->u1 = prim->u3 = ((i + 1) << 4) + 0x90;
     prim->v0 = prim->v1 = 0xC0;
-    // FAKE but needed to duplicate the sll 4 instruction
-    tempAngle = i;
-    prim->u1 = prim->u3 = (tempAngle << 4) - 0x60;
     prim->v2 = prim->v3 = 0xCF;
 }
 
