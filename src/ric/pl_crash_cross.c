@@ -111,26 +111,24 @@ static u8 D_8015635C[][5] = {
     {0x50, 0x50, 0x18, 0x08, 0x1F}, {0x50, 0x50, 0x18, 0x08, 0x5F},
     {0x68, 0x58, 0x10, 0x10, 0x0F}, {0x68, 0x58, 0x10, 0x10, 0x1F},
     {0x50, 0x58, 0x18, 0x10, 0x0F}, {0x50, 0x58, 0x18, 0x10, 0x1F}};
-static const SVECTOR D_80156C50 = {0, 0, 0};
-static const SVECTOR D_80156C58 = {-96, 0, 0};
 void RicEntityCrashCrossBeam(Entity* self) {
     MATRIX m;
     SVECTOR rot;
     VECTOR trans1;
-    SVECTOR pos;
-    SVECTOR sp50;
+    SVECTOR pos = {0, 0, 0};
+    SVECTOR sp50 = {-96, 0, 0};
     s32 z;
     s32 nclip;
     Primitive* prim;
     s32 temp_v1;
     s32 i;
     u8* primUVCoords;
-    SVECTOR* temp_a3;
     SVECTOR** vectors_ptr;
-    u16 priority;
+    SVECTOR* psp_s7;
+    SVECTOR* psp_s6;
+    SVECTOR* temp_a3;
+    SVECTOR* psp_s4;
 
-    pos = D_80156C50;
-    sp50 = D_80156C58;
     if (self->step == 0) {
         self->primIndex = g_api.func_800EDB58(PRIM_GT4, LEN(D_8015635C));
         if (self->primIndex == -1) {
@@ -147,20 +145,20 @@ void RicEntityCrashCrossBeam(Entity* self) {
         RicSetSubweaponParams(self);
         self->hitboxHeight = 0x50;
         self->hitboxWidth = 0xC;
+        self->facingLeft = 0;
         self->posY.i.hi = 0x160;
         self->velocityY = FIX(-6.0);
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        self->facingLeft = 0;
         self->ext.giantcross.unk7C = 0;
         self->ext.giantcross.unk7E = 0x400;
         g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
         self->step++;
-        primUVCoords = &D_8015635C[0];
         prim = &g_PrimBuf[self->primIndex];
+        primUVCoords = D_8015635C[0];
         for (i = 0; i < LEN(D_8015635C); i++, prim = prim->next,
             primUVCoords += 5) {
-            prim->clut = (primUVCoords[4] & 0xF) | 0x1A0;
+            prim->clut = (primUVCoords[4] & 0xF) + 0x1A0;
             switch (primUVCoords[4] & 0xF0) {
             case 0x10:
                 prim->u0 = primUVCoords[0] + primUVCoords[2];
@@ -272,13 +270,22 @@ void RicEntityCrashCrossBeam(Entity* self) {
     gte_ldv0(&pos);
     gte_rtps();
     prim = &g_PrimBuf[self->primIndex];
-    vectors_ptr = &D_8015607C;
-    gte_stsxy2(&prim->x0);
-    gte_stszotz(&z);
+    vectors_ptr = D_8015607C[0];
+    gte_stsxy((long*)&prim->x0);
+    gte_stszotz((long*)&z);
     self->hitboxOffX = prim->x0 - self->posX.i.hi;
     self->hitboxOffY = prim->y0 - self->posY.i.hi;
     for (i = 0; i < LEN(D_8015635C); i++, prim = prim->next, vectors_ptr += 4) {
-        gte_ldv3(vectors_ptr[0], vectors_ptr[1], vectors_ptr[3]);
+        psp_s7 = vectors_ptr[0];
+        psp_s6 = vectors_ptr[1];
+        psp_s4 = vectors_ptr[3];
+#if defined(VERSION_PSP)
+        gte_ldv0(psp_s7);
+        gte_ldv1(psp_s6);
+        gte_ldv2(psp_s4);
+#else
+        gte_ldv3(psp_s7, psp_s6, psp_s4);
+#endif
         gte_rtpt();
         temp_a3 = vectors_ptr[2];
         prim->type = PRIM_GT4;
@@ -293,14 +300,12 @@ void RicEntityCrashCrossBeam(Entity* self) {
         gte_rtps();
         prim->drawMode = DRAW_DEFAULT;
         if (z < 16) {
-            priority = 0x1F6;
-        } else if (z >= 999) {
-            priority = 0x10;
+            prim->priority = 0x1F6;
+        } else if (z > 998) {
+            prim->priority = 0x10;
         } else {
-            priority = 0x120;
-            priority -= z;
+            prim->priority = 0xD0 - (z - 0x50);
         }
-        prim->priority = priority;
-        gte_stsxy(&prim->x3);
+        gte_stsxy((long*)&prim->x3);
     }
 }
