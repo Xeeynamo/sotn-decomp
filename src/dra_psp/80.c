@@ -94,7 +94,7 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
     prim->y1 = basis->y2;
     prim->drawMode = DRAW_DEFAULT;
     prim = prim->next;
-    
+
     return prim;
 }
 
@@ -356,31 +356,30 @@ SVECTOR* D_800A35D0[] = {
 };
 
 SVECTOR* D_800A3608[][3] = {
-    {&D_80137E70[10], &D_80137E70[7],  &D_80137E70[6]},  
-    {&D_80137E70[10], &D_80137E70[6],  &D_80137E70[0]},  
-    {&D_80137E70[0],  &D_80137E70[6],  &D_80137E70[1]},  
-    {&D_80137E70[10], &D_80137E70[0],  &D_80137E70[13]},
-    {&D_80137E70[9],  &D_80137E70[7],  &D_80137E70[10]}, 
-    {&D_80137E70[6],  &D_80137E70[7],  &D_80137E70[5]},
-    {&D_80137E70[9],  &D_80137E70[11], &D_80137E70[7]},  
-    {&D_80137E70[0],  &D_80137E70[2],  &D_80137E70[13]},
-    {&D_80137E70[7],  &D_80137E70[11], &D_80137E70[5]},  
-    {&D_80137E70[9], &D_80137E70[10], &D_80137E70[13]}, 
-    {&D_80137E70[1],  &D_80137E70[6], &D_80137E70[5]},  
-    {&D_80137E70[0],  &D_80137E70[1],  &D_80137E70[2]},
-    {&D_80137E70[2],  &D_80137E70[1],  &D_80137E70[3]},  
-    {&D_80137E70[12], &D_80137E70[11], &D_80137E70[9]},  
-    {&D_80137E70[2],  &D_80137E70[4], &D_80137E70[13]}, 
-    {&D_80137E70[11], &D_80137E70[8],  &D_80137E70[5]},
-    {&D_80137E70[12], &D_80137E70[9],  &D_80137E70[13]}, 
-    {&D_80137E70[3], &D_80137E70[1],  &D_80137E70[5]},  
-    {&D_80137E70[12], &D_80137E70[8], &D_80137E70[11]}, 
-    {&D_80137E70[2],  &D_80137E70[3],  &D_80137E70[4]},
-    {&D_80137E70[4],  &D_80137E70[12], &D_80137E70[13]}, 
-    {&D_80137E70[8], &D_80137E70[3],  &D_80137E70[5]},  
-    {&D_80137E70[4],  &D_80137E70[8], &D_80137E70[12]}, 
-    {&D_80137E70[4],  &D_80137E70[3],  &D_80137E70[8]}
-};
+    {&D_80137E70[10], &D_80137E70[7], &D_80137E70[6]},
+    {&D_80137E70[10], &D_80137E70[6], &D_80137E70[0]},
+    {&D_80137E70[0], &D_80137E70[6], &D_80137E70[1]},
+    {&D_80137E70[10], &D_80137E70[0], &D_80137E70[13]},
+    {&D_80137E70[9], &D_80137E70[7], &D_80137E70[10]},
+    {&D_80137E70[6], &D_80137E70[7], &D_80137E70[5]},
+    {&D_80137E70[9], &D_80137E70[11], &D_80137E70[7]},
+    {&D_80137E70[0], &D_80137E70[2], &D_80137E70[13]},
+    {&D_80137E70[7], &D_80137E70[11], &D_80137E70[5]},
+    {&D_80137E70[9], &D_80137E70[10], &D_80137E70[13]},
+    {&D_80137E70[1], &D_80137E70[6], &D_80137E70[5]},
+    {&D_80137E70[0], &D_80137E70[1], &D_80137E70[2]},
+    {&D_80137E70[2], &D_80137E70[1], &D_80137E70[3]},
+    {&D_80137E70[12], &D_80137E70[11], &D_80137E70[9]},
+    {&D_80137E70[2], &D_80137E70[4], &D_80137E70[13]},
+    {&D_80137E70[11], &D_80137E70[8], &D_80137E70[5]},
+    {&D_80137E70[12], &D_80137E70[9], &D_80137E70[13]},
+    {&D_80137E70[3], &D_80137E70[1], &D_80137E70[5]},
+    {&D_80137E70[12], &D_80137E70[8], &D_80137E70[11]},
+    {&D_80137E70[2], &D_80137E70[3], &D_80137E70[4]},
+    {&D_80137E70[4], &D_80137E70[12], &D_80137E70[13]},
+    {&D_80137E70[8], &D_80137E70[3], &D_80137E70[5]},
+    {&D_80137E70[4], &D_80137E70[8], &D_80137E70[12]},
+    {&D_80137E70[4], &D_80137E70[3], &D_80137E70[8]}};
 u8 D_800A3728[] = {
     0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
     0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E,
@@ -420,8 +419,9 @@ void func_801042C4(s32 arg0) {
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
     D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
-    
-    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next, i++) {
+
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next,
+        i++) {
         prim->x0 = (i & 1) << 7;
         prim->y0 = (i / 2) * 0xD8;
         prim->u0 = 0x80;
@@ -461,7 +461,7 @@ void func_801042C4(s32 arg0) {
 
     SetGeomScreen(0x100);
     D_80137E40 = AllocPrimitives(5U, 0x18);
-    for(prim = &g_PrimBuf[D_80137E40];prim != NULL; prim = prim->next){
+    for (prim = &g_PrimBuf[D_80137E40]; prim != NULL; prim = prim->next) {
         prim->u0 = 0xDB;
         prim->v0 = 0xA8;
         prim->u1 = 0xBC;
@@ -473,7 +473,7 @@ void func_801042C4(s32 arg0) {
         prim->drawMode = DRAW_HIDE;
     }
     D_80137E44 = AllocPrimitives(2U, 0x12);
-    for(prim = &g_PrimBuf[D_80137E44];prim != NULL; prim = prim->next){
+    for (prim = &g_PrimBuf[D_80137E44]; prim != NULL; prim = prim->next) {
         prim->r0 = 0xFF;
         prim->g0 = 0xFF;
         prim->b0 = 0xFF;
@@ -485,7 +485,7 @@ void func_801042C4(s32 arg0) {
 }
 
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
-    #define PRIORITY_SHIFT 8
+#define PRIORITY_SHIFT 8
     s32 unused_interp;
     s32 nclip_otz;
     s32 unused_flag;
@@ -507,31 +507,31 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 yShift;
     s32 zShift;
 
-    if(g_pads[1].tapped & PAD_TRIANGLE){
+    if (g_pads[1].tapped & PAD_TRIANGLE) {
         D_801379C8.vz += 0x40;
     }
 
-    if(g_pads[1].tapped & PAD_CROSS){
+    if (g_pads[1].tapped & PAD_CROSS) {
         D_801379C8.vz -= 0x40;
     }
 
     FntPrint("vz=0x%08x\n", D_801379C8.vz);
 
-    if(g_pads[1].tapped & PAD_SQUARE){
+    if (g_pads[1].tapped & PAD_SQUARE) {
         D_801379C8.vy += 0x40;
     }
 
-    if(g_pads[1].tapped & PAD_CIRCLE){
+    if (g_pads[1].tapped & PAD_CIRCLE) {
         D_801379C8.vy -= 0x40;
     }
 
     FntPrint("vy=0x%08x\n", D_801379C8.vy);
-    
-    if(g_pads[1].tapped & PAD_R2){
+
+    if (g_pads[1].tapped & PAD_R2) {
         D_801379C8.vx += 0x40;
     }
 
-    if(g_pads[1].tapped & PAD_L2){
+    if (g_pads[1].tapped & PAD_L2) {
         D_801379C8.vx -= 0x40;
     }
 
@@ -618,16 +618,24 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         vecScaledShifted[i].vy = ((vecSrc[i].vy * Y_scale) + yShift);
         vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
         for (j = 0; j < 3; j++) {
-            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) + (vecScaledShifted[i].vx >> 0xC);
-            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) + (vecScaledShifted[i].vy >> 0xC);
-            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) + (vecScaledShifted[i].vz >> 0xC);
+            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
+                                   (vecScaledShifted[i].vx >> 0xC);
+            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
+                                   (vecScaledShifted[i].vy >> 0xC);
+            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
+                                   (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
-        Nclip3_result = RotAverageNclip3(&sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1, (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
+        Nclip3_result = RotAverageNclip3(
+            &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
         if (Nclip3_result < 0) {
-            RotAverageNclip3(&sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2, (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
+            RotAverageNclip3(
+                &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
-        PGREY(prim,3) = PGREY(prim,2) = PGREY(prim,1) = PGREY(prim,0) = 0xB0;
+        PGREY(prim, 3) = PGREY(prim, 2) = PGREY(prim, 1) = PGREY(prim, 0) =
+            0xB0;
         prim->type = PRIM_GT3;
         if (nclip_otz >= 0xF0) {
             continue;
@@ -672,8 +680,8 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             if (arg2 < 0x30) {
                 prim->priority -= PRIORITY_SHIFT;
             }
-        } 
-        if (arg0 == 3){
+        }
+        if (arg0 == 3) {
             prim->drawMode = DRAW_COLORS;
         } else if ((arg0 != 2) && (arg2 >= 0x40)) {
             prim->drawMode =
@@ -687,7 +695,6 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             prim->r2 = ((prim->r2 * (0x7F - arg2)) >> 6);
             prim->g2 = ((prim->g2 * (0x7F - arg2)) >> 6);
             prim->b2 = ((prim->b2 * (0x7F - arg2)) >> 6);
-            
         }
     }
 }
