@@ -2877,7 +2877,7 @@ void RicEntityTeleport(Entity* self) {
     bool var_s5;
 
     upperParams = self->params & 0xFE00;
-    FntPrint("pl_warp_flag:%02x\n", g_Player.unk1C);
+    FntPrint("pl_warp_flag:%02x\n", g_Player.warp_flag);
     showParticles = false;
     var_s5 = false;
     switch (self->step) {
@@ -3035,7 +3035,7 @@ void RicEntityTeleport(Entity* self) {
             self->ext.teleport.width = 0;
             self->ext.teleport.timer = 4;
             self->step++;
-            g_Player.unk1C = 1;
+            g_Player.warp_flag = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;

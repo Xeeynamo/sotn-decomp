@@ -1391,7 +1391,7 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
@@ -1412,7 +1412,7 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
@@ -1433,7 +1433,7 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
