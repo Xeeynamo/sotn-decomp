@@ -356,7 +356,7 @@ void DopEntityHitByHoly(Entity* self) {
     }
 }
 
-void func_80103EAC(void) { FntPrint("dummy set\n"); }
+void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C9624);
 
