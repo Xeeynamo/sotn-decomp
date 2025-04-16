@@ -143,8 +143,6 @@ void SetReleaseRate2(void) {
 }
 
 void CdSoundCommand10(void) {
-    s32 temp;
-
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
@@ -155,12 +153,10 @@ void CdSoundCommand10(void) {
     case 1:
         g_XaFadeCounter++;
         if (g_volumeL > 0) {
-            temp = g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_volumeL = g_volumeR - (temp >> 9);
-            if (g_volumeL >> 0x10) {
+            g_volumeL =
+                g_volumeR -
+                (g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter) / 0x200;
+            if (g_volumeL < 0) {
                 g_volumeL = 0;
             }
         } else {
@@ -184,35 +180,36 @@ void CdSoundCommand10(void) {
         D_800BD1C4--;
         if (D_800BD1C4 == 0) {
             SetReleaseRate2();
-        default:
-            g_CdSoundCommandStep = 0;
-            D_801390A0 = g_CdSoundCommandStep;
             D_8013B61C = 0;
+            D_801390A0 = g_CdSoundCommandStep = 0;
             AdvanceCdSoundCommandQueue();
         }
+        break;
+
+    default:
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
         break;
     }
 }
 
 void CdSoundCommand8(void) {
-    s32 temp;
-
     switch (g_CdSoundCommandStep) {
     case 0:
-        g_CdSoundCommandStep++;
         D_801390A0 = 1;
         g_XaFadeCounter = 0;
+        g_CdSoundCommandStep++;
         break;
 
     case 1:
         g_XaFadeCounter++;
         if (g_CdVolume > 0) {
-            temp = g_XaMusicVolume * g_XaVolumeMultiplier * g_XaFadeCounter;
-            if (temp < 0) {
-                temp += 0x1FF;
-            }
-            g_CdVolume = g_XaMusicVolume - (temp >> 9);
-            if (g_CdVolume >> 0x10) {
+            g_CdVolume =
+                g_XaMusicVolume -
+                (g_XaMusicVolume * g_XaVolumeMultiplier * g_XaFadeCounter) /
+                    0x200;
+            if (g_CdVolume < 0) {
                 g_CdVolume = 0;
             }
         } else {
@@ -226,11 +223,14 @@ void CdSoundCommand8(void) {
 
     case 2:
         AddCdSoundCommand(2);
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
+        break;
 
     default:
-        g_CdSoundCommandStep = 0;
-        D_801390A0 = g_CdSoundCommandStep;
         D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
@@ -273,7 +273,7 @@ void SetReleaseRateLow_22_23(void) {
 
 s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
     s32 ret = -2;
-    if (g_CurSfxId22_23 != 0) {
+    if (g_CurSfxId22_23) {
         if (distance < -8 || distance > 8) {
             distance = 0;
             ret = -1;
@@ -285,7 +285,6 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
             SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
-
         if (g_SoundCommandRingBufferWritePos == 0x100) {
             g_SoundCommandRingBufferWritePos = 0;
         }
@@ -294,28 +293,22 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
 }
 
 // alternate to PlaySfx with extra params
-u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan) {
-    u32 ret;
-    u32 var_v0;
-    s16 temp_v0;
-    s32 temp_a0;
-    u16 var;
+s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan) {
+    s32 ret = 0;
 
-    ret = 0;
-    if (g_SoundInitialized == 0) {
+    if (!g_SoundInitialized) {
         return -2;
     }
     if (sfxId > SFX_START && sfxId <= SFX_LAST) {
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = sfxVol & 0x7F;
-        var = (sfxPan + 8); // Left panning uses signed values, zero is center
-        if (var > 16) {
+        if (sfxPan < -8 || sfxPan > 8) {
             g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
             ret = -1;
         } else {
             g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = sfxPan;
+            ret = 0;
         }
-
         g_sfxRingBufferWritePos++;
         if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
             g_sfxRingBufferWritePos = 0;
@@ -327,45 +320,41 @@ u32 PlaySfxVolPan(s16 sfxId, s32 sfxVol, u16 sfxPan) {
 }
 
 void PlaySfx(s16 sfxId) {
-    if (g_SoundInitialized != 0) {
-        if (sfxId > SFX_START && sfxId <= SFX_LAST) {
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
-            g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
+    if (!g_SoundInitialized) {
+        return;
+    }
+    if (sfxId > SFX_START && sfxId <= SFX_LAST) {
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndId = sfxId - SFX_START;
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
+        g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
+        g_sfxRingBufferWritePos++;
+        if (g_sfxRingBufferWritePos == 0x100) {
+            g_sfxRingBufferWritePos = 0;
+        }
+    } else {
+        switch (sfxId) {
+        case 0x10:
+        case 0x11:
+            D_8013980C = 1;
+            break;
 
-            g_sfxRingBufferWritePos++;
-            if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
-                g_sfxRingBufferWritePos = 0;
-            }
-        } else {
-            switch (sfxId) {
-            case 0x10:
-            case 0x11:
-                D_8013980C = 1;
-                break;
-
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-                D_8013B61C = 1;
-                break;
-
-            default:
-                break;
-            }
-
-            g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
-            g_SoundCommandRingBufferWritePos++;
-            if (g_SoundCommandRingBufferWritePos == 0x100) {
-                g_SoundCommandRingBufferWritePos = 0;
-            }
+        case 0x80:
+        case 0x81:
+        case 0x82:
+        case 0x83:
+        case 0x84:
+        case 0x90:
+        case 0x91:
+        case 0x92:
+        case 0x93:
+        case 0x94:
+            D_8013B61C = 1;
+            break;
+        }
+        g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
+        g_SoundCommandRingBufferWritePos++;
+        if (g_SoundCommandRingBufferWritePos == 0x100) {
+            g_SoundCommandRingBufferWritePos = 0;
         }
     }
 }
@@ -383,7 +372,7 @@ void PauseSfxScripts(void) {
     s16 i;
 
     for (i = 0; i < NUM_CH; i++) {
-        if (g_CurrentSfxScriptSfxId[i] == 0) {
+        if (!g_CurrentSfxScriptSfxId[i]) {
             continue;
         }
         if (g_SfxScriptMode[i] == SFX_MODE_SCRIPT_NO_PAUSE) {
@@ -408,23 +397,21 @@ void PauseSfxScripts(void) {
 }
 
 void UnpauseSfxScripts(void) {
-    s16 i;
-    s16 j;
+    s16 i, j;
 
     for (i = 0; i < 3; i++) {
-        if (g_CurrentSfxScriptSfxIdCopy[i]) {
-            for (j = 0; j < 3; j++) {
-                if (g_CurrentSfxScriptSfxId2[j] == 0) {
-                    RestoreSfxScriptData(i, j);
-                    break;
-                }
-            }
-            g_CurrentSfxScriptSfxIdCopy[i] = 0;
+        if (!g_CurrentSfxScriptSfxIdCopy[i]) {
+            continue;
         }
+        for (j = 0; j < 3; j++) {
+            if (!g_CurrentSfxScriptSfxId2[j]) {
+                RestoreSfxScriptData(i, j);
+                break;
+            }
+        }
+        g_CurrentSfxScriptSfxIdCopy[i] = 0;
     }
-
-    if (g_CurrentSfxScriptSfxIdCopy[3] != 0 &&
-        g_CurrentSfxScriptSfxId2[3] == 0) {
+    if (g_CurrentSfxScriptSfxIdCopy[3] && !g_CurrentSfxScriptSfxId2[3]) {
         RestoreSfxScriptData(3, 3);
         g_CurrentSfxScriptSfxIdCopy[3] = 0;
     }
@@ -432,11 +419,14 @@ void UnpauseSfxScripts(void) {
 }
 
 void KeyOnChannels20_21(void) {
-    u16 temp = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId20_21].volume) >> 7;
+    u16 volume;
+
+    volume = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId20_21].volume) >> 7;
+    volume = (volume * g_CurSfxVol20_21) >> 7;
     func_80132A04(
         20, g_SfxData[g_CurSfxId20_21].vabid, g_SfxData[g_CurSfxId20_21].prog,
         g_SfxData[g_CurSfxId20_21].tone, g_SfxData[g_CurSfxId20_21].note,
-        (temp * (u16)g_CurSfxVol20_21) >> 7, g_CurSfxDistance20_21);
+        volume, g_CurSfxDistance20_21);
 }
 
 void KeyOnChannels22_23(void) {
