@@ -5,4 +5,4 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/64370", func_psp_09140CF0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64370", func_psp_09140D68);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64370", func_psp_09140DB0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/64370", SoundWait);

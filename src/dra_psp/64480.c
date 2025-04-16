@@ -7,7 +7,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09140E50);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_80132A04);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_091411F8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/64480", AddCdSoundCommand);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141440);
 

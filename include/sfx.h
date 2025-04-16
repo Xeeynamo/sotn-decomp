@@ -49,6 +49,8 @@ enum SfxModes {
 #define SET_STOP_SEQ 7
 #define SET_STOP_MUSIC 0xA
 #define SET_UNK_0B 0xB
+#define SET_UNK_0C 0xC
+#define SET_SOUND_WAIT 0xD
 #define SET_PAUSE_SFX_SCRIPTS 0xE
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF
 #define SET_UNK_10 0x10
