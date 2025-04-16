@@ -896,7 +896,7 @@ void func_80160F0C(Entity* self) {
 // Matches DRA func_8011B5A4
 static s16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
 static s32 velocity_x_80154C5C[] = {
-    -0x3000, -0x4000, -0x6000, -0x8000, -0xA000, -0xC000};
+    FIX(-0.1875), FIX(-0.25), -0x6000, FIX(-0.5), FIX(-0.625), FIX(-0.75)};
 static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
 static AnimationFrame anim_smoke_puff[] = {
     {1, FRAME(0x01, 0)},
