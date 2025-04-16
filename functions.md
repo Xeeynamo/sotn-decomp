@@ -940,7 +940,7 @@
 | no4    | EntityHeartDrop                     |      127 |         11 |        |                                 |       |
 | wrp    | EntityHeartDrop                     |      127 |         11 |        |                                 |       |
 | lib    | func_us_801B6E20                    |      127 |         12 |        |                                 |       |
-| dra    | CdSoundCommand10                    |      127 |         18 |        |                                 |       |
+| dra    | CdSoundCommand10                    |      127 |         18 |        | https://decomp.me/scratch/t0j7W | 0.982 |
 | dra    | MenuEquipHandlePageScroll           |      128 |         16 |        |                                 |       |
 | dra    | MenuStatChangesDraw                 |      128 |         17 |        |                                 |       |
 | dra    | MenuDrawSprite                      |      129 |         11 |        |                                 |       |
@@ -1160,7 +1160,7 @@
 | lib    | func_us_801B29C4                    |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
 | st0    | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra    | MenuHandleCursorInput               |      275 |         39 | Yes    |                                 |       |
-| dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/H4N3g | 0.995 |
+| dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4    | func_pspeu_0923FF60                 |      277 |         31 |        |                                 |       |
 | no4    | func_pspeu_092423C8                 |      277 |         33 |        |                                 |       |
 | wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
@@ -1474,7 +1474,7 @@
 | no4    | func_pspeu_0925E548                 |     1731 |        172 | Yes    |                                 |       |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra    | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
-| ric    | RicEntityWhip                       |     1741 |        169 |        |                                 |       |
+| ric    | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.869 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
