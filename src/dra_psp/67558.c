@@ -4,7 +4,7 @@
 
 extern s8* D_psp_09190C18[];
 
-// requires func_psp_09141488 (AdvanceCdSoundCommandQueue) to be static in the
+// requires AdvanceCdSoundCommandQueue to be static in the
 // same file, https://decomp.me/scratch/9rjfX
 INCLUDE_ASM("dra_psp/psp/dra_psp/67558", ExecCdSoundCommands);
 
