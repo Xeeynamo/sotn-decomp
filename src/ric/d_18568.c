@@ -38,6 +38,7 @@ s16 g_RicSensorsFloorDefault[NUM_HORIZONTAL_SENSORS] = {28, 24, 24, 24};
 s16 g_RicSensorsWallDefault[NUM_VERTICAL_SENSORS] = {23, 16, 8, 0, -8, -8, -15};
 s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
 s16 g_RicSensorsWallCrouch[NUM_VERTICAL_SENSORS] = {23, 16, 8, 4, 4, 1, 1};
+AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN] = {};
 u8 D_80154674[][4] = {{16, 127, 63, 0},
                       {16, 127, 0, 0},
                       {16, 63, 63, 127},

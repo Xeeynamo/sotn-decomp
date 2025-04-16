@@ -236,7 +236,11 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
+#if defined(VERSION_PSP)
+#define SPRITESHEET_PTR g_PlOvlSpritesheet
+#else
+#define SPRITESHEET_PTR 0x8013C020
+#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -1588,7 +1592,8 @@ typedef struct {
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
-    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(
+        s32 arg0, s32 arg1, s32 arg2, s32 arg3);
     /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
@@ -1953,6 +1958,7 @@ extern u32 g_GameTimer; // Increases when unpaused
 extern bool D_8003C908;
 extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
+extern s16* D_92641C8[];
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern u32 g_GameEngineStep;
