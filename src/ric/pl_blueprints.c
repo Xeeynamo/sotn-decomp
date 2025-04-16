@@ -489,9 +489,9 @@ void RicUpdatePlayerEntities(void) {
         }
     }
     D_80174F80[1] = D_80174F80[2] = 0;
-    if (g_Entities[16].enemyId == 1) {
+    if (g_Entities[E_WEAPON].enemyId == 1) {
         D_80174F80[1] = 1;
-    } else if (g_Entities[16].enemyId == 2) {
+    } else if (g_Entities[E_WEAPON].enemyId == 2) {
         D_80174F80[2] = 1;
     }
     for (j = 3; j < 11; j++) {
@@ -1805,7 +1805,8 @@ bool func_80162E9C(Entity* entity) {
 
     objId = entity->entityId;
     params = entity->params;
-    for (e = &g_Entities[16], i = 16; i < STAGE_ENTITY_START; e++, i++) {
+    for (e = &g_Entities[E_WEAPON], i = E_WEAPON; i < STAGE_ENTITY_START; e++,
+        i++) {
         if (objId == e->entityId && params == e->params && e != entity) {
             return true;
         }
