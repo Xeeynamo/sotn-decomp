@@ -229,7 +229,7 @@ set(SOURCE_FILES_RIC
     src/ric/pl_header.c
     src/ric/pl_main.c
     src/ric/pl_debug.c
-    src/ric/pl_handlers.c
+    src/ric/pl_steps.c
     src/ric/pl_utils.c
     src/ric/pl_setstep.c
     src/ric/pl_collision.c
