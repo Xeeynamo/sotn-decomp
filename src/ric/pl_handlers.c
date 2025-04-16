@@ -1367,7 +1367,7 @@ void func_8015BB80(void) {
 }
 
 // Corresponding DRA function is PlayerStepTeleport
-void func_8015BCD0(void) {
+void RicHandleTeleport(void) {
     Entity* e;
 
     PLAYER.velocityY = 0;

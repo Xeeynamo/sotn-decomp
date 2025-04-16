@@ -56,7 +56,7 @@ segments:
       - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
       - [0x1A5E0, .rodata, pl_debug]
       - [0x1A5F0, .rodata, pl_handlers]
-      - [0x1A7A8, .rodata, pl_handlers] # func_8015BCD0 and onwards
+      - [0x1A7A8, .rodata, pl_handlers] # RicHandleTeleport and onwards
       - [0x1A7C0, .rodata, pl_handlers] # RicHandleHighJump
       - [0x1A800, .rodata, pl_utils]
       - [0x1A80C, .rodata, pl_setstep]

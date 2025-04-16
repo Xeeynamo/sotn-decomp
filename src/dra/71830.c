@@ -1982,7 +1982,7 @@ void func_80115C50(void) {
     }
 }
 
-// Corresponding RIC function is func_8015BCD0
+// Corresponding RIC function is RicHandleTeleport
 void PlayerStepTeleport(void) {
     Entity* newEnt;
 

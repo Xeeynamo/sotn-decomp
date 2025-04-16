@@ -633,7 +633,7 @@ void RicMain(void) {
         RicHandleBladeDash();
         break;
     case PL_S_INIT:
-        func_8015BCD0();
+        RicHandleTeleport();
         break;
     }
     g_Player.unk08 = g_Player.status;
