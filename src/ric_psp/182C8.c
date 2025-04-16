@@ -2199,7 +2199,61 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", func_801641A0);
+void func_801641A0(Entity* self) {
+    Primitive* prim;
+    s16 primIndex;
+
+    self->posX.i.hi = PLAYER.posX.i.hi - 0;
+    self->posY.i.hi = PLAYER.posY.i.hi - 8;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.circleExpand.width = 16;
+        self->ext.circleExpand.height = 12;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u0 = prim->u2 = 64;
+        prim->v0 = prim->v1 = 192;
+        prim->u1 = prim->u3 = 127;
+        prim->v2 = prim->v3 = 255;
+        PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) = 128;
+        prim->tpage = 0x1A;
+        prim->clut = 0x160;
+        prim->priority = PLAYER.zPriority + 8;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+        self->flags =
+            FLAG_POS_PLAYER_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
+
+    case 1:
+        self->ext.circleExpand.width += 2;
+        self->ext.circleExpand.height += 2;
+        if (self->ext.circleExpand.width > 56) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y0 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x1 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y1 = self->posY.i.hi - self->ext.circleExpand.height;
+    prim->x2 = self->posX.i.hi - self->ext.circleExpand.width;
+    prim->y2 = self->posY.i.hi + self->ext.circleExpand.height;
+    prim->x3 = self->posX.i.hi + self->ext.circleExpand.width;
+    prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
+    if (prim->b3 >= 12) {
+        prim->b3 -= 12;
+    }
+    // remember last element of PGREY(prim,3) is prim->b3
+    PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3);
+}
 
 // clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/182C8", RicEntityShrinkingPowerUpRing);
