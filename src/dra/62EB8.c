@@ -5,48 +5,60 @@
 #include "sfx.h"
 
 void func_80102EB8(void) {
-    Primitive *poly1, *poly2, *poly3;
+    Primitive *prim1, *prim2, *prim3;
     s32 i;
 
     D_80137E58 = AllocPrimitives(PRIM_GT4, 3);
-    poly1 = &g_PrimBuf[D_80137E58];
+    prim1 = &g_PrimBuf[D_80137E58];
 
     D_80137E5C = AllocPrimitives(PRIM_G4, 3);
-    poly2 = &g_PrimBuf[D_80137E5C];
+    prim2 = &g_PrimBuf[D_80137E5C];
 
     D_80137E60 = AllocPrimitives(PRIM_LINE_G2, 12);
-    poly3 = &g_PrimBuf[D_80137E60];
+    prim3 = &g_PrimBuf[D_80137E60];
 
     for (i = 0; i < 3; i++) {
-        SetTexturedPrimRect(poly1, 98, 79, 96, 0, 0, 0);
-        func_801072DC(poly1);
-        poly1->tpage = 0x10;
-        poly1->clut = 0x1A1;
-        poly1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
-        poly1->drawMode = DRAW_HIDE;
-        poly1->p1 = 0;
-        SetPrimRect(poly2, 80, 79, 96, 0);
-        func_801072DC(poly2);
-        func_801071CC(poly2, 96, 0);
-        func_801071CC(poly2, 96, 1);
-        poly2->g0 = poly2->g1 = poly2->g2 = poly2->g3 = poly2->r0 = poly2->r1 =
-            poly2->r2 = poly2->r3 = 0;
-        poly2->tpage = 0x1F;
-        poly2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
-        poly2->drawMode = DRAW_HIDE;
-        poly1 = poly1->next;
-        poly2 = poly2->next;
+        SetTexturedPrimRect(prim1, 98, 79, 96, 0, 0, 0);
+        func_801072DC(prim1);
+        prim1->tpage = 0x10;
+        prim1->clut = 0x1A1;
+        #ifdef VERSION_PSP
+        prim1->priority = 0x1FF;
+        #else
+        prim1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
+        #endif
+        prim1->drawMode = DRAW_HIDE;
+        prim1->p1 = 0;
+        SetPrimRect(prim2, 80, 79, 96, 0);
+        func_801072DC(prim2);
+        func_801071CC(prim2, 96, 0);
+        func_801071CC(prim2, 96, 1);
+        PRED(prim2) = 0;
+        PGRN(prim2) = 0;
+        prim2->tpage = 0x1F;
+        #ifdef VERSION_PSP
+        prim2->priority = 0x1FF;
+        #else
+        prim2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
+        #endif
+        prim2->drawMode = DRAW_HIDE;
+        prim1 = prim1->next;
+        prim2 = prim2->next;
     }
 
     for (i = 0; i < 12; i++) {
-        func_80107250(poly3, 255);
-        poly3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
-        poly3->drawMode = DRAW_HIDE;
-        poly3 = poly3->next;
+        func_80107250(prim3, 255);
+        #ifdef VERSION_PSP
+        prim3->priority = 0x1FF;
+        #else
+        prim3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
+        #endif
+        prim3->drawMode = DRAW_HIDE;
+        prim3 = prim3->next;
     }
 }
 
-void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
+static void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
     s32 var_v1;
 
     if (arg2 == arg0) {
@@ -56,17 +68,15 @@ void func_801030B4(s32 arg0, POLY_GT4* poly, s32 arg2) {
             var_v1 = 0x7F - (g_Timer & 0x1F);
         }
 
-        poly->r0 = poly->r1 = var_v1 - 16;
-        poly->r2 = poly->r3 = var_v1 + 16;
-        poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
-        poly->pad3 = 0x404;
+        prim->r0 = prim->r1 = var_v1 - 16;
+        prim->r2 = prim->r3 = var_v1 + 16;
+        PBLU(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
     } else {
-        poly->b1 = 96;
-        poly->b0 = 96;
-        poly->b3 = 128;
-        poly->b2 = 128;
-        poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0;
-        poly->pad3 = 0x415;
+        prim->b0 = prim->b1 = 96;
+        prim->b2 = prim->b3 = 128;
+        PRED(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_TPAGE | DRAW_TRANSP;
     }
 }
 
