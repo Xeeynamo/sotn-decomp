@@ -399,7 +399,6 @@ void AddCdSoundCommand(s16 arg0) {
                 isFound = 1;
             }
         }
-
         if (isFound) {
             g_DebugEnabled++;
             g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
@@ -410,7 +409,6 @@ void AddCdSoundCommand(s16 arg0) {
                 for (i = 1; i < MAX_SND_COUNT; i++) {
                     g_CdSoundCommandQueue[i] = 0;
                 }
-
                 g_CdSoundCommandQueuePos = 1;
                 g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
                     CD_SOUND_COMMAND_14;
@@ -425,18 +423,17 @@ void AddCdSoundCommand(s16 arg0) {
         for (i = 1; i < MAX_SND_COUNT; i++) {
             g_CdSoundCommandQueue[i] = 0;
         }
-
         g_CdSoundCommandQueuePos = 1;
     }
 }
 
-u16 AdvanceCdSoundCommandQueue(void) {
+void AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
     for (i = 0; i < MAX_SND_COUNT - 1; i++) {
         g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
-    return --g_CdSoundCommandQueuePos;
+    g_CdSoundCommandQueuePos--;
 }
 
 #define ENCODE_BCD(x) ((((x) / 10) << 4) + ((x) % 10))
