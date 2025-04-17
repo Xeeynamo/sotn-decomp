@@ -296,10 +296,11 @@ s32 HandleSaveMenu(s32 arg0) {
         } else if (D_80137E4C == 10 && temp_t0 < 33) {
 #if defined(VERSION_US)
             temp_a1 = 0;
-            if(D_80137E54 != 2 && D_80137E54 != 3){
+            if (D_80137E54 != 2 && D_80137E54 != 3) {
                 temp_a1 = -10;
             }
-            SetTexturedPrimRect(prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
+            SetTexturedPrimRect(
+                prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
             prim2->p1 += 2;
             if (D_80137E54 == 2 || D_80137E54 == 3) {
                 SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
@@ -318,7 +319,8 @@ s32 HandleSaveMenu(s32 arg0) {
 #endif
             func_80103148(prim3, prim1);
         } else if (temp_t0 < 17) {
-            SetTexturedPrimRect(prim2, V86P62, 80 - temp_t0, V96P152, temp_t0, 0, 0);
+            SetTexturedPrimRect(
+                prim2, V86P62, 80 - temp_t0, V96P152, temp_t0, 0, 0);
             prim2->p1 += 2;
             SetPrimRect(prim1, V80P56, 80 - temp_t0, V96P152, temp_t0);
             func_80103148(prim3, prim1);
@@ -344,7 +346,7 @@ s32 HandleSaveMenu(s32 arg0) {
         D_8006C378 = -1;
         return 1;
     }
-    #else
+#else
         if (temp_t0 == 0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
@@ -423,7 +425,7 @@ s32 HandleSaveMenu(s32 arg0) {
         }
         return 0;
     }
-    #endif
+#endif
     if (!temp_t0) {
         PlaySfx(SFX_UI_ALERT_TINK);
         prim2->p1 += 2;
@@ -433,7 +435,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
             func_800F9D40("初期化してもいいですか　", 0, 1);
 #else
-            func_800F9D88("初期化してもいいですか　", 0, 1);
+                func_800F9D88("初期化してもいいですか　", 0, 1);
 #endif
             D_80137E6C = 1;
         }
@@ -443,7 +445,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
             func_800F9D40("　　上書きしますか　　　", 0, 1);
 #else
-            func_800F9D88(D_psp_091CE240, 0, 1);
+                func_800F9D88(D_psp_091CE240, 0, 1);
 #endif
             D_80137E6C = 0;
         }
@@ -453,7 +455,7 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
             func_800F9D40("　　セーブしますか　　　", 0, 1);
 #else
-            func_800F9D88(D_psp_091CE248, 0, 1);
+                func_800F9D88(D_psp_091CE248, 0, 1);
 #endif
             D_80137E6C = 0;
         }
@@ -464,8 +466,8 @@ s32 HandleSaveMenu(s32 arg0) {
         func_800F9D40("はい　　", 1, 0);
         func_800F9D40("いいえ　", 2, 0);
 #else
-        func_800F9D88(D_psp_091CE220, 1, 0);
-        func_800F9D88(D_psp_091CE218, 2, 0);
+            func_800F9D88(D_psp_091CE220, 1, 0);
+            func_800F9D88(D_psp_091CE218, 2, 0);
 #endif
 
         SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
@@ -481,7 +483,8 @@ s32 HandleSaveMenu(s32 arg0) {
         func_801030B4(1, prim1, D_80137E6C);
     } else if (temp_t0 < 17) {
         prim2->p1 += 2;
-        SetTexturedPrimRect(prim2, V62P46, 80 - temp_t0, V144P184, temp_t0, 0, 0);
+        SetTexturedPrimRect(
+            prim2, V62P46, 80 - temp_t0, V144P184, temp_t0, 0, 0);
         SetPrimRect(prim1, V56P40, 80 - temp_t0, V144P184, temp_t0);
         prim3 = func_80103148(prim3, prim1);
         prim2 = prim2->next;
