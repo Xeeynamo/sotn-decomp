@@ -145,6 +145,10 @@ s32 HandleSaveMenu(s32 arg0) {
 #define V86P62 62
 #define V96P152 152
 #define V80P56 56
+#define V62P46 46
+#define V144P184 184
+#define V56P40 40
+#define V24P36 36
 #else
 #define V86P70 86
 #define Vx60Px90 0x60
@@ -153,6 +157,10 @@ s32 HandleSaveMenu(s32 arg0) {
 #define V86P62 86
 #define V96P152 96
 #define V80P56 80
+#define V62P46 62
+#define V144P184 144
+#define V56P40 56
+#define V24P36 24
 #endif
     u8 temp_t0;
 
@@ -473,12 +481,12 @@ s32 HandleSaveMenu(s32 arg0) {
         func_801030B4(1, prim1, D_80137E6C);
     } else if (temp_t0 < 17) {
         prim2->p1 += 2;
-        SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
-        SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
+        SetTexturedPrimRect(prim2, V62P46, 80 - temp_t0, V144P184, temp_t0, 0, 0);
+        SetPrimRect(prim1, V56P40, 80 - temp_t0, V144P184, temp_t0);
         prim3 = func_80103148(prim3, prim1);
         prim2 = prim2->next;
         prim1 = prim1->next;
-        SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
+        SetTexturedPrimRect(prim2, 72, 104 - temp_t0, V24P36, temp_t0, 0, 16);
         SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
         func_801030B4(0, prim1, D_80137E6C);
         prim3 = func_80103148(prim3, prim1);
@@ -501,6 +509,7 @@ s32 HandleSaveMenu(s32 arg0) {
             }
             D_80137E6C = 1;
         }
+
         prim3 = func_80103148(prim3, prim1);
         prim1 = prim1->next;
         func_801030B4(0, prim1, D_80137E6C);
