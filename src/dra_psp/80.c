@@ -637,6 +637,7 @@ void func_80103ED4(void) {
         // I believe the rand() call here selects the icon on the save
         // in the save-select screen.
         StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
+        #ifdef VERSION_PSP
         func_psp_090DFC68();
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i, 1) != 0) {
             D_801379BC = 0x101;
@@ -646,6 +647,12 @@ void func_80103ED4(void) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 1;
             D_80137E4C = 6;
+        #else
+        if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
+            if (--g_MemCardRetryCount == -1) {
+                D_80137E4C = 0;
+            }
+        #endif
         } else {
             g_MemCardRetryCount = 10;
             D_80137E4C++;
