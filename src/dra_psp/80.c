@@ -420,19 +420,45 @@ s32 HandleSaveMenu(s32 arg0) {
         PlaySfx(SFX_UI_ALERT_TINK);
         prim2->p1 += 2;
         if (arg0 == 2) {
+#if defined(VERSION_US)
+            func_800F9D88(" Wish to format？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("初期化してもいいですか　", 0, 1);
+#else
             func_800F9D88("初期化してもいいですか　", 0, 1);
+#endif
             D_80137E6C = 1;
         }
         if (arg0 == 3) {
+#if defined(VERSION_US)
+            func_800F9D88(" Overwrite data？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("　　上書きしますか　　　", 0, 1);
+#else
             func_800F9D88(D_psp_091CE240, 0, 1);
+#endif
             D_80137E6C = 0;
         }
         if (arg0 == 4) {
+#if defined(VERSION_US)
+            func_800F9D88("   Wish to save？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("　　セーブしますか　　　", 0, 1);
+#else
             func_800F9D88(D_psp_091CE248, 0, 1);
+#endif
             D_80137E6C = 0;
         }
+#if defined(VERSION_US)
+        func_800F9D88("Yes ", 1, 0);
+        func_800F9D88("  No  ", 2, 0);
+#elif defined(VERSION_HD)
+        func_800F9D40("はい　　", 1, 0);
+        func_800F9D40("いいえ　", 2, 0);
+#else
         func_800F9D88(D_psp_091CE220, 1, 0);
         func_800F9D88(D_psp_091CE218, 2, 0);
+#endif
 
         SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
         prim2->drawMode = DRAW_DEFAULT;

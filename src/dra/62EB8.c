@@ -328,6 +328,7 @@ s32 HandleSaveMenu(s32 arg0) {
         }
         return 0;
     }
+
     if (arg0 == 1) {
 // This section handles memory card selection. PSP doesn't give that option.
 #ifdef VERSION_PSP
@@ -423,6 +424,8 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88(" Wish to format？", 0, 1);
 #elif defined(VERSION_HD)
             func_800F9D40("初期化してもいいですか　", 0, 1);
+#else
+            func_800F9D88("初期化してもいいですか　", 0, 1);
 #endif
             D_80137E6C = 1;
         }
@@ -431,6 +434,8 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88(" Overwrite data？", 0, 1);
 #elif defined(VERSION_HD)
             func_800F9D40("　　上書きしますか　　　", 0, 1);
+#else
+            func_800F9D88(D_psp_091CE240, 0, 1);
 #endif
             D_80137E6C = 0;
         }
@@ -439,6 +444,8 @@ s32 HandleSaveMenu(s32 arg0) {
             func_800F9D88("   Wish to save？", 0, 1);
 #elif defined(VERSION_HD)
             func_800F9D40("　　セーブしますか　　　", 0, 1);
+#else
+            func_800F9D88(D_psp_091CE248, 0, 1);
 #endif
             D_80137E6C = 0;
         }
@@ -448,7 +455,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
         func_800F9D40("はい　　", 1, 0);
         func_800F9D40("いいえ　", 2, 0);
-
+#else
+        func_800F9D88(D_psp_091CE220, 1, 0);
+        func_800F9D88(D_psp_091CE218, 2, 0);
 #endif
 
         SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
