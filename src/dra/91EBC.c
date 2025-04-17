@@ -430,13 +430,13 @@ void AddCdSoundCommand(s16 arg0) {
     }
 }
 
-u16 AdvanceCdSoundCommandQueue(void) {
+void AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
     for (i = 0; i < MAX_SND_COUNT - 1; i++) {
         g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
     }
-    return --g_CdSoundCommandQueuePos;
+    g_CdSoundCommandQueuePos--;
 }
 
 #define ENCODE_BCD(x) ((((x) / 10) << 4) + ((x) % 10))

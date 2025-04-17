@@ -4,14 +4,9 @@
 #include "objects.h"
 #include "sfx.h"
 
-// incorrect function prototype seems to be required
-s32 AdvanceCdSoundCommandQueue(void);
-
 #define CD_PREGAP_BLOCKS 150
 
-s32 CdSoundCommand6(void) {
-    u8 var_v0;
-    s32 temp;
+void CdSoundCommand6(void) {
     u32 cd_pos;
 
     switch (g_CdSoundCommandStep & 0xFF) {
@@ -22,34 +17,28 @@ s32 CdSoundCommand6(void) {
                  g_XaMusicConfigs[g_CurrentXaSoundId + 1].cd_addr;
         cd_pos += CD_PREGAP_BLOCKS + g_CurCdPos;
         MakeCdLoc(cd_pos, &D_8013B640);
-        g_CdSoundCommandStep += 1;
-        var_v0 = g_CdSoundCommandStep;
+        g_CdSoundCommandStep++;
         /* fallthrough */
     case 1:
-        var_v0 = DoCdCommand(CdlSetloc, &D_8013B640, NULL);
-        if (var_v0 == 0) {
-            g_CdSoundCommandStep += 1;
-            return g_CdSoundCommandStep;
+        if (!DoCdCommand(CdlSetloc, &D_8013B640, NULL)) {
+            g_CdSoundCommandStep++;
         }
-        return var_v0;
+        break;
+
     case 2:
-        var_v0 = DoCdCommand(CdlReadN, NULL, NULL);
-        if (var_v0 == 0) {
-            g_CdSoundCommandStep += 1;
-            return g_CdSoundCommandStep;
+        if (!DoCdCommand(CdlReadN, NULL, NULL)) {
+            g_CdSoundCommandStep++;
         }
-        return var_v0;
+        break;
+
     case 3:
-        var_v0 = DoCdCommand(CdlNop, NULL, g_CdCommandResult);
-        if (var_v0 == 0) {
-            var_v0 = *g_CdCommandResult & CdlStatSeek;
-            if (var_v0 == 0) {
-                g_CdSoundCommandStep += 1;
-                return g_CdSoundCommandStep;
+        if (!DoCdCommand(CdlNop, NULL, g_CdCommandResult)) {
+            if ((*g_CdCommandResult & CdlStatSeek) == 0) {
+                g_CdSoundCommandStep++;
             }
-            return var_v0;
         }
-        return var_v0;
+        break;
+
     case 4:
         D_8013AEF4 = VSync(-1);
         D_8013AE90 = g_XaMusicConfigs[D_8013845C + 1].unk228;
@@ -57,22 +46,24 @@ s32 CdSoundCommand6(void) {
         g_CdSoundCommandStep = 0;
         D_8013901C = (s16)D_8013845C;
         D_801390A0 = g_CdSoundCommandStep;
-        return AdvanceCdSoundCommandQueue();
+        AdvanceCdSoundCommandQueue();
+        break;
+
     default:
         g_CdSoundCommandStep = 0;
         D_801390A0 = g_CdSoundCommandStep;
-        return AdvanceCdSoundCommandQueue();
+        AdvanceCdSoundCommandQueue();
+        break;
     }
 }
 
 // func_80133488
-s32 CdFadeOut1(void) {
-    s32 var_v0;
-
+void CdFadeOut1(void) {
     switch (g_CdSoundCommandStep & 0xFF) {
     case 0:
         if (D_8013901C == 0) {
             SetMaxVolume();
+            AdvanceCdSoundCommandQueue();
             break;
         }
         D_801390A0 = 1;
@@ -82,22 +73,20 @@ s32 CdFadeOut1(void) {
         }
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         if (g_CdVolume == 0) {
-            g_CdSoundCommandStep += 1;
-            return g_CdSoundCommandStep;
+            g_CdSoundCommandStep++;
         }
-        return g_CdVolume;
+        break;
+
     case 1:
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
-        g_CdSoundCommandStep += 1;
-        var_v0 = g_CdSoundCommandStep;
+        g_CdSoundCommandStep++;
         /* fallthrough */
     case 2:
-        var_v0 = DoCdCommand(CdlPause, 0, 0);
-        if (var_v0 == 0) {
-            g_CdSoundCommandStep += 1;
-            return g_CdSoundCommandStep;
+        if (!DoCdCommand(CdlPause, 0, 0)) {
+            g_CdSoundCommandStep++;
         }
-        return var_v0;
+        break;
+
     case 3:
         D_8013901C = 0;
         SetMaxVolume();
@@ -105,51 +94,52 @@ s32 CdFadeOut1(void) {
     default:
         g_CdSoundCommandStep = 0;
         D_801390A0 = g_CdSoundCommandStep;
+        AdvanceCdSoundCommandQueue();
+        break;
     }
-    return AdvanceCdSoundCommandQueue();
 }
 
-s32 CdFadeOut2(void) {
-    s16 var_v0;
-
+void CdFadeOut2(void) {
     switch (g_CdSoundCommandStep & 0xFF) {
     case 0:
-        if (D_8013901C != 0) {
-            D_801390A0 = 1;
-            g_CdVolume -= 0x20;
-            if (g_CdVolume < 0) {
-                g_CdVolume = 0;
-            }
-            SetCdVolume(0, g_CdVolume, g_CdVolume);
-            if (g_CdVolume == 0) {
-                g_CdSoundCommandStep += 1;
-                return g_CdSoundCommandStep;
-            }
-            return g_CdVolume;
+        if (D_8013901C == 0) {
+            AdvanceCdSoundCommandQueue();
+            break;
+        }
+        D_801390A0 = 1;
+        g_CdVolume -= 0x20;
+        if (g_CdVolume < 0) {
+            g_CdVolume = 0;
+        }
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
+        if (g_CdVolume == 0) {
+            g_CdSoundCommandStep++;
         }
         break;
+
     case 1:
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
-        g_CdSoundCommandStep += 1;
-        var_v0 = g_CdSoundCommandStep;
+        g_CdSoundCommandStep++;
         /* fallthrough */
     case 2:
-        var_v0 = DoCdCommand(CdlPause, 0, 0);
-        if (var_v0 == 0) {
-            g_CdSoundCommandStep += 1;
-            return g_CdSoundCommandStep;
+        if (!DoCdCommand(CdlPause, 0, 0)) {
+            g_CdSoundCommandStep++;
         }
-        return var_v0;
+        break;
+
     case 3:
         g_CdSoundCommandStep = 0;
         D_8013901C = 0;
         D_801390A0 = g_CdSoundCommandStep;
+        AdvanceCdSoundCommandQueue();
         break;
+
     default:
         g_CdSoundCommandStep = 0;
         D_801390A0 = g_CdSoundCommandStep;
+        AdvanceCdSoundCommandQueue();
+        break;
     }
-    return AdvanceCdSoundCommandQueue();
 }
 
 void EnableCdReverb(s8 arg0) {

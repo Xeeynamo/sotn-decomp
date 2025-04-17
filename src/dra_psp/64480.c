@@ -16,7 +16,14 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/64480", AddCdSoundCommand);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141440);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", AdvanceCdSoundCommandQueue);
+static void AdvanceCdSoundCommandQueue(void) {
+    s32 i;
+
+    for (i = 0; i < MAX_SND_COUNT - 1; i++) {
+        g_CdSoundCommandQueue[i] = g_CdSoundCommandQueue[i + 1];
+    }
+    g_CdSoundCommandQueuePos--;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141550);
 
@@ -139,7 +146,7 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
             SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
-        if (g_SoundCommandRingBufferWritePos == 0x100) {
+        if (g_SoundCommandRingBufferWritePos == MAX_SND_COUNT) {
             g_SoundCommandRingBufferWritePos = 0;
         }
     }
@@ -164,7 +171,7 @@ s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan) {
             ret = 0;
         }
         g_sfxRingBufferWritePos++;
-        if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
+        if (g_sfxRingBufferWritePos == MAX_SND_COUNT) {
             g_sfxRingBufferWritePos = 0;
         }
     } else {
@@ -182,7 +189,7 @@ void PlaySfx(s16 sfxId) {
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
         g_sfxRingBufferWritePos++;
-        if (g_sfxRingBufferWritePos == 0x100) {
+        if (g_sfxRingBufferWritePos == MAX_SND_COUNT) {
             g_sfxRingBufferWritePos = 0;
         }
     } else {
@@ -207,7 +214,7 @@ void PlaySfx(s16 sfxId) {
         }
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
         g_SoundCommandRingBufferWritePos++;
-        if (g_SoundCommandRingBufferWritePos == 0x100) {
+        if (g_SoundCommandRingBufferWritePos == MAX_SND_COUNT) {
             g_SoundCommandRingBufferWritePos = 0;
         }
     }
@@ -468,7 +475,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
 }
 
 s16 IncrementRingBufferPos(s16 sfxBufPos) {
-    if (++sfxBufPos == LEN(g_SfxRingBuffer)) {
+    if (++sfxBufPos == MAX_SND_COUNT) {
         sfxBufPos = 0;
     }
 
