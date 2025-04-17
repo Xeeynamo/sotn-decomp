@@ -523,24 +523,24 @@ void RicEntityArmBrandishWhip(Entity* entity) {
     entity->posY.val = PLAYER.posY.val;
 }
 
-static s16 D_80155D30[] = {0x10, 0x18, 0x11, 0x19, 0x12, 0x1A, 0x13, 0x1B, 0x14,
-                           0x1C, 0x15, 0x1D, 0x16, 0x1E, 0x17, 0x00, 0x02, 0x01,
-                           0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x00, 0x00};
+static s16 D_80155D30[] = {0x10, 0x18, 0x11, 0x19, 0x12, 0x1A, 0x13, 0x1B,
+                           0x14, 0x1C, 0x15, 0x1D, 0x16, 0x1E, 0x17};
+static u16 unused_2[] = {0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x00};
 void func_80167964(Entity* entity) {
-    if (g_Player.unk46 != 0) {
-        if (entity->step == 0) {
-            entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
-                            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
-        }
-        if (!(entity->params & 0xFF00)) {
-            g_Entities[D_80155D30[entity->poseTimer]].palette = PAL_OVL(0x140);
-        }
-        g_Entities[D_80155D30[entity->poseTimer]].ext.player.unkA4 = 4;
-        entity->poseTimer++;
-        if (entity->poseTimer == 0xF) {
-            DestroyEntity(entity);
-        }
-    } else {
+    if (g_Player.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+    if (entity->step == 0) {
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
+    }
+    if (!(entity->params & 0xFF00)) {
+        g_Entities[D_80155D30[entity->poseTimer]].palette = PAL_OVL(0x140);
+    }
+    g_Entities[D_80155D30[entity->poseTimer]].ext.player.unkA4 = 4;
+    entity->poseTimer++;
+    if (entity->poseTimer == 15) {
         DestroyEntity(entity);
     }
 }
