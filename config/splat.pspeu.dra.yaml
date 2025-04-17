@@ -93,15 +93,7 @@ segments:
       - [0x63E60, c, dra_psp/63E60]
       - [0x63FE0, c, dra_psp/63FE0]
       - [0x64370, c, dra_psp/64370]
-      - [0x64480, c, dra_psp/64480]
-      - [0x64EE0, c, dra_psp/64EE0] # O4
-      - [0x65290, c, dra_psp/65290]
-      - [0x654B0, c, dra_psp/654B0]
-      - [0x65790, c, dra_psp/65790]
-      - [0x65F50, c, dra_psp/65F50]
-      - [0x661C0, c, dra_psp/661C0]
-      - [0x66DD8, c, dra_psp/66DD8]
-      - [0x67558, c, dra_psp/67558]
+      - [0x64480, c, dra_psp/64480] # O4
       - [0x68310, c, dra/collider] # O4
       - [0x68D80, data]
       - [0x68E00, data]
@@ -162,7 +154,7 @@ segments:
       - [0xEE8D8, .rodata, dra/7879C]
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
-      - [0xEED48, .rodata, dra_psp/65790]
+      - [0xEED48, .rodata, dra_psp/64480]
       - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
       - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
       - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss2}
