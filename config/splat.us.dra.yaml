@@ -90,7 +90,7 @@ segments:
       - [0x3134, .data, 628AC] # D_800A3194
       - [0x31B0, .data, 62EB8] # D_800A3210
       - [0x3330, .data, 62EB8] # D_800A33A0-D_800A35D0
-      - [0x37D8, .data, 62EB8] # Palette, GFX desc until D_800A3BB8
+      - [0x37D8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C40, .data, lba_stage]
       - [0x4A00, .data, config_us] # subweapons
       - [0x4B04, .data, config_us] # equipments
