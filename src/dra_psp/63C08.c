@@ -6,11 +6,98 @@ extern s32 D_psp_091893B8[];
 extern s16 D_psp_09187240[][2];
 extern s8* D_psp_09190C18[];
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09140E00);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140588);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09140E50);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", MuteCd);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_80132A04);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", UnMuteCd);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140600);
+
+bool func_80131F68(void) {
+    bool ret;
+    if (D_8013B61C) {
+        ret = 1;
+    } else {
+        ret = (D_8013901C != 0);
+    }
+    return ret;
+}
+
+s16 GetCdVolume(void) { return g_CdVolume; }
+
+void SetReverbDepth(short depth) { SsUtSetReverbDepth(depth, depth); }
+
+void func_80131FCC(void) {
+    switch (D_8013B680) {
+    case 0:
+        D_80138F7C = 0;
+        break;
+    case 1:
+    case 2:
+        D_80138F7C++;
+        break;
+    }
+    D_8013B680 = 0;
+}
+
+u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
+    g_CdCommandStatus = CdSync(1, g_CdCommandResult);
+
+    if (com == CdlGetlocL) {
+        if (g_CdCommandStatus != CdlComplete) {
+            CdControl(CdlNop, 0, 0);
+            D_8013B680 = 2;
+            return D_8013B680;
+        }
+    } else if (*g_CdCommandResult & CdlStatShellOpen) {
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    } else if (*g_CdCommandResult & CdlStatSeekError) {
+        CdControl(CdlNop, 0, 0);
+        D_8013B680 = 2;
+        return D_8013B680;
+    }
+
+    if (g_CdCommandStatus == CdlComplete) {
+        if (CdControl(com, param, result)) {
+            D_8013B680 = 0;
+            return D_8013B680;
+        }
+    }
+
+    D_8013B680 = 1;
+    return D_8013B680;
+}
+
+void SetMaxVolume(void) {
+    g_volumeL = 127;
+    g_volumeR = 127;
+    SsSetMVol(g_volumeL, g_volumeR);
+}
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", InitSoundVars3);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", InitSoundVars2);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140960);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SetCdVolume);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SetMonoStereo);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140CF0);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140D68);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SoundWait);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140E00);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140E50);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_80132A04);
 
 static void AddCdSoundCommand(s16 arg0) {
     s32 i;
@@ -51,7 +138,7 @@ static void AddCdSoundCommand(s16 arg0) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141440);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141440);
 
 static void AdvanceCdSoundCommandQueue(void) {
     s32 i;
@@ -62,15 +149,15 @@ static void AdvanceCdSoundCommandQueue(void) {
     g_CdSoundCommandQueuePos--;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141550);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141550);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141570);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141570);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_091415E0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_091415E0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141608);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141608);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141668);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141668);
 
 s32 func_psp_09141860(s32 arg0) { return D_psp_091893B8[arg0]; }
 
@@ -82,32 +169,32 @@ void func_psp_09141878(s32 arg0) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommand4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand6);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommand6);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdFadeOut1);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdFadeOut1);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdFadeOut2);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdFadeOut2);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09141E30);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141E30);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", EnableCdReverb);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", EnableCdReverb);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", StopSeq);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", StopSeq);
 
 void PlaySeq(s16 arg0);
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", PlaySeq);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", PlaySeq);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommandQueueEmpty);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommandQueueEmpty);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_80133950);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_80133950);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand12);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommand12);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand14);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommand14);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_80133FCC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_80133FCC);
 
 void SetReleaseRate1(void) {
     D_80138FB4->voice = 0;
@@ -1075,4 +1162,4 @@ void func_801361F8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", func_psp_09144C80);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09144C80);
