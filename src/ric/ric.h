@@ -277,7 +277,7 @@ extern SpriteParts* D_801541A8[];
 extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
-extern void RicHandleBladeDash(void);
+extern void RicStepBladeDash(void);
 void RicSetAnimation(AnimationFrame* anim);
 extern void RicDecelerateX(s32 speed);
 extern s32 RicCheckFacing(void);

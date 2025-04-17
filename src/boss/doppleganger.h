@@ -31,6 +31,8 @@ typedef enum {
     /* 0x42 */ E_ID_42 = 0x42,
     /* 0x43 */ E_ID_43 = 0x43,
 
+    /* 0x50 */ E_ID_50 = 0x50,
+
     /* 0x60 */ E_ID_60 = 0x60,
 } EntityIDs;
 
