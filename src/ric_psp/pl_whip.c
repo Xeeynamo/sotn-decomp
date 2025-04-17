@@ -481,6 +481,45 @@ void RicEntityWhip(Entity* self) {
     }
 }
 
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_whip", RicEntityArmBrandishWhip);
+static u16 D_80155CB8[] = {10, 11, 13, 17, 15, 12, 18, 14, 16};
+static u16 D_80155CCC[] = {10, 11, 17, 13, 15, 18, 12, 16, 14};
+static u16 D_80155CE0[] = {1, 2, 4, 8, 6, 3, 9, 5, 7};
+static u16 D_80155CF4[] = {1, 2, 8, 4, 6, 9, 3, 7, 5};
+static u16 D_80155D08[] = {19, 20, 22, 26, 24, 21, 27, 23, 25};
+static u16 D_80155D1C[] = {19, 20, 26, 22, 24, 27, 21, 25, 23};
+void RicEntityArmBrandishWhip(Entity* entity) {
+    if (g_Player.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+    entity->facingLeft = PLAYER.facingLeft;
+    if (entity->step == 0) {
+        entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                        FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
+        entity->animSet = ANIMSET_OVL(18);
+        entity->unk5A = 0x46;
+        entity->palette = PAL_OVL(0x120);
+        entity->zPriority = PLAYER.zPriority + 2;
+    }
+    if (PLAYER.step == PL_S_CROUCH) {
+        if (PLAYER.facingLeft) {
+            entity->animCurFrame = D_80155CCC[D_80175080];
+        } else {
+            entity->animCurFrame = D_80155CB8[D_80175080];
+        }
+    } else if (PLAYER.step == 0) {
+        if (PLAYER.facingLeft) {
+            entity->animCurFrame = D_80155CF4[D_80175080];
+        } else {
+            entity->animCurFrame = D_80155CE0[D_80175080];
+        }
+    } else if (PLAYER.facingLeft) {
+        entity->animCurFrame = D_80155D1C[D_80175080];
+    } else {
+        entity->animCurFrame = D_80155D08[D_80175080];
+    }
+    entity->posX.val = g_Entities->posX.val;
+    entity->posY.val = PLAYER.posY.val;
+}
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_whip", func_80167964);

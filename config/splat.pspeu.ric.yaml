@@ -72,7 +72,7 @@ segments:
       - [0x2F6B8, .data, ric/pl_crash_cross]
       - [0x2FBE8, data]
       - [0x2FC58, .data, ric_psp/pl_whip]
-      - [0x2FF60, data]
+      - [0x2FFF0, data]
       - [0x30100, .rodata, ric/pl_steps]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]

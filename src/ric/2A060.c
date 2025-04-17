@@ -482,24 +482,17 @@ void RicEntityWhip(Entity* self) {
     }
 }
 
-static s16 D_80155CB8[] = {0x000A, 0x000B, 0x000D, 0x0011, 0x000F,
-                           0x000C, 0x0012, 0x000E, 0x0010, 0x0000};
-static s16 D_80155CCC[] = {0x000A, 0x000B, 0x0011, 0x000D, 0x000F,
-                           0x0012, 0x000C, 0x0010, 0x000E, 0x0000};
-static s16 D_80155CE0[] = {0x0001, 0x0002, 0x0004, 0x0008, 0x0006,
-                           0x0003, 0x0009, 0x0005, 0x0007, 0x0000};
-static s16 D_80155CF4[] = {0x0001, 0x0002, 0x0008, 0x0004, 0x0006,
-                           0x0009, 0x0003, 0x0007, 0x0005, 0x0000};
-static s16 D_80155D08[] = {0x0013, 0x0014, 0x0016, 0x001A, 0x0018,
-                           0x0015, 0x001B, 0x0017, 0x0019, 0x0000};
-static s16 D_80155D1C[] = {0x0013, 0x0014, 0x001A, 0x0016, 0x0018,
-                           0x001B, 0x0015, 0x0019, 0x0017, 0x0000};
+static u16 D_80155CB8[] = {10, 11, 13, 17, 15, 12, 18, 14, 16};
+static u16 D_80155CCC[] = {10, 11, 17, 13, 15, 18, 12, 16, 14};
+static u16 D_80155CE0[] = {1, 2, 4, 8, 6, 3, 9, 5, 7};
+static u16 D_80155CF4[] = {1, 2, 8, 4, 6, 9, 3, 7, 5};
+static u16 D_80155D08[] = {19, 20, 22, 26, 24, 21, 27, 23, 25};
+static u16 D_80155D1C[] = {19, 20, 26, 22, 24, 27, 21, 25, 23};
 void RicEntityArmBrandishWhip(Entity* entity) {
     if (g_Player.unk46 == 0) {
         DestroyEntity(entity);
         return;
     }
-
     entity->facingLeft = PLAYER.facingLeft;
     if (entity->step == 0) {
         entity->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
@@ -509,7 +502,6 @@ void RicEntityArmBrandishWhip(Entity* entity) {
         entity->palette = PAL_OVL(0x120);
         entity->zPriority = PLAYER.zPriority + 2;
     }
-
     if (PLAYER.step == PL_S_CROUCH) {
         if (PLAYER.facingLeft) {
             entity->animCurFrame = D_80155CCC[D_80175080];
@@ -527,7 +519,6 @@ void RicEntityArmBrandishWhip(Entity* entity) {
     } else {
         entity->animCurFrame = D_80155D08[D_80175080];
     }
-
     entity->posX.val = g_Entities->posX.val;
     entity->posY.val = PLAYER.posY.val;
 }
