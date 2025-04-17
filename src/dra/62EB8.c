@@ -545,6 +545,12 @@ void func_80103EAC(void) {
 }
 
 void func_80103ED4(void) {
+    #if defined(VERSION_PSP)
+    #define IFSTATEMENT (g_MemCardRetryCount-- == 0)
+    #else
+    #define IFSTATEMENT (--g_MemCardRetryCount == -1)
+    #endif
+
     char saveFile[32];
     s32 memCardClose;
     s32 i;
@@ -555,32 +561,28 @@ void func_80103ED4(void) {
         MemcardInit();
         g_MemCardRetryCount = 4;
         D_80137E4C++;
-        return;
+        break;
     case 1:
         // This really should be doable as a switch, but that doesn't match.
         case1_state = func_800E9880(D_80097924, 0);
         if (case1_state == 0) {
-            return;
+            break;
         }
         if (case1_state == -1) {
-            if (--g_MemCardRetryCount == -1) {
+            if (IFSTATEMENT) {
                 D_80137E4C = 7;
             }
-            return;
-        }
-        if (case1_state == -3) {
-            if (--g_MemCardRetryCount == -1) {
+        } else if (case1_state == -3) {
+            if (IFSTATEMENT) {
                 D_80137E4C = 8;
             }
-            return;
-        }
-        if (case1_state == -2) {
+        } else if (case1_state == -2) {
             D_80137E4C = 9;
-            return;
+        } else {
+            MemcardInit();
+            D_80137E4C++;
         }
-        MemcardInit();
-        D_80137E4C++;
-        return;
+        break;
     case 2:
         if (MemcardParse(D_80097924, 0) >= 0) {
             g_MemCardRetryCount = 10;
@@ -599,10 +601,10 @@ void func_80103ED4(void) {
                     }
                 }
                 D_80137E4C += 2;
-                return;
+                break;
             } else {
                 D_80137E4C++;
-                return;
+                break;
             }
         }
         break;

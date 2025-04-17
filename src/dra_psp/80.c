@@ -545,6 +545,12 @@ void func_80103EAC(void) {
 }
 
 void func_80103ED4(void) {
+    #if defined(VERSION_PSP)
+    #define IFSTATEMENT (g_MemCardRetryCount-- == 0)
+    #else
+    #define IFSTATEMENT (--g_MemCardRetryCount == -1)
+    #endif
+
     char saveFile[32];
     s32 memCardClose;
     s32 i;
@@ -563,11 +569,11 @@ void func_80103ED4(void) {
             break;
         }
         if (case1_state == -1) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (IFSTATEMENT) {
                 D_80137E4C = 7;
             }
         } else if (case1_state == -3) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (IFSTATEMENT) {
                 D_80137E4C = 8;
             }
         } else if (case1_state == -2) {
