@@ -943,13 +943,13 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     const s32 PRIORITY_SHIFT = 8;
 #endif
     s32 unused_interp;
-    VECTOR sp28;
+    s32 nclip_otz;
+    s32 unused_flag;
+    VECTOR sp94;
     SVECTOR pad;
-    SVECTOR sp40[3];
+    SVECTOR sp7c[3];
     SVECTOR sp58[3];
     u8 sp70[4];
-    s32 sp7C;
-    s32 sp80;
     s32 spA0;
     s32 spA8;
     SVECTOR** spB0;
@@ -1024,7 +1024,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         var_a2_2 = 0;
         var_a0 = arg2;
         var_v1 = arg2;
-        sp7C = 0;
+        nclip_otz = 0;
         if (arg0 == 2) {
             var_v1_2 = (spA0 * 4);
             var_v1_2 -= 0x5C;
@@ -1057,25 +1057,25 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         var_s3[spA0].vy = ((var_s2[spA0].vy * var_v1) + var_a3_2);
         var_s3[spA0].vz = ((var_s2[spA0].vz * var_a0) + var_a2_2);
         for (i = 0; i < 3; i++) {
-            sp28.vx = sp40[i].vx =
+            sp94.vx = sp7c[i].vx =
                 ((spB0[i]->vx * arg1) >> 8) + (var_s3[spA0].vx >> 0xC);
-            sp28.vy = sp40[i].vy =
+            sp94.vy = sp7c[i].vy =
                 ((spB0[i]->vy * arg1) >> 8) + (var_s3[spA0].vy >> 0xC);
-            sp28.vz = sp40[i].vz =
+            sp94.vz = sp7c[i].vz =
                 ((spB0[i]->vz * arg1) >> 8) + (var_s3[spA0].vz >> 0xC);
-            func_80017008(&sp28, &sp58[i]);
+            func_80017008(&sp94, &sp58[i]);
         }
         temp_v0_5 = RotAverageNclip3(
-            &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
-            (s32*)&prim->x2, &unused_interp, &sp7C, &sp80);
+            &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
         if (temp_v0_5 < 0) {
             RotAverageNclip3(
-                &sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0, (s32*)&prim->x2,
-                (s32*)&prim->x1, &unused_interp, &sp7C, &sp80);
+                &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
         func_801072DC(prim);
         prim->type = PRIM_GT3;
-        if (sp7C >= 0xF0) {
+        if (nclip_otz >= 0xF0) {
             continue;
         }
         if (temp_v0_5 >= 0) {

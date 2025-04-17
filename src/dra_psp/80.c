@@ -946,6 +946,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 nclip_otz;
     s32 unused_flag;
     VECTOR sp94;
+    SVECTOR pad;
     SVECTOR sp7c[3];
     SVECTOR sp64[3];
     s32 unhiddenCount;
