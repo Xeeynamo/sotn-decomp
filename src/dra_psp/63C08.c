@@ -2,17 +2,25 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
+s16 SsSeqOpen(u32 addr, s16 vab_id);
+
 extern s32 D_psp_091893B8[];
 extern s16 D_psp_09187240[][2];
 extern s8* D_psp_09190C18[];
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140588);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", MuteCd);
+void MuteCd(void) {
+    g_MuteCd = 1;
+    D_8013B694 = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", UnMuteCd);
+void UnMuteCd(void) {
+    g_MuteCd = 0;
+    D_8013B694++;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140600);
+s32 func_80131F28(void) { return D_80138F7C; }
 
 bool func_80131F68(void) {
     bool ret;
@@ -77,27 +85,173 @@ void SetMaxVolume(void) {
     SsSetMVol(g_volumeL, g_volumeR);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", InitSoundVars3);
+void InitSoundVars3(void) {
+    s32 i;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", InitSoundVars2);
+    for (i = 0; i < 4; i++) {
+        g_SfxScriptVolume[i] = 0;
+        g_SfxScriptDistance[i] = 0;
+        g_CurrentSfxScriptSfxId[i] = 0;
+        g_SfxScriptTimer[i] = 0;
+        g_SfxScriptMode[i] = 0;
+        g_CurrentSfxScript[i] = 0;
+        g_CurrentSfxScriptSfxId2[i] = 0;
+        g_SfxScriptUnk6[i] = 0;
+    }
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140960);
+void InitSoundVars2(void) {
+    s32 i;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SetCdVolume);
+    InitSoundVars3();
+    D_8013B690 = 0;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SetMonoStereo);
+    for (i = 0; i < NUM_CH_2; i++) {
+        g_CurrentSfxId12_19[i] = 0;
+        D_8013AED4[i] = 0;
+    }
+    g_CurSfxId22_23 = 0;
+    g_CurSfxId20_21 = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140CF0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", InitSoundVars1);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140D68);
+void SetCdVolume(s8 s_num, s16 arg2, s16 arg3) {
+    SsSetSerialVol((arg2 << 0xF) / 127, arg2, arg3);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", SoundWait);
+void SetMonoStereo(u8 soundMode) {
+    CdlATV audioVolume;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140E00);
+    switch (soundMode) {
+    case MONO_SOUND:
+        if (D_801390A8 != MONO_SOUND) {
+            SsSetMono();
+            audioVolume.val2 = 128; // CD (R) --> SPU (R)
+            audioVolume.val0 = 128; // CD (L) --> SPU (L)
+            audioVolume.val3 = 128; // CD Right sound transferred to left
+            audioVolume.val1 = 128; // CD Left sound transferred to right
+            CdMix(&audioVolume);
+            g_SfxVolumeMultiplier = 108;
+            D_801390A8 = 0;
+        }
+        break;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09140E50);
+    case STEREO_SOUND:
+        if (D_801390A8 != STEREO_SOUND) {
+            SsSetStereo();
+            audioVolume.val2 = 224; // CD (R) --> SPU (R)
+            audioVolume.val0 = 224; // CD (L) --> SPU (L)
+            audioVolume.val3 = 0;
+            audioVolume.val1 = 0;
+            CdMix(&audioVolume);
+            g_SfxVolumeMultiplier = 127;
+            D_801390A8 = 1;
+        }
+        break;
+    }
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_80132A04);
+void SoundInit(void) {
+    g_SoundInitialized = 1;
+    SetMonoStereo(STEREO_SOUND);
+    SetMaxVolume();
+    g_CdVolume = 0x78;
+    SetCdVolume(0, g_CdVolume, g_CdVolume);
+    g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
+    DoCdCommand(CdlSetmode, g_CdMode, 0);
+    InitSoundVars1();
+    SetReverbDepth(10);
+}
+
+u8 func_801326D8(void) {
+    if (D_8013901C) {
+        return 1;
+    }
+    if (g_SeqPlayingId) {
+        return 3;
+    }
+    if (D_801390D8) {
+        return 2;
+    }
+    return 0;
+}
+
+void SoundWait(void) {
+    while (func_801326D8() != 0) {
+        VSync(0);
+        func_801361F8();
+    }
+}
+
+void MuteSound(void) {
+    SsSetMVol(0, 0);
+    SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
+    SetCdVolume(SS_SERIAL_A, 0, 0);
+    SetMaxVolume();
+    InitSoundVars1();
+}
+
+void KeyOnRange(s32 minVoice, s32 maxVoice, s16 vabId, s16 prog, s16 tone,
+                s16 note, s16 voll, s16 volr) {
+    s32 i;
+
+    s32 didStuff = 0;
+    for (i = minVoice; i < maxVoice; i += 2) {
+        if (!g_KeyStatus[i]) {
+            SsUtKeyOnV(i, vabId, prog, tone, note, 0, voll, volr);
+            SsUtKeyOnV(i + 1, vabId, prog, tone + 1, note, 0, voll, volr);
+            didStuff++;
+            if (i == (maxVoice - 2)) {
+                D_8013AEDC = minVoice;
+            } else {
+                D_8013AEDC = i + 2;
+            }
+            break;
+        }
+    }
+    if (!didStuff) {
+        SsUtKeyOnV(D_8013AEDC, vabId, prog, tone, note, 0, voll, volr);
+        SsUtKeyOnV(D_8013AEDC + 1, vabId, prog, tone + 1, note, 0, voll, volr);
+    }
+}
+
+void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
+                   s16 volume, s16 distance) {
+    if (!distance) {
+        g_VolL = volume;
+        g_VolR = volume;
+    } else {
+        g_VolR = (volume * D_psp_09187240[distance][0]) >> 7;
+        g_VolL = (volume * D_psp_09187240[distance][1]) >> 7;
+    }
+
+    // hardware voices 0-24
+    if (voice >= 0 && voice < 24) {
+        SsUtKeyOnV(voice, vabId, prog, tone, note, 0, g_VolL, g_VolR);
+        SsUtKeyOnV(voice + 1, vabId, prog, tone + 1, note, 0, g_VolL, g_VolR);
+        return;
+    }
+
+    // virtual voices 30-33 map to hardware channels 0-4,4-8,8-12,14-18
+    switch (voice) {
+    case 30:
+        KeyOnRange(0, 4, vabId, prog, tone, note, g_VolL, g_VolR);
+        break;
+
+    case 31:
+        KeyOnRange(4, 8, vabId, prog, tone, note, g_VolL, g_VolR);
+        break;
+
+    case 32:
+        KeyOnRange(8, 12, vabId, prog, tone, note, g_VolL, g_VolR);
+        break;
+
+    case 33:
+        KeyOnRange(14, 18, vabId, prog, tone, note, g_VolL, g_VolR);
+        break;
+    }
+}
 
 static void AddCdSoundCommand(s16 arg0) {
     s32 i;
@@ -179,16 +333,46 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdFadeOut2);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141E30);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", EnableCdReverb);
+void EnableCdReverb(s8 arg0) {
+    SsSetSerialAttr(SS_SERIAL_A, SS_REV, arg0 == SS_SON);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", StopSeq);
+void StopSeq(void) {
+    if (g_SeqPlayingId != 0) {
+        SsSeqStop(g_SeqAccessNum);
+        SsSeqClose(g_SeqAccessNum);
+        SetReleaseRate2();
+        g_SeqPlayingId = 0;
+        g_SeqIsPlaying = 0;
+    }
+}
 
-void PlaySeq(s16 arg0);
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", PlaySeq);
+void PlaySeq(s16 arg0) {
+    s16 index;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommandQueueEmpty);
+    if (g_SeqPlayingId) {
+        StopSeq();
+    }
+    index = (u8)(arg0 & 0xFF);
+    g_SeqAccessNum =
+        SsSeqOpen(g_SeqPointers[index], g_SeqInfo[index].unk2 >> 4);
+    g_ReverbDepth = g_SeqInfo[index].reverb_depth;
+    SetReverbDepth(g_ReverbDepth);
+    g_SeqVolume1 = g_SeqInfo[index].volume;
+    g_SeqVolume2 = g_SeqInfo[index].volume;
+    SsSeqSetVol(g_SeqAccessNum, g_SeqVolume1, g_SeqVolume1);
+    if ((g_SeqInfo[index].unk2 & 0xF) == 0) {
+        SsSeqPlay(g_SeqAccessNum, 1, 1);
+    } else {
+        SsSeqPlay(g_SeqAccessNum, 1, 0);
+    }
+    g_SeqPlayingId = index;
+    g_SeqIsPlaying = 0xE;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_80133950);
+bool CdSoundCommandQueueEmpty(void) { return g_CdSoundCommandQueuePos == 0; }
+
+bool func_80133950(void) { return !D_8013980C; }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", CdSoundCommand12);
 

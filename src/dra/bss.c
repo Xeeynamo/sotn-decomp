@@ -275,7 +275,7 @@ s32 D_80138448;
 s32 D_8013844C;
 s32 D_80138450;
 
-// 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
+// 91EBC.c
 s32 D_80138454;
 s16 g_CurrentXaConfigId;
 padding s16 g_CurrentXaConfigId_;

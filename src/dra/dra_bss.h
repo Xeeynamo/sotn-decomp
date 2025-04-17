@@ -82,7 +82,8 @@ extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
 
-// BSS 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
+// BSS 91EBC.c
+extern s32 D_80138454;
 extern s16 g_CurrentXaConfigId;
 extern s16 D_8013845C;
 extern u8 g_SeqTable[];
@@ -204,7 +205,6 @@ extern u16 g_SfxScriptVolume[4];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
 extern CdlLOC D_8013B640;
-extern s16 g_CurrentSfxId12_19[4];
 extern s32 D_8013B65C;
 extern s16 g_SeqAccessNum;
 extern s32 g_MemcardStep;

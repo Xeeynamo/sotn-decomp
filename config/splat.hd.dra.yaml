@@ -126,7 +126,7 @@ segments:
       - [0x1D2A4, .data, 91EBC] # g_SeqInfo
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
       - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
-      - [0x20A20, .data, 953A0]
+      - [0x20A20, .data, 91EBC]
       - [0x22220, cmp, D_800C217C]
       - [0x22854, cmp, D_800C27B0]
       - [0x23604, cmp, D_800C3560]
@@ -166,11 +166,7 @@ segments:
       - [0x41DAC, .rodata, 8A0A4]
       - [0x41DCC, .rodata, 8D3E8]
       - [0x41E4C, .rodata, 8D3E8]
-      - [0x41F50, .rodata, 92F60]
-      - [0x41F78, .rodata, 93290]
-      - [0x41FA8, .rodata, 93BDC]
-      - [0x41FD0, .rodata, 94F50]
-      - [0x42270, .rodata, 953A0]
+      - [0x41F50, .rodata, 91EBC]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x463E4, c, loading]
@@ -208,11 +204,6 @@ segments:
       - [0x8C28C, c, 8C600]
       - [0x8D050, c, 8D3E8]
       - [0x91A98, c, 91EBC]
-      - [0x92B3C, c, 92F60]
-      - [0x92E6C, c, 93290]
-      - [0x937B8, c, 93BDC]
-      - [0x94B2C, c, 94F50]
-      - [0x94F7C, c, 953A0]
       - [0x95E88, .bss, bss]
   - name: dra_data
     type: data
