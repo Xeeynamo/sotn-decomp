@@ -544,13 +544,6 @@ void func_80103EAC(void) {
     MemcardInfoInit();
 }
 
-s32 MemcardParse(s32 nPort, s32 nCard);
-s32 MemcardDetectSave(s32 nPort, char* expectedSaveName, s32 block);
-s32 GetMemcardFreeBlockCount(s32 nPort);
-s32 MemcardClose(s32 nPort);
-s32 MemcardWriteFile(s32 nPort, s32 nCard, char* name, void* data, s32 flags,
-                     s32 create, s32 unk);
-s32 func_800E9880(s32 nPort, s32 nCard);
 void func_80103ED4(void) {
     char saveFile[32];
     s32 memCardClose;

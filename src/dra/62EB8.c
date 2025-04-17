@@ -544,6 +544,138 @@ void func_80103EAC(void) {
     MemcardInfoInit();
 }
 
+void func_80103ED4(void) {
+    char saveFile[32];
+    s32 memCardClose;
+    s32 i;
+    s32 case1_state;
+
+    switch (D_80137E4C) {
+    case 0:
+        MemcardInit();
+        g_MemCardRetryCount = 4;
+        D_80137E4C++;
+        return;
+    case 1:
+        // This really should be doable as a switch, but that doesn't match.
+        case1_state = func_800E9880(D_80097924, 0);
+        if (case1_state == 0) {
+            return;
+        }
+        if (case1_state == -1) {
+            if (--g_MemCardRetryCount == -1) {
+                D_80137E4C = 7;
+            }
+            return;
+        }
+        if (case1_state == -3) {
+            if (--g_MemCardRetryCount == -1) {
+                D_80137E4C = 8;
+            }
+            return;
+        }
+        if (case1_state == -2) {
+            D_80137E4C = 9;
+            return;
+        }
+        MemcardInit();
+        D_80137E4C++;
+        return;
+    case 2:
+        if (MemcardParse(D_80097924, 0) >= 0) {
+            g_MemCardRetryCount = 10;
+            if (D_8006C378 >= 0) {
+                i = 0;
+                if (D_80137E54 == 2) {
+                    for (i = 0; i < 15; i++) {
+                        MakeMemcardPath(saveFile, i);
+                        if (MemcardDetectSave(D_80097924, saveFile, 0) != 0) {
+                            break;
+                        }
+                    }
+                    if ((i == 15) &&
+                        (GetMemcardFreeBlockCount(D_80097924) == 0)) {
+                        D_80137E54 = 3;
+                    }
+                }
+                D_80137E4C += 2;
+                return;
+            } else {
+                D_80137E4C++;
+                return;
+            }
+        }
+        break;
+    case 3:
+        for (i = 0; i < 15; i++) {
+            MakeMemcardPath(saveFile, i);
+            if (MemcardDetectSave(D_80097924, saveFile, 0) == 0) {
+                break;
+            }
+        }
+        if (i != 15) {
+            if (GetMemcardFreeBlockCount(D_80097924) == 0) {
+                D_80137E4C = 10;
+                return;
+            }
+            D_8006C378 = i;
+            D_80137E4C++;
+            return;
+        }
+        D_80137E4C = 10;
+        return;
+    case 4:
+        MakeMemcardPath(saveFile, D_8006C378);
+        // careful with i here, it's not an iterator.
+        if (MemcardDetectSave(D_80097924, saveFile, 0) == 1) {
+            i = 0;
+        } else {
+            i = 1;
+            if (GetMemcardFreeBlockCount(D_80097924) == 0) {
+                D_80137E4C = 10;
+                return;
+            }
+        }
+        // I believe the rand() call here selects the icon on the save
+        // in the save-select screen.
+        StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
+        if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
+            if (--g_MemCardRetryCount == -1) {
+                D_80137E4C = 0;
+                return;
+            }
+        } else {
+            g_MemCardRetryCount = 10;
+            D_80137E4C++;
+            return;
+        }
+        break;
+    case 5:
+        memCardClose = MemcardClose(D_80097924);
+        if (memCardClose == 0) {
+            return;
+        }
+        if (memCardClose == -3) {
+            if (--g_MemCardRetryCount != -1) {
+                D_80137E4C--;
+                return;
+            }
+            D_80137E4C = 0;
+            return;
+        }
+        D_80137E4C = 6;
+        return;
+    case 6:
+        return;
+    }
+}
+
+void func_8010427C(void) {
+    FreePrimitives(D_80137E40);
+    FreePrimitives(D_80137E44);
+    FreePrimitives(D_80137E48);
+}
+
 SVECTOR D_800A31B0 = {34, -18, -11};
 SVECTOR D_800A31B8 = {21, 18, -29};
 SVECTOR D_800A31C0 = {0, -18, -36};
@@ -1012,141 +1144,6 @@ u_long* D_800A3BB8[] = {
     D_800A3A74, D_800A3A88, D_800A3A60, D_800A3B00, D_800A3B10, D_800A3B24,
     D_800A3A9C, D_800A3B38, D_800A3ABC, D_800A3AD4,
 };
-
-// Note: Including this as part of the previous file (62D70.c) caused
-// four 00 bytes to be added to the rodata at 0x3CDC0; this indicates
-// that this function should be the start of this new file.
-void func_80103ED4(void) {
-    char saveFile[32];
-    s32 memCardClose;
-    s32 i;
-    s32 case1_state;
-
-    switch (D_80137E4C) {
-    case 0:
-        MemcardInit();
-        g_MemCardRetryCount = 4;
-        D_80137E4C++;
-        return;
-    case 1:
-        // This really should be doable as a switch, but that doesn't match.
-        case1_state = func_800E9880(D_80097924, 0);
-        if (case1_state == 0) {
-            return;
-        }
-        if (case1_state == -1) {
-            if (--g_MemCardRetryCount == -1) {
-                D_80137E4C = 7;
-            }
-            return;
-        }
-        if (case1_state == -3) {
-            if (--g_MemCardRetryCount == -1) {
-                D_80137E4C = 8;
-            }
-            return;
-        }
-        if (case1_state == -2) {
-            D_80137E4C = 9;
-            return;
-        }
-        MemcardInit();
-        D_80137E4C++;
-        return;
-    case 2:
-        if (MemcardParse(D_80097924, 0) >= 0) {
-            g_MemCardRetryCount = 10;
-            if (D_8006C378 >= 0) {
-                i = 0;
-                if (D_80137E54 == 2) {
-                    for (i = 0; i < 15; i++) {
-                        MakeMemcardPath(saveFile, i);
-                        if (MemcardDetectSave(D_80097924, saveFile, 0) != 0) {
-                            break;
-                        }
-                    }
-                    if ((i == 15) &&
-                        (GetMemcardFreeBlockCount(D_80097924) == 0)) {
-                        D_80137E54 = 3;
-                    }
-                }
-                D_80137E4C += 2;
-                return;
-            } else {
-                D_80137E4C++;
-                return;
-            }
-        }
-        break;
-    case 3:
-        for (i = 0; i < 15; i++) {
-            MakeMemcardPath(saveFile, i);
-            if (MemcardDetectSave(D_80097924, saveFile, 0) == 0) {
-                break;
-            }
-        }
-        if (i != 15) {
-            if (GetMemcardFreeBlockCount(D_80097924) == 0) {
-                D_80137E4C = 10;
-                return;
-            }
-            D_8006C378 = i;
-            D_80137E4C++;
-            return;
-        }
-        D_80137E4C = 10;
-        return;
-    case 4:
-        MakeMemcardPath(saveFile, D_8006C378);
-        // careful with i here, it's not an iterator.
-        if (MemcardDetectSave(D_80097924, saveFile, 0) == 1) {
-            i = 0;
-        } else {
-            i = 1;
-            if (GetMemcardFreeBlockCount(D_80097924) == 0) {
-                D_80137E4C = 10;
-                return;
-            }
-        }
-        // I believe the rand() call here selects the icon on the save
-        // in the save-select screen.
-        StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
-        if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
-            if (--g_MemCardRetryCount == -1) {
-                D_80137E4C = 0;
-                return;
-            }
-        } else {
-            g_MemCardRetryCount = 10;
-            D_80137E4C++;
-            return;
-        }
-        break;
-    case 5:
-        memCardClose = MemcardClose(D_80097924);
-        if (memCardClose == 0) {
-            return;
-        }
-        if (memCardClose == -3) {
-            if (--g_MemCardRetryCount != -1) {
-                D_80137E4C--;
-                return;
-            }
-            D_80137E4C = 0;
-            return;
-        }
-        D_80137E4C = 6;
-        return;
-    case 6:
-        return;
-    }
-}
-
-void func_8010427C(void) {
-    FreePrimitives(D_80137E40);
-    FreePrimitives(D_80137E44);
-    FreePrimitives(D_80137E48);
-}
 
 void func_801042C4(s32 arg0) {
     VECTOR sp10;
