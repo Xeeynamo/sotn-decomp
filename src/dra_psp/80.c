@@ -932,8 +932,16 @@ void func_801042C4(s32 arg0) {
     }
 }
 
+#if !defined(VERSION_PSP)
+MATRIX D_800A37B8 = {0};
+#endif
+
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
-#define PRIORITY_SHIFT 8
+#if defined(VERSION_US)
+    const s32 PRIORITY_SHIFT = 16;
+#else
+    const s32 PRIORITY_SHIFT = 8;
+#endif
     s32 unused_interp;
     s32 nclip_otz;
     s32 unused_flag;

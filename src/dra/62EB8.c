@@ -932,20 +932,22 @@ void func_801042C4(s32 arg0) {
     }
 }
 
+#if !defined(VERSION_PSP)
 MATRIX D_800A37B8 = {0};
+#endif
 
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #if defined(VERSION_US)
     const s32 PRIORITY_SHIFT = 16;
-#elif defined(VERSION_HD)
+#else
     const s32 PRIORITY_SHIFT = 8;
 #endif
+    s32 unused_interp;
     VECTOR sp28;
     SVECTOR pad;
     SVECTOR sp40[3];
     SVECTOR sp58[3];
     u8 sp70[4];
-    s32 sp78;
     s32 sp7C;
     s32 sp80;
     s32 spA0;
@@ -962,7 +964,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
     s32 var_v1;
     s32 var_v1_2;
-    u8* var_s7;
+    u8* uvPtr;
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
@@ -1006,7 +1008,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         }
     }
 
-    var_s7 = &D_800A3728;
+    uvPtr = &D_800A3728;
     for (spA0 = 0; spA0 < LEN(D_800A3210); spA0++, prim = prim->next,
         spB0 += 3) {
         if (spA0 >= spA8) {
@@ -1065,11 +1067,11 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         }
         temp_v0_5 = RotAverageNclip3(
             &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
-            (s32*)&prim->x2, &sp78, &sp7C, &sp80);
+            (s32*)&prim->x2, &unused_interp, &sp7C, &sp80);
         if (temp_v0_5 < 0) {
             RotAverageNclip3(
                 &sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0, (s32*)&prim->x2,
-                (s32*)&prim->x1, &sp78, &sp7C, &sp80);
+                (s32*)&prim->x1, &unused_interp, &sp7C, &sp80);
         }
         func_801072DC(prim);
         prim->type = PRIM_GT3;
@@ -1085,12 +1087,12 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
             (((u32)(arg0 - 1) < 2U) || ((arg0 == 3) && (arg2 >= 0x40)))) {
             prim->clut = (D_80137EE0 * 2) + 0x1F0;
-            prim->u0 = *var_s7++ + 0x80;
-            prim->v0 = *var_s7++ + 0x80;
-            prim->u1 = *var_s7++ + 0x80;
-            prim->v1 = *var_s7++ + 0x80;
-            prim->u2 = *var_s7++ + 0x80;
-            prim->v2 = *var_s7++ + 0x80;
+            prim->u0 = *uvPtr++ + 0x80;
+            prim->v0 = *uvPtr++ + 0x80;
+            prim->u1 = *uvPtr++ + 0x80;
+            prim->v1 = *uvPtr++ + 0x80;
+            prim->u2 = *uvPtr++ + 0x80;
+            prim->v2 = *uvPtr++ + 0x80;
             if (temp_v0_5 < 0) {
                 prim->u0 = 0xD1;
                 prim->v0 = 0xF1;
