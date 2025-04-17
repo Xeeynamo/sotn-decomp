@@ -178,7 +178,7 @@
 | dra    | func_800FAC48                       |       23 |          3 |        |                                 |       |
 | ric    | func_pspeu_092C8D48                 |       23 |          3 |        |                                 |       |
 | dra    | func_800E493C                       |       23 |          4 |        |                                 |       |
-| dra    | 65790.rodata                        |       24 |          0 | Yes    |                                 |       |
+| dra    | 64480.rodata                        |       24 |          0 | Yes    |                                 |       |
 | ric    | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
 | no4    | e_spear_guard.rodata                |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
@@ -1474,7 +1474,7 @@
 | no4    | func_pspeu_0925E548                 |     1731 |        172 | Yes    |                                 |       |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra    | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
-| ric    | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.869 |
+| ric    | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
 | dra    | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib    | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib    | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
