@@ -189,7 +189,14 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C7834);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C82F0);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C84F4);
+s32 func_us_801C84F4(void) {
+    if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & PAD_R2)) {
+        return false;
+    }
+    CheckMoveDirection();
+    SetPlayerStep(15);
+    return true;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C854C);
 
