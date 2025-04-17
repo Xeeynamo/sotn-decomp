@@ -269,8 +269,10 @@ s32 HandleSaveMenu(s32 arg0) {
             func_80103148(prim3, prim1);
         } else if (D_80137E4C == 10 && temp_t0 < 33) {
 #if defined(VERSION_US)
-            // silly logic here. if 2 or 3, it's 0, otherwise it's -10
-            temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
+            temp_a1 = 0;
+            if(D_80137E54 != 2 && D_80137E54 != 3){
+                temp_a1 = -10;
+            }
             SetTexturedPrimRect(prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
             prim2->p1 += 2;
             if (D_80137E54 == 2 || D_80137E54 == 3) {
@@ -306,11 +308,9 @@ s32 HandleSaveMenu(s32 arg0) {
                 return 1;
             }
         }
-        
-        // Seems this one shouldn't be needed since the else's would send it to
-        // the end anyway?
         return 0;
-    } else if (arg0 == 1) {
+    }
+    if (arg0 == 1) {
         if (temp_t0 == 0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
@@ -387,107 +387,108 @@ s32 HandleSaveMenu(s32 arg0) {
                 return 1;
             }
         }
+        return 0;
+    }
+    if (!temp_t0) {
+        PlaySfx(SFX_UI_ALERT_TINK);
+        prim2->p1 += 2;
+        if (arg0 == 2) {
+#if defined(VERSION_US)
+            func_800F9D88(" Wish to format？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("初期化してもいいですか　", 0, 1);
+#endif
+            D_80137E6C = 1;
+        }
+        if (arg0 == 3) {
+#if defined(VERSION_US)
+            func_800F9D88(" Overwrite data？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("　　上書きしますか　　　", 0, 1);
+#endif
+            D_80137E6C = 0;
+        }
+        if (arg0 == 4) {
+#if defined(VERSION_US)
+            func_800F9D88("   Wish to save？", 0, 1);
+#elif defined(VERSION_HD)
+            func_800F9D40("　　セーブしますか　　　", 0, 1);
+#endif
+            D_80137E6C = 0;
+        }
+#if defined(VERSION_US)
+        func_800F9D88("Yes ", 1, 0);
+        func_800F9D88("  No  ", 2, 0);
+#elif defined(VERSION_HD)
+        func_800F9D40("はい　　", 1, 0);
+        func_800F9D40("いいえ　", 2, 0);
+
+#endif
+
+        SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
+        prim2->drawMode = DRAW_DEFAULT;
+        prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+        prim2->drawMode = DRAW_DEFAULT;
+        func_801030B4(0, prim1, D_80137E6C);
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+        prim2->drawMode = DRAW_DEFAULT;
+        func_801030B4(1, prim1, D_80137E6C);
+    } else if (temp_t0 < 17) {
+        prim2->p1 += 2;
+        SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+        SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
+        prim3 = func_80103148(prim3, prim1);
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+        SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
+        SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
+        func_801030B4(0, prim1, D_80137E6C);
+        prim3 = func_80103148(prim3, prim1);
+        prim2 = prim2->next;
+        prim1 = prim1->next;
+        SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
+        SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
+        func_801030B4(1, prim1, D_80137E6C);
+        func_80103148(prim3, prim1);
     } else {
-        if (temp_t0 == 0) {
-            PlaySfx(SFX_UI_ALERT_TINK);
-            prim2->p1 += 2;
-            if (arg0 == 2) {
-#if defined(VERSION_US)
-                func_800F9D88(" Wish to format？", 0, 1);
-#elif defined(VERSION_HD)
-                func_800F9D40("初期化してもいいですか　", 0, 1);
-#endif
-                D_80137E6C = 1;
+        if (g_pads[0].tapped & PAD_LEFT) {
+            if (D_80137E6C != 0) {
+                PlaySfx(SFX_UI_TINK);
             }
-            if (arg0 == 3) {
-#if defined(VERSION_US)
-                func_800F9D88(" Overwrite data？", 0, 1);
-#elif defined(VERSION_HD)
-                func_800F9D40("　　上書きしますか　　　", 0, 1);
-#endif
-                D_80137E6C = 0;
+            D_80137E6C = 0;
+        }
+        if (g_pads[0].tapped & PAD_RIGHT) {
+            if (D_80137E6C == 0) {
+                PlaySfx(SFX_UI_TINK);
             }
-            if (arg0 == 4) {
-#if defined(VERSION_US)
-                func_800F9D88("   Wish to save？", 0, 1);
-#elif defined(VERSION_HD)
-                func_800F9D40("　　セーブしますか　　　", 0, 1);
-#endif
-                D_80137E6C = 0;
-            }
-#if defined(VERSION_US)
-            func_800F9D88("Yes ", 1, 0);
-            func_800F9D88("  No  ", 2, 0);
-#elif defined(VERSION_HD)
-            func_800F9D40("はい　　", 1, 0);
-            func_800F9D40("いいえ　", 2, 0);
+            D_80137E6C = 1;
+        }
+        prim3 = func_80103148(prim3, prim1);
+        prim1 = prim1->next;
+        func_801030B4(0, prim1, D_80137E6C);
+        prim3 = func_80103148(prim3, prim1);
+        prim1 = prim1->next;
 
-#endif
-
-            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
-            prim2->drawMode = DRAW_DEFAULT;
-            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
-            prim2 = prim2->next;
-            prim1 = prim1->next;
-            prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(0, prim1, D_80137E6C);
-            prim2 = prim2->next;
-            prim1 = prim1->next;
-            prim2->drawMode = DRAW_DEFAULT;
-            func_801030B4(1, prim1, D_80137E6C);
-        } else if (temp_t0 < 17) {
-            prim2->p1 += 2;
-            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
-            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
-            prim3 = func_80103148(prim3, prim1);
-            prim2 = prim2->next;
-            prim1 = prim1->next;
-            SetTexturedPrimRect(prim2, 72, 104 - temp_t0, 24, temp_t0, 0, 16);
-            SetPrimRect(prim1, 60, 104 - temp_t0, 48, temp_t0);
-            func_801030B4(0, prim1, D_80137E6C);
-            prim3 = func_80103148(prim3, prim1);
-            prim2 = prim2->next;
-            prim1 = prim1->next;
-            SetTexturedPrimRect(prim2, 154, 104 - temp_t0, 36, temp_t0, 0, 32);
-            SetPrimRect(prim1, 148, 104 - temp_t0, 48, temp_t0);
-            func_801030B4(1, prim1, D_80137E6C);
-            func_80103148(prim3, prim1);
-        } else {
-            if (g_pads[0].tapped & PAD_LEFT) {
-                if (D_80137E6C != 0) {
-                    PlaySfx(SFX_UI_TINK);
-                }
-                D_80137E6C = 0;
-            }
-            if (g_pads[0].tapped & PAD_RIGHT) {
-                if (D_80137E6C == 0) {
-                    PlaySfx(SFX_UI_TINK);
-                }
-                D_80137E6C = 1;
-            }
-            prim3 = func_80103148(prim3, prim1);
-            prim1 = prim1->next;
-            func_801030B4(0, prim1, D_80137E6C);
-            prim3 = func_80103148(prim3, prim1);
-            prim1 = prim1->next;
-
-            func_801030B4(1, prim1, D_80137E6C);
-            func_80103148(prim3, prim1);
-            if (g_pads[0].tapped & EXIT) {
-                D_80137E6C = 1;
-                FreePrimitives(D_80137E58);
-                FreePrimitives(D_80137E5C);
-                FreePrimitives(D_80137E60);
-                return 1;
-            } else if (g_pads[0].tapped & CONFIRM) {
-                PlaySfx(SFX_UI_CONFIRM);
-                FreePrimitives(D_80137E58);
-                FreePrimitives(D_80137E5C);
-                FreePrimitives(D_80137E60);
-                return 1;
-            }
+        func_801030B4(1, prim1, D_80137E6C);
+        func_80103148(prim3, prim1);
+        if (g_pads[0].tapped & EXIT) {
+            D_80137E6C = 1;
+            FreePrimitives(D_80137E58);
+            FreePrimitives(D_80137E5C);
+            FreePrimitives(D_80137E60);
+            return 1;
+        } else if (g_pads[0].tapped & CONFIRM) {
+            PlaySfx(SFX_UI_CONFIRM);
+            FreePrimitives(D_80137E58);
+            FreePrimitives(D_80137E5C);
+            FreePrimitives(D_80137E60);
+            return 1;
         }
     }
+
     return 0;
 }
 
