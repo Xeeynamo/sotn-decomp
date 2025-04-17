@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 void func_80102EB8(void) {
     Primitive *prim1, *prim2, *prim3;
@@ -135,6 +133,26 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_PSP)
 #define CONFIRM (D_psp_08B42050 | PAD_START | PAD_SQUARE)
 #define EXIT D_psp_08B42054
+#endif
+
+// Somewhat clumsy way to avoid ifdef throughout the code.
+// V86P70 means "Value is 86, except on PSP it's 70"
+#ifdef VERSION_PSP
+#define V86P70 70
+#define Vx60Px90 0x90
+#define Vx70PxA0 0xA0
+#define V72P56 56
+#define V86P62 62
+#define V96P152 152
+#define V80P56 56
+#else
+#define V86P70 86
+#define Vx60Px90 0x60
+#define Vx70PxA0 0x70
+#define V72P56 72
+#define V86P62 86
+#define V96P152 96
+#define V80P56 80
 #endif
     u8 temp_t0;
 
@@ -286,15 +304,15 @@ s32 HandleSaveMenu(s32 arg0) {
                 temp_a1 = -6;
             }
             SetTexturedPrimRect(
-                prim2, temp_a1 + 86, 96 - temp_t0, 0x60, temp_t0, 0, 0);
+                prim2, temp_a1 + V86P70, 96 - temp_t0, Vx60Px90, temp_t0, 0, 0);
             prim2->p1 += 2;
-            SetPrimRect(prim1, 72, 96 - temp_t0, 0x70, temp_t0);
+            SetPrimRect(prim1, V72P56, 96 - temp_t0, Vx70PxA0, temp_t0);
 #endif
             func_80103148(prim3, prim1);
         } else if (temp_t0 < 17) {
-            SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
+            SetTexturedPrimRect(prim2, V86P62, 80 - temp_t0, V96P152, temp_t0, 0, 0);
             prim2->p1 += 2;
-            SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
+            SetPrimRect(prim1, V80P56, 80 - temp_t0, V96P152, temp_t0);
             func_80103148(prim3, prim1);
         } else {
             func_80103148(prim3, prim1);
@@ -311,6 +329,13 @@ s32 HandleSaveMenu(s32 arg0) {
         return 0;
     }
     if (arg0 == 1) {
+// This section handles memory card selection. PSP doesn't give that option.
+#ifdef VERSION_PSP
+        D_80097924 = 0;
+        D_8006C378 = -1;
+        return 1;
+    }
+    #else
         if (temp_t0 == 0) {
             PlaySfx(SFX_UI_ALERT_TINK);
             prim2->p1 += 2;
@@ -389,6 +414,7 @@ s32 HandleSaveMenu(s32 arg0) {
         }
         return 0;
     }
+    #endif
     if (!temp_t0) {
         PlaySfx(SFX_UI_ALERT_TINK);
         prim2->p1 += 2;

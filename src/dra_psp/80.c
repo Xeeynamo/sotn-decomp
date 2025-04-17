@@ -134,6 +134,26 @@ s32 HandleSaveMenu(s32 arg0) {
 #define CONFIRM (D_psp_08B42050 | PAD_START | PAD_SQUARE)
 #define EXIT D_psp_08B42054
 #endif
+
+// Somewhat clumsy way to avoid ifdef throughout the code.
+// V86P70 means "Value is 86, except on PSP it's 70"
+#ifdef VERSION_PSP
+#define V86P70 70
+#define Vx60Px90 0x90
+#define Vx70PxA0 0xA0
+#define V72P56 56
+#define V86P62 62
+#define V96P152 152
+#define V80P56 56
+#else
+#define V86P70 86
+#define Vx60Px90 0x60
+#define Vx70PxA0 0x70
+#define V72P56 72
+#define V86P62 86
+#define V96P152 96
+#define V80P56 80
+#endif
     u8 temp_t0;
 
     Primitive* prim2;
@@ -266,19 +286,33 @@ s32 HandleSaveMenu(s32 arg0) {
             SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
             func_80103148(prim3, prim1);
         } else if (D_80137E4C == 10 && temp_t0 < 33) {
+#if defined(VERSION_US)
+            temp_a1 = 0;
+            if(D_80137E54 != 2 && D_80137E54 != 3){
+                temp_a1 = -10;
+            }
+            SetTexturedPrimRect(prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            if (D_80137E54 == 2 || D_80137E54 == 3) {
+                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+            } else {
+                SetPrimRect(prim1, 68, 96 - temp_t0, 120, temp_t0);
+            }
+#else
             temp_a1 = 0;
             if (D_80137E54 == 3) {
                 temp_a1 = -6;
             }
             SetTexturedPrimRect(
-                prim2, temp_a1 + 70, 96 - temp_t0, 0x90, temp_t0, 0, 0);
+                prim2, temp_a1 + V86P70, 96 - temp_t0, Vx60Px90, temp_t0, 0, 0);
             prim2->p1 += 2;
-            SetPrimRect(prim1, 56, 96 - temp_t0, 160, temp_t0);
+            SetPrimRect(prim1, V72P56, 96 - temp_t0, Vx70PxA0, temp_t0);
+#endif
             func_80103148(prim3, prim1);
         } else if (temp_t0 < 17) {
-            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 152, temp_t0, 0, 0);
+            SetTexturedPrimRect(prim2, V86P62, 80 - temp_t0, V96P152, temp_t0, 0, 0);
             prim2->p1 += 2;
-            SetPrimRect(prim1, 56, 80 - temp_t0, 152, temp_t0);
+            SetPrimRect(prim1, V80P56, 80 - temp_t0, V96P152, temp_t0);
             func_80103148(prim3, prim1);
         } else {
             func_80103148(prim3, prim1);
@@ -296,10 +330,92 @@ s32 HandleSaveMenu(s32 arg0) {
     }
 
     if (arg0 == 1) {
+// This section handles memory card selection. PSP doesn't give that option.
+#ifdef VERSION_PSP
         D_80097924 = 0;
         D_8006C378 = -1;
         return 1;
     }
+    #else
+        if (temp_t0 == 0) {
+            PlaySfx(SFX_UI_ALERT_TINK);
+            prim2->p1 += 2;
+#if defined(VERSION_US)
+            func_800F9D88("  Select the slot．", 0, 1);
+            func_800F9D88(" Slot １", 1, 0);
+            func_800F9D88(" Slot ２", 2, 0);
+#elif defined(VERSION_HD)
+            func_800F9D40("スロットを選んで下さい　", 0, 1);
+            func_800F9D40("スロット１　", 1, 0);
+            func_800F9D40("スロット２　", 2, 0);
+#endif
+            SetTexturedPrimRect(prim2, 56, 79, 144, 0, 0, 0);
+            prim2->drawMode = DRAW_DEFAULT;
+            prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(0, prim1, D_80097924);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            prim2->drawMode = DRAW_DEFAULT;
+            func_801030B4(1, prim1, D_80097924);
+        } else if (temp_t0 < 17) {
+            prim2->p1 += 2;
+            SetTexturedPrimRect(prim2, 62, 80 - temp_t0, 144, temp_t0, 0, 0);
+            SetPrimRect(prim1, 56, 80 - temp_t0, 144, temp_t0);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 54, 104 - temp_t0, 64, temp_t0, 0, 16);
+            SetPrimRect(prim1, 52, 104 - temp_t0, 64, temp_t0);
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim2 = prim2->next;
+            prim1 = prim1->next;
+            SetTexturedPrimRect(prim2, 142, 104 - temp_t0, 64, temp_t0, 0, 32);
+            SetPrimRect(prim1, 140, 104 - temp_t0, 64, temp_t0);
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+        } else {
+            if (g_pads[0].tapped & PAD_LEFT) {
+                if (D_80097924 != 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80097924 = 0;
+            }
+            if (g_pads[0].tapped & PAD_RIGHT) {
+                if (D_80097924 == 0) {
+                    PlaySfx(SFX_UI_TINK);
+                }
+                D_80097924 = 1;
+            }
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(0, prim1, D_80097924);
+            prim3 = func_80103148(prim3, prim1);
+            prim1 = prim1->next;
+            func_801030B4(1, prim1, D_80097924);
+            func_80103148(prim3, prim1);
+            if (g_pads[0].tapped & EXIT) {
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_80097924 = -1;
+                return 2;
+            }
+            if (g_pads[0].tapped & CONFIRM) {
+                PlaySfx(SFX_UI_CONFIRM);
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                D_8006C378 = -1;
+                return 1;
+            }
+        }
+        return 0;
+    }
+    #endif
     if (!temp_t0) {
         PlaySfx(SFX_UI_ALERT_TINK);
         prim2->p1 += 2;
