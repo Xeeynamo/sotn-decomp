@@ -420,7 +420,7 @@ u8 D_8013AEDD[3];
 u16 g_CurSfxVol22_23;
 padding u16 D_8013AEE2;
 s32 D_8013AEE4;
-s8 D_8013AEE8;
+u8 D_8013AEE8;
 padding u8 D_8013AEE9[3];
 u8 g_SoundInitialized;
 padding u8 D_8013AEED[3];

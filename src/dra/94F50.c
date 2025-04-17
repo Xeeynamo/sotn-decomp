@@ -22,7 +22,7 @@ void ExecSoundCommands(void) {
 
 #ifdef VERSION_HD
         if (id > 0x300 && id < 0x531) {
-#elifdef VERSION_PSP
+#elif defined(VERSION_PSP)
         if (id > 0x300 && id < 0x532) {
 #else
         if (id > 0x300 && id < 0x533) {
