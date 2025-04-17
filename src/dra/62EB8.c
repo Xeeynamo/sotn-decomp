@@ -841,6 +841,107 @@ u8 D_800A3728[] = {
     0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F, 0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68,
 };
 
+void func_801042C4(s32 arg0) {
+    VECTOR sp10;
+    Primitive* prim;
+    s32 i;
+    const int PrimCount = 4;
+
+    D_80137EE0 = arg0;
+    D_80097C98 = 0;
+    func_800EA5E4(0x18);
+    if (arg0 == 1) {
+        func_800EA5E4(0x19);
+        func_800EA5E4(0x401E);
+    }
+    D_801379BC = 0;
+    D_80137E54 = 0;
+    PlaySfx(SET_STOP_MUSIC);
+    D_80097928 = 1;
+    func_80103EAC();
+    D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
+    D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
+    D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
+
+    D_801379D0.vx = D_801379D0.vy = 0;
+    D_801379D0.vz = 0x100;
+    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
+    prim = &g_PrimBuf[D_80137E48];
+    i = 0;
+
+    for (i = 0; i < PrimCount; i++) {
+        prim->x0 = (i & 1) << 7;
+        prim->y0 = (i / 2) * 0xD8;
+        prim->u0 = 0x80;
+        prim->v0 = 0x20;
+
+        if ((i < 2 && !(g_StageId & 0x20)) || (i >= 2 && g_StageId & 0x20)) {
+            prim->g0 = 0x10;
+            prim->r0 = 0x10;
+            prim->b0 = 8;
+        }
+
+        prim->priority = 0x1EB;
+        prim->drawMode = DRAW_DEFAULT;
+        prim = prim->next;
+    }
+
+    for (i = 0; i < LEN(D_80137B20); i++) {
+        D_80137B20[i].vx = (D_80137B20[i].vy = (D_80137B20[i].vz = 0));
+        sp10.vx = (*(&D_800A33A0[i][0]))->vx + (*(&D_800A33A0[i][1]))->vx +
+                  (*(&D_800A33A0[i][2]))->vx;
+        sp10.vy = (*(&D_800A33A0[i][0]))->vy + (*(&D_800A33A0[i][1]))->vy +
+                  (*(&D_800A33A0[i][2]))->vy;
+        sp10.vz = (*(&D_800A33A0[i][0]))->vz + (*(&D_800A33A0[i][1]))->vz +
+                  (*(&D_800A33A0[i][2]))->vz;
+
+        func_80017008(&sp10, &D_80137D40[i]);
+    }
+
+    for (i = 0; i < LEN(D_801379E0); i++) {
+        D_801379E0[i].vx = (D_801379E0[i].vy = (D_801379E0[i].vz = 0));
+        sp10.vx = (*(&D_800A3210[i][0]))->vx + (*(&D_800A3210[i][1]))->vx +
+                  (*(&D_800A3210[i][2]))->vx;
+        sp10.vy = (*(&D_800A3210[i][0]))->vy + (*(&D_800A3210[i][1]))->vy +
+                  (*(&D_800A3210[i][2]))->vy;
+        sp10.vz = (*(&D_800A3210[i][0]))->vz + (*(&D_800A3210[i][1]))->vz +
+                  (*(&D_800A3210[i][2]))->vz;
+        func_80017008(&sp10, &D_80137CA0[i]);
+    }
+
+    SetGeomScreen(0x100);
+    D_80137E40 = AllocPrimitives(5U, 0x18);
+    prim = &g_PrimBuf[D_80137E40];
+    if (prim != NULL) {
+        do {
+            prim->u0 = 0xDB;
+            prim->v0 = 0xA8;
+            prim->u1 = 0xBC;
+            prim->v1 = 0xDE;
+            prim->u2 = 0xFA;
+            prim->v2 = 0xDE;
+            prim->tpage = 0x1B;
+            prim->clut = arg0 + 0x1F1;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        } while (prim != NULL);
+    }
+    D_80137E44 = AllocPrimitives(2U, 0x12);
+    prim = &g_PrimBuf[D_80137E44];
+    if (prim != NULL) {
+        do {
+            prim->r0 = 0xFF;
+            prim->g0 = 0xFF;
+            prim->b0 = 0xFF;
+            prim->r1 = 0xFF;
+            prim->g1 = 0xFF;
+            prim->b1 = 0xFF;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        } while (prim != NULL);
+    }
+}
+
 MATRIX D_800A37B8 = {0};
 
 u16 D_800A37D8[] = {0x8430, 0x843F};
@@ -1153,107 +1254,6 @@ u_long* D_800A3BB8[] = {
     D_800A3A74, D_800A3A88, D_800A3A60, D_800A3B00, D_800A3B10, D_800A3B24,
     D_800A3A9C, D_800A3B38, D_800A3ABC, D_800A3AD4,
 };
-
-void func_801042C4(s32 arg0) {
-    VECTOR sp10;
-    Primitive* prim;
-    s32 i;
-    const int PrimCount = 4;
-
-    D_80137EE0 = arg0;
-    D_80097C98 = 0;
-    func_800EA5E4(0x18);
-    if (arg0 == 1) {
-        func_800EA5E4(0x19);
-        func_800EA5E4(0x401E);
-    }
-    D_801379BC = 0;
-    D_80137E54 = 0;
-    PlaySfx(SET_STOP_MUSIC);
-    D_80097928 = 1;
-    func_80103EAC();
-    D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
-    D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
-    D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
-
-    D_801379D0.vx = D_801379D0.vy = 0;
-    D_801379D0.vz = 0x100;
-    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
-    prim = &g_PrimBuf[D_80137E48];
-    i = 0;
-
-    for (i = 0; i < PrimCount; i++) {
-        prim->x0 = (i & 1) << 7;
-        prim->y0 = (i / 2) * 0xD8;
-        prim->u0 = 0x80;
-        prim->v0 = 0x20;
-
-        if ((i < 2 && !(g_StageId & 0x20)) || (i >= 2 && g_StageId & 0x20)) {
-            prim->g0 = 0x10;
-            prim->r0 = 0x10;
-            prim->b0 = 8;
-        }
-
-        prim->priority = 0x1EB;
-        prim->drawMode = DRAW_DEFAULT;
-        prim = prim->next;
-    }
-
-    for (i = 0; i < LEN(D_80137B20); i++) {
-        D_80137B20[i].vx = (D_80137B20[i].vy = (D_80137B20[i].vz = 0));
-        sp10.vx = (*(&D_800A33A0[i][0]))->vx + (*(&D_800A33A0[i][1]))->vx +
-                  (*(&D_800A33A0[i][2]))->vx;
-        sp10.vy = (*(&D_800A33A0[i][0]))->vy + (*(&D_800A33A0[i][1]))->vy +
-                  (*(&D_800A33A0[i][2]))->vy;
-        sp10.vz = (*(&D_800A33A0[i][0]))->vz + (*(&D_800A33A0[i][1]))->vz +
-                  (*(&D_800A33A0[i][2]))->vz;
-
-        func_80017008(&sp10, &D_80137D40[i]);
-    }
-
-    for (i = 0; i < LEN(D_801379E0); i++) {
-        D_801379E0[i].vx = (D_801379E0[i].vy = (D_801379E0[i].vz = 0));
-        sp10.vx = (*(&D_800A3210[i][0]))->vx + (*(&D_800A3210[i][1]))->vx +
-                  (*(&D_800A3210[i][2]))->vx;
-        sp10.vy = (*(&D_800A3210[i][0]))->vy + (*(&D_800A3210[i][1]))->vy +
-                  (*(&D_800A3210[i][2]))->vy;
-        sp10.vz = (*(&D_800A3210[i][0]))->vz + (*(&D_800A3210[i][1]))->vz +
-                  (*(&D_800A3210[i][2]))->vz;
-        func_80017008(&sp10, &D_80137CA0[i]);
-    }
-
-    SetGeomScreen(0x100);
-    D_80137E40 = AllocPrimitives(5U, 0x18);
-    prim = &g_PrimBuf[D_80137E40];
-    if (prim != NULL) {
-        do {
-            prim->u0 = 0xDB;
-            prim->v0 = 0xA8;
-            prim->u1 = 0xBC;
-            prim->v1 = 0xDE;
-            prim->u2 = 0xFA;
-            prim->v2 = 0xDE;
-            prim->tpage = 0x1B;
-            prim->clut = arg0 + 0x1F1;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-        } while (prim != NULL);
-    }
-    D_80137E44 = AllocPrimitives(2U, 0x12);
-    prim = &g_PrimBuf[D_80137E44];
-    if (prim != NULL) {
-        do {
-            prim->r0 = 0xFF;
-            prim->g0 = 0xFF;
-            prim->b0 = 0xFF;
-            prim->r1 = 0xFF;
-            prim->g1 = 0xFF;
-            prim->b1 = 0xFF;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-        } while (prim != NULL);
-    }
-}
 
 void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #if defined(VERSION_US)
