@@ -22,11 +22,11 @@ void func_80102EB8(void) {
         func_801072DC(prim1);
         prim1->tpage = 0x10;
         prim1->clut = 0x1A1;
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         prim1->priority = 0x1FF;
-        #else
+#else
         prim1->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
-        #endif
+#endif
         prim1->drawMode = DRAW_HIDE;
         prim1->p1 = 0;
         SetPrimRect(prim2, 80, 79, 96, 0);
@@ -36,11 +36,11 @@ void func_80102EB8(void) {
         PRED(prim2) = 0;
         PGRN(prim2) = 0;
         prim2->tpage = 0x1F;
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         prim2->priority = 0x1FF;
-        #else
+#else
         prim2->priority = g_unkGraphicsStruct.g_zEntityCenter + 31;
-        #endif
+#endif
         prim2->drawMode = DRAW_HIDE;
         prim1 = prim1->next;
         prim2 = prim2->next;
@@ -48,11 +48,11 @@ void func_80102EB8(void) {
 
     for (i = 0; i < 12; i++) {
         func_80107250(prim3, 255);
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         prim3->priority = 0x1FF;
-        #else
+#else
         prim3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
-        #endif
+#endif
         prim3->drawMode = DRAW_HIDE;
         prim3 = prim3->next;
     }
@@ -112,28 +112,45 @@ static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
     return prim;
 }
 
-s32 HandleSaveMenu(s32 arg0) {
-// For some reason, US and HD have different controls for confirm and exit,
-// so we handle that with a couple of constants.
-#if defined(VERSION_US)
-    const s32 CONFIRM = PAD_CROSS;
-    const s32 EXIT = PAD_TRIANGLE;
-#elif defined(VERSION_HD)
-    const s32 CONFIRM = (PAD_START | PAD_SQUARE | PAD_CIRCLE);
-    const s32 EXIT = PAD_CROSS;
+#ifdef VERSION_PSP
+extern s32* D_psp_091CE248;
+extern s32* D_psp_091CE240;
+extern s32* D_psp_091CE238;
+extern s32* D_psp_091CE230;
+extern s32* D_psp_091CE228;
+extern s32* D_psp_091CE220;
+extern s32* D_psp_091CE218;
+
+extern u32 D_psp_08B42050; // psp cross button
+extern u32 D_psp_08B42054; // psp triangle button
 #endif
-    Primitive* prim1;
-    Primitive* prim2;
-    Primitive* prim3;
+
+s32 HandleSaveMenu(s32 arg0) {
+#if defined(VERSION_US)
+#define CONFIRM PAD_CROSS
+#define EXIT PAD_TRIANGLE
+#elif defined(VERSION_HD)
+#define CONFIRM (PAD_START | PAD_SQUARE | PAD_CIRCLE)
+#define EXIT PAD_CROSS
+#elif defined(VERSION_PSP)
+#define CONFIRM (D_psp_08B42050 | PAD_START | PAD_SQUARE)
+#define EXIT D_psp_08B42054
+#endif
     u8 temp_t0;
+
+    Primitive* prim2;
+    Primitive* prim1;
+    Primitive* prim3;
+
     s32 temp_a1;
 
     prim2 = &g_PrimBuf[D_80137E58];
-    temp_t0 = prim2->p1;
     prim1 = &g_PrimBuf[D_80137E5C];
     prim3 = &g_PrimBuf[D_80137E60];
+    temp_t0 = prim2->p1;
+
     if (arg0 == 0) {
-        if (temp_t0 == 0) {
+        if (!temp_t0) {
             prim2->drawMode = DRAW_DEFAULT;
             prim1->drawMode = DRAW_UNK_400 | DRAW_COLORS;
             if (D_80137E4C == 6) {
@@ -146,6 +163,8 @@ s32 HandleSaveMenu(s32 arg0) {
                 func_800F9D88("Data saved．", 0, 1);
 #elif defined(VERSION_HD)
                 func_800F9D40("セーブしました　　　", 0, 1);
+#elif defined(VERSION_PSP)
+                func_800F9D88(D_psp_091CE238, 0, 1);
 #endif
                 prim2->p1 += 2;
             }
@@ -156,6 +175,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("ささっていません　　", 1, 0);
+#elif defined(VERSION_PSP)
+                func_800F9D88("セーブできません　　", 0, 1);
+                func_800F9D88("でした　　　　　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -166,6 +188,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                 func_800F9D40("メモリーカードが　　", 0, 1);
                 func_800F9D40("　壊れています　　　", 1, 0);
+#elif defined(VERSION_PSP)
+                func_800F9D88("メモリーカードが　　", 0, 1);
+                func_800F9D88("　壊れています　　　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -176,6 +201,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                 func_800F9D40("　メモリーカードが　", 0, 1);
                 func_800F9D40("初期化されていません", 1, 0);
+#elif defined(VERSION_PSP)
+                func_800F9D88("　メモリーカードが　", 0, 1);
+                func_800F9D88("初期化されていません", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
@@ -187,6 +215,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                     func_800F9D40("　　上書き　　　　　", 0, 1);
                     func_800F9D40("　できません　　　　", 1, 0);
+#elif defined(VERSION_PSP)
+                    func_800F9D88("　　上書き　　　　　", 0, 1);
+                    func_800F9D88("　できません　　　　", 1, 0);
 #endif
                 } else if (D_80137E54 == 3) {
 #if defined(VERSION_US)
@@ -195,6 +226,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                     func_800F9D40("データがないため　　", 0, 1);
                     func_800F9D40("上書きできません　　", 1, 0);
+#elif defined(VERSION_PSP)
+                    func_800F9D88("データがないため　　", 0, 1);
+                    func_800F9D88("上書きできません　　", 1, 0);
 #endif
                 } else {
 #if defined(VERSION_US)
@@ -203,6 +237,9 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                     func_800F9D40("空きブロックが　　　", 0, 1);
                     func_800F9D40("　足りません　　　　", 1, 0);
+#elif defined(VERSION_PSP)
+                    func_800F9D88(D_psp_091CE230, 0, 1);
+                    func_800F9D88(D_psp_091CE228, 1, 0);
 #endif
                 }
                 prim2->p1 += 2;
@@ -214,60 +251,62 @@ s32 HandleSaveMenu(s32 arg0) {
 #elif defined(VERSION_HD)
                 func_800F9D40("　メモリーカードの　", 0, 1);
                 func_800F9D40("初期化に失敗しました　", 1, 0);
+#elif defined(VERSION_PSP)
+                func_800F9D88("　メモリーカードの　", 0, 1);
+                func_800F9D88("初期化に失敗しました　", 1, 0);
 #endif
                 prim2->p1 += 2;
             }
-        } else {
-            if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
-                SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
-                prim2->p1 += 2;
-                SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
-                func_80103148(prim3, prim1);
-            } else if (
-                (D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
-                SetTexturedPrimRect(
-                    prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
-                prim2->p1 += 2;
-                SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
-                func_80103148(prim3, prim1);
-            } else if (D_80137E4C == 10 && temp_t0 < 33) {
+        } else if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
+            SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
+            func_80103148(prim3, prim1);
+        } else if ((D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
+            SetTexturedPrimRect(prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
+            func_80103148(prim3, prim1);
+        } else if (D_80137E4C == 10 && temp_t0 < 33) {
 #if defined(VERSION_US)
-                // silly logic here. if 2 or 3, it's 0, otherwise it's -10
-                temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
-                SetTexturedPrimRect(
-                    prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
-                prim2->p1 += 2;
-                if (D_80137E54 == 2 || D_80137E54 == 3) {
-                    SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
-                } else {
-                    SetPrimRect(prim1, 68, 96 - temp_t0, 120, temp_t0);
-                }
-#elif defined(VERSION_HD)
-                temp_a1 = (-(!(D_80137E54 ^ 3))) & -6;
-                SetTexturedPrimRect(
-                    prim2, temp_a1 + 86, 96 - temp_t0, 96, temp_t0, 0, 0);
-                prim2->p1 += 2;
+            // silly logic here. if 2 or 3, it's 0, otherwise it's -10
+            temp_a1 = (-(!(D_80137E54 == 2 || D_80137E54 == 3))) & -10;
+            SetTexturedPrimRect(prim2, temp_a1 + 80, 96 - temp_t0, 112, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            if (D_80137E54 == 2 || D_80137E54 == 3) {
                 SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
-#endif
-                func_80103148(prim3, prim1);
-            } else if (temp_t0 < 17) {
-                SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
-                prim2->p1 += 2;
-                SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
-                func_80103148(prim3, prim1);
             } else {
-                func_80103148(prim3, prim1);
-                if (D_80137E4C == 6) {
-                    prim2->p1 += 2;
-                }
-                if ((prim2->p1 >= 224) || (g_pads[0].tapped & CONFIRM)) {
-                    FreePrimitives(D_80137E58);
-                    FreePrimitives(D_80137E5C);
-                    FreePrimitives(D_80137E60);
-                    return 1;
-                }
+                SetPrimRect(prim1, 68, 96 - temp_t0, 120, temp_t0);
+            }
+#else
+            temp_a1 = 0;
+            if (D_80137E54 == 3) {
+                temp_a1 = -6;
+            }
+            SetTexturedPrimRect(
+                prim2, temp_a1 + 86, 96 - temp_t0, 0x60, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            SetPrimRect(prim1, 72, 96 - temp_t0, 0x70, temp_t0);
+#endif
+            func_80103148(prim3, prim1);
+        } else if (temp_t0 < 17) {
+            SetTexturedPrimRect(prim2, 86, 80 - temp_t0, 96, temp_t0, 0, 0);
+            prim2->p1 += 2;
+            SetPrimRect(prim1, 80, 80 - temp_t0, 96, temp_t0);
+            func_80103148(prim3, prim1);
+        } else {
+            func_80103148(prim3, prim1);
+            if (D_80137E4C == 6) {
+                prim2->p1 += 2;
+            }
+            if ((prim2->p1 >= 224) || (g_pads[0].tapped & CONFIRM)) {
+                FreePrimitives(D_80137E58);
+                FreePrimitives(D_80137E5C);
+                FreePrimitives(D_80137E60);
+                return 1;
             }
         }
+        
         // Seems this one shouldn't be needed since the else's would send it to
         // the end anyway?
         return 0;
