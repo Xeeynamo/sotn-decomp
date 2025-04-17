@@ -44,13 +44,66 @@ void func_80102EB8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCBC8);
+static void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
+    s32 var_v1;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_psp_090DCC60);
+    if (arg2 == arg0) {
+        if (g_Timer & 0x20) {
+            var_v1 = (g_Timer & 0x1F) + 0x60;
+        } else {
+            var_v1 = 0x7F - (g_Timer & 0x1F);
+        }
+
+        prim->r0 = prim->r1 = var_v1 - 16;
+        prim->r2 = prim->r3 = var_v1 + 16;
+        PBLU(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS;
+    } else {
+        prim->b0 = prim->b1 = 96;
+        prim->b2 = prim->b3 = 128;
+        PRED(prim) = 0;
+        prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_TPAGE | DRAW_TRANSP;
+    }
+}
+
+static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y0 - 1;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x0 - 1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y2;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    prim->x0 = basis->x1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    return prim;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/80", HandleSaveMenu);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80103EAC);
+void func_80103EAC(void) {
+    D_80137E4C = 0;
+    MemcardInfoInit();
+}
 
 s32 MemcardParse(s32 nPort, s32 nCard);
 s32 MemcardDetectSave(s32 nPort, char* expectedSaveName, s32 block);
@@ -181,11 +234,470 @@ void func_80103ED4(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_8010427C);
+void func_8010427C(void) {
+    FreePrimitives(D_80137E40);
+    FreePrimitives(D_80137E44);
+    FreePrimitives(D_80137E48);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_801042C4);
+SVECTOR D_800A31B0 = {34, -18, -11};
+SVECTOR D_800A31B8 = {21, 18, -29};
+SVECTOR D_800A31C0 = {0, -18, -36};
+SVECTOR D_800A31C8 = {0, -40, 0};
+SVECTOR D_800A31D0 = {21, -18, 29};
+SVECTOR D_800A31D8 = {34, 18, 11};
+SVECTOR D_800A31E0 = {0, 40, 0};
+SVECTOR D_800A31E8 = {0, 18, 36};
+SVECTOR D_800A31F0 = {-34, -18, -11};
+SVECTOR D_800A31F8 = {-21, 18, -29};
+SVECTOR D_800A3200 = {-21, -18, 29};
+SVECTOR D_800A3208 = {-34, 18, 11};
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/80", func_80104790);
+SVECTOR* D_800A3210[][3] = {
+    {&D_800A31C8, &D_800A31B0, &D_800A31C0},
+    {&D_800A31C8, &D_800A31C0, &D_800A31F0},
+    {&D_800A31F0, &D_800A31C0, &D_800A31F8},
+    {&D_800A31C8, &D_800A31F0, &D_800A3200},
+    {&D_800A31D0, &D_800A31B0, &D_800A31C8},
+    {&D_800A31C0, &D_800A31B0, &D_800A31B8},
+    {&D_800A31D0, &D_800A31D8, &D_800A31B0},
+    {&D_800A31F0, &D_800A3208, &D_800A3200},
+    {&D_800A31B0, &D_800A31D8, &D_800A31B8},
+    {&D_800A31D0, &D_800A31C8, &D_800A3200},
+    {&D_800A31F8, &D_800A31C0, &D_800A31B8},
+    {&D_800A31F0, &D_800A31F8, &D_800A3208},
+    {&D_800A3208, &D_800A31F8, &D_800A31E0},
+    {&D_800A31E8, &D_800A31D8, &D_800A31D0},
+    {&D_800A3208, &D_800A31E8, &D_800A3200},
+    {&D_800A31D8, &D_800A31E0, &D_800A31B8},
+    {&D_800A31E8, &D_800A31D0, &D_800A3200},
+    {&D_800A31E0, &D_800A31F8, &D_800A31B8},
+    {&D_800A31E8, &D_800A31E0, &D_800A31D8},
+    {&D_800A3208, &D_800A31E0, &D_800A31E8},
+    {&D_800A31E8, &D_800A31E8, &D_800A3200},
+    {&D_800A31E0, &D_800A31E0, &D_800A31B8},
+    {&D_800A31E8, &D_800A31E0, &D_800A31E8},
+    {&D_800A31E8, &D_800A31E0, &D_800A31E0},
+};
+
+SVECTOR D_800A3330 = {-15, -46, 10};
+SVECTOR D_800A3338 = {-25, -21, -10};
+SVECTOR D_800A3340 = {-25, -21, 10};
+SVECTOR D_800A3348 = {-12, 50, -10};
+SVECTOR D_800A3350 = {-12, 50, 10};
+SVECTOR D_800A3358 = {0, -9, -10};
+SVECTOR D_800A3360 = {-15, -46, -10};
+SVECTOR D_800A3368 = {15, -46, -10};
+SVECTOR D_800A3370 = {12, 50, -10};
+SVECTOR D_800A3378 = {25, -21, 10};
+SVECTOR D_800A3380 = {15, -46, 10};
+SVECTOR D_800A3388 = {25, -21, -10};
+SVECTOR D_800A3390 = {12, 50, 10};
+SVECTOR D_800A3398 = {0, -9, 10};
+
+SVECTOR* D_800A33A0[][3] = {
+    {&D_800A3380, &D_800A3368, &D_800A3360},
+    {&D_800A3380, &D_800A3360, &D_800A3330},
+    {&D_800A3330, &D_800A3360, &D_800A3338},
+    {&D_800A3380, &D_800A3330, &D_800A3398},
+    {&D_800A3378, &D_800A3368, &D_800A3380},
+    {&D_800A3360, &D_800A3368, &D_800A3358},
+    {&D_800A3378, &D_800A3388, &D_800A3368},
+    {&D_800A3330, &D_800A3340, &D_800A3398},
+    {&D_800A3368, &D_800A3388, &D_800A3358},
+    {&D_800A3378, &D_800A3380, &D_800A3398},
+    {&D_800A3338, &D_800A3360, &D_800A3358},
+    {&D_800A3330, &D_800A3338, &D_800A3340},
+    {&D_800A3340, &D_800A3338, &D_800A3348},
+    {&D_800A3390, &D_800A3388, &D_800A3378},
+    {&D_800A3340, &D_800A3350, &D_800A3398},
+    {&D_800A3388, &D_800A3370, &D_800A3358},
+    {&D_800A3390, &D_800A3378, &D_800A3398},
+    {&D_800A3348, &D_800A3338, &D_800A3358},
+    {&D_800A3390, &D_800A3370, &D_800A3388},
+    {&D_800A3340, &D_800A3348, &D_800A3350},
+    {&D_800A3350, &D_800A3390, &D_800A3398},
+    {&D_800A3370, &D_800A3348, &D_800A3358},
+    {&D_800A3350, &D_800A3370, &D_800A3390},
+    {&D_800A3350, &D_800A3348, &D_800A3370},
+};
+
+SVECTOR* D_800A34C0[][3] = {
+    {&D_800A3330, &D_800A3340, &D_800A3398},
+    {&D_800A3340, &D_800A3350, &D_800A3398},
+    {&D_800A3350, &D_800A3390, &D_800A3398},
+    {&D_800A3390, &D_800A3378, &D_800A3398},
+    {&D_800A3378, &D_800A3380, &D_800A3398},
+    {&D_800A3380, &D_800A3330, &D_800A3398},
+    {&D_800A3338, &D_800A3360, &D_800A3358},
+    {&D_800A3360, &D_800A3368, &D_800A3358},
+    {&D_800A3368, &D_800A3388, &D_800A3358},
+    {&D_800A3388, &D_800A3370, &D_800A3358},
+    {&D_800A3370, &D_800A3348, &D_800A3358},
+    {&D_800A3348, &D_800A3338, &D_800A3358},
+    {&D_800A3330, &D_800A3360, &D_800A3338},
+    {&D_800A3340, &D_800A3338, &D_800A3348},
+    {&D_800A3350, &D_800A3348, &D_800A3370},
+    {&D_800A3390, &D_800A3370, &D_800A3388},
+    {&D_800A3378, &D_800A3388, &D_800A3368},
+    {&D_800A3380, &D_800A3368, &D_800A3360},
+};
+
+SVECTOR* D_800A3598[] = {
+    &D_800A31F0, &D_800A31F8, &D_800A3208, &D_800A31E0, &D_800A31E8,
+    &D_800A31B8, &D_800A31C0, &D_800A31B0, &D_800A31E0, &D_800A31D0,
+    &D_800A31C8, &D_800A31D8, &D_800A31E8, &D_800A3200,
+};
+
+SVECTOR* D_800A35D0[] = {
+    &D_800A3330, &D_800A3338, &D_800A3340, &D_800A3348, &D_800A3350,
+    &D_800A3358, &D_800A3360, &D_800A3368, &D_800A3370, &D_800A3378,
+    &D_800A3380, &D_800A3388, &D_800A3390, &D_800A3398,
+};
+
+SVECTOR* D_800A3608[][3] = {
+    {&D_80137E70[10], &D_80137E70[7], &D_80137E70[6]},
+    {&D_80137E70[10], &D_80137E70[6], &D_80137E70[0]},
+    {&D_80137E70[0], &D_80137E70[6], &D_80137E70[1]},
+    {&D_80137E70[10], &D_80137E70[0], &D_80137E70[13]},
+    {&D_80137E70[9], &D_80137E70[7], &D_80137E70[10]},
+    {&D_80137E70[6], &D_80137E70[7], &D_80137E70[5]},
+    {&D_80137E70[9], &D_80137E70[11], &D_80137E70[7]},
+    {&D_80137E70[0], &D_80137E70[2], &D_80137E70[13]},
+    {&D_80137E70[7], &D_80137E70[11], &D_80137E70[5]},
+    {&D_80137E70[9], &D_80137E70[10], &D_80137E70[13]},
+    {&D_80137E70[1], &D_80137E70[6], &D_80137E70[5]},
+    {&D_80137E70[0], &D_80137E70[1], &D_80137E70[2]},
+    {&D_80137E70[2], &D_80137E70[1], &D_80137E70[3]},
+    {&D_80137E70[12], &D_80137E70[11], &D_80137E70[9]},
+    {&D_80137E70[2], &D_80137E70[4], &D_80137E70[13]},
+    {&D_80137E70[11], &D_80137E70[8], &D_80137E70[5]},
+    {&D_80137E70[12], &D_80137E70[9], &D_80137E70[13]},
+    {&D_80137E70[3], &D_80137E70[1], &D_80137E70[5]},
+    {&D_80137E70[12], &D_80137E70[8], &D_80137E70[11]},
+    {&D_80137E70[2], &D_80137E70[3], &D_80137E70[4]},
+    {&D_80137E70[4], &D_80137E70[12], &D_80137E70[13]},
+    {&D_80137E70[8], &D_80137E70[3], &D_80137E70[5]},
+    {&D_80137E70[4], &D_80137E70[8], &D_80137E70[12]},
+    {&D_80137E70[4], &D_80137E70[3], &D_80137E70[8]}};
+u8 D_800A3728[] = {
+    0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
+    0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E,
+    0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F, 0x0C, 0x03, 0x2A, 0x03, 0x1B, 0x2A,
+    0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E,
+    0x2A, 0x03, 0x36, 0x1E, 0x1B, 0x2A, 0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E,
+    0x01, 0x1E, 0x0C, 0x03, 0x1B, 0x2A, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
+    0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
+    0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E, 0x36, 0x1E, 0x27, 0x65, 0x1B, 0x2A,
+    0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E, 0x0F, 0x65, 0x01, 0x1E, 0x1B, 0x2A,
+    0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
+    0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E, 0x27, 0x65, 0x0F, 0x65, 0x1B, 0x2A,
+    0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F, 0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68,
+};
+
+void func_801042C4(s32 arg0) {
+    VECTOR sp10;
+    s32 i;
+    Primitive* prim;
+    const int PrimCount = 4;
+
+    D_80137EE0 = arg0;
+    D_80097C98 = 0;
+    func_800EA5E4(0x18);
+    if (arg0 == 1) {
+        func_800EA5E4(0x19);
+        func_800EA5E4(0x401E);
+    }
+    D_801379BC = 0;
+    D_80137E54 = 0;
+    PlaySfx(SET_STOP_MUSIC);
+    D_80097928 = 1;
+    func_80103EAC();
+    D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
+    D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
+
+    D_801379D0.vx = D_801379D0.vy = 0;
+    D_801379D0.vz = 0x100;
+    D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
+
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next,
+        i++) {
+        prim->x0 = (i & 1) << 7;
+        prim->y0 = (i / 2) * 0xD8;
+        prim->u0 = 0x80;
+        prim->v0 = 0x20;
+
+        if ((i < 2 && !(g_StageId & 0x20)) || (i >= 2 && g_StageId & 0x20)) {
+            prim->r0 = prim->g0 = 0x10;
+            prim->b0 = 8;
+        }
+
+        prim->priority = 0x1EB;
+        prim->drawMode = DRAW_DEFAULT;
+    }
+
+    for (i = 0; i < LEN(D_80137B20); i++) {
+        D_80137B20[i].vx = (D_80137B20[i].vy = (D_80137B20[i].vz = 0));
+        sp10.vx = (*(&D_800A33A0[i][0]))->vx + (*(&D_800A33A0[i][1]))->vx +
+                  (*(&D_800A33A0[i][2]))->vx;
+        sp10.vy = (*(&D_800A33A0[i][0]))->vy + (*(&D_800A33A0[i][1]))->vy +
+                  (*(&D_800A33A0[i][2]))->vy;
+        sp10.vz = (*(&D_800A33A0[i][0]))->vz + (*(&D_800A33A0[i][1]))->vz +
+                  (*(&D_800A33A0[i][2]))->vz;
+
+        func_80017008(&sp10, &D_80137D40[i]);
+    }
+
+    for (i = 0; i < LEN(D_801379E0); i++) {
+        D_801379E0[i].vx = (D_801379E0[i].vy = (D_801379E0[i].vz = 0));
+        sp10.vx = (*(&D_800A3210[i][0]))->vx + (*(&D_800A3210[i][1]))->vx +
+                  (*(&D_800A3210[i][2]))->vx;
+        sp10.vy = (*(&D_800A3210[i][0]))->vy + (*(&D_800A3210[i][1]))->vy +
+                  (*(&D_800A3210[i][2]))->vy;
+        sp10.vz = (*(&D_800A3210[i][0]))->vz + (*(&D_800A3210[i][1]))->vz +
+                  (*(&D_800A3210[i][2]))->vz;
+        func_80017008(&sp10, &D_80137CA0[i]);
+    }
+
+    SetGeomScreen(0x100);
+    D_80137E40 = AllocPrimitives(5U, 0x18);
+    for (prim = &g_PrimBuf[D_80137E40]; prim != NULL; prim = prim->next) {
+        prim->u0 = 0xDB;
+        prim->v0 = 0xA8;
+        prim->u1 = 0xBC;
+        prim->v1 = 0xDE;
+        prim->u2 = 0xFA;
+        prim->v2 = 0xDE;
+        prim->tpage = 0x1B;
+        prim->clut = arg0 + 0x1F1;
+        prim->drawMode = DRAW_HIDE;
+    }
+    D_80137E44 = AllocPrimitives(2U, 0x12);
+    for (prim = &g_PrimBuf[D_80137E44]; prim != NULL; prim = prim->next) {
+        prim->r0 = 0xFF;
+        prim->g0 = 0xFF;
+        prim->b0 = 0xFF;
+        prim->r1 = 0xFF;
+        prim->g1 = 0xFF;
+        prim->b1 = 0xFF;
+        prim->drawMode = DRAW_HIDE;
+    }
+}
+
+void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
+#define PRIORITY_SHIFT 8
+    s32 unused_interp;
+    s32 nclip_otz;
+    s32 unused_flag;
+    VECTOR sp94;
+    SVECTOR sp7c[3];
+    SVECTOR sp64[3];
+    s32 unhiddenCount;
+    SVECTOR* vecSrc;
+    SVECTOR** vecTriplet;
+    u8* uvPtr;
+    s32 i;
+    s32 j;
+    VECTOR* vecScaledShifted;
+    Primitive* prim;
+    s32 Nclip3_result;
+    s32 XZ_scale;
+    s32 Y_scale;
+    s32 xShift;
+    s32 yShift;
+    s32 zShift;
+
+    if (g_pads[1].tapped & PAD_TRIANGLE) {
+        D_801379C8.vz += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_CROSS) {
+        D_801379C8.vz -= 0x40;
+    }
+
+    FntPrint("vz=0x%08x\n", D_801379C8.vz);
+
+    if (g_pads[1].tapped & PAD_SQUARE) {
+        D_801379C8.vy += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_CIRCLE) {
+        D_801379C8.vy -= 0x40;
+    }
+
+    FntPrint("vy=0x%08x\n", D_801379C8.vy);
+
+    if (g_pads[1].tapped & PAD_R2) {
+        D_801379C8.vx += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_L2) {
+        D_801379C8.vx -= 0x40;
+    }
+
+    FntPrint("vx=0x%08x\n", D_801379C8.vx);
+
+    RotMatrix(&D_801379C8, &D_80137E00); // types copied
+    prim = &g_PrimBuf[D_80137E40];
+
+    switch (arg0) {
+    case 0:
+        vecTriplet = &D_800A3210[0][0];
+        vecScaledShifted = &D_801379E0[0];
+        vecSrc = &D_80137CA0[0];
+        unhiddenCount = 0x14;
+        break;
+    case 1:
+    case 2:
+        vecTriplet = &D_800A33A0[0][0];
+        vecScaledShifted = &D_80137B20[0];
+        vecSrc = &D_80137D40[0];
+        unhiddenCount = 0x18;
+        break;
+    case 3:
+        vecTriplet = &D_800A3608[0][0];
+        vecScaledShifted = &D_80137B20[0];
+        vecSrc = &D_80137D40[0];
+        unhiddenCount = 0x18;
+        for (i = 0; i < LEN(D_800A3598); i++) {
+            D_80137E70[i].vx =
+                D_800A3598[i]->vx +
+                (((D_800A35D0[i]->vx - D_800A3598[i]->vx) * arg2) / 96);
+            D_80137E70[i].vy =
+                D_800A3598[i]->vy +
+                (((D_800A35D0[i]->vy - D_800A3598[i]->vy) * arg2) / 96);
+            D_80137E70[i].vz =
+                D_800A3598[i]->vz +
+                (((D_800A35D0[i]->vz - D_800A3598[i]->vz) * arg2) / 96);
+            D_80137E70[i].pad = 0;
+        }
+    }
+
+    uvPtr = &D_800A3728[0];
+    for (i = 0; i < LEN(D_800A3210); i++, prim = prim->next, vecTriplet += 3) {
+        if (i >= unhiddenCount) {
+            prim->drawMode = DRAW_HIDE;
+            continue;
+        }
+        TransMatrix(&D_80137E00, &D_801379D0); // types copied
+        SetRotMatrix(&D_80137E00);             // types copied
+        SetTransMatrix(&D_80137E00);           // types copied
+        XZ_scale = arg2;
+        Y_scale = arg2;
+        xShift = 0;
+        yShift = 0;
+        zShift = 0;
+        nclip_otz = 0;
+        if (arg0 == 2) {
+            zShift = (i * 4);
+            zShift -= 0x5C;
+            zShift += arg2;
+            if (zShift < 0) {
+                zShift = 0;
+            }
+            if (zShift > 0x7F) {
+                zShift = 0x7F;
+            }
+            zShift <<= 0xC;
+            xShift = zShift;
+            yShift = -zShift * 4;
+            if (vecSrc[i].vx < 0) {
+                xShift = -xShift;
+            }
+            if (vecSrc[i].vz < 0) {
+                zShift = -zShift;
+            }
+            XZ_scale = 0;
+            Y_scale = 0;
+        }
+        if (arg0 == 3) {
+            XZ_scale = 0;
+            Y_scale = 0;
+        }
+        vecScaledShifted[i].vx = ((vecSrc[i].vx * XZ_scale) + xShift);
+        vecScaledShifted[i].vy = ((vecSrc[i].vy * Y_scale) + yShift);
+        vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
+        for (j = 0; j < 3; j++) {
+            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
+                                   (vecScaledShifted[i].vx >> 0xC);
+            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
+                                   (vecScaledShifted[i].vy >> 0xC);
+            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
+                                   (vecScaledShifted[i].vz >> 0xC);
+            func_80017008(&sp94, &sp64[j]);
+        }
+        Nclip3_result = RotAverageNclip3(
+            &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
+        if (Nclip3_result < 0) {
+            RotAverageNclip3(
+                &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
+        }
+        PGREY(prim, 3) = PGREY(prim, 2) = PGREY(prim, 1) = PGREY(prim, 0) =
+            0xB0;
+        prim->type = PRIM_GT3;
+        if (nclip_otz >= 0xF0) {
+            continue;
+        }
+        if (Nclip3_result >= 0) {
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 4;
+        } else {
+            prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 4;
+        }
+        prim->drawMode = DRAW_COLORS;
+        if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
+            ((arg0 == 1) || (arg0 == 2) || ((arg0 == 3) && (arg2 >= 0x40)))) {
+            prim->clut = (D_80137EE0 * 2) + 0x1F0;
+            prim->u0 = *uvPtr++ + 0x80;
+            prim->v0 = *uvPtr++ + 0x80;
+            prim->u1 = *uvPtr++ + 0x80;
+            prim->v1 = *uvPtr++ + 0x80;
+            prim->u2 = *uvPtr++ + 0x80;
+            prim->v2 = *uvPtr++ + 0x80;
+            if (Nclip3_result < 0) {
+                prim->u0 = 0xD1;
+                prim->v0 = 0xF1;
+                prim->u1 = 0xDE;
+                prim->v1 = 0xFE;
+                prim->u2 = 0xD1;
+                prim->v2 = 0xFE;
+            }
+        } else {
+            prim->clut = D_80137EE0 + 0x1F1;
+            prim->u0 = 0xDB;
+            prim->v0 = 0xA8;
+            prim->u1 = 0xBC;
+            prim->v1 = 0xDE;
+            prim->u2 = 0xFA;
+            prim->v2 = 0xDE;
+        }
+
+        if ((arg0 == 0) && (arg2 < 0x10)) {
+            prim->priority -= PRIORITY_SHIFT;
+        }
+        if (arg0 == 3) {
+            if (arg2 < 0x30) {
+                prim->priority -= PRIORITY_SHIFT;
+            }
+        }
+        if (arg0 == 3) {
+            prim->drawMode = DRAW_COLORS;
+        } else if ((arg0 != 2) && (arg2 >= 0x40)) {
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->r0 = ((prim->r0 * (0x7F - arg2)) >> 6);
+            prim->g0 = ((prim->g0 * (0x7F - arg2)) >> 6);
+            prim->b0 = ((prim->b0 * (0x7F - arg2)) >> 6);
+            prim->r1 = ((prim->r1 * (0x7F - arg2)) >> 6);
+            prim->g1 = ((prim->g1 * (0x7F - arg2)) >> 6);
+            prim->b1 = ((prim->b1 * (0x7F - arg2)) >> 6);
+            prim->r2 = ((prim->r2 * (0x7F - arg2)) >> 6);
+            prim->g2 = ((prim->g2 * (0x7F - arg2)) >> 6);
+            prim->b2 = ((prim->b2 * (0x7F - arg2)) >> 6);
+        }
+    }
+}
 
 extern SVECTOR* D_800A34C0[][3];
 

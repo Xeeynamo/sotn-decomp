@@ -191,7 +191,14 @@ INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C8224);
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C8CE0);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C8EE4);
+s32 func_us_801C8EE4(void) {
+    if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & PAD_R2)) {
+        return false;
+    }
+    CheckMoveDirection();
+    SetPlayerStep(15);
+    return true;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801C8F3C);
 

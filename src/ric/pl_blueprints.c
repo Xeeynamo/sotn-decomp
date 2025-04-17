@@ -2264,7 +2264,7 @@ void func_801641A0(Entity* self) {
 // When the factory is made, unk5 loads into ext.factory.unk9A. This appears
 // to create a delay before the factory actually creates the child.
 // So 36, 37, 38, 39 create this entity with delay of 0, 4, 8, or 12 frames.
-// All 4 are used in RicHandleDeadPrologue. 36 alone (for instant child) is used
+// All 4 are used in RicStepDeadPrologue. 36 alone (for instant child) is used
 // when Richter does an item crash without a subweapon, in RicDoCrash.
 // Creates a large semi-transparent circle around Richter which shrinks inward.
 static s16 D_8015519C[][6] = {
@@ -2433,7 +2433,7 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
 }
 
 // Entity ID #40. Created by blueprint 47. That factory comes from
-// RicHandleHit.
+// RicStepHit.
 static Point16 D_801551FC = {-2, -24};
 static Point16 D_80155200 = {0, -8};
 static Point16 D_80155204 = {2, 8};
@@ -2877,7 +2877,7 @@ void RicEntityTeleport(Entity* self) {
     bool var_s5;
 
     upperParams = self->params & 0xFE00;
-    FntPrint("pl_warp_flag:%02x\n", g_Player.unk1C);
+    FntPrint("pl_warp_flag:%02x\n", g_Player.warp_flag);
     showParticles = false;
     var_s5 = false;
     switch (self->step) {
@@ -3035,7 +3035,7 @@ void RicEntityTeleport(Entity* self) {
             self->ext.teleport.width = 0;
             self->ext.teleport.timer = 4;
             self->step++;
-            g_Player.unk1C = 1;
+            g_Player.warp_flag = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;

@@ -1859,7 +1859,7 @@ typedef struct {
     /* 80072F34 */ u32 unk14;
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
-    /* 80072F3C */ s32 unk1C;
+    /* 80072F3C */ s32 warp_flag;
     /* 80072F40 */ s32 unk20;
     /* 80072F44 */ s32 unk24;
     /* 80072F48 */ PfnEntityUpdate unk28;

@@ -576,64 +576,64 @@ void RicMain(void) {
     g_Player.prev_step_s = PLAYER.step_s;
     switch (PLAYER.step) {
     case PL_S_STAND:
-        RicHandleStand();
+        RicStepStand();
         break;
     case PL_S_WALK:
-        RicHandleWalk();
+        RicStepWalk();
         break;
     case PL_S_CROUCH:
-        RicHandleCrouch();
+        RicStepCrouch();
         break;
     case PL_S_FALL:
-        RicHandleFall();
+        RicStepFall();
         break;
     case PL_S_JUMP:
-        RicHandleJump();
+        RicStepJump();
         break;
     case PL_S_HIGHJUMP:
-        RicHandleHighJump();
+        RicStepHighJump();
         break;
     case PL_S_HIT:
-        RicHandleHit(damageEffects, damageKind, playerStep, playerStepS);
+        RicStepHit(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case PL_S_BOSS_GRAB:
-        RicHandleBossGrab();
+        RicStepBossGrab();
         break;
     case PL_S_DEAD:
-        RicHandleDead(damageEffects, damageKind, playerStep, playerStepS);
+        RicStepDead(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case PL_S_STAND_IN_AIR:
-        RicHandleStandInAir();
+        RicStepStandInAir();
         break;
     case PL_S_FLAME_WHIP:
-        RicHandleEnableFlameWhip();
+        RicStepEnableFlameWhip();
         break;
     case PL_S_HYDROSTORM:
-        RicHandleHydrostorm();
+        RicStepHydrostorm();
         break;
     case PL_S_THROW_DAGGERS:
-        RicHandleThrowDaggers();
+        RicStepThrowDaggers();
         break;
     case PL_S_SUBWPN_CRASH:
-        RicHandleGenericSubwpnCrash();
+        RicStepGenericSubwpnCrash();
         break;
     case PL_S_DEAD_PROLOGUE:
-        RicHandleDeadPrologue();
+        RicStepDeadPrologue();
         break;
     case PL_S_SLIDE:
-        RicHandleSlide();
+        RicStepSlide();
         break;
     case PL_S_RUN:
-        RicHandleRun();
+        RicStepRun();
         break;
     case PL_S_SLIDE_KICK:
-        RicHandleSlideKick();
+        RicStepSlideKick();
         break;
     case PL_S_BLADEDASH:
-        RicHandleBladeDash();
+        RicStepBladeDash();
         break;
     case PL_S_INIT:
-        func_8015BCD0();
+        RicStepTeleport();
         break;
     }
     g_Player.unk08 = g_Player.status;
