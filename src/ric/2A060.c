@@ -2,202 +2,191 @@
 #include "ric.h"
 #include "sfx.h"
 
-// Entity #10, uses blueprint #10. Appears related to poisoning, due to call in
-// RicDoAttack
 static Point16 D_801559AC[] = {
-    0x0007, 0xFFFE, 0x0010, 0xFFFE, 0x0005, 0xFFEE, 0xFFF2,
-    0xFFEE, 0xFFE9, 0xFFFA, 0xFFE8, 0xFFFA, 0xFFE7, 0xFFFA};
+    {7, -2}, {16, -2}, {5, -18}, {-14, -18}, {-23, -6}, {-24, -6}, {-25, -6}};
 static Point16 D_801559C8[] = {
-    0x0007, 0x000B, 0x0010, 0x000B, 0x0005, 0xFFFB, 0xFFF2,
-    0xFFFB, 0xFFE9, 0x000B, 0xFFE8, 0x000B, 0xFFE7, 0x000B};
+    {7, 11}, {16, 11}, {5, -5}, {-14, -5}, {-23, 11}, {-24, 11}, {-25, 11}};
 static Point16 D_801559E4[] = {
-    0xFFF1, 0xFFFC, 0xFFF2, 0xFFF2, 0xFFF7, 0xFFFA, 0xFFEE, 0xFFFA, 0xFFF7,
-    0x0002, 0xFFF5, 0xFFF7, 0xFFF0, 0xFFF6, 0xFFF9, 0x0000, 0xFFF2, 0x0000};
-static s16 D_80155A08[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
-                           0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
+    {-15, -4}, {-14, -14}, {-9, -6}, {-18, -6}, {-9, 2},
+    {-11, -9}, {-16, -10}, {-7, 0},  {-14, 0}};
+static s16 D_80155A08[] = {15, 14, 18, 9, 9, 16, 11, 14, 7, 0};
 static Point16 D_80155A1C[] = {
-    0xFFF1, 0x0009, 0xFFF2, 0xFFFF, 0xFFF7, 0x0007, 0xFFEE, 0x0009, 0xFFF7,
-    0x000F, 0xFFF5, 0x0004, 0xFFF0, 0x0003, 0xFFF9, 0x000D, 0xFFF2, 0x000D,
-};
-static s16 D_80155A40[] = {0x000F, 0x000E, 0x0012, 0x0009, 0x0009,
-                           0x0010, 0x000B, 0x000E, 0x0007, 0x0000};
+    {-15, 9}, {-14, -1}, {-9, 7},  {-18, 9}, {-9, 15},
+    {-11, 4}, {-16, 3},  {-7, 13}, {-14, 13}};
+static s16 D_80155A40[] = {15, 14, 18, 9, 9, 16, 11, 14, 7};
 static Point16 D_80155A54[] = {
-    0xFFF1, 0xFFFA, 0xFFF2, 0xFFF0, 0xFFF7, 0xFFF8, 0xFFEE, 0xFFFA, 0xFFF7,
-    0x0000, 0xFFF5, 0xFFF5, 0xFFF0, 0xFFF4, 0xFFF9, 0xFFFE, 0xFFF2, 0xFFFE};
-static s16 D_80155A78[] = {
-    0x000F, 0x000E, 0x0012, 0x0009, 0x0009, 0x0010, 0x000B, 0x000E, 0x0007,
-    0x0000, 0x0001, 0x0000, 0x0005, 0x0000, 0x0002, 0x0000, 0x0007, 0x0000,
-    0x0004, 0x0000, 0x0008, 0x0000, 0x0003, 0x0000, 0x0006, 0x0000};
+    {-15, -6},  {-14, -16}, {-9, -8}, {-18, -6}, {-9, 0},
+    {-11, -11}, {-16, -12}, {-7, -2}, {-14, -2}};
+static s16 D_80155A78[] = {15, 14, 18, 9, 9, 16, 11, 14, 7};
+static s16 unused[] = {1, 0, 5, 0, 2, 0, 7, 0, 4, 0, 8, 0, 3, 0, 6, 0};
 static Point32 D_80155AAC[] = {
-    0x00040000, 0x00020000, 0x00040000, 0xFFFD8000, 0x00100000,
-    0x00000000, 0x00100000, 0x00000000, 0xFFEC0000, 0x00000000,
-    0xFFE00000, 0x00000000, 0xFFCC0000, 0x00000000};
+    {FIX(4), FIX(2)},  {FIX(4), FIX(-2.5)}, {FIX(16), FIX(0)},
+    {FIX(16), FIX(0)}, {FIX(-20), FIX(0)},  {FIX(-32), FIX(0)},
+    {FIX(-52), FIX(0)}};
 static Point32 D_80155AE4[] = {
-    0x00000000, 0x00000000, 0xFFFD8000, 0x00000000, 0xFFFFE000, 0x00020000,
-    0xFFFFE000, 0xFFFE0000, 0x00008000, 0x00000000, 0xFFFE0000, 0x00018000,
-    0xFFFE0000, 0xFFFE8000, 0x00008000, 0x00018000, 0x00008000, 0xFFFE8000};
-static s32 D_80155B2C[][9] = {
-    {1, 1, 5, 6, 0, 1, 1, 0, 0}, {2, 5, 2, 0, 7, 2, 0, 2, 0},
-    {3, 6, 0, 3, 8, 0, 3, 0, 3}, {4, 0, 7, 8, 4, 0, 0, 4, 4},
-    {5, 5, 5, 0, 0, 5, 1, 2, 0}, {6, 6, 0, 6, 0, 1, 6, 0, 3},
-    {7, 0, 7, 0, 7, 1, 0, 7, 4}, {8, 0, 0, 8, 8, 4, 3, 7, 8},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0},
-};
-static s16 D_80155C70[] = {0x8139, 0x813A, 0x813B, 0x0000};
+    {FIX(0), FIX(0)},       {FIX(-2.5), FIX(0)},  {FIX(-0.125), FIX(2)},
+    {FIX(-0.125), FIX(-2)}, {FIX(0.5), FIX(0)},   {FIX(-2), FIX(1.5)},
+    {FIX(-2), FIX(-1.5)},   {FIX(0.5), FIX(1.5)}, {FIX(0.5), FIX(-1.5)}};
+static s32 D_80155B2C_0[] = {1, 1, 5, 6, 0, 1, 1, 0, 0};
+static s32 D_80155B2C_1[] = {2, 5, 2, 0, 7, 2, 0, 2, 0};
+static s32 D_80155B2C_2[] = {3, 6, 0, 3, 8, 0, 3, 0, 3};
+static s32 D_80155B2C_3[] = {4, 0, 7, 8, 4, 0, 0, 4, 4};
+static s32 D_80155B2C_4[] = {5, 5, 5, 0, 0, 5, 1, 2, 0};
+static s32 D_80155B2C_5[] = {6, 6, 0, 6, 0, 1, 6, 0, 3};
+static s32 D_80155B2C_6[] = {7, 0, 7, 0, 7, 1, 0, 7, 4};
+static s32 D_80155B2C_7[] = {8, 0, 0, 8, 8, 4, 3, 7, 8};
+#if defined(VERSION_PSP)
+extern s32 D_80155B2C_8[];
+#else
+static s32 D_80155B2C_8[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+#endif
+static u16 D_80155C70[] = {0x8139, 0x813A, 0x813B};
 static s16 D_80155C78[] = {
-    0x0010, 0x000E, 0x000C, 0x000A, 0x0008, 0x0006, 0x0004, 0x0002,
-    0x000F, 0x000D, 0x000B, 0x0009, 0x0007, 0x0005, 0x0003, 0x00FF};
+    16, 14, 12, 10, 8, 6, 4, 2, 15, 13, 11, 9, 7, 5, 3, 255};
+#if defined(VERSION_PSP)
+static s16 D_80155C98[] = {
+#else
 static u16 D_80155C98[] = {
+#endif
     0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15};
+#if defined(VERSION_PSP)
+extern u32 D_80175080;
+extern s32 D_80175084;
+#else
 static u32 D_80175080;
 static s32 D_80175084;
+#endif
 void RicEntityWhip(Entity* self) {
     byte stackpad[40];
-    s32 sp38;
-    s16 upperParams;
-    s16 lowerParams;
-    Primitive* prim;
+    s16 sp4E;
+    s16 radius;
+    s32 sp44;
+    s32 sp40;
+    s32 prevX;
+    s32 prevY;
+    s16 sp4A;
+    s32 aimPath;
+    s32 newY;
     s16 angle;
-    s32 var_s3;
-#ifdef VERSION_PC
-    // this can still be uninitialized when we get past the D_80155B2C section
-    // not every combo of directions is covered
-    s32 var_s4 = 0;
-#else
-    s32 var_s4;
-#endif
-    s32 var_s5;
-    s32 temp_s6;
-    s32 var_s7;
-    s16 temp_a2;
-    s32 temp_a3;
-    s32 directionsPressed;
+    s32 diffY;
+    s16 psp_s4;
+    s32 diffX;
+    s32 newX;
+    Primitive* prim;
+    s32 psp_s0;
 
-    s32 randy;
-
-    s32 xDiff;
-    s32 yDiff;
-
-    s32 selfY;
-    s32 selfX;
-    f32 dumb_temp;
-    u16 playerUnk46;
-
-    s32 magSq;
-    s32 ySq;
-    s32 xSq;
-
-    lowerParams = self->params & 0xFF;
-    upperParams = self->params & 0xFF00;
-    if (lowerParams == 0) {
-        if (self->ext.whip.unkA6 != 0) {
+    psp_s4 = self->params & 0xFF;
+    sp4A = self->params & 0xFF00;
+    if (psp_s4 == 0) {
+        if (self->ext.whip.unkA6) {
             self->ext.whip.unkA6--;
         }
     }
-    playerUnk46 = g_Player.unk46;
-    if (playerUnk46 == 0) {
+    if (g_Player.unk46 == 0) {
         DestroyEntity(self);
         return;
     }
-    if ((self->step == 2) && (playerUnk46 == 2)) {
+    if (self->step == 2 && g_Player.unk46 == 2) {
         self->step = 1;
         self->velocityX = 0;
         self->velocityY = 0;
         self->palette = PAL_OVL(0x148);
-        if (!PLAYER.facingLeft) {
-            self->ext.whip.unk88 = playerUnk46;
+        if (PLAYER.facingLeft == 0) {
+            self->ext.whip.unk88 = 2;
         } else {
             self->ext.whip.unk88 = 3;
         }
         self->ext.whip.unk8C = 0x600;
     }
-    if (self->step != 0) {
-        xDiff = self->posX.val - self->ext.whip.unk98;
-        yDiff = self->posY.val - self->ext.whip.unk9C;
-        self->ext.whip.unk7C.val += xDiff;
-        self->ext.whip.unk80.val += yDiff;
+    if (self->step) {
+        diffX = self->posX.val - self->ext.whip.curX;
+        diffY = self->posY.val - self->ext.whip.curY;
+        self->ext.whip.prevX += diffX;
+        self->ext.whip.prevY += diffY;
     }
-    directionsPressed = g_Player.padPressed & 0xF000;
-    if (directionsPressed == PAD_UP) {
-        var_s4 = D_80155B2C[0][self->ext.whip.unk88];
+    aimPath = g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    if (aimPath == PAD_UP) {
+        psp_s0 = D_80155B2C_0[self->ext.whip.unk88];
     }
-    if (directionsPressed == PAD_DOWN) {
-        var_s4 = D_80155B2C[3][self->ext.whip.unk88];
+    if (aimPath == PAD_DOWN) {
+        psp_s0 = D_80155B2C_3[self->ext.whip.unk88];
     }
-    if (directionsPressed == PAD_RIGHT) {
-        var_s4 = D_80155B2C[1][self->ext.whip.unk88];
+    if (aimPath == PAD_RIGHT) {
+        psp_s0 = D_80155B2C_1[self->ext.whip.unk88];
     }
-    if (directionsPressed == PAD_LEFT) {
-        var_s4 = D_80155B2C[2][self->ext.whip.unk88];
+    if (aimPath == PAD_LEFT) {
+        psp_s0 = D_80155B2C_2[self->ext.whip.unk88];
     }
-    if (directionsPressed == (PAD_UP + PAD_RIGHT)) {
-        var_s4 = D_80155B2C[4][self->ext.whip.unk88];
+    if (aimPath == (PAD_UP + PAD_RIGHT)) {
+        psp_s0 = D_80155B2C_4[self->ext.whip.unk88];
     }
-    if (directionsPressed == (PAD_UP + PAD_LEFT)) {
-        var_s4 = D_80155B2C[5][self->ext.whip.unk88];
+    if (aimPath == (PAD_UP + PAD_LEFT)) {
+        psp_s0 = D_80155B2C_5[self->ext.whip.unk88];
     }
-    if (directionsPressed == (PAD_DOWN + PAD_RIGHT)) {
-        var_s4 = D_80155B2C[6][self->ext.whip.unk88];
+    if (aimPath == (PAD_DOWN + PAD_RIGHT)) {
+        psp_s0 = D_80155B2C_6[self->ext.whip.unk88];
     }
-    if (directionsPressed == (PAD_DOWN + PAD_LEFT)) {
-        var_s4 = D_80155B2C[7][self->ext.whip.unk88];
+    if (aimPath == (PAD_DOWN + PAD_LEFT)) {
+        psp_s0 = D_80155B2C_7[self->ext.whip.unk88];
     }
-    if (directionsPressed == 0) {
-        var_s4 = D_80155B2C[8][self->ext.whip.unk88];
+    if (aimPath == 0) {
+        psp_s0 = D_80155B2C_8[self->ext.whip.unk88];
     }
     self->ext.whip.unk86 = 0;
-    if (lowerParams == 0) {
+    if (psp_s4 == 0) {
         if (self->step == 1) {
             if (PLAYER.step == PL_S_CROUCH) {
-                if (!PLAYER.facingLeft) {
-                    var_s3 = D_80155A40[var_s4];
+                if (PLAYER.facingLeft == 0) {
+                    newX = D_80155A40[psp_s0];
                 } else {
-                    var_s3 = D_80155A1C[var_s4].x;
+                    newX = D_80155A1C[psp_s0].x;
                 }
-                var_s5 = D_80155A1C[var_s4].y;
+                newY = D_80155A1C[psp_s0].y;
+            } else if (PLAYER.step == PL_S_STAND) {
+                if (PLAYER.facingLeft == 0) {
+                    newX = D_80155A08[psp_s0];
+                } else {
+                    newX = D_801559E4[psp_s0].x;
+                }
+                newY = D_801559E4[psp_s0].y;
             } else {
-                if (PLAYER.step == PL_S_STAND) {
-                    if (!PLAYER.facingLeft) {
-                        var_s3 = D_80155A08[var_s4];
-                    } else {
-                        var_s3 = D_801559E4[var_s4].x;
-                    }
-                } else if (!PLAYER.facingLeft) {
-                    var_s3 = D_80155A78[var_s4];
+                if (PLAYER.facingLeft == 0) {
+                    newX = D_80155A78[psp_s0];
                 } else {
-                    var_s3 = D_80155A54[var_s4].x;
+                    newX = D_80155A54[psp_s0].x;
                 }
-                var_s5 = D_801559E4[var_s4].y;
+                newY = D_801559E4[psp_s0].y;
             }
         } else {
             if (PLAYER.step == PL_S_CROUCH) {
-                var_s3 = D_801559C8[PLAYER.pose].x;
-                var_s5 = D_801559C8[PLAYER.pose].y;
+                newX = D_801559C8[PLAYER.pose].x;
+                newY = D_801559C8[PLAYER.pose].y;
             } else {
-                var_s3 = D_801559AC[PLAYER.pose].x;
-                var_s5 = D_801559AC[PLAYER.pose].y;
+                newX = D_801559AC[PLAYER.pose].x;
+                newY = D_801559AC[PLAYER.pose].y;
             }
-            if (!PLAYER.facingLeft) {
-                var_s3 = -var_s3;
+            if (PLAYER.facingLeft == 0) {
+                newX = -newX;
             }
         }
-        var_s3 <<= 16;
-        var_s5 <<= 16;
-        var_s3 += PLAYER.posX.val;
-        var_s5 += PLAYER.posY.val;
+        newX <<= 16;
+        newY <<= 16;
+        newX += PLAYER.posX.val;
+        newY += PLAYER.posY.val;
     } else {
         self--;
-        var_s3 = self->posX.val;
-        var_s5 = self->posY.val;
+        newX = self->posX.val;
+        newY = self->posY.val;
         self++;
     }
     switch (self->step) {
     case 0:
         self->animSet = ANIMSET_OVL(18);
+        self->animCurFrame = 0x1D;
         self->animCurFrame = 0x1E;
         self->palette = PAL_OVL(0x138);
         self->unk5A = 0x46;
-        if (lowerParams < 8) {
+        if (psp_s4 < 8) {
             self->hitboxWidth = 3;
             self->hitboxHeight = 3;
             self->hitboxOffX = 0;
@@ -205,30 +194,34 @@ void RicEntityWhip(Entity* self) {
             self->ext.whip.unkB0 = PL_W_WHIP;
             RicSetSubweaponParams(self);
         }
-        if (lowerParams == 0) {
+        if (psp_s4 == 0) {
             self->zPriority = PLAYER.zPriority - 2;
         }
-        if (lowerParams == 7) {
+        if (psp_s4 == 7) {
             self->animCurFrame = 0x1F;
             self->hitboxWidth++;
             self->hitboxHeight++;
         }
         self->zPriority = PLAYER.zPriority + 4;
-        self->posX.val = var_s3;
-        self->posY.val = var_s5;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
+        self->posX.val = newX;
+        self->posY.val = newY;
+        self->ext.whip.prevX = self->posX.val;
+        self->ext.whip.prevY = self->posY.val;
+        self->ext.whip.curX = self->ext.whip.prevX;
+        self->ext.whip.curY = self->ext.whip.prevY;
         self->ext.whip.unk8C = 0x500;
-        self->ext.whip.unk7C.val = self->posX.val;
-        self->ext.whip.unk80.val = self->posY.val;
-        self->ext.whip.unk98 = self->ext.whip.unk7C.val;
-        self->ext.whip.unk9C = self->ext.whip.unk80.val;
         self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (self->primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[self->primIndex];
-            prim->b0 = prim->g0 = prim->r0 = 0x7F;
-            prim->b1 = prim->g1 = prim->r1 = 0x1F;
+            prim->r0 = 0x7F;
+            prim->g0 = 0x7F;
+            prim->b0 = 0x7F;
+            prim->r1 = 0x1F;
+            prim->g1 = 0x1F;
+            prim->b1 = 0x1F;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -237,22 +230,22 @@ void RicEntityWhip(Entity* self) {
         RicEntityWhip(self);
         break;
     case 1:
-        if (upperParams == 0) {
-            if ((u16)(self->palette + 0x7EC0) < 8) {
-                if (self->ext.whip.unkA4 != 0) {
+        if (sp4A == 0) {
+            if (self->palette < 0x8148 && self->palette >= 0x8140) {
+                if (self->ext.whip.unkA4) {
                     self->ext.whip.unkA4--;
                 } else {
                     self->palette++;
                 }
             }
-        } else if (self->ext.whip.unkA4 != 0) {
-            if (!(lowerParams & 1)) {
+        } else if (self->ext.whip.unkA4) {
+            if (!(psp_s4 & 1)) {
                 RicCreateEntFactoryFromEntity(self, BP_20, 0);
                 self->ext.whip.unkA4 = 0;
             }
         }
-        if (lowerParams < 8) {
-            if (self->ext.whip.unk84 != 0) {
+        if (psp_s4 < 8) {
+            if (self->ext.whip.unk84) {
                 if (--self->ext.whip.unk84 == 0) {
                     if (self->velocityY < 0) {
                         self->velocityY = 0;
@@ -262,64 +255,56 @@ void RicEntityWhip(Entity* self) {
             } else {
                 self->velocityX = self->velocityX * 3 / 4;
             }
-            if (self->ext.whip.unk88 == var_s4) {
+            if (self->ext.whip.unk88 == psp_s0) {
                 break;
             }
-
-            // This block has a really weird extra instruction.
-            //  Required a lot of faking to get it to match. The
-            //  first if-statement really should not matter.
-            if (lowerParams == 0) {
-                s32 a1;
-                Entity* a0;
-                if (upperParams == 0) {
-                    a1 = 18;
+            if (psp_s4 == 0) {
+                if (sp4A) {
+                    if (self->ext.whip.unkA6 == 0) {
+                        g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
+                        self->ext.whip.unkA6 = 0x20;
+                    }
                 } else {
-                    a0 = self;
+                    if (self->ext.whip.unkA6 == 0) {
+                        g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
+                        self->ext.whip.unkA6 = 0x20;
+                    }
                 }
-                if (self->ext.whip.unkA6 == 0) {
-                    g_api.PlaySfx(SFX_RIC_WHIP_RATTLE_A);
-                    self->ext.whip.unkA6 = 0x20;
-                }
-                if (upperParams == 0) {
-                    a0 = self;
-                    a1 = FACTORY(BP_18, 0);
+                if (sp4A == 0) {
+                    RicCreateEntFactoryFromEntity(self, FACTORY(BP_18, 0), 0);
                 } else {
-                    a0 = self;
-                    a1 = FACTORY(BP_18, 1);
+                    RicCreateEntFactoryFromEntity(self, FACTORY(BP_18, 1), 0);
                 }
-                RicCreateEntFactoryFromEntity(a0, a1, 0);
             }
 
             self->ext.whip.unk84 = 6;
-            if (var_s4 == 0) {
-                if (!PLAYER.facingLeft) {
-                    xDiff = D_80155A08[0];
+            if (psp_s0 == 0) {
+                if (PLAYER.facingLeft == 0) {
+                    diffX = D_80155A08[0];
                 } else {
-                    xDiff = D_801559E4[0].x;
+                    diffX = D_801559E4[0].x;
                 }
-                // This should be 2 simple lines, but I had to be pedantic about
-                // the individual steps to get it to match.
-                selfY = self->posY.val;
-                selfX = self->posX.val;
-                yDiff = D_801559E4[0].y;
-                xDiff += PLAYER.posX.i.hi;
-                yDiff += PLAYER.posY.i.hi;
-                xDiff <<= 16;
-                yDiff <<= 16;
+                diffY = D_801559E4[0].y;
+                diffX += PLAYER.posX.i.hi;
+                diffY += PLAYER.posY.i.hi;
+                diffX <<= 16;
+                diffY <<= 16;
 
-                angle = ratan2(selfY - yDiff, xDiff - selfX);
-                self->velocityX = (rcos(angle) << 7) >> 4;
-                self->velocityY = -(rsin(angle) << 7) >> 4;
+                diffX -= self->posX.val;
+                diffY -= self->posY.val;
+                angle = ratan2(-diffY, diffX);
+                radius = 0x80;
+                self->velocityX = (radius * rcos(angle)) >> 4;
+                self->velocityY = -(radius * rsin(angle)) >> 4;
             } else {
-                self->velocityY = D_80155AE4[var_s4].x;
-                self->velocityX = D_80155AE4[var_s4].y;
+                self->velocityY = D_80155AE4[psp_s0].x;
+                self->velocityX = D_80155AE4[psp_s0].y;
             }
-            self->ext.whip.unk88 = var_s4;
+            self->ext.whip.unk88 = psp_s0;
         }
         break;
     case 2:
-        if (lowerParams >= 8) {
+        if (psp_s4 > 7) {
             if (self->flags & FLAG_HAS_PRIMS) {
                 if (PLAYER.pose == 5) {
                     g_api.FreePrimitives(self->primIndex);
@@ -327,7 +312,9 @@ void RicEntityWhip(Entity* self) {
                 }
             }
             if (PLAYER.pose == 6) {
-                if ((PLAYER.poseTimer >= 0xF) || (PLAYER.poseTimer == 0)) {
+                if (PLAYER.poseTimer > 14) {
+                    self->palette = PAL_OVL(0x138);
+                } else if (PLAYER.poseTimer == 0) {
                     self->palette = PAL_OVL(0x138);
                 } else if ((PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12) ||
                            (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14)) {
@@ -337,10 +324,12 @@ void RicEntityWhip(Entity* self) {
 // todo this should read the previous element out of bounds?
 #ifdef VERSION_PC
                     if (PLAYER.poseTimer >= 0) {
-                        self->palette = D_80155C70[PLAYER.poseTimer % 3];
+                        self->palette =
+                            D_80155C70[PLAYER.poseTimer % LEN(D_80155C70)];
                     }
 #else
-                    self->palette = D_80155C70[PLAYER.poseTimer % 3];
+                    self->palette =
+                        D_80155C70[PLAYER.poseTimer % LEN(D_80155C70)];
 #endif
                 }
             }
@@ -349,14 +338,16 @@ void RicEntityWhip(Entity* self) {
             self->velocityY = D_80155AAC[PLAYER.pose].y;
             switch (PLAYER.pose) {
             case 0:
+                radius = 0x800;
                 angle = (rand() & 0x3FF) - 0x200;
-                self->velocityX = (rcos(angle) << 0xB) >> 4;
-                self->velocityY = -(rsin(angle) << 0xB) >> 4;
+                self->velocityX = (radius * rcos(angle)) >> 4;
+                self->velocityY = -(radius * rsin(angle)) >> 4;
                 break;
             case 1:
-                randy = rand() | ~0x3FF;
-                self->velocityX = (rcos(randy) << 0xB) >> 4;
-                self->velocityY = -(rsin(randy) << 0xB) >> 3;
+                radius = 0x800;
+                angle = (rand() & 0x3FF) - 0x400;
+                self->velocityX = (radius * rcos(angle)) >> 4;
+                self->velocityY = -(radius * rsin(angle)) >> 3;
                 self->ext.whip.unk8C = 0x600;
                 break;
             case 4:
@@ -373,12 +364,12 @@ void RicEntityWhip(Entity* self) {
                 }
                 break;
             case 6:
-                if (upperParams != 0) {
-                    if (PLAYER.poseTimer == D_80155C78[lowerParams]) {
+                if (sp4A) {
+                    if (PLAYER.poseTimer == D_80155C78[psp_s4]) {
                         RicCreateEntFactoryFromEntity(self, BP_20, 0);
                     }
                 }
-                if (lowerParams == (0x10 - PLAYER.poseTimer)) {
+                if (psp_s4 == (0x10 - PLAYER.poseTimer)) {
                     self->ext.whip.unk8C = 0x600;
                 }
                 // This very well might be a switch
@@ -386,9 +377,8 @@ void RicEntityWhip(Entity* self) {
                     self->palette = PAL_OVL(0x138);
                 } else if (PLAYER.poseTimer == 0) {
                     self->palette = PAL_OVL(0x138);
-                } else if (PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12) {
-                    self->palette = PAL_OVL(0x13C);
-                } else if (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14) {
+                } else if (PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12 ||
+                           PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14) {
                     self->palette = PAL_OVL(0x13C);
                 } else {
 // poseTimer can be -1 apparently.
@@ -403,102 +393,90 @@ void RicEntityWhip(Entity* self) {
                 }
                 break;
             }
-            if (!PLAYER.facingLeft) {
+            if (PLAYER.facingLeft == 0) {
                 self->velocityX = -self->velocityX;
             }
-            self->velocityX /= 2;
-            self->velocityY /= 2;
+            self->velocityX = self->velocityX / 2;
+            self->velocityY = self->velocityY / 2;
         }
         break;
     }
-    temp_a2 = self->ext.whip.unk8C;
-    temp_s6 = self->posX.val;
-    sp38 = self->posY.val;
-    if (lowerParams == 0) {
-        self->posX.val = var_s3;
-        self->posY.val = var_s5;
-    } else if (lowerParams >= 8) {
-        // weird reuse of variables here
-        xDiff = (self - 8)->posX.val;
-        yDiff = (self - 8)->posY.val;
-        temp_a3 = (self - 7)->posX.val;
-        self->posX.val = (xDiff + temp_a3) / 2;
-        var_s7 = (self - 7)->posY.val;
-        self->posY.val = (yDiff + var_s7) / 2;
+    sp4E = self->ext.whip.unk8C;
+    prevX = self->posX.val;
+    prevY = self->posY.val;
+    if (psp_s4 == 0) {
+        self->posX.val = newX;
+        self->posY.val = newY;
+    } else if (psp_s4 > 7) {
+        diffX = (self - 8)->posX.val;
+        diffY = (self - 8)->posY.val;
+        sp44 = (self - 7)->posX.val;
+        sp40 = (self - 7)->posY.val;
+        self->posX.val = (diffX + sp44) / 2;
+        self->posY.val = (diffY + sp40) / 2;
     } else {
-        temp_a3 = temp_s6 - self->ext.whip.unk7C.val;
-        var_s7 = sp38 - self->ext.whip.unk80.val;
+        sp44 = self->posX.val - self->ext.whip.prevX;
+        sp40 = self->posY.val - self->ext.whip.prevY;
         if (self->step == 1) {
             if (self->velocityY < FIX(0.5)) {
-                self->posX.val = temp_a3 + temp_s6;
-                self->posY.val += var_s7;
+                self->posX.val += sp44 * 16 / 16;
+                self->posY.val += sp40 * 16 / 16;
             }
-            if ((u32)(self->velocityY - FIX(0.5)) < FIX(0.75)) {
-                self->posX.val += temp_a3 * 15 / 16;
-                self->posY.val += var_s7 * 15 / 16;
+            if (self->velocityY >= FIX(0.5) && self->velocityY < FIX(1.25)) {
+                self->posX.val += sp44 * 15 / 16;
+                self->posY.val += sp40 * 15 / 16;
             }
-            if ((u32)self->velocityY >= FIX(1.25)) {
-                self->posX.val += temp_a3 * 13 / 16;
-                self->posY.val += var_s7 * 13 / 16;
+            if (self->velocityY >= FIX(1.25) || self->velocityY < 0) {
+                self->posX.val += sp44 * 13 / 16;
+                self->posY.val += sp40 * 13 / 16;
             }
         } else {
-            self->posX.val = temp_a3 * 3 / 4 + temp_s6;
-            self->posY.val += var_s7 * 3 / 4;
+            self->posX.val += sp44 * 3 / 4;
+            self->posY.val += sp40 * 3 / 4;
         }
-        if ((self->velocityY < FIX(8)) || (self->velocityY < 0)) {
+        if (self->velocityY < FIX(8) || self->velocityY < 0) {
             self->velocityY += 0xA00;
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-
-        magSq = ((temp_a2 * temp_a2) >> 0x10);
-        yDiff = self->posY.val - var_s5;
-        ySq = (yDiff * (yDiff >> 0x10)) >> 0x10;
-        xDiff = self->posX.val - var_s3;
-        xSq = (xDiff * (xDiff >> 0x10)) >> 0x10;
-        if (magSq < (ySq + xSq)) {
-            angle = ratan2(-yDiff, xDiff);
-            xDiff = (rcos(angle) * temp_a2) >> 4;
-            yDiff = -(rsin(angle) * temp_a2) >> 4;
-            self->posX.val = var_s3 + xDiff;
-            self->posY.val = var_s5 + yDiff;
+        diffY = self->posY.val - newY;
+        diffX = self->posX.val - newX;
+        if (((sp4E * sp4E) >> 0x10) < ((diffY * (diffY >> 0x10)) >> 0x10) +
+                                          ((diffX * (diffX >> 0x10)) >> 0x10)) {
+            angle = ratan2(-diffY, diffX);
+            diffX = (rcos(angle) * sp4E) >> 4;
+            diffY = -(rsin(angle) * sp4E) >> 4;
+            self->posX.val = newX + diffX;
+            self->posY.val = newY + diffY;
         }
     }
-    self->ext.whip.unk7C.val = temp_s6;
-    self->ext.whip.unk80.val = sp38;
-    self->ext.whip.unkA0 = var_s7;
-    self->ext.whip.unk98 = self->posX.val;
-    self->ext.whip.unk9C = self->posY.val;
-    if (lowerParams == 0) {
-        D_80175080 = var_s4;
+    self->ext.whip.prevX = prevX;
+    self->ext.whip.prevY = prevY;
+    self->ext.whip.curX = self->posX.val;
+    self->ext.whip.curY = self->posY.val;
+    self->ext.whip.unkA0 = sp40;
+    if (psp_s4 == 0) {
+        D_80175080 = psp_s0;
         D_80175084 = self->ext.whip.unk88;
     }
-    if ((self->primIndex != -1) && (self->flags & FLAG_HAS_PRIMS)) {
+    if (self->primIndex != -1 && (self->flags & FLAG_HAS_PRIMS)) {
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
-        // for some reason need this to make it use lh instead of lhu for x1 and
-        // y1.
-        dumb_temp = self->ext.whip.unk7C;
-        prim->x1 = dumb_temp.i.hi;
-        dumb_temp = self->ext.whip.unk80;
-        prim->y1 = dumb_temp.i.hi;
+        prim->x1 = self->ext.whip.prevX >> 0x10;
+        prim->y1 = self->ext.whip.prevY >> 0x10;
         if (PLAYER.pose == 4) {
             prim->priority = PLAYER.zPriority + 4;
         } else {
             prim->priority = PLAYER.zPriority + 2;
         }
     }
-    if (upperParams != 0) {
-        if (lowerParams != 7) {
-            self->unk6C =
-                (rsin(
-                     (s16)((((g_GameTimer / 4) & 7) + D_80155C98[lowerParams]) *
-                           512)) >>
-                 6) -
-                0x80;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+    if (sp4A) {
+        if (psp_s4 != 7) {
+            angle = (((g_GameTimer >> 2) & 7) + D_80155C98[psp_s4]) * 512;
+            self->unk6C = (rsin(angle) >> 6) + 0x80;
             self->drawFlags |= DRAW_HIDE;
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         self->palette = PAL_OVL(0x160);
     }
