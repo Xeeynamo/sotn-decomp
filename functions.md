@@ -756,7 +756,7 @@
 | dra    | func_psp_090E83E8                   |       85 |         12 |        |                                 |       |
 | ric    | pl_blueprints.rodata                |       86 |          0 | Yes    |                                 |       |
 | no4    | func_pspeu_09239788                 |       86 |          8 |        |                                 |       |
-| dra    | PlaySeq                             |       86 |          9 |        | https://decomp.me/scratch/zr0i7 | 0.997 |
+| dra    | PlaySeq                             |       86 |          9 |        |                                 |       |
 | dra    | func_80113D7C                       |       86 |         11 |        |                                 |       |
 | dra    | DoCdCommand                         |       86 |         12 |        |                                 |       |
 | dra    | MenuButtonConfigDraw                |       87 |          7 |        | https://decomp.me/scratch/UXNOu | 0.906 |
