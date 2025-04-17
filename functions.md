@@ -355,7 +355,7 @@
 | dra    | MenuReverseCloakDraw                |       37 |          4 |        |                                 |       |
 | dra    | func_8010FD88                       |       37 |          5 |        |                                 |       |
 | dra    | InitializePads                      |       37 |          5 |        |                                 |       |
-| dra    | func_psp_09141570                   |       37 |          5 |        |                                 |       |
+| dra    | func_psp_09141570                   |       37 |          5 |        | https://decomp.me/scratch/Xo490 | 0.567 |
 | ric    | RicSetRun                           |       37 |          5 |        |                                 |       |
 | dra    | PerformTetraSpirit                  |       37 |          6 |        |                                 |       |
 | lib    | AllocEntity                         |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
@@ -743,7 +743,7 @@
 | dra    | func_psp_090F76D0                   |       82 |          9 |        |                                 |       |
 | lib    | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
 | dra    | func_psp_090FF298                   |       82 |         11 |        |                                 |       |
-| dra    | CdFadeOut1                          |       82 |         15 |        |                                 |       |
+| dra    | CdFadeOut1                          |       82 |         15 |        | https://decomp.me/scratch/8ck7s | 0.659 |
 | dra    | KeyOnChannels22_23                  |       83 |          4 |        |                                 |       |
 | lib    | CheckFieldCollisionY                |       83 |          7 |        |                                 |       |
 | dra    | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
