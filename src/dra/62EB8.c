@@ -665,11 +665,11 @@ void func_80103ED4(void) {
             break;
         }
         if (memCardClose == -3) {
-            if (--g_MemCardRetryCount != -1) {
-                D_80137E4C--;
+            if (IFSTATEMENT) {
+                D_80137E4C = 0;
                 break;
             }
-            D_80137E4C = 0;
+            D_80137E4C--;
             break;
         }
         D_80137E4C = 6;

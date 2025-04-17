@@ -665,7 +665,7 @@ void func_80103ED4(void) {
             break;
         }
         if (memCardClose == -3) {
-            if (g_MemCardRetryCount-- == 0) {
+            if (IFSTATEMENT) {
                 D_80137E4C = 0;
                 break;
             }
@@ -825,6 +825,7 @@ SVECTOR* D_800A3608[][3] = {
     {&D_80137E70[8], &D_80137E70[3], &D_80137E70[5]},
     {&D_80137E70[4], &D_80137E70[8], &D_80137E70[12]},
     {&D_80137E70[4], &D_80137E70[3], &D_80137E70[8]}};
+
 u8 D_800A3728[] = {
     0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x01, 0x7E, 0x3E, 0x68, 0x3E, 0x7F,
     0x01, 0x7E, 0x3E, 0x68, 0x01, 0x68, 0x71, 0x71, 0x7E, 0x7E, 0x71, 0x7E,
