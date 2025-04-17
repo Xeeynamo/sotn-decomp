@@ -615,17 +615,13 @@ void func_80103ED4(void) {
                 break;
             }
         }
-        if (i != 15) {
-            if (GetMemcardFreeBlockCount(D_80097924) == 0) {
-                D_80137E4C = 10;
-                return;
-            }
-            D_8006C378 = i;
-            D_80137E4C++;
-            return;
+        if (i == 15 || GetMemcardFreeBlockCount(D_80097924) == 0) {
+            D_80137E4C = 10;
+            break;
         }
-        D_80137E4C = 10;
-        return;
+        D_8006C378 = i;
+        D_80137E4C++;
+        break;
     case 4:
         MakeMemcardPath(saveFile, D_8006C378);
         // careful with i here, it's not an iterator.
@@ -635,7 +631,7 @@ void func_80103ED4(void) {
             i = 1;
             if (GetMemcardFreeBlockCount(D_80097924) == 0) {
                 D_80137E4C = 10;
-                return;
+                break;
             }
         }
         // I believe the rand() call here selects the icon on the save
@@ -644,31 +640,31 @@ void func_80103ED4(void) {
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
             if (--g_MemCardRetryCount == -1) {
                 D_80137E4C = 0;
-                return;
+                break;
             }
         } else {
             g_MemCardRetryCount = 10;
             D_80137E4C++;
-            return;
+            break;
         }
         break;
     case 5:
         memCardClose = MemcardClose(D_80097924);
         if (memCardClose == 0) {
-            return;
+            break;
         }
         if (memCardClose == -3) {
             if (--g_MemCardRetryCount != -1) {
                 D_80137E4C--;
-                return;
+                break;
             }
             D_80137E4C = 0;
-            return;
+            break;
         }
         D_80137E4C = 6;
-        return;
+        break;
     case 6:
-        return;
+        break;
     }
 }
 
