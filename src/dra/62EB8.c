@@ -80,34 +80,36 @@ static void func_801030B4(bool arg0, Primitive* prim, bool arg2) {
     }
 }
 
-POLY_GT4* func_80103148(POLY_GT4* poly1, POLY_GT4* arg1) {
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y0 - 1;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
+static Primitive* func_80103148(Primitive* prim, Primitive* basis) {
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y0 - 1;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
 
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x0 - 1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x0 - 1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
 
-    poly1->x0 = arg1->x0 - 1;
-    poly1->y0 = arg1->y2;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    poly1 = (POLY_GT4*)poly1->tag;
+    prim->x0 = basis->x0 - 1;
+    prim->y0 = basis->y2;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
 
-    poly1->x0 = arg1->x1;
-    poly1->y0 = arg1->y0 - 1;
-    poly1->x1 = arg1->x1;
-    poly1->y1 = arg1->y2;
-    poly1->pad3 = 0;
-    return (POLY_GT4*)poly1->tag;
+    prim->x0 = basis->x1;
+    prim->y0 = basis->y0 - 1;
+    prim->x1 = basis->x1;
+    prim->y1 = basis->y2;
+    prim->drawMode = DRAW_DEFAULT;
+    prim = prim->next;
+
+    return prim;
 }
 
 s32 HandleSaveMenu(s32 arg0) {

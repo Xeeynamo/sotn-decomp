@@ -46,7 +46,11 @@ void func_80102EB8(void) {
 
     for (i = 0; i < 12; i++) {
         func_80107250(prim3, 255);
+        #ifdef VERSION_PSP
         prim3->priority = 0x1FF;
+        #else
+        prim3->priority = g_unkGraphicsStruct.g_zEntityCenter + 32;
+        #endif
         prim3->drawMode = DRAW_HIDE;
         prim3 = prim3->next;
     }
