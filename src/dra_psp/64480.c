@@ -89,13 +89,99 @@ void SetReleaseRate2(void) {
     InitSoundVars2();
 }
 
-// requires AdvanceCdSoundCommandQueue to be static in the
-// same file, https://decomp.me/scratch/t0j7W
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand10);
+void CdSoundCommand10(void) {
+    switch (g_CdSoundCommandStep) {
+    case 0:
+        D_801390A0 = 1;
+        g_XaFadeCounter = 0;
+        g_CdSoundCommandStep++;
+        break;
 
-// requires AdvanceCdSoundCommandQueue to be static in the
-// same file, https://decomp.me/scratch/hmJYM
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", CdSoundCommand8);
+    case 1:
+        g_XaFadeCounter++;
+        if (g_volumeL > 0) {
+            g_volumeL =
+                g_volumeR -
+                (g_volumeR * g_XaVolumeMultiplier * g_XaFadeCounter) / 0x200;
+            if (g_volumeL < 0) {
+                g_volumeL = 0;
+            }
+        } else {
+            g_volumeL = 0;
+        }
+        SsSetMVol(g_volumeL, g_volumeL);
+        if (g_volumeL == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 2:
+        SetReverbDepth(0);
+        StopSeq();
+        AddCdSoundCommand(3);
+        D_800BD1C4 = 3;
+        g_CdSoundCommandStep++;
+        break;
+
+    case 3:
+        D_800BD1C4--;
+        if (D_800BD1C4 == 0) {
+            SetReleaseRate2();
+            D_8013B61C = 0;
+            D_801390A0 = g_CdSoundCommandStep = 0;
+            AdvanceCdSoundCommandQueue();
+        }
+        break;
+
+    default:
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
+        break;
+    }
+}
+
+void CdSoundCommand8(void) {
+    switch (g_CdSoundCommandStep) {
+    case 0:
+        D_801390A0 = 1;
+        g_XaFadeCounter = 0;
+        g_CdSoundCommandStep++;
+        break;
+
+    case 1:
+        g_XaFadeCounter++;
+        if (g_CdVolume > 0) {
+            g_CdVolume =
+                g_XaMusicVolume -
+                (g_XaMusicVolume * g_XaVolumeMultiplier * g_XaFadeCounter) /
+                    0x200;
+            if (g_CdVolume < 0) {
+                g_CdVolume = 0;
+            }
+        } else {
+            g_CdVolume = 0;
+        }
+        SetCdVolume(0, g_CdVolume, g_CdVolume);
+        if (g_CdVolume == 0) {
+            g_CdSoundCommandStep++;
+        }
+        break;
+
+    case 2:
+        AddCdSoundCommand(2);
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
+        break;
+
+    default:
+        D_8013B61C = 0;
+        D_801390A0 = g_CdSoundCommandStep = 0;
+        AdvanceCdSoundCommandQueue();
+        break;
+    }
+}
 
 #define MASK_22_23 ((1 << 22) | (1 << 23))
 #define MASK_20_21 ((1 << 20) | (1 << 21))
@@ -153,7 +239,6 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
     return ret;
 }
 
-// alternate to PlaySfx with extra params
 s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan) {
     s32 ret = 0;
 
@@ -318,9 +403,57 @@ void SetVolume22_23(void) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/64480", ExecSoundCommands);
 
-// requires AdvanceCdSoundCommandQueue to be static in the
-// same file, https://decomp.me/scratch/9rjfX
-INCLUDE_ASM("dra_psp/psp/dra_psp/64480", ExecCdSoundCommands);
+void ExecCdSoundCommands(void) {
+    if (g_CdSoundCommandQueuePos == 0) {
+        return;
+    }
+    switch (g_CdSoundCommandQueue[0]) {
+    case 0:
+        AdvanceCdSoundCommandQueue();
+        break;
+
+    case CD_SOUND_COMMAND_FADE_OUT_2:
+        CdFadeOut2();
+        break;
+
+    case 31:
+        func_psp_09141E30();
+        break;
+
+    case CD_SOUND_COMMAND_FADE_OUT_1:
+        CdFadeOut1();
+        break;
+
+    case CD_SOUND_COMMAND_START_XA:
+        CdSoundCommand4();
+        break;
+
+    case CD_SOUND_COMMAND_6:
+        CdSoundCommand6();
+        break;
+
+    case CD_SOUND_COMMAND_8:
+        CdSoundCommand8();
+        break;
+
+    case CD_SOUND_COMMAND_10:
+        CdSoundCommand10();
+        break;
+
+    case CD_SOUND_COMMAND_12:
+        CdSoundCommand12();
+        break;
+
+    case CD_SOUND_COMMAND_14:
+        CdSoundCommand14();
+        break;
+
+    case CD_SOUND_COMMAND_16:
+        g_CdSoundCommand16 = 0;
+        AdvanceCdSoundCommandQueue();
+        break;
+    }
+}
 
 void PlaySfxScript(
     s16 arg0, s32 channel_group, bool do_key_off, u16 volume, s16 distance) {
