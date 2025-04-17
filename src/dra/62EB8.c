@@ -843,8 +843,8 @@ u8 D_800A3728[] = {
 
 void func_801042C4(s32 arg0) {
     VECTOR sp10;
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
     const int PrimCount = 4;
 
     D_80137EE0 = arg0;
@@ -861,29 +861,27 @@ void func_801042C4(s32 arg0) {
     func_80103EAC();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
+    #if !defined(VERSION_PSP)
     D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
+    #endif
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
     D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
-    prim = &g_PrimBuf[D_80137E48];
-    i = 0;
 
-    for (i = 0; i < PrimCount; i++) {
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next, i++) {
         prim->x0 = (i & 1) << 7;
         prim->y0 = (i / 2) * 0xD8;
         prim->u0 = 0x80;
         prim->v0 = 0x20;
 
         if ((i < 2 && !(g_StageId & 0x20)) || (i >= 2 && g_StageId & 0x20)) {
-            prim->g0 = 0x10;
-            prim->r0 = 0x10;
+            prim->r0 = prim->g0 = 0x10;
             prim->b0 = 8;
         }
 
         prim->priority = 0x1EB;
         prim->drawMode = DRAW_DEFAULT;
-        prim = prim->next;
     }
 
     for (i = 0; i < LEN(D_80137B20); i++) {
@@ -911,34 +909,26 @@ void func_801042C4(s32 arg0) {
 
     SetGeomScreen(0x100);
     D_80137E40 = AllocPrimitives(5U, 0x18);
-    prim = &g_PrimBuf[D_80137E40];
-    if (prim != NULL) {
-        do {
-            prim->u0 = 0xDB;
-            prim->v0 = 0xA8;
-            prim->u1 = 0xBC;
-            prim->v1 = 0xDE;
-            prim->u2 = 0xFA;
-            prim->v2 = 0xDE;
-            prim->tpage = 0x1B;
-            prim->clut = arg0 + 0x1F1;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-        } while (prim != NULL);
+    for (prim = &g_PrimBuf[D_80137E40]; prim != NULL; prim = prim->next) {
+        prim->u0 = 0xDB;
+        prim->v0 = 0xA8;
+        prim->u1 = 0xBC;
+        prim->v1 = 0xDE;
+        prim->u2 = 0xFA;
+        prim->v2 = 0xDE;
+        prim->tpage = 0x1B;
+        prim->clut = arg0 + 0x1F1;
+        prim->drawMode = DRAW_HIDE;
     }
     D_80137E44 = AllocPrimitives(2U, 0x12);
-    prim = &g_PrimBuf[D_80137E44];
-    if (prim != NULL) {
-        do {
-            prim->r0 = 0xFF;
-            prim->g0 = 0xFF;
-            prim->b0 = 0xFF;
-            prim->r1 = 0xFF;
-            prim->g1 = 0xFF;
-            prim->b1 = 0xFF;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-        } while (prim != NULL);
+    for (prim = &g_PrimBuf[D_80137E44]; prim != NULL; prim = prim->next) {
+        prim->r0 = 0xFF;
+        prim->g0 = 0xFF;
+        prim->b0 = 0xFF;
+        prim->r1 = 0xFF;
+        prim->g1 = 0xFF;
+        prim->b1 = 0xFF;
+        prim->drawMode = DRAW_HIDE;
     }
 }
 

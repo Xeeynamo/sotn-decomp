@@ -861,13 +861,15 @@ void func_801042C4(s32 arg0) {
     func_80103EAC();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
+    #if !defined(VERSION_PSP)
+    D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
+    #endif
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
     D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
 
-    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next,
-        i++) {
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next, i++) {
         prim->x0 = (i & 1) << 7;
         prim->y0 = (i / 2) * 0xD8;
         prim->u0 = 0x80;
