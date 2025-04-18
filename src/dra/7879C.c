@@ -2292,7 +2292,7 @@ void EntityUnkId24(Entity* self) {
 }
 
 // same as RIC/func_80162E9C
-bool func_8011BD48(Entity* entity) {
+static bool func_8011BD48(Entity* entity) {
     s16 objId = entity->entityId;
     s16 params = entity->params;
     Entity* e;
