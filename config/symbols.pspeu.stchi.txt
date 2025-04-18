@@ -103,6 +103,7 @@ func_pspeu_0924ED28 = 0x0924ED28;
 func_pspeu_0924F300 = 0x0924F300;
 func_pspeu_0924F6D0 = 0x0924F6D0;
 g_EInitDamageNum = 0x09254BD0;
+g_ItemIconSlots = 0x0926BB20;
 D_psp_0924BC68 = 0x0926BB68;
 D_psp_0924BC70 = 0x0926BB70;
 D_psp_0924BC78 = 0x0926BB78;

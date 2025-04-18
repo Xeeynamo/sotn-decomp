@@ -45,7 +45,7 @@ segments:
     subsegments:
       - [0x80, c, chi_psp/create_entity]
       - [0x5C28, c, chi_psp/e_red_door]
-      - [0x6F30, c, chi_psp/st_update]
+      - [0x6F30, c, chi/st_update]
       - [0x7468, c, chi_psp/e_particles]
       - [0x89F8, c, chi/ut_blit_char]
       - [0x9088, c, chi_psp/e_collect]
@@ -56,6 +56,8 @@ segments:
       - [0xFC38, c, chi_psp/st_common]
       - [0x10DC0, c, chi_psp/prim_helpers]
       - [0x18900, data]
+      - [0x18C50, .data, chi/st_update]
+      - [0x18C80, data]
       - [0x19298, .data, chi/st_collision]
       - [0x19670, data]
       - [0x34300, .rodata, chi_psp/create_entity]
