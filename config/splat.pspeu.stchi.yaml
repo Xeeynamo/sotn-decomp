@@ -47,7 +47,7 @@ segments:
       - [0x5C28, c, chi_psp/e_red_door]
       - [0x6F30, c, chi_psp/st_update]
       - [0x7468, c, chi_psp/e_particles]
-      - [0x8AD0, c, chi_psp/blit_char]
+      - [0x89F8, c, chi/ut_blit_char]
       - [0x9088, c, chi_psp/e_collect]
       - [0xB1C8, c, chi_psp/e_misc]
       - [0xD350, c, chi_psp/collision]
@@ -61,5 +61,7 @@ segments:
       - [0x34380, .rodata, chi_psp/e_collect]
       - [0x343B8, .rodata, chi_psp/e_misc]
       - [0x343E0, .rodata, chi_psp/prim_helpers]
-      - {type: bss, vram: 0x926BB00}
+      - {start: 0x34480, type: bss, vram: 0x0926BB00, name: bss1}
+      - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
+      - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss2}
   - [0x34480]
