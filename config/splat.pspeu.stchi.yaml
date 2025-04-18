@@ -54,7 +54,7 @@ segments:
       - [0xD350, c, chi/st_collision]
       - [0xF528, c, chi/en_popup]
       - [0xFB20, c, chi/en_room_foreground]
-      - [0xFC38, c, chi_psp/st_common]
+      - [0xFC38, c, chi/ut_common]
       - [0x10DC0, c, chi/ut_prim_helpers]
       - [0x11550, c, chi_psp/11550]
       - [0x18900, data]
