@@ -1145,15 +1145,16 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         } else if ((arg0 != 2) && (arg2 >= 0x40)) {
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-            prim->r0 = ((prim->r0 * (0x7F - arg2)) >> 6);
-            prim->g0 = ((prim->g0 * (0x7F - arg2)) >> 6);
-            prim->b0 = ((prim->b0 * (0x7F - arg2)) >> 6);
-            prim->r1 = ((prim->r1 * (0x7F - arg2)) >> 6);
-            prim->g1 = ((prim->g1 * (0x7F - arg2)) >> 6);
-            prim->b1 = ((prim->b1 * (0x7F - arg2)) >> 6);
-            prim->r2 = ((prim->r2 * (0x7F - arg2)) >> 6);
-            prim->g2 = ((prim->g2 * (0x7F - arg2)) >> 6);
-            prim->b2 = ((prim->b2 * (0x7F - arg2)) >> 6);
+            j = (0x7F - arg2);
+            prim->r0 = ((prim->r0 * j) >> 6);
+            prim->g0 = ((prim->g0 * j) >> 6);
+            prim->b0 = ((prim->b0 * j) >> 6);
+            prim->r1 = ((prim->r1 * j) >> 6);
+            prim->g1 = ((prim->g1 * j) >> 6);
+            prim->b1 = ((prim->b1 * j) >> 6);
+            prim->r2 = ((prim->r2 * j) >> 6);
+            prim->g2 = ((prim->g2 * j) >> 6);
+            prim->b2 = ((prim->b2 * j) >> 6);
         }
     }
 }
