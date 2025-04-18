@@ -1,16 +1,7 @@
 | Filename                     | Function Name   |   Length |   Branches | WIP                             | %     |
 |------------------------------|-----------------|----------|------------|---------------------------------|-------|
-| alucard/f_nonmat/f60A56D8.s  | func_060A56D8   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60ADD50.s  | func_060ADD50   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60ADD5C.s  | func_060ADD5C   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60ADD68.s  | func_060ADD68   |        9 |          0 |                                 |       |
 | alucard/f_nonmat/f60BD6C0.s  | func_060BD6C0   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60BD6CC.s  | func_060BD6CC   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60C0BE8.s  | func_060C0BE8   |        9 |          0 |                                 |       |
-| alucard/f_nonmat/f60BE354.s  | func_060BE354   |       11 |          0 |                                 |       |
-| alucard/f_nonmat/f60AF4A0.s  | func_060AF4A0   |       15 |          1 |                                 |       |
-| alucard/f_nonmat/f60BD6A8.s  | func_060BD6A8   |       15 |          1 |                                 |       |
-| alucard/f_nonmat/f60A7DD0.s  | func_060A7DD0   |       16 |          0 |                                 |       |
+| alucard/f_nonmat/f60A7DD0.s  | func_060A7DD0   |       16 |          0 | https://decomp.me/scratch/qQhhl | 0.667 |
 | game/f_nonmat/f607AF0C.s     | func_0607AF0C   |       17 |          0 | https://decomp.me/scratch/honea | 0.711 |
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0   |       17 |          0 | https://decomp.me/scratch/f6qn4 | 0.507 |
 | game/f_nonmat/f607872C.s     | func_0607872C   |       17 |          1 |                                 |       |
