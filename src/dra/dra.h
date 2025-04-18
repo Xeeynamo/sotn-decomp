@@ -274,7 +274,7 @@ typedef struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
     s16 unkc;
-    s8 unke;
+    u8 unke;
 } Cmd14;
 
 // Used for the button combos to signal successfully completing the sequence

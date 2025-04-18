@@ -386,7 +386,7 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
     }
 }
 
-void AddCdSoundCommand(s16 arg0) {
+static void AddCdSoundCommand(s16 arg0) {
     s32 i;
     s32 isFound;
 
@@ -425,7 +425,7 @@ void AddCdSoundCommand(s16 arg0) {
     }
 }
 
-void AdvanceCdSoundCommandQueue(void) {
+static void AdvanceCdSoundCommandQueue(void) {
     s32 i;
 
     for (i = 0; i < MAX_SND_COUNT - 1; i++) {
@@ -452,7 +452,7 @@ void CdSoundCommand4(void) {
         D_801390A0 = 1;
         g_CurrentXaConfigId = g_CurrentXaSoundId;
 #ifdef VERSION_HD
-        if (g_CurrentXaSoundId < 0x3d) {
+        if (g_CurrentXaSoundId < 0x3D) {
 #else
         if (g_CurrentXaSoundId < 0x40) {
 #endif
@@ -518,15 +518,13 @@ void CdSoundCommand4(void) {
     case 8:
         SsSetSerialAttr(0, 0, 1);
         D_8013AEF4 = VSync(-1);
-        g_CdSoundCommandStep = 0;
         D_8013901C = g_CurrentXaConfigId;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
 
     default:
-        g_CdSoundCommandStep = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
@@ -537,7 +535,7 @@ void CdSoundCommand4(void) {
 void CdSoundCommand6(void) {
     u32 cd_pos;
 
-    switch (g_CdSoundCommandStep & 0xFF) {
+    switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
         D_8013845C = g_CurrentXaSoundId;
@@ -571,22 +569,20 @@ void CdSoundCommand6(void) {
         D_8013AEF4 = VSync(-1);
         D_8013AE90 = g_XaMusicConfigs[D_8013845C + 1].unk228;
         SetReverbDepth(g_ReverbDepth);
-        g_CdSoundCommandStep = 0;
         D_8013901C = (s16)D_8013845C;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
 
     default:
-        g_CdSoundCommandStep = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
 }
 
 void CdFadeOut1(void) {
-    switch (g_CdSoundCommandStep & 0xFF) {
+    switch (g_CdSoundCommandStep) {
     case 0:
         if (D_8013901C == 0) {
             SetMaxVolume();
@@ -619,15 +615,14 @@ void CdFadeOut1(void) {
         SetMaxVolume();
         /* fallthrough */
     default:
-        g_CdSoundCommandStep = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
 }
 
 void CdFadeOut2(void) {
-    switch (g_CdSoundCommandStep & 0xFF) {
+    switch (g_CdSoundCommandStep) {
     case 0:
         if (D_8013901C == 0) {
             AdvanceCdSoundCommandQueue();
@@ -662,8 +657,7 @@ void CdFadeOut2(void) {
         break;
 
     default:
-        g_CdSoundCommandStep = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
@@ -686,7 +680,7 @@ void StopSeq(void) {
 void PlaySeq(s16 arg0) {
     s16 index;
 
-    if (g_SeqPlayingId != 0) {
+    if (g_SeqPlayingId) {
         StopSeq();
     }
     index = (u8)(arg0 & 0xFF);
@@ -723,13 +717,17 @@ void CdSoundCommand12(void) {
         if (D_8013901C == 0) {
             D_8013980C = 0;
             AdvanceCdSoundCommandQueue();
-            return;
+        } else {
+            D_801390A0 = 1;
+            g_CdSoundCommandStep++;
         }
-        D_801390A0 = 1;
-        g_CdSoundCommandStep++;
         break;
+
     case 1:
-        if (g_CdVolume <= 0 || (g_CdVolume -= 0xC, g_CdVolume <= 0)) {
+        if (g_CdVolume > 0) {
+            g_CdVolume -= 0xC;
+        }
+        if (g_CdVolume <= 0) {
             g_CdVolume = 0;
         }
         SetCdVolume(0, g_CdVolume, g_CdVolume);
@@ -737,11 +735,13 @@ void CdSoundCommand12(void) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 2:
         if (DoCdCommand(CdlGetlocL, NULL, D_8013B688) == 0) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 3:
         temp_a2 = VSync(-1);
         for (i = 0; i < 8; i++) {
@@ -760,18 +760,19 @@ void CdSoundCommand12(void) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 4:
         D_8013901C = 0;
         D_801390A0 = 0;
         D_8013980C = 0;
         g_CdSoundCommandStep = 0;
-        g_CdSoundCommand16 += 1;
+        g_CdSoundCommand16++;
         AdvanceCdSoundCommandQueue();
         break;
+
     default:
-        g_CdSoundCommandStep = 0;
         D_8013980C = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
@@ -780,20 +781,19 @@ void CdSoundCommand12(void) {
 void CdSoundCommand14(void) {
     s32 i;
 
-    switch (g_CdSoundCommandStep & 0xFF) {
+    switch (g_CdSoundCommandStep) {
     case 0:
-        if (g_CdSoundCommand16 == 0 || g_CdSoundCommand16 >= 3) {
+        if (g_CdSoundCommand16 == 0 || g_CdSoundCommand16 > 2) {
             D_8013980C = 0;
             AdvanceCdSoundCommandQueue();
-            return;
+            break;
         }
         if (D_8013901C != 0) {
             D_8013980C = 0;
             AdvanceCdSoundCommandQueue();
-            return;
+            break;
         }
         D_801390A0 = 1;
-
         for (i = 0; i < 8; i++) {
             D_8013B688[i] = D_8013B5F4[g_CdSoundCommand16 - 1].unk0[i];
         }
@@ -804,28 +804,33 @@ void CdSoundCommand14(void) {
         g_CdMode[0] = 0xC8;
         g_CdSoundCommandStep++;
         break;
+
     case 1:
         if (DoCdCommand(CdlSetmode, g_CdMode, NULL) == 0) {
             g_CdMode[0] = g_XaMusicConfigs[D_8013901C].filter_file;
-            g_CdMode[1] = g_XaMusicConfigs[D_8013901C].filter_channel_id & 0xf;
+            g_CdMode[1] = g_XaMusicConfigs[D_8013901C].filter_channel_id & 0xF;
             g_CdSoundCommandStep++;
         }
         break;
+
     case 2:
         if (DoCdCommand(CdlSetfilter, g_CdMode, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 3:
         if (DoCdCommand(CdlSetloc, D_8013B688, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 4:
         if (DoCdCommand(CdlReadN, NULL, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
         break;
+
     case 5:
         if (DoCdCommand(CdlNop, NULL, g_CdCommandResult) == 0) {
             if ((*g_CdCommandResult & 0x40) == 0) {
@@ -833,6 +838,7 @@ void CdSoundCommand14(void) {
             }
         }
         break;
+
     case 6:
         D_8013AEF4 = VSync(-1);
         SsSetSerialAttr(0, 0, 1);
@@ -840,14 +846,18 @@ void CdSoundCommand14(void) {
         D_80139014 = D_8013B5F4[g_CdSoundCommand16 - 1].unke;
         g_CdSoundCommandStep++;
         break;
+
     case 7:
-        if ((g_CdVolume >= g_XaMusicVolume) ||
-            (g_CdVolume += 0xC, g_CdVolume >= g_XaMusicVolume)) {
+        if (g_CdVolume < g_XaMusicVolume) {
+            g_CdVolume += 0xC;
+        }
+        if (g_CdVolume >= g_XaMusicVolume) {
             g_CdVolume = g_XaMusicVolume;
             g_CdSoundCommandStep++;
         }
         SetCdVolume(0, g_CdVolume, g_CdVolume);
         break;
+
     case 8:
         D_801390A0 = 0;
         D_8013980C = 0;
@@ -855,10 +865,10 @@ void CdSoundCommand14(void) {
         g_CdSoundCommand16--;
         AdvanceCdSoundCommandQueue();
         break;
+
     default:
-        g_CdSoundCommandStep = 0;
         D_8013980C = 0;
-        D_801390A0 = g_CdSoundCommandStep;
+        D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
         break;
     }
@@ -1058,7 +1068,7 @@ s32 SetVolumeCommand22_23(s16 vol, s16 distance) {
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] =
             SET_VOLUME_22_23;
         g_SoundCommandRingBufferWritePos++;
-        if (g_SoundCommandRingBufferWritePos == 0x100) {
+        if (g_SoundCommandRingBufferWritePos == MAX_SND_COUNT) {
             g_SoundCommandRingBufferWritePos = 0;
         }
     }
@@ -1082,7 +1092,7 @@ s32 PlaySfxVolPan(s16 sfxId, u16 sfxVol, s16 sfxPan) {
             ret = 0;
         }
         g_sfxRingBufferWritePos++;
-        if (g_sfxRingBufferWritePos == LEN(g_SfxRingBuffer)) {
+        if (g_sfxRingBufferWritePos == MAX_SND_COUNT) {
             g_sfxRingBufferWritePos = 0;
         }
     } else {
@@ -1100,7 +1110,7 @@ void PlaySfx(s16 sfxId) {
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndVol = 0xFFFF;
         g_SfxRingBuffer[g_sfxRingBufferWritePos].sndPan = 0;
         g_sfxRingBufferWritePos++;
-        if (g_sfxRingBufferWritePos == 0x100) {
+        if (g_sfxRingBufferWritePos == MAX_SND_COUNT) {
             g_sfxRingBufferWritePos = 0;
         }
     } else {
@@ -1125,7 +1135,7 @@ void PlaySfx(s16 sfxId) {
         }
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;
         g_SoundCommandRingBufferWritePos++;
-        if (g_SoundCommandRingBufferWritePos == 0x100) {
+        if (g_SoundCommandRingBufferWritePos == MAX_SND_COUNT) {
             g_SoundCommandRingBufferWritePos = 0;
         }
     }
@@ -1204,8 +1214,8 @@ void KeyOnChannels20_21(void) {
 void KeyOnChannels22_23(void) {
     u16 volume;
 
-    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
-    volume = volume * g_CurSfxVol22_23 >> 7;
+    volume = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume) >> 7;
+    volume = (volume * g_CurSfxVol22_23) >> 7;
     func_80132A04(
         22, g_SfxData[g_CurSfxId22_23].vabid, g_SfxData[g_CurSfxId22_23].prog,
         g_SfxData[g_CurSfxId22_23].tone, g_SfxData[g_CurSfxId22_23].note,
@@ -1219,8 +1229,8 @@ void KeyOnChannels22_23(void) {
 void SetVolume22_23(void) {
     u16 volume;
 
-    volume = g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume >> 7;
-    volume = volume * g_CurSfxVol22_23 >> 7;
+    volume = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume) >> 7;
+    volume = (volume * g_CurSfxVol22_23) >> 7;
     g_VolR = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 144]) >> 8;
     g_VolL = (volume * g_CdVolumeTable[g_CurSfxDistance22_23 * 2 + 145]) >> 8;
     SsUtSetVVol(22, g_VolL, g_VolR);
@@ -1504,9 +1514,9 @@ void ExecSoundCommands(void) {
 }
 
 void ExecCdSoundCommands(void) {
-    if (g_CdSoundCommandQueuePos == 0)
+    if (g_CdSoundCommandQueuePos == 0) {
         return;
-
+    }
     switch (g_CdSoundCommandQueue[0]) {
     case CD_SOUND_COMMAND_FADE_OUT_2:
         CdFadeOut2();
@@ -1514,24 +1524,31 @@ void ExecCdSoundCommands(void) {
     case CD_SOUND_COMMAND_FADE_OUT_1:
         CdFadeOut1();
         break;
+
     case CD_SOUND_COMMAND_START_XA:
         CdSoundCommand4();
         break;
+
     case CD_SOUND_COMMAND_6:
         CdSoundCommand6();
         break;
+
     case CD_SOUND_COMMAND_8:
         CdSoundCommand8();
         break;
+
     case CD_SOUND_COMMAND_10:
         CdSoundCommand10();
         break;
+
     case CD_SOUND_COMMAND_12:
         CdSoundCommand12();
         break;
+
     case CD_SOUND_COMMAND_14:
         CdSoundCommand14();
         break;
+
     case CD_SOUND_COMMAND_16:
         g_CdSoundCommand16 = 0;
     case 0:
@@ -1707,7 +1724,7 @@ void func_8013572C(s16 arg0, u16 volume, s16 distance) {
 }
 
 s16 IncrementRingBufferPos(s16 sfxBufPos) {
-    if (++sfxBufPos == LEN(g_SfxRingBuffer)) {
+    if (++sfxBufPos == MAX_SND_COUNT) {
         sfxBufPos = 0;
     }
 
