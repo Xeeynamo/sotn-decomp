@@ -578,14 +578,14 @@ void EntityHolyWater(Entity* self) {
     }
 }
 
-s16 D_800B0658[4][6] = {{0x0002, 0xFFFE, 0x0000, 0xFFFC, 0x0000, 0x0000},
-                        {0xFFFD, 0xFFFD, 0xFFFF, 0x0001, 0x0002, 0x0000},
-                        {0xFFFC, 0xFFFD, 0x0002, 0xFFFE, 0xFFFE, 0x0002},
-                        {0xFFFF, 0x0000, 0x0000, 0xFFFC, 0x0003, 0x0003}};
-
-// Glass breaking effect for holy water. Duplicate of RIC func_80167A70.
+// Glass breaking effect for holy water. Duplicate of RIC
+// RicEntityHolyWaterBreakGlass.
+static s16 D_800B0658[4][6] = {
+    {2, -2, 0, -4, 0, 0},
+    {-3, -3, -1, 1, 2, 0},
+    {-4, -3, 2, -2, -2, 2},
+    {-1, 0, 0, -4, 3, 3}};
 #define FAKEPRIM ((FakePrim*)prim)
-
 void EntityHolyWaterBreakGlass(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;
@@ -646,8 +646,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.timer.t = 20;
         self->step++;
-        return;
-
+        break;
     case 1:
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
@@ -677,6 +676,7 @@ void EntityHolyWaterBreakGlass(Entity* self) {
                 prim->y3 = prim->y2 = posY + D_800B0658[arrIndex][5];
             }
         }
+        break;
     }
 }
 

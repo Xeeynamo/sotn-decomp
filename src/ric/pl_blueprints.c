@@ -346,7 +346,7 @@ void RicEntityPlayerBlinkWhite(Entity* self);
 void RicEntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void RicEntityShrinkingPowerUpRing(Entity* self);
-void func_80167A70(Entity* self);
+void RicEntityHolyWaterBreakGlass(Entity* self);
 void RicEntitySubwpnThrownAxe(Entity* self);
 void RicEntityCrashAxe(Entity* self);
 void RicEntitySubwpnThrownDagger(Entity* self);
@@ -415,7 +415,7 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntitySubwpnCrashCrossParticles,
     func_801641A0,
     RicEntityShrinkingPowerUpRing,
-    func_80167A70,
+    RicEntityHolyWaterBreakGlass,
     RicEntitySubwpnThrownAxe,
     RicEntityCrashAxe,
     RicEntitySubwpnThrownDagger,
@@ -592,7 +592,7 @@ static FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 4),
     B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 8),
     B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 12),
-    B_MAKE(E_80167A70, 1, 1, true, true, 0, B_DECOR, 0, 0),
+    B_MAKE(E_HOLYWATER_BREAK_GLASS, 1, 1, true, true, 0, B_DECOR, 0, 0),
     B_MAKE(E_CRASH_AXE, 8, 8, NON_CRITICAL, true, 0, B_WPN, 1, 32),
     B_MAKE(E_HIT_BY_CUT_BLOOD, 3, 1, true, true, 3, B_DECOR, 0, 0),
     B_MAKE(E_SUBWPN_DAGGER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
