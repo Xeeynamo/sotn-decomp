@@ -142,8 +142,6 @@ void InitSoundVars1(void) {
         g_SfxRingBuffer[D_80138454].sndPan = 0;
     }
 
-    g_XaVolumeMultiplier = 0x20;
-    g_SfxVolumeMultiplier = 0x7F;
     g_SfxRingBufferReadPos = 0;
     g_sfxRingBufferWritePos = 0;
     g_SeqIsPlaying = 0;
@@ -163,6 +161,8 @@ void InitSoundVars1(void) {
     D_8013980C = 0;
     g_CdSoundCommandStep = 0;
     D_801390A0 = 0;
+    g_XaVolumeMultiplier = 0x20;
+    g_SfxVolumeMultiplier = 0x7F;
     g_SeqVolume1 = 0x70;
     g_SeqVolume2 = 0x70;
     D_8013B680 = 0;
