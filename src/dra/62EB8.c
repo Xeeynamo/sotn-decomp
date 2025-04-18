@@ -949,6 +949,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 i;
     s32 j;
     VECTOR sp94;
+    SVECTOR pad;
     SVECTOR sp7c[3];
     SVECTOR sp64[3];
     s32 unhiddenCount;
@@ -960,9 +961,11 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 Nclip3_result;
     s32 XZ_scale;
     s32 Y_scale;
+    s32 xyz_shift_temp;
     s32 xShift;
     s32 yShift;
     s32 zShift;
+    s32 stupid80;
     u8 sp70[4];
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
@@ -1023,18 +1026,18 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         zShift = 0;
         nclip_otz = 0;
         if (arg0 == 2) {
-            zShift = (i * 4);
-            zShift -= 0x5C;
-            zShift += arg2;
-            if (zShift < 0) {
-                zShift = 0;
+            xyz_shift_temp = (i * 4);
+            xyz_shift_temp -= 0x5C;
+            xyz_shift_temp += arg2;
+            if (xyz_shift_temp < 0) {
+                xyz_shift_temp = 0;
             }
-            if (zShift > 0x7F) {
-                zShift = 0x7F;
+            if (xyz_shift_temp > 0x7F) {
+                xyz_shift_temp = 0x7F;
             }
-            zShift <<= 0xC;
-            xShift = zShift;
-            yShift = -zShift * 4;
+            xyz_shift_temp <<= 0xC;
+            xShift = zShift = xyz_shift_temp;
+            yShift = -xyz_shift_temp * 4;
             if (vecSrc[i].vx < 0) {
                 xShift = -xShift;
             }
@@ -1051,13 +1054,14 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         vecScaledShifted[i].vx = ((vecSrc[i].vx * XZ_scale) + xShift);
         vecScaledShifted[i].vy = ((vecSrc[i].vy * Y_scale) + yShift);
         vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
+        stupid80 = 0x80;
         for (j = 0; j < 3; j++) {
             sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
-                                   (vecScaledShifted[i].vx >> 0xC);
+                                    (vecScaledShifted[i].vx >> 0xC);
             sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
-                                   (vecScaledShifted[i].vy >> 0xC);
+                                    (vecScaledShifted[i].vy >> 0xC);
             sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
-                                   (vecScaledShifted[i].vz >> 0xC);
+                                    (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
         Nclip3_result = RotAverageNclip3(
@@ -1082,12 +1086,12 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
             ((arg0 == 1) || (arg0 == 2) || ((arg0 == 3) && (arg2 >= 0x40)))) {
             prim->clut = (D_80137EE0 * 2) + 0x1F0;
-            prim->u0 = *uvPtr++ + 0x80;
-            prim->v0 = *uvPtr++ + 0x80;
-            prim->u1 = *uvPtr++ + 0x80;
-            prim->v1 = *uvPtr++ + 0x80;
-            prim->u2 = *uvPtr++ + 0x80;
-            prim->v2 = *uvPtr++ + 0x80;
+            prim->u0 = *uvPtr++ + stupid80;
+            prim->v0 = *uvPtr++ + stupid80;
+            prim->u1 = *uvPtr++ + stupid80;
+            prim->v1 = *uvPtr++ + stupid80;
+            prim->u2 = *uvPtr++ + stupid80;
+            prim->v2 = *uvPtr++ + stupid80;
             if (Nclip3_result < 0) {
                 prim->u0 = 0xD1;
                 prim->v0 = 0xF1;
@@ -1114,9 +1118,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         }
         if (arg0 == 3) {
             prim->drawMode = DRAW_COLORS;
-            continue;
-        }
-        if ((arg0 != 2) && (arg2 >= 0x40)) {
+        } else if ((arg0 != 2) && (arg2 >= 0x40)) {
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             j = (0x7F - arg2);
