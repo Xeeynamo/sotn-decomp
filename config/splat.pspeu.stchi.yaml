@@ -43,7 +43,8 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, chi_psp/create_entity]
+      - [0x80, c, chi/ut_create_entity]
+      - [0x1028, c, chi_psp/1028]
       - [0x5C28, c, chi/en_red_door]
       - [0x6F30, c, chi/st_update]
       - [0x7468, c, chi/en_particles]
@@ -63,12 +64,13 @@ segments:
       - [0x19298, .data, chi/st_collision]
       - [0x19670, .data, chi/en_room_foreground]
       - [0x19710, data]
-      - [0x34300, .rodata, chi_psp/create_entity]
+      - [0x34300, .rodata, chi_psp/1028]
       - [0x34368, .rodata, chi/en_red_door]
       - [0x34380, .rodata, chi_psp/e_collect]
       - [0x343B8, .rodata, chi_psp/e_misc]
       - [0x343E0, .rodata, chi_psp/prim_helpers]
-      - {start: 0x34480, type: bss, vram: 0x0926BB00, name: bss1}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
+      - {start: 0x34480, type: bss, vram: 0x0926BB20, name: bss1}
       - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss2}
   - [0x34480]
