@@ -1,0 +1,77 @@
+options:
+  platform: psp
+  basename: stchi
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
+  asm_path: asm/pspeu/st/chi_psp
+  asset_path: assets/st/chi
+  src_path: src/st
+  ld_script_path: build/pspeu/stchi.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stchi.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stchi.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stchi.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  nonmatchings_path: nonmatchings
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 6d2113b98203cfd239b58a7822910f9febb4c1ef
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stchi
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_size: 0x180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, chi/ut_create_entity]
+      - [0x1028, c, chi_psp/1028]
+      - [0x5C28, c, chi/en_red_door]
+      - [0x6F30, c, chi/st_update]
+      - [0x7468, c, chi/en_particles]
+      - [0x89F8, c, chi/ut_blit_char]
+      - [0x9088, c, chi_psp/e_collect]
+      - [0xC300, c, chi_psp/e_misc]
+      - [0xD350, c, chi/st_collision]
+      - [0xF528, c, chi/en_popup]
+      - [0xFB20, c, chi/en_room_foreground]
+      - [0xFC38, c, chi/ut_common]
+      - [0x10DC0, c, chi/ut_prim_helpers]
+      - [0x11550, c, chi_psp/11550]
+      - [0x18900, data]
+      - [0x18C38, .data, chi/en_red_door]
+      - [0x18C50, .data, chi/st_update]
+      - [0x18C80, .data, chi/en_particles]
+      - [0x18D00, .data, chi_psp/e_collect]
+      - [0x19248, data]
+      - [0x19298, .data, chi/st_collision]
+      - [0x19670, .data, chi/en_room_foreground]
+      - [0x19710, data]
+      - [0x34300, .rodata, chi_psp/1028]
+      - [0x34368, .rodata, chi/en_red_door]
+      - [0x34380, .rodata, chi_psp/e_collect]
+      - [0x343E0, .rodata, chi_psp/11550]
+      - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi_psp/e_collect}
+      - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
+      - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss2}
+  - [0x34480]
