@@ -1508,8 +1508,8 @@ typedef struct {
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
 typedef struct {
-    f32 unk7C;
-    f32 unk80;
+    s32 prevX;
+    s32 prevY;
     s16 unk84;
     s16 unk86;
     s32 unk88;
@@ -1517,8 +1517,8 @@ typedef struct {
     s16 unk8E;
     s32 unk90;
     s32 unk94;
-    s32 unk98;
-    s32 unk9C;
+    s32 curX;
+    s32 curY;
     s32 unkA0;
     s16 unkA4;
     s16 unkA6;
