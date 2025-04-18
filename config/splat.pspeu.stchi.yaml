@@ -50,7 +50,7 @@ segments:
       - [0x7468, c, chi/en_particles]
       - [0x89F8, c, chi/ut_blit_char]
       - [0x9088, c, chi_psp/e_collect]
-      - [0xB1C8, c, chi_psp/e_misc]
+      - [0xC300, c, chi_psp/e_misc]
       - [0xD350, c, chi/st_collision]
       - [0xF528, c, chi/en_popup]
       - [0xFB20, c, chi/en_room_foreground]
@@ -61,17 +61,17 @@ segments:
       - [0x18C38, .data, chi/en_red_door]
       - [0x18C50, .data, chi/st_update]
       - [0x18C80, .data, chi/en_particles]
-      - [0x18D00, data]
+      - [0x18D00, .data, chi_psp/e_collect]
+      - [0x19248, data]
       - [0x19298, .data, chi/st_collision]
       - [0x19670, .data, chi/en_room_foreground]
       - [0x19710, data]
       - [0x34300, .rodata, chi_psp/1028]
       - [0x34368, .rodata, chi/en_red_door]
       - [0x34380, .rodata, chi_psp/e_collect]
-      - [0x343B8, .rodata, chi_psp/e_misc]
       - [0x343E0, .rodata, chi_psp/11550]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
-      - {start: 0x34480, type: bss, vram: 0x0926BB20, name: bss1}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi_psp/e_collect}
       - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss2}
   - [0x34480]
