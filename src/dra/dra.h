@@ -299,7 +299,6 @@ extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
 
-extern SVECTOR* D_800A3608[];
 extern MATRIX D_800A37B8;
 extern u16 D_800A37D8[2];
 extern u16 g_JosephsCloakColors[4];

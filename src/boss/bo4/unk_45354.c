@@ -74,7 +74,16 @@ s32 CheckMoveDirection(void) {
     return 0;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C55A8);
+s32 func_us_801C55A8(s32 minX, s32 maxX) {
+    if (DOPPLEGANGER.step == 1 && DOPPLEGANGER.step == DOPPLEGANGER.step_s) {
+        if (DOPPLEGANGER.posX.i.hi >= minX) {
+            if (maxX >= DOPPLEGANGER.posX.i.hi) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 #include "../../set_speed_x.h"
 
@@ -85,7 +94,16 @@ void func_8010E3B8(s32 velocityX) {
     DOPPLEGANGER.velocityX = velocityX;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010E470);
+extern u8 D_us_80181318[][2];
+void func_8010E470(s32 arg0, s32 velocityX) {
+    s32 unused_stack[2];
+
+    DOPPLEGANGER.velocityX = velocityX;
+    DOPPLEGANGER.velocityY = 0;
+    DOPPLEGANGER.step = 3;
+    DOPPLEGANGER.step_s = D_us_80181318[arg0][0];
+    SetPlayerAnim(D_us_80181318[arg0][1]);
+}
 
 extern u8 D_us_80181320[];
 
@@ -219,7 +237,18 @@ void func_us_801C5A4C(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010EA54);
+extern s16 D_us_8018132C[];
+
+void func_8010EA54(s32 arg0) {
+    s16 temp_hi;
+
+    if (arg0 != 0) {
+        temp_hi = rand() % arg0;
+        if (temp_hi < 4) {
+            g_api.PlaySfx(D_us_8018132C[temp_hi]);
+        }
+    }
+}
 
 s32 func_us_801C5B68(void) {
     Entity* entity;
@@ -274,17 +303,41 @@ s32 func_us_801C5B68(void) {
     return 0;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010ED54);
+void func_8010ED54(u8 anim) {
+    DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
+    SetPlayerStep(16);
+    SetPlayerAnim(anim);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
+    g_Dop.unk48 = 0;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5CF8);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_8010FAF4);
+void func_8010FAF4(void) {
+    Entity* ent = &g_Entities[E_ID_50];
+    DestroyEntity(ent);
+    g_Dop.unk46 = 0;
+}
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C5FDC);
+void func_us_801C5FDC(void) {
+    DOPPLEGANGER.step = 1;
+    DOPPLEGANGER.step_s = 3;
+    SetSpeedX(FIX(-3.5));
+    g_CurrentEntity->velocityY = FIX(0.0);
+    SetPlayerAnim(0xDB);
+    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C6040);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_80111CC0);
+void func_80111CC0(void) {
+    if (g_Dop.timers[1] != 0) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x17), 0);
+    }
+    if (g_Dop.timers[0] != 0) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x16), 0);
+    }
+}
 
 void func_us_801C6654(void) {
     s32 anim;
@@ -373,7 +426,14 @@ void PlayerStepWalk(void) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C68D0);
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_45354", func_us_801C6BA0);
+void func_us_801C6BA0(void) {
+    if (func_us_801C6040(0x9029) == 0) {
+        DecelerateX(FIX(1.0 / 16.0));
+        if (CheckMoveDirection() != 0) {
+            SetSpeedX(FIX(3.0 / 4.0));
+        }
+    }
+}
 
 void func_us_801C6BE8(void) {
     s32 anim;

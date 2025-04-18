@@ -2554,7 +2554,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.width = 0;
             self->ext.teleport.timer = 4;
             self->step++;
-            g_Player.unk1C = 1;
+            g_Player.warp_flag = 1;
             PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;

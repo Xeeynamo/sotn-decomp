@@ -439,7 +439,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     g_Player.timers[PL_T_3] = 2;
 }
 
-// Entity ID #21. Blueprint 22. Called in RicHandleDeadPrologue.
+// Entity ID #21. Blueprint 22. Called in RicStepDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
 void RicEntityRevivalColumn(Entity* self) {
     Primitive* prim;

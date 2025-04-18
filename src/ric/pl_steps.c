@@ -25,7 +25,7 @@ void func_80158B04(u16 arg0) {
     }
 }
 
-void RicHandleStand(void) {
+void RicStepStand(void) {
     s16 xMod;
     s32 facing;
 
@@ -114,7 +114,7 @@ void RicHandleStand(void) {
     }
 }
 
-void RicHandleWalk(void) {
+void RicStepWalk(void) {
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
         RicDecelerateX(FIX(0.125));
@@ -131,7 +131,7 @@ void RicHandleWalk(void) {
     }
 }
 
-void RicHandleRun(void) {
+void RicStepRun(void) {
 #ifdef VERSION_US
     if (g_Player.unk7A != 0) {
         RicSetWalk(0);
@@ -165,7 +165,7 @@ void RicHandleRun(void) {
     }
 }
 
-void RicHandleJump(void) {
+void RicStepJump(void) {
     s32 facing;
 
     if (!g_IsPrologueStage && (PLAYER.velocityY < FIX(-1)) &&
@@ -296,7 +296,7 @@ void RicHandleJump(void) {
     }
 }
 
-void RicHandleFall(void) {
+void RicStepFall(void) {
     if (RicCheckInput(
             CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
         return;
@@ -313,7 +313,7 @@ void RicHandleFall(void) {
     }
 }
 
-void RicHandleCrouch(void) {
+void RicStepCrouch(void) {
     s32 i;
     s16 xShift;
     s32 facing;
@@ -484,15 +484,14 @@ void func_80159C04(void) {
     }
 }
 
-void RicHandleDead(
+void RicStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 #ifdef VERSION_PSP
 extern s32 ric_hit_stun_timer;
 #else
 static s32 ric_hit_stun_timer;
 #endif
-void RicHandleHit(
-    s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
+void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
     s32 damageResult;
     s16 xShift;
@@ -689,7 +688,7 @@ void RicHandleHit(
             damageResult = g_api.CalcPlayerDamage(&damage);
             if (damageResult) {
                 RicSetStep(PL_S_DEAD);
-                RicHandleDead(0, 2, PL_S_HIT, 2);
+                RicStepDead(0, 2, PL_S_HIT, 2);
                 return;
             }
             break;
@@ -732,7 +731,7 @@ void RicHandleHit(
                     damageResult = g_api.CalcPlayerDamage(&damage);
                     if (damageResult) {
                         RicSetStep(PL_S_DEAD);
-                        RicHandleDead(0, 2, PL_S_HIT, 2);
+                        RicStepDead(0, 2, PL_S_HIT, 2);
                         return;
                     }
                     break;
@@ -752,7 +751,7 @@ void RicHandleHit(
         damageResult = g_api.CalcPlayerDamage(&damage);
         if (damageResult) {
             RicSetStep(PL_S_DEAD);
-            RicHandleDead(0, 2, PL_S_HIT, 2);
+            RicStepDead(0, 2, PL_S_HIT, 2);
             return;
         }
         break;
@@ -828,7 +827,7 @@ void RicHandleHit(
     }
 }
 
-void RicHandleBossGrab(void) {
+void RicStepBossGrab(void) {
     DamageParam damage;
     s32 damageResult;
 
@@ -854,7 +853,7 @@ void RicHandleBossGrab(void) {
             damageResult = g_api.CalcPlayerDamage(&damage);
             if (damageResult) {
                 RicSetStep(PL_S_DEAD);
-                RicHandleDead(0, 2, PL_S_BOSS_GRAB, 1);
+                RicStepDead(0, 2, PL_S_BOSS_GRAB, 1);
                 return;
             }
             if (g_Player.unk62 == 0) {
@@ -900,7 +899,7 @@ static s16 D_80174F6C;
 STATIC_PAD_BSS(2);
 static enum DeathKind death_kind;
 #endif
-void RicHandleDead(
+void RicStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
     s32 j;
     s32 i;
@@ -1054,7 +1053,7 @@ void RicHandleDead(
     }
 }
 
-void RicHandleStandInAir(void) {
+void RicStepStandInAir(void) {
     if (PLAYER.step_s == 0) {
         PLAYER.velocityY += 0x3800;
         if (PLAYER.velocityY > 0) {
@@ -1072,7 +1071,7 @@ void RicHandleStandInAir(void) {
     }
 }
 
-void RicHandleEnableFlameWhip(void) {
+void RicStepEnableFlameWhip(void) {
     if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.poseTimer == 1)) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
@@ -1095,7 +1094,7 @@ void RicHandleEnableFlameWhip(void) {
     }
 }
 
-void RicHandleHydrostorm(void) {
+void RicStepHydrostorm(void) {
     if (PLAYER.poseTimer < 0) {
         RicSetStand(0);
         g_Player.unk46 = 0;
@@ -1107,7 +1106,7 @@ void RicHandleHydrostorm(void) {
     }
 }
 
-void RicHandleGenericSubwpnCrash(void) {
+void RicStepGenericSubwpnCrash(void) {
     if (g_Player.unk4E) {
         RicSetStand(0);
         g_Player.unk46 = 0;
@@ -1124,7 +1123,7 @@ extern s32 throw_dagger_timer;
 #else
 static s32 throw_dagger_timer;
 #endif
-void RicHandleThrowDaggers(void) {
+void RicStepThrowDaggers(void) {
     if (PLAYER.step_s == 0) {
         throw_dagger_timer = 0x200;
         PLAYER.step_s++;
@@ -1156,7 +1155,7 @@ extern s32 dead_prologue_timer;
 #else
 static s32 dead_prologue_timer;
 #endif
-void RicHandleDeadPrologue(void) {
+void RicStepDeadPrologue(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
@@ -1275,7 +1274,7 @@ void RicHandleDeadPrologue(void) {
     }
 }
 
-void RicHandleSlide(void) {
+void RicStepSlide(void) {
     s32 isTouchingGround = 0;
 
     if (PLAYER.facingLeft == 0 && g_Player.vram_flag & 4) {
@@ -1367,7 +1366,7 @@ void func_8015BB80(void) {
 }
 
 // Corresponding DRA function is PlayerStepTeleport
-void func_8015BCD0(void) {
+void RicStepTeleport(void) {
     Entity* e;
 
     PLAYER.velocityY = 0;
@@ -1391,7 +1390,7 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
@@ -1412,7 +1411,7 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
@@ -1433,14 +1432,14 @@ void func_8015BCD0(void) {
         if (PLAYER.poseTimer < 0) {
             RicSetStand(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             RicSetStand(0);
         }
         break;
     }
 }
 
-void RicHandleSlideKick(void) {
+void RicStepSlideKick(void) {
     // If we are pressing square while in contact with an enemy
     // (as detected in g_Player.unk44), we will bounce back.
     if (g_Player.padPressed & PAD_SQUARE && g_Player.unk44 & 0x80) {
@@ -1501,7 +1500,7 @@ void RicHandleSlideKick(void) {
     }
 }
 
-void RicHandleBladeDash(void) {
+void RicStepBladeDash(void) {
     RicDecelerateX(0x1C00);
 
     if (PLAYER.poseTimer < 0) {
@@ -1524,7 +1523,7 @@ void RicHandleBladeDash(void) {
     }
 }
 
-void RicHandleHighJump(void) {
+void RicStepHighJump(void) {
     bool loadAnim;
 
 #if defined(VERSION_US)

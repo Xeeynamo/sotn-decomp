@@ -55,9 +55,9 @@ segments:
       - [0x19EFC, .data, pl_crash_cross]
       - [0x1A444, .rodata, pl_main] # UpdateEntityRichter
       - [0x1A5E0, .rodata, pl_debug]
-      - [0x1A5F0, .rodata, pl_handlers]
-      - [0x1A7A8, .rodata, pl_handlers] # func_8015BCD0 and onwards
-      - [0x1A7C0, .rodata, pl_handlers] # RicHandleHighJump
+      - [0x1A5F0, .rodata, pl_steps]
+      - [0x1A7A8, .rodata, pl_steps] # RicStepTeleport and onwards
+      - [0x1A7C0, .rodata, pl_steps] # RicStepHighJump
       - [0x1A800, .rodata, pl_utils]
       - [0x1A80C, .rodata, pl_setstep]
       - [0x1A904, .rodata, pl_collision]
@@ -78,7 +78,7 @@ segments:
       - [0x1AC50, .rodata, pl_crash_cross]
       - [0x1AC60, c, pl_main]
       - [0x1C7C0, c, pl_debug]
-      - [0x1CB04, c, pl_handlers]
+      - [0x1CB04, c, pl_steps]
       - [0x204AC, c, pl_utils]
       - [0x20C50, c, pl_setstep]
       - [0x21B6C, c, pl_collision]
@@ -90,7 +90,7 @@ segments:
       - [0x319C4, c, 319C4]
       - [0x359A4, c, 319C4]
       - [0x3728C, c, pl_crash_cross]
-      - [0x37B64, .bss, pl_handlers]
+      - [0x37B64, .bss, pl_steps]
       - [0x37F80, .bss, pl_collision]
       - [0x37F84, .bss, pl_blueprints]
       - [0x38080, .bss, 2A060]
