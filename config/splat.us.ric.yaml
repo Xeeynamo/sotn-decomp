@@ -49,8 +49,8 @@ segments:
       - [0x18F7C, .data, pl_blueprints] # RicEntityPlayerBlinkWhite and onwards
       - [0x1938C, .data, pl_anims]
       - [0x199AC, .data, pl_whip]
-      - [0x19D64, .data, 2BA68]
-      - [0x19D94, .data, 2C4C4]
+      - [0x19D64, .data, pl_subweapon_holywater]
+      - [0x19DDC, .data, pl_subweapon_cross]
       - [0x19E70, .data, pl_subweapons]
       - [0x19E98, .data, 2F8E8]
       - [0x19EE0, .data, 319C4]
@@ -69,11 +69,11 @@ segments:
       - [0x1A9E8, .rodata, pl_blueprints] # RicEntityPlayerBlinkWhite
       - [0x1AA28, .rodata, pl_blueprints] # RicEntityTeleport
       - [0x1AAA0, .rodata, pl_whip]
-      - [0x1AABC, .rodata, 2C4C4]
-      - [0x1AAD4, .rodata, 2C4C4] # RicEntitySubwpnCrashCross
-      - [0x1AAEC, .rodata, 2C4C4] # RicEntityRevivalColumn
-      - [0x1AB04, .rodata, 2C4C4] # RicEntitySubwpnCross
-      - [0x1AB24, .rodata, 2C4C4] # RicEntitySubwpnAgunea
+      - [0x1AABC, .rodata, pl_subweapon_holywater] # RicEntitySubwpnHolyWater
+      - [0x1AAD4, .rodata, pl_subweapon_cross] # RicEntitySubwpnCrashCross
+      - [0x1AAEC, .rodata, pl_subweapon_cross] # RicEntityRevivalColumn
+      - [0x1AB04, .rodata, pl_subweapon_cross] # RicEntitySubwpnCross
+      - [0x1AB24, .rodata, pl_subweapon_cross] # RicEntitySubwpnAgunea
       - [0x1AB24, .rodata, 2F8E8]
       - [0x1AB38, .rodata, 319C4]
       - [0x1AB68, .rodata, pl_crash_cross]
@@ -87,8 +87,8 @@ segments:
       - [0x238F8, c, pl_blueprints]
       - [0x2A784, c, pl_whip]
       - [0x2BA58, c, pl_subweapon_dummy]
-      - [0x2BA68, c, 2BA68]
-      - [0x2C4C4, c, 2C4C4]
+      - [0x2BA68, c, pl_subweapon_holywater]
+      - [0x2D02C, c, pl_subweapon_cross]
       - [0x2E26C, c, pl_subweapons]
       - [0x2F8E8, c, 2F8E8]
       - [0x319C4, c, 319C4]
@@ -98,7 +98,7 @@ segments:
       - [0x37F80, .bss, pl_collision]
       - [0x37F84, .bss, pl_blueprints]
       - [0x38080, .bss, pl_whip]
-      - [0x38088, .bss, 2C4C4]
+      - [0x38088, .bss, pl_subweapon_cross]
       - [0x3988C, .bss, pl_subweapons]
       - [0x39890, .bss, 2F8E8]
       - [0x39894, .bss, 319C4]
