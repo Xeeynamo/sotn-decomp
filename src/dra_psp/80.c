@@ -942,19 +942,19 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #else
     const s32 PRIORITY_SHIFT = 8;
 #endif
+
     s32 unused_interp;
     s32 nclip_otz;
     s32 unused_flag;
+    s32 i;
+    s32 j;
     VECTOR sp94;
-    SVECTOR pad;
     SVECTOR sp7c[3];
     SVECTOR sp64[3];
     s32 unhiddenCount;
     SVECTOR* vecSrc;
     SVECTOR** vecTriplet;
     u8* uvPtr;
-    s32 i;
-    s32 j;
     VECTOR* vecScaledShifted;
     Primitive* prim;
     s32 Nclip3_result;
@@ -963,6 +963,10 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 xShift;
     s32 yShift;
     s32 zShift;
+    u8 sp70[4];
+
+    sp70[2] = sp70[1] = sp70[0] = 0x80;
+    sp70[3] = 0;
 
     if (g_pads[1].tapped & PAD_TRIANGLE) {
         D_801379C8.vz += 0x40;
@@ -1133,10 +1137,8 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         if ((arg0 == 0) && (arg2 < 0x10)) {
             prim->priority -= PRIORITY_SHIFT;
         }
-        if (arg0 == 3) {
-            if (arg2 < 0x30) {
-                prim->priority -= PRIORITY_SHIFT;
-            }
+        if ((arg0 == 3) && (arg2 < 0x30)) {
+            prim->priority -= PRIORITY_SHIFT;
         }
         if (arg0 == 3) {
             prim->drawMode = DRAW_COLORS;

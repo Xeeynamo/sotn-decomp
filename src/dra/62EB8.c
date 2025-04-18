@@ -942,29 +942,28 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 #else
     const s32 PRIORITY_SHIFT = 8;
 #endif
+
     s32 unused_interp;
     s32 nclip_otz;
     s32 unused_flag;
+    s32 i;
+    s32 j;
     VECTOR sp94;
-    SVECTOR pad;
     SVECTOR sp7c[3];
     SVECTOR sp64[3];
-    u8 sp70[4];
-    s32 spA0;
     s32 unhiddenCount;
-    SVECTOR** spB0;
-    SVECTOR* var_s2;
-    VECTOR* var_s3;
-    Primitive* prim;
-    s32 temp_v0_5;
-    s32 var_a0;
-    s32 var_a1;
-    s32 var_a2_2;
-    s32 var_a3_2;
-    s32 j;
-    s32 var_v1;
-    s32 var_v1_2;
+    SVECTOR* vecSrc;
+    SVECTOR** vecTriplet;
     u8* uvPtr;
+    VECTOR* vecScaledShifted;
+    Primitive* prim;
+    s32 Nclip3_result;
+    s32 XZ_scale;
+    s32 Y_scale;
+    s32 xShift;
+    s32 yShift;
+    s32 zShift;
+    u8 sp70[4];
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
@@ -977,98 +976,94 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 
     switch (arg0) {
     case 0:
-        spB0 = &D_800A3210;
-        var_s3 = &D_801379E0;
-        var_s2 = &D_80137CA0;
+        vecTriplet = &D_800A3210[0][0];
+        vecScaledShifted = &D_801379E0[0];
+        vecSrc = &D_80137CA0[0];
         unhiddenCount = 0x14;
         break;
     case 1:
     case 2:
-        spB0 = &D_800A33A0;
-        var_s3 = &D_80137B20;
-        var_s2 = &D_80137D40;
+        vecTriplet = &D_800A33A0[0][0];
+        vecScaledShifted = &D_80137B20[0];
+        vecSrc = &D_80137D40[0];
         unhiddenCount = 0x18;
         break;
     case 3:
-        spB0 = &D_800A3608;
-        var_s3 = &D_80137B20;
-        var_s2 = &D_80137D40;
+        vecTriplet = &D_800A3608[0][0];
+        vecScaledShifted = &D_80137B20[0];
+        vecSrc = &D_80137D40[0];
         unhiddenCount = 0x18;
-        for (spA0 = 0; spA0 < LEN(D_800A3598); spA0++) {
-            D_80137E70[spA0].vx =
-                D_800A3598[spA0]->vx +
-                (((D_800A35D0[spA0]->vx - D_800A3598[spA0]->vx) * arg2) / 96);
-            D_80137E70[spA0].vy =
-                D_800A3598[spA0]->vy +
-                (((D_800A35D0[spA0]->vy - D_800A3598[spA0]->vy) * arg2) / 96);
-            D_80137E70[spA0].vz =
-                D_800A3598[spA0]->vz +
-                (((D_800A35D0[spA0]->vz - D_800A3598[spA0]->vz) * arg2) / 96);
-            D_80137E70[spA0].pad = 0;
+        for (i = 0; i < LEN(D_800A3598); i++) {
+            D_80137E70[i].vx =
+                D_800A3598[i]->vx +
+                (((D_800A35D0[i]->vx - D_800A3598[i]->vx) * arg2) / 96);
+            D_80137E70[i].vy =
+                D_800A3598[i]->vy +
+                (((D_800A35D0[i]->vy - D_800A3598[i]->vy) * arg2) / 96);
+            D_80137E70[i].vz =
+                D_800A3598[i]->vz +
+                (((D_800A35D0[i]->vz - D_800A3598[i]->vz) * arg2) / 96);
+            D_80137E70[i].pad = 0;
         }
     }
 
-    uvPtr = &D_800A3728;
-    for (spA0 = 0; spA0 < LEN(D_800A3210); spA0++, prim = prim->next,
-        spB0 += 3) {
-        if (spA0 >= unhiddenCount) {
+    uvPtr = &D_800A3728[0];
+    for (i = 0; i < LEN(D_800A3210); i++, prim = prim->next, vecTriplet += 3) {
+        if (i >= unhiddenCount) {
             prim->drawMode = DRAW_HIDE;
             continue;
         }
         TransMatrix(&D_80137E00, &D_801379D0); // types copied
         SetRotMatrix(&D_80137E00);             // types copied
         SetTransMatrix(&D_80137E00);           // types copied
-
-        var_a1 = 0;
-        var_a3_2 = 0;
-        var_a2_2 = 0;
-        var_a0 = arg2;
-        var_v1 = arg2;
+        XZ_scale = arg2;
+        Y_scale = arg2;
+        xShift = 0;
+        yShift = 0;
+        zShift = 0;
         nclip_otz = 0;
         if (arg0 == 2) {
-            var_v1_2 = (spA0 * 4);
-            var_v1_2 -= 0x5C;
-            var_v1_2 += arg2;
-            if (var_v1_2 < 0) {
-                var_v1_2 = 0;
+            zShift = (i * 4);
+            zShift -= 0x5C;
+            zShift += arg2;
+            if (zShift < 0) {
+                zShift = 0;
             }
-            if (var_v1_2 >= 0x80) {
-                var_v1_2 = 0x7F;
+            if (zShift > 0x7F) {
+                zShift = 0x7F;
             }
-            var_a2_2 = var_v1_2 << 0xC;
-            var_a1 = var_a2_2;
-            var_a3_2 = -var_a2_2 * 4;
-            if (var_s2[spA0].vx < 0) {
-                do {
-                    var_a1 = -var_a1;
-                } while (0);
+            zShift <<= 0xC;
+            xShift = zShift;
+            yShift = -zShift * 4;
+            if (vecSrc[i].vx < 0) {
+                xShift = -xShift;
             }
-            if (var_s2[spA0].vz < 0) {
-                var_a2_2 = -var_a2_2;
+            if (vecSrc[i].vz < 0) {
+                zShift = -zShift;
             }
-            var_a0 = 0;
-            var_v1 = 0;
+            XZ_scale = 0;
+            Y_scale = 0;
         }
         if (arg0 == 3) {
-            var_a0 = 0;
-            var_v1 = 0;
+            XZ_scale = 0;
+            Y_scale = 0;
         }
-        var_s3[spA0].vx = ((var_s2[spA0].vx * var_a0) + var_a1);
-        var_s3[spA0].vy = ((var_s2[spA0].vy * var_v1) + var_a3_2);
-        var_s3[spA0].vz = ((var_s2[spA0].vz * var_a0) + var_a2_2);
+        vecScaledShifted[i].vx = ((vecSrc[i].vx * XZ_scale) + xShift);
+        vecScaledShifted[i].vy = ((vecSrc[i].vy * Y_scale) + yShift);
+        vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
         for (j = 0; j < 3; j++) {
-            sp94.vx = sp7c[j].vx =
-                ((spB0[j]->vx * arg1) >> 8) + (var_s3[spA0].vx >> 0xC);
-            sp94.vy = sp7c[j].vy =
-                ((spB0[j]->vy * arg1) >> 8) + (var_s3[spA0].vy >> 0xC);
-            sp94.vz = sp7c[j].vz =
-                ((spB0[j]->vz * arg1) >> 8) + (var_s3[spA0].vz >> 0xC);
+            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
+                                   (vecScaledShifted[i].vx >> 0xC);
+            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
+                                   (vecScaledShifted[i].vy >> 0xC);
+            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
+                                   (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
-        temp_v0_5 = RotAverageNclip3(
+        Nclip3_result = RotAverageNclip3(
             &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
             (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
-        if (temp_v0_5 < 0) {
+        if (Nclip3_result < 0) {
             RotAverageNclip3(
                 &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
@@ -1078,14 +1073,14 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         if (nclip_otz >= 0xF0) {
             continue;
         }
-        if (temp_v0_5 >= 0) {
+        if (Nclip3_result >= 0) {
             prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 4;
         } else {
             prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 4;
         }
         prim->drawMode = DRAW_COLORS;
         if (((D_80137E4C == 6) || (D_80137EE0 != 0)) &&
-            (((u32)(arg0 - 1) < 2U) || ((arg0 == 3) && (arg2 >= 0x40)))) {
+            ((arg0 == 1) || (arg0 == 2) || ((arg0 == 3) && (arg2 >= 0x40)))) {
             prim->clut = (D_80137EE0 * 2) + 0x1F0;
             prim->u0 = *uvPtr++ + 0x80;
             prim->v0 = *uvPtr++ + 0x80;
@@ -1093,7 +1088,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
             prim->v1 = *uvPtr++ + 0x80;
             prim->u2 = *uvPtr++ + 0x80;
             prim->v2 = *uvPtr++ + 0x80;
-            if (temp_v0_5 < 0) {
+            if (Nclip3_result < 0) {
                 prim->u0 = 0xD1;
                 prim->v0 = 0xF1;
                 prim->u1 = 0xDE;
@@ -1114,25 +1109,23 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         if ((arg0 == 0) && (arg2 < 0x10)) {
             prim->priority -= PRIORITY_SHIFT;
         }
+        if ((arg0 == 3) && (arg2 < 0x30)) {
+            prim->priority -= PRIORITY_SHIFT;
+        }
         if (arg0 == 3) {
-            if (arg2 < 0x30) {
-                prim->priority -= PRIORITY_SHIFT;
-            }
             prim->drawMode = DRAW_COLORS;
         } else if ((arg0 != 2) && (arg2 >= 0x40)) {
-            // this i is a register reuse, not an iterator
-            j = 0x7F - arg2;
-            prim->r0 = ((prim->r0 * j) >> 6);
-            prim->g0 = ((prim->g0 * j) >> 6);
-            prim->b0 = ((prim->b0 * j) >> 6);
-            prim->r1 = ((prim->r1 * j) >> 6);
-            prim->g1 = ((prim->g1 * j) >> 6);
-            prim->b1 = ((prim->b1 * j) >> 6);
-            prim->r2 = ((prim->r2 * j) >> 6);
-            prim->g2 = ((prim->g2 * j) >> 6);
-            prim->b2 = ((prim->b2 * j) >> 6);
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            prim->r0 = ((prim->r0 * (0x7F - arg2)) >> 6);
+            prim->g0 = ((prim->g0 * (0x7F - arg2)) >> 6);
+            prim->b0 = ((prim->b0 * (0x7F - arg2)) >> 6);
+            prim->r1 = ((prim->r1 * (0x7F - arg2)) >> 6);
+            prim->g1 = ((prim->g1 * (0x7F - arg2)) >> 6);
+            prim->b1 = ((prim->b1 * (0x7F - arg2)) >> 6);
+            prim->r2 = ((prim->r2 * (0x7F - arg2)) >> 6);
+            prim->g2 = ((prim->g2 * (0x7F - arg2)) >> 6);
+            prim->b2 = ((prim->b2 * (0x7F - arg2)) >> 6);
         }
     }
 }
