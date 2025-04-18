@@ -112,13 +112,12 @@ void RicEntityHolyWaterBreakGlass(Entity* self) {
 void RicEntityCrashHydroStorm(Entity* self) {
     PrimLineG2* line;
     s16 primcount;
-    s32 trigresult;
-    s32 trigtemp;
+    s32 i;
 
     if (self->params < 40) {
         primcount = 32;
     } else {
-        primcount = 33 - ((self->params - 32) * 2);
+        primcount = 33 - (self->params - 32) * 2;
     }
 
     switch (self->step) {
@@ -132,8 +131,8 @@ void RicEntityCrashHydroStorm(Entity* self) {
         RicSetSubweaponParams(self);
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_HAS_PRIMS | FLAG_UNK_20000;
-        line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         self->facingLeft = 0;
+        line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
         while (line != NULL) {
             line->r0 = 0x1F;
             line->g0 = 0x1F;
@@ -141,21 +140,21 @@ void RicEntityCrashHydroStorm(Entity* self) {
             line->r1 = 0x3F;
             line->g1 = 0x50;
             line->b1 = 0x7F;
-            line->x1 = line->x0 = rand() & 0x1FF;
-            line->y0 = line->y1 = -(rand() & 0xF);
+            line->x0 = rand() & 0x1FF;
+            line->x1 = line->x0;
+            line->y0 = -(rand() & 0xF);
+            line->y1 = line->y0;
             line->preciseX.i.hi = line->x1;
             line->preciseY.i.hi = line->y1;
 
-            // This whole block is weird. Why are we calculating rcos
-            // and rsin on a fixed value at runtime? And why aren't
-            // these simple multiplications?
-            trigresult = rcos(0xB80);
-            trigtemp = trigresult * 16;
-            line->velocityX.val = (trigresult * 32 + trigtemp) * 4;
-            trigresult = rsin(0xB80);
-            trigtemp = trigresult * -16;
-            line->velocityY.val = trigtemp * 12;
-
+            // both rcos and rsin could be pre-calcualted values
+            // PSP and PSX are logically equivalent
+#if defined(VERSION_PSP)
+            line->velocityX.val = (rcos(0xB80) * 16) * 12;
+#else
+            line->velocityX.val = -(rcos(0xB80) * -16) * 12;
+#endif
+            line->velocityY.val = -(rsin(0xB80) * 16) * 12;
             line->timer = 0;
             line->delay = (rand() & 0xF) + 12;
             if (rand() & 1) {
@@ -177,7 +176,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
         break;
     case 1:
         line = (PrimLineG2*)&g_PrimBuf[self->primIndex];
-        while (line != NULL) {
+        for (i = 0; line != NULL; i++, line = line->next) {
             if (line->timer == 0) {
                 line->preciseX.i.hi = line->x1;
                 line->preciseY.i.hi = line->y1;
@@ -185,7 +184,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
                 line->preciseY.val += line->velocityY.val;
                 line->x1 = line->preciseX.i.hi;
                 line->y1 = line->preciseY.i.hi;
-                if (line->delay < line->y1) {
+                if (line->y1 > line->delay) {
                     line->timer++;
                     line->xLength = line->x0 - line->x1;
                     line->yLength = line->y0 - line->y1;
@@ -203,12 +202,11 @@ void RicEntityCrashHydroStorm(Entity* self) {
                     self->step = 2;
                 }
             }
-            line = line->next;
         }
         self->ext.subweapon.timer++;
         break;
     case 2:
-#if defined(VERSION_HD)
+#if defined(VERSION_HD) || defined(VERSION_PSP)
         if (self->params == 0x28) {
             g_Player.unk4E = 1;
         }
