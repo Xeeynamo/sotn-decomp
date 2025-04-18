@@ -260,9 +260,30 @@ s32 RicCheckHolyWaterCollision(s16 baseY, s16 baseX) {
     return 0;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", func_8016840C);
+// Equivalent to DRA func_80125B6C
+s32 func_8016840C(s16 y, s16 x) {
+    Collider collider;
+    s16 xShift;
 
+    if (g_CurrentEntity->velocityX == 0) {
+        return 0;
+    }
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi + x,
+                         g_CurrentEntity->posY.i.hi + y, &collider, 0);
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.i.hi += xShift;
+        g_CurrentEntity->posX.i.lo = 0;
+        return 2;
+    }
+    return 0;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWater);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWaterFlame);

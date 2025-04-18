@@ -259,27 +259,27 @@ s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
     return 0;
 }
 
-s32 func_8016840C(s16 x, s16 y) {
+// Equivalent to DRA func_80125B6C
+s32 func_8016840C(s16 y, s16 x) {
     Collider collider;
-    u16 temp;
+    s16 xShift;
 
-    if (g_CurrentEntity->velocityX != 0) {
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi + y,
-                             g_CurrentEntity->posY.i.hi + x, &collider, 0);
-        if (g_CurrentEntity->velocityX > 0) {
-            temp = collider.unk14;
-        } else {
-            temp = collider.unk1C;
-        }
-        if (!(collider.effects & EFFECT_UNK_0002)) {
-            return 0;
-        }
-    } else {
+    if (g_CurrentEntity->velocityX == 0) {
         return 0;
     }
-    g_CurrentEntity->posX.i.lo = 0;
-    g_CurrentEntity->posX.i.hi += temp;
-    return 2;
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi + x,
+                         g_CurrentEntity->posY.i.hi + y, &collider, 0);
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.i.hi += xShift;
+        g_CurrentEntity->posX.i.lo = 0;
+        return 2;
+    }
+    return 0;
 }
 
 // Unused?
