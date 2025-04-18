@@ -599,13 +599,18 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
 
-void func_06011F40(void) { func_06018D88(); }
+void func_06011F40(s32 param) { func_06018D88(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 
 // _KeyOffBGM2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011FC8, func_06011FC8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012030, func_06012030);
+
+extern s32 d_06063BE0;
+void func_06012030(void) {
+    func_06011F40(7);
+    d_06063BE0 = 0;
+}
 
 // _KeyOffVox
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012054, func_06012054);
