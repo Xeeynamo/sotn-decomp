@@ -545,11 +545,11 @@ void func_80103EAC(void) {
 }
 
 void func_80103ED4(void) {
-    #if defined(VERSION_PSP)
-    #define IFSTATEMENT (g_MemCardRetryCount-- == 0)
-    #else
-    #define IFSTATEMENT (--g_MemCardRetryCount == -1)
-    #endif
+#if defined(VERSION_PSP)
+#define IFSTATEMENT (g_MemCardRetryCount-- == 0)
+#else
+#define IFSTATEMENT (--g_MemCardRetryCount == -1)
+#endif
 
     char saveFile[32];
     s32 memCardClose;
@@ -637,7 +637,7 @@ void func_80103ED4(void) {
         // I believe the rand() call here selects the icon on the save
         // in the save-select screen.
         StoreSaveData(g_Pix, D_8006C378, rand() & 0xF);
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         func_psp_090DFC68();
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i, 1) != 0) {
             D_801379BC = 0x101;
@@ -647,12 +647,12 @@ void func_80103ED4(void) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 1;
             D_80137E4C = 6;
-        #else
+#else
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
             if (--g_MemCardRetryCount == -1) {
                 D_80137E4C = 0;
             }
-        #endif
+#endif
         } else {
             g_MemCardRetryCount = 10;
             D_80137E4C++;
@@ -861,15 +861,16 @@ void func_801042C4(s32 arg0) {
     func_80103EAC();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;
-    #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
     D_801379C0.vx = D_801379C0.vy = D_801379C0.vz = 0;
-    #endif
+#endif
 
     D_801379D0.vx = D_801379D0.vy = 0;
     D_801379D0.vz = 0x100;
     D_80137E48 = AllocPrimitives(PRIM_TILE, PrimCount);
 
-    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next, i++) {
+    for (prim = &g_PrimBuf[D_80137E48], i = 0; i < PrimCount; prim = prim->next,
+        i++) {
         prim->x0 = (i & 1) << 7;
         prim->y0 = (i / 2) * 0xD8;
         prim->u0 = 0x80;
@@ -970,11 +971,46 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
+
+#ifdef VERSION_PSP
+    if (g_pads[1].tapped & PAD_TRIANGLE) {
+        D_801379C8.vz += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_CROSS) {
+        D_801379C8.vz -= 0x40;
+    }
+
+    FntPrint("vz=0x%08x\n", D_801379C8.vz);
+
+    if (g_pads[1].tapped & PAD_SQUARE) {
+        D_801379C8.vy += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_CIRCLE) {
+        D_801379C8.vy -= 0x40;
+    }
+
+    FntPrint("vy=0x%08x\n", D_801379C8.vy);
+
+    if (g_pads[1].tapped & PAD_R2) {
+        D_801379C8.vx += 0x40;
+    }
+
+    if (g_pads[1].tapped & PAD_L2) {
+        D_801379C8.vx -= 0x40;
+    }
+
+    FntPrint("vx=0x%08x\n", D_801379C8.vx);
+#endif
+
     RotMatrix(&D_801379C8, &D_80137E00); // types copied
+#if !defined(VERSION_PSP)
     RotMatrix(&D_801379C8, &D_80137E20); // types copied
     SetColorMatrix(&D_800A37B8);         // types copied
     SetLightMatrix(&D_80137E20);         // types copied
     SetBackColor(0xC0, 0xC0, 0xC0);
+#endif
     prim = &g_PrimBuf[D_80137E40];
 
     switch (arg0) {
@@ -1057,11 +1093,11 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         stupid80 = 0x80;
         for (j = 0; j < 3; j++) {
             sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
-                                    (vecScaledShifted[i].vx >> 0xC);
+                                   (vecScaledShifted[i].vx >> 0xC);
             sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
-                                    (vecScaledShifted[i].vy >> 0xC);
+                                   (vecScaledShifted[i].vy >> 0xC);
             sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
-                                    (vecScaledShifted[i].vz >> 0xC);
+                                   (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
         Nclip3_result = RotAverageNclip3(
@@ -1072,7 +1108,12 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                 &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
+#if defined(VERSION_PSP)
+        PGREY(prim, 3) = PGREY(prim, 2) = PGREY(prim, 1) = PGREY(prim, 0) =
+            0xB0;
+#else
         func_801072DC(prim);
+#endif
         prim->type = PRIM_GT3;
         if (nclip_otz >= 0xF0) {
             continue;
