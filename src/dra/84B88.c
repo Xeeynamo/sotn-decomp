@@ -434,7 +434,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
     }
 }
 
-// Same RIC function is func_801682B4
+// Equivalent to RicCheckHolyWaterCollision
 s32 CheckHolyWaterCollision(s16 baseY, s16 baseX) {
     Collider res1;
     Collider res2;

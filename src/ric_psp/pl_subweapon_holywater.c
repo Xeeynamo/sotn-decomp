@@ -216,9 +216,51 @@ void RicEntityCrashHydroStorm(Entity* self) {
     g_Player.timers[PL_T_3] = 16;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicCheckHolyWaterCollision);
+// Equivalent to DRA CheckHolyWaterCollision
+s32 RicCheckHolyWaterCollision(s16 baseY, s16 baseX) {
+    Collider res1;
+    Collider res2;
+    s16 x;
+    s16 newY;
+    s16 y;
+    s16 collEffs;
 
+    const u32 colFullSet =
+        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000 |
+         EFFECT_UNK_0800 | EFFECT_SOLID);
+    const u32 colSetNo800 = (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_2000 | EFFECT_UNK_1000 | EFFECT_SOLID);
+    const u32 colSet1 = (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+    const u32 colSet2 = (EFFECT_UNK_8000 | EFFECT_SOLID);
+    x = g_CurrentEntity->posX.i.hi + baseX;
+    y = g_CurrentEntity->posY.i.hi + baseY;
+
+    g_api.CheckCollision(x, y, &res1, 0);
+    collEffs = res1.effects & colFullSet;
+    y = y - 1 + res1.unk18;
+    g_api.CheckCollision(x, y, &res2, 0);
+    newY = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+
+    if ((collEffs & colSet1) == EFFECT_SOLID ||
+        (collEffs & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+        collEffs = res2.effects & colSetNo800;
+        if (!(collEffs & EFFECT_SOLID)) {
+            g_CurrentEntity->posY.i.hi = newY;
+            return 1;
+        }
+        if ((res2.effects & colSet2) == colSet2) {
+            g_CurrentEntity->posY.i.hi = newY - 1 + res2.unk18;
+            return collEffs;
+        }
+        return 0;
+    } else if ((collEffs & colSet2) == colSet2) {
+        g_CurrentEntity->posY.i.hi = newY;
+        return collEffs & colSetNo800;
+    }
+    return 0;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", func_8016840C);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWater);
