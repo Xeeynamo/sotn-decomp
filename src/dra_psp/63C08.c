@@ -804,7 +804,8 @@ void CdSoundCommand14(void) {
     case 1:
         if (DoCdCommand(CdlSetmode, g_CdMode, NULL) == 0) {
             g_CdMode[0] = g_XaMusicConfigs[D_psp_092374B0].filter_file;
-            g_CdMode[1] = g_XaMusicConfigs[D_psp_092374B0].filter_channel_id & 0xF;
+            g_CdMode[1] =
+                g_XaMusicConfigs[D_psp_092374B0].filter_channel_id & 0xF;
             g_CdSoundCommandStep++;
         }
         break;

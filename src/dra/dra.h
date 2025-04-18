@@ -677,7 +677,7 @@ void SetMaxVolume(void);
 void InitSoundVars3(void);
 void InitSoundVars2(void);
 void InitSoundVars1(void);
-void AddCdSoundCommand(s16);
+static void AddCdSoundCommand(s16);
 u8 DoCdCommand(u_char com, u_char* param, u_char* result);
 void SoundWait(void);
 void MuteSound(void);
