@@ -131,6 +131,9 @@ void RicEntityWhip(Entity* self) {
     if (aimPath == 0) {
         psp_s0 = D_80155B2C_8[self->ext.whip.unk88];
     }
+    // @bug: up+down or left+right are not handled, psp_s0 will be undefined.
+    // this never happens due to physical limitatitions of the PS controller.
+
     self->ext.whip.unk86 = 0;
     if (psp_s4 == 0) {
         if (self->step == 1) {
