@@ -1176,13 +1176,6 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-extern SVECTOR* D_800A34C0[][3];
-
-extern SVECTOR D_801379C8;
-extern VECTOR D_801379D0;
-extern MATRIX D_80137E00;
-extern s32 D_80137E44;
-
 static void func_80105078(s32 arg0, s32 arg1) {
     s32 interp;
     s32 otz;
