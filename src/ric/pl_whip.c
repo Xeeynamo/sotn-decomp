@@ -104,6 +104,10 @@ void RicEntityWhip(Entity* self) {
         self->ext.whip.prevY += diffY;
     }
     aimPath = g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    // @bug: up+down or left+right are not handled, psp_s0 will be undefined.
+    // this never happens due to physical limitatitions of the PS controller.
+    ASSERT(aimPath != (PAD_UP | PAD_DOWN));
+    ASSERT(aimPath != (PAD_LEFT | PAD_RIGHT));
     if (aimPath == PAD_UP) {
         psp_s0 = D_80155B2C_0[self->ext.whip.unk88];
     }
@@ -131,8 +135,6 @@ void RicEntityWhip(Entity* self) {
     if (aimPath == 0) {
         psp_s0 = D_80155B2C_8[self->ext.whip.unk88];
     }
-    // @bug: up+down or left+right are not handled, psp_s0 will be undefined.
-    // this never happens due to physical limitatitions of the PS controller.
 
     self->ext.whip.unk86 = 0;
     if (psp_s4 == 0) {
