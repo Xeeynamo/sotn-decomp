@@ -55,7 +55,8 @@ segments:
       - [0xF528, c, chi/en_popup]
       - [0xFB20, c, chi/en_room_foreground]
       - [0xFC38, c, chi_psp/st_common]
-      - [0x10DC0, c, chi_psp/prim_helpers]
+      - [0x10DC0, c, chi/ut_prim_helpers]
+      - [0x11550, c, chi_psp/11550]
       - [0x18900, data]
       - [0x18C38, .data, chi/en_red_door]
       - [0x18C50, .data, chi/st_update]
@@ -68,7 +69,7 @@ segments:
       - [0x34368, .rodata, chi/en_red_door]
       - [0x34380, .rodata, chi_psp/e_collect]
       - [0x343B8, .rodata, chi_psp/e_misc]
-      - [0x343E0, .rodata, chi_psp/prim_helpers]
+      - [0x343E0, .rodata, chi_psp/11550]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
       - {start: 0x34480, type: bss, vram: 0x0926BB20, name: bss1}
       - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
