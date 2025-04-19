@@ -1,16 +1,42 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../chi/chi.h"
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityHeartDrop);
+#define HEART_DROP_CASTLE_FLAG 0xB0
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityMessageBox);
+#include "../entity_heart_drop.h"
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityUnkId13);
+#include "../entity_message_box.h"
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityExplosionVariants);
+#include "../entity_unkId13.h"
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityGreyPuff);
+// NOTE: This entity data is slightly out of order.
+// Grey puff data comes before explosion variants data,
+// but explosion variant entity comes before grey puff entity.
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", EntityIntenseExplosion);
+static s16 greyPuff_rot[] = {
+    /* FF8 */ 0x0030,
+    /* FFA */ 0x0050,
+    /* FFC */ 0x0080,
+    /* FFE */ 0x00B0,
+    /* 1000 */ 0x00D0,
+    /* 1002 */ 0x0100,
+    /* 1004 */ 0x0100,
+    /* 1006 */ 0x0000,
+};
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/e_misc", PlaySfxPositional);
+static s32 greyPuff_yVel[] = {
+    /* 1008 */ FIX(2.0 / 128),
+    /* 100C */ FIX(18.0 / 128),
+    /* 1010 */ FIX(30.0 / 128),
+    /* 1014 */ FIX(48.0 / 128),
+    /* 1018 */ FIX(60.0 / 128),
+    /* 101C */ FIX(96.0 / 128),
+};
+
+#include "../entity_explosion_variants.h"
+
+#include "../entity_greypuff.h"
+
+#include "../entity_intense_explosion.h"
+
+#include "../play_sfx_positional.h"
