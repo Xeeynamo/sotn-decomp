@@ -34,7 +34,21 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C44, func_06004C44);
 
 // _REPEAT_PAD
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004CDC, func_06004CDC);
+
+extern s16 d_0605C670[];
+void _func_06004CDC(void) {
+    s16* puVar1;
+    s16* puVar2;
+    s16* puVar3;
+
+    puVar1 = &d_0605C670[0];
+    puVar2 = &d_0605C670[1];
+    puVar3 = &d_0605C670[2];
+    d_0605C670[3] = 0;
+    *puVar3 = 0;
+    *puVar1 = 0;
+    *puVar2 = 0;
+}
 
 // _SET_VBLANK
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D00, func_06004D00);
@@ -74,7 +88,23 @@ void func_0600652C(void) {
     DAT_06038a44 = 0;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600654C, func_0600654C);
+struct Unk0600654C {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unka;
+    s32 unkc;
+    s32 unk10;
+};
+s32 func_06006574(struct Unk0600654C*);
+void func_0600654C(s32 param_1, s32 param_2) {
+    struct Unk0600654C unk;
+    unk.unk0 = param_1;
+    unk.unk4 = param_2;
+    unk.unk8 = -1;
+    unk.unka = 0;
+    func_06006574(&unk);
+}
 
 // _FileReadSetAdrEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
@@ -88,8 +118,11 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E14, func_06006E14);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E4C, func_06006E4C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006E9C, func_06006E9C);
 
+s32 func_0602DCFC();
+
 // _IsCdOpened
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006ED4, func_06006ED4);
+u32 func_06006ED4() { return (func_0602DCFC() >> 5) & 1; }
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006EF8, func_06006EF8);
 
 bool func_06006F50(void) { return 1; }
@@ -132,7 +165,14 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007F3A, func_06007F3A);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007F6C, func_06007F6C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, func_06008048);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008134, func_06008134);
+
+// func_06008134
+void SetVdp2BackgroundColor(void) {
+    s16 local_c[2];
+    local_c[0] = 0;
+    SCL_SetBack(0x25E7FE20, 1, local_c);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
 
@@ -162,7 +202,21 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60082E8, func_060082E8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600831C, func_0600831C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008374, func_06008374);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600841C, func_0600841C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008464, func_06008464);
+
+s32 d_0605DB60[];
+void func_06008464(void) {
+    s32* puVar1;
+    s32 i;
+
+    puVar1 = d_0605DB60;
+
+    for (i = 0; i < 0x20; i++) {
+        puVar1[0] = 0;
+        puVar1[1] = 0;
+        puVar1 += 4;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 
@@ -423,7 +477,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, func_0600D6EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D8BC, func_0600D8BC);
 
 // _MOVIE_PRG_CLEAR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DA90, func_0600DA90);
+void func_0600DA90(void) { memset(0x06066000, 0, 0x9A000); }
 
 void func_0600DAB4(void) { func_0600DACC(); }
 
@@ -476,7 +530,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E4E0, func_0600E4E0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E51C, func_0600E51C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E5A4, func_0600E5A4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E61C, func_0600E61C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600EE64, func_0600EE64);
+
+s32 func_06030184(s32);
+s32 func_0600EE64(s32 param_1) { return func_06030184(param_1 << 4) >> 4; }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600EE88, func_0600EE88);
 INCLUDE_ASM("asm/saturn/zero/data", d600EFBC, d_0600EFBC);
@@ -486,6 +542,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600F96C, func_0600F96C);
 
 // _PSX_SHAKE_MAIN
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FA4C, func_0600FA4C);
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FACC, func_0600FACC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600FB0C, func_0600FB0C);
 
@@ -579,13 +636,18 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011EE0, func_06011EE0);
 
-void func_06011F40(void) { func_06018D88(); }
+void func_06011F40(s32 param) { func_06018D88(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011F58, func_06011F58);
 
 // _KeyOffBGM2
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011FC8, func_06011FC8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012030, func_06012030);
+
+extern s32 d_06063BE0;
+void func_06012030(void) {
+    func_06011F40(7);
+    d_06063BE0 = 0;
+}
 
 // _KeyOffVox
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6012054, func_06012054);
