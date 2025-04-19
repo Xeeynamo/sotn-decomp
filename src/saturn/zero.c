@@ -88,7 +88,23 @@ void func_0600652C(void) {
     DAT_06038a44 = 0;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600654C, func_0600654C);
+struct Unk0600654C {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unka;
+    s32 unkc;
+    s32 unk10;
+};
+s32 func_06006574(struct Unk0600654C*);
+void func_0600654C(s32 param_1, s32 param_2) {
+    struct Unk0600654C unk;
+    unk.unk0 = param_1;
+    unk.unk4 = param_2;
+    unk.unk8 = -1;
+    unk.unka = 0;
+    func_06006574(&unk);
+}
 
 // _FileReadSetAdrEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
@@ -149,7 +165,14 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007F3A, func_06007F3A);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007F6C, func_06007F6C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, func_06008048);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008134, func_06008134);
+
+// func_06008134
+void SetVdp2BackgroundColor(void) {
+    s16 local_c[2];
+    local_c[0] = 0;
+    SCL_SetBack(0x25E7FE20, 1, local_c);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600815C, func_0600815C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60081C8, func_060081C8);
 
@@ -179,7 +202,21 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60082E8, func_060082E8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600831C, func_0600831C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008374, func_06008374);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600841C, func_0600841C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008464, func_06008464);
+
+s32 d_0605DB60[];
+void func_06008464(void) {
+    s32* puVar1;
+    s32 i;
+
+    puVar1 = d_0605DB60;
+
+    for (i = 0; i < 0x20; i++) {
+        puVar1[0] = 0;
+        puVar1[1] = 0;
+        puVar1 += 4;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008488, func_06008488);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008524, func_06008524);
 
