@@ -7,6 +7,8 @@
 
 #include "chi.h"
 
+extern Primitive* FindFirstUnkPrim(Primitive* prim);
+
 // func_801A80A8
 void SalemWitchTrySpawnShadow() {
     Entity* entity;
@@ -65,6 +67,24 @@ static u8 AnimFrames_TriboltReset[] = {
     0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x03, 0x02, 0x03, 0x01, 0x03, 0x02, 0x04, 0x01,
     0x04, 0x02, 0x05, 0x01, 0x05, 0x02, 0x06, 0x01, 0x06, 0x02, 0xFF, 0x00
 };
+
+// D_8018162C
+static u8 AnimFrames_Twinkle[] = {
+    0x02, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x00, 0x00, 0x00, 0x00};
+
+// D_80181638
+static u8 AnimFrames_CurseProjectile[] = {
+    0x01, 0x2D, 0x01, 0x2E, 0x01, 0x2F, 0x01, 0x30, 0x01, 0x31, 0x01, 0x32, 0x01, 0x33, 0x01, 0x34,
+    0x01, 0x35, 0x01, 0x36, 0x01, 0x37, 0x01, 0x38, 0x01, 0x39, 0x01, 0x3A, 0x01, 0x3B, 0x01, 0x3C,
+    0x00, 0x00, 0x00, 0x00
+};
+
+static u8 AnimFrames_Unused[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02,
+    0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B,
+    0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x00, 0x00, 0x00, 0x00,
+};
+
 // clang-format on
 
 // E_SALEM_WITCH
@@ -173,7 +193,7 @@ void EntitySalemWitch(Entity* self) {
     }
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSalemWitch);
+        InitializeEntity(g_EInitSalemWitch);
         self->hitboxOffY = 0xA;
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_SALEM_WITCH_GLOW, entity);
@@ -554,7 +574,7 @@ void EntitySalemWitch(Entity* self) {
         break;
 
     case SHADOW_INIT:
-        InitializeEntity(&g_EInitSalemWitch);
+        InitializeEntity(g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->animCurFrame = self->params;
@@ -584,10 +604,6 @@ void EntitySalemWitch(Entity* self) {
     }
 }
 
-// D_8018162C
-static u8 AnimFrames_Twinkle[] = {
-    0x02, 0x29, 0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x00, 0x00, 0x00, 0x00};
-
 // E_SALEM_WITCH_GLOW
 // func_801A8DE8
 // PSP:func_psp_092399B0:Match
@@ -596,7 +612,7 @@ void EntitySalemWitchGlow(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
-        InitializeEntity(&g_EInitSalemWitch);
+        InitializeEntity(g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
@@ -618,17 +634,6 @@ void EntitySalemWitchGlow(Entity* self) {
         DestroyEntity(self);
     }
 }
-
-// clang-format off
-// D_80181638
-static u8 AnimFrames_CurseProjectile[] = {
-    0x01, 0x2D, 0x01, 0x2E, 0x01, 0x2F, 0x01, 0x30, 0x01, 0x31, 0x01, 0x32, 0x01, 0x33, 0x01, 0x34,
-    0x01, 0x35, 0x01, 0x36, 0x01, 0x37, 0x01, 0x38, 0x01, 0x39, 0x01, 0x3A, 0x01, 0x3B, 0x01, 0x3C,
-    0x00, 0x00, 0x00, 0x00, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x06,
-    0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E,
-    0x00, 0x00, 0x00, 0x00
-};
-// clang-format on
 
 extern signed short* sprites_chi_4[];
 
@@ -657,7 +662,7 @@ void EntitySalemWitchCurse(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSalemWitchCurse);
+        InitializeEntity(g_EInitSalemWitchCurse);
 
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         if (self->facingLeft) {
@@ -845,17 +850,16 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
     };
 
     Entity* entity;
-    s16 rot;
     s32 i;
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 5;
         self->palette = PAL_OVL(0x2EB);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->unk6C = 0x60;
         self->drawFlags |= FLAG_DRAW_UNK8;
+        self->unk6C = 0x60;
 
         PlaySfxPositional(SFX_CANDLE_HIT);
         // fallthrough
@@ -863,17 +867,16 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         if (AnimateEntity(&AnimFrames_TriboltCharge, self) == 0) {
             SetStep(SPAWN_PROJECTILES);
         }
-        return;
+        break;
 
     case SPAWN_PROJECTILES:
         self->animSet = ANIMSET_OVL(6);
         self->unk5A = 0x4B;
-        self->rotY = BurstStartRotation;
-        self->rotX = BurstStartRotation;
-        self->unk6C = 0x80;
         self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->step += 1;
+        self->rotX = self->rotY = BurstStartRotation;
         self->drawFlags |= FLAG_DRAW_UNK8;
+        self->unk6C = 0x80;
+        self->step++;
 
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
 
@@ -887,9 +890,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         }
         // fallthrough
     case BURST:
-        rot = self->rotY + BurstRotateSpeed;
-        self->rotY = rot;
-        self->rotX = rot;
+        self->rotX = self->rotY += BurstRotateSpeed;
         self->unk6C -= 4;
         if (AnimateEntity(&AnimFrames_TriboltBurst, self) == 0) {
             SetStep(CLEANUP);
@@ -932,19 +933,20 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
     };
 
     Entity* entity;
-    s16 rot;
-    s16 timer;
     s16 rotSansSpin;
     s32 launchDir;
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSalemWitchTribolt);
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
+        InitializeEntity(g_EInitSalemWitchTribolt);
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTX;
         self->rotX = 0x80;
         launchDir = self->params - 1;
-        self->rotZ = GetAngleBetweenEntities(self, &PLAYER) + (launchDir << 9) +
-                     SpinSpeed;
+        entity = &PLAYER;
+        rotSansSpin = GetAngleBetweenEntities(self, entity);
+        rotSansSpin += (launchDir << 9);
+        self->rotZ = rotSansSpin + SpinSpeed;
         self->ext.salemWitchTribolt.timer = 0x40;
         // fallthrough
     case UPDATE:
@@ -952,13 +954,11 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         AnimateEntity(&AnimFrames_TriboltProjectile, self);
 
         // Update velocity on curve
-        timer = self->ext.salemWitchTribolt.timer;
         launchDir = self->params - 1;
-        if (timer != 0) {
-            self->ext.salemWitchTribolt.timer = timer - 1;
-            rot = self->rotZ - (launchDir * RotateSpeed);
-            rotSansSpin = rot - SpinSpeed;
-            self->rotZ = rot;
+        if (self->ext.salemWitchTribolt.timer) {
+            self->ext.salemWitchTribolt.timer--;
+            self->rotZ -= (launchDir * RotateSpeed);
+            rotSansSpin = self->rotZ - SpinSpeed;
         } else {
             rotSansSpin = (self->rotZ + (launchDir << 9)) - SpinSpeed;
         }
@@ -982,16 +982,18 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         break;
 
     case TRAIL_INIT:
-        InitializeEntity(&g_EInitSalemWitchTribolt);
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
-        self->animCurFrame = self->params;
+        InitializeEntity(g_EInitSalemWitchTribolt);
         self->hitboxState = 0;
+        self->animCurFrame = self->params;
+        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTX;
+        self->drawFlags |= FLAG_DRAW_UNK8;
         self->unk6C = 0x60;
         self->pose = self->animCurFrame;
         // fallthrough
     case TRAIL_UPDATE:
-        self->unk6C += 0xFC;
+        self->unk6C -= 4;
         if (AnimateEntity(&AnimFrames_TriboltTrail, self) == 0) {
             DestroyEntity(self);
         }
