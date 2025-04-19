@@ -3,10 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableWithDebris);
-
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableDebris);
-
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_0923C0C0);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityStageNamePopup);

@@ -8,7 +8,7 @@ extern LayoutEntity* D_8D2E0C8;
 
 extern Overlay OVL_EXPORT(Overlay);
 
-s32 E_ID(ID_11);
+s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(ID_12);
 s32 E_ID(ID_13);
 s32 E_ID(ID_14);
@@ -17,7 +17,7 @@ s32 E_ID(ID_16);
 s32 E_ID(ID_17);
 s32 E_ID(ID_18);
 s32 E_ID(ID_19);
-s32 E_ID(ID_1A);
+s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(ID_1B);
 s32 E_ID(ID_1C);
 s32 E_ID(ID_1D);
@@ -39,7 +39,7 @@ s32 E_ID(ID_2C);
 s32 E_ID(ID_2D);
 
 void InitEntityIds(void) {
-    E_ID(ID_11) = 0x11;
+    E_ID(BACKGROUND_BLOCK) = 0x11;
     E_ID(ID_12) = 0x12;
     E_ID(ID_13) = 0x13;
     E_ID(ID_14) = 0x14;
@@ -48,7 +48,7 @@ void InitEntityIds(void) {
     E_ID(ID_17) = 0x17;
     E_ID(ID_18) = 0x18;
     E_ID(ID_19) = 0x19;
-    E_ID(ID_1A) = 0x1A;
+    E_ID(BREAKABLE_DEBRIS) = 0x1A;
     E_ID(ID_1B) = 0x1B;
     E_ID(ID_1C) = 0x1C;
     E_ID(ID_1D) = 0x1D;
