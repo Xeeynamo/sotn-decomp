@@ -70,6 +70,8 @@ segments:
       - [0x19710, data]
       - [0x19770, .data, chi/en_thornweed_corpseweed]
       - [0x19840, data]
+      - [0x1D428, .data, chi_psp/dt_entity]
+      - [0x1D630, data]
       - [0x34300, .rodata, chi_psp/1028]
       - [0x34368, .rodata, chi/en_red_door]
       - [0x34380, .rodata, chi_psp/e_collect]

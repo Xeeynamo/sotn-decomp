@@ -2,37 +2,37 @@
 #include "common.h"
 
 // clang-format off
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924B458);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityCerberusGateDebug);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_092469A0);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_092447C0);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924BD20);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableWithDebris);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924C060);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableDebris);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_0923C0C0);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924C620);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityStageNamePopup);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_0924D488);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBackgroundBlock);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityLockCamera);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924D7F8);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924D948);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityFallingStairs);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924E4D8);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityFallingStep);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924EAC0);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924EC10);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityDemonSwitch);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924ED28);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityDemonSwitchWall);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924F300);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableWallDebris);
 
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_0924F6D0);
+INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableWall);
 // clang-format on
