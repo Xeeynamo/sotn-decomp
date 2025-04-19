@@ -88,4 +88,6 @@ extern u16 g_EInitVenusWeedTendril[];
 extern u16 g_EInitVenusWeedDart[];
 extern ObjInit2 g_eBackgroundBlockInit[];
 
+extern Primitive* FindFirstUnkPrim(Primitive* prim);
+
 #endif

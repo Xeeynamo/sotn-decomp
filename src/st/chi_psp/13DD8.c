@@ -2,7 +2,6 @@
 #include "common.h"
 
 // clang-format off
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityCerberusGateDebug);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_092469A0);
 
