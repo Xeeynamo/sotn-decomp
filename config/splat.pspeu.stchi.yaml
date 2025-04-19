@@ -60,7 +60,8 @@ segments:
       - [0x11550, c, chi/en_gremlin]
       - [0x120D0, c, chi/en_thornweed_corpseweed]
       - [0x13DD8, c, chi/en_debug_cerberus_gate]
-      - [0x144C0, c, chi_psp/13DD8]
+      - [0x144C0, c, chi_psp/st_init_chi]
+      - [0x146A0, c, chi_psp/13DD8]
       - [0x18900, .data, chi/en_salem_witch]
       - [0x18AC8, .data, chi/en_venus_weed]
       - [0x18C38, .data, chi/en_red_door]
@@ -83,5 +84,7 @@ segments:
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
       - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi_psp/e_collect}
       - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
-      - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss2}
+      - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
+      - {start: 0x34480, type: bss, vram: 0x0926BC78, name: entity_lock_camera}
   - [0x34480]

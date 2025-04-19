@@ -90,4 +90,9 @@ extern ObjInit2 g_eBackgroundBlockInit[];
 
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
 
+extern s32 E_ID(ID_11);
+extern s32 E_ID(ID_15);
+extern s32 E_ID(ID_19);
+extern s32 E_ID(ID_1A);
+
 #endif

@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../chi/chi.h"
 
 // clang-format off
-
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_pspeu_092469A0);
-
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_092447C0);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBreakableWithDebris);
 
