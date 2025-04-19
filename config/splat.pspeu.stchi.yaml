@@ -62,7 +62,7 @@ segments:
       - [0x18C50, .data, chi/st_update]
       - [0x18C80, .data, chi/en_particles]
       - [0x18D00, .data, chi_psp/e_collect]
-      - [0x19248, data]
+      - [0x19248, .data, chi_psp/e_misc]
       - [0x19298, .data, chi/st_collision]
       - [0x19670, .data, chi/en_room_foreground]
       - [0x19710, data]
