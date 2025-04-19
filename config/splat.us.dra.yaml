@@ -131,7 +131,7 @@ segments:
       - [0x1D1E0, .data, 91EBC] # g_SeqInfo
       - [0x1D224, assets, music_xa, g_XaMusicConfigs]
       - [0x1F554, assets, sfx, g_SfxData]
-      - [0x2097C, .data, 953A0]
+      - [0x2097C, .data, sfx_scripts]
       - [0x2217C, cmp, D_800C217C]
       - [0x227B0, cmp, D_800C27B0]
       - [0x23560, cmp, D_800C3560]
@@ -235,12 +235,12 @@ segments:
       # - [0x41FD8, .rodata, 90264] # func_80130E94
       # - [0x42000, .rodata, 90264] # func_8013136C
       # - [0x42024, .rodata, 90264] # func_801315F8
-      - [0x42034, .rodata, 92F60] # CdSoundCommand4
-      - [0x4205C, .rodata, 93290] # CdSoundCommand6
-      # - [0x42074, .rodata, 93290] # CdSoundCommand12
-      - [0x4208C, .rodata, 93BDC] # CdSoundCommand14
-      - [0x420B4, .rodata, 94F50] # func_80134F50
-      - [0x42354, .rodata, 953A0] # func_801353A0
+      - [0x42034, .rodata, 91EBC] # CdSoundCommand4
+      # - [0x4205C, .rodata, 91EBC] # CdSoundCommand6
+      # - [0x42074, .rodata, 91EBC] # CdSoundCommand12
+      # - [0x4208C, .rodata, 91EBC] # CdSoundCommand14
+      # - [0x420B4, .rodata, 91EBC] # func_80134F50
+      # - [0x42354, .rodata, 91EBC] # func_801353A0
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
       - [0x45D30, c, loading]
@@ -278,11 +278,6 @@ segments:
       - [0x8C600, c, 8C600]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, 91EBC]
-      - [0x92F60, c, 92F60]
-      - [0x93290, c, 93290]
-      - [0x93BDC, c, 93BDC]
-      - [0x94F50, c, 94F50]
-      - [0x953A0, c, 953A0]
       - [0x962AC, .bss, bss]
   - name: dra_data
     type: data

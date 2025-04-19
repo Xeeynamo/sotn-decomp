@@ -435,11 +435,3 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     }
     return D_psp_092367D0;
 }
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/62FE0", func_psp_09140588);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/62FE0", MuteCd);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/62FE0", UnMuteCd);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/62FE0", func_psp_09140600);
