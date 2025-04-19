@@ -115,7 +115,17 @@ void func_0600654C(s32 param_1, s32 param_2) {
 
 // _FileReadSetAdrEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60066F0, func_060066F0);
+
+void func_060066F0(u32 param_1, u32 param_2, u32 param_3, u32 param_4) {
+    struct Unk0600654C unk;
+    unk.unk0 = param_1;
+    unk.unk4 = param_2;
+    unk.unk8 = -1;
+    unk.unka = 0;
+    unk.unkc = param_3;
+    unk.unk10 = param_4;
+    func_06006720(&unk, 3, 0);
+}
 
 // _FileReadNWStartEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
@@ -796,8 +806,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60166A8, func_060166A8);
 // _PcmOpen
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016B44, func_06016B44);
 
+int func_0601B8B4(int param_1, int param_2);
+int func_0601B75C(int param_1, int param_2, int param_3);
+
 // _PcmLseek
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016B6C, func_06016B6C);
+void _func_06016B6C(u32 param_1, int param_2) {
+    int iVar1 = func_0601B8B4(param_1, param_2 + 1);
+    func_0601B75C(param_1, iVar1 - 1, 0);
+}
 
 void func_06016B9C(s32 param_1, s32 param_2, s32 param_3) {
     func_06017FA4(param_2, param_3, param_1);
@@ -814,9 +830,46 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C60, func_06016C60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016D84, func_06016D84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016E84, func_06016E84);
 
-// _code2name
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016EE4, func_06016EE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016F9C, func_06016F9C);
+// ZOE apparently has a later version of this same library
+// https://github.com/Joy-Division/old-zoe/blob/51af2e237d75aa27bc1e4803f08bdf48902fa90c/module/sound/sd_file.c#L545
+
+// func_06016EE4
+void code2name(u32 code, u8* name) {
+    if (0x20000000 + code <= 0x0000FFFF) {
+        name[0] = 'S';
+        name[1] = 'D';
+    }
+    if (0x10000000 + code <= 0x0000FFFF) {
+        name[0] = 'S';
+        name[1] = 'D';
+    }
+    if (0x02000000 + code <= 0x0000FFFF) {
+        name[0] = 'W';
+        name[1] = 'V';
+    }
+
+    name[2] = num2char((code >> 4) & 0xF);
+    name[3] = num2char(code & 0xF);
+
+    name[4] = '.';
+    name[5] = 'P';
+    name[6] = 'C';
+    name[7] = 'M';
+    name[8] = '\0';
+}
+
+// func_06016F9C
+char num2char(u32 num) {
+    num &= 0x0F;
+
+    if (num < 10) {
+        num += 0x30;
+    } else {
+        num += 0x37;
+    }
+    return num;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016FB8, func_06016FB8);
 
 // _StartvoxvdStream

@@ -288,3 +288,5 @@ d_06039128 = 0x06039128;
 _func_06028C34 = 0x06028C34;
 _SetVdp2BackgroundColor = 0x06008134;
 _d_060578A0 = 0x060578A0;
+_num2char = 0x06016F9C;
+_code2name = 0x06016EE4;
