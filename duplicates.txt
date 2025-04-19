@@ -2179,6 +2179,15 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/62DEC/MemCardSetPort.s 
 | 1.00 | true     | func_800FAC30                       | asm/us/dra/matchings/menu/func_800FAC30.s 
 | 1.00 | true     | MemcardInfoInit                     | asm/us/dra/matchings/save_mgr/MemcardInfoInit.s 
@@ -2203,14 +2212,6 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/first_c_file/CutsceneUnk3.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/66590/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2439,15 +2440,15 @@
 | 1.00 | false    | func_us_801CD89C                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CD89C.s 
 | 1.00 | false    | func_8011EDA8                       | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_8011EDA8.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SetReleaseRateHigh20_21             | asm/us/dra/matchings/91EBC/SetReleaseRateHigh20_21.s 
+| 1.00 | true     | SetReleaseRateHigh22_23             | asm/us/dra/matchings/91EBC/SetReleaseRateHigh22_23.s 
+| 1.00 | true     | SetReleaseRateLow_20_21             | asm/us/dra/matchings/91EBC/SetReleaseRateLow_20_21.s 
+| 1.00 | true     | SetReleaseRateLow_22_23             | asm/us/dra/matchings/91EBC/SetReleaseRateLow_22_23.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_80131F28                       | asm/us/dra/matchings/91EBC/func_80131F28.s 
 | 1.00 | true     | GetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/GetVideoMode.s 
 | 1.00 | true     | GetGraphDebug                       | asm/us/main/matchings/psxsdk/libgpu/sys/GetGraphDebug.s 
 | 1.00 | true     | GetGraphType                        | asm/us/main/matchings/psxsdk/libgpu/sys/GetGraphType.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SetReleaseRateHigh20_21             | asm/us/dra/matchings/93BDC/SetReleaseRateHigh20_21.s 
-| 1.00 | true     | SetReleaseRateHigh22_23             | asm/us/dra/matchings/93BDC/SetReleaseRateHigh22_23.s 
-| 1.00 | true     | SetReleaseRateLow_20_21             | asm/us/dra/matchings/93BDC/SetReleaseRateLow_20_21.s 
-| 1.00 | true     | SetReleaseRateLow_22_23             | asm/us/dra/matchings/93BDC/SetReleaseRateLow_22_23.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SetCdPos                            | asm/us/dra/matchings/91EBC/SetCdPos.s 
 | 1.00 | true     | MemcardInit                         | asm/us/dra/matchings/save_mgr/MemcardInit.s 
@@ -2478,6 +2479,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2682,10 +2688,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -3027,11 +3029,11 @@
 | 1.00 | true     | GetCdVolume                         | asm/us/dra/matchings/91EBC/GetCdVolume.s 
 | 1.00 | true     | SsUtGetReverbType                   | asm/us/main/matchings/psxsdk/libsnd/ut_rev/SsUtGetReverbType.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_80133950                       | asm/us/dra/matchings/93290/func_80133950.s 
-| 1.00 | true     | _spu_getInTransfer                  | asm/us/main/matchings/psxsdk/libspu/s_it/_spu_getInTransfer.s 
+| 1.00 | true     | SetReleaseRate1                     | asm/us/dra/matchings/91EBC/SetReleaseRate1.s 
+| 1.00 | true     | SetReleaseRate2                     | asm/us/dra/matchings/91EBC/SetReleaseRate2.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetReleaseRate1                     | asm/us/dra/matchings/93BDC/SetReleaseRate1.s 
-| 1.00 | true     | SetReleaseRate2                     | asm/us/dra/matchings/93BDC/SetReleaseRate2.s 
+| 1.00 | true     | func_80133950                       | asm/us/dra/matchings/91EBC/func_80133950.s 
+| 1.00 | true     | _spu_getInTransfer                  | asm/us/main/matchings/psxsdk/libspu/s_it/_spu_getInTransfer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CopyRicOvlCallback                  | asm/us/dra/matchings/cd/CopyRicOvlCallback.s 
 | 0.97 | true     | func_80107DB4                       | asm/us/dra/matchings/cd/func_80107DB4.s 
@@ -3141,9 +3143,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3170,9 +3169,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
