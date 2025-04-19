@@ -264,22 +264,17 @@ typedef enum {
     COMBO_NUM,
 } ButtonComboIdx;
 
-struct SeqData {
+typedef struct SeqData {
     u8 volume;
     u8 reverb_depth;
-    union unk2 {
-        struct {
-            u8 one_shot : 4;
-            u8 vab_id : 4;
-        } info;
-    } unk2;
-};
+    u8 unk2;
+} SeqData;
 
 typedef struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
     s16 unkc;
-    s8 unke;
+    u8 unke;
 } Cmd14;
 
 // Used for the button combos to signal successfully completing the sequence
@@ -682,8 +677,7 @@ void SetMaxVolume(void);
 void InitSoundVars3(void);
 void InitSoundVars2(void);
 void InitSoundVars1(void);
-s32 func_801326D8(void);
-void AddCdSoundCommand(s16);
+static void AddCdSoundCommand(s16);
 u8 DoCdCommand(u_char com, u_char* param, u_char* result);
 void SoundWait(void);
 void MuteSound(void);
