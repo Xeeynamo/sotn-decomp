@@ -31,10 +31,10 @@
 | dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | EntityNull                          |        9 |          1 |        |                                 |       |
 | dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
+| dra    | func_80131F28                       |        9 |          1 |        |                                 |       |
 | dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | dra    | MemcardInit                         |        9 |          1 |        |                                 |       |
-| dra    | func_psp_09140600                   |        9 |          1 |        |                                 |       |
-| dra    | func_psp_09144C80                   |        9 |          1 |        |                                 |       |
+| dra    | func_psp_09144C80                   |        9 |          1 |        | https://decomp.me/scratch/1zDsK | 1.0   |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
 | ric    | RicEntityNotImplemented4            |        9 |          1 |        |                                 |       |
 | ric    | RicDebugOff                         |        9 |          1 |        |                                 |       |
@@ -45,23 +45,23 @@
 | no4    | func_pspeu_0923D0B8                 |        9 |          1 |        |                                 |       |
 | wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
 | dra    | func_8010E0B8                       |       11 |          1 |        |                                 |       |
+| dra    | CdSoundCommandQueueEmpty            |       11 |          1 |        |                                 |       |
+| dra    | EnableCdReverb                      |       11 |          1 |        |                                 |       |
+| dra    | MuteCd                              |       11 |          1 |        |                                 |       |
+| dra    | func_80133950                       |       11 |          1 |        |                                 |       |
 | dra    | func_psp_09141860                   |       11 |          1 |        |                                 |       |
 | dra    | MemcardClose                        |       11 |          1 |        |                                 |       |
 | dra    | MemcardInfoInit                     |       11 |          1 |        |                                 |       |
 | dra    | ClearBackbuffer                     |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
 | dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
-| dra    | MuteCd                              |       11 |          1 |        |                                 |       |
-| dra    | CdSoundCommandQueueEmpty            |       11 |          1 |        |                                 |       |
-| dra    | EnableCdReverb                      |       11 |          1 |        |                                 |       |
-| dra    | func_80133950                       |       11 |          1 |        |                                 |       |
 | dra    | func_800FAC30                       |       11 |          1 |        |                                 |       |
 | lib    | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
 | dra    | func_800FDE00                       |       13 |          1 |        |                                 |       |
 | dra    | SetMaxVolume                        |       13 |          1 |        |                                 |       |
+| dra    | UnMuteCd                            |       13 |          1 |        |                                 |       |
 | dra    | func_80105408                       |       13 |          1 |        |                                 |       |
 | dra    | func_800EB4F8                       |       13 |          1 |        |                                 |       |
-| dra    | UnMuteCd                            |       13 |          1 |        |                                 |       |
 | dra    | func_800FABEC                       |       13 |          1 |        |                                 |       |
 | ric    | func_80166024                       |       13 |          1 |        |                                 |       |
 | dra    | func_psp_090ECD58                   |       14 |          2 |        |                                 |       |
@@ -95,8 +95,8 @@
 | dra    | GiveStatBuff                        |       17 |          1 |        |                                 |       |
 | dra    | func_80102CD8                       |       17 |          1 |        | https://decomp.me/scratch/vel4f | 0.967 |
 | dra    | SetPrimRect                         |       17 |          1 |        |                                 |       |
-| dra    | GetMemcardFreeBlockCount            |       17 |          1 |        | https://decomp.me/scratch/Z1la2 | 0.761 |
 | dra    | SetCdVolume                         |       17 |          1 |        |                                 |       |
+| dra    | GetMemcardFreeBlockCount            |       17 |          1 |        | https://decomp.me/scratch/Z1la2 | 0.761 |
 | dra    | func_80131F68                       |       17 |          2 |        | https://decomp.me/scratch/eERF0 | 0.38  |
 | dra    | func_801073C0                       |       17 |          3 |        |                                 |       |
 | dra    | func_800F53A4                       |       17 |          4 |        |                                 |       |
@@ -185,7 +185,7 @@
 | dra    | func_800FAC48                       |       23 |          3 |        |                                 |       |
 | ric    | func_pspeu_092C8D48                 |       23 |          3 |        |                                 |       |
 | dra    | func_800E493C                       |       23 |          4 |        |                                 |       |
-| dra    | 64480.rodata                        |       24 |          0 | Yes    |                                 |       |
+| dra    | 63C08.rodata                        |       24 |          0 | Yes    |                                 |       |
 | ric    | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
 | no4    | e_spear_guard.rodata                |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
@@ -223,7 +223,7 @@
 | dra    | IsRelicActive                       |       25 |          3 |        | https://decomp.me/scratch/pQCWA | 0.798 |
 | dra    | ClearStatBuffs                      |       25 |          4 |        |                                 |       |
 | dra    | PerformHellfire                     |       25 |          4 |        |                                 |       |
-| dra    | func_psp_09140E00                   |       25 |          6 |        |                                 |       |
+| dra    | MuteSound                           |       25 |          6 |        |                                 |       |
 | dra    | 26948.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
 | dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
@@ -234,7 +234,7 @@
 | dra    | func_psp_090E7E90                   |       26 |          3 |        |                                 |       |
 | ric    | RicEntityCrashReboundStoneParticles |       26 |          3 |        |                                 |       |
 | no4    | func_pspeu_09258910                 |       26 |          3 |        |                                 |       |
-| dra    | func_psp_09140D68                   |       26 |          4 |        |                                 |       |
+| dra    | func_801326D8                       |       26 |          4 |        |                                 |       |
 | dra    | GetEquipItemCategory                |       27 |          1 |        |                                 |       |
 | dra    | SetTexturedPrimRect                 |       27 |          1 |        |                                 |       |
 | lib    | UnkPolyFunc0                        |       27 |          1 |        |                                 |       |
@@ -309,8 +309,8 @@
 | dra    | 1DDC0.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra    | func_80102D08                       |       32 |          2 |        |                                 |       |
 | dra    | func_8010E940                       |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
-| dra    | func_800EB6B4                       |       32 |          3 |        |                                 |       |
 | dra    | func_psp_09141608                   |       32 |          3 |        |                                 |       |
+| dra    | func_800EB6B4                       |       32 |          3 |        |                                 |       |
 | dra    | func_psp_090EB850                   |       32 |          3 |        |                                 |       |
 | dra    | func_800F9690                       |       32 |          4 |        |                                 |       |
 | ric    | RicGetPlayerSensor                  |       33 |          1 |        |                                 |       |
@@ -332,8 +332,8 @@
 | dra    | func_800FAB1C                       |       34 |          4 |        |                                 |       |
 | dra    | MemcardEraseFile                    |       34 |          6 |        |                                 |       |
 | dra    | func_800E34DC                       |       35 |          2 |        |                                 |       |
-| dra    | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
 | dra    | InitSoundVars2                      |       35 |          2 |        |                                 |       |
+| dra    | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
 | dra    | func_80121F14                       |       35 |          3 |        |                                 |       |
 | dra    | func_800FAEC4                       |       35 |          3 |        |                                 |       |
 | dra    | func_psp_090FFAB8                   |       35 |          4 |        |                                 |       |
@@ -344,7 +344,7 @@
 | wrp    | func_psp_092447C0                   |       35 |          4 |        |                                 |       |
 | dra    | func_80111CC0                       |       35 |          5 |        |                                 |       |
 | dra    | PerformSummonSpirit                 |       35 |          6 |        |                                 |       |
-| dra    | func_psp_09140CF0                   |       35 |          7 |        |                                 |       |
+| dra    | SoundInit                           |       35 |          7 |        |                                 |       |
 | dra    | PlayerStepUnk50                     |       36 |          2 |        | https://decomp.me/scratch/mciVh | 0.97  |
 | no4    | func_pspeu_0923D428                 |       36 |          3 |        |                                 |       |
 | dra    | func_80113E68                       |       36 |          4 |        |                                 |       |
@@ -599,8 +599,8 @@
 | dra    | SetVolume22_23                      |       59 |          3 |        |                                 |       |
 | st0    | ReplaceBreakableWithItemDrop        |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | dra    | DoGravityJump                       |       59 |         10 |        |                                 |       |
-| dra    | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
 | dra    | SetMonoStereo                       |       59 |         10 |        |                                 |       |
+| dra    | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
 | lib    | FindFirstUnkPrim2                   |       59 |         11 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | dra    | HandlePrologueEnd                   |       59 |         14 |        |                                 |       |
 | dra    | 692E8.rodata                        |       60 |          0 | Yes    |                                 |       |
@@ -980,7 +980,7 @@
 | lib    | func_us_801B3EC8                    |      113 |         14 |        |                                 |       |
 | dra    | func_800F9E18                       |      113 |         18 |        |                                 |       |
 | dra    | CheckSpecialMoveInputs              |      113 |         32 |        |                                 |       |
-| dra    | func_psp_09140E50                   |      114 |         10 |        |                                 |       |
+| dra    | KeyOnRange                          |      114 |         10 |        |                                 |       |
 | dra    | CreateEntFactoryFromEntity          |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra    | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
 | dra    | DrawMapCursor                       |      115 |          6 |        |                                 |       |
@@ -1025,7 +1025,7 @@
 | dra    | func_800F84CC                       |      136 |         11 |        |                                 |       |
 | no4    | EntityThrownSpear                   |      136 |         17 |        |                                 |       |
 | chi    | func_pspeu_09249370                 |      136 |         18 |        |                                 |       |
-| dra    | func_psp_09141668                   |      136 |         21 |        | https://decomp.me/scratch/2eFER | 0.976 |
+| dra    | func_psp_09141668                   |      136 |         21 |        |                                 |       |
 | chi    | func_pspeu_09249560                 |      136 |         21 |        |                                 |       |
 | no4    | func_pspeu_09249560                 |      138 |         15 |        |                                 |       |
 | dra    | CheckIfAllButtonsAreAssigned        |      139 |          2 |        |                                 |       |
@@ -1097,7 +1097,7 @@
 | dra    | HandleTransformationMP              |      170 |         34 |        |                                 |       |
 | dra    | CheckQuarterCircleForwardInput      |      172 |         25 |        |                                 |       |
 | st0    | EntityLockCamera                    |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
-| dra    | func_psp_09140960                   |      175 |          6 |        | https://decomp.me/scratch/rTWjY | 0.876 |
+| dra    | InitSoundVars1                      |      175 |          6 |        |                                 |       |
 | dra    | CalcAttack                          |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | lib    | EntityBloodDrips                    |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra    | func_psp_090E4968                   |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
@@ -1307,7 +1307,7 @@
 | dra    | func_80123B40                       |      342 |         25 |        |                                 |       |
 | dra    | func_800FE044                       |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
 | ric    | RicEntityApplyMariaPowerAnim        |      346 |         27 |        | https://decomp.me/scratch/YzZxq | 0.999 |
-| ric    | RicEntityCrashHydroStorm            |      346 |         37 |        |                                 |       |
+| ric    | RicEntityCrashHydroStorm            |      346 |         37 |        | https://decomp.me/scratch/EpsEj | 0.972 |
 | lib    | func_us_801CCF6C                    |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric    | RicEntityCrashVibhuti               |      349 |         43 |        |                                 |       |
 | dra    | CheckSwordBrothersInput             |      350 |         56 |        |                                 |       |
@@ -1380,7 +1380,7 @@
 | st0    | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra    | EntityHolyWaterBreakGlass           |      457 |         29 |        | https://decomp.me/scratch/umied | 0.976 |
 | dra    | EntitySubwpnCrashCross              |      457 |         38 |        | https://decomp.me/scratch/5pb9E | 0.999 |
-| ric    | func_80167A70                       |      461 |         29 |        |                                 |       |
+| ric    | func_80167A70                       |      461 |         29 |        | https://decomp.me/scratch/bkIM2 | 0.975 |
 | dra    | func_801309B4                       |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra    | ControlMistForm                     |      466 |         93 |        |                                 |       |
 | ric    | RicStepJump                         |      469 |         84 |        |                                 |       |
@@ -1417,7 +1417,7 @@
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
-| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    |                                 |       |
+| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    | https://decomp.me/scratch/A0ZwS | 0.922 |
 | dra    | ExecSoundCommands                   |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
@@ -1499,7 +1499,7 @@
 | dra    | EntitySubwpnThrownDagger            |      749 |         52 |        |                                 |       |
 | ric    | RicEntitySubwpnReboundStone         |      754 |        126 |        |                                 |       |
 | ric    | RicEntityHitByCutBlood              |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.999 |
-| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/ZAV8i | 0.967 |
+| dra    | func_psp_0913FA28                   |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 1.0   |
 | dra    | func_80106A28                       |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | lib    | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra    | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
@@ -1585,7 +1585,7 @@
 | lib    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | wrp    | HitDetection                        |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
-| no4    | func_pspeu_09239B00                 |     1639 |        210 | Yes    | https://decomp.me/scratch/WmZ7p | 0.806 |
+| no4    | func_pspeu_09239B00                 |     1639 |        210 | Yes    | https://decomp.me/scratch/s5g9m | 0.919 |
 | no4    | func_pspeu_0925E548                 |     1731 |        172 | Yes    |                                 |       |
 | st0    | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra    | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
