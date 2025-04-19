@@ -1391,8 +1391,7 @@ typedef struct XaMusicConfig {
     u8 filter_channel_id;
     u8 volume;
     u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
+    u32 unk230;
 } XaMusicConfig;
 
 typedef struct {
