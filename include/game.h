@@ -236,7 +236,7 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 #define SPRITESHEET_PTR g_PlOvlSpritesheet
 #else
 #define SPRITESHEET_PTR 0x8013C020

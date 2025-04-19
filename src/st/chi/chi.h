@@ -65,8 +65,6 @@ typedef enum {
     /* 0x2D */ E_VENUS_WEED_SPIKE,
 } EntityIDs;
 
-extern PfnEntityUpdate PfnEntityUpdates[];
-
 extern EInit OVL_EXPORT(EInitBreakable);
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
