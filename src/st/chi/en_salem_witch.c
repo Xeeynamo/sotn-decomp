@@ -7,8 +7,6 @@
 
 #include "chi.h"
 
-extern Primitive* FindFirstUnkPrim(Primitive* prim);
-
 // func_801A80A8
 void SalemWitchTrySpawnShadow() {
     Entity* entity;

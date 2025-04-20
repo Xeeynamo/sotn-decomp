@@ -8,40 +8,37 @@
 
 #include "chi.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(GREY_PUFF);
+#endif
+
 // func_8019BD0C
-void UpdateFallingPebble(Primitive* prim) {
+static void UpdateFallingPebble(Primitive* prim) {
     const int FallSpeed = 2;
     const int MaxScrolledY = 160;
 
-    s8 dims;
-    s16 newY;
-    u32 scrollY;
     s32 newYScrolled;
-    u8 newTimer;
+    u32 rand;
 
     switch (prim->p3) {
     case 1: // Init (and fallthru to Idle)
-        dims = (Random() & 1) + 1;
-        prim->u0 = dims;
-        prim->v0 = dims;
+        rand = (Random() & 1);
+        prim->u0 = rand + 1;
+        prim->v0 = rand + 1;
         prim->r0 = 0x60;
         prim->g0 = 0x80;
         prim->b0 = 0x30;
         prim->priority = 0xA0;
         prim->drawMode = DRAW_UNK02;
         prim->p2 = (Random() & 0x1F) + 0x10;
-        prim->p3 = 2U;
+        prim->p3 = 2;
         // fallthrough
     case 2: // Idle
-        newY = prim->y0 + FallSpeed;
-        newTimer = prim->p2 - 1;
-        prim->y0 = newY;
-        scrollY = g_Tilemap.scrollY.i.hi;
-        newYScrolled = scrollY + newY;
-        prim->p2 = newTimer;
-        if (newTimer == 0 || newYScrolled > MaxScrolledY) {
+        prim->y0 += FallSpeed;
+        newYScrolled = g_Tilemap.scrollY.i.hi + prim->y0;
+        if (!--prim->p2 || newYScrolled > MaxScrolledY) {
             prim->drawMode = DRAW_HIDE;
-            prim->p3 = 0U; // Inactive
+            prim->p3 = 0; // Inactive
         }
         return;
     }
@@ -57,7 +54,7 @@ void EntityDemonSwitch(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
 
         self->animCurFrame = 3;
         self->hitPoints = 32767;
@@ -65,7 +62,7 @@ void EntityDemonSwitch(Entity* self) {
         self->hitboxWidth = 6;
         self->hitboxHeight = 8;
 
-        if (g_CastleFlags[CHI_DEMON_SWITCH] != 0) {
+        if (g_CastleFlags[CHI_DEMON_SWITCH]) {
             self->animCurFrame = 4;
         }
         // fallthrough
@@ -84,13 +81,9 @@ void EntityDemonSwitch(Entity* self) {
     }
 }
 
-#if defined(VERSION_PSP)
-extern s32 D_psp_0926BC50;
-#endif
-
 // clang-format off
 // D_8018089C
-static u16 WallTiles[] = {
+static s16 WallTiles[] = {
     // With Collision
     0x039D, 0x03A0, 0x03A0, 0x039E, 0x03A0, 0x03A0, 0x03A0, 0x039F,
     0x03A0, 0x03A0, 0x03A0, 0x03A0,
@@ -127,7 +120,7 @@ void EntityDemonSwitchWall(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
 
         self->animCurFrame = 1; // Default: Collision (closed)
 
@@ -184,32 +177,10 @@ void EntityDemonSwitchWall(Entity* self) {
             self->posY.i.hi--;
         }
 
-#if defined(VERSION_PSP)
-        // There's a big diff here and I can't figure out how to match it
-
-        // Here is the closest I've gotten
-        // temp = self->ext.generic.unk80.modeS32;    // v1
-        // var_t1 = temp & 7;    // v0
-        // if (temp >= 0 ||
-        //    (temp = temp & 7) != 0) {
-        //    temp -= 8;
-        //}
-        // if (temp == 0) {
-        //    g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        //}
-        // MoveEntity();
-
-        // This is just what's in the PSX version
-        if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
+        if (!(self->ext.demonSwitchWall.unk80 % 8)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }
         MoveEntity();
-#else
-        if ((self->ext.demonSwitchWall.unk80 & 7) == 0) {
-            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-        }
-        MoveEntity();
-#endif
 
         if (self->velocityX < FIX(0.25)) {
             self->velocityX += FIX(0.0078125);
@@ -245,11 +216,7 @@ void EntityDemonSwitchWall(Entity* self) {
         yPos = self->posY.i.hi + 0x20;
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-#if defined(VERSION_PSP)
-            CreateEntityFromCurrentEntity(D_psp_0926BC50, newEntity);
-#else
-            CreateEntityFromCurrentEntity(E_GREY_PUFF, newEntity);
-#endif
+            CreateEntityFromCurrentEntity(E_ID(GREY_PUFF), newEntity);
             newEntity->posX.i.hi = xPos + (Random() & 0x1F);
             newEntity->posY.i.hi = yPos;
             newEntity->params = Random() & 3;
@@ -257,6 +224,7 @@ void EntityDemonSwitchWall(Entity* self) {
         }
 
         // Calculate how many columns of tiles should be blocking the player
+        remainingColumnCount = 0;
         remainingColumnCount = self->posX.i.hi - 0xE8;
         remainingColumnCount >>= 4;
         if (remainingColumnCount > 3) {
