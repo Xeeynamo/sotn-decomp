@@ -951,7 +951,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 j;
     VECTOR sp94;
     SVECTOR pad;
-    SVECTOR sp7c[3];
+    SVECTOR otz[3];
     SVECTOR sp64[3];
     s32 unhiddenCount;
     SVECTOR* vecSrc;
@@ -1092,20 +1092,20 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
         stupid80 = 0x80;
         for (j = 0; j < 3; j++) {
-            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
+            sp94.vx = otz[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
                                    (vecScaledShifted[i].vx >> 0xC);
-            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
+            sp94.vy = otz[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
                                    (vecScaledShifted[i].vy >> 0xC);
-            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
+            sp94.vz = otz[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
                                    (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
         Nclip3_result = RotAverageNclip3(
-            &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            &otz[0], &otz[1], &otz[2], (s32*)&prim->x0, (s32*)&prim->x1,
             (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
         if (Nclip3_result < 0) {
             RotAverageNclip3(
-                &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                &otz[0], &otz[2], &otz[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
 #if defined(VERSION_PSP)
@@ -1177,18 +1177,18 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80105078(s32 arg0, s32 arg1) {
-    VECTOR sp28;
+    VECTOR vec;
     SVECTOR pad;
-    SVECTOR sp40[3];
-    SVECTOR sp58[3];
+    SVECTOR rotVecs[3];
+    SVECTOR unkSvectors[3];
     u8 sp70[4];
-    s32 sp78;
-    s32 sp7C;
-    s32 sp80;
+    s32 interp;
+    s32 otz;
+    s32 unused_flag;
     s32 sp88;
     SVECTOR** sp90;
     Primitive* prim;
-    s32 temp_v0_4;
+    s32 nclip_result;
     s32 i;
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
@@ -1210,23 +1210,23 @@ void func_80105078(s32 arg0, s32 arg1) {
         TransMatrix(&D_80137E00, &D_801379D0);
         SetRotMatrix(&D_80137E00);
         SetTransMatrix(&D_80137E00);
-        sp7C = 0;
+        otz = 0;
         for (i = 0; i < 3; i++) {
-            sp28.vx = sp40[i].vx = (sp90[i]->vx * arg0) >> 8;
-            sp28.vy = sp40[i].vy = (sp90[i]->vy * arg0) >> 8;
-            sp28.vz = sp40[i].vz = (sp90[i]->vz * arg0) >> 8;
-            func_80017008(&sp28, &sp58[i]);
+            vec.vx = rotVecs[i].vx = (sp90[i]->vx * arg0) >> 8;
+            vec.vy = rotVecs[i].vy = (sp90[i]->vy * arg0) >> 8;
+            vec.vz = rotVecs[i].vz = (sp90[i]->vz * arg0) >> 8;
+            func_80017008(&vec, &unkSvectors[i]);
         }
-        temp_v0_4 = RotAverageNclip3(
-            &sp40[0], &sp40[1], &sp40[2], (s32*)&prim->x0, (s32*)&prim->x1,
-            (s32*)&prim->x2, &sp78, &sp7C, &sp80);
-        if (temp_v0_4 < 0) {
-            RotAverage3(&sp40[0], &sp40[2], &sp40[1], (s32*)&prim->x0,
-                        (s32*)&prim->x2, (s32*)&prim->x1, &sp78, &sp80);
+        nclip_result = RotAverageNclip3(
+            &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            (s32*)&prim->x2, &interp, &otz, &unused_flag);
+        if (nclip_result < 0) {
+            RotAverage3(&rotVecs[0], &rotVecs[2], &rotVecs[1], (s32*)&prim->x0,
+                        (s32*)&prim->x2, (s32*)&prim->x1, &interp, &unused_flag);
         }
         prim->type = PRIM_LINE_G2;
-        if (sp7C < 0xF0) {
-            if (temp_v0_4 >= 0) {
+        if (otz < 0xF0) {
+            if (nclip_result >= 0) {
                 prim->priority = g_unkGraphicsStruct.g_zEntityCenter + 3;
             } else {
                 prim->priority = g_unkGraphicsStruct.g_zEntityCenter - 3;

@@ -1187,7 +1187,10 @@ static void func_80105078(s32 arg0, s32 arg1) {
     s32 j;
     Primitive* prim;
     s32 nclip_result;
+    u8 sp70[4];
 
+    sp70[2] = sp70[1] = sp70[0] = 0x80;
+    sp70[3] = 0;
     RotMatrix(&D_801379C8, &D_80137E00);
 
     for (i = 0, prim = &g_PrimBuf[D_80137E44]; i < 18; i++, prim = prim->next) {
