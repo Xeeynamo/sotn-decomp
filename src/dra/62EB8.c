@@ -951,7 +951,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     s32 j;
     VECTOR sp94;
     SVECTOR pad;
-    SVECTOR otz[3];
+    SVECTOR sp7c[3];
     SVECTOR sp64[3];
     s32 unhiddenCount;
     SVECTOR* vecSrc;
@@ -1092,20 +1092,20 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
         vecScaledShifted[i].vz = ((vecSrc[i].vz * XZ_scale) + zShift);
         stupid80 = 0x80;
         for (j = 0; j < 3; j++) {
-            sp94.vx = otz[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
+            sp94.vx = sp7c[j].vx = ((vecTriplet[j]->vx * arg1) >> 8) +
                                    (vecScaledShifted[i].vx >> 0xC);
-            sp94.vy = otz[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
+            sp94.vy = sp7c[j].vy = ((vecTriplet[j]->vy * arg1) >> 8) +
                                    (vecScaledShifted[i].vy >> 0xC);
-            sp94.vz = otz[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
+            sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
                                    (vecScaledShifted[i].vz >> 0xC);
             func_80017008(&sp94, &sp64[j]);
         }
         Nclip3_result = RotAverageNclip3(
-            &otz[0], &otz[1], &otz[2], (s32*)&prim->x0, (s32*)&prim->x1,
+            &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
             (s32*)&prim->x2, &unused_interp, &nclip_otz, &unused_flag);
         if (Nclip3_result < 0) {
             RotAverageNclip3(
-                &otz[0], &otz[2], &otz[1], (s32*)&prim->x0, (s32*)&prim->x2,
+                &sp7c[0], &sp7c[2], &sp7c[1], (s32*)&prim->x0, (s32*)&prim->x2,
                 (s32*)&prim->x1, &unused_interp, &nclip_otz, &unused_flag);
         }
 #if defined(VERSION_PSP)
@@ -1176,7 +1176,7 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
     }
 }
 
-void func_80105078(s32 arg0, s32 arg1) {
+static void func_80105078(s32 arg0, s32 arg1) {
     s32 interp;
     s32 otz;
     s32 unused_flag;

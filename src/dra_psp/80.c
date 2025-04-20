@@ -1181,6 +1181,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
     s32 otz;
     s32 unused_flag;
     VECTOR vec;
+    SVECTOR pad;
     SVECTOR rotVecs[3];
     SVECTOR unkSvectors[3];
     s32 i;
