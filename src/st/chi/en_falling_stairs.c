@@ -11,14 +11,18 @@
 // https://decomp.me/scratch/0asn9
 // PSP:func_psp_0924D7F8:No match
 // PSP:https://decomp.me/scratch/vOZf2
-void UpdateDustParticles(Primitive* prim) {
+static void UpdateDustParticles(Primitive* prim) {
     s32 s1;
     s32 s0;
 
     if (!prim->p2) {
         prim->u0 = prim->v0 = 1;
         prim->drawMode = DRAW_UNK02;
+#ifdef VERSION_PSP
+        LOW(prim->x2) = -(Random() & 0x7F) << 9;
+#else
         LOW(prim->x2) = -((Random() & 0x7F) << 9);
+#endif
         LOW(prim->x3) = 0;
         prim->p2 = 1U;
     }
@@ -38,32 +42,30 @@ void UpdateDustParticles(Primitive* prim) {
     }
 }
 
-void UpdateDustParticles(Primitive*);
-
 // clang-format off
 // D_80180974
-static u16 FallingStairsNotFallenTileIndices[] = {
+static s16 FallingStairsNotFallenTileIndices[] = {
     0x022B, 0x022C, 0x0239, 0x023A, 0x023B, 0x023C, 0x0247, 0x0248,
     0x0249, 0x024A, 0x0255, 0x0256, 0x0257, 0x0258, 0x0259, 0x0265,
     0x0266, 0x0000,
 };
 
 // D_80180998
-static u16 FallingStairsFallenTileIndices[] = {
+static s16 FallingStairsFallenTileIndices[] = {
     0x028B, 0x028C, 0x0299, 0x029A, 0x029B, 0x029C, 0x02A7, 0x02A8,
     0x02A9, 0x02AA, 0x02B5, 0x02B6, 0x02B7, 0x02B8, 0x02B9, 0x02C5,
     0x02C6, 0x0000,
 };
 
 // D_801809BC
-static u16 FallingStairsNotFallenTileValues[] = {
+static s16 FallingStairsNotFallenTileValues[] = {
     0x01F9, 0x0224, 0x01F9, 0x0207, 0x0243, 0x0225, 0x01F9, 0x01E7,
     0x0244, 0x0226, 0x0229, 0x01E7, 0x0243, 0x01B5, 0x0226, 0x024B,
     0x0226, 0x0000,
 };
 
 // D_801809E0
-static u16 FallingStairsFallenTileValues[] = {
+static s16 FallingStairsFallenTileValues[] = {
     0x01C4, 0x0222,
 };
 // clang-format on
@@ -99,15 +101,15 @@ void EntityFallingStairs(Entity* self) {
     s32 i;
     s16* pDstTileIdx;
     s16* pSrcTile;
-    s32 yPos;
     s32 xPos;
+    s32 yPos;
     Entity* entity;
     Entity* player;
     s32 scrolledY;
-    s32 scrolledX;
+    s32 primIdx;
     s32 selfPosX;
     s32 selfPosY;
-    s32 primIdx;
+    s32 scrolledX;
 
     scrolledX = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
     scrolledY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
@@ -122,21 +124,21 @@ void EntityFallingStairs(Entity* self) {
         // Change position to be prepared for stairs falling
         self->posX.i.hi = NotFallenPosX - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
-        InitializeEntity(&g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
 
         self->drawFlags |= FLAG_DRAW_ROTZ;
         self->animCurFrame = 0;
 
         // Change tileset to show UNfallen stairs
-        pDstTileIdx = &FallingStairsNotFallenTileIndices;
-        pSrcTile = &FallingStairsNotFallenTileValues;
+        pDstTileIdx = FallingStairsNotFallenTileIndices;
+        pSrcTile = FallingStairsNotFallenTileValues;
         for (i = 0; i < 0x11; i++, pDstTileIdx++, pSrcTile++) {
             g_Tilemap.fg[*pDstTileIdx] = *pSrcTile;
         }
 
         // Change tileset to hide fallen stairs
-        pDstTileIdx = &FallingStairsFallenTileIndices;
-        pSrcTile = &FallingStairsFallenTileValues;
+        pDstTileIdx = FallingStairsFallenTileIndices;
+        pSrcTile = FallingStairsFallenTileValues;
         for (i = 0; i < 0xF; i++, pDstTileIdx++) {
             g_Tilemap.fg[*pDstTileIdx] = 0; // Most tiles are blank
         }
@@ -163,7 +165,7 @@ void EntityFallingStairs(Entity* self) {
         self->animCurFrame = 0x23;
 
         // Clear out all tiles in unfallen state
-        pDstTileIdx = &FallingStairsNotFallenTileIndices;
+        pDstTileIdx = FallingStairsNotFallenTileIndices;
         for (i = 0; i < 0x11; i++, pDstTileIdx++) {
             g_Tilemap.fg[*pDstTileIdx] = 0;
         }
@@ -339,8 +341,8 @@ void EntityFallingStairs(Entity* self) {
 
     case LAND:
         // Update tilemap to show fallen stairs
-        pDstTileIdx = &FallingStairsFallenTileIndices;
-        pSrcTile = &FallingStairsNotFallenTileValues;
+        pDstTileIdx = FallingStairsFallenTileIndices;
+        pSrcTile = FallingStairsNotFallenTileValues;
         for (i = 0; i < 0x10; i++, pDstTileIdx++, pSrcTile++) {
             // All except the last tile are in front of nothing
             g_Tilemap.fg[*pDstTileIdx] = *pSrcTile;
@@ -408,7 +410,7 @@ void EntityFallingStep(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(&g_EInitSecret);
+        InitializeEntity(g_EInitSecret);
         self->animCurFrame = 0;
         self->drawFlags |= FLAG_DRAW_ROTZ;
         g_Tilemap.fg[TilePos] = TileInitVal;
