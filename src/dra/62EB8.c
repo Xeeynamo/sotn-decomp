@@ -1261,12 +1261,17 @@ void func_80105428(void) {
 #elif defined(VERSION_HD)
     const s32 PAD_MASK = PAD_START | PAD_SQUARE | PAD_CROSS | PAD_CIRCLE;
 #elif defined(VERSION_PSP)
-    #define PAD_MASK (PAD_START | PAD_SQUARE)
+#define PAD_MASK (PAD_START | PAD_SQUARE | D_psp_08B42050 | D_psp_08B42054)
 #endif
     s32 temp_s0;
     s32 temp_result;
     s32 timer_temp;
+// This is a really surprising ifdef. Makes me think it's fake.
+#if defined(VERSION_PSP)
+    s32 temp_s3;
+#else
     u16 temp_s3;
+#endif
 
     SetGeomScreen(0x100);
     SetGeomOffset(0x80, D_801379B8 + 0x80);
@@ -1299,6 +1304,9 @@ void func_80105428(void) {
         } else {
             timer_temp = (timer_temp * 4) + 0xA0;
         }
+#if defined(VERSION_PSP)
+        D_80137E4C = 0;
+#endif
         func_80104790(0, timer_temp, 0);
         D_80137EE4 = timer_temp;
 
@@ -1323,18 +1331,24 @@ void func_80105428(void) {
             D_80137EE4 += 4;
         }
         func_80104790(0, D_80137EE4, 0);
-        if (D_801379B8 < ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
+        if (D_801379B8 <
+                ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
             (g_GameTimer != 0)) {
             D_801379B8++;
         }
+#if defined(VERSION_PSP)
+        if (abs(PLAYER.posX.i.hi - 0x80) < 3) {
+            PLAYER.posX.i.hi = 0x80;
+        }
+#endif
         if (PLAYER.posX.i.hi < 0x7F) {
             g_Player.padSim = PAD_RIGHT;
             g_Player.demo_timer = 1;
         } else if (PLAYER.posX.i.hi > 0x80) {
             g_Player.padSim = PAD_LEFT;
             g_Player.demo_timer = 1;
-        } else if (
-            D_801379B8 == ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
+        } else if (D_801379B8 ==
+                   ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
             func_80105408();
             D_80137EE8 = 8;
             if (D_80137EE0 != 0) {
@@ -1365,7 +1379,9 @@ void func_80105428(void) {
             if (D_80137E6C == 0) {
                 D_80137E54 = 2;
                 D_801379BC = 2;
-
+#if defined(VERSION_PSP)
+                D_80137E4C = 0;
+#endif
             } else {
                 func_80102EB8();
                 D_801379BC++;
@@ -1382,6 +1398,9 @@ void func_80105428(void) {
                 D_80097924 = 0;
                 func_80102EB8();
                 D_801379BC = 0x100;
+#if defined(VERSION_PSP)
+                D_80137E4C = 0;
+#endif
             } else {
                 D_80097924 = D_80137EF0;
                 D_8006C378 = D_80137EF4;
@@ -1524,7 +1543,6 @@ void func_80105428(void) {
             if (D_80137E4C == 9) {
                 func_80102EB8();
                 D_801379BC = 0x200;
-
             } else {
                 if (D_80137E4C != 6) {
                     D_80097924 = -1;
@@ -1536,6 +1554,7 @@ void func_80105428(void) {
             }
         }
         break;
+#if !defined(VERSION_PSP)
     case 0x200:
         func_80105408();
         if (HandleSaveMenu(2) != 0) {
@@ -1573,6 +1592,7 @@ void func_80105428(void) {
             D_80137EEC = 0x60;
         }
         break;
+#endif
     case 0x7:
         func_80105408();
         func_80104790(1, D_80137EE4, 0);
@@ -1681,7 +1701,7 @@ void func_80105428(void) {
         }
         func_80104790(3, D_80137EE4, D_80137EEC);
         D_80137EEC -= 2;
-        if (g_Player.demo_timer == 0){
+        if (g_Player.demo_timer == 0) {
             if (g_pads[0].pressed & PAD_MASK) {
                 g_Player.padSim = 0;
                 g_Player.demo_timer = 1;
@@ -1691,6 +1711,7 @@ void func_80105428(void) {
                 break;
             }
         }
+
         if (D_80137EEC <= 0) {
             if (D_801379BC == 0x30) {
                 D_80137E54 = 0;
