@@ -15,7 +15,7 @@ s32 DMA_CpuResult();
 // func_060234F4
 void DMA_ScuInit();
 
-void SPR_2SetGourTbl(u16 arg0);
+// void SPR_2SetGourTbl(u16 arg0);
 
 void func_0600DACC();
 

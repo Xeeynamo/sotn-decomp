@@ -4,6 +4,9 @@
 #include "sattypes.h"
 #include "lib/scl.h"
 
+#define _SPR2_
+#include "lib/spr.h"
+
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
@@ -65,12 +68,19 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005208, func_06005208);
 void func_06005310(void) { func_06006FA8(); }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005328, func_06005328);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600544C, func_0600544C);
+
+void func_0600544C(void) {}
+const char* logo = "LOGO.PRG";
+const char* kcen = "KCEN.MAP";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005470, func_06005470);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005508, func_06005508);
 
 // _READ_LOAD_MODE
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60055A4, func_060055A4);
+s32 func_060055A4(void) { return 0; }
+const char* rload_map = "RLOAD.MAP";
+const char* load_map = "LOAD.MAP";
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60055C8, func_060055C8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600583C, func_0600583C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60058D0, func_060058D0);
@@ -108,7 +118,17 @@ void func_0600654C(s32 param_1, s32 param_2) {
 
 // _FileReadSetAdrEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006574, func_06006574);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60066F0, func_060066F0);
+
+void func_060066F0(u32 param_1, u32 param_2, u32 param_3, u32 param_4) {
+    struct Unk0600654C unk;
+    unk.unk0 = param_1;
+    unk.unk4 = param_2;
+    unk.unk8 = -1;
+    unk.unka = 0;
+    unk.unkc = param_3;
+    unk.unk10 = param_4;
+    func_06006720(&unk, 3, 0);
+}
 
 // _FileReadNWStartEx
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6006720, func_06006720);
@@ -155,11 +175,76 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, func_06007CA0);
 
 u16 func_06007CE0(u16 param_1) { return param_1 * 0x10 + 0x400; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CF8, func_06007CF8);
+void SPR_2ClrAllChar(void);
+
+s16 d_0605BECA;
+s16 d_0605AEA8;
+s16 d_0605AEB0;
+s16 d_0605BEC8;
+s32 d_06038dbc;
+s32 d_0605BEC4;
+s32 d_060576AC;
+
+void func_06007CF8() {
+    SPR_2ClrAllChar();
+    d_0605BECA = 0;
+    d_0605AEA8 = 0;
+    d_0605AEB0 = 0;
+    d_0605BEC8 = 0x304;
+    d_060576AC = 0;
+    d_0605BEC4 = 0x00011180;
+    d_06038dbc = 0;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007D54, func_06007D54);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007E14, func_06007E14);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007EE6, func_06007EE6);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007F3A, func_06007F3A);
+
+void func_06022A48();
+
+s32 d_0605AEAC;
+s32 d_06038c5c;
+s32 d_06038c5c;
+s32 d_0605BEBE;
+u16 d_0605AEA0[4];
+void _func_06007E14(void) {
+    SprSpCmd cmd;
+
+    if (d_06038c5c) {
+        d_06038c5c--;
+        cmd.control = 0x1004;
+        cmd.drawMode = 0xC0; // sotn-lint-ignore
+        cmd.color = 0x8000;
+        cmd.ax = cmd.dx = 0;
+        cmd.bx = cmd.cx = d_0605BEBE;
+        cmd.ay = cmd.by = 0;
+        cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
+        SPR_2Cmd(0x1ff, &cmd);
+        d_0605AEAC += 0x20;
+    }
+
+    func_06022A48();
+}
+void SPR_SetEraseData(
+    Uint16 eraseData, Uint16 leftX, Uint16 topY, Uint16 rightX, Uint16 botY);
+
+void SPR_2FrameEraseData(Uint16);
+void FUN_06007eb8(s16 param_1) {
+    SPR_2FrameEraseData(param_1);
+    SPR_SetEraseData(
+        param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
+}
+
+void func_06024088();
+void func_06008134();
+
+void FUN_06007f04(void) {
+    func_06024088();
+    SCL_SetDisplayMode(0, 1, 0);
+    SPR_2FrameChgIntr(-1);
+    SclPriBuffDirty.SclColOffset = 1;
+    SclColOffset.ColorOffsetEnable = 0x6f;
+    SCL_SetColOffset(0, 0x6f, 0xFF01, 0xFF01, 0xFF01);
+    func_06008134();
+}
 
 // _SET_VDP2_VRAM
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007F6C, func_06007F6C);
@@ -350,7 +435,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
 
 // func_0600A304
-void SetSprGourTable(u16 arg0) { SPR_2SetGourTbl(arg0); }
+void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
+    SPR_2SetGourTbl(arg0, gourTbl);
+}
 
 // _SetPlTransNonSeparateAura
 void func_0600A31C(void) { DAT_0605D910[3] = 1; }
@@ -359,7 +446,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A330, func_0600A330);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A350, func_0600A350);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A490, func_0600A490);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A5FC, func_0600A5FC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A62C, func_0600A62C);
+
+u8 d_060578A0[];
+void func_0600A62C(u8* param_1, u8* param_2, int param_3) {
+    for (; param_3 > 0; param_3--) {
+        *param_2++ = d_060578A0[*param_1++];
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A650, func_0600A650);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A77C, func_0600A77C);
 
@@ -779,11 +873,24 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60164BC, func_060164BC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016614, func_06016614);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60166A8, func_060166A8);
 
+void code2name(u32 code, u8* name);
+s32 func_06017F5C(u8*);
+
 // _PcmOpen
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016B44, func_06016B44);
+void func_06016B44(s32 code) {
+    u8 name[0x10];
+    code2name(code, name);
+    func_06017F5C(name);
+}
+
+int func_0601B8B4(int param_1, int param_2);
+int func_0601B75C(int param_1, int param_2, int param_3);
 
 // _PcmLseek
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016B6C, func_06016B6C);
+void _func_06016B6C(u32 param_1, int param_2) {
+    int iVar1 = func_0601B8B4(param_1, param_2 + 1);
+    func_0601B75C(param_1, iVar1 - 1, 0);
+}
 
 void func_06016B9C(s32 param_1, s32 param_2, s32 param_3) {
     func_06017FA4(param_2, param_3, param_1);
@@ -800,9 +907,46 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C60, func_06016C60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016D84, func_06016D84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016E84, func_06016E84);
 
-// _code2name
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016EE4, func_06016EE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016F9C, func_06016F9C);
+// ZOE apparently has a later version of this same library
+// https://github.com/Joy-Division/old-zoe/blob/51af2e237d75aa27bc1e4803f08bdf48902fa90c/module/sound/sd_file.c#L545
+
+// func_06016EE4
+void code2name(u32 code, u8* name) {
+    if (0x20000000 + code <= 0x0000FFFF) {
+        name[0] = 'S';
+        name[1] = 'D';
+    }
+    if (0x10000000 + code <= 0x0000FFFF) {
+        name[0] = 'S';
+        name[1] = 'D';
+    }
+    if (0x02000000 + code <= 0x0000FFFF) {
+        name[0] = 'W';
+        name[1] = 'V';
+    }
+
+    name[2] = num2char((code >> 4) & 0xF);
+    name[3] = num2char(code & 0xF);
+
+    name[4] = '.';
+    name[5] = 'P';
+    name[6] = 'C';
+    name[7] = 'M';
+    name[8] = '\0';
+}
+
+// func_06016F9C
+char num2char(u32 num) {
+    num &= 0x0F;
+
+    if (num < 10) {
+        num += 0x30;
+    } else {
+        num += 0x37;
+    }
+    return num;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016FB8, func_06016FB8);
 
 // _StartvoxvdStream
@@ -902,7 +1046,16 @@ s32 func_0601AEA8(void) { return 0xff; }
 
 void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AECC, func_0601AECC);
+s32 d_0605D7E4;
+void (*func_060cf000)(void);
+
+// call familiar update function
+void func_0601AECC() {
+    if (d_0605D7E4) {
+        (*func_060cf000)();
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEF4, func_0601AEF4);
 
 void func_0601AF2C(void) { DAT_06064674 = DAT_060a5000; }
