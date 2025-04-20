@@ -37,6 +37,10 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>)
         original_lines.push(line_str.clone());
 
         for transformer in transformers {
+            if line_str.contains("sotn-lint-ignore")
+            {
+                continue;
+            }
             line_str = transformer.transform_line(&line_str);
         }
 

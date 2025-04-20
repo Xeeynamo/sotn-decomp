@@ -4,6 +4,9 @@
 #include "sattypes.h"
 #include "lib/scl.h"
 
+#define _SPR2_
+#include "lib/spr.h"
+
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
@@ -172,11 +175,76 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CA0, func_06007CA0);
 
 u16 func_06007CE0(u16 param_1) { return param_1 * 0x10 + 0x400; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007CF8, func_06007CF8);
+void SPR_2ClrAllChar(void);
+
+s16 d_0605BECA;
+s16 d_0605AEA8;
+s16 d_0605AEB0;
+s16 d_0605BEC8;
+s32 d_06038dbc;
+s32 d_0605BEC4;
+s32 d_060576AC;
+
+void func_06007CF8() {
+    SPR_2ClrAllChar();
+    d_0605BECA = 0;
+    d_0605AEA8 = 0;
+    d_0605AEB0 = 0;
+    d_0605BEC8 = 0x304;
+    d_060576AC = 0;
+    d_0605BEC4 = 0x00011180;
+    d_06038dbc = 0;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007D54, func_06007D54);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007E14, func_06007E14);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007EE6, func_06007EE6);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6007F3A, func_06007F3A);
+
+void func_06022A48();
+
+s32 d_0605AEAC;
+s32 d_06038c5c;
+s32 d_06038c5c;
+s32 d_0605BEBE;
+u16 d_0605AEA0[4];
+void _func_06007E14(void) {
+    SprSpCmd cmd;
+
+    if (d_06038c5c) {
+        d_06038c5c--;
+        cmd.control = 0x1004;
+        cmd.drawMode = 0xC0; // sotn-lint-ignore
+        cmd.color = 0x8000;
+        cmd.ax = cmd.dx = 0;
+        cmd.bx = cmd.cx = d_0605BEBE;
+        cmd.ay = cmd.by = 0;
+        cmd.cy = cmd.dy = d_0605AEA0[1] - 1;
+        SPR_2Cmd(0x1ff, &cmd);
+        d_0605AEAC += 0x20;
+    }
+
+    func_06022A48();
+}
+void SPR_SetEraseData(
+    Uint16 eraseData, Uint16 leftX, Uint16 topY, Uint16 rightX, Uint16 botY);
+
+void SPR_2FrameEraseData(Uint16);
+void FUN_06007eb8(s16 param_1) {
+    SPR_2FrameEraseData(param_1);
+    SPR_SetEraseData(
+        param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
+}
+
+void func_06024088();
+void func_06008134();
+
+void FUN_06007f04(void) {
+    func_06024088();
+    SCL_SetDisplayMode(0, 1, 0);
+    SPR_2FrameChgIntr(-1);
+    SclPriBuffDirty.SclColOffset = 1;
+    SclColOffset.ColorOffsetEnable = 0x6f;
+    SCL_SetColOffset(0, 0x6f, 0xFF01, 0xFF01, 0xFF01);
+    func_06008134();
+}
 
 // _SET_VDP2_VRAM
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007F6C, func_06007F6C);
@@ -367,7 +435,9 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A264, func_0600A264);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600A29C, func_0600A29C);
 
 // func_0600A304
-void SetSprGourTable(u16 arg0) { SPR_2SetGourTbl(arg0); }
+void SetSprGourTable(u16 arg0, SprGourTbl* gourTbl) {
+    SPR_2SetGourTbl(arg0, gourTbl);
+}
 
 // _SetPlTransNonSeparateAura
 void func_0600A31C(void) { DAT_0605D910[3] = 1; }
