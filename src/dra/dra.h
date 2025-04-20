@@ -429,7 +429,7 @@ extern struct XaMusicConfig g_XaMusicConfigs[563];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
-extern u8* g_SfxScripts[172];
+extern s8* g_SfxScripts[172];
 extern u8* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
