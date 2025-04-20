@@ -1194,12 +1194,15 @@ static void func_80105078(s32 arg0, s32 arg1) {
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
     RotMatrix(&D_801379C8, &D_80137E00);
+#if !defined(VERSION_PSP)
     RotMatrix(&D_801379C8, &D_80137E20);
     SetColorMatrix(&D_800A37B8);
     SetLightMatrix(&D_80137E20);
     SetBackColor(0xC0, 0xC0, 0xC0);
+#endif
 
-    for (i = 0, prim = &g_PrimBuf[D_80137E44], sp90 = &D_800A34C0[0][0]; i < 18; i++, prim = prim->next, sp90 += 3) {
+    for (i = 0, prim = &g_PrimBuf[D_80137E44], sp90 = &D_800A34C0[0][0]; i < 18;
+         i++, prim = prim->next, sp90 += 3) {
         if (arg0 == 0) {
             prim->drawMode = DRAW_HIDE;
             continue;
@@ -1215,11 +1218,12 @@ static void func_80105078(s32 arg0, s32 arg1) {
             func_80017008(&vec, &unkSvectors[j]);
         }
         nclip_result = RotAverageNclip3(
-            &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0, (s32*)&prim->x1,
-            (s32*)&prim->x2, &interp, &otz, &unused_flag);
+            &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0,
+            (s32*)&prim->x1, (s32*)&prim->x2, &interp, &otz, &unused_flag);
         if (nclip_result < 0) {
-            RotAverage3(&rotVecs[0], &rotVecs[2], &rotVecs[1], (s32*)&prim->x0,
-                        (s32*)&prim->x2, (s32*)&prim->x1, &interp, &unused_flag);
+            RotAverage3(
+                &rotVecs[0], &rotVecs[2], &rotVecs[1], (s32*)&prim->x0,
+                (s32*)&prim->x2, (s32*)&prim->x1, &interp, &unused_flag);
         }
         prim->type = PRIM_LINE_G2;
         if (otz < 0xF0) {
@@ -1230,12 +1234,11 @@ static void func_80105078(s32 arg0, s32 arg1) {
             }
             if (arg1 != 0) {
                 if (arg1 & 0x80) {
-                    prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
-                        prim->b1 = arg1 & 0x7F;
+                    PGREY(prim, 0) = PGREY(prim, 1) = arg1 & 0x7F;
                 } else if (arg1 < 0x11) {
-                    prim->r0 = prim->g0 = prim->b0 = (0x10 - arg1) * 8;
+                    PGREY(prim, 0) = (u16)((0x10 - arg1) * 8);
                 } else if (arg1 < 0x21) {
-                    prim->r1 = prim->g1 = prim->b1 = (0x20 - arg1) * 8;
+                    PGREY(prim, 1) = (u16)((0x20 - arg1) * 8);
                 } else {
                     prim->drawMode = DRAW_HIDE;
                     continue;
