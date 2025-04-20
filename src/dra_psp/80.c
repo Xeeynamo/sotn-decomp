@@ -1281,7 +1281,7 @@ void func_80105428(void) {
         func_80103ED4();
     }
     temp_s3 = D_801379C8.vy;
-    switch (D_801379BC) {
+    switch (temp_s0 = D_801379BC) {
     case 0x0:
         D_801379C8.vy = temp_s3 + 6;
         timer_temp = g_GameTimer & 0x7F;
@@ -1321,7 +1321,7 @@ void func_80105428(void) {
             D_80137EE4 += 4;
         }
         func_80104790(0, D_80137EE4, 0);
-        if (D_801379B8 < ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
+        if (D_801379B8 < ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8 &&
             (g_GameTimer != 0)) {
             D_801379B8++;
         }
@@ -1335,7 +1335,7 @@ void func_80105428(void) {
             g_Player.padSim = PAD_LEFT;
             g_Player.demo_timer = 1;
         } else if (
-            D_801379B8 == ((g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
+            D_801379B8 == ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8) {
             func_80105408();
             D_80137EE8 = 8;
             if (D_80137EE0 != 0) {
