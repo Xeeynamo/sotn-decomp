@@ -873,8 +873,15 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60164BC, func_060164BC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016614, func_06016614);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60166A8, func_060166A8);
 
+void code2name(u32 code, u8* name);
+s32 func_06017F5C(u8*);
+
 // _PcmOpen
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016B44, func_06016B44);
+void func_06016B44(s32 code) {
+    u8 name[0x10];
+    code2name(code, name);
+    func_06017F5C(name);
+}
 
 int func_0601B8B4(int param_1, int param_2);
 int func_0601B75C(int param_1, int param_2, int param_3);
@@ -1039,7 +1046,16 @@ s32 func_0601AEA8(void) { return 0xff; }
 
 void func_0601AEB4(void) { DAT_060645D0 = DAT_060cf040; }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AECC, func_0601AECC);
+s32 d_0605D7E4;
+void (*func_060cf000)(void);
+
+// call familiar update function
+void func_0601AECC() {
+    if (d_0605D7E4) {
+        (*func_060cf000)();
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601AEF4, func_0601AEF4);
 
 void func_0601AF2C(void) { DAT_06064674 = DAT_060a5000; }
