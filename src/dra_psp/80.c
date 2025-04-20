@@ -1204,9 +1204,9 @@ static void func_80105078(s32 arg0, s32 arg1) {
         SetTransMatrix(&D_80137E00);
         otz = 0;
         for (j = 0; j < 3; j++) {
-            vec.vx = rotVecs[j].vx = (D_800A34C0[i][j]->vx * arg0) >> 8;
-            vec.vy = rotVecs[j].vy = (D_800A34C0[i][j]->vy * arg0) >> 8;
-            vec.vz = rotVecs[j].vz = (D_800A34C0[i][j]->vz * arg0) >> 8;
+            vec.vx = rotVecs[j].vx = (sp90[j]->vx * arg0) >> 8;
+            vec.vy = rotVecs[j].vy = (sp90[j]->vy * arg0) >> 8;
+            vec.vz = rotVecs[j].vz = (sp90[j]->vz * arg0) >> 8;
             func_80017008(&vec, &unkSvectors[j]);
         }
         nclip_result = RotAverageNclip3(

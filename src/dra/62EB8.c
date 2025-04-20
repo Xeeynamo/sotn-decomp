@@ -1199,8 +1199,7 @@ void func_80105078(s32 arg0, s32 arg1) {
     SetLightMatrix(&D_80137E20);
     SetBackColor(0xC0, 0xC0, 0xC0);
 
-    sp90 = &D_800A34C0;
-    for (i = 0, prim = &g_PrimBuf[D_80137E44]; i < 18; i++, prim = prim->next, sp90 += 3) {
+    for (i = 0, prim = &g_PrimBuf[D_80137E44], sp90 = &D_800A34C0[0][0]; i < 18; i++, prim = prim->next, sp90 += 3) {
         if (arg0 == 0) {
             prim->drawMode = DRAW_HIDE;
             continue;
