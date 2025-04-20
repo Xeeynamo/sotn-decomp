@@ -1185,6 +1185,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
     SVECTOR unkSvectors[3];
     s32 i;
     s32 j;
+    SVECTOR** sp90;
     Primitive* prim;
     s32 nclip_result;
     u8 sp70[4];
@@ -1193,7 +1194,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
     sp70[3] = 0;
     RotMatrix(&D_801379C8, &D_80137E00);
 
-    for (i = 0, prim = &g_PrimBuf[D_80137E44]; i < 18; i++, prim = prim->next) {
+    for (i = 0, prim = &g_PrimBuf[D_80137E44], sp90 = &D_800A34C0[0][0]; i < 18; i++, prim = prim->next, sp90 += 3) {
         if (arg0 == 0) {
             prim->drawMode = DRAW_HIDE;
             continue;
