@@ -6,27 +6,597 @@ s16 SsSeqOpen(u32 addr, s16 vab_id);
 
 extern s32 D_8B42064;
 extern s32 D_psp_08B42060;
-extern s8* D_psp_09190C18[];
-extern s16 D_psp_09187240[][2];
-extern s8* D_psp_091893B8[];
-extern Point32 D_psp_09189D40[];
-extern s32 D_psp_09189D68;
-extern char D_psp_09189D70[];
-extern char D_psp_09189D80[];
-extern char D_psp_09189DB0[];
-extern char D_psp_09189DB8[];
 extern SpuVoiceAttr D_psp_09236838;
 extern s32 D_psp_09236880;
 extern char D_psp_09236888[];
 extern s32 D_psp_09236910;
 extern s32 D_psp_09236920;
 extern s32 D_psp_09236928;
-extern s8 D_psp_09237488;
-extern s16 D_psp_092374A0;
 extern s16 D_psp_092374B0;
 extern s16 D_psp_092374B8;
-extern s16 D_psp_092374C0;
 extern SpuVoiceAttr* D_psp_09237578;
+
+static s16 D_800BD17C[][2] = {
+    {0x00, 0x7F}, {0x10, 0x7F}, {0x20, 0x7F}, {0x30, 0x7F}, {0x40, 0x7F},
+    {0x50, 0x7F}, {0x60, 0x7F}, {0x70, 0x7F}, {0x7F, 0x7F}, {0x7F, 0x70},
+    {0x7F, 0x60}, {0x7F, 0x50}, {0x7F, 0x40}, {0x7F, 0x30}, {0x7F, 0x20},
+    {0x7F, 0x10}, {0x7F, 0x00}};
+static char* D_psp_091893B8[] = {
+    "PS_OP_NA.at3",
+    "PS_ARTBGM.at3",
+    "PS_SEQ_LIBRARY.at3",
+    "PS_BFSHITE.at3",
+    "PS_SD_EVE3.at3",
+    "PS_CHURCH.at3",
+    "PS_CHURCH.at3",
+    "PS_KATABGM.at3",
+    "PS_KATABGM.at3",
+    "PS_LIBRARY.at3",
+    "PS_LIBRARY.at3",
+    "PS_MIZU.at3",
+    "PS_MIZU.at3",
+    "PS_ROUKA.at3",
+    "PS_ROUKA.at3",
+    "PS_SHIRO.at3",
+    "PS_SHIRO.at3",
+    "PS_TOKEI.at3",
+    "PS_TOKEI.at3",
+    "PS_TOWER.at3",
+    "PS_TOWER.at3",
+    "PS_BFBOSS.at3",
+    "PS_BFBOSS.at3",
+    "PS_DANCE.at3",
+    "PS_DANCE.at3",
+    "PS_DOUKU.at3",
+    "PS_DOUKU.at3",
+    "PS_MVROOM.at3",
+    "PS_MVROOM.at3",
+    "PS_SENTOU1.at3",
+    "PS_SENTOU1.at3",
+    "PS_STAGE0.at3",
+    "PS_STAGE0.at3",
+    "PS_START.at3",
+    "PS_START.at3",
+    "PS_TOUGIJYO.at3",
+    "PS_TOUGIJYO.at3",
+    "PS_TUROOM.at3",
+    "PS_TUROOM.at3",
+    "PS_WIND_OUTDOOR.at3",
+    "PS_WIND_OUTDOOR.at3",
+    "PS_WIND_INDOOR.at3",
+    "PS_WIND_INDOOR.at3",
+    "PS_HALL.at3",
+    "PS_HALL.at3",
+    "PS_WBOSS.at3",
+    "PS_WBOSS.at3",
+    "PS_NAME.at3",
+    "PS_NAME.at3",
+    "PS_LBOSS.at3",
+    "PS_LBOSS.at3",
+    "PS_RBOSS.at3",
+    "PS_RBOSS.at3",
+    "PS_SAKASA.at3",
+    "PS_SAKASA.at3",
+    "PS_DLBOSS.at3",
+    "PS_DLBOSS.at3",
+    "PS_CREDIT.at3",
+    "PS_SAVE.at3",
+    "PS_GAMEOVER.at3",
+    "PS_HEKIRU.at3",
+    "PS_OP_NA.at3",
+    "PS_OP_NA.at3",
+    "PS_MID_DEMO.at3",
+    "PS_ENDDEMO.at3",
+    "cd1.at3",
+    "freef.at3",
+    "freeh.at3",
+    "freek.at3",
+    "freeo.at3",
+    "frees.at3",
+    "freew.at3",
+    "freey.at3",
+    "freez.at3",
+    "konaf.at3",
+    "konah1.at3",
+    "konah2.at3",
+    "konak.at3",
+    "konao.at3",
+    "konasj.at3",
+    "konask.at3",
+    "konaw.at3",
+    "konay1.at3",
+    "konay2.at3",
+    "konaz1.at3",
+    "konaz2.at3",
+    "011a.at3",
+    "011b.at3",
+    "011c.at3",
+    "011d.at3",
+    "011e.at3",
+    "011f.at3",
+    "012a.at3",
+    "020a.at3",
+    "020b.at3",
+    "020c.at3",
+    "020d.at3",
+    "020e.at3",
+    "030a.at3",
+    "030b.at3",
+    "030c.at3",
+    "030d.at3",
+    "030e.at3",
+    "040a.at3",
+    "040b.at3",
+    "040c.at3",
+    "040d.at3",
+    "040e.at3",
+    "050a.at3",
+    "050b.at3",
+    "050c.at3",
+    "050d.at3",
+    "050e.at3",
+    "050f.at3",
+    "050g.at3",
+    "060a.at3",
+    "060b.at3",
+    "060c.at3",
+    "060d.at3",
+    "060e.at3",
+    "070a.at3",
+    "070b.at3",
+    "070c.at3",
+    "070d.at3",
+    "070e.at3",
+    "070f.at3",
+    "070g.at3",
+    "070h.at3",
+    "070i.at3",
+    "070j.at3",
+    "070k.at3",
+    "070l.at3",
+    "070m.at3",
+    "070n.at3",
+    "070o.at3",
+    "070p.at3",
+    "070q.at3",
+    "080a.at3",
+    "080b.at3",
+    "080c.at3",
+    "080d.at3",
+    "090a.at3",
+    "090b.at3",
+    "090c.at3",
+    "090d.at3",
+    "100a.at3",
+    "110a.at3",
+    "110b.at3",
+    "110c.at3",
+    "110d.at3",
+    "110e.at3",
+    "120a.at3",
+    "120b.at3",
+    "120c.at3",
+    "120d.at3",
+    "120e.at3",
+    "130a.at3",
+    "140a.at3",
+    "140b.at3",
+    "140c.at3",
+    "150a.at3",
+    "160a.at3",
+    "160b.at3",
+    "160c.at3",
+    "160d.at3",
+    "160e.at3",
+    "160f.at3",
+    "170a.at3",
+    "170b.at3",
+    "171a.at3",
+    "171b.at3",
+    "171b1.at3",
+    "171b2.at3",
+    "172a.at3",
+    "172b.at3",
+    "172b1.at3",
+    "172b2.at3",
+    "173a.at3",
+    "173b.at3",
+    "173c.at3",
+    "174a.at3",
+    "180a.at3",
+    "180a1.at3",
+    "180a2.at3",
+    "190a.at3",
+    "190b.at3",
+    "190c.at3",
+    "190d.at3",
+    "190e.at3",
+    "190f.at3",
+    "190g.at3",
+    "190g1.at3",
+    "201a.at3",
+    "201b.at3",
+    "201c1.at3",
+    "201c1.at3",
+    "201d.at3",
+    "201e.at3",
+    "201f.at3",
+    "202a.at3",
+    "202b.at3",
+    "202c1.at3",
+    "202c1.at3",
+    "202d.at3",
+    "202e.at3",
+    "202f.at3",
+    "210a.at3",
+    "220a.at3",
+    "220b.at3",
+    "231a.at3",
+    "231b.at3",
+    "232a.at3",
+    "232b.at3",
+    "232c.at3",
+    "232d.at3",
+    "241a.at3",
+    "242a.at3",
+    "243a.at3",
+    "251a.at3",
+    "252a.at3",
+    "253a.at3",
+    "261a.at3",
+    "262a.at3",
+    "263a.at3",
+    "270a.at3",
+    "270b.at3",
+    "270c.at3",
+    "270d.at3",
+    "270e.at3",
+    "270f.at3",
+    "270g.at3",
+    "280a.at3",
+    "280b.at3",
+    "280c.at3",
+    "280d.at3",
+    "290a.at3",
+    "301a.at3",
+    "301b.at3",
+    "302a.at3",
+    "302b.at3",
+    "302c.at3",
+    "302d.at3",
+    "302e.at3",
+    "302f.at3",
+    "302g.at3",
+    "303a.at3",
+    "303b.at3",
+    "303c.at3",
+    "303d.at3",
+    "303e.at3",
+    "311a.at3",
+    "322a.at3",
+    "331a.at3",
+    "331b.at3",
+    "331c.at3",
+    "331d.at3",
+    "331e.at3",
+    "331f.at3",
+    "331g.at3",
+    "331h.at3",
+    "331i.at3",
+    "332a.at3",
+    "332b.at3",
+    "332c.at3",
+    "332d.at3",
+    "332e.at3",
+    "332f.at3",
+    "332g.at3",
+    "332h.at3",
+    "332i.at3",
+    "340a.at3",
+    "340b.at3",
+    "340c.at3",
+    "340d.at3",
+    "340e.at3",
+    "350a.at3",
+    "350b.at3",
+    "350c.at3",
+    "350d.at3",
+    "350e.at3",
+    "361a.at3",
+    "362a.at3",
+    "363a.at3",
+    "370a.at3",
+    "370b.at3",
+    "370c.at3",
+    "370d.at3",
+    "370e.at3",
+    "370f.at3",
+    "380a.at3",
+    "380b.at3",
+    "380c.at3",
+    "380d.at3",
+    "380e.at3",
+    "380f.at3",
+    "380g.at3",
+    "380h.at3",
+    "380i.at3",
+    "390a.at3",
+    "401a.at3",
+    "410a.at3",
+    "410b.at3",
+    "410c.at3",
+    "410d.at3",
+    "410e.at3",
+    "410f.at3",
+    "410g.at3",
+    "410h.at3",
+    "420a.at3",
+    "420b.at3",
+    "430a.at3",
+    "430b.at3",
+    "430c.at3",
+    "430d.at3",
+    "430e.at3",
+    "430f.at3",
+    "430g.at3",
+    "430h.at3",
+    "430i.at3",
+    "430j.at3",
+    "430k.at3",
+    "430l.at3",
+    "430m.at3",
+    "430n.at3",
+    "430o.at3",
+    "430p.at3",
+    "430q.at3",
+    "440a.at3",
+    "440b.at3",
+    "440c.at3",
+    "440d.at3",
+    "440e.at3",
+    "440f.at3",
+    "440g.at3",
+    "440h.at3",
+    "440i.at3",
+    "440j.at3",
+    "440k.at3",
+    "440l.at3",
+    "440m.at3",
+    "440n.at3",
+    "440o.at3",
+    "440p.at3",
+    "440q.at3",
+    "440r.at3",
+    "440s.at3",
+    "440t.at3",
+    "440u.at3",
+    "boyz4a.at3",
+    "boyz4b.at3",
+    "boyz4c.at3",
+    "boyz4d.at3",
+    "boyz4e.at3",
+    "boyz4f.at3",
+    "boyz4g.at3",
+    "boyz4h.at3",
+    "boyz5a.at3",
+    "boyz5b.at3",
+    "boyz5c.at3",
+    "boyz5d.at3",
+    "boyz5e.at3",
+    "boyz5f.at3",
+    "boyz5g.at3",
+    "boyz5h.at3",
+    "boyz5i.at3",
+    "boyz5j.at3",
+    "boyz5k.at3",
+    "boyz5l.at3",
+    "elas01a.at3",
+    "elas01b.at3",
+    "elas01c.at3",
+    "elas01d.at3",
+    "elas01e.at3",
+    "elas01f.at3",
+    "elas01g.at3",
+    "elas01h.at3",
+    "elas04a.at3",
+    "elas04b.at3",
+    "elas04c.at3",
+    "elas04d.at3",
+    "elas04e.at3",
+    "elas04h.at3",
+    "elas04i.at3",
+    "elas04j.at3",
+    "elas04k.at3",
+    "elas04l.at3",
+    "elas04m.at3",
+    "elas04n.at3",
+    "elas04o.at3",
+    "elas04p.at3",
+    "elas04q.at3",
+    "elas04r.at3",
+    "elas04s.at3",
+    "elas04t.at3",
+    "elas04u.at3",
+    "elas04v.at3",
+    "elas04w.at3",
+    "elas04x.at3",
+    "elas04y.at3",
+    "elas04z.at3",
+    "elas04za.at3",
+    "elas04zb.at3",
+    "elas04zc.at3",
+    "elas04zd.at3",
+    "elas05a.at3",
+    "elas05b.at3",
+    "elas05c.at3",
+    "elas05d.at3",
+    "elas05e.at3",
+    "elas05f.at3",
+    "elas05g.at3",
+    "elas05h.at3",
+    "elas05i.at3",
+    "elas05j.at3",
+    "elas05k.at3",
+    "elbs06a.at3",
+    "elbs06b.at3",
+    "elbs06c.at3",
+    "elbs06d.at3",
+    "elbs06e.at3",
+    "elbs06f.at3",
+    "elbs06g.at3",
+    "elbs09a.at3",
+    "elbs09b.at3",
+    "elbs09c.at3",
+    "elbs09d.at3",
+    "elbs09e.at3",
+    "elbs09h.at3",
+    "elbs09i.at3",
+    "elbs09j.at3",
+    "elbs09k.at3",
+    "elbs09l.at3",
+    "elbs09m.at3",
+    "elbs09p.at3",
+    "elbs09q.at3",
+    "elbs09r.at3",
+    "elbs09s.at3",
+    "elbs09t.at3",
+    "elbs09u.at3",
+    "elbs09v.at3",
+    "elbs09w.at3",
+    "elbs09x.at3",
+    "elbs09y.at3",
+    "elbs09z.at3",
+    "elbs09za.at3",
+    "elbs10a.at3",
+    "elbs10b.at3",
+    "elbs10c.at3",
+    "elbs10d.at3",
+    "elbs10e.at3",
+    "elbs10f.at3",
+    "elbs10g.at3",
+    "elbs10h.at3",
+    "elbs10i.at3",
+    "elbs10j.at3",
+    "elbs10k.at3",
+    "elbs10l.at3",
+    "elbs10m.at3",
+    "elbs10n.at3",
+    "elbs10o.at3",
+    "elbs10p.at3",
+    "elbs10q.at3",
+    "elbs10r.at3",
+    "elbs10s.at3",
+    "elbs10t.at3",
+    "elbs10u.at3",
+    "elbs10v.at3",
+    "elbs10w.at3",
+    "elbs10x.at3",
+    "elbs10y.at3",
+    "elbs11a.at3",
+    "elbs11b.at3",
+    "elbs11c.at3",
+    "elbs11d.at3",
+    "elbs11e.at3",
+    "elbs11f.at3",
+    "elbs11g.at3",
+    "elbs11h.at3",
+    "elbs11i.at3",
+    "elbs11j.at3",
+    "elbs11k.at3",
+    "elbs11l.at3",
+    "elbs11m.at3",
+    "elbs11n.at3",
+    "elbs11o.at3",
+    "fats1a.at3",
+    "koaz1a.at3",
+    "koaz1b.at3",
+    "koaz1c.at3",
+    "koaz1d.at3",
+    "koaz1e.at3",
+    "koaz1f.at3",
+    "koaz2a.at3",
+    "koaz2b.at3",
+    "koaz2c.at3",
+    "koaz2d.at3",
+    "koaz2e.at3",
+    "koaz2f.at3",
+    "koaz2g.at3",
+    "koaz2h.at3",
+    "koaz2i.at3",
+    "majs1a.at3",
+    "majs1b.at3",
+    "majs1c.at3",
+    "majs1d.at3",
+    "maks1a.at3",
+    "maks1b.at3",
+    "maks1c.at3",
+    "maks1d.at3",
+    "maks1e.at3",
+    "maks1f.at3",
+    "sens1a.at3",
+    "sens1b.at3",
+    "wats1a.at3",
+    "wats1b.at3",
+    "wats1c.at3",
+    "wats1d.at3",
+    "wats1e.at3",
+    "alk2a.at3",
+    "alk3a.at3",
+    "alk3b.at3",
+    "alk3c.at3",
+    "alk3d.at3",
+    "alk3e.at3",
+    "alk3f.at3",
+    "alk3g.at3",
+    "alk3h.at3",
+    "alk3i.at3",
+    "alk3j.at3",
+    "alk3k.at3",
+    "bosf2r.at3",
+    "bosf4u.at3",
+    "bosf5i.at3",
+    "bosw3n.at3",
+    "bosw3o.at3",
+    "bosw3p.at3",
+    "bosw3q.at3",
+    "bosw4s.at3",
+    "bosy6a.at3",
+    "bosy6l.at3",
+    "bosy7l.at3",
+    "bosy7m.at3",
+    "bosya5o.at3",
+    "bosya5p.at3",
+    "draw1y.at3",
+    "draw1z.at3",
+    "draw2o.at3",
+    "draw2p.at3",
+    "lihk1m.at3",
+    "lihk3i.at3",
+    "mary2x.at3",
+    "mary2zd.at3",
+    "sacf1s.at3",
+    "sacf1u.at3",
+    "shak4zf.at3",
+    "shak4zg.at3",
+    "shak4zh.at3",
+    "sins1w.at3",
+    "sins1x.at3",
+    "sins1y.at3",
+    "snis1z.at3",
+    "380e2.at3"};
+static s32 D_psp_09189C80[] = {
+    0x490, 0x48C, 0x478, 0x488, 0x478, 0x470, 0x471, 0x474, 0x477, 0x49F,
+    0x4A2, 0x4A3, 0x4A5, 0x4D2, 0x4BA, 0x4A6, 0x4B6, 0x4A6, 0x4EB, 0x4E6,
+    0x4EC, 0x4ED, 0x464, 0x465, 0x46A, 0x46B, 0x4F9, 0x4FC, 0x4FA, 0x4FD,
+    0x45C, 0x45D, 0x462, 0x463, 0x367, 0x368, 0x369, 0x36A, 0x36B, 0x373,
+    0x374, 0x375, 0x376, 0x377, 0x501, 0x502, 0x3FA, 0x3FB};
+static s32 D_psp_09189D40[][2] = {
+    {0x490, 0x488},
+    {0x4CF, 0x4B6},
+    {0x4FA, 0x4F9},
+    {0x45D, 0x45C},
+    {0x465, 0x464}};
+static s32 D_psp_09189D68 = 1;
 
 void func_psp_09140588(s32 arg0) {
     if (!func_psp_09141550(arg0)) {
@@ -181,10 +751,10 @@ void InitSoundVars1(void) {
     D_80138FBC = 0;
     D_psp_092374B8 = 0;
     D_psp_092374B0 = 0;
-    D_psp_092374C0 = 0;
-    D_psp_092374A0 = 0;
+    D_80139800 = 0;
+    D_80138F80 = 0;
     D_80139014 = 0;
-    D_psp_09237488 = 0;
+    D_8013B618 = 0;
     D_8013980C = 0;
     g_CdSoundCommandStep = 0;
     D_801390A0 = 0;
@@ -307,8 +877,8 @@ void func_80132A04(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note,
         g_VolL = volume;
         g_VolR = volume;
     } else {
-        g_VolR = (volume * D_psp_09187240[distance][0]) >> 7;
-        g_VolL = (volume * D_psp_09187240[distance][1]) >> 7;
+        g_VolR = (volume * (D_800BD17C + 8)[distance][0]) >> 7;
+        g_VolL = (volume * (D_800BD17C + 8)[distance][1]) >> 7;
     }
 
     // hardware voices 0-24
@@ -393,14 +963,34 @@ static void AdvanceCdSoundCommandQueue(void) {
     g_CdSoundCommandQueuePos--;
 }
 
-s32 func_psp_09141550(s32 arg0) {
+static s32 func_psp_09141550(s32 arg0) {
     if (arg0 == 2) {
-        return 1;
+        return true;
     }
-    return arg0 == 4;
+    if (arg0 == 4) {
+        return true;
+    }
+    return false;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09141570);
+void func_psp_09141570(s32 arg0, s32* arg1, s32* arg2) {
+    u32 i;
+
+    for (i = 0; i < 0x30; i++) {
+        if (arg0 == (D_psp_09189C80[i] - 0x300)) {
+            *arg1 = 0;
+            *arg2 = 1;
+            return;
+        }
+    }
+    if (func_psp_09141550(arg0)) {
+        *arg1 = 1;
+        *arg2 = 1;
+    } else {
+        *arg1 = 0;
+        *arg2 = 0;
+    }
+}
 
 s32 func_psp_091415E0(s32 arg0) {
     s32 sp1C;
@@ -415,8 +1005,8 @@ s32 func_psp_09141608(s32 arg0) {
 
     if (D_8B42064) {
         for (i = 0; i < 5; i++) {
-            if (arg0 == (D_psp_09189D40[i].x - 0x300)) {
-                return D_psp_09189D40[i].y - 0x300;
+            if (arg0 == (D_psp_09189D40[i][0] - 0x300)) {
+                return D_psp_09189D40[i][1] - 0x300;
             }
         }
     }
@@ -434,37 +1024,37 @@ s32 func_psp_09141668(s32 arg0) {
     var_s1 = 0;
     var_s2 = func_psp_09141608(arg0);
     func_psp_09141570(var_s2, &sp1C, &sp18);
-    temp_a3 = D_psp_091893B8[var_s2];
+    temp_a3 = (s8*)D_psp_091893B8[var_s2];
     if ((temp_a3[0] == 'P') && (temp_a3[1] == 'S') && (temp_a3[2] == '_')) {
-        psp_sprintf(D_psp_09236888, D_psp_09189D70, D_psp_08B42060,
+        psp_sprintf(D_psp_09236888, "%sPS_BGM/%s", D_psp_08B42060,
                     D_psp_091893B8[var_s2]);
         if (func_890FA7C(D_psp_09236888) < 0) {
             var_s2 = D_psp_09189D68;
         }
         D_psp_09189D68 = var_s2;
-        psp_sprintf(D_psp_09236888, D_psp_09189D80, D_psp_08B42060,
-                    D_psp_091893B8[var_s2]);
-        if (func_psp_09141550(var_s2) != 0) {
+        psp_sprintf(D_psp_09236888, "disc0:/PSP_GAME/USRDIR/res/ps/%sPS_BGM/%s",
+                    D_psp_08B42060, D_psp_091893B8[var_s2]);
+        if (func_psp_09141550(var_s2)) {
             var_s0 = func_8933F5C();
             var_s1 = func_8933F6C();
         }
         func_892A620(~sp18 & 1, 1);
         func_892A414(sp18, D_psp_09236888, 1, sp1C, var_s0, var_s1);
     } else {
-        psp_sprintf(D_psp_09236888, D_psp_09189DB0, D_psp_08B42060,
-                    D_psp_091893B8[var_s2]);
+        psp_sprintf(
+            D_psp_09236888, "%sXA/%s", D_psp_08B42060, D_psp_091893B8[var_s2]);
         if (func_890FA7C(D_psp_09236888) < 0) {
             var_s2 = D_psp_09236880;
         }
         D_psp_09236880 = var_s2;
-        psp_sprintf(D_psp_09236888, D_psp_09189DB8, D_psp_08B42060,
-                    D_psp_091893B8[var_s2]);
+        psp_sprintf(D_psp_09236888, "disc0:/PSP_GAME/USRDIR/res/ps/%sXA/%s",
+                    D_psp_08B42060, D_psp_091893B8[var_s2]);
         func_892A414(sp18, D_psp_09236888, 0, sp1C, 0, 0);
     }
     return sp1C;
 }
 
-s8* func_psp_09141860(s32 arg0) { return D_psp_091893B8[arg0]; }
+char* func_psp_09141860(s32 arg0) { return D_psp_091893B8[arg0]; }
 
 void func_psp_09141878(s32 arg0) {
     func_892A620(0, 0);
@@ -1209,8 +1799,8 @@ void KeyOnChannels22_23(void) {
         22, g_SfxData[g_CurSfxId22_23].vabid, g_SfxData[g_CurSfxId22_23].prog,
         g_SfxData[g_CurSfxId22_23].tone, g_SfxData[g_CurSfxId22_23].note,
         volume, g_CurSfxDistance22_23);
-    g_VolR = (volume * D_psp_09187240[g_CurSfxDistance22_23][0]) >> 8;
-    g_VolL = (volume * D_psp_09187240[g_CurSfxDistance22_23][1]) >> 8;
+    g_VolR = (volume * (D_800BD17C + 8)[g_CurSfxDistance22_23][0]) >> 8;
+    g_VolL = (volume * (D_800BD17C + 8)[g_CurSfxDistance22_23][1]) >> 8;
     SsUtSetVVol(22, g_VolL, g_VolR);
     SsUtSetVVol(23, g_VolL, g_VolR);
 }
@@ -1220,8 +1810,8 @@ void SetVolume22_23(void) {
 
     volume = (g_SfxVolumeMultiplier * g_SfxData[g_CurSfxId22_23].volume) >> 7;
     volume = (volume * g_CurSfxVol22_23) >> 7;
-    g_VolR = (volume * D_psp_09187240[g_CurSfxDistance22_23][0]) >> 8;
-    g_VolL = (volume * D_psp_09187240[g_CurSfxDistance22_23][1]) >> 8;
+    g_VolR = (volume * (D_800BD17C + 8)[g_CurSfxDistance22_23][0]) >> 8;
+    g_VolL = (volume * (D_800BD17C + 8)[g_CurSfxDistance22_23][1]) >> 8;
     SsUtSetVVol(22, g_VolL, g_VolR);
     SsUtSetVVol(23, g_VolL, g_VolR);
 }
@@ -1571,7 +2161,7 @@ void PlaySfxScript(
     g_CurrentSfxScriptSfxId[channel_group] = arg0;
     g_SfxScriptMode[channel_group] = g_SfxData[arg0].mode;
     progId = g_SfxData[arg0].prog + 1;
-    g_CurrentSfxScript[channel_group] = D_psp_09190C18[progId];
+    g_CurrentSfxScript[channel_group] = g_SfxScripts[progId];
     g_SfxScriptTimer[channel_group] = 0;
     g_CurrentSfxScriptSfxId2[channel_group] = arg0;
     g_SfxScriptUnk6[channel_group] = g_SfxData[arg0].unk6;
