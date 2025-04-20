@@ -2,11 +2,6 @@
 #include "../chi/chi.h"
 
 // clang-format off
-
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", func_psp_0923C0C0);
-
-INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityStageNamePopup);
-
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityBackgroundBlock);
 
 INCLUDE_ASM("st/chi_psp/nonmatchings/chi_psp/13DD8", EntityLockCamera);
