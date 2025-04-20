@@ -1189,7 +1189,7 @@ void func_80105078(s32 arg0, s32 arg1) {
     SVECTOR** sp90;
     Primitive* prim;
     s32 nclip_result;
-    s32 i;
+    s32 j;
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
@@ -1211,11 +1211,11 @@ void func_80105078(s32 arg0, s32 arg1) {
         SetRotMatrix(&D_80137E00);
         SetTransMatrix(&D_80137E00);
         otz = 0;
-        for (i = 0; i < 3; i++) {
-            vec.vx = rotVecs[i].vx = (sp90[i]->vx * arg0) >> 8;
-            vec.vy = rotVecs[i].vy = (sp90[i]->vy * arg0) >> 8;
-            vec.vz = rotVecs[i].vz = (sp90[i]->vz * arg0) >> 8;
-            func_80017008(&vec, &unkSvectors[i]);
+        for (j = 0; j < 3; j++) {
+            vec.vx = rotVecs[j].vx = (sp90[j]->vx * arg0) >> 8;
+            vec.vy = rotVecs[j].vy = (sp90[j]->vy * arg0) >> 8;
+            vec.vz = rotVecs[j].vz = (sp90[j]->vz * arg0) >> 8;
+            func_80017008(&vec, &unkSvectors[j]);
         }
         nclip_result = RotAverageNclip3(
             &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0, (s32*)&prim->x1,
