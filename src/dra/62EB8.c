@@ -1185,7 +1185,7 @@ void func_80105078(s32 arg0, s32 arg1) {
     s32 interp;
     s32 otz;
     s32 unused_flag;
-    s32 sp88;
+    s32 i;
     SVECTOR** sp90;
     Primitive* prim;
     s32 nclip_result;
@@ -1202,7 +1202,7 @@ void func_80105078(s32 arg0, s32 arg1) {
     sp90 = &D_800A34C0;
     prim = &g_PrimBuf[D_80137E44];
 
-    for (sp88 = 0; sp88 < 18; sp88++, prim = prim->next, sp90 += 3) {
+    for (i = 0; i < 18; i++, prim = prim->next, sp90 += 3) {
         if (arg0 == 0) {
             prim->drawMode = DRAW_HIDE;
             continue;
