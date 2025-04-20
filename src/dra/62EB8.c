@@ -1177,19 +1177,19 @@ void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 void func_80105078(s32 arg0, s32 arg1) {
+    s32 interp;
+    s32 otz;
+    s32 unused_flag;
     VECTOR vec;
     SVECTOR pad;
     SVECTOR rotVecs[3];
     SVECTOR unkSvectors[3];
-    u8 sp70[4];
-    s32 interp;
-    s32 otz;
-    s32 unused_flag;
     s32 i;
+    s32 j;
     SVECTOR** sp90;
     Primitive* prim;
     s32 nclip_result;
-    s32 j;
+    u8 sp70[4];
 
     sp70[2] = sp70[1] = sp70[0] = 0x80;
     sp70[3] = 0;
