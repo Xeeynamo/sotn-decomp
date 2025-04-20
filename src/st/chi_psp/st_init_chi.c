@@ -12,7 +12,7 @@ s32 E_ID(BACKGROUND_BLOCK);
 s32 E_ID(ID_12);
 s32 E_ID(ID_13);
 s32 E_ID(ID_14);
-s32 E_ID(ID_15);
+s32 E_ID(GREY_PUFF);
 s32 E_ID(ID_16);
 s32 E_ID(ID_17);
 s32 E_ID(ID_18);
@@ -43,7 +43,7 @@ void InitEntityIds(void) {
     E_ID(ID_12) = 0x12;
     E_ID(ID_13) = 0x13;
     E_ID(ID_14) = 0x14;
-    E_ID(ID_15) = 0x15;
+    E_ID(GREY_PUFF) = 0x15;
     E_ID(ID_16) = 0x16;
     E_ID(ID_17) = 0x17;
     E_ID(ID_18) = 0x18;
