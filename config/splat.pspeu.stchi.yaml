@@ -96,8 +96,8 @@ segments:
       - [0x34450, .rodata, chi_psp/en_breakable_wall]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
       - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi_psp/e_collect}
-      - {start: 0x34480, type: bss, vram: 0x0926BB68, name: ut_blit_char}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB68, name: chi/ut_blit_char}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
       - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
-      - {start: 0x34480, type: bss, vram: 0x0926BC78, name: entity_lock_camera}
+      - {start: 0x34480, type: .bss, vram: 0x0926BC78, name: chi/st_debug}
   - [0x34480]

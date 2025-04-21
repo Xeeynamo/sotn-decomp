@@ -7,13 +7,13 @@ extern LayoutEntity* D_8D2DF50;
 
 extern Overlay OVL_EXPORT(Overlay);
 
-extern s32 E_ID(ID_11);
-extern s32 E_ID(ID_12);
-extern s32 E_ID(ID_13);
-extern s32 E_ID(ID_14);
-extern s32 E_ID(ID_15);
-extern s32 E_ID(ID_16);
-extern s32 E_ID(SMALL_ROCKS);
+static s32 E_ID(ID_11);
+static s32 E_ID(ID_12);
+static s32 E_ID(ID_13);
+static s32 E_ID(ID_14);
+static s32 E_ID(ID_15);
+static s32 E_ID(ID_16);
+s32 E_ID(SMALL_ROCKS);
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;

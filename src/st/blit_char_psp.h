@@ -9,15 +9,15 @@ u8 func_psp_0923C2F8(u8 arg0) {
     return arg0 * 0x10;
 }
 
-extern u8* D_psp_0924BC78;
-extern s32 D_psp_0924BC70;
-extern s32 D_psp_0924BC68;
+// bss
+static u8* pixPtr;
+static s32 frameBufferX;
+static s32 frameBufferY;
 
-// PSP unique?
-void func_psp_0923C390(s32 arg0, s32 arg1) {
-    D_psp_0924BC78 = g_Pix[0];
-    D_psp_0924BC70 = arg0;
-    D_psp_0924BC68 = arg1;
+void func_psp_0923C390(s32 posX, s32 posY) {
+    pixPtr = g_Pix[0];
+    frameBufferX = posX;
+    frameBufferY = posY;
 }
 
 char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
@@ -47,7 +47,7 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
 
     size = 0x90;
     for (i = 0; i < size * 16; i++) {
-        D_psp_0924BC78[i] = 0;
+        pixPtr[i] = 0;
     }
     pos = 0;
     sp34 = 0;
@@ -137,7 +137,7 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
             }
 
             for (i = 0; i < FontHeight; i++) {
-                ptr = &D_psp_0924BC78[(i * size + pos)];
+                ptr = &pixPtr[(i * size + pos)];
                 *ptr++ = *chPix++;
                 *ptr++ = *chPix++;
                 *ptr++ = *chPix++;
@@ -156,9 +156,9 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
         }
     }
 
-    LoadTPage((u_long*)D_psp_0924BC78, 0, 0, D_psp_0924BC70 + sp34,
-              D_psp_0924BC68 + xOffset, size << 1, 0x10);
-    D_psp_0924BC78 += size * 0x10;
+    LoadTPage((u_long*)pixPtr, 0, 0, frameBufferX + sp34,
+              frameBufferY + xOffset, size << 1, 0x10);
+    pixPtr += size * 0x10;
 
     if (ch == 1) {
         BlitChar(str, xOffset + 0x10, posX, posY + 0x10);
