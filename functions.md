@@ -1,7 +1,6 @@
 | Ovl    | Function                            |   Length |   Branches | Jtbl   | WIP                             | %     |
 |--------|-------------------------------------|----------|------------|--------|---------------------------------|-------|
 | lib    | e_mist_door.rodata                  |        7 |          0 |        |                                 |       |
-| wrp    | jtbl_psp_0924BB78                   |        7 |          0 | Yes    |                                 |       |
 | dra    | func_801027A4                       |        7 |          1 |        |                                 |       |
 | dra    | func_8011EDA0                       |        7 |          1 |        |                                 |       |
 | dra    | DebugUpdate                         |        7 |          1 |        |                                 |       |
@@ -43,7 +42,6 @@
 | ric    | RicEntityNotImplemented3            |        9 |          1 |        |                                 |       |
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | no4    | func_pspeu_0923D0B8                 |        9 |          1 |        |                                 |       |
-| wrp    | warp.rodata                         |       11 |          0 | Yes    |                                 |       |
 | dra    | func_8010E0B8                       |       11 |          1 |        |                                 |       |
 | dra    | CdSoundCommandQueueEmpty            |       11 |          1 |        |                                 |       |
 | dra    | EnableCdReverb                      |       11 |          1 |        |                                 |       |
@@ -155,17 +153,17 @@
 | chi    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | chi    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | chi    | SetSubStep                          |       21 |          1 |        |                                 |       |
+| lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
 | lib    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
 | no4    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | no4    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | st0    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 1.0   |
-| wrp    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | wrp    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
+| wrp    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | dra    | func_8010FAF4                       |       21 |          2 |        |                                 |       |
 | dra    | func_800F223C                       |       21 |          2 |        |                                 |       |
 | dra    | func_800F9DD0                       |       21 |          3 |        |                                 |       |
@@ -520,6 +518,7 @@
 | st0    | func_801B0280                       |       47 |          6 |        |                                 |       |
 | dra    | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
 | no4    | first_c_file.rodata                 |       48 |          0 | Yes    |                                 |       |
+| wrp    | warp.rodata                         |       48 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra    | func_8012F83C                       |       49 |          4 |        |                                 |       |
 | dra    | func_800F9F40                       |       49 |          5 |        |                                 |       |
@@ -1249,7 +1248,6 @@
 | dra    | func_801042C4                       |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4    | func_pspeu_0923FF60                 |      277 |         31 |        |                                 |       |
 | no4    | func_pspeu_092423C8                 |      277 |         33 |        |                                 |       |
-| wrp    | EntityWarpSmallRocks                |      278 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
 | dra    | func_80124164                       |      279 |         17 |        |                                 |       |
 | ric    | func_80165DD8                       |      279 |         17 |        |                                 |       |
 | dra    | CheckDarkMetamorphosisInput         |      279 |         37 | Yes    |                                 |       |
@@ -1289,6 +1287,7 @@
 | ric    | RicEntitySubwpnStopwatchCircle      |      314 |         24 |        | https://decomp.me/scratch/kbgQU | 1.0   |
 | lib    | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4    | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
+| wrp    | EntityWarpSmallRocks                |      318 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
 | no4    | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
 | dra    | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.984 |
 | no4    | func_pspeu_0923F390                 |      324 |         16 |        |                                 |       |
@@ -1544,9 +1543,9 @@
 | chi    | EntityStageNamePopup                |     1000 |         92 | Yes    | https://decomp.me/scratch/DqmOT | 1.0   |
 | lib    | EntityStageNamePopup                |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4    | EntityStageNamePopup                |     1004 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
-| wrp    | EntityWarpRoom                      |     1011 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | lib    | func_psp_0926AED0                   |     1018 |        104 | Yes    | https://decomp.me/scratch/CgyWa | 0.998 |
 | dra    | EntityTransparentWhiteCircle        |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
+| wrp    | EntityWarpRoom                      |     1033 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | dra    | PlayerStepStand                     |     1045 |        179 |        |                                 |       |
 | ric    | RicStepHit                          |     1050 |        167 | Yes    |                                 |       |
 | st0    | PrologueScroll                      |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
