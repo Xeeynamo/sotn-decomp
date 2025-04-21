@@ -27,12 +27,12 @@
 |        | unused_3C1C                         |        7 |          1 |        |                                 |       |
 |        | unused_3C24                         |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090E4C58                   |        9 |          1 |        |                                 |       |
+| dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | dra    | func_8010E0A8                       |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
 | dra    | func_80111928                       |        9 |          1 |        |                                 |       |
 | dra    | EntityNull                          |        9 |          1 |        |                                 |       |
 | dra    | func_8011E0E4                       |        9 |          1 |        |                                 |       |
 | dra    | func_80131F28                       |        9 |          1 |        |                                 |       |
-| dra    | func_80103EAC                       |        9 |          1 |        |                                 |       |
 | dra    | MemcardInit                         |        9 |          1 |        |                                 |       |
 | dra    | func_psp_09144C80                   |        9 |          1 |        | https://decomp.me/scratch/1zDsK | 1.0   |
 | ric    | RicEntityDummy                      |        9 |          1 |        |                                 |       |
@@ -58,9 +58,9 @@
 | dra    | func_800FAC30                       |       11 |          1 |        |                                 |       |
 | lib    | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
 | dra    | func_800FDE00                       |       13 |          1 |        |                                 |       |
+| dra    | func_80105408                       |       13 |          1 |        |                                 |       |
 | dra    | SetMaxVolume                        |       13 |          1 |        |                                 |       |
 | dra    | UnMuteCd                            |       13 |          1 |        |                                 |       |
-| dra    | func_80105408                       |       13 |          1 |        |                                 |       |
 | dra    | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra    | func_800FABEC                       |       13 |          1 |        |                                 |       |
 | ric    | func_80166024                       |       13 |          1 |        |                                 |       |
@@ -104,10 +104,10 @@
 | dra    | func_800F53A4                       |       17 |          4 |        |                                 |       |
 | dra    | 624DC.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 628AC.rodata                        |       18 |          0 | Yes    |                                 |       |
+| dra    | 62EB8.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 84B88.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 8A0A4.rodata                        |       18 |          0 | Yes    |                                 |       |
 | dra    | 19AB0.rodata                        |       18 |          0 | Yes    |                                 |       |
-| dra    | 80.rodata                           |       18 |          0 | Yes    |                                 |       |
 | lib    | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
 | lib    | unk_3B53C.rodata                    |       18 |          0 | Yes    |                                 |       |
 | no4    | unk_221F8.rodata                    |       18 |          0 | Yes    |                                 |       |
@@ -136,7 +136,7 @@
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
 | dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
 | dra    | InitializeServant                   |       20 |          2 |        |                                 |       |
-| dra    | func_psp_090F0DD8                   |       20 |          2 |        |                                 |       |
+| dra    | func_800F9D88                       |       20 |          2 |        |                                 |       |
 | chi    | EntityDummy                         |       20 |          2 |        | https://decomp.me/scratch/unNIE | 1.0   |
 | chi    | FallEntity                          |       20 |          2 |        | https://decomp.me/scratch/ZIw3V | 0.986 |
 | lib    | EntityDummy                         |       20 |          2 |        | https://decomp.me/scratch/unNIE | 1.0   |
@@ -510,8 +510,8 @@
 | no4    | func_psp_0923C2F8                   |       46 |          7 |        | https://decomp.me/scratch/LLr7o | 1.0   |
 | wrp    | func_psp_0923C2F8                   |       46 |          7 |        | https://decomp.me/scratch/LLr7o | 1.0   |
 | dra    | func_psp_090EDBA0                   |       47 |          1 |        |                                 |       |
-| dra    | func_8011A290                       |       47 |          3 |        |                                 |       |
 | dra    | func_801030B4                       |       47 |          3 |        |                                 |       |
+| dra    | func_8011A290                       |       47 |          3 |        |                                 |       |
 | st0    | func_801B01F8                       |       47 |          4 |        |                                 |       |
 | dra    | DecelerateX                         |       47 |          5 |        |                                 |       |
 | dra    | DecelerateY                         |       47 |          5 |        |                                 |       |
