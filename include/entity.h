@@ -2067,7 +2067,7 @@ typedef struct {
 // Elevator at the top of CEN.
 // Exists in both CEN and NO0 (lowers you into CEN)
 typedef struct {
-    /* 0x7C */ struct Primitve* prim;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
 

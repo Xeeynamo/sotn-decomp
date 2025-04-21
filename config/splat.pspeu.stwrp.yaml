@@ -48,7 +48,7 @@ segments:
       - [0x1EA8, c, wrp/e_red_door]
       - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp/e_particles]
-      - [0x4C78, c, wrp_psp/blit_char]
+      - [0x4C78, c, wrp/blit_char]
       - [0x5308, c, wrp_psp/e_collect]
       - [0x8580, c, wrp_psp/e_misc]
       - [0x95D0, c, wrp/collision]
@@ -90,7 +90,14 @@ segments:
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp_psp/e_collect]
       - [0x144F8, .rodata, wrp/warp]
-      - [0x14500, .bss, wrp/create_entity]
-      - [0x14520, .bss, wrp_psp/e_collect]
-      - [0x14560, .bss, wrp_psp/bss]
+      - {start: 0x14580, type: .bss, vram: 0x0924BC00, name: wrp/create_entity}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC20, name: wrp_psp/e_collect}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC68, name: wrp/blit_char}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC80, name: wrp_psp/layers}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC90, name: wrp_psp/st_init_wrp}
+      - {start: 0x14580, type: .bss, vram: 0x0924BCC8, name: wrp/e_breakable}
+      - {start: 0x14580, type: .bss, vram: 0x0924BCD0, name: wrp_psp/tile_data}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCD0, name: wrp_psp/d_prize_drops}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/st_debug}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCE0, name: wrp/warp}
   - [0x14580]
