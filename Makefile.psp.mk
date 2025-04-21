@@ -3,7 +3,7 @@ AS_FLAGS        += -EL -I include/ -G0 -march=allegrex -mabi=eabi
 MWCCPSP_FLAGS   := -gccinc -Iinclude -D_internal_version_$(VERSION) -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck
 LD_FLAGS		:= --gc-sections
 CCPSP           := MWCIncludes=$(BIN_DIR) $(WIBO) $(MWCCPSP)
-OPT_HI_LIST		:= $(addsuffix .c.o, 80 3250 33F0 A710 C0B0 E6A8 186E8 26948 61F30 624DC 628AC 62FE0 63C08 collider)# These objects will get -O4,p instead of -Op
+OPT_HI_LIST		:= $(addsuffix .c.o, 3250 33F0 A710 C0B0 E6A8 186E8 26948 61F30 624DC 628AC 62EB8 62FE0 63C08 63C90 64EE0 65F50 661C0 67558 collider)# These objects will get -O4,p instead of -Op
 OPT_LEVEL		 = $(if $(filter $(notdir $@),$(OPT_HI_LIST)),-O4$(comma)p,-Op)
 COMPILER_ARGS	 = --mwcc-path $(MWCCPSP) --use-wibo --wibo-path $(WIBO) --as-path $(AS) --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc $(MWCCPSP_FLAGS) $(OPT_LEVEL) -opt nointrinsics
 AUTO_MERGE_FILES	:= e_init.c

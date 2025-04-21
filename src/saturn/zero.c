@@ -33,7 +33,19 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004932, func_06004932);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004A46, func_06004A46);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C44, func_06004C44);
+
+s16 d_0605C676;
+s32 d_060505E8[];
+
+void _func_06004C44(void) {
+    u8* puVar2;
+    int i;
+    d_0605C676 = 0;
+    puVar2 = d_060505E8;
+    for (i = 0; i < 0x10; i++) {
+        *puVar2++ = 0x10;
+    }
+}
 
 // _REPEAT_PAD
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
@@ -247,7 +259,33 @@ void FUN_06007f04(void) {
 }
 
 // _SET_VDP2_VRAM
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007F6C, func_06007F6C);
+void func_06007F6C(void) {
+    SclVramConfig cfg;
+    SCL_InitVramConfigTb(&cfg);
+    cfg.vramModeA = 0;
+    cfg.vramModeB = 1;
+    cfg.vramA0 = cfg.vramB0 = cfg.vramB1 = 0;
+    SCL_SetVramConfig(&cfg);
+    SCL_SetColRamMode(1);
+    SCL_DisplayFrame();
+    SCL_SetSpriteMode(5, 1, 0);
+
+    SCL_SetPriority(4, 7);
+    SCL_SetPriority(8, 4);
+    SCL_SetPriority(0x20, 3);
+    SCL_SetPriority(0x10, 2);
+    SCL_SetPriority(0x100, 4);
+    SCL_SetPriority(0x200, 1);
+    SCL_SetPriority(0x400, 2);
+    SCL_SetPriority(0x800, 3);
+    SCL_SetPriority(0x1000, 4);
+    SCL_SetPriority(0x2000, 6);
+    SCL_SetPriority(0x4000, 7);
+    SCL_SetPriority(0x8000, 0);
+
+    SCL_SetColMixMode(6, 1);
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6008048, func_06008048);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60080EC, func_060080EC);
 
@@ -476,7 +514,17 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B004, func_0600B004);
 // _SetParts
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B084, func_0600B084);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B0B8, func_0600B0B8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B104, func_0600B104);
+
+void func_0600B104(u16* param_1, int param_2, int param_3)
+
+{
+    s32 i;
+    for (i = 0; i < param_3; i++) {
+        *param_1 = *param_1 & 0xE0FF | (param_2 << 8);
+        param_1 = *(u16**)(param_1 + 6);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B12C, func_0600B12C);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600B1A8, func_0600B1A8);
 
@@ -501,7 +549,17 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BD68, func_0600BD68);
 
 // _AllocGameSprite
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BE18, func_0600BE18);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BE7C, func_0600BE7C);
+
+void func_0600BEA8();
+void func_0600BF08();
+void func_0600C18C();
+
+void func_0600BE7C(void) {
+    func_0600BEA8();
+    func_0600BF08();
+    func_0600C18C();
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BEA8, func_0600BEA8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BF08, func_0600BF08);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600BF38, func_0600BF38);
@@ -900,8 +958,16 @@ void func_06016BBC(s32 param_1, s32 param_2, s32 param_3) {
     func_06017FA4(param_2, param_3, param_1);
 }
 
+s32 d_060623B0[];
+
+void func_0601B724();
+
 // _PcmClose
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016BDC, func_06016BDC);
+void func_06016BDC(s32 param_0, int param_1) {
+    func_0601B724();
+    d_060623B0[param_1] = 0;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C08, func_06016C08);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016C60, func_06016C60);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6016D84, func_06016D84);
