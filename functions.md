@@ -490,7 +490,7 @@
 | st0    | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | ric    | pl_main.rodata                      |       46 |          0 | Yes    |                                 |       |
 | dra    | MenuDrawTime                        |       46 |          3 |        |                                 |       |
-| dra    | func_psp_090DFBD0                   |       46 |          4 |        |                                 |       |
+| dra    | func_psp_090DFBD0                   |       46 |          4 |        | https://decomp.me/scratch/1KfmL | 0.999 |
 | chi    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | lib    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | no4    | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
@@ -1139,7 +1139,7 @@
 | dra    | func_8012E550                       |      197 |         41 |        | https://decomp.me/scratch/FshRS | 0.994 |
 | dra    | PlayerStepTeleport                  |      198 |         34 | Yes    |                                 |       |
 |        | ServantInit                         |      199 |         20 |        |                                 |       |
-| dra    | func_80105078                       |      200 |         16 |        |                                 |       |
+| dra    | func_80105078                       |      200 |         16 |        | https://decomp.me/scratch/xfZj5 | 0.969 |
 | lib    | func_us_801B1064                    |      200 |         18 |        |                                 |       |
 | chi    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
 | lib    | UnkCollisionFunc2                   |      200 |         20 |        | https://decomp.me/scratch/FWfa0 | 0.998 |
@@ -1556,7 +1556,7 @@
 | dra    | DrawRichterHudSubweapon             |     1102 |        110 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | st0    | EntityCutscenePhotograph            |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | dra    | ControlBatForm                      |     1173 |        197 | Yes    | https://decomp.me/scratch/caTmz | 0.977 |
-| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.971 |
+| dra    | func_80105428                       |     1174 |        181 |        | https://decomp.me/scratch/BjuxX | 0.976 |
 | chi    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | lib    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | no4    | EntityRelicOrb                      |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
