@@ -4,3 +4,4 @@ D_psp_09186F10      = 0x09186F10;
 D_psp_09187040      = 0x09187040;
 g_api               = 0x091CF738;
 g_GpuBuffers        = 0x091FC4E8;
+RIC_sprites         = 0x092703C0;

@@ -270,6 +270,8 @@ enum RicSubweapons {
     NUM_WEAPONS,
 };
 
+extern PlayerOvl RIC_player;
+
 extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];

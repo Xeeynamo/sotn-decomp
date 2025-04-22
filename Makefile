@@ -129,7 +129,7 @@ define get_conf_merged
 	import os;\
 	yaml_file=open("$(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml");\
 	config = yaml.safe_load(yaml_file); yaml_file.close();\
-	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and x[1] == "c"];\
+	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and (x[1] == "c" or x[1] == ".data")];\
 	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
 	print(" ".join(merged_functions))')
 endef
