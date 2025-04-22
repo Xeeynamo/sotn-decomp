@@ -64,7 +64,7 @@ segments:
       - [0x28438, .data, ric/pl_header]
       - [0x28458, .data, ric/pl_anims]
       - [0x28AB0, .data, ric/pl_subweapons]
-      - [0x28AD8, data]
+      - [0x28AE8, data]
       - [0x2D2B0, .data, ric/2F8E8]
       - [0x2D2D0, .data, ric/319C4]
       - [0x2D308, data]

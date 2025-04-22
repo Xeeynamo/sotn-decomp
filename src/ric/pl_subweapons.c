@@ -424,11 +424,10 @@ void RicEntityCrashAxe(Entity* self) {
 // RIC Entity #38. Blueprint 43 AND 44.
 // Applies to subweapon 1, and its crash, subweapon 21. Very neat!
 // Not quite the same as the one in DRA, but close.
+static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
 #if defined(VERSION_PSP)
-extern s16 D_80155E98[];
 extern s32 D_8017588C;
 #else
-static s16 D_80155E98[] = {-5, -9, -3, -13, -5, 1, -7, -1};
 static s32 D_8017588C;
 #endif
 typedef enum {
