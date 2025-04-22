@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "ric.h"
-#include "sfx.h"
+#include "../ric/ric.h"
 
 void RicEntityNotImplemented3(Entity* self) {}
 
@@ -217,14 +216,14 @@ void RicEntityCrashHydroStorm(Entity* self) {
     g_Player.timers[PL_T_3] = 16;
 }
 
-// Copy of DRA function
-s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
-    s16 x;
-    s16 y;
+// Equivalent to DRA CheckHolyWaterCollision
+s32 RicCheckHolyWaterCollision(s16 baseY, s16 baseX) {
     Collider res1;
     Collider res2;
-    s16 colRes1;
-    s16 colRes2;
+    s16 newY;
+    s16 x;
+    s16 y;
+    s16 collEffs;
 
     const u32 colFullSet =
         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000 |
@@ -233,28 +232,30 @@ s32 RicCheckHolyWaterCollision(s32 baseY, s32 baseX) {
                              EFFECT_UNK_2000 | EFFECT_UNK_1000 | EFFECT_SOLID);
     const u32 colSet1 = (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
     const u32 colSet2 = (EFFECT_UNK_8000 | EFFECT_SOLID);
-    x = baseX + g_CurrentEntity->posX.i.hi;
-    y = baseY + g_CurrentEntity->posY.i.hi;
+    x = g_CurrentEntity->posX.i.hi + baseX;
+    y = g_CurrentEntity->posY.i.hi + baseY;
 
     g_api.CheckCollision(x, y, &res1, 0);
-    colRes1 = res1.effects & colFullSet;
-    g_api.CheckCollision(x, (s16)(y - 1 + res1.unk18), &res2, 0);
-    y = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
+    collEffs = res1.effects & colFullSet;
+    y = y - 1 + res1.unk18;
+    g_api.CheckCollision(x, y, &res2, 0);
+    newY = baseY + (g_CurrentEntity->posY.i.hi + res1.unk18);
 
-    if ((colRes1 & colSet1) == EFFECT_SOLID ||
-        (colRes1 & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
-        colRes2 = res2.effects & colSetNo800;
-        if (!((s16)res2.effects & EFFECT_SOLID)) {
-            g_CurrentEntity->posY.i.hi = y;
+    if ((collEffs & colSet1) == EFFECT_SOLID ||
+        (collEffs & colSet1) == (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+        collEffs = res2.effects & colSetNo800;
+        if (!(collEffs & EFFECT_SOLID)) {
+            g_CurrentEntity->posY.i.hi = newY;
             return 1;
         }
         if ((res2.effects & colSet2) == colSet2) {
-            g_CurrentEntity->posY.i.hi = y + (s16)(res2.unk18 - 1);
-            return colRes2;
+            g_CurrentEntity->posY.i.hi = newY - 1 + res2.unk18;
+            return collEffs;
         }
-    } else if ((colRes1 & colSet2) == colSet2) {
-        g_CurrentEntity->posY.i.hi = y;
-        return colRes1 & colSetNo800;
+        return 0;
+    } else if ((collEffs & colSet2) == colSet2) {
+        g_CurrentEntity->posY.i.hi = newY;
+        return collEffs & colSetNo800;
     }
     return 0;
 }
