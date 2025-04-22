@@ -156,9 +156,9 @@
 | lib    | func_psp_09243920                   |       21 |          1 |        |                                 |       |
 | lib    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | lib    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| no4    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | no4    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | no4    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| no4    | func_psp_0923C390                   |       21 |          1 |        |                                 |       |
 | st0    | SetSubStep                          |       21 |          1 |        |                                 |       |
 | st0    | Random                              |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | st0    | func_pspeu_09242A58                 |       21 |          1 |        | https://decomp.me/scratch/UMf70 | 1.0   |
@@ -1419,7 +1419,7 @@
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
-| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    | https://decomp.me/scratch/A0ZwS | 0.922 |
+| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    | https://decomp.me/scratch/A0ZwS | 0.999 |
 | dra    | ExecSoundCommands                   |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
@@ -1445,7 +1445,7 @@
 | ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
 | chi    | EntityBreakableWall                 |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
-| ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        |                                 |       |
+| ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.887 |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/SH4IO | 0.951 |
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
