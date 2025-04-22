@@ -23,19 +23,6 @@ static Point16 D_us_80183310[] = {
 static u8 D_us_80183324[] = {2, 40, 2, 41, 2, 42, 0, 0};
 static s16 D_us_8018332C[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_8018333C[] = {0, 8, 12, 8, 0, -8, -12, -8};
-static s32 D_us_8018334C[] = {FIX(2.0), FIX(3.0 / 4), FIX(-1.0), FIX(-7.5 / 4)};
-static s32 D_us_8018335C[] = {FIX(-2.25), FIX(-3.25), FIX(-2.75), FIX(-2.0)};
-static u16 D_us_8018336C[] = {0x2B, 0x2C, 0x2D, 0x2E};
-static u16 D_us_80183374[] = {0x38, 0x45, 0x3C, 0x34};
-static s16 D_us_8018337C[] = {0, 4, 0, 4, 8, -4, -16, 0};
-static s16 D_us_8018338C[] = {0, 12, 0, 4, 8, -4, -16, 0};
-static s16 D_us_8018339C[] = {0, 8, 0, 4, 8, -4, -16, 0};
-static s16 D_us_801833AC[] = {0, 16, 0, 4, 8, -4, -16, 0};
-static s16* D_us_801833BC[] = {
-    D_us_8018337C, D_us_8018338C, D_us_8018339C, D_us_801833AC};
-#ifdef STAGE_IS_NO1
-STATIC_PAD_DATA(4);
-#endif
 
 void EntitySkeletonApe(Entity* self) {
     Entity* tempEntity;
@@ -107,7 +94,7 @@ void EntitySkeletonApe(Entity* self) {
                 if (self->params == 2) {
                     self->hitboxState = 3;
                 }
-                break;
+                return;
             }
         } else {
             AnimateEntity(D_us_80183268, self);
@@ -199,12 +186,12 @@ void EntitySkeletonApePunch(Entity* self) {
     Entity* parent;
     u16 animCurFrame;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitSkeletonApePunch);
     }
     parent = self - 1;
     animCurFrame = parent->animCurFrame - 9;
-    if (animCurFrame >= 6) {
+    if (animCurFrame > 5) {
         animCurFrame = 0;
     }
     self->hitboxOffX = D_us_801832FC[animCurFrame].x;
@@ -221,10 +208,10 @@ void EntitySkeletonApePunch(Entity* self) {
     }
 }
 
-void SkeletonApeBarrelHelper(Entity* self, Entity* parent) {
+static void SkeletonApeBarrelHelper(Entity* self, Entity* parent) {
     self->posY.i.hi = parent->posY.i.hi - 28;
     self->posX.i.hi = parent->posX.i.hi;
-    if (self->facingLeft != 0) {
+    if (self->facingLeft) {
         self->posX.i.hi -= 10;
     } else {
         self->posX.i.hi += 10;
@@ -304,7 +291,7 @@ void EntitySkeletonApeBarrel(Entity* self) {
                 self->velocityY = -velocityY;
 
                 self->ext.skeletonApe.unk84++;
-                if (self->ext.skeletonApe.unk84 > 2) {
+                if (self->ext.skeletonApe.unk84 >= 3) {
                     SetStep(4);
                     return;
                 }
@@ -361,28 +348,42 @@ void EntitySkeletonApeBarrel(Entity* self) {
     }
 }
 
+static s32 D_us_8018334C[] = {FIX(2.0), FIX(3.0 / 4), FIX(-1.0), FIX(-7.5 / 4)};
+static s32 D_us_8018335C[] = {FIX(-2.25), FIX(-3.25), FIX(-2.75), FIX(-2.0)};
+static u16 D_us_8018336C[] = {0x2B, 0x2C, 0x2D, 0x2E};
+static s16 D_us_80183374[] = {0x38, 0x45, 0x3C, 0x34};
+static s16 D_us_8018337C[] = {0, 4, 0, 4, 8, -4, -16, 0};
+static s16 D_us_8018338C[] = {0, 12, 0, 4, 8, -4, -16, 0};
+static s16 D_us_8018339C[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 D_us_801833AC[] = {0, 16, 0, 4, 8, -4, -16, 0};
+static s16* D_us_801833BC[] = {
+    D_us_8018337C, D_us_8018338C, D_us_8018339C, D_us_801833AC};
+#ifdef STAGE_IS_NO1
+STATIC_PAD_DATA(4);
+#endif
+
 void EntityThrownBarrel(Entity* self) {
     Collider collider;
-    s16 x, y;
     s16 params;
+    s16 x, y;
+    s16* sensor;
     s32 velocityY;
-    s32 velocityX;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSkeletonApeBarrel);
+        self->hitboxState = 0;
         self->flags =
             FLAG_DESTROY_IF_OUT_OF_CAMERA |
             FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_2000;
-        self->hitboxState = 0;
         params = self->params;
-        velocityX = D_us_8018334C[params];
-        self->ext.skeletonApeBarrel.unk80 = velocityX;
-        if (self->facingLeft != 0) {
-            self->ext.skeletonApeBarrel.unk80 = -velocityX;
+        self->ext.skeletonApeBarrel.unk80 = D_us_8018334C[params];
+        if (self->facingLeft) {
+            self->ext.skeletonApeBarrel.unk80 =
+                -self->ext.skeletonApeBarrel.unk80;
         }
-        self->ext.skeletonApeBarrel.unk80 += self->velocityX;
+        self->ext.skeletonApeBarrel.unk80 += (u32)self->velocityX;
         self->velocityY = D_us_8018335C[params];
         self->animCurFrame = D_us_8018336C[params];
         self->ext.skeletonApeBarrel.unk7C = D_us_80183374[params];
@@ -391,7 +392,8 @@ void EntityThrownBarrel(Entity* self) {
     case 1:
         self->velocityX = self->ext.skeletonApeBarrel.unk80;
         velocityY = self->velocityY;
-        if (UnkCollisionFunc3(D_us_801833BC[self->params]) & 1) {
+        sensor = D_us_801833BC[self->params];
+        if (UnkCollisionFunc3(sensor) & 1) {
             if (velocityY > 0) {
                 velocityY /= 2;
                 self->ext.skeletonApeBarrel.unk80 /= 2;
@@ -414,8 +416,9 @@ void EntityThrownBarrel(Entity* self) {
             x -= 16;
         }
         g_api.CheckCollision(x, y, &collider, 0);
-        if ((collider.effects & EFFECT_UNK_0002) ||
-            !--self->ext.skeletonApeBarrel.unk7C) {
+        if (collider.effects & EFFECT_UNK_0002) {
+            EntityExplosionSpawn(0, SFX_EXPLODE_B);
+        } else if (!--self->ext.skeletonApeBarrel.unk7C) {
             EntityExplosionSpawn(0, SFX_EXPLODE_B);
         }
         break;
