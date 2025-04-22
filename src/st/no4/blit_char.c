@@ -6,4 +6,3 @@
 #else
 #include "../blit_char.h"
 #endif
-
