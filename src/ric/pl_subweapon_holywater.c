@@ -288,13 +288,12 @@ static s16 D_80155D94[] = {16, 0, -1, 0};
 // Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
 // Not at all the same as DRA's.
 void RicEntitySubwpnHolyWater(Entity* self) {
-    s16 argY;
-    s32 collision_result;
-    s32 tempXVel;
-    s32 trigresult;
-    s32 trigtemp;
+    s32 velocity;
+    s16 xMod;
+    s32 colRes;
 
-    if (self->step >= 3) {
+    colRes = 0;
+    if (self->step > 2) {
         self->posY.i.hi += 5;
     }
     switch (self->step) {
@@ -305,21 +304,19 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = 0x46;
         self->palette = PAL_OVL(0x12F);
-        self->posX.i.hi = self->posX.i.hi;
-        self->posY.i.hi = self->posY.i.hi - 0x10;
+        xMod = 0;
+        if (self->facingLeft) {
+            xMod = -xMod;
+        }
+        self->posX.i.hi += xMod;
+        self->posY.i.hi += -16;
         self->ext.holywater.angle = (rand() & 0x7F) + 0xDC0;
         if (PLAYER.facingLeft == 1) {
             self->ext.holywater.angle = (rand() & 0x7F) + 0x9C0;
         }
-
-        trigresult = rcos(self->ext.holywater.angle);
-        trigtemp = trigresult * 16;
-        self->velocityX = (trigresult * 32 + trigtemp) << 9 >> 8;
-
-        trigresult = rsin(self->ext.holywater.angle);
-        trigtemp = trigresult * 16;
-        self->velocityY = -((trigresult * 32 + trigtemp) << 9) >> 8;
-
+        self->velocityX = ((rcos(self->ext.holywater.angle) << 4) * 0x600) >> 8;
+        self->velocityY =
+            -((rsin(self->ext.holywater.angle) << 4) * 0x600) >> 8;
         self->ext.holywater.subweaponId = PL_W_HOLYWATER;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 4;
@@ -329,33 +326,34 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         break;
     case 1:
         self->posY.val += self->velocityY;
-        collision_result = RicCheckHolyWaterCollision(0, 0);
+        colRes = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
 
+        xMod = 4;
         if (self->velocityX < 0) {
-            argY = -4;
-        } else {
-            argY = 4;
+            xMod = -xMod;
         }
-        collision_result |= func_8016840C(-7, argY);
-        if (collision_result & 2) {
+        colRes |= func_8016840C(-7, xMod);
+        if (colRes & 2) {
             self->velocityX = -self->velocityX;
-            collision_result = 1;
+            colRes = 1;
         }
-        if ((collision_result & 1) || (self->hitFlags != 0)) {
-            g_api.CreateEntFactoryFromEntity(self, 0x28U, 0);
+        if ((colRes & 1) || self->hitFlags) {
+            // @bug: should call RicCreateEntFactoryFromEntity instead in case
+            // E_FACTORY goes out of order between RIC and DRA
+            g_api.CreateEntFactoryFromEntity(self, BP_HOLYWATER_GLASS, 0);
             g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
-            self->ext.holywater.timer = 0x50;
             self->animSet = 0;
             self->hitboxState = 0;
+            self->velocityX = self->velocityX >> 2;
+            self->ext.holywater.timer = 0x50;
             self->step = 3;
-            self->velocityX >>= 2;
         }
         break;
     case 2:
         if (--self->ext.holywater.timer == 0) {
+            self->velocityX = self->velocityX >> 2;
             self->ext.holywater.timer = 0x50;
-            self->velocityX >>= 2;
             self->step++;
         }
         break;
@@ -363,37 +361,35 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         if (!(self->ext.holywater.timer & 3)) {
             RicCreateEntFactoryFromEntity(
                 self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
-            // weirdly nonmatching with ++;
-            self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
+            self->ext.holywater.unk82 += 1;
             self->velocityX -= (self->velocityX / 32);
         }
-        collision_result = RicCheckHolyWaterCollision(6, 0);
-        tempXVel = self->velocityX;
+        colRes = RicCheckHolyWaterCollision(6, 0);
+        velocity = self->velocityX;
         if (self->velocityX < 0) {
-            if ((collision_result & 0xF000) == 0xC000) {
-                tempXVel = tempXVel * 10 / 16;
+            if ((colRes & 0xF000) == 0xC000) {
+                velocity = velocity * 10 / 16;
             }
-            if ((collision_result & 0xF000) == 0xD000) {
-                tempXVel = tempXVel * 13 / 16;
+            if ((colRes & 0xF000) == 0xD000) {
+                velocity = velocity * 13 / 16;
             }
         }
         if (self->velocityX > 0) {
-            if ((collision_result & 0xF000) == 0x8000) {
-                tempXVel = tempXVel * 10 / 16;
+            if ((colRes & 0xF000) == 0x8000) {
+                velocity = velocity * 10 / 16;
             }
-            if ((collision_result & 0xF000) == 0x9000) {
-                tempXVel = tempXVel * 13 / 16;
+            if ((colRes & 0xF000) == 0x9000) {
+                velocity = velocity * 13 / 16;
             }
         }
-        self->posX.val += tempXVel;
+        self->posX.val += velocity;
+        xMod = 4;
         if (self->velocityX < 0) {
-            argY = -4;
-        } else {
-            argY = 4;
+            xMod = -xMod;
         }
-        collision_result |= func_8016840C(-7, argY);
-        if (!(collision_result & 1)) {
-            self->velocityX >>= 1;
+        colRes |= func_8016840C(-7, xMod);
+        if (!(colRes & 1)) {
+            self->velocityX = self->velocityX >> 1;
             self->step++;
         }
         break;
@@ -401,30 +397,29 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         if (!(self->ext.holywater.timer & 3)) {
             RicCreateEntFactoryFromEntity(
                 self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
-            self->ext.holywater.unk82 = self->ext.holywater.unk82 + 1;
+            self->ext.holywater.unk82 += 1;
         }
         self->velocityY += FIX(12.0 / 128);
         if (self->velocityY > FIX(4)) {
             self->velocityY = FIX(4);
         }
         self->posY.val += self->velocityY;
-        collision_result = RicCheckHolyWaterCollision(0, 0);
+        colRes = RicCheckHolyWaterCollision(0, 0);
         self->posX.val += self->velocityX;
+        xMod = 4;
         if (self->velocityX < 0) {
-            argY = -4;
-        } else {
-            argY = 4;
+            xMod = -xMod;
         }
-        collision_result |= func_8016840C(-7, argY);
-        if (collision_result & 1) {
-            self->velocityX *= 2;
+        colRes |= func_8016840C(-7, xMod);
+        if (colRes & 1) {
+            self->velocityX = self->velocityX << 1;
             self->step--;
         }
         break;
     case 5:
         break;
     }
-    if (self->step >= 3) {
+    if (self->step > 2) {
         if (--self->ext.holywater.timer < 0) {
             DestroyEntity(self);
             return;
@@ -432,9 +427,9 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         if (self->ext.holywater.timer == 2) {
             self->step = 5;
         }
+        self->posY.i.hi -= 5;
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        self->posY.i.hi -= 5;
     }
     g_Player.timers[PL_T_3] = 2;
 }

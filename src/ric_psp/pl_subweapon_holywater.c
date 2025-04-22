@@ -283,8 +283,155 @@ s32 func_8016840C(s16 y, s16 x) {
     return 0;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWater);
+// Entity ID #7. Made by blueprint 6. Comes from subweapon 3. Holy water!
+// Not at all the same as DRA's.
+void RicEntitySubwpnHolyWater(Entity* self) {
+    s32 velocity;
+    s16 xMod;
+    s32 colRes;
 
+    colRes = 0;
+    if (self->step > 2) {
+        self->posY.i.hi += 5;
+    }
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED;
+        self->animSet = ANIMSET_OVL(0x12);
+        self->animCurFrame = 0x23;
+        self->zPriority = PLAYER.zPriority + 2;
+        self->unk5A = 0x46;
+        self->palette = PAL_OVL(0x12F);
+        xMod = 0;
+        if (self->facingLeft) {
+            xMod = -xMod;
+        }
+        self->posX.i.hi += xMod;
+        self->posY.i.hi += -16;
+        self->ext.holywater.angle = (rand() & 0x7F) + 0xDC0;
+        if (PLAYER.facingLeft == 1) {
+            self->ext.holywater.angle = (rand() & 0x7F) + 0x9C0;
+        }
+        self->velocityX = ((rcos(self->ext.holywater.angle) << 4) * 0x600) >> 8;
+        self->velocityY =
+            -((rsin(self->ext.holywater.angle) << 4) * 0x600) >> 8;
+        self->ext.holywater.subweaponId = PL_W_HOLYWATER;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->ext.holywater.unk80 = 0x200;
+        self->step += 1;
+        break;
+    case 1:
+        self->posY.val += self->velocityY;
+        colRes = RicCheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+
+        xMod = 4;
+        if (self->velocityX < 0) {
+            xMod = -xMod;
+        }
+        colRes |= func_8016840C(-7, xMod);
+        if (colRes & 2) {
+            self->velocityX = -self->velocityX;
+            colRes = 1;
+        }
+        if ((colRes & 1) || self->hitFlags) {
+            // @bug: should call RicCreateEntFactoryFromEntity instead in case
+            // E_FACTORY goes out of order between RIC and DRA
+            g_api.CreateEntFactoryFromEntity(self, BP_HOLYWATER_GLASS, 0);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            self->animSet = 0;
+            self->hitboxState = 0;
+            self->velocityX = self->velocityX >> 2;
+            self->ext.holywater.timer = 0x50;
+            self->step = 3;
+        }
+        break;
+    case 2:
+        if (--self->ext.holywater.timer == 0) {
+            self->velocityX = self->velocityX >> 2;
+            self->ext.holywater.timer = 0x50;
+            self->step++;
+        }
+        break;
+    case 3:
+        if (!(self->ext.holywater.timer & 3)) {
+            RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
+            self->ext.holywater.unk82 += 1;
+            self->velocityX -= (self->velocityX / 32);
+        }
+        colRes = RicCheckHolyWaterCollision(6, 0);
+        velocity = self->velocityX;
+        if (self->velocityX < 0) {
+            if ((colRes & 0xF000) == 0xC000) {
+                velocity = velocity * 10 / 16;
+            }
+            if ((colRes & 0xF000) == 0xD000) {
+                velocity = velocity * 13 / 16;
+            }
+        }
+        if (self->velocityX > 0) {
+            if ((colRes & 0xF000) == 0x8000) {
+                velocity = velocity * 10 / 16;
+            }
+            if ((colRes & 0xF000) == 0x9000) {
+                velocity = velocity * 13 / 16;
+            }
+        }
+        self->posX.val += velocity;
+        xMod = 4;
+        if (self->velocityX < 0) {
+            xMod = -xMod;
+        }
+        colRes |= func_8016840C(-7, xMod);
+        if (!(colRes & 1)) {
+            self->velocityX = self->velocityX >> 1;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (!(self->ext.holywater.timer & 3)) {
+            RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
+            self->ext.holywater.unk82 += 1;
+        }
+        self->velocityY += FIX(12.0 / 128);
+        if (self->velocityY > FIX(4)) {
+            self->velocityY = FIX(4);
+        }
+        self->posY.val += self->velocityY;
+        colRes = RicCheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+        xMod = 4;
+        if (self->velocityX < 0) {
+            xMod = -xMod;
+        }
+        colRes |= func_8016840C(-7, xMod);
+        if (colRes & 1) {
+            self->velocityX = self->velocityX << 1;
+            self->step--;
+        }
+        break;
+    case 5:
+        break;
+    }
+    if (self->step > 2) {
+        if (--self->ext.holywater.timer < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.holywater.timer == 2) {
+            self->step = 5;
+        }
+        self->posY.i.hi -= 5;
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+    }
+    g_Player.timers[PL_T_3] = 2;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWaterFlame);
 

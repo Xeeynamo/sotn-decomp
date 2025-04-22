@@ -192,7 +192,7 @@ enum RicBlueprints {
     BP_37,
     BP_38,
     BP_39,
-    BP_UNUSED_40,
+    BP_HOLYWATER_GLASS,
     BP_CRASH_AXE,
     BP_42,
     BP_SUBWPN_DAGGER,

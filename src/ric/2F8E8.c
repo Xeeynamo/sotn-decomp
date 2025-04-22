@@ -231,6 +231,8 @@ void RicEntitySubwpnReboundStone(Entity* self) {
         }
     block_93:
         if (self->ext.reboundStone.unk82) {
+            // @bug: should call RicCreateEntFactoryFromEntity instead in case
+            // E_FACTORY goes out of order between RIC and DRA
             g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
             g_api.PlaySfx(SFX_UI_TINK);
         }
