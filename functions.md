@@ -1382,7 +1382,7 @@
 | st0    | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra    | EntityHolyWaterBreakGlass           |      457 |         29 |        | https://decomp.me/scratch/umied | 0.976 |
 | dra    | EntitySubwpnCrashCross              |      457 |         38 |        | https://decomp.me/scratch/5pb9E | 0.999 |
-| ric    | func_80167A70                       |      461 |         29 |        | https://decomp.me/scratch/bkIM2 | 0.975 |
+| ric    | RicEntityHolyWaterBreakGlass        |      461 |         29 |        |                                 |       |
 | dra    | func_801309B4                       |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra    | ControlMistForm                     |      466 |         93 |        |                                 |       |
 | ric    | RicStepJump                         |      469 |         84 |        |                                 |       |
@@ -1412,14 +1412,14 @@
 | chi    | EntitySalemWitchCurse               |      516 |         35 |        |                                 |       |
 | dra    | MenuDrawStats                       |      517 |         73 |        | https://decomp.me/scratch/hp3KZ | 0.997 |
 | dra    | HandleDamage                        |      517 |         74 |        |                                 |       |
-| dra    | EntityHolyWaterFlame                |      519 |         37 |        | https://decomp.me/scratch/dALFW | 0.999 |
+| dra    | EntitySubwpnHolyWaterFlame          |      519 |         37 |        |                                 |       |
 | lib    | EntitySkeleton                      |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | chi    | EntityGremlin                       |      521 |         71 |        |                                 |       |
 | lib    | func_psp_0923DCC8                   |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib    | func_us_801AFE0C                    |      534 |         67 | Yes    |                                 |       |
 | dra    | MainGame                            |      539 |         84 |        | https://decomp.me/scratch/iU1d3 | 0.737 |
 |        | SwitchModeInitialize                |      542 |         56 |        |                                 |       |
-| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    | https://decomp.me/scratch/A0ZwS | 0.999 |
+| ric    | RicEntitySubwpnHolyWater            |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra    | ExecSoundCommands                   |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | dra    | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra    | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
@@ -1445,7 +1445,7 @@
 | ric    | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
 | chi    | EntityBreakableWall                 |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
-| ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.887 |
+| ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/SH4IO | 0.951 |
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
