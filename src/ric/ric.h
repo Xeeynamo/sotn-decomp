@@ -113,7 +113,7 @@ enum RicEntities {
     E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
     E_801641A0,                      // func_801641A0
     E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
-    E_80167A70,                      // func_80167A70
+    E_HOLYWATER_BREAK_GLASS,         // RicEntityHolyWaterBreakGlass
     E_SUBWPN_AXE,                    // RicEntitySubwpnThrownAxe
     E_CRASH_AXE,                     // RicEntityCrashAxe
     E_SUBWPN_DAGGER,                 // RicEntitySubwpnThrownDagger
@@ -192,7 +192,7 @@ enum RicBlueprints {
     BP_37,
     BP_38,
     BP_39,
-    BP_UNUSED_40,
+    BP_HOLYWATER_GLASS,
     BP_CRASH_AXE,
     BP_42,
     BP_SUBWPN_DAGGER,
