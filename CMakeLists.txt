@@ -234,8 +234,8 @@ set(SOURCE_FILES_RIC
     src/ric/pl_blueprints.c
     src/ric/pl_whip.c
     src/ric/pl_subweapon_dummy.c
-    src/ric/2BA68.c
-    src/ric/2C4C4.c
+    src/ric/pl_subweapon_holywater.c
+    src/ric/pl_subweapon_cross.c
     src/ric/pl_subweapons.c
     src/ric/2F8E8.c
     src/ric/319C4.c

@@ -2,8 +2,6 @@
 #include <game.h>
 #include "../../ric/ric.h"
 
-extern PlayerOvl RIC_player;
-
 static void (*real_player_init)(u16 params);
 static void InjectPlayerInit(u16 params) {
     // fixes a bug where g_CurrentEntity is not correctly initialized at init
