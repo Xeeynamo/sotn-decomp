@@ -1579,7 +1579,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntitySubwpnReboundStone,
     EntityLevelUpAnimation,
     EntityHolyWater,
-    EntityHolyWaterFlame,
+    EntitySubwpnHolyWaterFlame,
     EntityUnkId24,
     EntityHellfireHandler,
     EntityHellfireNormalFireball,

@@ -435,31 +435,28 @@ void RicEntitySubwpnHolyWater(Entity* self) {
 }
 
 // Entity ID #8. Blueprint 7.
-static Point32 D_80155D9C[] = {{28, 0}, {28, 16}, {28, 32}, {28, 48},
-                               {60, 0}, {60, 16}, {60, 32}, {60, 48}};
+static s32 D_80155D9C[] = {
+    28, 0, 28, 16, 28, 32, 28, 48, 60, 0, 60, 16, 60, 32, 60, 48};
 void RicEntitySubwpnHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
-    s16 pad[2];
-    Primitive* prim;
-    s16 angleTemp;
-    s32 angle;
-    s32 i;
-    s32 hex80;
+    s16 xMod;
+    s16 variant;
+    s16* primYPtr;
+    s32 doubleparams;
     u8 randR;
     u8 randG;
     u8 randB;
-    u8 primUBase;
-    u8 primVBase;
-    s16* primYPtr;
-    s32 var_s4;
-    s16 temp_v0_2;
-    s32 doubleparams;
+    s16 flameHeight;
+    s16 angle;
+    u8 texX;
+    u8 texY;
+    s32 i;
+    Primitive* prim;
 
-    s16 upperParams = self->params >> 8;
-
-    primUBase = D_80155D9C[(g_GameTimer & 7)].x;
-    primVBase = D_80155D9C[(g_GameTimer & 7)].y;
+    variant = self->params >> 8;
+    texX = D_80155D9C[(g_GameTimer & 7) * 2 + 0];
+    texY = D_80155D9C[(g_GameTimer & 7) * 2 + 1];
     switch (self->step) {
     case 0:
         randR = (rand() & 0x3F) + 0x2F;
@@ -472,60 +469,58 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
-        while (prim != NULL) {
-            PRED(prim) = randR;
-            PGRN(prim) = randG;
-            PBLU(prim) = randB;
+        while (prim) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
             if (i == 0) {
-                prim->b0 = prim->b1 = prim->g0 = prim->g1 = prim->r0 =
-                    prim->r1 = 0;
+                prim->r0 = prim->r1 = 0;
+                prim->g0 = prim->g1 = 0;
+                prim->b0 = prim->b1 = 0;
             }
             prim->clut = 0x1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-            prim = prim->next;
             i++;
+            prim = prim->next;
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->ext.holywater.timer = 1;
-        self->step += 1;
+        self->step++;
         break;
     case 1:
         if (--self->ext.holywater.timer == 0) {
             self->ext.holywater.subweaponId = PL_W_HOLYWATER_FLAMES;
             RicSetSubweaponParams(self);
-            self->hitboxWidth = 4;
             self->ext.holywater.hitboxState = self->hitboxState;
-            self->posY.i.hi = self->posY.i.hi - 10;
+            self->hitboxWidth = 4;
+            self->posY.i.hi -= 10;
             RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 3), 0);
+            self->posY.i.hi += 10;
             self->ext.holywater.timer = 0x50;
-            self->posY.i.hi = self->posY.i.hi + 10;
             self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
             self->ext.holywater.angle = rand() & 0xFFF;
-            self->step += 1;
+            self->step++;
         }
         break;
     case 2:
+        xMod = -1;
         if (self->facingLeft) {
-            var_s4 = 1;
-        } else {
-            var_s4 = -1;
+            xMod = -xMod;
         }
-        angleTemp = self->ext.holywater.angle;
+        angle = self->ext.holywater.angle;
         self->ext.holywater.angle += 0xC0;
-        angle = angleTemp;
         for (i = 0; i < 4; i++) {
-            sp10[i] = self->posX.i.hi + (rsin(angle) >> 0xA);
-            angle += 0x400;
+            sp10[i] = self->posX.i.hi + (rsin(angle + (i * 1024)) >> 10);
         }
         sp10[4] = self->posX.i.hi;
-        sp10[0] = var_s4 + self->posX.i.hi;
-        temp_v0_2 = rsin((s16)((self->ext.holywater.timer * 64) + 0x800)) >> 8;
-        temp_v0_2 += self->ext.holywater.unk80;
-        temp_v0_2 = temp_v0_2 * 3 >> 1;
-        sp20[0] = self->posY.i.hi - temp_v0_2;
+        sp10[0] = self->posX.i.hi + xMod;
+        angle = (self->ext.holywater.timer - 16) * 64 + 0xC00;
+        flameHeight = (rsin(angle) >> 8) + self->ext.holywater.unk80;
+        flameHeight = flameHeight * 3 >> 1;
+        sp20[0] = self->posY.i.hi - flameHeight;
         sp20[4] = self->posY.i.hi;
         sp20[2] = (sp20[0] + sp20[4]) / 2;
         sp20[1] = (sp20[0] + sp20[2]) / 2;
@@ -544,8 +539,8 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             self->hitboxState = 0;
         }
         i = 0;
-        while (prim != NULL) {
-            if (upperParams * 2 + 0x18 >= self->ext.holywater.timer) {
+        while (prim) {
+            if (self->ext.holywater.timer <= variant * 2 + 0x18) {
                 if (prim->g0 >= 10) {
                     prim->g0 -= 5;
                 }
@@ -568,11 +563,10 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             prim->y2 = sp20[i + 1];
             prim->y3 = sp20[i + 1];
             prim->drawMode &= ~DRAW_HIDE;
-            hex80 = 0x80;
-            prim->u0 = prim->u1 = primUBase - ((i * 7) + hex80);
-            prim->u2 = prim->u3 = primUBase - (((i + 1) * 7) + hex80);
-            prim->v0 = prim->v2 = primVBase - hex80;
-            prim->v1 = prim->v3 = primVBase - 0x70;
+            prim->u0 = prim->u1 = texX + 0x80 - i * 7;
+            prim->u2 = prim->u3 = texX + 0x80 - ((i + 1) * 7);
+            prim->v0 = prim->v2 = texY + 0x80;
+            prim->v1 = prim->v3 = texY + 0x90;
             if ((sp20[4] - sp20[0]) < 7) {
                 prim->drawMode |= DRAW_HIDE;
                 DestroyEntity(self);
@@ -581,8 +575,9 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
             i++;
             prim = prim->next;
         }
-        self->hitboxHeight = temp_v0_2 >> 1;
-        self->hitboxOffY = (-temp_v0_2 >> 1);
+        self->hitboxHeight = flameHeight >> 1;
+        self->hitboxOffY = (-flameHeight >> 1);
+        break;
     }
     g_Player.timers[PL_T_3] = 2;
 }

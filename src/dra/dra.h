@@ -620,7 +620,7 @@ void EntityNumberMovesToHpMeter(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);
 void EntityLevelUpAnimation(Entity* self);
 void EntityHolyWater(Entity* self);
-void EntityHolyWaterFlame(Entity* self);
+void EntitySubwpnHolyWaterFlame(Entity* self);
 void EntityUnkId24(Entity* self);
 void EntityHellfireHandler(Entity* self);
 void EntityHellfireNormalFireball(Entity* self);

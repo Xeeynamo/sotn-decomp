@@ -557,7 +557,7 @@ void EntityHolyWater(Entity* self) {
 
     case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
-            // Factory 28 has child 23, EntityHolyWaterFlame
+            // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
             CreateEntFactoryFromEntity(
                 self, FACTORY(28, D_8013841C), self->ext.holywater.unkB2 << 9);
             D_8013841C++;
@@ -683,24 +683,22 @@ s32 D_800B0688[16] = {28, 0, 28, 16, 28, 32, 28, 48,
                       60, 0, 60, 16, 60, 32, 60, 48};
 
 // green flame when holy water explodes
-void EntityHolyWaterFlame(Entity* self) {
+void EntitySubwpnHolyWaterFlame(Entity* self) {
     s16 sp10[5];
     s16 sp20[5];
-    s16 sp4e; // unused
+    s16 xMod; // unused
     Primitive* prim;
-    s16 yHeight;
+    s16 flameHeight;
     s16 angle;
     s32 i;
     u8 randR;
     u8 randG;
     u8 randB;
-    u8 primUBase;
-    u8 primVBase;
+    u8 texX;
+    u8 texY;
 
-    s16* primYPtr;
-
-    primUBase = D_800B0688[(g_GameTimer & 7) * 2 + 0];
-    primVBase = D_800B0688[(g_GameTimer & 7) * 2 + 1];
+    texX = D_800B0688[(g_GameTimer & 7) * 2 + 0];
+    texY = D_800B0688[(g_GameTimer & 7) * 2 + 1];
     switch (self->step) {
     case 0:
         randR = (rand() & 0x1F) + 0x40;
@@ -731,12 +729,12 @@ void EntityHolyWaterFlame(Entity* self) {
         self->posY.i.hi += 10;
         self->ext.holywater.timer = 0x50;
         self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
-        self->step += 1;
-        return;
+        self->step++;
+        break;
     case 1:
-        sp4e = -1;
+        xMod = -1;
         if (self->facingLeft) {
-            sp4e = -sp4e;
+            xMod = -xMod;
         }
         angle = self->ext.holywater.angle;
         self->ext.holywater.angle += 0x180;
@@ -746,8 +744,8 @@ void EntityHolyWaterFlame(Entity* self) {
         sp10[0] = self->posX.i.hi;
         sp10[4] = self->posX.i.hi;
         angle = ((self->ext.holywater.timer - 0x10) * 64) + 0xC00;
-        yHeight = (rsin(angle) >> 8) + self->ext.holywater.unk80;
-        sp20[0] = self->posY.i.hi - yHeight;
+        flameHeight = (rsin(angle) >> 8) + self->ext.holywater.unk80;
+        sp20[0] = self->posY.i.hi - flameHeight;
         sp20[4] = self->posY.i.hi;
         sp20[2] = (sp20[0] + sp20[4]) / 2;
         sp20[1] = (sp20[0] + sp20[2]) / 2;
@@ -786,16 +784,17 @@ void EntityHolyWaterFlame(Entity* self) {
             prim->y2 = sp20[i + 1];
             prim->y3 = sp20[i + 1];
             prim->drawMode &= ~DRAW_HIDE;
-            prim->u0 = prim->u1 = primUBase + 0x80 - (i * 7);
-            prim->u2 = prim->u3 = primUBase + 0x80 - ((i + 1) * 7);
-            prim->v0 = prim->v2 = primVBase + 0x80;
-            prim->v1 = prim->v3 = primVBase + 0x90;
+            prim->u0 = prim->u1 = texX + 0x80 - (i * 7);
+            prim->u2 = prim->u3 = texX + 0x80 - ((i + 1) * 7);
+            prim->v0 = prim->v2 = texY + 0x80;
+            prim->v1 = prim->v3 = texY + 0x90;
             if ((sp20[4] - sp20[0]) < 7) {
                 prim->drawMode |= DRAW_HIDE;
             }
         }
-        self->hitboxHeight = yHeight >> 1;
-        self->hitboxOffY = (-yHeight >> 1);
+        self->hitboxHeight = flameHeight >> 1;
+        self->hitboxOffY = (-flameHeight >> 1);
+        break;
     }
 }
 

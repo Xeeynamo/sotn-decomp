@@ -432,6 +432,150 @@ void RicEntitySubwpnHolyWater(Entity* self) {
     g_Player.timers[PL_T_3] = 2;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_holywater", RicEntitySubwpnHolyWaterFlame);
+// Entity ID #8. Blueprint 7.
+static s32 D_80155D9C[] = {
+    28, 0, 28, 16, 28, 32, 28, 48, 60, 0, 60, 16, 60, 32, 60, 48};
+void RicEntitySubwpnHolyWaterFlame(Entity* self) {
+    s16 sp10[5];
+    s16 sp20[5];
+    s16 xMod;
+    s16 variant;
+    s16* primYPtr;
+    s32 doubleparams;
+    u8 randR;
+    u8 randG;
+    u8 randB;
+    s16 flameHeight;
+    s16 angle;
+    u8 texX;
+    u8 texY;
+    s32 i;
+    Primitive* prim;
 
+    variant = self->params >> 8;
+    texX = D_80155D9C[(g_GameTimer & 7) * 2 + 0];
+    texY = D_80155D9C[(g_GameTimer & 7) * 2 + 1];
+    switch (self->step) {
+    case 0:
+        randR = (rand() & 0x3F) + 0x2F;
+        randG = (rand() & 0x3F) + 0x6F;
+        randB = (rand() & 0x7F) + 0x6F;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        i = 0;
+        while (prim) {
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
+            prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
+            prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
+            if (i == 0) {
+                prim->r0 = prim->r1 = 0;
+                prim->g0 = prim->g1 = 0;
+                prim->b0 = prim->b1 = 0;
+            }
+            prim->clut = 0x1B0;
+            prim->tpage = 0x1A;
+            prim->priority = PLAYER.zPriority + 2;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            i++;
+            prim = prim->next;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->ext.holywater.timer = 1;
+        self->step++;
+        break;
+    case 1:
+        if (--self->ext.holywater.timer == 0) {
+            self->ext.holywater.subweaponId = PL_W_HOLYWATER_FLAMES;
+            RicSetSubweaponParams(self);
+            self->ext.holywater.hitboxState = self->hitboxState;
+            self->hitboxWidth = 4;
+            self->posY.i.hi -= 10;
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 3), 0);
+            self->posY.i.hi += 10;
+            self->ext.holywater.timer = 0x50;
+            self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
+            self->ext.holywater.angle = rand() & 0xFFF;
+            self->step++;
+        }
+        break;
+    case 2:
+        xMod = -1;
+        if (self->facingLeft) {
+            xMod = -xMod;
+        }
+        angle = self->ext.holywater.angle;
+        self->ext.holywater.angle += 0xC0;
+        for (i = 0; i < 4; i++) {
+            sp10[i] = self->posX.i.hi + (rsin(angle + (i * 1024)) >> 10);
+        }
+        sp10[4] = self->posX.i.hi;
+        sp10[0] = self->posX.i.hi + xMod;
+        angle = (self->ext.holywater.timer - 16) * 64 + 0xC00;
+        flameHeight = (rsin(angle) >> 8) + self->ext.holywater.unk80;
+        flameHeight = flameHeight * 3 >> 1;
+        sp20[0] = self->posY.i.hi - flameHeight;
+        sp20[4] = self->posY.i.hi;
+        sp20[2] = (sp20[0] + sp20[4]) / 2;
+        sp20[1] = (sp20[0] + sp20[2]) / 2;
+        sp20[3] = (sp20[2] + sp20[4]) / 2;
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.holywater.timer < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.holywater.timer & 3) {
+            self->hitboxState = 0;
+        } else {
+            self->hitboxState = self->ext.holywater.hitboxState;
+        }
+        if (self->ext.holywater.timer < 0x15) {
+            self->hitboxState = 0;
+        }
+        i = 0;
+        while (prim) {
+            if (self->ext.holywater.timer <= variant * 2 + 0x18) {
+                if (prim->g0 >= 10) {
+                    prim->g0 -= 5;
+                }
+                if (prim->b0 >= 10) {
+                    prim->b0 -= 5;
+                }
+                if (prim->r0 >= 16) {
+                    prim->r0 -= 8;
+                }
+                prim->g1 = prim->g2 = prim->g3 = prim->g0;
+                prim->r1 = prim->r2 = prim->r3 = prim->r0;
+                prim->b1 = prim->b2 = prim->b3 = prim->b0;
+            }
+            prim->x0 = sp10[i] - 8;
+            prim->x1 = sp10[i] + 8;
+            prim->y0 = sp20[i];
+            prim->y1 = sp20[i];
+            prim->x2 = sp10[i + 1] - 8;
+            prim->x3 = sp10[i + 1] + 8;
+            prim->y2 = sp20[i + 1];
+            prim->y3 = sp20[i + 1];
+            prim->drawMode &= ~DRAW_HIDE;
+            prim->u0 = prim->u1 = texX + 0x80 - i * 7;
+            prim->u2 = prim->u3 = texX + 0x80 - ((i + 1) * 7);
+            prim->v0 = prim->v2 = texY + 0x80;
+            prim->v1 = prim->v3 = texY + 0x90;
+            if ((sp20[4] - sp20[0]) < 7) {
+                prim->drawMode |= DRAW_HIDE;
+                DestroyEntity(self);
+                return;
+            }
+            i++;
+            prim = prim->next;
+        }
+        self->hitboxHeight = flameHeight >> 1;
+        self->hitboxOffY = (-flameHeight >> 1);
+        break;
+    }
+    g_Player.timers[PL_T_3] = 2;
+}
