@@ -1667,6 +1667,10 @@ typedef struct {
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
     void (*GetPlayerSensor)(Collider* col);
+    u8** sprites0;
+    u8** sprites1;
+    u8** sprites2;
+    u8** sprites3;
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];

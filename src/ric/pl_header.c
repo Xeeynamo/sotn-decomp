@@ -2,7 +2,7 @@
 #include "ric.h"
 
 void RicMain(void);
-void RicInit(s16 arg0);
+void RicInit(u16 params);
 void RicUpdatePlayerEntities(void);
 void RicGetPlayerSensor(Collider* col);
 
@@ -11,8 +11,15 @@ PlayerOvl RIC_player = {
     RicInit,
     RicUpdatePlayerEntities,
     RicGetPlayerSensor,
+#if defined(VERSION_PSP)
+    (u8**)0x092703C0,
+    (u8**)0x092703C0,
+    (u8**)0x092703C0,
+    (u8**)0x092703C0,
+#else
+    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
+    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
+    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
+    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
+#endif
 };
-
-s32* D_8013C010[4] = {
-    &D_8013C010[LEN(D_8013C010)], &D_8013C010[LEN(D_8013C010)],
-    &D_8013C010[LEN(D_8013C010)], &D_8013C010[LEN(D_8013C010)]};
