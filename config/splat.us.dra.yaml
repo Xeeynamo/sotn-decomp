@@ -163,7 +163,7 @@ segments:
       # - [0x3C160, .rodata, save_mgr] # func_800E9C14
       # - [0x3C194, .rodata, save_mgr] # func_800EA48C
       - [0x3C1A8, .rodata, 4A538] # func_800EA7CC
-      - [0x3C1E8, .rodata, 4AEA4] # func_800EB098
+      - [0x3C1E8, .rodata, 4AEA4] # DecompressData
       # - [0x3C228, .rodata, 4AEA4] # func_800EB314
       - [0x3C238, .rodata, 4DA70] # RenderPrimitives
       - [0x3C290, .rodata, collider] # CheckCollision

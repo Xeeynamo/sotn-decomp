@@ -73,8 +73,8 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x2178, .data, 4A538] # D_800A21B8
-      - [0x23F8, .data, 4A538] # D_800A2438
+      - [0x2178, .data, 4AEA4] # D_800A21B8
+      - [0x23F8, .data, 4DA70] # D_800A2438
       - [0x23FC, .data, demo] # D_800A243C
       - [0x241C, .data, 5087C] # D_800A245C
       - [0x293C, .data, 5087C] # D_800A297C
@@ -143,6 +143,8 @@ segments:
       - [0x3B938, .rodata, 47BB8]
       - [0x3BE60, .rodata, save_mgr]
       - [0x3C11C, .rodata, 4A538]
+      - [0x3C15C, .rodata, 4AEA4]
+      - [0x3C1AC, .rodata, 4DA70] # RenderPrimitives
       - [0x3C204, .rodata, collider]
       - [0x3C404, .rodata, demo]
       - [0x3C488, .rodata, 5087C]
@@ -174,6 +176,8 @@ segments:
       - [0x493BC, c, pads]
       - [0x4957C, c, save_mgr]
       - [0x4ABF0, c, 4A538]
+      - [0x4B55C, c, 4AEA4]
+      - [0x4E0F4, c, 4DA70]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
