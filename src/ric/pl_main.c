@@ -73,13 +73,12 @@ static s16 func_80156DE4(void) {
 }
 
 extern s32 D_pspeu_092D7A68;
-extern s32 D_pspeu_092CFA58;
-extern u8* D_pspeu_092D33BC;
-extern u8 D_pspeu_092D2548[]; // FR
-extern u8 D_pspeu_092CFA70[]; // SP
-extern u8 D_pspeu_092D16F8[]; // GE
-extern u8 D_pspeu_092D08B8[]; // IT
-extern s32 D_pspeu_092D33B0;
+extern u8 hud_fr[];
+extern u8 hud_sp[];
+extern u8 hud_ge[];
+extern u8 hud_it[];
+extern LangImg g_FontImage;
+extern LangImg g_HudImage;
 // Similar to of DRA func_80109594
 void RicInit(s16 initParam) {
     Entity* e;
@@ -169,11 +168,10 @@ void RicInit(s16 initParam) {
     // or after loading a save. Not sure if a bugfix or QOL.
     D_pspeu_092D7A68 = 30;
 
-    func_91040A0(&D_pspeu_092CFA58);
-    D_pspeu_092D33BC = GetLang(0, D_pspeu_092D2548, D_pspeu_092CFA70,
-                               D_pspeu_092D16F8, D_pspeu_092D08B8);
-    if (D_pspeu_092D33BC != 0) {
-        func_91040A0(&D_pspeu_092D33B0);
+    func_91040A0(&g_FontImage);
+    g_HudImage.imgData = GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
+    if (g_HudImage.imgData) {
+        func_91040A0(&g_HudImage);
     }
 #endif
 }

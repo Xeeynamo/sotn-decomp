@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
@@ -41,6 +42,7 @@ type assetConfig struct {
 var handlers = func() map[string]assets.Handler {
 	m := make(map[string]assets.Handler)
 	for _, handler := range []assets.Handler{
+		cmpgfx.Handler,
 		cutscene.Handler,
 		gfxbanks.Handler,
 		layer.Handler,
@@ -102,7 +104,7 @@ func enqueueExtractAssetEntry(
 	eg.Go(func() error {
 		defer func() {
 			if err := recover(); err != nil {
-				fmt.Printf("unable to extract asset %q in %q: %v", name, assetDir, err)
+				fmt.Fprintf(os.Stderr, "\033[31munable to extract asset %q in %q: %v\033[0m\n", name, assetDir, err)
 			}
 		}()
 		if err := handler.Extract(assets.ExtractArgs{

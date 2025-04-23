@@ -248,6 +248,7 @@ set(SOURCE_FILES_RIC
     src/ric/pl_crash_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
+    src/ric/d_1859C.c
     src/ric/pl_anims.c
 )
 

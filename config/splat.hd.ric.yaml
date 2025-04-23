@@ -45,6 +45,7 @@ segments:
       - [0x17D24, .data, spritebank2]
       - [0x181A8, .data, spritebank3]
       - [0x18568, .data, d_18568]
+      - [0x1859C, .data, d_1859C]
       - [0x18688, assets, subweapondefs, D_80154688]
       - [0x188F4, .data, pl_blueprints]
       - [0x1895C, .data, pl_blueprints] # entity table
