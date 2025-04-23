@@ -108,7 +108,7 @@
 | dra    | 19AB0.rodata                        |       18 |          0 | Yes    |                                 |       |
 | lib    | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
 | lib    | unk_3B53C.rodata                    |       18 |          0 | Yes    |                                 |       |
-| no4    | unk_221F8.rodata                    |       18 |          0 | Yes    |                                 |       |
+| no4    | e_skeleton_ape.rodata               |       18 |          0 | Yes    |                                 |       |
 | dra    | SetGPUBuffRGB                       |       19 |          1 |        |                                 |       |
 | dra    | SetGPUBuffRGBZero                   |       19 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                       |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
@@ -860,7 +860,7 @@
 | dra    | func_8012E9C0                       |       95 |         11 |        |                                 |       |
 | dra    | CheckChainLimit                     |       95 |         14 |        |                                 |       |
 | dra    | 7E4BC.rodata                        |       96 |          0 | Yes    |                                 |       |
-| no4    | func_pspeu_09259F90                 |       96 |          6 |        |                                 |       |
+| no4    | EntitySkeletonApePunch              |       96 |          6 |        |                                 |       |
 | dra    | func_80123A60                       |       96 |         11 |        | https://decomp.me/scratch/Lfdzl | 0.994 |
 | lib    | UnkCollisionFunc                    |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
 | no4    | UnkCollisionFunc                    |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
@@ -1154,7 +1154,7 @@
 | lib    | EntityBackgroundFurniture           |      208 |         29 |        |                                 |       |
 | dra    | DrawRelicsMenu                      |      209 |         15 |        |                                 |       |
 | dra    | PlayerStepKillWater                 |      209 |         21 |        |                                 |       |
-| no4    | func_pspeu_0925A720                 |      209 |         23 |        |                                 |       |
+| no4    | EntityThrownBarrel                  |      209 |         23 |        |                                 |       |
 | dra    | CheckAndDoLevelUp                   |      211 |         20 |        |                                 |       |
 | lib    | e_shop.rodata                       |      212 |          0 | Yes    |                                 |       |
 | ric    | func_801623E0                       |      212 |         12 |        |                                 |       |
@@ -1344,7 +1344,7 @@
 | lib    | EntityBloodSplatter                 |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
 | st0    | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
 | ric    | RicEntityMariaPowers                |      395 |         25 |        |                                 |       |
-| no4    | func_pspeu_0925A170                 |      395 |         63 |        |                                 |       |
+| no4    | EntitySkeletonApeBarrel             |      395 |         63 |        |                                 |       |
 | lib    | func_psp_09257100                   |      396 |         35 |        | https://decomp.me/scratch/nEboo | 1.0   |
 | no4    | func_pspeu_09243478                 |      399 |         56 | Yes    |                                 |       |
 | chi    | BottomCornerText                    |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
@@ -1401,7 +1401,7 @@
 | ric    | RicEntityCrashBibleBeam             |      496 |         50 |        | https://decomp.me/scratch/xwy9o | 0.996 |
 | dra    | func_8010FDF8                       |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
 | ric    | RicEntityFactory                    |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
-| no4    | func_pspeu_09259878                 |      507 |         90 | Yes    |                                 |       |
+| no4    | EntitySkeletonApe                   |      507 |         90 | Yes    | https://decomp.me/scratch/jTy3E | 0.992 |
 | ric    | RicStepDead                         |      508 |         59 |        |                                 |       |
 | ric    | CheckStageCollision                 |      509 |         51 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | chi    | EntityMessageBox                    |      511 |         41 |        | https://decomp.me/scratch/nMwCS | 1.0   |
