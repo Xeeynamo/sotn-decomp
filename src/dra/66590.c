@@ -343,19 +343,17 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     if (g_IsUsingCd)
         return false;
 
-    if (!g_UseDisk) {
-        if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
-            return false;
-        }
-    } else {
+    if (g_UseDisk) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_Monster;
         g_LoadOvlIdx = monsterId;
+    } else if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
+        return false;
     }
     return true;
 }
 
-void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
+void func_801071CC(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         prim->b0 = colorIntensity;
@@ -380,14 +378,14 @@ void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(Primitive* prim, s32 colorIntensity) {
-    func_801071CC(prim, (u8)colorIntensity, 0);
-    func_801071CC(prim, (u8)colorIntensity, 1);
-    func_801071CC(prim, (u8)colorIntensity, 2);
-    func_801071CC(prim, (u8)colorIntensity, 3);
+void func_80107250(Primitive* prim, u8 colorIntensity) {
+    func_801071CC(prim, colorIntensity, 0);
+    func_801071CC(prim, colorIntensity, 1);
+    func_801071CC(prim, colorIntensity, 2);
+    func_801071CC(prim, colorIntensity, 3);
 }
 
-void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
+void func_801072BC(Primitive* prim) { func_80107250(prim, 0); }
 
 void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
 
