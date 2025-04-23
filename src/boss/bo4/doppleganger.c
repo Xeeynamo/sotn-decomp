@@ -1,7 +1,75 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C1A38);
+extern s32 D_us_801D4118[];
+extern s32 D_us_801D4198[];
+extern s32 D_us_801D4D74;
+
+void func_us_801C1A38(void) {
+    Entity* entity;
+    Primitive* prim;
+    s16 primIndex;
+    s32 angle;
+    s32 scale;
+    s32 i;
+    s32 colliderSize;
+    s32* colliders;
+
+    g_CurrentEntity = &DOPPLEGANGER;
+    DOPPLEGANGER.animSet = ANIMSET_OVL(1);
+    DOPPLEGANGER.unk5A = 8;
+    g_PlayerDraw[8].enableColorBlend = 0;
+    DOPPLEGANGER.zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
+    if (DOPPLEGANGER.posX.i.hi < PLAYER.posX.i.hi) {
+        DOPPLEGANGER.facingLeft = false;
+    } else {
+        DOPPLEGANGER.facingLeft = true;
+    }
+
+    DOPPLEGANGER.palette = PAL_OVL(0x200);
+    DOPPLEGANGER.rotX = 0x100;
+    DOPPLEGANGER.rotY = 0x100;
+    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.flags =
+        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
+
+    // BUG: this loop seems to be clearing parts of the floor
+    //      ceiling colliders, but not all of them
+    colliderSize = (sizeof(Collider) * 6) + 0x1C;
+    colliders = (s32*)g_Dop.colFloor;
+    for (i = 0; i < colliderSize; i++, colliders++) {
+        *colliders = 0;
+    }
+
+    D_us_801D4D74 = 0;
+    g_Dop.vram_flag = 0;
+    func_us_801C59DC(0);
+    entity = &g_Entities[E_ID_41];
+
+    for (i = 0; i < 3; i++, entity++) {
+        DestroyEntity(entity);
+        entity->animSet = ANIMSET_OVL(1);
+        entity->unk5A = i + 9;
+        entity->palette = PAL_OVL(0x200);
+        entity->flags = FLAG_POS_CAMERA_LOCKED;
+    }
+    primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    prim = &g_PrimBuf[primIndex];
+    g_Entities[E_ID_41].primIndex = primIndex;
+    g_Entities[E_ID_41].flags |= FLAG_HAS_PRIMS;
+
+    while (prim != NULL) {
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+        prim = prim->next;
+    }
+
+    for (i = 0; i < 32; i++) {
+        angle = (rand() & 0x3FF) + 0x100;
+        scale = (rand() & 0xFF) + 0x100;
+        D_us_801D4118[i] = ((rcos(angle) << 4) * scale) >> 8;
+        D_us_801D4198[i] = -(((rsin(angle) << 4) * scale) >> 7);
+    }
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C1CB0);
 
@@ -319,7 +387,7 @@ static void DopplegangerThinking(void) {
         }
         break;
     case THINK_STEP_BACKDASH:
-        if (DOPPLEGANGER.step == 1) {
+        if (DOPPLEGANGER.step == Dop_Stand) {
             // backdash
             g_Dop.padSim |= PAD_TRIANGLE;
             D_us_801D3D24 = THINK_STEP_WAIT;
