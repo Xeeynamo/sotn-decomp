@@ -36,9 +36,6 @@ void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3) {
     D_8003C0EC[2] = arg3;
 }
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dra/dra.h"
-
 s32 func_800EA5E4(u32 arg0) {
     u16 temp_v0;
     s32 i;
