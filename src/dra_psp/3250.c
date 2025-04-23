@@ -20,7 +20,9 @@ void func_psp_090DFBD0(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_psp_090DFC68);
+void func_psp_090DFC68(){
+    memcpy(&D_psp_091CB700, &g_Pix, 0x2000);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_psp_090DFC80);
 
