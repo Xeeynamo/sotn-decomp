@@ -178,6 +178,8 @@ set(SOURCE_FILES_DRA
     src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
     src/dra/4A538.c
+    src/dra/4AEA4.c
+    src/dra/4DA70.c
     src/dra/collider.c
     src/dra/demo.c
     src/dra/5087C.c
