@@ -13,14 +13,14 @@ static u16 crash_cross_img_data[] = {
     0xB18C, 0xAD6B, 0xA94A, 0xA529, 0xA108, 0x9CE7, 0x98C6, 0x94A5};
 static RECT crash_cross_img_vram = {0x0301, 0x01F8, 0x0030, 0x0001};
 void RicEntitySubwpnCrashCross(Entity* self) {
-    Primitive* prim;
+    s16 psp_s4;
+    s16 psp_s3;
     s16 right;
     s16 left;
-    s32 var_v0;
-    s32 temp_three;
-    u16 three = 3;
-    u16 one = 1;
+    Primitive* prim;
 
+    psp_s4 = 3;
+    psp_s3 = 1;
     self->posY.i.hi = 0x78;
     self->posX.i.hi = PLAYER.posX.i.hi;
     switch (self->step) {
@@ -36,29 +36,27 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         self->zPriority = 0xC2;
         self->ext.crashcross.subweaponId = PL_W_CRASH_CROSS;
         RicSetSubweaponParams(self);
-        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
+        LoadImage(&crash_cross_img_vram, (u_long*)crash_cross_img_data);
         g_api.PlaySfx(SFX_CRASH_CROSS);
         g_api.PlaySfx(SFX_TELEPORT_BANG_B);
-        self->step += 1;
+        self->step++;
         break;
     case 1:
-        // FAKE, register reuse thing
-        one = three * 2;
-        self->ext.crashcross.unk7E.val += three;
-        self->ext.crashcross.unk82 += one;
-        if (self->ext.crashcross.unk7E.i.lo >= 0x70U) {
+        self->ext.crashcross.unk7E.val += psp_s4;
+        self->ext.crashcross.unk82 += psp_s4 * 2;
+        if (self->ext.crashcross.unk7E.i.lo >= 0x70) {
             RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSSES_ONLY, 0);
             RicCreateEntFactoryFromEntity(self, BP_CRASH_CROSS_PARTICLES, 0);
-            self->step += 1;
+            self->step++;
         }
         break;
     case 2:
         if (g_Timer & 1) {
-            self->ext.crashcross.unk80 += one * 2;
-            self->ext.crashcross.unk7C = one + self->ext.crashcross.unk7C;
-            if (self->ext.crashcross.unk80 >= 0x2CU) {
+            self->ext.crashcross.unk7C += psp_s3;
+            self->ext.crashcross.unk80 += psp_s3 * 2;
+            if (self->ext.crashcross.unk80 >= 0x2C) {
+                self->step++;
                 self->ext.crashcross.unk84 = 0x80;
-                self->step += 1;
             }
         }
         break;
@@ -66,36 +64,32 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         if (--self->ext.crashcross.unk84 == 0) {
             g_api.func_801027C4(0);
             left = self->posX.i.hi - self->ext.crashcross.unk7C;
-            ;
             if (left < 0) {
                 left = 0;
             }
             right = self->posX.i.hi + self->ext.crashcross.unk7C;
-            if (right >= 0x100) {
+            if (right > 0xFF) {
                 right = 0xFF;
             }
             g_api.PlaySfx(SFX_WEAPON_APPEAR);
-            self->step += 1;
+            self->step++;
         }
         break;
     case 4:
-        temp_three = one * 2;
-        temp_three |= one;
-        var_v0 = self->posX.i.hi - 0x80;
-        self->ext.crashcross.unk7C =
-            (((temp_three) * ((s16)(var_v0 > 0 ? var_v0 : -var_v0) + 0x80)) /
-             112) +
-            self->ext.crashcross.unk7C;
+        psp_s3 *= 3;
+        left = abs(self->posX.i.hi - 0x80);
+        psp_s3 = psp_s3 * (left + 0x80) / 112;
+        self->ext.crashcross.unk7C += psp_s3;
 
         left = self->posX.i.hi - self->ext.crashcross.unk7C;
         if (left < 0) {
             left = 0;
         }
         right = self->posX.i.hi + self->ext.crashcross.unk7C;
-        if (right >= 0x100) {
+        if (right > 0xFF) {
             right = 0xFF;
         }
-        if ((right - left) >= 0xF9) {
+        if (right - left > 0xF8) {
             g_Player.unk4E = 1;
             DestroyEntity(self);
             return;
@@ -105,11 +99,11 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     self->hitboxOffY = 0;
     self->hitboxHeight = self->ext.crashcross.unk7E.val;
     if (self->step == 4) {
-        self->hitboxWidth = ((right - left) >> 1);
+        self->hitboxWidth = (right - left) >> 1;
         self->hitboxOffX = ((left + right) >> 1) - self->posX.i.hi;
     } else {
-        self->hitboxOffX = 0;
         self->hitboxWidth = self->ext.crashcross.unk7C;
+        self->hitboxOffX = 0;
     }
     prim = &g_PrimBuf[self->primIndex];
     prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
