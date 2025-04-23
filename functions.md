@@ -1194,7 +1194,7 @@
 | ric    | func_80162604                       |      238 |         17 |        |                                 |       |
 | no4    | func_pspeu_0923D9E0                 |      238 |         26 |        |                                 |       |
 | no4    | EntityBreakable                     |      238 |         35 |        | https://decomp.me/scratch/SjwKz | 0.998 |
-| dra    | DrawEntitiesHitbox                  |      240 |         15 |        | https://decomp.me/scratch/tjxvc | 0.952 |
+| dra    | DrawEntitiesHitbox                  |      240 |         15 |        | https://decomp.me/scratch/tjxvc | 0.997 |
 | st0    | EntitySecretButton                  |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.995 |
 | dra    | EntityGravityBootBeam               |      242 |         22 |        | https://decomp.me/scratch/3FcPM | 0.987 |
 | ric    | RicStepSlideKick                    |      242 |         29 |        |                                 |       |
