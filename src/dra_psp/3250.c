@@ -24,7 +24,9 @@ void func_psp_090DFC68(){
     memcpy(&D_psp_091CB700, &g_Pix, 0x2000);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_psp_090DFC80);
+void func_psp_090DFC80(){
+    func_89195C0(&D_psp_091CB700, 0x2000, D_8006C378);
+}
 
 void func_800EA538(s32 arg0) {
     u16 v1;
