@@ -1241,7 +1241,7 @@
 | dra    | func_8011EDA8                       |      270 |         27 |        | https://decomp.me/scratch/fBpkl | 0.984 |
 | ric    | func_80161C2C                       |      270 |         27 |        |                                 |       |
 | no4    | func_pspeu_0923E690                 |      272 |         23 |        |                                 |       |
-| ric    | RicEntityRevivalColumn              |      273 |         26 |        |                                 |       |
+| ric    | RicEntityRevivalColumn              |      273 |         26 |        | https://decomp.me/scratch/9WUIk | 0.999 |
 | lib    | func_us_801B29C4                    |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
 | st0    | func_801B101C                       |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra    | MenuHandleCursorInput               |      275 |         39 | Yes    |                                 |       |
