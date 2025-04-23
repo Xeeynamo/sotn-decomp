@@ -1374,7 +1374,7 @@
 | dra    | func_8012E040                       |      434 |         82 |        | https://decomp.me/scratch/SQeEq | 0.991 |
 | ric    | RicEntitySubwpnThrownVibhuti        |      435 |         44 |        |                                 |       |
 | chi    | SetupPrimsForEntitySpriteParts      |      437 |         25 |        |                                 |       |
-| ric    | RicEntitySubwpnCrashCross           |      438 |         38 |        |                                 |       |
+| ric    | RicEntitySubwpnCrashCross           |      438 |         38 |        | https://decomp.me/scratch/kFCSI | 0.998 |
 | dra    | EntitySummonSpirit                  |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
 | ric    | RicEntitySubwpnAgunea               |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric    | RicStepDeadPrologue                 |      445 |         51 | Yes    |                                 |       |
