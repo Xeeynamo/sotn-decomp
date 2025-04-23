@@ -28,14 +28,13 @@ void DestroyEntitiesFromIndex(s16 startIndex) {
 }
 
 void DrawEntitiesHitbox(s32 drawMode) {
-    DR_MODE* drMode;
     s32 polyCount;
-    OT_TYPE* ot;
     Entity* entity;
+    OT_TYPE* ot;
     TILE* tile;
+    DR_MODE* drMode;
     u32 otIdx;
-    u16 x;
-    u16 y;
+    s16 x, y;
 
     ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
@@ -49,8 +48,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        y = entity->posY.i.hi + g_backbufferY;
         x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
@@ -83,8 +82,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        y = entity->posY.i.hi + g_backbufferY;
         x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {

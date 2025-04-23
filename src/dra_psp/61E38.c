@@ -24,7 +24,104 @@ void DestroyEntitiesFromIndex(s16 startIndex) {
         DestroyEntity(pItem);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/61E38", DrawEntitiesHitbox);
+void DrawEntitiesHitbox(s32 drawMode) {
+    s32 polyCount;
+    Entity* entity;
+    OT_TYPE* ot;
+    TILE* tile;
+    DR_MODE* drMode;
+    u32 otIdx;
+    s16 x, y;
+
+    ot = g_CurrentBuffer->ot;
+    tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
+    drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+    otIdx = 0x2E8;
+    for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
+        entity++) {
+        if (entity->hitboxState == 0)
+            continue;
+        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
+            break;
+        }
+
+        x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
+        if (entity->facingLeft) {
+            x -= entity->hitboxOffX;
+        } else {
+            x += entity->hitboxOffX;
+        }
+        y += entity->hitboxOffY;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->hitboxState == 2) {
+            tile->r0 = 0;
+            tile->g0 = 0xFF;
+            tile->b0 = 0;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&ot[otIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
+    }
+
+    for (; polyCount < MAX_TILE_COUNT; polyCount++, entity++) {
+        if (entity->hitboxState == 0)
+            continue;
+        if (g_GpuUsage.tile >= MAX_TILE_COUNT) {
+            break;
+        }
+
+        x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
+        if (entity->facingLeft) {
+            x -= entity->hitboxOffX;
+        } else {
+            x += entity->hitboxOffX;
+        }
+        y += entity->hitboxOffY;
+
+        tile->r0 = 0xFF;
+        tile->g0 = 0xFF;
+        tile->b0 = 0xFF;
+        if (entity->hitboxState == 1) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0;
+        }
+        if (entity->hitboxState == 2) {
+            tile->r0 = 0;
+            tile->g0 = 0;
+            tile->b0 = 0xFF;
+        }
+        if (entity->hitboxState == 3) {
+            tile->r0 = 0xFF;
+            tile->g0 = 0;
+            tile->b0 = 0xFF;
+        }
+        tile->x0 = x - entity->hitboxWidth;
+        tile->y0 = y - entity->hitboxHeight;
+        tile->w = entity->hitboxWidth * 2;
+        tile->h = entity->hitboxHeight * 2;
+        SetSemiTrans(tile, 1);
+        AddPrim(&ot[otIdx], tile);
+        tile++;
+        g_GpuUsage.tile++;
+    }
+
+    if (g_GpuUsage.drawModes < MAX_DRAW_MODES) {
+        SetDrawMode(drMode, 0, 0, (drawMode - 1) << 5, &g_Vram.D_800ACD80);
+        AddPrim(&ot[otIdx], drMode);
+        g_GpuUsage.drawModes++;
+    }
+}
 
 extern u16 D_psp_09186EF8[];
 extern u8 D_psp_09186F10[10][30];

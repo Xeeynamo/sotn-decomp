@@ -106,20 +106,14 @@ typedef enum {
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 // PS1 and PSP use different values for most of these.
-#ifndef VERSION_PSP
+#ifdef VERSION_PSP
+#define OTSIZE 0x300
+#else
 #define OTSIZE 0x200
+#endif
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
 #define MAX_POLY_GT4_COUNT 0x300
-#endif
-#ifdef VERSION_PSP
-#define OTSIZE 0x600
-#define MAXSPRT16 0x320
-// Very low confidence on these. These make GpuBuffer the right size.
-// More decomp will give proper sizes for individual members.
-#define MAX_DRAW_MODES 0x1F0
-#define MAX_POLY_GT4_COUNT 0x2F0
-#endif
 #define MAX_TILE_COUNT 0x100
 #define MAX_LINE_G2_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
