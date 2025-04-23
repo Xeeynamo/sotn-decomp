@@ -431,7 +431,6 @@
 | zero/f_nonmat/f6007BE0.s     | func_06007BE0   |      108 |          9 |                                 |       |
 | game/f_nonmat/f60731C0.s     | func_060731C0   |      108 |         10 |                                 |       |
 | zero/f_nonmat/f600D1A0.s     | func_0600D1A0   |      108 |         10 |                                 |       |
-| zero/f_nonmat/f6007824.s     | func_06007824   |      108 |         11 | https://decomp.me/scratch/m7oP6 | 0.735 |
 | zero/f_nonmat/f6006470.s     | func_06006470   |      108 |         15 |                                 |       |
 | zero/f_nonmat/f601AC48.s     | func_0601AC48   |      109 |          5 |                                 |       |
 | game/f_nonmat/f607A1C8.s     | func_0607A1C8   |      110 |          8 |                                 |       |
