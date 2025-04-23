@@ -122,9 +122,78 @@ void RicEntitySubwpnCrashCross(Entity* self) {
     g_Player.timers[PL_T_3] = 2;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntityRevivalColumn);
+void RicEntityRevivalColumn(Entity* self) {
+    s16 psp_s4;
+    s16 psp_s3;
+    Primitive* prim;
 
+    psp_s4 = 3;
+    psp_s3 = 1;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        self->posY.i.hi = 0x78;
+        self->ext.crashcross.unk80 = 1;
+        self->zPriority = 0xC2;
+        LoadImage(&crash_cross_img_vram, (u_long*)crash_cross_img_data);
+        self->step++;
+        break;
+    case 1:
+        self->ext.crashcross.unk7E.val += psp_s4;
+        self->ext.crashcross.unk82 += psp_s4 * 2;
+        if ((u8)self->ext.crashcross.unk7E.i.lo >= 0x70) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (g_Timer & 1) {
+            self->ext.crashcross.unk7C += psp_s3;
+            self->ext.crashcross.unk80 += psp_s3 * 2;
+            if (self->ext.crashcross.unk80 >= 0x2C) {
+                self->step++;
+                self->ext.crashcross.unk84 = 0xA0;
+            }
+        }
+        break;
+    case 3:
+        if (--self->ext.crashcross.unk84 == 0) {
+            self->step++;
+        }
+        break;
+    case 4:
+        if (g_Timer & 1) {
+            self->ext.crashcross.unk7C -= psp_s3 * 2;
+            self->ext.crashcross.unk80 -= psp_s3 * 4;
+            if (self->ext.crashcross.unk80 < 4) {
+                DestroyEntity(self);
+                return;
+            }
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E.val;
+    prim->x1 = prim->x3 = prim->x0 + self->ext.crashcross.unk80;
+    prim->y2 = prim->y3 = prim->y0 + self->ext.crashcross.unk82;
+    prim->u0 = prim->u2 = 1;
+    prim->u1 = prim->u3 = 0x30;
+    prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;
+    prim->tpage = 0x11C;
+    if (g_Timer & 1) {
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+    prim->priority = self->zPriority;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCross);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", func_80169C10);

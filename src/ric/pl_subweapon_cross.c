@@ -126,10 +126,12 @@ void RicEntitySubwpnCrashCross(Entity* self) {
 // Entity ID #21. Blueprint 22. Called in RicStepDeadPrologue.
 // Creates the white column around Richter when he is revived in the Prologue.
 void RicEntityRevivalColumn(Entity* self) {
+    s16 psp_s4;
+    s16 psp_s3;
     Primitive* prim;
-    u32 three = 3;
-    u32 one = 1;
 
+    psp_s4 = 3;
+    psp_s3 = 1;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
@@ -139,38 +141,38 @@ void RicEntityRevivalColumn(Entity* self) {
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_UNK_10000;
         self->posY.i.hi = 0x78;
-        self->ext.ricColumn.unk80 = 1;
+        self->ext.crashcross.unk80 = 1;
         self->zPriority = 0xC2;
-        LoadImage(&crash_cross_img_vram, crash_cross_img_data);
-        self->step += 1;
+        LoadImage(&crash_cross_img_vram, (u_long*)crash_cross_img_data);
+        self->step++;
         break;
     case 1:
-        self->ext.ricColumn.unk7E = three + self->ext.ricColumn.unk7E;
-        self->ext.ricColumn.unk82 += three * 2;
-        if ((u8)self->ext.ricColumn.unk7E >= 0x70U) {
-            self->step += 1;
+        self->ext.crashcross.unk7E.val += psp_s4;
+        self->ext.crashcross.unk82 += psp_s4 * 2;
+        if ((u8)self->ext.crashcross.unk7E.i.lo >= 0x70) {
+            self->step++;
         }
         break;
     case 2:
         if (g_Timer & 1) {
-            self->ext.ricColumn.unk80 += one * 2;
-            self->ext.ricColumn.unk7C = one + self->ext.ricColumn.unk7C;
-            if (self->ext.ricColumn.unk80 >= 0x2CU) {
-                self->ext.ricColumn.unk84 = 0xA0;
-                self->step += 1;
+            self->ext.crashcross.unk7C += psp_s3;
+            self->ext.crashcross.unk80 += psp_s3 * 2;
+            if (self->ext.crashcross.unk80 >= 0x2C) {
+                self->step++;
+                self->ext.crashcross.unk84 = 0xA0;
             }
         }
         break;
     case 3:
-        if (--self->ext.ricColumn.unk84 == 0) {
-            self->step += 1;
+        if (--self->ext.crashcross.unk84 == 0) {
+            self->step++;
         }
         break;
     case 4:
         if (g_Timer & 1) {
-            self->ext.ricColumn.unk80 -= one * 4;
-            self->ext.ricColumn.unk7C -= (one * 2);
-            if (self->ext.ricColumn.unk80 < 4U) {
+            self->ext.crashcross.unk7C -= psp_s3 * 2;
+            self->ext.crashcross.unk80 -= psp_s3 * 4;
+            if (self->ext.crashcross.unk80 < 4) {
                 DestroyEntity(self);
                 return;
             }
@@ -178,10 +180,10 @@ void RicEntityRevivalColumn(Entity* self) {
         break;
     }
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.ricColumn.unk7C;
-    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.ricColumn.unk7E;
-    prim->x1 = prim->x3 = prim->x0 + self->ext.ricColumn.unk80;
-    prim->y2 = prim->y3 = prim->y0 + self->ext.ricColumn.unk82;
+    prim->x0 = prim->x2 = self->posX.i.hi - self->ext.crashcross.unk7C;
+    prim->y1 = prim->y0 = self->posY.i.hi - self->ext.crashcross.unk7E.val;
+    prim->x1 = prim->x3 = prim->x0 + self->ext.crashcross.unk80;
+    prim->y2 = prim->y3 = prim->y0 + self->ext.crashcross.unk82;
     prim->u0 = prim->u2 = 1;
     prim->u1 = prim->u3 = 0x30;
     prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0xF8;

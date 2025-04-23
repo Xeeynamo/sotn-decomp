@@ -1493,21 +1493,6 @@ typedef struct {
 } ET_BibleBeam;
 
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
-    u16 unk7C;
-    u16 unk7E;
-    u8 unk80;
-    u8 : 8;
-    u8 unk82;
-    u8 : 8;
-    s32 unk84;
-    s32 : 32;
-    struct Entity* parent;
-} ET_RicRevivalColumn; // Note this is the same as CrashCross
-
-typedef struct {
     s32 prevX;
     s32 prevY;
     s16 unk84;
@@ -2965,7 +2950,6 @@ typedef union { // offset=0x7C
     ET_SubwpnAxe subwpnAxe;
     ET_VibhutiCrash vibhutiCrash;
     ET_VibhutiCrashCloud vibCrashCloud;
-    ET_RicRevivalColumn ricColumn;
     ET_GiantSpinningCross giantcross;
     ET_ReboundStone reboundStone;
     ET_BibleBeam bibleBeam;
