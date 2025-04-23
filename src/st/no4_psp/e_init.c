@@ -16,7 +16,6 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -50,9 +49,6 @@ void func_pspeu_0923B288(Entity* self);
 void func_pspeu_0923B378(Entity* self);
 void func_pspeu_0923C460(Entity* self);
 void func_pspeu_0923D0B8(Entity* self);
-void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
-void EntityDummy(Entity* self);
 void func_pspeu_09238490(Entity* self);
 void func_pspeu_09241870(Entity* self);
 void func_pspeu_09241B28(Entity* self);
@@ -86,10 +82,10 @@ void func_pspeu_09239568(Entity* self);
 void func_pspeu_092423C8(Entity* self);
 void func_pspeu_092427C8(Entity* self);
 void func_pspeu_09238860(Entity* self);
-void func_pspeu_09259878(Entity* self);
-void func_pspeu_09259F90(Entity* self);
-void func_pspeu_0925A170(Entity* self);
-void func_pspeu_0925A720(Entity* self);
+void EntitySkeletonApe(Entity* self);
+void EntitySkeletonApePunch(Entity* self);
+void EntitySkeletonApeBarrel(Entity* self);
+void EntityThrownBarrel(Entity* self);
 void func_pspeu_09238CF0(Entity* self);
 void func_pspeu_09242AD0(Entity* self);
 void func_pspeu_09242D08(Entity* self);
@@ -184,10 +180,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x52 */ func_pspeu_092423C8,
     /* 0x53 */ func_pspeu_092427C8,
     /* 0x54 */ func_pspeu_09238860,
-    /* 0x55 */ func_pspeu_09259878,
-    /* 0x56 */ func_pspeu_09259F90,
-    /* 0x57 */ func_pspeu_0925A170,
-    /* 0x58 */ func_pspeu_0925A720,
+    /* 0x55 */ EntitySkeletonApe,
+    /* 0x56 */ EntitySkeletonApePunch,
+    /* 0x57 */ EntitySkeletonApeBarrel,
+    /* 0x58 */ EntityThrownBarrel,
     /* 0x59 */ func_pspeu_09238CF0,
     /* 0x5A */ func_pspeu_09242AD0,
     /* 0x5B */ func_pspeu_09242D08,
@@ -223,7 +219,7 @@ EInit g_EInitThrownSpear = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x08), 0x00, 0x4E, 0x21A, 0x06D};
 EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
-EInit D_pspeu_09267C10 = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
-EInit D_pspeu_09267C20 = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
-EInit D_pspeu_09267C30 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
+EInit g_EInitSkeletonApe = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
+EInit g_EInitSkeletonApeBarrel = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
+EInit g_EInitSkeletonApePunch = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
 EInit D_pspeu_09267C40 = {ANIMSET_OVL(0x09), 0x01, 0x50, 0x21B, 0x15E};
