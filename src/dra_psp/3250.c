@@ -2,7 +2,23 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_psp_090DFBD0);
+extern SaveData D_psp_091CB700;
+extern u8 D_psp_091CD6FE;
+extern u8 D_psp_091CD6FF;
+extern s32 D_8B42044;
+
+void func_psp_090DFBD0(void) {
+    if (*(g_SaveAreaNames[g_StageId]) != 0) {
+        StoreSaveData(&D_psp_091CB700, 0, rand() & 0xF);
+        if (D_8B42044 != 0) {
+            D_8B42044 = 0;
+            D_psp_091CD6FF = 0;
+        } else {
+            D_psp_091CD6FF = 0xFF;
+        }
+        D_psp_091CD6FE = D_8006C374;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_psp_090DFC68);
 
