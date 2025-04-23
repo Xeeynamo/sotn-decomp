@@ -650,7 +650,7 @@
 | st0    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | wrp    | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | dra    | AllocPrimitives                     |       63 |          8 |        | https://decomp.me/scratch/fIjai | 0.726 |
-| dra    | func_800EDB58                       |       63 |          8 |        | https://decomp.me/scratch/UDSDO | 0.7   |
+| dra    | func_800EDB58                       |       63 |          8 |        | https://decomp.me/scratch/jGDjr | 0.72  |
 | no4    | EntityUnkId3F                       |       63 |         10 |        |                                 |       |
 |        | ServantUnk0                         |       63 |         12 |        |                                 |       |
 | dra    | E6A8.rodata                         |       64 |          0 | Yes    |                                 |       |
@@ -1194,7 +1194,7 @@
 | ric    | func_80162604                       |      238 |         17 |        |                                 |       |
 | no4    | func_pspeu_0923D9E0                 |      238 |         26 |        |                                 |       |
 | no4    | EntityBreakable                     |      238 |         35 |        | https://decomp.me/scratch/SjwKz | 0.998 |
-| dra    | DrawEntitiesHitbox                  |      240 |         15 |        |                                 |       |
+| dra    | DrawEntitiesHitbox                  |      240 |         15 |        | https://decomp.me/scratch/tjxvc | 0.952 |
 | st0    | EntitySecretButton                  |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.995 |
 | dra    | EntityGravityBootBeam               |      242 |         22 |        | https://decomp.me/scratch/3FcPM | 0.987 |
 | ric    | RicStepSlideKick                    |      242 |         29 |        |                                 |       |
