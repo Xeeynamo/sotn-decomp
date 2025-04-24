@@ -54,7 +54,36 @@ DR_ENV* func_800EDB08(Primitive* prim) {
     return NULL;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", func_800EDB58);
+s32 func_800EDB58(u8 primType, s32 count) {
+    s32 primStartIdx;
+    s32 i;
+    s32 var_v1;
+    Primitive* prim;
+    
+    var_v1 = count;
+    primStartIdx = 0;
+    for(i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++){
+        if (prim->type != PRIM_NONE) {
+            primStartIdx = i + 1;
+            var_v1 = count;
+        } else if (--var_v1 == 0) {
+            break;
+        }
+    }
+    if (var_v1 != 0) {
+        return -1;
+    }
+    
+    for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
+        DestroyPrimitive(prim);
+        prim->type = primType;
+        prim->next = &g_PrimBuf[primStartIdx] + i + 1;    
+    }
+    prim[-1].type &= 0xEF;
+    prim[-1].next = NULL;
+    // Casted return value as mentioned above
+    return (s16)primStartIdx;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", AllocPrimitives);
 

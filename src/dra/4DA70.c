@@ -59,50 +59,32 @@ s32 D_800A2438 = 0;
 // This function casts its return value as an s16, but at least one caller
 // (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
 s32 func_800EDB58(u8 primType, s32 count) {
-    Primitive* prim;
-    Primitive* temp_v0;
-    bool isLooping;
     s32 primStartIdx;
-    s32 var_s1;
     s32 i;
     s32 var_v1;
-
+    Primitive* prim;
+    
     var_v1 = count;
     primStartIdx = 0;
-    i = 0;
-    prim = g_PrimBuf;
-    isLooping = 1;
-    while (isLooping) {
-        var_v1--;
+    for(i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++){
         if (prim->type != PRIM_NONE) {
-            var_v1 = i;
-            primStartIdx = var_v1 + 1;
+            primStartIdx = i + 1;
             var_v1 = count;
-        } else if (var_v1 == 0) {
+        } else if (--var_v1 == 0) {
             break;
         }
-        var_s1 = i + 1;
-        prim++;
-        i++;
-        isLooping = i < 0x400;
-        if (isLooping) {
-            continue;
-        }
-        if (var_v1 != 0) {
-            return -1;
-        }
     }
-
+    if (var_v1 != 0) {
+        return -1;
+    }
+    
     for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
         DestroyPrimitive(prim);
-        var_s1 = 0;
-        temp_v0 = &g_PrimBuf[i];
         prim->type = primType;
-        prim->next = temp_v0;
-        prim->next = prim->next + primStartIdx + 1;
+        prim->next = &g_PrimBuf[primStartIdx] + i + 1;    
     }
-    prim[-1].next = NULL;
     prim[-1].type &= 0xEF;
+    prim[-1].next = NULL;
     // Casted return value as mentioned above
     return (s16)primStartIdx;
 }
