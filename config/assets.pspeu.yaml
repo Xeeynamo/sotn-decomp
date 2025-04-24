@@ -15,6 +15,8 @@ files:
           - [0x2B4F8, cmpgfx, hud_ge, 128, 128, 4]
           - [0x2C348, cmpgfx, hud_fr, 128, 128, 4]
           - [0x2D1B0, skip]
+          - [0x2D320, subweaponsdef, subweapons_def, RicSubweapons, RicBlueprints]
+          - [0x2D590, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

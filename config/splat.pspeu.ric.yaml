@@ -65,10 +65,11 @@ segments:
       - [0x28458, .data, ric/pl_anims]
       - [0x28AB0, .data, ric/pl_subweapons]
       - [0x28AE8, .data, ric/d_18568]
-      - [0x2D1F0, data]
+      - [0x2D1F0, .data, ric/d_1859C]
       - [0x2D2B0, .data, ric/2F8E8]
       - [0x2D2D0, .data, ric/319C4]
-      - [0x2D308, data]
+      - [0x2D308, .data, ric/pl_blueprints]
+      - [0x2D320, .data, ric/pl_blueprints] # subweapons
       - [0x2D590, .data, ric/pl_blueprints]
       - [0x2E0A8, .data, ric/spritebank3]
       - [0x2E4D0, .data, ric/spritebank0]

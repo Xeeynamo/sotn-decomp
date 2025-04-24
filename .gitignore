@@ -11,6 +11,7 @@ expected/
 disks/
 nonmatchings/
 .vscode/settings.json
+subweapons_def.h
 
 # Unsure if these are directories or files
 function_calls

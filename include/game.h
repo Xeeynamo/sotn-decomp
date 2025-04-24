@@ -268,7 +268,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #endif
 
 // used with various equipment, enemy resistances, etc
-typedef enum {
+typedef enum Elements {
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,
     ELEMENT_POISON = 0x80,

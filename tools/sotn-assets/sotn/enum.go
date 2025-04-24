@@ -25,9 +25,9 @@ func removeComments(line string) string {
 	return strings.TrimSpace(line)
 }
 
-func ParseCEnum(r io.Reader, name string) (map[int]string, error) {
-	enumMap := make(map[int]string, 0x100)
-	for i := 0; i < 0x100; i++ {
+func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
+	enumMap := make(map[int]string, min)
+	for i := 0; i < min; i++ {
 		enumMap[i] = fmt.Sprintf("0x%02X", i)
 	}
 	scanner := bufio.NewScanner(r)
@@ -47,8 +47,14 @@ func ParseCEnum(r io.Reader, name string) (map[int]string, error) {
 				if name == "" {
 					continue
 				}
+				if strings.HasPrefix(name, "NUM_") {
+					continue
+				}
 				if len(parts) > 1 {
 					valueStr := strings.TrimSpace(parts[1])
+					if strings.Contains(valueStr, " |") { // ignore FLAG_1 | FLAG_2
+						continue
+					}
 					base := 10
 					if strings.HasPrefix(valueStr, "0x") {
 						valueStr = valueStr[2:]
