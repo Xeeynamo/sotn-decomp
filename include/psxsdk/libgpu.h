@@ -6,6 +6,24 @@
 #else
 #define DR_ENV_CODE_SIZE 8
 #endif
+
+#ifndef VERSION_PSP
+#define SPRT_CODE 0x64
+#define POLYGT3_CODE 0x34
+#define POLYG4_CODE 0x38
+#define POLYGT4_CODE 0x3C
+#define LINEG2_CODE 0x50
+#define TILE_CODE 0x60
+#endif
+#ifdef VERSION_PSP
+#define SPRT_CODE 0x1
+#define POLYGT3_CODE 0x4
+#define POLYGT4_CODE 0x5
+#define POLYG4_CODE 0x6
+#define LINEG2_CODE 0x9
+#define TILE_CODE 0xB
+#endif
+
 /*
  *	Set Primitive Attributes
  */
