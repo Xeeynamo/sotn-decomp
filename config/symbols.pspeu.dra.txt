@@ -842,6 +842,7 @@ D_8013AE9C = 0x09236770;
 g_MemcardStep = 0x09236778;
 g_MemcardInfo = 0x09236780;
 g_PadsRepeatTimer = 0x092367C0;
+D_80137EF8 = 0x092367D0;
 D_80138454 = 0x09236830;
 g_DebugEnabled = 0x09236878;
 g_CurrentXaConfigId = 0x09236908;

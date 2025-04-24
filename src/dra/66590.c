@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
-#include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -39,7 +36,11 @@ void DrawEntitiesHitbox(s32 drawMode) {
     ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+#ifdef VERSION_PSP
+    otIdx = 0x2E8;
+#else
     otIdx = 0x1F0;
+#endif
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
         entity++) {
         if (entity->hitboxState == 0)
@@ -127,10 +128,10 @@ void DrawEntitiesHitbox(s32 drawMode) {
 }
 
 extern u16 D_800AC910[];
-#ifdef VERSION_HD
-extern u8 D_800AC914[10][30];
-#else
+#ifdef VERSION_US
 extern u8 D_800AC914[1][30];
+#else
+extern u8 D_800AC914[10][30];
 #endif
 extern u16 D_800AC934[]; // LUT of ceil(index / 2)
 extern u16 D_80137EF8[];
