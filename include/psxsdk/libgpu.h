@@ -150,6 +150,7 @@ typedef struct {
     u_long len
 typedef struct {
     O_TAG;
+    u_long dummy;
 } OT_TYPE;
 #else
 #define O_TAG u_long tag
@@ -160,10 +161,12 @@ typedef struct {
 // In func_800EDB08, the setcode needs to write to offset 0xb.
 #ifndef VERSION_PC
 typedef struct {
-    unsigned addr : 24;
-    unsigned len : 8;
 #ifdef VERSION_PSP
-    s32 dummy;
+    u_long addr;
+    u_long len;
+#else
+    u_long addr : 24;
+    u_long len : 8;
 #endif
     u_char r0, g0, b0, code;
 } P_TAG;
