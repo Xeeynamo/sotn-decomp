@@ -114,7 +114,28 @@ s32 AllocPrimitives(u8 primType, s32 count) {
     return -1;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", func_800EDD9C);
+s32 func_800EDD9C(u8 type, s32 count) {
+    s32 i;
+    Primitive* prim;
+    s16 foundPolyIndex;
+
+    for(prim = &g_PrimBuf[LEN(g_PrimBuf) - 1],i = LEN(g_PrimBuf) - 1; i >= 0; i--, prim--) {
+        if (prim->type == PRIM_NONE) {
+            DestroyPrimitive(prim);
+            if (count == 1) {
+                prim->type = type;
+                prim->next = NULL;
+            } else {
+                prim->type = type;
+                foundPolyIndex = func_800EDD9C(type, count - 1);
+                prim->next = &g_PrimBuf[foundPolyIndex];
+            }
+            foundPolyIndex = i;
+            return foundPolyIndex;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", FreePrimitives);
 
