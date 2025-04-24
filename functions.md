@@ -1432,7 +1432,7 @@
 | dra    | func_8012F178                       |      564 |         35 |        |                                 |       |
 | no4    | func_pspeu_09258E30                 |      564 |         51 | Yes    |                                 |       |
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
-| dra    | RenderTilemap                       |      570 |         35 |        | https://decomp.me/scratch/4wi95 | 0.982 |
+| dra    | RenderTilemap                       |      570 |         35 |        | https://decomp.me/scratch/4wi95 | 0.999 |
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
 | lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
