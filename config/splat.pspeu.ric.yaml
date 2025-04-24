@@ -78,7 +78,7 @@ segments:
       - [0x2FBE8, .data, ric/pl_subweapon_holywater]
       - [0x2FC58, .data, ric/pl_whip]
       - [0x30010, .data, ric_psp/pl_subweapon_cross]
-      - [0x30078, data]
+      - [0x300A0, data]
       - [0x30100, .rodata, ric/pl_steps]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]

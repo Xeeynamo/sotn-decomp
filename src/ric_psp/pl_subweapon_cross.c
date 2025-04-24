@@ -193,9 +193,174 @@ void RicEntityRevivalColumn(Entity* self) {
     prim->priority = self->zPriority;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCross);
+static AnimationFrame anim_cross_boomerang[] = {
+    {36, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},
+    {1, FRAME(4, 0)},  {1, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
+#if defined(VERSION_PSP)
+extern Point16 D_80175088[4][128];
+extern s32 D_80175888;
+#else
+static Point16 D_80175088[4][128];
+static s32 D_80175888;
+#endif
+void RicEntitySubwpnCross(Entity* self) {
+    s16 playerHitboxX;
+    s16 playerHitboxY;
+    s16 rotZ;
+    s16* psp_s1;
+    s32 xAccel;
 
+    rotZ = self->rotZ;
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        // gets used by shadow, must align with that entity
+        self->ext.crossBoomerang.unk84 = D_80175088[D_80175888];
+        D_80175888++;
+        D_80175888 &= 3;
+        RicCreateEntFactoryFromEntity(self, BP_5, 0);
+        self->animSet = ANIMSET_OVL(0x11);
+        self->unk5A = 0x66;
+        self->anim = anim_cross_boomerang;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        RicSetSpeedX(FIX(3.5625));
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0xC00;
+        self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
+        RicSetSubweaponParams(self);
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->posY.i.hi -= 8;
+        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
+        self->step++;
+        break;
+    case 1:
+        if (PLAYER.pose == 1) {
+            self->step++;
+        }
+    case 2:
+        // First phase. We spin at 0x80 angle units per frame.
+        // Velocity gets decremented by 1/16 per frame until we slow
+        // down to less than 0.75.
+        self->rotZ -= 0x80;
+        self->posX.val += self->velocityX;
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        self->velocityX -= xAccel;
+        if (abs(self->velocityX) < FIX(0.75)) {
+            self->step++;
+        }
+        break;
+    case 3:
+        // Second phase. Once we are slow, we spin twice as fast, and then
+        // wait until our speed gets higher once again (turned around).
+        self->rotZ -= 0x100;
+        self->posX.val += self->velocityX;
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        self->velocityX -= xAccel;
+        if (abs(self->velocityX) > FIX(0.75)) {
+            self->step++;
+        }
+        break;
+    case 4:
+        // Third phase. We've now sped up and we're coming back.
+        // Increase speed until a terminal velocity of 2.5.
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        self->velocityX -= xAccel;
+        if (abs(self->velocityX) > FIX(2.5)) {
+            self->step++;
+        }
+    case 5:
+        // Now we check 2 conditions. If we're within the player's hitbox...
+        playerHitboxX = (PLAYER.posX.i.hi + PLAYER.hitboxOffX);
+        playerHitboxY = (PLAYER.posY.i.hi + PLAYER.hitboxOffY);
+        if (abs(self->posX.i.hi - playerHitboxX) <
+                PLAYER.hitboxWidth + self->hitboxWidth &&
+            abs(self->posY.i.hi - playerHitboxY) <
+                PLAYER.hitboxHeight + self->hitboxHeight) {
+            // ... Then we go to step 7 to be destroyed.
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
+        }
+        // Alternatively, if we're offscreen, we will also be destroyed.
+        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi > 0x120)) {
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
+        }
+        // Otherwise, we keep trucking. spin at the slower rate again.
+        self->rotZ -= 0x80;
+        self->posX.val += self->velocityX;
+        break;
+    case 7:
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->hitboxState = 0;
+        self->animSet = 0;
+        self->posX.val += self->velocityX;
+        break;
+    }
+    // We will increment through these states, creating trails.
+    // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
+    // Factory 4 is entity #5, RicEntityHitByCutBlood. Appears to make a
+    // "shadow" of the cross boomerang.
+    self->ext.crossBoomerang.unk7E++;
+    if (1 < self->step && self->step < 6) {
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
+            RicCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
+            RicCreateEntFactoryFromEntity(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+    }
+    // Applies a flickering effect
+    if ((g_GameTimer >> 1) & 1) {
+        self->palette = PAL_OVL(0x1B0);
+    } else {
+        self->palette = PAL_OVL(0x1B1);
+    }
+    psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
+    psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
+    *psp_s1 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    psp_s1++;
+    *psp_s1 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
+    rotZ ^= self->rotZ;
+    g_Player.timers[PL_T_3] = 2;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", func_80169C10);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCrossTrail);

@@ -203,19 +203,19 @@ static AnimationFrame anim_cross_boomerang[] = {
 static Point16 D_80175088[4][128];
 static s32 D_80175888;
 void RicEntitySubwpnCross(Entity* self) {
-    s32 xAccel;
-    Point16* temp_a0;
     s16 playerHitboxX;
     s16 playerHitboxY;
+    s16 rotZ;
+    s16* psp_s1;
+    s32 xAccel;
 
-    f32 tempX;
-
+    rotZ = self->rotZ;
     switch (self->step) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
         // gets used by shadow, must align with that entity
-        self->ext.crossBoomerang.unk84 = &D_80175088[D_80175888];
+        self->ext.crossBoomerang.unk84 = D_80175088[D_80175888];
         D_80175888++;
         D_80175888 &= 3;
         RicCreateEntFactoryFromEntity(self, BP_5, 0);
@@ -229,7 +229,8 @@ void RicEntitySubwpnCross(Entity* self) {
         self->rotZ = 0xC00;
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
         RicSetSubweaponParams(self);
-        self->hitboxHeight = self->hitboxWidth = 8;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
         self->posY.i.hi -= 8;
         g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
         self->step++;
@@ -238,14 +239,17 @@ void RicEntitySubwpnCross(Entity* self) {
         if (PLAYER.pose == 1) {
             self->step++;
         }
-        /* fallthrough */
     case 2:
         // First phase. We spin at 0x80 angle units per frame.
         // Velocity gets decremented by 1/16 per frame until we slow
         // down to less than 0.75.
         self->rotZ -= 0x80;
         self->posX.val += self->velocityX;
-        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
         self->velocityX -= xAccel;
         if (abs(self->velocityX) < FIX(0.75)) {
             self->step++;
@@ -256,7 +260,11 @@ void RicEntitySubwpnCross(Entity* self) {
         // wait until our speed gets higher once again (turned around).
         self->rotZ -= 0x100;
         self->posX.val += self->velocityX;
-        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
         self->velocityX -= xAccel;
         if (abs(self->velocityX) > FIX(0.75)) {
             self->step++;
@@ -265,19 +273,20 @@ void RicEntitySubwpnCross(Entity* self) {
     case 4:
         // Third phase. We've now sped up and we're coming back.
         // Increase speed until a terminal velocity of 2.5.
-        xAccel = self->facingLeft ? FIX(-1.0 / 16) : FIX(1.0 / 16);
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
         self->velocityX -= xAccel;
         if (abs(self->velocityX) > FIX(2.5)) {
             self->step++;
         }
-        /* fallthrough */
     case 5:
-        // FAKE, unfortunate need to preload this.
-        tempX = self->posX;
         // Now we check 2 conditions. If we're within the player's hitbox...
         playerHitboxX = (PLAYER.posX.i.hi + PLAYER.hitboxOffX);
         playerHitboxY = (PLAYER.posY.i.hi + PLAYER.hitboxOffY);
-        if (abs(tempX.i.hi - playerHitboxX) <
+        if (abs(self->posX.i.hi - playerHitboxX) <
                 PLAYER.hitboxWidth + self->hitboxWidth &&
             abs(self->posY.i.hi - playerHitboxY) <
                 PLAYER.hitboxHeight + self->hitboxHeight) {
@@ -287,8 +296,8 @@ void RicEntitySubwpnCross(Entity* self) {
             return;
         }
         // Alternatively, if we're offscreen, we will also be destroyed.
-        if ((!self->facingLeft && self->posX.i.hi < -0x20) ||
-            (self->facingLeft && self->posX.i.hi >= 0x121)) {
+        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi > 0x120)) {
             self->step = 7;
             self->ext.crossBoomerang.timer = 0x20;
             return;
@@ -297,7 +306,6 @@ void RicEntitySubwpnCross(Entity* self) {
         self->rotZ -= 0x80;
         self->posX.val += self->velocityX;
         break;
-
     case 7:
         if (--self->ext.crossBoomerang.timer == 0) {
             DestroyEntity(self);
@@ -334,19 +342,19 @@ void RicEntitySubwpnCross(Entity* self) {
         }
     }
     // Applies a flickering effect
-    if (!((g_GameTimer >> 1) & 1)) {
-        self->palette = PAL_OVL(0x1B1);
-    } else {
+    if ((g_GameTimer >> 1) & 1) {
         self->palette = PAL_OVL(0x1B0);
+    } else {
+        self->palette = PAL_OVL(0x1B1);
     }
-    temp_a0 = self->ext.crossBoomerang.unk84;
-    // This indexes into the unk84 array.
-    // Better way would have been temp_a0 = &unk84[unk80].
-    temp_a0 += self->ext.crossBoomerang.unk80;
-    temp_a0->x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-    temp_a0->y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
+    psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
+    *psp_s1 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    psp_s1++;
+    *psp_s1 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     self->ext.crossBoomerang.unk80++;
     self->ext.crossBoomerang.unk80 &= 0x3F;
+    rotZ ^= self->rotZ;
     g_Player.timers[PL_T_3] = 2;
 }
 
