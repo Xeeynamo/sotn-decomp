@@ -1,0 +1,42 @@
+options:
+  target_path:  disks/saturn/RICHTER.PRG
+  asm_path:     asm/saturn/richter
+  src_path:     src/saturn
+  ld_scripts_path: config/saturn
+  syms_path: config/saturn
+  decomp_empty_funcs: false
+segments:
+  - name: richter
+    type: code
+    start: 0x00000000
+    vram:  0x060A5000
+    subalign: 2
+    subsegments:
+      - start: 0x0
+        type: data
+        file: richter
+        end: 0x5F
+      - start: 0x60
+        type: c
+        file: richter
+        end: 0x2CEF
+      - start: 0x2CF0
+        type: data
+        file: richter
+        end: 0x2FD3
+      - start: 0x2FD4
+        type: c
+        file: richter
+        end: 0xD3B5
+      - start: 0xD3B6
+        type: data
+        file: richter
+        end: 0xD40B
+      - start: 0xD40C
+        type: c
+        file: richter
+        end: 0x19D57
+      - start: 0x19D58
+        type: data
+        file: richter
+        end: 0x2F04B
