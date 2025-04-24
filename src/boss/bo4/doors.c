@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
-// hit during enter sequence
-extern s32 D_us_801805A0;
-extern s32 D_us_801805A4;
+s32 D_us_801805A0 = 0;
+s32 D_us_801805A4 = 0;
+
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
 extern EInit g_EInitInteractable;
@@ -21,14 +21,15 @@ extern s32 D_pspeu_0926BC98;
 #define E_ID(ID_1D) D_pspeu_0926BC98
 #endif
 
+// hit during enter sequence
 void func_us_801B4BF0(Entity* self) {
-    s32 i;          // s2
-    Entity* dop;    // s0
-    Entity* entity; // s1
-    s32 offsetX;    // s4
-    s32 offsetY;    // s3
-    s32 tangent;    // s5
-    s16 angle;      // s6
+    s32 i;
+    Entity* dop;
+    Entity* entity;
+    s32 offsetX;
+    s32 offsetY;
+    s32 tangent;
+    s16 angle;
 
     FntPrint("pl_demo_timer:%02x\n", g_Player.demo_timer);
     FntPrint("step:%02x\n", self->step);
@@ -134,7 +135,8 @@ void func_us_801B4BF0(Entity* self) {
         offsetX = 0x100 - g_Tilemap.scrollX.i.hi;
         offsetY = 0x80 - g_Tilemap.scrollY.i.hi;
         for (i = 0; i < 2; i++) {
-            dop = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            dop =
+                AllocEntity(g_Entities + 224, g_Entities + TOTAL_ENTITY_COUNT);
             if (dop != NULL) {
                 CreateEntityFromCurrentEntity(E_ID(ID_1C), dop);
                 dop->posX.i.hi = offsetX - 64 + (i * 128);
@@ -152,7 +154,7 @@ void func_us_801B4BF0(Entity* self) {
         break;
 
     case 9:
-        dop = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        dop = AllocEntity(g_Entities + 160, g_Entities + 192);
         if (dop != NULL) {
             CreateEntityFromEntity(E_ID(ID_1D), self, dop);
             dop->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
@@ -177,13 +179,19 @@ void func_us_801B4BF0(Entity* self) {
 // hit during enter sequence
 extern EInit D_us_80180458;
 extern s32 D_us_80181570;
-extern s16 D_us_801805A8[];
-extern s16 D_us_801805B4[];
-extern s16 D_us_801805C0[];
-extern u8 D_us_801805CC[];
-extern u8 D_us_801805D4[];
-extern u8 D_us_801805DC[];
-extern u8 D_us_801805E4[];
+static s16 D_us_801805A8[] = {
+    0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
+};
+static s16 D_us_801805B4[] = {
+    0xC, 0xC, 0x12, 0x16, 0x20, 0x26,
+};
+static s16 D_us_801805C0[] = {
+    0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
+};
+static u8 D_us_801805CC[] = {1, 0x62, 0x1, 0x63, 0};
+extern u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
+extern u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
+extern u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
 
 void func_us_801B5040(Entity* self) {
     s32 flag;
@@ -263,7 +271,7 @@ void func_us_801B5040(Entity* self) {
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
-            if (self->palette > 0x8058) {
+            if (self->palette > PAL_OVL(0x58)) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
                 self->palette = PAL_OVL(0x4F);
                 self->step++;
@@ -275,7 +283,7 @@ void func_us_801B5040(Entity* self) {
         break;
 
     case 4:
-        magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
+        magnitude = self->ext.et_801BDA0C.unk80 / FIX(1);
         xOffset = (rcos(self->rotZ - 0x400) * magnitude) >> 0xC;
         yOffset = (rsin(self->rotZ - 0x400) * magnitude) >> 0xC;
         prim = self->ext.et_801BDA0C.unk7C;

@@ -243,10 +243,14 @@ set(SOURCE_FILES_RIC
     src/ric/pl_subweapons.c
     src/ric/2F8E8.c
     src/ric/319C4.c
-    src/ric/spriteparts.c
+    src/ric/spritebank0.c
+    src/ric/spritebank1.c
+    src/ric/spritebank2.c
+    src/ric/spritebank3.c
     src/ric/pl_crash_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
+    src/ric/d_1859C.c
     src/ric/pl_anims.c
 )
 

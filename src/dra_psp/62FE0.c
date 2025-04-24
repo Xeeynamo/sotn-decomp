@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-static u16 D_psp_09186EF8[] = {
+u16 D_800AC910[] = {
     '踪', '眷', '翔', '彷', '徨',
     '苺', '獰', '賤', '贄', '鬱'}; // last one should be a copyright symbol
 
-static u8 D_psp_09186F10[][30] = {
+u8 D_800AC914[][30] = {
     // clang-format off
     {
         0b00000000, 0b00100000,
@@ -180,9 +180,8 @@ static u8 D_psp_09186F10[][30] = {
     // clang-format on
 };
 
-static u16 D_psp_09187040[] = {
-    0, 1, 1, 2, 2, 3, 3, 4, 4,
-    5, 5, 6, 6, 7, 7, 8, 8}; // LUT of ceil(index / 2)
+u16 D_800AC934[] = {0, 1, 1, 2, 2, 3, 3, 4, 4,
+                    5, 5, 6, 6, 7, 7, 8, 8}; // LUT of ceil(index / 2)
 
 static char D_psp_09187068[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstu"
@@ -204,7 +203,7 @@ static u16 D_psp_091871B0[] = {
     0x860F, 0x860E, 0x8611, 0x8610, 0x8620, 0x861F, 0x8622, 0x8621,
     0x8577, 0x8586, 0x814E, 0x8636, 0x8147, 0x8621, 0x0000};
 
-extern u16 D_psp_092367D0[];
+extern u16 D_80137EF8[];
 
 u16 func_psp_0913F960(char* str, u8* type) {
     u32 i;
@@ -255,10 +254,10 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     // bitmap of size 16x15.
     bitmap = (u8*)Krom2RawAdd(ch);
     if (bitmap == (u8*)-1) {
-        srcPtr = D_psp_09186EF8;
-        for (i = 0; i < LEN(D_psp_09186F10); i++) {
+        srcPtr = D_800AC910;
+        for (i = 0; i < LEN(D_800AC914); i++) {
             if (ch == *srcPtr++) {
-                bitmap = D_psp_09186F10[i];
+                bitmap = D_800AC914[i];
             }
         }
         if (bitmap == (u8*)-1) {
@@ -267,7 +266,7 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         }
     }
 
-    srcPtr = D_psp_092367D0;
+    srcPtr = D_80137EF8;
     for (i = 0; i < 15; i++) {
         val0 = val2 = val1 = 0;
 
@@ -320,17 +319,17 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
         bitmap++;
     }
 
-    destPtr = D_psp_092367D0;
-    srcPtr = D_psp_092367D0;
+    destPtr = D_80137EF8;
+    srcPtr = D_80137EF8;
     switch (kind) {
     case 0:
     case 3:
         for (i = 0; i < 45; i++) {
             val0 = *srcPtr++;
-            dest = D_psp_09187040[(val0 >> 0xC & 0xF) * 4] << 0xC;
-            dest |= D_psp_09187040[(val0 >> 0x8 & 0xF) * 4] << 0x8;
-            dest |= D_psp_09187040[(val0 >> 0x4 & 0xF) * 4] << 0x4;
-            dest |= D_psp_09187040[(val0 >> 0x0 & 0xF) * 4] << 0x0;
+            dest = D_800AC934[(val0 >> 0xC & 0xF) * 4] << 0xC;
+            dest |= D_800AC934[(val0 >> 0x8 & 0xF) * 4] << 0x8;
+            dest |= D_800AC934[(val0 >> 0x4 & 0xF) * 4] << 0x4;
+            dest |= D_800AC934[(val0 >> 0x0 & 0xF) * 4] << 0x0;
             *destPtr++ = dest;
         }
         for (i = 0; i < 3; i++) {
@@ -345,21 +344,21 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
                     val0 = *srcPtr;
                     srcPtr += 3;
                     val2 = *srcPtr;
-                    dest = D_psp_09187040[((val0 >> 0xC & 0xF) * k +
-                                           (val2 >> 0xC & 0xF) * (8 - k)) /
-                                          2]
+                    dest = D_800AC934[((val0 >> 0xC & 0xF) * k +
+                                       (val2 >> 0xC & 0xF) * (8 - k)) /
+                                      2]
                            << 0xC;
-                    dest |= D_psp_09187040[((val0 >> 0x8 & 0xF) * k +
-                                            (val2 >> 0x8 & 0xF) * (8 - k)) /
-                                           2]
+                    dest |= D_800AC934[((val0 >> 0x8 & 0xF) * k +
+                                        (val2 >> 0x8 & 0xF) * (8 - k)) /
+                                       2]
                             << 0x8;
-                    dest |= D_psp_09187040[((val0 >> 0x4 & 0xF) * k +
-                                            (val2 >> 0x4 & 0xF) * (8 - k)) /
-                                           2]
+                    dest |= D_800AC934[((val0 >> 0x4 & 0xF) * k +
+                                        (val2 >> 0x4 & 0xF) * (8 - k)) /
+                                       2]
                             << 0x4;
-                    dest |= D_psp_09187040[((val0 >> 0x0 & 0xF) * k +
-                                            (val2 >> 0x0 & 0xF) * (8 - k)) /
-                                           2]
+                    dest |= D_800AC934[((val0 >> 0x0 & 0xF) * k +
+                                        (val2 >> 0x0 & 0xF) * (8 - k)) /
+                                       2]
                             << 0x0;
                     *destPtr = dest;
                     destPtr += 3;
@@ -382,17 +381,17 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
                     val0 = *srcPtr;
                     srcPtr += 3;
                     val2 = *srcPtr;
-                    dest = D_psp_09187040[(val0 >> 0xC & 0xF) * k +
-                                          (val2 >> 0xC & 0xF) * (4 - k)]
+                    dest = D_800AC934[(val0 >> 0xC & 0xF) * k +
+                                      (val2 >> 0xC & 0xF) * (4 - k)]
                            << 0xC;
-                    dest |= D_psp_09187040[(val0 >> 0x8 & 0xF) * k +
-                                           (val2 >> 0x8 & 0xF) * (4 - k)]
+                    dest |= D_800AC934[(val0 >> 0x8 & 0xF) * k +
+                                       (val2 >> 0x8 & 0xF) * (4 - k)]
                             << 0x8;
-                    dest |= D_psp_09187040[(val0 >> 0x4 & 0xF) * k +
-                                           (val2 >> 0x4 & 0xF) * (4 - k)]
+                    dest |= D_800AC934[(val0 >> 0x4 & 0xF) * k +
+                                       (val2 >> 0x4 & 0xF) * (4 - k)]
                             << 0x4;
-                    dest |= D_psp_09187040[(val0 >> 0x0 & 0xF) * k +
-                                           (val2 >> 0x0 & 0xF) * (4 - k)]
+                    dest |= D_800AC934[(val0 >> 0x0 & 0xF) * k +
+                                       (val2 >> 0x0 & 0xF) * (4 - k)]
                             << 0x0;
                     *destPtr = dest;
                     destPtr += 3;
@@ -410,28 +409,28 @@ u16* func_psp_0913FA28(u16 ch, u16 kind) {
     }
     if (kind == 3) {
         for (i = 0; i < 0x42; i++) {
-            dest2 = D_psp_092367D0[i];
+            dest2 = D_80137EF8[i];
             if (dest2 & 4) {
-                if ((D_psp_092367D0[i] & 0xF0) == 0) {
-                    D_psp_092367D0[i] |= 0x10;
+                if ((D_80137EF8[i] & 0xF0) == 0) {
+                    D_80137EF8[i] |= 0x10;
                 }
             }
             if (dest2 & 0x40) {
-                if ((D_psp_092367D0[i] & 0xF00) == 0) {
-                    D_psp_092367D0[i] |= 0x100;
+                if ((D_80137EF8[i] & 0xF00) == 0) {
+                    D_80137EF8[i] |= 0x100;
                 }
             }
             if (dest2 & 0x400) {
-                if ((D_psp_092367D0[i] & 0xF000) == 0) {
-                    D_psp_092367D0[i] |= 0x1000;
+                if ((D_80137EF8[i] & 0xF000) == 0) {
+                    D_80137EF8[i] |= 0x1000;
                 }
             }
             if ((dest2 & 0x4000) && (i < 0x41)) {
-                if ((D_psp_092367D0[i + 1] & 0xF) == 0) {
-                    D_psp_092367D0[i + 1] |= 1;
+                if ((D_80137EF8[i + 1] & 0xF) == 0) {
+                    D_80137EF8[i + 1] |= 1;
                 }
             }
         }
     }
-    return D_psp_092367D0;
+    return D_80137EF8;
 }

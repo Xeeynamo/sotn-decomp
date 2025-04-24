@@ -140,11 +140,11 @@ $(BUILD_DIR)/%.c.o: %.c $(MASPSX_APP) $(CC1PSX)
 $(BUILD_DIR)/$(SRC_DIR)/main/psxsdk/libgpu/sys.c.o: $(SRC_DIR)/main/psxsdk/libgpu/sys.c $(MASPSX_APP) $(CC1PSX)
 	$(CPP) $(CPP_FLAGS) -lang-c $< | $(SOTNSTR_APP) process | $(ICONV) | $(CC) $(CC_FLAGS) $(PSXCC_FLAGS) | $(MASPSX_21) | $(AS) $(AS_FLAGS) -o $@
 
-extract_assets: $(SOTNASSETS)
+extract_assets: config/assets.$(VERSION).yaml $(SOTNASSETS)
 	cd tools/sotn-assets; $(GO) install
-	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
-build_assets: $(SOTNASSETS)
-	$(SOTNASSETS) build config/assets.$(VERSION).yaml
+	$(SOTNASSETS) extract $<
+build_assets: config/assets.$(VERSION).yaml $(SOTNASSETS)
+	$(SOTNASSETS) build $<
 
 $(BUILD_DIR)/assets/dra/memcard_%.png.o: assets/dra/memcard_%.png
 	mkdir -p $(dir $@)

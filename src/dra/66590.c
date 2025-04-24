@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
-#include "dra_bss.h"
-#include "objects.h"
-#include "sfx.h"
 
 void DestroyEntity(Entity* entity) {
     s32 i;
@@ -28,19 +25,22 @@ void DestroyEntitiesFromIndex(s16 startIndex) {
 }
 
 void DrawEntitiesHitbox(s32 drawMode) {
-    DR_MODE* drMode;
     s32 polyCount;
-    OT_TYPE* ot;
     Entity* entity;
+    OT_TYPE* ot;
     TILE* tile;
+    DR_MODE* drMode;
     u32 otIdx;
-    u16 x;
-    u16 y;
+    s16 x, y;
 
     ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+#ifdef VERSION_PSP
+    otIdx = 0x2E8;
+#else
     otIdx = 0x1F0;
+#endif
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
         entity++) {
         if (entity->hitboxState == 0)
@@ -49,8 +49,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        y = entity->posY.i.hi + g_backbufferY;
         x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
@@ -83,8 +83,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
             break;
         }
 
-        y = entity->posY.i.hi + g_backbufferY;
         x = entity->posX.i.hi + g_backbufferX;
+        y = entity->posY.i.hi + g_backbufferY;
         if (entity->facingLeft) {
             x -= entity->hitboxOffX;
         } else {
@@ -128,10 +128,10 @@ void DrawEntitiesHitbox(s32 drawMode) {
 }
 
 extern u16 D_800AC910[];
-#ifdef VERSION_HD
-extern u8 D_800AC914[10][30];
-#else
+#ifdef VERSION_US
 extern u8 D_800AC914[1][30];
+#else
+extern u8 D_800AC914[10][30];
 #endif
 extern u16 D_800AC934[]; // LUT of ceil(index / 2)
 extern u16 D_80137EF8[];
@@ -343,19 +343,17 @@ bool LoadMonsterLibrarianPreview(s32 monsterId) {
     if (g_IsUsingCd)
         return false;
 
-    if (!g_UseDisk) {
-        if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
-            return false;
-        }
-    } else {
+    if (g_UseDisk) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_Monster;
         g_LoadOvlIdx = monsterId;
+    } else if (LoadFileSim(monsterId, SimFileType_Monster) < 0) {
+        return false;
     }
     return true;
 }
 
-void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
+void func_801071CC(Primitive* prim, u8 colorIntensity, s32 vertexIndex) {
     switch (vertexIndex) {
     case 0:
         prim->b0 = colorIntensity;
@@ -380,14 +378,14 @@ void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex) {
     }
 }
 
-void func_80107250(Primitive* prim, s32 colorIntensity) {
-    func_801071CC(prim, (u8)colorIntensity, 0);
-    func_801071CC(prim, (u8)colorIntensity, 1);
-    func_801071CC(prim, (u8)colorIntensity, 2);
-    func_801071CC(prim, (u8)colorIntensity, 3);
+void func_80107250(Primitive* prim, u8 colorIntensity) {
+    func_801071CC(prim, colorIntensity, 0);
+    func_801071CC(prim, colorIntensity, 1);
+    func_801071CC(prim, colorIntensity, 2);
+    func_801071CC(prim, colorIntensity, 3);
 }
 
-void func_801072BC(POLY_GT4* poly) { func_80107250(poly, 0); }
+void func_801072BC(Primitive* prim) { func_80107250(prim, 0); }
 
 void func_801072DC(Primitive* prim) { func_80107250(prim, 0x80); }
 

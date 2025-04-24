@@ -172,7 +172,45 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60076D0, func_060076D0);
 
 // _CD_READ_OUT
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007714, func_06007714);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6007824, func_06007824);
+
+struct Unk0600654C prg_info;
+struct Unk0600654C chr_info;
+void func_0601AE2C(s32);
+void func_0600C0C4(s32);
+void func_0600C298(s32);
+s32 func_0601AE5C(s32, s32);
+
+char* WEAPON0_PRG;
+char* WEAPON0_CHR;
+char* WEAPON1_PRG;
+char* WEAPON1_CHR;
+s32 d_060481c0;
+
+void func_06007824(int param_1, int param_2) {
+    if ((d_060481c0 == 0) || (0x3f < param_2)) {
+        func_0601AE5C(param_1, param_2);
+    } else {
+        prg_info.unka = param_2 * 6;
+        chr_info.unka = param_2 * 8;
+        if (param_1 == 0) {
+            prg_info.unk0 = &WEAPON0_PRG;
+            prg_info.unk4 = 0x060D6000;
+            chr_info.unk0 = &WEAPON0_CHR;
+            chr_info.unk4 = VRAM_ADDR + 0x1D980;
+        } else {
+            prg_info.unk0 = &WEAPON1_PRG;
+            prg_info.unk4 = 0x060D9000;
+            chr_info.unk0 = &WEAPON1_CHR;
+            chr_info.unk4 = VRAM_ADDR + 0x21980;
+        }
+        func_06006574(&prg_info);
+        func_0601AE2C(param_1);
+        func_06006574(&chr_info);
+        func_0600C298(param_1);
+        func_0600C0C4(param_1);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60078EC, func_060078EC);
 
 // _InitVdp1
