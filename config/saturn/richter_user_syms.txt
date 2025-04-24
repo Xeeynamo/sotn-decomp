@@ -1,3 +1,4 @@
+_g_CurrentEntity = 0x0605C6E0;
 _g_Entities = 0x060997F8;
 _RicStepEnableFlameWhip = 0x060a80b0;
 _RicStepHydrostorm = 0x060a8170;

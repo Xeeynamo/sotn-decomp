@@ -75,8 +75,11 @@ void RicSetStep(s16 step) {
     PLAYER.step_s = 0;
 }
 
-// RicSetAnimation
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA064, func_060AA064);
+void RicSetAnimation(AnimationFrame* anim) {
+    g_CurrentEntity->anim = anim;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+}
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA088, func_060AA088);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA194, func_060AA194);

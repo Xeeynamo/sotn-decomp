@@ -37,6 +37,15 @@ typedef union {
     } i;
 } SotnFixed32;
 
+#define FRAME(x, y) ((x) | ((y) << 8))
+#define A_LOOP_AT(frame) {0, frame}
+#define A_END {-1, 0}
+#define A_JUMP_AT(anim) {-2, anim}
+typedef struct {
+    u16 duration;
+    u16 unk2;
+} AnimationFrame;
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -120,7 +129,7 @@ typedef struct Entity {
     /* 0x44 */ u8 hitboxWidth;
     /* 0x45 */ u8 hitboxHeight;
     /* 0x46 */ u8 hitFlags; // 1 = took hit
-    /* 0x47 */ char pad6[0x4];
+    /* 0x48 */ AnimationFrame* anim;
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
     /* 0x50 */ char pad_50[0x2];
