@@ -85,7 +85,34 @@ s32 func_800EDB58(u8 primType, s32 count) {
     return (s16)primStartIdx;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", AllocPrimitives);
+s32 AllocPrimitives(u8 primType, s32 count) {
+    s32 i;
+    Primitive* prim;
+    s16 index;
+
+    for(i = 0, prim = &g_PrimBuf[0]; i < MAX_PRIM_ALLOC_COUNT; i++, prim++){
+        if (prim->type == 0) {
+            DestroyPrimitive(prim);
+            if (count == 1) {
+                prim->type = primType;
+                prim->next = NULL;
+                if (D_800A2438 < i) {
+                    D_800A2438 = i;
+                }
+            } else {
+                prim->type = primType;
+                index = AllocPrimitives(primType, count - 1);
+                if (index == -1) {
+                    prim->type = 0;
+                    return -1;
+                }
+                prim->next = &g_PrimBuf[index];
+            }
+            return (s16)i;
+        }
+    }
+    return -1;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", func_800EDD9C);
 
