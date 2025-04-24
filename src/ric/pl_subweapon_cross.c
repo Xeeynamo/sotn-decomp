@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include "sfx.h"
 
 // Entity 13. Made by blueprint 13. That's from subweapon 12.
 // That's the crash for subweapon 4. That's the cross.
@@ -200,8 +199,13 @@ static AnimationFrame anim_cross_boomerang[] = {
     {36, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},
     {1, FRAME(4, 0)},  {1, FRAME(5, 0)}, {1, FRAME(6, 0)},
     {1, FRAME(7, 0)},  {1, FRAME(8, 0)}, A_LOOP_AT(0)};
+#if defined(VERSION_PSP)
+extern Point16 D_80175088[4][128];
+extern s32 D_80175888;
+#else
 static Point16 D_80175088[4][128];
 static s32 D_80175888;
+#endif
 void RicEntitySubwpnCross(Entity* self) {
     s16 playerHitboxX;
     s16 playerHitboxY;
@@ -441,7 +445,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
     }
 
     // get the x and y position from the parent (must align)
-    temp = &self->ext.crossBoomerang.unk84[0];
+    temp = (s16*)&self->ext.crossBoomerang.unk84[0];
     temp += self->ext.crossBoomerang.unk80 * 2;
     self->posX.i.hi = *temp - g_Tilemap.scrollX.i.hi;
     temp++;
