@@ -232,7 +232,7 @@
 | zero/f_nonmat/f6016FB8.s     | func_06016FB8   |       56 |          6 |                                 |       |
 | game/f_nonmat/f607A994.s     | func_0607A994   |       57 |          1 |                                 |       |
 | zero/f_nonmat/f601449C.s     | func_0601449C   |       57 |          2 |                                 |       |
-| zero/f_nonmat/f600C818.s     | func_0600C818   |       57 |          3 |                                 |       |
+| zero/f_nonmat/f600C818.s     | func_0600C818   |       57 |          3 | https://decomp.me/scratch/pLW7E | 0.528 |
 | zero/f_nonmat/f600BCE0.s     | func_0600BCE0   |       57 |          5 |                                 |       |
 | zero/f_nonmat/f6012C4C.s     | func_06012C4C   |       57 |          5 |                                 |       |
 | game/f_nonmat/f607284C.s     | func_0607284C   |       57 |          7 |                                 |       |
