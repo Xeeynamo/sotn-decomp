@@ -497,7 +497,6 @@ void ResetPendingGfxLoad(void);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 bool func_800EB720(void);
 void HideAllBackgroundLayers(void);
-void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
 s32 func_800EDAE4(void);
 DR_ENV* func_800EDB08(Primitive* prim);
