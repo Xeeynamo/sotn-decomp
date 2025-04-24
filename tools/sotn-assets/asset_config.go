@@ -13,6 +13,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/subweaponsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
@@ -52,6 +53,7 @@ var handlers = func() map[string]assets.Handler {
 		skip.Handler,
 		spritebanks.Handler,
 		spriteset.Handler,
+		subweaponsdef.Handler,
 	} {
 		m[handler.Name()] = handler
 	}
@@ -94,6 +96,7 @@ func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
 	handler assets.Extractor,
 	assetDir string,
+	srcDir string,
 	name string,
 	data []byte,
 	start int,
@@ -112,6 +115,7 @@ func enqueueExtractAssetEntry(
 			Start:       start,
 			End:         end,
 			AssetDir:    assetDir,
+			SrcDir:      srcDir,
 			RamBase:     ramBase,
 			Name:        name,
 			Args:        args,
@@ -159,7 +163,7 @@ func extractAssetFile(file assetFileEntry) error {
 					}
 					start := int(off) - segment.Start
 					end := start + size
-					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, name, data[segment.Start:], start, end, args, segment.Vram, splatConfig)
+					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram, splatConfig)
 				} else {
 					return fmt.Errorf("handler %q not found", kind)
 				}
@@ -177,12 +181,15 @@ func enqueueBuildAssetEntry(
 	handler assets.Builder,
 	assetDir,
 	sourceDir,
-	name string) {
+	name string,
+	args []string,
+) {
 	eg.Go(func() error {
 		err := handler.Build(assets.BuildArgs{
 			AssetDir: assetDir,
 			SrcDir:   sourceDir,
 			Name:     name,
+			Args:     args,
 		})
 		if err != nil {
 			return fmt.Errorf("unable to build asset %q at %q: %v", name, assetDir, err)
@@ -224,7 +231,7 @@ func buildAssetFile(file assetFileEntry) error {
 					name = args[0]
 					args = args[1:]
 				}
-				enqueueBuildAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name)
+				enqueueBuildAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, args)
 			}
 		}
 	}
