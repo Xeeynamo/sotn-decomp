@@ -321,7 +321,7 @@ extern s16 g_RicSensorsCeilingCrouch[];
 extern s16 g_RicSensorsWallCrouch[];
 
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
-extern SubweaponDef D_80154688[];
+extern SubweaponDef subweapons_def[];
 extern u8 uv_anim_801548F4[6][8];
 
 extern s8 D_80156A28;

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-static SubweaponDef D_80154688[] = {
+static SubweaponDef subweapons_def[] = {
 #include "subweapons_def.h"
 };
-STATIC_ASSERT(LEN(D_80154688) == NUM_WEAPONS, "weapon array wrong size");
+STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
 static Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
@@ -77,7 +77,7 @@ void func_8015FA5C(s32 arg0) {
 }
 
 void RicSetSubweaponParams(Entity* entity) {
-    SubweaponDef* subwpn = &D_80154688[entity->ext.subweapon.subweaponId];
+    SubweaponDef* subwpn = &subweapons_def[entity->ext.subweapon.subweaponId];
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE]) {
         entity->attack = subwpn->attack * 2;
     } else {
@@ -99,7 +99,7 @@ s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
 
     // Not an item crash. Just read the item in.
     if (isItemCrash == 0) {
-        *actualSubwpn = D_80154688[g_Status.subWeapon];
+        *actualSubwpn = subweapons_def[g_Status.subWeapon];
         if (g_Status.hearts >= actualSubwpn->heartCost) {
             if (useHearts) {
                 g_Status.hearts -= actualSubwpn->heartCost;
@@ -110,8 +110,8 @@ s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     }
     // If it's a crash, load the subweapon by referencing our
     // subweapon's crash ID and loading that.
-    subwpn = &D_80154688[g_Status.subWeapon];
-    *actualSubwpn = D_80154688[subwpn->crashId];
+    subwpn = &subweapons_def[g_Status.subWeapon];
+    *actualSubwpn = subweapons_def[subwpn->crashId];
     if (g_Status.hearts >= actualSubwpn->heartCost) {
         if (useHearts) {
             g_Status.hearts -= actualSubwpn->heartCost;
