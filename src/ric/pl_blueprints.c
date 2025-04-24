@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
+static SubweaponDef D_80154688[] = {
+#include "subweapons_def.h"
+};
+STATIC_ASSERT(LEN(D_80154688) == NUM_WEAPONS, "weapon array wrong size");
+
 static Entity* RicGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;

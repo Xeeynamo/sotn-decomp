@@ -149,7 +149,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 			"{%d,%d,%s,%d,%d,%d,%d,%s,%d,%d,%d,%d,%d},\n",
 			entry.Attack,
 			entry.HeartCost,
-			strings.Join(entry.AttackElement, "|"),
+			strings.Join(append(entry.AttackElement, "0"), "|"),
 			entry.ChainLimit,
 			entry.NFramesInvincibility,
 			entry.StunFrames,
