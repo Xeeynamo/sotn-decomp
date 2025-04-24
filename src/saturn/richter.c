@@ -142,7 +142,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B720C, func_060B720C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7650, func_060B7650);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7A4C, func_060B7A4C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8044, func_060B8044);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B89CE, func_060B89CE);
+INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B89CE, func_060B89CE);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8B1C, func_060B8B1C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8DF8, func_060B8DF8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B91B8, func_060B91B8);
