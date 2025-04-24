@@ -1432,7 +1432,7 @@
 | dra    | func_8012F178                       |      564 |         35 |        |                                 |       |
 | no4    | func_pspeu_09258E30                 |      564 |         51 | Yes    |                                 |       |
 | dra    | PlayerStepJump                      |      565 |        106 |        |                                 |       |
-| dra    | RenderTilemap                       |      570 |         35 |        |                                 |       |
+| dra    | RenderTilemap                       |      570 |         35 |        | https://decomp.me/scratch/4wi95 | 0.982 |
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
 | lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
@@ -1446,7 +1446,7 @@
 | chi    | EntityBreakableWall                 |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra    | func_80104790                       |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
 | ric    | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
-| dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/SH4IO | 0.951 |
+| dra    | func_psp_090DFFD0                   |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
