@@ -22,7 +22,7 @@ func TestParseCEnum(t *testing.T) {
 		"FLAG_1 | FLAG_2 // ignore\n" +
 		"NUM_SOMETHING // ignore\n" +
 		"} // malformed, it misses a semicolon\n"
-	m, err := ParseCEnum(strings.NewReader(src), "MyEnum")
+	m, err := ParseCEnum(strings.NewReader(src), "MyEnum", 0x100)
 	require.NoError(t, err)
 	assert.Equal(t, "First", m[0])
 	assert.Equal(t, "Second", m[1])
