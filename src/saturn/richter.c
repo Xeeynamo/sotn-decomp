@@ -70,8 +70,10 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_060A9DEC);
 
-// RicSetStep
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA048, func_060AA048);
+void RicSetStep(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
 
 // RicSetAnimation
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA064, func_060AA064);
