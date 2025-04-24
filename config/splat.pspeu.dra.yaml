@@ -45,7 +45,7 @@ segments:
     subsegments:
       - [0x80, c, dra/62EB8]
       - [0x3250, c, dra_psp/3250]
-      - [0x42B0, c, dra_psp/42B0]
+      - [0x42B0, c, dra/4DA70]
       - [0x5DA0, c, dra/624DC] # O4
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
@@ -155,7 +155,7 @@ segments:
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/63C08]
       - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
-      - {start: 0xeed80, type: .bss, vram: 0x091CDC58, name: dra_psp/42B0}
+      - {start: 0xeed80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xeed80, type: bss, vram: 0x091CDC60, name: bss2}
       - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
       - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss3}
