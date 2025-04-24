@@ -124,15 +124,7 @@ define link
 		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
 		$(3)
 endef
-define get_conf_merged
-	$(shell $(PYTHON) -c 'import yaml;\
-	import os;\
-	yaml_file=open("$(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml");\
-	config = yaml.safe_load(yaml_file); yaml_file.close();\
-	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and (x[1] == "c" or x[1] == ".data")];\
-	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
-	print(" ".join(merged_functions))')
-endef
+get_conf_merged = $(shell $(PYTHON) tools/list_ovl_files.py $(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml $(1))
 get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
 get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
 get_psp_o_files = $(subst //,/,$(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
