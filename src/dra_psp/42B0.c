@@ -162,7 +162,7 @@ typedef union
 
 typedef struct 
 {
-  OT_TYPE *ot;
+  u_long *ot;
   POLY_GT4 *gt4;
   POLY_G4 *g4;
   POLY_GT3 *gt3;
@@ -201,7 +201,7 @@ void RenderPrimitives(void) {
     s16 sp80;
     DR_ENV* env;
 
-    r->ot = &g_CurrentBuffer->ot[0];
+    r->ot = (u_long*)&g_CurrentBuffer->ot[0];
     r->gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     r->gt3 = &g_CurrentBuffer->polyGT3[g_GpuUsage.gt3];
