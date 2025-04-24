@@ -3209,7 +3209,6 @@ SYNC_FIELD(ET_EntFactory, ET_8011E4BC, parent);
 SYNC_FIELD(ET_EntFactory, ET_HolyWater, parent);
 SYNC_FIELD(ET_EntFactory, ET_GiantSpinningCross, parent);
 SYNC_FIELD(ET_EntFactory, ET_CrashCross, parent);
-SYNC_FIELD(ET_EntFactory, ET_RicRevivalColumn, parent);
 SYNC_FIELD(ET_EntFactory, ET_80162870, parent);
 SYNC_FIELD(ET_EntFactory, ET_PlayerBlink, parent);
 SYNC_FIELD(ET_EntFactory, ET_RichterPowerUpRing, parent);
