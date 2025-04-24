@@ -1,11 +1,6 @@
 | Filename                     | Function Name   |   Length |   Branches | WIP                             | %     |
 |------------------------------|-----------------|----------|------------|---------------------------------|-------|
 | alucard/f_nonmat/f60BD6C0.s  | func_060BD6C0   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60B0604.s  | func_060B0604   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60B0610.s  | func_060B0610   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60B1508.s  | func_060B1508   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60B1514.s  | func_060B1514   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60B965C.s  | func_060B965C   |        9 |          0 |                                 |       |
 | richter/f_nonmat/f60A9A5C.s  | func_060A9A5C   |       15 |          1 |                                 |       |
 | richter/f_nonmat/f60AE538.s  | func_060AE538   |       15 |          1 |                                 |       |
 | richter/f_nonmat/f60B05EC.s  | func_060B05EC   |       15 |          1 |                                 |       |
