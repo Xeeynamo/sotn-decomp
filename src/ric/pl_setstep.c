@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../ric/ric.h"
+#include "ric.h"
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 

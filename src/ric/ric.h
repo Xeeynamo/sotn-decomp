@@ -2,6 +2,8 @@
 #include <game.h>
 #include <sfx.h>
 
+#define OVL_EXPORT(x) RIC_##x
+
 #define GAME_OVER 0x80000
 
 #define CHECK_GROUND 1
