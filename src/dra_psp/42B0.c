@@ -138,7 +138,9 @@ s32 func_800EDD9C(u8 type, s32 count) {
             return foundPolyIndex;
         }
     }
+    #if defined(VERSION_PSP)
     return 0;
+    #endif
 }
 
 void FreePrimitives(s32 primitiveIndex) {

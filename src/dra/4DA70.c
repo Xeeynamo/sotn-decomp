@@ -119,14 +119,11 @@ s32 AllocPrimitives(u8 primType, s32 count) {
 }
 
 s32 func_800EDD9C(u8 type, s32 count) {
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
     s16 foundPolyIndex;
 
-    prim = &g_PrimBuf[LEN(g_PrimBuf) - 1];
-    i = LEN(g_PrimBuf) - 1;
-
-    while (i >= 0) {
+    for(prim = &g_PrimBuf[LEN(g_PrimBuf) - 1],i = LEN(g_PrimBuf) - 1; i >= 0; i--, prim--) {
         if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
@@ -140,23 +137,22 @@ s32 func_800EDD9C(u8 type, s32 count) {
             foundPolyIndex = i;
             return foundPolyIndex;
         }
-        i--;
-        prim--;
     }
+    #if defined(VERSION_PSP)
+    return 0;
+    #endif
 }
 
 void FreePrimitives(s32 primitiveIndex) {
-    Primitive* prim = &g_PrimBuf[primitiveIndex];
+    Primitive* prim; 
 
-    if (prim) {
-        do {
-            if (prim->type == PRIM_ENV) {
-                **(DR_ENV***)&prim->r1 = NULL;
-                prim->type = PRIM_NONE;
-            } else
-                prim->type = PRIM_NONE;
-            prim = prim->next;
-        } while (prim);
+    for (prim = &g_PrimBuf[primitiveIndex]; prim != NULL; prim = prim->next) {
+        if (prim->type == PRIM_ENV) {
+            **(DR_ENV***)&prim->r1 = NULL;
+            prim->type = PRIM_NONE;
+        } else {
+            prim->type = PRIM_NONE;
+        }
     }
 }
 
