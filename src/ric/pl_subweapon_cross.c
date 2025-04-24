@@ -358,45 +358,40 @@ void RicEntitySubwpnCross(Entity* self) {
     g_Player.timers[PL_T_3] = 2;
 }
 
-void func_80169C10(Entity* entity) {
+void func_80169C10(Entity* self) {
     Primitive* prim;
-    s16 primIndex;
-    s32 PosX = 8;
-    s32 PosY = 4;
+    s32 posX;
+    s32 posY;
 
-    switch (entity->step) {
-    case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        entity->primIndex = primIndex;
-        if (primIndex != -1) {
-            entity->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-            entity->velocityY = FIX(0.5);
-            entity->posX.i.hi =
-                ((u16)entity->posX.i.hi - PosX) + (rand() & 0xF);
-            entity->posY.i.hi =
-                ((u16)entity->posY.i.hi - PosY) + (rand() & 0xF);
-            prim = &g_PrimBuf[entity->primIndex];
-            prim->clut = 0x1B0;
-            prim->tpage = 0x1A;
-            prim->b0 = 0;
-            prim->b1 = 0;
-            prim->priority = entity->zPriority;
-            prim->priority = prim->priority + 4;
-            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-            func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi);
-            entity->step++;
-        } else {
-            DestroyEntity(entity);
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
         }
-        break;
-
-    default:
-        entity->posY.val += entity->velocityY;
-        prim = &g_PrimBuf[entity->primIndex];
-        if (func_8015FDB0(prim, entity->posX.i.hi, entity->posY.i.hi) != 0) {
-            DestroyEntity(entity);
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->velocityY = FIX(0.5);
+        self->posX.i.hi += (rand() & 0xF) - 8;
+        self->posY.i.hi += (rand() & 0xF) - 4;
+#if defined(VERSION_PSP)
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+#endif
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+        prim->tpage = 0x1A;
+        prim->b0 = 0;
+        prim->b1 = 0;
+        prim->priority = self->zPriority + 4;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        func_8015FDB0(prim, self->posX.i.hi, self->posY.i.hi);
+        self->step++;
+    } else {
+        prim = &g_PrimBuf[self->primIndex];
+        self->posY.val += self->velocityY;
+        if (func_8015FDB0(prim, self->posX.i.hi, self->posY.i.hi)) {
+            DestroyEntity(self);
         }
-        break;
     }
 }
 

@@ -360,9 +360,44 @@ void RicEntitySubwpnCross(Entity* self) {
     g_Player.timers[PL_T_3] = 2;
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", func_80169C10);
+void func_80169C10(Entity* self) {
+    Primitive* prim;
+    s32 posX;
+    s32 posY;
 
+    if (self->step == 0) {
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->velocityY = FIX(0.5);
+        self->posX.i.hi += (rand() & 0xF) - 8;
+        self->posY.i.hi += (rand() & 0xF) - 4;
+#if defined(VERSION_PSP)
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+#endif
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x1B0;
+        prim->tpage = 0x1A;
+        prim->b0 = 0;
+        prim->b1 = 0;
+        prim->priority = self->zPriority + 4;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        func_8015FDB0(prim, self->posX.i.hi, self->posY.i.hi);
+        self->step++;
+    } else {
+        prim = &g_PrimBuf[self->primIndex];
+        self->posY.val += self->velocityY;
+        if (func_8015FDB0(prim, self->posX.i.hi, self->posY.i.hi)) {
+            DestroyEntity(self);
+        }
+    }
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCrossTrail);
 
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCrashCrossParticles);

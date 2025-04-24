@@ -291,7 +291,6 @@ extern void RicSetRun(void);
 extern void RicSetFall(void);
 extern bool RicCheckInput(s32 checks);
 extern void RicSetSubweaponParams(Entity*);
-extern s32 func_8015FDB0(Primitive* poly, s16 posX, s16 posY);
 extern Entity* RicCreateEntFactoryFromEntity(
     Entity* entity, u32 arg1, s32 arg2);
 
