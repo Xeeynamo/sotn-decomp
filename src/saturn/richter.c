@@ -89,8 +89,31 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA2E0, func_060AA2E0);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA310, func_060AA310);
 
-// RicCheckFacing
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA340, func_060AA340);
+s32 RicCheckFacing(void) {
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+
+    if (PLAYER.facingLeft == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            g_Player.unk4C = 1;
+            return -1;
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
 
 // RicSetSpeedX
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3BC, func_060AA3BC);

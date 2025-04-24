@@ -17,6 +17,9 @@ typedef unsigned long long u64;
 
 #define NULL 0
 
+#define PAD_RIGHT 0x8000
+#define PAD_LEFT 0x4000
+
 #define STAGE_INVERTEDCASTLE_MASK 0x1F
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
@@ -107,7 +110,7 @@ typedef struct Entity {
     /* 0x10 */ s32 velocityY;
     /* 0x14 */ u16 hitboxOffX;
     /* 0x16 */ s16 hitboxOffY;
-    /* 0x18 */ s16 unk18;
+    /* 0x18 */ u16 facingLeft;
     /* 0x1A */ char pad_1A[0x4];
     /* 0x1E */ s16 rotZ;
     /* 0x20 */ s16 unk1A;
@@ -311,8 +314,17 @@ typedef struct Unkstruct_800A7734 {
 } Unkstruct_800A7734; // size = 0x20
 
 typedef struct {
-    char pad[0x3F8];
-    u32 status;
+    char pad0[0x3B0];
+    /* 0x3B0 */ u32 padPressed;
+    char pad3B4[0x44];
+    /* 0x3F8 */ u32 status;
+    char pad3FC[0x34];
+    /* 0x430 */ u16 unk44;
+    /* 0x432 */ u16 unk46;
+    /* 0x434 */ u16 unk48;
+    /* 0x436 */ u16 unk4A;
+    /* 0x438 */ u16 unk4C;
+    /* 0x43A */ u16 unk4E;
 } PlayerState;
 
 typedef enum {
