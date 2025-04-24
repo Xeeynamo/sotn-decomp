@@ -73,7 +73,7 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x2178, .data, 4AEA4] # D_800A21B8
+      - [0x2178, .data, 4B758] # D_800A21B8
       - [0x23F8, .data, 4DA70] # D_800A2438
       - [0x23FC, .data, demo] # D_800A243C
       - [0x241C, .data, 5087C] # D_800A245C
@@ -177,6 +177,8 @@ segments:
       - [0x4957C, c, save_mgr]
       - [0x4ABF0, c, 4A538]
       - [0x4B55C, c, 4AEA4]
+      - [0x4BE10, c, 4B758]
+      - [0x4D4B0, c, 4CE2C]
       - [0x4E0F4, c, 4DA70]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
