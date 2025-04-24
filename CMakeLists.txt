@@ -179,6 +179,8 @@ set(SOURCE_FILES_DRA
     src/dra/save_mgr.c
     src/dra/4A538.c
     src/dra/4AEA4.c
+    src/dra/4B758.c
+    src/dra/4CE2C.c
     src/dra/4DA70.c
     src/dra/collider.c
     src/dra/demo.c
