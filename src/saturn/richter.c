@@ -137,8 +137,12 @@ s32 RicCheckFacing(void) {
     return 0;
 }
 
-// RicSetSpeedX
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3BC, func_060AA3BC);
+int func_8015CAAC(s32 speed) {
+    if (PLAYER.entityRoomIndex == 1)
+        speed = -speed;
+    PLAYER.velocityX = speed;
+    return speed;
+}
 
 // RicSetInvincibilityFrames
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3E0, func_060AA3E0);
