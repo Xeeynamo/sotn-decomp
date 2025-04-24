@@ -40,7 +40,8 @@ extern signed short* sprites_chi_7[];
 // https://decomp.me/scratch/yZqKn
 // PSP:func_psp_0923A7F0:Match
 // PSP:https://decomp.me/scratch/tPXxN
-Primitive* SetupPrimsForEntitySpriteParts(Entity* entity, Primitive* prim) {
+static Primitive* SetupPrimsForEntitySpriteParts(
+    Entity* entity, Primitive* prim) {
     s16 y;
     s32 spritePartCount;
     s16 x;
@@ -278,8 +279,11 @@ static u8 AnimFrames_ThornweedDisguise[] = {
 
 // D_80181904
 static u8 AnimFrames_ThornweedQuickWiggle[] = {
-    0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00, 0x00, 0x00, 0x10, 0x0C, 0x0E, 0x0E,
-    0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00
+    0x02, 0x2A, 0x02, 0x2B, 0x02, 0x2C, 0x02, 0x2D, 0x00, 0x00, 0x00, 0x00
+};
+
+static u8 AnimFrames_Unused[] = {
+    0x10, 0x0C, 0x0E, 0x0E, 0x0C, 0x12, 0x0E, 0x13, 0x02, 0x14, 0x04, 0x15, 0x20, 0x16, 0xFF, 0x00
 };
 
 // D_80181920
@@ -295,7 +299,10 @@ static u8 HitboxIndices_Tendril[] = {
 
 // D_80181948
 static s16 TendrilSpikeStartTimeOffset[] = {
-    0x0000, 0x0010, 0x0024, 0x001C, 0x001C, 0x0024, 0x0010, 0x0000,
+    0x0000, 0x0010, 0x0024, 0x001C, 0x001C, 0x0024, 0x0010, 0x0000
+};
+
+static s16 Unused[] = {
     0x0000, 0x0000
 };
 // clang-format on
@@ -357,7 +364,7 @@ void EntityVenusWeed(Entity* self) {
 
     switch (self->step) {
     case VENUS_WEED_INIT:
-        InitializeEntity(&g_EInitVenusWeedRoot);
+        InitializeEntity(g_EInitVenusWeedRoot);
         self->hitboxOffX = 1;
         self->hitboxOffY = -7;
 
@@ -587,9 +594,10 @@ void EntityVenusWeed(Entity* self) {
                 }
                 // Update leaves sprites
                 for (i = -1; i < 2; i += 2) {
+                    // 0x38 is LeavesWidthMax
+                    // Using a const here changes the registers on PSP
                     prim->x1 =
-                        x + (self->ext.venusWeed.leavesWidth + LeavesWidthMax) /
-                                2 * i;
+                        x + (self->ext.venusWeed.leavesWidth + 0x38) / 2 * i;
                     prim->x3 = x + (self->ext.venusWeed.leavesWidth * i);
                     prim->y0++;
                     prim->y1++;
@@ -643,7 +651,9 @@ void EntityVenusWeed(Entity* self) {
 
         // Update leaves
         for (i = -1; i < 2; i += 2) {
-            prim->x1 = self->posX.i.hi + (x + LeavesWidthMax) * i;
+            // 0x38 is LeavesWidthMax
+            // Using a const here changes the registers on PSP
+            prim->x1 = self->posX.i.hi + (x + 0x38) * i;
             prim->y1 = self->posY.i.hi - LeavesHeightMax + y * i;
 
             prim = prim->next;
@@ -659,8 +669,10 @@ void EntityVenusWeed(Entity* self) {
             prim->x0 = self->posX.i.hi - StemWidthMax;
             prim->x1 = self->posX.i.hi + StemWidthMax;
         } else {
-            prim->x0 = self->posX.i.hi - StemWidthMax + x;
-            prim->x1 = self->posX.i.hi + StemWidthMax + x;
+            // 0xC is StemWidthMax
+            // Using a const here changes the registers on PSP
+            prim->x0 = self->posX.i.hi - 0xC + x;
+            prim->x1 = self->posX.i.hi + 0xC + x;
             entity->posX.i.hi = self->posX.i.hi + x;
         }
     }
@@ -739,7 +751,7 @@ void EntityVenusWeedFlower(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitVenusWeedFlower);
+        InitializeEntity(g_EInitVenusWeedFlower);
         self->hitboxOffX = HitboxOffsetX;
         self->hitboxOffY = HitboxOffsetY;
         self->hitboxWidth = HitboxWidth;
@@ -1024,7 +1036,7 @@ void EntityVenusWeedTendril(Entity* self) {
 
     switch (self->step) {
     case VENUS_WEED_TENDRIL_INIT:
-        InitializeEntity(&g_EInitVenusWeedTendril);
+        InitializeEntity(g_EInitVenusWeedTendril);
         self->animCurFrame = 0;
         break;
 
@@ -1170,7 +1182,7 @@ void EntityVenusWeedDart(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitVenusWeedDart);
+        InitializeEntity(g_EInitVenusWeedDart);
         self->animCurFrame = AnimFrameIndexInit;
         self->drawFlags = FLAG_DRAW_ROTZ;
         rot = self->rotZ;
@@ -1290,7 +1302,7 @@ void EntityVenusWeedSpike(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitVenusWeedFlower);
+        InitializeEntity(g_EInitVenusWeedFlower);
 
         self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
         self->hitboxState = 0;

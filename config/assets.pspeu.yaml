@@ -1,4 +1,20 @@
 files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
+    asset_path: assets/ric
+    src_path: src/ric
+    splat_config_path: config/splat.pspeu.ric.yaml
+    segments:
+      - start: 0x80
+        vram: 0x092A6280
+        assets:
+          - [0x80, skip]
+          - [0x28AF0, cmpgfx, font_eu, 128, 128, 4]
+          - [0x29858, skip]
+          - [0x29870, cmpgfx, hud_sp, 128, 128, 4]
+          - [0x2A6B8, cmpgfx, hud_it, 128, 128, 4]
+          - [0x2B4F8, cmpgfx, hud_ge, 128, 128, 4]
+          - [0x2C348, cmpgfx, hud_fr, 128, 128, 4]
+          - [0x2D1B0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp
@@ -14,7 +30,6 @@ files:
           - [0x3F260, cutscene, cutscene_data_ge]
           - [0x3F448, cutscene, cutscene_data_en]
           - [0x3F608, skip]
-
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no4.bin
     asset_path: assets/st/no4
     src_path: src/st/no4_psp
@@ -35,7 +50,6 @@ files:
           - [0x309A0, cutscene, cutscene_data_ferryman_left_ge]
           - [0x30A08, cutscene, cutscene_data_ferryman_left_en]
           - [0x30A68, skip]
-
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
     src_path: src/st/st0_psp

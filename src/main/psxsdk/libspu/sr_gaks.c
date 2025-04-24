@@ -44,7 +44,7 @@ s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
     return 0;
 }
 
-void SpuGetAllKeysStatus(char* status) {
+void SpuGetAllKeysStatus(s8* status) {
     s32 voice;
     u16* new_var;
     u16 volumex;

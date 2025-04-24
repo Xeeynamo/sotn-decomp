@@ -13,7 +13,11 @@
 #define DAMAGE_FLAG_IMMUNE 0xC000
 
 #define SFX_START (0x600)
+#ifdef VERSION_PSP
+#define SFX_LAST (0x90B)
+#else
 #define SFX_LAST (0x8E0)
+#endif
 #define MAX_SND_COUNT (0x100)
 
 #define SEQ_TABLE_S_MAX 0x10
@@ -260,22 +264,17 @@ typedef enum {
     COMBO_NUM,
 } ButtonComboIdx;
 
-struct SeqData {
+typedef struct SeqData {
     u8 volume;
     u8 reverb_depth;
-    union unk2 {
-        struct {
-            u8 one_shot : 4;
-            u8 vab_id : 4;
-        } info;
-    } unk2;
-};
+    u8 unk2;
+} SeqData;
 
 typedef struct Cmd14 {
     u8 unk0[8];
     s32 unk8;
     s16 unkc;
-    s8 unke;
+    u8 unke;
 } Cmd14;
 
 // Used for the button combos to signal successfully completing the sequence
@@ -300,7 +299,6 @@ extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
 
-extern SVECTOR* D_800A3608[];
 extern MATRIX D_800A37B8;
 extern u16 D_800A37D8[2];
 extern u16 g_JosephsCloakColors[4];
@@ -312,6 +310,8 @@ extern Lba g_StagesLba[80];
 extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
 #if defined(VERSION_PSP)
+extern char** g_SaveAreaNamesSecondPart;
+extern char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
 extern char** g_MenuStr;
@@ -407,7 +407,6 @@ extern u16 D_800AFFB8[];
 extern s8 D_800B0130[];
 extern AnimationFrame* D_800B01B8[];
 extern u8 D_800B0608[];
-extern s16 D_800B0658[4][6];
 extern s32 D_800B0688[];
 extern u32 D_800B06C8[24];
 extern u32 D_800B0728[24];
@@ -429,7 +428,7 @@ extern struct XaMusicConfig g_XaMusicConfigs[563];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
-extern u8* g_SfxScripts[172];
+extern s8* g_SfxScripts[172];
 extern u8* D_800C52F8[];
 extern const char D_800DB524[];
 extern const char a0104x04x;
@@ -557,8 +556,6 @@ void func_80103EAC(void);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntitiesFromIndex(s16 startIndex);
-void func_801071CC(Primitive* prim, u32 colorIntensity, s32 vertexIndex);
-void func_80107250(Primitive* prim, s32 colorIntensity);
 void SetTexturedPrimRect(
     Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
 void func_801073C0(void);
@@ -620,7 +617,7 @@ void EntityNumberMovesToHpMeter(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);
 void EntityLevelUpAnimation(Entity* self);
 void EntityHolyWater(Entity* self);
-void EntityHolyWaterFlame(Entity* self);
+void EntitySubwpnHolyWaterFlame(Entity* self);
 void EntityUnkId24(Entity* self);
 void EntityHellfireHandler(Entity* self);
 void EntityHellfireNormalFireball(Entity* self);
@@ -677,8 +674,7 @@ void SetMaxVolume(void);
 void InitSoundVars3(void);
 void InitSoundVars2(void);
 void InitSoundVars1(void);
-s32 func_801326D8(void);
-void AddCdSoundCommand(s16);
+static void AddCdSoundCommand(s16);
 u8 DoCdCommand(u_char com, u_char* param, u_char* result);
 void SoundWait(void);
 void MuteSound(void);

@@ -144,16 +144,16 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6990);
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6EEC);
 
 extern PlayerState g_Dop;
-extern s16 D_us_80183B9A[];
+extern s16 D_us_80183B98[][2];
 
 bool BatFormFinished(void) {
-    if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & 8)) {
+    if (DOPPLEGANGER.step_s == 0 || !(g_Dop.padTapped & 8)) {
         return false;
     }
 
     SetPlayerStep(10);
     SetPlayerAnim(202);
-    D_us_80183B9A[0] = 6;
+    D_us_80183B98[0][1] = 6;
     DOPPLEGANGER.palette = PAL_OVL(0x20D);
     g_Dop.unk66 = 0;
     g_Dop.unk68 = 0;
@@ -187,13 +187,141 @@ static s32 func_us_801C781C(void) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C7834);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C82F0);
+extern s16 D_us_80183B9C[][2];
+extern s16 D_us_801812F8[];
+extern s16 D_us_80181300[];
+extern s16 D_us_80181318[][2];
+extern s16 D_us_80181328[][2];
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C84F4);
+void func_us_801C82F0(void) {
+    s32 i;
+    s32 count;
+    u8 _pad[40]; // must be between 33 & 40
+
+    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTZ;
+    DecelerateX(FIX(1.0 / 8.0));
+    if (g_Dop.vram_flag & 3) {
+        DOPPLEGANGER.velocityY = 0;
+    }
+    DecelerateY(FIX(1.0 / 8.0));
+    func_8011690C(0);
+    count = 0;
+
+    switch (DOPPLEGANGER.step_s) {
+    case 0:
+        for (i = 0; i < 4; i++) {
+            if (D_us_80181328[i][1] < D_us_80181300[i]) {
+                D_us_80181328[i][1]++;
+            } else {
+                count++;
+            }
+
+            if (D_us_80181318[i][1] > D_us_801812F8[i]) {
+                D_us_80181318[i][1]--;
+            } else {
+                count++;
+            }
+
+            if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
+                DOPPLEGANGER.posY.i.hi--;
+            }
+        }
+
+        if (count == 8) {
+            DOPPLEGANGER.animSet = ANIMSET_OVL(1);
+            DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+            DOPPLEGANGER.rotZ = 0;
+            g_Dop.unk66 = 1;
+            DOPPLEGANGER.step_s = 1;
+            D_us_80183B98[0][1] = 0x5F;
+        }
+        break;
+
+    case 1:
+        if (g_Dop.unk66 == 3) {
+            func_us_801C4EE4();
+            if (!(g_Dop.vram_flag & 0x8000)) {
+                DOPPLEGANGER.velocityY = 0xFFFF0000;
+            }
+            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            func_80111CC0();
+        }
+        break;
+    }
+}
+
+s32 func_us_801C84F4(void) {
+    if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & PAD_R2)) {
+        return false;
+    }
+    CheckMoveDirection();
+    SetPlayerStep(15);
+    return true;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C854C);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C89D4);
+extern s16 D_us_801812F8[];
+extern s16 D_us_80181300[];
+extern s16 D_us_80181318[][2];
+extern s16 D_us_80181328[][2];
+
+void func_us_801C89D4(void) {
+    s32 i;
+    s32 count;
+    u8 _pad[40];
+
+    if ((g_Dop.vram_flag & 1) && DOPPLEGANGER.velocityY > 0) {
+        DOPPLEGANGER.velocityY = 0;
+    }
+    if ((g_Dop.vram_flag & 2) && DOPPLEGANGER.velocityY < 0) {
+        DOPPLEGANGER.velocityY = 0;
+    }
+
+    DecelerateX(FIX(1.0 / 128.0));
+    DecelerateY(FIX(1.0 / 128.0));
+    count = 0;
+
+    for (i = 0; i < 4; i++) {
+
+        if (D_us_80181328[i][1] < D_us_80181300[i]) {
+            D_us_80181328[i][1]++;
+        } else {
+            count += 1;
+        }
+        if (D_us_80181318[i][1] > D_us_801812F8[i]) {
+            D_us_80181318[i][1]--;
+        } else {
+            count += 1;
+        }
+        if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
+            DOPPLEGANGER.posY.i.hi--;
+        }
+    }
+
+    if (count == 8) {
+        DOPPLEGANGER.animSet = ANIMSET_OVL(1);
+        SetPlayerAnim(0xCB);
+        if (DOPPLEGANGER.step_s != 0) {
+            SetPlayerAnim(0xCC);
+        }
+
+        if (g_Entities[E_ID_50].step < 3) {
+            g_Entities[E_ID_50].step = 3;
+            return;
+        }
+        if (g_Entities[E_ID_50].step == 5) {
+            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            func_8010FAF4();
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x5B), 0);
+            func_us_801C4EE4();
+            if (!(g_Dop.vram_flag & 0x8000)) {
+                DOPPLEGANGER.velocityY = FIX(-1);
+            }
+            func_80111CC0();
+        }
+    }
+}
 
 extern s32 D_us_801D331C;
 
@@ -227,7 +355,7 @@ extern u8 D_us_801D332C;
 extern u8 D_us_801D3330;
 
 void func_80118C28(s32 arg0) {
-    // Break up the 4-byte struct D_us_8018136C[arg0] into individual bytes.
+    // Break up the 4-byte struct D_us_801813F8[arg0] into individual bytes.
     D_us_801D3324 = D_us_801813F8[arg0].rawBytes[0];
     D_us_801D3328 = D_us_801813F8[arg0].rawBytes[1];
     D_us_801D332C = D_us_801813F8[arg0].rawBytes[2];
@@ -356,13 +484,69 @@ void DopEntityHitByHoly(Entity* self) {
     }
 }
 
-void func_80103EAC(void) { FntPrint("dummy set\n"); }
+void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C9624);
+extern PfnEntityUpdate D_us_8018145C[];
+// some kind of timer
+extern u8 D_us_801D3324;
+extern u8 D_us_801D3328;
+extern u8 D_us_801D332C;
+extern u8 D_us_801D3330;
+
+void func_us_801C9624(void) {
+    Entity* entity;
+    PfnEntityUpdate entityUpdate;
+    s32 i;
+
+    entity = g_CurrentEntity = &g_Entities[E_ID_44];
+
+    for (i = E_ID_44; i < E_ID_90; i++, g_CurrentEntity++, entity++) {
+        if (i == 16 && entity->entityId == 0) {
+            g_Dop.unk48 = 0;
+        }
+
+        if (entity->entityId == 0) {
+            continue;
+        }
+
+        entityUpdate = D_us_8018145C[entity->entityId];
+        entityUpdate(entity);
+
+        entity = g_CurrentEntity;
+        if (entity->entityId != 0) {
+            if (!(entity->flags & FLAG_UNK_10000000) &&
+                (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                 entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                DestroyEntity(g_CurrentEntity);
+            } else {
+                if (entity->flags & FLAG_UNK_20000000) {
+                    UpdateAnim(0, &D_us_801813F8[0].af);
+                }
+                entity->flags |= FLAG_NOT_AN_ENEMY;
+            }
+        }
+    }
+
+    if (D_us_801D3324) {
+        D_us_801D3324--;
+        if (D_us_801D3324 & 1) {
+            g_api.g_pfn_800EA5AC(
+                1, D_us_801D3328, D_us_801D332C, D_us_801D3330);
+        }
+    }
+
+    if (g_Dop.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
+        FntPrint("dead boss\n");
+        entity = &g_Entities[E_ID_44];
+        for (i = E_ID_44; i < E_ID_90; i++, entity++) {
+            entity->hitboxState = 0;
+        }
+    }
+}
 
 Entity* CreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s16 arg2) {
-    Entity* newFactory = GetFreeEntity(0x44, 0x50);
+    Entity* newFactory = GetFreeEntity(E_ID_44, E_ID_50);
 
     if (newFactory == NULL) {
         return NULL;
@@ -385,7 +569,7 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C98BC);
 extern EInit D_us_80180448;
 
 void func_us_801C9D58(Entity* self) {
-    if (DOPPLEGANGER.step != 6 || DOPPLEGANGER.step_s != 3) {
+    if (DOPPLEGANGER.step != Dop_MorphBat || DOPPLEGANGER.step_s != 3) {
         DestroyEntity(self);
         return;
     }
@@ -451,7 +635,22 @@ void DopEntityHitByDark(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_8011BD48);
+// Does any entity with the same ID and params already
+// exist in the index range [0x50, 0x90)
+static bool func_8011BD48(Entity* entity) {
+    s16 objId = entity->entityId;
+    s16 params = entity->params;
+    Entity* e;
+    s32 i;
+
+    for (e = &g_Entities[E_ID_50], i = E_ID_50; i < E_ID_90; e++, i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CA68C);
 
@@ -851,7 +1050,7 @@ void DopEntityHitByLightning(Entity* self) {
         if ((++self->ext.hitbylightning.unk9C) > 0xA8) {
             var_s0 = true;
         }
-    } else if (DOPPLEGANGER.step != 11) {
+    } else if (DOPPLEGANGER.step != Dop_Hit) {
         var_s0 = true;
     }
 
@@ -881,7 +1080,7 @@ void DopEntityHitByLightning(Entity* self) {
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
-        if ((DOPPLEGANGER.velocityY != 0) && (DOPPLEGANGER.step != 17)) {
+        if ((DOPPLEGANGER.velocityY != 0) && (DOPPLEGANGER.step != Dop_Kill)) {
             self->ext.hitbylightning.unk92 = 1;
         }
         self->ext.hitbylightning.unk94 = 16;

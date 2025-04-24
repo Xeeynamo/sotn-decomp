@@ -7,10 +7,7 @@ static u32 bg_color_angle[] = {
     0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
 };
 
-#if defined(VERSION_PSP)
-extern u32 D_80180648; // SBSS
-extern s32 E_ID(SMALL_ROCKS);
-#else
+#ifndef VERSION_PSP
 static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
 #endif
@@ -25,10 +22,12 @@ static WarpCoord WarpRoomCoords[] = {
 
 #ifdef VERSION_PSP
 
-extern s32 DestinationWarpRoom;
-extern s32 WarpBackgroundAmplitiude;
-extern s32 WarpBackgroundPhase;
-extern s32 WarpBackgroundBrightness;
+extern s32 E_ID(SMALL_ROCKS);
+static s32 DestinationWarpRoom;
+static s32 WarpBackgroundAmplitiude;
+static s32 WarpBackgroundPhase;
+static s32 WarpBackgroundBrightness;
+static u32 D_80180648;
 
 #else
 

@@ -1982,7 +1982,7 @@ void func_80115C50(void) {
     }
 }
 
-// Corresponding RIC function is func_8015BCD0
+// Corresponding RIC function is RicStepTeleport
 void PlayerStepTeleport(void) {
     Entity* newEnt;
 
@@ -2012,7 +2012,7 @@ void PlayerStepTeleport(void) {
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             func_8010E570(0);
         }
         break;
@@ -2035,7 +2035,7 @@ void PlayerStepTeleport(void) {
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             func_8010E570(0);
         }
         break;
@@ -2058,7 +2058,7 @@ void PlayerStepTeleport(void) {
         if (PLAYER.poseTimer < 0) {
             func_8010E570(0);
         }
-        if (g_Player.unk1C != 0) {
+        if (g_Player.warp_flag) {
             func_8010E570(0);
         }
         break;

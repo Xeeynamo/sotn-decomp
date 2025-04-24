@@ -178,6 +178,10 @@ set(SOURCE_FILES_DRA
     src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
     src/dra/4A538.c
+    src/dra/4AEA4.c
+    src/dra/4B758.c
+    src/dra/4CE2C.c
+    src/dra/4DA70.c
     src/dra/collider.c
     src/dra/demo.c
     src/dra/5087C.c
@@ -191,7 +195,9 @@ set(SOURCE_FILES_DRA
     src/dra/624DC.c
     src/dra/628AC.c
     src/dra/62DEC.c
-    src/dra/63ED4.c
+    src/dra/62EB8.c
+    src/dra/d_37d8.c
+    src/dra/66590.c
     src/dra/d_CD80.c
     src/dra/692E8.c
     src/dra/6BF64.c
@@ -213,11 +219,7 @@ set(SOURCE_FILES_DRA
     src/dra/8C600.c
     src/dra/8D3E8.c
     src/dra/91EBC.c
-    src/dra/92F60.c
-    src/dra/93290.c
-    src/dra/93BDC.c
-    src/dra/94F50.c
-    src/dra/953A0.c
+    src/dra/sfx_scripts.c
     src/dra/d_24CEC.c
     src/dra/d_2F324.c
     src/dra/d_3B0D4.c
@@ -228,23 +230,27 @@ set(SOURCE_FILES_RIC
     src/ric/pl_header.c
     src/ric/pl_main.c
     src/ric/pl_debug.c
-    src/ric/pl_handlers.c
+    src/ric/pl_steps.c
     src/ric/pl_utils.c
     src/ric/pl_setstep.c
     src/ric/pl_collision.c
     src/ric/211D0.c
-    src/ric/238F8.c
-    src/ric/24788.c
-    src/ric/26C84.c
-    src/ric/2A060.c
-    src/ric/2C4C4.c
+    src/ric/pl_blueprints.c
+    src/ric/pl_whip.c
+    src/ric/pl_subweapon_dummy.c
+    src/ric/pl_subweapon_holywater.c
+    src/ric/pl_subweapon_cross.c
     src/ric/pl_subweapons.c
     src/ric/2F8E8.c
     src/ric/319C4.c
-    src/ric/spriteparts.c
-    src/ric/e_giant_spinning_cross.c
+    src/ric/spritebank0.c
+    src/ric/spritebank1.c
+    src/ric/spritebank2.c
+    src/ric/spritebank3.c
+    src/ric/pl_crash_cross.c
     src/ric/bss.c
     src/ric/d_18568.c
+    src/ric/d_1859C.c
     src/ric/pl_anims.c
 )
 

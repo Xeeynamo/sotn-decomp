@@ -32,29 +32,6 @@ static s32 greyPuff_yVel[] = {
     /* 101C */ FIX(96.0 / 128),
 };
 
-static s32 explode_yVel[] = {
-    /* 1020 */ FIX(4.0 / 128),
-    /* 1024 */ FIX(20.0 / 128),
-    /* 1028 */ FIX(36.0 / 128),
-    /* 102C */ FIX(56.0 / 128),
-    /* 1030 */ FIX(112.0 / 128),
-    /* 1034 */ FIX(144.0 / 128),
-};
-
-static u8 explode_startFrame[] = {
-    /* 1038 */ 1,
-    /* 1039 */ 9,
-    /* 103A */ 21,
-    /* 103B */ 43,
-};
-
-static u16 explode_lifetime[] = {
-    /* 103C */ 0x0010,
-    /* 103E */ 0x0018,
-    /* 1040 */ 0x002A,
-    /* 1042 */ 0x002F,
-};
-
 #include "../entity_explosion_variants.h"
 
 #include "../entity_greypuff.h"

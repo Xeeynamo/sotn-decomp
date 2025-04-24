@@ -16,7 +16,7 @@ typedef struct {
     /* 0x8 */ u16 params;
 } LayoutEntity; // size = 0xA
 
-extern u16 g_ItemIconSlots[32];
+extern u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 /*
  * Sets up layout arrays and initializes stage state to

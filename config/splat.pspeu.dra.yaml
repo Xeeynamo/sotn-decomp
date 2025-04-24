@@ -43,16 +43,16 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, dra_psp/80]
-      - [0x1E50, c, dra_psp/1E50]
-      - [0x33F0, c, dra_psp/33F0] # O4
+      - [0x80, c, dra/62EB8]
+      - [0x3250, c, dra_psp/3250]
+      - [0x42B0, c, dra_psp/42B0]
       - [0x5DA0, c, dra/624DC] # O4
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
       - [0xA710, c, dra_psp/A710] # O4
       - [0xE6A8, c, dra_psp/E6A8]
+      - [0x18648, c, dra_psp/lang] #O0 in a sea of O4
       - [0x186E8, c, dra_psp/186E8]
-      - [0x18BE0, c, dra_psp/18BE0]
       - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/1A0D0]
       - [0x1A110, c, dra_psp/1A110]
@@ -68,6 +68,7 @@ segments:
       - [0x23AD8, c, dra_psp/23AD8]
       - [0x23C18, c, dra/5D5BC] # O0
       - [0x26948, c, dra_psp/26948]
+      - [0x274E8, c, dra_psp/274E8]
       - [0x27FD8, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra/70394]
@@ -86,24 +87,13 @@ segments:
       - [0x60C28, c, dra_psp/cd]
       - [0x60C90, c, dra_psp/memcard]
       - [0x61B78, c, dra/pads]
-      - [0x61E38, c, dra_psp/61E38]
-      - [0x61F30, c, dra_psp/61F30] # O4
+      - [0x61E38, c, dra/66590] # O4
       - [0x62FE0, c, dra_psp/62FE0] # O4
-      - [0x63C90, c, dra_psp/63C90] # O4
-      - [0x63E60, c, dra_psp/63E60]
-      - [0x63FE0, c, dra_psp/63FE0]
-      - [0x64370, c, dra_psp/64370]
-      - [0x64480, c, dra_psp/64480]
-      - [0x64EE0, c, dra_psp/64EE0] # O4
-      - [0x65290, c, dra_psp/65290]
-      - [0x654B0, c, dra_psp/654B0]
-      - [0x65790, c, dra_psp/65790]
-      - [0x65F50, c, dra_psp/65F50]
-      - [0x661C0, c, dra_psp/661C0]
-      - [0x67D50, c, dra_psp/67D50]
-      - [0x67E90, c, dra_psp/67E90]
-      - [0x680C0, c, dra_psp/680C0]
+      - [0x63C08, c, dra_psp/63C08] # O4
+      - [0x68310, c, dra/collider] # O4
       - [0x68D80, data]
+      - [0x68E00, data]
+      - [0x68F40, .data, dra/62EB8]
       - [0x69578, .data, dra/628AC]
       - [0x69600, data]
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
@@ -138,8 +128,11 @@ segments:
       - [0xA88D8, data]
       - [0xAA3B0, .data, dra_psp/memcard]
       - [0xAA578, .data, dra_psp/62FE0]
-      - [0xAA8A0, data]
-      - [0xEE380, .rodata, dra_psp/80]
+      - [0xAA8A0, .data, dra_psp/63C08]
+      - [0xAD460, data]
+      - [0xB2C40, .data, dra/sfx_scripts]
+      - [0xB4548, data]
+      - [0xEE380, .rodata, dra/62EB8]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
       - [0xEE3E8, .rodata, dra/628AC]
@@ -151,7 +144,7 @@ segments:
       - [0xEE600, .rodata, dra_psp/1DCE0]
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra/5D5BC]
-      - [0xEE6C8, .rodata, dra_psp/26948]
+      - [0xEE6C8, .rodata, dra_psp/274E8]
       - [0xEE708, .rodata, dra/692E8]
       - [0xEE7B0, .rodata, dra/71830]
       - [0xEE840, .rodata, dra/704D0]
@@ -160,12 +153,14 @@ segments:
       - [0xEE8D8, .rodata, dra/7879C]
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
-      - [0xEED48, .rodata, dra_psp/65790]
-      - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
-      - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
-      - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss2}
-      - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
-      - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss3}
-      - {start: 0xeed80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
-      - {start: 0xeed80, type: bss, vram: 0x09234DB8, name: bss4}
+      - [0xEED48, .rodata, dra_psp/63C08]
+      - {start: 0xEED80, type: bss, vram: 0x091CB700, name: bss1}
+      - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
+      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss2}
+      - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}
+      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss3}
+      - {start: 0xEED80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
+      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss4}
+      - {start: 0xEED80, type: .bss, vram: 0x09236830, name: dra_psp/63C08}
+      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss5}
   - [0xEED80]

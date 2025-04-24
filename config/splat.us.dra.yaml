@@ -74,8 +74,8 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x21B8, .data, 4A538] # D_800A21B8
-      - [0x2438, .data, 4A538] # D_800A2438
+      - [0x21B8, .data, 4B758] # D_800A21B8
+      - [0x2438, .data, 4DA70] # D_800A2438
       - [0x243C, .data, demo] # D_800A243C
       - [0x245C, .data, 5087C] # D_800A245C
       - [0x297C, .data, 5087C] # D_800A297C
@@ -88,9 +88,9 @@ segments:
       - [0x300C, .data, 5F60C] # g_CheatCodes
       - [0x3014, .data, 5F60C] # D_800A3014
       - [0x3134, .data, 628AC] # D_800A3194
-      - [0x31B0, .data, 63ED4] # D_800A3210
-      - [0x3330, .data, 63ED4] # D_800A33A0-D_800A35D0
-      - [0x37D8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
+      - [0x31B0, .data, 62EB8] # D_800A3210
+      - [0x3330, .data, 62EB8] # D_800A33A0-D_800A35D0
+      - [0x37D8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C40, .data, lba_stage]
       - [0x4A00, .data, config_us] # subweapons
       - [0x4B04, .data, config_us] # equipments
@@ -124,14 +124,14 @@ segments:
       - [0x1807C, raw, vh_3] # aPbav_1
       - [0x1A07C, data] # aPqes_1
       - [0x1D07C, .data, 91EBC] # g_CdVolumeTable
-      - [0x1D19C, .data, 91EBC] # g_VolumeTable
-      - [0x1D1C0, .data, 91EBC] # g_DebugEnabled
-      - [0x1D1C4, .data, 91EBC] # D_800BD1C4
-      - [0x1D1C8, .data, 91EBC] # g_VabAddrs
-      - [0x1D1E0, .data, 91EBC] # g_SeqInfo
+      #- [0x1D19C, .data, 91EBC] # g_VolumeTable
+      #- [0x1D1C0, .data, 91EBC] # g_DebugEnabled
+      #- [0x1D1C4, .data, 91EBC] # D_800BD1C4
+      #- [0x1D1C8, .data, 91EBC] # g_VabAddrs
+      #- [0x1D1E0, .data, 91EBC] # g_SeqInfo
       - [0x1D224, assets, music_xa, g_XaMusicConfigs]
       - [0x1F554, assets, sfx, g_SfxData]
-      - [0x2097C, .data, 953A0]
+      - [0x2097C, .data, sfx_scripts]
       - [0x2217C, cmp, D_800C217C]
       - [0x227B0, cmp, D_800C27B0]
       - [0x23560, cmp, D_800C3560]
@@ -163,9 +163,9 @@ segments:
       # - [0x3C160, .rodata, save_mgr] # func_800E9C14
       # - [0x3C194, .rodata, save_mgr] # func_800EA48C
       - [0x3C1A8, .rodata, 4A538] # func_800EA7CC
-      # - [0x3C1E8, .rodata, 4A538] # func_800EB098
-      # - [0x3C228, .rodata, 4A538] # func_800EB314
-      # - [0x3C238, .rodata, 4A538] # RenderPrimitives
+      - [0x3C1E8, .rodata, 4AEA4] # DecompressData
+      # - [0x3C228, .rodata, 4AEA4] # func_800EB314
+      - [0x3C238, .rodata, 4DA70] # RenderPrimitives
       - [0x3C290, .rodata, collider] # CheckCollision
       - [0x3C490, .rodata, demo] # func_800F0334
       # - [0x3C4C0, .rodata, demo] # func_800F04A4
@@ -185,8 +185,8 @@ segments:
       - [0x3CC0C, .rodata, 624DC] # func_801027C4
       - [0x3CC2C, .rodata, 628AC] # func_801028AC
       # - [0x3CC54, .rodata, 628AC] # func_80102D70
-      - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
-      - [0x3CDC0, .rodata, 63ED4] # func_80103ED4
+      - [0x3CC70, .rodata, 62EB8] # HandleSaveMenu
+      - [0x3CDC0, .rodata, 62EB8] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
       - [0x40D38, .rodata, cd] # func_801080DC
@@ -235,12 +235,12 @@ segments:
       # - [0x41FD8, .rodata, 90264] # func_80130E94
       # - [0x42000, .rodata, 90264] # func_8013136C
       # - [0x42024, .rodata, 90264] # func_801315F8
-      - [0x42034, .rodata, 92F60] # CdSoundCommand4
-      - [0x4205C, .rodata, 93290] # CdSoundCommand6
-      # - [0x42074, .rodata, 93290] # CdSoundCommand12
-      - [0x4208C, .rodata, 93BDC] # CdSoundCommand14
-      - [0x420B4, .rodata, 94F50] # func_80134F50
-      - [0x42354, .rodata, 953A0] # func_801353A0
+      - [0x42034, .rodata, 91EBC] # CdSoundCommand4
+      # - [0x4205C, .rodata, 91EBC] # CdSoundCommand6
+      # - [0x42074, .rodata, 91EBC] # CdSoundCommand12
+      # - [0x4208C, .rodata, 91EBC] # CdSoundCommand14
+      # - [0x420B4, .rodata, 91EBC] # func_80134F50
+      # - [0x42354, .rodata, 91EBC] # func_801353A0
       - [0x42398, c, 42398]
       - [0x4493C, c, play]
       - [0x45D30, c, loading]
@@ -248,6 +248,10 @@ segments:
       - [0x48D24, c, pads]
       - [0x48EE4, c, save_mgr]
       - [0x4A538, c, 4A538]
+      - [0x4AEA4, c, 4AEA4]
+      - [0x4B758, c, 4B758]
+      - [0x4CE2C, c, 4CE2C]
+      - [0x4DA70, c, 4DA70]
       - [0x4F45C, c, collider]
       - [0x4FBF8, c, demo]
       - [0x5087C, c, 5087C]
@@ -258,7 +262,8 @@ segments:
       - [0x624DC, c, 624DC]
       - [0x628AC, c, 628AC]
       - [0x62DEC, c, 62DEC]
-      - [0x63ED4, c, 63ED4]
+      - [0x62EB8, c, 62EB8]
+      - [0x66590, c, 66590]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
       - [0x6BF64, c, 6BF64]
@@ -277,11 +282,6 @@ segments:
       - [0x8C600, c, 8C600]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, 91EBC]
-      - [0x92F60, c, 92F60]
-      - [0x93290, c, 93290]
-      - [0x93BDC, c, 93BDC]
-      - [0x94F50, c, 94F50]
-      - [0x953A0, c, 953A0]
       - [0x962AC, .bss, bss]
   - name: dra_data
     type: data

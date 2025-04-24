@@ -106,20 +106,14 @@ typedef enum {
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 // PS1 and PSP use different values for most of these.
-#ifndef VERSION_PSP
+#ifdef VERSION_PSP
+#define OTSIZE 0x300
+#else
 #define OTSIZE 0x200
+#endif
 #define MAXSPRT16 0x280
 #define MAX_DRAW_MODES 0x400
 #define MAX_POLY_GT4_COUNT 0x300
-#endif
-#ifdef VERSION_PSP
-#define OTSIZE 0x600
-#define MAXSPRT16 0x320
-// Very low confidence on these. These make GpuBuffer the right size.
-// More decomp will give proper sizes for individual members.
-#define MAX_DRAW_MODES 0x1F0
-#define MAX_POLY_GT4_COUNT 0x2F0
-#endif
 #define MAX_TILE_COUNT 0x100
 #define MAX_LINE_G2_COUNT 0x100
 #define MAX_POLY_GT3_COUNT 0x30
@@ -236,7 +230,11 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#define SPRITESHEET_PTR 0x8013C020 // g_PlOvlSpritesheet
+#if defined(VERSION_PSP) || defined(VERSION_PC)
+#define SPRITESHEET_PTR g_PlOvlSpritesheet
+#else
+#define SPRITESHEET_PTR 0x8013C020
+#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -1387,8 +1385,7 @@ typedef struct XaMusicConfig {
     u8 filter_channel_id;
     u8 volume;
     u8 unk22f;
-    u8 unk230;
-    u8 pad[3];
+    u32 unk230;
 } XaMusicConfig;
 
 typedef struct {
@@ -1588,7 +1585,10 @@ typedef struct {
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
     /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
-    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+    // Everywhere g_pfn_800EA5AC is called it can use a default signature
+    // and in `bo4` and `rbo5` a generic signature is required.
+    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(
+        s32 arg0, s32 arg1, s32 arg2, s32 arg3);
     /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
@@ -1663,6 +1663,10 @@ typedef struct {
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
     void (*GetPlayerSensor)(Collider* col);
+    u8** sprites0;
+    u8** sprites1;
+    u8** sprites2;
+    u8** sprites3;
 } PlayerOvl;
 extern PlayerOvl g_PlOvl;
 extern u8** g_PlOvlAluBatSpritesheet[1];
@@ -1773,8 +1777,8 @@ typedef struct {
     /* 80073098 */ s32 unused14;
     /* 8007309C */ s32 order;
     /* 800730A0 */ u32 flags;
-    /* 800730A4 */ s32 hSize;
-    /* 800730A8 */ s32 vSize;
+    /* 800730A4 */ u32 hSize;
+    /* 800730A8 */ u32 vSize;
     /* 800730AC */ u32 hideTimer;
     /* 800730B0 */ s32 left;
     /* 800730B4 */ s32 top;
@@ -1854,7 +1858,7 @@ typedef struct {
     /* 80072F34 */ u32 unk14;
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
-    /* 80072F3C */ s32 unk1C;
+    /* 80072F3C */ s32 warp_flag;
     /* 80072F40 */ s32 unk20;
     /* 80072F44 */ s32 unk24;
     /* 80072F48 */ PfnEntityUpdate unk28;
@@ -1953,6 +1957,7 @@ extern u32 g_GameTimer; // Increases when unpaused
 extern bool D_8003C908;
 extern s32 g_EquippedWeaponIds[2];
 extern u32 g_Timer; // Increases continuously
+extern s16* D_92641C8[];
 extern s32 g_MapCursorTimer;
 /* 0x8003C9A0 */ extern s32 g_PlayableCharacter;
 /* 0x8003C9A4 */ extern u32 g_GameEngineStep;
@@ -2085,6 +2090,15 @@ typedef enum {
     LANG_IT,
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
-u8* GetLang(u8* en, u8* fr, u8* sp, u8* ge, u8* it);
+void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
+
+typedef struct {
+    s16 unk00;
+    s16 unk02;
+    RECT rect;
+    u8* imgData;
+    s32 unk10;
+    s32 unk14;
+} LangImg;
 
 #endif

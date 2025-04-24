@@ -73,13 +73,12 @@ static s16 func_80156DE4(void) {
 }
 
 extern s32 D_pspeu_092D7A68;
-extern s32 D_pspeu_092CFA58;
-extern u8* D_pspeu_092D33BC;
-extern u8 D_pspeu_092D2548[]; // FR
-extern u8 D_pspeu_092CFA70[]; // SP
-extern u8 D_pspeu_092D16F8[]; // GE
-extern u8 D_pspeu_092D08B8[]; // IT
-extern s32 D_pspeu_092D33B0;
+extern u8 hud_fr[];
+extern u8 hud_sp[];
+extern u8 hud_ge[];
+extern u8 hud_it[];
+extern LangImg g_FontImage;
+extern LangImg g_HudImage;
 // Similar to of DRA func_80109594
 void RicInit(s16 initParam) {
     Entity* e;
@@ -169,11 +168,10 @@ void RicInit(s16 initParam) {
     // or after loading a save. Not sure if a bugfix or QOL.
     D_pspeu_092D7A68 = 30;
 
-    func_91040A0(&D_pspeu_092CFA58);
-    D_pspeu_092D33BC = GetLang(0, D_pspeu_092D2548, D_pspeu_092CFA70,
-                               D_pspeu_092D16F8, D_pspeu_092D08B8);
-    if (D_pspeu_092D33BC != 0) {
-        func_91040A0(&D_pspeu_092D33B0);
+    func_91040A0(&g_FontImage);
+    g_HudImage.imgData = GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
+    if (g_HudImage.imgData) {
+        func_91040A0(&g_HudImage);
     }
 #endif
 }
@@ -576,64 +574,64 @@ void RicMain(void) {
     g_Player.prev_step_s = PLAYER.step_s;
     switch (PLAYER.step) {
     case PL_S_STAND:
-        RicHandleStand();
+        RicStepStand();
         break;
     case PL_S_WALK:
-        RicHandleWalk();
+        RicStepWalk();
         break;
     case PL_S_CROUCH:
-        RicHandleCrouch();
+        RicStepCrouch();
         break;
     case PL_S_FALL:
-        RicHandleFall();
+        RicStepFall();
         break;
     case PL_S_JUMP:
-        RicHandleJump();
+        RicStepJump();
         break;
     case PL_S_HIGHJUMP:
-        RicHandleHighJump();
+        RicStepHighJump();
         break;
     case PL_S_HIT:
-        RicHandleHit(damageEffects, damageKind, playerStep, playerStepS);
+        RicStepHit(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case PL_S_BOSS_GRAB:
-        RicHandleBossGrab();
+        RicStepBossGrab();
         break;
     case PL_S_DEAD:
-        RicHandleDead(damageEffects, damageKind, playerStep, playerStepS);
+        RicStepDead(damageEffects, damageKind, playerStep, playerStepS);
         break;
     case PL_S_STAND_IN_AIR:
-        RicHandleStandInAir();
+        RicStepStandInAir();
         break;
     case PL_S_FLAME_WHIP:
-        RicHandleEnableFlameWhip();
+        RicStepEnableFlameWhip();
         break;
     case PL_S_HYDROSTORM:
-        RicHandleHydrostorm();
+        RicStepHydrostorm();
         break;
     case PL_S_THROW_DAGGERS:
-        RicHandleThrowDaggers();
+        RicStepThrowDaggers();
         break;
     case PL_S_SUBWPN_CRASH:
-        RicHandleGenericSubwpnCrash();
+        RicStepGenericSubwpnCrash();
         break;
     case PL_S_DEAD_PROLOGUE:
-        RicHandleDeadPrologue();
+        RicStepDeadPrologue();
         break;
     case PL_S_SLIDE:
-        RicHandleSlide();
+        RicStepSlide();
         break;
     case PL_S_RUN:
-        RicHandleRun();
+        RicStepRun();
         break;
     case PL_S_SLIDE_KICK:
-        RicHandleSlideKick();
+        RicStepSlideKick();
         break;
     case PL_S_BLADEDASH:
-        RicHandleBladeDash();
+        RicStepBladeDash();
         break;
     case PL_S_INIT:
-        func_8015BCD0();
+        RicStepTeleport();
         break;
     }
     g_Player.unk08 = g_Player.status;

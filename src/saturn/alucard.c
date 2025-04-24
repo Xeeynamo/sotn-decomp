@@ -20,7 +20,9 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5614, func_060A5614);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5644, func_060A5644);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5674, func_060A5674);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56AC, func_060A56AC);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56D8, func_060A56D8);
+
+void func_060A56D8() {}
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A56E4, func_060A56E4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A5738, func_060A5738);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60A580C, func_060A580C);
@@ -94,9 +96,13 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD524, func_060AD524);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AD714, func_060AD714);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADACC, func_060ADACC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADB80, func_060ADB80);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADD50, func_060ADD50);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADD5C, func_060ADD5C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADD68, func_060ADD68);
+
+void func_060ADD50() {}
+
+void func_060ADD5C() {}
+
+void func_060ADD68() {}
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADD74, func_060ADD74);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADDDC, func_060ADDDC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60ADF3C, func_060ADF3C);
@@ -113,8 +119,12 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEEE4, func_060AEEE4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AEFBC, func_060AEFBC);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF050, func_060AF050);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF124, func_060AF124);
+
+void func_060AF1BC(int);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF1BC, func_060AF1BC);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF4A0, func_060AF4A0);
+
+void func_060AF4A0(void) { func_060AF1BC(1); }
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF4B8, func_060AF4B8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF550, func_060AF550);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60AF654, func_060AF654);
@@ -204,13 +214,23 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD2B0, func_060BD2B0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD39C, func_060BD39C);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD5A4, func_060BD5A4);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD61C, func_060BD61C);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6A8, func_060BD6A8);
+
+void func_0600FFB8();
+
+void func_060BD6A8(void) { func_0600FFB8(); }
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6C0, func_060BD6C0);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6CC, func_060BD6CC);
+
+void func_060BD6CC() {}
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD6D8, func_060BD6D8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BD8F8, func_060BD8F8);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BDA44, func_060BDA44);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE354, func_060BE354);
+
+void func_060BE354() {}
+
+const u32 DAT_060be360 = 0xBA2E8BA3;
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE364, func_060BE364);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE620, func_060BE620);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60BE7DC, func_060BE7DC);
@@ -225,7 +245,9 @@ INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C01C0, func_060C01C0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C06A0, func_060C06A0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C07F0, func_060C07F0);
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C08A8, func_060C08A8);
-INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C0BE8, func_060C0BE8);
+
+void func_060C0BE8() {}
+
 INCLUDE_ASM("asm/saturn/alucard/f_nonmat", f60C0BF4, func_060C0BF4);
 INCLUDE_ASM("asm/saturn/alucard/data", d60C0E48, d_060C0E48);
 INCLUDE_ASM("asm/saturn/alucard/data", d60C1378, d_060C1378);

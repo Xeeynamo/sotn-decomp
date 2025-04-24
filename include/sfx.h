@@ -49,6 +49,8 @@ enum SfxModes {
 #define SET_STOP_SEQ 7
 #define SET_STOP_MUSIC 0xA
 #define SET_UNK_0B 0xB
+#define SET_UNK_0C 0xC
+#define SET_SOUND_WAIT 0xD
 #define SET_PAUSE_SFX_SCRIPTS 0xE
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF
 #define SET_UNK_10 0x10
@@ -285,6 +287,9 @@ enum SfxModes {
 #define SE_ITEM_YOINK 0x7A2
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
+
+// BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
+#define SFX_BO4_UNK_7D7 0x7D7
 
 // BOSS RBO3 - Medusa
 #define SFX_RBO3_UNK_7C5 0x7C5

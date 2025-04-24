@@ -59,27 +59,30 @@
 #define __builtin_memcpy memcpy
 #endif
 
-#ifdef _MSC_VER
+#if defined(VERSION_PSP) || defined(_MSC_VER)
 #define ZERO_LEN 1
 #else
 #define ZERO_LEN 0
 #endif
 
 #if defined(VERSION_PC)
-#ifndef _MSC_VER
 #include <assert.h>
+#ifndef _MSC_VER
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
 #else
 #define STATIC_ASSERT(x, ...)
 #define PACKED
 #endif
+#define ASSERT(x) assert(x)
 
 #elif defined(VERSION_PSP)
+#define ASSERT(x)
 #define STATIC_ASSERT(x, y)
 #define PACKED
 
 #else
+#define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
 #define PACKED
 

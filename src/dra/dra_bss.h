@@ -82,7 +82,8 @@ extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
 
-// BSS 91EBC.c, 92F60.c, 93290.c, 93BDC.c, 94F50.c, 953A0.c
+// BSS 91EBC.c
+extern s32 D_80138454;
 extern s16 g_CurrentXaConfigId;
 extern s16 D_8013845C;
 extern u8 g_SeqTable[];
@@ -106,9 +107,9 @@ extern ButtonComboState g_ButtonCombo[COMBO_NUM];
 extern s16 g_sfxRingBufferWritePos; // D_80139000
 extern s16 g_VolR;                  // vol_r
 extern s32 D_80139008;
-extern s16 g_CurSfxDistance20_21;
+extern u16 g_CurSfxDistance20_21;
 extern u8 D_80139014;
-extern s8 g_SfxScriptModeCopy[4];
+extern u8 g_SfxScriptModeCopy[4];
 extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 g_MuteCd;
@@ -117,15 +118,15 @@ extern s32 g_PrevEquippedWeapons[2];
 extern s16 g_CurrentXaSoundId;
 extern s16 g_SeqVolume1;
 extern u8 D_801390A0;
-extern s16 g_CurSfxVol20_21;
+extern u16 g_CurSfxVol20_21;
 extern u8 D_801390A8;
-extern s16 g_SfxScriptVolumeCopy[];
-extern s32 D_801390B4[];
+extern u16 g_SfxScriptVolumeCopy[];
+extern s8* D_801390B4[];
 extern u8 g_SeqIsPlaying;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;
 extern SfxRingBufferItem g_SfxRingBuffer[MAX_SND_COUNT];
-extern s16 g_CurSfxDistance12_19;
+extern u16 g_CurSfxDistance12_19;
 extern s16 D_801396E0;
 extern s16 D_801396E4;
 extern s16 D_801396E6;
@@ -187,7 +188,7 @@ extern u8 D_8017D350[57744];  // VAB file
 extern u8 D_8018B4E0[108048]; // VAB file
 extern u8 D_801A9C80[64496];  // VAB file
 extern u16 g_CurSfxVol22_23;
-extern s8 D_8013AEE8;
+extern u8 D_8013AEE8;
 extern u8 g_SoundInitialized;
 extern s16 g_SeqVolume2;
 extern s32 D_8013AEF4;
@@ -204,7 +205,6 @@ extern u16 g_SfxScriptVolume[4];
 extern u16 D_8013B626;
 extern s8* g_CurrentSfxScript[4];
 extern CdlLOC D_8013B640;
-extern s16 g_CurrentSfxId12_19[4];
 extern s32 D_8013B65C;
 extern s16 g_SeqAccessNum;
 extern s32 g_MemcardStep;

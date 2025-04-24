@@ -1508,8 +1508,8 @@ typedef struct {
 } ET_RicRevivalColumn; // Note this is the same as CrashCross
 
 typedef struct {
-    f32 unk7C;
-    f32 unk80;
+    s32 prevX;
+    s32 prevY;
     s16 unk84;
     s16 unk86;
     s32 unk88;
@@ -1517,8 +1517,8 @@ typedef struct {
     s16 unk8E;
     s32 unk90;
     s32 unk94;
-    s32 unk98;
-    s32 unk9C;
+    s32 curX;
+    s32 curY;
     s32 unkA0;
     s16 unkA4;
     s16 unkA6;
@@ -2067,7 +2067,7 @@ typedef struct {
 // Elevator at the top of CEN.
 // Exists in both CEN and NO0 (lowers you into CEN)
 typedef struct {
-    /* 0x7C */ struct Primitve* prim;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
 
@@ -2936,6 +2936,12 @@ typedef struct {
     /* 0xA8 */ u8 unkA8[8];
 } ET_801D96FC;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ Primitive* prim;
+    /* 0x84 */ u8 unk84;
+} ET_DopplegangerBGLight;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3189,6 +3195,7 @@ typedef union { // offset=0x7C
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
     ET_801D96FC et_801D96FC;
+    ET_DopplegangerBGLight dopBGLight;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

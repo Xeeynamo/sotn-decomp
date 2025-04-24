@@ -7,5 +7,5 @@ extern s32 D_psp_091CDC88;
 
 s32 func_89192EC(s32, s32);
 void func_892A620(s32, s32);
-void func_psp_09140BF8(s32, s32, s32);
+void SetCdVolume(s32, s32, s32);
 void func_psp_09141668(s32);

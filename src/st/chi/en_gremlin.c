@@ -13,6 +13,21 @@ static u8 AnimFrames_Running[] = {
     0x06, 0x01, 0x03, 0x02, 0x02, 0x03, 0x02, 0x04, 0x03, 0x05, 0x06, 0x06, 0x03, 0x05, 0x02, 0x04,
     0x02, 0x03, 0x03, 0x02, 0x00, 0x00, 0x00, 0x00
 };
+
+static u8 AnimFrames_Fire[] = {
+    0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0x01, 0x0E,
+    0x01, 0x0F, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00
+};
+
+// D_8018171C
+static u8 AnimFrames_Glow[] = {
+    0x01, 0x11, 0x01, 0x12, 0x00, 0x00, 0x00, 0x00
+};
+
+static u8 AnimFrames_FireIdle[] = {
+    0x02, 0x14, 0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A, 0x02, 0x1B,
+    0x02, 0x1C, 0x02, 0x1D, 0x00, 0x00, 0x00, 0x00
+};
 // clang-format on
 
 // E_GREMLIN
@@ -53,7 +68,7 @@ void EntityGremlin(Entity* self) {
     }
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitGremlin);
+        InitializeEntity(g_EInitGremlin);
         self->animCurFrame = 1;
         self->hitboxOffX = 6;
         self->facingLeft = self->params;
@@ -211,19 +226,6 @@ void EntityGremlin(Entity* self) {
     }
 }
 
-// clang-format off
-// D_80181704
-static u8 AnimFrames_Fire[] = {
-    0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0x01, 0x0E,
-    0x01, 0x0F, 0x01, 0x10, 0x00, 0x00, 0x00, 0x00
-};
-
-// D_8018171C
-static u8 AnimFrames_Glow[] = {
-    0x01, 0x11, 0x01, 0x12, 0x00, 0x00, 0x00, 0x00
-};
-// clang-format on
-
 // E_GREMLIN_EFFECT
 // params: True to be fire, false to be glow
 // func_801A9D40
@@ -241,12 +243,12 @@ void EntityGremlinEffect(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitGremlin);
-        self->hitboxState = 0;
+        InitializeEntity(g_EInitGremlin);
         self->flags |= FLAG_UNK_2000;
+        self->hitboxState = 0;
 
         // Check whether to be fire or glow
-        if (self->params != 0) {
+        if (self->params) {
             // Fire init
             self->step = FIRE;
             break;
@@ -289,14 +291,6 @@ void EntityGremlinEffect(Entity* self) {
     }
 }
 
-// clang-format off
-// D_80181724
-static u8 AnimFrames_FireIdle[] = {
-    0x02, 0x14, 0x02, 0x15, 0x02, 0x16, 0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A, 0x02, 0x1B,
-    0x02, 0x1C, 0x02, 0x1D, 0x00, 0x00, 0x00, 0x00
-};
-// clang-format on
-
 // E_GREMLIN_FIRE
 // func_801A9E94
 void EntityGremlinFire(Entity* self) {
@@ -323,7 +317,7 @@ void EntityGremlinFire(Entity* self) {
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitGremlinFire);
+        InitializeEntity(g_EInitGremlinFire);
         self->ext.gremlinFire.timer = FireDuration;
         // fallthrough
     case IDLE:
@@ -333,8 +327,7 @@ void EntityGremlinFire(Entity* self) {
         // Bounce up and down slightly
         self->velocityY = rcos(self->rotZ);
         self->rotZ += BounceSpeed;
-        self->ext.gremlinFire.timer--;
-        if (self->ext.gremlinFire.timer == 0) {
+        if (!--self->ext.gremlinFire.timer) {
             self->hitboxState = 0;
             SetStep(DEATH);
         }
@@ -353,7 +346,7 @@ void EntityGremlinFire(Entity* self) {
             AnimateEntity(&AnimFrames_FireIdle, self);
             self->rotX -= 8;
             self->rotY -= 6;
-            if (self->rotX == 0) {
+            if (!self->rotX) {
                 DestroyEntity(self);
             }
             break;

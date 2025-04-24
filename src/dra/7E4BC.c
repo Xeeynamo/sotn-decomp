@@ -2346,32 +2346,29 @@ void func_80123F78(Entity* self) {
 
 // Corresponding RIC function is func_80165DD8
 static void func_80124164(
-    Primitive* prim, s32 colorIntensity, s32 y, s32 radius, bool arg4) {
+    Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
     prim->y0 = prim->y1 = y - radius;
     prim->y2 = prim->y3 = y + radius;
-
     if (prim->y0 < 0) {
         prim->y0 = prim->y1 = 0;
     }
-
     if (prim->y0 > 240) {
         prim->y2 = prim->y3 = 240;
     }
-
     if (arg4 == 0) {
-        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
-        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
-        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
-        prim->r0 = prim->r2 = D_800AE27C * colorIntensity / 0x100;
-        prim->g0 = prim->g2 = D_800AE280 * colorIntensity / 0x100;
-        prim->b0 = prim->b2 = D_800AE284 * colorIntensity / 0x100;
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE27C * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE280 * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE284 * colorMul / 256;
     } else {
-        prim->r1 = prim->r3 = D_800AE270 * colorIntensity / 0x100;
-        prim->g1 = prim->g3 = D_800AE274 * colorIntensity / 0x100;
-        prim->b1 = prim->b3 = D_800AE278 * colorIntensity / 0x100;
-        prim->r0 = prim->r2 = D_800AE288 * colorIntensity / 0x100;
-        prim->g0 = prim->g2 = D_800AE28C * colorIntensity / 0x100;
-        prim->b0 = prim->b2 = D_800AE290 * colorIntensity / 0x100;
+        prim->r1 = prim->r3 = D_800AE270 * colorMul / 256;
+        prim->g1 = prim->g3 = D_800AE274 * colorMul / 256;
+        prim->b1 = prim->b3 = D_800AE278 * colorMul / 256;
+        prim->r0 = prim->r2 = D_800AE288 * colorMul / 256;
+        prim->g0 = prim->g2 = D_800AE28C * colorMul / 256;
+        prim->b0 = prim->b2 = D_800AE290 * colorMul / 256;
     }
 }
 
@@ -2389,11 +2386,13 @@ void EntityTeleport(Entity* self) {
     s32 xVar;
     s32 i;
     s32 result;
+    s32 upperParams;
+    bool showParticles;
+    bool var_s5;
 
-    s32 upperParams = self->params & 0xFE00;
-    bool wasCase3 = false;
-    bool var_s5 = false;
-
+    upperParams = self->params & 0xFE00;
+    showParticles = false;
+    var_s5 = false;
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, LEN(D_8013839C) + 4);
@@ -2478,7 +2477,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 3:
-        wasCase3 = true;
+        showParticles = true;
         self->ext.teleport.colorIntensity += 4;
         if (self->ext.teleport.colorIntensity >= 0x100) {
             self->ext.teleport.colorIntensity = 0x100;
@@ -2555,7 +2554,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.width = 0;
             self->ext.teleport.timer = 4;
             self->step++;
-            g_Player.unk1C = 1;
+            g_Player.warp_flag = 1;
             PlaySfx(SFX_TELEPORT_BANG_B);
             DestroyEntity(self);
             return;
@@ -2589,7 +2588,7 @@ void EntityTeleport(Entity* self) {
     func_80124164(
         prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
     prim = prim->next;
-    if (wasCase3) {
+    if (showParticles) {
         for (i = 0; i < LEN(D_8013839C); i++) {
             switch (prim->g0) {
             case 0:
@@ -2613,7 +2612,7 @@ void EntityTeleport(Entity* self) {
             prim = prim->next;
         }
     } else {
-        // Potential bug? Should probably be doing prim = prim->next, right?
+        // @bug: should probably be doing prim = prim->next
         for (i = 0; i < LEN(D_8013839C); i++) {
             prim->drawMode |= DRAW_HIDE;
         }

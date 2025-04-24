@@ -113,7 +113,7 @@ enum RicEntities {
     E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
     E_801641A0,                      // func_801641A0
     E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
-    E_80167A70,                      // func_80167A70
+    E_HOLYWATER_BREAK_GLASS,         // RicEntityHolyWaterBreakGlass
     E_SUBWPN_AXE,                    // RicEntitySubwpnThrownAxe
     E_CRASH_AXE,                     // RicEntityCrashAxe
     E_SUBWPN_DAGGER,                 // RicEntitySubwpnThrownDagger
@@ -192,7 +192,7 @@ enum RicBlueprints {
     BP_37,
     BP_38,
     BP_39,
-    BP_UNUSED_40,
+    BP_HOLYWATER_GLASS,
     BP_CRASH_AXE,
     BP_42,
     BP_SUBWPN_DAGGER,
@@ -270,6 +270,8 @@ enum RicSubweapons {
     NUM_WEAPONS,
 };
 
+extern PlayerOvl RIC_player;
+
 extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];
@@ -277,7 +279,7 @@ extern SpriteParts* D_801541A8[];
 extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
-extern void RicHandleBladeDash(void);
+extern void RicStepBladeDash(void);
 void RicSetAnimation(AnimationFrame* anim);
 extern void RicDecelerateX(s32 speed);
 extern s32 RicCheckFacing(void);
@@ -320,7 +322,6 @@ extern s16 g_RicSensorsWallCrouch[];
 extern u8 D_80154674[][4]; // TODO AnimationFrames*[]
 extern SubweaponDef D_80154688[];
 extern u8 uv_anim_801548F4[6][8];
-extern FactoryBlueprint g_RicFactoryBlueprints[];
 
 extern s8 D_80156A28;
 extern s8 D_80156904;

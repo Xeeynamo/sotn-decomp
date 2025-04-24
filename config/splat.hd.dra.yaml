@@ -73,8 +73,8 @@ segments:
       - [0x1C18, ci4, memcard_14, 16, 48]
       - [0x1D98, ci4, memcard_15, 16, 48]
       - [0x1F18, .data, save_mgr]
-      - [0x2178, .data, 4A538] # D_800A21B8
-      - [0x23F8, .data, 4A538] # D_800A2438
+      - [0x2178, .data, 4B758] # D_800A21B8
+      - [0x23F8, .data, 4DA70] # D_800A2438
       - [0x23FC, .data, demo] # D_800A243C
       - [0x241C, .data, 5087C] # D_800A245C
       - [0x293C, .data, 5087C] # D_800A297C
@@ -89,9 +89,9 @@ segments:
       - [0x301C, .data, 5F60C] # g_CheatCodes
       - [0x3024, .data, 5F60C] # D_800A3014
       - [0x3144, .data, 628AC] # D_800A3194
-      - [0x31C0, .data, 63ED4] # D_800A3210
-      - [0x3340, .data, 63ED4] # D_800A33A0-D_800A35D0
-      - [0x37E8, .data, 63ED4] # Palette, GFX desc until D_800A3BB8
+      - [0x31C0, .data, 62EB8] # D_800A3210
+      - [0x3340, .data, 62EB8] # D_800A33A0-D_800A35D0
+      - [0x37E8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C50, .data, lba_stage]
       - [0x4A10, .data, config_jp]
       - [0xC8BC, .data, d_C910]
@@ -126,7 +126,7 @@ segments:
       - [0x1D2A4, .data, 91EBC] # g_SeqInfo
       - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
       - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
-      - [0x20A20, .data, 953A0]
+      - [0x20A20, .data, sfx_scripts]
       - [0x22220, cmp, D_800C217C]
       - [0x22854, cmp, D_800C27B0]
       - [0x23604, cmp, D_800C3560]
@@ -143,6 +143,8 @@ segments:
       - [0x3B938, .rodata, 47BB8]
       - [0x3BE60, .rodata, save_mgr]
       - [0x3C11C, .rodata, 4A538]
+      - [0x3C15C, .rodata, 4AEA4]
+      - [0x3C1AC, .rodata, 4DA70] # RenderPrimitives
       - [0x3C204, .rodata, collider]
       - [0x3C404, .rodata, demo]
       - [0x3C488, .rodata, 5087C]
@@ -152,7 +154,7 @@ segments:
       - [0x3CC78, .rodata, 624DC]
       - [0x3CC98, .rodata, 628AC]
       - [0x3CCDC, .rodata, 62DEC]
-      - [0x3CED4, .rodata, 63ED4]
+      - [0x3CED4, .rodata, 62EB8]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
@@ -166,11 +168,7 @@ segments:
       - [0x41DAC, .rodata, 8A0A4]
       - [0x41DCC, .rodata, 8D3E8]
       - [0x41E4C, .rodata, 8D3E8]
-      - [0x41F50, .rodata, 92F60]
-      - [0x41F78, .rodata, 93290]
-      - [0x41FA8, .rodata, 93BDC]
-      - [0x41FD0, .rodata, 94F50]
-      - [0x42270, .rodata, 953A0]
+      - [0x41F50, .rodata, 91EBC]
       - [0x422B4, c, 42398]
       - [0x44EC8, c, play]
       - [0x463E4, c, loading]
@@ -178,6 +176,10 @@ segments:
       - [0x493BC, c, pads]
       - [0x4957C, c, save_mgr]
       - [0x4ABF0, c, 4A538]
+      - [0x4B55C, c, 4AEA4]
+      - [0x4BE10, c, 4B758]
+      - [0x4D4B0, c, 4CE2C]
+      - [0x4E0F4, c, 4DA70]
       - [0x4FAE0, c, collider]
       - [0x5027C, c, demo]
       - [0x50F00, c, 5087C]
@@ -188,7 +190,8 @@ segments:
       - [0x6236C, c, 624DC]
       - [0x6273C, c, 628AC]
       - [0x62C7C, c, 62DEC]
-      - [0x63D1C, c, 63ED4]
+      - [0x62D48, c, 62EB8]
+      - [0x663CC, c, 66590]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
       - [0x6BCA8, c, 6BF64]
@@ -207,11 +210,6 @@ segments:
       - [0x8C28C, c, 8C600]
       - [0x8D050, c, 8D3E8]
       - [0x91A98, c, 91EBC]
-      - [0x92B3C, c, 92F60]
-      - [0x92E6C, c, 93290]
-      - [0x937B8, c, 93BDC]
-      - [0x94B2C, c, 94F50]
-      - [0x94F7C, c, 953A0]
       - [0x95E88, .bss, bss]
   - name: dra_data
     type: data

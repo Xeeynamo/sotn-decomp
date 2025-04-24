@@ -43,7 +43,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, ric/pl_debug]
-      - [0x410, c, ric/pl_handlers]
+      - [0x410, c, ric/pl_steps]
       - [0x4B60, c, ric/pl_subweapons]
       - [0x6C78, c, ric_psp/lang]
       - [0x6D18, c, ric/pl_main]
@@ -52,22 +52,33 @@ segments:
       - [0xB070, c, ric/pl_collision]
       - [0xD268, c, ric/2F8E8]
       - [0xFD48, c, ric/319C4]
-      - [0x182C8, c, ric_psp/182C8]
-      - [0x22028, c, ric_psp/e_giant_spinning_cross]
+      - [0x182C8, c, ric/pl_blueprints]
+      - [0x22028, c, ric/pl_crash_cross]
       - [0x22B48, c, ric_psp/22B48]
-      - [0x22B90, c, ric_psp/pl_subweapon_holywater]
-      - [0x24B68, c, ric_psp/pl_whip]
-      - [0x26878, c, ric_psp/pl_subweapon_dummy]
+      - [0x22B90, c, ric/pl_subweapon_holywater]
+      - [0x24B68, c, ric/pl_whip]
+      - [0x26878, c, ric/pl_subweapon_dummy]
       - [0x26898, c, ric_psp/pl_subweapon_cross]
       - [0x28400, .data, ric/pl_debug]
-      - [0x28410, .data, ric/pl_handlers]
-      - [0x28438, data]
+      - [0x28410, .data, ric/pl_steps]
+      - [0x28438, .data, ric/pl_header]
+      - [0x28458, .data, ric/pl_anims]
       - [0x28AB0, .data, ric/pl_subweapons]
-      - [0x28AD8, data]
+      - [0x28AE8, .data, ric/d_18568]
+      - [0x2D1F0, data]
       - [0x2D2B0, .data, ric/2F8E8]
       - [0x2D2D0, .data, ric/319C4]
       - [0x2D308, data]
-      - [0x30100, .rodata, ric/pl_handlers]
+      - [0x2D590, .data, ric/pl_blueprints]
+      - [0x2E0A8, .data, ric/spritebank3]
+      - [0x2E4D0, .data, ric/spritebank0]
+      - [0x2EEC8, .data, ric/spritebank1]
+      - [0x2F1A0, .data, ric/spritebank2]
+      - [0x2F6B8, .data, ric/pl_crash_cross]
+      - [0x2FBE8, .data, ric/pl_subweapon_holywater]
+      - [0x2FC58, .data, ric/pl_whip]
+      - [0x30010, data]
+      - [0x30100, .rodata, ric/pl_steps]
       - [0x30158, .rodata, ric/pl_main]
       - [0x301D8, .rodata, ric/pl_setstep]
       - [0x30200, .rodata, ric/319C4] # RicEntityCrashReboundStone
@@ -76,10 +87,10 @@ segments:
       # - [0x30270, .rodata, ric/319C4] # RicEntityAguneaLightning
       # - [0x30290, .rodata, ric/319C4] # RicEntityAguneaCircle
       # - [0x302B0, .rodata, ric/319C4] # RicEntitySubwpnStopwatch
-      - [0x302D0, .rodata, ric_psp/182C8] # RicEntityFactory
-      # - [0x30320, .rodata, ric_psp/182C8] # RicEntityHitByCutBlood
-      # - [0x30370, .rodata, ric_psp/182C8] # RicEntityPlayerBlinkWhite
-      - [0x303B0, .rodata, ric_psp/pl_subweapon_holywater] # RicEntitySubwpnHolyWater
+      - [0x302D0, .rodata, ric/pl_blueprints] # RicEntityFactory
+      # - [0x30320, .rodata, ric/pl_blueprints] # RicEntityHitByCutBlood
+      # - [0x30370, .rodata, ric/pl_blueprints] # RicEntityPlayerBlinkWhite
+      - [0x303B0, .rodata, ric/pl_subweapon_holywater] # RicEntitySubwpnHolyWater
       - [0x303C8, .rodata, ric_psp/pl_subweapon_cross]
       - {type: bss, vram: 0x92D6600}
   - [0x30400]

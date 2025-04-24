@@ -1,338 +1,326 @@
 #!/usr/bin/env python3
+"""This script is intended to make it easier for someone to decompile a function within the sotn-decomp project
+and optionally upload that function to decomp.me.
+Any questions or issues related to running it should be directed to the sotn-decomp discord #tooling channel:
+https://sotn-discord.xee.dev/
+
+Use `decompile.py --help` for usage and options"""
 
 import argparse
 import io
 import os
-import subprocess
+import sys
 import tempfile
-from contextlib import redirect_stdout
-from pathlib import Path
-import re
-from enum import Enum
+import requests
 import m2ctx
 import m2c.m2c.main as m2c
+from contextlib import redirect_stdout
+from pathlib import Path
+from typing import Optional
 
 
-# gets the root directory of the project
-# the way it works is that it looks for the directory 'src'
-def get_root_dir():
-    def search_root_dir(base_dir):
-        for dir in os.listdir(base_dir):
-            if os.path.isdir(dir) and dir == "src":
-                return os.path.normpath(base_dir)
-        return search_root_dir(os.path.join(base_dir, ".."))
+class SotnFunction(object):
+    """A representation of a function within sotn-decomp, including paths and code associated with the function"""
 
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    return search_root_dir(base_dir=script_dir)
+    def __init__(self, func_root: Path, function_path: Path, args: argparse.Namespace):
+        self.name: str = args.function
+        self.version: str = args.version
+        self._overlay: str = args.overlay
 
-
-def get_all_c_files(src_dir):
-    c_files_list = list()
-    for root, dirs, files in os.walk(src_dir):
-        for f in files:
-            if f.endswith(".c"):
-                c_files_list.append(os.path.join(root, f))
-    return c_files_list
-
-
-# global variables
-root_dir = get_root_dir()
-asm_dir = os.path.join(root_dir, "asm")
-src_dir = os.path.join(root_dir, "src")
-src_files = get_all_c_files(src_dir)
-
-
-class NonMatchingFunc(object):
-    def __init__(self, nonmatching_path):
-        split = nonmatching_path.split("/")
-
-        self.asm_path = nonmatching_path
-        self.name = os.path.splitext(os.path.basename(nonmatching_path))[0]
-        self.overlay_name = split[split.index("nonmatchings") - 1]
-        self.text_offset = split[split.index("nonmatchings") + 1]
-
-        assumed_path = "/".join(split[split.index("nonmatchings") + 1 : -1]) + ".c"
-        c_paths = [
-            src
-            for src in src_files
-            if src.endswith(assumed_path) and self.overlay_name in src.split("/")
-        ]
-        assert len(c_paths) == 1
-        self.src_path = c_paths[0]
-
-
-def get_nonmatching_functions(base_path, func_name) -> list:
-    function_list = list()
-    for root, dirs, files in os.walk(base_path):
-        if "/nonmatchings/" in root:
-            for f in files:
-                if f == f"{func_name}.s":
-                    full_path = os.path.join(root, f)
-                    function = NonMatchingFunc(full_path)
-                    function_list.append(function)
-    return function_list
-
-
-def get_c_context(src_file) -> str:
-    return m2ctx.import_c_file(src_file)
-
-
-def run_m2c(func: NonMatchingFunc, ctx_str: str):
-    with tempfile.NamedTemporaryFile(
-        mode="w", encoding="utf-8", suffix=".c"
-    ) as tmp_ctx:
-        tmp_ctx.writelines(ctx_str)
-        tmp_ctx.flush()
-        options = m2c.parse_flags(
-            [
-                "-P",
-                "4",
-                "--pointer-style",
-                "left",
-                "--knr",
-                "--indent-switch-contents",
-                "--comment-style",
-                "oneline",
-                "--target",
-                "mipsel-gcc-c",
-                "--context",
-                tmp_ctx.name,
-                func.asm_path,
-            ]
+        # These directories/paths should be considered to be specific to the function
+        self.root: Path = func_root
+        self.asm_dir: Path = func_root.joinpath("asm", args.version)
+        self.src_dir: Path = func_root.joinpath(
+            "src", "saturn" if args.version == "saturn" else ""
         )
-
-        with redirect_stdout(io.StringIO()) as f:
-            m2c.run(options)
-        return f.getvalue()
-
-
-def guess_unknown_type(dec: str) -> str:
-    ret = ""
-    for line in dec.splitlines():
-        if line.find("?") == -1:
-            line = line
-        elif line.startswith("? func"):
-            line = line.replace("? func_", "/*?*/ void func_")
-        elif line.startswith("extern ? D_"):
-            line = line.replace("extern ? D_", "extern /*?*/s32 D_")
-        elif line.startswith("extern ?* D_"):
-            line = line.replace("extern ?* D_", "extern /*?*/u8* D_")
-        ret += line + "\n"
-    return ret
-
-
-class InjectRes(Enum):
-    SUCCESS = 0
-    NOT_INJECTED = 1
-    NOT_COMPILABLE = 2
-    NON_MATCHING = 3
-    UNKNOWN_ERROR = -1
-
-
-# check if the overlay can be compiled
-def check_injected_code(func) -> InjectRes:
-    compile_result = subprocess.run(
-        f"make {func.overlay_name}",
-        cwd=root_dir,
-        shell=True,
-        check=False,
-        capture_output=True,
-    )
-    if compile_result.returncode == 0:
-        # good news, the code was compilable
-        # now checking for the checksum...
-        check_result = subprocess.run(
-            "make check", cwd=root_dir, shell=True, check=False, capture_output=True
-        )
-        if check_result.returncode == 0:
-            # decompilation successful! There is nothing else to do
-            return InjectRes.SUCCESS
-        else:
-            return InjectRes.NON_MATCHING
-    else:
-        return InjectRes.NOT_COMPILABLE
-
-
-def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> InjectRes:
-    with open(func.src_path) as file:
-        lines = [line.rstrip() for line in file]
-
-    # this portion of code NEEDS to be resiliant; if there is an exception
-    # while writing the file content, the original source code where the
-    # function is supposed to be injected will be lost.
-    try:
-        # assume function matches
-        found = False
-        newcode = ""
-        for line in lines:
-            if line.startswith("INCLUDE_ASM(") and func.name in line:
-                newcode += dec
-                found = True
-            else:
-                newcode += line + "\n"
-        with open(func.src_path, "w") as file:
-            file.writelines(newcode)
-
-        if not found:
-            return InjectRes.NOT_INJECTED
-        result = check_injected_code(func)
-        if result == InjectRes.SUCCESS:
-            return result
-
-        newcode = ""
-        for line in lines:
-            if line.startswith("INCLUDE_ASM(") and func.name in line:
-                newcode += "//#ifndef NON_MATCHING\n"
-                newcode += f"//{line}\n"
-                newcode += "//#else\n"
-                newcode += dec
-                newcode += "//#endif\n"
-            else:
-                newcode += line + "\n"
-        with open(func.src_path, "w") as file:
-            file.writelines(newcode)
-
-        return result
-
-    except Exception as e:
-        with open(func.src_path, "w") as file:
-            for line in lines:
-                file.write(line)
-                file.write("\n")
-        raise e
-
-
-def show_asm_differ_command(func: NonMatchingFunc):
-    isStage = True
-    if (
-        func.overlay_name == "dra"
-        or func.overlay_name == "ric"
-        or func.overlay_name.startswith("tt_")
-        or func.overlay_name == "main"
-    ):
-        isStage = False
-
-    tool_path = os.path.join(root_dir, "tools/asm-differ/diff.py")
-    tool_path = os.path.relpath(tool_path)
-    overlay_name = f"st/{func.overlay_name}" if isStage else func.overlay_name
-    print(f"python3 {tool_path} -mwo --overlay {overlay_name} {func.name}")
-
-
-def resolve_jumptables(func: NonMatchingFunc):
-    filepath = func.asm_path
-    with open(filepath, "r+") as asm_file:
-        lines = asm_file.readlines()
-        for i, line in enumerate(lines):
-            if "jr" in line and "$ra" not in line:
-                print(f"\nJump table call at line {i}")
-                jumpreg = line.split()[-1]
-                if "nop" not in lines[i - 1]:
-                    break
-                print("good nop")
-                # Build a regex to search for the standard jump table setup
-                lw_regex = r'lw\s*\\" + jumpreg + ", %lo\(([^)]*)\)\(\$at\)'
-                lwcheck = re.search(lw_regex, lines[i - 2])
-                if lwcheck == None:
-                    break
-                jumptable_name = lwcheck.group(1)
-                print(f"Jumptable: {jumptable_name}")
-                addu_regex = r"addu\s*\$at, \$at, \$"
-                adducheck = re.search(addu_regex, lines[i - 3])
-                if adducheck == None:
-                    print("Couldn't get the addu")
-                    print(lines[i - 3])
-                    break
-                print("Good addu")
-                lui_regex = r'lui\s*\$at, %hi\(" + jumptable_name + "\)'
-                luicheck = re.search(lui_regex, lines[i - 4])
-                if luicheck == None:
-                    break
-                print("Good lui")
-                # Confirmed the jump table is as expected. Now find it.
-                # Look in all rodata and data files.
-                paths = list(Path("asm").rglob("*.rodata.s"))
-                paths += list(Path("asm").rglob("*.data.s"))
-                for rodata_file in paths:
-                    with open(rodata_file) as f:
-                        rodata = f.read()
-                        if jumptable_name in rodata:
-                            print("Found jump table in rodata")
-                            all_rodata_lines = rodata.split("\n")
-                            outlines = [".section .rodata"]
-                            for line in all_rodata_lines:
-                                if jumptable_name in line or len(outlines) > 1:
-                                    outlines.append(line)
-                                    if len(line) == 0:
-                                        print("Outputting")
-                                        print(outlines)
-                                        asm_file.write("\n".join(outlines))
-                                        break
-
-
-def decompile(func_name: str, number_occurrence: int = None, force: bool = False):
-    funcs = get_nonmatching_functions(asm_dir, func_name)
-    if len(funcs) == 0:
-        print(f"function {func_name} not found or already decompiled")
-
-    if force:
-        funcs = funcs[:1]
-    elif number_occurrence is not None and number_occurrence < len(funcs):
-        funcs = [funcs[number_occurrence]]
-    else:
-        if len(funcs) > 1:
-            print(
-                f"{len(funcs)} occurrences found for '{func_name}' in the following overlays:"
+        self.abspath: Path = function_path.resolve()
+        self.relpath: Path = function_path.relative_to(func_root)
+        self.src_path: Path = self._infer_src_path()
+        if args.version == "saturn":
+            self.include_asm: str = (
+                f'INCLUDE_ASM("{self.abspath.relative_to(self.root).parent}", {self.relpath.stem}, {self.name});'
             )
-            for n, func in enumerate(funcs):
-                print(f"[{n}] {func.overlay_name} at {func.asm_path}")
-            print("invoke this decompiler again with the -n or -f parameter.")
-            os._exit(-1)
-    func = funcs[0]
+        else:
+            self.include_asm: str = (
+                f'INCLUDE_ASM("{self.abspath.relative_to(self.asm_dir).parent}", {self.relpath.stem});'
+            )
+        self.asm_code: str = self.abspath.read_text()
+        self.c_code: str = ""
+        self._context: str = ""
 
-    # print(f"func: {func.name}")
-    # print(f"overlay: {func.overlay_name}")
-    # print(f"text: {func.text_offset}")
-    # print(f"asm: {func.asm_path}")
-    # print(f"src: {func.src_path}")
-    resolve_jumptables(func)
+    @property
+    def overlay(self) -> str:
+        """Attempts to infer the overlay from the asm file path or returns None if one is not found.
+        The '_psp' extension will be included if the version is psp"""
+        nonmatchings_dir = (
+            "f_nonmat"
+            if args.version == "saturn"
+            else "psp" if "psp" in args.version else "nonmatchings"
+        )
+        if not self._overlay:
+            nonmatching_index = next(
+                (
+                    i
+                    for i, part in enumerate(self.relpath.parts)
+                    if part == nonmatchings_dir
+                ),
+                None,
+            )
+            self._overlay = (
+                self.relpath.parts[nonmatching_index - 1] if nonmatching_index else None
+            )
+        return self._overlay
 
-    ctx = get_c_context(func.src_path)
-    dec = run_m2c(func, ctx)
-    dec_res = guess_unknown_type(dec)
-    inject_res = inject_decompiled_function_into_file(func, dec_res)
-    if inject_res == InjectRes.SUCCESS:
-        print(f"function '{func.name}' decompiled successfully!")
-    elif inject_res == InjectRes.NON_MATCHING:
-        print(f"function '{func.name}' decompiled but not matching")
-        show_asm_differ_command(func)
-    elif inject_res == InjectRes.NOT_COMPILABLE:
-        print(f"function '{func.name}' decompiled but cannot be compiled")
-        show_asm_differ_command(func)
-    elif inject_res == InjectRes.NOT_INJECTED:
-        print(f"function '{func.name}' might already be decompiled")
+    @property
+    def asm_differ_command(self) -> str:
+        """Constructs the command string the user can enter to run asm-differ against the overlay this function resides in"""
+        return f"{Path(sys.executable).name} {self.root.joinpath("tools/asm-differ/diff.py").relative_to(Path.cwd())} -mwo --overlay {self.overlay} {self.name}"
+
+    @property
+    def context(self):
+        """Leverages m2ctx to create context text"""
+        if not self._context:
+            m2ctx.root_dir = self.root
+            m2ctx.VERSION_DEF = [f"-D_internal_version_{self.version}"]
+            self._context = m2ctx.import_c_file(self.src_path)
+        return self._context
+
+    def decompile(self) -> str:
+        """Leverages m2c to decompile the function and stores it so that decompilation only needs to run once"""
+        if self.version != "saturn" and not self.c_code:
+            self.c_code = self._guess_unknown_type(self._run_m2c())
+        return self.c_code
+
+    def upload_to_decompme(self) -> None:
+        """Uploads the decompiled code to decomp.me using the extracted context and SotN decomp.me presets"""
+        print("Loading up the catapult...")
+        # No current expectation of these changing, so hardcoding instead of retrieving them from the API programmatically is probably fine
+        # The preset id's can be found at https://www.decomp.me/api/compilers, searching the page for Castlevania: Symphony of the Night
+        preset = (
+            21 if self.version == "saturn" else 132 if "psp" in self.version else 14
+        )  # 14 is ps1 preset
+        payload = {
+            "name": self.name,
+            "target_asm": self.asm_code,
+            "context": self.context,
+            "preset": preset,
+            "diff_label": self.name,
+        }
+        if self.decompile():
+            payload["source_code"] = self.decompile()
+
+        try:
+            print("Launching cow...")
+            response = requests.post("https://decomp.me/api/scratch", data=payload)
+            response_json = response.json()
+            if "slug" in response_json:
+                self.scratch_link = (
+                    f"https://decomp.me/scratch/{response_json["slug"]}/"
+                )
+                claim_token = response_json.get("claim_token")
+                if claim_token:
+                    self.scratch_link += f"claim?token={claim_token}"
+                print(
+                    f"{self.name} successfully uploaded to decomp.me and can be {"claimed" if "claim" in self.scratch_link else "accessed"} at {self.scratch_link}"
+                )
+                print(
+                    "If this function had been previously decompiled, the decompiled code may need to be moved manually from the context tab to the source tab in decomp.me"
+                )
+            else:
+                print(
+                    f"Received an error when attempting to upload to decomp.me: {response_json.get("error", response.text)}"
+                )
+        except Exception as e:
+            print(
+                f"An unhandled error occurred while attempting to upload to decomp.me: {e}"
+            )
+
+    def _run_m2c(self) -> str:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", suffix=".c"
+        ) as tmp_ctx:
+            tmp_ctx.writelines(self.context)
+            tmp_ctx.flush()
+            options = m2c.parse_flags(
+                [
+                    "-P",
+                    "4",
+                    "--pointer-style",
+                    "left",
+                    "--knr",
+                    "--indent-switch-contents",
+                    "--comment-style",
+                    "oneline",
+                    "--target",
+                    "mipsel-gcc-c",
+                    "--context",
+                    tmp_ctx.name,
+                    str(self.abspath),
+                ]
+            )
+
+            with redirect_stdout(io.StringIO()) as f:
+                m2c.run(options)
+                return f.getvalue()
+
+    def _guess_unknown_type(self, decompiled_code: str) -> str:
+        return (
+            decompiled_code.replace("? func_", "/*?*/ void func_")
+            .replace("extern ? D_", "extern /*?*/s32 D_")
+            .replace("extern ?* D_", "extern /*?*/u8* D_")
+        )
+
+    def _infer_src_path(self) -> Optional[Path]:
+        inferred_c_name = f"{self.abspath.parent.parent.name if self.version == "saturn" else self.abspath.parent.name}.c"
+        inferred_c_files = (
+            file
+            for file in self.src_dir.rglob(inferred_c_name)
+            if self.overlay in file.parts or self.overlay in file.name
+        )
+        return next(
+            (path for path in inferred_c_files if self.name in path.read_text()), None
+        )
+
+
+def get_repo_root(current_dir: Path = Path(__file__).resolve().parent) -> Path:
+    """Steps backward from the file location to infer the root of the repo"""
+    if next(current_dir.glob("src"), None) or current_dir.name == "/":
+        return current_dir
     else:
-        print("unhandled error!")
+        return get_repo_root(current_dir.parent)
+
+
+def get_function_path(asm_dir: Path, args: argparse.Namespace) -> Optional[Path]:
+    """Uses the version asm directory and the passed args to find any files matching the function name."""
+    file_name = f"{args.function.replace("func_0", "f") if args.version == "saturn" else args.function}.s"
+    matchings_dir = "f_match" if args.version == "saturn" else "matchings"
+    nonmatchings_dir = (
+        "f_nonmat"
+        if args.version == "saturn"
+        else "psp" if "psp" in args.version else "nonmatchings"
+    )
+
+    candidates = tuple(file for file in asm_dir.rglob(file_name))
+    matching = tuple(c for c in candidates if matchings_dir in c.parts)
+    nonmatching = tuple(
+        c
+        for c in candidates
+        if nonmatchings_dir in c.parts and (not args.overlay or args.overlay in c.parts)
+    )
+
+    if not matching and not nonmatching:
+        print(
+            f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        )
+        return None
+    elif matching and not nonmatching:
+        print(
+            f"It appears that {args.function} has already been decompiled and matched."
+        )
+        return None
+
+    if len(nonmatching) > 1:
+        message = f"{len(nonmatching)} possible files found for {args.function} in the following locations:\n"
+        message += f"{"\n".join(f"\t{path.relative_to(asm_dir.parent)}" for path in nonmatching)}"
+        message += "Invoke this tool again using the -o/--overlay argument to specify the appropriate overlay."
+        print(message)
+        return None
+    else:
+        return nonmatching[0]
+
+
+def safe_write(file_path: Path, lines: list[str]) -> None:
+    """Writes to a temp file, then replaces the original file after the temp file is successfully written"""
+    # Since we are using os.replace, the temp file needs to be on the same filesystem as the original.
+    with tempfile.NamedTemporaryFile(
+        mode="w", encoding="utf-8", dir=file_path.parent
+    ) as temp_file:
+        temp_file.writelines([l.rstrip("\n") + "\n" for l in lines])
+        temp_file.flush()
+        os.replace(temp_file.name, file_path)
+
+
+def inject_decompiled_function(repo_root: Path, sotn_func: SotnFunction) -> None:
+    """Replaces the INCLUDE_ASM macro line with the decompiled code, writes it, then returns a status based on the results"""
+    lines = sotn_func.src_path.read_text().splitlines()
+
+    # This should be removed when the remaining 4 functions in mad are decompiled
+    sotn_func.include_asm = sotn_func.include_asm.replace("st/mad", "asm/us/st/mad")
+
+    if sotn_func.include_asm in lines:
+        function_index = lines.index(sotn_func.include_asm)
+
+        # Using copy() so that the lines object is not modified when new_lines is
+        new_lines = lines.copy()
+        new_lines[function_index] = sotn_func.decompile()
+        safe_write(sotn_func.src_path, new_lines)
+
+        print(
+            f"{sotn_func.name} was successfully decompiled, but likely will not compile without adjustments."
+        )
+        print(
+            f"When it successfully compiles, the following command can be used to look for the differences:\n\t{sotn_func.asm_differ_command}"
+        )
+    elif [line for line in lines if sotn_func.name in line]:
+        print(
+            f"{sotn_func.name} seems to have already been decompiled in {sotn_func.src_path.relative_to(repo_root)}"
+        )
+    else:
+        print(
+            f"Could not find function {args.function}, are you sure it exists in version {args.version}?"
+        )
+
+
+def main(args: argparse.Namespace) -> None:
+    """Executes the decompilation workflow and gives console feedback based on the results"""
+    if args.version == "saturn":
+        message = f"Local decompilation of saturn overlays is not currently supported"
+        if args.upload:
+            message += ", the function will only be uploaded to decomp.me"
+        else:
+            message += ", invoke the tool again with the -u/--upload option"
+        print(message)
+
+    repo_root = get_repo_root()
+    function_path = get_function_path(repo_root.joinpath("asm", args.version), args)
+
+    if function_path:
+        sotn_func = SotnFunction(repo_root, function_path, args)
+        if sotn_func.src_path and sotn_func.decompile():
+            inject_decompiled_function(repo_root, sotn_func)
+
+        if args.upload:
+            sotn_func.upload_to_decompme()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="automatically decompiles a function")
-    parser.add_argument("function", help="function name to decompile")
+    parser = argparse.ArgumentParser(
+        description="Decompile a function locally or upload to decomp.me"
+    )
+    parser.add_argument("function", help="The name of the function to decompile")
     parser.add_argument(
-        "-n",
-        "--number-occurrence",
-        help="the occurrence number in case multiple functions with the same name are found",
-        type=int,
-        default=None,
+        "-v",
+        "--version",
+        required=False,
+        type=str,
+        default=os.getenv("VERSION") or "us",
+        help="Sets the target game version and overrides VERSION environment variable",
+    )
+    parser.add_argument(
+        "-o",
+        "--overlay",
+        help="The overlay to use if there are multiple asm files that match the provided function name",
+        type=str,
         required=False,
     )
     parser.add_argument(
-        "-f",
-        "--force",
-        help="force decompiling only the first occurrence",
-        default=None,
-        required=False,
+        "-u",
+        "--upload",
+        help="Upload the function to decomp.me after decompilation",
         action="store_true",
+        required=False,
     )
 
     args = parser.parse_args()
-    decompile(args.function, args.number_occurrence, args.force)
+
+    main(args)

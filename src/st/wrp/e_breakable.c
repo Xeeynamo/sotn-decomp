@@ -10,7 +10,7 @@ static u8 g_eBreakableHitboxes[] = {8, 8, 0, 0, 0, 0, 0, 0};
 #ifndef VERSION_PSP // on PSP this is in the BSS section, not data
 static u8 g_eBreakableExplosionTypes[] = {0, 0, 0, 0, 0, 0, 0, 0};
 #else
-extern u8 g_eBreakableExplosionTypes[];
+static u8 g_eBreakableExplosionTypes[] = {0};
 #endif
 
 static u16 g_eBreakableanimSets[] = {
@@ -25,9 +25,7 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT};
 
-#ifndef VERSION_PSP
-// on PSP this might be either optimised out to BSS or completely removed
+// stripped on PSP
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
-#endif
 
 #include "../e_breakable.h"
