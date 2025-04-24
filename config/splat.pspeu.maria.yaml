@@ -45,5 +45,5 @@ segments:
       - [0x80, c, 80]
       - [0x1A180, data]
       - [0x3F480, .rodata, 80]
-      - {type: bss, vram: 0x92E5880}
+      - {type: bss, vram: 0x92E5980}
   - [0x3F700]
