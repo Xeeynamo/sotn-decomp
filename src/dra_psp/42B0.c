@@ -137,6 +137,17 @@ s32 func_800EDD9C(u8 type, s32 count) {
     return 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", FreePrimitives);
+void FreePrimitives(s32 primitiveIndex) {
+    Primitive* prim; 
+
+    for (prim = &g_PrimBuf[primitiveIndex]; prim != NULL; prim = prim->next) {
+        if (prim->type == PRIM_ENV) {
+            **(DR_ENV***)&prim->r1 = NULL;
+            prim->type = PRIM_NONE;
+        } else {
+            prim->type = PRIM_NONE;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/42B0", RenderPrimitives);
