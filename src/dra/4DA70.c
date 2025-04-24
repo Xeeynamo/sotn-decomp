@@ -63,10 +63,10 @@ s32 func_800EDB58(u8 primType, s32 count) {
     s32 i;
     s32 var_v1;
     Primitive* prim;
-    
+
     var_v1 = count;
     primStartIdx = 0;
-    for(i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++){
+    for (i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++) {
         if (prim->type != PRIM_NONE) {
             primStartIdx = i + 1;
             var_v1 = count;
@@ -77,11 +77,11 @@ s32 func_800EDB58(u8 primType, s32 count) {
     if (var_v1 != 0) {
         return -1;
     }
-    
+
     for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
         DestroyPrimitive(prim);
         prim->type = primType;
-        prim->next = &g_PrimBuf[primStartIdx] + i + 1;    
+        prim->next = &g_PrimBuf[primStartIdx] + i + 1;
     }
     prim[-1].type &= 0xEF;
     prim[-1].next = NULL;
@@ -94,8 +94,8 @@ s32 AllocPrimitives(u8 primType, s32 count) {
     Primitive* prim;
     s16 index;
 
-    for(i = 0, prim = &g_PrimBuf[0]; i < MAX_PRIM_ALLOC_COUNT; i++, prim++){
-        if (prim->type == 0) {
+    for (i = 0, prim = &g_PrimBuf[0]; i < MAX_PRIM_ALLOC_COUNT; i++, prim++) {
+        if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
                 prim->type = primType;
@@ -107,7 +107,7 @@ s32 AllocPrimitives(u8 primType, s32 count) {
                 prim->type = primType;
                 index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
-                    prim->type = 0;
+                    prim->type = PRIM_NONE;
                     return -1;
                 }
                 prim->next = &g_PrimBuf[index];
@@ -123,7 +123,8 @@ s32 func_800EDD9C(u8 type, s32 count) {
     Primitive* prim;
     s16 foundPolyIndex;
 
-    for(prim = &g_PrimBuf[LEN(g_PrimBuf) - 1],i = LEN(g_PrimBuf) - 1; i >= 0; i--, prim--) {
+    for (prim = &g_PrimBuf[LEN(g_PrimBuf) - 1], i = LEN(g_PrimBuf) - 1; i >= 0;
+         i--, prim--) {
         if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
@@ -138,13 +139,13 @@ s32 func_800EDD9C(u8 type, s32 count) {
             return foundPolyIndex;
         }
     }
-    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
     return 0;
-    #endif
+#endif
 }
 
 void FreePrimitives(s32 primitiveIndex) {
-    Primitive* prim; 
+    Primitive* prim;
 
     for (prim = &g_PrimBuf[primitiveIndex]; prim != NULL; prim = prim->next) {
         if (prim->type == PRIM_ENV) {
@@ -166,7 +167,7 @@ typedef union {
 } PrimBuf;
 
 typedef struct {
-    OT_TYPE* ot;
+    u_long* ot;
     POLY_GT4* gt4;
     POLY_G4* g4;
     POLY_GT3* gt3;
@@ -207,15 +208,15 @@ void RenderPrimitives(void) {
     s32 i;
     Primitive* prim;
     u8 primType;
-    bool useShadeTex;
-    bool dtd;
-    bool unkBool;
+    s32 useShadeTex;
+    s32 dtd;
+    s32 unkBool;
 
     DRAWENV drawEnv;
     s16 drawOfs;
     DR_ENV* env;
 
-    r->ot = g_CurrentBuffer->ot;
+    r->ot = (u_long*)&g_CurrentBuffer->ot[0];
     r->gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     r->gt3 = &g_CurrentBuffer->polyGT3[g_GpuUsage.gt3];

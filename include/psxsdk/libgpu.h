@@ -181,13 +181,13 @@ typedef struct {
 // In func_800EDB08, the setcode needs to write to offset 0xb.
 #ifndef VERSION_PC
 typedef struct {
-    #ifdef VERSION_PSP
+#ifdef VERSION_PSP
     u_long addr;
     u_long len;
-    #else
+#else
     unsigned addr : 24;
     unsigned len : 8;
-    #endif
+#endif
     u_char r0, g0, b0, code;
 } P_TAG;
 #else
