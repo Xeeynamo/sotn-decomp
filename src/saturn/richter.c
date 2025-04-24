@@ -84,8 +84,18 @@ void RicSetAnimation(AnimationFrame* anim) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA088, func_060AA088);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA194, func_060AA194);
 
-// RicDecelerateX
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA2E0, func_060AA2E0);
+void RicDecelerateX(s32 speed) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += speed;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= speed;
+        if (g_CurrentEntity->velocityX < 0)
+            g_CurrentEntity->velocityX = 0;
+    }
+}
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA310, func_060AA310);
 
