@@ -225,7 +225,7 @@
 | dra    | ClearStatBuffs                      |       25 |          4 |        |                                 |       |
 | dra    | PerformHellfire                     |       25 |          4 |        |                                 |       |
 | dra    | MuteSound                           |       25 |          6 |        |                                 |       |
-| dra    | 26948.rodata                        |       26 |          0 | Yes    |                                 |       |
+| dra    | 274E8.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
 | dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
 | dra    | func_psp_090FA740                   |       26 |          2 |        |                                 |       |
