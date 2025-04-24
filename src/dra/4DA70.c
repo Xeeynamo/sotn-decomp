@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void DestroyPrimitive(Primitive* prim) {
+static void DestroyPrimitive(Primitive* prim) {
     s32 i;
     s32 n;
     u32* primData = (u32*)prim;
@@ -13,8 +13,8 @@ void DestroyPrimitive(Primitive* prim) {
 }
 
 void DestroyAllPrimitives(void) {
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
         DestroyPrimitive(prim);

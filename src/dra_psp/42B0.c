@@ -54,6 +54,10 @@ DR_ENV* func_800EDB08(Primitive* prim) {
     return NULL;
 }
 
+s32 D_800A2438 = 0;
+
+// This function casts its return value as an s16, but at least one caller
+// (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
 s32 func_800EDB58(u8 primType, s32 count) {
     s32 primStartIdx;
     s32 i;

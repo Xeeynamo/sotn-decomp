@@ -154,13 +154,13 @@ segments:
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/63C08]
-      - {start: 0xEED80, type: bss, vram: 0x091CB700, name: bss1}
-      - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
-      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss2}
-      - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}
-      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss3}
-      - {start: 0xEED80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
-      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss4}
-      - {start: 0xEED80, type: .bss, vram: 0x09236830, name: dra_psp/63C08}
-      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss5}
+      - {start: 0xeed80, type: bss, vram: 0x091CB700, name: bss1}
+      - {start: 0xeed80, type: .bss, vram: 0x091CDC58, name: dra_psp/42B0}
+      - {start: 0xeed80, type: bss, vram: 0x091CDC60, name: bss2}
+      - {start: 0xeed80, type: .bss, vram: 0x09234B68, name: dra/692E8}
+      - {start: 0xeed80, type: bss, vram: 0x09234B98, name: bss3}
+      - {start: 0xeed80, type: .bss, vram: 0x09234CB0, name: dra/71830}
+      - {start: 0xeed80, type: bss, vram: 0x09234CC0, name: bss4}
+      - {start: 0xeed80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
+      - {start: 0xeed80, type: bss, vram: 0x09234DB8, name: bss5}
   - [0xEED80]
