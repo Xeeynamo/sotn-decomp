@@ -396,7 +396,13 @@ void func_80169C10(Entity* self) {
 }
 
 // made by blueprint #5, see step 0 of RicEntitySubwpnCross
-static s16 D_80155E68[] = {9, 10, 11, 12};
+static s16 D_80155E68[] = {
+    9, 10, 11, 12,
+#if defined(VERSION_PSP) // @bug: not sure if this is a bugfix for an array oob
+    0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+#endif
+};
 void RicEntitySubwpnCrossTrail(Entity* self) {
     s16* temp;
 
@@ -418,7 +424,6 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->rotZ = 0xC00;
         self->step++;
         break;
-
     case 1:
         self->rotZ -= 0x80;
         if (self->ext.crossBoomerang.parent->step == 7) {
@@ -426,7 +431,6 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
             self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
-
     case 2:
         self->rotZ -= 0x80;
         if (--self->ext.crossBoomerang.timer == 0) {

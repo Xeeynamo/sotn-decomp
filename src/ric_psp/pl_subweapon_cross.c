@@ -397,7 +397,60 @@ void func_80169C10(Entity* self) {
     }
 }
 
-// clang-format off
-INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCrossTrail);
+// made by blueprint #5, see step 0 of RicEntitySubwpnCross
+static s16 D_80155E68[] = {
+    9, 10, 11, 12,
+#if defined(VERSION_PSP) // @bug: not sure if this is a bugfix for an array oob
+    0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+#endif
+};
+void RicEntitySubwpnCrossTrail(Entity* self) {
+    s16* temp;
 
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        // the parent pointer is set in RicEntityFactory.
+        // the value of unk84 is set in RicEntitySubwpnCross
+        self->ext.crossBoomerang.unk84 =
+            self->ext.crossBoomerang.parent->ext.crossBoomerang.unk84;
+        self->animSet = ANIMSET_OVL(17);
+        self->animCurFrame = D_80155E68[self->params];
+        self->unk5A = 0x66;
+        self->palette = PAL_OVL(0x1B0);
+        self->drawMode = DRAW_TPAGE;
+        self->facingLeft = PLAYER.facingLeft;
+        self->zPriority = PLAYER.zPriority;
+        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->rotZ = 0xC00;
+        self->step++;
+        break;
+    case 1:
+        self->rotZ -= 0x80;
+        if (self->ext.crossBoomerang.parent->step == 7) {
+            self->step++;
+            self->ext.crossBoomerang.timer = (self->params + 1) * 4;
+        }
+        break;
+    case 2:
+        self->rotZ -= 0x80;
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    // get the x and y position from the parent (must align)
+    temp = (s16*)&self->ext.crossBoomerang.unk84[0];
+    temp += self->ext.crossBoomerang.unk80 * 2;
+    self->posX.i.hi = *temp - g_Tilemap.scrollX.i.hi;
+    temp++;
+    self->posY.i.hi = *temp - g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
+}
+
+// clang-format off
 INCLUDE_ASM("ric_psp/nonmatchings/ric_psp/pl_subweapon_cross", RicEntitySubwpnCrashCrossParticles);
