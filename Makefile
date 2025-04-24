@@ -127,10 +127,15 @@ endef
 define get_conf_merged
 	$(shell $(PYTHON) -c 'import yaml;\
 	import os;\
+	import sys;\
 	yaml_file=open("$(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml");\
 	config = yaml.safe_load(yaml_file); yaml_file.close();\
 	c_subsegments = [x for x in config["segments"][1]["subsegments"] if type(x) == list and (x[1] == "c" or x[1] == ".data")];\
+	print(f"c_subsegments: {c_subsegments}\n", file=sys.stderr);\
 	merged_functions = [x[2].split("/")[1] for x in c_subsegments if str(x[2]).startswith("$(1)/")];\
+	print(f"merged_functions: {merged_functions}\n", file=sys.stderr);\
+	print(f"1: $1\n", file=sys.stderr);\
+	print(f"2: $2\n", file=sys.stderr);\
 	print(" ".join(merged_functions))')
 endef
 get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))

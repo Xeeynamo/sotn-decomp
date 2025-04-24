@@ -34,6 +34,8 @@ $(BUILD_DIR)/assets/%/mwo_header.bin.o: assets/%/mwo_header.bin
 	$(if $(VERBOSE),,@echo "Building $<";) $(LD) -r -b binary -o $@ $<
 
 # Step 2/5 of build
+testa:
+	echo $(call get_psp_o_files,maria)
 $(foreach target,$(GAME),$(BUILD_DIR)/$(target).elf): $(BUILD_DIR)/%.elf: $(BUILD_DIR)/%.ld $$(call get_psp_o_files,%)
 	$(call link,$*,$@)
 $(BUILD_DIR)/st%.elf: $(BUILD_DIR)/st%.ld $$(call get_psp_o_files,%,st)
