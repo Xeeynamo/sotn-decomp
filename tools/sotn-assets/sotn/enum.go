@@ -49,6 +49,9 @@ func ParseCEnum(r io.Reader, name string) (map[int]string, error) {
 				}
 				if len(parts) > 1 {
 					valueStr := strings.TrimSpace(parts[1])
+					if strings.Contains(valueStr, " |") { // ignore FLAG_1 | FLAG_2
+						continue
+					}
 					base := 10
 					if strings.HasPrefix(valueStr, "0x") {
 						valueStr = valueStr[2:]

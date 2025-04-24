@@ -19,6 +19,7 @@ func TestParseCEnum(t *testing.T) {
 		"/* 0x18nope */ E_MARIA = 0x18\n" +
 		"E_COMMENT = 123 // ignore\n" +
 		"E_COMMENT_2 /* ignore this as well */\n" +
+		"FLAG_1 | FLAG_2 // ignore\n" +
 		"} // malformed, it misses a semicolon\n"
 	m, err := ParseCEnum(strings.NewReader(src), "MyEnum")
 	require.NoError(t, err)
