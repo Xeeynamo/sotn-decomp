@@ -43,12 +43,3 @@ extern s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS]; // on BSS
 s16 g_RicSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
 #endif
 s16 g_RicSensorsWallCrouch[NUM_VERTICAL_SENSORS] = {23, 16, 8, 4, 4, 1, 1};
-
-#if !defined(VERSION_PSP)
-AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN] = {};
-u8 D_80154674[][4] = {{16, 127, 63, 0},
-                      {16, 127, 0, 0},
-                      {16, 63, 63, 127},
-                      {16, 63, 127, 63},
-                      {16, 47, 63, 127}};
-#endif

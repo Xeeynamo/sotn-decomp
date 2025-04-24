@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
+#if defined(VERSION_PSP)
+extern AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN]; // BSS
+#else
+static AnimationFrame* g_RicEmptyAnimGroup[ZERO_LEN] = {};
+#endif
+
+static u8 D_80154674[][4] = {
+    {16, 127, 63, 0},
+    {16, 127, 0, 0},
+    {16, 63, 63, 127},
+    {16, 63, 127, 63},
+    {16, 47, 63, 127}};
+
 static SubweaponDef subweapons_def[] = {
 #include "subweapons_def.h"
 };
