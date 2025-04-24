@@ -138,6 +138,8 @@
 
 #define setShadeTex(p, tge)                                                    \
     ((tge) ? setcode(p, getcode(p) | 0x01) : setcode(p, getcode(p) & ~0x01))
+#else
+#define setSemiTrans SetSemiTrans
 #endif
 
 #define getTPage(tp, abr, x, y)                                                \
