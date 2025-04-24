@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "inc_asm.h"
-#include "sattypes.h"
+#include "richter.h"
 
 INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5060, func_060A5060);
@@ -144,8 +143,17 @@ int func_8015CAAC(s32 speed) {
     return speed;
 }
 
-// RicSetInvincibilityFrames
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3E0, func_060AA3E0);
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x15), 0);
+        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
+        }
+    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
+    }
+}
 
 // DisableAfterImage
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
@@ -174,6 +182,8 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
 
 // RicCreateEntFactoryFromEntity
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC398, func_060AC398);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
