@@ -12,6 +12,7 @@ _RicSetHighJump = 0x060a92d8;
 _RicSetStep = 0x060aa048;
 _RicSetAnimation = 0x060aa064;
 _RicDecelerateX = 0x060aa2e0;
+_RicDecelerateY = 0x060AA310;
 _RicCheckFacing = 0x060aa340;
 _RicSetSpeedX = 0x60AA3BC;
 _RicSetInvincibilityFrames = 0x060aa3e0;

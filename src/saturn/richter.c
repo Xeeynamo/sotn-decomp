@@ -97,7 +97,19 @@ void RicDecelerateX(s32 speed) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA310, func_060AA310);
+void RicDecelerateY(s32 speed) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += speed;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= speed;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
 
 s32 RicCheckFacing(void) {
     if (g_Player.unk44 & 2) {
