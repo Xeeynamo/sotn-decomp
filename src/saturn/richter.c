@@ -108,13 +108,25 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF7F4, func_060AF7F4);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AFE70, func_060AFE70);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B052A, func_060B052A);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B05EC, func_060B05EC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B0604, func_060B0604);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B0610, func_060B0610);
+
+void func_060B0604() {}
+
+const u16 pad_60B060E = 0;
+
+s32 func_060B0610() { return 0; }
+
+const u16 pad_60B061A = 0;
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, func_060B061C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, func_060B12CC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1458, func_060B1458);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1508, func_060B1508);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1514, func_060B1514);
+
+void func_060B1508() {}
+
+void func_060B1514() {}
+
+const u16 pad_60B151E = 0;
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1520, func_060B1520);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/data", d60B23B6, d_060B23B6);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B240C, func_060B240C);
@@ -148,7 +160,11 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8DF8, func_060B8DF8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B91B8, func_060B91B8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9300, func_060B9300);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B940C, func_060B940C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B965C, func_060B965C);
+
+void func_060B965C() {}
+
+const u16 pad_60B9666 = 0x0009; // nop
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A2C, func_060B9A2C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
