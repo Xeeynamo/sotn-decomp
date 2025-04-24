@@ -454,15 +454,11 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
 // Surprisingly pretty different from DRA version.
 void RicEntitySubwpnCrashCrossParticles(Entity* self) {
     Primitive* prim;
-    s32 var_a2;
-    s32 temp_s0;
-    s32 temp_a3;
-    s32 temp_t0;
-    u8* temp_a1;
-    s32 priority;
-
-    s16 temp_a0;
-    u8 temps0copy;
+    s16 psp_s4;
+    s16 psp_s3;
+    s16 psp_s2;
+    u8* psp_s1;
+    s16 temp_s0;
 
     if (self->step == 0) {
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
@@ -473,16 +469,15 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         self->ext.timer.t = 0xC0;
-        self->step += 1;
+        self->step++;
         return;
     }
     if (--self->ext.timer.t == 0) {
         DestroyEntity(self);
         return;
     }
-    if ((self->ext.timer.t >= 9) && !(self->ext.timer.t & 3)) {
-        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
-             prim = prim->next) {
+    if (self->ext.timer.t > 8 && !(self->ext.timer.t & 3)) {
+        for (prim = &g_PrimBuf[self->primIndex]; prim; prim = prim->next) {
             if (prim->r0 == 0) {
                 prim->r0 = 1;
                 prim->r1 = 0;
@@ -490,60 +485,68 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
             }
         }
     }
-    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
-        if (prim->r0 == 0) {
+    for (prim = &g_PrimBuf[self->primIndex]; prim; prim = prim->next) {
+        if (!prim->r0) {
             continue;
         }
         if (prim->r1 == 0) {
             temp_s0 = rand() & 0x3F;
             prim->g0 = (rand() % 237) + 9;
-            temps0copy = temp_s0;
-            prim->g1 = -0x10 - (rand() & 0x20);
+            prim->g1 = 0xF0 - (rand() & 0x20);
             prim->clut = 0x1B0;
             prim->tpage = 0x1A;
             prim->b0 = 0;
-            priority = (temp_s0 + PLAYER.zPriority) - 0x20;
+            prim->priority = PLAYER.zPriority + temp_s0 - 0x20;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-            prim->g3 = (temps0copy >> 2) + 4;
-            prim->priority = priority;
+            prim->g3 = ((u8)temp_s0 >> 2) + 4;
             prim->r1++;
         } else {
             prim->g1 -= prim->g3;
-            if (((u8)prim->b0 >= 6U) || ((u8)prim->g1 < 0x18U)) {
+            if ((u8)prim->b0 >= 6 || (u8)prim->g1 < 0x18) {
                 prim->drawMode = DRAW_HIDE;
                 prim->r0 = 0;
             }
         }
-        if (prim->r0 == 0) {
+        if (!prim->r0) {
             continue;
         }
-        temp_a1 = &uv_anim_801548F4;
-        temp_a3 = prim->g0;
-        temp_t0 = prim->g1;
-        temp_a1 += prim->b0 * 8; // weird array indexing
+        psp_s4 = 0;
+        psp_s3 = 0;
+        psp_s4 |= prim->g0;
+        psp_s3 |= prim->g1;
+        psp_s1 = uv_anim_801548F4[0];
+        psp_s1 += prim->b0 * 8; // weird array indexing
         if (prim->b0 >= 3) {
-            var_a2 = 4;
+            psp_s2 = 4;
         } else {
-            var_a2 = 8;
+            psp_s2 = 8;
         }
-        temp_a0 = temp_a3 - var_a2;
-        prim->y1 = prim->y0 = temp_t0 - var_a2;
-        prim->x0 = temp_a0;
-        prim->x1 = temp_a3 + var_a2;
-        prim->x2 = temp_a0;
-        prim->y2 = temp_t0 + var_a2;
-        prim->x3 = var_a2 + temp_a3;
-        prim->y3 = var_a2 + temp_t0;
-        prim->u0 = *temp_a1++;
-        prim->v0 = *temp_a1++;
-        prim->u1 = *temp_a1++;
-        prim->v1 = *temp_a1++;
-        prim->u2 = *temp_a1++;
-        prim->v2 = *temp_a1++;
-        prim->u3 = *temp_a1++;
-        prim->v3 = *temp_a1++;
+        prim->x0 = psp_s4 - psp_s2;
+        prim->y0 = psp_s3 - psp_s2;
+        prim->x1 = psp_s4 + psp_s2;
+        prim->y1 = psp_s3 - psp_s2;
+        prim->x2 = psp_s4 - psp_s2;
+        prim->y2 = psp_s3 + psp_s2;
+        prim->x3 = psp_s4 + psp_s2;
+        prim->y3 = psp_s3 + psp_s2;
+        prim->u0 = *psp_s1;
+        psp_s1++;
+        prim->v0 = *psp_s1;
+        psp_s1++;
+        prim->u1 = *psp_s1;
+        psp_s1++;
+        prim->v1 = *psp_s1;
+        psp_s1++;
+        prim->u2 = *psp_s1;
+        psp_s1++;
+        prim->v2 = *psp_s1;
+        psp_s1++;
+        prim->u3 = *psp_s1;
+        psp_s1++;
+        prim->v3 = *psp_s1;
+        psp_s1++;
         if (!(g_GameTimer & 1)) {
-            prim->b0 += 1;
+            prim->b0++;
         }
     }
 }
