@@ -64,13 +64,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
-	for i, ch := range data {
-		sb.WriteString("0x" + strconv.FormatInt(int64(ch), 16) + ",")
-		if (i & 15) == 15 {
-			sb.WriteString("\n")
-		}
-	}
-	sb.WriteString("\n")
+	util.WriteBytesAsHex(&sb, data)
 	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()), 0644)
 }
 
