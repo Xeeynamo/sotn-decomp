@@ -22,3 +22,4 @@ _RicCreateEntFactoryFromEntity = 0x060ac398;
 _g_IsPrologueStage = 0x060BED9C;
 _D_801554F0 = 0x060BFD84;
 _D_8015550C = 0x060BFDA0;
+_D_80155534 = 0X060BFDC8;

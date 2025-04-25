@@ -89,9 +89,22 @@ enum RicBlueprints {
 };
 
 enum RicTimers {
-    // there seems to be two new values on Saturn
-    PL_T_INVINCIBLE_SCENE = 15, // "dying" in the prologue
+    PL_T_POISON,
+    PL_T_CURSE,
+    PL_T_2,
+    PL_T_3,
+    PL_T_4,
+    PL_T_5,
+    PL_T_6,
+    PL_T_7,
+    PL_T_8,
+    PL_T_ATTACK,
+    PL_T_10,
+    PL_T_RUN,
+    PL_T_12,
+    PL_T_INVINCIBLE_SCENE, // "dying" in the prologue
     PL_T_INVINCIBLE,
+    PL_T_AFTERIMAGE_DISABLE,
 };
 
 // Richter mostly uses the same steps as Alucard, or uses unused Alucard steps.
@@ -134,6 +147,7 @@ enum RicSteps {
     PL_S_DEBUG = 0xF0,
 };
 
-AnimationFrame D_8015550C[];
 AnimationFrame D_801554F0[];
+AnimationFrame D_8015550C[];
+AnimationFrame D_80155534[];
 extern s32 g_IsPrologueStage;

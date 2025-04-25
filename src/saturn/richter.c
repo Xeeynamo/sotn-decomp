@@ -50,9 +50,29 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, func_060A8F8C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
 
-// RicSetFall
-void RicSetFall(void);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9100, func_060A9100);
+void RicSetFall(void) {
+    if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
+        PLAYER.velocityX = 0;
+    }
+    if (g_Player.prev_step != PL_S_WALK && g_Player.prev_step != PL_S_RUN) {
+        RicSetAnimation(D_80155534);
+    }
+    if (g_Player.prev_step == PL_S_RUN) {
+        g_Player.unk44 = 0x10;
+    }
+    RicSetStep(PL_S_FALL);
+    PLAYER.velocityY = FIX(2);
+    g_Player.timers[PL_T_5] = 8;
+    g_Player.timers[PL_T_6] = 8;
+    g_Player.timers[PL_T_CURSE] = 0;
+    g_Player.timers[PL_T_8] = 0;
+    if (g_Player.prev_step == PL_S_SLIDE) {
+        g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
+        PLAYER.pose = 2;
+        PLAYER.poseTimer = 0x10;
+        PLAYER.velocityX /= 2;
+    }
+}
 
 static inline void RicSetSpeedX(s32 speed) {
     if (g_CurrentEntity->facingLeft == 1)

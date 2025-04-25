@@ -16,6 +16,7 @@ typedef unsigned long long u64;
 #define bool s32
 
 #define NULL 0
+#define FIX(x) ((s32)((x) * 65536.0))
 
 #define PAD_RIGHT 0x8000
 #define PAD_LEFT 0x4000
@@ -317,8 +318,8 @@ typedef struct Unkstruct_800A7734 {
 typedef struct {
     char pad0[0x3B0];
     /* 0x3B0 */ u32 padPressed;
-    char pad3B4[0x10];
-    /* 0x3C4 */ s16 timers[18]; // the array is bigger than PSX
+    char pad3B4[0x14];
+    /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
     char pad3E8[0x10];
     /* 0x3F8 */ u32 status;
     char pad3FC[0x34];
@@ -328,7 +329,9 @@ typedef struct {
     /* 0x436 */ u16 unk4A;
     /* 0x438 */ u16 unk4C;
     /* 0x43A */ u16 unk4E;
-    char pad43C[0x20];
+    /* 0x43C */ u16 prev_step;
+    /* 0x43E */ u16 prev_step_s;
+    char pad43C[0x1C];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
 } PlayerState;
