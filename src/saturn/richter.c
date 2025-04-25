@@ -269,8 +269,9 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
 // func_8015CC28
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4C8, func_060AA4C8);
 
-// RicCheckInputINCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4,
-// func_060AA4F4);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
+
+// RicCheckInput
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 
 // func_8015E484
