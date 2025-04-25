@@ -17,6 +17,7 @@ LoadTPage = 0x0891CF3C;
 AddPrim = 0x0891D078;
 ClearOTag = 0x0891D0E0;
 SetSemiTrans = 0x0891D158;
+setShadeTex = 0x0891D1A8;
 SetDrawMode = 0x0891D1F8;
 SetDrawEnv = 0x0891D338;
 PutDrawEnv = 0x0891D484;
