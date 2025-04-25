@@ -227,9 +227,9 @@
 | dra    | MuteSound                           |       25 |          6 |        |                                 |       |
 | dra    | 274E8.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0    | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
+| dra    | HideAllBackgroundLayers             |       26 |          2 |        |                                 |       |
 | dra    | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
 | dra    | func_psp_090FA740                   |       26 |          2 |        |                                 |       |
-| dra    | HideAllBackgroundLayers             |       26 |          2 |        |                                 |       |
 | ric    | RicSetSpeedX                        |       26 |          2 |        |                                 |       |
 | dra    | PlayerStepUnk49                     |       26 |          3 |        |                                 |       |
 | dra    | func_psp_090E7E90                   |       26 |          3 |        |                                 |       |
@@ -349,8 +349,8 @@
 | dra    | SoundInit                           |       35 |          7 |        |                                 |       |
 | dra    | PlayerStepUnk50                     |       36 |          2 |        | https://decomp.me/scratch/mciVh | 0.97  |
 | no4    | func_pspeu_0923D428                 |       36 |          3 |        |                                 |       |
-| dra    | func_80113E68                       |       36 |          4 |        |                                 |       |
 | dra    | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
+| dra    | func_80113E68                       |       36 |          4 |        |                                 |       |
 | chi    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | lib    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | no4    | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
