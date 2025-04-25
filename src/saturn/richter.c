@@ -51,10 +51,40 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
 
 // RicSetFall
+void RicSetFall(void);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9100, func_060A9100);
 
-// RicSetJump
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A91D8, func_060A91D8);
+static inline void RicSetSpeedX(s32 speed) {
+    if (g_CurrentEntity->facingLeft == 1)
+        speed = -speed;
+    g_CurrentEntity->velocityX = speed;
+}
+void RicSetJump(void) {
+    if (g_Player.unk72) {
+        RicSetFall();
+        return;
+    }
+    if (RicCheckFacing() != 0 || PLAYER.step == Player_Slide) {
+        RicSetAnimation(D_8015550C);
+        if (PLAYER.step == PL_S_RUN) {
+            RicSetSpeedX(0x2D000);
+            g_Player.unk44 = 0x10;
+        } else {
+            RicSetSpeedX(0x19000);
+            g_Player.unk44 = 0;
+        }
+    } else {
+        RicSetAnimation(D_801554F0);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+    RicSetStep(PL_S_JUMP);
+    if (g_IsPrologueStage) {
+        PLAYER.velocityY = -0x4B000;
+    } else {
+        PLAYER.velocityY = -0x57000;
+    }
+}
 
 // RicSetHighJump
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);

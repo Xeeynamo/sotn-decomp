@@ -328,6 +328,9 @@ typedef struct {
     /* 0x436 */ u16 unk4A;
     /* 0x438 */ u16 unk4C;
     /* 0x43A */ u16 unk4E;
+    char pad43C[0x20];
+    /* 0x45C */ u16 unk70;
+    /* 0x45E */ u16 unk72;
 } PlayerState;
 
 typedef enum {

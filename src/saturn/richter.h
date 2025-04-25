@@ -93,3 +93,47 @@ enum RicTimers {
     PL_T_INVINCIBLE_SCENE = 15, // "dying" in the prologue
     PL_T_INVINCIBLE,
 };
+
+// Richter mostly uses the same steps as Alucard, or uses unused Alucard steps.
+// There are a couple steps that mean one thing for Alucard, and another for
+// Richter. This enum handles Richter's version of the ones that overlap.
+enum RicSteps {
+    PL_S_STAND,
+    PL_S_WALK,
+    PL_S_CROUCH,
+    PL_S_FALL,
+    PL_S_JUMP,
+    PL_S_5, // unused
+    PL_S_6, // unused
+    PL_S_7, // unused
+    PL_S_HIGHJUMP,
+    PL_S_9, // unused
+    PL_S_HIT,
+    PL_S_11, // unused
+    PL_S_BOSS_GRAB,
+    PL_S_13, // unused
+    PL_S_14, // unused
+    PL_S_15, // unused
+    PL_S_DEAD,
+    PL_S_17, // unused
+    PL_S_STAND_IN_AIR,
+    PL_S_FLAME_WHIP,
+    PL_S_HYDROSTORM,
+    PL_S_THROW_DAGGERS,
+    PL_S_DEAD_PROLOGUE,
+    PL_S_SLIDE,
+    PL_S_BLADEDASH,
+    PL_S_RUN,
+    PL_S_SLIDE_KICK,
+    PL_S_SUBWPN_CRASH,
+    PL_S_28, // unused
+    PL_S_29, // unused
+    PL_S_30, // unused
+    PL_S_31, // unused
+    PL_S_INIT,
+    PL_S_DEBUG = 0xF0,
+};
+
+AnimationFrame D_8015550C[];
+AnimationFrame D_801554F0[];
+extern s32 g_IsPrologueStage;

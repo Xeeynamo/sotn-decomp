@@ -19,3 +19,6 @@ _RicSetInvincibilityFrames = 0x060aa3e0;
 _DisableAfterImage = 0x060AA438;
 _func_8015CC28 = 0x060aa4c8;
 _RicCreateEntFactoryFromEntity = 0x060ac398;
+_g_IsPrologueStage = 0x060BED9C;
+_D_801554F0 = 0x060BFD84;
+_D_8015550C = 0x060BFDA0;
