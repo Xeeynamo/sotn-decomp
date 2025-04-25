@@ -1,16 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "richter.h"
 
+// export table
 INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5060, func_060A5060);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5154, func_060A5154);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5208, func_060A5208);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5518, func_060A5518);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5864, func_060A5864);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5988, func_060A5988);
+
+// ===== pl_main.c
+
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5060, GetTeleportToOtherCastle);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5154, func_80156DE4);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5208, RicInit);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5518, CheckStageCollision);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5864, CheckBladeDashInput);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5988, CheckHighJumpInput);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60A6272, func_060A6272);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6428, func_060A6428);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A64CC, func_060A64CC);
+
+// ===== pl_steps.c
+
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6428, func_80158B04);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A64CC, RicStepStand);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A6738, func_060A6738);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A67B0, func_060A67B0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A68A0, func_060A68A0);
@@ -21,34 +28,27 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
 INCLUDE_ASM("asm/saturn/richter/data", d60A7CF0, d_060A7CF0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7FD4, func_060A7FD4);
-
-// RicStepEnableFlameWhip
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, func_060A80B0);
-
-// RicStepHydrostorm
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8170, func_060A8170);
-
-// RicStepGenericSubwpnCrash
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, func_060A81C4);
-
-// RicStepThrowDaggers
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, func_060A8234);
-
-// RicStepDeadPrologue
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
-
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, RicStepEnableFlameWhip);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8170, RicStepHydrostorm);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, RicStepGenericSubwpnCrash);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, RicStepThrowDaggers);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, RicStepDeadPrologue);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A887C, func_060A887C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A892C, func_060A892C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8A58, func_060A8A58);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8C88, func_060A8C88);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8D64, func_060A8D64);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8D64, RicStepHighJump);
+// contains part of RicStepHighJump, probably split by accident
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8E9C, func_060A8E9C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, func_060A8F8C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
+
+// ===== pl_setstep.c
+
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_8015CC70);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, RicSetCrouch);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, RicSetStand);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, RicSetWalk);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, RicSetRun);
 
 void RicSetFall(void) {
     if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
@@ -106,18 +106,19 @@ void RicSetJump(void) {
     }
 }
 
-// RicSetHighJump
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, func_060A938C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_060A93F4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A95AC, func_060A95AC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A97B0, func_060A97B0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A5C, func_060A9A5C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A74, func_060A9A74);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9AFC, func_060A9AFC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, RicSetHighJump);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, RicCheckSubwpnChainLimit);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_8015D250);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A95AC, RicDoAttack);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A97B0, RicDoCrash);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A5C, RicSetDeadPrologue);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9A74, RicSetSlide);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9AFC, RicSetSlideKick);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, RicSetBladeDash);
+
+// ===== pl_utils.c
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_060A9DEC);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_8015C6D4);
 
 void RicSetStep(s16 step) {
     PLAYER.step = step;
@@ -205,127 +206,163 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     }
 }
 
-// DisableAfterImage
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
-
-// func_8015CC28
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4C8, func_060AA4C8);
-
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, DisableAfterImage);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4C8, func_8015CC28);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD50, func_060AAD50);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD8C, func_060AAD8C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB1F4, func_060AB1F4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB5F0, func_060AB5F0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB7B4, func_060AB7B4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB980, func_060AB980);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, func_060AB9C0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA50, func_060ABA50);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA98, func_060ABA98);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABB78, func_060ABB78);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABC24, func_060ABC24);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABCD8, func_060ABCD8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABF34, func_060ABF34);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
+
+// ===== pl_collision.c
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, RicCheckInput);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_8015E484);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD50, RicGetPlayerSensor);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD8C, RicCheckFloor);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB1F4, RicCheckCeiling);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB5F0, RicCheckWallRight);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB7B4, RicCheckWallLeft);
+
+// ===== pl_blueprints.c
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB980, RicGetFreeEntity);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, RicGetFreeEntityReverse);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_8015F9F0);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA50, func_8015FA5C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA98, RicSetSubweaponParams);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABB78, func_8015FB84);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABC24, func_8015FDB0);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABCD8, RicEntityHitByHoly);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABF34, RicEntityHitByDark);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, RicUpdatePlayerEntities);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
 
-// RicCreateEntFactoryFromEntity
 Entity* RicCreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s32 arg2);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC398, func_060AC398);
-
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC824, func_060AC824);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC908, func_060AC908);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACA10, func_060ACA10);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACACC, func_060ACACC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACB70, func_060ACB70);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACFA0, func_060ACFA0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AD780, func_060AD780);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADA34, func_060ADA34);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADB2C, func_060ADB2C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADE2C, func_060ADE2C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADFD4, func_060ADFD4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE1B4, func_060AE1B4);
+// clang-format off
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC398, RicCreateEntFactoryFromEntity);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, RicEntityFactory);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC824, RicEntitySlideKick);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC908, func_80160D2C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACA10, RicEntityBladeDash);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACACC, func_80160F0C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACB70, RicEntitySmokePuff);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ACFA0, RicEntityHitByCutBlood);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AD780, func_80161C2C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADA34, func_80161EF8);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADB2C, RicEntityApplyMariaPowerAnim);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADE2C, func_801623E0);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ADFD4, func_80162604);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE1B4, RicEntityMariaPowers);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE538, func_060AE538);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE550, func_060AE550);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE550, RicEntityMaria);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE714, func_060AE714);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE768, func_060AE768);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AEC04, func_060AEC04);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AEDCC, func_060AEDCC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF094, func_060AF094);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE768, RicEntityPlayerBlinkWhite);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AEC04, func_801641A0);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AEDCC, RicEntityShrinkingPowerUpRing);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF094, RicEntityHitByIce);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF704, func_060AF704);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF7F4, func_060AF7F4);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AF7F4, RicEntityHitByLightning);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AFE70, func_060AFE70);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B052A, func_060B052A);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B05EC, func_060B05EC);
+// clang-format on
+
+// ===== ???
+
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B05EC, RicEntityDummy);
 
 void func_060B0604() {}
 
-const u16 pad_60B060E = 0;
+const u16 pad_60B060E = 0; // file split?
 
 s32 func_060B0610() { return 0; }
 
-const u16 pad_60B061A = 0;
+const u16 pad_60B061A = 0; // file split!
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, func_060B061C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, func_060B12CC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1458, func_060B1458);
+// ===== pl_whip.c
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B061C, RicEntityWhip);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B12CC, RicEntityArmBrandishWhip);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1458, func_80167964);
 
-void func_060B1508() {}
+// ===== pl_subweapon_dummy.c
 
-void func_060B1514() {}
+void RicEntityNotImplemented1() {}
 
-const u16 pad_60B151E = 0;
+void RicEntityNotImplemented2() {}
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1520, func_060B1520);
+const u16 pad_60B151E = 0; // file split!
+
+// ===== 2F8E8.c
+// clang-format off
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B1520, RicEntitySubwpnReboundStone);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/data", d60B23B6, d_060B23B6);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B240C, func_060B240C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B24C8, func_060B24C8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B28E8, func_060B28E8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B2EE4, func_060B2EE4);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3074, func_060B3074);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B33DC, func_060B33DC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3454, func_060B3454);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A0C, func_060B3A0C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A48, func_060B3A48);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3B3C, func_060B3B3C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B40F8, func_060B40F8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B4644, func_060B4644);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B47EC, func_060B47EC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5434, func_060B5434);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B54AC, func_060B54AC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5564, func_060B5564);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5670, func_060B5670);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5AA0, func_060B5AA0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5F64, func_060B5F64);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B60D8, func_060B60D8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7020, func_060B7020);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B720C, func_060B720C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7650, func_060B7650);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7A4C, func_060B7A4C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8044, func_060B8044);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B89CE, func_060B89CE);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8B1C, func_060B8B1C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8DF8, func_060B8DF8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B91B8, func_060B91B8);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9300, func_060B9300);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B940C, func_060B940C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B24C8, RicEntitySubwpnAgunea);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B28E8, RicEntityAguneaHitEnemy);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B2EE4, RicEntityVibhutiCrashCloud);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3074, RicEntityCrashVibhuti);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B33DC, RicEntityCrashReboundStoneParticles);
+// clang-format on
 
-void func_060B965C() {}
+// ===== 319C4.c
+// clang-format off
+
+// func_8016D9C4, includes part of next function
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3454, func_060B3454);
+
+// RicEntityCrashReboundStoneExplosion, split start at mid function
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A0C, func_060B3A0C);
+
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3A48, RicEntityCrashReboundStone);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B3B3C, RicEntityCrashBibleBeam);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B40F8, RicEntityCrashBible);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B4644, func_8016F198);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B47EC, RicEntityCrashStopwatchDoneSparkle);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5434, RicEntityStopwatchCrashLightning);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B54AC, RicEntityCrashStopwatch);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5564, GetAguneaLightningAngle);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5670, RicEntityAguneaLightning);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5AA0, RicEntityAguneaCircle);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B5F64, RicEntitySubwpnStopwatchCircle);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B60D8, RicEntitySubwpnStopwatch);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7020, RicEntitySubwpnBibleTrail);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B720C, RicEntitySubwpnBible);
+// clang-format on
+
+// ===== pl_subweapons_dagger.c
+// clang-format off
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7650, RicEntitySubwpnThrownDagger);
+// clang-format on
+
+// ===== pl_subweapons_axe.c
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7A4C, RicEntitySubwpnThrownAxe);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8044, RicEntityCrashAxe);
+
+// ===== pl_subweapons_cross.c
+// clang-format off
+INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B89CE, func_060B89CE);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8B1C, RicEntityRevivalColumn);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B8DF8, RicEntitySubwpnCross);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B91B8, func_80169C10);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9300, RicEntitySubwpnCrossTrail);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B940C, RicEntitySubwpnCrashCrossParticles);
+// clang-format on
+
+// ===== pl_subweapon_holywater.c
+void RicEntityNotImplemented3() {}
 
 const u16 pad_60B9666 = 0x0009; // nop
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
+// clang-format off
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, RicEntityHolyWaterBreakGlass);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A2C, func_060B9A2C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9D6C, func_060B9D6C);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9E40, func_060B9E40);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9EA0, func_060B9EA0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA3DC, func_060BA3DC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, RicEntityCrashHydroStorm);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9D6C, RicCheckHolyWaterCollision);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9E40, func_8016840C);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9EA0, RicEntitySubwpnHolyWater);
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA3DC, RicEntitySubwpnHolyWaterFlame);
+// clang-format on
+
+// ===== pl_crash_cross.c
+INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, RicEntityCrashCrossBeam);
+
+// ===== all these functions below seems to be exclusive to Saturn
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACA4, func_060BACA4);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
