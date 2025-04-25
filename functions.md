@@ -43,6 +43,8 @@
 |        | unused_1560                         |        9 |          1 |        |                                 |       |
 | no4    | func_pspeu_0923D0B8                 |        9 |          1 |        |                                 |       |
 | dra    | func_8010E0B8                       |       11 |          1 |        |                                 |       |
+| dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
+| dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
 | dra    | CdSoundCommandQueueEmpty            |       11 |          1 |        |                                 |       |
 | dra    | EnableCdReverb                      |       11 |          1 |        |                                 |       |
 | dra    | MuteCd                              |       11 |          1 |        |                                 |       |
@@ -51,8 +53,6 @@
 | dra    | MemcardClose                        |       11 |          1 |        |                                 |       |
 | dra    | MemcardInfoInit                     |       11 |          1 |        |                                 |       |
 | dra    | ClearBackbuffer                     |       11 |          1 |        |                                 |       |
-| dra    | func_psp_090DFC68                   |       11 |          1 |        |                                 |       |
-| dra    | func_psp_090DFC80                   |       11 |          1 |        |                                 |       |
 | dra    | func_800FAC30                       |       11 |          1 |        |                                 |       |
 | lib    | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
 | dra    | func_800FDE00                       |       13 |          1 |        |                                 |       |
@@ -130,9 +130,9 @@
 | ric    | pl_setstep.rodata                   |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                     |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata              |       20 |          0 | Yes    |                                 |       |
+| dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
 | dra    | func_800FD664                       |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                   |       20 |          2 |        |                                 |       |
-| dra    | DestroyPrimitive                    |       20 |          2 |        |                                 |       |
 | dra    | InitializeServant                   |       20 |          2 |        |                                 |       |
 | dra    | func_800F9D88                       |       20 |          2 |        |                                 |       |
 | chi    | EntityDummy                         |       20 |          2 |        | https://decomp.me/scratch/unNIE | 1.0   |
@@ -170,9 +170,9 @@
 | dra    | 1A1A0.rodata                        |       22 |          0 | Yes    |                                 |       |
 | chi    | en_breakable_wall.rodata            |       22 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090E4C18                   |       22 |          2 |        |                                 |       |
+| dra    | DestroyAllPrimitives                |       22 |          3 |        |                                 |       |
 | dra    | func_8010E3E0                       |       22 |          3 |        | https://decomp.me/scratch/OVtm6 | 0.805 |
 | dra    | PlayerStepSummonSpells              |       22 |          3 |        |                                 |       |
-| dra    | DestroyAllPrimitives                |       22 |          3 |        |                                 |       |
 | dra    | func_psp_09140588                   |       22 |          3 |        |                                 |       |
 | dra    | func_psp_090F54E0                   |       22 |          4 |        |                                 |       |
 | dra    | func_80111938                       |       23 |          1 |        |                                 |       |
@@ -190,8 +190,8 @@
 | ric    | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
 | no4    | e_spear_guard.rodata                |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
-| dra    | func_8010E3B8                       |       24 |          2 |        |                                 |       |
 | dra    | func_800EDAE4                       |       24 |          2 |        |                                 |       |
+| dra    | func_8010E3B8                       |       24 |          2 |        |                                 |       |
 | dra    | ResetPendingGfxLoad                 |       24 |          2 |        |                                 |       |
 | ric    | func_8015CAAC                       |       24 |          2 |        |                                 |       |
 |        | SetEntityAnimation                  |       24 |          2 |        |                                 |       |
@@ -384,8 +384,8 @@
 | st0    | AllocEntity                         |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp    | AllocEntity                         |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | dra    | DestroyEntity                       |       38 |          3 |        |                                 |       |
-| dra    | GetEquipmentName                    |       38 |          4 |        |                                 |       |
 | dra    | func_800EDB08                       |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
+| dra    | GetEquipmentName                    |       38 |          4 |        |                                 |       |
 | chi    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | lib    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | no4    | FindFirstEntityAbove                |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
