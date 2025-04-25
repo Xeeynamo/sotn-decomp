@@ -106,13 +106,7 @@ typedef enum {
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
 
-// PSP gets an extra 0x100 OTSIZE. Worth researching why.
-#ifndef VERSION_PSP
 #define OTSIZE 0x200
-#else
-#define OTSIZE 0x300
-#endif
-
 #define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
 #define MAX_POLY_GT4_COUNT 0x300

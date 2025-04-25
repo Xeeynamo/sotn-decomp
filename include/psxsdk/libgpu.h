@@ -140,6 +140,7 @@
     ((tge) ? setcode(p, getcode(p) | 0x01) : setcode(p, getcode(p) & ~0x01))
 #else
 #define setSemiTrans SetSemiTrans
+#define setShadeTex SetShadeTex
 #endif
 
 #define getTPage(tp, abr, x, y)                                                \
@@ -173,6 +174,7 @@ typedef struct {
     u_long len
 typedef struct {
     O_TAG;
+    u_long dummy;
 } OT_TYPE;
 #else
 #define O_TAG u_long tag
@@ -187,8 +189,8 @@ typedef struct {
     u_long addr;
     u_long len;
 #else
-    unsigned addr : 24;
-    unsigned len : 8;
+    u_long addr : 24;
+    u_long len : 8;
 #endif
     u_char r0, g0, b0, code;
 } P_TAG;
