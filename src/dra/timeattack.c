@@ -14,8 +14,10 @@ s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action) {
         // defeated
         if (g_Settings.timeAttackRecords[eventId] == 0) {
             g_Settings.timeAttackRecords[eventId] = g_Status.timerSeconds;
-            g_Settings.timeAttackRecords[eventId] += g_Status.timerMinutes * 100;
-            g_Settings.timeAttackRecords[eventId] += g_Status.timerHours * 10000;
+            g_Settings.timeAttackRecords[eventId] +=
+                g_Status.timerMinutes * 100;
+            g_Settings.timeAttackRecords[eventId] +=
+                g_Status.timerHours * 10000;
         }
         break;
 

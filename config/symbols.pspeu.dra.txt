@@ -938,3 +938,5 @@ g_MenuStr = 0x09237638;
 g_EnemyDefs = 0x09237640;
 g_AccessoryDefs = 0x09237648;
 g_EquipDefs = 0x09237650;
+D_800B0884 = 0x09160B40;
+D_800B08A8 = 0x09160B68;

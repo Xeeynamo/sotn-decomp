@@ -65,6 +65,7 @@ segments:
       - [0x1E1B0, c, dra_psp/1E1B0]
       - [0x20560, c, dra_psp/20560]
       - [0x22A40, c, dra_psp/22A40] # O0
+      - [0x231A8, c, dra/8BEF8] # O0
       - [0x23AD8, c, dra/timeattack] # O0
       - [0x23C18, c, dra/5D5BC] # O0
       - [0x26948, c, dra/4CE2C] # O4
