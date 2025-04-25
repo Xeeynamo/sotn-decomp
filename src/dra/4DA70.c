@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-void DestroyPrimitive(Primitive* prim) {
+static void DestroyPrimitive(Primitive* prim) {
     s32 i;
     s32 n;
     u32* primData = (u32*)prim;
@@ -13,8 +13,8 @@ void DestroyPrimitive(Primitive* prim) {
 }
 
 void DestroyAllPrimitives(void) {
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
 
     for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_COUNT; i++) {
         DestroyPrimitive(prim);
@@ -59,100 +59,72 @@ s32 D_800A2438 = 0;
 // This function casts its return value as an s16, but at least one caller
 // (EntityGravityBootBeam) needs to receive a returned s32 so we use that here.
 s32 func_800EDB58(u8 primType, s32 count) {
-    Primitive* prim;
-    Primitive* temp_v0;
-    bool isLooping;
     s32 primStartIdx;
-    s32 var_s1;
     s32 i;
     s32 var_v1;
+    Primitive* prim;
 
     var_v1 = count;
     primStartIdx = 0;
-    i = 0;
-    prim = g_PrimBuf;
-    isLooping = 1;
-    while (isLooping) {
-        var_v1--;
+    for (i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++) {
         if (prim->type != PRIM_NONE) {
-            var_v1 = i;
-            primStartIdx = var_v1 + 1;
+            primStartIdx = i + 1;
             var_v1 = count;
-        } else if (var_v1 == 0) {
+        } else if (--var_v1 == 0) {
             break;
         }
-        var_s1 = i + 1;
-        prim++;
-        i++;
-        isLooping = i < 0x400;
-        if (isLooping) {
-            continue;
-        }
-        if (var_v1 != 0) {
-            return -1;
-        }
+    }
+    if (var_v1 != 0) {
+        return -1;
     }
 
     for (i = 0, prim = &g_PrimBuf[primStartIdx]; i < count; i++, prim++) {
         DestroyPrimitive(prim);
-        var_s1 = 0;
-        temp_v0 = &g_PrimBuf[i];
         prim->type = primType;
-        prim->next = temp_v0;
-        prim->next = prim->next + primStartIdx + 1;
+        prim->next = &g_PrimBuf[primStartIdx] + i + 1;
     }
-    prim[-1].next = NULL;
     prim[-1].type &= 0xEF;
+    prim[-1].next = NULL;
     // Casted return value as mentioned above
     return (s16)primStartIdx;
 }
 
 s32 AllocPrimitives(u8 primType, s32 count) {
-    s32 primIndex = 0;
-    Primitive* prim = g_PrimBuf;
-    u8* dstPrimType = &g_PrimBuf->type;
+    s32 i;
+    Primitive* prim;
     s16 index;
 
-    while (primIndex < MAX_PRIM_ALLOC_COUNT) {
-        if (*dstPrimType == 0) {
+    for (i = 0, prim = &g_PrimBuf[0]; i < MAX_PRIM_ALLOC_COUNT; i++, prim++) {
+        if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
-                *dstPrimType = primType;
+                prim->type = primType;
                 prim->next = NULL;
-                if (D_800A2438 < primIndex) {
-                    D_800A2438 = primIndex;
+                if (D_800A2438 < i) {
+                    D_800A2438 = i;
                 }
             } else {
-                *dstPrimType = primType;
+                prim->type = primType;
                 index = AllocPrimitives(primType, count - 1);
                 if (index == -1) {
-                    *dstPrimType = 0;
+                    prim->type = PRIM_NONE;
                     return -1;
                 }
                 prim->next = &g_PrimBuf[index];
             }
-            return (s16)primIndex;
-        }
-
-        primIndex++;
-        dstPrimType += sizeof(Primitive);
-        prim++;
-        if (primIndex >= 0x400) {
-            return -1;
+            return (s16)i;
         }
     }
     return -1;
 }
 
 s32 func_800EDD9C(u8 type, s32 count) {
-    Primitive* prim;
     s32 i;
+    Primitive* prim;
     s16 foundPolyIndex;
 
-    prim = &g_PrimBuf[LEN(g_PrimBuf) - 1];
-    i = LEN(g_PrimBuf) - 1;
-
-    while (i >= 0) {
+    for (prim = &g_PrimBuf[LEN(g_PrimBuf) - 1], i = LEN(g_PrimBuf) - 1; i >= 0;
+         i--, prim--) {
         if (prim->type == PRIM_NONE) {
             DestroyPrimitive(prim);
             if (count == 1) {
@@ -166,23 +138,22 @@ s32 func_800EDD9C(u8 type, s32 count) {
             foundPolyIndex = i;
             return foundPolyIndex;
         }
-        i--;
-        prim--;
     }
+#if defined(VERSION_PSP)
+    return 0;
+#endif
 }
 
 void FreePrimitives(s32 primitiveIndex) {
-    Primitive* prim = &g_PrimBuf[primitiveIndex];
+    Primitive* prim;
 
-    if (prim) {
-        do {
-            if (prim->type == PRIM_ENV) {
-                **(DR_ENV***)&prim->r1 = NULL;
-                prim->type = PRIM_NONE;
-            } else
-                prim->type = PRIM_NONE;
-            prim = prim->next;
-        } while (prim);
+    for (prim = &g_PrimBuf[primitiveIndex]; prim != NULL; prim = prim->next) {
+        if (prim->type == PRIM_ENV) {
+            **(DR_ENV***)&prim->r1 = NULL;
+            prim->type = PRIM_NONE;
+        } else {
+            prim->type = PRIM_NONE;
+        }
     }
 }
 
@@ -196,7 +167,7 @@ typedef union {
 } PrimBuf;
 
 typedef struct {
-    OT_TYPE* ot;
+    u_long* ot;
     POLY_GT4* gt4;
     POLY_G4* g4;
     POLY_GT3* gt3;
@@ -237,15 +208,15 @@ void RenderPrimitives(void) {
     s32 i;
     Primitive* prim;
     u8 primType;
-    bool useShadeTex;
-    bool dtd;
-    bool unkBool;
+    s32 useShadeTex;
+    s32 dtd;
+    s32 unkBool;
 
     DRAWENV drawEnv;
     s16 drawOfs;
     DR_ENV* env;
 
-    r->ot = g_CurrentBuffer->ot;
+    r->ot = (u_long*)&g_CurrentBuffer->ot[0];
     r->gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     r->gt3 = &g_CurrentBuffer->polyGT3[g_GpuUsage.gt3];
