@@ -36,11 +36,7 @@ void DrawEntitiesHitbox(s32 drawMode) {
     ot = g_CurrentBuffer->ot;
     tile = &g_CurrentBuffer->tiles[g_GpuUsage.tile];
     drMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
-#ifdef VERSION_PSP
-    otIdx = 0x2E8;
-#else
     otIdx = 0x1F0;
-#endif
     for (polyCount = 0, entity = g_Entities; polyCount < 0x40; polyCount++,
         entity++) {
         if (entity->hitboxState == 0)

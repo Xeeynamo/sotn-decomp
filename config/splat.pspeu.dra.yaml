@@ -67,7 +67,7 @@ segments:
       - [0x22A40, c, dra_psp/22A40] # O0
       - [0x23AD8, c, dra_psp/23AD8]
       - [0x23C18, c, dra/5D5BC] # O0
-      - [0x26948, c, dra_psp/26948]
+      - [0x26948, c, dra/4CE2C] # O4
       - [0x274E8, c, dra_psp/274E8]
       - [0x27FD8, c, dra/692E8]
       - [0x2BF60, c, dra/71830]

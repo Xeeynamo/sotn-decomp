@@ -34,46 +34,43 @@ typedef struct {
 } TilemapRenderer;
 
 void RenderTilemap(void) {
+    s32 i, j;
+    s32 l;
+    BgLayer* bg;
+    s32 subX, subY;
+    s32 row;
+    u16 tpage;
+    u16 tile;
+    u16 clut;
+    s32 x0, y0;
+    s32 tx, ty;
+    s32 startTx, startTy;
+    u16 page;
+    u8 u, v;
+
 #ifdef VERSION_PC
     SPRT_16 _sp16;
     TilemapRenderer _r;
     SPRT_16* sp16 = &_sp16;
     TilemapRenderer* r = &_r;
 #else
-    SPRT_16* sp16 = (SPRT_16*)0x1F800000;
-    TilemapRenderer* r = (TilemapRenderer*)0x1F800010;
+    SPRT_16* sp16 = ((SPRT_16*)SP(0x00));
+    TilemapRenderer* r = ((TilemapRenderer*)SP(sizeof(SPRT_16)));
 #endif
 
     Tilemap* t = &g_Tilemap;
-    BgLayer* bg;
-    s32 subX;
-    s32 subY;
-    s32 row;
-    s32 tx;
-    s32 ty;
-    u16 tpage;
-    s32 startTx;
-    s32 startTy;
-    s32 i;
-    s32 j;
-    s32 l;
-    u16 tile;
-    u16 gfx;
-    u16 page;
-    u16 clut;
-    s32 x0;
-    s32 y0;
-    u8 u;
-    u8 v;
-
+    r->ot = g_CurrentBuffer->ot;
+    r->sp16 = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16];
+    r->dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
     r->rect.x = 0;
     r->rect.y = 0;
     r->rect.w = 255;
     r->rect.h = 255;
+#ifdef VERSION_PSP
+    setBlockFill(sp16);
+#else
     setSprt16(sp16);
-    r->ot = g_CurrentBuffer->ot;
-    r->sp16 = &g_CurrentBuffer->sprite16[g_GpuUsage.sp16];
-    r->dr = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
+#endif
     r->x = g_backbufferX;
     r->y = g_backbufferY;
     if (t->hideTimer > 0) {
@@ -109,10 +106,9 @@ void RenderTilemap(void) {
                     break;
                 }
                 row = ty * r->roomTileWidth;
-                r->tiles = &t->fg[startTx + ty * r->roomTileWidth];
-                j = 0;
-                tx = startTx;
-                for (; j < N_HORIZ_TILES; j++, x0 += TILE_SIZE, tx++) {
+                r->tiles = &t->fg[startTx + row];
+                for (j = 0, tx = startTx; j < N_HORIZ_TILES; j++,
+                    x0 += TILE_SIZE, tx++) {
                     if (tx < 0) {
                         continue;
                     }
@@ -124,10 +120,9 @@ void RenderTilemap(void) {
                     if (tile == 0) {
                         continue;
                     }
+                    u = r->gfx[tile] << 0x4;
+                    v = r->gfx[tile] & 0xF0;
                     page = r->page[tile];
-                    gfx = r->gfx[tile];
-                    u = gfx * 0x10;
-                    v = gfx & 0xF0;
                     clut = g_ClutIds[r->clut[tile]];
                     if (r->clutAlt) {
                         clut = g_ClutIds[0x100 + r->clut[tile]];
@@ -142,7 +137,7 @@ void RenderTilemap(void) {
                     sp16->v0 = v;
                     setSemiTrans(sp16, r->isSemiTrans);
                     setShadeTex(sp16, true);
-                    __builtin_memcpy(r->sp16, sp16, sizeof(SPRT_16));
+                    *r->sp16 = *sp16;
                     addPrim(r->order + page + r->ot, r->sp16);
                     r->sp16++;
                     g_GpuUsage.sp16++;
@@ -158,22 +153,20 @@ void RenderTilemap(void) {
                     tpage += 0x80;
                 }
                 SetDrawMode(r->dr, 0, 0, tpage, &r->rect);
-                AddPrim(i + r->order + r->ot, r->dr);
+                AddPrim(&r->ot[i + r->order], r->dr);
                 r->dr++;
                 g_GpuUsage.drawModes++;
             }
         }
     }
 
-    l = 0;
-    bg = g_BgLayers;
-    for (; l < MAX_BG_LAYER_COUNT; l++, bg++) {
+    for (l = 0, bg = g_BgLayers; l < MAX_BG_LAYER_COUNT; l++, bg++) {
         if (bg->hideTimer > 0) {
             bg->hideTimer--;
             continue;
         }
         r->flags = bg->flags;
-        if (!(r->flags & LAYER_SHOW)) {
+        if ((r->flags & LAYER_SHOW) == 0) {
             continue;
         }
         r->clutAlt = r->flags & LAYER_CLUT_ALT;
@@ -212,9 +205,8 @@ void RenderTilemap(void) {
             }
             row = ty * r->roomTileWidth;
             r->tiles = &bg->layout[startTx + row];
-            j = 0;
-            tx = startTx;
-            for (; j < N_HORIZ_TILES; j++, x0 += TILE_SIZE, tx++) {
+            for (j = 0, tx = startTx; j < N_HORIZ_TILES; j++, x0 += TILE_SIZE,
+                tx++) {
                 if (r->flags & LAYER_WRAP_BG) {
                     tx &= 0xF;
                     r->tiles = &bg->layout[tx + row];
@@ -230,10 +222,9 @@ void RenderTilemap(void) {
                 if (tile == 0) {
                     continue;
                 }
+                u = r->gfx[tile] << 0x4;
+                v = r->gfx[tile] & 0xF0;
                 page = r->page[tile];
-                gfx = r->gfx[tile];
-                u = gfx * 0x10;
-                v = gfx & 0xF0;
                 clut = g_ClutIds[r->clut[tile]];
                 if (r->clutAlt) {
                     clut = g_ClutIds[0x100 + r->clut[tile]];
@@ -248,7 +239,7 @@ void RenderTilemap(void) {
                 sp16->v0 = v;
                 setSemiTrans(sp16, r->isSemiTrans);
                 setShadeTex(sp16, true);
-                __builtin_memcpy(r->sp16, sp16, sizeof(SPRT_16));
+                *r->sp16 = *sp16;
                 addPrim(r->order + page + r->ot, r->sp16);
                 r->sp16++;
                 g_GpuUsage.sp16++;
@@ -263,14 +254,14 @@ void RenderTilemap(void) {
                 tpage += 0x80;
             }
             SetDrawMode(r->dr, 0, 0, tpage, &r->rect);
-            AddPrim(i + r->order + r->ot, r->dr);
+            AddPrim(&r->ot[i + r->order], r->dr);
             r->dr++;
             g_GpuUsage.drawModes++;
         }
     }
 }
 
-void SetRoomForegroundLayer(LayerDef* layerDef) {
+static void SetRoomForegroundLayer(LayerDef* layerDef) {
     D_8003C708.flags = 0;
     g_canRevealMap = true; // Default to allowing revealing map
     g_Tilemap.tileDef = layerDef->tileDef;
@@ -313,7 +304,7 @@ void SetRoomForegroundLayer(LayerDef* layerDef) {
     g_Tilemap.hideTimer = 1;
 }
 
-void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef) {
+static void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef) {
     g_BgLayers[index].flags = 0;
     g_BgLayers[index].tileDef = layerDef->tileDef;
     g_BgLayers[index].layout = layerDef->layout;

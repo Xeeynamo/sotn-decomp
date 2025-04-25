@@ -473,8 +473,6 @@ void func_801072DC(Primitive* prim);
 void InitializePads(void);
 void ReadPads(void);
 void ClearBackbuffer(void);
-void SetRoomForegroundLayer(LayerDef* layerDef);
-void SetRoomBackgroundLayer(s32 index, LayerDef* layerDef);
 void CheckCollision(s32 x, s32 y, Collider* res, s32 unk);
 void DemoInit(s32 arg0);
 void DemoUpdate(void);
