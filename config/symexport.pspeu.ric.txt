@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_ric_mwo_header_bin_start);
-EXTERN(func_pspeu_092C8D48)
+EXTERN(RIC_Load)

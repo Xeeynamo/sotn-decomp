@@ -105,16 +105,17 @@ typedef enum {
 #define COLOR_LEN ((COLOR_BPP) / 8)
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
+
 #define OTSIZE 0x200
-#define MAXSPRT16 0x280
+#define MAX_ENV_COUNT 0x10
 #define MAX_DRAW_MODES 0x400
 #define MAX_POLY_GT4_COUNT 0x300
-#define MAX_TILE_COUNT 0x100
-#define MAX_LINE_G2_COUNT 0x100
-#define MAX_POLY_GT3_COUNT 0x30
 #define MAX_POLY_G4_COUNT 0x100
+#define MAX_POLY_GT3_COUNT 0x30
+#define MAX_LINE_G2_COUNT 0x100
+#define MAXSPRT16 0x280
+#define MAX_TILE_COUNT 0x100
 #define MAX_SPRT_COUNT 0x200
-#define MAX_ENV_COUNT 0x10
 
 #define DISP_ALL_H 240
 #define DISP_STAGE_W 256
@@ -263,7 +264,7 @@ extern u8 g_BmpCastleMap[0x20000];
 #endif
 
 // used with various equipment, enemy resistances, etc
-typedef enum {
+typedef enum Elements {
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,
     ELEMENT_POISON = 0x80,

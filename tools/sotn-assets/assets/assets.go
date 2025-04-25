@@ -11,6 +11,7 @@ type ExtractArgs struct {
 	Start       int
 	End         int
 	AssetDir    string
+	SrcDir      string
 	Name        string
 	Args        []string
 	SplatConfig *splat.Config
@@ -24,6 +25,7 @@ type BuildArgs struct {
 	AssetDir string
 	SrcDir   string
 	Name     string
+	Args     []string
 }
 type Builder interface {
 	Build(a BuildArgs) error

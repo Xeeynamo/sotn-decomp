@@ -135,13 +135,8 @@ void RenderTilemap(void) {
                     sp16->y0 = y0;
                     sp16->u0 = u;
                     sp16->v0 = v;
-#ifdef VERSION_PSP
-                    SetSemiTrans(sp16, r->isSemiTrans);
-                    SetShadeTex(sp16, true);
-#else
                     setSemiTrans(sp16, r->isSemiTrans);
                     setShadeTex(sp16, true);
-#endif
                     *r->sp16 = *sp16;
                     addPrim(r->order + page + r->ot, r->sp16);
                     r->sp16++;
@@ -242,13 +237,8 @@ void RenderTilemap(void) {
                 sp16->y0 = y0;
                 sp16->u0 = u;
                 sp16->v0 = v;
-#ifdef VERSION_PSP
-                SetSemiTrans(sp16, r->isSemiTrans);
-                SetShadeTex(sp16, true);
-#else
                 setSemiTrans(sp16, r->isSemiTrans);
                 setShadeTex(sp16, true);
-#endif
                 *r->sp16 = *sp16;
                 addPrim(r->order + page + r->ot, r->sp16);
                 r->sp16++;

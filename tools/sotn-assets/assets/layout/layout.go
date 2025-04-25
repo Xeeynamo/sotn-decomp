@@ -39,7 +39,7 @@ func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
 		return nil, err
 	}
 	defer f.Close()
-	return sotn.ParseCEnum(f, "EntityIDs")
+	return sotn.ParseCEnum(f, "EntityIDs", 0x100)
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {

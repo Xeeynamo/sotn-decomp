@@ -6,6 +6,24 @@
 #else
 #define DR_ENV_CODE_SIZE 8
 #endif
+
+#ifndef VERSION_PSP
+#define SPRT_CODE 0x64
+#define POLYGT3_CODE 0x34
+#define POLYG4_CODE 0x38
+#define POLYGT4_CODE 0x3C
+#define LINEG2_CODE 0x50
+#define TILE_CODE 0x60
+#endif
+#ifdef VERSION_PSP
+#define SPRT_CODE 0x1
+#define POLYGT3_CODE 0x4
+#define POLYGT4_CODE 0x5
+#define POLYG4_CODE 0x6
+#define LINEG2_CODE 0x9
+#define TILE_CODE 0xB
+#endif
+
 /*
  *	Set Primitive Attributes
  */
@@ -91,33 +109,39 @@
 #define setPolyF3(p) setlen(p, 4), setcode(p, 0x20)
 #define setPolyFT3(p) setlen(p, 7), setcode(p, 0x24)
 #define setPolyG3(p) setlen(p, 6), setcode(p, 0x30)
-#define setPolyGT3(p) setlen(p, 9), setcode(p, 0x34)
+#define setPolyGT3(p) setlen(p, 9), setcode(p, POLYGT3_CODE)
 #define setPolyF4(p) setlen(p, 5), setcode(p, 0x28)
 #define setPolyFT4(p) setlen(p, 9), setcode(p, 0x2c)
-#define setPolyG4(p) setlen(p, 8), setcode(p, 0x38)
-#define setPolyGT4(p) setlen(p, 12), setcode(p, 0x3c)
+#define setPolyG4(p) setlen(p, 8), setcode(p, POLYG4_CODE)
+#define setPolyGT4(p) setlen(p, 12), setcode(p, POLYGT4_CODE)
 
 #define setSprt8(p) setlen(p, 3), setcode(p, 0x74)
 #define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
-#define setSprt(p) setlen(p, 4), setcode(p, 0x64)
+#define setSprt(p) setlen(p, 4), setcode(p, SPRT_CODE)
 
 #define setTile1(p) setlen(p, 2), setcode(p, 0x68)
 #define setTile8(p) setlen(p, 2), setcode(p, 0x70)
 #define setTile16(p) setlen(p, 2), setcode(p, 0x78)
-#define setTile(p) setlen(p, 3), setcode(p, 0x60)
+#define setTile(p) setlen(p, 3), setcode(p, TILE_CODE)
 #define setBlockFill(p) setlen(p, 3), setcode(p, 0x02)
 #define setLineF2(p) setlen(p, 3), setcode(p, 0x40)
-#define setLineG2(p) setlen(p, 4), setcode(p, 0x50)
+#define setLineG2(p) setlen(p, 4), setcode(p, LINEG2_CODE)
 #define setLineF3(p) setlen(p, 5), setcode(p, 0x48), (p)->pad = 0x55555555
 #define setLineG3(p) setlen(p, 7), setcode(p, 0x58), (p)->pad = 0x55555555
 #define setLineF4(p) setlen(p, 6), setcode(p, 0x4c), (p)->pad = 0x55555555
 #define setLineG4(p) setlen(p, 9), setcode(p, 0x5c), (p)->pad = 0x55555555
 
+// On PSP these are proper function calls.
+#ifndef VERSION_PSP
 #define setSemiTrans(p, abe)                                                   \
     ((abe) ? setcode(p, getcode(p) | 0x02) : setcode(p, getcode(p) & ~0x02))
 
 #define setShadeTex(p, tge)                                                    \
     ((tge) ? setcode(p, getcode(p) | 0x01) : setcode(p, getcode(p) & ~0x01))
+#else
+#define setSemiTrans SetSemiTrans
+#define setShadeTex SetShadeTex
+#endif
 
 #define getTPage(tp, abr, x, y)                                                \
     ((GetGraphType() == 1 || GetGraphType() == 2)                              \
@@ -171,6 +195,7 @@ typedef struct {
     u_char r0, g0, b0, code;
 } P_TAG;
 #else
+// PC version
 typedef struct {
     void* addr;
     u_long len;

@@ -576,6 +576,8 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 	touch $@
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
+$(BUILD_DIR)/$(ASSETS_DIR)/%/subweapons_def.yaml.o: $(ASSETS_DIR)/%/subweapons_def.yaml
+	touch $@
 
 ##@
 ##@ Disc Dumping Targets

@@ -1,6 +1,6 @@
 # Saturn is special and does not yet conform
 VERSION_PREFIX 	:= SATURN
-SATURN_GAME		:= GAME ALUCARD
+SATURN_GAME		:= GAME ALUCARD RICHTER
 SATURN_STAGES	:= STAGE_02 WARP
 SATURN_STAGES	+= 
 SATURN_BOSSES 	:= 
@@ -48,6 +48,7 @@ extract_saturn: $(SATURN_SPLITTER_APP)
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
 	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
+	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/richter.prg.yaml
 
 .PHONY: extract_disk_saturn
 extract_disk_saturn:
@@ -68,6 +69,8 @@ $(BUILD_DIR)/0.BIN: $(BUILD_DIR)/zero.elf
 $(BUILD_DIR)/GAME.PRG: $(BUILD_DIR)/game.elf
 	sh-elf-objcopy $< -O binary $@
 $(BUILD_DIR)/ALUCARD.PRG: $(BUILD_DIR)/alucard.elf
+	sh-elf-objcopy $< -O binary $@
+$(BUILD_DIR)/RICHTER.PRG: $(BUILD_DIR)/richter.elf
 	sh-elf-objcopy $< -O binary $@
 $(BUILD_DIR)/STAGE_02.PRG: $(BUILD_DIR)/stage_02.elf
 	sh-elf-objcopy $< -O binary $@
@@ -120,6 +123,7 @@ $(CC1_SATURN): $(SATURN_TOOLCHAIN)
 	cp -r ./asm/saturn/stage_02 $(BUILD_DIR)/asm/saturn/stage_02
 	cp -r ./asm/saturn/warp $(BUILD_DIR)/asm/saturn/warp
 	cp -r ./asm/saturn/alucard $(BUILD_DIR)/asm/saturn/alucard
+	cp -r ./asm/saturn/richter $(BUILD_DIR)/asm/saturn/richter
 	touch $(CC1_SATURN)
 
 $(SATURN_SPLITTER_APP):

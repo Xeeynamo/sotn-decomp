@@ -18,6 +18,14 @@ func JoinMapKeys[T any](m map[string]T, sep string) string {
 	return strings.Join(keys, sep)
 }
 
+func ReverseMap[K comparable, V comparable](m map[K]V) map[V]K {
+	reversed := make(map[V]K, len(m))
+	for k, v := range m {
+		reversed[v] = k
+	}
+	return reversed
+}
+
 func MinBy[T any](slice []T, getter func(T) int) (max int) {
 	if len(slice) == 0 {
 		return max
@@ -94,4 +102,19 @@ func WriteJsonFile(name string, v any) error {
 
 func RemoveFileNameExt(name string) string {
 	return strings.TrimSuffix(name, filepath.Ext(name))
+}
+
+func WriteBytesAsHex(sb *strings.Builder, content []byte) {
+	const hex = "0123456789ABCDEF"
+	sb.Grow(len(content)*5 + (len(content) >> 4) + 2)
+	for i, b := range content {
+		sb.WriteString("0x")
+		sb.WriteByte(hex[b>>4])
+		sb.WriteByte(hex[b&15])
+		sb.WriteByte(',')
+		if (i & 15) == 15 {
+			sb.WriteByte('\n')
+		}
+	}
+	sb.WriteByte('\n')
 }

@@ -311,7 +311,7 @@ extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
 #if defined(VERSION_PSP)
 extern char** g_SaveAreaNamesSecondPart;
-extern char** g_SaveAreaNames;
+extern signed char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
 extern char** g_MenuStr;
@@ -495,7 +495,6 @@ void ResetPendingGfxLoad(void);
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 bool func_800EB720(void);
 void HideAllBackgroundLayers(void);
-void DestroyPrimitive(Primitive* prim);
 void DestroyAllPrimitives(void);
 s32 func_800EDAE4(void);
 DR_ENV* func_800EDB08(Primitive* prim);
