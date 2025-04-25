@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "inc_asm.h"
-#include "sattypes.h"
+#include "richter.h"
 
 INCLUDE_ASM("asm/saturn/richter/data", d60A5000, d_060A5000);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A5060, func_060A5060);
@@ -22,11 +21,22 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7310, func_060A7310);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7B78, func_060A7B78);
 INCLUDE_ASM("asm/saturn/richter/data", d60A7CF0, d_060A7CF0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7FD4, func_060A7FD4);
+
+// RicStepEnableFlameWhip
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, func_060A80B0);
+
+// RicStepHydrostorm
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8170, func_060A8170);
+
+// RicStepGenericSubwpnCrash
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, func_060A81C4);
+
+// RicStepThrowDaggers
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8234, func_060A8234);
+
+// RicStepDeadPrologue
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A82F8, func_060A82F8);
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8664, func_060A8664);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A887C, func_060A887C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A892C, func_060A892C);
@@ -39,8 +49,64 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, func_060A8F8C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9100, func_060A9100);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A91D8, func_060A91D8);
+
+void RicSetFall(void) {
+    if (g_Player.prev_step != PL_S_RUN && g_Player.prev_step != PL_S_SLIDE) {
+        PLAYER.velocityX = 0;
+    }
+    if (g_Player.prev_step != PL_S_WALK && g_Player.prev_step != PL_S_RUN) {
+        RicSetAnimation(D_80155534);
+    }
+    if (g_Player.prev_step == PL_S_RUN) {
+        g_Player.unk44 = 0x10;
+    }
+    RicSetStep(PL_S_FALL);
+    PLAYER.velocityY = FIX(2);
+    g_Player.timers[PL_T_5] = 8;
+    g_Player.timers[PL_T_6] = 8;
+    g_Player.timers[PL_T_CURSE] = 0;
+    g_Player.timers[PL_T_8] = 0;
+    if (g_Player.prev_step == PL_S_SLIDE) {
+        g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
+        PLAYER.pose = 2;
+        PLAYER.poseTimer = 0x10;
+        PLAYER.velocityX /= 2;
+    }
+}
+
+static inline void RicSetSpeedX(s32 speed) {
+    if (g_CurrentEntity->facingLeft == 1)
+        speed = -speed;
+    g_CurrentEntity->velocityX = speed;
+}
+void RicSetJump(void) {
+    if (g_Player.unk72) {
+        RicSetFall();
+        return;
+    }
+    if (RicCheckFacing() != 0 || PLAYER.step == Player_Slide) {
+        RicSetAnimation(D_8015550C);
+        if (PLAYER.step == PL_S_RUN) {
+            RicSetSpeedX(0x2D000);
+            g_Player.unk44 = 0x10;
+        } else {
+            RicSetSpeedX(0x19000);
+            g_Player.unk44 = 0;
+        }
+    } else {
+        RicSetAnimation(D_801554F0);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+    RicSetStep(PL_S_JUMP);
+    if (g_IsPrologueStage) {
+        PLAYER.velocityY = -0x4B000;
+    } else {
+        PLAYER.velocityY = -0x57000;
+    }
+}
+
+// RicSetHighJump
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, func_060A938C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_060A93F4);
@@ -52,17 +118,99 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9AFC, func_060A9AFC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_060A9DEC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA048, func_060AA048);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA064, func_060AA064);
+
+void RicSetStep(s16 step) {
+    PLAYER.step = step;
+    PLAYER.step_s = 0;
+}
+
+void RicSetAnimation(AnimationFrame* anim) {
+    g_CurrentEntity->anim = anim;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA088, func_060AA088);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA194, func_060AA194);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA2E0, func_060AA2E0);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA310, func_060AA310);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA340, func_060AA340);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3BC, func_060AA3BC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA3E0, func_060AA3E0);
+
+void RicDecelerateX(s32 speed) {
+    if (g_CurrentEntity->velocityX < 0) {
+        g_CurrentEntity->velocityX += speed;
+        if (g_CurrentEntity->velocityX > 0) {
+            g_CurrentEntity->velocityX = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityX -= speed;
+        if (g_CurrentEntity->velocityX < 0)
+            g_CurrentEntity->velocityX = 0;
+    }
+}
+
+void RicDecelerateY(s32 speed) {
+    if (g_CurrentEntity->velocityY < 0) {
+        g_CurrentEntity->velocityY += speed;
+        if (g_CurrentEntity->velocityY > 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    } else {
+        g_CurrentEntity->velocityY -= speed;
+        if (g_CurrentEntity->velocityY < 0) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+}
+
+s32 RicCheckFacing(void) {
+    if (g_Player.unk44 & 2) {
+        return 0;
+    }
+
+    if (PLAYER.facingLeft == 1) {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            g_Player.unk4C = 1;
+            return -1;
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            return 1;
+        }
+    } else {
+        if (g_Player.padPressed & PAD_RIGHT) {
+            return 1;
+        }
+        if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            g_Player.unk4C = 1;
+            return -1;
+        }
+    }
+    return 0;
+}
+
+int func_8015CAAC(s32 speed) {
+    if (PLAYER.entityRoomIndex == 1)
+        speed = -speed;
+    PLAYER.velocityX = speed;
+    return speed;
+}
+
+void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
+    if (!kind) {
+        RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_RIC_BLINK, 0x15), 0);
+        if (g_Player.timers[PL_T_INVINCIBLE_SCENE] <= invincibilityFrames) {
+            g_Player.timers[PL_T_INVINCIBLE_SCENE] = invincibilityFrames;
+        }
+    } else if (g_Player.timers[PL_T_INVINCIBLE] <= invincibilityFrames) {
+        g_Player.timers[PL_T_INVINCIBLE] = invincibilityFrames;
+    }
+}
+
+// DisableAfterImage
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
+
+// func_8015CC28
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4C8, func_060AA4C8);
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
@@ -82,7 +230,12 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABCD8, func_060ABCD8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABF34, func_060ABF34);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC0E0, func_060AC0E0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC2DC, func_060AC2DC);
+
+// RicCreateEntFactoryFromEntity
+Entity* RicCreateEntFactoryFromEntity(
+    Entity* source, u32 factoryParams, s32 arg2);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC398, func_060AC398);
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC46C, func_060AC46C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC824, func_060AC824);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AC908, func_060AC908);
