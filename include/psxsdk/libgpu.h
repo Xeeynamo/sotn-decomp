@@ -1,27 +1,28 @@
 #ifndef LIBGPU_H
 #define LIBGPU_H
 
-#ifndef VERSION_PSP
-#define DR_ENV_CODE_SIZE 15
-#else
+#ifdef VERSION_PSP
 #define DR_ENV_CODE_SIZE 8
+#else
+#define DR_ENV_CODE_SIZE 15
 #endif
 
-#ifndef VERSION_PSP
-#define SPRT_CODE 0x64
-#define POLYGT3_CODE 0x34
-#define POLYG4_CODE 0x38
-#define POLYGT4_CODE 0x3C
-#define LINEG2_CODE 0x50
-#define TILE_CODE 0x60
-#endif
 #ifdef VERSION_PSP
 #define SPRT_CODE 0x1
+#define SPRT16_CODE 0x2
 #define POLYGT3_CODE 0x4
 #define POLYGT4_CODE 0x5
 #define POLYG4_CODE 0x6
 #define LINEG2_CODE 0x9
 #define TILE_CODE 0xB
+#else
+#define SPRT_CODE 0x64
+#define SPRT16_CODE 0x7C
+#define POLYGT3_CODE 0x34
+#define POLYG4_CODE 0x38
+#define POLYGT4_CODE 0x3C
+#define LINEG2_CODE 0x50
+#define TILE_CODE 0x60
 #endif
 
 /*
@@ -116,7 +117,7 @@
 #define setPolyGT4(p) setlen(p, 12), setcode(p, POLYGT4_CODE)
 
 #define setSprt8(p) setlen(p, 3), setcode(p, 0x74)
-#define setSprt16(p) setlen(p, 3), setcode(p, 0x7c)
+#define setSprt16(p) setlen(p, 3), setcode(p, SPRT16_CODE)
 #define setSprt(p) setlen(p, 4), setcode(p, SPRT_CODE)
 
 #define setTile1(p) setlen(p, 2), setcode(p, 0x68)
