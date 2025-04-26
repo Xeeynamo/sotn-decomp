@@ -91,8 +91,57 @@ void func_800F0940(void) {
         break;
     }
 }
+extern RoomLoadDefHolder D_801375BC;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", SetNextRoomToLoad);
+s32 SetNextRoomToLoad(u32 x, u32 y) {
+    s32 res;
+    RoomHeader* room;
+    RoomLoadDef* loader;
+    RoomTeleport* tele;
+
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
+        return 0;
+    }
+    res = func_800F087C(x, y);
+    if (res) {
+        return res;
+    }
+    // Look for the proper room at the xy coordinates.
+    for(room = &g_api.o.rooms[0]; true; room++){
+        // Perhaps the final room gets a hard-coded value of 0x40?
+        // Indicates no room found, return 0
+        if (room->left == 0x40) {
+            return 0;
+        }
+        // Now check the 4 coordinates. If x,y are beyond the room's
+        // bounds, then this isn't the room we're looking for.
+        if (x < room->left){
+            continue;
+        }
+        if(y < room->top){
+            continue;
+        } 
+        if(x > room->right){
+            continue;
+        } 
+        if(y > room->bottom) {
+            continue;
+        }
+        // All 4 bounds passed. We found our room.
+
+        // Don't know what this is testing for.
+        loader = &room->load;
+        if (loader->tilesetId == 0xFF){
+            tele = &D_800A245C[loader->tileLayoutId];
+            if(tele->stageId == STAGE_ST0) {
+                return 0;
+            }
+        }
+        // Finally set this to the room we found, and return a success.
+        D_801375BC.def = &room->load;
+        return 1;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F0CD8);
 
