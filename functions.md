@@ -86,6 +86,7 @@
 | chi    | en_stage_name.rodata                |       16 |          0 | Yes    |                                 |       |
 | lib    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | no4    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
+| no4    | unk_10C30.rodata                    |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp    | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | dra    | IncrementRingBufferPos              |       16 |          1 |        |                                 |       |
@@ -109,6 +110,7 @@
 | lib    | e_life_up.rodata                    |       18 |          0 | Yes    |                                 |       |
 | lib    | unk_3B53C.rodata                    |       18 |          0 | Yes    |                                 |       |
 | no4    | e_skeleton_ape.rodata               |       18 |          0 | Yes    |                                 |       |
+| no4    | e_toad.rodata                       |       18 |          0 | Yes    |                                 |       |
 | dra    | SetGPUBuffRGB                       |       19 |          1 |        |                                 |       |
 | dra    | SetGPUBuffRGBZero                   |       19 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                       |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
@@ -251,7 +253,6 @@
 | dra    | SoundWait                           |       27 |          6 |        |                                 |       |
 | lib    | e_lesser_demon.rodata               |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                     |       28 |          0 | Yes    |                                 |       |
-| no4    | unk_10C30.rodata                    |       28 |          0 | Yes    |                                 |       |
 | no4    | unk_1E818.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                   |       28 |          0 | Yes    |                                 |       |
@@ -1129,7 +1130,7 @@
 | ric    | CheckBladeDashInput                 |      189 |         29 |        |                                 |       |
 |        | UpdatePrimitives                    |      192 |          6 |        |                                 |       |
 | st0    | EntityDraculaRainAttack             |      192 |         37 |        | https://decomp.me/scratch/y31mz | 0.997 |
-| no4    | func_pspeu_09249FA0                 |      193 |         24 |        |                                 |       |
+| no4    | func_pspeu_09249FA0                 |      193 |         24 |        | https://decomp.me/scratch/cLBEx | 0.999 |
 | dra    | 7879C.rodata                        |      194 |          0 | Yes    |                                 |       |
 | dra    | func_800FE3C4                       |      194 |         20 |        |                                 |       |
 | dra    | func_8010D59C                       |      196 |         22 |        |                                 |       |
@@ -1367,7 +1368,7 @@
 | lib    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | no4    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
 | wrp    | EntityEnemyBlood                    |      418 |         45 |        | https://decomp.me/scratch/uEYs4 | 0.997 |
-| no4    | func_pspeu_0924A260                 |      420 |         78 |        |                                 |       |
+| no4    | func_pspeu_0924A260                 |      420 |         78 |        | https://decomp.me/scratch/7WKgl | 0.999 |
 | st0    | EntitySecretStairs                  |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | lib    | EntityLesserDemonSpit               |      425 |         35 | Yes    |                                 |       |
 | no4    | func_pspeu_0923DD38                 |      428 |         36 |        |                                 |       |
@@ -1436,7 +1437,7 @@
 | dra    | CheckCeiling                        |      573 |         58 |        |                                 |       |
 | lib    | func_psp_09240860                   |      580 |         75 | Yes    | https://decomp.me/scratch/Mp9e1 | 0.994 |
 | dra    | EntityHellfireHandler               |      582 |         49 | Yes    | https://decomp.me/scratch/RU4Im | 0.997 |
-| no4    | func_pspeu_09249760                 |      582 |         92 | Yes    |                                 |       |
+| no4    | func_pspeu_09249760                 |      582 |         92 | Yes    | https://decomp.me/scratch/B70fl | 0.999 |
 | chi    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | lib    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | no4    | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
