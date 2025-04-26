@@ -2929,20 +2929,18 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
+    /* 0x80 */ s16 lickTimer;
+    /* 0x82 */ s16 jumpTimer;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ struct Entity* entity;
+    /* 0x88 */ struct Entity* tongueEntity;
 } ET_Toad;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 lickTimer;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 step;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u16 : 16;
-    /* 0x88 */ struct Entity* entity;
+    /* 0x84 */ u8 jumpStep;
+    /* 0x85 */ u8 jumpCount;
 } ET_Frog;
 
 typedef union { // offset=0x7C

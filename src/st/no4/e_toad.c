@@ -4,28 +4,41 @@
 // PSX: https://decomp.me/scratch/EQbZe
 // PSP: https://decomp.me/scratch/B70fl
 
-extern s16 D_us_8018261C[]; // sensors_ground
-extern u8 D_us_801825CC[];
-extern u8 D_us_801825D8[];
-extern u8 D_us_801825E8[];
-extern u8 D_us_801825EC[];
-extern u8 D_us_80182600[];
-extern u8 D_us_801825F8[];
-extern s16 D_us_80182648[];
-extern s16 D_us_80182658[];
-extern Point32 D_us_80182668[]; // velocities
-extern s16 D_us_8018262C[][2];  // hitbox data
+static u8 anim_change_dir[] = {
+    0x05, 0x01, 0x05, 0x02, 0x05, 0x01, 0x05, 0x02, 0x05, 0x01, 0xFF, 0x00};
+static u8 anim_jump[] = {0x03, 0x01, 0x03, 0x02, 0x03, 0x01, 0x02, 0x02,
+                         0x02, 0x01, 0x09, 0x02, 0x04, 0x03, 0xFF, 0x00};
+static u8 anim_land[] = {0x02, 0x06, 0xFF, 0x00};
+static u8 anim_open_mouth[] = {
+    0x09, 0x01, 0x02, 0x02, 0x01, 0x01, 0x06, 0x07, 0x08, 0x08, 0xFF, 0x00};
+static u8 anim_close_mouth[] = {0x08, 0x08, 0x06, 0x07, 0x03, 0x01, 0xFF, 0x00};
+static u8 anim_tongue[] = {
+    0x01, 0x09, 0x01, 0x0A, 0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D,
+    0x01, 0x0E, 0x06, 0x0F, 0x05, 0x0E, 0x04, 0x0D, 0x03, 0x0C,
+    0x02, 0x0B, 0x02, 0x0A, 0x03, 0x09, 0xFF, 0x00};
+static s16 sensors_ground[4][2] = {{0, 12}, {0, 4}, {4, -4}, {-8, 0}};
+// { hitboxOffX, hitboxWidth }
+static s16 tongueHitbox[][2] = {
+    {-9, 4}, {-9, 4}, {-12, 5}, {-12, 5}, {-16, 9}, {-16, 9}, {-22, 16}};
+static s16 jumpIntervals[] = {256, 32, 8, 96, 96, 32, 256, 64};
+static s16 lickIntervals[] = {32, 32, 16, 512, 128, 192, 256, 8};
+static Point32 jumpVelocities[] = {
+    {.x = FIX(0.5), .y = FIX(-6)},
+    {.x = FIX(1.5), .y = FIX(-4)},
+    {.x = FIX(2), .y = FIX(-2)},
+    {.x = FIX(2.5), .y = FIX(-1)},
+};
 
 void EntityToad(Entity* self) {
     Collider collider;
     Entity* entity;
-    s32 temp_s2;
+    s32 index;
     s32 posX;
     s32 posY;
 
     if (self->flags & FLAG_DEAD) {
-        if (self->ext.toad.entity) {
-            entity = self->ext.toad.entity;
+        if (self->ext.toad.tongueEntity) {
+            entity = self->ext.toad.tongueEntity;
             DestroyEntity(entity);
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -33,6 +46,7 @@ void EntityToad(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
+        // Frog "chitter" croak
         PlaySfxPositional(0x71B);
         DestroyEntity(self);
         return;
@@ -42,6 +56,7 @@ void EntityToad(Entity* self) {
     case 0:
         InitializeEntity(g_EInitToad);
         if (self->params) {
+            // params set to 1 means this is the toad's tongue
             self->hitboxHeight = 3;
             self->hitboxOffY = -1;
             self->hitPoints = 0x7FFF;
@@ -51,10 +66,10 @@ void EntityToad(Entity* self) {
         }
         break;
     case 1:
-        if (UnkCollisionFunc3(D_us_8018261C) & 1) {
-            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            self->ext.toad.unk82 = 0x20;
-            self->ext.toad.unk80 = 0x40;
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->ext.toad.jumpTimer = 0x20;
+            self->ext.toad.lickTimer = 0x40;
             self->step++;
         }
         break;
@@ -67,25 +82,26 @@ void EntityToad(Entity* self) {
                 self->pose = 0;
                 self->step_s++;
             }
-            if (self->ext.toad.unk82) {
-                self->ext.toad.unk82--;
+            if (self->ext.toad.jumpTimer) {
+                self->ext.toad.jumpTimer--;
             } else {
                 SetStep(3);
                 break;
             }
 
-            if (self->ext.toad.unk80) {
-                self->ext.toad.unk80--;
+            if (self->ext.toad.lickTimer) {
+                self->ext.toad.lickTimer--;
             } else {
                 SetStep(4);
                 break;
             }
 
+            // Croak
             PlaySfxPositional(0x71A);
 
             break;
         case 1:
-            if (!AnimateEntity(D_us_801825CC, self)) {
+            if (!AnimateEntity(anim_change_dir, self)) {
                 self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
                 self->step_s--;
                 break;
@@ -93,16 +109,17 @@ void EntityToad(Entity* self) {
             break;
         }
         break;
+    // Jump
     case 3:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_801825D8, self)) {
-                temp_s2 = Random() & 3;
-                self->velocityX = D_us_80182668[temp_s2].x;
+            if (!AnimateEntity(anim_jump, self)) {
+                index = Random() & 3;
+                self->velocityX = jumpVelocities[index].x;
                 if (!self->facingLeft) {
                     self->velocityX = -self->velocityX;
                 }
-                self->velocityY = D_us_80182668[temp_s2].y;
+                self->velocityY = jumpVelocities[index].y;
                 self->hitboxOffX = 1;
                 self->hitboxOffY = -7;
                 self->hitboxWidth = 7;
@@ -131,7 +148,7 @@ void EntityToad(Entity* self) {
                     self->velocityY = 0;
                 }
             }
-            if (UnkCollisionFunc3(D_us_8018261C) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 SetSubStep(2);
             }
             if (self->velocityY < 0) {
@@ -149,54 +166,56 @@ void EntityToad(Entity* self) {
             self->hitboxOffY = 2;
             self->hitboxWidth = 9;
             self->hitboxHeight = 10;
-            if (!AnimateEntity(D_us_801825E8, self)) {
-                self->ext.toad.unk82 = D_us_80182648[Random() & 7];
+            if (!AnimateEntity(anim_land, self)) {
+                self->ext.toad.jumpTimer = jumpIntervals[Random() & 7];
                 SetStep(2);
             }
         }
         break;
+    // Lick
     case 4:
         switch (self->step_s) {
         case 0:
             self->step_s++;
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_ID_3C, self, entity);
+                // Spawn the toad tongue
+                CreateEntityFromEntity(E_TOAD, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->params = 1;
                 entity->zPriority = self->zPriority + 1;
-                self->ext.toad.entity = entity;
+                self->ext.toad.tongueEntity = entity;
                 break;
             }
             SetStep(2);
-            self->ext.toad.entity = NULL;
+            self->ext.toad.tongueEntity = NULL;
             break;
         case 1:
-            if (!AnimateEntity(D_us_801825EC, self)) {
+            if (!AnimateEntity(anim_open_mouth, self)) {
                 PlaySfxPositional(SFX_BOING);
                 SetSubStep(2);
             }
             break;
         case 2:
-            entity = self->ext.toad.entity;
-            if (!AnimateEntity(D_us_80182600, entity)) {
+            entity = self->ext.toad.tongueEntity;
+            if (!AnimateEntity(anim_tongue, entity)) {
                 DestroyEntity(entity);
-                self->ext.toad.entity = NULL;
+                self->ext.toad.tongueEntity = NULL;
                 SetSubStep(3);
             }
             break;
         case 3:
-            if (!AnimateEntity(D_us_801825F8, self)) {
+            if (!AnimateEntity(anim_close_mouth, self)) {
                 SetStep(2);
-                self->ext.toad.unk80 = D_us_80182658[Random() & 7];
+                self->ext.toad.lickTimer = lickIntervals[Random() & 7];
             }
             break;
         }
         break;
     case 6:
-        temp_s2 = self->animCurFrame - 9;
-        self->hitboxOffX = D_us_8018262C[temp_s2][0];
-        self->hitboxWidth = D_us_8018262C[temp_s2][1];
+        index = self->animCurFrame - 9;
+        self->hitboxOffX = tongueHitbox[index][0];
+        self->hitboxWidth = tongueHitbox[index][1];
         break;
     }
 }

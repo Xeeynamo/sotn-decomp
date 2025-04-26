@@ -1,24 +1,47 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-extern u8 D_us_801826C0[];  // anim
-extern s16 D_us_801826C8[]; // sensors_ground
-extern Point32 D_us_801826D8[];
+static u8 anim_throat_inflate[] = {
+    0x05, 0x10, 0x03, 0x11, 0x05, 0x12, 0x03, 0x12, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_tongue[] = {
+    0x04, 0x10, 0x08, 0x13, 0x01, 0x11, 0x02, 0x12, 0x01, 0x11, 0x01,
+    0x14, 0x01, 0x15, 0x01, 0x16, 0x01, 0x17, 0x02, 0x18, 0x03, 0x19,
+    0x0C, 0x18, 0x04, 0x17, 0x04, 0x16, 0x04, 0x15, 0x02, 0x14, 0x08,
+    0x10, 0x01, 0x11, 0x04, 0x12, 0x01, 0x11, 0x10, 0x10, 0xFF, 0x00};
+static u8 anim_jump[] = {0x03, 0x10, 0x0C, 0x13, 0x03, 0x10, 0xFF, 0x00};
+static s16 sensors_ground[4][2] = {{0, 8}, {0, 4}, {3, -4}, {-6, 0}};
+static Point32 jumpVelocities[] = {
+    {.x = FIX(2), .y = FIX(-1.5)},
+    {.x = FIX(1), .y = FIX(-2)},
+    {.x = FIX(2), .y = FIX(-3)},
+    {.x = FIX(3), .y = FIX(-4.5)},
+};
+// { step_s / jumpCount }
+static u8 jumpType[][2] = {
+    // 9 tiny jumps
+    {1, 0},
+    // 1 small, 1 medium, 1 big jump
+    {2, 1},
+    // 1 big, 1 medium, 1 small jump
+    {3, 3},
+    // 2 small jumps, 1 big jump
+    {4, 0},
+};
 
-static s32 func_us_801D7FAC(s32 index) {
+static s32 FrogJump(s32 index) {
     Collider collider;
     s32 posX;
     s32 posY;
 
-    switch (g_CurrentEntity->ext.frog.step) {
+    switch (g_CurrentEntity->ext.frog.jumpStep) {
     case 0:
-        if (!AnimateEntity(D_us_801826C0, g_CurrentEntity)) {
-            g_CurrentEntity->velocityX = D_us_801826D8[index].x;
+        if (!AnimateEntity(anim_jump, g_CurrentEntity)) {
+            g_CurrentEntity->velocityX = jumpVelocities[index].x;
             if (!g_CurrentEntity->facingLeft) {
                 g_CurrentEntity->velocityX = -g_CurrentEntity->velocityX;
             }
-            g_CurrentEntity->velocityY = D_us_801826D8[index].y;
-            g_CurrentEntity->ext.frog.step++;
+            g_CurrentEntity->velocityY = jumpVelocities[index].y;
+            g_CurrentEntity->ext.frog.jumpStep++;
             PlaySfxPositional(SFX_BLIPS_C);
             g_CurrentEntity->ext.frog.unk82 = 4;
         }
@@ -36,10 +59,10 @@ static s32 func_us_801D7FAC(s32 index) {
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->velocityX = 0;
         }
-        if (UnkCollisionFunc3(D_us_801826C8) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             g_CurrentEntity->poseTimer = 0;
             g_CurrentEntity->pose = 0;
-            g_CurrentEntity->ext.frog.step = 2;
+            g_CurrentEntity->ext.frog.jumpStep = 2;
         }
         if (abs(g_CurrentEntity->velocityY) < FIX(2)) {
             g_CurrentEntity->animCurFrame = 0x1B;
@@ -52,7 +75,7 @@ static s32 func_us_801D7FAC(s32 index) {
         }
         break;
     case 2:
-        if (!AnimateEntity(D_us_801826C0, g_CurrentEntity)) {
+        if (!AnimateEntity(anim_jump, g_CurrentEntity)) {
             return 1;
         }
         break;
@@ -61,16 +84,12 @@ static s32 func_us_801D7FAC(s32 index) {
     return 0;
 }
 
-extern u8 D_us_80182688[];  // anim
-extern u8 D_us_80182694[];  // anim
-extern s16 D_us_801826C8[]; // sensors_ground
-extern u8 D_us_801826F8[][2];
-
 void EntityFrog(Entity* self) {
     Entity* entity;
     s32 index;
 
     if (self->flags & FLAG_DEAD) {
+        // Frog "chitter" croak
         PlaySfxPositional(0x71B);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -89,22 +108,23 @@ void EntityFrog(Entity* self) {
         self->hitboxOffY = 1;
         self->hitboxWidth = 8;
         self->hitboxHeight = 7;
-        self->ext.frog.unk80 = 0x80;
+        self->ext.frog.lickTimer = 0x80;
         break;
     case 1:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        if (UnkCollisionFunc3(D_us_801826C8) & 1) {
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step++;
         }
         break;
     case 2:
-        if (!AnimateEntity(&D_us_80182688, self)) {
+        if (!AnimateEntity(anim_throat_inflate, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            // Frog "chitter" croak
             PlaySfxPositional(0x71B);
         }
 
-        if (self->ext.frog.unk80) {
-            self->ext.frog.unk80--;
+        if (self->ext.frog.lickTimer) {
+            self->ext.frog.lickTimer--;
         } else if (GetDistanceToPlayerX() < 0x40 &&
                    (GetSideToPlayer() & 1) ^ self->facingLeft) {
             SetStep(4);
@@ -115,9 +135,10 @@ void EntityFrog(Entity* self) {
         }
 
         break;
+    // Lick
     case 4:
-        if (!AnimateEntity(D_us_80182694, self)) {
-            self->ext.frog.unk80 = 0x80;
+        if (!AnimateEntity(anim_tongue, self)) {
+            self->ext.frog.lickTimer = 0x80;
             SetStep(2);
         }
 
@@ -152,55 +173,64 @@ void EntityFrog(Entity* self) {
             break;
         }
         break;
+    // Jump
     case 3:
         switch (self->step_s) {
         case 0:
             index = Random() & 3;
-            self->ext.frog.step = 0;
-            self->step_s = D_us_801826F8[index][0];
-            self->ext.frog.unk85 = D_us_801826F8[index][1];
+            self->ext.frog.jumpStep = 0;
+            self->step_s = jumpType[index][0];
+            self->ext.frog.jumpCount = jumpType[index][1];
             break;
         case 1:
-            if (func_us_801D7FAC(0) != 0) {
-                self->ext.frog.step = 0;
-                self->ext.frog.unk85++;
+            // Do 9 tiny jumps
+            // Jump velocity index 0
+            if (FrogJump(0) != 0) {
+                self->ext.frog.jumpStep = 0;
+                self->ext.frog.jumpCount++;
             }
 
-            if (self->ext.frog.unk85 > 8) {
+            if (self->ext.frog.jumpCount > 8) {
                 SetStep(2);
             }
             break;
         case 2:
-            if (func_us_801D7FAC(self->ext.frog.unk85) != 0) {
-                self->ext.frog.step = 0;
-                self->ext.frog.unk85++;
+            // Do 1 small, 1 medium, 1 big jump
+            // Jump velocity index 1, 2, 3
+            if (FrogJump(self->ext.frog.jumpCount) != 0) {
+                self->ext.frog.jumpStep = 0;
+                self->ext.frog.jumpCount++;
             }
 
-            if (self->ext.frog.unk85 > 3) {
+            if (self->ext.frog.jumpCount > 3) {
                 SetStep(2);
             }
             break;
         case 3:
-            if (func_us_801D7FAC(self->ext.frog.unk85) != 0) {
-                self->ext.frog.step = 0;
-                self->ext.frog.unk85--;
+            // Do 1 big, 1 medium, 1 small jump
+            // Jump velocity index 3, 2, 1
+            if (FrogJump(self->ext.frog.jumpCount) != 0) {
+                self->ext.frog.jumpStep = 0;
+                self->ext.frog.jumpCount--;
             }
 
-            if (!self->ext.frog.unk85) {
+            if (!self->ext.frog.jumpCount) {
                 SetStep(2);
             }
             break;
         case 4:
-            if (self->ext.frog.unk85 < 2) {
+            // Do 2 short jumps, followed by 1 big jump
+            // Jump velocity index 1, 1, 3
+            if (self->ext.frog.jumpCount < 2) {
                 index = 1;
             } else {
                 index = 3;
             }
 
-            if (func_us_801D7FAC(index) != 0) {
-                self->ext.frog.step = 0;
-                self->ext.frog.unk85++;
-                if (self->ext.frog.unk85 > 2) {
+            if (FrogJump(index) != 0) {
+                self->ext.frog.jumpStep = 0;
+                self->ext.frog.jumpCount++;
+                if (self->ext.frog.jumpCount > 2) {
                     SetStep(2);
                 }
             }
