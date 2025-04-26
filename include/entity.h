@@ -2931,11 +2931,19 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 step;
-    /* 0x85 */ u8 : 8;
-    /* 0x86 */ u16 : 16;
+    /* 0x84 */ s32 : 32;
     /* 0x88 */ struct Entity* entity;
 } ET_Toad;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 step;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ struct Entity* entity;
+} ET_Frog;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3191,6 +3199,7 @@ typedef union { // offset=0x7C
     ET_801D96FC et_801D96FC;
     ET_DopplegangerBGLight dopBGLight;
     ET_Toad toad;
+    ET_Frog frog;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
