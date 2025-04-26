@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include "player.h"
 #include "sfx.h"
 
-void func_80158B04(u16 arg0) {
+static void func_80158B04(u16 arg0) {
     s16 xMod = 3;
     if (PLAYER.facingLeft) {
         xMod = -xMod;
@@ -437,14 +436,14 @@ void RicStepCrouch(void) {
     }
 }
 
-void func_80159BC8(void) {
+static void func_80159BC8(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
 }
 
-void func_80159C04(void) {
+static void func_80159C04(void) {
     Entity* entity;
     s16 var_s3;
     s16 var_s2;

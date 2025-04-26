@@ -1,11 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_8015CC70);
+void MarSetDebug() { MarSetStep(PL_S_DEBUG); }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetCrouch);
+void MarSetInit(s32 step_s) {
+    PLAYER.step = PL_S_INIT;
+    PLAYER.step_s = step_s;
+    PLAYER.pose = PLAYER.poseTimer = 0;
+    if (step_s & 1) {
+        PLAYER.anim = mar_80155950;
+    } else {
+        PLAYER.anim = mar_8015591C;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1CE8);
+void MarSetCrouch(s32 kind, s32 velocityX) {
+    MarSetStep(PL_S_CROUCH);
+    MarSetAnimation(mar_anim_crouch);
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    if (kind == 1) {
+        PLAYER.anim = mar_anim_crouch_from_stand;
+        PLAYER.step_s = 4;
+    }
+    if (kind == 2) {
+        PLAYER.anim = mar_anim_crouch_from_stand;
+        PLAYER.step_s = 1;
+    }
+    if (kind == 3) {
+        PLAYER.anim = mar_anim_crouch_from_stand;
+        PLAYER.step_s = 4;
+    }
+}
+
+INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetStand);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1D98);
 
@@ -19,7 +47,37 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B20B8);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2170);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarCheckSubwpnChainLimit);
+static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
+
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B22B8);
 
@@ -29,6 +87,16 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2590);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B28B0);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetSlide);
+void MarSetSlide(void) {
+    MarCheckFacing();
+    MarSetStep(PL_S_SLIDE);
+    MarSetAnimation(mar_80155750);
+    g_CurrentEntity->velocityY = 0;
+    MarSetSpeedX(FIX(4.5));
+    func_8015CC28();
+    MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    g_api.PlaySfx(SFX_SCRAPE_C);
+    g_Player.timers[PL_T_12] = 4;
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2D00);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetBladeDash);

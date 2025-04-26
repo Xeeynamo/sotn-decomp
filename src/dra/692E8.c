@@ -2,7 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 #include "sfx.h"
-#include "player.h"
 
 // data order is slightly different between US and HD
 // maybe this suggests a file split
@@ -545,6 +544,11 @@ void func_8010A3F0(void) {
     g_Player.unk10 = 0;
 }
 
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_PressUp) {
