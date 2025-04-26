@@ -56,8 +56,8 @@ void func_pspeu_09241E38(Entity* self);
 void func_pspeu_09242E30(Entity* self);
 void func_pspeu_09243478(Entity* self);
 void EntitySpearGuardBlock(Entity* self);
-void func_pspeu_09249760(Entity* self);
-void func_pspeu_0924A260(Entity* self);
+void EntityToad(Entity* self);
+void EntityFrog(Entity* self);
 void func_pspeu_092483A0(Entity* self);
 void func_pspeu_092482B0(Entity* self);
 void EntityUnkId3F(Entity* self);
@@ -154,8 +154,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x38 */ func_pspeu_09242E30,
     /* 0x39 */ func_pspeu_09243478,
     /* 0x3A */ EntitySpearGuardBlock,
-    /* 0x3B */ func_pspeu_09249760,
-    /* 0x3C */ func_pspeu_0924A260,
+    /* 0x3B */ EntityToad,
+    /* 0x3C */ EntityFrog,
     /* 0x3D */ func_pspeu_092483A0,
     /* 0x3E */ func_pspeu_092482B0,
     /* 0x3F */ EntityUnkId3F,
@@ -203,8 +203,8 @@ EInit D_pspeu_09267AF0 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_80180BF8 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
-EInit D_pspeu_09267B20 = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06A};
-EInit D_pspeu_09267B30 = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
+EInit g_EInitToad = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06A};
+EInit g_EInitFrog = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
 EInit D_pspeu_09267B40 = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
 EInit D_pspeu_09267B50 = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
 EInit g_EInitUnkId3F = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
