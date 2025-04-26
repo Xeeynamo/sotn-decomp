@@ -2931,7 +2931,9 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
-    /* 0x84 */ s32 : 32;
+    /* 0x84 */ u8 step;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u16 : 16;
     /* 0x88 */ struct Entity* entity;
 } ET_Toad;
 
