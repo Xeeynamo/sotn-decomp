@@ -280,13 +280,16 @@ enum SfxModes {
 #define NA_VO_SU_DELICIOUS 0x8D1
 
 // STAGE NO3 / NP3
-
 #define NA_SE_EV_WINDOW_LATCH 0x79D
 #define SE_DEATH_TAKES_ITEMS 0x7A0
 #define NA_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2
 #define SE_TREE_BRANCH_SNAP 0x7A4
 #define SE_CASTLE_GATE_RISE 0x7A5
+
+// STAGE NO4
+#define SFX_TOAD_CROAK 0x71A
+#define SFX_FROG_CROAK 0x71B
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_BO4_UNK_7D7 0x7D7

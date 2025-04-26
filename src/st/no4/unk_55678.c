@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D798C);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D7FAC);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D81B4);
-
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D85A4);
 
 INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8654);
