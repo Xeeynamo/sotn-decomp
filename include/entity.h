@@ -2927,6 +2927,14 @@ typedef struct {
     /* 0x84 */ u8 unk84;
 } ET_DopplegangerBGLight;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ struct Entity* entity;
+} ET_Toad;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3180,6 +3188,7 @@ typedef union { // offset=0x7C
     ET_unkDoor unkDoor;
     ET_801D96FC et_801D96FC;
     ET_DopplegangerBGLight dopBGLight;
+    ET_Toad toad;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
