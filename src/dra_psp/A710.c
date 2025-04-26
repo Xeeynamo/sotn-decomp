@@ -142,8 +142,159 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         return 1;
     }
 }
+extern s32 D_801375A4;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F0CD8);
+s32 func_800F0CD8(s32 arg0) {
+    s32 var_s0;
+    s32 ret;
+
+    if (!g_unkGraphicsStruct.unk18) {
+        if (D_80097C98 == 2) {
+            ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
+                                    g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
+            D_801375C0 = PLAYER.posX.i.hi & 0xFF;
+            D_801375C4 = PLAYER.posY.i.hi & 0xFF;
+            return ret;
+        }
+        if (arg0) {
+            if (g_PlayerX < g_Tilemap.x) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
+                if (ret) {
+                    if(PLAYER.posX.i.hi < 4){
+                        PLAYER.posX.i.hi = -1;
+                        PLAYER.posX.i.lo = 0;
+                    }
+                    D_801375C0 = PLAYER.posX.i.hi + 256;
+                    D_801375C4 = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    return ret;
+                } else {
+                    g_PlayerX = g_Tilemap.x;
+                    PLAYER.posX.i.hi = 0;
+                }
+            }
+            if (g_PlayerX >= g_Tilemap.width) {
+                ret = SetNextRoomToLoad(
+                    g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
+                if (ret) {
+                    if(PLAYER.posX.i.hi > 252){
+                        PLAYER.posX.i.hi = 256;
+                        PLAYER.posX.i.lo = 0;
+                    }
+                    D_801375C0 = PLAYER.posX.i.hi - 256;
+                    D_801375C4 = PLAYER.posY.i.hi;
+                    g_Player.unk78 = 1;
+                    return ret;
+                } else {
+                    g_PlayerX = g_Tilemap.width - 1;
+                    PLAYER.posX.i.hi = 255;
+                }
+            }
+        } else {
+            goto block_25;
+        }
+    }
+    if (!g_unkGraphicsStruct.unk24) {
+        if (g_PlayerY < g_Tilemap.y + 4) {
+            ret = SetNextRoomToLoad(
+                g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.top - 1);
+            if (ret) {
+                D_801375C0 = PLAYER.posX.i.hi;
+                D_801375C4 = PLAYER.posY.i.hi + 208;
+                g_PlayerY -= 128;
+                g_Player.unk78 = 2;
+                return ret;
+            } else {
+                g_PlayerY = g_Tilemap.y + 4;
+                PLAYER.posY.i.hi = 0;
+            }
+        }
+        var_s0 = 48;
+        if (!(g_Player.vram_flag & 1) &&
+            !(g_Player.status &
+              (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
+            var_s0 = 24;
+        }
+        if (g_PlayerY >= g_Tilemap.height - var_s0 + 20) {
+            ret = SetNextRoomToLoad(
+                g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.bottom + 1);
+            if (ret) {
+                D_801375C0 = PLAYER.posX.i.hi;
+                D_801375C4 = PLAYER.posY.i.hi - (256 - var_s0);
+                g_PlayerY += 0x80;
+                g_Player.unk78 = 2;
+                return ret;
+            } else {
+                g_PlayerY = g_Tilemap.height - var_s0 + 0x13;
+                PLAYER.posY.i.hi = 271 - var_s0;
+            }
+        }
+    }
+block_25:
+    if (g_PlayerX < g_Tilemap.x + g_unkGraphicsStruct.unkC) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (g_Tilemap.x + g_unkGraphicsStruct.unkC <
+                g_PlayerX + D_801375A4) {
+                PLAYER.posX.i.hi += g_PlayerX + D_801375A4 -
+                                    (g_Tilemap.x + g_unkGraphicsStruct.unkC);
+            }
+        }
+        g_Tilemap.scrollX.i.hi = g_Tilemap.x;
+    } else if (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256 < g_PlayerX) {
+        if (arg0 && g_Tilemap.hSize != 1) {
+            if (g_PlayerX + D_801375A4 <
+                g_Tilemap.width + g_unkGraphicsStruct.unkC - 256) {
+                PLAYER.posX.i.hi +=
+                    g_PlayerX + D_801375A4 -
+                    (g_Tilemap.width + g_unkGraphicsStruct.unkC - 256);
+            }
+        }
+        g_Tilemap.scrollX.i.hi = g_Tilemap.width - 256;
+    } else {
+        g_Tilemap.scrollX.i.hi = g_PlayerX - g_unkGraphicsStruct.unkC;
+        PLAYER.posX.i.hi = g_unkGraphicsStruct.unkC;
+    }
+    if (g_unkGraphicsStruct.unk1C != 0) {
+        if (g_PlayerY < g_Tilemap.y + 140) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else if (g_Tilemap.height - 116 < g_PlayerY) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else {
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 136;
+            PLAYER.posY.i.hi = 136;
+        }
+    } else if (g_PlayerY < g_Tilemap.y + 140) {
+        if (g_Tilemap.scrollY.i.hi - (g_PlayerY - 136) >= 4 &&
+            g_Tilemap.y + 8 < g_Tilemap.scrollY.i.hi) {
+            g_Tilemap.scrollY.i.hi -= 4;
+            PLAYER.posY.i.hi += 4;
+        } else if (g_Tilemap.scrollY.i.hi < g_Tilemap.y && g_Tilemap.y != 0) {
+            g_Tilemap.scrollY.i.hi += 4;
+            PLAYER.posY.i.hi -= 4;
+        } else {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        }
+    } else {
+        if (g_Tilemap.height - 116 < g_PlayerY) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        } else if (g_Tilemap.scrollY.i.hi - (g_PlayerY - 136) >= 4) {
+            g_Tilemap.scrollY.i.hi = g_Tilemap.scrollY.i.hi - 4;
+            PLAYER.posY.i.hi = PLAYER.posY.i.hi + 4;
+        } else {
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 136;
+            PLAYER.posY.i.hi = 136;
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F14CC);
 
@@ -233,16 +384,13 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2860);
 extern bool D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;
-extern s32 D_801375A4;
 extern s32 D_801375A8;
 extern s32 D_801375AC;
 extern s32 D_801375B0;
 extern s32 D_801375B4;
 extern s32 D_801375B8;
 extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
+
 
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
