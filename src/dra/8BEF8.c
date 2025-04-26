@@ -2,6 +2,18 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+typedef struct {
+    s32 : 32;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+} Unkstruct_8012BEF8; // size = 0x1C
+
 // echo of bat effect
 void EntityBatEcho(Entity* self) {
 #ifdef VERSION_PC
@@ -11,8 +23,8 @@ void EntityBatEcho(Entity* self) {
     Primitive* temp;
     Unkstruct_8012BEF8* unkstruct;
     s32 i;
-    s16 temp_unk7E;
     s32 var_s5;
+    s16 temp_unk7E;
     s32 var_s6;
     s32 temp_s7;
     s32 posX, posY;
@@ -62,16 +74,18 @@ void EntityBatEcho(Entity* self) {
             self->hitboxHeight = 0xC;
             func_8011A328(self, 0xA);
         }
-        self->step += 1;
+        self->step++;
         break;
+
     case 1:
         self->ext.batEcho.unk7E += 0xA;
         if (self->ext.batEcho.unk7E > self->ext.batEcho.unk80) {
             self->ext.batEcho.unk7E = self->ext.batEcho.unk80;
             self->hitboxState = 0;
-            self->step += 1;
+            self->step++;
         }
         break;
+
     case 2:
         self->ext.batEcho.unk7E -= 0xA;
         if (self->ext.batEcho.unk7E < 0) {
@@ -80,6 +94,7 @@ void EntityBatEcho(Entity* self) {
             return;
         }
         break;
+
     case 3:
         prim = self->ext.batEcho.unk84;
         while (prim != NULL) {
@@ -119,7 +134,8 @@ void EntityBatEcho(Entity* self) {
         var_s5 = posX + 16;
     }
 
-    temp_s7 = (((rsin(PLAYER.rotZ) >> 4) * 0xA) >> 8) - 6;
+    temp_unk7E = PLAYER.rotZ;
+    temp_s7 = (((rsin(temp_unk7E) >> 4) * 0xA) >> 8) - 6;
     temp_s7 = posY + temp_s7;
     temp_unk7E = self->ext.batEcho.unk7E;
     unkstruct = (Unkstruct_8012BEF8*)SP(sizeof(Primitive));
@@ -143,14 +159,14 @@ void EntityBatEcho(Entity* self) {
         } else {
             var_s5 += 8;
         }
-        *(s32*)&prim->x0 = *(s32*)&temp->x0 = *(s32*)&temp->x1;
-        *(s32*)&prim->x2 = *(s32*)&temp->x2 = *(s32*)&temp->x3;
+        LOW(prim->x0) = LOW(temp->x0) = LOW(temp->x1);
+        LOW(prim->x2) = LOW(temp->x2) = LOW(temp->x3);
         prim->x3 = prim->x1 = temp->x3 = temp->x1 = var_s5;
         prim->y1 = temp->y1 =
             temp_s7 + ((unkstruct->unk18 * unkstruct->unkA) >> 9);
         prim->y3 = temp->y3 = temp->y1 - unkstruct->unk8;
 
-        *(s32*)&prim->r0 = *(s32*)&temp->r0 = *(s32*)&temp->r1;
+        LOW(prim->r0) = LOW(temp->r0) = LOW(temp->r1);
 
         prim->r1 = temp->r1 =
             (unkstruct->unk10 + 0x41) * unkstruct->unkC * temp_unk7E / FIX(1);
@@ -161,12 +177,12 @@ void EntityBatEcho(Entity* self) {
 
         prim->type = PRIM_G4;
         prim = prim->next;
-        *(s32*)&prim->x0 = *(s32*)&temp->x0;
-        *(s32*)&prim->x1 = *(s32*)&temp->x1;
-        *(s32*)&prim->x2 = *(s32*)&temp->x2;
-        *(s32*)&prim->x3 = *(s32*)&temp->x3;
-        *(s32*)&prim->r0 = *(s32*)&temp->r0;
-        *(s32*)&prim->r1 = *(s32*)&temp->r1;
+        LOW(prim->x0) = LOW(temp->x0);
+        LOW(prim->x1) = LOW(temp->x1);
+        LOW(prim->x2) = LOW(temp->x2);
+        LOW(prim->x3) = LOW(temp->x3);
+        LOW(prim->r0) = LOW(temp->r0);
+        LOW(prim->r1) = LOW(temp->r1);
         prim->y2 = var_s6;
         var_s6 = temp->y1 + unkstruct->unk8;
         prim->y3 = var_s6;

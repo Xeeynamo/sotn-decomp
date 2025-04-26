@@ -66,11 +66,7 @@ void RenderTilemap(void) {
     r->rect.y = 0;
     r->rect.w = 255;
     r->rect.h = 255;
-#ifdef VERSION_PSP
-    setBlockFill(sp16);
-#else
     setSprt16(sp16);
-#endif
     r->x = g_backbufferX;
     r->y = g_backbufferY;
     if (t->hideTimer > 0) {
