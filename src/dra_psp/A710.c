@@ -355,7 +355,27 @@ void func_800F14CC(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F16D0);
+s32 func_800F16D0(void) {
+    s32 stageId;
+    RoomTeleport* tele;
+
+    if (D_8003C730 != 0)
+        return g_StageId;
+    else if (D_80097C98 == 4)
+        return STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG;
+    else if (D_80097C98 == 5)
+        return STAGE_TOP;
+    else if (D_80097C98 == 6)
+        return STAGE_LIB;
+    else {
+        tele = &D_800A245C[D_8006C374];
+        stageId = tele->stageId;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            stageId ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        return stageId;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E38);
 
