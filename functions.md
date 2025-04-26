@@ -1450,7 +1450,7 @@
 | dra    | func_8011B5A4                       |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
-| dra    | EntityBatEcho                       |      618 |         43 |        | https://decomp.me/scratch/ewB0M | 0.998 |
+| dra    | EntityBatEcho                       |      618 |         43 |        | https://decomp.me/scratch/90rWo | 0.998 |
 | dra    | func_800EB758                       |      619 |         30 |        |                                 |       |
 | no4    | func_pspeu_0923BB30                 |      621 |         50 |        |                                 |       |
 | ric    | RicEntityAguneaLightning            |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
