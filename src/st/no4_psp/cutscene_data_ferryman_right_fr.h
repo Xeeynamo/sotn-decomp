@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// clang-format off
+PLAY_SOUND(0x10),
+SET_POS(60,24),
+LOAD_PORTRAIT(0x80100006,0),
+SET_PORTRAIT(0,0),
+SCRIPT_UNKNOWN_11(),
+PLAY_SOUND(0x502),
+WAIT_FOR_SOUND(),
+'V','o','t','r','e',' ','d','e','s','t','i','n',' ','v','o','u','s',' ','a','t','t','e','n','d',',',
+LINE_BREAK(),
+'O',' ','P','r','i','n','c','e','.',
+SCRIPT_UNKNOWN_11(),
+NEXT_DIALOG(),
+CLOSE_DIALOG(),
+SCRIPT_UNKNOWN_20(0x11),
+SET_FLAG(7),
+END_CUTSCENE(),

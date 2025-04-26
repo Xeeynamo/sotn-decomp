@@ -934,7 +934,3 @@ void RunMainEngine(void) {
         }
     }
 }
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAF08);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAFA8);
