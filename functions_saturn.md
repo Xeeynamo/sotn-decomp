@@ -387,7 +387,7 @@
 | zero/f_nonmat/f600AD98.s     | func_0600AD98   |       86 |          6 |                                 |       |
 | alucard/f_nonmat/f60AEFBC.s  | func_060AEFBC   |       86 |          8 |                                 |       |
 | alucard/f_nonmat/f60BD214.s  | func_060BD214   |       87 |          5 |                                 |       |
-| richter/f_nonmat/f60A8FD0.s  | func_060A8FD0   |       87 |          7 | https://decomp.me/scratch/UsjCG | 0.678 |
+| richter/f_nonmat/f60A8FD0.s  | func_060A8FD0   |       87 |          7 | https://decomp.me/scratch/gJfUv | 0.709 |
 | zero/f_nonmat/f6014B80.s     | func_06014B80   |       87 |          9 |                                 |       |
 | zero/f_nonmat/f6008488.s     | func_06008488   |       87 |         10 |                                 |       |
 | richter/f_nonmat/f60A6D64.s  | func_060A6D64   |       87 |         11 |                                 |       |
