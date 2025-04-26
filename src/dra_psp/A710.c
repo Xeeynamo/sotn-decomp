@@ -388,7 +388,15 @@ void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E90);
+s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
+    s32 temp_v0 = (x / 2) + (y * 4);
+
+    if (!(x & 1)) {
+        return bitmap[temp_v0] & 0xF;
+    } else {
+        return (bitmap[temp_v0] & 0xF0) >> 4;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7ED8);
 
