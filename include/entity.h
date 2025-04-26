@@ -2931,17 +2931,11 @@ typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 lickTimer;
     /* 0x82 */ s16 jumpTimer;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ struct Entity* tongueEntity;
-} ET_Toad;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 lickTimer;
-    /* 0x82 */ s16 unk82;
     /* 0x84 */ u8 jumpStep;
     /* 0x85 */ u8 jumpCount;
-} ET_Frog;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ struct Entity* tongueEntity;
+} ET_FrogToad;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3196,8 +3190,7 @@ typedef union { // offset=0x7C
     ET_unkDoor unkDoor;
     ET_801D96FC et_801D96FC;
     ET_DopplegangerBGLight dopBGLight;
-    ET_Toad toad;
-    ET_Frog frog;
+    ET_FrogToad frogToad;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
