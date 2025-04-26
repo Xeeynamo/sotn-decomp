@@ -377,7 +377,16 @@ s32 func_800F16D0(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E38);
+void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
+    // Pixels are stored 2 per byte
+    s32 index = (x / 2) + (y * 4);
+
+    if (!(x & 1)) {
+        bitmap[index] = (bitmap[index] & 0xF0) + explored;
+    } else {
+        bitmap[index] = (bitmap[index] & 0xF) + (explored << 4);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E90);
 
