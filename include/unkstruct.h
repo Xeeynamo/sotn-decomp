@@ -145,18 +145,6 @@ typedef struct {
 } unkStr_8011E4BC; // size = 0x10
 
 typedef struct {
-    s32 : 32;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-} Unkstruct_8012BEF8; // size = 0x1C
-
-typedef struct {
     u8 childId;
     u8 unk1;
     u8 unk2;
