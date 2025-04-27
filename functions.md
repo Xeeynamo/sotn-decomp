@@ -90,8 +90,8 @@
 | chi       | en_red_door.rodata                  |       16 |          0 | Yes    |                                 |       |
 | chi       | en_stage_name.rodata                |       16 |          0 | Yes    |                                 |       |
 | lib       | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
+| no4       | e_fishhead.rodata                   |       16 |          0 | Yes    |                                 |       |
 | no4       | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
-| no4       | unk_10C30.rodata                    |       16 |          0 | Yes    |                                 |       |
 | st0       | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | wrp       | e_red_door.rodata                   |       16 |          0 | Yes    |                                 |       |
 | dra       | IncrementRingBufferPos              |       16 |          1 |        |                                 |       |
@@ -713,7 +713,7 @@
 | wrp       | PrimDecreaseBrightness              |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | dra       | AllocPrimitives                     |       63 |          8 |        | https://decomp.me/scratch/h0S5o | 0.727 |
 | dra       | func_800EDB58                       |       63 |          8 |        | https://decomp.me/scratch/jGDjr | 0.72  |
-| no4       | EntityUnkId3F                       |       63 |         10 |        |                                 |       |
+| no4       | EntityFishheadFireball              |       63 |         10 |        |                                 |       |
 |           | ServantUnk0                         |       63 |         12 |        |                                 |       |
 | dra       | E6A8.rodata                         |       64 |          0 | Yes    |                                 |       |
 | lib       | cutscene.rodata                     |       64 |          0 | Yes    |                                 |       |
@@ -739,7 +739,7 @@
 | maria_psp | func_80160F0C                       |       67 |          6 |        |                                 |       |
 | ric       | func_80160F0C                       |       67 |          6 |        |                                 |       |
 | lib       | func_psp_09239568                   |       67 |          6 |        | https://decomp.me/scratch/vnLIX | 1.0   |
-| no4       | func_pspeu_092482B0                 |       67 |          6 |        |                                 |       |
+| no4       | func_pspeu_092482B0                 |       67 |          6 |        | https://decomp.me/scratch/LJBKp | 0.998 |
 | st0       | SetTitleDisplayBuffer               |       67 |          6 |        |                                 |       |
 | dra       | func_8012CED4                       |       67 |          8 |        |                                 |       |
 | dra       | UnpauseSfxScripts                   |       67 |          8 |        |                                 |       |
@@ -1113,7 +1113,7 @@
 | chi       | EntityGremlinEffect                 |      136 |         18 |        |                                 |       |
 | dra       | func_psp_09141668                   |      136 |         21 |        |                                 |       |
 | chi       | EntityGremlinFire                   |      136 |         21 |        |                                 |       |
-| no4       | func_pspeu_09249560                 |      138 |         15 |        |                                 |       |
+| no4       | func_pspeu_09249560                 |      138 |         15 |        | https://decomp.me/scratch/KO4LD | 0.999 |
 | dra       | CheckIfAllButtonsAreAssigned        |      139 |          2 |        |                                 |       |
 | lib       | SetCutsceneScript                   |      139 |          5 |        | https://decomp.me/scratch/ExoTq | 0.999 |
 | no4       | SetCutsceneScript                   |      139 |          5 |        | https://decomp.me/scratch/ExoTq | 0.999 |
@@ -1209,8 +1209,8 @@
 | no4       | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | wrp       | CollectSubweapon                    |      184 |         20 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra       | PlayerStepUnmorphWolf               |      185 |         25 |        |                                 |       |
+| no4       | func_pspeu_09248D90                 |      185 |         27 |        | https://decomp.me/scratch/wRJ5x | 0.999 |
 | no4       | func_pspeu_0923D180                 |      185 |         27 |        |                                 |       |
-| no4       | func_pspeu_09248D90                 |      185 |         27 |        |                                 |       |
 | dra       | EntitySubwpnBibleTrail              |      186 |         14 |        |                                 |       |
 | chi       | UnkCollisionFunc3                   |      186 |         20 |        |                                 |       |
 | lib       | UnkCollisionFunc3                   |      186 |         20 |        |                                 |       |
@@ -1436,7 +1436,7 @@
 | dra       | CheckSwordBrothersInput             |      350 |         56 |        |                                 |       |
 | no4       | EntitySideWaterSplash               |      352 |         30 |        |                                 |       |
 | dra       | func_80130264                       |      352 |         34 | Yes    |                                 |       |
-| no4       | func_pspeu_09249030                 |      356 |         34 |        |                                 |       |
+| no4       | func_pspeu_09249030                 |      356 |         34 |        | https://decomp.me/scratch/VAgqW | 1.0   |
 | chi       | EntityVenusWeedDart                 |      356 |         37 |        |                                 |       |
 | dra       | UpdatePlayerEntities                |      356 |         51 |        |                                 |       |
 | lib       | func_us_801B0C40                    |      357 |         45 |        |                                 |       |
@@ -1593,7 +1593,7 @@
 | dra       | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
 | dra       | HandleSaveMenu                      |      639 |        101 |        | https://decomp.me/scratch/rPayV | 0.924 |
 | lib       | func_us_801B4830                    |      642 |         61 | Yes    |                                 |       |
-| no4       | func_pspeu_092483A0                 |      644 |         88 | Yes    |                                 |       |
+| no4       | func_pspeu_092483A0                 |      644 |         88 | Yes    | https://decomp.me/scratch/I0gCE | 0.998 |
 | dra       | func_8012D3E8                       |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
 | maria_psp | func_pspeu_092B3848                 |      648 |        123 |        |                                 |       |
 | lib       | func_psp_09258100                   |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
