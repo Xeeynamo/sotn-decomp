@@ -250,7 +250,7 @@ void EntityFishhead(Entity* self) {
             }
         }
     }
-    ptr = hitbox_data;
+    ptr = hitbox_data[0];
     ptr += hitbox_data_indices[self->animCurFrame] << 2;
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;

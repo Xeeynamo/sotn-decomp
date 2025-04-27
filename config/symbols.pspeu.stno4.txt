@@ -104,6 +104,7 @@ DrawCutsceneActorName = 0x0925DE60;
 CutsceneUnk3 = 0x0925E178;
 CutsceneUnk4 = 0x0925E1F8;
 SetCutsceneScript = 0x0925E338;
+D_us_801BCDD8 = 0x092632A0;
 g_SpriteBanks = 0x09267098;
 g_TileLayers = 0x092674F8;
 g_Cluts = 0x092676C0;
