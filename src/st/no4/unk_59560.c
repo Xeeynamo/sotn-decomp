@@ -1,253 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-void EntityFishheadSpawner(Entity* self) {
-    Entity* entity;
-    s32 params;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitFishheadSpawner);
-        self->animCurFrame = 0x13;
-        params = self->params;
-
-        // Spawn two stacked fishheads
-        entity = self + 1;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
-        entity->params = params & 0x100;
-        entity->facingLeft = params & 1;
-
-        entity = self + 2;
-        CreateEntityFromEntity(E_FISHHEAD, self, entity);
-        entity->params = (params & 0x100) + 1;
-        entity->facingLeft = (params & 2) >> 1;
-        entity->posY.i.hi -= 0x18;
-        break;
-    default:
-        break;
-    }
-}
-
-extern u16 D_us_80180C22; // palette
-extern u8 D_us_80182700[];
-extern u8 D_us_80182708[];
-extern u8 D_us_8018274C[];
-extern u8 D_us_80182764[];
-extern s8 D_us_801827B4[];
-extern u8 D_us_801827C4[];
-extern s16 D_us_801827D8[];
-
-void EntityFishhead(Entity* self) {
-    Entity* entity;
-    s32 playerFacing;
-    s32 i;
-    s8* ptr;
-
-    if (self->flags & 0x100 && self->step != 5) {
-        SetStep(5);
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitFishhead);
-        self->animCurFrame = 1;
-        self->palette += 5;
-        if (!(self->params & 1)) {
-            self->ext.fishhead.unk86 = 1;
-        }
-        self->ext.fishhead.unk84 = Random() & 7;
-        // fallthrough
-    case 1:
-    case 2:
-        switch (self->step_s) {
-        case 0:
-            self->ext.fishhead.unk80 = D_us_801827D8[self->ext.fishhead.unk84];
-            self->ext.fishhead.unk84++;
-            self->ext.fishhead.unk84 &= 7;
-            self->step_s++;
-            // fallthrough
-        case 1:
-            AnimateEntity(D_us_80182700, self);
-            if (!(self->flags & 0xF)) {
-                self->ext.fishhead.unk82 += 0x10;
-                if (self->ext.fishhead.unk82 > 0xA80) {
-                    self->ext.fishhead.unk82 = -self->ext.fishhead.unk82;
-                }
-                playerFacing = (abs(self->ext.fishhead.unk82) >> 8);
-                self->palette = D_us_80180C22 + 5 + playerFacing;
-            }
-            if (!(self->ext.fishhead.unk80 & 0xF)) {
-                for (i = 0; i < 5; i++) {
-                    entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (entity != NULL) {
-                        CreateEntityFromEntity(0x41, self, entity);
-                        entity->zPriority = self->zPriority + 1;
-                        if (self->facingLeft) {
-                            entity->posX.i.hi += 0x12;
-                        } else {
-                            entity->posX.i.hi -= 0x12;
-                        }
-                        entity->posY.i.hi -= 4;
-                        entity->posY.i.hi -= Random() & 7;
-                        entity->posX.i.hi += (Random() & 7) - 4;
-                        entity->params = 0;
-                    }
-                }
-            }
-            if (!self->ext.fishhead.unk80) {
-                self->step_s++;
-            } else {
-                self->ext.fishhead.unk80--;
-            }
-            break;
-        case 2:
-            self->palette = D_us_80180C22;
-            playerFacing = (GetSideToPlayer() & 1) ^ 1;
-            if (GetDistanceToPlayerX() < 0x48) {
-                self->ext.fishhead.unk85 = 1;
-            } else {
-                self->ext.fishhead.unk85 = 0;
-            }
-            SetStep(4);
-            if (self->facingLeft != playerFacing && !(self->params & 0x100)) {
-                SetStep(3);
-            }
-            break;
-        }
-        break;
-    case 3:
-        if (!AnimateEntity(D_us_80182764, self)) {
-            self->facingLeft ^= 1;
-            self->animCurFrame = 2;
-            SetStep(2);
-        }
-        break;
-    case 4:
-        if (!(self->flags & 0xF)) {
-            if (g_Timer & 2) {
-                self->palette = D_us_80180C22 + 0;
-            } else {
-                self->palette = D_us_80180C22 + 2;
-            }
-        }
-        switch (self->step_s) {
-        case 0:
-            if (!AnimateEntity(D_us_80182708, self)) {
-                SetSubStep(1);
-            }
-            break;
-        case 1:
-            PlaySfxPositional(SFX_FIRE_SHOT);
-
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (entity != NULL) {
-                if (self->ext.fishhead.unk85) {
-                    CreateEntityFromEntity(0x43, self, entity);
-                } else {
-                    CreateEntityFromEntity(0x40, self, entity);
-                }
-                entity->ext.fishhead.entity = self;
-                entity->facingLeft = self->facingLeft;
-                entity->zPriority = self->zPriority + 1;
-                if (self->facingLeft) {
-                    entity->posX.i.hi += 0xE;
-                } else {
-                    entity->posX.i.hi -= 0xE;
-                }
-                entity->posY.i.hi++;
-            }
-
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (entity != NULL) {
-                CreateEntityFromEntity(0x41, self, entity);
-                entity->zPriority = self->zPriority + 1;
-                if (self->facingLeft) {
-                    entity->posX.i.hi += 0x12;
-                } else {
-                    entity->posX.i.hi -= 0x12;
-                }
-                entity->posY.i.hi -= 4;
-                entity->params = 1;
-            }
-            self->step_s++;
-            // fallthrough
-        case 2:
-            if (!AnimateEntity(D_us_8018274C, self)) {
-                SetStep(2);
-            }
-            break;
-        }
-        break;
-    case 5:
-        self->ext.fishhead.unk86 = 1;
-        for (i = 0; i < 3; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
-                CreateEntityFromEntity(0x42, self, entity);
-                entity->params = i;
-                entity->facingLeft = self->facingLeft;
-                entity->zPriority = self->zPriority + 4 - i;
-            }
-        }
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
-            entity->params = 2;
-        }
-        PlaySfxPositional(SFX_EXPLODE_B);
-        DestroyEntity(self);
-        return;
-    }
-
-    if (!self->ext.fishhead.unk86) {
-        entity = self - 1;
-        if (entity->flags & 0x100 || entity->entityId != E_FISHHEAD) {
-            self->posY.i.hi++;
-            entity = self - 2;
-            if (self->posY.i.hi >= entity->posY.i.hi) {
-                self->ext.fishhead.unk86 = 1;
-            }
-        }
-    }
-    ptr = D_us_801827B4;
-    ptr += D_us_801827C4[self->animCurFrame] << 2;
-    self->hitboxOffX = *ptr++;
-    self->hitboxOffY = *ptr++;
-    self->hitboxWidth = *ptr++;
-    self->hitboxHeight = *ptr++;
-    GetPlayerCollisionWith(self, self->hitboxWidth - 4, self->hitboxHeight, 4);
-}
-
-extern u8 D_us_80182780[];
-
-// Fishhead fireball
-void EntityFishheadFireball(Entity* self) {
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitFishheadFireball);
-        if (self->facingLeft) {
-            self->velocityX = FIX(4.0);
-        } else {
-            self->velocityX = FIX(-4.0);
-        }
-        // fallthrough
-    case 1:
-        MoveEntity();
-        AnimateEntity(D_us_80182780, self);
-        if (self->flags & FLAG_DEAD) {
-            self->step = 0;
-            self->pfnUpdate = EntityExplosion;
-            self->params = 0;
-        }
-    }
-}
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8DF0);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D8FE0);
-
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D93E0);
-
 static void func_us_801D9560(FrozenShadePrim* prim) {
     s16 dx, dy;
 
@@ -264,7 +17,7 @@ static void func_us_801D9560(FrozenShadePrim* prim) {
     prim->y3 = dy + (prim->u3 / 4 + 2);
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801D95EC);
+INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801D95EC);
 
 extern u8 D_us_801827F0[];
 extern u8 D_us_80182800[];
@@ -280,7 +33,7 @@ extern s16 D_us_8018295C[];
 extern s16 D_us_80182A54[];
 extern s16 D_us_80182A5C[];
 
-#define offsetof(st, m) (size_t)((size_t)&(((st*)0)->m)) // __builtin_offsetof
+#define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
 typedef struct {
     SVECTOR points[4];
     Point16 sxy[4];
@@ -1002,10 +755,10 @@ void func_us_801D96FC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801DB194);
+INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB194);
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801DB1E8);
+INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB1E8);
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801DB65C);
+INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB65C);
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_55678", func_us_801DBBEC);
+INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DBBEC);
