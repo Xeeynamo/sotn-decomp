@@ -61,9 +61,9 @@ void EntityFrog(Entity* self);
 void EntityFishhead(Entity* self);
 void EntityFishheadSpawner(Entity* self);
 void EntityFishheadFireball(Entity* self);
-void func_us_801D8DF0(Entity* self);
-void func_us_801D93E0(Entity* self);
-void func_us_801D8FE0(Entity* self);
+void EntityFishheadParticles(Entity* self);
+void EntityFishheadDeathParts(Entity* self);
+void EntityFishheadFireBreath(Entity* self);
 void func_us_801C8E4C(Entity* self);
 void func_us_801D96FC(Entity* self);
 void func_us_801DB194(Entity* self);
@@ -159,9 +159,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3D */ EntityFishhead,
     /* 0x3E */ EntityFishheadSpawner,
     /* 0x3F */ EntityFishheadFireball,
-    /* 0x40 */ func_us_801D8DF0,
-    /* 0x41 */ func_us_801D93E0,
-    /* 0x42 */ func_us_801D8FE0,
+    /* 0x40 */ EntityFishheadParticles,
+    /* 0x41 */ EntityFishheadDeathParts,
+    /* 0x42 */ EntityFishheadFireBreath,
     /* 0x43 */ func_us_801C8E4C,
     /* 0x44 */ func_us_801D96FC,
     /* 0x45 */ func_us_801DB194,
@@ -208,8 +208,8 @@ EInit g_EInitFrog = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
 EInit g_EInitFishhead = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
 EInit g_EInitFishheadSpawner = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
 EInit g_EInitFishheadFireball = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
-EInit D_us_80180C40 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
-EInit D_us_80180C4C = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
+EInit g_EInitFishheadPieces = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
+EInit g_EInitFishheadFireBreath = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
 EInit D_us_80180C58 = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
 EInit D_us_80180C64 = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x219, 0x063};
 EInit D_us_80180C70 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};

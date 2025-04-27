@@ -2939,17 +2939,17 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
+    /* 0x80 */ s16 attackTimer;
+    /* 0x82 */ s16 palette;
+    /* 0x84 */ u8 attackTimerIndex;
+    /* 0x85 */ u8 playerIsClose;
+    /* 0x86 */ u8 isBottomHead;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
     /* 0x90 */ s32 : 32;
     /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 : 32;
-    /* 0x9C */ struct Entity* entity;
+    /* 0x9C */ struct Entity* fishheadEntity;
 } ET_Fishhead;
 
 typedef union { // offset=0x7C

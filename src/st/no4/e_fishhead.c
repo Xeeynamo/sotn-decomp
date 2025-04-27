@@ -1,6 +1,47 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
+static u8 anim_idle[] = {0x30, 0x02, 0x0F, 0x01, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_prep_attack[] = {
+    0x05, 0x02, 0x04, 0x01, 0x03, 0x02, 0x03, 0x01, 0x03, 0x02, 0x02, 0x01,
+    0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x01, 0x04, 0x02, 0x01,
+    0x02, 0x03, 0x02, 0x04, 0x02, 0x03, 0x02, 0x02, 0x02, 0x03, 0x02, 0x02,
+    0x01, 0x03, 0x01, 0x02, 0x01, 0x03, 0x02, 0x02, 0x03, 0x03, 0x11, 0x02,
+    0x04, 0x05, 0x05, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F,
+    0x02, 0x10, 0x01, 0x0C, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_post_attack[] = {
+    0x08, 0x11, 0x05, 0x12, 0x30, 0x0C, 0x05, 0x0B, 0x05, 0x05, 0x05, 0x03,
+    0x10, 0x02, 0x04, 0x01, 0x08, 0x02, 0x04, 0x04, 0x20, 0x02, 0xFF, 0x00};
+static u8 anim_rotate[] = {
+    0x32, 0x02, 0x02, 0x01, 0x02, 0x04, 0x02, 0x03, 0x06, 0x05,
+    0x03, 0x03, 0x04, 0x02, 0x05, 0x06, 0x05, 0x07, 0x04, 0x0A,
+    0x06, 0x09, 0x20, 0x0A, 0xFF, 0x00, 0x00, 0x00};
+
+static u8 anim_fireball[] = {
+    0x02, 0x17, 0x02, 0x18, 0x02, 0x19, 0x02, 0x1A, 0x00, 0x00, 0x00, 0x00};
+
+static u8 anim_fireball_puff[] = {
+    0x06, 0x1B, 0x06, 0x1C, 0x08, 0x1D, 0x08, 0x1E,
+    0x06, 0x1F, 0x07, 0x20, 0x08, 0x21, 0xFF, 0x00};
+
+static u8 anim_fire_breath[] = {
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06,
+    0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A, 0x03, 0x0B, 0xFF, 0x00};
+
+// { hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight }
+static s8 hitbox_data[][4] = {
+    {0, 0, 0, 0},
+    {-8, 1, 15, 12},
+    {0, 1, 11, 12},
+    {10, 1, 15, 12},
+};
+static u8 hitbox_data_indices[] = {
+    0, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 0};
+// semi-random attack timers so the Fishheads fire at different intervals
+static s16 attack_timers[] = {16, 32, 48, 64, 80, 64, 48, 32};
+
+static s16 death_parts_posY_offset[] = {10, 8, 8};
+
 void EntityFishheadSpawner(Entity* self) {
     Entity* entity;
     s32 params;
@@ -28,22 +69,13 @@ void EntityFishheadSpawner(Entity* self) {
     }
 }
 
-extern u16 D_us_80180C22; // palette
-extern u8 D_us_80182700[];
-extern u8 D_us_80182708[];
-extern u8 D_us_8018274C[];
-extern u8 D_us_80182764[];
-extern s8 D_us_801827B4[];
-extern u8 D_us_801827C4[];
-extern s16 D_us_801827D8[];
-
 void EntityFishhead(Entity* self) {
     Entity* entity;
     s32 playerFacing;
     s32 i;
     s8* ptr;
 
-    if (self->flags & 0x100 && self->step != 5) {
+    if (self->flags & FLAG_DEAD && self->step != 5) {
         SetStep(5);
     }
 
@@ -52,35 +84,40 @@ void EntityFishhead(Entity* self) {
         InitializeEntity(g_EInitFishhead);
         self->animCurFrame = 1;
         self->palette += 5;
+
+        // First head spawned is the bottom head
         if (!(self->params & 1)) {
-            self->ext.fishhead.unk86 = 1;
+            self->ext.fishhead.isBottomHead = 1;
         }
-        self->ext.fishhead.unk84 = Random() & 7;
+        self->ext.fishhead.attackTimerIndex = Random() & 7;
         // fallthrough
     case 1:
     case 2:
         switch (self->step_s) {
         case 0:
-            self->ext.fishhead.unk80 = D_us_801827D8[self->ext.fishhead.unk84];
-            self->ext.fishhead.unk84++;
-            self->ext.fishhead.unk84 &= 7;
+            self->ext.fishhead.attackTimer =
+                attack_timers[self->ext.fishhead.attackTimerIndex];
+            self->ext.fishhead.attackTimerIndex++;
+            self->ext.fishhead.attackTimerIndex &= 7;
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80182700, self);
+            AnimateEntity(anim_idle, self);
             if (!(self->flags & 0xF)) {
-                self->ext.fishhead.unk82 += 0x10;
-                if (self->ext.fishhead.unk82 > 0xA80) {
-                    self->ext.fishhead.unk82 = -self->ext.fishhead.unk82;
+                self->ext.fishhead.palette += 0x10;
+                if (self->ext.fishhead.palette > 0xA80) {
+                    self->ext.fishhead.palette = -self->ext.fishhead.palette;
                 }
-                playerFacing = (abs(self->ext.fishhead.unk82) >> 8);
-                self->palette = D_us_80180C22 + 5 + playerFacing;
+                playerFacing = (abs(self->ext.fishhead.palette) >> 8);
+                self->palette = g_EInitFishhead[3] + 5 + playerFacing;
             }
-            if (!(self->ext.fishhead.unk80 & 0xF)) {
+            if (!(self->ext.fishhead.attackTimer & 0xF)) {
+                // Spawn 5 bubbles that float above the Fishhead
                 for (i = 0; i < 5; i++) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(0x41, self, entity);
+                        CreateEntityFromEntity(
+                            E_FISHHEAD_PARTICLES, self, entity);
                         entity->zPriority = self->zPriority + 1;
                         if (self->facingLeft) {
                             entity->posX.i.hi += 0x12;
@@ -94,19 +131,19 @@ void EntityFishhead(Entity* self) {
                     }
                 }
             }
-            if (!self->ext.fishhead.unk80) {
+            if (!self->ext.fishhead.attackTimer) {
                 self->step_s++;
             } else {
-                self->ext.fishhead.unk80--;
+                self->ext.fishhead.attackTimer--;
             }
             break;
         case 2:
-            self->palette = D_us_80180C22;
+            self->palette = g_EInitFishhead[3];
             playerFacing = (GetSideToPlayer() & 1) ^ 1;
             if (GetDistanceToPlayerX() < 0x48) {
-                self->ext.fishhead.unk85 = 1;
+                self->ext.fishhead.playerIsClose = 1;
             } else {
-                self->ext.fishhead.unk85 = 0;
+                self->ext.fishhead.playerIsClose = 0;
             }
             SetStep(4);
             if (self->facingLeft != playerFacing && !(self->params & 0x100)) {
@@ -116,7 +153,7 @@ void EntityFishhead(Entity* self) {
         }
         break;
     case 3:
-        if (!AnimateEntity(D_us_80182764, self)) {
+        if (!AnimateEntity(anim_rotate, self)) {
             self->facingLeft ^= 1;
             self->animCurFrame = 2;
             SetStep(2);
@@ -125,14 +162,14 @@ void EntityFishhead(Entity* self) {
     case 4:
         if (!(self->flags & 0xF)) {
             if (g_Timer & 2) {
-                self->palette = D_us_80180C22 + 0;
+                self->palette = g_EInitFishhead[3] + 0;
             } else {
-                self->palette = D_us_80180C22 + 2;
+                self->palette = g_EInitFishhead[3] + 2;
             }
         }
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80182708, self)) {
+            if (!AnimateEntity(anim_prep_attack, self)) {
                 SetSubStep(1);
             }
             break;
@@ -141,12 +178,13 @@ void EntityFishhead(Entity* self) {
 
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                if (self->ext.fishhead.unk85) {
-                    CreateEntityFromEntity(0x43, self, entity);
+                if (self->ext.fishhead.playerIsClose) {
+                    CreateEntityFromEntity(
+                        E_FISHHEAD_FIRE_BREATH, self, entity);
                 } else {
-                    CreateEntityFromEntity(0x40, self, entity);
+                    CreateEntityFromEntity(E_FISHHEAD_FIREBALL, self, entity);
                 }
-                entity->ext.fishhead.entity = self;
+                entity->ext.fishhead.fishheadEntity = self;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
@@ -159,7 +197,8 @@ void EntityFishhead(Entity* self) {
 
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(0x41, self, entity);
+                // Spawn the puff of smoke after the fireball goes off
+                CreateEntityFromEntity(E_FISHHEAD_PARTICLES, self, entity);
                 entity->zPriority = self->zPriority + 1;
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x12;
@@ -172,18 +211,18 @@ void EntityFishhead(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            if (!AnimateEntity(D_us_8018274C, self)) {
+            if (!AnimateEntity(anim_post_attack, self)) {
                 SetStep(2);
             }
             break;
         }
         break;
     case 5:
-        self->ext.fishhead.unk86 = 1;
+        self->ext.fishhead.isBottomHead = 1;
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(0x42, self, entity);
+                CreateEntityFromEntity(E_FISHHEAD_DEATH_PARTS, self, entity);
                 entity->params = i;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority + 4 - i;
@@ -191,7 +230,7 @@ void EntityFishhead(Entity* self) {
         }
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         PlaySfxPositional(SFX_EXPLODE_B);
@@ -199,26 +238,26 @@ void EntityFishhead(Entity* self) {
         return;
     }
 
-    if (!self->ext.fishhead.unk86) {
+    if (!self->ext.fishhead.isBottomHead) {
         entity = self - 1;
-        if (entity->flags & 0x100 || entity->entityId != E_FISHHEAD) {
+        if (entity->flags & FLAG_DEAD || entity->entityId != E_FISHHEAD) {
+            // If the bottom head of a stack is killed, the top head falls to
+            // the ground and becomes a bottom head
             self->posY.i.hi++;
             entity = self - 2;
             if (self->posY.i.hi >= entity->posY.i.hi) {
-                self->ext.fishhead.unk86 = 1;
+                self->ext.fishhead.isBottomHead = 1;
             }
         }
     }
-    ptr = D_us_801827B4;
-    ptr += D_us_801827C4[self->animCurFrame] << 2;
+    ptr = hitbox_data;
+    ptr += hitbox_data_indices[self->animCurFrame] << 2;
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;
     self->hitboxHeight = *ptr++;
     GetPlayerCollisionWith(self, self->hitboxWidth - 4, self->hitboxHeight, 4);
 }
-
-extern u8 D_us_80182780[];
 
 // Fishhead fireball
 void EntityFishheadFireball(Entity* self) {
@@ -233,7 +272,7 @@ void EntityFishheadFireball(Entity* self) {
         // fallthrough
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80182780, self);
+        AnimateEntity(anim_fireball, self);
         if (self->flags & FLAG_DEAD) {
             self->step = 0;
             self->pfnUpdate = EntityExplosion;
@@ -242,11 +281,9 @@ void EntityFishheadFireball(Entity* self) {
     }
 }
 
-extern EInit D_us_80180C40;
-extern u8 D_us_8018278C[];
-
-// Fishman particles
-void func_us_801D8DF0(Entity* self) {
+// Params 0 = bubbles
+// Params 1 = fireball smoke
+void EntityFishheadParticles(Entity* self) {
     Primitive* prim;
     u8* r0_ptr;
     s32 primIndex;
@@ -256,7 +293,7 @@ void func_us_801D8DF0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C40);
+        InitializeEntity(g_EInitFishheadPieces);
         if (self->params) {
             // Fireball puff
             self->step = 2;
@@ -311,7 +348,7 @@ void func_us_801D8DF0(Entity* self) {
         if (self->velocityY > FIX(-2)) {
             self->velocityY -= 0x400;
         }
-        if (!AnimateEntity(D_us_8018278C, self)) {
+        if (!AnimateEntity(anim_fireball_puff, self)) {
             DestroyEntity(self);
         }
         break;
@@ -319,11 +356,9 @@ void func_us_801D8DF0(Entity* self) {
 }
 
 extern s16* D_us_801BCDD8[];
-extern EInit D_us_80180C4C;
-extern u8 D_us_8018279C[];
 
 // Fire breath
-void func_us_801D8FE0(Entity* self) {
+void EntityFishheadFireBreath(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
@@ -333,7 +368,7 @@ void func_us_801D8FE0(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C4C);
+        InitializeEntity(g_EInitFishheadFireBreath);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
         if (primIndex == -1) {
@@ -372,9 +407,9 @@ void func_us_801D8FE0(Entity* self) {
         PlaySfxPositional(SFX_FIREBALL_SHOT_B);
         // fallthrough
     case 1:
-        entity = self->ext.fishhead.entity;
+        entity = self->ext.fishhead.fishheadEntity;
         self->posY.i.hi = entity->posY.i.hi + 1;
-        if (!AnimateEntity(D_us_8018279C, self)) {
+        if (!AnimateEntity(anim_fire_breath, self)) {
             self->hitboxState = 0;
             self->step += 1;
             return;
@@ -416,7 +451,7 @@ void func_us_801D8FE0(Entity* self) {
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
-        self->ext.fishhead.unk80 = 0x30;
+        self->ext.fishhead.attackTimer = 0x30;
         self->step++;
         // fallthrough
     case 3:
@@ -432,31 +467,28 @@ void func_us_801D8FE0(Entity* self) {
             prim = prim->next;
         }
 
-        if (!--self->ext.fishhead.unk80) {
+        if (!--self->ext.fishhead.attackTimer) {
             DestroyEntity(self);
         }
         break;
     }
 }
 
-extern EInit D_us_80180C40;
-extern s16 D_us_801827E8[];
-
 // Death parts
-void func_us_801D93E0(Entity* self) {
+void EntityFishheadDeathParts(Entity* self) {
     Collider collider;
     s32 posX;
     s32 posY;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C40);
+        InitializeEntity(g_EInitFishheadPieces);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x14;
-        self->ext.fishhead.unk80 = self->params + 0xC;
+        self->ext.fishhead.attackTimer = self->params + 0xC;
         break;
     case 1:
-        if (!--self->ext.fishhead.unk80) {
+        if (!--self->ext.fishhead.attackTimer) {
             self->step++;
         }
         break;
@@ -464,16 +496,16 @@ void func_us_801D93E0(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
-        posY = self->posY.i.hi + D_us_801827E8[self->params];
+        posY = self->posY.i.hi + death_parts_posY_offset[self->params];
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            self->ext.fishhead.unk80 = 0xE;
+            self->ext.fishhead.attackTimer = 0xE;
             self->step++;
         }
         break;
     case 3:
-        if (!--self->ext.fishhead.unk80) {
+        if (!--self->ext.fishhead.attackTimer) {
             self->step = 0;
             self->pfnUpdate = EntityExplosion;
             self->params = 2;
