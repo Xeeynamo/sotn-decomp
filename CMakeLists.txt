@@ -234,7 +234,6 @@ set(SOURCE_FILES_RIC
     src/ric/pl_utils.c
     src/ric/pl_setstep.c
     src/ric/pl_collision.c
-    src/ric/211D0.c
     src/ric/pl_blueprints.c
     src/ric/pl_whip.c
     src/ric/pl_subweapon_dummy.c
