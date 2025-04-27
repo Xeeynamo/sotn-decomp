@@ -1619,7 +1619,7 @@
 | ric       | RicEntitySubwpnThrownAxe            |      694 |         57 |        |                                 |       |
 | dra       | EntityTeleport                      |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
 | dra       | EntityHitByIce                      |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
-| maria_psp | MarEntityTeleport                   |      700 |         78 |        |                                 |       |
+| maria     | MarEntityTeleport                   |      700 |         78 |        |                                 |       |
 | ric       | RicEntityTeleport                   |      700 |         78 |        | https://decomp.me/scratch/zdUhe | 0.959 |
 | chi       | EntityVenusWeedFlower               |      702 |        106 | Yes    |                                 |       |
 | st0       | func_801B1298                       |      705 |         69 |        | https://decomp.me/scratch/6QrSP | 0.987 |
