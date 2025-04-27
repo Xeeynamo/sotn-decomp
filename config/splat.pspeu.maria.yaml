@@ -1,0 +1,63 @@
+options:
+  platform: psp
+  basename: maria
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/maria.bin
+  asm_path: asm/pspeu/maria_psp
+  asset_path: assets/maria
+  src_path: src/maria
+  ld_script_path: build/pspeu/maria.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.maria.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.maria.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.maria.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: d50f2c928f7a01fb489628658f4c72a029befbd4
+segments:
+  - [0x0, bin, mwo_header]
+  - name: maria
+    type: code
+    start: 0x80
+    vram:  0x092A6280
+    bss_size: 0x1D00
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, 80]
+      - [0x54B0, c, lang]
+      - [0x5550, c, pl_main]
+      - [0x7B18, c, pl_debug]
+      - [0x7EA8, c, pl_steps]
+      - [0xB990, c, pl_setstep]
+      - [0xCBA0, c, pl_utils]
+      - [0xD648, c, pl_collision]
+      - [0xF7D0, c, pl_blueprints]
+      - [0x18838, c, 18838]
+      - [0x1A080, c, 1A080]
+      - [0x1A180, data]
+      - [0x3F480, .rodata, 80]
+      - [0x3F4E8, .rodata, pl_main]
+      - [0x3F568, .rodata, pl_steps]
+      - [0x3F5A0, .rodata, pl_blueprints]
+      - [0x3F6A0, .rodata, 18838]
+      - {type: bss, vram: 0x92E5900}
+  - [0x3F700]
