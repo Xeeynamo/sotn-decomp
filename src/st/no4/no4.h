@@ -69,7 +69,7 @@ typedef enum EntityIDs {
     /* 0x3C */ E_TOAD,
     /* 0x3D */ E_FISHHEAD_SPAWNER,
     /* 0x3E */ E_FISHHEAD,
-    /* 0x3F */ E_ID_3F,
+    /* 0x3F */ E_FISHHEAD_TOP,
     /* 0x40 */ E_FISHHEAD_FIREBALL,
     /* 0x41 */ E_FISHHEAD_PARTICLES,
     /* 0x42 */ E_FISHHEAD_DEATH_PARTS,
