@@ -1404,7 +1404,7 @@
 | ric       | RicEntitySubwpnStopwatchCircle      |      314 |         24 |        | https://decomp.me/scratch/kbgQU | 1.0   |
 | lib       | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
 | no4       | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
-| maria_psp | MarInit                             |      317 |         34 |        |                                 |       |
+| maria     | MarInit                             |      317 |         34 |        |                                 |       |
 | wrp       | EntityWarpSmallRocks                |      318 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
 | no4       | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
 | dra       | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.984 |
