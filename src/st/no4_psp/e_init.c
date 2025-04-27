@@ -58,12 +58,12 @@ void func_pspeu_09243478(Entity* self);
 void EntitySpearGuardBlock(Entity* self);
 void EntityToad(Entity* self);
 void EntityFrog(Entity* self);
-void func_pspeu_092483A0(Entity* self);
-void func_pspeu_092482B0(Entity* self);
-void EntityUnkId3F(Entity* self);
-void func_pspeu_09248D90(Entity* self);
-void func_pspeu_09249560(Entity* self);
-void func_pspeu_09249030(Entity* self);
+void EntityFishhead(Entity* self);
+void EntityFishheadSpawner(Entity* self);
+void EntityFishheadFireball(Entity* self);
+void EntityFishheadParticles(Entity* self);
+void EntityFishheadDeathParts(Entity* self);
+void EntityFishheadFireBreath(Entity* self);
 void func_pspeu_09237700(Entity* self);
 void func_pspeu_09256330(Entity* self);
 void func_pspeu_09258910(Entity* self);
@@ -156,12 +156,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3A */ EntitySpearGuardBlock,
     /* 0x3B */ EntityToad,
     /* 0x3C */ EntityFrog,
-    /* 0x3D */ func_pspeu_092483A0,
-    /* 0x3E */ func_pspeu_092482B0,
-    /* 0x3F */ EntityUnkId3F,
-    /* 0x40 */ func_pspeu_09248D90,
-    /* 0x41 */ func_pspeu_09249560,
-    /* 0x42 */ func_pspeu_09249030,
+    /* 0x3D */ EntityFishhead,
+    /* 0x3E */ EntityFishheadSpawner,
+    /* 0x3F */ EntityFishheadFireball,
+    /* 0x40 */ EntityFishheadParticles,
+    /* 0x41 */ EntityFishheadDeathParts,
+    /* 0x42 */ EntityFishheadFireBreath,
     /* 0x43 */ func_pspeu_09237700,
     /* 0x44 */ func_pspeu_09256330,
     /* 0x45 */ func_pspeu_09258910,
@@ -205,11 +205,11 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_80180BF8 = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
 EInit g_EInitToad = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06A};
 EInit g_EInitFrog = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
-EInit D_pspeu_09267B40 = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
-EInit D_pspeu_09267B50 = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
-EInit g_EInitUnkId3F = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
-EInit D_pspeu_09267B70 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
-EInit D_pspeu_09267B80 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
+EInit g_EInitFishhead = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
+EInit g_EInitFishheadSpawner = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
+EInit g_EInitFishheadFireball = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
+EInit g_EInitFishheadPieces = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
+EInit g_EInitFishheadFireBreath = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
 EInit D_pspeu_09267B90 = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
 EInit D_pspeu_09267BA0 = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x219, 0x063};
 EInit D_pspeu_09267BB0 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
