@@ -211,6 +211,7 @@ extern s16 g_MarSensorsWallDefault[];
 extern s16 g_MarSensorsCeilingCrouch[];
 extern s16 g_MarSensorsWallCrouch[];
 
+extern s16* mar_801530AC[];
 extern AnimationFrame mar_anim_crouch[];
 extern AnimationFrame mar_anim_crouch_from_stand[];
 extern AnimationFrame mar_80155544[];
