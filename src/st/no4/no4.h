@@ -68,7 +68,7 @@ typedef enum EntityIDs {
     /* 0x3B */ E_SPEAR_GUARD_BLOCK,
     /* 0x3C */ E_TOAD,
     // /* 0x3D */ E_ID_3D,
-    // /* 0x3E */ E_ID_3E,
+    /* 0x3E */ E_FISHHEAD = 0x3E,
     // /* 0x3F */ E_ID_3F,
     // /* 0x40 */ E_ID_40,
     // /* 0x41 */ E_ID_41,
@@ -113,9 +113,9 @@ extern EInit g_EInitCommon;
 // extern EInit D_us_80180BF8;
 extern EInit g_EInitToad;
 extern EInit g_EInitFrog;
-// extern EInit D_us_80180C1C;
-// extern EInit D_us_80180C28;
-extern EInit g_EInitUnkId3F;
+extern EInit g_EInitFishhead;
+extern EInit g_EInitFishheadSpawner;
+extern EInit g_EInitFishheadFireball;
 // extern EInit D_us_80180C40;
 // extern EInit D_us_80180C4C;
 // extern EInit D_us_80180C58;

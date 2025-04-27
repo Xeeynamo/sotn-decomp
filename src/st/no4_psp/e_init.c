@@ -60,7 +60,7 @@ void EntityToad(Entity* self);
 void EntityFrog(Entity* self);
 void func_pspeu_092483A0(Entity* self);
 void func_pspeu_092482B0(Entity* self);
-void EntityUnkId3F(Entity* self);
+void EntityFishheadFireball(Entity* self);
 void func_pspeu_09248D90(Entity* self);
 void func_pspeu_09249560(Entity* self);
 void func_pspeu_09249030(Entity* self);
@@ -158,7 +158,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3C */ EntityFrog,
     /* 0x3D */ func_pspeu_092483A0,
     /* 0x3E */ func_pspeu_092482B0,
-    /* 0x3F */ EntityUnkId3F,
+    /* 0x3F */ EntityFishheadFireball,
     /* 0x40 */ func_pspeu_09248D90,
     /* 0x41 */ func_pspeu_09249560,
     /* 0x42 */ func_pspeu_09249030,
@@ -207,7 +207,7 @@ EInit g_EInitToad = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06A};
 EInit g_EInitFrog = {ANIMSET_OVL(0x03), 0x01, 0x4B, 0x204, 0x06B};
 EInit D_pspeu_09267B40 = {ANIMSET_OVL(0x04), 0x01, 0x4A, 0x206, 0x115};
 EInit D_pspeu_09267B50 = {ANIMSET_OVL(0x04), 0x13, 0x4A, 0x206, 0x005};
-EInit g_EInitUnkId3F = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
+EInit g_EInitFishheadFireball = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
 EInit D_pspeu_09267B70 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
 EInit D_pspeu_09267B80 = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
 EInit D_pspeu_09267B90 = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
