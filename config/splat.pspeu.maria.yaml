@@ -54,6 +54,7 @@ segments:
       - [0x18838, c, 18838]
       - [0x1A080, c, 1A080]
       - [0x1A180, data]
+      - [0x1A878, .data, d_18568]
       - [0x1EE28, .data, pl_debug]
       - [0x1EE38, data]
       - [0x1EFC8, .data, pl_blueprints]
