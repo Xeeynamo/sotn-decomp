@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include <player.h>
 
 #include "../destroy_entity.h"
 
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
