@@ -278,7 +278,7 @@ void func_us_801D8DF0(Entity* self) {
         prim->u0 = prim->v0 = 1;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
-        self->velocityX = (Random() << 7) - 0x4000;
+        self->velocityX = (Random() << 7) - FIX(0.25);
         // Passthrough
     case 1:
         // Small bubbles when Fishhead is idling
@@ -439,5 +439,45 @@ void func_us_801D8FE0(Entity* self) {
     }
 }
 
+extern EInit D_us_80180C40;
+extern s16 D_us_801827E8[];
+
 // Death parts
-INCLUDE_ASM("st/no4/nonmatchings/e_fishhead", func_us_801D93E0);
+void func_us_801D93E0(Entity* self) {
+    Collider collider;
+    s32 posX;
+    s32 posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180C40);
+        self->hitboxState = 0;
+        self->animCurFrame = self->params + 0x14;
+        self->ext.fishhead.unk80 = self->params + 0xC;
+        break;
+    case 1:
+        if (!--self->ext.fishhead.unk80) {
+            self->step++;
+        }
+        break;
+    case 2:
+        MoveEntity();
+        self->velocityY += FIX(0.15625);
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + D_us_801827E8[self->params];
+        g_api.CheckCollision(posX, posY, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            self->posY.i.hi += collider.unk18;
+            self->ext.fishhead.unk80 = 0xE;
+            self->step++;
+        }
+        break;
+    case 3:
+        if (!--self->ext.fishhead.unk80) {
+            self->step = 0;
+            self->pfnUpdate = EntityExplosion;
+            self->params = 2;
+        }
+        break;
+    }
+}
