@@ -2937,6 +2937,21 @@ typedef struct {
     /* 0x88 */ struct Entity* tongueEntity;
 } ET_FrogToad;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 attackTimer;
+    /* 0x82 */ s16 palette;
+    /* 0x84 */ u8 attackTimerIndex;
+    /* 0x85 */ u8 playerIsClose;
+    /* 0x86 */ u8 isBottomHead;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Entity* fishheadEntity;
+} ET_Fishhead;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3191,6 +3206,7 @@ typedef union { // offset=0x7C
     ET_801D96FC et_801D96FC;
     ET_DopplegangerBGLight dopBGLight;
     ET_FrogToad frogToad;
+    ET_Fishhead fishhead;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
