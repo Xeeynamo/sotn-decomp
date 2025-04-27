@@ -7,9 +7,18 @@ extern AnimationFrame* g_MarEmptyAnimGroup[ZERO_LEN]; // BSS
 static AnimationFrame* g_MarEmptyAnimGroup[ZERO_LEN] = {};
 
 #endif
-extern u8 D_80154674[][4];
-extern SubweaponDef subweapons_def[];
-extern PfnEntityUpdate entity_functions[];
+
+static u8 D_80154674[][4] = {
+    {16, 127, 63, 0},
+    {16, 127, 0, 0},
+    {16, 63, 63, 127},
+    {16, 63, 127, 63},
+    {16, 47, 63, 127}};
+
+static SubweaponDef subweapons_def[] = {
+#include "subweapons_def.h"
+};
+STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
 Entity* MarGetFreeEntity(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
@@ -110,7 +119,13 @@ s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
 }
 
 // Corresponding DRA function is func_80119E78
-extern u8 uv_anim_801548F4[6][8];
+u8 uv_anim_801548F4[6][8] = {
+    {0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60},
+    {0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60},
+    {0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50},
+    {0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38},
+    {0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38},
+    {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
 s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     s16 offset;
     s32 ret;
@@ -156,6 +171,112 @@ s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
 }
 
 void MarEntityDummy(Entity*) {}
+
+void MarEntityFactory(Entity* self);
+void MarEntitySmokePuff(Entity* self);
+void func_pspeu_092A7B80(Entity* self);
+void func_pspeu_092A6280(Entity* self);
+void MarEntityHitByCutBlood(Entity* self);
+void func_pspeu_092BF950(Entity* self);
+void func_pspeu_092AAA38(Entity* self);
+void func_pspeu_092AB1C0(Entity* self);
+void func_80161C2C(Entity* self);
+void func_pspeu_092B92F0(Entity* self);
+void func_pspeu_092AAC80(Entity* self);
+void func_pspeu_092A82E0(Entity* self);
+void func_pspeu_092A8AE8(Entity* self);
+void func_pspeu_092BEB40(Entity* self);
+void func_pspeu_092BFD30(Entity* self);
+void func_pspeu_092BFF78(Entity* self);
+void MarEntityApplyMariaPowerAnim(Entity* self);
+void MarEntitySlideKick(Entity* self);
+void MarEntityBladeDash(Entity* self);
+void func_801623E0(Entity* self);
+void func_80162604(Entity* self);
+void func_80160F0C(Entity* self);
+void func_pspeu_092B91A8(Entity* self);
+void MarEntityPlayerBlinkWhite(Entity* self);
+void MarEntityShrinkingPowerUpRing(Entity* self);
+void func_pspeu_092A7950(Entity* self);
+void func_pspeu_092A6E50(Entity* self);
+void func_pspeu_092A7560(Entity* self);
+void func_pspeu_092A9288(Entity* self);
+void func_pspeu_092A95A8(Entity* self);
+void MarEntityHitByIce(Entity* self);
+void MarEntityHitByLightning(Entity* self);
+void func_pspeu_092A9E88(Entity* self);
+void func_pspeu_092A6740(Entity* self);
+void MarEntityTeleport(Entity* self);
+static PfnEntityUpdate entity_functions[] = {
+    MarEntityDummy,
+    MarEntityFactory,
+    MarEntitySmokePuff,
+    func_pspeu_092A7B80,
+    func_pspeu_092A6280,
+    MarEntityHitByCutBlood,
+    func_pspeu_092BF950,
+    func_pspeu_092AAA38,
+    func_pspeu_092AB1C0,
+    func_80161C2C,
+    func_pspeu_092B92F0,
+    func_pspeu_092AAC80,
+    MarEntityDummy,
+    func_pspeu_092A82E0,
+    func_pspeu_092A8AE8,
+    MarEntityDummy,
+    func_pspeu_092BEB40,
+    func_pspeu_092BFD30,
+    func_pspeu_092BFF78,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityApplyMariaPowerAnim,
+    MarEntitySlideKick,
+    MarEntityBladeDash,
+    func_801623E0,
+    func_80162604,
+    MarEntityDummy,
+    MarEntityDummy,
+    func_80160F0C,
+    func_pspeu_092B91A8,
+    MarEntityPlayerBlinkWhite,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityShrinkingPowerUpRing,
+    func_pspeu_092A7950,
+    func_pspeu_092A6E50,
+    func_pspeu_092A7560,
+    func_pspeu_092A9288,
+    func_pspeu_092A95A8,
+    MarEntityHitByIce,
+    MarEntityHitByLightning,
+    func_pspeu_092A9E88,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    func_pspeu_092A6740,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityDummy,
+    MarEntityTeleport,
+    MarEntityDummy};
+STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 // Corresponding DRA function is UpdatePlayerEntities
 extern AnimationFrame* g_MarEmptyAnimGroup[];
@@ -250,6 +371,51 @@ Entity* MarCreateEntFactoryFromEntity(
     return entity;
 }
 
+// TODO use asset tool
+static FactoryBlueprint blueprints[] = {
+    {0x02, 0x05, 0xC1, 0x02, 0x00, 0x00}, {0x02, 0x03, 0xC1, 0x04, 0x20, 0x00},
+    {0x03, 0x01, 0xC1, 0x00, 0x19, 0x08}, {0x04, 0x01, 0xC1, 0x00, 0x19, 0x08},
+    {0x05, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x11, 0x01, 0xC1, 0x00, 0x2E, 0x00},
+    {0x07, 0x01, 0xC1, 0x00, 0x19, 0x08}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x09, 0x06, 0xC1, 0x0C, 0x38, 0x00}, {0x09, 0x80, 0xC1, 0x03, 0x38, 0x08},
+    {0x0A, 0x01, 0xCF, 0x00, 0x1A, 0x00}, {0x05, 0x48, 0xC1, 0x02, 0x13, 0x00},
+    {0x0B, 0x01, 0xC1, 0x00, 0x11, 0x30}, {0x0D, 0x01, 0xC1, 0x00, 0x09, 0x00},
+    {0x08, 0x01, 0xC1, 0x00, 0x0A, 0x08}, {0x0E, 0x01, 0xC1, 0x00, 0x0A, 0x08},
+    {0x00, 0x0F, 0xCF, 0x00, 0x18, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x1C, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x08, 0x00}, {0x24, 0x01, 0xC1, 0x00, 0x19, 0x08},
+    {0x00, 0x01, 0xC1, 0x00, 0x40, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x03, 0x00}, {0x00, 0x04, 0xC1, 0x18, 0x03, 0x00},
+    {0x02, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x17, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x18, 0x01, 0xC1, 0x00, 0x01, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x03, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x03, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x05, 0x00},
+    {0x00, 0x04, 0xC1, 0x04, 0x03, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x1E, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x1F, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x22, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x22, 0x01, 0xC1, 0x00, 0x00, 0x04},
+    {0x22, 0x01, 0xC1, 0x00, 0x00, 0x08}, {0x22, 0x01, 0xC1, 0x00, 0x00, 0x0C},
+    {0x23, 0x01, 0xC1, 0x00, 0x0A, 0x08}, {0x25, 0x01, 0xC1, 0x00, 0x09, 0x20},
+    {0x05, 0x03, 0xC1, 0x03, 0x00, 0x00}, {0x26, 0x01, 0xC1, 0x00, 0x19, 0x08},
+    {0x27, 0x01, 0xC1, 0x00, 0x09, 0x08}, {0x1D, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x05, 0x0C, 0xC1, 0x02, 0x38, 0x00}, {0x28, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x29, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x2A, 0x01, 0xC1, 0x00, 0x0A, 0x08},
+    {0x32, 0x01, 0xC1, 0x00, 0x19, 0x01}, {0x00, 0x01, 0xC1, 0x00, 0x11, 0x04},
+    {0x00, 0x01, 0xC1, 0x00, 0x10, 0x00}, {0x09, 0x48, 0xC1, 0x02, 0x13, 0x10},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x12}, {0x00, 0x01, 0xC1, 0x00, 0x06, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x00, 0x02, 0xC1, 0x02, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x14},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x03, 0x00},
+    {0x00, 0x60, 0xC1, 0x04, 0x18, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00},
+    {0x00, 0x01, 0xC1, 0x00, 0x00, 0x00}, {0x00, 0x01, 0xC1, 0x00, 0x01, 0x00},
+    {0x02, 0x01, 0xC1, 0x00, 0x01, 0x00}, {0x02, 0x04, 0xC1, 0x02, 0x30, 0x00},
+    {0x02, 0x06, 0xC6, 0x00, 0x00, 0x00}, {0x42, 0x01, 0x41, 0x00, 0x03, 0x00},
+};
+static u8 entity_ranges[][2] = {
+    {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
+    {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
 INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", MarEntityFactory);
 
 void MarEntitySlideKick(Entity* entity) {
@@ -329,12 +495,38 @@ void func_80160F0C(Entity* self) {
 // Entity ID #2. Created by 6 blueprints:
 // 0, 1, 24, 74, 75, 76.
 // Matches DRA func_8011B5A4
-extern s16 pos_x_80154C50[];
-extern s32 velocity_x_80154C5C[];
-extern s16 rot_x_80154C74[];
-extern AnimationFrame anim_smoke_puff[];
-extern u8 sensors1_80154CE4[14];
-extern u8 sensors2_80154CF4[10];
+static s16 pos_x_80154C50[] = {0, -4, -8, -12, -16, -20};
+static s32 velocity_x_80154C5C[] = {
+    FIX(-0.1875), FIX(-0.25), -0x6000, FIX(-0.5), FIX(-0.625), FIX(-0.75)};
+static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
+static AnimationFrame anim_smoke_puff[] = {
+    {1, FRAME(0x01, 0)},
+    {1, FRAME(0x02, 0)},
+    {1, FRAME(0x03, 0)},
+    {1, FRAME(0x04, 0)},
+    {1, FRAME(0x05, 0)},
+    {1, FRAME(0x06, 0)},
+    {1, FRAME(0x07, 0)},
+    {1, FRAME(0x08, 0)},
+    {1, FRAME(0x09, 0)},
+    {1, FRAME(0x0A, 0)},
+    {1, FRAME(0x0B, 0)},
+    {1, FRAME(0x0C, 0)},
+    {1, FRAME(0x0D, 0)},
+    {1, FRAME(0x0E, 0)},
+    {1, FRAME(0x0F, 0)},
+    {1, FRAME(0x10, 0)},
+    {1, FRAME(0x11, 0)},
+    {1, FRAME(0x12, 0)},
+    {1, FRAME(0x13, 0)},
+    {1, FRAME(0x14, 0)},
+    {1, FRAME(0x15, 0)},
+    {1, FRAME(0x16, 0)},
+    {1, FRAME(0x17, 0)},
+    {1, FRAME(0x18, 0)},
+    A_END};
+static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
+static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
 void MarEntitySmokePuff(Entity* self) {
     s16 posX;
     s32 i;
@@ -457,7 +649,29 @@ void MarEntitySmokePuff(Entity* self) {
 }
 
 // Corresponding DRA function is func_8011E4BC
-extern unkStr_8011E4BC* D_80154DA0[];
+static unkStr_8011E4BC D_80154D00 = {
+    0x08, 0xC0, 0x60, 0x00, 0x01, 0x01, 0x0004, 0x0033, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D10 = {
+    0x10, 0x7F, 0x7F, 0x7F, 0x01, 0x01, 0x0002, 0x0033, 0x0001, 0x0C800000};
+static unkStr_8011E4BC D_80154D20 = {
+    0x08, 0x7F, 0x7F, 0x7F, 0x02, 0x02, 0x0002, 0x0033, 0x0000, 0x08800000};
+static unkStr_8011E4BC D_80154D30 = {
+    0x06, 0x7F, 0xFF, 0xFF, 0x01, 0x01, 0x0004, 0x0073, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D40 = {
+    0x0C, 0xC0, 0x60, 0x00, 0x01, 0x01, 0x0004, 0x0033, 0x0003, 0x08800000};
+static unkStr_8011E4BC D_80154D50 = {
+    0x0C, 0x7F, 0x00, 0x00, 0x03, 0x03, 0x0002, 0x0002, 0x0004, 0x0C800000};
+static unkStr_8011E4BC D_80154D60 = {
+    0x08, 0x1F, 0x1F, 0x7F, 0x01, 0x01, 0x0004, 0x0033, 0x0006, 0x0C800000};
+static unkStr_8011E4BC D_80154D70 = {
+    0x14, 0x7F, 0x7F, 0xC0, 0x01, 0x01, 0xFFFE, 0x0033, 0x0007, 0x0C800000};
+static unkStr_8011E4BC D_80154D80 = {
+    0x06, 0xC0, 0xC0, 0xC0, 0x02, 0x02, 0x0002, 0x007B, 0x0008, 0x08800000};
+static unkStr_8011E4BC D_80154D90 = {
+    0x10, 0x7F, 0x7F, 0x7F, 0x01, 0x01, 0x0002, 0x0033, 0x0009, 0x08800000};
+static unkStr_8011E4BC* D_80154DA0[] = {
+    &D_80154D00, &D_80154D10, &D_80154D20, &D_80154D30, &D_80154D40,
+    &D_80154D50, &D_80154D60, &D_80154D70, &D_80154D80, &D_80154D90};
 void MarEntityHitByCutBlood(Entity* self) {
     byte stackpad[0x28];
     u8 thickness;
@@ -699,8 +913,26 @@ void MarEntityHitByCutBlood(Entity* self) {
 }
 
 // DRA function is func_8011EDA8
-extern AnimationFrame anim_80154DC8[];
-extern AnimationFrame anim_80154E04[];
+static AnimationFrame anim_80154DC8[] = {
+    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
+    {2, FRAME(3, 0)}, {2, FRAME(4, 0)}, {2, FRAME(3, 0)},
+    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {1, FRAME(6, 0)},
+    {1, FRAME(7, 0)}, {1, FRAME(8, 0)}, A_END};
+static AnimationFrame anim_80154E04[] = {
+    {1, FRAME(9, 0)},
+    {2, FRAME(10, 0)},
+    {2, FRAME(11, 0)},
+    {2, FRAME(12, 0)},
+    {2, FRAME(13, 0)},
+    {2, FRAME(14, 0)},
+    {2, FRAME(15, 0)},
+    {2, FRAME(16, 0)},
+    {2, FRAME(17, 0)},
+    {2, FRAME(18, 0)},
+    {3, FRAME(19, 0)},
+    {4, FRAME(20, 0)},
+    A_END};
 void func_80161C2C(Entity* self) {
     s16 paramsHi;
     s16 paramsLo;
@@ -778,7 +1010,11 @@ typedef struct {
     u8 uBase;
     u8 vBase;
 } Props_80161FF0; // size = 0x14
-extern Props_80161FF0 D_80154E5C[];
+static Props_80161FF0 D_80154E5C[] = {
+    {-0x40, 0, +FIX(2.5), FIX(0), 0x0060, 0x1B, 0x0118, 128, 0},
+    {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
+    {0, -0x40, FIX(0), +FIX(2.5), 0x0030, 0x19, 0x011A, 0, 0},
+    {0, +0x40, FIX(0), -FIX(2.5), 0x0018, 0x19, 0x011B, 128, 0}};
 void MarEntityApplyMariaPowerAnim(Entity* self) {
     Primitive* prim;
     s16 posX;
@@ -974,6 +1210,11 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B91B8);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B9298);
 
+static u16 D_pspeu_092C59E8[][2] = {
+    {5, FRAME(1, 0)}, {1, FRAME(2, 0)}, {1, FRAME(3, 0)},  {1, FRAME(4, 0)},
+    {3, FRAME(5, 0)}, {3, FRAME(6, 0)}, {2, FRAME(7, 0)},  {4, FRAME(8, 0)},
+    {2, FRAME(7, 0)}, {3, FRAME(9, 0)}, {3, FRAME(10, 0)}, {1, FRAME(4, 0)},
+    {1, FRAME(3, 0)}, {1, FRAME(2, 0)}, A_LOOP_AT(0)};
 INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B92F0);
 
 // same as DRA/func_8011BD48
@@ -996,8 +1237,36 @@ bool func_80162E9C(Entity* entity) {
 
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
+#if defined(VERSION_PSP)
 extern s32 D_80154F7C[];
-extern s16 D_80154FBC[][10];
+#else
+static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+#endif
+static s16 D_80154FBC[][10] = {
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x0100, 0x0060, 0x31, 0x200},
+    {0, 2, 6, 0x15F, 0x0100, 0x0100, 0x0100, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x7000, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x0010, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x7000, 0x0010, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x7000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0100, 0x7002, 0x31, 0x100},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x7000, 0x0070, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7000, 0x0200, 0x7006, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0200, 0x0200, 0x0400, 0x7001, 0x31, 0x200},
+    {0, 0, 0, 0x166, 0x0100, 0x0100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x7000, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x7100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x0100, 0x7005, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x0200, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x7000, 0x0100, 0x0040, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x0100, 0x7000, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0400, 0x0100, 0x0400, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x7000, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x0200, 0x0800, 0x0800, 0x7007, 0x31, 0x200},
+    {0, 0, 0, 0x102, 0x0100, 0x0100, 0x0100, 0x0000, 0x31, 0x200},
+    {0, 0, 0, 0x15F, 0x00C0, 0x00C0, 0x0100, 0x0010, 0x31, 0x200},
+    {8, 0, 8, 0x165, 0x0100, 0x0100, 0x0100, 0x7007, 0x51, 0x200},
+    {0, 0, 0, 0x168, 0x7100, 0x7100, 0x0200, 0x7007, 0x31, 0x200}};
 void MarEntityPlayerBlinkWhite(Entity* self) {
     u8 xMargin;
     u8 yMargin;
@@ -1360,7 +1629,15 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
 // All 4 are used in RicStepDeadPrologue. 36 alone (for instant child) is used
 // when Richter does an item crash without a subweapon, in RicDoCrash.
 // Creates a large semi-transparent circle around Richter which shrinks inward.
-extern s16 D_8015519C[][6];
+static s16 D_8015519C[][6] = {
+    {0x0000, 0x0000, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0000},
+    {0x0000, 0x0000, 0x0100, 0x7000, 0x7000, 0x0200},
+    {0x0000, 0x0000, 0x7100, 0x7100, 0x0100, 0x1000},
+    {0x0000, 0x0000, 0x7100, 0x0100, 0x7000, 0x0800},
+    {0x0000, 0x0000, 0x0100, 0x7100, 0x0100, 0x0400},
+    {0x0500, 0x0A00, 0x0100, 0x0100, 0x0100, 0x0100},
+    {0x0500, 0x0A00, 0x0100, 0x0200, 0x7100, 0x0100}};
 void MarEntityShrinkingPowerUpRing(Entity* self) {
     s16 variant;
     s16 rMod;
@@ -1517,7 +1794,40 @@ void MarEntityShrinkingPowerUpRing(Entity* self) {
     }
 }
 
-extern Point16* D_80155244[72];
+static Point16 D_801551FC = {-2, -24};
+static Point16 D_80155200 = {0, -8};
+static Point16 D_80155204 = {2, 8};
+static Point16 D_80155208 = {0, 24};
+static Point16 D_8015520C = {6, -12};
+static Point16 D_80155210 = {8, 0};
+static Point16 D_80155214 = {7, 12};
+static Point16 D_80155218 = {-8, -12};
+static Point16 D_8015521C = {-9, 0};
+static Point16 D_80155220 = {-7, 12};
+static Point16 D_80155224 = {-14, -6};
+static Point16 D_80155228 = {-15, 7};
+static Point16 D_8015522C = {13, -7};
+static Point16 D_80155230 = {16, 8};
+static Point16 D_80155234 = {-7, -22};
+static Point16 D_80155238 = {6, -21};
+static Point16 D_8015523C = {-8, 21};
+static Point16 D_80155240 = {7, 22};
+static Point16* D_80155244[] = {
+    &D_801551FC, &D_8015520C, &D_80155200, &D_8015520C, &D_80155210,
+    &D_80155200, &D_80155210, &D_80155204, &D_80155200, &D_80155210,
+    &D_80155214, &D_80155204, &D_80155214, &D_80155208, &D_80155204,
+    &D_80155204, &D_80155208, &D_80155220, &D_80155204, &D_80155220,
+    &D_8015521C, &D_80155200, &D_80155204, &D_8015521C, &D_80155200,
+    &D_8015521C, &D_80155218, &D_80155200, &D_80155218, &D_801551FC,
+    &D_8015520C, &D_8015522C, &D_80155210, &D_8015522C, &D_80155230,
+    &D_80155210, &D_80155230, &D_80155214, &D_80155210, &D_80155218,
+    &D_8015521C, &D_80155224, &D_8015521C, &D_80155228, &D_80155224,
+    &D_8015521C, &D_80155220, &D_80155228, &D_801551FC, &D_80155218,
+    &D_80155234, &D_801551FC, &D_80155238, &D_8015520C, &D_80155208,
+    &D_8015523C, &D_80155220, &D_80155214, &D_80155240, &D_80155208,
+    &D_80155234, &D_80155218, &D_80155224, &D_80155238, &D_8015522C,
+    &D_8015520C, &D_80155228, &D_80155220, &D_8015523C, &D_80155230,
+    &D_80155240, &D_80155214};
 void MarEntityHitByIce(Entity* self) {
     const int PrimCount = LEN(D_80155244) / 3;
     s16 x;
@@ -1720,7 +2030,7 @@ void MarEntityHitByIce(Entity* self) {
     }
 }
 
-extern u16 lightning_clut[];
+static u16 lightning_clut[] = {0x194, 0x199};
 void MarEntityHitByLightning(Entity* self) {
     s16 x;
     s16 y;
@@ -1860,15 +2170,15 @@ void MarEntityHitByLightning(Entity* self) {
 }
 
 // Corresponding DRA function is func_80124164
-extern s32 D_800AE270;
-extern s32 D_800AE274;
-extern s32 D_800AE278;
-extern s32 D_800AE27C;
-extern s32 D_800AE280;
-extern s32 D_800AE284;
-extern s32 D_800AE288;
-extern s32 D_800AE28C;
-extern s32 D_800AE290;
+static s32 D_800AE270 = 255;
+static s32 D_800AE274 = 255;
+static s32 D_800AE278 = 255;
+static s32 D_800AE27C = 127;
+static s32 D_800AE280 = 127;
+static s32 D_800AE284 = 63;
+static s32 D_800AE288 = 127;
+static s32 D_800AE28C = 63;
+static s32 D_800AE290 = 127;
 static void func_80165DD8(
     Primitive* prim, s32 colorMul, s32 y, s32 radius, bool arg4) {
     prim->y0 = prim->y1 = y - radius;
@@ -1906,4 +2216,246 @@ static void func_80166044() {
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", MarEntityTeleport);
+// Entity ID 66. Made by blueprint 77 (the very last one).
+// Created in 3 spots in 2 functions (total of 6 calls).
+// DRA version is very similar.
+#if defined(VERSION_PSP)
+extern Point16 D_80175000[32];
+#else
+static Point16 D_80175000[32];
+#endif
+void MarEntityTeleport(Entity* self) {
+    Primitive* prim;
+    s32 w;
+    s32 h;
+    s32 yVar;
+    s32 xVar;
+    s32 i;
+    s32 result;
+    s32 upperParams;
+    bool showParticles;
+    bool var_s5;
+
+    upperParams = self->params & 0xFE00;
+    FntPrint("pl_warp_flag:%02x\n", g_Player.warp_flag);
+    showParticles = false;
+    var_s5 = false;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(D_80175000) + 4);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_HAS_PRIMS | FLAG_UNK_10000;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 2; i++) {
+            prim->r0 = prim->b0 = prim->g0 = 0;
+            prim->x0 = 0xC0 * i;
+            prim->y0 = 0;
+            prim->u0 = 0xC0;
+            prim->v0 = 0xF0;
+            prim->type = PRIM_TILE;
+            prim->priority = 0x1FD;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        for (i = 0; i < 2; i++) {
+            prim->type = PRIM_G4;
+            prim->priority = 0x1F8;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        for (i = 0; i < LEN(D_80175000); i++) {
+            xVar = PLAYER.posX.i.hi + (rand() % 28) - 14;
+            yVar = 0xE0 - (rand() & 0x3F);
+            D_80175000[i].x = xVar;
+            D_80175000[i].y = yVar;
+            prim->clut = 0x1B2;
+            prim->clut = 0x1B5;
+            prim->clut = 0x1BA;
+            prim->tpage = 0x1A;
+            prim->b0 = 0;
+            prim->b1 = 0;
+            prim->g0 = 0;
+            prim->g1 = (rand() & 0x1F) + 1;
+            prim->g2 = 0;
+            prim->priority = 0x1F0;
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+        self->ext.teleport.width = 0;
+        self->ext.teleport.height = 0x10;
+        self->ext.teleport.colorIntensity = 0x80;
+        if ((self->params & 0x100) == 0x100) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.height = 0x100;
+            self->ext.teleport.colorIntensity = 0x80;
+            self->ext.teleport.unk90 = 0xFF;
+            var_s5 = true;
+            self->step = Player_Unk20;
+#ifndef VERSION_PSP
+            g_api.PlaySfx(SFX_UNK_8BB);
+#endif
+        } else {
+            self->ext.teleport.unk90 = 0;
+            self->ext.teleport.width = 1;
+            self->ext.teleport.height = 0x10;
+            self->ext.teleport.colorIntensity = 0x80;
+            self->step = 1;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_A);
+            g_api.PlaySfx(NA_SE_PL_TELEPORT);
+        }
+        break;
+    case 1:
+        self->ext.teleport.height += 0x20;
+        if (self->ext.teleport.height > 0x100) {
+            self->step++;
+        }
+        break;
+    case 2:
+        self->ext.teleport.width++;
+        if (self->ext.teleport.width >= 0x10) {
+            self->ext.teleport.width = 0x10;
+            self->ext.teleport.timer = 0x80;
+            self->step++;
+        }
+        break;
+    case 3:
+        showParticles = true;
+        self->ext.teleport.colorIntensity += 4;
+        if (self->ext.teleport.colorIntensity >= 0x100) {
+            self->ext.teleport.colorIntensity = 0x100;
+        }
+        if (--self->ext.teleport.timer == 0) {
+            PLAYER.palette = PAL_OVL(0x10D);
+            self->step++;
+        }
+        break;
+    case 4:
+        func_80166024();
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width <= 0) {
+            self->ext.teleport.width = 0;
+            self->step++;
+        }
+        break;
+    case 5:
+        func_80166024();
+        var_s5 = true;
+        self->ext.teleport.unk90 += 4;
+        if (self->ext.teleport.unk90 >= 0x100) {
+            self->ext.teleport.unk90 = 0xFF;
+            self->ext.teleport.timer = 0x20;
+            self->step++;
+        }
+        break;
+    case 6:
+        func_80166024();
+        var_s5 = true;
+        if (--self->ext.teleport.timer == 0) {
+            self->ext.teleport.unk90 = 0;
+            if (upperParams == 0) {
+                D_80097C98 = 6;
+            }
+            if (upperParams == 0x200) {
+                D_80097C98 = 4;
+            }
+            if (upperParams == 0x400) {
+                D_80097C98 = 5;
+            }
+        }
+        break;
+    case 20:
+        var_s5 = true;
+        self->ext.teleport.unk90 = 0xFF;
+        self->ext.teleport.timer = 0x20;
+        self->step++;
+        break;
+    case 21:
+        var_s5 = true;
+        if (--self->ext.teleport.timer == 0) {
+#ifdef VERSION_PSP
+            g_api.PlaySfx(SFX_UNK_8BB);
+#endif
+            self->step++;
+        }
+        break;
+    case 22:
+        var_s5 = true;
+        self->ext.teleport.unk90 -= 4;
+        if (self->ext.teleport.unk90 <= 0) {
+            self->ext.teleport.unk90 = 0;
+            self->step++;
+        }
+        break;
+    case 23:
+        self->ext.teleport.width--;
+        if (self->ext.teleport.width < 2) {
+            self->ext.teleport.width = 0;
+            self->ext.teleport.timer = 4;
+            self->step++;
+            g_Player.warp_flag = 1;
+            g_api.PlaySfx(SFX_TELEPORT_BANG_B);
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    xVar = PLAYER.posX.i.hi;
+    yVar = PLAYER.posY.i.hi;
+    w = self->ext.teleport.width;
+    h = self->ext.teleport.height;
+    prim = &g_PrimBuf[self->primIndex];
+
+    for (i = 0; i < 2; prim = prim->next, i++) {
+        prim->r0 = prim->b0 = prim->g0 = self->ext.teleport.unk90;
+        prim->drawMode |= DRAW_HIDE;
+        if (var_s5) {
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+    }
+
+    prim->x1 = prim->x3 = xVar;
+    prim->x0 = prim->x2 = xVar - w;
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    prim = prim->next;
+    prim->x1 = prim->x3 = xVar;
+    prim->x0 = prim->x2 = xVar + w;
+    func_80165DD8(
+        prim, self->ext.teleport.colorIntensity, yVar, h, upperParams);
+    prim = prim->next;
+    if (showParticles) {
+        for (i = 0; i < LEN(D_80175000); i++) {
+            switch (prim->g0) {
+            case 0:
+                if (--prim->g1 == 0) {
+                    prim->g0++;
+                }
+                break;
+            case 1:
+                xVar = D_80175000[i].x;
+                yVar = D_80175000[i].y;
+                result = func_8015FDB0(prim, xVar, yVar);
+                D_80175000[i].y -= 16;
+                if (result < 0) {
+                    prim->drawMode |= DRAW_HIDE;
+                    prim->g0++;
+                } else {
+                    prim->drawMode &= ~DRAW_HIDE;
+                }
+                break;
+            }
+            prim = prim->next;
+        }
+    } else {
+        // @bug: should probably be doing prim = prim->next
+        for (i = 0; i < LEN(D_80175000); i++) {
+            prim->drawMode |= DRAW_HIDE;
+        }
+    }
+}

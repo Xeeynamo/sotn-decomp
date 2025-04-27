@@ -64,6 +64,72 @@ enum MarTimers {
 enum MarEntities {
     E_NONE,
     E_FACTORY,
+    E_SMOKE_PUFF,             // MarEntitySmokePuff
+    E_UNK_3,                  // func_pspeu_092A7B80
+    E_UNK_4,                  // func_pspeu_092A6280
+    E_HIT_BY_CUT_BLOOD,       // MarEntityHitByCutBlood
+    E_UNK_6,                  // func_pspeu_092BF950
+    E_UNK_7,                  // func_pspeu_092AAA38
+    E_UNK_8,                  // func_pspeu_092AB1C0
+    E_80161C2C,               // func_80161C2C
+    E_UNK_10,                 // func_pspeu_092B92F0
+    E_UNK_11,                 // func_pspeu_092AAC80
+    E_DUMMY_12,               // MarEntityDummy
+    E_UNK_13,                 // func_pspeu_092A82E0
+    E_UNK_14,                 // func_pspeu_092A8AE8
+    E_DUMMY_15,               // MarEntityDummy
+    E_UNK_16,                 // func_pspeu_092BEB40
+    E_UNK_17,                 // func_pspeu_092BFD30
+    E_UNK_18,                 // func_pspeu_092BFF78
+    E_DUMMY_19,               // MarEntityDummy
+    E_DUMMY_20,               // MarEntityDummy
+    E_DUMMY_21,               // MarEntityDummy
+    E_APPLY_MARIA_POWER_ANIM, // MarEntityApplyMariaPowerAnim
+    E_SLIDE_KICK,             // MarEntitySlideKick
+    E_BLADE_DASH,             // MarEntityBladeDash
+    E_801623E0,               // func_801623E0
+    E_80162604,               // func_80162604
+    E_DUMMY_27,               // MarEntityDummy
+    E_DUMMY_28,               // MarEntityDummy
+    E_80160F0C,               // func_80160F0C
+    E_UNK_30,                 // func_pspeu_092B91A8
+    E_BLINK_WHITE,            // MarEntityPlayerBlinkWhite
+    E_DUMMY_32,               // MarEntityDummy
+    E_DUMMY_33,               // MarEntityDummy
+    E_SHRINKING_POWERUP_RING, // MarEntityShrinkingPowerUpRing
+    E_UNK_35,                 // func_pspeu_092A7950
+    E_UNK_36,                 // func_pspeu_092A6E50
+    E_UNK_37,                 // func_pspeu_092A7560
+    E_UNK_38,                 // func_pspeu_092A9288
+    E_UNK_39,                 // func_pspeu_092A95A8
+    E_HIT_BY_ICE,             // MarEntityHitByIce
+    E_HIT_BY_LIGHTNING,       // MarEntityHitByLightning
+    E_UNK_42,                 // func_pspeu_092A9E88
+    E_DUMMY_43,               // MarEntityDummy
+    E_DUMMY_44,               // MarEntityDummy
+    E_DUMMY_45,               // MarEntityDummy
+    E_DUMMY_46,               // MarEntityDummy
+    E_DUMMY_47,               // MarEntityDummy
+    E_DUMMY_48,               // MarEntityDummy
+    E_DUMMY_49,               // MarEntityDummy
+    E_UNK_50,                 // func_pspeu_092A6740
+    E_DUMMY_51,               // MarEntityDummy
+    E_DUMMY_52,               // MarEntityDummy
+    E_DUMMY_53,               // MarEntityDummy
+    E_DUMMY_54,               // MarEntityDummy
+    E_DUMMY_55,               // MarEntityDummy
+    E_DUMMY_56,               // MarEntityDummy
+    E_DUMMY_57,               // MarEntityDummy
+    E_DUMMY_58,               // MarEntityDummy
+    E_DUMMY_59,               // MarEntityDummy
+    E_DUMMY_60,               // MarEntityDummy
+    E_DUMMY_61,               // MarEntityDummy
+    E_DUMMY_62,               // MarEntityDummy
+    E_DUMMY_63,               // MarEntityDummy
+    E_DUMMY_64,               // MarEntityDummy
+    E_DUMMY_65,               // MarEntityDummy
+    E_TELEPORT,               // MarEntityTeleport
+    E_DUMMY_67,               // MarEntityDummy
 };
 
 // all enums with an underscore as prefix are unconfirmed
@@ -150,11 +216,11 @@ enum MarBlueprints {
     _BP_SKID_SMOKE_2,
     _BP_SKID_SMOKE_3,
     BP_TELEPORT,
-    _NUM_BLUEPRINTS,
+    NUM_BLUEPRINTS,
 };
 
 // all enums with an underscore as prefix are unconfirmed
-enum RicSubweapons {
+enum MarSubweapons {
     PL_W_NONE,
     _PL_W_DAGGER,
     _PL_W_AXE,
@@ -186,7 +252,8 @@ enum RicSubweapons {
     _PL_W_28,
     _PL_W_CRASH_REBOUND_EXPLOSION,
     _PL_W_30,
-    _NUM_WEAPONS,
+    _PL_W_31,
+    NUM_WEAPONS,
 };
 
 extern s16 mar_80154568[];

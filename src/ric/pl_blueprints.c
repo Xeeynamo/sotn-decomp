@@ -566,7 +566,7 @@ Entity* RicCreateEntFactoryFromEntity(
 #else
 #define NON_CRITICAL true
 #endif
-static FactoryBlueprint g_RicFactoryBlueprints[] = {
+static FactoryBlueprint blueprints[] = {
     // clang-format off
     B_MAKE(E_SMOKE_PUFF, 5, 1, true, true, 2, B_DECOR, 0, 0),
     B_MAKE(E_SMOKE_PUFF, 3, 1, true, true, 4, B_DECOR, 2, 0),
@@ -652,8 +652,7 @@ static FactoryBlueprint g_RicFactoryBlueprints[] = {
     B_MAKE(E_TELEPORT, 1, 1, false, true, 0, B_KIND_3, 0, 0),
     // clang-format on
 };
-STATIC_ASSERT(
-    LEN(g_RicFactoryBlueprints) == NUM_BLUEPRINTS, "bp array wrong size");
+STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 
 // Similar to same function in DRA
 static u8 entity_ranges[][2] = {
@@ -668,7 +667,7 @@ void RicEntityFactory(Entity* self) {
     u8* data;
 
     if (self->step == 0) {
-        data = (u8*)&g_RicFactoryBlueprints[self->params];
+        data = (u8*)&blueprints[self->params];
         self->ext.factory.newEntityId = *data++;
         self->ext.factory.amount = *data++;
         self->ext.factory.nPerCycle = *data & 0x3F;
