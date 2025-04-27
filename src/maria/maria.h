@@ -279,6 +279,16 @@ extern s16 g_MarSensorsCeilingCrouch[];
 extern s16 g_MarSensorsWallCrouch[];
 
 extern s16* mar_801530AC[];
+extern SpriteParts* D_pspeu_092C6A50[];
+extern SpriteParts* D_pspeu_092C8CE0[];
+extern SpriteParts* D_pspeu_092CC558[];
+extern SpriteParts* D_pspeu_092CA590[];
+extern SpriteParts* D_pspeu_092CDC48[];
+extern SpriteParts* D_pspeu_092C7AA0[];
+
+extern AnimationFrame mar_anim_stand[];
+extern AnimationFrame mar_anim_stand_relax[];
+extern AnimationFrame mar_anim_walk[];
 extern AnimationFrame mar_anim_crouch[];
 extern AnimationFrame mar_anim_crouch_from_stand[];
 extern AnimationFrame mar_80155544[];
