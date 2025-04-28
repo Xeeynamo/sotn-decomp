@@ -16,7 +16,7 @@ if not os.path.exists('tools/saturn/GCCSH'):
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
 ninja.rule('compile',
-           command='sh ./tools/saturn/dosemu_wrapper.sh $in $out $args',
+           command='sh ./tools/saturn/dosemu_wrapper.sh $in $out $args $tmpdir',
            description='Building $out from $in')
 
 ninja.rule(
@@ -50,21 +50,42 @@ ninja.rule('link_multi',
                     $in $objs',
            description='Linking $out from $in')
 
+ninja.rule('cpp',
+           command=f'cpp $FLAGS $in $out',
+           description='Running preprocessor on $out from $in')
+
+ninja.rule('as',
+           'sh-elf-as -no-pad-sections -I./src/saturn $in -o $out')
+
 def add_srcs(srcs, output_dir, args):
     for src in srcs:
         filename_without_extension = os.path.splitext(os.path.basename(src))[0]
         relative_path = os.path.relpath(src, 'src/saturn')
         obj_dir = os.path.join(output_dir, os.path.dirname(relative_path))
         obj_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
-        os.makedirs(os.path.dirname(obj_name), exist_ok=True)
+        cpp_name = os.path.join(obj_dir, f"{filename_without_extension}.cpp")
+        asm_name = os.path.join(obj_dir, f"{filename_without_extension}.s")
+
+        flags = '-lang-c -v -I./src/saturn -I./src/saturn/lib -undef -D__GNUC__=2 -D__GNUC_MINOR__=7 -D__sh__ -D__sh__ -D__sh2__'
 
         ninja.build(
-            obj_name, 
-            'compile', 
+            cpp_name,
+            'cpp',
             inputs=[src],
+            variables={'FLAGS': flags})
+
+        ninja.build(
+            asm_name, 
+            'compile', 
+            inputs=[cpp_name],
             variables={
                 'args': args
             })
+        
+        ninja.build(
+            obj_name,
+            'as',
+            inputs=[asm_name])
 
 snd_srcs = [
     'src/saturn/alucard.c',

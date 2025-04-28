@@ -59,4 +59,4 @@ void CSH_Purge(void* adrs, Uint32 P_size) {
 }
 
 // more funcs here
-INCLUDE_ASM("asm/saturn/zero/data", d602bb98, d_0602bb98);
+INCLUDE_ASM("asm/saturn/zero/data", d602BB98, d_0602bb98);
