@@ -107,4 +107,28 @@ void EntityKillerFish(Entity* self) {
     self->hitboxHeight = 8;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_killer_fish", func_us_801C9460);
+extern u8 D_us_801819B4[];
+
+void func_us_801C9460(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->pose = 0;
+        self->poseTimer = 0;
+        self->animSet = 0xE;
+        self->unk5A = 0x79;
+        self->palette = PAL_DRA(0x2E8);
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_UNK8;
+        self->unk6C = 0x60;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->velocityY += -0x8000 - 0x8000;
+        return;
+    }
+
+    self->posY.val += self->velocityY;
+    if (!AnimateEntity(D_us_801819B4, self)) {
+        DestroyEntity(self);
+    }
+}
