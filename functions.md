@@ -211,7 +211,7 @@
 | maria     | func_8015CAAC                       |       24 |          2 |        |                                 |       |
 | ric       | func_8015CAAC                       |       24 |          2 |        |                                 |       |
 |           | SetEntityAnimation                  |       24 |          2 |        |                                 |       |
-| dra       | func_800EB720                       |       24 |          3 |        |                                 |       |
+| dra       | func_800EB720                       |       24 |          3 |        | https://decomp.me/scratch/kWEy5 | 1.0   |
 | dra       | GetEquipCount                       |       24 |          4 |        |                                 |       |
 | dra       | GetEquipOrder                       |       24 |          4 |        |                                 |       |
 | dra       | RefreshCapePalette                  |       24 |          4 |        |                                 |       |
@@ -256,7 +256,7 @@
 | maria_psp | func_pspeu_092B0D70                 |       26 |          3 |        |                                 |       |
 | maria_psp | func_pspeu_092B0DC0                 |       26 |          3 |        |                                 |       |
 | ric       | RicEntityCrashReboundStoneParticles |       26 |          3 |        |                                 |       |
-| no4       | func_pspeu_09258910                 |       26 |          3 |        |                                 |       |
+| no4       | func_pspeu_09258910                 |       26 |          3 |        | https://decomp.me/scratch/ahwzg | 0.995 |
 | dra       | func_801326D8                       |       26 |          4 |        |                                 |       |
 | dra       | GetEquipItemCategory                |       27 |          1 |        |                                 |       |
 | dra       | SetTexturedPrimRect                 |       27 |          1 |        |                                 |       |
@@ -564,7 +564,7 @@
 | st0       | func_801B0280                       |       47 |          6 |        |                                 |       |
 | dra       | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
 | maria     | 80.rodata                           |       48 |          0 | Yes    |                                 |       |
-| no4       | first_c_file.rodata                 |       48 |          0 | Yes    |                                 |       |
+| no4       | unk_4A0.rodata                      |       48 |          0 | Yes    |                                 |       |
 | wrp       | warp.rodata                         |       48 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra       | func_8012F83C                       |       49 |          4 |        |                                 |       |
@@ -598,7 +598,7 @@
 | ric       | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
 | dra       | GetLang                             |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
-| dra       | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
+| dra       | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/H4JYb | 1.0   |
 | dra       | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090EAF08                   |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria     | GetLang                             |       51 |         10 |        |                                 |       |
@@ -679,7 +679,7 @@
 | lib       | func_us_801CCED0                    |       61 |          5 |        |                                 |       |
 | dra       | func_800E5498                       |       61 |          6 |        |                                 |       |
 | lib       | func_us_801B8958                    |       61 |          6 |        |                                 |       |
-| dra       | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
+| dra       | LoadGfxAsync                        |       61 |          7 |        | https://decomp.me/scratch/uhT67 | 0.958 |
 | maria     | func_8015F9F0                       |       61 |          8 |        |                                 |       |
 | ric       | func_8015F9F0                       |       61 |          8 |        |                                 |       |
 | dra       | func_8010A3F0                       |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
@@ -863,7 +863,7 @@
 | no4       | func_pspeu_09242D08                 |       81 |          5 |        |                                 |       |
 | dra       | func_80102D70                       |       81 |         11 | Yes    |                                 |       |
 | ric       | 319C4.rodata                        |       82 |          0 | Yes    |                                 |       |
-| no4       | func_pspeu_09238CF0                 |       82 |          8 |        |                                 |       |
+| no4       | func_pspeu_09238CF0                 |       82 |          8 |        | https://decomp.me/scratch/qonr5 | 1.0   |
 | dra       | func_psp_090F76D0                   |       82 |          9 |        |                                 |       |
 | lib       | EntitySkeletonPieces                |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
 | dra       | func_psp_090FF298                   |       82 |         11 |        |                                 |       |
@@ -1105,7 +1105,7 @@
 | dra       | func_801093C4                       |      132 |         15 |        | https://decomp.me/scratch/hwPYr | 0.998 |
 | dra       | CdSoundCommand4                     |      132 |         16 |        |                                 |       |
 | st0       | EntityDraculaMegaFireball           |      133 |         18 |        | https://decomp.me/scratch/6Jc0h | 0.998 |
-| no4       | func_pspeu_09256138                 |      134 |          9 |        |                                 |       |
+| no4       | func_pspeu_09256138                 |      134 |          9 |        | https://decomp.me/scratch/SGsZx | 1.0   |
 | dra       | CheckHolyWaterCollision             |      135 |         12 |        |                                 |       |
 | dra       | UnknownEntId48                      |      135 |         13 |        | https://decomp.me/scratch/50GZY | 0.996 |
 | dra       | func_800F84CC                       |      136 |         11 |        |                                 |       |
@@ -1369,7 +1369,7 @@
 | dra       | EntityExpandingCircle               |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
 | dra       | EntityPlayerPinkEffect              |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
 | dra       | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
-| no4       | func_pspeu_09237700                 |      285 |         47 |        |                                 |       |
+| no4       | func_pspeu_09237700                 |      285 |         47 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | lib       | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | maria_psp | func_pspeu_092A7560                 |      287 |         32 | Yes    |                                 |       |
 | dra       | UpdateAnim                          |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -1403,10 +1403,10 @@
 | ric       | RicInit                             |      313 |         33 |        |                                 |       |
 | ric       | RicEntitySubwpnStopwatchCircle      |      314 |         24 |        | https://decomp.me/scratch/kbgQU | 1.0   |
 | lib       | func_us_801BBAB4                    |      315 |         26 |        |                                 |       |
-| no4       | func_pspeu_09258960                 |      317 |         18 |        |                                 |       |
+| no4       | func_pspeu_09258960                 |      317 |         18 |        | https://decomp.me/scratch/6JUYI | 0.597 |
 | maria     | MarInit                             |      317 |         34 |        |                                 |       |
 | wrp       | EntityWarpSmallRocks                |      318 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
-| no4       | func_pspeu_09238860                 |      320 |         54 |        |                                 |       |
+| no4       | func_pspeu_09238860                 |      320 |         54 |        | https://decomp.me/scratch/aJLfo | 0.999 |
 | dra       | MenuSpellsDraw                      |      323 |         37 |        | https://decomp.me/scratch/ug2ll | 0.984 |
 | no4       | func_pspeu_0923F390                 |      324 |         16 |        |                                 |       |
 | st0       | func_801AF380                       |      325 |          7 |        | https://decomp.me/scratch/WwUfr | 0.998 |
