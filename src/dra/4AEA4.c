@@ -7,26 +7,30 @@ extern u16 D_80137478[ICON_SLOT_NUM];
 extern u16 D_801374B8[ICON_SLOT_NUM];
 extern u16 D_801374F8[ICON_SLOT_NUM];
 extern u16 D_80137538[ICON_SLOT_NUM];
+extern u8* g_DecSrcPtr;
+extern u8* g_DecDstPtr;
+extern bool g_DecReadNibbleFlag;
+extern bool g_DecWriteNibbleFlag;
 
 void func_800EAEA4(void) {
     u16* ptr;
     s32 i;
 
-    for (ptr = D_801374F8, i = 0; i < 32; i++) {
-        *ptr++ = ~0;
+    for (i = 0, ptr = D_801374F8; i < ICON_SLOT_NUM; i++) {
+        *ptr++ = -1;
     }
 
-    for (ptr = D_80137538, i = 0; i < 32; i++) {
-        *ptr++ = ~0;
+    for (i = 0, ptr = D_80137538; i < ICON_SLOT_NUM; i++) {
+        *ptr++ = -1;
     }
 }
 
 void ResetPendingGfxLoad(void) {
-    GfxLoad* gfxLoad = g_GfxLoad;
+    GfxLoad* ptr;
     s32 i;
 
-    for (i = 0; i < LEN(g_GfxLoad); i++, gfxLoad++) {
-        gfxLoad->kind = GFX_BANK_NONE;
+    for (i = 0, ptr = g_GfxLoad; i < LEN(g_GfxLoad); i++, ptr++) {
+        ptr->kind = GFX_BANK_NONE;
     }
 
     func_800EAEA4();
@@ -45,114 +49,124 @@ void LoadGfxAsync(s32 gfxId) {
     } else {
         gfxBank = g_GfxSharedBank[gfxId];
     }
-
-    if (gfxBank->kind != GFX_BANK_NONE && gfxBank->kind != -1) {
-        for (i = 0; i < LEN(g_GfxLoad); i++) {
-            gfxLoad = &g_GfxLoad[i];
-            if (gfxLoad->kind == GFX_BANK_NONE) {
-                gfxLoad->kind = gfxBank->kind;
-                gfxLoad->unk6 = 0;
-                gfxLoad->unk8 = 0;
-                gfxLoad->next = gfxBank->entries;
-                break;
-            }
+    if (gfxBank->kind == GFX_BANK_NONE) {
+        return;
+    }
+    if (gfxBank->kind == -1) {
+        return;
+    }
+    for (i = 0; i < LEN(g_GfxLoad); i++) {
+        gfxLoad = &g_GfxLoad[i];
+        if (gfxLoad->kind == GFX_BANK_NONE) {
+            gfxLoad->kind = gfxBank->kind;
+            gfxLoad->unk6 = 0;
+            gfxLoad->unk8 = 0;
+            gfxLoad->next = gfxBank->entries;
+            return;
         }
     }
 }
 
-// BSS
-extern u8* g_DecSrcPtr;
-extern u8* g_DecDstPtr;
-extern s32 g_DecReadNibbleFlag;
-extern s32 g_DecWriteNibbleFlag;
-
-void DecompressWriteNibble(s32 ch) {
-    u8 temp = ch;
-
-    if (g_DecWriteNibbleFlag == 0) {
-        g_DecWriteNibbleFlag = 1;
-        *g_DecDstPtr = temp;
+static void DecompressWriteNibble(u8 ch) {
+    if (!g_DecWriteNibbleFlag) {
+        g_DecWriteNibbleFlag = true;
+        *g_DecDstPtr = ch;
     } else {
-        g_DecWriteNibbleFlag = 0;
-        *g_DecDstPtr += ch * 16;
+        g_DecWriteNibbleFlag = false;
+        *g_DecDstPtr += ch << 4;
         g_DecDstPtr++;
     }
 }
 
-u8 DecompressReadNibble(void) {
+static u8 DecompressReadNibble(void) {
     u8 ret;
 
-    if (g_DecReadNibbleFlag != 0) {
-        g_DecReadNibbleFlag = 0;
-        ret = *g_DecSrcPtr;
-        g_DecSrcPtr++;
-        return (ret >> 0) & 0xF;
+    if (!g_DecReadNibbleFlag) {
+        g_DecReadNibbleFlag = true;
+        ret = *g_DecSrcPtr >> 4;
     } else {
-        g_DecReadNibbleFlag = 1;
-        ret = *g_DecSrcPtr;
-        return (ret >> 4) & 0xF;
+        g_DecReadNibbleFlag = false;
+        ret = *g_DecSrcPtr & 0xF;
+        g_DecSrcPtr++;
     }
+    return ret;
 }
 
-s32 DecompressData(u8* dst, u8* src) {
+static s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
-    u8 ch;
-    s32 len;
+    s32 ch;
     s32 count;
     s32 i;
     s32 var_v1;
-    u32* var_a0;
+    u32* ptr;
     u32 op;
 
-    var_a0 = buf;
+    ptr = buf;
     for (var_v1 = 0; var_v1 < LEN(buf); var_v1++) {
-        *var_a0++ = *src++;
+        *ptr++ = *src++;
     }
 
-    g_DecReadNibbleFlag = 0;
-    g_DecWriteNibbleFlag = 0;
+    g_DecReadNibbleFlag = false;
+    g_DecWriteNibbleFlag = false;
     g_DecSrcPtr = src;
     g_DecDstPtr = dst;
 
-    while (count = 1) {
+    while (true) {
         op = DecompressReadNibble();
         switch (op) {
         case 0:
-            len = DecompressReadNibble();
+            ch = DecompressReadNibble();
             op = DecompressReadNibble();
-            count = len * 0x10 + op + 0x13;
+            count = (ch << 4) + op + 0x13;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
             break;
+
+        case 1:
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            break;
+
         case 2:
             ch = DecompressReadNibble();
             DecompressWriteNibble(ch);
             DecompressWriteNibble(ch);
             break;
-        case 4:
-            DecompressWriteNibble(DecompressReadNibble());
+
         case 3:
-            DecompressWriteNibble(DecompressReadNibble());
-        case 1:
-            DecompressWriteNibble(DecompressReadNibble());
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
             break;
+
+        case 4:
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            ch = DecompressReadNibble();
+            DecompressWriteNibble(ch);
+            break;
+
         case 5:
-            len = DecompressReadNibble();
-            op = DecompressReadNibble();
-            count = op + 3;
-            ch = len;
+            ch = DecompressReadNibble();
+            var_v1 = DecompressReadNibble();
+            count = var_v1 + 3;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(ch);
             }
             break;
+
         case 6:
-            len = DecompressReadNibble();
-            count = len + 3;
+            ch = DecompressReadNibble();
+            count = ch + 3;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
             break;
+
         case 7:
         case 8:
         case 9:
@@ -160,28 +174,29 @@ s32 DecompressData(u8* dst, u8* src) {
         case 11:
         case 12:
         case 13:
-        case 14: {
-            len = buf[op - 7];
-            switch (len & 0xF0) {
+        case 14:
+            ch = buf[op - 7];
+            switch (ch & 0xF0) {
             case 0x20:
-                DecompressWriteNibble(len & 0xF);
+                DecompressWriteNibble(ch & 0xF);
             case 0x10:
-                DecompressWriteNibble(len & 0xF);
+                DecompressWriteNibble(ch & 0xF);
                 break;
+
             case 0x60:
-                count = (len & 0xF) + 3;
+                count = (ch & 0xF) + 3;
                 for (i = 0; i < count; i++) {
                     DecompressWriteNibble(0);
                 }
                 break;
             }
             break;
-        }
+
         case 15:
-            if (dst + 0x2000 >= g_DecDstPtr) {
-                return 0;
+            if (dst + 0x2000 < g_DecDstPtr) {
+                return g_DecDstPtr - dst + 0x2000;
             }
-            return g_DecDstPtr - dst + 0x2000;
+            return 0;
         }
     }
 }
@@ -223,6 +238,7 @@ void LoadPendingGfx(void) {
             }
             gfxLoad->kind = GFX_BANK_NONE;
             break;
+
         case GFX_BANK_COMPRESSED:
             gfxEntry = gfxLoad->next;
             for (; j < 4; j++) {
@@ -248,31 +264,22 @@ void LoadPendingGfx(void) {
 }
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
-    LoadTPage(pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
+    LoadTPage((u_long*)pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
-    u8* iconGfx;
-    u16* clutPtr;
-    s32 vramX;
-    s32 var_t0;
     s32 i;
 
     if (D_801374F8[index] != equipIcon) {
-        iconGfx = g_GfxEquipIcon[equipIcon];
-        vramX = ((index & 7) * 4) + 0x280;
-        var_t0 = index;
-        if (index < 0) {
-            var_t0 = index + 7;
-        }
-
-        LoadTPage(iconGfx, 0, 0, vramX, (var_t0 >> 3) * 0x10 + 0x180, 16, 16);
+        LoadTPage((u_long*)g_GfxEquipIcon[equipIcon], 0, 0,
+                  ((index & 7) * 4) + 0x280, (index / 8) * 0x10 + 0x180, 16,
+                  16);
     }
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            clutPtr = &g_Clut[0x1D00];
-            clutPtr[index * 0x10 + i] = g_PalEquipIcon[palette * 0x10 + i];
+            g_Clut[index * 0x10 + i + 0x1D00] =
+                g_PalEquipIcon[palette * 0x10 + i];
         }
 
         LoadClut(&g_Clut[0x1D00], 0, 0xFD);
@@ -289,17 +296,17 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 void func_800EB6B4(void) {
     s32 i;
 
-    for (i = 0; i < 32; i++) {
+    for (i = 0; i < ICON_SLOT_NUM; i++) {
         LoadEquipIcon(D_80137478[i], D_801374B8[i], i);
     }
 }
 
 bool func_800EB720(void) {
-    GfxLoad* temp = g_GfxLoad;
+    GfxLoad* ptr;
     s32 i;
 
-    for (i = 0; i < 16; i++) {
-        if (temp[i].kind != 0) {
+    for (i = 0, ptr = g_GfxLoad; i < LEN(g_GfxLoad); i++) {
+        if (ptr[i].kind) {
             return true;
         }
     }
