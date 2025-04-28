@@ -24,11 +24,11 @@ static void func_80158B04(u16 arg0) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092AE1C0);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepStand);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092AE4A8);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepWalk);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092AE558);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepJump);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepFall);
 
@@ -106,7 +106,7 @@ void MarStepBossGrab(void) {
             damage.effects = EFFECT_NONE;
             damage.damageKind = DAMAGEKIND_1;
             damage.damageTaken = g_Player.damageTaken;
-            damageResult = g_api.CalcPlayerDamageAgain(&damage);
+            damageResult = g_api.CalcPlayerDamageMaria(&damage);
             if (damageResult) {
                 MarSetStep(PL_S_DEAD);
                 MarStepDead(0, 2, PL_S_BOSS_GRAB, 1);
@@ -321,9 +321,9 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0DC0);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0E10);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0E50);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepSlide);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B1110);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepRun);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_8015BB80);
 
@@ -401,6 +401,6 @@ void MarStepTeleport(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B1790);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepBladeDash);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B1930);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepHighJump);

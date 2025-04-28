@@ -30,8 +30,7 @@ s32 func_800FD664(s32 arg0) {
 }
 
 #ifdef VERSION_PSP
-// Unused. Exactly the same as CalcPlayerDamage. Pulled into g_Api.
-bool CalcPlayerDamageAgain(DamageParam* damage) {
+bool CalcPlayerDamageMaria(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
             damage->damageTaken = g_Status.hpMax / 8;
