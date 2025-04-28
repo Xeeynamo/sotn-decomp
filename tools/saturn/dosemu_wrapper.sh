@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if correct number of arguments are provided
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 3 ]; then
     echo "Usage: $0 input output"
     exit 1
 fi
@@ -13,4 +13,4 @@ in=$(echo "$1" | tr '/' '\\')
 out=$(echo "$2" | tr '/' '\\')
 
 # we need BUILD.BAT to define the path so GO32 works
-dosemu -quiet -dumb -f ./dosemurc -K . -E "TOOLS\SATURN\BUILD.BAT $in $out"
+dosemu -quiet -dumb -f ./dosemurc -K . -E "TOOLS\SATURN\BUILD.BAT $in $out $3"

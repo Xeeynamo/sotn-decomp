@@ -16,26 +16,13 @@ if not os.path.exists('tools/saturn/GCCSH'):
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
 ninja.rule('compile',
-           command='sh ./tools/saturn/dosemu_wrapper.sh $in $out',
+           command='sh ./tools/saturn/dosemu_wrapper.sh $in $out $args',
            description='Building $out from $in')
 
 ninja.rule(
         'check',
         command='sha1sum --check config/check.saturn.sha',
         description='Checking that $in matches')
-
-def add_srcs(srcs, output_dir):
-    for src in srcs:
-        filename_without_extension = os.path.splitext(os.path.basename(src))[0]
-        relative_path = os.path.relpath(src, 'src/saturn')
-        obj_dir = os.path.join(output_dir, os.path.dirname(relative_path))
-        obj_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
-        os.makedirs(os.path.dirname(obj_name), exist_ok=True)
-
-        ninja.build(
-            obj_name, 
-            'compile', 
-            inputs=[src])
 
 ninja.rule('coff2elf',
            command="sh-elf-objcopy -Icoff-sh -Oelf32-sh $in $out",
@@ -63,10 +50,33 @@ ninja.rule('link_multi',
                     $in $objs',
            description='Linking $out from $in')
 
+def add_srcs(srcs, output_dir, args):
+    for src in srcs:
+        filename_without_extension = os.path.splitext(os.path.basename(src))[0]
+        relative_path = os.path.relpath(src, 'src/saturn')
+        obj_dir = os.path.join(output_dir, os.path.dirname(relative_path))
+        obj_name = os.path.join(obj_dir, f"{filename_without_extension}.cof")
+        os.makedirs(os.path.dirname(obj_name), exist_ok=True)
+
+        ninja.build(
+            obj_name, 
+            'compile', 
+            inputs=[src],
+            variables={
+                'args': args
+            })
+
 snd_srcs = [
-    # 'src/saturn/alucard.c',
+    'src/saturn/alucard.c',
     'src/saturn/zero.c',
-    # 'src/saturn/game.c',
+    'src/saturn/game.c',
+    'src/saturn/richter.c',
+    'src/saturn/stage_02.c',
+    'src/saturn/t_bat.c',
+    'src/saturn/warp.c',
+]
+
+lib_srcs = [
     'src/saturn/lib/bup.c',
     'src/saturn/lib/cdc.c',
     'src/saturn/lib/csh.c',
@@ -77,13 +87,12 @@ snd_srcs = [
     'src/saturn/lib/scl.c',
     'src/saturn/lib/spr.c',
     'src/saturn/lib/sys.c',
-    # 'src/saturn/richter.c',
-    # 'src/saturn/stage_02.c',
-    # 'src/saturn/t_bat.c',
-    # 'src/saturn/warp.c',
 ]
 
-add_srcs(snd_srcs, "build/saturn")
+# O0 srcs
+add_srcs(lib_srcs, "build/saturn", "O0")
+
+add_srcs(snd_srcs, "build/saturn", "O2")
 
 def elf_srcs(srcs, output_dir):
     for src in srcs:
@@ -98,6 +107,7 @@ def elf_srcs(srcs, output_dir):
             inputs=[input_name])
 
 elf_srcs(snd_srcs, "build/saturn")
+elf_srcs(lib_srcs, "build/saturn")
 
 def link_objs(srcs, output_dir):
     for src in srcs:
@@ -115,16 +125,16 @@ def link_objs(srcs, output_dir):
                 'ld_file': ld_file,
                 'syms_file': syms_file})
 
-# objs = [
-#     'build/saturn/game.o',
-#     'build/saturn/alucard.o',
-#     'build/saturn/richter.o',
-#     'build/saturn/stage_02.o',
-#     'build/saturn/warp.o',
-#     'build/saturn/t_bat.o'
-# ]
+objs = [
+    'build/saturn/game.o',
+    'build/saturn/alucard.o',
+    'build/saturn/richter.o',
+    'build/saturn/stage_02.o',
+    'build/saturn/warp.o',
+    'build/saturn/t_bat.o'
+]
 
-# link_objs(objs, 'build/saturn')
+link_objs(objs, 'build/saturn')
 
 def link_multi(multi_objs, output_dir):
     for main_obj, sub_objs in multi_objs.items():
@@ -132,10 +142,6 @@ def link_multi(multi_objs, output_dir):
         elf_name = f"{output_dir}/{filename_without_extension}.elf"
         ld_file = f'{filename_without_extension}.ld'
         syms_file = f'{filename_without_extension}_user_syms.txt'
-
-        # all_objs = [main_obj] + sub_objs
-
-        # print(all_objs)
 
         ninja.build(
             elf_name, 
@@ -169,12 +175,12 @@ ninja.rule('elf2prg',
 
 prgs = {
     'zero.elf': '0.BIN',
-    # 'game.elf': 'GAME.PRG',
-    # 'alucard.elf': 'ALUCARD.PRG',
-    # 'richter.elf': 'RICHTER.PRG',
-    # 'stage_02.elf': 'STAGE_02.PRG',
-    # 'warp.elf': 'WARP.PRG',
-    # 't_bat.elf': 'T_BAT.PRG'
+    'game.elf': 'GAME.PRG',
+    'alucard.elf': 'ALUCARD.PRG',
+    'richter.elf': 'RICHTER.PRG',
+    'stage_02.elf': 'STAGE_02.PRG',
+    'warp.elf': 'WARP.PRG',
+    't_bat.elf': 'T_BAT.PRG'
 }
 
 def make_prgs(prgs, output_dir):

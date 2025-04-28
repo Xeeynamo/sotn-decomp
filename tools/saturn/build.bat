@@ -1,4 +1,4 @@
 @echo off
 set PATH=TOOLS\SATURN\GCCSH;%PATH%
 echo INPUT FILE: %1
-TOOLS\SATURN\GCCSH\GCC.EXE -v -c -I.\SRC\SATURN -I.\SRC\SATURN\LIB -O2 -m2 -fsigned-char %1 -o %2
+TOOLS\SATURN\GCCSH\GCC.EXE -v -c -I.\SRC\SATURN -I.\SRC\SATURN\LIB -%3 -m2 -fsigned-char %1 -o %2
