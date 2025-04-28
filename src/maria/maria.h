@@ -4,40 +4,39 @@
 
 #define OVL_EXPORT(x) MAR_##x
 
-// all enums with an underscore as prefix are unconfirmed
 enum MarSteps {
     PL_S_STAND,
     PL_S_WALK,
     PL_S_CROUCH,
     PL_S_FALL,
     PL_S_JUMP,
-    _PL_S_5, // unused
-    _PL_S_6, // unused
-    _PL_S_7, // unused
+    PL_S_5, // unused
+    PL_S_6, // unused
+    PL_S_7, // unused
     PL_S_HIGHJUMP,
-    _PL_S_9, // unused
+    PL_S_9, // unused
     PL_S_HIT,
-    _PL_S_11, // unused
+    PL_S_11, // unused
     PL_S_BOSS_GRAB,
-    _PL_S_13, // unused
-    _PL_S_14, // unused
-    _PL_S_15, // unused
+    PL_S_13, // unused
+    PL_S_14, // unused
+    PL_S_15, // unused
     PL_S_DEAD,
-    _PL_S_17, // unused
-    _PL_S_STAND_IN_AIR,
-    _PL_S_FLAME_WHIP,
-    _PL_S_HYDROSTORM,
-    _PL_S_THROW_DAGGERS,
-    _PL_S_DEAD_PROLOGUE,
+    PL_S_17, // unused
+    PL_S_SUBWPN_18,
+    PL_S_SUBWPN_19,
+    PL_S_SUBWPN_20,
+    PL_S_SUBWPN_21,
+    PL_S_22, // unused
     PL_S_SLIDE,
-    PL_S_BLADEDASH, // needs a better name
-    _PL_S_RUN,
-    _PL_S_SLIDE_KICK,
-    _PL_S_SUBWPN_CRASH,
-    _PL_S_28, // unused
-    _PL_S_29, // unused
-    _PL_S_30, // unused
-    _PL_S_31, // unused
+    PL_S_BLADEDASH,
+    PL_S_RUN,
+    PL_S_26, // unused
+    PL_S_SUBWPN_27,
+    PL_S_SUBWPN_28,
+    PL_S_29, // unused
+    PL_S_30, // unused
+    PL_S_31, // unused
     PL_S_INIT,
     PL_S_DEBUG = 0xF0,
 };
@@ -256,8 +255,11 @@ enum MarSubweapons {
     NUM_WEAPONS,
 };
 
+extern u16 mar_80154574[];
+
 extern s16 mar_80154568[];
 extern ButtonComboState g_MarBladeDashButtons;
+extern ButtonComboState mar_801758E4;
 extern s16 g_MarDebugCurFrame;
 extern s16 g_MarDebugDrawFlags;
 extern u16 g_MarDebugPalette;
@@ -286,18 +288,23 @@ extern SpriteParts* D_pspeu_092CA590[];
 extern SpriteParts* D_pspeu_092CDC48[];
 extern SpriteParts* D_pspeu_092C7AA0[];
 
+extern AnimationFrame* mar_8015538C[];
 extern AnimationFrame mar_anim_stand[];
 extern AnimationFrame mar_anim_stand_relax[];
 extern AnimationFrame mar_anim_walk[];
 extern AnimationFrame mar_anim_crouch[];
 extern AnimationFrame mar_anim_crouch_from_stand[];
+extern AnimationFrame mar_80155534[];
 extern AnimationFrame mar_80155544[];
 extern AnimationFrame mar_anim_run[];
 extern AnimationFrame mar_anim_stun[];
+extern AnimationFrame mar_801556C4[];
 extern AnimationFrame mar_80155750[];
 extern AnimationFrame mar_8015591C[];
 extern AnimationFrame mar_80155950[];
+extern FrameProperty mar_80155964[];
 
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 Entity* MarCreateEntFactoryFromEntity(Entity* entity, u32 arg1, s32 arg2);
+void func_pspeu_092BEAB0(s16);

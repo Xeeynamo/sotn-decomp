@@ -45,7 +45,7 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2040);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B20B8);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2170);
+INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetHighJump);
 
 static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;

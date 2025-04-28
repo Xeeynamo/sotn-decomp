@@ -100,7 +100,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
 
-bool CalcPlayerDamageAgain(DamageParam* damage) {
+bool CalcPlayerDamage(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
             damage->damageTaken = g_Status.hpMax / 8;

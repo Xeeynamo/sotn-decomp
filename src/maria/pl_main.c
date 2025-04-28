@@ -248,6 +248,446 @@ static void CheckBladeDashInput(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_main", CheckHighJumpInput);
+static void CheckHighJumpInput(void) {
+    switch (mar_801758E4.buttonsCorrect) {
+    case 0:
+        if (g_Player.padTapped & PAD_DOWN) {
+            if (g_Player.padHeld == 0) {
+                mar_801758E4.timer = 16;
+                mar_801758E4.buttonsCorrect++;
+                return;
+            }
+        }
+        break;
+    case 1:
+        if (g_Player.padTapped & PAD_UP) {
+            mar_801758E4.timer = 16;
+            mar_801758E4.buttonsCorrect++;
+            return;
+        }
+        if (--mar_801758E4.timer == 0) {
+            mar_801758E4.buttonsCorrect = 0;
+        }
+        break;
+    case 2:
+        if (mar_801758E4.timer && --mar_801758E4.timer == 0) {
+            mar_801758E4.buttonsCorrect = 0;
+            return;
+        }
+        if (g_Player.padTapped & PAD_CROSS) {
+            if (PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_STAND ||
+                (PLAYER.step == PL_S_JUMP && PLAYER.velocityY > FIX(1)) ||
+                PLAYER.step == PL_S_FALL) {
+                if (g_Player.unk72) {
+                    mar_801758E4.buttonsCorrect = 0;
+                } else {
+                    MarSetHighJump();
+                    mar_801758E4.buttonsCorrect = 0;
+                }
+            }
+        }
+        break;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_main", MarMain);
+extern s32 D_pspeu_092E5F20;
+extern s32 D_pspeu_092E5F28;
+// the main difference with Richter is that every code related to how Richter
+// survives at 0hp during the prologue, it's removed.
+void MarMain(void) {
+    s16 angle;
+    s32 i;
+    s32 newStatus;
+    s32 damageEffects;
+    s16 playerStep;
+    s16 playerStepS;
+    s32 damageKind;
+    bool isDamageTakenDeadly;
+    PlayerDraw* draw;
+    DamageParam damage;
+    int posX;
+    int posY;
+    s32 vramFlag;
+    s32 temp;
+
+    g_CurrentEntity = &PLAYER;
+    draw = &g_PlayerDraw[0];
+    if (g_Player.unk78) {
+        // this is new to the maria overlay
+        g_Player.unk7A = 0;
+        g_Player.unk5C = 0;
+        g_Player.unk78 = 0;
+    }
+    damageEffects = 0;
+    g_Player.unk4C = 0;
+    g_Player.unk72 = func_80156DE4();
+    for (i = 0; i < LEN(g_Player.timers); i++) {
+        if (!g_Player.timers[i]) {
+            continue;
+        }
+        switch (i) {
+        case PL_T_POISON:
+        case PL_T_CURSE:
+        case PL_T_3:
+        case PL_T_5:
+        case PL_T_6:
+        case PL_T_7:
+        case PL_T_8:
+        case PL_T_ATTACK:
+        case PL_T_10:
+        case PL_T_RUN:
+        case PL_T_12:
+        case PL_T_INVINCIBLE:
+            break;
+        case PL_T_2:
+            PLAYER.palette = g_Player.unk40;
+            break;
+        case PL_T_4: {
+            angle = (g_GameTimer & 0xF) * 256;
+            draw->r0 = draw->b0 = draw->g0 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r1 = draw->b1 = draw->g1 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r3 = draw->b3 = draw->g3 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            angle += 0x200;
+            draw->r2 = draw->b2 = draw->g2 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->enableColorBlend = 1;
+            break;
+        }
+        case PL_T_INVINCIBLE_SCENE:
+            // removed compared to RIC, as Maria does not have a prologue
+            break;
+        case PL_T_AFTERIMAGE_DISABLE:
+            DisableAfterImage(0, 0);
+            break;
+        }
+        if (--g_Player.timers[i] != 0) {
+            continue;
+        }
+        switch (i) {
+        case PL_T_POISON:
+        case PL_T_5:
+        case PL_T_7:
+        case PL_T_8:
+        case PL_T_ATTACK:
+        case PL_T_10:
+        case PL_T_12:
+        case PL_T_INVINCIBLE:
+            break;
+        case PL_T_2:
+            PLAYER.palette = 0x8114;
+            break;
+        case PL_T_4:
+            draw->enableColorBlend = 0;
+            break;
+        case PL_T_INVINCIBLE_SCENE:
+            // removed compared to RIC, as Maria does not have a prologue
+            break;
+        case PL_T_6:
+            if (PLAYER.step == PL_S_FALL && PLAYER.anim != mar_80155534) {
+                MarSetAnimation(mar_80155534);
+                g_Player.unk44 &= ~0x10;
+            }
+            break;
+        case PL_T_AFTERIMAGE_DISABLE:
+            func_8015CC28();
+            break;
+        }
+    }
+    g_Player.padHeld = g_Player.padPressed;
+    if (g_Player.demo_timer) {
+        g_Player.demo_timer--;
+        g_Player.padPressed = g_Player.padSim;
+    } else {
+        g_Player.padPressed = g_pads[0].pressed;
+#ifdef VERSION_PSP
+        if (D_pspeu_092E5F20 > 0) {
+            D_pspeu_092E5F20--;
+            g_Player.padPressed = 0;
+        }
+#endif
+    }
+    g_Player.padTapped =
+        g_Player.padPressed & (g_Player.padHeld ^ g_Player.padPressed);
+    if (PLAYER.step != PL_S_DEAD) {
+        // Reuse the i variable here even though we aren't iterating
+        i = GetTeleportToOtherCastle();
+        if (i != TELEPORT_CHECK_NONE) {
+            MarSetInit(i);
+        }
+        // Marhter must use step #32 for something else, look into it!
+        if (PLAYER.step != PL_S_INIT) {
+            if (g_DebugPlayer && MarDebug()) {
+                return;
+            }
+            if (g_Player.unk56) {
+                // this block is exclusive to Maria
+                g_Status.hp += g_Player.unk58;
+                func_9101FC8();
+                func_pspeu_092BEAB0(g_Player.unk58);
+                if (g_Status.hpMax < g_Status.hp) {
+                    g_Status.hp = g_Status.hpMax;
+                }
+                g_Player.unk56 = 0;
+            }
+            if (!(g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+                  g_Player.timers[PL_T_INVINCIBLE]) &&
+                g_Player.unk60 < 2) {
+                if (g_Player.unk60 == 1) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    MarSetStep(PL_S_BOSS_GRAB);
+                    goto check_input_combo;
+                } else if (PLAYER.hitParams) {
+                    playerStep = PLAYER.step;
+                    playerStepS = PLAYER.step_s;
+                    damage.effects = PLAYER.hitParams & ~0x1F;
+                    damage.damageKind = PLAYER.hitParams & 0x1F;
+#ifdef VERSION_PSP
+                    if (D_8C630C4) {
+                        PLAYER.hitPoints = 0;
+                    }
+#endif
+                    damage.damageTaken = PLAYER.hitPoints;
+                    isDamageTakenDeadly = g_api.CalcPlayerDamageMaria(&damage);
+                    damageKind = damage.damageKind;
+                    damageEffects = damage.effects;
+                    if (isDamageTakenDeadly) {
+                        MarSetStep(PL_S_DEAD);
+                    } else {
+                        MarSetStep(PL_S_HIT);
+                    }
+                } else {
+                    goto check_input_combo;
+                }
+            } else {
+                goto check_input_combo;
+            }
+        }
+    } else {
+    check_input_combo:
+        CheckBladeDashInput();
+        CheckHighJumpInput();
+    }
+    g_Player.prev_step = PLAYER.step;
+    g_Player.prev_step_s = PLAYER.step_s;
+    switch (PLAYER.step) {
+    case PL_S_STAND:
+        MarStepStand();
+        break;
+    case PL_S_WALK:
+        MarStepWalk();
+        break;
+    case PL_S_CROUCH:
+        MarStepCrouch();
+        break;
+    case PL_S_FALL:
+        MarStepFall();
+        break;
+    case PL_S_JUMP:
+        MarStepJump();
+        break;
+    case PL_S_HIGHJUMP:
+        MarStepHighJump();
+        break;
+    case PL_S_HIT:
+        MarStepHit(damageEffects, damageKind, playerStep, playerStepS);
+        break;
+    case PL_S_BOSS_GRAB:
+        MarStepBossGrab();
+        break;
+    case PL_S_DEAD:
+        MarStepDead(damageEffects, damageKind, playerStep, playerStepS);
+        break;
+    case PL_S_SUBWPN_18:
+        func_pspeu_092B0C70();
+        break;
+    case PL_S_SUBWPN_19:
+        func_pspeu_092B0CD0();
+        break;
+    case PL_S_SUBWPN_20:
+        func_pspeu_092B0D20();
+        break;
+    case PL_S_SUBWPN_21:
+        func_pspeu_092B0D70();
+        break;
+    case PL_S_SUBWPN_27:
+        func_pspeu_092B0DC0();
+        break;
+    case PL_S_SUBWPN_28:
+        func_pspeu_092B0E10();
+        break;
+    case PL_S_SLIDE:
+        MarStepSlide();
+        break;
+    case PL_S_RUN:
+        MarStepRun();
+        break;
+    case PL_S_BLADEDASH:
+        MarStepBladeDash();
+        break;
+    case PL_S_INIT:
+        MarStepTeleport();
+        break;
+    }
+    g_Player.unk08 = g_Player.status;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    // uninitialized on PSX, it was a coincidence it worked
+    newStatus = 0;
+#endif
+    switch (PLAYER.step) {
+    case PL_S_STAND:
+        newStatus = NO_AFTERIMAGE;
+        break;
+    case PL_S_WALK:
+        newStatus = NO_AFTERIMAGE;
+        break;
+    case PL_S_CROUCH:
+        newStatus = NO_AFTERIMAGE;
+        if (PLAYER.step_s != 2) {
+            newStatus = NO_AFTERIMAGE | PLAYER_STATUS_CROUCH;
+        }
+        break;
+    case PL_S_FALL:
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
+        break;
+    case PL_S_JUMP:
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK2000;
+        break;
+    case PL_S_HIGHJUMP:
+        break;
+    case PL_S_HIT:
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_UNK10000;
+        MarSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_BOSS_GRAB:
+        newStatus = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
+                    PLAYER_STATUS_UNK40;
+        MarSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_DEAD:
+        newStatus = NO_AFTERIMAGE | PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000;
+        if (PLAYER.step_s == 0x80) {
+            newStatus |= PLAYER_STATUS_UNK80000;
+        }
+        MarSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_SUBWPN_19:
+    case PL_S_SUBWPN_20:
+    case PL_S_SUBWPN_21:
+    case PL_S_SUBWPN_27:
+    case PL_S_SUBWPN_18:
+        newStatus = 0x08000000;
+        MarSetInvincibilityFrames(1, 16);
+        break;
+    case PL_S_SUBWPN_28:
+        break;
+    case PL_S_SLIDE:
+        newStatus = 0x20;
+        break;
+    case PL_S_RUN:
+        newStatus = 0x80000020;
+        break;
+    case PL_S_BLADEDASH:
+        break;
+    case PL_S_INIT:
+        newStatus = NO_AFTERIMAGE;
+        MarSetInvincibilityFrames(1, 16);
+        break;
+    }
+    if (g_Player.timers[PL_T_ATTACK]) {
+        newStatus |= PLAYER_STATUS_UNK400;
+    }
+    if (g_Player.timers[PL_T_10]) {
+        newStatus |= PLAYER_STATUS_UNK800;
+    }
+    if (g_Player.timers[PL_T_12]) {
+        newStatus |= PLAYER_STATUS_UNK1000;
+    }
+    if (*D_80097448 != 0) {
+        newStatus |= PLAYER_STATUS_UNK20000;
+    }
+    newStatus |= PLAYER_STATUS_UNK10000000;
+    g_Player.status = newStatus;
+    if (g_Player.unk08 & PLAYER_STATUS_UNK10000 &&
+        !(g_Player.status & PLAYER_STATUS_UNK10000)) {
+        MarSetInvincibilityFrames(1, 16);
+        g_Player.timers[PL_T_4] = 0x10;
+        PLAYER.palette = 0x8114;
+    }
+    if (newStatus & NO_AFTERIMAGE) {
+        DisableAfterImage(1, 4);
+    }
+    if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
+        g_Player.timers[PL_T_INVINCIBLE]) {
+        g_Player.status |= PLAYER_STATUS_UNK100;
+    }
+    g_api.UpdateAnim(mar_80155964, (AnimationFrame**)mar_8015538C);
+    PLAYER.hitboxState = 1;
+    PLAYER.hitParams = 0;
+    PLAYER.hitPoints = 0;
+    if (PLAYER.anim == mar_801556C4) {
+        PLAYER.palette = mar_80154574[PLAYER.pose];
+    }
+    if (PLAYER.step == PL_S_DEAD) {
+        if (PLAYER.poseTimer < 0) {
+            PLAYER.animCurFrame |= ANIM_FRAME_LOAD;
+        }
+#if defined(VERSION_HD) || defined(VERSION_PSP)
+        PLAYER.posX.val += PLAYER.velocityX;
+        PLAYER.posY.val += PLAYER.velocityY;
+        return;
+#endif
+    }
+    if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
+        return;
+    }
+    func_8015C4AC();
+    if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
+        PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
+        PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
+    }
+    posX = PLAYER.posX.val;
+    posY = PLAYER.posY.val;
+    vramFlag = g_Player.vram_flag;
+    if (abs(PLAYER.velocityY) > FIX(2) || abs(PLAYER.velocityX) > FIX(2)) {
+        PLAYER.velocityX >>= 2;
+        PLAYER.velocityY >>= 2;
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(1);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi >= 0) {
+            CheckStageCollision(0);
+        }
+        if (PLAYER.posY.i.hi < 0) {
+            PLAYER.posY.val = FIX(-1);
+        }
+        PLAYER.velocityX *= 4;
+        PLAYER.velocityY *= 4;
+    } else {
+        CheckStageCollision(1);
+    }
+    g_Player.unk04 = vramFlag;
+    if (*D_80097448 > 0x28 && !g_CurrentEntity->nFramesInvincibility) {
+        PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
+        PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
+    }
+    g_CurrentEntity->nFramesInvincibility = 0;
+    func_8015C6D4();
+
+    // this block is new to maria
+    if (!(D_pspeu_092E5F28 & 0x2000) && (func_8919BA8() & 0x2000) &&
+        func_90E4C58() < 0) {
+        func_90E4C18();
+        temp = g_Status.subWeapon;
+        g_Status.subWeapon = g_Status.D_80097C40;
+        g_Status.D_80097C40 = temp;
+    }
+    D_pspeu_092E5F28 = func_8919BA8();
+}
