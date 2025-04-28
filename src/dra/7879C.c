@@ -1840,6 +1840,24 @@ Entity* CreateEntFactoryFromEntity(
     return entity;
 }
 
+static FactoryBlueprint blueprints[] = {
+#include "blueprints_def.h"
+};
+STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
+
+static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
+    {0x20, 0x3F}, // B_KIND_0
+    {0x11, 0x2F}, // B_KIND_1
+    {0x20, 0x2F}, // B_KIND_2
+    {0x10, 0x10}, // B_KIND_3
+    {0x1C, 0x1F}, // B_KIND_4
+    {0x19, 0x1F}, // B_KIND_5
+    {0x11, 0x1F}, // B_KIND_6
+    {0x11, 0x3F}, // B_KIND_7
+    {0x11, 0x3F}, // B_KIND_8
+    {0x2F, 0x2F}, // B_KIND_9
+};
+
 // This is a complicated function with ongoing research.
 // This function is created with its self->params which defines
 // what blueprint to read in order to create an entity. Then, based on
@@ -1855,7 +1873,7 @@ void EntityFactory(Entity* self) {
     u8* data;
 
     if (self->step == 0) {
-        data = (u8*)&g_FactoryBlueprints[self->params];
+        data = (u8*)&blueprints[self->params];
         self->ext.factory.newEntityId = *data++;
         self->ext.factory.amount = *data++;
         self->ext.factory.nPerCycle = *data & 0x3F;
@@ -1869,31 +1887,31 @@ void EntityFactory(Entity* self) {
 
         self->step++;
         switch (self->ext.factory.origin) {
-        case 0:
-        case 6:
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_6:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
-        case 4:
-        case 5:
+        case B_ORIGIN_4:
+        case B_ORIGIN_5:
             self->flags |= FLAG_UNK_20000;
-        case 2:
-        case 7:
+        case B_ORIGIN_2:
+        case B_ORIGIN_7:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
         }
     } else {
         switch (self->ext.factory.origin) {
-        case 0:
-        case 1:
-        case 3:
-        case 6:
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_1:
+        case B_ORIGIN_3:
+        case B_ORIGIN_6:
             break;
-        case 2:
+        case B_ORIGIN_2:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
-        case 4:
+        case B_ORIGIN_4:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Walk) {
@@ -1901,7 +1919,7 @@ void EntityFactory(Entity* self) {
                 return;
             }
             break;
-        case 5:
+        case B_ORIGIN_5:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step_s != 0x70) {
@@ -1909,7 +1927,7 @@ void EntityFactory(Entity* self) {
                 return;
             }
             break;
-        case 7:
+        case B_ORIGIN_7:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Hit) {
@@ -1929,9 +1947,9 @@ void EntityFactory(Entity* self) {
     n = self->ext.factory.nPerCycle;
     for (i = 0; i < n; i++) {
 
-        // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
-        // instead of doing &D_800AD4B8 followed by +=
-        data = &D_800AD4B8[0];
+        // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
+        // instead of doing &entity_ranges followed by +=
+        data = (u8*)&entity_ranges[0];
         data += self->ext.factory.kind * 2;
 
         startIndex = *data++;

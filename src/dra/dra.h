@@ -316,6 +316,64 @@ enum AluBlueprints {
     BP_120,
     BP_TELEPORT,
     BP_SLEEP_ZZZ,
+    NUM_BLUEPRINTS,
+};
+
+// NOTE: B_MAKE is different between DRA and RIC!
+// Parsing is done in EntityFactory
+// entityId: what entity to spawn based on the Entity Set
+// amount: How many entities to spawn in total
+// nPerCycle: how many entities to spawn at once without waiting for tCycle
+// isNonCritical: 'true' for particles, 'false' for gameplay related entities
+//   false: keep searching for a free entity slot every frame to make the entity
+//   true: when there are no entities available then just forgets about it
+// incParamsKind: the technique used to set the self->params to the new entity
+//   false: it is set from 0 to 'nPerCycle'
+//   true: it is set from 0 to 'amount'
+// timerCycle: wait frames per cycle until 'amount' of entities are made
+// kind: refer to `BlueprintKind` for a list of options
+// origin: position where the entity will spawn from
+// timerDelay: how many frames to wait before starting to make the first entity
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               timerCycle, kind, origin, timerDelay)                           \
+    {(entityId),                                                               \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (timerCycle),                                                             \
+     ((kind) & 15) | (((origin) & 15) << 4),                                   \
+     timerDelay}
+enum BlueprintKind {
+    B_KIND_0,
+    B_KIND_1,
+    B_KIND_2,
+    B_KIND_3,
+    B_KIND_4,
+    B_KIND_5,
+    B_KIND_6,
+    B_KIND_7,
+    B_KIND_8,
+    B_KIND_9,
+    NUM_BLUEPRINT_KIND,
+};
+enum BlueprintOrigin {
+    // Spawned entities have a life-cycle on their own and
+    B_ORIGIN_DEFAULT,
+
+    B_ORIGIN_1,
+    B_ORIGIN_2,
+    B_ORIGIN_3,
+    B_ORIGIN_4,
+    B_ORIGIN_5,
+    B_ORIGIN_6,
+    B_ORIGIN_7,
+    B_ORIGIN_8,
+    B_ORIGIN_9,
+    B_ORIGIN_10,
+    B_ORIGIN_11,
+    B_ORIGIN_12,
+    B_ORIGIN_13,
+    B_ORIGIN_14,
 };
 
 typedef enum {
@@ -556,8 +614,6 @@ extern unionD_800ACFB4 D_800ACFB4[];
 extern s16* D_800CF324[];
 extern unkstr_800cfe48* D_800CFE48[18];
 extern PfnEntityUpdate D_800AD0C4[];
-extern FactoryBlueprint g_FactoryBlueprints[];
-extern u8 D_800AD4B8[];
 extern s16 D_800AD54C[6];
 extern s32 D_800AD558[6];
 extern s16 D_800AD570[6];
