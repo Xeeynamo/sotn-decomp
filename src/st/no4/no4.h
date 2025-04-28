@@ -118,7 +118,7 @@ extern EInit g_EInitFishheadSpawner;
 extern EInit g_EInitFishheadFireball;
 extern EInit g_EInitFishheadPieces;
 extern EInit g_EInitFishheadFireBreath;
-// extern EInit D_us_80180C58;
+extern EInit g_EInitBat;
 extern EInit D_us_80180C64;
 // extern EInit D_us_80180C70;
 // extern EInit D_us_80180C7C;
