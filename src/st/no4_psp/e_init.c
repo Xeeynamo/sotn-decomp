@@ -86,7 +86,7 @@ void EntitySkeletonApe(Entity* self);
 void EntitySkeletonApePunch(Entity* self);
 void EntitySkeletonApeBarrel(Entity* self);
 void EntityThrownBarrel(Entity* self);
-void func_us_801C9460(Entity* self);
+void EntityKillerFishDeathPuff(Entity* self);
 void func_pspeu_09242AD0(Entity* self);
 void func_pspeu_09242D08(Entity* self);
 void func_pspeu_09242FB8(Entity* self);
@@ -184,7 +184,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x56 */ EntitySkeletonApePunch,
     /* 0x57 */ EntitySkeletonApeBarrel,
     /* 0x58 */ EntityThrownBarrel,
-    /* 0x59 */ func_us_801C9460,
+    /* 0x59 */ EntityKillerFishDeathPuff,
     /* 0x5A */ func_pspeu_09242AD0,
     /* 0x5B */ func_pspeu_09242D08,
     /* 0x5C */ func_pspeu_09242FB8,

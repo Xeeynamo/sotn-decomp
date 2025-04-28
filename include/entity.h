@@ -2953,8 +2953,8 @@ typedef struct {
 } ET_Fishhead;
 
 typedef struct {
-    /* 0x7C */ u32 unk7C;
-    /* 0x80 */ u32 unk80;
+    /* 0x7C */ u32 swimTimer;
+    /* 0x80 */ u32 swimCount;
 } ET_KillerFish;
 
 typedef union { // offset=0x7C
