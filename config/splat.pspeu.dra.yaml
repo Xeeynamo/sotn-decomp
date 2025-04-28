@@ -70,7 +70,7 @@ segments:
       - [0x23C18, c, dra/5D5BC] # O0
       - [0x26948, c, dra/4CE2C] # O4
       - [0x274E8, c, dra_psp/274E8]
-      - [0x27FD8, c, dra/692E8]
+      - [0x27F38, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra/70394]
       - [0x353B0, c, dra/704D0] # O0

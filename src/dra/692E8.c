@@ -63,6 +63,25 @@ s32 D_800ACE00[] = {
 
 #endif
 
+#ifdef VERSION_PSP
+extern s32 g_UserLanguage;
+static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
+    switch (g_UserLanguage) {
+    default:
+    case LANG_EN:
+        return en;
+    case LANG_FR:
+        return fr;
+    case LANG_SP:
+        return sp;
+    case LANG_GE:
+        return ge;
+    case LANG_IT:
+        return it;
+    }
+}
+#endif
+
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];
     D_800A37D8[1] = D_800ACE48[arg0 * 2 + 1];
@@ -146,21 +165,21 @@ extern s32 D_80137FB8;
 extern s32 D_80137FBC;
 #endif
 
-extern s32 D_psp_09148C10;
-extern s32 D_psp_091490B0;
-extern s32 D_psp_09149550;
-extern s32 D_psp_091499F0;
+extern s32 D_psp_09148C10[];
+extern s32 D_psp_091490B0[];
+extern s32 D_psp_09149550[];
+extern s32 D_psp_091499F0[];
 
-extern s32 D_psp_0917DCA8;
-extern s32 D_psp_0917ED60;
-extern s32 D_psp_0917FF10;
-extern s32 D_psp_09180EC0;
-extern s32 D_psp_09182028;
+extern s32 D_psp_0917DCA8[];
+extern s32 D_psp_0917ED60[];
+extern s32 D_psp_0917FF10[];
+extern s32 D_psp_09180EC0[];
+extern s32 D_psp_09182028[];
 extern s32 D_psp_09183138;
 extern s32 D_psp_09183150;
-extern s32 D_psp_0918315C;
+extern s32* D_psp_0918315C;
 extern s32 D_psp_09183168;
-extern s32 D_psp_09183174;
+extern s32* D_psp_09183174;
 
 // Duplicate of RIC func_80156F40
 void func_80109594() {
@@ -270,12 +289,11 @@ void func_80109594() {
     }
 #ifdef VERSION_PSP
     func_psp_091040A0(&D_psp_09183138);
-    D_psp_0918315C =
-        func_psp_091048B8(&D_psp_0917DCA8, &D_psp_09180EC0, &D_psp_0917ED60,
-                          &D_psp_09182028, &D_psp_0917FF10);
+    D_psp_0918315C = GetLang(D_psp_0917DCA8, D_psp_09180EC0, D_psp_0917ED60,
+                             D_psp_09182028, D_psp_0917FF10);
     func_psp_091040A0(&D_psp_09183150);
-    D_psp_09183174 = func_psp_091048B8(
-        0, &D_psp_09149550, &D_psp_09148C10, &D_psp_091499F0, &D_psp_091490B0);
+    D_psp_09183174 = GetLang(
+        0, D_psp_09149550, D_psp_09148C10, D_psp_091499F0, D_psp_091490B0);
     if (D_psp_09183174 != 0) {
         func_psp_091040A0(&D_psp_09183168);
     }
