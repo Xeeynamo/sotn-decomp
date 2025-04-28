@@ -155,30 +155,3 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C86F4);
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C89F4);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8CC4);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8E4C);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9130);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9460);
-
-void func_us_801C9538(void) {
-    D_us_801DF788 = 2;
-    D_us_801DF78A = 0;
-    D_us_801DF78E = 0;
-    D_us_801DF78F = 8;
-}
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9568);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", CutsceneUnk3);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9764);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9800);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", ScaleCutsceneAvatar);
-
-INCLUDE_RODATA("st/no4/nonmatchings/first_c_file", D_us_801C0A70);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C9A54);
