@@ -96,6 +96,7 @@ typedef enum EntityIDs {
     /* 0x57 */ E_SKELETON_APE_PUNCH,
     /* 0x58 */ E_SKELETON_APE_BARREL,
     /* 0x59 */ E_THROWN_BARREL,
+    /* 0x5A */ E_ID_5A = 0x5A
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -130,7 +131,7 @@ extern EInit g_EInitBoneArcherArrow;
 extern EInit g_EInitSkeletonApe;
 extern EInit g_EInitSkeletonApeBarrel;
 extern EInit g_EInitSkeletonApePunch;
-// extern EInit D_us_80180CE8;
+extern EInit g_EInitKillerFish;
 
 extern s16 D_us_801DF788;
 extern s16 D_us_801DF78A;
