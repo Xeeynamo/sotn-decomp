@@ -60,9 +60,9 @@
 | lib       | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
 | dra       | func_800FDE00                       |       13 |          1 |        |                                 |       |
 | dra       | func_80105408                       |       13 |          1 |        |                                 |       |
+| dra       | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra       | SetMaxVolume                        |       13 |          1 |        |                                 |       |
 | dra       | UnMuteCd                            |       13 |          1 |        |                                 |       |
-| dra       | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra       | func_800FABEC                       |       13 |          1 |        |                                 |       |
 | maria     | func_80166024                       |       13 |          1 |        |                                 |       |
 | ric       | func_80166024                       |       13 |          1 |        |                                 |       |
@@ -337,8 +337,8 @@
 | dra       | 1DDC0.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra       | func_80102D08                       |       32 |          2 |        |                                 |       |
 | dra       | func_8010E940                       |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
-| dra       | func_psp_09141608                   |       32 |          3 |        |                                 |       |
 | dra       | func_800EB6B4                       |       32 |          3 |        |                                 |       |
+| dra       | func_psp_09141608                   |       32 |          3 |        |                                 |       |
 | dra       | func_psp_090EB850                   |       32 |          3 |        |                                 |       |
 | dra       | func_800F9690                       |       32 |          4 |        |                                 |       |
 | maria     | MarGetPlayerSensor                  |       33 |          1 |        |                                 |       |
@@ -363,8 +363,8 @@
 | maria_psp | MarSetHighJump                      |       34 |          5 |        |                                 |       |
 | dra       | MemcardEraseFile                    |       34 |          6 |        |                                 |       |
 | dra       | func_800E34DC                       |       35 |          2 |        |                                 |       |
-| dra       | InitSoundVars2                      |       35 |          2 |        |                                 |       |
 | dra       | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
+| dra       | InitSoundVars2                      |       35 |          2 |        |                                 |       |
 | dra       | func_80121F14                       |       35 |          3 |        |                                 |       |
 | dra       | func_800FAEC4                       |       35 |          3 |        |                                 |       |
 | dra       | func_psp_090FFAB8                   |       35 |          4 |        |                                 |       |
@@ -596,10 +596,10 @@
 | maria     | MarGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric       | RicGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric       | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
+| dra       | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
+| dra       | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra       | GetLang                             |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
-| dra       | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
-| dra       | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090EAF08                   |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria     | GetLang                             |       51 |         10 |        |                                 |       |
 | ric       | GetLang                             |       51 |         10 |        |                                 |       |
