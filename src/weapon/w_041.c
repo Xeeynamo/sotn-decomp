@@ -165,7 +165,7 @@ void func_123000_8017A914(void) {
 }
 
 // Purpose is not 100% clear, but appears to be something like:
-// Iterate over entities 64-192. Look for any which are positioned
+// Iterate over entities 64-128. Look for any which are positioned
 // in a certain direction from us. That direction is the angleTarget,
 // and the targeted entity must be within tolerance from that target.
 

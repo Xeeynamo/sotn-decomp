@@ -10,6 +10,8 @@ files:
           - [0x0, skip]
           - [0x18688, subweaponsdef, subweapons_def, RicSubweapons, RicBlueprints]
           - [0x188F4, skip]
+          - [0x18A6C, blueprintsdef, blueprints_def, RicBlueprints, RicEntities]
+          - [0x18C42, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
     asset_path: assets/st/cen
     src_path: src/st/cen

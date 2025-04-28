@@ -17,6 +17,8 @@ files:
           - [0x2D1B0, skip]
           - [0x2D320, subweaponsdef, subweapons_def, RicSubweapons, RicBlueprints]
           - [0x2D590, skip]
+          - [0x2D718, blueprintsdef, blueprints_def, RicBlueprints, RicEntities]
+          - [0x2D8F0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/maria.bin
     asset_path: assets/maria
     src_path: src/maria
@@ -35,6 +37,8 @@ files:
           - [0x1EDF0, skip]
           - [0x1EFE0, subweaponsdef, subweapons_def, MarSubweapons, MarBlueprints]
           - [0x1F260, skip]
+          - [0x1F3B0, blueprintsdef, blueprints_def, MarBlueprints, MarEntities]
+          - [0x1F588, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp
