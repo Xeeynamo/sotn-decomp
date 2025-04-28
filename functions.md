@@ -564,7 +564,7 @@
 | st0       | func_801B0280                       |       47 |          6 |        |                                 |       |
 | dra       | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
 | maria     | 80.rodata                           |       48 |          0 | Yes    |                                 |       |
-| no4       | unk_4A0.rodata                      |       48 |          0 | Yes    |                                 |       |
+| no4       | unk_1798.rodata                     |       48 |          0 | Yes    |                                 |       |
 | wrp       | warp.rodata                         |       48 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra       | func_8012F83C                       |       49 |          4 |        |                                 |       |
@@ -684,8 +684,8 @@
 | ric       | func_8015F9F0                       |       61 |          8 |        |                                 |       |
 | dra       | func_8010A3F0                       |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
 | lib       | func_psp_09253D58                   |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
-| no4       | GetLangAt                           |       61 |         10 |        |                                 |       |
 | no4       | func_pspeu_0923D4A0                 |       61 |         10 |        |                                 |       |
+| no4       | GetLangAt                           |       61 |         10 |        |                                 |       |
 | st0       | GetLangAt                           |       61 |         10 |        |                                 |       |
 | dra       | func_8012CC30                       |       61 |         12 |        |                                 |       |
 | dra       | 71830.rodata                        |       62 |          0 | Yes    |                                 |       |
@@ -1084,7 +1084,7 @@
 | maria     | func_8015FB84                       |      121 |         11 |        |                                 |       |
 | ric       | func_8015FB84                       |      121 |         11 |        |                                 |       |
 | dra       | func_80102EB8                       |      121 |         13 |        | https://decomp.me/scratch/PURZu | 0.491 |
-| dra       | LoadPendingGfx                      |      123 |         14 |        | https://decomp.me/scratch/iF3ip | 0.962 |
+| dra       | LoadPendingGfx                      |      123 |         14 |        |                                 |       |
 | ric       | RicEntityCrashReboundStone          |      124 |         11 | Yes    |                                 |       |
 | dra       | func_8012D28C                       |      125 |         22 |        |                                 |       |
 |           | UpdatePrimWhenAlucardIsBat          |      126 |          5 |        |                                 |       |
