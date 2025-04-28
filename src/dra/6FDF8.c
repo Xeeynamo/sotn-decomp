@@ -61,7 +61,7 @@ bool func_8010FDF8(s32 branchFlags) {
                 if (PLAYER.velocityY > FIX(6.875)) {
                     func_8010E470(1, 0);
                     PlaySfxVolPan(SFX_STOMP_HARD_B);
-                    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                    CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
                 } else {
                     if (g_Player.unk44 & 0x10) {
                         func_8010E6AC(1);
@@ -82,13 +82,13 @@ bool func_8010FDF8(s32 branchFlags) {
                     func_8010E470(1, 0);
                 }
                 PlaySfx(SFX_STOMP_HARD_B);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
             } else if (g_Player.unk44 & 0x10) {
                 func_8010E6AC(1);
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
             } else if (abs(PLAYER.velocityX) > FIX(2)) {
                 PlaySfx(SFX_STOMP_HARD_B);
-                CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
                 func_8010E570(PLAYER.velocityX);
             } else {
                 PlaySfx(SFX_STOMP_SOFT_B, SFX_arg, 0);
@@ -99,7 +99,7 @@ bool func_8010FDF8(s32 branchFlags) {
         if (branchFlags & 0x20000 && g_Player.vram_flag & 1) {
             func_8010E470(3, PLAYER.velocityX);
             PlaySfx(SFX_STOMP_HARD_B);
-            CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
             return 1;
         }
     }

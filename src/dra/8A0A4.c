@@ -136,7 +136,7 @@ void EntityStopWatch(Entity* self) {
         prim->priority = PLAYER.zPriority + 3;
         prim->drawMode = DRAW_UNK_200 | DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
 
-        CreateEntFactoryFromEntity(self, FACTORY(75, 0), 0);
+        CreateEntFactoryFromEntity(self, FACTORY(BP_STOPWATCH_ACTIVATE, 0), 0);
         PlaySfx(SFX_UI_ALERT_TINK);
         g_unkGraphicsStruct.D_800973FC = 1;
         self->step++;
@@ -228,7 +228,7 @@ void EntityStopWatch(Entity* self) {
     case 6:
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t > 14) {
-            CreateEntFactoryFromEntity(self, FACTORY(4, 14), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_4, 14), 0);
             self->step++;
         }
         break;
@@ -604,7 +604,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->y0 = prim->y1 = selfY - 12;
         prim->y2 = prim->y3 = selfY + 12;
         prim->priority = self->zPriority;
-        CreateEntFactoryFromEntity(self, FACTORY(79, 0), 0);
+        CreateEntFactoryFromEntity(self, FACTORY(BP_79, 0), 0);
         if (g_GameTimer % 10 == 0) {
             PlaySfx(BIBLE_SUBWPN_SWOOSH);
         }

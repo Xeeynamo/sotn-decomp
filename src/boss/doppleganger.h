@@ -4,7 +4,7 @@
 
 typedef enum {
     /* 0x00 */ E_NONE,
-    /* 0x01 */ E_ENTITYFACTORY,
+    /* 0x01 */ E_FACTORY,
     /* 0x02 */ E_EXPLOSION = 2,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,

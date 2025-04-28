@@ -214,7 +214,7 @@ segments:
       - [0x41A44, .rodata, 7879C] # EntityNumberMovesToHpMeter
       # - [0x41A74, .rodata, 7879C] # EntityGuardText
       # - [0x41AA4, .rodata, 7879C] # UpdatePlayerEntities
-      # - [0x41AB4, .rodata, 7879C] # EntityEntFactory
+      # - [0x41AB4, .rodata, 7879C] # EntityFactory
       # - [0x41AF4, .rodata, 7879C] # EntityPlayerBlinkWhite
       # - [0x41B94, .rodata, 7879C] # EntityMpReplenished
       - [0x41CB4, .rodata, 7E4BC] # func_8011E4BC

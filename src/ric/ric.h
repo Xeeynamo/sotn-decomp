@@ -115,10 +115,10 @@ enum RicEntities {
     E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
     E_801641A0,                      // func_801641A0
     E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
-    E_HOLYWATER_BREAK_GLASS,         // RicEntityHolyWaterBreakGlass
+    E_HOLYWATER_BREAK_GLASS,         // RicEntitySubwpnHolyWaterBreakGlass
     E_SUBWPN_AXE,                    // RicEntitySubwpnThrownAxe
     E_CRASH_AXE,                     // RicEntityCrashAxe
-    E_SUBWPN_DAGGER,                 // RicEntitySubwpnThrownDagger
+    E_SUBWPN_DAGGER,                 // RicEntitySubwpnKnife
     E_80160D2C,                      // func_80160D2C
     E_HIT_BY_ICE,                    // RicEntityHitByIce
     E_HIT_BY_LIGHTNING,              // RicEntityHitByLightning

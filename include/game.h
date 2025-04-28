@@ -509,6 +509,12 @@ enum BlueprintOrigin {
     // A subweapon crash will spawn different particles that should get
     // de-spawned when the attack terminates.
     B_ORIGIN_SUBWEAPON_CRASH_PARTICLE,
+
+    B_ORIGIN_10, // ???
+    B_ORIGIN_11, // ???
+    B_ORIGIN_12, // ???
+    B_ORIGIN_13, // ???
+    B_ORIGIN_14, // ???
 };
 
 #define SAVE_FLAG_NORMAL (0)
@@ -2071,7 +2077,7 @@ typedef enum {
 // 0x00:      player entity
 // 0x01-0x03: player after-image
 // 0x04-0x07: servant entities
-// 0x08-0x0F: ???
+// 0x08-0x0F: factory entities
 // 0x10-0x1E: alucard weapons and richter's whip
 // 0x1F:      ???
 // 0x20-0x2F: subweapon entities

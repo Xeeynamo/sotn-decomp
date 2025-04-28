@@ -10,7 +10,7 @@ typedef enum {
 } DaggerSteps;
 
 // dagger thrown when using subweapon
-void EntitySubwpnThrownDagger(Entity* self) {
+void EntitySubwpnKnife(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 offsetX;
@@ -96,7 +96,7 @@ void EntitySubwpnThrownDagger(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(10, 0), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
                 self->posX.i.hi -= xCol;
                 PlaySfx(SFX_UI_TINK);
                 self->step++;
@@ -509,7 +509,7 @@ typedef enum {
     HOLYWATER_BREAK,
     HOLYWATER_DESTROY
 } HolyWaterSteps;
-void EntityHolyWater(Entity* self) {
+void EntitySubwpnHolyWater(Entity* self) {
     s16 xOffset;
     s32 collisionFlags = 0;
 
@@ -547,8 +547,8 @@ void EntityHolyWater(Entity* self) {
 
         if (collisionFlags & 1) {
             PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
-            // Factory 59 has child 40, EntityHolyWaterBreakGlass
-            CreateEntFactoryFromEntity(self, FACTORY(59, 0), 0);
+            // Factory 59 has child 40, EntitySubwpnHolyWaterBreakGlass
+            CreateEntFactoryFromEntity(self, FACTORY(BP_59, 0), 0);
             self->animSet = ANIMSET_DRA(0);
             self->ext.holywater.timer = 16;
             self->step = HOLYWATER_BREAK;
@@ -558,8 +558,8 @@ void EntityHolyWater(Entity* self) {
     case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
-            CreateEntFactoryFromEntity(
-                self, FACTORY(28, D_8013841C), self->ext.holywater.unkB2 << 9);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_28, D_8013841C),
+                                       self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
         if (--self->ext.holywater.timer == 0) {
@@ -577,14 +577,14 @@ void EntityHolyWater(Entity* self) {
 }
 
 // Glass breaking effect for holy water. Duplicate of RIC
-// RicEntityHolyWaterBreakGlass.
+// RicEntitySubwpnHolyWaterBreakGlass.
 static s16 D_800B0658[4][6] = {
     {2, -2, 0, -4, 0, 0},
     {-3, -3, -1, 1, 2, 0},
     {-4, -3, 2, -2, -2, 2},
     {-1, 0, 0, -4, 3, 3}};
 #define FAKEPRIM ((FakePrim*)prim)
-void EntityHolyWaterBreakGlass(Entity* self) {
+void EntitySubwpnHolyWaterBreakGlass(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;
     s16 posX;
@@ -725,7 +725,7 @@ void EntitySubwpnHolyWaterFlame(Entity* self) {
         func_8011A290(self);
         self->hitboxWidth = 4;
         self->posY.i.hi -= 10;
-        CreateEntFactoryFromEntity(self, FACTORY(4, 7), 0);
+        CreateEntFactoryFromEntity(self, FACTORY(BP_4, 7), 0);
         self->posY.i.hi += 10;
         self->ext.holywater.timer = 0x50;
         self->ext.holywater.unk80 = (rand() & 0xF) + 0x12;
@@ -1008,7 +1008,7 @@ typedef enum {
     HFH_FINAL_PHASE
 } HellfireHandlerSteps;
 
-void EntityHellfireHandler(Entity* self) {
+void EntityHellfire(Entity* self) {
     Primitive* prim;
     s16 selfPosX;
     s16 selfPosY;
@@ -1088,7 +1088,7 @@ void EntityHellfireHandler(Entity* self) {
         PLAYER.palette = 0x810D;
         if (self->ext.hellfireHandler.timer == 0x10) {
             // Red flickering beam. Blueprint 38 has child 29 or func_80127CC8
-            CreateEntFactoryFromEntity(self, FACTORY(38, 0), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_38, 0), 0);
         }
         if (--self->ext.hellfireHandler.timer == 0) {
             self->step++;
@@ -1124,7 +1124,7 @@ void EntityHellfireHandler(Entity* self) {
             }
         }
         if (self->ext.hellfireHandler.timer == 0x50) {
-            CreateEntFactoryFromEntity(self, FACTORY(4, 10), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_4, 10), 0);
         }
         if (self->ext.hellfireHandler.timer < 0x48) {
             self->ext.hellfireHandler.beamwidth -= four;
@@ -1319,7 +1319,7 @@ void EntityHellfireBigFireball(Entity* entity) {
                 entity->velocityX += FIX(0.09375);
             }
             if (!(g_GameTimer & 1) && (rand() & 1)) {
-                CreateEntFactoryFromEntity(entity, FACTORY(36, 1), 0);
+                CreateEntFactoryFromEntity(entity, FACTORY(BP_36, 1), 0);
             }
             entity->posX.val += entity->velocityX;
             entity->posY.val += entity->velocityY;
@@ -1945,7 +1945,7 @@ void EntitySubwpnAgunea(Entity* self) {
         prim->b1 = 0x80;
         SetSpeedX(FIX(6));
         PlaySfx(SFX_WEAPON_SWISH_C);
-        CreateEntFactoryFromEntity(self, FACTORY(44, 0x52), 0);
+        CreateEntFactoryFromEntity(self, FACTORY(BP_BLINK_WHITE, 0x52), 0);
         g_Player.timers[10] = 4;
         self->step++;
         break;
@@ -1999,7 +1999,7 @@ void EntitySubwpnAgunea(Entity* self) {
             if (self->ext.agunea.unk84 == 0) {
                 CreateEntFactoryFromEntity(self, 23, 0);
                 PlaySfx(SFX_THUNDER_B);
-                CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(BP_61, 2), 0);
                 self->ext.agunea.unk84++;
             } else {
                 heartCost = 5;
@@ -2019,7 +2019,7 @@ void EntitySubwpnAgunea(Entity* self) {
                     g_Status.hearts -= heartCost;
                     CreateEntFactoryFromEntity(self, 23, 0);
                     PlaySfx(SFX_THUNDER_B);
-                    CreateEntFactoryFromEntity(self, FACTORY(61, 2), 0);
+                    CreateEntFactoryFromEntity(self, FACTORY(BP_61, 2), 0);
                 } else {
                     self->step = 4;
                 }
@@ -2605,7 +2605,7 @@ void EntitySummonSpirit(Entity* self) {
                 CreateEntFactoryFromEntity(self, 116, 0);
             }
             // Blueprint 44 is child 11. EntityPlayerBlinkWhite
-            CreateEntFactoryFromEntity(self, FACTORY(44, 0x67), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_BLINK_WHITE, 0x67), 0);
             PlaySfx(SFX_UI_MP_FULL);
             self->step++;
         }
