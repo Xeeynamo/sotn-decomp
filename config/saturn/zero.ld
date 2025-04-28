@@ -7,17 +7,17 @@ SECTIONS
     .zero 0x06004080 : AT(zero_ROM_START) SUBALIGN(2)
     {
         zero_TEXT_START = .;
-        zero.o(.text);
-        lib/gfs.o(.text);
-        lib/spr.o(.text);
-        lib/dma.o(.text);
-        lib/scl.o(.text);
-        lib/csh.o(.text);
-        lib/per.o(.text);
-        lib/cdc.o(.text);
-        lib/mth.o(.text);
-        lib/bup.o(.text);
-        lib/sys.o(.text);
+        build/saturn/zero.o(.text);
+        build/saturn/lib/gfs.o(.text);
+        build/saturn/lib/spr.o(.text);
+        build/saturn/lib/dma.o(.text);
+        build/saturn/lib/scl.o(.text);
+        build/saturn/lib/csh.o(.text);
+        build/saturn/lib/per.o(.text);
+        build/saturn/lib/cdc.o(.text);
+        build/saturn/lib/mth.o(.text);
+        build/saturn/lib/bup.o(.text);
+        build/saturn/lib/sys.o(.text);
         zero_TEXT_END = .;
         zero_TEXT_SIZE = ABSOLUTE(zero_TEXT_END - zero_TEXT_START);
     }
