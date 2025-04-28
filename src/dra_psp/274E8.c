@@ -224,7 +224,7 @@ static s32 DecompressData(u8* dst, u8* src) {
         case 11:
         case 12:
         case 13:
-        case 14: {
+        case 14:
             ch = buf[op - 7];
             switch (ch & 0xF0) {
             case 0x20:
@@ -232,6 +232,7 @@ static s32 DecompressData(u8* dst, u8* src) {
             case 0x10:
                 DecompressWriteNibble(ch & 0xF);
                 break;
+
             case 0x60:
                 count = (ch & 0xF) + 3;
                 for (i = 0; i < count; i++) {
@@ -240,7 +241,7 @@ static s32 DecompressData(u8* dst, u8* src) {
                 break;
             }
             break;
-        }
+
         case 15:
             if (dst + 0x2000 < g_DecDstPtr) {
                 return g_DecDstPtr - dst + 0x2000;
@@ -251,6 +252,12 @@ static s32 DecompressData(u8* dst, u8* src) {
 }
 
 void LoadPendingGfx(void) {
+    // Called every frame, it continuously checks if there is any new graphics
+    // to transfer from RAM to Video RAM. Compressed graphics are loaded as
+    // 128x128 images into a 256x256 tpage (hence the `j < 4`). Each pending
+    // GFX load contains a descriptor to instruct this function in which area
+    // of the Video RAM the texture will be transferred to.
+
     char buf[0x100];
     GfxEntry* gfxEntry;
     GfxLoad* gfxLoad;
@@ -264,15 +271,13 @@ void LoadPendingGfx(void) {
 
     for (j = 0, i = 0, gfxLoad = g_GfxLoad; i < 0x10; i++) {
         switch (gfxLoad->kind) {
-        case 0:
+        case GFX_BANK_NONE:
             break;
 
-        case 1:
-        case 2:
-        case 3:
+        case GFX_BANK_4BPP:
+        case GFX_BANK_8BPP:
+        case GFX_BANK_16BPP:
             gfxEntry = gfxLoad->next;
-            xy = (u32)gfxEntry->xy;
-            wh = (u32)gfxEntry->wh;
             while ((u32)gfxEntry->xy != -1) {
                 xy = (u32)gfxEntry->xy;
                 wh = (u32)gfxEntry->wh;
@@ -281,10 +286,10 @@ void LoadPendingGfx(void) {
                           (u16)xy, wh >> 0x10, (u16)wh);
                 gfxEntry++;
             }
-            gfxLoad->kind = 0;
+            gfxLoad->kind = GFX_BANK_NONE;
             break;
 
-        case 4:
+        case GFX_BANK_COMPRESSED:
             gfxEntry = gfxLoad->next;
             for (; j < 4; j++) {
                 dst = g_Pix[j];
@@ -301,7 +306,7 @@ void LoadPendingGfx(void) {
                 gfxEntry++;
                 gfxLoad->next = gfxEntry;
                 if ((u32)gfxEntry->xy == -1) {
-                    gfxLoad->kind = 0;
+                    gfxLoad->kind = GFX_BANK_NONE;
                     break;
                 }
             }

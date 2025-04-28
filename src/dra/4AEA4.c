@@ -67,7 +67,7 @@ void LoadGfxAsync(s32 gfxId) {
     }
 }
 
-void DecompressWriteNibble(u8 ch) {
+static void DecompressWriteNibble(u8 ch) {
     if (!g_DecWriteNibbleFlag) {
         g_DecWriteNibbleFlag = true;
         *g_DecDstPtr = ch;
@@ -78,7 +78,7 @@ void DecompressWriteNibble(u8 ch) {
     }
 }
 
-u8 DecompressReadNibble(void) {
+static u8 DecompressReadNibble(void) {
     u8 ret;
 
     if (!g_DecReadNibbleFlag) {
@@ -92,18 +92,18 @@ u8 DecompressReadNibble(void) {
     return ret;
 }
 
-s32 DecompressData(u8* dst, u8* src) {
+static s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
     s32 ch;
     s32 count;
     s32 i;
     s32 var_v1;
-    u32* var_a0;
+    u32* ptr;
     u32 op;
 
-    var_a0 = buf;
+    ptr = buf;
     for (var_v1 = 0; var_v1 < LEN(buf); var_v1++) {
-        *var_a0++ = *src++;
+        *ptr++ = *src++;
     }
 
     g_DecReadNibbleFlag = false;
@@ -238,6 +238,7 @@ void LoadPendingGfx(void) {
             }
             gfxLoad->kind = GFX_BANK_NONE;
             break;
+
         case GFX_BANK_COMPRESSED:
             gfxEntry = gfxLoad->next;
             for (; j < 4; j++) {
