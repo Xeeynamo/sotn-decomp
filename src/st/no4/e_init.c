@@ -81,12 +81,12 @@ void func_us_801C89F4(Entity* self);
 void func_us_801C8CC4(Entity* self);
 void func_us_801C4D2C(Entity* self);
 void func_us_801C5020(Entity* self);
-void func_us_801C9130(Entity* self);
+void EntityKillerFish(Entity* self);
 void EntitySkeletonApe(Entity* self);
 void EntitySkeletonApePunch(Entity* self);
 void EntitySkeletonApeBarrel(Entity* self);
 void EntityThrownBarrel(Entity* self);
-void func_us_801C9460(Entity* self);
+void EntityKillerFishDeathPuff(Entity* self);
 void func_us_801C5268(Entity* self);
 void func_us_801C542C(Entity* self);
 void func_us_801C5628(Entity* self);
@@ -179,12 +179,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x51 */ func_us_801C8CC4,
     /* 0x52 */ func_us_801C4D2C,
     /* 0x53 */ func_us_801C5020,
-    /* 0x54 */ func_us_801C9130,
+    /* 0x54 */ EntityKillerFish,
     /* 0x55 */ EntitySkeletonApe,
     /* 0x56 */ EntitySkeletonApePunch,
     /* 0x57 */ EntitySkeletonApeBarrel,
     /* 0x58 */ EntityThrownBarrel,
-    /* 0x59 */ func_us_801C9460,
+    /* 0x59 */ EntityKillerFishDeathPuff,
     /* 0x5A */ func_us_801C5268,
     /* 0x5B */ func_us_801C542C,
     /* 0x5C */ func_us_801C5628,
@@ -222,4 +222,4 @@ EInit D_us_80180CB8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x000, 0x005};
 EInit g_EInitSkeletonApe = {ANIMSET_OVL(0x0A), 0x01, 0x4C, 0x21D, 0x053};
 EInit g_EInitSkeletonApeBarrel = {ANIMSET_OVL(0x0A), 0x28, 0x4C, 0x21D, 0x054};
 EInit g_EInitSkeletonApePunch = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x181};
-EInit D_us_80180CE8 = {ANIMSET_OVL(0x09), 0x01, 0x50, 0x21B, 0x15E};
+EInit g_EInitKillerFish = {ANIMSET_OVL(0x09), 0x01, 0x50, 0x21B, 0x15E};

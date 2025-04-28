@@ -2952,6 +2952,11 @@ typedef struct {
     /* 0x9C */ struct Entity* fishheadEntity;
 } ET_Fishhead;
 
+typedef struct {
+    /* 0x7C */ u32 swimTimer;
+    /* 0x80 */ u32 swimCount;
+} ET_KillerFish;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3207,6 +3212,7 @@ typedef union { // offset=0x7C
     ET_DopplegangerBGLight dopBGLight;
     ET_FrogToad frogToad;
     ET_Fishhead fishhead;
+    ET_KillerFish killerFish;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
