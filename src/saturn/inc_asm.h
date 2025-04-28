@@ -27,6 +27,5 @@ __asm__(".include \"src/saturn/macro.inc\"\n");
     __asm__(".text\n"                                                          \
             "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
-// __asm__(".include \"src/saturn/macro.inc\"\n");
 
 #endif

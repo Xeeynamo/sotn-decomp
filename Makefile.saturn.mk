@@ -38,7 +38,8 @@ check_saturn:
 	sha1sum --check config/check.saturn.sha
 
 .PHONY: build_saturn
-build_saturn: $(BUILD_DIR)/0.BIN $(SATURN_BUILD_PRGS)
+build_saturn:
+	python3 ./tools/saturn/build.py && ninja
 
 .PHONY: extract_saturn
 extract_saturn: $(SATURN_SPLITTER_APP)

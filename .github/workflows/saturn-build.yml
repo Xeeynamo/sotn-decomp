@@ -59,7 +59,7 @@ jobs:
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Build saturn binaries
-        run: python3 ./tools/saturn/build.py && ninja -j1
+        run: VERSION=saturn make build
       - name: Check saturn
         run: VERSION=saturn make check
 
