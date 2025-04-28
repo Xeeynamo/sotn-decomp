@@ -121,7 +121,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		return fmt.Errorf("fetch enum %s: %w", enumName, err)
 	}
 
-	// the entry order, amount and continuity is not guaranteed, we need to re-map it into a contiguous array
+	// the entry order, amount and continuity is not guaranteed; we need to re-map it into a contiguous array
 	var entryMap map[string]subweaponModel
 	if err := yaml.Unmarshal(data, &entryMap); err != nil {
 		return fmt.Errorf("failed to parse %s: %w", inFileName, err)

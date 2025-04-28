@@ -438,36 +438,77 @@ typedef enum {
 // incParamsKind: the technique used to set the self->params to the new entity
 //   false: it is set from 0 to 'nPerCycle'
 //   true: it is set from 0 to 'amount'
-// tCycle: wait 'tCycle' frames per cycle until 'amount' of entities are made
+// timerCycle: wait frames per cycle until 'amount' of entities are made
 // kind: refer to `BlueprintKind` for a list of options
-// f: ???
-// tDelay: how many frames to wait before starting to make the first entity
+// origin: position where the entity will spawn from
+// timerDelay: how many frames to wait before starting to make the first entity
 #define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
-               tCycle, kind, origin, tDelay)                                   \
-    {entityId,                                                                 \
+               timerCycle, kind, origin, timerDelay)                           \
+    {(entityId),                                                               \
      (amount),                                                                 \
      ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
          ((!!(isNonCritical)) << 7),                                           \
-     (tCycle),                                                                 \
-     ((kind) & 15) | ((origin) << 4),                                          \
-     tDelay}
+     (timerCycle),                                                             \
+     ((kind) & 7) | (((origin) & 31) << 3),                                    \
+     timerDelay}
 enum BlueprintKind {
-    B_DECOR,      // cannot collide with any other entity, used for decoration
-    B_WPN,        // can collide to stage items, like candles or enemies
-    B_WPN_UNIQUE, // same as above, but new entity replaces the prev. one
-    B_KIND_3,
-    B_KIND_4,
-    B_KIND_5,
-    B_KIND_6,
-    B_KIND_7,
-    B_KIND_8,
-    B_KIND_9,
-    B_KIND_10,
-    B_KIND_11,
-    B_KIND_12,
-    B_KIND_13,
-    B_KIND_14,
-    B_KIND_15,
+    // cannot collide with any other entity, used for decoration
+    B_DECORATION,
+
+    // can collide to stage items, like candles or enemies
+    B_WEAPON,
+
+    // same as above, but new entity replaces the previous one
+    B_WEAPON_UNIQUE,
+
+    // graphics and particle effects
+    B_EFFECTS,
+
+    // Exclusive to the whip entity controller, entity slot 31
+    B_WHIP,
+
+    // Exclusive to young Maria during the prologue, entity slot 48
+    B_CUTSCENE_MARIA,
+
+    // Used by subweapon crashes that use a lot of particiles that deal damage
+    B_WEAPON_CHILDREN,
+
+    NUM_BLUEPRINT_KIND,
+};
+enum BlueprintOrigin {
+    // Spawned entities have a life-cycle on their own and
+    B_ORIGIN_DEFAULT,
+
+    // Entity moves with the camera, remaining static on the screen.
+    B_ORIGIN_FOLLOW_CAMERA,
+
+    // Entity remains attached to the player.
+    B_ORIGIN_FOLLOW_PLAYER,
+
+    // The player moves when getting hit with a velocity that corresponds to the
+    // severity of the attack received, and we want tjhe effect to follow the
+    // player when moving during that phase.
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT,
+
+    // Entity remains attached to the player, but only with step==PL_S_RUN
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING,
+
+    B_ORIGIN_5, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
+    B_ORIGIN_6, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
+
+    // Useful when the player is about to use a subweapon: once the command is
+    // issued, there is a fraction of delay until the subweapon is spawned to
+    // allow the attack to be synchronized with the animaiton. If the player is
+    // hit during that fraction, the spawning of the subweapon is effectively
+    // canceled.
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT,
+
+    // Spawned entites remain attached to their parent.
+    B_ORIGIN_FOLLOW_PARENT_ENTITY,
+
+    // A subweapon crash will spawn different particles that should get
+    // de-spawned when the attack terminates.
+    B_ORIGIN_SUBWEAPON_CRASH_PARTICLE,
 };
 
 #define SAVE_FLAG_NORMAL (0)
@@ -2026,6 +2067,17 @@ typedef enum {
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
+
+// 0x00:      player entity
+// 0x01-0x03: player after-image
+// 0x04-0x07: servant entities
+// 0x08-0x0F: ???
+// 0x10-0x1E: alucard weapons and richter's whip
+// 0x1F:      ???
+// 0x20-0x2F: subweapon entities
+// 0x30-0x3F: mostly used for decoration and graphics effects
+// 0x40-0x7F: stage entities, other entities can interact with
+// 0x80-0xFF: stage entities, only player can interact with
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
 extern s32 g_entityDestroyed[18];
