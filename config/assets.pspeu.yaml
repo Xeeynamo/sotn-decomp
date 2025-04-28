@@ -37,6 +37,8 @@ files:
           - [0x1EDF0, skip]
           - [0x1EFE0, subweaponsdef, subweapons_def, MarSubweapons, MarBlueprints]
           - [0x1F260, skip]
+          - [0x1F3B0, blueprintsdef, blueprints_def, MarBlueprints, MarEntities]
+          - [0x1F588, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp
