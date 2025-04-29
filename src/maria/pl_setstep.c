@@ -61,7 +61,17 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2040);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B20B8);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetHighJump);
+void MarSetHighJump(void) {
+    MarSetStep(PL_S_HIGHJUMP);
+    PLAYER.velocityX = 0;
+    PLAYER.velocityY = FIX(-5.0);
+    g_Player.high_jump_timer = 0;
+    MarSetAnimation(mar_anim_high_jump);
+    func_8015CC28();
+    if (g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
 static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     Entity* entity;
@@ -115,4 +125,14 @@ void MarSetSlide(void) {
     g_Player.timers[PL_T_12] = 4;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetBladeDash);
+void MarSetBladeDash(void) {
+    MarSetStep(PL_S_BLADEDASH);
+    MarSetAnimation(mar_anim_blade_dash);
+    g_CurrentEntity->velocityY = 0;
+    MarSetSpeedX(FIX(5.5));
+    g_Player.unk46 = 5;
+    g_Player.timers[PL_T_12] = 4;
+    MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
+    func_8015CC28();
+    g_api.PlaySfx(SFX_VO_MAR_ATTACK_C);
+}

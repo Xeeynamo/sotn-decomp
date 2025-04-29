@@ -160,7 +160,7 @@ enum MarBlueprints {
     _BP_MARIA_POWERS_APPLIED,
     _BP_SLIDE,
     BP_25,
-    _BP_BLADE_DASH,
+    BP_BLADE_DASH,
     _BP_BLUE_CIRCLE,
     _BP_BLUE_SPHERE,
     _BP_MARIA,
@@ -382,6 +382,7 @@ extern AnimationFrame mar_anim_crouch_from_stand[];
 extern AnimationFrame mar_80155534[];
 extern AnimationFrame mar_80155544[];
 extern AnimationFrame mar_anim_run[];
+extern AnimationFrame mar_anim_high_jump[];
 extern AnimationFrame mar_anim_stun[];
 extern AnimationFrame mar_801556C4[];
 extern AnimationFrame mar_80155750[];
@@ -389,6 +390,7 @@ extern AnimationFrame mar_8015591C[];
 extern AnimationFrame mar_80155950[];
 extern AnimationFrame D_pspeu_092C0630[];
 extern AnimationFrame D_pspeu_092C04B8[];
+extern AnimationFrame mar_anim_blade_dash[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(
