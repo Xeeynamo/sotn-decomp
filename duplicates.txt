@@ -2249,17 +2249,17 @@
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_003/matchings/demon/CreateEventEntity.s 
 | 1.00 | true     | CreateEventEntity                   | asm/us/servant/tt_004/matchings/servant_common/CreateEventEntity.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
@@ -2669,7 +2669,7 @@
 | 1.00 | true     | func_801B1DA8                       | asm/us/st/sel/matchings/2C048/func_801B1DA8.s 
 | 1.00 | true     | InitClutIndices                     | asm/us/st/st0/matchings/prologue_scroll/InitClutIndices.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_8011B5A4                       | asm/us/dra/matchings/7879C/func_8011B5A4.s 
+| 1.00 | true     | EntitySmokePuff                     | asm/us/dra/matchings/7879C/EntitySmokePuff.s 
 | 0.97 | false    | func_us_801CA834                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CA834.s 
 | 0.97 | false    | func_8011B5A4                       | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_8011B5A4.s 
 -------------------------------------------------------------------------------
@@ -3012,8 +3012,8 @@
 | 1.00 | true     | EntityAguneaHitEnemy                | asm/us/dra/matchings/84B88/EntityAguneaHitEnemy.s 
 | 0.99 | true     | RicEntityAguneaHitEnemy             | asm/us/ric/matchings/2F8E8/RicEntityAguneaHitEnemy.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityHolyWaterBreakGlass           | asm/us/dra/matchings/84B88/EntityHolyWaterBreakGlass.s 
-| 0.98 | true     | RicEntityHolyWaterBreakGlass        | asm/us/ric/matchings/pl_subweapon_holywater/RicEntityHolyWaterBreakGlass.s 
+| 1.00 | true     | EntitySubwpnHolyWaterBreakGlass     | asm/us/dra/matchings/84B88/EntitySubwpnHolyWaterBreakGlass.s 
+| 0.98 | true     | RicEntitySubwpnHolyWaterBreakGlass  | asm/us/ric/matchings/pl_subweapon_holywater/RicEntitySubwpnHolyWaterBreakGlass.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySubwpnThrownAxe               | asm/us/dra/matchings/84B88/EntitySubwpnThrownAxe.s 
 | 0.93 | true     | RicEntitySubwpnThrownAxe            | asm/us/ric/matchings/pl_subweapons/RicEntitySubwpnThrownAxe.s 
@@ -3056,6 +3056,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/2C048/func_801B1EF4.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/2C048/func_801B2108.s 
@@ -3143,9 +3146,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
