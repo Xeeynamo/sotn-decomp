@@ -35,6 +35,7 @@ MarSetStand = 0x092B1CE8;
 MarSetWalk = 0x092B1D98;
 MarSetFall = 0x092B1E18;
 MarSetJump = 0x092B1F30;
+MarSetRun = 0x092B20B8;
 MarSetHighJump = 0x092B2170;
 MarCheckSubwpnChainLimit = 0x092B21E0;
 MarSetSlide = 0x092B2C68;

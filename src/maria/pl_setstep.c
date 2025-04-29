@@ -105,9 +105,36 @@ void MarSetJump(s32 setunk44Flag) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2040);
+void func_pspeu_092B2040(void) {
+    g_Player.unk44 |= 0x21;
+    MarSetAnimation(D_pspeu_092C05A0);
+    MarSetStep(PL_S_JUMP);
+    PLAYER.step_s = 0;
+    PLAYER.velocityY = FIX(-4.25);
+    if (g_Player.unk72) {
+        PLAYER.velocityY = 0;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B20B8);
+void MarSetRun(s32 arg0) {
+    AnimationFrame* anim;
+
+    g_Player.unk44 = 1;
+    MarSetStep(PL_S_RUN);
+    if (arg0) {
+        anim = D_pspeu_092C0668;
+    } else {
+        anim = D_pspeu_092C06A0;
+    }
+    MarSetAnimation(anim);
+    g_CurrentEntity->velocityY = 0;
+    if (arg0) {
+        MarSetSpeedX(FIX(-8));
+    } else {
+        MarSetSpeedX(FIX(8));
+    }
+    g_api.PlaySfx(SFX_WEAPON_SCRAPE_ECHO);
+}
 
 void MarSetHighJump(void) {
     MarSetStep(PL_S_HIGHJUMP);
