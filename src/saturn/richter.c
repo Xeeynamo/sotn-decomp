@@ -587,8 +587,21 @@ void func_060BBAC8(void) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBAF4, func_060BBAF4);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBC00, func_060BBC00);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBCCC, func_060BBCCC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBD88, func_060BBD88);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBDB4, func_060BBDB4);
+
+void func_060BBD88(void) {
+    int* iVar2;
+    d_06086390 = 4;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
+void func_060BBDB4(void) {
+    int* iVar2;
+    d_06086390 = 5;
+    iVar2 = func_060784A8();
+    iVar2[0x4500] = 0xffffffff;
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBDE0, func_060BBDE0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBF08, func_060BBF08);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BC048, func_060BC048);
