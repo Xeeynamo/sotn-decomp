@@ -2,6 +2,15 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+extern s32 g_UserLanguage;
+
+extern GfxBank* D_psp_0918BBD0[];
+extern GfxBank* D_psp_0918BBE8[];
+extern GfxBank* D_psp_0918BC00[];
+extern GfxBank* D_psp_0918BC18[];
+extern GfxBank* D_psp_0918BC30[];
+extern u16 D_psp_091654C0[];
+
 // BSS
 extern u16 D_80137478[ICON_SLOT_NUM];
 extern u16 D_801374B8[ICON_SLOT_NUM];
@@ -12,9 +21,29 @@ extern u8* g_DecDstPtr;
 extern bool g_DecReadNibbleFlag;
 extern bool g_DecWriteNibbleFlag;
 
+#ifdef VERSION_PSP
+#pragma optimization_level 0
+static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
+    switch (g_UserLanguage) {
+    default:
+    case LANG_EN:
+        return en;
+    case LANG_FR:
+        return fr;
+    case LANG_SP:
+        return sp;
+    case LANG_GE:
+        return ge;
+    case LANG_IT:
+        return it;
+    }
+}
+#pragma optimization_level 4
+#endif
+
 void func_800EAEA4(void) {
-    u16* ptr;
     s32 i;
+    u16* ptr;
 
     for (i = 0, ptr = D_801374F8; i < ICON_SLOT_NUM; i++) {
         *ptr++ = -1;
@@ -26,8 +55,8 @@ void func_800EAEA4(void) {
 }
 
 void ResetPendingGfxLoad(void) {
-    GfxLoad* ptr;
     s32 i;
+    GfxLoad* ptr;
 
     for (i = 0, ptr = g_GfxLoad; i < LEN(g_GfxLoad); i++, ptr++) {
         ptr->kind = GFX_BANK_NONE;
@@ -47,6 +76,11 @@ void LoadGfxAsync(s32 gfxId) {
     if (gfxId & ANIMSET_OVL_FLAG) {
         gfxBank = g_api.o.gfxBanks[gfxId & 0x7FFF];
     } else {
+#ifdef VERSION_PSP
+        GfxBank** g_GfxSharedBank =
+            GetLang(D_psp_0918BBD0, D_psp_0918BC30, D_psp_0918BBE8,
+                    D_psp_0918BC18, D_psp_0918BC00);
+#endif
         gfxBank = g_GfxSharedBank[gfxId];
     }
     if (gfxBank->kind == GFX_BANK_NONE) {
@@ -66,6 +100,32 @@ void LoadGfxAsync(s32 gfxId) {
         }
     }
 }
+
+#ifdef VERSION_PSP
+s32 func_psp_091040A0(GfxBank* gfxBank) {
+    GfxLoad* ptr;
+    s32 i;
+
+    if (gfxBank->kind == GFX_BANK_NONE) {
+        return -1;
+    }
+    if (gfxBank->kind == -1) {
+        return -1;
+    }
+    for (i = 0; i < LEN(g_GfxLoad); i++) {
+        ptr = &g_GfxLoad[i];
+        if (ptr->kind == GFX_BANK_NONE) {
+            ptr->kind = gfxBank->kind;
+            ptr->unk6 = 0;
+            ptr->unk8 = 0;
+            ptr->next = gfxBank->entries;
+            return i;
+        }
+        ptr++;
+    }
+    return -1;
+}
+#endif
 
 static void DecompressWriteNibble(u8 ch) {
     if (!g_DecWriteNibbleFlag) {
@@ -94,15 +154,14 @@ static u8 DecompressReadNibble(void) {
 
 static s32 DecompressData(u8* dst, u8* src) {
     u32 buf[8];
-    s32 ch;
+    s32 ch, ch2;
     s32 count;
-    s32 i;
-    s32 var_v1;
+    s32 i, j;
     u32* ptr;
     u32 op;
 
     ptr = buf;
-    for (var_v1 = 0; var_v1 < LEN(buf); var_v1++) {
+    for (j = 0; j < LEN(buf); j++) {
         *ptr++ = *src++;
     }
 
@@ -116,8 +175,12 @@ static s32 DecompressData(u8* dst, u8* src) {
         switch (op) {
         case 0:
             ch = DecompressReadNibble();
-            op = DecompressReadNibble();
-            count = (ch << 4) + op + 0x13;
+            ch2 = DecompressReadNibble();
+#ifdef VERSION_PSP
+            count = ch2 + (ch << 4) + 0x13;
+#else
+            count = (ch << 4) + ch2 + 0x13;
+#endif
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
@@ -152,8 +215,8 @@ static s32 DecompressData(u8* dst, u8* src) {
 
         case 5:
             ch = DecompressReadNibble();
-            var_v1 = DecompressReadNibble();
-            count = var_v1 + 3;
+            ch2 = DecompressReadNibble();
+            count = ch2 + 3;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(ch);
             }
@@ -209,32 +272,32 @@ void LoadPendingGfx(void) {
     // of the Video RAM the texture will be transferred to.
 
     char buf[0x100];
-    s32 i;
-    s32 j;
+    GfxEntry* gfxEntry;
+    GfxLoad* gfxLoad;
+    s32 over;
+    s32 i, j;
     u32 xy;
     u32 wh;
-    u8* cmp;
     u8* src;
     u8* dst;
-    s32 over;
-    GfxLoad* gfxLoad;
-    GfxEntry* gfxEntry;
+    u8* cmp;
 
-    j = 0;
-    gfxLoad = g_GfxLoad;
-    for (i = 0; i < LEN(g_GfxLoad); i++, gfxLoad++) {
+    for (j = 0, i = 0, gfxLoad = g_GfxLoad; i < LEN(g_GfxLoad); i++) {
         switch (gfxLoad->kind) {
         case GFX_BANK_NONE:
             break;
+
         case GFX_BANK_4BPP:
         case GFX_BANK_8BPP:
         case GFX_BANK_16BPP:
-            for (gfxEntry = gfxLoad->next; gfxEntry->xy != -1; gfxEntry++) {
+            gfxEntry = gfxLoad->next;
+            while ((u32)gfxEntry->xy != -1) {
                 xy = (u32)gfxEntry->xy;
                 wh = (u32)gfxEntry->wh;
                 src = (u8*)gfxEntry->data;
-                LoadTPage(src, gfxLoad->kind - 1, 0, xy >> 0x10, (u16)xy,
-                          wh >> 0x10, (u16)wh);
+                LoadTPage((u_long*)src, gfxLoad->kind - 1, 0, xy >> 0x10,
+                          (u16)xy, wh >> 0x10, (u16)wh);
+                gfxEntry++;
             }
             gfxLoad->kind = GFX_BANK_NONE;
             break;
@@ -251,15 +314,17 @@ void LoadPendingGfx(void) {
                     sprintf(buf, "over:%08x(%04x)", cmp, over);
                     DebugInputWait(buf);
                 }
-                LoadTPage(dst, 0, 0, xy >> 0x10, (u16)xy, wh >> 0x10, (u16)wh);
+                LoadTPage((u_long*)dst, 0, 0, xy >> 0x10, (u16)xy, wh >> 0x10,
+                          (u16)wh);
                 gfxLoad->next = ++gfxEntry;
-                if (gfxEntry->xy == -1) {
+                if ((u32)gfxEntry->xy == -1) {
                     gfxLoad->kind = GFX_BANK_NONE;
                     break;
                 }
             }
             break;
         }
+        gfxLoad++;
     }
 }
 
@@ -269,6 +334,8 @@ void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
 
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     s32 i;
+    u16* ptr;
+    s32 x, y;
 
     if (D_801374F8[index] != equipIcon) {
         LoadTPage((u_long*)g_GfxEquipIcon[equipIcon], 0, 0,
@@ -281,9 +348,19 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
             g_Clut[index * 0x10 + i + 0x1D00] =
                 g_PalEquipIcon[palette * 0x10 + i];
         }
-
+#ifdef VERSION_PSP
+        x = index & 0xF;
+        y = index / 16;
+        if (palette < 0x100) {
+            ptr = &g_PalEquipIcon[palette * 0x10];
+        } else {
+            ptr = &D_psp_091654C0[(palette - 0x100) * 0x10];
+        }
+        func_891CCBC(ptr, x * 0x10, y + 0xFD);
+#else
         LoadClut(&g_Clut[0x1D00], 0, 0xFD);
         LoadClut(&g_Clut[0x1E00], 0, 0xFE);
+#endif
     }
     if (D_800973EC == 0) {
         D_80137478[index] = equipIcon;

@@ -270,9 +270,9 @@ void EntityRelicOrb(Entity* self) {
         }
 
         if (g_UserLanguage != LANG_GE) {
-            psp_sprintf(&sp34, "%s %s", obtainedStr, msg);
+            sprintf(&sp34, "%s %s", obtainedStr, msg);
         } else {
-            psp_sprintf(&sp34, "%s %s", msg, obtainedStr);
+            sprintf(&sp34, "%s %s", msg, obtainedStr);
         }
         // Presumably this is a strlen call?
         msgLen = func_890CAE0(sp34);
