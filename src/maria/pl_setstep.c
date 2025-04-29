@@ -51,7 +51,17 @@ void MarSetStand(s32 velocityX) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1D98);
+void MarSetWalk(s32 arg0) {
+    g_Player.unk44 = 0;
+    MarSetStep(PL_S_WALK);
+    if (g_Player.unk4C) {
+        MarSetAnimation(D_pspeu_092C04A8);
+    } else {
+        MarSetAnimation(D_pspeu_092C0498);
+    }
+    MarSetSpeedX(FIX(2.25));
+    PLAYER.velocityY = 0;
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1E18);
 
