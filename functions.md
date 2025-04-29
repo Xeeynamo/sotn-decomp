@@ -360,7 +360,7 @@
 | no4       | GetDistanceToPlayerX                |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | dra       | HasEnoughMp                         |       34 |          4 |        | https://decomp.me/scratch/ZUbXu | 0.68  |
 | dra       | func_800FAB1C                       |       34 |          4 |        |                                 |       |
-| maria_psp | MarSetHighJump                      |       34 |          5 |        |                                 |       |
+| maria     | MarSetHighJump                      |       34 |          5 |        |                                 |       |
 | dra       | MemcardEraseFile                    |       34 |          6 |        |                                 |       |
 | dra       | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
 | dra       | func_800E34DC                       |       35 |          2 |        |                                 |       |
@@ -380,7 +380,7 @@
 | no4       | func_pspeu_0923D428                 |       36 |          3 |        |                                 |       |
 | dra       | LoadRoomLayer                       |       36 |          4 |        |                                 |       |
 | dra       | func_80113E68                       |       36 |          4 |        |                                 |       |
-| maria_psp | func_pspeu_092B2040                 |       36 |          4 |        |                                 |       |
+| maria     | func_pspeu_092B2040                 |       36 |          4 |        |                                 |       |
 | chi       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | lib       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | no4       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
@@ -436,13 +436,13 @@
 | wrp       | CreateEntityFromEntity              |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | dra       | GetSavePalette                      |       39 |          3 |        |                                 |       |
 | maria     | MarSetInit                          |       39 |          3 |        |                                 |       |
-| ric       | func_8015CC70                       |       39 |          3 |        |                                 |       |
+| ric       | RicSetInit                          |       39 |          3 |        |                                 |       |
 | lib       | CutsceneUnk3                        |       39 |          3 |        |                                 |       |
 | no4       | func_pspeu_0925A0F0                 |       39 |          3 |        |                                 |       |
 | no4       | func_pspeu_0923BAB0                 |       39 |          4 |        |                                 |       |
 | dra       | LoadMonsterLibrarianPreview         |       39 |          5 |        |                                 |       |
 | ric       | func_pspeu_092B5F48                 |       39 |          5 |        |                                 |       |
-| maria_psp | func_pspeu_092B1D98                 |       39 |          7 |        |                                 |       |
+| maria     | MarSetWalk                          |       39 |          7 |        |                                 |       |
 | dra       | 704D0.rodata                        |       40 |          0 | Yes    |                                 |       |
 | ric       | pl_steps.rodata                     |       40 |          0 | Yes    |                                 |       |
 | lib       | e_spellbook_magic_tome.rodata       |       40 |          0 | Yes    |                                 |       |
@@ -510,7 +510,7 @@
 | maria_psp | func_pspeu_092BEAB0                 |       43 |          5 |        |                                 |       |
 | dra       | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra       | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
-| maria_psp | func_pspeu_092B22B8                 |       43 |          6 |        |                                 |       |
+| maria     | func_pspeu_092B22B8                 |       43 |          6 |        |                                 |       |
 | dra       | func_8010DF70                       |       43 |          8 |        |                                 |       |
 | maria     | MarSetSlide                         |       43 |          8 |        |                                 |       |
 | ric       | RicSetSlide                         |       43 |          8 |        |                                 |       |
@@ -527,7 +527,7 @@
 | dra       | func_8010E334                       |       45 |          6 |        |                                 |       |
 | dra       | SetMenuDisplayBuffer                |       45 |          6 |        |                                 |       |
 | lib       | func_us_801BED48                    |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
-| maria_psp | MarSetBladeDash                     |       45 |          7 |        |                                 |       |
+| maria     | MarSetBladeDash                     |       45 |          7 |        |                                 |       |
 | st0       | func_pspeu_09242F68                 |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | maria     | pl_main.rodata                      |       46 |          0 | Yes    |                                 |       |
 | ric       | pl_main.rodata                      |       46 |          0 | Yes    |                                 |       |
@@ -619,7 +619,7 @@
 | dra       | PlayerStepSwordWarp                 |       53 |          7 |        |                                 |       |
 | maria_psp | func_pspeu_092A6958                 |       53 |          7 |        |                                 |       |
 | dra       | func_80109990                       |       53 |          8 |        | https://decomp.me/scratch/8jkIg | 1.0   |
-| maria_psp | MarSetStand                         |       53 |         10 |        |                                 |       |
+| maria     | MarSetStand                         |       53 |         10 |        |                                 |       |
 | dra       | MenuEquipSortDraw                   |       54 |          4 |        |                                 |       |
 | ric       | AguneaShuffleParams                 |       54 |          5 |        |                                 |       |
 | ric       | RicSetHighJump                      |       54 |          8 |        |                                 |       |
@@ -638,7 +638,7 @@
 | lib       | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | no4       | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
 | wrp       | CollectHeartVessel                  |       55 |          8 |        |                                 |       |
-| maria_psp | func_pspeu_092B20B8                 |       55 |         10 |        |                                 |       |
+| maria     | MarSetRun                           |       55 |         10 |        |                                 |       |
 | dra       | AdvanceCdSoundCommandQueue          |       56 |          2 |        |                                 |       |
 | ric       | RicStepStandInAir                   |       56 |          8 |        |                                 |       |
 | lib       | func_us_801B4010                    |       57 |          1 |        |                                 |       |
@@ -847,7 +847,7 @@
 | maria_psp | func_pspeu_092C0138                 |       78 |         14 |        |                                 |       |
 | dra       | GetSpellDef                         |       79 |          5 |        |                                 |       |
 | lib       | func_psp_09258A38                   |       79 |          7 |        | https://decomp.me/scratch/YDvBh | 1.0   |
-| maria_psp | func_pspeu_092B1E18                 |       79 |          8 |        |                                 |       |
+| maria     | MarSetFall                          |       79 |          8 |        |                                 |       |
 | chi       | EntitySalemWitchGlow                |       79 |          8 |        |                                 |       |
 | no4       | func_pspeu_092427C8                 |       79 |          8 |        |                                 |       |
 | chi       | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
@@ -856,7 +856,7 @@
 | st0       | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | wrp       | UpdateStageEntities                 |       79 |          9 |        | https://decomp.me/scratch/RqyKw | 0.994 |
 | dra       | CheckEquipmentItemCount             |       79 |         11 |        | https://decomp.me/scratch/5WfaD | 0.419 |
-| maria_psp | func_pspeu_092B1F30                 |       79 |         14 |        |                                 |       |
+| maria     | MarSetJump                          |       79 |         14 |        |                                 |       |
 |           | CheckEntityValid                    |       79 |         15 |        |                                 |       |
 | dra       | func_psp_090EBFA8                   |       80 |          3 |        |                                 |       |
 | no4       | func_pspeu_09259648                 |       80 |         10 |        |                                 |       |
@@ -1164,7 +1164,7 @@
 | dra       | func_8012CCE4                       |      159 |         21 |        |                                 |       |
 | dra       | LoadSaveData                        |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
 | ric       | RicEntitySubwpnCrossTrail           |      160 |         11 |        | https://decomp.me/scratch/98zwV | 0.998 |
-| ric       | func_8015D250                       |      160 |         30 |        |                                 |       |
+| ric       | RicDoSubweapon                      |      160 |         30 |        |                                 |       |
 | maria     | func_8015FDB0                       |      161 |          5 |        |                                 |       |
 | ric       | func_8015FDB0                       |      161 |          5 |        |                                 |       |
 | dra       | EntityBatFireball                   |      161 |         14 |        | https://decomp.me/scratch/u4uRW | 0.997 |
@@ -1172,7 +1172,7 @@
 | maria     | MarStepBossGrab                     |      161 |         21 |        |                                 |       |
 | ric       | RicStepBossGrab                     |      161 |         21 |        |                                 |       |
 | dra       | EntityUnarmedAttack                 |      162 |         17 |        | https://decomp.me/scratch/67yNb | 0.994 |
-| maria_psp | func_pspeu_092B2348                 |      162 |         33 |        |                                 |       |
+| maria     | MarDoAttack                         |      162 |         33 |        |                                 |       |
 | ric       | RicEntityVibhutiCrashCloud          |      163 |         18 |        |                                 |       |
 | maria_psp | func_pspeu_092A7F78                 |      163 |         26 |        |                                 |       |
 | dra       | DrawHud                             |      164 |         14 |        |                                 |       |
@@ -1270,7 +1270,7 @@
 | no4       | func_pspeu_09240680                 |      216 |         18 |        |                                 |       |
 | lib       | func_us_801B4ED4                    |      218 |         16 | Yes    |                                 |       |
 | dra       | DecompressData                      |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
-| maria_psp | func_pspeu_092B2590                 |      219 |         40 |        |                                 |       |
+| maria     | MarDoSubweapon                      |      219 |         40 |        |                                 |       |
 | dra       | PlayerStepHellfire                  |      219 |         43 |        |                                 |       |
 | no4       | EntitySmallWaterDrop                |      220 |         22 |        |                                 |       |
 | no4       | func_pspeu_0923E368                 |      221 |         22 |        |                                 |       |
@@ -1334,7 +1334,7 @@
 | no4       | func_pspeu_09238E18                 |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra       | func_800E414C                       |      258 |         36 |        |                                 |       |
 | no4       | func_pspeu_09240CD0                 |      261 |         21 |        |                                 |       |
-| maria_psp | func_pspeu_092B28B0                 |      261 |         51 |        |                                 |       |
+| maria     | MarDoCrash                          |      261 |         51 |        |                                 |       |
 | st0       | func_801A8328                       |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | chi       | EntityBreakableWallDebris           |      262 |         33 |        | https://decomp.me/scratch/pQIB9 | 0.998 |
 | lib       | func_psp_0925D4D0                   |      263 |         19 |        | https://decomp.me/scratch/1G4Sk | 1.0   |
