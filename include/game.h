@@ -2086,7 +2086,6 @@ typedef enum {
     LANG_IT,
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
-void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
 
 typedef struct {
     s16 unk00;
