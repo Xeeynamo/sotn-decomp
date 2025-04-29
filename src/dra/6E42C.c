@@ -110,8 +110,8 @@ void func_8010E6AC(bool forceAnim13) {
         }
     } else {
         SetPlayerAnim(7);
-        // Factory blueprint 1 has child 2, which is func_8011B5A4
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
+        // Factory blueprint 1 has child 2, which is EntitySmokePuff
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_1, 5), 0);
     }
 
     if (g_Player.unk4C) {
@@ -201,7 +201,7 @@ void DoGravityJump(void) {
     }
     // Factory with blueprint 2, creates child entity 3 which is
     // EntityGravityBootBeam
-    CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, BP_GRAVITY_BOOT_BEAM, 0);
     SetPlayerStep(Player_HighJump);
     PLAYER.velocityY = FIX(-12);
     SetPlayerAnim(0x21);
@@ -364,7 +364,7 @@ void func_8010ED54(u8 anim) {
     SetPlayerStep(Player_SwordWarp);
     SetPlayerAnim(anim);
     // Factory 61 has child 31, EntityPlayerOutline
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_61, 20), 0);
     g_Player.unk48 = 0;
 }
 
@@ -519,11 +519,11 @@ block_45:
             // Blueprint 55, child 39. EntityPlayerPinkEffect
             ent6C = CreateEntFactoryFromEntity(
                 g_CurrentEntity,
-                FACTORY(55, (equipped_item->unk14 & 0x7F) + (hand << 7)),
+                FACTORY(BP_55, (equipped_item->unk14 & 0x7F) + (hand << 7)),
                 equipped_id);
         } else if (g_Player.timers[ALU_T_CURSE]) {
             // Blueprint 57, child 31. EntityPlayerOutline
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(57, 1), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_57, 1), 0);
             goto block_70;
         } else if (!var_s7) {
             ent6C = CreateEntFactoryFromEntity(
@@ -601,7 +601,7 @@ block_45:
         }
         equipped_item = &g_EquipDefs[0];
         CreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY((hand + 42), (hand << 7)), 0);
+            g_CurrentEntity, FACTORY((hand + BP_42), (hand << 7)), 0);
         var_s2 = equipped_item->playerAnim;
         goto block_1000;
 
@@ -862,7 +862,8 @@ void PerformDarkMetamorphosis(void) {
     g_Player.timers[ALU_T_DARKMETAMORPH] =
         GetStatusAilmentTimer(STATUS_AILMENT_DARK_METAMORPHOSIS, 0x400);
     func_801092E8(1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x11), 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_RIPPLE_OUTLINE, 17), 0);
     func_80118C28(0xB);
 }
 
@@ -882,7 +883,8 @@ void PerformSummonSpirit(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 0), 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SUMMON_SPIRIT, 0), 0);
     SetPlayerAnim(0xF0);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[ALU_T_12] = 4;
@@ -893,7 +895,8 @@ void PerformTetraSpirit(void) {
     PLAYER.velocityX = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(117, 1), 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_SUMMON_SPIRIT, 1), 0);
     SetPlayerAnim(0xF1);
     PlaySfx(SFX_VO_ALU_ATTACK_D);
     g_Player.timers[ALU_T_12] = 4;
@@ -905,7 +908,8 @@ void PerformSwordBrothers(void) {
     SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
     SetPlayerAnim(0xF1);
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(40, 0x17), 0);
+    CreateEntFactoryFromEntity(
+        g_CurrentEntity, FACTORY(BP_RIPPLE_OUTLINE, 23), 0);
     g_Player.timers[ALU_T_12] = 4;
 }
 
@@ -915,7 +919,7 @@ void func_8010FD88(void) {
     SetSpeedX(FIX(-3.5));
     g_CurrentEntity->velocityY = 0;
     SetPlayerAnim(0xDB);
-    CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
     g_Player.unk46 = 0;
     PlaySfx(SFX_SCRAPE_C);
 }

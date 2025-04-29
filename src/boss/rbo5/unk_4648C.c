@@ -553,7 +553,7 @@ Entity* CreateEntFactoryFromEntity(
     }
 
     DestroyEntity(newFactory);
-    newFactory->entityId = E_ENTITYFACTORY;
+    newFactory->entityId = E_FACTORY;
     newFactory->ext.factory.parent = source;
     newFactory->posX.val = source->posX.val;
     newFactory->posY.val = source->posY.val;

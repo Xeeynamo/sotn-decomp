@@ -501,7 +501,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7020, func_060B7020);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B720C, func_060B720C);
 
 // ===== pl_subweapons_dagger.c
-// RicEntitySubwpnThrownDagger
+// RicEntitySubwpnKnife
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7650, func_060B7650);
 
 // ===== pl_subweapons_axe.c
@@ -534,7 +534,7 @@ void RicEntityNotImplemented3() {}
 
 const u16 pad_60B9666 = 0x0009; // nop
 
-// RicEntityHolyWaterBreakGlass
+// RicEntitySubwpnHolyWaterBreakGlass
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A2C, func_060B9A2C);

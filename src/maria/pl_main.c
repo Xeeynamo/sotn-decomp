@@ -76,7 +76,7 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-// Similar to of DRA func_80109594
+// Similar to of AluInit and RicInit
 extern s32 D_pspeu_092E5F20;
 extern u8 hud_fr[];
 extern u8 hud_sp[];

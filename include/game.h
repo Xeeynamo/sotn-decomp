@@ -429,47 +429,6 @@ typedef enum {
 #define DIAG_EOL 0xFF   // end of line
 #define DIAG_EOS 0x00   // end of string
 
-// entityId: what entity to spawn based on the Entity Set
-// amount: How many entities to spawn in total
-// nPerCycle: how many entities to spawn at once without waiting for tCycle
-// isNonCritical: 'true' for particles, 'false' for gameplay related entities
-//   false: keep searching for a free entity slot every frame to make the entity
-//   true: when there are no entities available then just forgets about it
-// incParamsKind: the technique used to set the self->params to the new entity
-//   false: it is set from 0 to 'nPerCycle'
-//   true: it is set from 0 to 'amount'
-// tCycle: wait 'tCycle' frames per cycle until 'amount' of entities are made
-// kind: refer to `BlueprintKind` for a list of options
-// f: ???
-// tDelay: how many frames to wait before starting to make the first entity
-#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
-               tCycle, kind, origin, tDelay)                                   \
-    {entityId,                                                                 \
-     (amount),                                                                 \
-     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
-         ((!!(isNonCritical)) << 7),                                           \
-     (tCycle),                                                                 \
-     ((kind) & 15) | ((origin) << 4),                                          \
-     tDelay}
-enum BlueprintKind {
-    B_DECOR,      // cannot collide with any other entity, used for decoration
-    B_WPN,        // can collide to stage items, like candles or enemies
-    B_WPN_UNIQUE, // same as above, but new entity replaces the prev. one
-    B_KIND_3,
-    B_KIND_4,
-    B_KIND_5,
-    B_KIND_6,
-    B_KIND_7,
-    B_KIND_8,
-    B_KIND_9,
-    B_KIND_10,
-    B_KIND_11,
-    B_KIND_12,
-    B_KIND_13,
-    B_KIND_14,
-    B_KIND_15,
-};
-
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
 #define SAVE_FLAG_REPLAY (2)
@@ -2026,6 +1985,17 @@ typedef enum {
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
+
+// 0x00:      player entity
+// 0x01-0x03: player after-image
+// 0x04-0x07: servant entities
+// 0x08-0x0F: factory entities
+// 0x10-0x1E: alucard weapons and richter's whip
+// 0x1F:      ???
+// 0x20-0x2F: subweapon entities
+// 0x30-0x3F: mostly used for decoration and graphics effects
+// 0x40-0x7F: stage entities, other entities can interact with
+// 0x80-0xFF: stage entities, only player can interact with
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
 extern s32 g_entityDestroyed[18];
