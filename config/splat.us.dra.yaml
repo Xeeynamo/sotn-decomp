@@ -99,7 +99,7 @@ segments:
       - [0x8410, .data, config_us] # spells
       - [0x8720, .data, config_us] # relics
       - [0x8900, .data, config_us] # enemies
-      - [0xC910, .data, d_C910]
+      - [0xC910, .data, 66590]
       - [0xC958, .data, cd]
       - [0xCD80, .data, d_CD80]
       - [0xCDF8, .data, 692E8]

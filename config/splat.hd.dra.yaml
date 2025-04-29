@@ -94,7 +94,7 @@ segments:
       - [0x37E8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C50, .data, lba_stage]
       - [0x4A10, .data, config_jp]
-      - [0xC8BC, .data, d_C910]
+      - [0xC8BC, .data, 66590]
       - [0xCA20, .data, cd]
       - [0xCE48, .data, d_CD80]
       - [0xCEB8, .data, 692E8]
