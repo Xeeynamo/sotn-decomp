@@ -98,7 +98,8 @@ bool WolfFormFinished(void) {
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         // Create factory for EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x24), 0);
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x24), 0);
         PLAYER.velocityY >>= 1;
         return true;
     }
@@ -342,7 +343,7 @@ void func_8012D178(void) {
         if (g_Player.unk04 & 0x40) {
             func_8012CA64();
         } else if (g_GameTimer % 6 == 0) {
-            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(69, 1), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_69, 1), 0);
         }
     }
 }
@@ -384,7 +385,7 @@ void func_8012D28C(bool exitEarly) {
     }
 
     SetSpeedX(FIX(1));
-    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(4, 9), 0);
+    CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_4, 9), 0);
     D_800B0914 = 0;
     // Finally make use of that bit to control if X is positive or negative.
     if (bitNotFound) {

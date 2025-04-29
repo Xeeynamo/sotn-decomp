@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
+#include "../get_lang.h"
+
 extern s32 g_DebugWaitInfoTimer;
 
 void DebugShowWaitInfo(const char* msg) {
@@ -340,13 +342,13 @@ extern s32 D_psp_08B42060;
 s32 func_psp_090F5188(void) {
     char sp10[0x100];
 
-    psp_sprintf(&sp10, "%sSE/sd_j010.spk;1", D_psp_08B42060);
+    sprintf(&sp10, "%sSE/sd_j010.spk;1", D_psp_08B42060);
     func_892EAFC(&sp10, 0);
-    psp_sprintf(&sp10, "%sSE/sd_alk.spk;1", D_psp_08B42060);
+    sprintf(&sp10, "%sSE/sd_alk.spk;1", D_psp_08B42060);
     func_892EAFC(&sp10, 1);
-    psp_sprintf(&sp10, "%sSE/sd_mak.spk;1", D_psp_08B42060);
+    sprintf(&sp10, "%sSE/sd_mak.spk;1", D_psp_08B42060);
     func_892EAFC(&sp10, 2);
-    psp_sprintf(&sp10, "%sSE/sd_rou.spk;1", D_psp_08B42060);
+    sprintf(&sp10, "%sSE/sd_rou.spk;1", D_psp_08B42060);
     func_892EAFC(&sp10, 3);
     return 0;
 }

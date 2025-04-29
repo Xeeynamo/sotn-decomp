@@ -73,7 +73,7 @@ void RicSetDebug(void) { RicSetStep(PL_S_DEBUG); }
 
 // ===== pl_setstep.c
 
-// func_8015CC70
+// RicSetInit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
 
 // RicSetCrouch
@@ -150,7 +150,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
 // RicCheckSubwpnChainLimit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, func_060A938C);
 
-// func_8015D250
+// RicDoSubweapon
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_060A93F4);
 
 // RicDoAttack
@@ -501,7 +501,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7020, func_060B7020);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B720C, func_060B720C);
 
 // ===== pl_subweapons_dagger.c
-// RicEntitySubwpnThrownDagger
+// RicEntitySubwpnKnife
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B7650, func_060B7650);
 
 // ===== pl_subweapons_axe.c
@@ -534,7 +534,7 @@ void RicEntityNotImplemented3() {}
 
 const u16 pad_60B9666 = 0x0009; // nop
 
-// RicEntityHolyWaterBreakGlass
+// RicEntitySubwpnHolyWaterBreakGlass
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9668, func_060B9668);
 
 // bad split, part of previous function

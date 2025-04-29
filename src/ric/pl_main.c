@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
+#include "../get_lang.h"
+
 #include "../destroy_entity.h"
 
 typedef enum {
@@ -83,7 +85,7 @@ extern u8 hud_ge[];
 extern u8 hud_it[];
 extern LangImg g_FontImage;
 extern LangImg g_HudImage;
-// Similar to of DRA func_80109594
+// Similar to AluInit
 void RicInit(s16 initParam) {
     Entity* e;
     s16 radius;
@@ -155,17 +157,17 @@ void RicInit(s16 initParam) {
     if (D_80097C98 == 6) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 1), 0);
-        func_8015CC70(1);
+        RicSetInit(1);
     }
     if (D_80097C98 == 4) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 3), 0);
-        func_8015CC70(3);
+        RicSetInit(3);
     }
     if (D_80097C98 == 5) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 5), 0);
-        func_8015CC70(5);
+        RicSetInit(5);
     }
 #ifdef VERSION_PSP
     // new to PSP: block input for half a second when the Prologue stage starts
@@ -513,7 +515,7 @@ void RicMain(void) {
         // Reuse the i variable here even though we aren't iterating
         i = GetTeleportToOtherCastle();
         if (i != TELEPORT_CHECK_NONE) {
-            func_8015CC70(i);
+            RicSetInit(i);
         }
         // Richter must use step #32 for something else, look into it!
         if (PLAYER.step != PL_S_INIT) {

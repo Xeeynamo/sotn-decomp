@@ -1,4 +1,15 @@
 files:
+  - target: disks/us/DRA.BIN
+    asset_path: assets/dra
+    src_path: src/dra
+    splat_config_path: config/splat.us.dra.yaml
+    segments:
+      - start: 0
+        vram: 0x800A0000
+        assets:
+          - [0x0, skip]
+          - [0xD1D4, blueprintsdef, blueprints_def, AluBlueprints, AluEntities]
+          - [0xD4B8, skip]
   - target: disks/us/BIN/RIC.BIN
     asset_path: assets/ric
     src_path: src/ric

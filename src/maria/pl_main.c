@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
+#include "../get_lang.h"
+
 #include "../destroy_entity.h"
 
 typedef enum {
@@ -76,7 +78,7 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
-// Similar to of DRA func_80109594
+// Similar to of AluInit and RicInit
 extern s32 D_pspeu_092E5F20;
 extern u8 hud_fr[];
 extern u8 hud_sp[];
@@ -499,7 +501,7 @@ void MarMain(void) {
     case PL_S_DEAD:
         MarStepDead(damageEffects, damageKind, playerStep, playerStepS);
         break;
-    case PL_S_SUBWPN_18:
+    case PL_S_18:
         func_pspeu_092B0C70();
         break;
     case PL_S_SUBWPN_19:
@@ -576,7 +578,7 @@ void MarMain(void) {
     case PL_S_SUBWPN_20:
     case PL_S_SUBWPN_21:
     case PL_S_SUBWPN_27:
-    case PL_S_SUBWPN_18:
+    case PL_S_18:
         newStatus = 0x08000000;
         MarSetInvincibilityFrames(1, 16);
         break;

@@ -116,13 +116,265 @@ typedef struct {
     SimKind kind;
 } SimFile;
 
-typedef enum {
-    E_NONE,
-    E_ENTITYFACTORY,
+enum AluEntities {
+    E_NONE,                         // EntityNull
+    E_FACTORY,                      // EntityFactory
+    E_SMOKE_PUFF,                   // EntitySmokePuff
+    E_GRAVITY_BOOT_BEAM,            // EntityGravityBootBeam
+    E_KNIFE,                        // EntitySubwpnKnife
+    E_UNK_5,                        // func_8011E4BC
+    E_UNK_6,                        // EntityDiveKickAttack
+    E_UNK_7,                        // EntityGiantSpinningCross
+    E_CRASH_CROSS_ROTATING,         // EntitySubwpnCrashCross
+    E_SUBWPN_CRASH_CROSS_PARTICLES, // EntitySubwpnCrashCrossParticles
+    E_SUBWPN_AXE,                   // EntitySubwpnThrownAxe
+    E_BLINK_WHITE,                  // EntityPlayerBlinkWhite
+    E_SUBWPN_VIBHUTI,               // EntitySubwpnThrownVibhuti
+    E_UNK_13,                       // func_8011E0E4
+    E_UNK_14,                       // func_8011EDA0
+    E_UNK_15,                       // EntityUnarmedAttack
+    E_UNK_16,                       // func_8011EDA8
+    E_SUBWPN_AGUNEA,                // EntitySubwpnAgunea
+    E_SUBWPN_AGUNEA_HIT_ENEMY,      // EntityAguneaHitEnemy
+    E_UNK_19,                       // EntityNumberMovesToHpMeter
+    E_SUBWPN_REBOUND_STONE,         // EntitySubwpnReboundStone
+    E_UNK_21,                       // EntityLevelUpAnimation
+    E_SUBWPN_HOLY_WATER,            // EntitySubwpnHolyWater
+    E_SUBWPN_HOLY_WATER_FLAME,      // EntitySubwpnHolyWaterFlame
+    E_UNK_24,                       // EntityUnkId24
+    E_HELLFIRE,                     // EntityHellfire
+    E_HELLFIRE_SMALL_FIREBALL,      // EntityHellfireNormalFireball
+    E_HELLFIRE_BIG_FIREBALL,        // EntityHellfireBigFireball
+    E_UNK_28,                       // EntityExpandingCircle
+    E_UNK_29,                       // func_80127CC8
+    E_HIT_BY_LIGHTNING,             // EntityHitByLightning
+    E_PLAYER_OUTLINE,               // EntityPlayerOutline
+    E_UNK_32,                       // EntityPlayerDissolves
+    E_HIT_BY_ICE,                   // EntityHitByIce
+    E_MIST,                         // EntityMist
+    E_WING_SMASH_TRAIL,             // EntityWingSmashTrail
+    E_UNK_36,                       // func_8011B480
+    E_UNK_37,                       // EntityGuardText
+    E_UNK_38,                       // EntityTransparentWhiteCircle
+    E_UNK_39,                       // EntityPlayerPinkEffect
+    E_HOLYWATER_BREAK_GLASS,        // EntitySubwpnHolyWaterBreakGlass
+    E_SUBWPN_STOPWATCH,             // EntityStopWatch
+    E_SUBWPN_STOPWATCH_CIRCLE,      // EntityStopWatchExpandingCircle
+    E_SUBWPN_BIBLE,                 // EntitySubwpnBible
+    E_SUBWPN_BIBLE_TRAIL,           // EntitySubwpnBibleTrail
+    E_BAT_FIREBALL,                 // EntityBatFireball
+    E_UNK_46,                       // func_80123B40
+    E_UNK_47,                       // func_80119F70
+    E_UNK_48,                       // UnknownEntId48
+    E_UNK_49,                       // UnknownEntId49
+    E_UNK_50,                       // func_80123A60
+    E_SMALL_RISING_HEART,           // EntitySmallRisingHeart
+    E_BAT_ECHO,                     // EntityBatEcho
+    E_UNK_53,                       // func_8011B530
+    E_UNK_54,                       // func_8011F074
+    E_UNK_55,                       // func_80130264
+    E_UNK_56,                       // func_8012F894
+    E_UNK_57,                       // func_80130618
+    E_UNK_58,                       // func_801309B4
+    E_UNK_59,                       // func_80130E94
+    E_UNK_60,                       // func_8013136C
+    E_UNK_61,                       // func_80129864
+    E_UNK_62,                       // EntityNull
+    E_SUMMON_SPIRIT,                // EntitySummonSpirit
+    E_UNK_64,                       // func_80123F78
+    E_TELEPORT,                     // EntityTeleport
+    E_SLEEP_ZZZ,                    // EntityPlayerSleepZ
+    E_UNK_67,                       // EntityNull
+    NUM_ENTITIES,
 
-    ENTITY_13 = 0x13,
-    E_UNK_22 = 0x22,
-} EntityIDs;
+    E_UNK_238 = 238, // ???
+    E_UNK_254 = 254, // ???
+
+};
+
+enum AluBlueprints {
+    BP_0,
+    BP_1,
+    BP_GRAVITY_BOOT_BEAM,
+    BP_3,
+    BP_4,
+    BP_5,
+    BP_6,
+    BP_7,
+    BP_8,
+    BP_9,
+    BP_10,
+    BP_11,
+    BP_12,
+    BP_13,
+    BP_14,
+    BP_15,
+    BP_16,
+    BP_17,
+    BP_18,
+    BP_19,
+    BP_20,
+    BP_21,
+    BP_22,
+    BP_23,
+    BP_24,
+    BP_25,
+    BP_26,
+    BP_27,
+    BP_28,
+    BP_29,
+    BP_30,
+    BP_31,
+    BP_32,
+    BP_HELLFIRE,
+    BP_HELLFIRE_SMALL_FIREBALL,
+    BP_HELLFIRE_BIG_FIREBALL,
+    BP_36,
+    BP_37,
+    BP_38,
+    BP_39,
+    BP_RIPPLE_OUTLINE,
+    BP_41,
+    BP_42,
+    BP_43,
+    BP_BLINK_WHITE,
+    BP_45,
+    BP_HIT_BY_ICE,
+    BP_47,
+    BP_48,
+    BP_49,
+    BP_50,
+    BP_51,
+    BP_52,
+    BP_53,
+    BP_54,
+    BP_55,
+    BP_56,
+    BP_57,
+    BP_58,
+    BP_59,
+    BP_60,
+    BP_61,
+    BP_62,
+    BP_63,
+    BP_64,
+    BP_WING_SMASH_TRAIL,
+    BP_66,
+    BP_67,
+    BP_68,
+    BP_69,
+    BP_70,
+    BP_71,
+    BP_72,
+    BP_73,
+    BP_74,
+    BP_STOPWATCH_ACTIVATE,
+    BP_76,
+    BP_77,
+    BP_78,
+    BP_79,
+    BP_80,
+    BP_BAT_FIREBALL,
+    BP_82,
+    BP_83,
+    BP_84,
+    BP_85,
+    BP_86,
+    BP_87,
+    BP_88,
+    BP_89,
+    BP_90,
+    BP_91,
+    BP_92,
+    BP_93,
+    BP_94,
+    BP_95,
+    BP_96,
+    BP_97,
+    BP_98,
+    BP_SMALL_RISING_HEART,
+    BP_100,
+    BP_101,
+    BP_102,
+    BP_BAT_ECHO,
+    BP_104,
+    BP_105,
+    BP_106,
+    BP_107,
+    BP_108,
+    BP_109,
+    BP_110,
+    BP_111,
+    BP_112,
+    BP_113,
+    BP_114,
+    BP_115,
+    BP_116,
+    BP_SUMMON_SPIRIT,
+    BP_118,
+    BP_119,
+    BP_120,
+    BP_TELEPORT,
+    BP_SLEEP_ZZZ,
+    NUM_BLUEPRINTS,
+};
+
+// NOTE: B_MAKE from DRA is different than RIC or MARIA!
+// Parsing is done in EntityFactory
+// entityId: what entity to spawn based on the Entity Set
+// amount: How many entities to spawn in total
+// nPerCycle: how many entities to spawn at once without waiting for tCycle
+// isNonCritical: 'true' for particles, 'false' for gameplay related entities
+//   false: keep searching for a free entity slot every frame to make the entity
+//   true: when there are no entities available then just forgets about it
+// incParamsKind: the technique used to set the self->params to the new entity
+//   false: it is set from 0 to 'nPerCycle'
+//   true: it is set from 0 to 'amount'
+// timerCycle: wait frames per cycle until 'amount' of entities are made
+// kind: refer to `BlueprintKind` for a list of options
+// origin: position where the entity will spawn from
+// timerDelay: how many frames to wait before starting to make the first entity
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               timerCycle, kind, origin, timerDelay)                           \
+    {(entityId),                                                               \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (timerCycle),                                                             \
+     ((kind) & 15) | (((origin) & 15) << 4),                                   \
+     timerDelay}
+enum BlueprintKind {
+    B_KIND_0,
+    B_KIND_1,
+    B_KIND_2,
+    B_KIND_3,
+    B_KIND_4,
+    B_KIND_5,
+    B_KIND_6,
+    B_KIND_7,
+    B_KIND_8,
+    B_KIND_9,
+    NUM_BLUEPRINT_KIND,
+};
+enum BlueprintOrigin {
+    // Spawned entities have a life-cycle on their own and
+    B_ORIGIN_DEFAULT,
+
+    B_ORIGIN_1,
+    B_ORIGIN_2,
+    B_ORIGIN_3,
+    B_ORIGIN_4,
+    B_ORIGIN_5,
+    B_ORIGIN_6,
+    B_ORIGIN_7,
+    B_ORIGIN_8,
+    B_ORIGIN_9,
+    B_ORIGIN_10,
+    B_ORIGIN_11,
+    B_ORIGIN_12,
+    B_ORIGIN_13,
+    B_ORIGIN_14,
+};
 
 typedef enum {
     STATUS_AILMENT_POISON,
@@ -362,8 +614,6 @@ extern unionD_800ACFB4 D_800ACFB4[];
 extern s16* D_800CF324[];
 extern unkstr_800cfe48* D_800CFE48[18];
 extern PfnEntityUpdate D_800AD0C4[];
-extern FactoryBlueprint g_FactoryBlueprints[];
-extern u8 D_800AD4B8[];
 extern s16 D_800AD54C[6];
 extern s32 D_800AD558[6];
 extern s16 D_800AD570[6];
@@ -592,10 +842,10 @@ Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
 
 // Forward declarations for all the entity updating functions
 void EntityNull(Entity* self);
-void EntityEntFactory(Entity* self);
-void func_8011B5A4(Entity* self);
+void EntityFactory(Entity* self);
+void EntitySmokePuff(Entity* self);
 void EntityGravityBootBeam(Entity* self);
-void EntitySubwpnThrownDagger(Entity* self);
+void EntitySubwpnKnife(Entity* self);
 void func_8011E4BC(Entity* self);
 void EntityDiveKickAttack(Entity* self);
 void EntityGiantSpinningCross(Entity* self);
@@ -613,10 +863,10 @@ void EntityAguneaHitEnemy(Entity* self);
 void EntityNumberMovesToHpMeter(Entity* self);
 void EntitySubwpnReboundStone(Entity* self);
 void EntityLevelUpAnimation(Entity* self);
-void EntityHolyWater(Entity* self);
+void EntitySubwpnHolyWater(Entity* self);
 void EntitySubwpnHolyWaterFlame(Entity* self);
 void EntityUnkId24(Entity* self);
-void EntityHellfireHandler(Entity* self);
+void EntityHellfire(Entity* self);
 void EntityHellfireNormalFireball(Entity* self);
 void EntityHellfireBigFireball(Entity* self);
 void EntityExpandingCircle(Entity* self);
@@ -631,7 +881,7 @@ void func_8011B480(Entity* self);
 void EntityGuardText(Entity* self);
 void EntityTransparentWhiteCircle(Entity* self);
 void EntityPlayerPinkEffect(Entity* self);
-void EntityHolyWaterBreakGlass(Entity* self);
+void EntitySubwpnHolyWaterBreakGlass(Entity* self);
 void EntityStopWatch(Entity* self);
 void EntityStopWatchExpandingCircle(Entity* self);
 void EntitySubwpnBible(Entity* self);

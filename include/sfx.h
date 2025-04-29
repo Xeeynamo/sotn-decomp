@@ -631,6 +631,12 @@ enum Sfx {
     SFX_UNK_7AF = 0x7Af,
 
 #if defined(VERSION_PSP)
+    /* 0x8E7 */ SFX_VO_MAR_ATTACK_C = 0x8E7,
+    /* 0x8EC */ SFX_VO_MAR_8EC = 0x8EC,
+    /* 0x8ED */ SFX_VO_MAR_8ED,
+    /* 0x8EE */ SFX_VO_MAR_8EE,
+    /* 0x8EF */ SFX_VO_MAR_8EF,
+    /* 0x8F0 */ SFX_VO_MAR_8F0,
     /* 0x8F2 */ SFX_VO_MAR_PAIN_B = 0x8F2,
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,

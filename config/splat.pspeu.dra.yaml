@@ -50,9 +50,8 @@ segments:
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
       - [0xA710, c, dra_psp/A710] # O4
-      - [0xE6A8, c, dra_psp/E6A8]
-      - [0x18648, c, dra_psp/lang] #O0 in a sea of O4
-      - [0x186E8, c, dra_psp/186E8]
+      - [0xE6A8, c, dra_psp/E6A8] # O4
+      - [0x18648, c, dra_psp/186E8] # O4
       - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/1A0D0]
       - [0x1A110, c, dra_psp/1A110]
@@ -64,12 +63,13 @@ segments:
       - [0x1DDC0, c, dra_psp/1DDC0]
       - [0x1E1B0, c, dra_psp/1E1B0]
       - [0x20560, c, dra_psp/20560]
-      - [0x22A40, c, dra_psp/22A40] # O0
+      - [0x21FC8, c, dra_psp/demo] # O0
+      - [0x23138, c, dra_psp/23138]
       - [0x231A8, c, dra/8BEF8] # O0
       - [0x23AD8, c, dra/timeattack] # O0
       - [0x23C18, c, dra/5D5BC] # O0
       - [0x26948, c, dra/4CE2C] # O4
-      - [0x274E8, c, dra_psp/274E8]
+      - [0x274E8, c, dra/4AEA4] # O4
       - [0x27F38, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra/70394]
@@ -108,8 +108,11 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
+      - [0x84080, .data, dra_psp/demo]
+      - [0x841C0, data]
       - [0x84210, .data, dra/5D5BC]
-      - [0x84238, data]
+      - [0x84238, .data, dra/4AEA4]
+      - [0x84248, data]
       - [0xA0578, .data, dra/692E8]
       - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
@@ -120,8 +123,8 @@ segments:
       - [0xA6920, .data, dra/6BF64]
       - [0xA69C8, .data, dra/84B88]
       - [0xA6C38, .data, dra/7879C]
-      - [0xA6FD8, data] # Factory blueprints
-      - [0xA72C0, .data, dra/7E4BC]
+      - [0xA6FD8, data] # blueprints
+      - [0xA72E4, .data, dra/7E4BC]
       - [0xA79D0, data]
       - [0xA8120, .data, dra/8D3E8]
       - [0xA8888, data]
@@ -145,7 +148,7 @@ segments:
       - [0xEE600, .rodata, dra_psp/1DCE0]
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra/5D5BC]
-      - [0xEE6C8, .rodata, dra_psp/274E8]
+      - [0xEE6C8, .rodata, dra/4AEA4]
       - [0xEE708, .rodata, dra/692E8]
       - [0xEE7B0, .rodata, dra/71830]
       - [0xEE840, .rodata, dra/704D0]
