@@ -69,7 +69,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8C88, func_060A8C88);
 // RicStepHighJump
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8D64, func_060A8D64);
 
-void func_060A8E9C(void) { RicSetStep(PL_S_DEBUG); }
+void RicSetDebug(void) { RicSetStep(PL_S_DEBUG); }
 
 // ===== pl_setstep.c
 
@@ -400,8 +400,7 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/richter/f_nonmat", f60B052A, func_060B052A);
 
 // ===== ???
 
-// RicEntityDummy
-void func_060B05EC(void) { func_0600FFB8(); }
+void RicEntityDummy(void) { func_0600FFB8(); }
 
 void func_060B0604() {}
 
