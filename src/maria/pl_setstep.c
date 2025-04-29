@@ -180,7 +180,18 @@ static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B22B8);
+extern s16 D_pspeu_092C5040[];
+// TBC: MarDoAttack?
+void func_pspeu_092B22B8(s32 arg0) {
+    s16 var_s0;
+
+    if (arg0) {
+        var_s0 = rand() % arg0;
+        if (var_s0 < 5) {
+            func_9142FC8(D_pspeu_092C5040[var_s0]);
+        }
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2348);
 
