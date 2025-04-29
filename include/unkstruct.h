@@ -100,12 +100,11 @@ typedef struct Unkstruct_801C7954 {
 } Unkstruct_801C7954; // size = 0x10
 
 typedef struct {
-    u8 unk0[8];
-    u8 unk8[8];
-    u8 unk16[1];
-    u8 pad3[5];
+    u8 timers[8];
+    u8 blueprints[8];
+    u8 blueprintParams[8];
     u32 unk18;
-} Unkstruct_800ADEF0;
+} Unkstruct_800ADEF0; // size:0x1C
 
 typedef struct {
     u16 palette;

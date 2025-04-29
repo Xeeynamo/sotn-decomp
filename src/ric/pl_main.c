@@ -85,7 +85,7 @@ extern u8 hud_ge[];
 extern u8 hud_it[];
 extern LangImg g_FontImage;
 extern LangImg g_HudImage;
-// Similar to of DRA func_80109594
+// Similar to AluInit
 void RicInit(s16 initParam) {
     Entity* e;
     s16 radius;

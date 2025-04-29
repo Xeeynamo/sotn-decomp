@@ -13,6 +13,8 @@ tiledef_*.h
 cutscene_data*.h
 hud_*.h
 font_*.h
+subweapons_def.h
+blueprints_def.h
 
 weapon/w_*_1.h
 weapon/w_*_2.h

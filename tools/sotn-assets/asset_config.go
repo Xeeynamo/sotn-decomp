@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
@@ -43,6 +44,7 @@ type assetConfig struct {
 var handlers = func() map[string]assets.Handler {
 	m := make(map[string]assets.Handler)
 	for _, handler := range []assets.Handler{
+		blueprintsdef.Handler,
 		cmpgfx.Handler,
 		cutscene.Handler,
 		gfxbanks.Handler,

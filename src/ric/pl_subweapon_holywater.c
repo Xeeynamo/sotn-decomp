@@ -4,14 +4,14 @@
 void RicEntityNotImplemented3(Entity* self) {}
 
 // Entity ID #35. Created by blueprint 40. No known FACTORY calls with
-// blueprint 40. Duplicate of DRA EntityHolyWaterBreakGlass.
+// blueprint 40. Duplicate of DRA EntitySubwpnHolyWaterBreakGlass.
 static s16 D_80155D64[4][6] = {
     {2, -2, 0, -4, 0, 0},
     {-3, -3, -1, 1, 2, 0},
     {-4, -3, 2, -2, -2, 2},
     {-1, 0, 0, -4, 3, 3}};
 #define FAKEPRIM ((FakePrim*)prim)
-void RicEntityHolyWaterBreakGlass(Entity* self) {
+void RicEntitySubwpnHolyWaterBreakGlass(Entity* self) {
     Point16 sp10[8];
     Primitive* prim;
     s16 posX;

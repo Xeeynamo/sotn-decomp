@@ -1187,7 +1187,7 @@ void RunMainEngine(void) {
                 playerInit(0);
             }
         } else {
-            func_80109594();
+            AluInit();
         }
         if (g_StageId == STAGE_MAD) {
             g_api.o.StageEndCutScene();
