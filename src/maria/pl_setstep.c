@@ -305,7 +305,80 @@ s32 MarDoSubweapon(void) {
     return 0;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B28B0);
+bool MarDoCrash(void) {
+    SubweaponDef subWpn;
+    Entity* subWpnEnt;
+    s16 subWpnID;
+
+    subWpnEnt = NULL;
+    if (g_Player.unk5C) {
+        return 0;
+    }
+    subWpnID = func_8015FB84(&subWpn, true, false);
+    if (subWpnID < 0) {
+        return 0;
+    }
+    if (subWpnID != PL_W_NONE &&
+        (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP)) {
+        return 0;
+    }
+    if (subWpn.blueprintNum) {
+        subWpnEnt = MarCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(subWpn.blueprintNum, 0), 0);
+    }
+    if (subWpnEnt == NULL) {
+        return 0;
+    }
+    subWpnID = func_8015FB84(&subWpn, true, true);
+    g_Player.unk4A = subWpnID;
+    g_Player.unk46 = 4;
+    g_Player.unk4E = 0;
+    PLAYER.velocityY = 0;
+    PLAYER.velocityX = 0;
+    switch (subWpnID) {
+    case 0:
+        if (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP) {
+            MarSetAnimation(D_pspeu_092C0720);
+        } else if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK) {
+            MarSetAnimation(D_pspeu_092C06C8);
+        } else {
+            MarSetAnimation(mar_anim_stand_relax);
+        }
+        g_api.PlaySfx(SFX_VO_MAR_8EC);
+        g_Player.unk46 = 0;
+        break;
+    case 1:
+        g_Player.unk5C = 2;
+        MarSetStep(PL_S_SUBWPN_19);
+        MarSetAnimation(D_pspeu_092C07E8);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+        g_api.PlaySfx(SFX_VO_MAR_8EF);
+        break;
+    case 2:
+        g_Player.unk5C = 2;
+        MarSetStep(PL_S_SUBWPN_20);
+        MarSetAnimation(D_pspeu_092C07E8);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+        g_api.PlaySfx(SFX_VO_MAR_8EE);
+        break;
+    case 3:
+        g_Player.unk5C = 2;
+        MarSetStep(PL_S_SUBWPN_21);
+        MarSetAnimation(D_pspeu_092C07E8);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+        g_api.PlaySfx(SFX_VO_MAR_8ED);
+        break;
+    case 4:
+        g_Player.unk5C = 2;
+        MarSetStep(PL_S_SUBWPN_27);
+        MarSetAnimation(D_pspeu_092C07E8);
+        g_api.PlaySfx(SFX_WEAPON_APPEAR);
+        g_api.PlaySfx(SFX_VO_MAR_8F0);
+        break;
+    }
+    g_Player.timers[PL_T_12] = 4;
+    return 1;
+}
 
 void MarSetSlide(void) {
     MarCheckFacing();
