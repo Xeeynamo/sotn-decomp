@@ -894,7 +894,7 @@
 | st0       | EntitySecretStairsCeiling           |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra       | func_psp_090E4828                   |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
 | dra       | TimeAttackController                |       89 |          8 |        |                                 |       |
-| dra       | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
+| dra       | func_psp_090FF608                   |       89 |         10 |        | https://decomp.me/scratch/adWrA | 0.506 |
 | dra       | func_80115C50                       |       89 |         11 |        |                                 |       |
 | ric       | func_8015BB80                       |       89 |         11 |        | https://decomp.me/scratch/x9rRM | 0.99  |
 | chi       | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
@@ -1247,7 +1247,7 @@
 | maria_psp | MarStepStand                        |      203 |         44 |        |                                 |       |
 | dra       | func_80111DE8                       |      204 |         31 |        |                                 |       |
 | dra       | func_800F8990                       |      205 |         22 |        |                                 |       |
-| dra       | EntityHolyWater                     |      206 |         24 |        | https://decomp.me/scratch/dALFW | 0.999 |
+| dra       | EntitySubwpnHolyWater               |      206 |         24 |        |                                 |       |
 | dra       | CdSoundCommand12                    |      208 |         24 |        |                                 |       |
 | maria     | MarDebug                            |      208 |         28 |        |                                 |       |
 | ric       | RicDebug                            |      208 |         28 |        |                                 |       |
@@ -1331,7 +1331,7 @@
 | ric       | RicEntityHitByHoly                  |      257 |         29 |        |                                 |       |
 |           | FindValidTarget                     |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
 | no4       | func_pspeu_09241E38                 |      258 |         19 |        |                                 |       |
-| no4       | func_pspeu_09238E18                 |      258 |         30 |        |                                 |       |
+| no4       | func_pspeu_09238E18                 |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra       | func_800E414C                       |      258 |         36 |        |                                 |       |
 | no4       | func_pspeu_09240CD0                 |      261 |         21 |        |                                 |       |
 | maria_psp | func_pspeu_092B28B0                 |      261 |         51 |        |                                 |       |
@@ -1504,9 +1504,9 @@
 | dra       | func_80130E94                       |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
 | maria_psp | MarStepJump                         |      451 |         78 |        |                                 |       |
 | st0       | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
-| dra       | EntityHolyWaterBreakGlass           |      457 |         29 |        | https://decomp.me/scratch/umied | 0.976 |
+| dra       | EntitySubwpnHolyWaterBreakGlass     |      457 |         29 |        |                                 |       |
 | dra       | EntitySubwpnCrashCross              |      457 |         38 |        | https://decomp.me/scratch/5pb9E | 0.999 |
-| ric       | RicEntityHolyWaterBreakGlass        |      461 |         29 |        |                                 |       |
+| ric       | RicEntitySubwpnHolyWaterBreakGlass  |      461 |         29 |        |                                 |       |
 | dra       | func_801309B4                       |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra       | ControlMistForm                     |      466 |         93 |        |                                 |       |
 | ric       | RicStepJump                         |      469 |         84 |        |                                 |       |
@@ -1555,7 +1555,7 @@
 | dra       | func_800FB23C                       |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra       | EntityLevelUpAnimation              |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib       | func_us_801B7DF8                    |      556 |         54 |        |                                 |       |
-| dra       | EntityEntFactory                    |      557 |         48 | Yes    | https://decomp.me/scratch/pklqi | 0.998 |
+| dra       | EntityFactory                       |      557 |         48 | Yes    |                                 |       |
 | st0       | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | st0       | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
 | ric       | RicEntitySubwpnCross                |      560 |         53 | Yes    | https://decomp.me/scratch/98zwV | 0.998 |
@@ -1644,7 +1644,7 @@
 | lib       | func_psp_0923A538                   |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra       | EntityGuardText                     |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | no4       | EntitySplashWater                   |      785 |         68 |        |                                 |       |
-| ric       | RicEntitySubwpnThrownDagger         |      786 |         53 |        |                                 |       |
+| ric       | RicEntitySubwpnKnife                |      786 |         53 |        |                                 |       |
 | lib       | func_psp_0923FCD8                   |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
 | chi       | EntityFallingStairs                 |      791 |         88 |        | https://decomp.me/scratch/Bg0u3 | 0.997 |
 | st0       | EntityPrizeDrop                     |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
