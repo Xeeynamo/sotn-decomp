@@ -58,9 +58,9 @@
 | dra       | ClearBackbuffer                     |       11 |          1 |        |                                 |       |
 | dra       | func_800FAC30                       |       11 |          1 |        |                                 |       |
 | lib       | func_psp_09264E08                   |       11 |          1 |        |                                 |       |
+| dra       | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra       | func_800FDE00                       |       13 |          1 |        |                                 |       |
 | dra       | func_80105408                       |       13 |          1 |        |                                 |       |
-| dra       | func_800EB4F8                       |       13 |          1 |        |                                 |       |
 | dra       | SetMaxVolume                        |       13 |          1 |        |                                 |       |
 | dra       | UnMuteCd                            |       13 |          1 |        |                                 |       |
 | dra       | func_800FABEC                       |       13 |          1 |        |                                 |       |
@@ -205,9 +205,9 @@
 | ric       | pl_subweapon_cross.rodata           |       24 |          0 | Yes    |                                 |       |
 | no4       | e_spear_guard.rodata                |       24 |          0 | Yes    |                                 |       |
 | st0       | 3AB08.rodata                        |       24 |          0 | Yes    |                                 |       |
+| dra       | ResetPendingGfxLoad                 |       24 |          2 |        |                                 |       |
 | dra       | func_800EDAE4                       |       24 |          2 |        |                                 |       |
 | dra       | func_8010E3B8                       |       24 |          2 |        |                                 |       |
-| dra       | ResetPendingGfxLoad                 |       24 |          2 |        |                                 |       |
 | maria     | func_8015CAAC                       |       24 |          2 |        |                                 |       |
 | ric       | func_8015CAAC                       |       24 |          2 |        |                                 |       |
 |           | SetEntityAnimation                  |       24 |          2 |        |                                 |       |
@@ -242,7 +242,7 @@
 | dra       | ClearStatBuffs                      |       25 |          4 |        |                                 |       |
 | dra       | PerformHellfire                     |       25 |          4 |        |                                 |       |
 | dra       | MuteSound                           |       25 |          6 |        |                                 |       |
-| dra       | 274E8.rodata                        |       26 |          0 | Yes    |                                 |       |
+| dra       | 4AEA4.rodata                        |       26 |          0 | Yes    |                                 |       |
 | st0       | 2A218.rodata                        |       26 |          0 | Yes    |                                 |       |
 | dra       | HideAllBackgroundLayers             |       26 |          2 |        |                                 |       |
 | dra       | SetSpeedX                           |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
@@ -336,8 +336,8 @@
 | dra       | 5D5BC.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra       | 1DDC0.rodata                        |       32 |          0 | Yes    |                                 |       |
 | dra       | func_80102D08                       |       32 |          2 |        |                                 |       |
-| dra       | func_8010E940                       |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
 | dra       | func_800EB6B4                       |       32 |          3 |        |                                 |       |
+| dra       | func_8010E940                       |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
 | dra       | func_psp_09141608                   |       32 |          3 |        |                                 |       |
 | dra       | func_psp_090EB850                   |       32 |          3 |        |                                 |       |
 | dra       | func_800F9690                       |       32 |          4 |        |                                 |       |
@@ -362,8 +362,8 @@
 | dra       | func_800FAB1C                       |       34 |          4 |        |                                 |       |
 | maria_psp | MarSetHighJump                      |       34 |          5 |        |                                 |       |
 | dra       | MemcardEraseFile                    |       34 |          6 |        |                                 |       |
-| dra       | func_800E34DC                       |       35 |          2 |        |                                 |       |
 | dra       | DecompressWriteNibble               |       35 |          2 |        |                                 |       |
+| dra       | func_800E34DC                       |       35 |          2 |        |                                 |       |
 | dra       | InitSoundVars2                      |       35 |          2 |        |                                 |       |
 | dra       | func_80121F14                       |       35 |          3 |        |                                 |       |
 | dra       | func_800FAEC4                       |       35 |          3 |        |                                 |       |
@@ -386,8 +386,8 @@
 | no4       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | st0       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | wrp       | FindFirstEntityToTheRight           |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
-| dra       | func_801071CC                       |       36 |          5 |        |                                 |       |
 | dra       | func_psp_091040A0                   |       36 |          5 |        | https://decomp.me/scratch/WO6Th | 1.0   |
+| dra       | func_801071CC                       |       36 |          5 |        |                                 |       |
 | dra       | func_psp_090F2178                   |       37 |          2 |        |                                 |       |
 | chi       | GetAngleBetweenEntities             |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | lib       | GetAngleBetweenEntities             |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
@@ -464,8 +464,8 @@
 | dra       | func_801092E8                       |       41 |          1 |        |                                 |       |
 | dra       | func_8010E470                       |       41 |          2 |        |                                 |       |
 | dra       | MakeMemcardPath                     |       41 |          2 |        |                                 |       |
-| dra       | func_8011A328                       |       41 |          3 |        |                                 |       |
 | dra       | func_800EAEA4                       |       41 |          3 |        |                                 |       |
+| dra       | func_8011A328                       |       41 |          3 |        |                                 |       |
 | chi       | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | lib       | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | no4       | GetSideToPlayer                     |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
@@ -596,8 +596,8 @@
 | maria     | MarGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric       | RicGetFreeEntity                    |       51 |          5 |        |                                 |       |
 | ric       | RicSetSlideKick                     |       51 |          8 |        |                                 |       |
-| dra       | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra       | func_psp_09103E68                   |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
+| dra       | func_psp_091048B8                   |       51 |         10 |        |                                 |       |
 | dra       | GetLang                             |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090F6368                   |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090EAF08                   |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
