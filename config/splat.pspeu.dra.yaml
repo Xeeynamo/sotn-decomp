@@ -69,7 +69,7 @@ segments:
       - [0x23AD8, c, dra/timeattack] # O0
       - [0x23C18, c, dra/5D5BC] # O0
       - [0x26948, c, dra/4CE2C] # O4
-      - [0x274E8, c, dra_psp/274E8]
+      - [0x274E8, c, dra/4AEA4] # O4
       - [0x27F38, c, dra/692E8]
       - [0x2BF60, c, dra/71830]
       - [0x35238, c, dra/70394]
@@ -109,7 +109,8 @@ segments:
       - [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
       - [0x84210, .data, dra/5D5BC]
-      - [0x84238, data]
+      - [0x84238, .data, dra/4AEA4]
+      - [0x84248, data]
       - [0xA0578, .data, dra/692E8]
       - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
@@ -145,7 +146,7 @@ segments:
       - [0xEE600, .rodata, dra_psp/1DCE0]
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra/5D5BC]
-      - [0xEE6C8, .rodata, dra_psp/274E8]
+      - [0xEE6C8, .rodata, dra/4AEA4]
       - [0xEE708, .rodata, dra/692E8]
       - [0xEE7B0, .rodata, dra/71830]
       - [0xEE840, .rodata, dra/704D0]
