@@ -82,7 +82,28 @@ void MarSetFall(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1F30);
+void MarSetJump(s32 setunk44Flag) {
+    if (g_Player.unk72) {
+        MarSetFall();
+        return;
+    }
+    if (MarCheckFacing() != 0 || PLAYER.step == Player_Slide) {
+        MarSetAnimation(D_pspeu_092C0528);
+        MarSetSpeedX(FIX(2.25));
+        g_Player.unk44 = 0;
+    } else {
+        MarSetAnimation(D_pspeu_092C0620);
+        PLAYER.velocityX = 0;
+        g_Player.unk44 = 4;
+    }
+    MarSetStep(PL_S_JUMP);
+    PLAYER.velocityY = FIX(-5.4375);
+    if (setunk44Flag) {
+        g_Player.unk44 &= ~1;
+    } else {
+        g_Player.unk44 |= 1;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2040);
 

@@ -135,9 +135,9 @@ void RicSetJump(void) {
     }
     RicSetStep(PL_S_JUMP);
     if (g_IsPrologueStage) {
-        PLAYER.velocityY = -FIX(4.6875);
+        PLAYER.velocityY = FIX(-4.6875);
     } else {
-        PLAYER.velocityY = -FIX(5.4375);
+        PLAYER.velocityY = FIX(-5.4375);
     }
 }
 

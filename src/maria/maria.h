@@ -393,6 +393,8 @@ extern AnimationFrame D_pspeu_092C04B8[];
 extern AnimationFrame mar_anim_blade_dash[];
 extern AnimationFrame D_pspeu_092C04A8[];
 extern AnimationFrame D_pspeu_092C0498[];
+extern AnimationFrame D_pspeu_092C0528[];
+extern AnimationFrame D_pspeu_092C0620[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(
