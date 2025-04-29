@@ -662,7 +662,7 @@
 | maria_psp | func_pspeu_092BFEB0                 |       59 |          8 |        |                                 |       |
 | dra       | DoGravityJump                       |       59 |         10 |        |                                 |       |
 | dra       | SetMonoStereo                       |       59 |         10 |        |                                 |       |
-| dra       | func_psp_090FF480                   |       59 |         10 |        |                                 |       |
+| dra       | DemoInit                            |       59 |         10 |        |                                 |       |
 | lib       | FindFirstUnkPrim2                   |       59 |         11 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | dra       | HandlePrologueEnd                   |       59 |         14 |        |                                 |       |
 | dra       | 692E8.rodata                        |       60 |          0 | Yes    |                                 |       |
