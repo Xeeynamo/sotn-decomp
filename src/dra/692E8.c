@@ -63,24 +63,7 @@ s32 D_800ACE00[] = {
 
 #endif
 
-#ifdef VERSION_PSP
-extern s32 g_UserLanguage;
-static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (g_UserLanguage) {
-    default:
-    case LANG_EN:
-        return en;
-    case LANG_FR:
-        return fr;
-    case LANG_SP:
-        return sp;
-    case LANG_GE:
-        return ge;
-    case LANG_IT:
-        return it;
-    }
-}
-#endif
+#include "../get_lang.h"
 
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];

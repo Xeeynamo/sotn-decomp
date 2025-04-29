@@ -2,8 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-extern s32 g_UserLanguage;
-
 extern GfxBank* D_psp_0918BBD0[];
 extern GfxBank* D_psp_0918BBE8[];
 extern GfxBank* D_psp_0918BC00[];
@@ -21,25 +19,7 @@ extern u8* g_DecDstPtr;
 extern bool g_DecReadNibbleFlag;
 extern bool g_DecWriteNibbleFlag;
 
-#ifdef VERSION_PSP
-#pragma optimization_level 0
-static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (g_UserLanguage) {
-    default:
-    case LANG_EN:
-        return en;
-    case LANG_FR:
-        return fr;
-    case LANG_SP:
-        return sp;
-    case LANG_GE:
-        return ge;
-    case LANG_IT:
-        return it;
-    }
-}
-#pragma optimization_level 4
-#endif
+#include "../get_lang.h"
 
 void func_800EAEA4(void) {
     s32 i;

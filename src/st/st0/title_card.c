@@ -3,6 +3,7 @@
 #include "sfx.h"
 
 #if defined(VERSION_PSP)
+void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
 extern s32 D_80180908;
 extern u8 D_pspeu_09253FB0[];
 extern u8 D_pspeu_09253FF0[];
