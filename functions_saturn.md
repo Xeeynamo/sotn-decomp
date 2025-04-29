@@ -1,15 +1,15 @@
 | Filename                     | Function Name   |   Length |   Branches | WIP                             | %     |
 |------------------------------|-----------------|----------|------------|---------------------------------|-------|
 | alucard/f_nonmat/f60BD6C0.s  | func_060BD6C0   |        9 |          0 |                                 |       |
-| richter/f_nonmat/f60A9A5C.s  | func_060A9A5C   |       15 |          1 |                                 |       |
-| richter/f_nonmat/f60AE538.s  | func_060AE538   |       15 |          1 |                                 |       |
+| richter/f_nonmat/f60A9A5C.s  | func_060A9A5C   |       15 |          1 | https://decomp.me/scratch/Xjd3u | 0.242 |
+| richter/f_nonmat/f60AE538.s  | func_060AE538   |       15 |          1 | https://decomp.me/scratch/egQ38 | 0.992 |
 | richter/f_nonmat/f60B05EC.s  | func_060B05EC   |       15 |          1 |                                 |       |
 | alucard/f_nonmat/f60A7DD0.s  | func_060A7DD0   |       16 |          0 | https://decomp.me/scratch/qQhhl | 0.667 |
 | game/f_nonmat/f607AF0C.s     | func_0607AF0C   |       17 |          0 | https://decomp.me/scratch/honea | 0.711 |
 | game/f_nonmat/f607C0A0.s     | func_0607C0A0   |       17 |          0 | https://decomp.me/scratch/f6qn4 | 0.507 |
 | game/f_nonmat/f607872C.s     | func_0607872C   |       17 |          1 |                                 |       |
 | zero/f_nonmat/f6018F04.s     | func_06018F04   |       17 |          1 | https://decomp.me/scratch/8MBlN | 0.714 |
-| richter/f_nonmat/f60A8E9C.s  | func_060A8E9C   |       18 |          1 |                                 |       |
+| richter/f_nonmat/f60A8E9C.s  | func_060A8E9C   |       18 |          1 | https://decomp.me/scratch/Zh0gb | 0.714 |
 | zero/f_nonmat/f600CB04.s     | func_0600CB04   |       20 |          0 | https://decomp.me/scratch/kFsbY | 1.0   |
 | alucard/f_nonmat/f60A5574.s  | func_060A5574   |       20 |          1 |                                 |       |
 | alucard/f_nonmat/f60A5594.s  | func_060A5594   |       20 |          1 |                                 |       |
@@ -26,7 +26,7 @@
 | game/f_nonmat/f607371C.s     | func_0607371C   |       21 |          1 |                                 |       |
 | game/f_nonmat/f6079BE4.s     | func_06079BE4   |       21 |          1 |                                 |       |
 | game/f_nonmat/f607B0AC.s     | func_0607B0AC   |       21 |          1 |                                 |       |
-| richter/f_nonmat/f60B9A2C.s  | func_060B9A2C   |       21 |          1 |                                 |       |
+| richter/f_nonmat/f60B9A2C.s  | func_060B9A2C   |       21 |          1 | https://decomp.me/scratch/9iA0f | 0.322 |
 | alucard/f_nonmat/f60B7994.s  | func_060B7994   |       22 |          1 |                                 |       |
 | game/f_nonmat/f6067958.s     | func_06067958   |       22 |          1 |                                 |       |
 | zero/f_nonmat/f600FB0C.s     | func_0600FB0C   |       23 |          0 | https://decomp.me/scratch/rUvuf | 0.6   |
@@ -36,9 +36,9 @@
 | zero/f_nonmat/f600A240.s     | func_0600A240   |       24 |          2 | https://decomp.me/scratch/o04vx | 0.778 |
 | game/f_nonmat/f607AF3C.s     | func_0607AF3C   |       25 |          0 |                                 |       |
 | game/f_nonmat/f607AF68.s     | func_0607AF68   |       25 |          1 |                                 |       |
-| richter/f_nonmat/f60BBAC8.s  | func_060BBAC8   |       25 |          1 |                                 |       |
-| richter/f_nonmat/f60BBD88.s  | func_060BBD88   |       25 |          1 |                                 |       |
-| richter/f_nonmat/f60BBDB4.s  | func_060BBDB4   |       25 |          1 |                                 |       |
+| richter/f_nonmat/f60BBAC8.s  | func_060BBAC8   |       25 |          1 | https://decomp.me/scratch/pjLZM | 0.725 |
+| richter/f_nonmat/f60BBD88.s  | func_060BBD88   |       25 |          1 | https://decomp.me/scratch/oh8W0 | 0.725 |
+| richter/f_nonmat/f60BBDB4.s  | func_060BBDB4   |       25 |          1 | https://decomp.me/scratch/x8WbP | 0.725 |
 | game/f_nonmat/f607AAA4.s     | func_0607AAA4   |       25 |          2 |                                 |       |
 | game/f_nonmat/f607AACC.s     | func_0607AACC   |       25 |          2 |                                 |       |
 | alucard/f_nonmat/f60A7D3C.s  | func_060A7D3C   |       26 |          1 |                                 |       |
@@ -56,7 +56,7 @@
 | zero/f_nonmat/f6009D30.s     | func_06009D30   |       28 |          2 |                                 |       |
 | zero/f_nonmat/f60120D8.s     | func_060120D8   |       28 |          3 |                                 |       |
 | alucard/f_nonmat/f60A56AC.s  | func_060A56AC   |       29 |          0 |                                 |       |
-| richter/f_nonmat/f60AA4C8.s  | func_060AA4C8   |       29 |          0 |                                 |       |
+| richter/f_nonmat/f60AA4C8.s  | func_060AA4C8   |       29 |          0 | https://decomp.me/scratch/gMjTo | 0.907 |
 | zero/f_nonmat/f6006F74.s     | func_06006F74   |       29 |          0 |                                 |       |
 | zero/f_nonmat/f600E01C.s     | func_0600E01C   |       29 |          0 |                                 |       |
 | zero/f_nonmat/f600E070.s     | func_0600E070   |       29 |          0 |                                 |       |
@@ -102,7 +102,7 @@
 | zero/f_nonmat/f600C0C4.s     | func_0600C0C4   |       33 |          2 |                                 |       |
 | zero/f_nonmat/f600C6AC.s     | func_0600C6AC   |       33 |          2 |                                 |       |
 | zero/f_nonmat/f6012F7C.s     | func_06012F7C   |       33 |          4 |                                 |       |
-| richter/f_nonmat/f60AAD50.s  | func_060AAD50   |       34 |          0 |                                 |       |
+| richter/f_nonmat/f60AAD50.s  | func_060AAD50   |       34 |          0 | https://decomp.me/scratch/hD2wR | 0.795 |
 | game/f_nonmat/f607AB4C.s     | func_0607AB4C   |       34 |          2 |                                 |       |
 | game/f_nonmat/f607AB84.s     | func_0607AB84   |       34 |          2 |                                 |       |
 | zero/f_nonmat/f6012154.s     | func_06012154   |       34 |          2 |                                 |       |
