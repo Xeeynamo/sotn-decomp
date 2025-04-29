@@ -42,7 +42,7 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-#if (defined(VERSION_HD) || defined(VERSION_PSP)) && !defined(VERSION_PC)
+#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
 // only on US, this is moved after RicSetWalk
 void RicSetRun(void) {
     g_Player.unk44 = 0;
@@ -73,7 +73,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-#if defined(VERSION_US) && defined(VERSION_PC)
+#if defined(VERSION_US) && !defined(VERSION_PC)
 void RicSetRun(void) {
     if (g_Player.unk7A) {
         RicSetWalk(0);
