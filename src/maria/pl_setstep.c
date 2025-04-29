@@ -181,19 +181,63 @@ static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
 }
 
 extern s16 D_pspeu_092C5040[];
-// TBC: MarDoAttack?
-void func_pspeu_092B22B8(s32 arg0) {
-    s16 var_s0;
+static void PlayGruntAttackSoundEffect(s32 max) {
+    s16 sfxIndex;
 
-    if (arg0) {
-        var_s0 = rand() % arg0;
-        if (var_s0 < 5) {
-            func_9142FC8(D_pspeu_092C5040[var_s0]);
+    if (max) {
+        sfxIndex = rand() % max;
+        if (sfxIndex < 5) {
+            func_9142FC8(D_pspeu_092C5040[sfxIndex]);
         }
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2348);
+bool MarDoAttack(void) {
+    s32 var_s0;
+
+    var_s0 = 0;
+    if (func_pspeu_092B2590() == 0) {
+        return 1;
+    }
+    if (PLAYER.step != PL_S_STAND && PLAYER.step != PL_S_WALK &&
+        PLAYER.step != PL_S_FALL && PLAYER.step != PL_S_JUMP &&
+        PLAYER.step != PL_S_CROUCH && PLAYER.step != PL_S_18) {
+        return 0;
+    }
+    if (g_Player.timers[PL_T_8] > 0) {
+        return 0;
+    }
+    if (MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_OWL, 0)) {
+        switch (PLAYER.step) {
+        case PL_S_18:
+        case PL_S_STAND:
+            PLAYER.step = 0;
+            MarSetAnimation(D_pspeu_092C06C8);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case PL_S_WALK:
+            var_s0 = 1;
+            break;
+        case PL_S_CROUCH:
+            MarSetAnimation(D_pspeu_092C0730);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case PL_S_FALL:
+        case PL_S_JUMP:
+            PLAYER.step = 4;
+            MarSetAnimation(D_pspeu_092C0720);
+            break;
+        default:
+            return false;
+        }
+        g_Player.timers[PL_T_ATTACK] = 4;
+        g_Player.timers[PL_T_8] = 13;
+        g_api_PlaySfx(SFX_BONE_SWORD_SWISH_C);
+        PlayGruntAttackSoundEffect(10);
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2590);
 

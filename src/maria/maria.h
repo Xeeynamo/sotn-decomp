@@ -23,7 +23,7 @@ enum MarSteps {
     PL_S_15, // unused
     PL_S_DEAD,
     PL_S_17, // unused
-    PL_S_SUBWPN_18,
+    PL_S_18,
     PL_S_SUBWPN_19,
     PL_S_SUBWPN_20,
     PL_S_SUBWPN_21,
@@ -143,7 +143,7 @@ enum MarBlueprints {
     _BP_HOLYWATER_FIRE,
     _BP_HIT_BY_FIRE,
     _BP_HOLYWATER_FLAMES,
-    _BP_WHIP,
+    BP_OWL,
     BP_MULTIPLE_EMBERS,
     _BP_HYDROSTORM,
     _BP_CRASH_CROSS,
@@ -398,6 +398,9 @@ extern AnimationFrame D_pspeu_092C0620[];
 extern AnimationFrame D_pspeu_092C05A0[];
 extern AnimationFrame D_pspeu_092C0668[];
 extern AnimationFrame D_pspeu_092C06A0[];
+extern AnimationFrame D_pspeu_092C06C8[];
+extern AnimationFrame D_pspeu_092C0730[];
+extern AnimationFrame D_pspeu_092C0720[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(

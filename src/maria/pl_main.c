@@ -501,7 +501,7 @@ void MarMain(void) {
     case PL_S_DEAD:
         MarStepDead(damageEffects, damageKind, playerStep, playerStepS);
         break;
-    case PL_S_SUBWPN_18:
+    case PL_S_18:
         func_pspeu_092B0C70();
         break;
     case PL_S_SUBWPN_19:
@@ -578,7 +578,7 @@ void MarMain(void) {
     case PL_S_SUBWPN_20:
     case PL_S_SUBWPN_21:
     case PL_S_SUBWPN_27:
-    case PL_S_SUBWPN_18:
+    case PL_S_18:
         newStatus = 0x08000000;
         MarSetInvincibilityFrames(1, 16);
         break;
