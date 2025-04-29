@@ -3,7 +3,7 @@
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
-void func_8015CC70(s32 step_s) {
+void RicSetInit(s32 step_s) {
     PLAYER.step = PL_S_INIT;
     PLAYER.step_s = step_s;
     PLAYER.pose = PLAYER.poseTimer = 0;
@@ -43,6 +43,7 @@ void RicSetStand(s32 velocityX) {
 }
 
 #if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
+// only on US, this is moved after RicSetWalk
 void RicSetRun(void) {
     g_Player.unk44 = 0;
     RicSetStep(PL_S_RUN);
@@ -134,9 +135,9 @@ void RicSetJump(void) {
     }
     RicSetStep(PL_S_JUMP);
     if (g_IsPrologueStage) {
-        PLAYER.velocityY = -FIX(4.6875);
+        PLAYER.velocityY = FIX(-4.6875);
     } else {
-        PLAYER.velocityY = -FIX(5.4375);
+        PLAYER.velocityY = FIX(-5.4375);
     }
 }
 
@@ -188,7 +189,7 @@ static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-s32 func_8015D250() {
+s32 RicDoSubweapon() {
     SubweaponDef subweapon;
     s16 subweaponId;
     s16 chainLimit;
@@ -220,7 +221,6 @@ s32 func_8015D250() {
 
     RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Player.timers[PL_T_10] = 4;
-
     switch (PLAYER.step) {
     case PL_S_RUN:
         PLAYER.step = PL_S_STAND;
@@ -251,7 +251,7 @@ bool RicDoAttack(void) {
     s16 sfxGrunt;
 
     sfxGrunt = rand() % 6;
-    if (func_8015D250() == 0) {
+    if (RicDoSubweapon() == 0) {
         if (sfxGrunt == 0) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }

@@ -23,7 +23,7 @@ enum MarSteps {
     PL_S_15, // unused
     PL_S_DEAD,
     PL_S_17, // unused
-    PL_S_SUBWPN_18,
+    PL_S_18,
     PL_S_SUBWPN_19,
     PL_S_SUBWPN_20,
     PL_S_SUBWPN_21,
@@ -143,7 +143,7 @@ enum MarBlueprints {
     _BP_HOLYWATER_FIRE,
     _BP_HIT_BY_FIRE,
     _BP_HOLYWATER_FLAMES,
-    _BP_WHIP,
+    BP_OWL,
     BP_MULTIPLE_EMBERS,
     _BP_HYDROSTORM,
     _BP_CRASH_CROSS,
@@ -160,7 +160,7 @@ enum MarBlueprints {
     _BP_MARIA_POWERS_APPLIED,
     _BP_SLIDE,
     BP_25,
-    _BP_BLADE_DASH,
+    BP_BLADE_DASH,
     _BP_BLUE_CIRCLE,
     _BP_BLUE_SPHERE,
     _BP_MARIA,
@@ -218,7 +218,7 @@ enum MarBlueprints {
     NUM_BLUEPRINTS,
 };
 
-// NOTE: B_MAKE is different between DRA and RIC!
+// NOTE: B_MAKE from DRA is different than RIC or MARIA!
 // Parsing is done in RicEntityFactory
 // entityId: what entity to spawn based on the Entity Set
 // amount: How many entities to spawn in total
@@ -382,11 +382,27 @@ extern AnimationFrame mar_anim_crouch_from_stand[];
 extern AnimationFrame mar_80155534[];
 extern AnimationFrame mar_80155544[];
 extern AnimationFrame mar_anim_run[];
+extern AnimationFrame mar_anim_high_jump[];
 extern AnimationFrame mar_anim_stun[];
 extern AnimationFrame mar_801556C4[];
 extern AnimationFrame mar_80155750[];
 extern AnimationFrame mar_8015591C[];
 extern AnimationFrame mar_80155950[];
+extern AnimationFrame D_pspeu_092C0630[];
+extern AnimationFrame D_pspeu_092C04B8[];
+extern AnimationFrame mar_anim_blade_dash[];
+extern AnimationFrame D_pspeu_092C04A8[];
+extern AnimationFrame D_pspeu_092C0498[];
+extern AnimationFrame D_pspeu_092C0528[];
+extern AnimationFrame D_pspeu_092C0620[];
+extern AnimationFrame D_pspeu_092C05A0[];
+extern AnimationFrame D_pspeu_092C0668[];
+extern AnimationFrame D_pspeu_092C06A0[];
+extern AnimationFrame D_pspeu_092C06C8[];
+extern AnimationFrame D_pspeu_092C0730[];
+extern AnimationFrame D_pspeu_092C0720[];
+extern AnimationFrame D_pspeu_092C0878[];
+extern AnimationFrame D_pspeu_092C07E8[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(
