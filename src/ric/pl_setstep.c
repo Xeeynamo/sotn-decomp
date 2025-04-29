@@ -3,7 +3,7 @@
 
 void RicSetDebug() { RicSetStep(PL_S_DEBUG); }
 
-void func_8015CC70(s32 step_s) {
+void RicSetInit(s32 step_s) {
     PLAYER.step = PL_S_INIT;
     PLAYER.step_s = step_s;
     PLAYER.pose = PLAYER.poseTimer = 0;
@@ -42,7 +42,8 @@ void RicSetStand(s32 velocityX) {
     RicSetAnimation(ric_anim_stand);
 }
 
-#if defined(VERSION_HD) || defined(VERSION_PSP) || defined(VERSION_PC)
+#if (defined(VERSION_HD) || defined(VERSION_PSP)) && !defined(VERSION_PC)
+// only on US, this is moved after RicSetWalk
 void RicSetRun(void) {
     g_Player.unk44 = 0;
     RicSetStep(PL_S_RUN);
@@ -72,7 +73,7 @@ void RicSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-#if defined(VERSION_US) && !defined(VERSION_PC)
+#if defined(VERSION_US) && defined(VERSION_PC)
 void RicSetRun(void) {
     if (g_Player.unk7A) {
         RicSetWalk(0);

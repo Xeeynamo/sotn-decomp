@@ -73,7 +73,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8E9C, func_060A8E9C);
 
 // ===== pl_setstep.c
 
-// func_8015CC70
+// RicSetInit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
 
 // RicSetCrouch

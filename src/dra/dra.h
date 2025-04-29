@@ -319,7 +319,7 @@ enum AluBlueprints {
     NUM_BLUEPRINTS,
 };
 
-// NOTE: B_MAKE is different between DRA and RIC!
+// NOTE: B_MAKE from DRA is different than RIC or MARIA!
 // Parsing is done in EntityFactory
 // entityId: what entity to spawn based on the Entity Set
 // amount: How many entities to spawn in total
