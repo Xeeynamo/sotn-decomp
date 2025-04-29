@@ -57,14 +57,14 @@ void func_8010E0D0(s32 arg0) {
     if (arg0 == 1) {
         player = &PLAYER;
 
-        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x47), 0);
-
+        entity = CreateEntFactoryFromEntity(
+            player, FACTORY(BP_BLINK_WHITE, 0x47), 0);
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
 
-        entity = CreateEntFactoryFromEntity(player, FACTORY(44, 0x40), 0);
-
+        entity = CreateEntFactoryFromEntity(
+            player, FACTORY(BP_BLINK_WHITE, 0x40), 0);
         if (entity != NULL) {
             entity->flags |= FLAG_UNK_10000;
         }
@@ -76,7 +76,8 @@ void func_8010E168(s32 arg0, s16 arg1) {
     if (arg0 == 0) {
         // Create factory with unkA0 = 0x1500, blueprint #44.
         // Blueprint 44 is to make child entity #11, or EntityPlayerBlinkWhite
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x15), 0);
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x15), 0);
         if (g_Player.timers[13] <= arg1) {
             g_Player.timers[13] = arg1;
         }

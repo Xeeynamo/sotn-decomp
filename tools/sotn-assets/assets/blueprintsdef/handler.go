@@ -47,21 +47,21 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if len(e.Args) < 2 {
 		return fmt.Errorf("require blueprint enum name as second argument")
 	}
-	bpKindFields, err := fetchEnum("include", "game", "BlueprintKind")
+	ovlName := path.Base(e.AssetDir)
+	bpKindFields, err := fetchEnum(e.SrcDir, ovlName, "BlueprintKind")
 	if err != nil || len(bpKindFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintKind", err)
 	}
-	bpOriginFields, err := fetchEnum("include", "game", "BlueprintOrigin")
+	bpOriginFields, err := fetchEnum(e.SrcDir, ovlName, "BlueprintOrigin")
 	if err != nil || len(bpOriginFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintOrigin", err)
 	}
-	ovlName := path.Base(e.AssetDir)
 	blueprintFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[0])
 	if err != nil || len(blueprintFields) == 0 {
 		if err == nil {
@@ -77,7 +77,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[1], err)
 	}
 
-	entries, err := parse(e.Data[e.Start:e.End], entityFields, bpKindFields, bpOriginFields)
+	entries, err := parse(e.Data[e.Start:e.End], ovlName == "dra", entityFields, bpKindFields, bpOriginFields)
 	if err != nil {
 		return fmt.Errorf("parse error: %w", err)
 	}
@@ -174,6 +174,7 @@ func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
 
 func parse(
 	data []byte,
+	isDra bool,
 	entities map[int]string,
 	kinds map[int]string,
 	origins map[int]string,
@@ -199,9 +200,16 @@ func parse(
 		mappedEntries[i].TimerCycle = entry[3]
 		mappedEntries[i].TimerDelay = entry[5]
 
+		var kind, origin int
+		if isDra {
+			// DRA parses the data differently than RIC and MARIA
+			kind = int(entry[4] & 15)
+			origin = int((entry[4] >> 4) & 15)
+		} else {
+			kind = int(entry[4] & 7)
+			origin = int((entry[4] >> 3) & 31)
+		}
 		entity := int(entry[0])
-		kind := int(entry[4] & 7)
-		origin := int((entry[4] >> 3) & 31)
 
 		entityName, ok := entities[entity]
 		if !ok {
