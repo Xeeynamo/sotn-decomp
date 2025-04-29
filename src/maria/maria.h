@@ -387,6 +387,8 @@ extern AnimationFrame mar_801556C4[];
 extern AnimationFrame mar_80155750[];
 extern AnimationFrame mar_8015591C[];
 extern AnimationFrame mar_80155950[];
+extern AnimationFrame D_pspeu_092C0630[];
+extern AnimationFrame D_pspeu_092C04B8[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(

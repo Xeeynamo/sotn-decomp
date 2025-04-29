@@ -33,7 +33,23 @@ void MarSetCrouch(s32 kind, s32 velocityX) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", MarSetStand);
+void MarSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+    MarSetStep(PL_S_STAND);
+    switch (g_Player.prev_step) {
+    case PL_S_JUMP:
+        MarSetAnimation(D_pspeu_092C0630);
+        break;
+    case PL_S_RUN:
+        MarSetAnimation(D_pspeu_092C04B8);
+        break;
+    default:
+        MarSetAnimation(mar_anim_stand_relax);
+        break;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1D98);
 
