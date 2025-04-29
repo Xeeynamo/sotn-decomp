@@ -73,7 +73,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8E9C, func_060A8E9C);
 
 // ===== pl_setstep.c
 
-// func_8015CC70
+// RicSetInit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
 
 // RicSetCrouch
@@ -150,7 +150,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
 // RicCheckSubwpnChainLimit
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, func_060A938C);
 
-// func_8015D250
+// RicDoSubweapon
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_060A93F4);
 
 // RicDoAttack
