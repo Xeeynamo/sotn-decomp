@@ -196,7 +196,7 @@ bool MarDoAttack(void) {
     s32 var_s0;
 
     var_s0 = 0;
-    if (func_pspeu_092B2590() == 0) {
+    if (MarDoSubweapon() == 0) {
         return 1;
     }
     if (PLAYER.step != PL_S_STAND && PLAYER.step != PL_S_WALK &&
@@ -239,7 +239,71 @@ bool MarDoAttack(void) {
     return false;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B2590);
+s32 MarDoSubweapon(void) {
+    SubweaponDef subweapon;
+    s16 subweaponId;
+    s16 chainLimit;
+    s16 unused;
+
+    unused = 0;
+    if (g_Player.unk7A) {
+        return 1;
+    }
+    if (PLAYER.step != PL_S_STAND && PLAYER.step != PL_S_WALK &&
+        PLAYER.step != PL_S_FALL && PLAYER.step != PL_S_JUMP &&
+        PLAYER.step != PL_S_CROUCH) {
+        return 0;
+    }
+    if (!(g_Player.padPressed & PAD_UP)) {
+        return 1;
+    }
+    subweaponId = func_8015FB84(&subweapon, false, false);
+    if (subweaponId <= 0) {
+        return 1;
+    }
+    if (subweapon.blueprintNum == 0) {
+        return 4;
+    }
+    chainLimit = subweapon.chainLimit;
+    if (MarCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
+        return 2;
+    }
+    subweaponId = func_8015FB84(&subweapon, false, true);
+    if (subweaponId <= 0) {
+        return 3;
+    }
+    if (g_Player.unk72) {
+        return 5;
+    }
+    if (subweaponId == _PL_W_DAGGER &&
+        (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP ||
+         PLAYER.velocityX || PLAYER.velocityY)) {
+        return 0;
+    }
+
+    MarCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
+    g_Player.timers[PL_T_10] = 4;
+    switch (PLAYER.step) {
+    case PL_S_STAND:
+    case PL_S_WALK:
+    case PL_S_CROUCH:
+        if (subweaponId == _PL_W_DAGGER) {
+            g_Player.unk7A = 2;
+            MarSetAnimation(D_pspeu_092C0878);
+            PLAYER.step = PL_S_SUBWPN_28;
+        } else {
+            g_Player.unk7A = 3;
+            MarSetAnimation(D_pspeu_092C06C8);
+            PLAYER.step = PL_S_STAND;
+        }
+        break;
+    }
+    g_Player.unk46 = 3;
+    PLAYER.step_s = 0x42;
+    g_Player.timers[PL_T_10] = 4;
+    func_9142FC8(0x8EB);
+    return 0;
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B28B0);
 

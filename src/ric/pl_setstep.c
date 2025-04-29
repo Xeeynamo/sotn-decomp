@@ -189,7 +189,7 @@ static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-s32 func_8015D250() {
+s32 RicDoSubweapon() {
     SubweaponDef subweapon;
     s16 subweaponId;
     s16 chainLimit;
@@ -221,7 +221,6 @@ s32 func_8015D250() {
 
     RicCreateEntFactoryFromEntity(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Player.timers[PL_T_10] = 4;
-
     switch (PLAYER.step) {
     case PL_S_RUN:
         PLAYER.step = PL_S_STAND;
@@ -252,7 +251,7 @@ bool RicDoAttack(void) {
     s16 sfxGrunt;
 
     sfxGrunt = rand() % 6;
-    if (func_8015D250() == 0) {
+    if (RicDoSubweapon() == 0) {
         if (sfxGrunt == 0) {
             g_api.PlaySfx(SFX_VO_RIC_ATTACK_A);
         }

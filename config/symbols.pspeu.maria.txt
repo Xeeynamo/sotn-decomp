@@ -39,6 +39,7 @@ MarSetRun = 0x092B20B8;
 MarSetHighJump = 0x092B2170;
 MarCheckSubwpnChainLimit = 0x092B21E0;
 MarDoAttack = 0x092B2348;
+MarDoSubweapon = 0x092B2590;
 MarSetSlide = 0x092B2C68;
 MarSetBladeDash = 0x092B2D00;
 func_8015C4AC = 0x092B2DA0;
