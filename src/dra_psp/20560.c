@@ -4,7 +4,3 @@
 INCLUDE_ASM("dra_psp/psp/dra_psp/20560", func_psp_090FCEE0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/20560", RenderEntities);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/20560", func_psp_090FE948);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/20560", func_psp_090FF298);
