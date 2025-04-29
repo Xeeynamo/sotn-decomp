@@ -604,8 +604,8 @@
 | maria     | GetLang                             |       51 |         10 |        |                                 |       |
 | ric       | GetLang                             |       51 |         10 |        |                                 |       |
 | lib       | func_psp_0924B2E0                   |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
-| lib       | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
 | lib       | GetLang                             |       51 |         10 |        |                                 |       |
+| lib       | func_psp_0925D430                   |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
 | no4       | GetLang                             |       51 |         10 |        |                                 |       |
 | st0       | GetLang                             |       51 |         10 |        |                                 |       |
 | chi       | SalemWitchTrySpawnShadow            |       52 |          5 |        |                                 |       |
@@ -894,7 +894,7 @@
 | st0       | EntitySecretStairsCeiling           |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra       | func_psp_090E4828                   |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
 | dra       | TimeAttackController                |       89 |          8 |        |                                 |       |
-| dra       | func_psp_090FF608                   |       89 |         10 |        | https://decomp.me/scratch/adWrA | 0.506 |
+| dra       | func_psp_090FF608                   |       89 |         10 |        |                                 |       |
 | dra       | func_80115C50                       |       89 |         11 |        |                                 |       |
 | ric       | func_8015BB80                       |       89 |         11 |        | https://decomp.me/scratch/x9rRM | 0.99  |
 | chi       | CreateEntitiesToTheRight            |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
@@ -1590,7 +1590,7 @@
 | ric       | RicEntityAguneaLightning            |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib       | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0       | func_801BD8F0                       |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
-| dra       | func_psp_090FE948                   |      636 |         42 |        |                                 |       |
+| dra       | func_psp_090FE948                   |      636 |         42 |        | https://decomp.me/scratch/Rf7xS | 1.0   |
 | dra       | HandleSaveMenu                      |      639 |        101 |        | https://decomp.me/scratch/rPayV | 0.924 |
 | lib       | func_us_801B4830                    |      642 |         61 | Yes    |                                 |       |
 | no4       | func_pspeu_092483A0                 |      644 |         88 | Yes    | https://decomp.me/scratch/I0gCE | 0.998 |
