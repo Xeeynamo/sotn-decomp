@@ -32,9 +32,7 @@ static char richter_mist_label[] =
     "\x94\x1EI have nothing to do\x01with this wall．．．";
 #endif
 
-#ifdef VERSION_PSP
 #include "../get_lang.h"
-#endif
 
 void EntityMistDoor(Entity* self) {
     Entity* messageBox;

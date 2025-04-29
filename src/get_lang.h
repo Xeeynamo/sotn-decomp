@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
+#ifdef VERSION_PSP
+
 #pragma optimization_level 0
 
 extern s32 g_UserLanguage;
@@ -22,3 +24,5 @@ static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
 }
 
 #pragma optimization_level reset
+
+#endif

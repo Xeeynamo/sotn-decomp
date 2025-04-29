@@ -63,9 +63,7 @@ s32 D_800ACE00[] = {
 
 #endif
 
-#ifdef VERSION_PSP
 #include "../get_lang.h"
-#endif
 
 void func_801092E8(s32 arg0) {
     D_800A37D8[0] = D_800ACE48[arg0 * 2];

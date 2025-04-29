@@ -19,9 +19,7 @@ extern u8* g_DecDstPtr;
 extern bool g_DecReadNibbleFlag;
 extern bool g_DecWriteNibbleFlag;
 
-#ifdef VERSION_PSP
 #include "../get_lang.h"
-#endif
 
 void func_800EAEA4(void) {
     s32 i;
