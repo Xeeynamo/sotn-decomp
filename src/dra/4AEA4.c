@@ -176,11 +176,7 @@ static s32 DecompressData(u8* dst, u8* src) {
         case 0:
             ch = DecompressReadNibble();
             ch2 = DecompressReadNibble();
-#ifdef VERSION_PSP
-            count = ch2 + (ch << 4) + 0x13;
-#else
-            count = (ch << 4) + ch2 + 0x13;
-#endif
+            count = (ch * 16) + ch2 + 0x13;
             for (i = 0; i < count; i++) {
                 DecompressWriteNibble(0);
             }
