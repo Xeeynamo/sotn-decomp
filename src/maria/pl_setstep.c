@@ -63,7 +63,24 @@ void MarSetWalk(s32 arg0) {
     PLAYER.velocityY = 0;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1E18);
+void MarSetFall(void) {
+    if (g_Player.prev_step != PL_S_SLIDE && g_Player.prev_step != PL_S_RUN) {
+        PLAYER.velocityX = 0;
+    }
+    if (g_Player.prev_step != PL_S_WALK) {
+        MarSetAnimation(mar_80155534);
+    }
+    MarSetStep(PL_S_FALL);
+    PLAYER.velocityY = FIX(2);
+    g_Player.timers[PL_T_5] = 8;
+    g_Player.timers[PL_T_6] = 8;
+    if (g_Player.prev_step == PL_S_SLIDE) {
+        g_Player.timers[PL_T_5] = g_Player.timers[PL_T_6] = 0;
+        PLAYER.pose = 2;
+        PLAYER.poseTimer = 0x10;
+        PLAYER.velocityX /= 2;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_setstep", func_pspeu_092B1F30);
 
