@@ -14,7 +14,6 @@ extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u8* D_psp_092A54E0;
-extern s32 g_UserLanguage;
 
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
@@ -2140,77 +2139,45 @@ static ShopItem D_us_801D4364[64];
 static u8* D_psp_092A5D38;
 static char D_us_80181650[4];
 
-void* func_psp_0925D430(void* en, void* fr, void* sp, void* ge, void* it) {
-    switch (g_UserLanguage) {
-    default:
-    case LANG_EN:
-        return en;
-    case LANG_FR:
-        return fr;
-    case LANG_SP:
-        return sp;
-    case LANG_GE:
-        return ge;
-    case LANG_IT:
-        return it;
-    }
-}
+#include "../../get_lang.h"
 
 void func_psp_0925D4D0(void) {
-    D_us_80181528 =
-        func_psp_0925D430(D_psp_092A1730, D_psp_092A33C0, D_psp_092A2148,
-                          D_psp_092A3C80, D_psp_092A2AC0);
-    D_us_80181310 =
-        func_psp_0925D430(D_psp_092A1798, D_psp_092A3428, D_psp_092A21A8,
-                          D_psp_092A3CD8, D_psp_092A2B20);
-    D_us_801816A4 =
-        func_psp_0925D430(D_psp_092A17B8, D_psp_092A3448, D_psp_092A21C8,
-                          D_psp_092A3CF8, D_psp_092A2B40);
-    D_us_801816AC =
-        func_psp_0925D430(D_psp_092A17D8, D_psp_092A3468, D_psp_092A21E8,
-                          D_psp_092A3D18, D_psp_092A2B60);
-    D_us_801816B0 =
-        func_psp_0925D430(D_psp_092A1870, D_psp_092A3500, D_psp_092A2280,
-                          D_psp_092A3DB0, D_psp_092A2BF8);
-    D_us_8018181C =
-        func_psp_0925D430(D_psp_092A1990, D_psp_092A35C0, D_psp_092A2390,
-                          D_psp_092A3E70, D_psp_092A2CB0);
-    D_psp_092A5F98 =
-        func_psp_0925D430(D_psp_092A1A20, D_psp_092A3650, D_psp_092A2428,
-                          D_psp_092A3F08, D_psp_092A2D40);
-    D_us_8018187C =
-        func_psp_0925D430(D_psp_092A1A88, D_psp_092A36B8, D_psp_092A2480,
-                          D_psp_092A3F58, D_psp_092A2D88);
-    D_psp_092A5F88 =
-        func_psp_0925D430(D_psp_092A1AB8, D_psp_092A36E8, D_psp_092A24B0,
-                          D_psp_092A3F88, D_psp_092A2DB8);
-    D_us_801818C0 =
-        func_psp_0925D430(D_psp_092A1B00, D_psp_092A3708, D_psp_092A24E8,
-                          D_psp_092A3FB0, D_psp_092A2DE8);
-    D_us_80181668 =
-        func_psp_0925D430(D_psp_092A1B20, D_psp_092A3728, D_psp_092A2508,
-                          D_psp_092A3FD0, D_psp_092A2E08);
-    D_us_80181674 =
-        func_psp_0925D430(D_psp_092A1B60, D_psp_092A3758, D_psp_092A2540,
-                          D_psp_092A4008, D_psp_092A2E40);
-    D_us_801818F4 =
-        func_psp_0925D430(D_psp_092A1DC0, D_psp_092A39A8, D_psp_092A27F0,
-                          D_psp_092A4270, D_psp_092A30F8);
-    D_us_8018168C =
-        func_psp_0925D430(D_psp_092A2110, D_psp_092A3C48, D_psp_092A2A88,
-                          D_psp_092A44F0, D_psp_092A3390);
-    D_us_80181660 =
-        func_psp_0925D430(D_psp_092A2138, D_psp_092A3C70, D_psp_092A2AB0,
-                          D_psp_092A4518, D_psp_092A33B8);
-    D_us_801816C8 =
-        func_psp_0925D430(D_psp_092A1FA8, D_psp_092A3AC8, D_psp_092A2908,
-                          D_psp_092A4398, D_psp_092A3210);
-    D_psp_092A5F48 =
-        func_psp_0925D430(D_psp_09299A18, D_psp_0929ED18, D_psp_0929B4A0,
-                          D_psp_092A0AF0, D_psp_0929D1B0);
-    D_psp_092A5F40 =
-        func_psp_0925D430(D_psp_0929A320, D_psp_0929F950, D_psp_0929BFF0,
-                          D_psp_092A14D0, D_psp_0929DBD0);
+    D_us_80181528 = GetLang(D_psp_092A1730, D_psp_092A33C0, D_psp_092A2148,
+                            D_psp_092A3C80, D_psp_092A2AC0);
+    D_us_80181310 = GetLang(D_psp_092A1798, D_psp_092A3428, D_psp_092A21A8,
+                            D_psp_092A3CD8, D_psp_092A2B20);
+    D_us_801816A4 = GetLang(D_psp_092A17B8, D_psp_092A3448, D_psp_092A21C8,
+                            D_psp_092A3CF8, D_psp_092A2B40);
+    D_us_801816AC = GetLang(D_psp_092A17D8, D_psp_092A3468, D_psp_092A21E8,
+                            D_psp_092A3D18, D_psp_092A2B60);
+    D_us_801816B0 = GetLang(D_psp_092A1870, D_psp_092A3500, D_psp_092A2280,
+                            D_psp_092A3DB0, D_psp_092A2BF8);
+    D_us_8018181C = GetLang(D_psp_092A1990, D_psp_092A35C0, D_psp_092A2390,
+                            D_psp_092A3E70, D_psp_092A2CB0);
+    D_psp_092A5F98 = GetLang(D_psp_092A1A20, D_psp_092A3650, D_psp_092A2428,
+                             D_psp_092A3F08, D_psp_092A2D40);
+    D_us_8018187C = GetLang(D_psp_092A1A88, D_psp_092A36B8, D_psp_092A2480,
+                            D_psp_092A3F58, D_psp_092A2D88);
+    D_psp_092A5F88 = GetLang(D_psp_092A1AB8, D_psp_092A36E8, D_psp_092A24B0,
+                             D_psp_092A3F88, D_psp_092A2DB8);
+    D_us_801818C0 = GetLang(D_psp_092A1B00, D_psp_092A3708, D_psp_092A24E8,
+                            D_psp_092A3FB0, D_psp_092A2DE8);
+    D_us_80181668 = GetLang(D_psp_092A1B20, D_psp_092A3728, D_psp_092A2508,
+                            D_psp_092A3FD0, D_psp_092A2E08);
+    D_us_80181674 = GetLang(D_psp_092A1B60, D_psp_092A3758, D_psp_092A2540,
+                            D_psp_092A4008, D_psp_092A2E40);
+    D_us_801818F4 = GetLang(D_psp_092A1DC0, D_psp_092A39A8, D_psp_092A27F0,
+                            D_psp_092A4270, D_psp_092A30F8);
+    D_us_8018168C = GetLang(D_psp_092A2110, D_psp_092A3C48, D_psp_092A2A88,
+                            D_psp_092A44F0, D_psp_092A3390);
+    D_us_80181660 = GetLang(D_psp_092A2138, D_psp_092A3C70, D_psp_092A2AB0,
+                            D_psp_092A4518, D_psp_092A33B8);
+    D_us_801816C8 = GetLang(D_psp_092A1FA8, D_psp_092A3AC8, D_psp_092A2908,
+                            D_psp_092A4398, D_psp_092A3210);
+    D_psp_092A5F48 = GetLang(D_psp_09299A18, D_psp_0929ED18, D_psp_0929B4A0,
+                             D_psp_092A0AF0, D_psp_0929D1B0);
+    D_psp_092A5F40 = GetLang(D_psp_0929A320, D_psp_0929F950, D_psp_0929BFF0,
+                             D_psp_092A14D0, D_psp_0929DBD0);
 }
 
 // This is probably EntityLibrarian, but I don't know for sure

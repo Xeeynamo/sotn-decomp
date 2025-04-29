@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
+#include "../get_lang.h"
+
 #include "../destroy_entity.h"
 
 typedef enum {

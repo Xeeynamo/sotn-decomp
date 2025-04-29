@@ -26,7 +26,6 @@ static char* alucard_mist_label; // bss
 static char* maria_mist_label;   // bss
 static char* richter_mist_label; // bss
 
-extern s32 g_UserLanguage;
 #else
 static char alucard_mist_label[] = "\x7C\x0EMist could pass．";
 static char richter_mist_label[] =
@@ -34,22 +33,7 @@ static char richter_mist_label[] =
 #endif
 
 #ifdef VERSION_PSP
-static char* GetMistLabel(
-    char* str_EN, char* str_FR, char* str_ES, char* str_DE, char* str_IT) {
-    switch (g_UserLanguage) {
-    case 1:
-    default:
-        return str_EN;
-    case 2:
-        return str_FR;
-    case 3:
-        return str_ES;
-    case 4:
-        return str_DE;
-    case 5:
-        return str_IT;
-    }
-}
+#include "../get_lang.h"
 #endif
 
 void EntityMistDoor(Entity* self) {
@@ -71,14 +55,14 @@ void EntityMistDoor(Entity* self) {
             messageBox->posY.i.hi = 0xB0;
 #ifdef VERSION_PSP
             alucard_mist_label =
-                GetMistLabel(alucard_mist_ENG, alucard_mist_FR, alucard_mist_ES,
-                             alucard_mist_DE, alucard_mist_IT);
+                GetLang(alucard_mist_ENG, alucard_mist_FR, alucard_mist_ES,
+                        alucard_mist_DE, alucard_mist_IT);
             maria_mist_label =
-                GetMistLabel(maria_mist_ENG, maria_mist_FR, maria_mist_ES,
-                             maria_mist_DE, maria_mist_IT);
+                GetLang(maria_mist_ENG, maria_mist_FR, maria_mist_ES,
+                        maria_mist_DE, maria_mist_IT);
             richter_mist_label =
-                GetMistLabel(richter_mist_ENG, richter_mist_FR, richter_mist_ES,
-                             richter_mist_DE, richter_mist_IT);
+                GetLang(richter_mist_ENG, richter_mist_FR, richter_mist_ES,
+                        richter_mist_DE, richter_mist_IT);
             if (g_PlayableCharacter == PLAYER_MARIA) {
                 messageBox->ext.messageBox.label = maria_mist_label;
             } else if (g_PlayableCharacter == PLAYER_RICHTER) {

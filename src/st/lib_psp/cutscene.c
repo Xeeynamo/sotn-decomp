@@ -68,6 +68,8 @@ static u16 actor_names_ge[] = {
 static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
 
+#include "../../get_lang.h"
+
 #include "../cutscene_actor_name_psp.h"
 
 #define CUTSCENE_UNK3_RECT_X 64

@@ -43,8 +43,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, 80]
-      - [0x54B0, c, lang]
-      - [0x5550, c, pl_main]
+      - [0x54B0, c, pl_main]
       - [0x7B18, c, pl_debug]
       - [0x7EA8, c, pl_steps]
       - [0xB990, c, pl_setstep]
