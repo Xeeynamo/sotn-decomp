@@ -195,7 +195,170 @@ void MarGetPlayerSensor(Collider* col) {
     col->unk20 = g_MarSensorsCeiling[1].y + 1;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckFloor);
+void MarCheckFloor(void) {
+    Collider col;
+    s32 i;
+    s32 effects;
+    s32 effects2;
+    s16 yCheck;
+    s16 xCheck;
+    s16* x;
+    s16* y;
+    s32* vramFlag;
+    s32 vramApply;
+    s16 xMod;
+    s32 xMax;
+    s16 yMod;
+
+    yMod = 0;
+    i = 0;
+    y = &PLAYER.posY.i.hi;
+    x = &PLAYER.posX.i.hi;
+    vramFlag = &g_Player.vram_flag;
+
+    if (g_unkGraphicsStruct.unk18) {
+        *vramFlag = 1;
+        return;
+    }
+    if (PLAYER.step == PL_S_RUN) {
+        i = 1;
+    } else if (PLAYER.velocityY == 0 && g_Player.unk04 & 1) {
+        yMod = 4;
+    } else {
+        i = 1;
+    }
+    for (; i < NUM_HORIZONTAL_SENSORS; i++, yMod = 0) {
+        if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_BELOW) {
+            continue;
+        }
+        if (!(g_Player.colFloor[i].effects & EFFECT_UNK_0002 ||
+              PLAYER.velocityY >= 0 ||
+              (PLAYER.step == PL_S_RUN &&
+               g_Player.colFloor[i].effects & EFFECT_UNK_8000))) {
+            continue;
+        }
+        effects2 = g_Player.colFloor[i].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+        if ((effects2 == EFFECT_SOLID) || (effects2 & EFFECT_UNK_0800)) {
+            xCheck = *x + g_MarSensorsFloor[i].x;
+            yCheck = *y + g_MarSensorsFloor[i].y;
+            yCheck += g_Player.colFloor[i].unk18 - 1;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            effects = col.effects;
+            if (!(effects & EFFECT_SOLID)) {
+                if (g_Player.colFloor[i].effects != EFFECT_SOLID ||
+                    PLAYER.velocityY >= 0 || PLAYER.step == PL_S_RUN) {
+                    if (effects2 & EFFECT_UNK_0800) {
+                        *y += yMod + g_Player.colFloor[i].unk8;
+                    } else {
+                        *y += yMod + g_Player.colFloor[i].unk18;
+                    }
+                    *vramFlag |= 1;
+                    return;
+                }
+                continue;
+            }
+            if ((effects &
+                 (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+                (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+                if (i < 2) {
+                    *vramFlag |= (effects & (EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                                             EFFECT_UNK_1000)) +
+                                 (EFFECT_UNK_8000 | EFFECT_SOLID);
+                    *y += g_Player.colFloor[i].unk8 + col.unk18 - 1 + yMod;
+                    return;
+                }
+                if (i == 2 && (effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                                          EFFECT_SOLID)) ==
+                                  (EFFECT_UNK_8000 | EFFECT_SOLID)) {
+                    g_Player.colFloor[2].effects = effects;
+                    g_Player.colFloor[2].unk10 = g_Player.colFloor[2].unk8;
+                }
+                if (i == 3 &&
+                    (effects &
+                     (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) ==
+                        (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID)) {
+                    g_Player.colFloor[3].effects = effects;
+                    g_Player.colFloor[3].unk10 = g_Player.colFloor[3].unk8;
+                }
+            }
+        }
+        if (effects2 == (EFFECT_UNK_8000 | EFFECT_SOLID) && i < 2) {
+            *vramFlag |= g_Player.colFloor[i].effects &
+                         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                          EFFECT_UNK_1000 | EFFECT_SOLID);
+            *y += yMod + g_Player.colFloor[i].unk18;
+            return;
+        }
+    }
+    if (g_Player.colFloor[1].effects & EFFECT_QUICKSAND) {
+        *vramFlag |= EFFECT_SOLID | EFFECT_MIST_ONLY;
+        if (!(g_Timer & 3)) {
+            (*y)++;
+        }
+        return;
+    }
+    if (g_Player.colFloor[1].effects & EFFECT_WATER) {
+        *vramFlag |= EFFECT_SOLID_FROM_BELOW;
+    }
+    if (PLAYER.velocityY < 0) {
+        return;
+    }
+    xCheck = *x + g_MarSensorsFloor[0].x;
+    yCheck = *y + g_MarSensorsFloor[0].y + 10;
+    g_api.CheckCollision(xCheck, yCheck, &col, 0);
+    if ((col.effects & (EFFECT_UNK_8000 | EFFECT_SOLID)) != EFFECT_NONE) {
+        return;
+    }
+
+    for (i = 2; i < NUM_HORIZONTAL_SENSORS; i++) {
+        if ((g_Player.colFloor[3].effects & EFFECT_UNK_8000) &&
+            (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) {
+            return;
+        }
+        effects2 = g_Player.colFloor[i].effects;
+        vramApply = ((effects2 &
+                      (EFFECT_UNK_4000 | EFFECT_UNK_2000 | EFFECT_UNK_1000)) +
+                     (EFFECT_UNK_8000 | EFFECT_SOLID));
+        if (!(effects2 & EFFECT_UNK_8000)) {
+            continue;
+        }
+        if (i == 2) {
+            effects = EFFECT_UNK_4000;
+            xMod = g_Player.colFloor[2].unk4;
+            xMax = xMod + 8;
+        } else {
+            effects = 0;
+            xMod = g_Player.colFloor[3].unkC;
+            xMax = 8 - xMod;
+        }
+        if ((effects2 & EFFECT_UNK_4000) == effects) {
+            xCheck = xMod + (*x + g_MarSensorsFloor[i].x);
+            yCheck = *y + g_MarSensorsFloor[i].y;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            if (col.effects & EFFECT_SOLID) {
+                *y += col.unk18;
+                *vramFlag |= vramApply;
+                return;
+            }
+            continue;
+        }
+        if (xMax <= 0) {
+            continue;
+        }
+        if (!(effects2 & 1)) {
+            continue;
+        }
+        xCheck = *x + g_MarSensorsFloor[i].x + xMod;
+        yCheck = *y + g_MarSensorsFloor[i].y + g_Player.colFloor[i].unk10;
+        g_api.CheckCollision(xCheck, yCheck, &col, 0);
+        if (col.effects & EFFECT_SOLID) {
+            *y += (col.unk18 + g_Player.colFloor[i].unk10);
+            *vramFlag |= vramApply;
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckCeiling);
 
