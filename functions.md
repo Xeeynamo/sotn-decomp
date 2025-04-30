@@ -611,7 +611,7 @@
 | chi       | SalemWitchTrySpawnShadow            |       52 |          5 |        |                                 |       |
 | dra       | func_800EDD9C                       |       52 |          6 |        | https://decomp.me/scratch/qAogY | 0.659 |
 | st0       | func_801AD838                       |       52 |         10 |        | https://decomp.me/scratch/2pNca | 0.995 |
-| maria_psp | MarStepWalk                         |       52 |         13 |        |                                 |       |
+| maria     | MarStepWalk                         |       52 |         13 |        |                                 |       |
 | dra       | func_psp_090F18B0                   |       53 |          3 |        |                                 |       |
 | no4       | func_pspeu_0923D0C8                 |       53 |          3 |        |                                 |       |
 | dra       | func_80109328                       |       53 |          5 |        | https://decomp.me/scratch/oS04z | 0.98  |
@@ -1282,13 +1282,13 @@
 | no4       | func_pspeu_092409A8                 |      222 |         25 |        |                                 |       |
 | no4       | func_pspeu_09240350                 |      223 |         22 |        |                                 |       |
 | dra       | func_psp_090E4CD0                   |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
-| maria_psp | MarCheckWallRight                   |      224 |         28 |        |                                 |       |
+| maria     | MarCheckWallRight                   |      224 |         28 |        | https://decomp.me/scratch/0FafD | 0.998 |
 | ric       | RicCheckWallRight                   |      224 |         28 |        | https://decomp.me/scratch/JM89s | 0.999 |
 | dra       | func_800EAD7C                       |      225 |          7 |        |                                 |       |
 | lib       | func_us_801BC28C                    |      225 |         18 |        |                                 |       |
 | chi       | EntityBreakableWithDebris           |      226 |         27 |        | https://decomp.me/scratch/KHBTI | 0.992 |
 | lib       | EntityBackgroundBookcase            |      227 |         29 |        |                                 |       |
-| maria_psp | MarCheckWallLeft                    |      228 |         29 |        |                                 |       |
+| maria     | MarCheckWallLeft                    |      228 |         29 |        |                                 |       |
 | ric       | RicCheckWallLeft                    |      228 |         29 |        |                                 |       |
 | lib       | func_us_801B12D0                    |      231 |         11 |        |                                 |       |
 | dra       | PlayerStepHighJump                  |      232 |         32 |        |                                 |       |
@@ -1559,7 +1559,7 @@
 | st0       | EntityCutscene                      |      557 |         84 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | st0       | EntityStageTitleCard                |      559 |         43 | Yes    |                                 |       |
 | ric       | RicEntitySubwpnCross                |      560 |         53 | Yes    | https://decomp.me/scratch/98zwV | 0.998 |
-| maria_psp | MarCheckCeiling                     |      562 |         55 |        |                                 |       |
+| maria     | MarCheckCeiling                     |      562 |         55 |        | https://decomp.me/scratch/FMvjc | 0.997 |
 | ric       | RicCheckCeiling                     |      562 |         55 |        | https://decomp.me/scratch/XrVFn | 0.998 |
 | dra       | func_8012F178                       |      564 |         35 |        |                                 |       |
 | no4       | func_pspeu_09258E30                 |      564 |         51 | Yes    |                                 |       |
@@ -1576,7 +1576,7 @@
 | wrp       | EntityEquipItemDrop                 |      583 |         67 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra       | MenuDraw                            |      584 |         77 | Yes    | https://decomp.me/scratch/hp3KZ | 0.997 |
 | ric       | RicCheckFloor                       |      590 |         56 |        | https://decomp.me/scratch/gDGE6 | 0.998 |
-| maria_psp | MarCheckFloor                       |      599 |         58 |        |                                 |       |
+| maria     | MarCheckFloor                       |      599 |         58 |        | https://decomp.me/scratch/Kcej4 | 0.996 |
 | chi       | EntityBreakableWall                 |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra       | func_80104790                       |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
 | ric       | RicEntitySubwpnHolyWaterFlame       |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
@@ -1595,7 +1595,7 @@
 | lib       | func_us_801B4830                    |      642 |         61 | Yes    |                                 |       |
 | no4       | func_pspeu_092483A0                 |      644 |         88 | Yes    | https://decomp.me/scratch/I0gCE | 0.998 |
 | dra       | func_8012D3E8                       |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
-| maria_psp | func_pspeu_092B3848                 |      648 |        123 |        |                                 |       |
+| maria     | MarCheckInput                       |      648 |        123 |        | https://decomp.me/scratch/mNR5x | 0.992 |
 | lib       | func_psp_09258100                   |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
 | ric       | RicEntityAguneaCircle               |      655 |         49 | Yes    | https://decomp.me/scratch/hxWhp | 0.999 |
 | lib       | EntityFleaArmor                     |      655 |         98 |        |                                 |       |
@@ -1723,7 +1723,7 @@
 | dra       | AlucardHandleDamage                 |     1338 |        206 | Yes    |                                 |       |
 | st0       | EntityDracula                       |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra       | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
-| dra       | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/kdYz5 | 0.997 |
+| dra       | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/MJde9 | 0.999 |
 | dra       | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/NjoUv | 0.992 |
 | ric       | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        | https://decomp.me/scratch/G9CWM | 1.0   |
 | lib       | func_us_801B15C0                    |     1588 |        176 | Yes    |                                 |       |
