@@ -360,7 +360,172 @@ void MarCheckFloor(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckCeiling);
+void MarCheckCeiling(void) {
+    Collider col;
+    s32 i;
+    u32 effects;
+    u32 effects2;
+    s16 xCheck;
+    s16 yCheck;
+    s16* x;
+    s16* y;
+    s32* vramFlag;
+    s32 vramApply;
+    s16 xMod;
+    s32 xMax;
+
+    i = 1;
+    y = &PLAYER.posY.i.hi;
+    x = &PLAYER.posX.i.hi;
+    vramFlag = &g_Player.vram_flag;
+
+    if (g_unkGraphicsStruct.unk18) {
+        return;
+    }
+    for (; i < NUM_HORIZONTAL_SENSORS; i++) {
+        if (g_Player.colCeiling[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+            continue;
+        }
+        effects2 = g_Player.colCeiling[i].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_SOLID);
+        if ((effects2 == EFFECT_SOLID) || (effects2 & EFFECT_UNK_8000)) {
+            if ((PLAYER.step == PL_S_RUN || PLAYER.step == PL_S_SLIDE) &&
+                !(effects2 & EFFECT_SOLID)) {
+                continue;
+            }
+            xCheck = *x + g_MarSensorsCeiling[i].x;
+            yCheck = *y + g_MarSensorsCeiling[i].y +
+                     g_Player.colCeiling[i].unk10 + 1;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            effects = col.effects;
+            if (!(effects & EFFECT_SOLID)) {
+                if (g_Player.colCeiling[i].effects != EFFECT_SOLID ||
+                    PLAYER.velocityY <= 0) {
+                    *vramFlag |= 2;
+                    if (!(*vramFlag & 1) &&
+                        ((g_Player.unk04 &
+                          (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID)) !=
+                         (EFFECT_SOLID_FROM_ABOVE | EFFECT_SOLID))) {
+                        if (g_Player.colCeiling[i].effects & EFFECT_UNK_8000) {
+                            *y += g_Player.colCeiling[i].unk10;
+                        } else {
+                            *y += g_Player.colCeiling[i].unk20;
+                        }
+                    }
+                    return;
+                }
+                continue;
+            }
+            if ((effects &
+                 (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ==
+                (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+                if (i < 2) {
+                    *vramFlag |=
+                        (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         ((effects >> 4) & (EFFECT_UNK_0400 | EFFECT_UNK_0200 |
+                                            EFFECT_UNK_0100)));
+                    if (!(*vramFlag & 1)) {
+                        *y += 1 + (g_Player.colCeiling[i].unk10 + col.unk20);
+                    }
+                    return;
+                }
+                if (i == 2 && (effects & (EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                                          EFFECT_SOLID)) ==
+                                  (EFFECT_UNK_0800 | EFFECT_SOLID)) {
+                    g_Player.colFloor[2].effects = effects;
+                    g_Player.colFloor[2].unk8 = g_Player.colFloor[2].unk10;
+                }
+                if (i == 3 &&
+                    (effects &
+                     (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) ==
+                        (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID)) {
+                    g_Player.colFloor[3].effects = effects;
+                    g_Player.colFloor[3].unk8 = g_Player.colFloor[3].unk10;
+                }
+            }
+            if ((effects & EFFECT_UNK_0800) == EFFECT_NONE) {
+                *vramFlag |=
+                    (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     ((effects >> 4) &
+                      (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+                if (!(*vramFlag & 1)) {
+                    *y += 1 + (g_Player.colCeiling[i].unk10 + col.unk20);
+                }
+                return;
+            }
+        }
+        if ((effects2 == (EFFECT_UNK_0800 | EFFECT_SOLID)) && i < 2) {
+            *vramFlag |=
+                (EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                 ((g_Player.colCeiling[i].effects >> 4) &
+                  (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)));
+            if (!(*vramFlag & 1)) {
+                *y += g_Player.colCeiling[i].unk20;
+            }
+            return;
+        }
+    }
+    if (PLAYER.velocityY > 0) {
+        return;
+    }
+    xCheck = *x + g_MarSensorsCeiling[0].x;
+    yCheck = (*y + g_MarSensorsCeiling[0].y) - 10;
+    g_api.CheckCollision(xCheck, yCheck, &col, 0);
+    if ((col.effects & EFFECT_SOLID) != EFFECT_NONE) {
+        return;
+    }
+    for (i = 2; i < NUM_HORIZONTAL_SENSORS; i++) {
+        if ((g_Player.colCeiling[3].effects & EFFECT_UNK_0800) &&
+            (g_Player.colCeiling[2].effects & EFFECT_UNK_0800)) {
+            return;
+        }
+        effects2 = g_Player.colCeiling[i].effects;
+        vramApply = ((effects2 >> 4) &
+                     (EFFECT_UNK_0400 | EFFECT_UNK_0200 | EFFECT_UNK_0100)) +
+                    (EFFECT_UNK_0800 | EFFECT_UNK_0002);
+        if (!(effects2 & EFFECT_UNK_0800)) {
+            continue;
+        }
+        if (i == 2) {
+            effects = EFFECT_UNK_4000;
+            xMod = g_Player.colCeiling[2].unk4;
+            xMax = xMod + 8;
+        } else {
+            effects = 0;
+            xMod = g_Player.colCeiling[3].unkC;
+            xMax = 8 - xMod;
+        }
+        if ((effects2 & EFFECT_UNK_4000) == effects) {
+            xCheck = xMod + (*x + g_MarSensorsCeiling[i].x);
+            yCheck = *y + g_MarSensorsCeiling[i].y;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            if (col.effects & EFFECT_SOLID) {
+                *vramFlag |= vramApply;
+                if (!(*vramFlag & 1)) {
+                    *y += col.unk20;
+                }
+                return;
+            }
+            continue;
+        }
+        if (xMax <= 0) {
+            continue;
+        }
+        if (!(effects2 & 1)) {
+            continue;
+        }
+        xCheck = *x + g_MarSensorsCeiling[i].x + xMod;
+        yCheck = *y + g_MarSensorsCeiling[i].y + g_Player.colCeiling[i].unk8;
+        g_api.CheckCollision(xCheck, yCheck, &col, 0);
+        if (col.effects & EFFECT_SOLID) {
+            if (!(*vramFlag & 1)) {
+                *y += col.unk20 + g_Player.colCeiling[i].unk8;
+            }
+            *vramFlag |= vramApply;
+            return;
+        }
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckWallRight);
 
