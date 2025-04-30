@@ -527,6 +527,155 @@ void MarCheckCeiling(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckWallRight);
+void MarCheckWallRight(void) {
+    Collider col;
+    s32 i;
+    s32 effects;
+    s16 xCheck;
+    s16 yCheck;
+    s16* y;
+    s16* x;
+    s32* vramFlag;
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_collision", MarCheckWallLeft);
+    y = &PLAYER.posY.i.hi;
+    x = &PLAYER.posX.i.hi;
+    vramFlag = &g_Player.vram_flag;
+
+    if (g_unkGraphicsStruct.unk18) {
+        return;
+    }
+    effects =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+        (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID))) {
+        *vramFlag |= 4;
+        return;
+    }
+
+    for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+        effects = g_Player.colWall[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                        EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                        EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID) ||
+            effects == (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+            xCheck = *x + g_MarSensorsWall[i].x + g_Player.colWall[i].unk4 - 1;
+            yCheck = *y + g_MarSensorsWall[i].y;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            if ((col.effects & EFFECT_SOLID) == EFFECT_NONE) {
+                *vramFlag |= 4;
+                *x += g_Player.colWall[i].unk4;
+                return;
+            }
+        }
+        if (*vramFlag & 1) {
+            continue;
+        }
+        if ((effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                EFFECT_UNK_8000 &&
+            (i != 0) &&
+            ((g_Player.colWall[0].effects & EFFECT_UNK_0800) ||
+             !(g_Player.colWall[0].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *vramFlag |= 4;
+            *x += g_Player.colWall[i].unk4;
+            return;
+        }
+        if ((effects & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                EFFECT_UNK_0800 &&
+            (i != 6) &&
+            ((g_Player.colWall[6].effects & EFFECT_UNK_8000) ||
+             !(g_Player.colWall[6].effects &
+               (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+            *vramFlag |= 4;
+            *x += g_Player.colWall[i].unk4;
+            return;
+        }
+    }
+}
+
+void MarCheckWallLeft(void) {
+    Collider col;
+    s32 i;
+    s32 effects;
+    s16 xCheck;
+    s16 yCheck;
+    s16* y;
+    s16* x;
+    s32* vramFlag;
+
+    y = &PLAYER.posY.i.hi;
+    x = &PLAYER.posX.i.hi;
+    vramFlag = &g_Player.vram_flag;
+
+    if (g_unkGraphicsStruct.unk18) {
+        return;
+    }
+    effects =
+        g_Player.unk04 & (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                          EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID);
+    if ((effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID)) ||
+        (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0400 | EFFECT_UNK_0002 |
+                     EFFECT_SOLID)) ||
+        (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                     EFFECT_UNK_0400 | EFFECT_UNK_0002 | EFFECT_SOLID))) {
+        *vramFlag |= 8;
+        return;
+    }
+    for (i = NUM_VERTICAL_SENSORS; i < NUM_VERTICAL_SENSORS * 2; i++) {
+        effects = g_Player.colWall[i].effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800 |
+                   EFFECT_UNK_0002 | EFFECT_SOLID);
+        if ((effects == (EFFECT_UNK_8000 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_8000 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_0800 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_4000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
+                         EFFECT_SOLID)) ||
+            (effects == (EFFECT_UNK_0002 | EFFECT_SOLID))) {
+            xCheck = *x + g_MarSensorsWall[i].x + g_Player.colWall[i].unkC + 1;
+            yCheck = *y + g_MarSensorsWall[i].y;
+            g_api.CheckCollision(xCheck, yCheck, &col, 0);
+            if ((col.effects & EFFECT_SOLID) == EFFECT_NONE) {
+                *vramFlag |= 8;
+                *x += g_Player.colWall[i].unkC;
+                return;
+            }
+        }
+        if (!(*vramFlag & 1)) {
+            if (((effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                 (EFFECT_UNK_8000 | EFFECT_UNK_4000)) &&
+                (i != 7) &&
+                ((g_Player.colWall[7].effects & EFFECT_UNK_0800) ||
+                 !(g_Player.colWall[7].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vramFlag |= 8;
+                *x += g_Player.colWall[i].unkC;
+                return;
+            }
+            if (((effects &
+                  (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                 (EFFECT_UNK_4000 | EFFECT_UNK_0800)) &&
+                (i != 13) &&
+                ((g_Player.colWall[13].effects & EFFECT_UNK_8000) ||
+                 !(g_Player.colWall[13].effects &
+                   (EFFECT_UNK_8000 | EFFECT_UNK_0800 | EFFECT_UNK_0002)))) {
+                *vramFlag |= 8;
+                *x += g_Player.colWall[i].unkC;
+                return;
+            }
+        }
+    }
+}
