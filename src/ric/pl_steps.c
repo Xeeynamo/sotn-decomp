@@ -121,8 +121,8 @@ void RicStepWalk(void) {
             RicSetStand(0);
             return;
         }
-        if (g_Entities[0].step_s != 0) {
-            if (g_Entities[0].step_s) {
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
             }
         } else {
             RicSetSpeedX(FIX(1.25));
@@ -155,8 +155,8 @@ void RicStepRun(void) {
             }
             return;
         }
-        if (g_Entities[0].step_s != 0) {
-            if (g_Entities[0].step_s) {
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
             }
         } else {
             RicSetSpeedX(FIX(2.25));

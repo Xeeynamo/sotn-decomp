@@ -26,7 +26,24 @@ static void func_80158B04(u16 arg0) {
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepStand);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepWalk);
+void MarStepWalk(void) {
+    if (!MarCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
+                       CHECK_400 | CHECK_800 | CHECK_ATTACK | CHECK_CROUCH)) {
+        MarDecelerateX(FIX(0.125));
+        if (MarCheckFacing() == 0) {
+            MarSetStand(0);
+            MarSetAnimation(D_pspeu_092C04B8);
+            MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+            return;
+        }
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
+            }
+        } else {
+            MarSetSpeedX(FIX(2.25));
+        }
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepJump);
 
