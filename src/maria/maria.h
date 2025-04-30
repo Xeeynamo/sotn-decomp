@@ -4,6 +4,23 @@
 
 #define OVL_EXPORT(x) MAR_##x
 
+#define CHECK_GROUND 1
+#define CHECK_FALL 4
+#define CHECK_FACING 8
+#define CHECK_JUMP 0x10
+#define CHECK_20 0x20
+#define CHECK_CRASH 0x40
+#define CHECK_80 0x80
+#define CHECK_GRAVITY_HIT 0x200
+#define CHECK_400 0x400
+#define CHECK_800 0x800
+#define CHECK_ATTACK 0x1000
+#define CHECK_CROUCH 0x2000
+#define CHECK_GRAVITY_FALL 0x8000
+#define CHECK_GRAVITY_JUMP 0x10000
+#define CHECK_GROUND_AFTER_HIT 0x20000
+#define CHECK_SLIDE 0x40000
+
 enum MarSteps {
     PL_S_STAND,
     PL_S_WALK,
@@ -398,11 +415,15 @@ extern AnimationFrame D_pspeu_092C0620[];
 extern AnimationFrame D_pspeu_092C05A0[];
 extern AnimationFrame D_pspeu_092C0668[];
 extern AnimationFrame D_pspeu_092C06A0[];
-extern AnimationFrame D_pspeu_092C06C8[];
-extern AnimationFrame D_pspeu_092C0730[];
-extern AnimationFrame D_pspeu_092C0720[];
+extern AnimationFrame mar_80155588[];
+extern AnimationFrame mar_801555A8[];
+extern AnimationFrame mar_801555C8[];
 extern AnimationFrame D_pspeu_092C0878[];
 extern AnimationFrame D_pspeu_092C07E8[];
+extern AnimationFrame mar_801555E8[];
+extern AnimationFrame mar_801555C8[];
+extern AnimationFrame mar_801555A8[];
+extern AnimationFrame mar_80155588[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(
