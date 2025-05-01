@@ -378,7 +378,7 @@ s32 func_800F16D0(void) {
     }
 }
 
-void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
+static void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
     // Pixels are stored 2 per byte
     s32 index = (x / 2) + (y * 4);
 
@@ -399,7 +399,7 @@ s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
     }
 }
 
-void func_800F180C(s32 x, s32 y, u8* dst) {
+static void func_800F180C(s32 x, s32 y, u8* dst) {
     s32 i, j;
     u8 *start, *src;
 
@@ -413,7 +413,7 @@ void func_800F180C(s32 x, s32 y, u8* dst) {
     }
 }
 
-void func_800F1868(s32 x, s32 y, u8* src) {
+static void func_800F1868(s32 x, s32 y, u8* src) {
     s32 i;
     s32 j;
     u8* start;
@@ -427,7 +427,20 @@ void func_800F1868(s32 x, s32 y, u8* src) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7F98);
+void func_800F18C4(s32 x, s32 y) {
+    u8 sp10[4 * 5];
+    s32 i;
+    s32 j;
+
+    func_800F180C(x, y, sp10);
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 5; j++) {
+            func_800F1770(sp10, j, i, false);
+        }
+    }
+    func_800F1868(x, y, sp10);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8008);
 
