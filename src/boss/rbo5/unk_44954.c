@@ -171,7 +171,7 @@ void func_8010E6AC(bool forceAnim13) {
         }
     } else {
         SetPlayerAnim(7);
-        // Factory blueprint 1 has child 2, which is func_8011B5A4
+        // Factory blueprint 1 has child 2, which is EntitySmokePuff
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 
@@ -578,7 +578,7 @@ void func_80111CC0(void) {
     }
 }
 
-void func_us_801C5C64(void) {
+void PlayerStepStand(void) {
     s32 anim;
     u16 var_s0;
 
@@ -665,7 +665,7 @@ void PlayerStepWalk(void) {
 
 extern s16 D_us_801813C0[];
 
-void func_us_801C5EE0(void) {
+void PlayerStepJump(void) {
     s32 moveDirection;
     s16 index;
 
@@ -743,7 +743,7 @@ void func_us_801C5EE0(void) {
     }
 }
 
-void func_us_801C61B0(void) {
+void PlayerStepFall(void) {
     if (func_us_801C5650(0x9029) == false) {
         DecelerateX(FIX(1.0 / 16.0));
         if (CheckMoveDirection() != 0) {
@@ -752,7 +752,7 @@ void func_us_801C61B0(void) {
     }
 }
 
-void func_us_801C61F8(void) {
+void PlayerStepCrouch(void) {
     s32 anim;
     s16 var_s0;
     u8 _pad[40]; // any size between 33-40 (inclusive);

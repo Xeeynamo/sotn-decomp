@@ -172,7 +172,7 @@ void func_8010E6AC(bool forceAnim13) {
         }
     } else {
         SetPlayerAnim(7);
-        // Factory blueprint 1 has child 2, which is func_8011B5A4
+        // Factory blueprint 1 has child 2, which is EntitySmokePuff
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
 
@@ -579,7 +579,7 @@ void func_80111CC0(void) {
     }
 }
 
-void func_us_801C6654(void) {
+void PlayerStepStand(void) {
     s32 anim;
     u16 var_s0;
 
@@ -666,7 +666,7 @@ void PlayerStepWalk(void) {
 
 extern s16 D_us_80181334[];
 
-void func_us_801C68D0(void) {
+void PlayerStepJump(void) {
     s32 moveDirection;
     s16 index;
 
@@ -744,7 +744,7 @@ void func_us_801C68D0(void) {
     }
 }
 
-void func_us_801C6BA0(void) {
+void PlayerStepFall(void) {
     if (func_us_801C6040(0x9029) == false) {
         DecelerateX(FIX(1.0 / 16.0));
         if (CheckMoveDirection() != 0) {
@@ -753,13 +753,13 @@ void func_us_801C6BA0(void) {
     }
 }
 
-void func_us_801C6BE8(void) {
+void PlayerStepCrouch(void) {
     s32 anim;
     s16 var_s0;
     u8 _pad[40]; // any size between 33-40 (inclusive);
 
     var_s0 = 0;
-    // n.b.! much of this code is copied from `func_us_801C6654`,
+    // n.b.! much of this code is copied from `PlayerStepStand`,
     // but this variable is not used in this version of the function
     anim = 0;
     if (g_Dop.vram_flag & 0x20) {

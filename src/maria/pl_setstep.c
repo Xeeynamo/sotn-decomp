@@ -212,20 +212,20 @@ bool MarDoAttack(void) {
         case PL_S_18:
         case PL_S_STAND:
             PLAYER.step = 0;
-            MarSetAnimation(D_pspeu_092C06C8);
+            MarSetAnimation(mar_80155588);
             g_CurrentEntity->velocityX = 0;
             break;
         case PL_S_WALK:
             var_s0 = 1;
             break;
         case PL_S_CROUCH:
-            MarSetAnimation(D_pspeu_092C0730);
+            MarSetAnimation(mar_801555A8);
             g_CurrentEntity->velocityX = 0;
             break;
         case PL_S_FALL:
         case PL_S_JUMP:
             PLAYER.step = 4;
-            MarSetAnimation(D_pspeu_092C0720);
+            MarSetAnimation(mar_801555C8);
             break;
         default:
             return false;
@@ -293,7 +293,7 @@ s32 MarDoSubweapon(void) {
             PLAYER.step = PL_S_SUBWPN_28;
         } else {
             g_Player.unk7A = 3;
-            MarSetAnimation(D_pspeu_092C06C8);
+            MarSetAnimation(mar_80155588);
             PLAYER.step = PL_S_STAND;
         }
         break;
@@ -338,9 +338,9 @@ bool MarDoCrash(void) {
     switch (subWpnID) {
     case 0:
         if (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP) {
-            MarSetAnimation(D_pspeu_092C0720);
+            MarSetAnimation(mar_801555C8);
         } else if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK) {
-            MarSetAnimation(D_pspeu_092C06C8);
+            MarSetAnimation(mar_80155588);
         } else {
             MarSetAnimation(mar_anim_stand_relax);
         }

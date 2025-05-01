@@ -178,6 +178,7 @@ typedef enum {
     PAD_LEFT = 0x8000,
 #endif
     PAD_SIM_UNK20000 = 0x20000,
+    PAD_DIRECTION_MASK = PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT,
 } PlayerPad;
 
 // Convenience macros inheriting from PlayerPad
