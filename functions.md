@@ -1464,7 +1464,7 @@
 | maria_psp | func_pspeu_092AAC80                 |      377 |         41 | Yes    |                                 |       |
 | dra       | func_80121F58                       |      381 |         27 |        |                                 |       |
 | lib       | EntityBloodSplatter                 |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
-| maria_psp | MarStepCrouch                       |      384 |         75 |        |                                 |       |
+| maria     | MarStepCrouch                       |      384 |         75 |        |                                 |       |
 | st0       | EntityClockTower3D                  |      391 |         39 |        |                                 |       |
 | ric       | RicEntityMariaPowers                |      395 |         25 |        |                                 |       |
 | no4       | EntitySkeletonApeBarrel             |      395 |         63 |        |                                 |       |
@@ -1502,7 +1502,7 @@
 | ric       | RicEntitySubwpnAgunea               |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric       | RicStepDeadPrologue                 |      445 |         51 | Yes    |                                 |       |
 | dra       | func_80130E94                       |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
-| maria_psp | MarStepJump                         |      451 |         78 |        | https://decomp.me/scratch/uZHTg | 0.995 |
+| maria     | MarStepJump                         |      451 |         78 |        | https://decomp.me/scratch/uZHTg | 0.995 |
 | st0       | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra       | EntitySubwpnHolyWaterBreakGlass     |      457 |         29 |        |                                 |       |
 | dra       | EntitySubwpnCrashCross              |      457 |         38 |        | https://decomp.me/scratch/5pb9E | 0.999 |
@@ -1736,7 +1736,7 @@
 | st0       | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra       | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric       | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
-| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.889 |
+| dra       | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
 | lib       | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib       | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | maria     | MarEntityPlayerBlinkWhite           |     1981 |        164 | Yes    |                                 |       |
