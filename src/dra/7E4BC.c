@@ -2319,8 +2319,8 @@ void func_80123F78(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
 
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 = 
-            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 = 
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 =
                 plDraw->g2 = plDraw->g3 = 0x80;
         plDraw->enableColorBlend = true;
         self->step++;
