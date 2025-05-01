@@ -462,7 +462,23 @@ void func_800F1954(s32 x, s32 y, s32 arg2) {
     func_800F1868(x, y, sp10);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E80E0);
+void func_800F1A3C(s32 arg0) {
+    if (arg0 == 0) {
+        func_800F18C4(0xE, 0x2B);
+        func_800F18C4(0x10, 0x2B);
+        func_800F18C4(0x2B, 0x2A);
+        func_800F18C4(0x2C, 0x2A);
+        func_800F18C4(0x2D, 0x2A);
+        func_800F18C4(0x30, 0x2A);
+    } else {
+        func_800F1954(0xE, 0x2B, 0);
+        func_800F1954(0x10, 0x2B, 1);
+        func_800F1954(0x2B, 0x2A, 2);
+        func_800F1954(0x2C, 0x2A, 2);
+        func_800F1954(0x2D, 0x2A, 2);
+        func_800F1954(0x30, 0x2A, 2);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E81A8);
 
