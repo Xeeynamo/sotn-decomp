@@ -223,7 +223,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
             animFrame = func_8010DA70(frames);
             // Using a switch doesn't work
             if (animFrame->duration == 0x0) {
-                g_CurrentEntity->pose = animFrame->unk2;
+                g_CurrentEntity->pose = animFrame->pose;
                 animFrame = func_8010DA70(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else if (animFrame->duration == 0xFFFF) {
@@ -231,8 +231,8 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
                 g_CurrentEntity->poseTimer = -1;
                 animFrame = func_8010DA70(frames);
             } else if (animFrame->duration == 0xFFFE) {
-                g_CurrentEntity->ext.player.anim = animFrame->unk2 & 0xFF;
-                g_CurrentEntity->pose = animFrame->unk2 >> 8;
+                g_CurrentEntity->ext.player.anim = animFrame->pose & 0xFF;
+                g_CurrentEntity->pose = animFrame->pose >> 8;
                 animFrame = func_8010DA70(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else {
@@ -247,7 +247,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
         // expression fails.
 
         // Please check function UpdateAnim down below
-        frameProps = &frameProps[((animFrame->unk2 >> 9) & 0x7F) * 4];
+        frameProps = &frameProps[((animFrame->pose >> 9) & 0x7F) * 4];
         g_CurrentEntity->hitboxOffX = *frameProps;
         frameProps++;
         g_CurrentEntity->hitboxOffY = *frameProps;
@@ -256,7 +256,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
         frameProps++;
         g_CurrentEntity->hitboxHeight = *frameProps;
     }
-    g_CurrentEntity->animCurFrame = animFrame->unk2 & 0x1FF;
+    g_CurrentEntity->animCurFrame = animFrame->pose & 0x1FF;
 }
 
 // Nasty casting. This is just
@@ -267,7 +267,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     (*((AnimationFrame*)(&(                                                    \
         ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->pose * 2]))))
 
-u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
+u32 UpdateAnim(s8* hitboxes, AnimationFrame** anims) {
 #if defined(VERSION_PC)
     s32 ret = 0;
 #else
@@ -289,7 +289,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
         g_CurrentEntity->pose++;
         // Effectively a switch statement, but breaks if I actually use one.
         if (CURRANIM.duration == 0) {
-            g_CurrentEntity->pose = CURRANIM.unk2;
+            g_CurrentEntity->pose = CURRANIM.pose;
             g_CurrentEntity->poseTimer = CURRANIM.duration;
             ret = 0;
         } else if (CURRANIM.duration == 0xFFFF) {
@@ -297,7 +297,7 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
             g_CurrentEntity->poseTimer = -1;
             ret = -1;
         } else if (CURRANIM.duration == 0xFFFE) {
-            g_CurrentEntity->anim = anims[CURRANIM.unk2];
+            g_CurrentEntity->anim = anims[CURRANIM.pose];
             g_CurrentEntity->pose = 0;
             g_CurrentEntity->poseTimer = CURRANIM.duration;
             ret = -2;
@@ -305,19 +305,19 @@ u32 UpdateAnim(s8* frameProps, AnimationFrame** anims) {
             g_CurrentEntity->poseTimer = CURRANIM.duration;
         }
     }
-    if (frameProps != NULL) {
+    if (hitboxes) {
         // This is ugly - theoretically the type for frameProps should be
         // FrameProperty* but anything besides this where we assign this big
         // expression fails.
-        frameProps = &frameProps[((CURRANIM.unk2 >> 9) & 0x7F) << 2];
-        g_CurrentEntity->hitboxOffX = *frameProps;
-        frameProps++;
-        g_CurrentEntity->hitboxOffY = *frameProps;
-        frameProps++;
-        g_CurrentEntity->hitboxWidth = *frameProps;
-        frameProps++;
-        g_CurrentEntity->hitboxHeight = *frameProps;
+        hitboxes = &hitboxes[((CURRANIM.pose >> 9) & 0x7F) << 2];
+        g_CurrentEntity->hitboxOffX = *hitboxes;
+        hitboxes++;
+        g_CurrentEntity->hitboxOffY = *hitboxes;
+        hitboxes++;
+        g_CurrentEntity->hitboxWidth = *hitboxes;
+        hitboxes++;
+        g_CurrentEntity->hitboxHeight = *hitboxes;
     }
-    g_CurrentEntity->animCurFrame = CURRANIM.unk2 & 0x1FF;
+    g_CurrentEntity->animCurFrame = CURRANIM.pose & 0x1FF;
     return ret;
 }

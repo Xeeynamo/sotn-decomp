@@ -301,7 +301,7 @@ s32 MarDoSubweapon(void) {
     g_Player.unk46 = 3;
     PLAYER.step_s = 0x42;
     g_Player.timers[PL_T_10] = 4;
-    func_9142FC8(0x8EB);
+    func_9142FC8(SFX_VO_MAR_8EB);
     return 0;
 }
 

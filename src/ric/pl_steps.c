@@ -1071,7 +1071,7 @@ void RicStepStandInAir(void) {
 }
 
 void RicStepEnableFlameWhip(void) {
-    if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.poseTimer == 1)) {
+    if (PLAYER.animCurFrame == 181 && PLAYER.poseTimer == 1) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
     }

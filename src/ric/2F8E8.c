@@ -791,10 +791,10 @@ void RicEntityAguneaHitEnemy(Entity* self) {
 
 // White cloud that comes out of Richter's finger with the Vibhuti crash
 static AnimationFrame D_80155EA8[] = {
-    {3, FRAME(1, 0)},  {3, FRAME(2, 0)},  {3, FRAME(3, 0)},  {3, FRAME(4, 0)},
-    {3, FRAME(5, 0)},  {3, FRAME(6, 0)},  {3, FRAME(7, 0)},  {3, FRAME(8, 0)},
-    {3, FRAME(9, 0)},  {3, FRAME(10, 0)}, {3, FRAME(11, 0)}, {3, FRAME(12, 0)},
-    {3, FRAME(13, 0)}, A_LOOP_AT(0)};
+    POSE(3, 1, 0),  POSE(3, 2, 0),  POSE(3, 3, 0),  POSE(3, 4, 0),
+    POSE(3, 5, 0),  POSE(3, 6, 0),  POSE(3, 7, 0),  POSE(3, 8, 0),
+    POSE(3, 9, 0),  POSE(3, 10, 0), POSE(3, 11, 0), POSE(3, 12, 0),
+    POSE(3, 13, 0), POSE_LOOP(0)};
 void RicEntityVibhutiCrashCloud(Entity* entity) {
     s32 angle;
 

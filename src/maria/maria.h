@@ -357,6 +357,8 @@ enum MarSubweapons {
     NUM_WEAPONS,
 };
 
+extern s32 mar_8015459C;
+
 extern u16 mar_80154574[];
 
 extern s16 mar_80154568[];
@@ -418,12 +420,11 @@ extern AnimationFrame D_pspeu_092C06A0[];
 extern AnimationFrame mar_80155588[];
 extern AnimationFrame mar_801555A8[];
 extern AnimationFrame mar_801555C8[];
+extern AnimationFrame mar_801555E8[];
 extern AnimationFrame D_pspeu_092C0878[];
 extern AnimationFrame D_pspeu_092C07E8[];
-extern AnimationFrame mar_801555E8[];
-extern AnimationFrame mar_801555C8[];
-extern AnimationFrame mar_801555A8[];
-extern AnimationFrame mar_80155588[];
+extern AnimationFrame D_pspeu_092C0858[];
+extern AnimationFrame mar_801554E0[];
 extern FrameProperty mar_80155964[];
 
 void MarStepDead(
