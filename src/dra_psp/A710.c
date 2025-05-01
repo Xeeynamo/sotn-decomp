@@ -546,7 +546,33 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     LoadTPage((u_long*)bitmap, 0, 0, VramPosX + x, VramPosY + y * 4, 8, 5);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E83E8);
+void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
+    #define VramPosX 0x340
+    #define VramPosY 0x100
+    RECT rect;
+    u8 buf[20];
+    u8* bitmap = buf;
+
+    rect.x = x + VramPosX;
+    rect.y = y * 4 + VramPosY;
+    rect.w = 2;
+    rect.h = 5;
+    StoreImage(&rect, (u_long*)bitmap);
+    DrawSync(0);
+    if (direction == WALL_TOP) {
+        func_800F1770(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
+    }
+    if (direction == WALL_LEFT) {
+        func_800F1770(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
+    }
+    if (direction == WALL_BOTTOM) {
+        func_800F1770(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
+    }
+    if (direction == WALL_RIGHT) {
+        func_800F1770(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
+    }
+    LoadTPage((u_long*)bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8518);
 
