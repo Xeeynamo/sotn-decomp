@@ -107,7 +107,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         return res;
     }
     // Look for the proper room at the xy coordinates.
-    for(room = &g_api.o.rooms[0]; true; room++){
+    for (room = &g_api.o.rooms[0]; true; room++) {
         // Perhaps the final room gets a hard-coded value of 0x40?
         // Indicates no room found, return 0
         if (room->left == 0x40) {
@@ -115,25 +115,25 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         }
         // Now check the 4 coordinates. If x,y are beyond the room's
         // bounds, then this isn't the room we're looking for.
-        if (x < room->left){
+        if (x < room->left) {
             continue;
         }
-        if(y < room->top){
+        if (y < room->top) {
             continue;
-        } 
-        if(x > room->right){
+        }
+        if (x > room->right) {
             continue;
-        } 
-        if(y > room->bottom) {
+        }
+        if (y > room->bottom) {
             continue;
         }
         // All 4 bounds passed. We found our room.
 
         // Don't know what this is testing for.
         loader = &room->load;
-        if (loader->tilesetId == 0xFF){
+        if (loader->tilesetId == 0xFF) {
             tele = &D_800A245C[loader->tileLayoutId];
-            if(tele->stageId == STAGE_ST0) {
+            if (tele->stageId == STAGE_ST0) {
                 return 0;
             }
         }
@@ -164,7 +164,7 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-                    if(PLAYER.posX.i.hi < 4){
+                    if (PLAYER.posX.i.hi < 4) {
                         PLAYER.posX.i.hi = -1;
                         PLAYER.posX.i.lo = 0;
                     }
@@ -181,7 +181,7 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-                    if(PLAYER.posX.i.hi > 252){
+                    if (PLAYER.posX.i.hi > 252) {
                         PLAYER.posX.i.hi = 256;
                         PLAYER.posX.i.lo = 0;
                     }
@@ -319,7 +319,8 @@ void func_800F14CC(void) {
     temp_a2 = &D_800A245C[D_8006C374];
 
     // TODO: !FAKE Ugly casts, need to work this out.
-    D_801375BC.def = &((RoomHeader*)((u8*)g_api.o.rooms + temp_a2->roomId))->load;
+    D_801375BC.def =
+        &((RoomHeader*)((u8*)g_api.o.rooms + temp_a2->roomId))->load;
     PLAYER.posX.i.hi = temp_a2->x;
     PLAYER.posY.i.hi = temp_a2->y;
 
@@ -412,7 +413,19 @@ void func_800F180C(s32 x, s32 y, u8* dst) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7F38);
+void func_800F1868(s32 x, s32 y, u8* src) {
+    s32 i;
+    s32 j;
+    u8* start;
+
+    start = CASTLE_MAP_PTR;
+    start += x * 2;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 4; j++) {
+            (start + (((y * 4) + i) * 128))[j] = src[(4 * i) + j];
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7F98);
 
@@ -496,7 +509,6 @@ extern s32 D_801375B0;
 extern s32 D_801375B4;
 extern s32 D_801375B8;
 extern RoomLoadDefHolder D_801375BC;
-
 
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
