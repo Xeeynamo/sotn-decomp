@@ -226,11 +226,7 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#if defined(VERSION_PSP) || defined(VERSION_PC)
-#define SPRITESHEET_PTR g_PlOvlSpritesheet
-#else
 #define SPRITESHEET_PTR 0x8013C020
-#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -1265,7 +1261,7 @@ typedef struct {
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*UpdateStageEntities)(void);
-    /* 8003C7A0 */ u8** unk2c; // sprite bank 1
+    /* 8003C7A0 */ u8** unk2C; // sprite bank 1
     /* 8003C7A4 */ u8** unk30; // sprite bank 2
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
