@@ -1,4 +1,3 @@
-subweapons_def = 0x80154688;
 g_bladeDashButtons = 0x80175834;
 D_801758E2 = 0x80175836;
 D_801758E4 = 0x80175838;
