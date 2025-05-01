@@ -31,6 +31,13 @@ func (off Addr) Align4() Addr {
 	return off
 }
 
+func (off Addr) Align(alignment int) Addr {
+	if (off % Addr(alignment)) != 0 {
+		return (off | Addr(alignment-1)) + 1
+	}
+	return off
+}
+
 func (off Addr) Sum(x int) Addr {
 	return Addr(uint32(off) + uint32(x))
 }

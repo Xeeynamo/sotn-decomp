@@ -1,0 +1,161 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "maria.h"
+
+static u16 maria_pal[] = {
+#include "gen_maria_pal.h"
+};
+
+#include "gen_wpn_owl_spr.h"
+static u16 wpn_owl_pal[] = {
+#include "gen_wpn_owl_pal.h"
+};
+u8 D_pspeu_092C7328[] = {
+#include "gen_wpn_owl_gfx.h"
+};
+
+#include "gen_wpn_doll_spr.h"
+static u16 wpn_doll_pal[] = {
+#include "gen_wpn_doll_pal.h"
+};
+u8 D_pspeu_092C8298[] = {
+#include "gen_wpn_doll_gfx.h"
+};
+
+#include "gen_wpn_turtle_spr.h"
+static u16 wpn_turtle_pal[] = {
+#include "gen_wpn_turtle_pal.h"
+};
+static u16 wpn_turtle2_pal[] = {
+#include "gen_wpn_turtle2_pal.h"
+};
+u8 D_pspeu_092C93D0[] = {
+#include "gen_wpn_turtle_gfx.h"
+};
+
+#include "gen_wpn_cardinal_spr.h"
+static u16 wpn_cardinal_pal[] = {
+#include "gen_wpn_cardinal_pal.h"
+};
+u8 D_pspeu_092CB6A8[] = {
+#include "gen_wpn_cardinal_gfx.h"
+};
+
+#include "gen_wpn_cat_spr.h"
+static u16 wpn_cat_pal[] = {
+#include "gen_wpn_cat_pal.h"
+};
+static u16 wpn_cat2_pal[] = {
+#include "gen_wpn_cat2_pal.h"
+};
+u8 D_pspeu_092CCF70[] = {
+#include "gen_wpn_cat_gfx.h"
+};
+
+#include "gen_wpn_dragon_spr.h"
+static u16 wpn_dragon_pal[] = {
+#include "gen_wpn_dragon_pal.h"
+};
+static u16 wpn_dragon2_pal[] = {
+#include "gen_wpn_dragon2_pal.h"
+};
+u8 D_pspeu_092CE450[] = {
+#include "gen_wpn_dragon_gfx.h"
+};
+
+static void func_pspeu_092BFFB8(s32 paletteID, u16* palette) {
+    s32 i;
+
+    for (i = 0; i < 0x10; i++) {
+        if (palette[i] != 0) {
+            palette[i] |= 0x8000;
+        }
+    }
+    func_892667C(paletteID, palette);
+}
+
+extern u16 D_pspeu_092E4F38[];
+void func_pspeu_092C0040(void) {
+    func_pspeu_092BFFB8(PAL_MARIA, maria_pal);
+    func_pspeu_092BFFB8(PAL_WPN_OWL, wpn_owl_pal);
+    func_pspeu_092BFFB8(PAL_WPN_TURTLE, wpn_turtle_pal);
+    func_pspeu_092BFFB8(PAL_WPN_TURTLE_CRASH, wpn_turtle2_pal);
+    func_pspeu_092BFFB8(PAL_WPN_CAT, wpn_cat_pal);
+    func_pspeu_092BFFB8(PAL_WPN_CAT_CRASH, wpn_cat2_pal);
+    func_pspeu_092BFFB8(PAL_WPN_CARDINAL, wpn_cardinal_pal);
+    func_pspeu_092BFFB8(PAL_WPN_DRAGON, wpn_dragon_pal);
+    func_pspeu_092BFFB8(PAL_WPN_DRAGON_CRASH, wpn_dragon2_pal);
+    func_pspeu_092BFFB8(PAL_WPN_DOLL, wpn_doll_pal);
+    func_pspeu_092BFFB8(PAL_UNK_811E, D_pspeu_092E4F38);
+}
+
+extern LangImg D_pspeu_092E0C28;
+extern LangImg D_pspeu_092E1B80;
+extern LangImg D_pspeu_092E2E08;
+extern LangImg D_pspeu_092E4070;
+extern u16 D_pspeu_092E4F38[];
+extern u16 D_pspeu_092E4F58[];
+extern u16 D_pspeu_092E4F78[];
+extern u16 D_pspeu_092E4F98[];
+extern LangImg D_pspeu_092E55C8;
+extern LangImg* D_pspeu_092E55D4;
+
+void func_pspeu_092C0138(s32 arg0) {
+    switch (arg0) {
+    case 1:
+        D_pspeu_092E55D4 = &D_pspeu_092E2E08;
+        func_pspeu_092BFFB8(PAL_UNK_811E, D_pspeu_092E4F98);
+        break;
+    case 2:
+        D_pspeu_092E55D4 = &D_pspeu_092E4070;
+        func_pspeu_092BFFB8(PAL_UNK_811E, D_pspeu_092E4F38);
+        break;
+    case 3:
+        D_pspeu_092E55D4 = &D_pspeu_092E0C28;
+        func_pspeu_092BFFB8(PAL_UNK_811E, D_pspeu_092E4F58);
+        break;
+    case 4:
+        D_pspeu_092E55D4 = &D_pspeu_092E1B80;
+        func_pspeu_092BFFB8(PAL_UNK_811E, D_pspeu_092E4F78);
+        break;
+    }
+    func_91040A0(&D_pspeu_092E55C8);
+}
+
+extern LangImg D_pspeu_092E55E0;
+extern LangImg D_pspeu_092E55F8;
+void func_pspeu_092C0248(void) {
+    func_91040A0(&D_pspeu_092E55E0);
+    func_91040A0(&D_pspeu_092E55F8);
+}
+
+extern PlayerOvl D_pspeu_092C0400;
+extern u8* D_pspeu_092DECC8[0x74];
+extern LangImg D_pspeu_092E5538;
+extern LangImg D_pspeu_092E5550;
+extern LangImg D_pspeu_092E5568;
+extern LangImg D_pspeu_092E5580;
+extern LangImg D_pspeu_092E5598;
+extern LangImg D_pspeu_092E55B0;
+extern s16 D_pspeu_092CC6C8;
+extern s16 D_pspeu_092CC766;
+extern s16 D_pspeu_092CC81E;
+void MAR_Load(void) {
+    memcpy(&g_PlOvl, &D_pspeu_092C0400, sizeof(PlayerOvl));
+    memcpy(&g_PlOvlSpritesheet, &D_pspeu_092DECC8, sizeof(D_pspeu_092DECC8));
+    func_91040A0(&D_pspeu_092E5538);
+    func_91040A0(&D_pspeu_092E5550);
+    func_91040A0(&D_pspeu_092E5568);
+    func_91040A0(&D_pspeu_092E5580);
+    func_91040A0(&D_pspeu_092E5598);
+    func_91040A0(&D_pspeu_092E55B0);
+
+    if (((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx == -48) {
+        ((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx--;
+    }
+    if (((SpriteParts*)wpn_cat_spr_7)->parts[3].offsetx == -48) {
+        ((SpriteParts*)wpn_cat_spr_7)->parts[3].offsetx--;
+    }
+    if (((SpriteParts*)wpn_cat_spr_8)->parts[3].offsetx == -49) {
+        ((SpriteParts*)wpn_cat_spr_8)->parts[3].offsetx--;
+    }
+}

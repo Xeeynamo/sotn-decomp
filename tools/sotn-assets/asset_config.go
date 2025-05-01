@@ -13,6 +13,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/palette"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
@@ -54,6 +55,7 @@ var handlers = func() map[string]assets.Handler {
 		layer.Handler,
 		layout.Handler,
 		paldef.Handler,
+		palette.Handler,
 		rooms.Handler,
 		skip.Handler,
 		spritebanks.Handler,

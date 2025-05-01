@@ -21,6 +21,22 @@
 #define CHECK_GROUND_AFTER_HIT 0x20000
 #define CHECK_SLIDE 0x40000
 
+enum MarPalette {
+    /* 0x8114 */ PAL_MARIA = 0x8114,
+    /* 0x8115 */ PAL_WPN_OWL,
+    /* 0x8116 */ PAL_WPN_TURTLE,
+    /* 0x8117 */ PAL_WPN_TURTLE_CRASH,
+    /* 0x8118 */ PAL_WPN_CAT,
+    /* 0x8119 */ PAL_WPN_CAT_CRASH,
+    /* 0x811A */ PAL_WPN_CARDINAL,
+    /* 0x811B */ PAL_WPN_DRAGON,
+    /* 0x811C */ PAL_WPN_DRAGON_CRASH,
+    /* 0x811D */ PAL_WPN_DOLL,
+    /* 0x811E */ PAL_UNK_811E,
+    /* 0x812E */ PAL_UNK_812E = 0x812E,
+    /* 0x812F */ PAL_UNK_812F,
+};
+
 enum MarSteps {
     PL_S_STAND,
     PL_S_WALK,
@@ -381,12 +397,12 @@ extern s16 g_MarSensorsCeilingCrouch[];
 extern s16 g_MarSensorsWallCrouch[];
 
 extern s16* mar_801530AC[];
-extern SpriteParts* D_pspeu_092C6A50[];
-extern SpriteParts* D_pspeu_092C8CE0[];
-extern SpriteParts* D_pspeu_092CC558[];
-extern SpriteParts* D_pspeu_092CA590[];
-extern SpriteParts* D_pspeu_092CDC48[];
-extern SpriteParts* D_pspeu_092C7AA0[];
+extern s16* wpn_owl_spr[];
+extern s16* wpn_turtle_spr[];
+extern s16* wpn_cat_spr[];
+extern s16* wpn_cardinal_spr[];
+extern s16* wpn_dragon_spr[];
+extern s16* wpn_doll_spr[];
 
 extern AnimationFrame* mar_8015538C[];
 extern AnimationFrame mar_anim_stand[];
@@ -426,4 +442,5 @@ extern FrameProperty mar_80155964[];
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 Entity* MarCreateEntFactoryFromEntity(Entity* entity, u32 arg1, s32 arg2);
-void func_pspeu_092BEAB0(s16);
+s32 func_pspeu_092BEAB0(s16);
+void func_pspeu_092BEA38(Entity* entity, s32 setUnk6C);

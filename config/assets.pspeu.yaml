@@ -36,10 +36,10 @@ files:
     src_path: src/maria
     splat_config_path: config/splat.pspeu.maria.yaml
     segments:
-      - start: 0x80
-        vram: 0x092A6280
+      - start: 0
+        vram: 0x092A6200
         assets:
-          - [0x80, skip]
+          - [0x00, skip]
           - [0x1A880, cmpgfx, font_eu, 128, 128, 4]
           - [0x1B5E8, skip]
           - [0x1B600, cmpgfx, hud_sp, 128, 128, 4]
@@ -51,6 +51,35 @@ files:
           - [0x1F260, skip]
           - [0x1F3B0, blueprintsdef, blueprints, MarBlueprints, MarEntities]
           - [0x1F588, skip]
+          - [0x20250, palette, maria_pal, png, 16]
+          - [0x20850, spriteset, wpn_owl_spr]
+          - [0x20B28, palette, wpn_owl_pal, png, 16]
+          - [0x21128, cmpgfx, wpn_owl_gfx, 128, 128, 4, 0x20B28] 
+          - [0x218A0, spriteset, wpn_doll_spr]
+          - [0x21A98, palette, wpn_doll_pal, png, 16]
+          - [0x22098, cmpgfx, wpn_doll_gfx, 128, 128, 4, 0x21A98]
+          - [0x22AE0, spriteset, wpn_turtle_spr]
+          - [0x22BD0, palette, wpn_turtle_pal, png, 16] 
+          - [0x22BF0, palette, wpn_turtle2_pal, png, 16]
+          - [0x231D0, cmpgfx, wpn_turtle_gfx, 128, 128, 4, 0x22BD0]
+          - [0x24390, spriteset, wpn_cardinal_spr]
+          - [0x24EA8, palette, wpn_cardinal_pal, png, 16]
+          - [0x254A8, cmpgfx, wpn_cardinal_gfx, 128, 128, 4, 0x24EA8]
+          - [0x26358, spriteset, wpn_cat_spr]
+          - [0x26770, palette, wpn_cat_pal, png, 16]
+          - [0x26790, palette, wpn_cat2_pal, png, 16]
+          - [0x26D70, cmpgfx, wpn_cat_gfx, 128, 128, 4, 0x26770]
+          - [0x27A48, spriteset, wpn_dragon_spr]
+          - [0x27C50, palette, wpn_dragon_pal, png, 16]
+          - [0x27C70, palette, wpn_dragon2_pal, png, 16]
+          - [0x28250, cmpgfx, wpn_dragon_gfx, 128, 128, 4, 0x27C50]
+          - [0x28E88, skip] # maria sprites
+          - [0x38C98, cmpgfx, D_pspeu_092DEE98, 128, 128, 4] # icons
+          - [0x39C38, cmpgfx, D_pspeu_092DFE38, 128, 128, 4] # hud_en
+          - [0x3AA28, cmpgfx, D_pspeu_092E0C28, 128, 128, 4] # turtle2
+          - [0x3B980, skip]
+          - [0x3ED38, palette, pal_11E, png, 16]
+          - [0x3ED58, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

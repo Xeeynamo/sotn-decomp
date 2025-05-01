@@ -22,8 +22,8 @@ func FromAddr(addr psx.Addr, len int) DataRange {
 	return New(addr, addr.Sum(len))
 }
 
-func FromAlignedAddr(addr psx.Addr, len int) DataRange {
-	return New(addr, addr.Sum(len).Align4())
+func FromAlignedAddr(addr psx.Addr, len int, alignment int) DataRange {
+	return New(addr, addr.Sum(len).Align(alignment))
 }
 
 func (r DataRange) Align4() DataRange {

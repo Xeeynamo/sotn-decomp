@@ -106,7 +106,7 @@ void MarInit(s16 initParam) {
     PLAYER.animSet = ANIMSET_OVL(0x10);
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
-    PLAYER.palette = 0x8114;
+    PLAYER.palette = PAL_MARIA;
     PLAYER.rotY = 0x100;
     PLAYER.rotX = 0x100;
     PLAYER.hitboxOffX = 0;
@@ -132,17 +132,17 @@ void MarInit(s16 initParam) {
     spriteptr += 0x10;
     *spriteptr = (SpriteParts*)mar_801530AC;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092C6A50;
+    *spriteptr = (SpriteParts*)wpn_owl_spr;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092C8CE0;
+    *spriteptr = (SpriteParts*)wpn_turtle_spr;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092CC558;
+    *spriteptr = (SpriteParts*)wpn_cat_spr;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092CA590;
+    *spriteptr = (SpriteParts*)wpn_cardinal_spr;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092CDC48;
+    *spriteptr = (SpriteParts*)wpn_dragon_spr;
     spriteptr++;
-    *spriteptr = (SpriteParts*)D_pspeu_092C7AA0;
+    *spriteptr = (SpriteParts*)wpn_doll_spr;
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
@@ -377,7 +377,7 @@ void MarMain(void) {
         case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
-            PLAYER.palette = 0x8114;
+            PLAYER.palette = PAL_MARIA;
             break;
         case PL_T_4:
             draw->enableColorBlend = 0;
@@ -615,7 +615,7 @@ void MarMain(void) {
         !(g_Player.status & PLAYER_STATUS_UNK10000)) {
         MarSetInvincibilityFrames(1, 16);
         g_Player.timers[PL_T_4] = 0x10;
-        PLAYER.palette = 0x8114;
+        PLAYER.palette = PAL_MARIA;
     }
     if (newStatus & NO_AFTERIMAGE) {
         DisableAfterImage(1, 4);

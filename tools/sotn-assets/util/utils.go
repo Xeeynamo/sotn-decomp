@@ -3,14 +3,13 @@ package util
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"image/color"
 	"os"
 	"path/filepath"
 	"slices"
 	"strconv"
 	"strings"
-
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
 
 func JoinMapKeys[T any](m map[string]T, sep string) string {
