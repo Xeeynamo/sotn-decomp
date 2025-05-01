@@ -1736,7 +1736,7 @@
 | st0       | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra       | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric       | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
-| dra       | func_psp_090FAB30                   |     1745 |        198 |        |                                 |       |
+| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.889 |
 | lib       | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib       | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | maria     | MarEntityPlayerBlinkWhite           |     1981 |        164 | Yes    |                                 |       |
