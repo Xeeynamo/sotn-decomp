@@ -301,7 +301,7 @@
 | lib       | en_thornweed_corpseweed.rodata      |       30 |          0 | Yes    |                                 |       |
 | st0       | prologue_scroll.rodata              |       30 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090E7ED8                   |       30 |          2 |        |                                 |       |
-| dra       | func_psp_090E7F38                   |       30 |          2 |        | https://decomp.me/scratch/2vtlT | 0.977 |
+| dra       | func_psp_090E7F38                   |       30 |          2 |        | https://decomp.me/scratch/2vtlT | 1.0   |
 | dra       | func_psp_090E7E38                   |       30 |          3 |        |                                 |       |
 | no4       | func_pspeu_09243260                 |       30 |          3 |        |                                 |       |
 | dra       | HandleGravityBootsMP                |       30 |          4 |        |                                 |       |
@@ -743,7 +743,7 @@
 | st0       | SetTitleDisplayBuffer               |       67 |          6 |        |                                 |       |
 | dra       | func_8012CED4                       |       67 |          8 |        |                                 |       |
 | dra       | UnpauseSfxScripts                   |       67 |          8 |        |                                 |       |
-| dra       | func_psp_090E8008                   |       67 |         10 |        |                                 |       |
+| dra       | func_psp_090E8008                   |       67 |         10 |        | https://decomp.me/scratch/hkdJl | 0.715 |
 | lib       | SkeletonAttackCheck                 |       67 |         10 |        |                                 |       |
 | maria_psp | func_pspeu_092C0040                 |       67 |         12 |        |                                 |       |
 | no4       | unk_26740.rodata                    |       68 |          0 | Yes    |                                 |       |
@@ -841,7 +841,7 @@
 | lib       | func_us_801B7D10                    |       78 |          8 |        |                                 |       |
 |           | GetTargetPositionWithDistanceBuffer |       78 |          9 |        |                                 |       |
 | chi       | EntityDemonSwitch                   |       78 |          9 |        | https://decomp.me/scratch/SdRL2 | 0.99  |
-| dra       | func_psp_090E8518                   |       78 |         12 |        |                                 |       |
+| dra       | func_psp_090E8518                   |       78 |         12 |        | https://decomp.me/scratch/i0EJ4 | 0.997 |
 | dra       | CdFadeOut2                          |       78 |         13 |        |                                 |       |
 | dra       | func_psp_09141E30                   |       78 |         13 |        |                                 |       |
 | maria_psp | func_pspeu_092C0138                 |       78 |         14 |        |                                 |       |
@@ -1021,7 +1021,7 @@
 | wrp       | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
 | dra       | ExecCdSoundCommands                 |      106 |         33 |        | https://decomp.me/scratch/3SmFf | 0.977 |
 | no4       | func_pspeu_09242E30                 |      107 |          9 |        |                                 |       |
-| dra       | func_psp_090E88C0                   |      107 |         10 |        |                                 |       |
+| dra       | func_psp_090E88C0                   |      107 |         10 |        | https://decomp.me/scratch/zdXUd | 0.975 |
 | dra       | func_8012DF04                       |      107 |         17 |        | https://decomp.me/scratch/njdiv | 0.992 |
 | dra       | func_psp_090EC0C0                   |      108 |          3 |        |                                 |       |
 | dra       | func_800EA5E4                       |      108 |          9 |        | https://decomp.me/scratch/I1WLh | 0.997 |
@@ -1182,7 +1182,7 @@
 | no4       | EntityLockCamera                    |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | wrp       | EntityLockCamera                    |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | dra       | func_8012E7A4                       |      166 |         16 |        | https://decomp.me/scratch/huJsJ | 0.984 |
-| dra       | func_psp_090E81A8                   |      166 |         19 |        |                                 |       |
+| dra       | func_psp_090E81A8                   |      166 |         19 |        | https://decomp.me/scratch/51Yrl | 0.722 |
 | st0       | EntityDraculaMeteorball             |      166 |         24 |        | https://decomp.me/scratch/w4afZ | 0.995 |
 | dra       | func_8010A234                       |      167 |         27 |        | https://decomp.me/scratch/DDKMb | 0.994 |
 | maria     | func_8015C4AC                       |      168 |         15 |        |                                 |       |
@@ -1314,7 +1314,7 @@
 | dra       | func_psp_090FA828                   |      245 |         39 | Yes    |                                 |       |
 | dra       | CheckHellfireInput                  |      246 |         41 |        |                                 |       |
 | no4       | func_pspeu_09237BE8                 |      247 |          1 |        |                                 |       |
-| dra       | func_psp_090FCEE0                   |      247 |         31 |        |                                 |       |
+| dra       | func_psp_090FCEE0                   |      247 |         31 |        | https://decomp.me/scratch/fwp99 | 1.0   |
 | no4       | func_pspeu_092391D8                 |      248 |         34 |        |                                 |       |
 | lib       | EntityCandleTable                   |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                |      250 |         34 |        |                                 |       |
@@ -1502,7 +1502,7 @@
 | ric       | RicEntitySubwpnAgunea               |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric       | RicStepDeadPrologue                 |      445 |         51 | Yes    |                                 |       |
 | dra       | func_80130E94                       |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
-| maria_psp | MarStepJump                         |      451 |         78 |        |                                 |       |
+| maria_psp | MarStepJump                         |      451 |         78 |        | https://decomp.me/scratch/uZHTg | 0.995 |
 | st0       | EntityStageTitleFadeout             |      456 |         31 | Yes    |                                 |       |
 | dra       | EntitySubwpnHolyWaterBreakGlass     |      457 |         29 |        |                                 |       |
 | dra       | EntitySubwpnCrashCross              |      457 |         38 |        | https://decomp.me/scratch/5pb9E | 0.999 |
@@ -1585,7 +1585,7 @@
 | dra       | CheckFloor                          |      611 |         62 |        |                                 |       |
 | st0       | EntityEquipItemDrop                 |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra       | EntityBatEcho                       |      618 |         43 |        | https://decomp.me/scratch/90rWo | 0.998 |
-| dra       | func_800EB758                       |      619 |         30 |        |                                 |       |
+| dra       | func_800EB758                       |      619 |         30 |        | https://decomp.me/scratch/i7kpN | 1.0   |
 | no4       | func_pspeu_0923BB30                 |      621 |         50 |        |                                 |       |
 | ric       | RicEntityAguneaLightning            |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib       | func_psp_0923CFC0                   |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
