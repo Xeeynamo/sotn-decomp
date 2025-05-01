@@ -125,8 +125,8 @@ void func_8010D800(void) {
             prim->x1 = 0;
         }
 
-        PRED(plDraw) = PBLU(plDraw) = prim->r0;
-        PGRN(plDraw) = prim->b0;
+        PRED(plDraw) = PGRN(plDraw) = prim->r0;
+        PBLU(plDraw) = prim->b0;
         plDraw->enableColorBlend = true;
         plDraw++;
     }

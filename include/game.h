@@ -227,11 +227,7 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#if defined(VERSION_PSP) || defined(VERSION_PC)
-#define SPRITESHEET_PTR g_PlOvlSpritesheet
-#else
 #define SPRITESHEET_PTR 0x8013C020
-#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -1271,7 +1267,7 @@ typedef struct {
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*UpdateStageEntities)(void);
-    /* 8003C7A0 */ u8** unk2c; // sprite bank 1
+    /* 8003C7A0 */ u8** unk2C; // sprite bank 1
     /* 8003C7A4 */ u8** unk30; // sprite bank 2
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
@@ -1871,20 +1867,20 @@ typedef struct {
     /* 0x08 */ RECT rect1;
     /* 0x10 */ RECT rect2;
     /* 0x18 */ u8 r0;
-    /* 0x19 */ u8 g0;
-    /* 0x1A */ u8 b0;
+    /* 0x19 */ u8 b0;
+    /* 0x1A */ u8 g0;
     /* 0x1B */ u8 enableColorBlend;
     /* 0x1C */ u8 r1;
-    /* 0x1D */ u8 g1;
-    /* 0x1E */ u8 b1;
+    /* 0x1D */ u8 b1;
+    /* 0x1E */ u8 g1;
     /* 0x1F */ u8 tpage;
     /* 0x20 */ u8 r2;
-    /* 0x21 */ u8 g2;
-    /* 0x22 */ u8 b2;
+    /* 0x21 */ u8 b2;
+    /* 0x22 */ u8 g2;
     /* 0x23 */ u8 flipX;
     /* 0x24 */ u8 r3;
-    /* 0x25 */ u8 g3;
-    /* 0x26 */ u8 b3;
+    /* 0x25 */ u8 b3;
+    /* 0x26 */ u8 g3;
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 

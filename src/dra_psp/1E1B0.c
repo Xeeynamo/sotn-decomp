@@ -4,7 +4,3 @@
 INCLUDE_ASM("dra_psp/psp/dra_psp/1E1B0", func_psp_090FAB30);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/1E1B0", LoadFileSim);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/1E1B0", func_800EB758);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/1E1B0", func_psp_090FCE58);

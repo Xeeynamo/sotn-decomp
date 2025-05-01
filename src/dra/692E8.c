@@ -691,16 +691,16 @@ void EntityAlucard() {
                     case 4: {
                         angle = ((g_GameTimer & 0xF) * 256);
                         draw = g_PlayerDraw;
-                        draw->r0 = draw->b0 = draw->g0 =
+                        draw->r0 = draw->g0 = draw->b0 =
                             (rsin(angle) + 0x1000) / 64 + 0x60;
                         angle += 0x200;
-                        draw->r1 = draw->b1 = draw->g1 =
+                        draw->r1 = draw->g1 = draw->b1 =
                             (rsin(angle) + 0x1000) / 64 + 0x60;
                         angle += 0x200;
-                        draw->r3 = draw->b3 = draw->g3 =
+                        draw->r3 = draw->g3 = draw->b3 =
                             (rsin(angle) + 0x1000) / 64 + 0x60;
                         angle += 0x200;
-                        draw->r2 = draw->b2 = draw->g2 =
+                        draw->r2 = draw->g2 = draw->b2 =
                             (rsin(angle) + 0x1000) / 64 + 0x60;
                         draw->enableColorBlend = 1;
                         break;

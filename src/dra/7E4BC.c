@@ -2319,21 +2319,23 @@ void func_80123F78(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
 
-        PCOL(plDraw) = 0x80;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 =
+                plDraw->g2 = plDraw->g3 = 0x80;
         plDraw->enableColorBlend = true;
         self->step++;
         break;
 
     case 1:
-        plDraw->b3 -= 1;
-        if (plDraw->b3 < 4) {
+        plDraw->g3 -= 1;
+        if (plDraw->g3 < 4) {
             plDraw->enableColorBlend = 0;
             DestroyEntity(self);
             return;
         }
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->g0 =
-            plDraw->g1 = plDraw->g2 = plDraw->g3 = plDraw->b0 = plDraw->b1 =
-                plDraw->b2 = plDraw->b3;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 =
+                plDraw->g2 = plDraw->g3;
         break;
     }
 }

@@ -132,7 +132,7 @@ void func_8010D800(void) {
             prim->x1 = 0;
         }
 
-        PGRN(plDraw) = PBLU(plDraw) = prim->b0;
+        PBLU(plDraw) = PGRN(plDraw) = prim->b0;
         PRED(plDraw) = prim->r0;
         plDraw->enableColorBlend = true;
         plDraw++;
