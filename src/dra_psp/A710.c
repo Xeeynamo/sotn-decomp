@@ -558,7 +558,64 @@ void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     LoadTPage((u_long*)bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", RevealSecretPassageOnMap);
+// clang-format off
+u8 D_800A2BC0[] = {
+    12, 34, WALL_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN, //
+    12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN, //
+    32, 40, WALL_RIGHT, CHI_DEMON_SWITCH, RCHI_DEMON_SWITCH, //
+    37, 41, WALL_LEFT, CHI_SECRET_WALL_OPEN, RCHI_SECRET_WALL_OPEN, //
+    43, 11, WALL_LEFT, NZ1_LOWER_WALL_OPEN, RNZ1_UPPER_WALL_OPEN, //
+    50, 11, WALL_RIGHT, NZ1_UPPER_WALL_OPEN, RNZ1_LOWER_WALL_OPEN, //
+    11, 41, WALL_LEFT, JEWEL_SWORD_ROOM_OPEN, JEWEL_ROOM_OPEN, //
+    21, 22, WALL_BOTTOM, ARE_ELEVATOR_ACTIVATED, RARE_ELEVATOR_ACTIVATED, //
+    20, 21, WALL_TOP, ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN, //
+    29, 22, WALL_RIGHT, NO2_SECRET_WALL_OPEN, RNO2_SECRET_WALL_OPEN, //
+    19, 19, WALL_TOP, NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN, //
+    35, 8, WALL_TOP, TOP_SECRET_STAIRS, RTOP_SECRET_STAIRS, //
+    39, 39, WALL_BOTTOM, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN, //
+    36, 27, WALL_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN, //
+    32, 26, WALL_BOTTOM, CEN_OPEN, RCEN_OPEN, //
+    0x00, // terminator
+};
+// clang-format on
+
+void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
+    s32 mapX;
+    s32 mapY;
+    s32 passageDirection;
+    s32 castleFlagId;
+    s32 reverseCastleFlagId;
+    u8* secretMapWallEntry;
+
+    if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+        playerMapX = 63 - playerMapX;
+        playerMapY = 63 - playerMapY;
+    }
+    secretMapWallEntry = D_800A2BC0;
+    while (*secretMapWallEntry) {
+        mapX = *secretMapWallEntry++;
+        mapY = *secretMapWallEntry++;
+        passageDirection = *secretMapWallEntry++;
+        castleFlagId = *secretMapWallEntry++;
+        reverseCastleFlagId = *secretMapWallEntry++;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            // Use the equivalent flag in Reverse Castle instead
+            castleFlagId = reverseCastleFlagId;
+        }
+        if (castleFlagId != 0xFF) {
+            if (flagId != 0xFFFF) {
+                if (flagId == castleFlagId) {
+                    DrawSecretPassageOnMap(mapX, mapY, passageDirection);
+                }
+            } else {
+                if (mapX == playerMapX && mapY == playerMapY &&
+                    g_CastleFlags[castleFlagId]) {
+                    DrawSecretPassageOnMap(mapX, mapY, passageDirection);
+                }
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8620);
 
