@@ -101,9 +101,9 @@ void func_8015C6D4(void) {
                 prim->x1 = 0;
             }
 
-            draw->r0 = draw->r1 = draw->r2 = draw->r3 = draw->b0 = draw->b1 =
-                draw->b2 = draw->b3 = prim->r0;
-            draw->g0 = draw->g1 = draw->g2 = draw->g3 = prim->b0;
+            draw->r0 = draw->r1 = draw->r2 = draw->r3 = draw->g0 = draw->g1 =
+                draw->g2 = draw->g3 = prim->r0;
+            draw->b0 = draw->b1 = draw->b2 = draw->b3 = prim->b0;
             draw->enableColorBlend = true;
             draw++;
         }

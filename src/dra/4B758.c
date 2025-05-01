@@ -300,17 +300,17 @@ void RenderEntities(void) {
             }
             if (plDraw->enableColorBlend) {
                 poly->r0 = plDraw->r0;
-                poly->g0 = plDraw->b0;
-                poly->b0 = plDraw->g0;
+                poly->g0 = plDraw->g0;
+                poly->b0 = plDraw->b0;
                 poly->r1 = plDraw->r1;
-                poly->g1 = plDraw->b1;
-                poly->b1 = plDraw->g1;
+                poly->g1 = plDraw->g1;
+                poly->b1 = plDraw->b1;
                 poly->r2 = plDraw->r2;
-                poly->g2 = plDraw->b2;
-                poly->b2 = plDraw->g2;
+                poly->g2 = plDraw->g2;
+                poly->b2 = plDraw->b2;
                 poly->r3 = plDraw->r3;
-                poly->g3 = plDraw->b3;
-                poly->b3 = plDraw->g3;
+                poly->g3 = plDraw->g3;
+                poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
                 if (r->eDrawFlags & FLAG_DRAW_UNK8) {
@@ -798,17 +798,17 @@ void RenderEntitiesPSP(void) {
             }
             if (plDraw->enableColorBlend) {
                 poly->r0 = plDraw->r0;
-                poly->g0 = plDraw->b0;
-                poly->b0 = plDraw->g0;
+                poly->g0 = plDraw->g0;
+                poly->b0 = plDraw->b0;
                 poly->r1 = plDraw->r1;
-                poly->g1 = plDraw->b1;
-                poly->b1 = plDraw->g1;
+                poly->g1 = plDraw->g1;
+                poly->b1 = plDraw->b1;
                 poly->r2 = plDraw->r2;
-                poly->g2 = plDraw->b2;
-                poly->b2 = plDraw->g2;
+                poly->g2 = plDraw->g2;
+                poly->b2 = plDraw->b2;
                 poly->r3 = plDraw->r3;
-                poly->g3 = plDraw->b3;
-                poly->b3 = plDraw->g3;
+                poly->g3 = plDraw->g3;
+                poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
                 if (r->eDrawFlags & FLAG_DRAW_UNK8) {

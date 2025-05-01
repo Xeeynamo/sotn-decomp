@@ -1862,20 +1862,20 @@ typedef struct {
     /* 0x08 */ RECT rect1;
     /* 0x10 */ RECT rect2;
     /* 0x18 */ u8 r0;
-    /* 0x19 */ u8 g0;
-    /* 0x1A */ u8 b0;
+    /* 0x19 */ u8 b0;
+    /* 0x1A */ u8 g0;
     /* 0x1B */ u8 enableColorBlend;
     /* 0x1C */ u8 r1;
-    /* 0x1D */ u8 g1;
-    /* 0x1E */ u8 b1;
+    /* 0x1D */ u8 b1;
+    /* 0x1E */ u8 g1;
     /* 0x1F */ u8 tpage;
     /* 0x20 */ u8 r2;
-    /* 0x21 */ u8 g2;
-    /* 0x22 */ u8 b2;
+    /* 0x21 */ u8 b2;
+    /* 0x22 */ u8 g2;
     /* 0x23 */ u8 flipX;
     /* 0x24 */ u8 r3;
-    /* 0x25 */ u8 g3;
-    /* 0x26 */ u8 b3;
+    /* 0x25 */ u8 b3;
+    /* 0x26 */ u8 g3;
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 

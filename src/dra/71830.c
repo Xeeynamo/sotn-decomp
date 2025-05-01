@@ -1851,9 +1851,9 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_49, 5), 0);
             D_80137FEC = 0;
         }
-        plDraw->r0 = plDraw->b0 = plDraw->g0 = plDraw->r1 = plDraw->b1 =
-            plDraw->g1 = plDraw->r2 = plDraw->b2 = plDraw->g2 = plDraw->r3 =
-                plDraw->b3 = plDraw->g3 = 0x80;
+        plDraw->r0 = plDraw->g0 = plDraw->b0 = plDraw->r1 = plDraw->g1 =
+            plDraw->b1 = plDraw->r2 = plDraw->g2 = plDraw->b2 = plDraw->r3 =
+                plDraw->g3 = plDraw->b3 = 0x80;
         plDraw->enableColorBlend = 1;
         PLAYER.step_s++;
         break;
@@ -1862,32 +1862,32 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             if (plDraw->r0 < 0xF8) {
                 plDraw->r0++;
             }
-            if (plDraw->g0 > 8) {
-                plDraw->g0--;
+            if (plDraw->b0 > 8) {
+                plDraw->b0--;
             }
 
             plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0;
-            plDraw->b0 = plDraw->b1 = plDraw->g1 = plDraw->b2 = plDraw->g2 =
-                plDraw->b3 = plDraw->g3 = plDraw->g0;
+            plDraw->g0 = plDraw->g1 = plDraw->b1 = plDraw->g2 = plDraw->b2 =
+                plDraw->g3 = plDraw->b3 = plDraw->b0;
         }
         if (D_80137FEC == 1 || D_80137FEC == 2) {
-            if (plDraw->g0 > 8) {
-                plDraw->g0--;
+            if (plDraw->b0 > 8) {
+                plDraw->b0--;
             }
-            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0 = plDraw->b0 =
-                plDraw->b1 = plDraw->g1 = plDraw->b2 = plDraw->g2 = plDraw->b3 =
-                    plDraw->g3 = plDraw->g0;
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0 = plDraw->g0 =
+                plDraw->g1 = plDraw->b1 = plDraw->g2 = plDraw->b2 = plDraw->g3 =
+                    plDraw->b3 = plDraw->b0;
         }
         if (D_80137FEC == 3) {
             if (plDraw->r0 < 0xF8) {
                 plDraw->r0--;
             }
-            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->b3 = plDraw->b2 =
-                plDraw->b1 = plDraw->b0 = plDraw->r0;
-            if (plDraw->g0 < 0xF8) {
-                plDraw->g0++;
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->g3 = plDraw->g2 =
+                plDraw->g1 = plDraw->g0 = plDraw->r0;
+            if (plDraw->b0 < 0xF8) {
+                plDraw->b0++;
             }
-            plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
+            plDraw->b3 = plDraw->b2 = plDraw->b1 = plDraw->b0;
         }
         PLAYER.velocityY += FIX(11.0 / 128);
         if (PLAYER.velocityY > FIX(1.0 / 4)) {
@@ -2118,22 +2118,22 @@ void PlayerStepKillWater(void) {
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x59), 0);
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_49, 6), 0);
         // Sets as RBG, not RGB.
-        plDraw->r0 = plDraw->b0 = plDraw->g0 = plDraw->r1 = plDraw->b1 =
-            plDraw->g1 = plDraw->r2 = plDraw->b2 = plDraw->g2 = plDraw->r3 =
-                plDraw->b3 = plDraw->g3 = 128;
+        plDraw->r0 = plDraw->g0 = plDraw->b0 = plDraw->r1 = plDraw->g1 =
+            plDraw->b1 = plDraw->r2 = plDraw->g2 = plDraw->b2 = plDraw->r3 =
+                plDraw->g3 = plDraw->b3 = 128;
         plDraw->enableColorBlend = true;
         PLAYER.step_s++;
         break;
     case 1:
-        if (plDraw->g0 < 0xF8) {
-            plDraw->g0++;
+        if (plDraw->b0 < 0xF8) {
+            plDraw->b0++;
         }
         if (plDraw->r0 > 8) {
             plDraw->r0--;
         }
-        plDraw->g3 = plDraw->g2 = plDraw->g1 = plDraw->g0;
-        plDraw->b0 = plDraw->b1 = plDraw->r1 = plDraw->b2 = plDraw->r2 =
-            plDraw->b3 = plDraw->r3 = plDraw->r0;
+        plDraw->b3 = plDraw->b2 = plDraw->b1 = plDraw->b0;
+        plDraw->g0 = plDraw->g1 = plDraw->r1 = plDraw->g2 = plDraw->r2 =
+            plDraw->g3 = plDraw->r3 = plDraw->r0;
         PLAYER.velocityY += FIX(1.0 / 16);
         // Interesting, this isn't a normal capping function.
         // If we get going fast enough, it drops our speed, rather than holding

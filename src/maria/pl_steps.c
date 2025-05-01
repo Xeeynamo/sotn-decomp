@@ -230,10 +230,10 @@ void MarStepDead(
                 g_CurrentEntity, FACTORY(BP_MULTIPLE_EMBERS, 5), 0);
             death_kind = DEATH_GENERIC;
         }
-        playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = playerDraw->r1 =
-            playerDraw->b1 = playerDraw->g1 = playerDraw->r2 = playerDraw->b2 =
-                playerDraw->g2 = playerDraw->r3 = playerDraw->b3 =
-                    playerDraw->g3 = 0x80;
+        playerDraw->r0 = playerDraw->g0 = playerDraw->b0 = playerDraw->r1 =
+            playerDraw->g1 = playerDraw->b1 = playerDraw->r2 = playerDraw->g2 =
+                playerDraw->b2 = playerDraw->r3 = playerDraw->g3 =
+                    playerDraw->b3 = 0x80;
         playerDraw->enableColorBlend = 1;
         PLAYER.step_s++;
         break;
@@ -297,30 +297,30 @@ void MarStepDead(
             if (playerDraw->r0 < 0xF8) {
                 playerDraw->r0 += 2;
             }
-            if (playerDraw->g0 > 8) {
-                playerDraw->g0 -= 2;
+            if (playerDraw->b0 > 8) {
+                playerDraw->b0 -= 2;
             }
 
             playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0;
-            playerDraw->b0 = playerDraw->b1 = playerDraw->g1 = playerDraw->b2 =
-                playerDraw->g2 = playerDraw->b3 = playerDraw->g3 =
-                    playerDraw->g0;
+            playerDraw->g0 = playerDraw->g1 = playerDraw->b1 = playerDraw->g2 =
+                playerDraw->b2 = playerDraw->g3 = playerDraw->b3 =
+                    playerDraw->b0;
         }
         if (death_kind == DEATH_BY_FIRE || death_kind == DEATH_BY_THUNDER) {
-            if (playerDraw->g0 > 8) {
-                playerDraw->g0 -= 2;
+            if (playerDraw->b0 > 8) {
+                playerDraw->b0 -= 2;
             }
             playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0 =
-                playerDraw->b0 = playerDraw->b1 = playerDraw->g1 =
-                    playerDraw->b2 = playerDraw->g2 = playerDraw->b3 =
-                        playerDraw->g3 = playerDraw->g0;
+                playerDraw->g0 = playerDraw->g1 = playerDraw->b1 =
+                    playerDraw->g2 = playerDraw->b2 = playerDraw->g3 =
+                        playerDraw->b3 = playerDraw->b0;
         }
         if (death_kind == DEATH_BY_ICE) {
             if ((playerDraw->r0 > 8) && (g_Timer & 1)) {
                 playerDraw->r0 -= 1;
             }
-            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->b3 =
-                playerDraw->b2 = playerDraw->b1 = playerDraw->b0 =
+            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->g3 =
+                playerDraw->g2 = playerDraw->g1 = playerDraw->g0 =
                     playerDraw->r0;
         }
     }
