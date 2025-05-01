@@ -208,12 +208,12 @@ void RenderEntities(void) {
                     spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
                 }
             } else if ((r->animSet & 0x7FFF) == 1) {
-// NOTE: Different on PSP and PS1. PS1 skips the *
+                // NOTE: Different on PSP and PS1. PS1 skips the *
                 spriteData = g_api.o.unk2C[r->spriteSheetIdx];
             } else if ((r->animSet & 0x7FFF) == 16) {
                 spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
             } else {
-// see above note
+                // see above note
                 spriteData = g_api.o.unk30[r->spriteSheetIdx];
             }
             r->xPivot = animFrame[0] + spriteData[2];
@@ -706,12 +706,12 @@ void RenderEntitiesPSP(void) {
                     spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
                 }
             } else if ((r->animSet & 0x7FFF) == 1) {
-// NOTE: Different on PSP and PS1. PS1 skips the *
+                // NOTE: Different on PSP and PS1. PS1 skips the *
                 spriteData = (*((u8***)g_api.o.unk2C))[r->spriteSheetIdx];
             } else if ((r->animSet & 0x7FFF) == 16) {
                 spriteData = ((u8**)SPRITESHEET_PTR)[r->spriteSheetIdx];
             } else {
-// see above note
+                // see above note
                 spriteData = (*((u8***)g_api.o.unk30))[r->spriteSheetIdx];
             }
             r->xPivot = animFrame[0] + spriteData[2];
