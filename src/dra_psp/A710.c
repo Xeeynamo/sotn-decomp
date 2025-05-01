@@ -617,7 +617,10 @@ void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8620);
+void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
+    RevealSecretPassageOnMap(g_Tilemap.left + (g_PlayerX >> 8),
+                              g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2014);
 
