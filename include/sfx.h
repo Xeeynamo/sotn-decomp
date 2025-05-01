@@ -632,7 +632,9 @@ enum Sfx {
 
 #if defined(VERSION_PSP)
     /* 0x8E7 */ SFX_VO_MAR_ATTACK_C = 0x8E7,
-    /* 0x8EC */ SFX_VO_MAR_8EC = 0x8EC,
+    /* 0x8EA */ SFX_VO_MAR_8EA = 0x8EA,
+    /* 0x8EB */ SFX_VO_MAR_8EB,
+    /* 0x8EC */ SFX_VO_MAR_8EC,
     /* 0x8ED */ SFX_VO_MAR_8ED,
     /* 0x8EE */ SFX_VO_MAR_8EE,
     /* 0x8EF */ SFX_VO_MAR_8EF,

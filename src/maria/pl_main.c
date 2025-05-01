@@ -683,7 +683,8 @@ void MarMain(void) {
     g_CurrentEntity->nFramesInvincibility = 0;
     func_8015C6D4();
 
-    // this block is new to maria
+    // this block is new to maria and it is related to the support for
+    // the two subweapons
     if (!(D_pspeu_092E5F28 & 0x2000) && (func_8919BA8() & 0x2000) &&
         func_90E4C58() < 0) {
         func_90E4C18();

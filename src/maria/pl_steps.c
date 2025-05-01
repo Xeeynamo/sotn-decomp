@@ -45,11 +45,243 @@ void MarStepWalk(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepJump);
+void MarStepJump(void) {
+    s32 facing;
+
+    if (PLAYER.velocityY < FIX(-1) && !(g_Player.unk44 & 0x40) &&
+        !(g_Player.padPressed & PAD_CROSS)) {
+        PLAYER.velocityY = FIX(-1);
+    }
+    if (g_Player.vram_flag & 2 && PLAYER.velocityY < FIX(-1)) {
+        PLAYER.velocityY = FIX(-0.25);
+        g_Player.unk44 |= 0x20;
+    }
+    if (MarCheckInput(CHECK_GROUND | CHECK_FACING | CHECK_ATTACK |
+                      CHECK_GRAVITY_JUMP | 0x460)) {
+        return;
+    }
+    switch (PLAYER.step_s) {
+    case 0:
+        facing = MarCheckFacing();
+        if (facing) {
+            MarSetSpeedX(FIX(2.25));
+            g_Player.unk44 &= ~4;
+        } else {
+            MarDecelerateX(abs(g_CurrentEntity->velocityX) / 20);
+        }
+        if (facing <= 0) {
+            g_Player.unk44 &= ~0x10;
+        }
+        if (PLAYER.velocityY > 0) {
+            if (!(g_Player.unk44 & 1)) {
+                MarSetAnimation(mar_80155534);
+            }
+            PLAYER.step_s = 1;
+        }
+        break;
+    case 1:
+        facing = MarCheckFacing();
+        if (facing) {
+            MarSetSpeedX(FIX(2.25));
+            g_Player.unk44 &= ~4;
+        } else {
+            MarDecelerateX(abs(g_CurrentEntity->velocityX) / 20);
+        }
+        if (facing <= 0) {
+            g_Player.unk44 &= ~0x10;
+        }
+        break;
+    case 0x40:
+        DisableAfterImage(1, 1);
+        if (PLAYER.pose < 3) {
+            facing = MarCheckFacing();
+            if (facing) {
+                MarSetSpeedX(FIX(2.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                MarSetSpeedX(FIX(2.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.poseTimer < 0) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            MarSetAnimation(mar_80155534);
+        }
+        break;
+    case 0x42:
+        DisableAfterImage(1, 1);
+        if (PLAYER.pose < 3) {
+            facing = MarCheckFacing();
+            if (facing) {
+                MarSetSpeedX(FIX(2.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        } else {
+            if (((g_Player.padPressed & PAD_RIGHT) && PLAYER.facingLeft == 0) ||
+                ((g_Player.padPressed & PAD_LEFT) && PLAYER.facingLeft)) {
+                MarSetSpeedX(FIX(2.25));
+                g_Player.unk44 &= ~4;
+            } else {
+                g_Player.unk44 &= ~0x10;
+            }
+        }
+        if (PLAYER.poseTimer < 0) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            MarSetAnimation(mar_80155534);
+        }
+        break;
+    case 0x70:
+        if (g_Player.unk44 & 0x80) {
+            MarSetJump(1);
+            if (!(g_Player.padPressed & 0x4000)) {
+                PLAYER.velocityY = FIX(-4.25);
+            }
+            g_Player.unk44 |= 0x40;
+        }
+        break;
+    }
+    if ((PLAYER.step_s == 0 || PLAYER.step_s == 1) && (g_Player.unk44 & 1) &&
+        g_Player.padPressed & PAD_DOWN && g_Player.padTapped & PAD_CROSS) {
+        MarSetAnimation(D_pspeu_092C0858);
+        PLAYER.step_s = 0x70;
+        MarCreateEntFactoryFromEntity(g_CurrentEntity, 5, 0);
+        g_Player.unk44 &= ~0x80;
+        PLAYER.velocityY = 0x60000;
+        if (facing) {
+            MarSetSpeedX(0x48000);
+        }
+        func_9142FC8(SFX_VO_MAR_8EA);
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepFall);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepCrouch);
+void MarStepCrouch(void) {
+    s32 i;
+    s16 xShift;
+    s32 facing;
+
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
+        (g_Player.padPressed & PAD_DOWN)) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE) {
+                g_Player.timers[PL_T_7] = 8;
+                return;
+            }
+        }
+    }
+    if (MarCheckInput(CHECK_FALL | CHECK_FACING | CHECK_ATTACK | CHECK_SLIDE)) {
+        return;
+    }
+    if ((g_Player.padTapped & PAD_CROSS) && !g_Player.unk46 &&
+        (!g_Player.unk72)) {
+        MarSetJump(1);
+        return;
+    } else if (!g_Player.unk72 && !g_Player.unk46 &&
+               (g_Player.padTapped & PAD_TRIANGLE) && MarDoCrash()) {
+        return;
+    }
+    MarDecelerateX(0x2000);
+    switch (PLAYER.step_s) {
+    case 0x0:
+        if (mar_8015459C != 0) {
+            mar_8015459C--;
+        } else if (*D_80097448 > 0x18 && !g_Player.unk48) {
+            xShift = 9;
+            if (PLAYER.facingLeft) {
+                xShift = -xShift;
+            }
+            PLAYER.posX.i.hi += xShift;
+            PLAYER.posY.i.hi += 2;
+            MarCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
+            PLAYER.posY.i.hi -= 2;
+            PLAYER.posX.i.hi -= xShift;
+            mar_8015459C = 0x60;
+        }
+        if (!(g_Player.padPressed & PAD_DOWN) &&
+            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
+            MarSetAnimation(mar_801554E0);
+            PLAYER.step_s = 2;
+            return;
+        }
+        break;
+    case 0x1:
+        if (!(g_Player.padPressed & PAD_DOWN) &&
+            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+                return;
+            }
+            PLAYER.anim = mar_801554E0;
+            PLAYER.step_s = 2;
+            PLAYER.pose = 0;
+            PLAYER.poseTimer = 1;
+            break;
+        }
+    case 0x4:
+        if (PLAYER.poseTimer != -1) {
+            return;
+        }
+        MarSetAnimation(mar_anim_crouch);
+        PLAYER.step_s = 0;
+        break;
+    case 0x2:
+        if (!g_Player.unk72 || !(g_Player.vram_flag & 0x40)) {
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+                return;
+            }
+            if (PLAYER.poseTimer == -1) {
+                MarSetStand(0);
+                return;
+            }
+        }
+        break;
+    case 0x3:
+        if (PLAYER.poseTimer < 0) {
+            MarSetAnimation(mar_anim_crouch);
+            PLAYER.step_s = 0;
+            return;
+        }
+        break;
+    case 0x40:
+        DisableAfterImage(1, 1);
+        if (PLAYER.pose < 3) {
+            facing = MarCheckFacing();
+            if (!(g_Player.padPressed & PAD_DOWN) && !g_Player.unk72) {
+                PLAYER.step = PL_S_STAND;
+                PLAYER.anim = mar_80155588;
+                return;
+            }
+        }
+        if (PLAYER.poseTimer < 0) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            MarSetAnimation(mar_anim_crouch);
+        }
+        break;
+    case 0x41:
+        DisableAfterImage(1, 1);
+        if (!(g_Player.padPressed & PAD_SQUARE)) {
+            g_Player.unk46 = 0;
+            PLAYER.step_s = 0;
+            MarSetAnimation(mar_anim_crouch);
+        }
+        break;
+    }
+}
 
 static void func_80159BC8(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
