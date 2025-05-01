@@ -273,13 +273,10 @@ void RicEntityHitByHoly(Entity* entity) {
 
 // same as DRA/func_8011F074
 static AnimationFrame anim_smoke_dark[] = {
-    {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
-    {2, FRAME(3, 0)},  {2, FRAME(4, 0)},
-    {2, FRAME(5, 0)},  {2, FRAME(6, 0)},
-    {2, FRAME(7, 0)},  {2, FRAME(8, 0)},
-    {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
-    {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
-    {2, FRAME(13, 0)}, A_END};
+    POSE(2, 1, 0),  POSE(2, 2, 0),  POSE(2, 3, 0),  POSE(2, 4, 0),
+    POSE(2, 5, 0),  POSE(2, 6, 0),  POSE(2, 7, 0),  POSE(2, 8, 0),
+    POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE_END};
 #if defined(VERSION_PSP)
 extern s32 D_80174FFC;
 #else
@@ -834,31 +831,13 @@ static s32 velocity_x_80154C5C[] = {
     FIX(-0.1875), FIX(-0.25), -0x6000, FIX(-0.5), FIX(-0.625), FIX(-0.75)};
 static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
 static AnimationFrame anim_smoke_puff[] = {
-    {1, FRAME(0x01, 0)},
-    {1, FRAME(0x02, 0)},
-    {1, FRAME(0x03, 0)},
-    {1, FRAME(0x04, 0)},
-    {1, FRAME(0x05, 0)},
-    {1, FRAME(0x06, 0)},
-    {1, FRAME(0x07, 0)},
-    {1, FRAME(0x08, 0)},
-    {1, FRAME(0x09, 0)},
-    {1, FRAME(0x0A, 0)},
-    {1, FRAME(0x0B, 0)},
-    {1, FRAME(0x0C, 0)},
-    {1, FRAME(0x0D, 0)},
-    {1, FRAME(0x0E, 0)},
-    {1, FRAME(0x0F, 0)},
-    {1, FRAME(0x10, 0)},
-    {1, FRAME(0x11, 0)},
-    {1, FRAME(0x12, 0)},
-    {1, FRAME(0x13, 0)},
-    {1, FRAME(0x14, 0)},
-    {1, FRAME(0x15, 0)},
-    {1, FRAME(0x16, 0)},
-    {1, FRAME(0x17, 0)},
-    {1, FRAME(0x18, 0)},
-    A_END};
+    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0), POSE(1, 0x04, 0),
+    POSE(1, 0x05, 0), POSE(1, 0x06, 0), POSE(1, 0x07, 0), POSE(1, 0x08, 0),
+    POSE(1, 0x09, 0), POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
+    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0), POSE(1, 0x10, 0),
+    POSE(1, 0x11, 0), POSE(1, 0x12, 0), POSE(1, 0x13, 0), POSE(1, 0x14, 0),
+    POSE(1, 0x15, 0), POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0),
+    POSE_END};
 static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
 static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
 void RicEntitySmokePuff(Entity* self) {
@@ -1248,25 +1227,14 @@ void RicEntityHitByCutBlood(Entity* self) {
 
 // DRA function is func_8011EDA8
 static AnimationFrame anim_80154DC8[] = {
-    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
-    {2, FRAME(3, 0)}, {2, FRAME(4, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {1, FRAME(6, 0)},
-    {1, FRAME(7, 0)}, {1, FRAME(8, 0)}, A_END};
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END};
 static AnimationFrame anim_80154E04[] = {
-    {1, FRAME(9, 0)},
-    {2, FRAME(10, 0)},
-    {2, FRAME(11, 0)},
-    {2, FRAME(12, 0)},
-    {2, FRAME(13, 0)},
-    {2, FRAME(14, 0)},
-    {2, FRAME(15, 0)},
-    {2, FRAME(16, 0)},
-    {2, FRAME(17, 0)},
-    {2, FRAME(18, 0)},
-    {3, FRAME(19, 0)},
-    {4, FRAME(20, 0)},
-    A_END};
+    POSE(1, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE(2, 14, 0), POSE(2, 15, 0), POSE(2, 16, 0),
+    POSE(2, 17, 0), POSE(2, 18, 0), POSE(3, 19, 0), POSE(4, 20, 0),
+    POSE_END};
 void func_80161C2C(Entity* self) {
     s16 paramsHi;
     s16 paramsLo;
@@ -1334,9 +1302,8 @@ void func_80161C2C(Entity* self) {
 }
 
 static AnimationFrame anim_80154E38[] = {
-    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(6, 0)},
-    {2, FRAME(7, 0)}, {2, FRAME(8, 0)}, A_END};
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0), POSE_END};
 void func_80161EF8(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1660,21 +1627,20 @@ void RicEntityMariaPowers(Entity* self) {
 void RicEntityNotImplemented4(Entity* self) {}
 
 static AnimationFrame anim_maria_walk[] = {
-    {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
-    {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
-    {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
+    POSE(4, 1, 0), POSE(4, 2, 0), POSE(4, 3, 0), POSE(4, 4, 0), POSE(4, 5, 0),
+    POSE(4, 6, 0), POSE(4, 7, 0), POSE(4, 8, 0), POSE_LOOP(0)};
 static AnimationFrame anim_maria_offering_powers[] = {
-    {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
-    {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
-    {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
-    {0x04, FRAME(0x0D, 0)}, {0x03, FRAME(0x0F, 0)}, {0x03, FRAME(0x0E, 0)},
-    {0x03, FRAME(0x0D, 0)}, {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0F, 0)},
-    {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0D, 0)}, {0x04, FRAME(0x0E, 0)},
-    {0x05, FRAME(0x0F, 0)}, {0x06, FRAME(0x0E, 0)}, {0x07, FRAME(0x0D, 0)},
-    {0x30, FRAME(0x0E, 0)}, {0x0C, FRAME(0x09, 0)}, {0x0D, FRAME(0x10, 0)},
-    {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
-    {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
-    {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
+    POSE(0x08, 0x09, 0), POSE(0x08, 0x0D, 0), POSE(0x40, 0x0A, 0),
+    POSE(0x02, 0x0B, 0), POSE(0x02, 0x0C, 0), POSE(0x06, 0x0D, 0),
+    POSE(0x07, 0x0E, 0), POSE(0x06, 0x0F, 0), POSE(0x05, 0x0E, 0),
+    POSE(0x04, 0x0D, 0), POSE(0x03, 0x0F, 0), POSE(0x03, 0x0E, 0),
+    POSE(0x03, 0x0D, 0), POSE(0x03, 0x0E, 0), POSE(0x03, 0x0F, 0),
+    POSE(0x03, 0x0E, 0), POSE(0x03, 0x0D, 0), POSE(0x04, 0x0E, 0),
+    POSE(0x05, 0x0F, 0), POSE(0x06, 0x0E, 0), POSE(0x07, 0x0D, 0),
+    POSE(0x30, 0x0E, 0), POSE(0x0C, 0x09, 0), POSE(0x0D, 0x10, 0),
+    POSE(0x08, 0x11, 0), POSE(0x0C, 0x12, 0), POSE(0xB0, 0x13, 0),
+    POSE(0x0A, 0x14, 0), POSE(0x0A, 0x15, 0), POSE(0x0A, 0x16, 0),
+    POSE(0x30, 0x17, 0), POSE(0xD0, 0x18, 0), POSE_END};
 void RicEntityMaria(Entity* self) {
     switch (self->step) {
     case 0:

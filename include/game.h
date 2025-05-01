@@ -782,13 +782,14 @@ typedef struct {
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
-#define FRAME(x, y) ((x) | ((y) << 8))
-#define A_LOOP_AT(frame) {0, frame}
-#define A_END {-1, 0}
-#define A_JUMP_AT(anim) {-2, anim}
+#define POSE(duration, frameNo, hitboxNo)                                      \
+    {(duration), (((frameNo) & 0x1FF) | (((hitboxNo) & 0x7F) << 9))}
+#define POSE_LOOP(index) {0, index} // loop at pose index
+#define POSE_END {-1, 0}            // stop at last frame
+#define POSE_JUMP(anim) {-2, anim}  // set new animation
 typedef struct {
     u16 duration;
-    u16 unk2;
+    u16 pose; // contains both frameNo and hitboxNo
 } AnimationFrame;
 
 typedef struct {
