@@ -622,7 +622,28 @@ void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
                               g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2014);
+void func_800F2014(void) {
+    s32 x;
+    s32 y;
+    s32 subMap;
+    s32 idx;
+
+    if (g_canRevealMap && (g_StageId != STAGE_ST0)) {
+        x = g_Tilemap.left + (g_PlayerX >> 8);
+        y = g_Tilemap.top + (g_PlayerY >> 8);
+        subMap = 1 << ((3 - (x & 3)) * 2);
+        idx = (x >> 2) + (y * 16);
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            idx += 2 * 4 * 0x80;
+        }
+        if (!(g_CastleMap[idx] & subMap)) {
+            g_CastleMap[idx] |= subMap;
+            g_RoomCount++;
+            func_800F1B08(x, y, 0);
+            RevealSecretPassageOnMap(x, y, 0xFFFF);
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8760);
 
@@ -712,7 +733,7 @@ void func_800F2288(s32 arg0) {
                         }
                         subMap &= 0xAA;
                         if (!(g_CastleMap[idx] & subMap)) {
-                            g_CastleMap[idx] |= (u8)subMap;
+                            g_CastleMap[idx] |= subMap;
                             func_800F1B08(x, y, 1);
                         }
                     }
