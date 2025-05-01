@@ -192,7 +192,7 @@ void MarStepCrouch(void) {
                (g_Player.padTapped & PAD_TRIANGLE) && MarDoCrash()) {
         return;
     }
-    MarDecelerateX(0x2000);
+    MarDecelerateX(FIX(0.125));
     switch (PLAYER.step_s) {
     case 0x0:
         if (mar_8015459C != 0) {
