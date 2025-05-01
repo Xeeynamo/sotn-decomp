@@ -505,8 +505,8 @@
 | dra       | MenuDrawAlucardPortrait             |       43 |          3 |        |                                 |       |
 | dra       | func_psp_090ED9E0                   |       43 |          4 |        |                                 |       |
 | no4       | func_pspeu_09238490                 |       43 |          4 |        |                                 |       |
+| dra       | ResetEntityArray                    |       43 |          5 |        |                                 |       |
 | dra       | CreateHPNumMove                     |       43 |          5 |        |                                 |       |
-| dra       | func_psp_090FCE58                   |       43 |          5 |        |                                 |       |
 | maria_psp | func_pspeu_092BEAB0                 |       43 |          5 |        |                                 |       |
 | dra       | func_8010EA54                       |       43 |          6 |        |                                 |       |
 | dra       | SetCgiDisplayBuffer                 |       43 |          6 |        |                                 |       |
@@ -1314,7 +1314,7 @@
 | dra       | func_psp_090FA828                   |      245 |         39 | Yes    |                                 |       |
 | dra       | CheckHellfireInput                  |      246 |         41 |        |                                 |       |
 | no4       | func_pspeu_09237BE8                 |      247 |          1 |        |                                 |       |
-| dra       | func_psp_090FCEE0                   |      247 |         31 |        | https://decomp.me/scratch/fwp99 | 1.0   |
+| dra       | InitRenderer                        |      247 |         31 |        |                                 |       |
 | no4       | func_pspeu_092391D8                 |      248 |         34 |        |                                 |       |
 | lib       | EntityCandleTable                   |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                |      250 |         34 |        |                                 |       |
@@ -1723,7 +1723,7 @@
 | dra       | AlucardHandleDamage                 |     1338 |        206 | Yes    |                                 |       |
 | st0       | EntityDracula                       |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra       | func_8010EDB8                       |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
-| dra       | RenderEntities                      |     1538 |        105 |        | https://decomp.me/scratch/MJde9 | 0.999 |
+| dra       | RenderEntitiesPSP                   |     1538 |        105 |        |                                 |       |
 | dra       | RenderPrimitives                    |     1552 |         69 |        | https://decomp.me/scratch/NjoUv | 0.992 |
 | ric       | RicEntityCrashStopwatchDoneSparkle  |     1568 |         75 |        | https://decomp.me/scratch/G9CWM | 1.0   |
 | lib       | func_us_801B15C0                    |     1588 |        176 | Yes    |                                 |       |
@@ -1736,7 +1736,7 @@
 | st0       | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra       | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric       | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
-| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.961 |
+| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.962 |
 | lib       | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib       | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | maria     | MarEntityPlayerBlinkWhite           |     1981 |        164 | Yes    |                                 |       |
