@@ -293,6 +293,9 @@ enum SfxModes {
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_BO4_UNK_7D7 0x7D7
+#define SFX_BO4_UNK_7DC 0x7DC
+#define SFX_BO4_UNK_7DD 0x7DD
+#define SFX_BO4_UNK_7E6 0x7E6
 
 // BOSS RBO3 - Medusa
 #define SFX_RBO3_UNK_7C5 0x7C5

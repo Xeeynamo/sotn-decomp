@@ -33,99 +33,92 @@ static u16 D_170000_8017A808[] = {
     0x921D, 0x965D, 0x9EBE,
 };
 
-static AnimationFrame D_170000_8017A988[] = {{2, FRAME(1, 2)}, A_LOOP_AT(0)};
+static AnimationFrame D_170000_8017A988[] = {POSE(2, 1, 1), POSE_LOOP(0)};
 
 static AnimationFrame D_170000_8017A990[] = {
-    {2, FRAME(0x02, 0x04)},
-    A_LOOP_AT(0),
+    POSE(2, 0x02, 2),
+    POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017A998[] = {
-    {2, FRAME(0x03, 0x06)}, {2, FRAME(0x04, 0x06)}, {2, FRAME(0x05, 0x06)},
-    {2, FRAME(0x06, 0x06)}, {2, FRAME(0x07, 0x06)}, {2, FRAME(0x08, 0x06)},
-    {2, FRAME(0x09, 0x08)}, {2, FRAME(0x0A, 0x02)}, {2, FRAME(0x0B, 0x02)},
-    {2, FRAME(0x0C, 0x02)}, A_LOOP_AT(0),
+    POSE(2, 0x03, 3), POSE(2, 0x04, 3), POSE(2, 0x05, 3), POSE(2, 0x06, 3),
+    POSE(2, 0x07, 3), POSE(2, 0x08, 3), POSE(2, 0x09, 4), POSE(2, 0x0A, 1),
+    POSE(2, 0x0B, 1), POSE(2, 0x0C, 1), POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017A9C4[] = {
-    {3, FRAME(0x0D, 0x02)}, {3, FRAME(0x0E, 0x0E)}, {3, FRAME(0x0F, 0x10)},
-    {3, FRAME(0x10, 0x12)}, {3, FRAME(0x11, 0x14)}, {3, FRAME(0x12, 0x16)},
-    {3, FRAME(0x13, 0x18)}, {3, FRAME(0x14, 0x1A)}, {3, FRAME(0x15, 0x1C)},
-    {3, FRAME(0x16, 0x1A)}, {3, FRAME(0x17, 0x18)}, {3, FRAME(0x18, 0x16)},
-    {3, FRAME(0x19, 0x14)}, {3, FRAME(0x1A, 0x12)}, {3, FRAME(0x1B, 0x10)},
-    {3, FRAME(0x1C, 0x0E)}, A_LOOP_AT(0),
+    POSE(3, 0x0D, 1),  POSE(3, 0x0E, 7),  POSE(3, 0x0F, 8),  POSE(3, 0x10, 9),
+    POSE(3, 0x11, 10), POSE(3, 0x12, 11), POSE(3, 0x13, 12), POSE(3, 0x14, 13),
+    POSE(3, 0x15, 14), POSE(3, 0x16, 13), POSE(3, 0x17, 12), POSE(3, 0x18, 11),
+    POSE(3, 0x19, 10), POSE(3, 0x1A, 9),  POSE(3, 0x1B, 8),  POSE(3, 0x1C, 7),
+    POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AA08[] = {
-    {1, FRAME(0x24, 0x02)}, {1, FRAME(0x25, 0x02)}, {1, FRAME(0x26, 0x02)},
-    {1, FRAME(0x27, 0x02)}, {1, FRAME(0x28, 0x02)}, {1, FRAME(0x29, 0x02)},
-    {1, FRAME(0x2A, 0x02)}, {1, FRAME(0x2B, 0x02)}, {1, FRAME(0x2C, 0x02)},
-    {1, FRAME(0x2D, 0x02)}, {1, FRAME(0x2E, 0x02)}, {1, FRAME(0x2F, 0x02)},
-    {1, FRAME(0x30, 0x02)}, A_LOOP_AT(0),
+    POSE(1, 0x24, 1), POSE(1, 0x25, 1), POSE(1, 0x26, 1), POSE(1, 0x27, 1),
+    POSE(1, 0x28, 1), POSE(1, 0x29, 1), POSE(1, 0x2A, 1), POSE(1, 0x2B, 1),
+    POSE(1, 0x2C, 1), POSE(1, 0x2D, 1), POSE(1, 0x2E, 1), POSE(1, 0x2F, 1),
+    POSE(1, 0x30, 1), POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AA40[] = {
-    {1, FRAME(0x2A, 0x02)}, {1, FRAME(0x2B, 0x02)}, {1, FRAME(0x2C, 0x02)},
-    {1, FRAME(0x2D, 0x02)}, {1, FRAME(0x2E, 0x02)}, {1, FRAME(0x2F, 0x02)},
-    {1, FRAME(0x30, 0x02)}, A_LOOP_AT(0),
+    POSE(1, 0x2A, 1), POSE(1, 0x2B, 1), POSE(1, 0x2C, 1), POSE(1, 0x2D, 1),
+    POSE(1, 0x2E, 1), POSE(1, 0x2F, 1), POSE(1, 0x30, 1), POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AA60[] = {
-    {2, FRAME(0x21, 0x02)}, {2, FRAME(0x22, 0x02)}, {2, FRAME(0x23, 0x02)},
-    {2, FRAME(0x24, 0x02)}, {2, FRAME(0x25, 0x02)}, {2, FRAME(0x26, 0x02)},
-    {2, FRAME(0x27, 0x02)}, {2, FRAME(0x28, 0x02)}, {2, FRAME(0x29, 0x02)},
-    {2, FRAME(0x2A, 0x02)}, {2, FRAME(0x2B, 0x02)}, {2, FRAME(0x2C, 0x02)},
-    {2, FRAME(0x2D, 0x02)}, {2, FRAME(0x2E, 0x02)}, {2, FRAME(0x2F, 0x02)},
-    {2, FRAME(0x30, 0x02)}, A_LOOP_AT(0),
+    POSE(2, 0x21, 1), POSE(2, 0x22, 1), POSE(2, 0x23, 1), POSE(2, 0x24, 1),
+    POSE(2, 0x25, 1), POSE(2, 0x26, 1), POSE(2, 0x27, 1), POSE(2, 0x28, 1),
+    POSE(2, 0x29, 1), POSE(2, 0x2A, 1), POSE(2, 0x2B, 1), POSE(2, 0x2C, 1),
+    POSE(2, 0x2D, 1), POSE(2, 0x2E, 1), POSE(2, 0x2F, 1), POSE(2, 0x30, 1),
+    POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AAA4[] = {
-    {2, FRAME(0x31, 0x02)},
-    {2, FRAME(0x32, 0x02)},
-    {2, FRAME(0x33, 0x02)},
-    A_END,
+    POSE(2, 0x31, 1),
+    POSE(2, 0x32, 1),
+    POSE(2, 0x33, 1),
+    POSE_END,
 };
 
 static AnimationFrame D_170000_8017AAB4[] = {
-    {2, FRAME(0x34, 0x04)},
-    {2, FRAME(0x35, 0x04)},
-    {2, FRAME(0x36, 0x04)},
-    A_END,
+    POSE(2, 0x34, 2),
+    POSE(2, 0x35, 2),
+    POSE(2, 0x36, 2),
+    POSE_END,
 };
 
 static AnimationFrame D_170000_8017AAC4[] = {
-    {2, FRAME(0x33, 0x02)},
-    {2, FRAME(0x32, 0x02)},
-    {2, FRAME(0x31, 0x02)},
-    A_END,
+    POSE(2, 0x33, 1),
+    POSE(2, 0x32, 1),
+    POSE(2, 0x31, 1),
+    POSE_END,
 };
 
 static AnimationFrame D_170000_8017AAD4[] = {
-    {2, FRAME(0x36, 0x04)},
-    {2, FRAME(0x35, 0x04)},
-    {2, FRAME(0x34, 0x04)},
-    A_END,
+    POSE(2, 0x36, 2),
+    POSE(2, 0x35, 2),
+    POSE(2, 0x34, 2),
+    POSE_END,
 };
 
 static AnimationFrame D_170000_8017AAE4[] = {
-    {4, FRAME(0x1D, 0x02)},
-    {4, FRAME(0x1E, 0x02)},
-    A_LOOP_AT(0),
+    POSE(4, 0x1D, 1),
+    POSE(4, 0x1E, 1),
+    POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AAF0[] = {
-    {2, FRAME(0x1F, 0x0C)},
-    {2, FRAME(0x20, 0x0C)},
-    A_LOOP_AT(0),
+    POSE(2, 0x1F, 6),
+    POSE(2, 0x20, 6),
+    POSE_LOOP(0),
 };
 
 static AnimationFrame D_170000_8017AAFC[] = {
-    {3, FRAME(0x37, 0x22)}, {3, FRAME(0x38, 0x22)}, {3, FRAME(0x38, 0x22)},
-    {3, FRAME(0x38, 0x20)}, {3, FRAME(0x38, 0x1E)}, {3, FRAME(0x39, 0x02)},
-    {3, FRAME(0x3A, 0x02)}, {3, FRAME(0x3B, 0x02)}, {3, FRAME(0x3C, 0x02)},
-    {3, FRAME(0x3D, 0x02)}, {3, FRAME(0x01, 0x02)}, {3, FRAME(0x01, 0x02)},
-    {3, FRAME(0x01, 0x02)}, {3, FRAME(0x01, 0x02)}, {3, FRAME(0x01, 0x02)},
-    A_LOOP_AT(0),
+    POSE(3, 0x37, 17), POSE(3, 0x38, 17), POSE(3, 0x38, 17), POSE(3, 0x38, 16),
+    POSE(3, 0x38, 15), POSE(3, 0x39, 1),  POSE(3, 0x3A, 1),  POSE(3, 0x3B, 1),
+    POSE(3, 0x3C, 1),  POSE(3, 0x3D, 1),  POSE(3, 0x01, 1),  POSE(3, 0x01, 1),
+    POSE(3, 0x01, 1),  POSE(3, 0x01, 1),  POSE(3, 0x01, 1),  POSE_LOOP(0),
 };
 
 static s8 D_170000_8017AB3C[] = {
