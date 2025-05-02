@@ -116,7 +116,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 			{
 				DataRange: palDefRange,
 				Kind:      h.Name(),
-				Name:      "gen_palette_def",
+				Name:      "palette_def",
 			},
 		},
 		SplatEntries: splatEntries,
