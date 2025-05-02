@@ -3,7 +3,6 @@
 #include "dra_bss.h"
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
-#include "sfx.h"
 
 RoomTeleport D_800A245C[] = {
     {496, 392, 0x00A0, STAGE_NO0, STAGE_NZ0},

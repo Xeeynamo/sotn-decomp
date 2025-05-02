@@ -100,7 +100,7 @@ segments:
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, data]
-      - [0x6B290, .data, dra_psp/A710]
+      - [0x6B060, .data, dra_psp/A710]
       - [0x6B4E0, data]
       - [0x6DA20, .data, dra_psp/E588]
       - [0x6DCA8, data]
