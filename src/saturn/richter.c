@@ -80,7 +80,14 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
 
 // RicSetStand
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, func_060A8F8C);
+extern AnimationFrame ric_anim_stand[];
+void RicSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_STAND);
+    RicSetAnimation(ric_anim_stand);
+}
 
 // RicSetWalk
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
@@ -314,8 +321,18 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, func_060AB9C0);
 // func_8015F9F0
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
 
-// func_8015FA5C
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA50, func_060ABA50);
+extern u8 D_80154674[][4];
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+
+void func_8015FA5C(s32 arg0) {
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
+}
 
 // RicSetSubweaponParams
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA98, func_060ABA98);
