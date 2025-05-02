@@ -13,7 +13,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"sort"
 	"strings"
 )
@@ -123,11 +123,11 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }
 
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.h", name))
 }
 
 type paletteEntry struct {

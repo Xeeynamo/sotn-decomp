@@ -8,7 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"sort"
 	"strings"
 )
@@ -84,7 +84,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 }
 
 func buildSprites(fileName string, outputDir string) error {
-	ovlName := path.Base(outputDir)
+	ovlName := filepath.Base(outputDir)
 	data, err := os.ReadFile(fileName)
 	if err != nil {
 		return err
@@ -124,8 +124,8 @@ func buildSprites(fileName string, outputDir string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(path.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
-	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
 }

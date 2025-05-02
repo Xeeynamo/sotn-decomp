@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -125,14 +125,14 @@ func assetPath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return path.Join(dir, fmt.Sprintf("%s.yaml", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.yaml", name))
 }
 
 func sourcePath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.h", name))
 }
 
 type cmdDef struct {

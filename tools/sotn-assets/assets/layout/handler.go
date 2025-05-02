@@ -10,7 +10,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
-	"path"
+	"path/filepath"
 )
 
 const entryCount = 53 // the number seems to be fixed
@@ -22,7 +22,7 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "layout" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	ovlName := path.Base(e.AssetDir)
+	ovlName := filepath.Base(e.AssetDir)
 	r := bytes.NewReader(e.Data)
 	layoutOff, err := layoutOffset(r)
 	if err != nil {
@@ -37,7 +37,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {

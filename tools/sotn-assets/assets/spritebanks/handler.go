@@ -8,7 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"path"
+	"path/filepath"
 )
 
 const banksCount = 24 // the number seems to be fixed
@@ -63,5 +63,5 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }

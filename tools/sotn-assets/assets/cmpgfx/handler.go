@@ -9,7 +9,7 @@ import (
 	"image/color"
 	"image/png"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -73,15 +73,15 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPathAsPNG(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.png", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.png", name))
 }
 
 func assetPathAsRAW(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.cmp", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.cmp", name))
 }
 
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.h", name))
 }
 
 func makeImage(data []byte, width, height, bpp int, p color.Palette) (image.Image, error) {

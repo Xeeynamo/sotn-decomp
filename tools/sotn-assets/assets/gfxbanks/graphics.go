@@ -8,7 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
-	"path"
+	"path/filepath"
 )
 
 type GfxKind uint32
@@ -43,7 +43,7 @@ func (e GfxEntry) symbol() string {
 	if e.Name == "" {
 		return "NULL"
 	}
-	return util.RemoveFileNameExt(path.Base(e.Name))
+	return util.RemoveFileNameExt(filepath.Base(e.Name))
 }
 
 type GfxBank struct {
