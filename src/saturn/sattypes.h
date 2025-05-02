@@ -170,7 +170,7 @@ typedef struct Entity {
     /* 0x80 */ Ext ext;
     /* 0x88 */ char pad_88[0x2];
     /* 0x8A */ struct UnkStruct_060e8350* unk8A;
- } Entity; // size = 0xB8
+} Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
     /* 0x00 */ s16 unk0;
