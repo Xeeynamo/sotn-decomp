@@ -111,8 +111,8 @@ typedef enum {
 
 typedef struct {
     const char* path; // file name
-    u8* addr;         // where to load the file to
-    s32 size;         // file size
+    void* addr;       // where to load the file to
+    size_t size;      // file size
     SimKind kind;
 } SimFile;
 
@@ -579,7 +579,7 @@ extern Accessory g_AccessoryDefs[90];
 extern Equipment g_EquipDefs[217];
 #endif
 extern s32 g_ExpNext[];
-extern u16 D_800AC958[];
+extern s16 D_800AC958[];
 extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
 extern Vram g_Vram;
