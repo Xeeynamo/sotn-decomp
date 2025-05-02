@@ -855,7 +855,60 @@ void func_800F24F4(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", DrawMapCursor);
+void DrawMapCursor(void) {
+    s32 x;
+    s32 y;
+    s32 tick;
+    s32 cursorSize;
+    OT_TYPE* gpu_ot = &g_CurrentBuffer->ot[0];
+    POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
+
+    x = g_Tilemap.left + (g_PlayerX >> 8);
+    y = g_Tilemap.top + (g_PlayerY >> 8);
+    x = x * 4 - 14;
+    y = y * 4 - 13;
+    if (g_StageId & 0x20) {
+        x -= 1;
+        y -= 17;
+    }
+
+    tick = g_MapCursorTimer & 0x3F;
+    tick = 0x3F - tick;
+    tick = SQ(tick) >> 8;
+    tick = 15 - tick;
+    if (tick == 0) {
+        tick = 15;
+    }
+
+    x += tick;
+    y += tick;
+    cursorSize = 32 - (tick * 2);
+    setSemiTrans(poly, true);
+    setShadeTex(poly, false);
+    poly->x0 = x;
+    poly->y0 = y;
+    poly->x1 = x + cursorSize;
+    poly->y1 = y;
+    poly->x2 = x;
+    poly->y2 = y + cursorSize;
+    poly->x3 = x + cursorSize;
+    poly->y3 = y + cursorSize;
+    poly->u0 = 0;
+    poly->v0 = 0;
+    poly->u1 = 32;
+    poly->v1 = 0;
+    poly->u2 = 0;
+    poly->v2 = 32;
+    poly->u3 = 32;
+    poly->v3 = 32;
+    poly->tpage = 0x1A;
+
+    poly->clut = g_ClutIds[0x170];
+
+    func_80107250((Primitive*)poly, tick * 0x10);
+    AddPrim(&gpu_ot[OTSIZE - 1], poly);
+    g_GpuUsage.gt4++;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8E58);
 
