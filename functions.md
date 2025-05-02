@@ -369,7 +369,7 @@
 | dra       | func_800FAEC4                       |       35 |          3 |        |                                 |       |
 | dra       | func_psp_090FFAB8                   |       35 |          4 |        |                                 |       |
 | dra       | func_psp_090E7F98                   |       35 |          4 |        |                                 |       |
-| dra       | func_psp_090E8E58                   |       35 |          4 |        |                                 |       |
+| dra       | func_psp_090E8E58                   |       35 |          4 |        | https://decomp.me/scratch/6xLSZ | 0.8   |
 | chi       | func_psp_092447C0                   |       35 |          4 |        |                                 |       |
 | st0       | func_pspeu_09246B10                 |       35 |          4 |        |                                 |       |
 | wrp       | func_psp_092447C0                   |       35 |          4 |        |                                 |       |
@@ -804,7 +804,7 @@
 | dra       | CheckMoveDirection                  |       73 |         12 |        |                                 |       |
 | maria     | MarCheckFacing                      |       73 |         12 |        |                                 |       |
 | ric       | RicCheckFacing                      |       73 |         12 |        |                                 |       |
-| dra       | func_800F2014                       |       74 |          6 |        |                                 |       |
+| dra       | func_800F2014                       |       74 |          6 |        | https://decomp.me/scratch/E04og | 1.0   |
 | dra       | func_8010DFF0                       |       74 |          7 |        | https://decomp.me/scratch/fbTWl | 0.952 |
 | dra       | func_801139CC                       |       74 |          7 |        |                                 |       |
 | ric       | RicStepRun                          |       74 |         16 |        |                                 |       |
@@ -870,7 +870,7 @@
 | dra       | CdFadeOut1                          |       82 |         15 |        |                                 |       |
 | dra       | KeyOnChannels22_23                  |       83 |          4 |        |                                 |       |
 | lib       | CheckFieldCollisionY                |       83 |          7 |        |                                 |       |
-| dra       | func_psp_090E8760                   |       83 |         11 |        |                                 |       |
+| dra       | func_psp_090E8760                   |       83 |         11 |        | https://decomp.me/scratch/QylPL | 0.994 |
 | dra       | func_8010E83C                       |       83 |         14 |        | https://decomp.me/scratch/0vLJU | 0.983 |
 | dra       | WolfFormFinished                    |       83 |         14 |        |                                 |       |
 | dra       | GetServantStats                     |       84 |          4 |        |                                 |       |
@@ -1068,7 +1068,7 @@
 | dra       | CreateEntFactoryFromEntity          |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra       | func_80118894                       |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
 | maria_psp | MarStepBladeDash                    |      114 |         20 |        |                                 |       |
-| dra       | DrawMapCursor                       |      115 |          6 |        |                                 |       |
+| dra       | DrawMapCursor                       |      115 |          6 |        | https://decomp.me/scratch/fTMVz | 0.994 |
 | dra       | func_8012D024                       |      115 |         27 |        |                                 |       |
 | dra       | func_800FF494                       |      116 |         14 |        |                                 |       |
 | dra       | func_8010E570                       |      116 |         18 |        | https://decomp.me/scratch/Eo8a9 | 0.988 |
@@ -1736,7 +1736,7 @@
 | st0       | EntityDraculaFinalForm              |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra       | EntityStopWatch                     |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric       | RicEntityWhip                       |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
-| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.962 |
+| dra       | func_psp_090FAB30                   |     1745 |        198 |        | https://decomp.me/scratch/xiDRV | 0.996 |
 | lib       | func_us_801B2BE4                    |     1891 |        203 | Yes    |                                 |       |
 | lib       | EntityLesserDemon                   |     1920 |        313 |        |                                 |       |
 | maria     | MarEntityPlayerBlinkWhite           |     1981 |        164 | Yes    |                                 |       |
