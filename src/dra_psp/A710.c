@@ -678,7 +678,11 @@ void func_800F2120(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F223C);
+void func_800F223C(void) {
+    g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
+    func_800F2120();
+    g_StageId ^= STAGE_INVERTEDCASTLE_FLAG;
+}
 
 u8 D_800A2C0C[] = {
     0x00, 0x06, 0x08, 0x26, 0x00, 0x00, 0x00, 0x00, 0x30, 0x00, 0x00, 0x00,
