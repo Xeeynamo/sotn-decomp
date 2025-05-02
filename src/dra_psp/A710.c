@@ -780,7 +780,39 @@ void func_800F2288(s32 arg0) {
 
 extern bool D_80137598;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2404);
+void func_800F2404(s32 arg0) {
+    s32 i;
+
+    if (arg0 == 0) {
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+        g_unkGraphicsStruct.D_800973F8 = 0;
+        g_unkGraphicsStruct.D_800973FC = 0;
+    }
+    g_CutsceneHasControl = 0;
+
+    g_unkGraphicsStruct.pauseEnemies = 0;
+    g_unkGraphicsStruct.unk18 = 0;
+    g_unkGraphicsStruct.unk1C = 0;
+    g_unkGraphicsStruct.unkC = 0x80;
+
+    if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+        FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+    }
+
+    g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    g_unkGraphicsStruct.BottomCornerTextPrims = 0;
+    g_unkGraphicsStruct.g_zEntityCenter = 148;
+    for (i = 0; i < LEN(g_unkGraphicsStruct.D_80097428); i++) {
+        g_unkGraphicsStruct.D_80097428[i] = 0;
+    }
+
+    g_unkGraphicsStruct.unk20 = 0;
+    g_unkGraphicsStruct.unk24 = 0;
+    D_80097448[0] = 0;
+    D_80097448[1] = 0;
+    D_80097450 = 0;
+    SetGPUBuffRGBZero();
+}
 
 void func_800F24F4(void) {
     s32 x;
