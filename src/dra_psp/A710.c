@@ -645,7 +645,38 @@ void func_800F2014(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8760);
+void func_800F2120(void) {
+    s32 x;
+    s32 y;
+    s32 subMap;
+    s32 idx;
+
+    func_800F1A3C(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
+    ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
+    DrawSync(0);
+
+    for (y = 0; y < 64; y++) {
+        for (x = 0; x < 64; x++) {
+            // sequence of 2 bit masks: 0xC0, 0x30, 0x0C, 0x03
+            // 0b11000000, 0b110000, 0b1100, 0b11
+            subMap = 3 << ((3 - (x & 3)) * 2);
+            idx = (x >> 2) + (y * 16);
+
+            if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+                idx += 0x400;
+            }
+            // 0x55 and 0xAA are masks for even and odd bits.
+            // 0x55 is 0b1010101
+            if (g_CastleMap[idx] & (subMap & 0x55)) {
+                func_800F1B08(x, y, 0);
+                RevealSecretPassageOnMap(x, y, 0xFFFF);
+                // 0xAA is 0b10101010
+            } else if (g_CastleMap[idx] & (subMap & 0xAA)) {
+                func_800F1B08(x, y, 1);
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F223C);
 

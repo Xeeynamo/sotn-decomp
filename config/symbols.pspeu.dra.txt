@@ -62,6 +62,7 @@ DrawSecretPassageOnMap = 0x090E83E8;
 RevealSecretPassageOnMap = 0x090E8518;
 RevealSecretPassageAtPlayerPositionOnMap = 0x090E8620;
 func_800F2014 = 0x090E8658;
+func_800F2120 = 0x090E8760;
 func_800F223C = 0x090E8880;
 func_800F2288 = 0x090E88C0;
 func_800F2404 = 0x090E8A30;
