@@ -49,7 +49,6 @@
 | zero/f_nonmat/f6009D30.s     | func_06009D30   |       28 |          2 |                                 |       |
 | zero/f_nonmat/f60120D8.s     | func_060120D8   |       28 |          3 |                                 |       |
 | alucard/f_nonmat/f60A56AC.s  | func_060A56AC   |       29 |          0 |                                 |       |
-| richter/f_nonmat/f60AA4C8.s  | func_060AA4C8   |       29 |          0 | https://decomp.me/scratch/gMjTo | 0.907 |
 | zero/f_nonmat/f6006F74.s     | func_06006F74   |       29 |          0 |                                 |       |
 | zero/f_nonmat/f600E01C.s     | func_0600E01C   |       29 |          0 |                                 |       |
 | zero/f_nonmat/f600E070.s     | func_0600E070   |       29 |          0 |                                 |       |
