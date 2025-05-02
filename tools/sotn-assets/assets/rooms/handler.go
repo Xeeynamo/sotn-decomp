@@ -101,7 +101,7 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("%s.c", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.c", name))
 }
 
 func (r Room) isTerminator() bool {

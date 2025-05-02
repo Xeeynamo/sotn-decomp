@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"sync"
 	"testing"
 
@@ -39,11 +39,11 @@ func TestGatherAssetInfo(t *testing.T) {
 			assert.Contains(t, stdout, "  - [0x8C, .data, header] # palette definitions\n")
 			assert.Contains(t, stdout, "  - [0x164, .data, header] # layers\n")
 			assert.Contains(t, stdout, "  - [0x47C, .data, header] # graphics banks\n")
-			assert.Contains(t, stdout, "  - [0x8EC, .data, e_laydef] # layout entries header\n")
+			assert.Contains(t, stdout, "  - [0x8EC, .data, gen_e_laydef] # layout entries header\n")
 			assert.Contains(t, stdout, "  - [0xA94, data]\n")
 			assert.Contains(t, stdout, "  - [0x272C, .data, rooms]\n")
 			assert.Contains(t, stdout, "  - [0x2830, data]\n")
-			assert.Contains(t, stdout, "  - [0x2884, .data, e_layout] # layout entries data\n")
+			assert.Contains(t, stdout, "  - [0x2884, .data, gen_e_layout] # layout entries data\n")
 			assert.Contains(t, stdout, "  - [0x3B0C, data]\n")
 			assert.Contains(t, stdout, "  - [0x15C3C, pal, D_80195C3C]\n")
 			assert.Contains(t, stdout, "  - [0x1601C, pal, D_8019601C]\n")
@@ -51,7 +51,7 @@ func TestGatherAssetInfo(t *testing.T) {
 			assert.Contains(t, stdout, "  - [0x162DC, pal, D_801962DC]\n")
 			assert.Contains(t, stdout, "  - [0x16A5C, .data, tile_data] # tile data\n")
 			assert.Contains(t, stdout, "  - [0x20A5C, .data, tile_data] # tile definitions\n")
-			assert.Contains(t, stdout, "  - [0x26E8C, .data, sprites]\n")
+			assert.Contains(t, stdout, "  - [0x26E8C, .data, gen_sprites]\n")
 			assert.Contains(t, stdout, "  - [0x3058C, data]\n")
 			if t.Failed() {
 				require.FailNow(t, "unexpected output", stdout)

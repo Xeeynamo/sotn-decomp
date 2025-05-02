@@ -39,7 +39,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x1EC, .data, e_laydef]
+      - [0x1EC, .data, gen_e_laydef]
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
       - [0x554, .data, e_breakable]
@@ -55,8 +55,8 @@ segments:
       - [0x10DC, data, e_misc]
       - [0x11F8, .data, e_particles]
       - [0x127C, .data, e_room_fg]
-      - [0x1308, .data, rooms]
-      - [0x1334, .data, e_layout]
+      - [0x1308, .data, gen_rooms]
+      - [0x1334, .data, gen_e_layout]
       - [0x1424, data] # cutscene script?
       - [0x1678, cmpgfx, stage_title_jp, 128, 128, 4]
       - [0x19BC, cmpgfx, stage_placeholder, 128, 128, 4]
@@ -71,7 +71,7 @@ segments:
       - [0x69AC, pal, e_maria_cen_p]
       - [0x69CC, pal, e_elevator_cen_p]
       - [0x6A0C, .data, tile_data]
-      - [0xC62C, .data, sprites]
+      - [0xC62C, .data, gen_sprites]
       - [0xD434, .rodata, cutscene]
       - [0xD4B8, .rodata, F890]
       - [0xD4E0, .rodata, e_red_door]

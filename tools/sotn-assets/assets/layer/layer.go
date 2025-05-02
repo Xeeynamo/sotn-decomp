@@ -4,15 +4,16 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"golang.org/x/sync/errgroup"
 	"io"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"golang.org/x/sync/errgroup"
 )
 
 type layerDef struct {
@@ -283,7 +284,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		}
 	}
 	sb.WriteString("};\n")
-	return os.WriteFile(filepath.Join(outputDir, "layers.h"), []byte(sb.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "gen_layers.h"), []byte(sb.String()), 0644)
 }
 
 func makeSymbolFromFileName(fileName string) string {
@@ -328,7 +329,7 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	return os.WriteFile(filepath.Join(outputDir, fmt.Sprintf("%s.h", symbol)), []byte(sb.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)), []byte(sb.String()), 0644)
 }
 
 func buildTiledefs(fileName string, symbol string, outputDir string) error {
@@ -342,7 +343,7 @@ func buildTiledefs(fileName string, symbol string, outputDir string) error {
 		return err
 	}
 
-	f, err := os.Create(filepath.Join(outputDir, fmt.Sprintf("%s.h", symbol)))
+	f, err := os.Create(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)))
 	if err != nil {
 		return err
 	}

@@ -298,8 +298,8 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	}
 	sbData.WriteString(fmt.Sprintf("};\n"))
 
-	if err := os.WriteFile(filepath.Join(outputDir, "e_layout.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(outputDir, "gen_e_layout.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(outputDir, "e_laydef.c"), []byte(sbHeader.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "gen_e_laydef.c"), []byte(sbHeader.String()), 0644)
 }

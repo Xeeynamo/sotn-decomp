@@ -132,7 +132,7 @@ func sourcePath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return filepath.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }
 
 type cmdDef struct {

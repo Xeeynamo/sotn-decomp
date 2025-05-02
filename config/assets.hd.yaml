@@ -8,7 +8,7 @@ files:
         vram: 0x800A0000
         assets:
           - [0x0, skip]
-          - [0xD298, blueprintsdef, blueprints_def, AluBlueprints, AluEntities]
+          - [0xD298, blueprintsdef, blueprints, AluBlueprints, AluEntities]
           - [0xD57C, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin
     asset_path: assets/ric
@@ -19,9 +19,9 @@ files:
         vram: 0x8013C000
         assets:
           - [0x0, skip]
-          - [0x18688, subweaponsdef, subweapons_def, RicSubweapons, RicBlueprints]
+          - [0x18688, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
           - [0x188F4, skip]
-          - [0x18A6C, blueprintsdef, blueprints_def, RicBlueprints, RicEntities]
+          - [0x18A6C, blueprintsdef, blueprints, RicBlueprints, RicEntities]
           - [0x18C42, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/cen.bin
     asset_path: assets/st/cen

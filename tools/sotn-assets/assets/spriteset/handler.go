@@ -61,5 +61,5 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }

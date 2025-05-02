@@ -3,14 +3,15 @@ package spritebanks
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"io"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
 
 type SpriteBanks struct {
@@ -124,8 +125,8 @@ func buildSprites(fileName string, outputDir string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(filepath.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(outputDir, "gen_sprites.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "gen_sprite_banks.h"), []byte(sbHeader.String()), 0644)
 }
