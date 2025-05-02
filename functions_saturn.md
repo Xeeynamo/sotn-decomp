@@ -100,7 +100,7 @@
 | zero/f_nonmat/f6012154.s     | func_06012154   |       34 |          2 |                                 |       |
 | game/f_nonmat/f607ABBC.s     | func_0607ABBC   |       34 |          4 |                                 |       |
 | game/f_nonmat/f607ABF4.s     | func_0607ABF4   |       34 |          4 |                                 |       |
-| richter/f_nonmat/f60BBA88.s  | func_060BBA88   |       35 |          2 |                                 |       |
+| richter/f_nonmat/f60BBA88.s  | func_060BBA88   |       35 |          2 | https://decomp.me/scratch/aawdu | 0.311 |
 | zero/f_nonmat/f6006E14.s     | func_06006E14   |       35 |          4 |                                 |       |
 | zero/f_nonmat/f600E4E0.s     | func_0600E4E0   |       35 |          4 |                                 |       |
 | zero/f_nonmat/f60198F4.s     | func_060198F4   |       35 |          4 |                                 |       |
@@ -117,7 +117,7 @@
 | zero/f_nonmat/f6019FA0.s     | func_06019FA0   |       38 |          4 |                                 |       |
 | game/f_nonmat/f60766DC.s     | func_060766DC   |       38 |          6 |                                 |       |
 | alucard/f_nonmat/f60B95C8.s  | func_060B95C8   |       39 |          0 |                                 |       |
-| richter/f_nonmat/f60ABA50.s  | func_060ABA50   |       39 |          0 |                                 |       |
+| richter/f_nonmat/f60ABA50.s  | func_060ABA50   |       39 |          0 | https://decomp.me/scratch/Wo9nb | 0.553 |
 | zero/f_nonmat/f6008FF0.s     | func_06008FF0   |       39 |          0 |                                 |       |
 | game/f_nonmat/f60736D4.s     | func_060736D4   |       39 |          1 |                                 |       |
 | zero/f_nonmat/f6004E50.s     | func_06004E50   |       39 |          1 |                                 |       |
