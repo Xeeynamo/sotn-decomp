@@ -175,6 +175,7 @@ RoomBossTeleport D_800A297C[] = {
     {0x2C, 0x0D, STAGE_RCAT, TIMEATTACK_EVENT_GALAMOTH_DEFEAT, 0x43},
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
+
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
 
@@ -197,6 +198,7 @@ s32 func_800F087C(u32 chunkX, u32 chunkY) {
     }
 }
 
+// Performs calculations for background parallax
 void func_800F0940(void) {
     switch (g_BgLayers[0].scrollKind) {
     case 1:
@@ -250,7 +252,7 @@ extern RoomLoadDefHolder D_801375BC;
 s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
-    RoomLoadDef* loader;
+    RoomLoadDef* loader[4];
     RoomTeleport* tele;
 
     if (g_Player.status & PLAYER_STATUS_DEAD) {
@@ -284,9 +286,9 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         // All 4 bounds passed. We found our room.
 
         // Don't know what this is testing for.
-        loader = &room->load;
-        if (loader->tilesetId == 0xFF) {
-            tele = &D_800A245C[loader->tileLayoutId];
+        loader[0] = &room->load;
+        if (loader[0]->tilesetId == 0xFF) {
+            tele = &D_800A245C[loader[0]->tileLayoutId];
             if (tele->stageId == STAGE_ST0) {
                 return 0;
             }
@@ -296,6 +298,7 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         return 1;
     }
 }
+
 extern s32 D_801375A4;
 extern s32 D_801375C0;
 extern s32 D_801375C4;

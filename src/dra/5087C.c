@@ -253,7 +253,9 @@ extern RoomLoadDefHolder D_801375BC;
 s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
-    u32 stack[4];
+    // We only ever use the first one of these. Could be a fake array.
+    RoomLoadDef* loader[4];
+    RoomTeleport* tele;
 
     if (g_Player.status & PLAYER_STATUS_DEAD) {
         return 0;
@@ -262,23 +264,40 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
     if (res) {
         return res;
     }
-
-    room = g_api.o.rooms;
-    while (true) {
+    // Look for the proper room at the xy coordinates.
+    for (room = &g_api.o.rooms[0]; true; room++) {
+        // Perhaps the final room gets a hard-coded value of 0x40?
+        // Indicates no room found, return 0
         if (room->left == 0x40) {
             return 0;
         }
-        if (room->left <= x && room->top <= y && room->right >= x &&
-            room->bottom >= y) {
-            stack[0] = &room->load;
-            if (room->load.tilesetId == 0xFF &&
-                D_800A245C[room->load.tileLayoutId].stageId == STAGE_ST0) {
+        // Now check the 4 coordinates. If x,y are beyond the room's
+        // bounds, then this isn't the room we're looking for.
+        if (x < room->left) {
+            continue;
+        }
+        if (y < room->top) {
+            continue;
+        }
+        if (x > room->right) {
+            continue;
+        }
+        if (y > room->bottom) {
+            continue;
+        }
+        // All 4 bounds passed. We found our room.
+
+        // Don't know what this is testing for.
+        loader[0] = &room->load;
+        if (loader[0]->tilesetId == 0xFF) {
+            tele = &D_800A245C[loader[0]->tileLayoutId];
+            if (tele->stageId == STAGE_ST0) {
                 return 0;
             }
-            D_801375BC.def = &room->load;
-            return 1;
         }
-        room++;
+        // Finally set this to the room we found, and return a success.
+        D_801375BC.def = &room->load;
+        return 1;
     }
 }
 
