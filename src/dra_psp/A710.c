@@ -1146,7 +1146,6 @@ void func_800F2860(void) {
     }
 }
 
-extern bool D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;
 extern s32 D_801375A8;
@@ -1159,7 +1158,7 @@ extern RoomLoadDefHolder D_801375BC;
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
 extern s32* D_8D97C40;
-void (*D_8CE9C48)();
+extern void (*D_8CE9C48)();
 extern s32 D_psp_091CE570;
 
 void RunMainEngine(void) {

@@ -176,21 +176,6 @@ RoomBossTeleport D_800A297C[] = {
     {0x80, 0x00, 0x00, 0x00, 0x00},
 };
 
-// BSS
-extern bool D_80137598;
-extern s32 D_8013759C;
-extern s32 D_801375A0;
-extern s32 D_801375A4;
-extern s32 D_801375A8;
-extern s32 D_801375AC;
-extern s32 D_801375B0;
-extern s32 D_801375B4;
-extern s32 D_801375B8;
-extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
-
 s32 func_800F087C(u32 chunkX, u32 chunkY) {
     RoomBossTeleport* phi_s1;
 
@@ -263,6 +248,8 @@ void func_800F0940(void) {
     }
 }
 
+extern RoomLoadDefHolder D_801375BC;
+
 s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
@@ -294,6 +281,11 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         room++;
     }
 }
+
+extern s32 D_801375A4;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
 
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
@@ -956,6 +948,8 @@ void func_800F2288(s32 arg0) {
     }
 }
 
+extern bool D_80137598;
+
 void func_800F2404(s32 arg0) {
     s32 i;
 
@@ -1149,6 +1143,21 @@ void func_800F2860(void) {
         break;
     }
 }
+
+extern s32 D_8013759C;
+extern s32 D_801375A0;
+extern s32 D_801375A8;
+extern s32 D_801375AC;
+extern s32 D_801375B0;
+extern s32 D_801375B4;
+extern s32 D_801375B8;
+extern RoomLoadDefHolder D_801375BC;
+
+extern bool D_8C630C8;
+extern s32 D_psp_091CE578;
+extern s32* D_8D97C40;
+extern void (*D_8CE9C48)();
+extern s32 D_psp_091CE570;
 
 void RunMainEngine(void) {
     Entity* ent;
