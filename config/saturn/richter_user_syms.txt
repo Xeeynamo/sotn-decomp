@@ -146,3 +146,11 @@ _D_8015550C = 0x060BFDA0;
 _D_80155534 = 0x060BFDC8;
 
 _d_06086390 = 0x06086390;
+_g_RicSensorsWall = 0x060bee48;
+_g_RicSensorsFloor = 0x060bee28;
+_g_RicSensorsCeiling = 0x060bee08;
+
+_d_060476A0 = 0x060476A0;
+_d_060cd748 = 0x060cd748;
+_d_060cd74c = 0x060cd74c;
+_d_060476A4 = 0x060476A4;
