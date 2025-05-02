@@ -2,16 +2,15 @@ package cmpgfx
 
 import (
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"image"
 	"image/color"
-	"image/png"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 type handler struct{}
@@ -39,9 +38,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("bpp value %v is not a number", e.Args[2])
 	}
+	palette := makeGreyPalette(bpp)
 	cmp := e.Data[e.Start:e.End]
 	dec := sotn.Inflate(cmp)
-	image, err := makeImage(dec, width, height, bpp, makeGreyPalette(bpp))
+	bitmap, err := makeBitmap(dec, bpp)
 	if err != nil {
 		return fmt.Errorf("error generating image: %v", err)
 	}
@@ -53,7 +53,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer fout.Close()
-	return png.Encode(fout, image)
+	return util.PngEncode(fout, bitmap, width, height, palette)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -84,40 +84,36 @@ func sourcePath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }
 
-func makeImage(data []byte, width, height, bpp int, p color.Palette) (image.Image, error) {
-	img := image.NewPaletted(image.Rectangle{image.Point{0, 0}, image.Point{width, height}}, p)
+func makeBitmap(data []byte, bpp int) ([]byte, error) {
 	switch bpp {
 	case 4:
-		if len(data)*2 < len(img.Pix) {
-			return nil, fmt.Errorf("data is too small: expected %X, got %X", len(data)*2, len(img.Pix))
+		out := make([]byte, len(data)*2)
+		for i := 0; i < len(data); i++ {
+			out[i*2+0] = data[i] & 15
+			out[i*2+1] = data[i] >> 4
 		}
-		for i := 0; i < len(img.Pix)/2; i++ {
-			img.Pix[i*2+0] = data[i] & 15
-			img.Pix[i*2+1] = data[i] >> 4
-		}
+		return out, nil
 	case 8:
-		if len(data) < len(img.Pix) {
-			return nil, fmt.Errorf("data is too small: expected %X, got %X", len(data), len(img.Pix))
-		}
-		copy(img.Pix, data[:len(img.Pix)])
+		return data, nil
 	default:
 		return nil, fmt.Errorf("bpp %d invalid or not supported", bpp)
 	}
-	return img, nil
 }
 
-func makeGreyPalette(bpp int) color.Palette {
+func makeGreyPalette(bpp int) []color.RGBA {
 	switch bpp {
 	case 4:
-		colors := make([]color.Color, 16)
+		colors := make([]color.RGBA, 16)
 		for i := range colors {
-			colors[i] = color.Gray{uint8(i << 4)}
+			c := uint8(i << 4)
+			colors[i] = color.RGBA{R: c, G: c, B: c, A: 255}
 		}
 		return colors
 	case 8:
-		colors := make([]color.Color, 256)
+		colors := make([]color.RGBA, 256)
 		for i := range colors {
-			colors[i] = color.Gray{uint8(i)}
+			c := uint8(i)
+			colors[i] = color.RGBA{R: c, G: c, B: c, A: 255}
 		}
 		return colors
 	default:
