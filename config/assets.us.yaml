@@ -1,3 +1,4 @@
+version: us
 files:
   - target: disks/us/DRA.BIN
     asset_path: assets/dra

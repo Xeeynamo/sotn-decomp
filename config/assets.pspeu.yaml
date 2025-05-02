@@ -1,3 +1,4 @@
+version: pspeu
 files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
     asset_path: assets/dra
