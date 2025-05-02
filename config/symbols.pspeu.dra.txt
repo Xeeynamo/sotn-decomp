@@ -68,6 +68,7 @@ func_800F2288 = 0x090E88C0;
 func_800F2404 = 0x090E8A30;
 func_800F24F4 = 0x090E8B30;
 DrawMapCursor = 0x090E8CA8;
+func_800F27F4 = 0x090E8E58;
 func_800F2860 = 0x090E8EC0;
 RunMainEngine = 0x090e9018;
 CheckIfAllButtonsAreAssigned = 0x090EB028;

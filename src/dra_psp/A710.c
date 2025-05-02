@@ -910,7 +910,19 @@ void DrawMapCursor(void) {
     g_GpuUsage.gt4++;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8E58);
+bool func_800F27F4(s32 arg0) {
+    if (arg0 == 0) {
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0){
+            return false;
+        }
+        if(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
+            return false;
+        }
+        D_801375C8 = 1;
+        return true;
+    }
+    D_801375C8 = 8;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2860);
 
