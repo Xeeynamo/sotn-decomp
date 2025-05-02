@@ -465,8 +465,8 @@ void func_800F1A3C(s32 arg0) {
 }
 
 void func_800F1B08(s32 x, s32 y, s32 arg2) {
-    #define VramPosX 0x340
-    #define VramPosY 0x100
+#define VramPosX 0x340
+#define VramPosY 0x100
     RECT rect;
     u8 sp28[2][20];
     s32 j;
@@ -496,7 +496,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
             sp28[0][4 * i + j] = src[j];
         }
     }
-    
+
     if (arg2 == 0) {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
@@ -531,8 +531,8 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
 }
 
 void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
-    #define VramPosX 0x340
-    #define VramPosY 0x100
+#define VramPosX 0x340
+#define VramPosY 0x100
     RECT rect;
     u8 buf[20];
     u8* bitmap = buf;
@@ -619,7 +619,7 @@ void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
 
 void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
     RevealSecretPassageOnMap(g_Tilemap.left + (g_PlayerX >> 8),
-                              g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
+                             g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
 }
 
 void func_800F2014(void) {
@@ -732,30 +732,30 @@ const char* D_800A2D58[] = {
 };
 
 void func_800F2288(s32 arg0) {
-    s32 width; //s8
-    s32 height; //s7
-    s32 startx; //sp3c
-    s32 starty; //s2
-    u8* ptrMap; //s6
-    s32 j; //s5
-    s32 bit; //s4
-    s32 x; //s3
-    s32 y; //s2
-    s32 n; //s0
-    
-    s32 idx; //a1
-    s32 subMap; //a2
+    s32 width;  // s8
+    s32 height; // s7
+    s32 startx; // sp3c
+    s32 starty; // s2
+    u8* ptrMap; // s6
+    s32 j;      // s5
+    s32 bit;    // s4
+    s32 x;      // s3
+    s32 y;      // s2
+    s32 n;      // s0
+
+    s32 idx;    // a1
+    s32 subMap; // a2
 
     ptrMap = D_800A2D44[arg0];
     while (true) {
-        
+
         if ((startx = *ptrMap++) == 0xFF) {
             return;
         }
         starty = *ptrMap++;
         width = *ptrMap++;
         height = *ptrMap++;
-        
+
         for (y = starty; height != 0; height--, y++) {
             for (j = width, x = startx; j != 0; j--) {
                 n = *ptrMap++;
@@ -912,10 +912,10 @@ void DrawMapCursor(void) {
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0){
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
             return false;
         }
-        if(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
+        if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
         D_801375C8 = 1;
