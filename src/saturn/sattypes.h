@@ -105,6 +105,28 @@ typedef enum {
     Player_MariaSpellFourHolyBeasts,
 } PlayerSteps;
 
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+} ET_EntitySlot1;
+
+typedef struct {
+    /* 0x7C */ u8 pad0[0x4];
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[2];
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+} ET_ExplosionPuffOpaque;
+
+typedef union { // offset=0x7C
+    u8 base[0x38];
+    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_ExplosionPuffOpaque opaquePuff;
+} Ext;
+
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
     /* 0x04 */ SotnFixed32 posX;
@@ -144,14 +166,10 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;
-    /* 0x76 */ char pad_76[0xA];
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ char pad_82[0x2];
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ s8 unk85;
-    /* 0x86 */ char pad_86[0x2];
-    /* 0x88 */ struct UnkStruct_060e8350* unk88;
-    /* 0x8C */ char pad[0x2C];
+    /* 0x76 */ char pad_76[0x1];
+    /* 0x80 */ Ext ext;
+    /* 0x88 */ char pad_88[0x2];
+    /* 0x8A */ struct UnkStruct_060e8350* unk8A;
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {

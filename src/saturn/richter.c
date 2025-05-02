@@ -265,8 +265,12 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 // DisableAfterImage
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
 
-// func_8015CC28
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4C8, func_060AA4C8);
+void func_8015CC28(void) {
+    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
+        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
+            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
+                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
+}
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);
 

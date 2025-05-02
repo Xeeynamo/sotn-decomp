@@ -98,20 +98,20 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DDF64, func_060DDF64);
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60DE178, func_060DE178);
 
 // SAT func_060DE2B0
-void CreateExplosionPuff(void) {
-    Entity* newEntity;
+void CreateExplosionPuff() {
+    Entity* entity;
     s8 temp_s4 = Random() & 3;
     s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(E_FIRE, g_CurrentEntity, newEntity);
-            newEntity->params = 2;
-            newEntity->unk85 = 6 - i;
-            newEntity->unk80 = temp_s3;
-            newEntity->unk84 = temp_s4;
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_FIRE, g_CurrentEntity, entity);
+            entity->params = 2;
+            entity->ext.opaquePuff.unk89 = 6 - i;
+            entity->ext.opaquePuff.unk84 = temp_s3;
+            entity->ext.opaquePuff.unk88 = temp_s4;
         }
     }
 }
@@ -229,7 +229,13 @@ void func_060e8330(void) {
     arr_0605C140[0xF1] = 1;
 }
 
-void func_060E8350(Entity* self) {
+// not clear if this is Entity or not
+struct Unk10 {
+    u8 pad[0x88];
+    u32* unk88;
+};
+
+void func_060E8350(struct Unk10* self) {
     UnkStruct_060e8350* iVar1 = self->unk88;
     s32 i;
 
