@@ -8,10 +8,10 @@
 | dra       | DebugUpdate                         |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F6B20                   |        7 |          1 |        |                                 |       |
 | dra       | nullsub_9                           |        7 |          1 |        |                                 |       |
+| dra       | LoadFileSim                         |        7 |          1 |        |                                 |       |
 | dra       | SetReverbDepth                      |        7 |          1 |        |                                 |       |
 | dra       | MenuSoundConfigDraw                 |        7 |          1 |        |                                 |       |
 | dra       | func_psp_0913D610                   |        7 |          1 |        |                                 |       |
-| dra       | LoadFileSim                         |        7 |          1 |        |                                 |       |
 | dra       | func_800F66BC                       |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F1CE0                   |        7 |          1 |        |                                 |       |
 |           | unused_339C                         |        7 |          1 |        |                                 |       |
@@ -537,8 +537,8 @@
 | lib       | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | no4       | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
 | wrp       | CollectHeart                        |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
+| dra       | LoadStageTileset                    |       46 |          5 |        |                                 |       |
 | dra       | MemcardDetectSave                   |       46 |          5 |        | https://decomp.me/scratch/MybKX | 1.0   |
-| dra       | func_psp_090FA790                   |       46 |          5 |        |                                 |       |
 | maria     | DestroyEntity                       |       46 |          5 |        |                                 |       |
 | ric       | DestroyEntity                       |       46 |          5 |        |                                 |       |
 |           | DestroyEntity                       |       46 |          5 |        |                                 |       |
@@ -1311,7 +1311,7 @@
 | no4       | func_pspeu_09241098                 |      243 |         25 |        |                                 |       |
 | no4       | EntityBoneArcherArrow               |      244 |         31 |        | https://decomp.me/scratch/s6o5d | 0.997 |
 | dra       | func_8013136C                       |      245 |         26 | Yes    |                                 |       |
-| dra       | func_psp_090FA828                   |      245 |         39 | Yes    |                                 |       |
+| dra       | LoadFileSimToMem                    |      245 |         39 | Yes    |                                 |       |
 | dra       | CheckHellfireInput                  |      246 |         41 |        |                                 |       |
 | no4       | func_pspeu_09237BE8                 |      247 |          1 |        |                                 |       |
 | dra       | InitRenderer                        |      247 |         31 |        |                                 |       |
