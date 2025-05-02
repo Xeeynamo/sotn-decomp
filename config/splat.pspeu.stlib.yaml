@@ -107,7 +107,7 @@ segments:
       - [0x38C78, .data, lib/e_library_bg]
       - [0x38D38, data]
       - [0x3E898, .data, lib/e_init]
-      - [0x3EC28, data] # g_Rooms
+      - [0x3EC28, data] # g_gen_rooms.c
       - [0x3ECB0, .data, lib_psp/cutscene_data]
       - [0x3F608, .data, lib/e_breakable]
       - [0x3F710, data]

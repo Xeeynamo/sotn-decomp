@@ -9,7 +9,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"gopkg.in/yaml.v2"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -76,7 +76,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil || len(elementFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", "Elements", err)
 	}
-	ovlName := path.Base(e.AssetDir)
+	ovlName := filepath.Base(e.AssetDir)
 	weaponFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[0])
 	if err != nil || len(weaponFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[0], err)
@@ -115,7 +115,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 	enumName := e.Args[0]
-	ovlName := path.Base(e.AssetDir)
+	ovlName := filepath.Base(e.AssetDir)
 	fields, err := fetchEnum(e.SrcDir, ovlName, enumName)
 	if err != nil {
 		return fmt.Errorf("fetch enum %s: %w", enumName, err)
@@ -169,11 +169,11 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.yaml", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.yaml", name))
 }
 
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }
 
 func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {

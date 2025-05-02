@@ -2,8 +2,8 @@
 // Weapon ID #41. Used by weapons:
 // Monster vial 2
 #include "weapon_private.h"
-#include "w_041_1.h"
-#include "w_041_2.h"
+#include "gen_w_041_1.h"
+#include "gen_w_041_2.h"
 #define g_Animset w_041_1
 #define g_Animset2 w_041_2
 #include "sfx.h"

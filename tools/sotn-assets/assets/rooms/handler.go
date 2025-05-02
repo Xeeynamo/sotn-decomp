@@ -12,7 +12,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -45,7 +45,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 func (h *handler) Build(e assets.BuildArgs) error {
 	inPath := assetPath(e.AssetDir, e.Name)
 	outPath := sourcePath(e.SrcDir, e.Name)
-	ovlName := path.Base(path.Dir(outPath))
+	ovlName := filepath.Base(filepath.Dir(outPath))
 	data, err := os.ReadFile(inPath)
 	if err != nil {
 		return err
@@ -97,11 +97,11 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }
 
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.c", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.c", name))
 }
 
 func (r Room) isTerminator() bool {

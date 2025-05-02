@@ -3,8 +3,8 @@
 // Mace
 
 #include "weapon_private.h"
-#include "w_002_1.h"
-#include "w_002_2.h"
+#include "gen_w_002_1.h"
+#include "gen_w_002_2.h"
 #define g_Animset w_002_1
 #define g_Animset2 w_002_2
 #include "sfx.h"

@@ -9,7 +9,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
-	"path"
+	"path/filepath"
 )
 
 type handler struct{}
@@ -48,12 +48,12 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	if err := util.WriteJsonFile(path.Join(e.AssetDir, "layers.json"), l); err != nil {
+	if err := util.WriteJsonFile(filepath.Join(e.AssetDir, "layers.json"), l); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
 	for offset, data := range tileMaps {
-		fileName := path.Join(e.AssetDir, tilemapFileName(offset))
+		fileName := filepath.Join(e.AssetDir, tilemapFileName(offset))
 		if err := os.WriteFile(fileName, data, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
@@ -66,19 +66,19 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			Cluts:      tiledefClutsFileName(offset),
 			Collisions: tiledefCollisionsFileName(offset),
 		}
-		if err := os.WriteFile(path.Join(e.AssetDir, defs.Tiles), tileDefsData.Tiles, 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(e.AssetDir, defs.Tiles), tileDefsData.Tiles, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Tiles, err)
 		}
-		if err := os.WriteFile(path.Join(e.AssetDir, defs.Pages), tileDefsData.Pages, 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(e.AssetDir, defs.Pages), tileDefsData.Pages, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Pages, err)
 		}
-		if err := os.WriteFile(path.Join(e.AssetDir, defs.Cluts), tileDefsData.Cluts, 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(e.AssetDir, defs.Cluts), tileDefsData.Cluts, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Cluts, err)
 		}
-		if err := os.WriteFile(path.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols, 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols, 0644); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
-		if err := util.WriteJsonFile(path.Join(e.AssetDir, tiledefFileName(offset)), defs); err != nil {
+		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(offset)), defs); err != nil {
 			return fmt.Errorf("unable to create layers file: %w", err)
 		}
 	}
@@ -86,7 +86,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildLayers(e.AssetDir, path.Join(e.AssetDir, "layers.json"), e.SrcDir)
+	return buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir)
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {

@@ -568,9 +568,9 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
 	touch $@
 $(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
 	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%/subweapons_def.yaml.o: $(ASSETS_DIR)/%/subweapons_def.yaml
+$(BUILD_DIR)/$(ASSETS_DIR)/%/subweapons.yaml.o: $(ASSETS_DIR)/%/subweapons.yaml
 	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%/blueprints_def.yaml.o: $(ASSETS_DIR)/%/blueprints_def.yaml
+$(BUILD_DIR)/$(ASSETS_DIR)/%/blueprints.yaml.o: $(ASSETS_DIR)/%/blueprints.yaml
 	touch $@
 
 ##@

@@ -4,15 +4,16 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"slices"
+	"strings"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"golang.org/x/sync/errgroup"
-	"io"
-	"os"
-	"path"
-	"slices"
-	"strings"
 )
 
 type layerDef struct {
@@ -143,13 +144,13 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	}
 	pack := func(l layerUnpacked) map[string]interface{} {
 		return map[string]interface{}{
-			"data":    makeSymbolFromFileName(l.Data),
-			"tiledef": makeSymbolFromFileName(l.Tiledef),
+			"data":      makeSymbolFromFileName(l.Data),
+			"tiledef":   makeSymbolFromFileName(l.Tiledef),
 			"left":      l.Left,
 			"top":       l.Top,
 			"right":     l.Right,
 			"bottom":    l.Bottom,
-			"params":	(l.ScrollMode) | (util.Btoi(l.HideOnMap) << 4) | (util.Btoi(l.IsSaveRoom) << 5) | (util.Btoi(l.IsLoadingRoom) << 6) | (util.Btoi(l.UnusedFlag) << 7),
+			"params":    (l.ScrollMode) | (util.Btoi(l.HideOnMap) << 4) | (util.Btoi(l.IsSaveRoom) << 5) | (util.Btoi(l.IsLoadingRoom) << 6) | (util.Btoi(l.UnusedFlag) << 7),
 			"zPriority": l.ZPriority,
 			"flags":     l.Flags,
 		}
@@ -192,14 +193,14 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 
 	eg := errgroup.Group{}
 	for name := range tilemaps {
-		fullPath := path.Join(path.Dir(fileName), name)
+		fullPath := filepath.Join(filepath.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
 			return buildGenericU16(fullPath, symbol, outputDir)
 		})
 	}
 	for name := range tiledefs {
-		fullPath := path.Join(path.Dir(fileName), name)
+		fullPath := filepath.Join(filepath.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
 			return buildTiledefs(fullPath, symbol, outputDir)
@@ -283,11 +284,11 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		}
 	}
 	sb.WriteString("};\n")
-	return os.WriteFile(path.Join(outputDir, "layers.h"), []byte(sb.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "gen_layers.h"), []byte(sb.String()), 0644)
 }
 
 func makeSymbolFromFileName(fileName string) string {
-	return strings.Split(path.Base(fileName), ".")[0]
+	return strings.Split(filepath.Base(fileName), ".")[0]
 }
 
 func writeStaticU8(w io.Writer, fileName string, symbol string) error {
@@ -328,7 +329,7 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	return os.WriteFile(path.Join(outputDir, fmt.Sprintf("%s.h", symbol)), []byte(sb.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)), []byte(sb.String()), 0644)
 }
 
 func buildTiledefs(fileName string, symbol string, outputDir string) error {
@@ -342,32 +343,32 @@ func buildTiledefs(fileName string, symbol string, outputDir string) error {
 		return err
 	}
 
-	f, err := os.Create(path.Join(outputDir, fmt.Sprintf("%s.h", symbol)))
+	f, err := os.Create(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)))
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
 	tilesSymbol := makeSymbolFromFileName(tiledef.Tiles)
-	tilesFileName := path.Join(path.Dir(fileName), tiledef.Tiles)
+	tilesFileName := filepath.Join(filepath.Dir(fileName), tiledef.Tiles)
 	if err := writeStaticU8(f, tilesFileName, tilesSymbol); err != nil {
 		return err
 	}
 
 	pagesSymbol := makeSymbolFromFileName(tiledef.Pages)
-	pagesFileName := path.Join(path.Dir(fileName), tiledef.Pages)
+	pagesFileName := filepath.Join(filepath.Dir(fileName), tiledef.Pages)
 	if err := writeStaticU8(f, pagesFileName, pagesSymbol); err != nil {
 		return err
 	}
 
 	clutsSymbol := makeSymbolFromFileName(tiledef.Cluts)
-	clutsFileName := path.Join(path.Dir(fileName), tiledef.Cluts)
+	clutsFileName := filepath.Join(filepath.Dir(fileName), tiledef.Cluts)
 	if err := writeStaticU8(f, clutsFileName, clutsSymbol); err != nil {
 		return err
 	}
 
 	colsSymbol := makeSymbolFromFileName(tiledef.Collisions)
-	colsFileName := path.Join(path.Dir(fileName), tiledef.Collisions)
+	colsFileName := filepath.Join(filepath.Dir(fileName), tiledef.Collisions)
 	if err := writeStaticU8(f, colsFileName, colsSymbol); err != nil {
 		return err
 	}

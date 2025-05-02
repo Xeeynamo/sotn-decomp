@@ -2,8 +2,8 @@
 // Weapon ID #44. Used by weapons:
 // Heart Refresh
 #include "weapon_private.h"
-#include "w_044_1.h"
-#include "w_044_2.h"
+#include "gen_w_044_1.h"
+#include "gen_w_044_2.h"
 #define g_Animset w_044_1
 #define g_Animset2 w_044_2
 #include "sfx.h"
