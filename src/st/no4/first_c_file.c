@@ -158,11 +158,13 @@ void EntityBreakableCrystalFloor(Entity* self) {
     s32 tilePos;
     s32 i;
 
-    // NOTE: Behind the breakable floor, the background layer is originally empty in the tilemap data (all black)
+    // NOTE: Behind the breakable floor, the background layer is originally
+    // empty in the tilemap data (all black)
     switch (self->step) {
     case BREAKABLE_CRYSTAL_FLOOR_INIT:
-        // Overwrite the background tiles so when the floor is broken, the cave wall is visible
-        // Overwrite the foreground tiles based on whether the floor has already been broken or not
+        // Overwrite the background tiles so when the floor is broken, the cave
+        // wall is visible Overwrite the foreground tiles based on whether the
+        // floor has already been broken or not
         InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
@@ -178,7 +180,7 @@ void EntityBreakableCrystalFloor(Entity* self) {
         (&g_BgLayers[0].layout[tilePos])[2] = 0x3FF;
         (&g_BgLayers[0].layout[tilePos])[17] = 0x401;
         (&g_BgLayers[0].layout[tilePos])[18] = 0x402;
-        for (i = 0; i < 2; i++,  tileLayoutPtr += 3) {
+        for (i = 0; i < 2; i++, tileLayoutPtr += 3) {
             (&g_Tilemap.fg[tilePos])[0] = tileLayoutPtr[0];
             (&g_Tilemap.fg[tilePos])[1] = tileLayoutPtr[1];
             (&g_Tilemap.fg[tilePos])[2] = tileLayoutPtr[2];
@@ -199,7 +201,8 @@ void EntityBreakableCrystalFloor(Entity* self) {
     case BREAKABLE_CRYSTAL_FLOOR_BREAK:
         // Update the tiles with every break and spawn puffs of smoke
         self->ext.breakableCrystalFloor.breakCount++;
-        tileLayoutPtr = &D_us_80181880[self->ext.breakableCrystalFloor.breakCount * 6];
+        tileLayoutPtr =
+            &D_us_80181880[self->ext.breakableCrystalFloor.breakCount * 6];
         tilePos = 0x2D3;
         for (i = 0; i < 2; i++, tileLayoutPtr += 3) {
             (&g_Tilemap.fg[tilePos])[0] = tileLayoutPtr[0];
