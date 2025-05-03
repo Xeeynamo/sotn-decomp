@@ -694,8 +694,8 @@
 | lib       | LIB_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
 | lib       | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | lib       | func_us_801B7C94                    |       62 |          5 |        |                                 |       |
-| no4       | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | no4       | NO4_EntityBackgroundBlock           |       62 |          5 |        |                                 |       |
+| no4       | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | st0       | PrizeDropFall                       |       62 |          5 |        |                                 |       |
 | st0       | ST0_EntityBackgroundBlock           |       62 |          5 |        | https://decomp.me/scratch/WQI2Y | 0.998 |
 | wrp       | PrizeDropFall                       |       62 |          5 |        |                                 |       |
@@ -1381,7 +1381,7 @@
 |           | ProcessEvent                        |      293 |         42 |        |                                 |       |
 | no4       | func_pspeu_09241410                 |      294 |         16 |        |                                 |       |
 | lib       | EntityBreakable                     |      294 |         47 |        | https://decomp.me/scratch/SjwKz | 0.998 |
-| dra       | HandleEnding                        |      298 |         60 |        | https://decomp.me/scratch/9QZjQ | 0.96  |
+| dra       | HandleEnding                        |      298 |         60 |        | https://decomp.me/scratch/MP6vj | 0.999 |
 | no4       | func_pspeu_0923EA80                 |      300 |         26 |        |                                 |       |
 | dra       | func_8013572C                       |      303 |         47 |        | https://decomp.me/scratch/NrPlO | 0.964 |
 | dra       | func_8012C600                       |      305 |         25 |        |                                 |       |
