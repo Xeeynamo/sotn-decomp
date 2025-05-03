@@ -1219,7 +1219,7 @@
 | lib       | EntityChair                         |      186 |         25 |        |                                 |       |
 | dra       | HandleTitle                         |      186 |         35 | Yes    |                                 |       |
 | no4       | func_pspeu_09241870                 |      187 |         21 |        |                                 |       |
-| dra       | MainMenuHandler                     |      187 |         28 | Yes    |                                 |       |
+| dra       | MainMenuHandler                     |      187 |         28 | Yes    | https://decomp.me/scratch/PgIaV | 1.0   |
 | ric       | RicEntitySubwpnBibleTrail           |      188 |         14 |        |                                 |       |
 | maria     | CheckBladeDashInput                 |      189 |         29 |        |                                 |       |
 | ric       | CheckBladeDashInput                 |      189 |         29 |        |                                 |       |
@@ -1368,7 +1368,7 @@
 | dra       | CheckWingSmashInput                 |      279 |         38 | Yes    | https://decomp.me/scratch/ygTgB | 0.828 |
 | dra       | EntityExpandingCircle               |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
 | dra       | EntityPlayerPinkEffect              |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
-| dra       | HandleVideoPlayback                 |      285 |         37 | Yes    |                                 |       |
+| dra       | HandleVideoPlayback                 |      285 |         37 | Yes    | https://decomp.me/scratch/kc55L | 1.0   |
 | no4       | func_pspeu_09237700                 |      285 |         47 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | lib       | func_psp_0923B010                   |      287 |         30 |        |                                 |       |
 | maria_psp | func_pspeu_092A7560                 |      287 |         32 | Yes    |                                 |       |
