@@ -61,7 +61,6 @@ segments:
       - [0x1C030, c, dra_psp/1C030]
       - [0x1DCE0, c, dra_psp/1DCE0]
       - [0x1DDC0, c, dra_psp/1DDC0]
-      - [0x1E1B0, c, dra_psp/1E1B0]
       - [0x1FB60, c, dra/4B758] # O0
       - [0x21FC8, c, dra_psp/demo] # O0
       - [0x23138, c, dra_psp/23138]
@@ -108,6 +107,7 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       #- [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
+      - [0x832A8, .data, dra_psp/1DDC0]
       - [0x84028, .data, dra/4B758]
       - [0x84080, .data, dra_psp/demo]
       - [0x841C0, data]

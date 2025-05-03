@@ -40,7 +40,7 @@ segments:
       - [0x0, .data, dt_header]   # Header
       - [0xE8, .data, dt_header]  # Layers
       - [0x298, .data, dt_header] # Gfx banks
-      - [0x3B4, .data, e_laydef]  # layout entities header
+      - [0x3B4, .data, gen_e_laydef]  # layout entities header
       - [0x55C, .data, dt_entity]
       - [0x798, .data, st_debug]
       - [0x818, .data, en_breakable]
@@ -73,8 +73,8 @@ segments:
       - [0x173C, .data, en_thornweed_corpseweed]
       - [0x17F4, .data, en_venus_weed]
       # Binary data
-      - [0x195C, .data, rooms]
-      - [0x19F8, .data, e_layout] # layout entities data
+      - [0x195C, .data, gen_rooms]
+      - [0x19F8, .data, gen_e_layout] # layout entities data
       - [0x20D8, cmpgfx, bn_gfx_stage_name_jp_sm, 128, 128, 4]
       - [0x2508, cmpgfx, bn_gfx_stage_name_jp_lg, 128, 128, 4]
       - [0x2A60, cmpgfx, bn_gfx_gremlin, 128, 128, 4, 0xA300]
@@ -96,7 +96,7 @@ segments:
       - [0xA440, pal, bn_pal_venus_weed]
       - [0xA960, .data, tile_data] # tile data
       - [0xF760, .data, tile_data] # tile definitions
-      - [0x17B90, .data, sprites]
+      - [0x17B90, .data, gen_sprites]
       - [0x1B100, .rodata, en_demon_switch_wall]      # jtbl_8019B100 [EntityDemonSwitchWall]
       - [0x1B144, .rodata, en_breakable_wall]         # jtbl_8018B144 [EntityBreakableWall]
       - [0x1B168, .rodata, en_debug_cerberus_gate]    # jtbl_8019B168 [EntityCerberusGateDebug]

@@ -128,6 +128,7 @@ NO4_PrizeDrops = 0x0929CD18;
 g_SplashSfx = 0x0929CD68;
 g_SurfacingSfx = 0x0929CD6A;
 g_WaterXTbl = 0x0929CD70;
+NO4_BackgroundBlockInit = 0x0929CFA8;
 D_psp_E_KILLER_FISH_DEATH_PUFF = 0x092A03E0;
 g_ItemIconSlots = 0x092A0670;
 obtainedStr = 0x092A06B0;

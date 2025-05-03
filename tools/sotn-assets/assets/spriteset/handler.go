@@ -7,7 +7,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -57,9 +57,9 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.animset.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.animset.json", name))
 }
 
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }

@@ -39,7 +39,7 @@ segments:
       - [0xA0, .data, header] # palette definitions
       - [0xB8, .data, header] # layers
       - [0x1B8, .data, header] # graphics banks
-      - [0x23C, .data, e_laydef] # layout entries header
+      - [0x23C, .data, gen_e_laydef] # layout entries header
       - [0x3E4, .data, e_init]
       - [0x528, .data, st_debug]
       - [0x5A8, .data, e_breakable]
@@ -53,15 +53,15 @@ segments:
       - [0xF84, .data, e_misc]
       - [0xFE8, .data, e_particles]
       - [0x1124, .data, e_room_fg]
-      - [0x11B0, .data, rooms]
-      - [0x122C, .data, e_layout] # layout entries data
+      - [0x11B0, .data, gen_rooms]
+      - [0x122C, .data, gen_e_layout] # layout entries data
       - [0x1424, cmpgfx, stage_title_jp, 128, 128, 4]
       - [0x1768, cmpgfx, stage_placeholder, 128, 128, 4]
       - [0x1D0C, pal, D_80181D0C]
       - [0x1D2C, pal, D_80181D2C] # unused
       - [0x1D6C, .data, tile_data] # tile data
       - [0x296C, .data, tile_data] # tile definitions
-      - [0x6D8C, .data, sprites]
+      - [0x6D8C, .data, gen_sprites]
       - [0x6E34, .rodata, warp] # warp strings
       - [0x6E74, .rodata, warp] # EntityWarpRoom
       - [0x6E94, .rodata, warp] # EntityWarpSmallRocks

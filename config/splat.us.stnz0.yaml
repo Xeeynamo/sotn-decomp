@@ -40,7 +40,7 @@ segments:
       - [0x8C, .data, header] # palette definitions
       - [0x164, .data, header] # layers
       - [0x47C, .data, header] # graphics banks
-      - [0x8EC, .data, e_laydef] # layout entries header
+      - [0x8EC, .data, gen_e_laydef] # layout entries header
       - [0xA94, .data, e_init]
       - [0xDBC, .data, e_lock_camera]
       - [0xDE4, .data, e_breakable]
@@ -68,9 +68,9 @@ segments:
       - [0x2584, .data, e_subweapon_container]
       - [0x2610, .data, e_blood_skeleton]
       - [0x26B8, .data, e_magically_sealed_door]
-      - [0x272C, .data, rooms]
+      - [0x272C, .data, gen_rooms]
       - [0x2830, .data, e_life_up]
-      - [0x2884, .data, e_layout] # layout entries data
+      - [0x2884, .data, gen_e_layout] # layout entries data
       - [0x3B0C, .data, cutscene_data]
       - [0x3CB8, data]
       - [0x3CCC, cmpgfx, stage_title_nz0_jp, 128, 128, 4] # unused
@@ -123,7 +123,7 @@ segments:
       - [0x1695C, pal, D_8019695C] # unused
       - [0x16A5C, .data, tile_data] # tile data
       - [0x20A5C, .data, tile_data] # tile definitions
-      - [0x26E8C, .data, sprites]
+      - [0x26E8C, .data, gen_sprites]
       - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
       - [0x30598, .rodata, 337B4] # EntityRelicContainer
       - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque

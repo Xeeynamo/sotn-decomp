@@ -12,7 +12,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -49,7 +49,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	ovlName := path.Base(e.SrcDir)
+	ovlName := filepath.Base(e.SrcDir)
 	data, err := os.ReadFile(assetPath(e.AssetDir, e.Name))
 	if err != nil {
 		return err
@@ -163,8 +163,8 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 }
 
 func assetPath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.json", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.json", name))
 }
 func sourcePath(dir, name string) string {
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }

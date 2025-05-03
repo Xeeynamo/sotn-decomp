@@ -242,21 +242,24 @@ typedef enum {
 
 #else
 #define DRA_PRG_PTR 0x800A0000
-#define RIC_PRG_PTR 0x8013C000
+#define RIC_PRG_PTR &g_PlOvl
 #define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
-#define STAGE_PRG_PTR 0x80180000
+#define WEAPON1_PTR &D_8017D000
+#define STAGE_PRG_PTR D_8D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
 #ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
 #endif
-#define SIM_CHR0 0x80280000
-#define SIM_CHR1 0x80284000
-#define SIM_PTR 0x80280000
+#define SIM_CHR0 D_8C6BC40
+#define SIM_CHR1 D_8C6FC40
+#define SIM_PTR D_8C6BC40
 
 extern u8 g_BmpCastleMap[0x20000];
+extern u8 D_8C6BC40[];
+extern u8 D_8C6FC40[];
+extern u8 D_8D2DC40[];
 
 #endif
 
@@ -703,19 +706,19 @@ typedef struct {
 } ImgSrc;
 
 typedef struct {
-    /* 00 */ u32 gfxOff;
-    /* 04 */ u32 ovlOff;
-    /* 08 */ u32 ovlLen;
-    /* 0C */ u32 vhOff;
-    /* 10 */ u32 vhLen;
-    /* 14 */ u32 vbLen;
-    /* 18 */ u32 unk18;
-    /* 1C */ const char* gfxName;
-    /* 20 */ const char* ovlName;
-    /* 24 */ const char* name;
-    /* 28 */ u8 unk28;
-    /* 29 */ s8 seqIdx; // index of D_800ACCF8
-    /* 2A */ u16 unk2A;
+    /* 0x00 */ u32 gfxOff;
+    /* 0x04 */ u32 ovlOff;
+    /* 0x08 */ u32 ovlLen;
+    /* 0x0C */ u32 vhOff;
+    /* 0x10 */ u32 vhLen;
+    /* 0x14 */ u32 vbLen;
+    /* 0x18 */ u32 unk18;
+    /* 0x1C */ const char* gfxName;
+    /* 0x20 */ const char* ovlName;
+    /* 0x24 */ char* name;
+    /* 0x28 */ u8 unk28;
+    /* 0x29 */ s8 seqIdx; // index of D_800ACCF8
+    /* 0x2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
 typedef struct {

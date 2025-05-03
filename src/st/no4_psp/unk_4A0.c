@@ -10,7 +10,3 @@ INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_4A0", func_psp_09254120);
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_4A0", EntityBreakable);
 
 INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_4A0", func_pspeu_09238490);
-
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_4A0", NO4_EntityBackgroundBlock);
-
-INCLUDE_ASM("st/no4_psp/psp/no4_psp/unk_4A0", EntityLockCamera);

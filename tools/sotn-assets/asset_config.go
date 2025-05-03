@@ -38,7 +38,8 @@ type assetFileEntry struct {
 }
 
 type assetConfig struct {
-	Files []assetFileEntry `yaml:"files"`
+	Version string           `yaml:"version"`
+	Files   []assetFileEntry `yaml:"files"`
 }
 
 var handlers = func() map[string]assets.Handler {
