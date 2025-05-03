@@ -212,7 +212,7 @@ void EntityBreakableCrystalFloor(Entity* self) {
         }
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
         // There is a cooldown of 32 frames between breaks
@@ -221,10 +221,10 @@ void EntityBreakableCrystalFloor(Entity* self) {
         if (self->ext.breakableCrystalFloor.breakCount == 3) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 0x13;
             }
-            g_api_PlaySfx(SFX_WALL_DEBRIS_B);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             g_CastleFlags[NO4_SECRET_FLOOR_OPEN] = 1;
             g_api_func_800F1FC4(NO4_SECRET_FLOOR_OPEN);
             DestroyEntity(self);
