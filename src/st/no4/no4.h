@@ -136,3 +136,14 @@ extern s16 D_us_801DF788;
 extern s16 D_us_801DF78A;
 extern s8 D_us_801DF78E;
 extern s8 D_us_801DF78F;
+
+// *** EntityBreakableCrystalFloor properties START ***
+
+typedef enum {
+    BREAKABLE_CRYSTAL_FLOOR_INIT,
+    BREAKABLE_CRYSTAL_FLOOR_IDLE,
+    BREAKABLE_CRYSTAL_FLOOR_BREAK,
+    BREAKABLE_CRYSTAL_FLOOR_CHECK
+} BREAKABLE_CRYSTAL_FLOOR_STEPS;
+
+// *** EntityBreakableCrystalFloor properties END ***
