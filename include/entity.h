@@ -1843,7 +1843,7 @@ typedef struct {
 
 // NO4 Room 1, Bottom, Breakable Crystal Floor
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ u32 resetTimer;
     /* 0x84 */ u32 breakCount;
 } ET_BreakableCrystalFloor;
