@@ -150,6 +150,13 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8248);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C82B8);
 
+typedef enum {
+    BREAKABLE_CRYSTAL_FLOOR_INIT,
+    BREAKABLE_CRYSTAL_FLOOR_IDLE,
+    BREAKABLE_CRYSTAL_FLOOR_BREAK,
+    BREAKABLE_CRYSTAL_FLOOR_CHECK
+} BREAKABLE_CRYSTAL_FLOOR_STEPS;
+
 extern s16 D_us_80181880[];
 
 void EntityBreakableCrystalFloor(Entity* self) {
