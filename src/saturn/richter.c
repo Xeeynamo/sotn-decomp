@@ -80,10 +80,43 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
 
 // RicSetStand
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F8C, func_060A8F8C);
+extern AnimationFrame ric_anim_stand[];
+void RicSetStand(s32 velocityX) {
+    PLAYER.velocityX = velocityX;
+    PLAYER.velocityY = 0;
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_STAND);
+    RicSetAnimation(ric_anim_stand);
+}
 
-// RicSetWalk
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8FD0, func_060A8FD0);
+#define RicSetSpeedX(speed)                                                    \
+    do {                                                                       \
+        s32 _tmp_speed = (speed);                                              \
+        if (g_CurrentEntity->facingLeft == 1)                                  \
+            _tmp_speed = -_tmp_speed;                                          \
+        g_CurrentEntity->velocityX = _tmp_speed;                               \
+    } while (0)
+
+void RicSetRun(void);
+
+extern AnimationFrame ric_anim_walk[];
+// func_060A8FD0
+void RicSetWalk(s32 arg0) {
+    if (g_Player.timers[PL_T_8] && !g_Player.unk7A) {
+        RicSetRun();
+        return;
+    }
+    g_Player.timers[PL_T_CURSE] = 8;
+    if (g_Player.timers[PL_T_CURSE]) {
+        g_Player.timers[PL_T_8] = 12;
+    }
+    g_Player.timers[PL_T_CURSE] = 12;
+    g_Player.unk44 = 0;
+    RicSetStep(PL_S_WALK);
+    RicSetAnimation(ric_anim_walk);
+    RicSetSpeedX(0x19000);
+    PLAYER.velocityY = 0;
+}
 
 // RicSetRun
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9068, func_060A9068);
@@ -112,11 +145,6 @@ void RicSetFall(void) {
     }
 }
 
-static inline void RicSetSpeedX(s32 speed) {
-    if (g_CurrentEntity->facingLeft == 1)
-        speed = -speed;
-    g_CurrentEntity->velocityX = speed;
-}
 void RicSetJump(void) {
     if (g_Player.unk72) {
         RicSetFall();
@@ -280,8 +308,16 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA5C0, func_060AA5C0);
 // func_8015E484
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAB80, func_060AAB80);
 
-// RicGetPlayerSensor
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD50, func_060AAD50);
+extern Point16 g_RicSensorsCeiling[NUM_HORIZONTAL_SENSORS];
+extern Point16 g_RicSensorsFloor[NUM_HORIZONTAL_SENSORS];
+extern Point16 g_RicSensorsWall[NUM_VERTICAL_SENSORS * 2];
+
+void RicGetPlayerSensor(Collider* col) {
+    col->unk14 = g_RicSensorsWall[0].x;
+    col->unk1C = g_RicSensorsWall[0].y;
+    col->unk18 = g_RicSensorsFloor[1].y - FIX(1);
+    col->unk20 = g_RicSensorsCeiling[1].y + FIX(1);
+}
 
 // RicCheckFloor
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AAD8C, func_060AAD8C);
@@ -306,8 +342,18 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, func_060AB9C0);
 // func_8015F9F0
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
 
-// func_8015FA5C
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA50, func_060ABA50);
+extern u8 D_80154674[][4];
+extern u8 D_80174FAC;
+extern u8 D_80174FB0;
+extern u8 D_80174FB4;
+extern u8 D_80174FB8;
+
+void func_8015FA5C(s32 arg0) {
+    D_80174FAC = D_80154674[arg0][0];
+    D_80174FB0 = D_80154674[arg0][1];
+    D_80174FB4 = D_80154674[arg0][2];
+    D_80174FB8 = D_80154674[arg0][3];
+}
 
 // RicSetSubweaponParams
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA98, func_060ABA98);
@@ -576,10 +622,24 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB58C, func_060BB58C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB718, func_060BB718);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB90C, func_060BB90C);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB9BC, func_060BB9BC);
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BBA88, func_060BBA88);
 
 s32 d_06086390;
+s32 d_060476A0;
+s32 d_060476A4;
+s32 d_060cd748;
+s32 d_060cd74c;
+void func_060BB9BC(s32*);
 s32* func_060784A8();
+
+void func_060BBA88(void) {
+    s32* iVar2;
+    iVar2 = func_060784A8();
+    func_060BB9BC(iVar2);
+    d_060476A0 = d_060cd748;
+    d_060476A4 = d_060cd74c;
+}
+
+s32 d_06086390;
 void func_060BBAC8(void) {
     s32* iVar2;
     d_06086390 = 0;

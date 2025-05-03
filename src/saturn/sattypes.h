@@ -52,6 +52,18 @@ typedef struct {
     u16 unk2;
 } AnimationFrame;
 
+typedef struct Collider {
+    /* 0x00 */ u32 effects;
+    /* 0x04 */ s32 unk4; // possibly an x offset
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14; // Left edge of queried tile collision
+    /* 0x18 */ s32 unk18; // Top edge of queried tile collision
+    /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
+    /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
+} Collider;               /* size=0x24 */
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -182,10 +194,6 @@ typedef struct Unk0600B344 {
     /* 0x14 */ s32 unk14;
     /* 0x18 */ s32 unk18;
 } Unk0600B344;
-
-typedef struct {
-    // structure still unknown
-} Collider;
 
 typedef struct {
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
@@ -353,6 +361,11 @@ typedef struct {
     char pad43C[0x1C];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
+    /* 0x460 */ u32 unk74;
+    /* 0x464 */ u16 unk78;
+    /* 0x466 */ u16 unk7A;
+    /* 0x468 */ u16 unk7C;
+    /* 0x46A */ u16 unk7E;
 } PlayerState;
 
 typedef enum {
@@ -436,5 +449,16 @@ extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
+
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
+// changed to s32
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x2 */ s32 y;
+} Point16; // size = 0x4
+
+#define FIX(x) (x << 16)
 
 #endif

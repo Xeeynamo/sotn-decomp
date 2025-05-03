@@ -857,7 +857,20 @@ s32 GetSideToPlayer(Entity* self) {
     return side;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
+// func_0607AB1C
+// saturn unique?
+s32 GetSideToPlayer2(Entity* self) {
+    s16 side = 0;
+
+    if (g_CurrentEntity->posX.val > PLAYER.posX.val) {
+        side = 1;
+    }
+    if (g_CurrentEntity->posY.val > PLAYER.posY.val) {
+        side |= 2;
+    }
+
+    return side;
+}
 
 // _bicyousei_dir_0
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB4C, func_0607AB4C);
