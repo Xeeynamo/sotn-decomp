@@ -5,7 +5,7 @@ extern u16 g_EInitCommon[];
 
 // params: Index of ObjInit to use
 //         (== 1) Use a different hardcoded rotY and rotX value
-void EntityBackgroundBlock(Entity* self) {
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
@@ -18,9 +18,11 @@ void EntityBackgroundBlock(Entity* self) {
         if (objInit->flags) {
             self->flags = objInit->flags;
         }
+#ifndef STAGE_IS_NO4
         if (self->params == 1) {
             self->rotX = self->rotY = 0x0200;
         }
+#endif
     }
     AnimateEntity(objInit->animFrames, self);
 }

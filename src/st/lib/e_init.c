@@ -5,7 +5,7 @@ void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void LIB_EntityRedDoor(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void EntitySoulStealOrb(Entity* self);
 void EntityRoomForeground(Entity* self);
@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void LIB_EntityBackgroundBlock(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -37,7 +37,7 @@ void func_us_801BCC10(Entity* self);
 void func_us_801BED48(Entity* self);
 void func_us_801AFE0C(Entity* self);
 void EntityLibrarianChair(Entity* self);
-void LIB_EntityCutscene(Entity* self);
+void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_801B15C0(Entity* self);
 void func_us_801B2BE4(Entity* self);
 void func_us_801B4830(Entity* self);
@@ -88,7 +88,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
-    /* 0x04 */ LIB_EntityRedDoor,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ EntitySoulStealOrb,
     /* 0x07 */ EntityRoomForeground,
@@ -100,7 +100,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0D */ EntityMessageBox,
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
-    /* 0x10 */ LIB_EntityBackgroundBlock,
+    /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
     /* 0x11 */ EntityLockCamera,
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
@@ -120,7 +120,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x21 */ func_us_801BED48,
     /* 0x22 */ func_us_801AFE0C,
     /* 0x23 */ EntityLibrarianChair,
-    /* 0x24 */ LIB_EntityCutscene,
+    /* 0x24 */ OVL_EXPORT(EntityCutscene),
     /* 0x25 */ func_us_801B15C0,
     /* 0x26 */ func_us_801B2BE4,
     /* 0x27 */ func_us_801B4830,

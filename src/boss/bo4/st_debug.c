@@ -3,7 +3,7 @@
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
-void EntityBackgroundBlock(Entity* self) {
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
 
     if (self->step == 0) {
