@@ -163,8 +163,9 @@ void EntityBreakableCrystalFloor(Entity* self) {
     switch (self->step) {
     case BREAKABLE_CRYSTAL_FLOOR_INIT:
         // Overwrite the background tiles so when the floor is broken, the cave
-        // wall is visible Overwrite the foreground tiles based on whether the
-        // floor has already been broken or not
+        // wall is visible
+        // Overwrite the foreground tiles based on whether the floor has
+        // already been broken or not
         InitializeEntity(g_EInitInteractable);
         self->hitboxWidth = 16;
         self->hitboxHeight = 16;
