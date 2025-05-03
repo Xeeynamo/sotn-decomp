@@ -160,3 +160,5 @@ _D_80154674 = 0x060bef21;
 _D_80174FB0 = 0x060ced30;
 _D_80174FB4 = 0x060ced31;
 _D_80174FB8 = 0x060ced32;
+
+_ric_anim_walk = 0x060bfd1c;
