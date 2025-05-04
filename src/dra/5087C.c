@@ -822,7 +822,7 @@ void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
         playerMapY = 63 - playerMapY;
     }
     secretMapWallEntry = D_800A2BC0;
-    while (*secretMapWallEntry != 0) {
+    while (*secretMapWallEntry) {
         mapX = *secretMapWallEntry++;
         mapY = *secretMapWallEntry++;
         passageDirection = *secretMapWallEntry++;
@@ -848,8 +848,8 @@ void RevealSecretPassageOnMap(s32 playerMapX, s32 playerMapY, s32 flagId) {
 }
 
 void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
-    RevealSecretPassageOnMap((g_PlayerX >> 8) + g_Tilemap.left,
-                             (g_PlayerY >> 8) + g_Tilemap.top, castleFlagId);
+    RevealSecretPassageOnMap(g_Tilemap.left + (g_PlayerX >> 8),
+                             g_Tilemap.top + (g_PlayerY >> 8), castleFlagId);
 }
 
 void func_800F2014(void) {
@@ -857,19 +857,17 @@ void func_800F2014(void) {
     s32 y;
     s32 subMap;
     s32 idx;
-    s32 currMapRect;
 
     if (g_canRevealMap && (g_StageId != STAGE_ST0)) {
-        x = (g_PlayerX >> 8) + g_Tilemap.left;
-        y = (g_PlayerY >> 8) + g_Tilemap.top;
-        idx = (x >> 2) + (y * 16);
+        x = g_Tilemap.left + (g_PlayerX >> 8);
+        y = g_Tilemap.top + (g_PlayerY >> 8);
         subMap = 1 << ((3 - (x & 3)) * 2);
+        idx = (x >> 2) + (y * 16);
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             idx += 2 * 4 * 0x80;
         }
-        currMapRect = g_CastleMap[idx];
-        if (!(currMapRect & subMap)) {
-            g_CastleMap[idx] = currMapRect | subMap;
+        if (!(g_CastleMap[idx] & subMap)) {
+            g_CastleMap[idx] |= subMap;
             g_RoomCount++;
             func_800F1B08(x, y, 0);
             RevealSecretPassageOnMap(x, y, 0xFFFF);
@@ -882,7 +880,6 @@ void func_800F2120(void) {
     s32 y;
     s32 subMap;
     s32 idx;
-    u8 currMapRect;
 
     func_800F1A3C(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
     ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
@@ -890,22 +887,21 @@ void func_800F2120(void) {
 
     for (y = 0; y < 64; y++) {
         for (x = 0; x < 64; x++) {
-            idx = (x >> 2) + (y * 16);
             // sequence of 2 bit masks: 0xC0, 0x30, 0x0C, 0x03
             // 0b11000000, 0b110000, 0b1100, 0b11
             subMap = 3 << ((3 - (x & 3)) * 2);
+            idx = (x >> 2) + (y * 16);
 
             if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
                 idx += 0x400;
             }
-            currMapRect = g_CastleMap[idx];
             // 0x55 and 0xAA are masks for even and odd bits.
             // 0x55 is 0b1010101
-            if (currMapRect & 0x55 & subMap) {
+            if (g_CastleMap[idx] & (subMap & 0x55)) {
                 func_800F1B08(x, y, 0);
                 RevealSecretPassageOnMap(x, y, 0xFFFF);
                 // 0xAA is 0b10101010
-            } else if (currMapRect & 0xAA & subMap) {
+            } else if (g_CastleMap[idx] & (subMap & 0xAA)) {
                 func_800F1B08(x, y, 1);
             }
         }
