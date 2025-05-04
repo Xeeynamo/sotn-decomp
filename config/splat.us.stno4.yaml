@@ -83,6 +83,7 @@ segments:
       - [0x40D3C, .rodata, prim_helpers]
       - [0x40D44, c, st_debug]
       - [0x40FC8, c, first_c_file]
+      - [0x486F4, c, e_secrets]
       - [0x48E4C, c, e_bat]
       - [0x49130, c, e_killer_fish]
       - [0x49538, c, cutscene]
