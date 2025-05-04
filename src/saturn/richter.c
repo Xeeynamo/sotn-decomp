@@ -333,11 +333,31 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB7B4, func_060AB7B4);
 
 // ===== pl_blueprints.c
 
-// RicGetFreeEntity
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB980, func_060AB980);
+#define E_NONE 0
+// func_060AB980
+static Entity* RicGetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-// RicGetFreeEntityReverse
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, func_060AB9C0);
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+// func_060AB9C0
+static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
 // func_8015F9F0
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
@@ -611,7 +631,28 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 // ===== all these functions below seems to be exclusive to Saturn
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACA4, func_060BACA4);
+s32 func_06032EA8(s32, s32, s32);
+void func_06033024(s32, s32, s32);
+void func_060BB330();
+
+s32 DAT_060c4118;
+s32 DAT_060c411c;
+
+void func_060BACA4(void) {
+    s32 arg0;
+    s32 arg2;
+    s32 arg1;
+    void (*ptr)(s32, s32, s32);
+    func_06032EA8(&DAT_060c4118, 0, 4);
+    arg0 = 0x002B2000;
+    arg1 = &DAT_060c411c;
+    ptr = func_06033024;
+    arg2 = 0x00009600;
+    ptr(arg0, arg1, arg2);
+
+    func_060BB330();
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB09C, func_060BB09C);

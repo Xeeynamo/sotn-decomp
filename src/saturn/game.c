@@ -909,7 +909,7 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     Entity* current = start;
 
     while (current < end) {
-        if (current->unk74 == 0) { // not entityId?
+        if (current->entityId == 0) {
             DestroyEntity(current);
             return current;
         }
@@ -948,7 +948,7 @@ s32 Random(void) {
 
 void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
     DestroyEntity(entity);
-    entity->unk74 = id;
+    entity->entityId = id;
     entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
