@@ -1074,12 +1074,12 @@ void DrawMapCursor(void) {
     s32 y;
     s32 tick;
     s32 cursorSize;
-    GpuBuffer* gpu = g_CurrentBuffer;
+    OT_TYPE* gpu_ot = &g_CurrentBuffer->ot[0];
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
 
     x = g_Tilemap.left + (g_PlayerX >> 8);
-    x = x * 4 - 14;
     y = g_Tilemap.top + (g_PlayerY >> 8);
+    x = x * 4 - 14;
     y = y * 4 - 13;
     if (g_StageId & 0x20) {
         x -= 1;
@@ -1097,7 +1097,8 @@ void DrawMapCursor(void) {
     x += tick;
     y += tick;
     cursorSize = 32 - (tick * 2);
-
+    setSemiTrans(poly, true);
+    setShadeTex(poly, false);
     poly->x0 = x;
     poly->y0 = y;
     poly->x1 = x + cursorSize;
@@ -1106,15 +1107,20 @@ void DrawMapCursor(void) {
     poly->y2 = y + cursorSize;
     poly->x3 = x + cursorSize;
     poly->y3 = y + cursorSize;
-    poly->u2 = poly->v1 = poly->v0 = poly->u0 = 0;
-    poly->v3 = poly->u3 = poly->v2 = poly->u1 = 32;
+    poly->u0 = 0;
+    poly->v0 = 0;
+    poly->u1 = 32;
+    poly->v1 = 0;
+    poly->u2 = 0;
+    poly->v2 = 32;
+    poly->u3 = 32;
+    poly->v3 = 32;
     poly->tpage = 0x1A;
-    setSemiTrans(poly, true);
-    setShadeTex(poly, false);
+
     poly->clut = g_ClutIds[0x170];
 
-    func_80107250(poly, tick * 0x10);
-    AddPrim(&gpu->ot[OTSIZE - 1], poly);
+    func_80107250((Primitive*)poly, tick * 0x10);
+    AddPrim(&gpu_ot[OTSIZE - 1], poly);
     g_GpuUsage.gt4++;
 }
 
