@@ -613,17 +613,14 @@ static s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
 
 static void func_800F180C(s32 x, s32 y, u8* dst) {
     s32 i, j;
-    u8 *start, *curSrc, *src;
+    u8 *start;
 
     start = CASTLE_MAP_PTR;
     start += x * 2;
     start += y * 4 * 128;
-    for (i = 0; i < 5; i++, start += 0x80) {
-        for (j = 0, src = start; j < 4; j++) {
-            do {
-                curSrc = src;
-            } while (0);
-            dst[4 * i + j] = curSrc[j];
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 4; j++) {
+            dst[4 * i + j] = (start + i*0x80)[j];
         }
     }
 }
