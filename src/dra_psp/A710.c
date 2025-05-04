@@ -445,6 +445,14 @@ block_25:
             g_Tilemap.scrollY.i.hi += 4;
             PLAYER.posY.i.hi -= 4;
         } else {
+// From here down, things get funky. There is no difference between
+// what is done in these two versions, but PSP is straightforward while
+// the non-psp relies on temp variables, meaningless self-assigns, and
+// do-while(0). There might be some trick to unify these, but it's not
+// evident so far. It's possible the real code is somewhere in between.
+// Perhaps Saturn or X360 version could someday reveal the truth.
+// Or just someone REALLY clever coming along ;). Good luck!
+#if defined(VERSION_PSP)
             g_Tilemap.scrollY.i.hi = g_Tilemap.y + 4;
             PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
         }
@@ -460,7 +468,44 @@ block_25:
             PLAYER.posY.i.hi = 136;
         }
     }
+#else
+            temp_a2 = g_Tilemap.y + 4;
+            g_Tilemap.scrollY.i.hi = temp_a2;
+            PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+        }
+    } else {
+        temp_a2 = g_Tilemap.scrollY.i.hi;
+        temp_a3 = PLAYER.posY.i.hi;
+        g_Tilemap.scrollY.i = g_Tilemap.scrollY.i;
+        temp_a0 = temp_a2 << 16;
+        if (g_Tilemap.height - 116 < g_PlayerY) {
+            do {
+                g_Tilemap.scrollY.i.hi = g_Tilemap.height - 252;
+                PLAYER.posY.i.hi = g_PlayerY - g_Tilemap.scrollY.i.hi;
+            } while (0);
+        } else if ((temp_a0 >> 16) - (g_PlayerY - 136) >= 4) {
+            g_Tilemap.scrollY.i.hi = temp_a2 - 4;
+            PLAYER.posY.i.hi = temp_a3 + 4;
+        } else {
+            g_Tilemap.scrollY.i.hi = g_PlayerY - 136;
+            PLAYER.posY.i.hi = 136;
+        }
+    }
+#endif
     return 0;
+}
+
+// Stripped on PSP; only called in HD.
+void func_800F1424(void) {
+    if (g_pads[1].tapped & PAD_R1) {
+        g_Tilemap.flags ^= 2;
+    }
+    if (g_pads[1].tapped & PAD_L1) {
+        g_Tilemap.flags ^= 1;
+    }
+    if ((g_pads[1].tapped & PAD_L2) && (g_BgLayers[0].tileDef != 0)) {
+        g_BgLayers[0].flags ^= 1;
+    }
 }
 
 void func_800F14CC(void) {
