@@ -48,8 +48,18 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7FD4, func_060A7FD4);
 // RicStepEnableFlameWhip
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, func_060A80B0);
 
-// RicStepHydrostorm
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8170, func_060A8170);
+// func_060A8170
+void RicStepHydrostorm(void) {
+    if (PLAYER.poseTimer < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if ((g_Player.vram_flag & 1) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
 
 // RicStepGenericSubwpnCrash
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, func_060A81C4);
