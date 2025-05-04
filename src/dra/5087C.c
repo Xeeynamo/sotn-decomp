@@ -645,7 +645,7 @@ void func_800F18C4(s32 x, s32 y) {
     s32 i;
     s32 j;
 
-    func_800F180C(x, y, &sp10);
+    func_800F180C(x, y, sp10);
 
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 5; j++) {
@@ -664,15 +664,15 @@ void func_800F1954(s32 x, s32 y, s32 arg2) {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 5; j++) {
             if (arg2 == 1 && j == 0) {
-                func_800F1770(sp10, 0, i, false);
+                func_800F1770(sp10, j, i, false);
             } else if (arg2 != 2 && j == 4) {
-                func_800F1770(sp10, 4, i, false);
+                func_800F1770(sp10, j, i, false);
             } else {
                 func_800F1770(sp10, j, i, true);
             }
         }
     }
-    func_800F1868(x, y, &sp10);
+    func_800F1868(x, y, sp10);
 }
 
 void func_800F1A3C(s32 arg0) {
@@ -694,15 +694,14 @@ void func_800F1A3C(s32 arg0) {
 }
 
 void func_800F1B08(s32 x, s32 y, s32 arg2) {
-    const int VramPosX = 0x340;
-    const int VramPosY = 0x100;
+#define VramPosX 0x340
+#define VramPosY 0x100
     RECT rect;
-    u8 sp28[20];
-    u8 sp40[20];
+    u8 img2[20];
+    u8 img1[20];
     s32 j;
     s32 i;
     s32 temp_v0;
-    u8* var_a2;
     u8* src;
     u8* dst;
     u8* bitmap;
@@ -711,32 +710,29 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
         x = 0x3F - x;
         y = 0x3F - y;
     }
-    bitmap = sp28;
-    rect.x = x + VramPosX;
-    rect.y = y * 4 + VramPosY;
+    bitmap = img2;
+    rect.x = VramPosX + x;
+    rect.y = VramPosY + y * 4;
     rect.w = 2;
     rect.h = 5;
-    StoreImage(&rect, bitmap);
+    StoreImage(&rect, (u_long*)bitmap);
     DrawSync(0);
-    var_a2 = CASTLE_MAP_PTR;
-    var_a2 += x * 2;
-    var_a2 += y * 4 * 0x80;
+    src = CASTLE_MAP_PTR;
+    src += x * 2;
+    src += y * 4 * 0x80;
 
-    i = 0;
-    dst = sp40;
-    src = var_a2;
-    for (; i < 5; i++) {
+    for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            dst[i * 4 + j] = src[j];
+            img1[4 * i + j] = (src + i*0x80)[j];
         }
-        src += 0x80;
     }
+
     if (arg2 == 0) {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 temp_v0 = func_800F17C8(bitmap, j, i);
                 if (temp_v0 == 0 || temp_v0 == 3 || temp_v0 == 13) {
-                    temp_v0 = func_800F17C8(sp40, j, i);
+                    temp_v0 = func_800F17C8(img1, j, i);
                     if (temp_v0 == 2) {
                         temp_v0 = 1;
                     }
@@ -752,7 +748,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 if (func_800F17C8(bitmap, j, i) == 0) {
-                    if (func_800F17C8(sp40, j, i) == 0) {
+                    if (func_800F17C8(img1, j, i) == 0) {
                         func_800F1770(bitmap, j, i, 13);
                     } else {
                         func_800F1770(bitmap, j, i, 3);
@@ -761,12 +757,12 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
             }
         }
     }
-    LoadTPage(bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
+    LoadTPage((u_long*)bitmap, 0, 0, VramPosX + x, VramPosY + y * 4, 8, 5);
 }
 
 void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
-    const int VramPosX = 0x340;
-    const int VramPosY = 0x100;
+    #define VramPosX 0x340
+    #define VramPosY 0x100
     RECT rect;
     u8 buf[20];
     u8* bitmap = buf;

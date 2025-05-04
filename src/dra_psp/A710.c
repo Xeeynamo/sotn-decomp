@@ -697,7 +697,8 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
 #define VramPosX 0x340
 #define VramPosY 0x100
     RECT rect;
-    u8 sp28[2][20];
+    u8 img2[20];
+    u8 img1[20];
     s32 j;
     s32 i;
     s32 temp_v0;
@@ -709,7 +710,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
         x = 0x3F - x;
         y = 0x3F - y;
     }
-    bitmap = sp28[1];
+    bitmap = img2;
     rect.x = VramPosX + x;
     rect.y = VramPosY + y * 4;
     rect.w = 2;
@@ -720,9 +721,9 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     src += x * 2;
     src += y * 4 * 0x80;
 
-    for (i = 0; i < 5; i++, src += 0x80) {
+    for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            sp28[0][4 * i + j] = src[j];
+            img1[4 * i + j] = (src + i*0x80)[j];
         }
     }
 
@@ -731,7 +732,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
             for (j = 0; j < 5; j++) {
                 temp_v0 = func_800F17C8(bitmap, j, i);
                 if (temp_v0 == 0 || temp_v0 == 3 || temp_v0 == 13) {
-                    temp_v0 = func_800F17C8(sp28[0], j, i);
+                    temp_v0 = func_800F17C8(img1, j, i);
                     if (temp_v0 == 2) {
                         temp_v0 = 1;
                     }
@@ -747,7 +748,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 if (func_800F17C8(bitmap, j, i) == 0) {
-                    if (func_800F17C8(sp28[0], j, i) == 0) {
+                    if (func_800F17C8(img1, j, i) == 0) {
                         func_800F1770(bitmap, j, i, 13);
                     } else {
                         func_800F1770(bitmap, j, i, 3);
