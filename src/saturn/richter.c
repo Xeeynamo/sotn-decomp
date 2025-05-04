@@ -73,8 +73,19 @@ void RicSetDebug(void) { RicSetStep(PL_S_DEBUG); }
 
 // ===== pl_setstep.c
 
-// RicSetInit
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
+AnimationFrame D_80155950[];
+AnimationFrame D_8015591C[];
+// func_060A8EB8
+void RicSetInit(s32 step_s) {
+    PLAYER.step = PL_S_INIT;
+    PLAYER.step_s = step_s;
+    PLAYER.pose = PLAYER.poseTimer = 0;
+    if (step_s & 1) {
+        PLAYER.anim = D_80155950;
+    } else {
+        PLAYER.anim = D_8015591C;
+    }
+}
 
 // RicSetCrouch
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
@@ -359,8 +370,28 @@ static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
     return NULL;
 }
 
-// func_8015F9F0
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+s32 D_80174F80[11];
+// func_060ABA08
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
+
+    if (entity < &g_Entities[32]) {
+        entity->enemyId = 1;
+        return;
+    }
+
+    for (i = 0;; i++) {
+        for (enemyId = 2; enemyId < LEN(D_80174F80); ++enemyId) {
+            if (D_80174F80[enemyId] == i) {
+                ++D_80174F80[enemyId];
+                entity->enemyId = enemyId;
+                return;
+            }
+        }
+    }
+}
 
 extern u8 D_80154674[][4];
 extern u8 D_80174FAC;
