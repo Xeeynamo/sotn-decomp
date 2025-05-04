@@ -564,7 +564,7 @@
 | st0       | func_801B0280                       |       47 |          6 |        |                                 |       |
 | dra       | func_psp_090F5188                   |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
 | maria     | 80.rodata                           |       48 |          0 | Yes    |                                 |       |
-| no4       | unk_1798.rodata                     |       48 |          0 | Yes    |                                 |       |
+| no4       | unk_2108.rodata                     |       48 |          0 | Yes    |                                 |       |
 | wrp       | warp.rodata                         |       48 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090EBE50                   |       48 |          4 |        |                                 |       |
 | dra       | func_8012F83C                       |       49 |          4 |        |                                 |       |
@@ -1021,7 +1021,7 @@
 | wrp       | PrizeDropFall2                      |      106 |         16 |        |                                 |       |
 | dra       | ExecCdSoundCommands                 |      106 |         33 |        | https://decomp.me/scratch/3SmFf | 0.977 |
 | no4       | func_pspeu_09242E30                 |      107 |          9 |        |                                 |       |
-| dra       | func_psp_090E88C0                   |      107 |         10 |        | https://decomp.me/scratch/zdXUd | 0.975 |
+| dra       | func_psp_090E88C0                   |      107 |         10 |        | https://decomp.me/scratch/zdXUd | 0.999 |
 | dra       | func_8012DF04                       |      107 |         17 |        | https://decomp.me/scratch/njdiv | 0.992 |
 | dra       | func_psp_090EC0C0                   |      108 |          3 |        |                                 |       |
 | dra       | func_800EA5E4                       |      108 |          9 |        | https://decomp.me/scratch/I1WLh | 0.997 |
