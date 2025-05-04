@@ -947,43 +947,42 @@ u8* D_800A2D44[] = {D_800A2C0C};
 
 // called when castle map is bought from the librarian
 void func_800F2288(s32 arg0) {
-    s32 subMap;
-    s32 idx;
-    s32 bit;
-    u8* ptrMap;
-    s32 n;
-    u8 currMapRect;
-    s32 startx;
     s32 width;
     s32 height;
-    s32 y;
-    s32 j;
-    s32 x;
+    s32 startx;
     s32 starty;
+    u8* ptrMap;
+    s32 j;
+    s32 bit;
+    s32 x;
+    s32 y;
+    s32 n;
+
+    s32 idx;
+    s32 subMap;
 
     ptrMap = D_800A2D44[arg0];
     while (true) {
-        startx = *ptrMap++;
-        if (startx == 0xFF) {
+
+        if ((startx = *ptrMap++) == 0xFF) {
             return;
         }
         starty = *ptrMap++;
-        y = starty;
         width = *ptrMap++;
         height = *ptrMap++;
-        for (; height != 0; height--, y++) {
+
+        for (y = starty; height != 0; height--, y++) {
             for (j = width, x = startx; j != 0; j--) {
                 n = *ptrMap++;
                 for (bit = 0; bit < 8; bit++, x++) {
-                    if ((n >> bit) & 1) {
-                        idx = (x >> 2) + (y * 16);
+                    if (n & (1 << bit)) {
                         subMap = 3 << ((3 - (x & 3)) * 2);
+                        idx = (x >> 2) + (y * 16);
                         if (g_StageId & 0x20) {
                             idx += 0x400;
                         }
-                        currMapRect = g_CastleMap[idx];
-                        if (!(currMapRect & 0xAA & subMap)) {
-                            g_CastleMap[idx] = currMapRect | (subMap & ~0x55);
+                        if (!(g_CastleMap[idx] & (subMap & 0xAA))) {
+                            g_CastleMap[idx] |= (subMap & 0xAA);
                             func_800F1B08(x, y, 1);
                         }
                     }

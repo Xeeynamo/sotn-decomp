@@ -945,6 +945,7 @@ u8 D_800A2C0C[] = {
 
 u8* D_800A2D44[] = {D_800A2C0C};
 
+// called when castle map is bought from the librarian
 void func_800F2288(s32 arg0) {
     s32 width;
     s32 height;
@@ -980,9 +981,8 @@ void func_800F2288(s32 arg0) {
                         if (g_StageId & 0x20) {
                             idx += 0x400;
                         }
-                        subMap &= 0xAA;
-                        if (!(g_CastleMap[idx] & subMap)) {
-                            g_CastleMap[idx] |= subMap;
+                        if (!(g_CastleMap[idx] & (subMap & 0xAA))) {
+                            g_CastleMap[idx] |= (subMap & 0xAA);
                             func_800F1B08(x, y, 1);
                         }
                     }
