@@ -247,11 +247,13 @@ void func_800F0940(void) {
         break;
     }
 }
+
 extern RoomLoadDefHolder D_801375BC;
 
 s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
+    // We only ever use the first one of these. Could be a fake array.
     RoomLoadDef* loader[4];
     RoomTeleport* tele;
 
@@ -307,6 +309,10 @@ extern s32 D_801375C8;
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
     s32 ret;
+    // Remaining vars might be fake. Not needed on PSP.
+    s16 temp_a3;
+    s32 temp_a0;
+    s16 temp_a2;
 
     if (!g_unkGraphicsStruct.unk18) {
         if (D_80097C98 == 2) {
@@ -321,10 +327,12 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
+                    #if defined(VERSION_PSP)
                     if (PLAYER.posX.i.hi < 4) {
                         PLAYER.posX.i.hi = -1;
                         PLAYER.posX.i.lo = 0;
                     }
+                    #endif
                     D_801375C0 = PLAYER.posX.i.hi + 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
@@ -338,10 +346,12 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
+                    #if defined(VERSION_PSP)
                     if (PLAYER.posX.i.hi > 252) {
                         PLAYER.posX.i.hi = 256;
                         PLAYER.posX.i.lo = 0;
                     }
+                    #endif
                     D_801375C0 = PLAYER.posX.i.hi - 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
