@@ -945,36 +945,20 @@ u8 D_800A2C0C[] = {
 
 u8* D_800A2D44[] = {D_800A2C0C};
 
-const char* D_800A2D10[] = {
-    "装備技システム短剣必殺使攻撃力防",
-};
-
-const char* D_800A2D14[] = {
-    "御魔導器拳こ一覧棒両手食物爆弾盾",
-};
-
-const char* D_800A2D18[] = {
-    "投射薬ん右左武兜鎧マントその他い",
-};
-
-const char* D_800A2D58[] = {
-    "再開中断終了決定戻る　　　　　　",
-};
-
 void func_800F2288(s32 arg0) {
-    s32 width;  // s8
-    s32 height; // s7
-    s32 startx; // sp3c
-    s32 starty; // s2
-    u8* ptrMap; // s6
-    s32 j;      // s5
-    s32 bit;    // s4
-    s32 x;      // s3
-    s32 y;      // s2
-    s32 n;      // s0
+    s32 width;
+    s32 height;
+    s32 startx;
+    s32 starty;
+    u8* ptrMap;
+    s32 j;
+    s32 bit;
+    s32 x;
+    s32 y;
+    s32 n;
 
-    s32 idx;    // a1
-    s32 subMap; // a2
+    s32 idx;
+    s32 subMap;
 
     ptrMap = D_800A2D44[arg0];
     while (true) {

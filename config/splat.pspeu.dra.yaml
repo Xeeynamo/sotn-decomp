@@ -101,7 +101,7 @@ segments:
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, data]
       - [0x6AB40, .data, dra_psp/A710]
-      - [0x6B4E0, data]
+      - [0x6B420, data]
       - [0x6DA20, .data, dra_psp/E588]
       - [0x6DCA8, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
