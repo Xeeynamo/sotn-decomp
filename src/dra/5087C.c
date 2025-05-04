@@ -529,8 +529,7 @@ void func_800F14CC(void) {
         return;
     }
     temp_a2 = &D_800A245C[D_8006C374];
-    do {
-    } while (0);
+
     // TODO: !FAKE Ugly casts, need to work this out.
     D_801375BC.def =
         &((RoomHeader*)((u8*)g_api.o.rooms + temp_a2->roomId))->load;
@@ -570,6 +569,9 @@ void func_800F14CC(void) {
 }
 
 s32 func_800F16D0(void) {
+    s32 stageId;
+    RoomTeleport* tele;
+
     if (D_8003C730 != 0)
         return g_StageId;
     else if (D_80097C98 == 4)
@@ -579,7 +581,8 @@ s32 func_800F16D0(void) {
     else if (D_80097C98 == 6)
         return STAGE_LIB;
     else {
-        s32 stageId = D_800A245C[D_8006C374].stageId;
+        tele = &D_800A245C[D_8006C374];
+        stageId = tele->stageId;
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             stageId ^= STAGE_INVERTEDCASTLE_FLAG;
         }
@@ -587,28 +590,28 @@ s32 func_800F16D0(void) {
     }
 }
 
-void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
+static void func_800F1770(u8 bitmap[], s32 x, s32 y, s32 explored) {
     // Pixels are stored 2 per byte
     s32 index = (x / 2) + (y * 4);
 
     if (!(x & 1)) {
         bitmap[index] = (bitmap[index] & 0xF0) + explored;
     } else {
-        bitmap[index] = (bitmap[index] & 0xF) + (explored * 0x10);
+        bitmap[index] = (bitmap[index] & 0xF) + (explored << 4);
     }
 }
 
-s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
+static s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
     s32 temp_v0 = (x / 2) + (y * 4);
 
     if (!(x & 1)) {
         return bitmap[temp_v0] & 0xF;
     } else {
-        return bitmap[temp_v0] >> 4;
+        return (bitmap[temp_v0] & 0xF0) >> 4;
     }
 }
 
-void func_800F180C(s32 x, s32 y, u8* dst) {
+static void func_800F180C(s32 x, s32 y, u8* dst) {
     s32 i, j;
     u8 *start, *curSrc, *src;
 
@@ -625,7 +628,7 @@ void func_800F180C(s32 x, s32 y, u8* dst) {
     }
 }
 
-void func_800F1868(s32 x, s32 y, u8* src) {
+static void func_800F1868(s32 x, s32 y, u8* src) {
     s32 i;
     s32 j;
     u8* dst;
