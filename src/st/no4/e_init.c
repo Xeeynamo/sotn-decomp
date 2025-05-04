@@ -69,7 +69,7 @@ void func_us_801D96FC(Entity* self);
 void func_us_801DB194(Entity* self);
 void func_us_801DB65C(Entity* self);
 void func_us_801DBBEC(Entity* self);
-void func_us_801C86F4(Entity* self);
+void EntityBreakableCrystalFloor(Entity* self);
 void EntitySpearGuard(Entity* self);
 void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
@@ -167,7 +167,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x45 */ func_us_801DB194,
     /* 0x46 */ func_us_801DB65C,
     /* 0x47 */ func_us_801DBBEC,
-    /* 0x48 */ func_us_801C86F4,
+    /* 0x48 */ EntityBreakableCrystalFloor,
     /* 0x49 */ EntitySpearGuard,
     /* 0x4A */ EntityThrownSpear,
     /* 0x4B */ EntityBoneArcher,
