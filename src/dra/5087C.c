@@ -1126,8 +1126,10 @@ void DrawMapCursor(void) {
 
 bool func_800F27F4(s32 arg0) {
     if (arg0 == 0) {
-        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0 ||
-            D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
+            return false;
+        }
+        if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
             return false;
         }
         D_801375C8 = 1;
