@@ -1146,13 +1146,12 @@ void func_800F2860(void) {
     s32 var_v0;
 
     switch (D_801375C8) {
+    case 0:
+        break;
     case 1:
         PlaySfx(0x80);
         D_801375C8++;
         break;
-    case 0:
-    default:
-        return;
     case 2:
         if (func_80131F68() == false) {
             D_801375C8++;
@@ -1162,7 +1161,7 @@ void func_800F2860(void) {
     case 3:
 #if defined(VERSION_US)
         PlaySfx(0x33F);
-#elif defined(VERSION_HD)
+#else
         PlaySfx(0x33C);
 #endif
         D_801375C8++;

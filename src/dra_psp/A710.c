@@ -1138,15 +1138,20 @@ bool func_800F27F4(s32 arg0) {
     D_801375C8 = 8;
 }
 
+// Needs PlaySfx to have a signature of
+// void PlaySfx(s32 sfxId); but changing it causes other parts
+// of binary to mismatch. Removing it from the header seems
+// to make it match everywhere
 void func_800F2860(void) {
     s32 var_v0;
 
     switch (D_801375C8) {
+    case 0:
+        break;
     case 1:
         PlaySfx(0x80);
         D_801375C8++;
         break;
-
     case 2:
         if (func_80131F68() == false) {
             D_801375C8++;
