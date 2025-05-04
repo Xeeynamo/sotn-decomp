@@ -30,8 +30,7 @@ s32 func_800FD664(s32 arg0) {
 }
 
 #ifdef VERSION_PSP
-// Unused. Exactly the same as CalcPlayerDamage. Pulled into g_Api.
-bool CalcPlayerDamageAgain(DamageParam* damage) {
+bool CalcPlayerDamageMaria(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
             damage->damageTaken = g_Status.hpMax / 8;
@@ -578,7 +577,8 @@ void AddHearts(s32 value) {
         }
         // Creates a heart rising from the player, which flickers away
         player = &PLAYER;
-        CreateEntFactoryFromEntity(player, FACTORY(99, 0), 0);
+        CreateEntFactoryFromEntity(
+            player, FACTORY(BP_SMALL_RISING_HEART, 0), 0);
         PlaySfx(SFX_HEART_PICKUP);
     }
 }

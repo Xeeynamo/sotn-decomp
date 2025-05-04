@@ -101,10 +101,6 @@
 #define ALIGNED4
 #endif
 
-#ifndef __clang__
-int sprintf(char* dst, const char* fmt, ...);
-#endif
-
 // Converts a given value to a fixed-point value, where
 // 16 bits represents the integer part and 16 bits for fractional part
 #define FIX(x) ((s32)((x) * 65536.0))

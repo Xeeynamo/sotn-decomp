@@ -15,7 +15,7 @@ static u8 D_80154674[][4] = {
     {16, 47, 63, 127}};
 
 static SubweaponDef subweapons_def[] = {
-#include "subweapons_def.h"
+#include "gen_subweapons.h"
 };
 STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
@@ -273,13 +273,10 @@ void RicEntityHitByHoly(Entity* entity) {
 
 // same as DRA/func_8011F074
 static AnimationFrame anim_smoke_dark[] = {
-    {2, FRAME(1, 0)},  {2, FRAME(2, 0)},
-    {2, FRAME(3, 0)},  {2, FRAME(4, 0)},
-    {2, FRAME(5, 0)},  {2, FRAME(6, 0)},
-    {2, FRAME(7, 0)},  {2, FRAME(8, 0)},
-    {2, FRAME(9, 0)},  {2, FRAME(10, 0)},
-    {2, FRAME(11, 0)}, {2, FRAME(12, 0)},
-    {2, FRAME(13, 0)}, A_END};
+    POSE(2, 1, 0),  POSE(2, 2, 0),  POSE(2, 3, 0),  POSE(2, 4, 0),
+    POSE(2, 5, 0),  POSE(2, 6, 0),  POSE(2, 7, 0),  POSE(2, 8, 0),
+    POSE(2, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE_END};
 #if defined(VERSION_PSP)
 extern s32 D_80174FFC;
 #else
@@ -364,10 +361,10 @@ void RicEntityPlayerBlinkWhite(Entity* self);
 void RicEntitySubwpnCrashCrossParticles(Entity* self);
 void func_801641A0(Entity* self);
 void RicEntityShrinkingPowerUpRing(Entity* self);
-void RicEntityHolyWaterBreakGlass(Entity* self);
+void RicEntitySubwpnHolyWaterBreakGlass(Entity* self);
 void RicEntitySubwpnThrownAxe(Entity* self);
 void RicEntityCrashAxe(Entity* self);
-void RicEntitySubwpnThrownDagger(Entity* self);
+void RicEntitySubwpnKnife(Entity* self);
 void func_80160D2C(Entity* self);
 void RicEntityHitByIce(Entity* self);
 void RicEntityHitByLightning(Entity* self);
@@ -433,10 +430,10 @@ static PfnEntityUpdate entity_functions[] = {
     RicEntitySubwpnCrashCrossParticles,
     func_801641A0,
     RicEntityShrinkingPowerUpRing,
-    RicEntityHolyWaterBreakGlass,
+    RicEntitySubwpnHolyWaterBreakGlass,
     RicEntitySubwpnThrownAxe,
     RicEntityCrashAxe,
-    RicEntitySubwpnThrownDagger,
+    RicEntitySubwpnKnife,
     func_80160D2C,
     RicEntityHitByIce,
     RicEntityHitByLightning,
@@ -561,104 +558,21 @@ Entity* RicCreateEntFactoryFromEntity(
     return entity;
 }
 
-#if defined(VERSION_US)
-#define NON_CRITICAL false
-#else
-#define NON_CRITICAL true
-#endif
-static FactoryBlueprint g_RicFactoryBlueprints[] = {
-    // clang-format off
-    B_MAKE(E_SMOKE_PUFF, 5, 1, true, true, 2, B_DECOR, 0, 0),
-    B_MAKE(E_SMOKE_PUFF, 3, 1, true, true, 4, B_DECOR, 2, 0),
-    B_MAKE(E_SUBWPN_CROSS, 1, 1, true, true, 0, B_KIND_9, 1, 8),
-    B_MAKE(E_80169C10, 3, 1, true, true, 2, B_DECOR, 0, 0),
-    B_MAKE(E_HIT_BY_CUT_BLOOD, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SUBWPN_CROSS_TRAIL, 4, 1, true, true, 4, B_DECOR, 0, 4),
-    B_MAKE(E_SUBWPN_HOLY_WATER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
-    B_MAKE(E_SUBWPN_HOLY_WATER_FLAME, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_80161C2C, 6, 1, true, true, 12, B_KIND_8, 3, 0),
-    B_MAKE(E_80161C2C, 128, 1, true, true, 3, B_KIND_8, 3, 8),
-    B_MAKE(E_WHIP, 15, 15, NON_CRITICAL, true, 0, B_KIND_10, 1, 0),
-    B_MAKE(E_HIT_BY_CUT_BLOOD, 72, 1, true, true, 2, B_KIND_3, 1, 0),
-    B_MAKE(E_CRASH_HYDROSTORM, 48, 1, NON_CRITICAL, true, 6, B_WPN, 1, 48),
-    B_MAKE(E_CRASH_CROSS_ROTATING, 1, 1, NON_CRITICAL, true, 0, B_KIND_9, 0, 0),
-    B_MAKE(E_CRASH_CROSS_BEAM, 6, 1, true, true, 24, B_KIND_9, 0, 0),
-    B_MAKE(E_NOT_IMPLEMENTED_1, 16, 16, NON_CRITICAL, true, 0, B_KIND_8, 1, 0),
-    //0x10
-    B_MAKE(E_NOT_IMPLEMENTED_2, 15, 15, true, true, 0, B_KIND_8, 1, 0),
-    B_MAKE(E_ARM_BRANDISH_WHIP, 1, 1, NON_CRITICAL, true, 0, B_KIND_12, 1, 0),
-    B_MAKE(E_80167964, 1, 1, true, true, 0, B_KIND_8, 0, 0),
-    B_MAKE(E_SUBWPN_AXE, 1, 1, true, true, 0, B_KIND_9, 1, 8),
-    B_MAKE(E_80161EF8, 1, 1, true, true, 0, B_DECOR, 4, 0),
-    B_MAKE(E_NOT_IMPLEMENTED_3, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_REVIVAL_COLUMN, 1, 1, NON_CRITICAL, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_APPLY_MARIA_POWER_ANIM, 4, 1, NON_CRITICAL, true, 24, B_KIND_3, 0, 0),
-    B_MAKE(E_SMOKE_PUFF, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SLIDE_KICK, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_BLADE_DASH, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_801623E0, 1, 1, true, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_80162604, 1, 1, true, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_MARIA, 1, 1, NON_CRITICAL, true, 0, B_KIND_5, 0, 0),
-    B_MAKE(E_MARIA_POWERS, 4, 1, true, true, 4, B_KIND_3, 0, 0),
-    B_MAKE(E_80160D2C, 1, 1, true, true, 0, B_WPN, 0, 0),
-    //0x20
-    B_MAKE(E_NOT_IMPLEMENTED_4, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_BLINK_WHITE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SUBWPN_CRASH_CROSS_PARTICLES, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_801641A0, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 4),
-    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 8),
-    B_MAKE(E_SHRINKING_POWERUP_RING, 1, 1, true, true, 0, B_DECOR, 0, 12),
-    B_MAKE(E_HOLYWATER_BREAK_GLASS, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_AXE, 8, 8, NON_CRITICAL, true, 0, B_WPN, 1, 32),
-    B_MAKE(E_HIT_BY_CUT_BLOOD, 3, 1, true, true, 3, B_DECOR, 0, 0),
-    B_MAKE(E_SUBWPN_DAGGER, 1, 1, true, true, 0, B_KIND_9, 1, 8),
-    B_MAKE(E_SUBWPN_DAGGER, 128, 1, NON_CRITICAL, true, 4, B_KIND_14, 4, 8),
-    B_MAKE(E_80160F0C, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_HIT_BY_CUT_BLOOD, 12, 1, true, true, 2, B_KIND_8, 3, 0),
-    B_MAKE(E_HIT_BY_ICE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    //0x30
-    B_MAKE(E_HIT_BY_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SUBWPN_VIBHUTI, 1, 1, true, true, 0, B_WPN, 1, 8),
-    B_MAKE(E_SUBWPN_REBOUND_STONE, 1, 1, true, true, 0, B_WPN, 1, 4),
-    B_MAKE(E_SUBWPN_AGUNEA, 1, 1, true, true, 0, B_WPN, 1, 4),
-    B_MAKE(E_SUBWPN_AGUNEA_HIT_ENEMY, 1, 1, true, true, 0, B_DECOR, 1, 0),
-    B_MAKE(E_80161C2C, 72, 1, true, true, 2, B_KIND_3, 1, 16),
-    B_MAKE(E_CRASH_VIBHUTI, 1, 1, NON_CRITICAL, true, 0, B_DECOR, 0, 18),
-    B_MAKE(E_CRASH_VIBHUTI_CLOUD, 1, 1, true, true, 0, B_KIND_6, 0, 0),
-    B_MAKE(E_CRASH_REBOUND_STONE, 1, 1, NON_CRITICAL, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_8016D9C4, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_CRASH_REBOUND_STONE_EXPLOSION, 1, 1, NON_CRITICAL, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_CRASH_BIBLE, 1, 1, NON_CRITICAL, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_CRASH_BIBLE_BEAM, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_SUBWPN_BIBLE, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_SUBWPN_BIBLE_TRAIL, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_SUBWPN_STOPWATCH, 1, 1, true, true, 0, B_WPN, 0, 0),
-    //0x40
-    B_MAKE(E_SUBWPN_STOPWATCH_CIRCLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_STOPWATCH, 1, 1, NON_CRITICAL, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_8016F198, 2, 1, true, true, 2, B_DECOR, 0, 0),
-    B_MAKE(E_AGUNEA_CIRCLE, 1, 1, NON_CRITICAL, true, 0, B_WPN, 0, 20),
-    B_MAKE(E_AGUNEA_LIGHTNING, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_REBOUND_STONE_PARTICLES, 1, 1, true, true, 0, B_KIND_3, 0, 0),
-    B_MAKE(E_HIT_BY_DARK, 96, 1, true, true, 4, B_KIND_8, 1, 0),
-    B_MAKE(E_HIT_BY_HOLY, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_STOPWATCH_DONE_PARTICLE, 1, 1, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_CRASH_STOPWATCH_LIGHTNING, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_SMOKE_PUFF, 1, 1, true, true, 0, B_WPN, 0, 0),
-    B_MAKE(E_SMOKE_PUFF, 4, 1, true, true, 2, B_DECOR, 3, 0),
-    B_MAKE(E_SMOKE_PUFF, 6, 6, true, true, 0, B_DECOR, 0, 0),
-    B_MAKE(E_TELEPORT, 1, 1, false, true, 0, B_KIND_3, 0, 0),
-    // clang-format on
+static FactoryBlueprint blueprints[] = {
+#include "gen_blueprints.h"
 };
-STATIC_ASSERT(
-    LEN(g_RicFactoryBlueprints) == NUM_BLUEPRINTS, "bp array wrong size");
+STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 
 // Similar to same function in DRA
-static u8 entity_ranges[][2] = {
-    {0x30, 0x3F}, {0x20, 0x2F}, {0x10, 0x1E}, {0x10, 0x3F},
-    {0x1F, 0x1F}, {0x30, 0x30}, {0x10, 0x2F}, {0x00, 0x00}};
+static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
+    {0x30, 0x3F}, // B_DECORATION
+    {0x20, 0x2F}, // B_WEAPON
+    {0x10, 0x1E}, // B_WEAPON_UNIQUE
+    {0x10, 0x3F}, // B_EFFECTS
+    {0x1F, 0x1F}, // B_WHIP
+    {0x30, 0x30}, // B_CUTSCENE_MARIA
+    {0x10, 0x2F}, // B_WEAPON_CHILDREN
+};
 void RicEntityFactory(Entity* self) {
     Entity* newEntity;
     s16 nPerCycle;
@@ -668,7 +582,7 @@ void RicEntityFactory(Entity* self) {
     u8* data;
 
     if (self->step == 0) {
-        data = (u8*)&g_RicFactoryBlueprints[self->params];
+        data = (u8*)&blueprints[self->params];
         self->ext.factory.newEntityId = *data++;
         self->ext.factory.amount = *data++;
         self->ext.factory.nPerCycle = *data & 0x3F;
@@ -681,20 +595,20 @@ void RicEntityFactory(Entity* self) {
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
         self->step++;
         switch (self->ext.factory.origin) {
-        case 0:
+        case B_ORIGIN_DEFAULT:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
-        case 4:
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING:
             self->flags |= FLAG_UNK_20000;
-        case 2:
-        case 9:
+        case B_ORIGIN_FOLLOW_PLAYER:
+        case B_ORIGIN_SUBWEAPON_CRASH_PARTICLE:
             self->flags |= FLAG_POS_PLAYER_LOCKED;
-        case 3:
-        case 7:
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
-        case 8:
+        case B_ORIGIN_FOLLOW_PARENT_ENTITY:
             self->flags |= FLAG_POS_PLAYER_LOCKED;
             self->posX.val = self->ext.factory.parent->posX.val;
             self->posY.val = self->ext.factory.parent->posY.val;
@@ -702,42 +616,42 @@ void RicEntityFactory(Entity* self) {
         }
     } else {
         switch (self->ext.factory.origin) {
-        case 0:
+        case B_ORIGIN_DEFAULT:
             break;
-        case 9:
+        case B_ORIGIN_SUBWEAPON_CRASH_PARTICLE:
             if (g_Player.unk4E) {
                 DestroyEntity(self);
                 return;
             }
-        case 2:
-            self->posX.val = g_Entities->posX.val;
+        case B_ORIGIN_FOLLOW_PLAYER:
+            self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
-        case 4:
-            self->posX.val = g_Entities->posX.val;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING:
+            self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != PL_S_RUN) {
                 self->entityId = 0;
                 return;
             }
             break;
-        case 3:
-            self->posX.val = g_Entities->posX.val;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
+            self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step == PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
             break;
-        case 7:
-            self->posX.val = g_Entities->posX.val;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
+            self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != PL_S_HIT) {
                 self->entityId = 0;
                 return;
             }
             break;
-        case 8:
+        case B_ORIGIN_FOLLOW_PARENT_ENTITY:
             self->posX.val = self->ext.factory.parent->posX.val;
             self->posY.val = self->ext.factory.parent->posY.val;
             break;
@@ -755,11 +669,11 @@ void RicEntityFactory(Entity* self) {
         data += self->ext.factory.kind * 2;
         startIndex = *data++;
         endIndex = *data;
-        if (self->ext.factory.kind == 0) {
+        if (self->ext.factory.kind == B_DECORATION) {
             newEntity = RicGetFreeEntityReverse(startIndex, endIndex + 1);
-        } else if (self->ext.factory.kind == 4) {
+        } else if (self->ext.factory.kind == B_WHIP) {
             newEntity = &g_Entities[31];
-        } else if (self->ext.factory.kind == 5) {
+        } else if (self->ext.factory.kind == B_CUTSCENE_MARIA) {
             newEntity = &g_Entities[48];
         } else {
             newEntity = RicGetFreeEntity(startIndex, endIndex + 1);
@@ -917,31 +831,13 @@ static s32 velocity_x_80154C5C[] = {
     FIX(-0.1875), FIX(-0.25), -0x6000, FIX(-0.5), FIX(-0.625), FIX(-0.75)};
 static s16 rot_x_80154C74[] = {0x0030, 0x0040, 0x0050, 0x0060, 0x0070, 0x0080};
 static AnimationFrame anim_smoke_puff[] = {
-    {1, FRAME(0x01, 0)},
-    {1, FRAME(0x02, 0)},
-    {1, FRAME(0x03, 0)},
-    {1, FRAME(0x04, 0)},
-    {1, FRAME(0x05, 0)},
-    {1, FRAME(0x06, 0)},
-    {1, FRAME(0x07, 0)},
-    {1, FRAME(0x08, 0)},
-    {1, FRAME(0x09, 0)},
-    {1, FRAME(0x0A, 0)},
-    {1, FRAME(0x0B, 0)},
-    {1, FRAME(0x0C, 0)},
-    {1, FRAME(0x0D, 0)},
-    {1, FRAME(0x0E, 0)},
-    {1, FRAME(0x0F, 0)},
-    {1, FRAME(0x10, 0)},
-    {1, FRAME(0x11, 0)},
-    {1, FRAME(0x12, 0)},
-    {1, FRAME(0x13, 0)},
-    {1, FRAME(0x14, 0)},
-    {1, FRAME(0x15, 0)},
-    {1, FRAME(0x16, 0)},
-    {1, FRAME(0x17, 0)},
-    {1, FRAME(0x18, 0)},
-    A_END};
+    POSE(1, 0x01, 0), POSE(1, 0x02, 0), POSE(1, 0x03, 0), POSE(1, 0x04, 0),
+    POSE(1, 0x05, 0), POSE(1, 0x06, 0), POSE(1, 0x07, 0), POSE(1, 0x08, 0),
+    POSE(1, 0x09, 0), POSE(1, 0x0A, 0), POSE(1, 0x0B, 0), POSE(1, 0x0C, 0),
+    POSE(1, 0x0D, 0), POSE(1, 0x0E, 0), POSE(1, 0x0F, 0), POSE(1, 0x10, 0),
+    POSE(1, 0x11, 0), POSE(1, 0x12, 0), POSE(1, 0x13, 0), POSE(1, 0x14, 0),
+    POSE(1, 0x15, 0), POSE(1, 0x16, 0), POSE(1, 0x17, 0), POSE(1, 0x18, 0),
+    POSE_END};
 static u8 sensors1_80154CE4[] = {2, 9, 3, 10, 1, 8, 4, 11, 0, 7, 5, 12, 6, 13};
 static u8 sensors2_80154CF4[] = {2, 9, 3, 10, 4, 11, 5, 12, 6, 13};
 void RicEntitySmokePuff(Entity* self) {
@@ -1331,25 +1227,14 @@ void RicEntityHitByCutBlood(Entity* self) {
 
 // DRA function is func_8011EDA8
 static AnimationFrame anim_80154DC8[] = {
-    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(4, 0)},
-    {2, FRAME(3, 0)}, {2, FRAME(4, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {1, FRAME(6, 0)},
-    {1, FRAME(7, 0)}, {1, FRAME(8, 0)}, A_END};
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 3, 0), POSE(2, 4, 0),
+    POSE(2, 5, 0), POSE(1, 6, 0), POSE(1, 7, 0), POSE(1, 8, 0), POSE_END};
 static AnimationFrame anim_80154E04[] = {
-    {1, FRAME(9, 0)},
-    {2, FRAME(10, 0)},
-    {2, FRAME(11, 0)},
-    {2, FRAME(12, 0)},
-    {2, FRAME(13, 0)},
-    {2, FRAME(14, 0)},
-    {2, FRAME(15, 0)},
-    {2, FRAME(16, 0)},
-    {2, FRAME(17, 0)},
-    {2, FRAME(18, 0)},
-    {3, FRAME(19, 0)},
-    {4, FRAME(20, 0)},
-    A_END};
+    POSE(1, 9, 0),  POSE(2, 10, 0), POSE(2, 11, 0), POSE(2, 12, 0),
+    POSE(2, 13, 0), POSE(2, 14, 0), POSE(2, 15, 0), POSE(2, 16, 0),
+    POSE(2, 17, 0), POSE(2, 18, 0), POSE(3, 19, 0), POSE(4, 20, 0),
+    POSE_END};
 void func_80161C2C(Entity* self) {
     s16 paramsHi;
     s16 paramsLo;
@@ -1417,9 +1302,8 @@ void func_80161C2C(Entity* self) {
 }
 
 static AnimationFrame anim_80154E38[] = {
-    {2, FRAME(1, 0)}, {2, FRAME(2, 0)}, {2, FRAME(3, 0)},
-    {2, FRAME(4, 0)}, {2, FRAME(5, 0)}, {2, FRAME(6, 0)},
-    {2, FRAME(7, 0)}, {2, FRAME(8, 0)}, A_END};
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(2, 4, 0), POSE(2, 5, 0),
+    POSE(2, 6, 0), POSE(2, 7, 0), POSE(2, 8, 0), POSE_END};
 void func_80161EF8(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1743,21 +1627,20 @@ void RicEntityMariaPowers(Entity* self) {
 void RicEntityNotImplemented4(Entity* self) {}
 
 static AnimationFrame anim_maria_walk[] = {
-    {4, FRAME(1, 0)}, {4, FRAME(2, 0)}, {4, FRAME(3, 0)},
-    {4, FRAME(4, 0)}, {4, FRAME(5, 0)}, {4, FRAME(6, 0)},
-    {4, FRAME(7, 0)}, {4, FRAME(8, 0)}, A_LOOP_AT(0)};
+    POSE(4, 1, 0), POSE(4, 2, 0), POSE(4, 3, 0), POSE(4, 4, 0), POSE(4, 5, 0),
+    POSE(4, 6, 0), POSE(4, 7, 0), POSE(4, 8, 0), POSE_LOOP(0)};
 static AnimationFrame anim_maria_offering_powers[] = {
-    {0x08, FRAME(0x09, 0)}, {0x08, FRAME(0x0D, 0)}, {0x40, FRAME(0x0A, 0)},
-    {0x02, FRAME(0x0B, 0)}, {0x02, FRAME(0x0C, 0)}, {0x06, FRAME(0x0D, 0)},
-    {0x07, FRAME(0x0E, 0)}, {0x06, FRAME(0x0F, 0)}, {0x05, FRAME(0x0E, 0)},
-    {0x04, FRAME(0x0D, 0)}, {0x03, FRAME(0x0F, 0)}, {0x03, FRAME(0x0E, 0)},
-    {0x03, FRAME(0x0D, 0)}, {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0F, 0)},
-    {0x03, FRAME(0x0E, 0)}, {0x03, FRAME(0x0D, 0)}, {0x04, FRAME(0x0E, 0)},
-    {0x05, FRAME(0x0F, 0)}, {0x06, FRAME(0x0E, 0)}, {0x07, FRAME(0x0D, 0)},
-    {0x30, FRAME(0x0E, 0)}, {0x0C, FRAME(0x09, 0)}, {0x0D, FRAME(0x10, 0)},
-    {0x08, FRAME(0x11, 0)}, {0x0C, FRAME(0x12, 0)}, {0xB0, FRAME(0x13, 0)},
-    {0x0A, FRAME(0x14, 0)}, {0x0A, FRAME(0x15, 0)}, {0x0A, FRAME(0x16, 0)},
-    {0x30, FRAME(0x17, 0)}, {0xD0, FRAME(0x18, 0)}, A_END};
+    POSE(0x08, 0x09, 0), POSE(0x08, 0x0D, 0), POSE(0x40, 0x0A, 0),
+    POSE(0x02, 0x0B, 0), POSE(0x02, 0x0C, 0), POSE(0x06, 0x0D, 0),
+    POSE(0x07, 0x0E, 0), POSE(0x06, 0x0F, 0), POSE(0x05, 0x0E, 0),
+    POSE(0x04, 0x0D, 0), POSE(0x03, 0x0F, 0), POSE(0x03, 0x0E, 0),
+    POSE(0x03, 0x0D, 0), POSE(0x03, 0x0E, 0), POSE(0x03, 0x0F, 0),
+    POSE(0x03, 0x0E, 0), POSE(0x03, 0x0D, 0), POSE(0x04, 0x0E, 0),
+    POSE(0x05, 0x0F, 0), POSE(0x06, 0x0E, 0), POSE(0x07, 0x0D, 0),
+    POSE(0x30, 0x0E, 0), POSE(0x0C, 0x09, 0), POSE(0x0D, 0x10, 0),
+    POSE(0x08, 0x11, 0), POSE(0x0C, 0x12, 0), POSE(0xB0, 0x13, 0),
+    POSE(0x0A, 0x14, 0), POSE(0x0A, 0x15, 0), POSE(0x0A, 0x16, 0),
+    POSE(0x30, 0x17, 0), POSE(0xD0, 0x18, 0), POSE_END};
 void RicEntityMaria(Entity* self) {
     switch (self->step) {
     case 0:

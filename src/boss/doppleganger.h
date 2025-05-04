@@ -4,7 +4,7 @@
 
 typedef enum {
     /* 0x00 */ E_NONE,
-    /* 0x01 */ E_ENTITYFACTORY,
+    /* 0x01 */ E_FACTORY,
     /* 0x02 */ E_EXPLOSION = 2,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,
@@ -27,6 +27,8 @@ typedef enum {
     /* 0x1C */ E_ID_1C = 0x1C,
     /* 0x1D */ E_ID_1D,
 
+    /* 0x22 */ E_ID_22 = 0x22,
+
     /* 0x41 */ E_ID_41 = 0x41,
     /* 0x42 */ E_ID_42 = 0x42,
     /* 0x43 */ E_ID_43 = 0x43,
@@ -44,10 +46,15 @@ typedef enum {
     Dop_Fall,
     Dop_Jump,
     Dop_MorphBat,
-    Dop_UnmorphBat = 10,
+    Dop_MorphMist = 8,
+    Dop_HighJump,
+    Dop_UnmorphBat,
     Dop_Hit,
-    Dop_Kill = 17,
-} Doppleganger_Steps;
+    Dop_StatusStone,
+    Dop_UnmorphMist = 15,
+    Dop_SwordWarp,
+    Dop_Kill,
+} Doppleganger_Step;
 
 extern PlayerState g_Dop;
 

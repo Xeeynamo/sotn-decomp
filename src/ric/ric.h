@@ -115,10 +115,10 @@ enum RicEntities {
     E_SUBWPN_CRASH_CROSS_PARTICLES,  // RicEntitySubwpnCrashCrossParticles
     E_801641A0,                      // func_801641A0
     E_SHRINKING_POWERUP_RING,        // RicEntityShrinkingPowerUpRing
-    E_HOLYWATER_BREAK_GLASS,         // RicEntityHolyWaterBreakGlass
+    E_HOLYWATER_BREAK_GLASS,         // RicEntitySubwpnHolyWaterBreakGlass
     E_SUBWPN_AXE,                    // RicEntitySubwpnThrownAxe
     E_CRASH_AXE,                     // RicEntityCrashAxe
-    E_SUBWPN_DAGGER,                 // RicEntitySubwpnThrownDagger
+    E_SUBWPN_DAGGER,                 // RicEntitySubwpnKnife
     E_80160D2C,                      // func_80160D2C
     E_HIT_BY_ICE,                    // RicEntityHitByIce
     E_HIT_BY_LIGHTNING,              // RicEntityHitByLightning
@@ -237,6 +237,91 @@ enum RicBlueprints {
     NUM_BLUEPRINTS,
 };
 
+// NOTE: B_MAKE from DRA is different than RIC or MARIA!
+// Parsing is done in RicEntityFactory
+// entityId: what entity to spawn based on the Entity Set
+// amount: How many entities to spawn in total
+// nPerCycle: how many entities to spawn at once without waiting for tCycle
+// isNonCritical: 'true' for particles, 'false' for gameplay related entities
+//   false: keep searching for a free entity slot every frame to make the entity
+//   true: when there are no entities available then just forgets about it
+// incParamsKind: the technique used to set the self->params to the new entity
+//   false: it is set from 0 to 'nPerCycle'
+//   true: it is set from 0 to 'amount'
+// timerCycle: wait frames per cycle until 'amount' of entities are made
+// kind: refer to `BlueprintKind` for a list of options
+// origin: position where the entity will spawn from
+// timerDelay: how many frames to wait before starting to make the first entity
+#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
+               timerCycle, kind, origin, timerDelay)                           \
+    {(entityId),                                                               \
+     (amount),                                                                 \
+     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
+         ((!!(isNonCritical)) << 7),                                           \
+     (timerCycle),                                                             \
+     ((kind) & 7) | (((origin) & 31) << 3),                                    \
+     timerDelay}
+enum BlueprintKind {
+    // cannot collide with any other entity, used for decoration
+    B_DECORATION,
+
+    // can collide to stage items, like candles or enemies
+    B_WEAPON,
+
+    // same as above, but new entity replaces the previous one
+    B_WEAPON_UNIQUE,
+
+    // graphics and particle effects
+    B_EFFECTS,
+
+    // Exclusive to the whip entity controller, entity slot 31
+    B_WHIP,
+
+    // Exclusive to young Maria during the prologue, entity slot 48
+    B_CUTSCENE_MARIA,
+
+    // Used by subweapon crashes that use a lot of particiles that deal damage
+    B_WEAPON_CHILDREN,
+
+    B_KIND_7, // unused
+    NUM_BLUEPRINT_KIND,
+};
+enum BlueprintOrigin {
+    // Spawned entities have a life-cycle on their own and
+    B_ORIGIN_DEFAULT,
+
+    // Entity moves with the camera, remaining static on the screen.
+    B_ORIGIN_FOLLOW_CAMERA,
+
+    // Entity remains attached to the player.
+    B_ORIGIN_FOLLOW_PLAYER,
+
+    // The player moves when getting hit with a velocity that corresponds to the
+    // severity of the attack received, and we want tjhe effect to follow the
+    // player when moving during that phase.
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT,
+
+    // Entity remains attached to the player, but only with step==PL_S_RUN
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING,
+
+    B_ORIGIN_5, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
+    B_ORIGIN_6, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
+
+    // Useful when the player is about to use a subweapon: once the command is
+    // issued, there is a fraction of delay until the subweapon is spawned to
+    // allow the attack to be synchronized with the animaiton. If the player is
+    // hit during that fraction, the spawning of the subweapon is effectively
+    // canceled.
+    B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT,
+
+    // Spawned entites remain attached to their parent.
+    B_ORIGIN_FOLLOW_PARENT_ENTITY,
+
+    // A subweapon crash will spawn different particles that should get
+    // de-spawned when the attack terminates.
+    B_ORIGIN_SUBWEAPON_CRASH_PARTICLE,
+};
+
 enum RicSubweapons {
     PL_W_NONE,
     PL_W_DAGGER,
@@ -278,7 +363,6 @@ extern s16* D_801530AC[];
 extern SpriteParts* D_80153AA0[];
 extern SpriteParts* D_80153D24[];
 extern SpriteParts* D_801541A8[];
-extern void func_80159C04(void);
 extern void DestroyEntity(Entity* entity);
 extern void func_8015BB80(void);
 extern void RicStepBladeDash(void);

@@ -2,8 +2,8 @@
 // Weapon ID #46. Used by weapons:
 // Holbein dagger, Blue knuckles
 #include "weapon_private.h"
-#include "w_046_1.h"
-#include "w_046_2.h"
+#include "gen_w_046_1.h"
+#include "gen_w_046_2.h"
 #define g_Animset w_046_1
 #define g_Animset2 w_046_2
 

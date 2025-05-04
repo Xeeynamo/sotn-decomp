@@ -178,6 +178,7 @@ typedef enum {
     PAD_LEFT = 0x8000,
 #endif
     PAD_SIM_UNK20000 = 0x20000,
+    PAD_DIRECTION_MASK = PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT,
 } PlayerPad;
 
 // Convenience macros inheriting from PlayerPad
@@ -226,11 +227,7 @@ typedef enum {
 #if defined(VERSION_US) || defined(VERSION_HD)
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
-#if defined(VERSION_PSP) || defined(VERSION_PC)
-#define SPRITESHEET_PTR g_PlOvlSpritesheet
-#else
 #define SPRITESHEET_PTR 0x8013C020
-#endif
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR 0x8017D000
@@ -245,21 +242,24 @@ typedef enum {
 
 #else
 #define DRA_PRG_PTR 0x800A0000
-#define RIC_PRG_PTR 0x8013C000
+#define RIC_PRG_PTR &g_PlOvl
 #define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
-#define WEAPON1_PTR 0x8017D000
-#define STAGE_PRG_PTR 0x80180000
+#define WEAPON1_PTR &D_8017D000
+#define STAGE_PRG_PTR D_8D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
 #ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
 #endif
-#define SIM_CHR0 0x80280000
-#define SIM_CHR1 0x80284000
-#define SIM_PTR 0x80280000
+#define SIM_CHR0 D_8C6BC40
+#define SIM_CHR1 D_8C6FC40
+#define SIM_PTR D_8C6BC40
 
 extern u8 g_BmpCastleMap[0x20000];
+extern u8 D_8C6BC40[];
+extern u8 D_8C6FC40[];
+extern u8 D_8D2DC40[];
 
 #endif
 
@@ -428,47 +428,6 @@ typedef enum {
 #define FONT_SPACE 4    // gap for the space character
 #define DIAG_EOL 0xFF   // end of line
 #define DIAG_EOS 0x00   // end of string
-
-// entityId: what entity to spawn based on the Entity Set
-// amount: How many entities to spawn in total
-// nPerCycle: how many entities to spawn at once without waiting for tCycle
-// isNonCritical: 'true' for particles, 'false' for gameplay related entities
-//   false: keep searching for a free entity slot every frame to make the entity
-//   true: when there are no entities available then just forgets about it
-// incParamsKind: the technique used to set the self->params to the new entity
-//   false: it is set from 0 to 'nPerCycle'
-//   true: it is set from 0 to 'amount'
-// tCycle: wait 'tCycle' frames per cycle until 'amount' of entities are made
-// kind: refer to `BlueprintKind` for a list of options
-// f: ???
-// tDelay: how many frames to wait before starting to make the first entity
-#define B_MAKE(entityId, amount, nPerCycle, isNonCritical, incParamsKind,      \
-               tCycle, kind, origin, tDelay)                                   \
-    {entityId,                                                                 \
-     (amount),                                                                 \
-     ((nPerCycle) & 0x3F) | ((!!(incParamsKind)) << 6) |                       \
-         ((!!(isNonCritical)) << 7),                                           \
-     (tCycle),                                                                 \
-     ((kind) & 15) | ((origin) << 4),                                          \
-     tDelay}
-enum BlueprintKind {
-    B_DECOR,      // cannot collide with any other entity, used for decoration
-    B_WPN,        // can collide to stage items, like candles or enemies
-    B_WPN_UNIQUE, // same as above, but new entity replaces the prev. one
-    B_KIND_3,
-    B_KIND_4,
-    B_KIND_5,
-    B_KIND_6,
-    B_KIND_7,
-    B_KIND_8,
-    B_KIND_9,
-    B_KIND_10,
-    B_KIND_11,
-    B_KIND_12,
-    B_KIND_13,
-    B_KIND_14,
-    B_KIND_15,
-};
 
 #define SAVE_FLAG_NORMAL (0)
 #define SAVE_FLAG_CLEAR (1)
@@ -747,19 +706,19 @@ typedef struct {
 } ImgSrc;
 
 typedef struct {
-    /* 00 */ u32 gfxOff;
-    /* 04 */ u32 ovlOff;
-    /* 08 */ u32 ovlLen;
-    /* 0C */ u32 vhOff;
-    /* 10 */ u32 vhLen;
-    /* 14 */ u32 vbLen;
-    /* 18 */ u32 unk18;
-    /* 1C */ const char* gfxName;
-    /* 20 */ const char* ovlName;
-    /* 24 */ const char* name;
-    /* 28 */ u8 unk28;
-    /* 29 */ s8 seqIdx; // index of D_800ACCF8
-    /* 2A */ u16 unk2A;
+    /* 0x00 */ u32 gfxOff;
+    /* 0x04 */ u32 ovlOff;
+    /* 0x08 */ u32 ovlLen;
+    /* 0x0C */ u32 vhOff;
+    /* 0x10 */ u32 vhLen;
+    /* 0x14 */ u32 vbLen;
+    /* 0x18 */ u32 unk18;
+    /* 0x1C */ const char* gfxName;
+    /* 0x20 */ const char* ovlName;
+    /* 0x24 */ char* name;
+    /* 0x28 */ u8 unk28;
+    /* 0x29 */ s8 seqIdx; // index of D_800ACCF8
+    /* 0x2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
 typedef struct {
@@ -823,13 +782,14 @@ typedef struct {
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
 
-#define FRAME(x, y) ((x) | ((y) << 8))
-#define A_LOOP_AT(frame) {0, frame}
-#define A_END {-1, 0}
-#define A_JUMP_AT(anim) {-2, anim}
+#define POSE(duration, frameNo, hitboxNo)                                      \
+    {(duration), (((frameNo) & 0x1FF) | (((hitboxNo) & 0x7F) << 9))}
+#define POSE_LOOP(index) {0, index} // loop at pose index
+#define POSE_END {-1, 0}            // stop at last frame
+#define POSE_JUMP(anim) {-2, anim}  // set new animation
 typedef struct {
     u16 duration;
-    u16 unk2;
+    u16 pose; // contains both frameNo and hitboxNo
 } AnimationFrame;
 
 typedef struct {
@@ -1156,7 +1116,11 @@ typedef struct {
     /* 80097C34 */ s32 timerMinutes;
     /* 80097C38 */ s32 timerSeconds;
     /* 80097C3C */ s32 timerFrames;
-    /* 80097C40 */ u32 D_80097C40; // reused for Maria subweapon
+
+    // ALUCARD: murasama kill count
+    // MARIA: secondary subweapon
+    /* 80097C40 */ u32 D_80097C40;
+
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
@@ -1306,7 +1270,7 @@ typedef struct {
     /* 8003C794 */ RoomDef* tileLayers;
     /* 8003C798 */ GfxBank** gfxBanks;
     /* 8003C79C */ void (*UpdateStageEntities)(void);
-    /* 8003C7A0 */ u8** unk2c; // sprite bank 1
+    /* 8003C7A0 */ u8** unk2C; // sprite bank 1
     /* 8003C7A4 */ u8** unk30; // sprite bank 2
     /* 8003C7A8 */ s32* unk34;
     /* 8003C7AC */ s32* unk38;
@@ -1643,7 +1607,7 @@ typedef struct {
     /* 8003C8A0 */ void* unused12C;
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
-    /* 8003C8A4 */ s32 (*CalcPlayerDamageAgain)(DamageParam* damageParam);
+    /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
 #else
@@ -1906,20 +1870,20 @@ typedef struct {
     /* 0x08 */ RECT rect1;
     /* 0x10 */ RECT rect2;
     /* 0x18 */ u8 r0;
-    /* 0x19 */ u8 g0;
-    /* 0x1A */ u8 b0;
+    /* 0x19 */ u8 b0;
+    /* 0x1A */ u8 g0;
     /* 0x1B */ u8 enableColorBlend;
     /* 0x1C */ u8 r1;
-    /* 0x1D */ u8 g1;
-    /* 0x1E */ u8 b1;
+    /* 0x1D */ u8 b1;
+    /* 0x1E */ u8 g1;
     /* 0x1F */ u8 tpage;
     /* 0x20 */ u8 r2;
-    /* 0x21 */ u8 g2;
-    /* 0x22 */ u8 b2;
+    /* 0x21 */ u8 b2;
+    /* 0x22 */ u8 g2;
     /* 0x23 */ u8 flipX;
     /* 0x24 */ u8 r3;
-    /* 0x25 */ u8 g3;
-    /* 0x26 */ u8 b3;
+    /* 0x25 */ u8 b3;
+    /* 0x26 */ u8 g3;
     /* 0x27 */ u8 unk27;
 } PlayerDraw; /* size = 0x28 */
 
@@ -2026,6 +1990,17 @@ typedef enum {
     UNK_ENTITY_51 = 0x51, // SubWeapons container falling liquid
     UNK_ENTITY_100 = 0x100
 } EntityTypes;
+
+// 0x00:      player entity
+// 0x01-0x03: player after-image
+// 0x04-0x07: servant entities
+// 0x08-0x0F: factory entities
+// 0x10-0x1E: alucard weapons and richter's whip
+// 0x1F:      ???
+// 0x20-0x2F: subweapon entities
+// 0x30-0x3F: mostly used for decoration and graphics effects
+// 0x40-0x7F: stage entities, other entities can interact with
+// 0x80-0xFF: stage entities, only player can interact with
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
 extern s32 g_entityDestroyed[18];
@@ -2086,7 +2061,6 @@ typedef enum {
     LANG_IT,
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
-void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
 
 typedef struct {
     s16 unk00;

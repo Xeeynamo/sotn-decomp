@@ -2,12 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-u8 D_800AD4B8[] = {
-    // TODO: move to 7A4D0.c
-    0x20, 0x3F, 0x11, 0x2F, 0x20, 0x2F, 0x10, 0x10, 0x1C, 0x1F,
-    0x19, 0x1F, 0x11, 0x1F, 0x11, 0x3F, 0x11, 0x3F, 0x2F, 0x2F,
-};
-
 u16 D_800AD4CC[] = {
     0x0200, 0x0600, 0x0800, 0x0800, 0x0800,
     0x0200, 0x0200, 0x0200, 0x0200, 0xFFFF,
@@ -547,7 +541,7 @@ void func_8011EDA8(Entity* self) {
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
-                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+                CreateEntFactoryFromEntity(self, FACTORY(BP_4, 4), 0);
             }
         }
 
@@ -1117,7 +1111,7 @@ void EntityPlayerPinkEffect(Entity* self) {
     case 0:
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
-        self->ext.timer.t = data_idx->unk0[0];
+        self->ext.timer.t = data_idx->timers[0];
         if (data_idx->unk18 != 0x83) {
             PlaySfx(SFX_TRANSFORM);
         }
@@ -1132,19 +1126,19 @@ void EntityPlayerPinkEffect(Entity* self) {
         if (--self->ext.timer.t != 0) {
             return;
         }
-        if (data_idx->unk8[self->ext.factory.unk7E]) {
+        if (data_idx->blueprints[self->ext.factory.unk7E]) {
             CreateEntFactoryFromEntity(
                 self,
-                FACTORY(data_idx->unk8[self->ext.factory.unk7E],
-                        data_idx->unk16[self->ext.factory.unk7E]),
+                FACTORY(data_idx->blueprints[self->ext.factory.unk7E],
+                        data_idx->blueprintParams[self->ext.factory.unk7E]),
                 0);
-            if (data_idx->unk8[self->ext.factory.unk7E] == 0x28) {
+            if (data_idx->blueprints[self->ext.factory.unk7E] == 0x28) {
                 PlaySfx(SFX_UI_MP_FULL);
             }
         }
 
         self->ext.factory.unk7E++;
-        self->ext.timer.t = data_idx->unk0[self->ext.factory.unk7E];
+        self->ext.timer.t = data_idx->timers[self->ext.factory.unk7E];
         if (self->ext.timer.t == 0xFF) {
             switch (data_idx->unk18) {
             case 0x83: // There is no un-stoning potion, perhaps related to
@@ -1182,7 +1176,7 @@ void EntityPlayerPinkEffect(Entity* self) {
                 break;
             default: // Used by Resist and Stat Boosting Potions most likely.
                 CreateEntFactoryFromEntity(
-                    self, FACTORY(0x2F, D_800AE120[data_idx->unk18]), 0);
+                    self, FACTORY(BP_47, D_800AE120[data_idx->unk18]), 0);
                 PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);
             case 0x82:
                 break;
@@ -1463,7 +1457,7 @@ void EntityLevelUpAnimation(Entity* self) {
         PlaySfx(SFX_LEVEL_UP); // Max HP & MP
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_UNK_20000 | FLAG_UNK_10000;
-        CreateEntFactoryFromEntity(self, FACTORY(0x2C, 0x4A), 0);
+        CreateEntFactoryFromEntity(self, FACTORY(BP_BLINK_WHITE, 0x4A), 0);
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 48;
         prim = &g_PrimBuf[self->primIndex];
@@ -1523,7 +1517,7 @@ void EntityLevelUpAnimation(Entity* self) {
         self->ext.factory.unk80 = 8;
         self->ext.factory.unk82 = 4;
         if (--self->ext.timer.t == 0) {
-            CreateEntFactoryFromEntity(self, FACTORY(0x28, 10), 0);
+            CreateEntFactoryFromEntity(self, FACTORY(BP_RIPPLE_OUTLINE, 10), 0);
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 14; i++) {
                 prim->drawMode =
@@ -2325,21 +2319,23 @@ void func_80123F78(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
 
-        PCOL(plDraw) = 0x80;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 =
+                plDraw->g2 = plDraw->g3 = 0x80;
         plDraw->enableColorBlend = true;
         self->step++;
         break;
 
     case 1:
-        plDraw->b3 -= 1;
-        if (plDraw->b3 < 4) {
+        plDraw->g3 -= 1;
+        if (plDraw->g3 < 4) {
             plDraw->enableColorBlend = 0;
             DestroyEntity(self);
             return;
         }
-        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->g0 =
-            plDraw->g1 = plDraw->g2 = plDraw->g3 = plDraw->b0 = plDraw->b1 =
-                plDraw->b2 = plDraw->b3;
+        plDraw->r0 = plDraw->r1 = plDraw->r2 = plDraw->r3 = plDraw->b0 =
+            plDraw->b1 = plDraw->b2 = plDraw->b3 = plDraw->g0 = plDraw->g1 =
+                plDraw->g2 = plDraw->g3;
         break;
     }
 }

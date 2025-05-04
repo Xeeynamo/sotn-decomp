@@ -100,7 +100,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
 
-bool CalcPlayerDamageAgain(DamageParam* damage) {
+bool CalcPlayerDamage(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
         if (damage->damageKind >= DAMAGEKIND_16) {
             damage->damageTaken = g_Status.hpMax / 8;
@@ -857,7 +857,20 @@ s32 GetSideToPlayer(Entity* self) {
     return side;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB1C, func_0607AB1C);
+// func_0607AB1C
+// saturn unique?
+s32 GetSideToPlayer2(Entity* self) {
+    s16 side = 0;
+
+    if (g_CurrentEntity->posX.val > PLAYER.posX.val) {
+        side = 1;
+    }
+    if (g_CurrentEntity->posY.val > PLAYER.posY.val) {
+        side |= 2;
+    }
+
+    return side;
+}
 
 // _bicyousei_dir_0
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB4C, func_0607AB4C);

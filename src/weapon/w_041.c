@@ -2,8 +2,8 @@
 // Weapon ID #41. Used by weapons:
 // Monster vial 2
 #include "weapon_private.h"
-#include "w_041_1.h"
-#include "w_041_2.h"
+#include "gen_w_041_1.h"
+#include "gen_w_041_2.h"
 #define g_Animset w_041_1
 #define g_Animset2 w_041_2
 #include "sfx.h"
@@ -102,22 +102,17 @@ static s16 D_123000_8017A284[] = {
     COLOR16(0, 0, 0, 1),    COLOR16(0, 0, 1, 0)};
 
 static AnimationFrame D_123000_8017A4A4[] = {
-    {4, FRAME(0x01, 0x02)}, {1, FRAME(0x02, 0x04)},
-    {1, FRAME(0x03, 0x06)}, {1, FRAME(0x0A, 0x12)},
-    {1, FRAME(0x04, 0x08)}, {1, FRAME(0x05, 0x0A)},
-    {4, FRAME(0x06, 0x0C)}, {2, FRAME(0x07, 0x0A)},
-    {2, FRAME(0x08, 0x0E)}, {2, FRAME(0x09, 0x10)},
-    {1, FRAME(0x0A, 0x12)}, {2, FRAME(0x03, 0x06)},
-    {2, FRAME(0x02, 0x04)}, A_LOOP_AT(0)};
+    POSE(4, 0x01, 1), POSE(1, 0x02, 2), POSE(1, 0x03, 3), POSE(1, 0x0A, 9),
+    POSE(1, 0x04, 4), POSE(1, 0x05, 5), POSE(4, 0x06, 6), POSE(2, 0x07, 5),
+    POSE(2, 0x08, 7), POSE(2, 0x09, 8), POSE(1, 0x0A, 9), POSE(2, 0x03, 3),
+    POSE(2, 0x02, 2), POSE_LOOP(0)};
 
 static AnimationFrame D_123000_8017A4DC[] = {
-    {2, FRAME(0x0C, 0x16)}, {1, FRAME(0x0D, 0x16)},
-    {2, FRAME(0x0E, 0x16)}, {1, FRAME(0x0F, 0x16)},
-    {1, FRAME(0x10, 0x16)}, {1, FRAME(0x11, 0x16)},
-    {1, FRAME(0x12, 0x16)}, {1, FRAME(0x0E, 0x16)},
-    {1, FRAME(0x0D, 0x16)}, A_END};
+    POSE(2, 0x0C, 11), POSE(1, 0x0D, 11), POSE(2, 0x0E, 11), POSE(1, 0x0F, 11),
+    POSE(1, 0x10, 11), POSE(1, 0x11, 11), POSE(1, 0x12, 11), POSE(1, 0x0E, 11),
+    POSE(1, 0x0D, 11), POSE_END};
 
-static AnimationFrame D_123000_8017A504[] = {{0x80, 0x000B}, A_END};
+static AnimationFrame D_123000_8017A504[] = {{0x80, 0x000B}, POSE_END};
 
 static FrameProperty D_123000_8017A50C[] = {
     {0x00, 0x00, 0x00, 0x00}, {0x00, 0xFA, 0x06, 0x0D},
@@ -165,7 +160,7 @@ void func_123000_8017A914(void) {
 }
 
 // Purpose is not 100% clear, but appears to be something like:
-// Iterate over entities 64-192. Look for any which are positioned
+// Iterate over entities 64-128. Look for any which are positioned
 // in a certain direction from us. That direction is the angleTarget,
 // and the targeted entity must be within tolerance from that target.
 

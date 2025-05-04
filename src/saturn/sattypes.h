@@ -42,14 +42,27 @@ typedef union {
     } i;
 } SotnFixed32;
 
-#define FRAME(x, y) ((x) | ((y) << 8))
-#define A_LOOP_AT(frame) {0, frame}
-#define A_END {-1, 0}
-#define A_JUMP_AT(anim) {-2, anim}
+#define POSE(duration, frameNo, hitboxNo)                                      \
+    {(duration), (((frameNo) & 0x1FF) | (((hitboxNo) & 0x7F) << 9))}
+#define POSE_LOOP(frame) {0, frame}
+#define POSE_END {-1, 0}
+#define POSE_JUMP(anim) {-2, anim}
 typedef struct {
     u16 duration;
     u16 unk2;
 } AnimationFrame;
+
+typedef struct Collider {
+    /* 0x00 */ u32 effects;
+    /* 0x04 */ s32 unk4; // possibly an x offset
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14; // Left edge of queried tile collision
+    /* 0x18 */ s32 unk18; // Top edge of queried tile collision
+    /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
+    /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
+} Collider;               /* size=0x24 */
 
 struct Entity;
 
@@ -104,6 +117,28 @@ typedef enum {
     Player_MariaSpellFourHolyBeasts,
 } PlayerSteps;
 
+typedef struct {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+} ET_EntitySlot1;
+
+typedef struct {
+    /* 0x7C */ u8 pad0[0x4];
+    /* 0x80 */ u8* anim;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ u8 pad86[2];
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+} ET_ExplosionPuffOpaque;
+
+typedef union { // offset=0x7C
+    u8 base[0x38];
+    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_ExplosionPuffOpaque opaquePuff;
+} Ext;
+
 typedef struct Entity {
     /* 0x00 */ struct Unk0600B344* unk0;
     /* 0x04 */ SotnFixed32 posX;
@@ -143,14 +178,10 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 unk74;
-    /* 0x76 */ char pad_76[0xA];
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ char pad_82[0x2];
-    /* 0x84 */ s8 unk84;
-    /* 0x85 */ s8 unk85;
-    /* 0x86 */ char pad_86[0x2];
-    /* 0x88 */ struct UnkStruct_060e8350* unk88;
-    /* 0x8C */ char pad[0x2C];
+    /* 0x76 */ char pad_76[0x1];
+    /* 0x80 */ Ext ext;
+    /* 0x88 */ char pad_88[0x2];
+    /* 0x8A */ struct UnkStruct_060e8350* unk8A;
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
@@ -163,10 +194,6 @@ typedef struct Unk0600B344 {
     /* 0x14 */ s32 unk14;
     /* 0x18 */ s32 unk18;
 } Unk0600B344;
-
-typedef struct {
-    // structure still unknown
-} Collider;
 
 typedef struct {
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
@@ -334,6 +361,11 @@ typedef struct {
     char pad43C[0x1C];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
+    /* 0x460 */ u32 unk74;
+    /* 0x464 */ u16 unk78;
+    /* 0x466 */ u16 unk7A;
+    /* 0x468 */ u16 unk7C;
+    /* 0x46A */ u16 unk7E;
 } PlayerState;
 
 typedef enum {
@@ -417,5 +449,16 @@ extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
+
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
+// changed to s32
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x2 */ s32 y;
+} Point16; // size = 0x4
+
+#define FIX(x) (x << 16)
 
 #endif

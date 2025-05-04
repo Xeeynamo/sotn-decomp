@@ -14,6 +14,9 @@ func handlerConfigExtract(args []string) error {
 	if err != nil {
 		return err
 	}
+	if c.Version != "" {
+		_ = os.Setenv("VERSION", c.Version)
+	}
 	return extractFromConfig(c)
 }
 

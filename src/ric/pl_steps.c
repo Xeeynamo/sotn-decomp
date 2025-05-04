@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include "player.h"
 #include "sfx.h"
 
-void func_80158B04(u16 arg0) {
+static void func_80158B04(u16 arg0) {
     s16 xMod = 3;
     if (PLAYER.facingLeft) {
         xMod = -xMod;
@@ -122,8 +121,8 @@ void RicStepWalk(void) {
             RicSetStand(0);
             return;
         }
-        if (g_Entities[0].step_s != 0) {
-            if (g_Entities[0].step_s) {
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
             }
         } else {
             RicSetSpeedX(FIX(1.25));
@@ -156,8 +155,8 @@ void RicStepRun(void) {
             }
             return;
         }
-        if (g_Entities[0].step_s != 0) {
-            if (g_Entities[0].step_s) {
+        if (PLAYER.step_s != 0) {
+            if (PLAYER.step_s) {
             }
         } else {
             RicSetSpeedX(FIX(2.25));
@@ -437,14 +436,14 @@ void RicStepCrouch(void) {
     }
 }
 
-void func_80159BC8(void) {
+static void func_80159BC8(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
 }
 
-void func_80159C04(void) {
+static void func_80159C04(void) {
     Entity* entity;
     s16 var_s3;
     s16 var_s2;
@@ -957,10 +956,10 @@ void RicStepDead(
                 g_CurrentEntity, FACTORY(BP_MULTIPLE_EMBERS, 5), 0);
             death_kind = DEATH_GENERIC;
         }
-        playerDraw->r0 = playerDraw->b0 = playerDraw->g0 = playerDraw->r1 =
-            playerDraw->b1 = playerDraw->g1 = playerDraw->r2 = playerDraw->b2 =
-                playerDraw->g2 = playerDraw->r3 = playerDraw->b3 =
-                    playerDraw->g3 = 0x80;
+        playerDraw->r0 = playerDraw->g0 = playerDraw->b0 = playerDraw->r1 =
+            playerDraw->g1 = playerDraw->b1 = playerDraw->r2 = playerDraw->g2 =
+                playerDraw->b2 = playerDraw->r3 = playerDraw->g3 =
+                    playerDraw->b3 = 0x80;
         playerDraw->enableColorBlend = 1;
         PLAYER.step_s++;
         break;
@@ -1024,30 +1023,30 @@ void RicStepDead(
             if (playerDraw->r0 < 0xF8) {
                 playerDraw->r0 += 2;
             }
-            if (playerDraw->g0 > 8) {
-                playerDraw->g0 -= 2;
+            if (playerDraw->b0 > 8) {
+                playerDraw->b0 -= 2;
             }
 
             playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0;
-            playerDraw->b0 = playerDraw->b1 = playerDraw->g1 = playerDraw->b2 =
-                playerDraw->g2 = playerDraw->b3 = playerDraw->g3 =
-                    playerDraw->g0;
+            playerDraw->g0 = playerDraw->g1 = playerDraw->b1 = playerDraw->g2 =
+                playerDraw->b2 = playerDraw->g3 = playerDraw->b3 =
+                    playerDraw->b0;
         }
         if (death_kind == DEATH_BY_FIRE || death_kind == DEATH_BY_THUNDER) {
-            if (playerDraw->g0 > 8) {
-                playerDraw->g0 -= 2;
+            if (playerDraw->b0 > 8) {
+                playerDraw->b0 -= 2;
             }
             playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->r0 =
-                playerDraw->b0 = playerDraw->b1 = playerDraw->g1 =
-                    playerDraw->b2 = playerDraw->g2 = playerDraw->b3 =
-                        playerDraw->g3 = playerDraw->g0;
+                playerDraw->g0 = playerDraw->g1 = playerDraw->b1 =
+                    playerDraw->g2 = playerDraw->b2 = playerDraw->g3 =
+                        playerDraw->b3 = playerDraw->b0;
         }
         if (death_kind == DEATH_BY_ICE) {
             if ((playerDraw->r0 > 8) && (g_Timer & 1)) {
                 playerDraw->r0 -= 1;
             }
-            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->b3 =
-                playerDraw->b2 = playerDraw->b1 = playerDraw->b0 =
+            playerDraw->r3 = playerDraw->r2 = playerDraw->r1 = playerDraw->g3 =
+                playerDraw->g2 = playerDraw->g1 = playerDraw->g0 =
                     playerDraw->r0;
         }
     }
@@ -1072,7 +1071,7 @@ void RicStepStandInAir(void) {
 }
 
 void RicStepEnableFlameWhip(void) {
-    if ((PLAYER.animCurFrame == 0xB5) && (PLAYER.poseTimer == 1)) {
+    if (PLAYER.animCurFrame == 181 && PLAYER.poseTimer == 1) {
         RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_35, 0);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
     }

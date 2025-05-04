@@ -92,7 +92,7 @@ void PlayerStepHighJump(void) {
         }
         break;
     case 4:
-        DOPPLEGANGER.velocityY += 0x1000;
+        DOPPLEGANGER.velocityY += FIX(1.0 / 16.0);
         if (DOPPLEGANGER.poseTimer < 0) {
             var_s1 = 2;
         }
@@ -117,7 +117,7 @@ s32 func_80113E68(void) {
 }
 
 void func_us_801C68CC(void) {
-    DOPPLEGANGER.animSet = -0x7FFF;
+    DOPPLEGANGER.animSet = ANIMSET_OVL(1);
     DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                               FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
     DOPPLEGANGER.poseTimer = 0;
@@ -126,7 +126,7 @@ void func_us_801C68CC(void) {
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
     DOPPLEGANGER.rotZ = 0;
-    if (g_Entities[STAGE_ENTITY_START + 16].entityId == 0x22) {
+    if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_ID_22) {
         func_8010FAF4();
     }
 }
@@ -139,12 +139,12 @@ void func_us_801C6950(void) {
     DOPPLEGANGER.entityRoomIndex = 1;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6990);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerHandleDamage);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C6EEC);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", PlayerStepKill);
 
 extern PlayerState g_Dop;
-extern s16 D_us_80183B98[][2];
+extern s16 D_us_80183B98[];
 
 bool BatFormFinished(void) {
     if (DOPPLEGANGER.step_s == 0 || !(g_Dop.padTapped & 8)) {
@@ -153,7 +153,7 @@ bool BatFormFinished(void) {
 
     SetPlayerStep(10);
     SetPlayerAnim(202);
-    D_us_80183B98[0][1] = 6;
+    D_us_80183B98[1] = 6;
     DOPPLEGANGER.palette = PAL_OVL(0x20D);
     g_Dop.unk66 = 0;
     g_Dop.unk68 = 0;
@@ -185,7 +185,7 @@ static s32 func_us_801C781C(void) {
     return 0;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C7834);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", ControlBatForm);
 
 extern s16 D_us_80183B9C[][2];
 extern s16 D_us_801812F8[];
@@ -193,7 +193,7 @@ extern s16 D_us_80181300[];
 extern s16 D_us_80181318[][2];
 extern s16 D_us_80181328[][2];
 
-void func_us_801C82F0(void) {
+void PlayerStepUnmorphBat(void) {
     s32 i;
     s32 count;
     u8 _pad[40]; // must be between 33 & 40
@@ -233,7 +233,7 @@ void func_us_801C82F0(void) {
             DOPPLEGANGER.rotZ = 0;
             g_Dop.unk66 = 1;
             DOPPLEGANGER.step_s = 1;
-            D_us_80183B98[0][1] = 0x5F;
+            D_us_80183B98[1] = 0x5F;
         }
         break;
 
@@ -259,14 +259,162 @@ s32 func_us_801C84F4(void) {
     return true;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C854C);
+extern s32 D_us_801D3FEC;
 
+void ControlMistForm(void) {
+    u32 padDirection;
+
+    if (func_us_801C84F4() == 0) {
+        padDirection = g_Dop.padPressed & PAD_DIRECTION_MASK;
+        switch (DOPPLEGANGER.step_s) {
+        case 0:
+            CheckMoveDirection();
+            g_Dop.unk44 = g_Dop.unk46 = g_Dop.unk48 = 0;
+            g_api.func_800EA5E4(0x8003U);
+            func_8010FAF4();
+            CreateEntFactoryFromEntity(g_CurrentEntity, 0x49U, 0);
+            if (DOPPLEGANGER.velocityX > 0) {
+                DOPPLEGANGER.velocityX = FIX(1);
+            }
+            if (DOPPLEGANGER.velocityX < 0) {
+                DOPPLEGANGER.velocityX = FIX(-1);
+            }
+            if (DOPPLEGANGER.velocityY > 0) {
+                DOPPLEGANGER.velocityY = FIX(1);
+            }
+            if (DOPPLEGANGER.velocityY < 0) {
+                DOPPLEGANGER.velocityY = FIX(-1);
+            }
+            SetPlayerAnim(0xCA);
+            D_us_80183B98[1] = DOPPLEGANGER.animCurFrame;
+            g_api.func_800EA538(5);
+            g_api.func_800EA5E4(0x8801U);
+            DOPPLEGANGER.step_s++;
+            break;
+
+        case 1:
+            switch (padDirection) {
+            case PAD_NONE:
+            default:
+                DecelerateX(FIX(3.0 / 256.0));
+                DecelerateY(FIX(3.0 / 256.0));
+                break;
+            case PAD_UP:
+                if (DOPPLEGANGER.velocityY < FIX(-1.0)) {
+                    DecelerateY(FIX(3.0 / 256.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(-1.0);
+                }
+                DecelerateX(FIX(3.0 / 256.0));
+                break;
+            case PAD_DOWN:
+                if (DOPPLEGANGER.velocityY > FIX(1.0)) {
+                    DecelerateY(FIX(3.0 / 256.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(1.0);
+                }
+                DecelerateX(FIX(3.0 / 256.0));
+                break;
+            case PAD_RIGHT:
+                DOPPLEGANGER.facingLeft = false;
+                if (DOPPLEGANGER.velocityX > FIX(1.0)) {
+                    DecelerateX(FIX(3.0 / 256.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(1.0);
+                }
+                DecelerateY(FIX(3.0 / 256.0));
+                break;
+            case PAD_LEFT:
+                DOPPLEGANGER.facingLeft = true;
+                if (DOPPLEGANGER.velocityX < FIX(-1.0)) {
+                    DecelerateX(FIX(3.0 / 256.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(-1.0);
+                }
+                DecelerateY(FIX(3.0 / 256.0));
+                break;
+
+            case (PAD_UP | PAD_RIGHT):
+                DOPPLEGANGER.facingLeft = false;
+                if (DOPPLEGANGER.velocityX > FIX(0.625)) {
+                    DecelerateX(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(0.625);
+                }
+
+                if (DOPPLEGANGER.velocityY < FIX(-0.625)) {
+                    DecelerateY(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(-0.625);
+                }
+                break;
+            case (PAD_UP | PAD_LEFT):
+                DOPPLEGANGER.facingLeft = true;
+                if (DOPPLEGANGER.velocityX < FIX(-0.625)) {
+                    DecelerateX(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(-0.625);
+                }
+
+                if (DOPPLEGANGER.velocityY < FIX(-0.625)) {
+                    DecelerateY(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(-0.625);
+                }
+                break;
+
+            case (PAD_DOWN | PAD_RIGHT):
+                DOPPLEGANGER.facingLeft = false;
+                if (DOPPLEGANGER.velocityX > FIX(0.625)) {
+                    DecelerateX(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(0.625);
+                }
+                if (DOPPLEGANGER.velocityY > FIX(0.625)) {
+                    DecelerateY(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(0.625);
+                }
+                break;
+            case (PAD_DOWN | PAD_LEFT):
+                DOPPLEGANGER.facingLeft = 1;
+                if (DOPPLEGANGER.velocityX < FIX(-0.625)) {
+                    DecelerateX(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityX = FIX(-0.625);
+                }
+
+                if (DOPPLEGANGER.velocityY > FIX(0.625)) {
+                    DecelerateY(FIX(1.0 / 128.0));
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(0.625);
+                }
+                break;
+            }
+            break;
+
+        default:
+            FntPrint("error step\n");
+            break;
+        }
+
+        if (D_us_801D3FEC != 0) {
+            if (D_us_801D3FEC > 0) {
+                D_us_801D3FEC--;
+                DOPPLEGANGER.posY.i.hi++;
+            } else {
+                D_us_801D3FEC++;
+                DOPPLEGANGER.posY.i.hi--;
+            }
+        }
+    }
+}
 extern s16 D_us_801812F8[];
 extern s16 D_us_80181300[];
 extern s16 D_us_80181318[][2];
 extern s16 D_us_80181328[][2];
 
-void func_us_801C89D4(void) {
+void PlayerStepUnmorphMist(void) {
     s32 i;
     s32 count;
     u8 _pad[40];
@@ -338,7 +486,102 @@ void PlayerStepSwordWarp(void) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C8CA4);
+extern s16 D_us_801813D8[]; // rotation angles
+extern s32 D_us_801D3320;
+
+void PlayerStepStone(s32 arg0) {
+    switch (DOPPLEGANGER.step_s) {
+    case 0:
+        func_us_801C68CC();
+        func_us_801C6950();
+        DOPPLEGANGER.velocityY = FIX(-4);
+        func_8010E3B8(FIX(-0.625));
+        func_80113E68();
+        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        g_api.PlaySfx(SFX_BO4_UNK_7DC);
+        g_Dop.unk5E = 8;
+        g_Dop.timers[2] = 0;
+        DOPPLEGANGER.step_s = 1;
+        break;
+
+    case 1:
+        func_us_801C4A30(1, 4);
+        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        if (func_us_801C5650(0x20280) != 0) {
+            DOPPLEGANGER.step = Dop_StatusStone;
+            DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
+            g_api.func_80102CD8(1);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(39, 0), 0);
+            if (g_Dop.unk6A == 0) {
+                D_us_801D3320 = 0x20;
+            }
+            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            SetPlayerAnim(0x38);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
+            DOPPLEGANGER.step_s = 2;
+        }
+        break;
+
+    case 2:
+        if (g_Dop.unk6A == 0) {
+            if (--D_us_801D3320 == 0) {
+                DOPPLEGANGER.step = Dop_Kill;
+                g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
+                DOPPLEGANGER.step_s = 16;
+            }
+            func_us_801C4A30(1, 4);
+            break;
+        }
+
+        if ((g_Dop.padTapped & PAD_DIRECTION_MASK) || arg0 != 0) {
+            g_Dop.padTapped |= PAD_DIRECTION_MASK;
+            DOPPLEGANGER.poseTimer = 16;
+            g_Dop.unk5E--;
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
+
+            if (g_Dop.unk5E == 0) {
+                SetPlayerAnim(0x3B);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
+                g_api.PlaySfx(SFX_BO4_UNK_7DD);
+                DOPPLEGANGER.step = Dop_Hit;
+                DOPPLEGANGER.step_s = 8;
+                DOPPLEGANGER.palette = PAL_OVL(0x200);
+            } else {
+                func_us_801C4A30(1, 4);
+                DOPPLEGANGER.step_s = 3;
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(13, 3), 0);
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 3), 0);
+                DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            }
+        } else {
+            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+        }
+
+        break;
+
+    case 3:
+        if (DOPPLEGANGER.poseTimer < 0) {
+            DOPPLEGANGER.step_s = 2;
+            DOPPLEGANGER.drawFlags &=
+                FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
+                FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                FLAG_DRAW_ROTX;
+        } else {
+            DOPPLEGANGER.rotPivotX = 0;
+            DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTZ;
+            DOPPLEGANGER.rotZ = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
+            if (DOPPLEGANGER.rotZ == 0) {
+                DOPPLEGANGER.rotPivotY = 24;
+            } else {
+                DOPPLEGANGER.rotPivotY = 20;
+            }
+        }
+        DOPPLEGANGER.palette = PAL_OVL(0x19E);
+        break;
+    }
+}
 
 #include "../../get_free_entity.h"
 
@@ -553,7 +796,7 @@ Entity* CreateEntFactoryFromEntity(
     }
 
     DestroyEntity(newFactory);
-    newFactory->entityId = E_ENTITYFACTORY;
+    newFactory->entityId = E_FACTORY;
     newFactory->ext.factory.parent = source;
     newFactory->posX.val = source->posX.val;
     newFactory->posY.val = source->posY.val;
@@ -590,7 +833,147 @@ void func_us_801C9D58(Entity* self) {
     self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_8011B5A4);
+extern u8 D_us_801818A8[10];
+extern s16 D_us_80181804[];
+extern AnimationFrame D_us_80181834[];
+extern u8 D_us_80181898[NUM_VERTICAL_SENSORS * 2];
+extern s16 D_us_80181828[];
+extern s32 D_us_80181810[];
+extern Point16 D_us_80181338[NUM_VERTICAL_SENSORS * 2]; // g_SensorsWall
+
+void EntitySmokePuff(Entity* self) {
+    byte stackpad[40];
+    s16 posX;
+    s32 i;
+    s16 paramsLo;
+    s16 paramsHi;
+
+    switch (self->step) {
+    case 0:
+        paramsHi = self->params >> 8;
+        paramsLo = self->params & 0xFF;
+        self->animSet = 5;
+        self->anim = D_us_80181834;
+        self->zPriority = DOPPLEGANGER.zPriority + 2;
+        self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
+        self->palette = PAL_OVL(0x195);
+        self->drawMode = DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+
+        posX = D_us_80181804[paramsLo];
+        if (paramsHi == 0) {
+            posX += 6;
+        }
+        if (paramsHi == 1) {
+            posX -= 8;
+        }
+        if ((paramsHi == 2) || (paramsHi == 0xA)) {
+            posX -= 2;
+        }
+        if (paramsHi == 5) {
+            posX = -6;
+        }
+        if (paramsHi == 6) {
+            posX = -24;
+        }
+        if (paramsHi == 3) {
+            posX = (rand() % 30) - 0xE;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= rand() % 4;
+        }
+        if (paramsHi == 7) {
+            posX = (rand() % 60) - 0x1E;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= rand() % 4;
+        }
+        if (paramsHi == 9) {
+            posX = rand() % 16 - 8;
+            paramsLo = (rand() & 3) + 2;
+            self->posY.i.hi -= (20 + (rand() % 4));
+        }
+        if (paramsHi == 4) {
+            for (i = paramsLo * 2; i < LEN(D_us_80181898); i++) {
+                if (g_Dop.colWall[D_us_80181898[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(D_us_80181898)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi =
+                DOPPLEGANGER.posX.i.hi + D_us_80181338[D_us_80181898[i]].x;
+            self->posY.i.hi =
+                DOPPLEGANGER.posY.i.hi + D_us_80181338[D_us_80181898[i]].y;
+            self->velocityY = FIX(-0.25);
+            self->rotX = D_us_80181828[1] + 0x40;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 8) {
+            for (i = paramsLo * 2; i < LEN(D_us_801818A8); i++) {
+                if (g_Dop.colWall[D_us_801818A8[i]].effects &
+                    (EFFECT_UNK_0002 | EFFECT_SOLID)) {
+                    break;
+                }
+            }
+            if (i == LEN(D_us_801818A8)) {
+                DestroyEntity(self);
+                return;
+            }
+            self->posX.i.hi =
+                DOPPLEGANGER.posX.i.hi + D_us_80181338[D_us_801818A8[i]].x;
+            self->posY.i.hi =
+                DOPPLEGANGER.posY.i.hi + D_us_80181338[D_us_801818A8[i]].y;
+            self->velocityY = D_us_80181810[paramsLo];
+            self->rotX = D_us_80181828[paramsLo] + 0x20;
+            self->rotY = self->rotX;
+            self->step++;
+            return;
+        }
+        if (paramsHi == 1) {
+            if (g_Dop.vram_flag & 0x8000) {
+                posX /= 2;
+            }
+        }
+        if (paramsHi == 6) {
+            if (DOPPLEGANGER.velocityX > 0) {
+                posX = -posX;
+            }
+        } else {
+            if (self->facingLeft) {
+                posX = -posX;
+            }
+        }
+        self->posX.i.hi += posX;
+        self->posY.i.hi += 0x18;
+        self->rotX = D_us_80181828[paramsLo] + 0x40;
+        self->velocityY = D_us_80181810[paramsLo];
+        if (paramsHi == 1) {
+            self->velocityY = FIX(-0.25);
+            SetSpeedX(-0x3000);
+            self->rotX = D_us_80181828[1] + 0x40;
+        }
+        if (paramsHi == 5) {
+            self->velocityY = D_us_80181810[4 - paramsLo * 2];
+        }
+        self->rotY = self->rotX;
+        if (paramsHi == 10) {
+            self->posY.i.hi -= 6;
+        }
+        self->step++;
+        break;
+    case 1:
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern s32 D_us_801D3374;
 extern AnimationFrame D_us_801818B4[];
@@ -955,11 +1338,11 @@ void EntityGravityBootBeam(Entity* self) {
 
     case 1:
         if (DOPPLEGANGER.velocityY > FIX(-1.5)) {
-            self->step = 2;
+            self->step = Dop_Walk;
         }
         // If transformed, timer drains faster
         if (g_Dop.status & (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
-            self->step = 3;
+            self->step = Dop_Crouch;
         }
         break;
 
@@ -1029,7 +1412,80 @@ void EntityWingSmashTrail(Entity* self) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CC788);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_8011EDA8);
+extern AnimationFrame D_us_80181834[];
+extern AnimationFrame D_us_80181DC8[];
+extern AnimationFrame D_us_80181E04[];
+
+void func_8011EDA8(Entity* self) {
+    s16 paramsLo = self->params & 0xFF;
+    s16 paramsHi = (self->params >> 8) & 0xFF;
+
+    switch (self->step) {
+    case 0:
+        if (paramsHi == 1) {
+            self->rotX = 0xC0;
+            self->rotY = 0xC0;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->animSet = ANIMSET_DRA(2);
+            self->anim = D_us_80181E04;
+        }
+
+        if ((paramsHi == 0) || (paramsHi == 2)) {
+            if (paramsLo & 3) {
+                self->anim = D_us_80181DC8;
+                self->rotX = 0x120;
+                self->rotY = 0x120;
+                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->animSet = ANIMSET_DRA(2);
+            } else {
+                self->animSet = ANIMSET_DRA(5);
+                self->anim = D_us_80181834;
+                self->palette = PAL_OVL(0x170);
+            }
+        }
+        self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
+
+        if (rand() & 3) {
+            self->zPriority = DOPPLEGANGER.zPriority + 2;
+        } else {
+            self->zPriority = DOPPLEGANGER.zPriority - 2;
+        }
+
+        if (paramsHi == 2) {
+            self->posX.i.hi = DOPPLEGANGER.posX.i.hi + (rand() % 44) - 22;
+        } else {
+            self->posX.i.hi = DOPPLEGANGER.posX.i.hi + (rand() & 15) - 8;
+        }
+
+        self->posY.i.hi = DOPPLEGANGER.posY.i.hi + DOPPLEGANGER.hitboxOffY +
+                          (rand() & 31) - 16;
+        self->velocityY = FIX(-0.5);
+        self->velocityX = DOPPLEGANGER.velocityX >> 2;
+        self->step++;
+        break;
+
+    case 1:
+        self->rotX -= 4;
+        self->rotY -= 4;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if ((self->pose == 8) && (self->anim != D_us_80181834)) {
+            self->drawMode = DRAW_TPAGE;
+            if (!(paramsLo & 1) && (self->poseTimer == 1)) {
+                CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
+            }
+        }
+
+        if ((self->pose == 16) && (self->anim == D_us_80181834)) {
+            self->drawMode = DRAW_TPAGE;
+        }
+
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern u16 D_us_80181E38[2];
 
@@ -1504,7 +1960,7 @@ void func_us_801D0BD8(Entity* self) {
         self->zPriority = DOPPLEGANGER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
-        self->step = 1;
+        self->step = Dop_Stand;
     }
     self->ext.weapon.anim = DOPPLEGANGER.ext.player.anim - anim->frameStart;
     if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {

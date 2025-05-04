@@ -17,7 +17,7 @@
 #endif
 
 // omit .global
-__asm__(".include \"macro.inc\"\n");
+__asm__(".include \"src/saturn/macro.inc\"\n");
 
 #else
 #define INCLUDE_ASM(FOLDER, NAME)
@@ -27,6 +27,5 @@ __asm__(".include \"macro.inc\"\n");
     __asm__(".text\n"                                                          \
             "\t.global\t _" #LABEL "\n"                                        \
             ".include \"" FOLDER "/" #NAME ".s\"\n");
-__asm__(".include \"macro.inc\"\n");
 
 #endif

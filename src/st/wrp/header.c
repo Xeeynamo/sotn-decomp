@@ -27,7 +27,7 @@ Overlay OVL_EXPORT(Overlay) = {
     .UpdateStageEntities = UpdateStageEntities,
 };
 
-#include "sprite_banks.h"
-#include "palette_def.h"
-#include "layers.h"
-#include "graphics_banks.h"
+#include "gen_sprite_banks.h"
+#include "gen_palette_def.h"
+#include "gen_layers.h"
+#include "gen_graphics_banks.h"

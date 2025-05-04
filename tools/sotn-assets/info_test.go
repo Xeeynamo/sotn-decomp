@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"sync"
 	"testing"
 
@@ -162,7 +162,7 @@ func changeDirToRepoRoot() {
 		if err != nil {
 			panic(err)
 		}
-		parent := path.Dir(cwd)
+		parent := filepath.Dir(cwd)
 		if cwd == parent {
 			panic(fmt.Errorf("unable to find repo root"))
 		}

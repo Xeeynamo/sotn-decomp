@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
-#include <player.h>
+
+#include "../get_lang.h"
 
 #include "../destroy_entity.h"
 
+typedef enum {
+    TELEPORT_CHECK_NONE = 0,
+    TELEPORT_CHECK_TO_RTOP = 2,
+    TELEPORT_CHECK_TO_TOP = 4
+} TeleportCheck;
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != PL_S_STAND || PLAYER.step_s != 1) {
@@ -79,7 +85,7 @@ extern u8 hud_ge[];
 extern u8 hud_it[];
 extern LangImg g_FontImage;
 extern LangImg g_HudImage;
-// Similar to of DRA func_80109594
+// Similar to AluInit
 void RicInit(s16 initParam) {
     Entity* e;
     s16 radius;
@@ -151,17 +157,17 @@ void RicInit(s16 initParam) {
     if (D_80097C98 == 6) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 1), 0);
-        func_8015CC70(1);
+        RicSetInit(1);
     }
     if (D_80097C98 == 4) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 3), 0);
-        func_8015CC70(3);
+        RicSetInit(3);
     }
     if (D_80097C98 == 5) {
         RicCreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_TELEPORT, 5), 0);
-        func_8015CC70(5);
+        RicSetInit(5);
     }
 #ifdef VERSION_PSP
     // new to PSP: block input for half a second when the Prologue stage starts
@@ -440,13 +446,13 @@ void RicMain(void) {
             break;
         case PL_T_4: {
             angle = (g_GameTimer & 0xF) * 256;
-            draw->r0 = draw->b0 = draw->g0 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->r0 = draw->g0 = draw->b0 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r1 = draw->b1 = draw->g1 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->r1 = draw->g1 = draw->b1 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r3 = draw->b3 = draw->g3 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->r3 = draw->g3 = draw->b3 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r2 = draw->b2 = draw->g2 = (rsin(angle) + 0x1000) / 64 + 0x60;
+            draw->r2 = draw->g2 = draw->b2 = (rsin(angle) + 0x1000) / 64 + 0x60;
             draw->enableColorBlend = 1;
             break;
         }
@@ -509,7 +515,7 @@ void RicMain(void) {
         // Reuse the i variable here even though we aren't iterating
         i = GetTeleportToOtherCastle();
         if (i != TELEPORT_CHECK_NONE) {
-            func_8015CC70(i);
+            RicSetInit(i);
         }
         // Richter must use step #32 for something else, look into it!
         if (PLAYER.step != PL_S_INIT) {

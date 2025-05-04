@@ -3,8 +3,8 @@
 // Unknown#216
 #define FUNC_0C_S32
 #include "weapon_private.h"
-#include "w_045_1.h"
-#include "w_045_2.h"
+#include "gen_w_045_1.h"
+#include "gen_w_045_2.h"
 #define g_Animset w_045_1
 #define g_Animset2 w_045_2
 #include "sfx.h"

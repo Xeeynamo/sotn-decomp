@@ -293,6 +293,9 @@ enum SfxModes {
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_BO4_UNK_7D7 0x7D7
+#define SFX_BO4_UNK_7DC 0x7DC
+#define SFX_BO4_UNK_7DD 0x7DD
+#define SFX_BO4_UNK_7E6 0x7E6
 
 // BOSS RBO3 - Medusa
 #define SFX_RBO3_UNK_7C5 0x7C5
@@ -629,6 +632,21 @@ enum Sfx {
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
+
+#if defined(VERSION_PSP)
+    /* 0x8E7 */ SFX_VO_MAR_ATTACK_C = 0x8E7,
+    /* 0x8EA */ SFX_VO_MAR_8EA = 0x8EA,
+    /* 0x8EB */ SFX_VO_MAR_8EB,
+    /* 0x8EC */ SFX_VO_MAR_8EC,
+    /* 0x8ED */ SFX_VO_MAR_8ED,
+    /* 0x8EE */ SFX_VO_MAR_8EE,
+    /* 0x8EF */ SFX_VO_MAR_8EF,
+    /* 0x8F0 */ SFX_VO_MAR_8F0,
+    /* 0x8F2 */ SFX_VO_MAR_PAIN_B = 0x8F2,
+    /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
+    /* 0x8F4 */ SFX_VO_MAR_PAIN_D,
+    /* 0x8F5 */ SFX_VO_MAR_DEATH,
+#endif
 };
 
 #endif

@@ -7,111 +7,111 @@ s32 g_SimVabId = 0;
 SimFile D_800A024C[] = {
     {
         "sim:c:\\bin\\f_title1.bin",
-        0x80280000,
+        SIM_PTR,
         0x00042000,
-        13,
+        SIM_13,
     },
     {
         "sim:c:\\bin\\f_game.bin",
-        0x80180000,
+        STAGE_PRG_PTR,
         0x00042000,
-        1,
+        SIM_1,
     },
     {
         "sim:c:\\bin\\f_title0.bin",
-        0x80280000,
+        SIM_PTR,
         0x00042000,
-        2,
+        SIM_STAGE_CHR,
     },
     {
         "sim:c:\\bin\\face.bin",
-        0x80180000,
+        STAGE_PRG_PTR,
         0x0001C000,
-        6,
+        SIM_6,
     },
     {
         "sim:c:\\bin\\arc_f.bin",
-        0x8013C000,
+        RIC_PRG_PTR,
         0x00034000,
-        8,
+        SIM_WEAPON_PRG,
     },
     {
         "sim:c:\\bin\\ric.bin",
-        0x8013C000,
+        RIC_PRG_PTR,
         0x00044000,
-        8,
+        SIM_WEAPON_PRG,
     },
     {
         "sim:c:\\bin\\f_prolo0.bin",
-        0x80280000,
+        SIM_PTR,
         0x00042000,
-        11,
+        SIM_11,
     },
     {
         "sim:c:\\bin\\f_prolo1.bin",
-        0x80280000,
+        SIM_PTR,
         0x00042000,
-        12,
+        SIM_12,
     },
     {
         "sim:c:\\bin\\gof.bin",
-        0x80280000,
+        SIM_PTR,
         0x00008000,
-        14,
+        SIM_14,
     },
     {
         "sim:c:\\bin\\gob.bin",
-        0x80280000,
+        SIM_PTR,
         0x00010000,
-        15,
+        SIM_15,
     },
     {
         "sim:c:\\bin\\c_gof.bin",
-        0x80280000,
+        SIM_PTR,
         0x00002000,
-        16,
+        SIM_16,
     },
     {
         "sim:c:\\bin\\c_gob.bin",
-        0x80280000,
+        SIM_PTR,
         0x00002000,
-        17,
+        SIM_17,
     },
     {
         "sim:c:\\bin\\f_sel.bin",
-        0x80280000,
+        SIM_PTR,
         0x00042000,
-        2,
+        SIM_STAGE_CHR,
     },
     {
         "sim:c:\\bin\\f_game2.bin",
-        0x80180000,
+        STAGE_PRG_PTR,
         0x00042000,
-        1,
+        SIM_1,
     },
     {
         "sim:c:\\bin\\edf.bin",
-        0x80280000,
+        SIM_PTR,
         0x00002000,
-        21,
+        SIM_21,
     },
     {
         "sim:c:\\bin\\edb.bin",
-        0x80280000,
+        SIM_PTR,
         0x00010000,
-        15,
+        SIM_15,
     },
     {
         "sim:c:\\bin\\c_edf.bin",
-        0x80280000,
+        SIM_PTR,
         0x00002000,
-        16,
+        SIM_16,
     },
     {
         "sim:c:\\bin\\c_edb.bin",
-        0x80280000,
+        SIM_PTR,
         0x00002000,
-        17,
+        SIM_17,
     },
 };
 
@@ -124,7 +124,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_alk.vb",
-        0x80280000,
+        SIM_PTR,
         SD_ALK_VB_LEN,
         SIM_VB,
     },
@@ -136,7 +136,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_rih.vb",
-        0x80280000,
+        SIM_PTR,
         SD_RIH_VB_LEN,
         SIM_VB,
     },
@@ -148,7 +148,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_mar.vb",
-        0x80280000,
+        SIM_PTR,
         SD_MAR_VB_LEN,
         SIM_VB,
     },
@@ -160,7 +160,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_tuka2.vb",
-        0x80280000,
+        SIM_PTR,
         SD_TUKA2_VB_LEN,
         SIM_VB,
     },
@@ -172,7 +172,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_tuka2.vb",
-        0x80280000,
+        SIM_PTR,
         SD_TUKA2_VB_LEN,
         SIM_VB,
     },
@@ -184,7 +184,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_tuka1.vb",
-        0x80280000,
+        SIM_PTR,
         SD_TUKA1_VB_LEN,
         SIM_VB,
     },
@@ -196,7 +196,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_koa1.vb",
-        0x80280000,
+        SIM_PTR,
         SD_KOA1_VB_LEN,
         SIM_VB,
     },
@@ -208,7 +208,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_mak.vb",
-        0x80280000,
+        SIM_PTR,
         SD_MAK_VB_LEN,
         SIM_VB,
     },
@@ -220,7 +220,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_tuka2.vb",
-        0x80280000,
+        SIM_PTR,
         SD_TUKA2_VB_LEN,
         SIM_VB,
     },
@@ -232,7 +232,7 @@ SimFile D_800A036C[] = {
     },
     {
         "sim:c:\\sound\\data\\sd_koa2.vb",
-        0x80280000,
+        SIM_PTR,
         SD_KOA2_VB_LEN,
         SIM_VB,
     },
@@ -329,21 +329,20 @@ void func_800E7D08(void) {
 
 void LoadStageTileset(u8* pTilesetData, s32 y) {
     RECT rect;
-    u8* pTilesetDataSrc;
     s32 i;
+    u8* ptr;
 
     rect.w = 0x20;
     rect.h = 0x80;
     for (i = 0; i < 0x20; i++) {
-        pTilesetDataSrc = pTilesetData + 0x2000 * i;
+        ptr = &pTilesetData[i * 0x2000];
         rect.x = D_800AC958[i];
         if (i & 2) {
             rect.y = y + 0x80;
         } else {
             rect.y = y;
         }
-
-        LoadImage(&rect, pTilesetDataSrc);
+        LoadImage(&rect, (u_long*)ptr);
         while (DrawSync(1)) {
         }
     }
@@ -355,7 +354,7 @@ s32 LoadFileSimToMem(SimKind kind) {
     s32 i;
     u32* pDst;
     u32* pSrc;
-    u16* clutAddr;
+    u_long* clutAddr;
 
     switch (kind) {
     case SIM_STAGE_PRG:
@@ -368,35 +367,36 @@ s32 LoadFileSimToMem(SimKind kind) {
         } while (i < (s32)(sizeof(Overlay) / sizeof(void*)));
         break;
     case SIM_FAMILIAR_CHR:
-        LoadTPage(SIM_CHR0, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
-        LoadTPage(SIM_CHR1, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
+        LoadTPage((u_long*)SIM_CHR0, 0, 0, 0x2C0, 0x100, 0x100, 0x80);
+        LoadTPage((u_long*)SIM_CHR1, 0, 0, 0x2C0, 0x180, 0x80, 0x80);
         break;
     case SIM_WEAPON0_CHR:
-        LoadTPage(g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
+        LoadTPage((u_long*)g_Pix[0], 0, 0, 0x240, 0x100, 0x100, 0x80);
         break;
     case SIM_WEAPON1_CHR:
-        LoadTPage(g_Pix[2], 0, 0, 0x240, 0x180, 0x100, 0x80);
+        LoadTPage((u_long*)g_Pix[2], 0, 0, 0x240, 0x180, 0x100, 0x80);
         break;
     case SIM_MONSTER:
-        LoadTPage(SIM_CHR0, 2, 0, 0x20, 0x100, 0x60, 0x70);
+        LoadTPage((u_long*)SIM_CHR0, 2, 0, 0x20, 0x100, 0x60, 0x70);
         break;
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0x100);
         DrawSync(0);
-        LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+        LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
         LoadImage(&g_Vram.D_800ACDA8, 0x801C0000);
         while (DrawSync(1)) {
         }
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
+        clutAddr = (u_long*)&g_Clut[0x1000];
+        StoreImage(&g_Vram.D_800ACDA8, clutAddr);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0);
         DrawSync(0);
-        clutAddr = g_Clut;
+        clutAddr = (u_long*)&g_Clut[0];
         StoreImage(&g_Vram.D_800ACDB8, clutAddr);
-        if (kind == 11) {
-            clutAddr += 0x2000;
+        if (kind == SIM_11) {
+            clutAddr = (u_long*)&g_Clut[0x2000];
             StoreImage(&g_Vram.D_800ACDB8, clutAddr);
             DrawSync(0);
             LoadImage(&g_Vram.D_800ACDB0, clutAddr);
@@ -405,8 +405,8 @@ s32 LoadFileSimToMem(SimKind kind) {
     case SIM_12:
     case SIM_13:
         LoadStageTileset(SIM_CHR0, 0x100);
-        if (kind == 13) {
-            LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
+        if (kind == SIM_13) {
+            LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
         }
         DrawSync(0);
         break;
@@ -434,24 +434,26 @@ s32 LoadFileSimToMem(SimKind kind) {
         }
         break;
     case SIM_6:
-        LoadImage(&g_Vram.D_800ACDC0, STAGE_PRG_PTR);
+        LoadImage(&g_Vram.D_800ACDC0, (u_long*)STAGE_PRG_PTR);
         break;
     case SIM_14:
-        LoadImage(&g_Vram.D_800ACDD0, SIM_PTR);
+        LoadImage(&g_Vram.D_800ACDD0, (u_long*)SIM_PTR);
         break;
     case SIM_21:
-        LoadImage(&g_Vram.D_800ACDE0, SIM_PTR);
+        LoadImage(&g_Vram.D_800ACDE0, (u_long*)SIM_PTR);
         break;
     case SIM_15:
-        LoadImage(&g_Vram.D_800ACDD8, SIM_PTR);
+        LoadImage(&g_Vram.D_800ACDD8, (u_long*)SIM_PTR);
         break;
     case SIM_16:
-        LoadImage(&g_Vram.D_800ACDB8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDB8, g_Clut + 0x2000);
+        LoadImage(&g_Vram.D_800ACDB8, (u_long*)SIM_PTR);
+        clutAddr = (u_long*)&g_Clut[0x2000];
+        StoreImage(&g_Vram.D_800ACDB8, clutAddr);
         break;
     case SIM_17:
-        LoadImage(&g_Vram.D_800ACDA8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut);
+        LoadImage(&g_Vram.D_800ACDA8, (u_long*)SIM_PTR);
+        clutAddr = (u_long*)&g_Clut[0];
+        StoreImage(&g_Vram.D_800ACDA8, clutAddr);
         break;
     }
     return 0;
@@ -469,8 +471,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         g_SimFile = &D_80136450;
         strcat(buf, g_StagesLba[g_StageId].ovlName);
         strcat(buf, ".bin");
-        g_SimFile->addr = STAGE_PRG_PTR;
         g_SimFile->path = buf;
+        g_SimFile->addr = STAGE_PRG_PTR;
         g_SimFile->size = 0x60000;
         g_SimFile->kind = SIM_STAGE_PRG;
     }
@@ -482,8 +484,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             g_SimFile = &D_80136450;
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vh");
-            g_SimFile->addr = aPbav_2;
             g_SimFile->path = buf;
+            g_SimFile->addr = aPbav_2;
             g_SimFile->size = g_StagesLba[g_StageId].vhLen;
             g_SimFile->kind = SIM_VH;
         }
@@ -509,8 +511,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             STRCPY(buf, "sim:c:\\sound\\data\\sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vb");
-            g_SimFile->addr = SIM_PTR;
             g_SimFile->path = buf;
+            g_SimFile->addr = SIM_PTR;
             g_SimFile->size = g_StagesLba[g_StageId].vbLen;
             g_SimFile->kind = SIM_VB;
         }
@@ -523,9 +525,9 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         STRCPY(buf, "sim:c:\\bin\\");
         strcat(buf, g_StagesLba[g_StageId].gfxName);
         strcat(buf, ".bin");
+        g_SimFile->path = buf;
         g_SimFile->addr = SIM_PTR;
         g_SimFile->size = 0x40000;
-        g_SimFile->path = buf;
         g_SimFile->kind = SIM_STAGE_CHR;
     }
     if (type == SimFileType_Weapon0Prg) {
@@ -534,8 +536,8 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
-        g_SimFile->size = 0x3000;
         g_SimFile->addr = WEAPON0_PTR;
+        g_SimFile->size = 0x3000;
         g_SimFile->kind = SIM_WEAPON_PRG;
     }
     if (type == SimFileType_Weapon1Prg) {

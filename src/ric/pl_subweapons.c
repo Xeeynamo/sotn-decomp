@@ -436,7 +436,7 @@ typedef enum {
     DAGGER_BOUNCE,
     DAGGER_HIT_ENEMY
 } DaggerSteps;
-void RicEntitySubwpnThrownDagger(Entity* self) {
+void RicEntitySubwpnKnife(Entity* self) {
     Collider collider;
     Primitive* prim;
     s16 offsetX;

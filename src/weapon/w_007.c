@@ -3,8 +3,8 @@
 // Shield rod, Unknown#173
 #define FUNC_04_VOID
 #include "weapon_private.h"
-#include "w_007_1.h"
-#include "w_007_2.h"
+#include "gen_w_007_1.h"
+#include "gen_w_007_2.h"
 #define g_Animset w_007_1
 #define g_Animset2 w_007_2
 #include "sfx.h"
@@ -144,11 +144,8 @@ static u16 D_35000_8017AB2C[] = {
 };
 
 static AnimationFrame D_35000_8017AB44[] = {
-    {4, FRAME(0x3D, 0x24)},
-    {4, FRAME(0x3E, 0x24)},
-    {4, FRAME(0x3F, 0x24)},
-    {4, FRAME(0x40, 0x24)},
-    A_LOOP_AT(0)};
+    POSE(4, 0x3D, 18), POSE(4, 0x3E, 18), POSE(4, 0x3F, 18), POSE(4, 0x40, 18),
+    POSE_LOOP(0)};
 
 static s8 D_35000_8017AB58[] = {
     0x00, 0x00, 0x00, 0x00, 0xFD, 0xE6, 0x0C, 0x04, 0x1A, 0xE5, 0x10, 0x06,

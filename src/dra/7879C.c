@@ -195,7 +195,7 @@ s32 CreateHPNumMove(s16 number, s16 type) {
         return -1;
     }
     DestroyEntity(entity);
-    entity->entityId = ENTITY_13;
+    entity->entityId = E_UNK_19;
     entity->posX.val = PLAYER.posX.val;
     entity->posY.val = PLAYER.posY.val;
     entity->ext.hpNumMove.number = number;
@@ -1557,10 +1557,10 @@ void EntityNull(Entity* entity) {}
 
 PfnEntityUpdate g_DraEntityTbl[] = {
     EntityNull,
-    EntityEntFactory,
-    func_8011B5A4,
+    EntityFactory,
+    EntitySmokePuff,
     EntityGravityBootBeam,
-    EntitySubwpnThrownDagger,
+    EntitySubwpnKnife,
     func_8011E4BC,
     EntityDiveKickAttack,
     EntityGiantSpinningCross,
@@ -1578,10 +1578,10 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityNumberMovesToHpMeter,
     EntitySubwpnReboundStone,
     EntityLevelUpAnimation,
-    EntityHolyWater,
+    EntitySubwpnHolyWater,
     EntitySubwpnHolyWaterFlame,
     EntityUnkId24,
-    EntityHellfireHandler,
+    EntityHellfire,
     EntityHellfireNormalFireball,
     EntityHellfireBigFireball,
     EntityExpandingCircle,
@@ -1596,7 +1596,7 @@ PfnEntityUpdate g_DraEntityTbl[] = {
     EntityGuardText,
     EntityTransparentWhiteCircle,
     EntityPlayerPinkEffect,
-    EntityHolyWaterBreakGlass,
+    EntitySubwpnHolyWaterBreakGlass,
     EntityStopWatch,
     EntityStopWatchExpandingCircle,
     EntitySubwpnBible,
@@ -1801,47 +1801,62 @@ void func_8011A9D8(void) {
 
 Entity* CreateEntFactoryFromEntity(
     Entity* source, u32 factoryParams, s16 arg2) {
-    Entity* newFactory;
-
-    newFactory = GetFreeEntity(8, 16);
-    if (newFactory == NULL) {
+    Entity* entity = GetFreeEntity(8, 16);
+    if (entity == NULL) {
         return NULL;
     }
 
-    DestroyEntity(newFactory);
-    newFactory->entityId = E_ENTITYFACTORY;
-    newFactory->ext.factory.parent = source;
-    newFactory->posX.val = source->posX.val;
-    newFactory->posY.val = source->posY.val;
-    newFactory->facingLeft = source->facingLeft;
-    newFactory->zPriority = source->zPriority;
-    newFactory->params = factoryParams & 0xFFF;
+    DestroyEntity(entity);
+    entity->entityId = E_FACTORY;
+    entity->ext.factory.parent = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
+    entity->params = factoryParams & 0xFFF;
     if (factoryParams & 0x5000) {
-        newFactory->ext.factory.entityIdMod = 0xE0;
+        entity->ext.factory.entityIdMod = 0xE0;
     }
     if (factoryParams & 0xA000) {
-        newFactory->ext.factory.entityIdMod = 0xF0;
+        entity->ext.factory.entityIdMod = 0xF0;
     }
-    newFactory->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
-    newFactory->ext.factory.unk92 = arg2;
+    entity->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
+    entity->ext.factory.unk92 = arg2;
     if (source->flags & FLAG_UNK_10000) {
-        newFactory->flags |= FLAG_UNK_10000;
+        entity->flags |= FLAG_UNK_10000;
     }
     if (factoryParams & 0x1000) {
-        newFactory->entityId = 0xEF;
+        entity->entityId = 0xEF;
     }
     if (factoryParams & 0x2000) {
-        newFactory->entityId = 0xFF;
+        entity->entityId = 0xFF;
     }
     if (factoryParams & 0x4000) {
-        newFactory->entityId = 0xED;
+        entity->entityId = 0xED;
     }
     if (factoryParams & 0x8000) {
-        newFactory->entityId = 0xFD;
+        entity->entityId = 0xFD;
     }
-
-    return newFactory;
+    return entity;
 }
+
+static FactoryBlueprint blueprints[] = {
+#include "gen_blueprints.h"
+};
+STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
+
+static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
+    {0x20, 0x3F}, // B_KIND_0
+    {0x11, 0x2F}, // B_KIND_1
+    {0x20, 0x2F}, // B_KIND_2
+    {0x10, 0x10}, // B_KIND_3
+    {0x1C, 0x1F}, // B_KIND_4
+    {0x19, 0x1F}, // B_KIND_5
+    {0x11, 0x1F}, // B_KIND_6
+    {0x11, 0x3F}, // B_KIND_7
+    {0x11, 0x3F}, // B_KIND_8
+    {0x2F, 0x2F}, // B_KIND_9
+};
 
 // This is a complicated function with ongoing research.
 // This function is created with its self->params which defines
@@ -1849,54 +1864,54 @@ Entity* CreateEntFactoryFromEntity(
 // that blueprint, it creates some number of child entities.
 // This entity has an ID of 1, but is not an "entity" of an independent
 // variety. It is only responsible for creating child entities.
-void EntityEntFactory(Entity* self) {
+void EntityFactory(Entity* self) {
     Entity* newEntity;
     s16 n;
     s16 i;
     s16 endIndex;
     s16 startIndex;
-    u8* data_idx;
+    u8* data;
 
     if (self->step == 0) {
-        data_idx = (u8*)&g_FactoryBlueprints[self->params];
-        self->ext.factory.newEntityId = *data_idx++;
-        self->ext.factory.amount = *data_idx++;
-        self->ext.factory.nPerCycle = *data_idx & 0x3F;
-        self->ext.factory.isNonCritical = (s16)(*data_idx >> 7) & 1;
-        self->ext.factory.incParamsKind = (s16)(*data_idx++ >> 6) & 1;
-        self->ext.factory.tCycle = *data_idx++;
-        self->ext.factory.kind = *data_idx & 0xF;
-        self->ext.factory.origin = (s16)(*data_idx++ >> 4) & 0xF;
-        self->ext.factory.delay = *data_idx;
+        data = (u8*)&blueprints[self->params];
+        self->ext.factory.newEntityId = *data++;
+        self->ext.factory.amount = *data++;
+        self->ext.factory.nPerCycle = *data & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data++ >> 6) & 1;
+        self->ext.factory.tCycle = *data++;
+        self->ext.factory.kind = *data & 0xF;
+        self->ext.factory.origin = (s16)(*data++ >> 4) & 0xF;
+        self->ext.factory.delay = *data;
         self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
 
         self->step++;
         switch (self->ext.factory.origin) {
-        case 0:
-        case 6:
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_6:
             self->flags |= FLAG_POS_CAMERA_LOCKED;
             break;
-        case 4:
-        case 5:
+        case B_ORIGIN_4:
+        case B_ORIGIN_5:
             self->flags |= FLAG_UNK_20000;
-        case 2:
-        case 7:
+        case B_ORIGIN_2:
+        case B_ORIGIN_7:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
         }
     } else {
         switch (self->ext.factory.origin) {
-        case 0:
-        case 1:
-        case 3:
-        case 6:
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_1:
+        case B_ORIGIN_3:
+        case B_ORIGIN_6:
             break;
-        case 2:
+        case B_ORIGIN_2:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             break;
-        case 4:
+        case B_ORIGIN_4:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Walk) {
@@ -1904,7 +1919,7 @@ void EntityEntFactory(Entity* self) {
                 return;
             }
             break;
-        case 5:
+        case B_ORIGIN_5:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step_s != 0x70) {
@@ -1912,7 +1927,7 @@ void EntityEntFactory(Entity* self) {
                 return;
             }
             break;
-        case 7:
+        case B_ORIGIN_7:
             self->posX.val = PLAYER.posX.val;
             self->posY.val = PLAYER.posY.val;
             if (PLAYER.step != Player_Hit) {
@@ -1932,13 +1947,13 @@ void EntityEntFactory(Entity* self) {
     n = self->ext.factory.nPerCycle;
     for (i = 0; i < n; i++) {
 
-        // !FAKE, this should probably be &D_800AD4B8[unk9C] or similar,
-        // instead of doing &D_800AD4B8 followed by +=
-        data_idx = &D_800AD4B8[0];
-        data_idx += self->ext.factory.kind * 2;
+        // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
+        // instead of doing &entity_ranges followed by +=
+        data = (u8*)&entity_ranges[0];
+        data += self->ext.factory.kind * 2;
 
-        startIndex = *data_idx++;
-        endIndex = *data_idx;
+        startIndex = *data++;
+        endIndex = *data;
 
         if (self->ext.factory.kind == 3 || self->ext.factory.kind == 10 ||
             self->ext.factory.kind == 11 || self->ext.factory.kind == 12 ||
@@ -2113,7 +2128,7 @@ void func_8011B530(Entity* self) {
 }
 
 // Entity #2. Many blueprints. Matches RIC RicEntitySmokePuff
-void func_8011B5A4(Entity* self) {
+void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
     s16 posX;
     s32 i;
@@ -2298,7 +2313,7 @@ static bool func_8011BD48(Entity* entity) {
     Entity* e;
     s32 i;
 
-    for (e = &g_Entities[0x10], i = 0x10; i < 0x40; e++, i++) {
+    for (e = &g_Entities[0x10], i = 0x10; i < STAGE_ENTITY_START; e++, i++) {
         if (objId == e->entityId && params == e->params && e != entity) {
             return true;
         }

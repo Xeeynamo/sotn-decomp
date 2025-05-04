@@ -1,4 +1,16 @@
+version: pspeu
 files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
+    asset_path: assets/dra
+    src_path: src/dra
+    splat_config_path: config/splat.pspeu.dra.yaml
+    segments:
+      - start: 0x80
+        vram: 0x090DCA00
+        assets:
+          - [0x80, skip]
+          - [0xA6FD8, blueprintsdef, blueprints, AluBlueprints, AluEntities]
+          - [0xA72BC, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
     asset_path: assets/ric
     src_path: src/ric
@@ -15,8 +27,30 @@ files:
           - [0x2B4F8, cmpgfx, hud_ge, 128, 128, 4]
           - [0x2C348, cmpgfx, hud_fr, 128, 128, 4]
           - [0x2D1B0, skip]
-          - [0x2D320, subweaponsdef, subweapons_def, RicSubweapons, RicBlueprints]
+          - [0x2D320, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
           - [0x2D590, skip]
+          - [0x2D718, blueprintsdef, blueprints, RicBlueprints, RicEntities]
+          - [0x2D8F0, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/maria.bin
+    asset_path: assets/maria
+    src_path: src/maria
+    splat_config_path: config/splat.pspeu.maria.yaml
+    segments:
+      - start: 0x80
+        vram: 0x092A6280
+        assets:
+          - [0x80, skip]
+          - [0x1A880, cmpgfx, font_eu, 128, 128, 4]
+          - [0x1B5E8, skip]
+          - [0x1B600, cmpgfx, hud_sp, 128, 128, 4]
+          - [0x1C3F0, cmpgfx, hud_it, 128, 128, 4]
+          - [0x1D1D8, cmpgfx, hud_ge, 128, 128, 4]
+          - [0x1DFD8, cmpgfx, hud_fr, 128, 128, 4]
+          - [0x1EDF0, skip]
+          - [0x1EFE0, subweaponsdef, subweapons, MarSubweapons, MarBlueprints]
+          - [0x1F260, skip]
+          - [0x1F3B0, blueprintsdef, blueprints, MarBlueprints, MarEntities]
+          - [0x1F588, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

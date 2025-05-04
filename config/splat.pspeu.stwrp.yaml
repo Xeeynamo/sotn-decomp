@@ -68,11 +68,11 @@ segments:
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
       - [0xF4D8, data] # WRP_spriteBanks
-      - [0xF5F8, data] # WRP_rooms_layers
+      - [0xF5F8, data] # WRP_gen_rooms.c_layers
       - [0xF700, data] # WRP_cluts
       - [0xF708, .data, wrp_psp/graphics_banks]
       - [0xF790, .data, wrp_psp/e_init]
-      - [0xF8A0, data] # WRP_rooms
+      - [0xF8A0, data] # WRP_gen_rooms.c
       - [0xF920, .data, wrp/e_breakable]
       - [0xF970, data] # [0xF970, cmpgfx, stage_title_jp, 128, 128, 4]
       - [0xFCB8, data] # [0xFCB8, cmpgfx, stage_placeholder, 128, 128, 4]

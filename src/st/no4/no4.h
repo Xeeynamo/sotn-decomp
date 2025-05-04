@@ -67,13 +67,13 @@ typedef enum EntityIDs {
     /* 0x3A */ E_UNK_NO4_SPEAR_GUARD = 0x3A,
     /* 0x3B */ E_SPEAR_GUARD_BLOCK,
     /* 0x3C */ E_TOAD,
-    // /* 0x3D */ E_ID_3D,
-    // /* 0x3E */ E_ID_3E,
-    // /* 0x3F */ E_ID_3F,
-    // /* 0x40 */ E_ID_40,
-    // /* 0x41 */ E_ID_41,
-    // /* 0x42 */ E_ID_42,
-    // /* 0x43 */ E_ID_43,
+    /* 0x3D */ E_FISHHEAD_SPAWNER,
+    /* 0x3E */ E_FISHHEAD,
+    /* 0x3F */ E_FISHHEAD_TOP,
+    /* 0x40 */ E_FISHHEAD_FIREBALL,
+    /* 0x41 */ E_FISHHEAD_PARTICLES,
+    /* 0x42 */ E_FISHHEAD_DEATH_PARTS,
+    /* 0x43 */ E_FISHHEAD_FIRE_BREATH,
     // /* 0x44 */ E_ID_44,
     // /* 0x45 */ E_ID_45,
     /* 0x46 */ E_ID_46 = 0x46,
@@ -96,6 +96,7 @@ typedef enum EntityIDs {
     /* 0x57 */ E_SKELETON_APE_PUNCH,
     /* 0x58 */ E_SKELETON_APE_BARREL,
     /* 0x59 */ E_THROWN_BARREL,
+    /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);
@@ -107,18 +108,18 @@ extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
-// extern EInit D_us_80180BD4;
+extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 // extern EInit D_us_80180BF8;
 extern EInit g_EInitToad;
 extern EInit g_EInitFrog;
-// extern EInit D_us_80180C1C;
-// extern EInit D_us_80180C28;
-extern EInit g_EInitUnkId3F;
-// extern EInit D_us_80180C40;
-// extern EInit D_us_80180C4C;
-// extern EInit D_us_80180C58;
+extern EInit g_EInitFishhead;
+extern EInit g_EInitFishheadSpawner;
+extern EInit g_EInitFishheadFireball;
+extern EInit g_EInitFishheadPieces;
+extern EInit g_EInitFishheadFireBreath;
+extern EInit g_EInitBat;
 extern EInit D_us_80180C64;
 // extern EInit D_us_80180C70;
 // extern EInit D_us_80180C7C;
@@ -130,7 +131,7 @@ extern EInit g_EInitBoneArcherArrow;
 extern EInit g_EInitSkeletonApe;
 extern EInit g_EInitSkeletonApeBarrel;
 extern EInit g_EInitSkeletonApePunch;
-// extern EInit D_us_80180CE8;
+extern EInit g_EInitKillerFish;
 
 extern s16 D_us_801DF788;
 extern s16 D_us_801DF78A;

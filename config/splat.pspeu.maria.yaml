@@ -43,8 +43,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, 80]
-      - [0x54B0, c, lang]
-      - [0x5550, c, pl_main]
+      - [0x54B0, c, pl_main]
       - [0x7B18, c, pl_debug]
       - [0x7EA8, c, pl_steps]
       - [0xB990, c, pl_setstep]
@@ -54,6 +53,11 @@ segments:
       - [0x18838, c, 18838]
       - [0x1A080, c, 1A080]
       - [0x1A180, data]
+      - [0x1A878, .data, d_18568]
+      - [0x1EE28, .data, pl_debug]
+      - [0x1EE38, data]
+      - [0x1EFC8, .data, pl_blueprints]
+      - [0x1FC80, data]
       - [0x3F480, .rodata, 80]
       - [0x3F4E8, .rodata, pl_main]
       - [0x3F568, .rodata, pl_steps]
