@@ -43,6 +43,8 @@ segments:
       - [0xCF4, data]
       - [0xD5C, .data, st_debug]
       - [0xDDC, data]
+      - [0x1880, .data, e_secrets]
+      - [0x18B0, data, e_secrets]
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
       - [0x1974, .data, e_killer_fish]

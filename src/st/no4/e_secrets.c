@@ -8,7 +8,22 @@ typedef enum {
     BREAKABLE_CRYSTAL_FLOOR_CHECK
 } BREAKABLE_CRYSTAL_FLOOR_STEPS;
 
-extern s16 D_us_80181880[];
+// clang-format off
+static s16 D_us_80181880[] = {
+    // Phase 0
+    0x054C, 0x054D, 0x054E,
+    0x0180, 0x0551, 0x0552,
+    // Phase 1
+    0x054C, 0x0740, 0x0748,
+    0x0180, 0x0551, 0x0552,
+    // Phase 2
+    0x054C, 0x074D, 0x074E,
+    0x0180, 0x0551, 0x0552,
+    // Phase 3
+    0x055E, 0x0000, 0x0000,
+    0x055F, 0x0000, 0x0000
+};
+// clang-format on
 
 void EntityBreakableCrystalFloor(Entity* self) {
     Entity* newEntity;
