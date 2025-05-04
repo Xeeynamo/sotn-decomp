@@ -119,8 +119,8 @@
 | zero/f_nonmat/f600D47C.s     | func_0600D47C   |       39 |          2 |                                 |       |
 | alucard/f_nonmat/f60B92B8.s  | func_060B92B8   |       39 |          3 |                                 |       |
 | game/f_nonmat/f607AECC.s     | func_0607AECC   |       39 |          3 |                                 |       |
-| richter/f_nonmat/f60AB980.s  | func_060AB980   |       39 |          3 |                                 |       |
-| richter/f_nonmat/f60BACA4.s  | func_060BACA4   |       39 |          3 |                                 |       |
+| richter/f_nonmat/f60AB980.s  | func_060AB980   |       39 |          3 | https://decomp.me/scratch/9PIVf | 0.936 |
+| richter/f_nonmat/f60BACA4.s  | func_060BACA4   |       39 |          3 | https://decomp.me/scratch/y8zCT | 0.553 |
 | zero/f_nonmat/f6017F5C.s     | func_06017F5C   |       39 |          4 |                                 |       |
 | zero/f_nonmat/f601AE5C.s     | func_0601AE5C   |       39 |          4 |                                 |       |
 | zero/f_nonmat/f6008A70.s     | func_06008A70   |       39 |          5 |                                 |       |
