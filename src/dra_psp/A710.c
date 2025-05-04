@@ -632,9 +632,10 @@ static void func_800F1868(s32 x, s32 y, u8* src) {
 
     start = CASTLE_MAP_PTR;
     start += x * 2;
+    start += y * 4 * 128;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            (start + (((y * 4) + i) * 128))[j] = src[(4 * i) + j];
+            (start + i*0x80)[j] = src[(4 * i) + j];
         }
     }
 }
