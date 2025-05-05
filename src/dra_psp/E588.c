@@ -3,6 +3,10 @@
 #include "../dra/dra_bss.h"
 #include "../dra/menu.h"
 
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EAF08);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EAFA8);
+
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[8];
     s32 i;
@@ -37,7 +41,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     return bitMask_Assigned == 0x7F;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", IsAlucart);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", IsAlucart);
 
 extern s32 g_StatBuffTimers[16];
 
@@ -191,13 +195,13 @@ s32 CalcAttack(s32 equipId, u32 otherEquipId) {
     return totalAttack;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EB850);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EB850);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EB8B8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EB8B8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F53A4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F53A4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EBE50);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EBE50);
 
 u8 func_800F548C(u8 arg0) {
     if (arg0 & 0x100) {
@@ -209,25 +213,25 @@ u8 func_800F548C(u8 arg0) {
     return arg0 << 4;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EBF50);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EBF50);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EBFA8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EBFA8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC0C0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EC0C0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EC248);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EC248);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawImg);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawImg);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F5A90);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F5A90);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F5AE4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F5AE4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawSprite);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawSprite);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawRect);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawRect);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F5E68);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F5E68);
 
 extern s16 g_RelicMenuFadeTimer;
 void DrawRelicsMenu(MenuContext* ctx) {
@@ -296,33 +300,33 @@ void DrawRelicsMenu(MenuContext* ctx) {
 #undef INDEXER
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawAlucardPortrait);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardPortrait);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECD58);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECD58);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECD78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECD78);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawAlucardCloakPreview);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardCloakPreview);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ECF20);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECF20);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6568);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F6568);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6618);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F6618);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F66BC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F66BC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawChar);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawChar);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawStr);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawStr);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawInt);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawInt);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawTime);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawTime);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F6A48);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F6A48);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuJosephsCloakDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuJosephsCloakDraw);
 
 u8 g_ChButtons[] = {SQUARE,  CIRCLE,  CROSS,   TRIANGLE,
                     CH('L'), CH('R'), CH('L'), NULL};
@@ -356,9 +360,9 @@ void MenuWindowColorsDraw(MenuContext* context) {
         context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", SortTimeAttackEntries);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", SortTimeAttackEntries);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuTimeAttackDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuTimeAttackDraw);
 
 void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 i;
@@ -405,15 +409,15 @@ void MenuReverseCloakDraw(MenuContext* context) {
 
 void MenuSoundConfigDraw(MenuContext* context) {}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090ED9E0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ED9E0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDA78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDA78);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDB70);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDB70);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090EDBA0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDBA0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuStatChangesDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuStatChangesDraw);
 
 extern const char** D_800A2D68;
 
@@ -660,27 +664,27 @@ void MenuSpellsDraw(MenuContext* ctx) {
                  17, colorIntensity, colorIntensity, 0);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuFamiliarsDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuFamiliarsDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F82F4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F82F4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuSystemDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuSystemDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F84CC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F84CC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F86E4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F86E4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F8754);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F8754);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuEquipSortDraw);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipSortDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F892C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F892C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F8990);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F8990);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuDrawLine);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawLine);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawConsumableCount);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", DrawConsumableCount);
 
 extern MenuData g_MenuData;
 extern s32 D_801377FC[NUM_MENU];
@@ -932,9 +936,9 @@ void MenuDraw(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9690);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9690);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F96F4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F96F4);
 
 extern u8* D_8013794C;
 extern s32 D_80137950;
@@ -945,9 +949,9 @@ static void func_800F97DC(void) {
     D_80137950 = 0x180;
     D_80137954 = 0;
 }
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9808);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9808);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F98AC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F98AC);
 
 void func_800F99B8(char* str, s32 arg1, s32 arg2) {
     // See src/st/blit_char.h
@@ -1074,9 +1078,9 @@ void func_800F99B8(char* str, s32 arg1, s32 arg2) {
     D_8013794C += sp4c;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9D88);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9D88);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800F9DD0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9DD0);
 
 extern u8* D_psp_0914A394;
 extern s32 D_psp_0914A0D0;
@@ -1145,49 +1149,49 @@ void func_800F9F40(void) {
 }
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHandleCursorInput);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuHandleCursorInput);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1418);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1418);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuEquipHandlePageScroll);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipHandlePageScroll);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", CheckWeaponCombo);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", CheckWeaponCombo);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F18B0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F18B0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1968);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1968);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", InitWeapon);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", InitWeapon);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAB1C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAB1C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuHide);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuHide);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", MenuShow);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuShow);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FABEC);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FABEC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC0C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC0C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC30);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC30);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAC48);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC48);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1CE8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE8);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAD34);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAD34);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FADC0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FADC0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F1EA0);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1EA0);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAEC4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAEC4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FAF44);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAF44);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB004);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB004);
 
 typedef struct EquipMenuHelper {
     s32 equipTypeFilter;
@@ -1216,9 +1220,9 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F2178);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F2178);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_psp_090F21F8);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F21F8);
 
 s32 D_800A2DEC[] = {
     0x1A, 0x00, 0x30, 0x39, 0x39,
@@ -1243,7 +1247,7 @@ extern u32 D_psp_08B42054; // psp triangle button
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FB23C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB23C);
 
 typedef struct {
     /* 0x00 */ s16 cursorX;
@@ -1303,7 +1307,7 @@ void func_800FB9BC(void) {
         YScrollPerElement;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", func_800FBAC4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
 
 void func_800FAEC4(
     s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
@@ -2105,4 +2109,4 @@ block_4:
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E6A8", DrawHudSubweapon2);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", DrawHudSubweapon2);

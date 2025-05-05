@@ -49,9 +49,9 @@ segments:
       - [0x5DA0, c, dra/624DC] # O4
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
-      - [0xA710, c, dra_psp/A710] # O4
-      - [0xE6A8, c, dra_psp/E6A8] # O4
-      - [0x18648, c, dra_psp/186E8] # O4
+      - [0xA710, c, dra/5087C] # O4
+      - [0xE588, c, dra_psp/E588]
+      - [0x186E8, c, dra_psp/186E8]
       - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/1A0D0]
       - [0x1A110, c, dra_psp/1A110]
@@ -100,9 +100,9 @@ segments:
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, data]
-      - [0x6B420, .data, dra_psp/A710]
-      - [0x6B4E0, data]
-      - [0x6DA20, .data, dra_psp/E6A8]
+      - [0x6AB40, .data, dra/5087C]
+      - [0x6B420, data]
+      - [0x6DA20, .data, dra_psp/E588]
       - [0x6DCA8, data]
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       #- [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
@@ -142,8 +142,8 @@ segments:
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
       - [0xEE3E8, .rodata, dra/628AC]
-      - [0xEE408, .rodata, dra_psp/A710]
-      - [0xEE4C8, .rodata, dra_psp/E6A8]
+      - [0xEE408, .rodata, dra/5087C]
+      - [0xEE4C8, .rodata, dra_psp/E588]
       - [0xEE570, .rodata, dra_psp/19AB0]
       - [0xEE590, .rodata, dra_psp/1A1A0]
       - [0xEE5C0, .rodata, dra_psp/1C030]
