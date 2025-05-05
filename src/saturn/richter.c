@@ -676,8 +676,29 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
 // RicCheckHolyWaterCollision
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9D6C, func_060B9D6C);
 
-// func_8016840C
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9E40, func_060B9E40);
+#define EFFECT_UNK_0002 1 << 1
+
+// SAT func_060B9E40
+// Equivalent to DRA func_80125B6C
+s32 func_8016840C(s32 y, s32 x) {
+    Collider collider;
+    s32 xShift;
+    if (g_CurrentEntity->velocityX == 0) {
+        return 0;
+    }
+    CheckCollision(g_CurrentEntity->posX.val + x, g_CurrentEntity->posY.val + y,
+                   &collider, 0);
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.val += xShift;
+        return 2;
+    }
+    return 0;
+}
 
 // RicEntitySubwpnHolyWater
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9EA0, func_060B9EA0);
