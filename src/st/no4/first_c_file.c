@@ -149,9 +149,3 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C801C);
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8248);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C82B8);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C86F4);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C89F4);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8CC4);

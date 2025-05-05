@@ -1,204 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dra/dra.h"
-#include "../dra/dra_bss.h"
-#include "servant.h"
-#include "../dra/menu.h"
-
-const char* D_800A2D10[] = {
-    "装備技システム短剣必殺使攻撃力防",
-};
-
-const char* D_800A2D14[] = {
-    "御魔導器拳こ一覧棒両手食物爆弾盾",
-};
-
-const char* D_800A2D18[] = {
-    "投射薬ん右左武兜鎧マントその他い",
-};
-
-const char* D_800A2D58[] = {
-    "再開中断終了決定戻る　　　　　　",
-};
-
-extern RoomBossTeleport D_800A297C[];
-s32 func_800F087C(u32 chunkX, u32 chunkY) {
-    RoomBossTeleport* phi_s1;
-
-    for (phi_s1 = &D_800A297C[0]; true; phi_s1++) {
-        if (phi_s1->x == 0x80) {
-            return 0;
-        }
-        // All must match, otherwise we jump out.
-        if (phi_s1->x != chunkX || phi_s1->y != chunkY ||
-            phi_s1->stageId != g_StageId) {
-            continue;
-        }
-
-        if (phi_s1->eventId == TIMEATTACK_EVENT_INVALID) {
-            return phi_s1->unk10 + 2;
-        }
-        if (TimeAttackController(phi_s1->eventId, TIMEATTACK_GET_RECORD) == 0) {
-            return phi_s1->unk10 + 2;
-        }
-    }
-}
-
-void func_800F0940(void) {
-    switch (g_BgLayers[0].scrollKind) {
-    case 1:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
-        break;
-    case 2:
-        g_BgLayers[0].scrollX.i.hi = (g_Tilemap.scrollX.i.hi / 2);
-        g_BgLayers[0].scrollY.i.hi = (g_Tilemap.scrollY.i.hi / 2) + 0x76;
-        break;
-    case 3:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi;
-        break;
-    case 4:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi;
-        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
-        if (g_StageId == STAGE_RCHI) {
-            g_BgLayers[0].scrollY.i.hi += 0x80;
-        }
-        break;
-    case 5:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
-        if (g_StageId == STAGE_RDAI) {
-            g_BgLayers[0].scrollX.i.hi += 0x80;
-        }
-        break;
-    case 6:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_BgLayers[0].scrollY.i.hi =
-            (g_Tilemap.scrollY.i.hi / 2 - ((g_Tilemap.vSize - 1) * 128)) +
-            (g_BgLayers[0].h * 128);
-        if (g_StageId == STAGE_RDAI) {
-            g_BgLayers[0].scrollX.i.hi += 0x80;
-            g_BgLayers[0].scrollY.i.hi = g_Tilemap.scrollY.i.hi / 2;
-        }
-        break;
-    case 7:
-        g_BgLayers[0].scrollX.i.hi = g_Tilemap.scrollX.i.hi / 2;
-        g_BgLayers[0].scrollY.i.hi = 4;
-        break;
-    default:
-        g_BgLayers[0].scrollX.i.hi = 0;
-        g_BgLayers[0].scrollY.i.hi = 4;
-        break;
-    }
-}
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", SetNextRoomToLoad);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F0CD8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F14CC);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F16D0);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E38);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7E90);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7ED8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7F38);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E7F98);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8008);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E80E0);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E81A8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E83E8);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8518);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8620);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2014);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8760);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F223C);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E88C0);
-
-extern bool D_80137598;
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2404);
-
-void func_800F24F4(void) {
-    s32 x;
-    s32 y;
-    s32 var_a0;
-
-    x = g_Tilemap.left + (g_PlayerX >> 8);
-    y = g_Tilemap.top + (g_PlayerY >> 8);
-    if (D_8003C708.flags & STAGE_INVERTEDCASTLE_FLAG) {
-        if (g_StageId == STAGE_RNO0 && x == 32 && y == 36) {
-            if (TimeAttackController(TIMEATTACK_EVENT_FINAL_SAVEPOINT,
-                                     TIMEATTACK_GET_RECORD) == 0) {
-                TimeAttackController(
-                    TIMEATTACK_EVENT_FINAL_SAVEPOINT, TIMEATTACK_SET_RECORD);
-            }
-        }
-
-        var_a0 = 0;
-        if (g_StageId == STAGE_RNO4 && x == 18 && y == 30) {
-            D_80137598 = false;
-            return;
-        }
-        if (g_StageId == STAGE_NO4 && x == 45 && y == 33) {
-            if (PLAYER.posX.i.hi == 128) {
-                D_8003C730 = 1;
-            } else {
-                if (TimeAttackController(TIMEATTACK_EVENT_SUCCUBUS_DEFEAT,
-                                         TIMEATTACK_GET_RECORD)) {
-                    D_80137598 = false;
-                    return;
-                }
-            }
-            var_a0 = 1;
-        }
-        func_801042C4(var_a0);
-        D_80137598 = true;
-        func_80105428();
-    } else {
-        D_80137598 = false;
-    }
-}
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", DrawMapCursor);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090E8E58);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_800F2860);
-
-extern bool D_80137598;
 extern s32 D_8013759C;
 extern s32 D_801375A0;
-extern s32 D_801375A4;
 extern s32 D_801375A8;
 extern s32 D_801375AC;
 extern s32 D_801375B0;
 extern s32 D_801375B4;
 extern s32 D_801375B8;
 extern RoomLoadDefHolder D_801375BC;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
 
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
 extern s32* D_8D97C40;
-void (*D_8CE9C48)();
+extern void (*D_8CE9C48)();
 extern s32 D_psp_091CE570;
 
 void RunMainEngine(void) {
@@ -206,15 +19,12 @@ void RunMainEngine(void) {
     Primitive* prim;
     LayerDef* layer;
     s32 i;
-    u16 ent_unk68;
-    void (*playerInit)();
+    s32 ent_unk68;
+    void (*playerInit)(int isPrologue);
     void (*RichterUpdater)(void);
-    u32 tempX;
-    u32 tempY;
-
-    if (D_8C630C8) {
-        g_Status.hearts = 99;
-    }
+    s32 tempX;
+    s32 tempY;
+    s32* ptr_791c;
     // This function is a state machine, this variable is some kind of
     // overall state of the game engine
     switch (g_GameEngineStep) {
@@ -225,7 +35,6 @@ void RunMainEngine(void) {
         D_8006BB00 = 0;
         D_801375C8 = 0;
         g_PauseAllowed = true;
-        D_psp_091CE578 = 1;
         g_StageId = func_800F16D0();
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
@@ -234,7 +43,7 @@ void RunMainEngine(void) {
         DrawHud();
         func_800F2404(0);
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-            playerInit = (void*)g_PlOvl.D_8013C004;
+            playerInit = g_PlOvl.D_8013C004;
             if (g_StageId == STAGE_ST0) {
                 playerInit(1);
             } else {
@@ -258,19 +67,22 @@ void RunMainEngine(void) {
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
+#if defined(VERSION_US)
+            D_80097910 = SE_INTRO_WIND;
+#elif defined(VERSION_HD)
             D_80097910 = MU_METAMORPHOSIS;
+#endif
         }
-        if ((D_8003C730 == 4) ||
-            (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
+        if ((D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(D_80097910);
         }
         D_80097928 = 0;
         func_800EA538(2);
         if (D_801375BC.def->tilesetId != 0) {
-            func_800EA5E4((D_801375BC.def->tilesetId & 0xFF) + 0x7fff | 0x4000);
+            func_800EA5E4(D_801375BC.def->tilesetId + 0x7fff | 0x4000);
         }
         if (D_801375BC.def->objGfxId != 0) {
-            LoadGfxAsync((D_801375BC.def->objGfxId & 0xFF) + 0x7fff);
+            LoadGfxAsync(D_801375BC.def->objGfxId + 0x7fff);
             D_80097904 = D_801375BC.def->objGfxId + 0x7fff;
         } else {
             D_80097904 = 0;
@@ -281,14 +93,12 @@ void RunMainEngine(void) {
         g_PlayerY = tempY;
         PLAYER.posX.i.hi = (u8)tempX;
         PLAYER.posY.i.hi = (u8)tempY;
-
         if (PLAYER.posX.i.hi < 0x80) {
             PLAYER.facingLeft = 0;
-        }
-        // This is so dumb. SOTN programmers never heard of "else"?
-        if (PLAYER.posX.i.hi >= 0x80) {
+        } else {
             PLAYER.facingLeft = 1;
         }
+        ptr_791c = &D_8009791C;
         g_Tilemap.x =
             ((D_801375BC.def - 1)->tileLayoutId - g_Tilemap.left) << 8;
         g_Tilemap.y = ((D_801375BC.def - 1)->tilesetId - g_Tilemap.top) << 8;
@@ -297,16 +107,16 @@ void RunMainEngine(void) {
         g_Tilemap.height =
             (((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top) + 1) << 8;
 
-        D_8009791C = g_Tilemap.left + (g_PlayerX >> 8);
-        D_80097920 = g_Tilemap.top + (g_PlayerY >> 8);
+        *ptr_791c = (g_PlayerX >> 8) + g_Tilemap.left;
+        D_80097920 = (g_PlayerY >> 8) + g_Tilemap.top;
 
-        g_Tilemap.scrollX.i.hi = (D_8009791C - g_Tilemap.left) << 8;
+        g_Tilemap.scrollX.i.hi = (*ptr_791c - g_Tilemap.left) << 8;
         g_Tilemap.scrollY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
 
         if (D_8003C730 == 2) {
-            g_Tilemap.bottom -= 1;
             g_Tilemap.height -= 0x100;
             PLAYER.facingLeft = 1;
+            g_Tilemap.bottom -= 1;
         }
         if (D_8006C374 == 0x2C) {
             g_Tilemap.y = 0x2FB;
@@ -341,22 +151,8 @@ void RunMainEngine(void) {
         if (D_8003C730 == 3) {
             D_8003C730 = 0;
         }
-        if (D_8003C730 == 4) {
-            D_8003C730 = 0;
-            D_80097928 = 1;
-            if (D_8006C374 == 0x25) {
-                g_Tilemap.scrollX.i.hi = 0x640;
-                g_Tilemap.scrollY.i.hi = 0x4BF;
-                PLAYER.posX.i.hi = 0x80;
-                PLAYER.posY.i.hi = 0x88;
-                g_PlayerX = 0x6C0;
-                g_PlayerY = 0x547;
-                g_PrevScrollX = 0x640;
-                g_PrevScrollY = 0x4BF;
-            }
-        }
         func_800F24F4();
-        g_unkGraphicsStruct.D_800973F8 = (s16)AllocPrimitives(PRIM_GT4, 16);
+        g_unkGraphicsStruct.D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
         if (g_unkGraphicsStruct.D_800973F8 != 0) {
             prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
             while (prim != NULL) {
@@ -368,7 +164,6 @@ void RunMainEngine(void) {
         }
         RefreshCapePalette();
         g_GameEngineStep++; // Move to Engine_Normal
-        func_psp_090DFBD0();
         return;
     case Engine_Normal:
         g_GameTimer++;
@@ -384,10 +179,10 @@ void RunMainEngine(void) {
         g_api.o.HitDetection();
         D_8013759C = PLAYER.posX.i.hi;
         g_Player.unk7C = PLAYER.posX.i.hi;
-        D_801375A0 = PLAYER.posY.i.hi;
-        g_Player.unk7E = PLAYER.posY.i.hi;
         D_80097488.x.val = 0;
         D_80097488.y.val = 0;
+        D_801375A0 = PLAYER.posY.i.hi;
+        g_Player.unk7E = PLAYER.posY.i.hi;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_PlOvl.D_8013C000();
             g_PlOvl.D_8013C008();
@@ -398,24 +193,29 @@ void RunMainEngine(void) {
         g_api.o.UpdateRoomPosition();
         g_api.o.Update();
 
+#if defined(VERSION_US)
         if (g_GameState == Game_Ending) {
             if (D_80097C98 == 6) {
                 D_80097C98 = 0;
                 return;
             }
+#elif defined(VERSION_HD)
+        if (0) {
+#endif
+
         } else {
             func_800F2860();
             if (g_DemoMode == Demo_End) {
                 g_DemoMode = Demo_None;
                 D_80097C98 = 0x08000000;
-                LoadSaveData(&D_8D97C40);
+                LoadSaveData(0x801EA000);
                 D_8003C730 = 2;
                 g_GameStep = Play_PrepareNextStage;
                 return;
             }
-            if (D_80097C98 & 0x80000000) {
+            if (D_80097C98 < 0) {
                 PlaySfx(SET_STOP_SEQ);
-                StoreSaveData(&D_8D97C40, 0, 0);
+                StoreSaveData(0x801EA000, 0, 0);
                 g_GameStep = Play_PrepareNextStage;
                 return;
             }
@@ -460,7 +260,7 @@ void RunMainEngine(void) {
             i = func_800F0CD8(1);
             if (i != 0) {
                 func_801027A4();
-                if (i > 1) {
+                if (i >= 2) {
                     D_8006C374 = i - 2;
                     g_GameStep = Play_PrepareNextStage;
                     return;
@@ -470,7 +270,6 @@ void RunMainEngine(void) {
                     g_GameStep = Play_PrepareNextStage;
                     return;
                 }
-                func_8932B50();
                 g_GameEngineStep = Engine_3;
                 g_MenuStep = MENU_STEP_INIT;
                 return;
@@ -486,8 +285,8 @@ void RunMainEngine(void) {
             for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
                 ent_unk68 = ent->unk68;
                 if (ent_unk68) {
-                    ent->posX.val += D_801375B4 * ent_unk68 * 0x100;
-                    ent->posY.val += D_801375B8 * ent_unk68 * 0x100;
+                    ent->posX.val += ent_unk68 * D_801375B4 * 0x100;
+                    ent->posY.val += ent_unk68 * D_801375B8 * 0x100;
                 } else {
                     if (ent->flags & FLAG_POS_CAMERA_LOCKED) {
                         ent->posX.i.hi += D_801375B4;
@@ -557,10 +356,12 @@ void RunMainEngine(void) {
                 g_GameEngineStep = Engine_10;
                 g_MenuStep = MENU_STEP_INIT;
             }
-            if (g_unkGraphicsStruct.D_800973FC != 0 && D_8006BB00 == 0) {
-                D_8006BB00 = 1;
-                MuteCd();
-            } else if (g_unkGraphicsStruct.D_800973FC == 0 && D_8006BB00 != 0) {
+            if (g_unkGraphicsStruct.D_800973FC != 0) {
+                if (D_8006BB00 == 0) {
+                    D_8006BB00 = 1;
+                    MuteCd();
+                }
+            } else if (D_8006BB00 != 0) {
                 if (g_unkGraphicsStruct.pauseEnemies != 0) {
                     D_80097928 = 0;
                     D_8006BB00 = 0;
@@ -579,19 +380,24 @@ void RunMainEngine(void) {
                     D_8006BB00 = 0;
                 }
             }
-            D_psp_091CE570 = 0;
             if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed &&
-                    D_psp_091CE578) {
+                if ((g_pads[0].tapped & PAD_START) && g_PauseAllowed) {
                     func_801027A4();
                     if ((g_StageId == STAGE_ST0) ||
                         (g_PlayableCharacter != PLAYER_ALUCARD)) {
+                        if (func_8010183C(0) == 0) {
+                            return;
+                        }
                         D_800974A4 = 1;
                         g_GameEngineStep = Engine_0x70;
-                        g_MenuStep = MENU_STEP_INIT;
                         PlaySfx(SET_RELEASE_RATE_LOW_22_23);
                         PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                         PlaySfx(SET_PAUSE_SFX_SCRIPTS);
+#if defined(VERSION_US)
+                        if (g_StageId == STAGE_ST0) {
+                            MuteCd();
+                        }
+#endif
                         return;
                     }
                     PlaySfx(SET_RELEASE_RATE_LOW_22_23);
@@ -600,10 +406,8 @@ void RunMainEngine(void) {
                     func_801027C4(1);
                     g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                     g_MenuStep = MENU_STEP_INIT;
-                    D_psp_091CE570 = 1;
                 } else if ((g_pads[0].tapped & PAD_SELECT) &&
-                           (g_StageId != STAGE_ST0) && g_PauseAllowed &&
-                           D_psp_091CE578) {
+                           (g_StageId != STAGE_ST0) && g_PauseAllowed) {
                     func_801027C4(6);
                     D_800974A4 = 1;
                     g_GameEngineStep = Engine_Map;
@@ -612,7 +416,21 @@ void RunMainEngine(void) {
             }
             break;
         case Engine_0x70:
-            DrawHudSubweapon2();
+            DrawHudSubweapon();
+            if (g_pads[0].tapped & PAD_START) {
+                if (func_8010183C(1) != 0) {
+                    D_800974A4 = 0;
+                    g_GameEngineStep = Engine_Normal;
+                    PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+                    PlaySfx(SET_KEY_ON_20_21);
+                    PlaySfx(SET_KEY_ON_22_23);
+#if defined(VERSION_US)
+                    if (g_StageId == STAGE_ST0) {
+                        UnMuteCd();
+                    }
+#endif
+                }
+            }
             func_801028AC(1);
             break;
         case Engine_Menu:
@@ -640,6 +458,7 @@ void RunMainEngine(void) {
                     g_MenuStep = MENU_STEP_EXIT_BEGIN;
                 } else {
                     func_801027C4(1);
+                case 2:
                     g_MenuStep++;
                 }
                 break;
@@ -647,9 +466,6 @@ void RunMainEngine(void) {
                 if (func_801025F4() != 0) {
                     g_MenuStep++;
                 }
-                break;
-            case 2:
-                g_MenuStep++;
                 break;
             case 3:
                 if (g_IsUsingCd) {
@@ -687,8 +503,8 @@ void RunMainEngine(void) {
                     } while (0);
                     D_80097920 = layer->flags;
                 } else {
-                    D_8009791C = g_Tilemap.left + (g_PlayerX >> 8);
-                    D_80097920 = g_Tilemap.top + (g_PlayerY >> 8);
+                    D_8009791C = (g_PlayerX >> 8) + g_Tilemap.left;
+                    D_80097920 = (g_PlayerY >> 8) + g_Tilemap.top;
                 }
                 D_8013759C = PLAYER.posX.val;
                 D_801375A0 = PLAYER.posY.val;
@@ -700,10 +516,10 @@ void RunMainEngine(void) {
                 func_800EA538(2);
                 if (D_801375BC.def->tilesetId != 0) {
                     func_800EA5E4(
-                        ((D_801375BC.def->tilesetId & 0xFF) + 0x7FFF) | 0x4000);
+                        (D_801375BC.def->tilesetId + 0x7FFF) | 0x4000);
                 }
                 if (D_801375BC.def->objGfxId != 0) {
-                    LoadGfxAsync((D_801375BC.def->objGfxId & 0xFF) + 0x7FFF);
+                    LoadGfxAsync(D_801375BC.def->objGfxId + 0x7FFF);
                     D_80097904 = D_801375BC.def->objGfxId + 0x7FFF;
                 } else {
                     D_80097904 = 0;
@@ -729,7 +545,7 @@ void RunMainEngine(void) {
                     (((D_801375BC.def - 1)->objLayoutId - g_Tilemap.top) + 1)
                     << 8;
                 // permuter found this weird & -> thing, I don't know man
-                g_Tilemap.scrollX.i.hi = (D_8009791C - g_Tilemap.left) << 8;
+                (&g_Tilemap.scrollX)->i.hi = (D_8009791C - g_Tilemap.left) << 8;
                 g_Tilemap.scrollY.i.hi = (D_80097920 - g_Tilemap.top) << 8;
                 g_PlayerX = PLAYER.posX.i.hi + g_Tilemap.scrollX.i.hi;
                 g_PlayerY = PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -826,6 +642,9 @@ void RunMainEngine(void) {
                 if (D_80097C98 == 3) {
                     g_GameEngineStep = Engine_Normal;
                 }
+#if defined(VERSION_US)
+                func_8011A9D8();
+#endif
                 g_MenuStep++;
 
                 break;
@@ -863,21 +682,8 @@ void RunMainEngine(void) {
                             g_api.o.UpdateStageEntities();
                             func_80102D70();
                         }
-                    } else if (g_PlayableCharacter == PLAYER_RICHTER) {
-                        RichterUpdater = g_api.o.UpdateStageEntities;
-                        RichterUpdater();
-                        func_80102D70();
-                    } else if (g_unkGraphicsStruct.unk20 == 0x100) {
-                        RichterUpdater = g_PlOvl.D_8013C000;
-                        RichterUpdater();
-                        RichterUpdater = D_8CE9C48;
-                        RichterUpdater();
-                        RichterUpdater = g_api.o.UpdateStageEntities;
-                        RichterUpdater();
-                        func_80102D70();
                     } else {
-                        RichterUpdater = g_api.o.UpdateStageEntities;
-                        RichterUpdater();
+                        g_api.o.UpdateStageEntities();
                         func_80102D70();
                     }
                 } else {
@@ -934,7 +740,3 @@ void RunMainEngine(void) {
         }
     }
 }
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAF08);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/A710", func_psp_090EAFA8);
