@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern s32 D_8013759C;
 extern s32 D_801375A0;
 extern s32 D_801375A8;

@@ -327,12 +327,12 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.left - 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-                    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
                     if (PLAYER.posX.i.hi < 4) {
                         PLAYER.posX.i.hi = -1;
                         PLAYER.posX.i.lo = 0;
                     }
-                    #endif
+#endif
                     D_801375C0 = PLAYER.posX.i.hi + 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
@@ -346,12 +346,12 @@ s32 func_800F0CD8(s32 arg0) {
                 ret = SetNextRoomToLoad(
                     g_Tilemap.right + 1, g_Tilemap.top + (g_PlayerY >> 8));
                 if (ret) {
-                    #if defined(VERSION_PSP)
+#if defined(VERSION_PSP)
                     if (PLAYER.posX.i.hi > 252) {
                         PLAYER.posX.i.hi = 256;
                         PLAYER.posX.i.lo = 0;
                     }
-                    #endif
+#endif
                     D_801375C0 = PLAYER.posX.i.hi - 256;
                     D_801375C4 = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
@@ -613,14 +613,14 @@ static s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
 
 static void func_800F180C(s32 x, s32 y, u8* dst) {
     s32 i, j;
-    u8 *start;
+    u8* start;
 
     start = CASTLE_MAP_PTR;
     start += x * 2;
     start += y * 4 * 128;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            dst[4 * i + j] = (start + i*0x80)[j];
+            dst[4 * i + j] = (start + i * 0x80)[j];
         }
     }
 }
@@ -635,7 +635,7 @@ static void func_800F1868(s32 x, s32 y, u8* src) {
     start += y * 4 * 128;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            (start + i*0x80)[j] = src[(4 * i) + j];
+            (start + i * 0x80)[j] = src[(4 * i) + j];
         }
     }
 }
@@ -723,7 +723,7 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
 
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 4; j++) {
-            img1[4 * i + j] = (src + i*0x80)[j];
+            img1[4 * i + j] = (src + i * 0x80)[j];
         }
     }
 
