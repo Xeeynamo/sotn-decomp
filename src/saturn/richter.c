@@ -48,8 +48,18 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A7FD4, func_060A7FD4);
 // RicStepEnableFlameWhip
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A80B0, func_060A80B0);
 
-// RicStepHydrostorm
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8170, func_060A8170);
+// func_060A8170
+void RicStepHydrostorm(void) {
+    if (PLAYER.poseTimer < 0) {
+        RicSetStand(0);
+        g_Player.unk46 = 0;
+    }
+
+    if ((g_Player.vram_flag & 1) == 0) {
+        RicSetFall();
+        g_Player.unk46 = 0;
+    }
+}
 
 // RicStepGenericSubwpnCrash
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A81C4, func_060A81C4);
@@ -73,8 +83,19 @@ void RicSetDebug(void) { RicSetStep(PL_S_DEBUG); }
 
 // ===== pl_setstep.c
 
-// RicSetInit
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8EB8, func_060A8EB8);
+AnimationFrame D_80155950[];
+AnimationFrame D_8015591C[];
+// func_060A8EB8
+void RicSetInit(s32 step_s) {
+    PLAYER.step = PL_S_INIT;
+    PLAYER.step_s = step_s;
+    PLAYER.pose = PLAYER.poseTimer = 0;
+    if (step_s & 1) {
+        PLAYER.anim = D_80155950;
+    } else {
+        PLAYER.anim = D_8015591C;
+    }
+}
 
 // RicSetCrouch
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A8F00, func_060A8F00);
@@ -175,8 +196,38 @@ void RicSetJump(void) {
 // RicSetHighJump
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A92D8, func_060A92D8);
 
-// RicCheckSubwpnChainLimit
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A938C, func_060A938C);
+// func_060A938C
+static s32 RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
+
+    // Iterate through entities 32-48 (which hold subweapons)
+    // Any that match the proposed ID increments the count.
+    // If at any point the count reaches the limit, return -1.
+    entity = &g_Entities[32];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 16; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    // This will indicate that there is an available entity slot
+    // to hold the subweapon we're trying to spawn.
+    // At the end, if this is zero, there are none available so return
+    // -1 to indicate there is no room for the proposed subweapon.
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
 
 // RicDoSubweapon
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A93F4, func_060A93F4);
@@ -333,14 +384,54 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB7B4, func_060AB7B4);
 
 // ===== pl_blueprints.c
 
-// RicGetFreeEntity
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB980, func_060AB980);
+#define E_NONE 0
+// func_060AB980
+static Entity* RicGetFreeEntity(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
 
-// RicGetFreeEntityReverse
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AB9C0, func_060AB9C0);
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
-// func_8015F9F0
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60ABA08, func_060ABA08);
+// func_060AB9C0
+static Entity* RicGetFreeEntityReverse(s16 start, s16 end) {
+    Entity* entity = &g_Entities[end - 1];
+    s16 i;
+    for (i = end - 1; i >= start; i--, entity--) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
+
+#define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
+s32 D_80174F80[11];
+// func_060ABA08
+void func_8015F9F0(Entity* entity) {
+    s32 i;
+    s32 enemyId;
+
+    if (entity < &g_Entities[32]) {
+        entity->enemyId = 1;
+        return;
+    }
+
+    for (i = 0;; i++) {
+        for (enemyId = 2; enemyId < LEN(D_80174F80); ++enemyId) {
+            if (D_80174F80[enemyId] == i) {
+                ++D_80174F80[enemyId];
+                entity->enemyId = enemyId;
+                return;
+            }
+        }
+    }
+}
 
 extern u8 D_80154674[][4];
 extern u8 D_80174FAC;
@@ -426,7 +517,26 @@ void func_060AE538(void) { func_0600FFB8(); }
 // RicEntityMaria
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE550, func_060AE550);
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE714, func_060AE714);
+#define E_WEAPON 0x10
+#define STAGE_ENTITY_START 64
+
+// func_060AE714
+bool func_80162E9C(Entity* entity) {
+    Entity* e;
+    s32 i;
+    s16 objId;
+    s16 params;
+
+    objId = entity->entityId;
+    params = entity->params;
+    for (e = &g_Entities[E_WEAPON], i = E_WEAPON; i < STAGE_ENTITY_START; e++,
+        i++) {
+        if (objId == e->entityId && params == e->params && e != entity) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // RicEntityPlayerBlinkWhite
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AE768, func_060AE768);
@@ -596,8 +706,29 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9A50, func_060B9A50);
 // RicCheckHolyWaterCollision
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9D6C, func_060B9D6C);
 
-// func_8016840C
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9E40, func_060B9E40);
+#define EFFECT_UNK_0002 1 << 1
+
+// SAT func_060B9E40
+// Equivalent to DRA func_80125B6C
+s32 func_8016840C(s32 y, s32 x) {
+    Collider collider;
+    s32 xShift;
+    if (g_CurrentEntity->velocityX == 0) {
+        return 0;
+    }
+    CheckCollision(g_CurrentEntity->posX.val + x, g_CurrentEntity->posY.val + y,
+                   &collider, 0);
+    if (g_CurrentEntity->velocityX > 0) {
+        xShift = collider.unk14;
+    } else {
+        xShift = collider.unk1C;
+    }
+    if (collider.effects & EFFECT_UNK_0002) {
+        g_CurrentEntity->posX.val += xShift;
+        return 2;
+    }
+    return 0;
+}
 
 // RicEntitySubwpnHolyWater
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60B9EA0, func_060B9EA0);
@@ -611,7 +742,28 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BA788, func_060BA788);
 
 // ===== all these functions below seems to be exclusive to Saturn
 
-INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACA4, func_060BACA4);
+s32 func_06032EA8(s32, s32, s32);
+void func_06033024(s32, s32, s32);
+void func_060BB330();
+
+s32 DAT_060c4118;
+s32 DAT_060c411c;
+
+void func_060BACA4(void) {
+    s32 arg0;
+    s32 arg2;
+    s32 arg1;
+    void (*ptr)(s32, s32, s32);
+    func_06032EA8(&DAT_060c4118, 0, 4);
+    arg0 = 0x002B2000;
+    arg1 = &DAT_060c411c;
+    ptr = func_06033024;
+    arg2 = 0x00009600;
+    ptr(arg0, arg1, arg2);
+
+    func_060BB330();
+}
+
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BACEC, func_060BACEC);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BAED0, func_060BAED0);
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60BB09C, func_060BB09C);
