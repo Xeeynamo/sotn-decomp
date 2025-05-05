@@ -133,10 +133,33 @@ typedef struct {
     /* 0x89 */ u8 unk89;
 } ET_ExplosionPuffOpaque;
 
+typedef struct {
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[2];
+#endif
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+    /* 0xB2 */ s16 unkB2;
+} ET_Subweapon;
+
 typedef union { // offset=0x7C
     u8 base[0x38];
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_ExplosionPuffOpaque opaquePuff;
+    ET_Subweapon subweapon;
 } Ext;
 
 typedef struct Entity {
