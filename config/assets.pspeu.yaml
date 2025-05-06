@@ -76,10 +76,15 @@ files:
           - [0x28E88, spritesheet, maria, disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/maria.bin, 0x20250]
           - [0x38C98, cmpgfx, D_pspeu_092DEE98, 128, 128, 4] # icons
           - [0x39C38, cmpgfx, D_pspeu_092DFE38, 128, 128, 4] # hud_en
-          - [0x3AA28, cmpgfx, D_pspeu_092E0C28, 128, 128, 4] # turtle2
-          - [0x3B980, skip]
-          - [0x3ED38, palette, pal_11E, png, 16]
-          - [0x3ED58, skip]
+          - [0x3AA28, cmpgfx, D_pspeu_092E0C28, 128, 128, 4] # turtle_crash
+          - [0x3B980, cmpgfx, D_pspeu_092E1B80, 128, 128, 4] # dragon_crash
+          - [0x3CC08, cmpgfx, D_pspeu_092E2E08, 128, 128, 4] # cardinal_crash
+          - [0x3DE70, cmpgfx, D_pspeu_092E4070, 128, 128, 4] # cat_crash
+          - [0x3ED38, palette, crash_cat_pal, png, 16]
+          - [0x3ED58, palette, crash_turtle_pal, png, 16]
+          - [0x3ED78, palette, crash_dragon_pal, png, 16]
+          - [0x3ED98, palette, crash_cardinal_pal, png, 16]
+          - [0x3F338, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

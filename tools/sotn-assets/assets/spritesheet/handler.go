@@ -66,6 +66,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	maxSpritCount := 0x100
 	r := bytes.NewReader(e.Data)
 	if !headerFirst {
+		// on PSP the header is at the end, so we need to find the pointers from the end
 		start = e.End
 		maxSpritCount = 0
 		for {

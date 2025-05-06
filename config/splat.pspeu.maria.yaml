@@ -59,7 +59,6 @@ segments:
       - [0x1EFC8, .data, pl_blueprints]
       - [0x1FC80, data] # spritebanks
       - [0x20250, .data, ovl_load]
-      - [0x38C98, data]
       - [0x3F480, .rodata, 80]
       - [0x3F4E8, .rodata, pl_main]
       - [0x3F568, .rodata, pl_steps]
