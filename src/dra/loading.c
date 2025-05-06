@@ -4,6 +4,10 @@
 #include "servant.h"
 
 RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
+
+// BSS
+extern NowLoadingModel g_NowLoadingModel;
+
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     Primitive* prim;
     s32 i;
@@ -27,23 +31,24 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
             self->waveTable[i] = i << 8;
-            prim->u0 = (i * NOW_LOADING_PRIM_COUNT / 2) - 0x80;
             prim->v0 = prim->v1 = 0xE8;
             prim->v2 = prim->v3 = 0xFF;
-            prim->u1 = (i + 1) * NOW_LOADING_PRIM_COUNT / 2 - 0x80;
+            prim->u0 = (i * 8) + 0x80;
+            prim->u1 = ((i + 1) * 8) + 0x80;
             if (i == NOW_LOADING_PRIM_COUNT - 1) {
                 prim->u1 = 0xFF;
             }
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
             prim->tpage = 0x1A;
             prim->clut = 0x19F;
             prim->priority = 0x1FE;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-            prim->u2 = prim->u0;
-            prim->u3 = prim->u1;
             prim = prim->next;
         }
         prim->v0 = prim->v1 = 0x80;
         prim->v2 = prim->v3 = 0xBF;
+        prim->u2 = prim->u0 = 0;
         prim->u3 = prim->u1 = 0x7F;
         prim->y0 = prim->y1 = 0xA0;
         prim->y2 = prim->y3 = 0xDF;
@@ -52,13 +57,12 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         prim->tpage = 0x9D;
         prim->clut = 0x1D0;
         prim->priority = 0x1FE;
-        prim->u2 = prim->u0 = 0;
         prim->drawMode = DRAW_DEFAULT;
-        self->verticalWave = 4;
-        self->horizontalWave = 4;
         self->x = x;
         self->y = y;
         self->unkC = 0;
+        self->verticalWave = 4;
+        self->horizontalWave = 4;
         self->unk12 = 0;
         self->speed = 0x20;
         self->step++;
@@ -101,9 +105,9 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     }
     posX = self->x;
     posY = self->y;
+    prim = &g_PrimBuf[self->primIndex];
     verticalWave = self->verticalWave;
     horizontalWave = self->horizontalWave;
-    prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
         angle = self->waveTable[i];
         sy = -(rsin(angle) >> 5) * verticalWave / 0x100;
@@ -156,9 +160,6 @@ s32 func_800E6300(void) {
     return 0;
 }
 
-// BSS
-extern NowLoadingModel g_NowLoadingModel;
-
 void HandleNowLoading(void) {
     void (*pfnWeapon)(u8);
     s8 var_a0;
@@ -200,7 +201,6 @@ void HandleNowLoading(void) {
         if (D_800987B4 < 0) {
             D_800987B4 += 0x3F;
         }
-
         g_StageId = g_StageSelectOrder[D_800987B4];
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
@@ -428,7 +428,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            if (LoadFileSim(weaponId, 8) < 0) {
+            if (LoadFileSim(weaponId, SimFileType_Weapon1Prg) < 0) {
                 break;
             }
             g_EquippedWeaponIds[1] = weaponId;
@@ -461,10 +461,12 @@ void HandleNowLoading(void) {
             pfnWeapon = D_8017D000.LoadWeaponPalette;
             pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else {
-            if (LoadFileSim(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) < 0) {
+            if (LoadFileSim(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) <
+                0) {
                 break;
             }
-            if (LoadFileSim(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) < 0) {
+            if (LoadFileSim(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) <
+                0) {
                 break;
             }
         }
@@ -527,7 +529,7 @@ void HandleVideoPlayback(void) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
+                D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);

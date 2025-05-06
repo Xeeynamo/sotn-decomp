@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
 #include "servant.h"
 
 void func_8932CEC(bool, s8);
@@ -14,10 +15,9 @@ extern u8 D_8D41C40;
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
-extern u8 D_psp_0914C2D8[];
-extern u8 D_psp_0914C3A8;
-extern u8 D_psp_0914C3B8;
-extern u8 D_psp_0914C3C8;
+extern char D_psp_0914C3A8[];
+extern char D_psp_0914C3B8[];
+extern char D_psp_0914C3C8[];
 extern RECT D_psp_09156F40;
 extern u32 D_psp_09156F48;
 extern s32 D_psp_0915AF48;
@@ -41,13 +41,7 @@ extern s32 D_psp_0915FBF8;
 extern s32 D_psp_0915FC04;
 extern s32 D_psp_0915FC10;
 extern s32 D_psp_0915FC1C;
-extern NowLoadingModel D_psp_091CE310;
-extern s32 D_psp_091CE350;
-extern s32 D_psp_091CE548;
-extern s32 D_psp_091CE558;
-extern s32 D_psp_091CE568[];
-extern s32 D_psp_091CE5E8;
-extern s32 D_psp_091CE5F0;
+extern NowLoadingModel g_NowLoadingModel;
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     RECT sp48;
@@ -79,19 +73,19 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     }
     switch (self->step) {
     case 0:
-        primIndex = (s16)AllocPrimitives(4, 0x11);
-        self->primIndex = primIndex;
-        if (primIndex == -1) {
+        self->primIndex =
+            (s16)AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+        if (self->primIndex == -1) {
             return;
         }
-        prim = &g_PrimBuf[primIndex];
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
             self->waveTable[i] = i << 8;
             prim->v0 = prim->v1 = 0xE8;
             prim->v2 = prim->v3 = 0xFF;
             prim->u0 = (i * 8) + 0x80;
             prim->u1 = ((i + 1) * 8) + 0x80;
-            if (i == 0xF) {
+            if (i == NOW_LOADING_PRIM_COUNT - 1) {
                 prim->u1 = 0xFF;
             }
             prim->u2 = prim->u0;
@@ -222,7 +216,7 @@ void HandleNowLoading(void) {
     void (*pfnWeapon)(s32);
     s32 weaponId, weaponId1, weaponId2;
 
-    NowLoadingModel* nowLoadingModel = &D_psp_091CE310;
+    NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
     if (g_GameStep >= 4 && g_GameStep < 16) {
         AnimateNowLoading(nowLoadingModel, 0x40, 0x70, false);
@@ -240,33 +234,33 @@ void HandleNowLoading(void) {
     case 1:
         if (g_pads[0].repeat & PAD_RIGHT) {
             PlaySfx(SFX_DEBUG_SELECT);
-            D_psp_091CE558 += 1;
+            D_800987B4 += 1;
         }
         if (g_pads[0].repeat & PAD_DOWN) {
             PlaySfx(SFX_DEBUG_SELECT);
-            D_psp_091CE558 += 8;
+            D_800987B4 += 8;
         }
         if (g_pads[0].repeat & PAD_LEFT) {
             PlaySfx(SFX_DEBUG_SELECT);
-            D_psp_091CE558 -= 1;
+            D_800987B4 -= 1;
         }
         if (g_pads[0].repeat & PAD_UP) {
             PlaySfx(SFX_DEBUG_SELECT);
-            D_psp_091CE558 -= 8;
+            D_800987B4 -= 8;
         }
         if (g_pads[0].repeat & PAD_SELECT) {
             g_PlayableCharacter++;
             g_PlayableCharacter %= 3;
         }
-        if (D_psp_091CE558 < 0) {
-            D_psp_091CE558 = 0x39;
+        if (D_800987B4 < 0) {
+            D_800987B4 = 0x39;
         }
-        if (D_psp_091CE558 >= 0x3AU) {
-            D_psp_091CE558 = 0;
+        if (D_800987B4 >= 0x3AU) {
+            D_800987B4 = 0;
         }
-        g_StageId = D_psp_0914C2D8[D_psp_091CE558];
+        g_StageId = g_StageSelectOrder[D_800987B4];
         FntPrint("Player:%s\n", D_psp_0915E500[g_PlayableCharacter]);
-        FntPrint("%02x (%02x)\n", D_psp_091CE558, g_StageId);
+        FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
         } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
@@ -284,24 +278,22 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_START_SLAM_B);
             if (g_StageId == STAGE_MEMORYCARD) {
                 SetGameState(Game_MainMenu);
+            } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
+                D_800978B4 = g_StageId - 0xF0;
+                SetGameState(Game_Ending);
             } else {
-                if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
-                    D_psp_091CE548 = g_StageId - 0xF0;
-                    SetGameState(Game_Ending);
-                    return;
-                }
-                STRCPY(g_Status.saveName, &D_psp_0914C3A8);
+                STRCPY(g_Status.saveName, D_psp_0914C3A8);
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
                     STRCPY(
                         g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
                     g_IsTimeAttackUnlocked = true;
                     if (g_PlayableCharacter == PLAYER_RICHTER) {
-                        STRCPY(g_Status.saveName, &D_psp_0914C3B8);
+                        STRCPY(g_Status.saveName, D_psp_0914C3B8);
                         g_PlayableCharacter = PLAYER_RICHTER;
                         g_IsTimeAttackUnlocked = true;
                     } else if (g_PlayableCharacter == PLAYER_MARIA) {
-                        STRCPY(g_Status.saveName, &D_psp_0914C3C8);
+                        STRCPY(g_Status.saveName, D_psp_0914C3C8);
                         g_PlayableCharacter = PLAYER_MARIA;
                         g_IsTimeAttackUnlocked = true;
                     } else {
@@ -319,8 +311,8 @@ void HandleNowLoading(void) {
         }
         break;
     case 2:
-        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
-            if (g_PlayableCharacter == 2) {
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_PlayableCharacter == PLAYER_MARIA) {
                 func_8932FD4(2);
             } else if (g_StageId == STAGE_ST0) {
                 func_8932FD4(3);
@@ -345,7 +337,8 @@ void HandleNowLoading(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_GameChr;
         } else {
-            if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_StageId == STAGE_ST0 ||
+                g_PlayableCharacter != PLAYER_ALUCARD) {
                 if (g_PlayableCharacter == PLAYER_MARIA) {
                     if (func_psp_090FAB30(5, SimFileType_System, true) < 0) {
                         break;
@@ -497,8 +490,8 @@ void HandleNowLoading(void) {
         }
         g_Servant = 0;
         g_ServantLoaded = 0;
-        D_psp_091CE568[0] = -1;
-        D_psp_091CE568[1] = -1;
+        g_EquippedWeaponIds[0] = -1;
+        g_EquippedWeaponIds[1] = -1;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_GameStep = 0x10;
         } else {
@@ -522,14 +515,14 @@ void HandleNowLoading(void) {
                     g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
                 weaponId2 = weaponId2 == 0xFF ? 1 : weaponId2;
             }
-            D_psp_091CE568[0] = weaponId;
+            g_EquippedWeaponIds[0] = weaponId;
             func_8932CEC(0, weaponId1);
             func_8932CEC(1, weaponId2);
             g_GameStep++;
         }
         break;
     case 11:
-        if (!func_8932D34(0, 0xD)) {
+        if (!func_8932D34(0)) {
             break;
         }
         if (!func_8932D34(1)) {
@@ -540,7 +533,7 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_psp_091CE568[0]].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
         } else {
             weaponId = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
             if (weaponId == 0xFF) {
@@ -552,9 +545,9 @@ void HandleNowLoading(void) {
             if (func_psp_090FAB30(weaponId, SimFileType_Weapon0Prg, true) < 0) {
                 break;
             }
-            D_psp_091CE568[0] = weaponId;
+            g_EquippedWeaponIds[0] = weaponId;
             pfnWeapon = D_8017A000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_psp_091CE568[0]].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[0]].palette);
             weaponId =
                 g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
             if (weaponId == 0xFF) {
@@ -566,9 +559,9 @@ void HandleNowLoading(void) {
             if (func_psp_090FAB30(weaponId, SimFileType_Weapon1Prg, true) < 0) {
                 break;
             }
-            D_psp_091CE568[1] = weaponId;
+            g_EquippedWeaponIds[1] = weaponId;
             pfnWeapon = D_8017D000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_psp_091CE568[1]].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         }
         g_GameStep++;
         break;
@@ -584,7 +577,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            D_psp_091CE568[1] = weaponId;
+            g_EquippedWeaponIds[1] = weaponId;
         }
         g_GameStep++;
         break;
@@ -594,14 +587,14 @@ void HandleNowLoading(void) {
                 break;
             }
             pfnWeapon = D_8017D000.LoadWeaponPalette;
-            pfnWeapon(g_EquipDefs[D_psp_091CE568[1]].palette);
+            pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else {
             if (func_psp_090FAB30(
-                    D_psp_091CE568[0], SimFileType_Weapon0Chr, true) < 0) {
+                    g_EquippedWeaponIds[0], SimFileType_Weapon0Chr, true) < 0) {
                 break;
             }
             if (func_psp_090FAB30(
-                    D_psp_091CE568[1], SimFileType_Weapon1Chr, true) < 0) {
+                    g_EquippedWeaponIds[1], SimFileType_Weapon1Chr, true) < 0) {
                 break;
             }
         }
@@ -623,17 +616,18 @@ void HandleNowLoading(void) {
         g_GameStep++;
         break;
     case 15:
-        if (func_8932EA4(g_GameStep)) {
-            if (g_UseDisk) {
-                if (g_IsUsingCd) {
-                    break;
-                }
-            } else {
-                func_800E6250();
-            }
-            g_ServantLoaded = g_Servant;
-            g_GameStep++;
+        if (!func_8932EA4()) {
+            break;
         }
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            func_800E6250();
+        }
+        g_ServantLoaded = g_Servant;
+        g_GameStep++;
         break;
     case 16:
         AnimateNowLoading(nowLoadingModel, 64, 112, true);
@@ -641,7 +635,9 @@ void HandleNowLoading(void) {
             if (g_StageId > 0x34) {
                 D_8006C374 = g_StagesLba[g_StageId].unk28;
             } else {
-                D_8006C374 = g_StagesLba[g_StageId & 0xDF].unk28;
+                D_8006C374 =
+                    g_StagesLba[g_StageId & (u8)~STAGE_INVERTEDCASTLE_FLAG]
+                        .unk28;
             }
         }
         if (g_StageId == STAGE_NO3 && g_PlayableCharacter != PLAYER_ALUCARD) {
@@ -680,8 +676,8 @@ void HandleVideoPlayback(void) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_psp_091CE350 = (s16)AllocPrimitives(PRIM_GT4, 2);
-                prim = &g_PrimBuf[D_psp_091CE350];
+                D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 2);
+                prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
                 prim->tpage = 0x1C;
@@ -697,7 +693,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 1:
-            prim = &g_PrimBuf[D_psp_091CE350];
+            prim = &g_PrimBuf[D_8013640C];
             prim->p1--;
             if (prim->p1 == 0) {
                 g_GameStep++;
@@ -705,7 +701,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 2:
-            prim = &g_PrimBuf[D_psp_091CE350];
+            prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
             if (temp == 128) {
@@ -715,7 +711,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 3:
-            prim = &g_PrimBuf[D_psp_091CE350];
+            prim = &g_PrimBuf[D_8013640C];
             prim->p1--;
             if (prim->p1 == 0) {
                 g_GameStep++;
@@ -723,7 +719,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 4:
-            prim = &g_PrimBuf[D_psp_091CE350];
+            prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 - 1;
             func_80107250(prim, temp);
             if (temp == 64) {
@@ -731,22 +727,22 @@ void HandleVideoPlayback(void) {
                 prim2->drawMode = DRAW_HIDE;
             }
             if (temp == 0) {
-                FreePrimitives(D_psp_091CE350);
+                FreePrimitives(D_8013640C);
                 g_GameStep++;
             }
             break;
 
         case 5:
             if (!g_UseDisk || !g_IsUsingCd) {
-                D_psp_091CE5F0 = 1;
-                D_psp_091CE5E8 = 1;
+                D_8003C728 = 1;
+                g_CurrentStream = 1;
                 g_GameStep++;
             }
             break;
 
         case 6:
             g_api.o.UpdateRoomPosition();
-            if (!D_psp_091CE5F0) {
+            if (!D_8003C728) {
                 goto hack;
             }
             break;
@@ -940,7 +936,7 @@ void HandleEnding(void) {
             g_LoadFile = CdFile_AlucardPrg;
         }
         g_GameStep++;
-        if (D_psp_091CE548 != 3 && D_psp_091CE548 != 5) {
+        if (D_800978B4 != 3 && D_800978B4 != 5) {
             g_GameStep++;
         }
         break;
