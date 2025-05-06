@@ -1,30 +1,80 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "dra.h"
-#include "dra_bss.h"
+#include "../dra/dra.h"
+#include "../dra/dra_bss.h"
 #include "servant.h"
 
-RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
+void func_8932CEC(bool, s8);
 
-// BSS
+extern Weapon D_8017A000;
+extern Weapon D_8017D000;
+extern s32 D_8C630D4;
+extern u8 D_8D2DC40[];
+extern u8 D_8D2FC40;
+extern u8 D_8D3FC40;
+extern u8 D_8D41C40;
+extern u8 D_psp_091463F8;
+extern u8 D_psp_09146400;
+extern u8 D_psp_09146401;
+extern char D_psp_0914C3A8[];
+extern char D_psp_0914C3B8[];
+extern char D_psp_0914C3C8[];
+extern RECT D_psp_09156F40;
+extern u32 D_psp_09156F48;
+extern s32 D_psp_0915AF48;
+extern s32 D_psp_0915B148;
+extern s32 D_psp_0915BEC8;
+extern s32 D_psp_0915CC78;
+extern s32 D_psp_0915D808;
+extern s32 D_psp_0915E4E8;
+extern s32 D_psp_0915E4F4;
+extern char* D_psp_0915E500[];
+
+extern s32 D_psp_0915E5A0;
+extern s32 D_psp_0915E8B8;
+extern s32 D_psp_0915EB78;
+extern s32 D_psp_0915EEE0;
+extern s32 D_psp_0915F288;
+extern s32 D_psp_0915F4E0;
+extern s32 D_psp_0915F6B8;
+extern s32 D_psp_0915F940;
+extern s32 D_psp_0915FBF8;
+extern s32 D_psp_0915FC04;
+extern s32 D_psp_0915FC10;
+extern s32 D_psp_0915FC1C;
 extern NowLoadingModel g_NowLoadingModel;
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
-    Primitive* prim;
-    s32 i;
-    s16 posX;
-    s16 posY;
-    s16 angle;
-    s16 verticalWave;
-    s16 horizontalWave;
-    s16 baseY;
-    s16 sx;
+    RECT sp48;
+    s32 horizontalWave;
     s16 sy;
-    s16 ex;
+    s16 sx;
     s16 ey;
+    Primitive* prim;
+    s16 verticalWave;
+    s16 posY;
+    s16 posX;
+    s16 angle;
+    s32 primIndex;
+    s32 i;
+    s16 ex;
+    s32 baseY;
 
+    sp48.x = 0x740;
+    sp48.y = 0x80;
+    sp48.w = 0x40;
+    sp48.h = 0x40;
+
+    LoadImage(&sp48, (u_long*)&D_psp_09156F48);
+    func_89264CC(0x81D0, &D_psp_0915AF48, 1);
+    D_psp_0915E4F4 = func_psp_090F6368(
+        0, &D_psp_0915B148, &D_psp_0915D808, &D_psp_0915CC78, &D_psp_0915BEC8);
+    if (D_psp_0915E4F4 != 0) {
+        func_psp_091040A0(&D_psp_0915E4E8);
+    }
     switch (self->step) {
     case 0:
-        self->primIndex = AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+        self->primIndex =
+            (s16)AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
         if (self->primIndex == -1) {
             return;
         }
@@ -71,7 +121,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         if (isDone) {
             FreePrimitives(self->primIndex);
             self->step = 0;
-            ClearImage(&D_800A0240, 0, 0, 0);
+            ClearImage(&D_psp_09156F40, 0, 0, 0);
             return;
         }
         if (g_pads[0].pressed & PAD_UP) {
@@ -108,6 +158,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     prim = &g_PrimBuf[self->primIndex];
     verticalWave = self->verticalWave;
     horizontalWave = self->horizontalWave;
+    baseY = posY + 0x18;
     for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
         angle = self->waveTable[i];
         sy = -(rsin(angle) >> 5) * verticalWave / 0x100;
@@ -121,9 +172,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         prim->x3 = ex + (posX + prim->u3) - 0x80;
         prim->y0 = posY + sy;
         prim->y1 = posY + ey;
-        baseY = 0x18;
-        prim->y2 = posY + (sy + baseY);
-        prim->y3 = posY + (ey + baseY);
+        prim->y2 = baseY + sy;
+        prim->y3 = baseY + ey;
         self->waveTable[i] += self->speed;
         prim = prim->next;
     }
@@ -137,13 +187,15 @@ void InitializeServant(InitializeMode mode) {
 
 void func_800E6250(void) {
     if (g_Servant != 0) {
-        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarPrg))
+        while (func_psp_090FAB30(g_Servant - 1, SimFileType_FamiliarPrg, true))
             ;
-        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarChr))
+        while (func_psp_090FAB30(g_Servant - 1, SimFileType_FamiliarChr, true))
             ;
-        while (LoadFileSim((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh))
+        while (func_psp_090FAB30(
+            ((g_Servant + 2) * 2) + 0x8000, SimFileType_Vh, true))
             ;
-        while (LoadFileSim((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb))
+        while (func_psp_090FAB30(
+            ((g_Servant + 2) * 2) + 0x8001, SimFileType_Vb, true))
             ;
     }
 }
@@ -161,18 +213,19 @@ s32 func_800E6300(void) {
 }
 
 void HandleNowLoading(void) {
-    void (*pfnWeapon)(u8);
-    s8 var_a0;
-    s32 weaponId;
+    void (*pfnWeapon)(s32);
+    s32 weaponId, weaponId1, weaponId2;
+
     NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
-    if (g_GameStep >= 3 && g_GameStep < 16) {
+    if (g_GameStep >= 4 && g_GameStep < 16) {
         AnimateNowLoading(nowLoadingModel, 0x40, 0x70, false);
     }
     switch (g_GameStep) {
     case 0:
         D_8003C730 = 0;
         D_80097924 = -1;
+        D_8006C378 = -1;
         ClearBackbuffer();
         SetStageDisplayBuffer();
         g_GameStep++;
@@ -195,18 +248,23 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
-        if (D_800987B4 >= 0x3F) {
-            D_800987B4 -= 0x3F;
+        if (g_pads[0].repeat & PAD_SELECT) {
+            g_PlayableCharacter++;
+            g_PlayableCharacter %= 3;
         }
         if (D_800987B4 < 0) {
-            D_800987B4 += 0x3F;
+            D_800987B4 = 0x39;
+        }
+        if (D_800987B4 >= 0x3AU) {
+            D_800987B4 = 0;
         }
         g_StageId = g_StageSelectOrder[D_800987B4];
+        FntPrint("Player:%s\n", D_psp_0915E500[g_PlayableCharacter]);
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
-        } else if (g_StageId == STAGE_ENDING) {
-            FntPrint("ending\n");
+        } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
+            FntPrint("ending(type%d)\n", g_StageId - 0xF0);
         } else if (g_StageId == STAGE_IWA_LOAD) {
             FntPrint("iwa load\n");
         } else if (g_StageId == STAGE_IGA_LOAD) {
@@ -220,23 +278,31 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_START_SLAM_B);
             if (g_StageId == STAGE_MEMORYCARD) {
                 SetGameState(Game_MainMenu);
-            } else if (g_StageId == STAGE_ENDING) {
+            } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
+                D_800978B4 = g_StageId - 0xF0;
                 SetGameState(Game_Ending);
             } else {
-                STRCPY(g_Status.saveName, "alucard ");
+                STRCPY(g_Status.saveName, D_psp_0914C3A8);
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
-                    if (g_pads[1].pressed & PAD_UP) {
-                        STRCPY(g_Status.saveName, "richter ");
+                    STRCPY(
+                        g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
+                    g_IsTimeAttackUnlocked = true;
+                    if (g_PlayableCharacter == PLAYER_RICHTER) {
+                        STRCPY(g_Status.saveName, D_psp_0914C3B8);
                         g_PlayableCharacter = PLAYER_RICHTER;
+                        g_IsTimeAttackUnlocked = true;
+                    } else if (g_PlayableCharacter == PLAYER_MARIA) {
+                        STRCPY(g_Status.saveName, D_psp_0914C3C8);
+                        g_PlayableCharacter = PLAYER_MARIA;
                         g_IsTimeAttackUnlocked = true;
                     } else {
                         g_PlayableCharacter = PLAYER_ALUCARD;
                         g_IsTimeAttackUnlocked = false;
                     }
-                    if (g_pads[1].pressed & PAD_CIRCLE) {
+                    if (D_8C630D4 == 1) {
                         DemoInit(1);
-                    } else if (g_pads[1].pressed & PAD_CROSS) {
+                    } else if (D_8C630D4 == 2) {
                         DemoInit(0);
                     }
                 }
@@ -245,6 +311,24 @@ void HandleNowLoading(void) {
         }
         break;
     case 2:
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_PlayableCharacter == PLAYER_MARIA) {
+                func_8932FD4(2);
+            } else if (g_StageId == STAGE_ST0) {
+                func_8932FD4(3);
+            } else {
+                func_8932FD4(1);
+            }
+        } else {
+            func_8932FD4(0);
+        }
+        g_GameStep = 0x64;
+        break;
+
+    case 0x64:
+        if (!func_8933000()) {
+            break;
+        }
         D_800978C4 = 0;
         if (g_IsUsingCd) {
             break;
@@ -255,40 +339,63 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-                if (LoadFileSim(5, SimFileType_System) < 0) {
-                    break;
-                }
-                if (LoadFileSim(0x8002, SimFileType_Vh) < 0) {
-                    break;
-                }
-                if (LoadFileSim(0x8003, SimFileType_Vb) < 0) {
-                    break;
-                }
-                if (g_StageId == STAGE_ST0) {
-                    if (LoadFileSim(0x8004, SimFileType_Vh) < 0) {
+                if (g_PlayableCharacter == PLAYER_MARIA) {
+                    if (func_psp_090FAB30(5, SimFileType_System, true) < 0) {
                         break;
                     }
-                    if (LoadFileSim(0x8005, SimFileType_Vb) < 0) {
+                    if (func_psp_090FAB30(0x8014, SimFileType_Vh, true) < 0) {
                         break;
+                    }
+                    if (func_psp_090FAB30(0x8015, SimFileType_Vb, true) < 0) {
+                        break;
+                    }
+                } else {
+                    if (func_psp_090FAB30(5, SimFileType_System, true) < 0) {
+                        break;
+                    }
+                    if (func_psp_090FAB30(0x8002, SimFileType_Vh, true) < 0) {
+                        break;
+                    }
+                    if (func_psp_090FAB30(0x8003, SimFileType_Vb, true) < 0) {
+                        break;
+                    }
+                    if (g_StageId == STAGE_ST0) {
+                        // BUGS: wrong signature
+                        if (LoadFileSim(0x8004, SimFileType_Vh, true) < 0) {
+                            break;
+                        }
+                        if (LoadFileSim(0x8005, SimFileType_Vb, true) < 0) {
+                            break;
+                        }
                     }
                 }
             } else {
-                if (LoadFileSim(4, SimFileType_System) < 0) {
+                if (func_psp_090FAB30(4, SimFileType_System, true) < 0) {
                     break;
                 }
-                if (LoadFileSim(0x8000, SimFileType_Vh) < 0) {
+                if (func_psp_090FAB30(0x8000, SimFileType_Vh, true) < 0) {
                     break;
                 }
-                if (LoadFileSim(0x8001, SimFileType_Vb) < 0) {
+                if (func_psp_090FAB30(0x8001, SimFileType_Vb, true) < 0) {
                     break;
                 }
             }
         }
-        nowLoadingModel->step = 0;
-        AnimateNowLoading(nowLoadingModel, 64, 112, false);
-        g_GameStep++;
+        g_GameStep = 3;
         break;
     case 3:
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
+            func_8933130(1);
+        } else {
+            func_8933130(0);
+        }
+        g_GameStep = 0x65;
+        break;
+
+    case 0x65:
+        if (!func_893315C()) {
+            break;
+        }
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -296,18 +403,23 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-                if (LoadFileSim(13, SimFileType_System) < 0) {
+                if (func_psp_090FAB30(13, SimFileType_System, true) < 0) {
                     break;
                 }
             } else {
-                if (LoadFileSim(1, SimFileType_System) < 0) {
+                if (func_psp_090FAB30(1, SimFileType_System, true) < 0) {
                     break;
                 }
             }
+            func_891CEB8(0, 0xFD);
         }
-        g_GameStep++;
+        func_8932AD4(g_StageId);
+        g_GameStep = 4;
         break;
     case 4:
+        if (!func_8932B74(g_GameStep, 5)) {
+            break;
+        }
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -321,7 +433,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_StageChr) < 0) {
+            if (func_psp_090FAB30(0, SimFileType_StageChr, true) < 0) {
                 break;
             }
         }
@@ -340,10 +452,10 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_Vh) < 0) {
+            if (func_psp_090FAB30(0, SimFileType_Vh, true) < 0) {
                 break;
             }
-            if (LoadFileSim(0, SimFileType_Vb) < 0) {
+            if (func_psp_090FAB30(0, SimFileType_Vb, true) < 0) {
                 break;
             }
         }
@@ -362,7 +474,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+            if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
                 break;
             }
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
@@ -383,23 +495,39 @@ void HandleNowLoading(void) {
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_GameStep = 0x10;
         } else {
-            if (g_UseDisk) {
-                g_CdStep = CdStep_LoadInit;
-                g_LoadFile = CdFile_Weapon0;
-                weaponId =
-                    g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
-                if (weaponId == 0xFF) {
-                    weaponId = 1;
-                }
-                if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
-                    weaponId = g_EquipDefs[0xD8].weaponId;
-                }
-                g_EquippedWeaponIds[0] = weaponId;
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_Weapon0;
+            weaponId = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
+            if (weaponId == 0xFF) {
+                weaponId = 1;
             }
+            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+                weaponId = g_EquipDefs[0xD8].weaponId;
+                weaponId1 = weaponId;
+                weaponId2 = weaponId;
+            } else {
+                weaponId1 =
+                    g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
+                if (weaponId1 == 0xFF) {
+                    weaponId1 = 1;
+                }
+                weaponId2 =
+                    g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
+                weaponId2 = weaponId2 == 0xFF ? 1 : weaponId2;
+            }
+            g_EquippedWeaponIds[0] = weaponId;
+            func_8932CEC(0, weaponId1);
+            func_8932CEC(1, weaponId2);
             g_GameStep++;
         }
         break;
     case 11:
+        if (!func_8932D34(0)) {
+            break;
+        }
+        if (!func_8932D34(1)) {
+            break;
+        }
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -414,7 +542,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            if (LoadFileSim(weaponId, SimFileType_Weapon0Prg) < 0) {
+            if (func_psp_090FAB30(weaponId, SimFileType_Weapon0Prg, true) < 0) {
                 break;
             }
             g_EquippedWeaponIds[0] = weaponId;
@@ -428,7 +556,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            if (LoadFileSim(weaponId, SimFileType_Weapon1Prg) < 0) {
+            if (func_psp_090FAB30(weaponId, SimFileType_Weapon1Prg, true) < 0) {
                 break;
             }
             g_EquippedWeaponIds[1] = weaponId;
@@ -461,12 +589,12 @@ void HandleNowLoading(void) {
             pfnWeapon = D_8017D000.LoadWeaponPalette;
             pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else {
-            if (LoadFileSim(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) <
-                0) {
+            if (func_psp_090FAB30(
+                    g_EquippedWeaponIds[0], SimFileType_Weapon0Chr, true) < 0) {
                 break;
             }
-            if (LoadFileSim(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) <
-                0) {
+            if (func_psp_090FAB30(
+                    g_EquippedWeaponIds[1], SimFileType_Weapon1Chr, true) < 0) {
                 break;
             }
         }
@@ -484,9 +612,13 @@ void HandleNowLoading(void) {
             g_LoadFile = CdFile_ServantChr;
             g_LoadOvlIdx = g_Servant - 1;
         }
+        func_8932E78(g_Servant - 1);
         g_GameStep++;
         break;
     case 15:
+        if (!func_8932EA4()) {
+            break;
+        }
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -499,11 +631,14 @@ void HandleNowLoading(void) {
         break;
     case 16:
         AnimateNowLoading(nowLoadingModel, 64, 112, true);
-        if (((s32)g_StageId) > 0x34) {
-            D_8006C374 = g_StagesLba[g_StageId].unk28;
-        } else {
-            D_8006C374 =
-                g_StagesLba[g_StageId & (u8)~STAGE_INVERTEDCASTLE_FLAG].unk28;
+        if (D_8003C730 != 4) {
+            if (g_StageId > 0x34) {
+                D_8006C374 = g_StagesLba[g_StageId].unk28;
+            } else {
+                D_8006C374 =
+                    g_StagesLba[g_StageId & (u8)~STAGE_INVERTEDCASTLE_FLAG]
+                        .unk28;
+            }
         }
         if (g_StageId == STAGE_NO3 && g_PlayableCharacter != PLAYER_ALUCARD) {
             D_8006C374 = 0x11;
@@ -526,10 +661,22 @@ void HandleVideoPlayback(void) {
             if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
+                D_psp_0915FC04 =
+                    func_psp_090F6368(0, &D_psp_0915EEE0, &D_psp_0915E5A0,
+                                      &D_psp_0915EB78, &D_psp_0915E8B8);
+                if (D_psp_0915FC04 != 0) {
+                    func_psp_091040A0(&D_psp_0915FBF8);
+                }
+                D_psp_0915FC1C =
+                    func_psp_090F6368(0, &D_psp_0915F940, &D_psp_0915F288,
+                                      &D_psp_0915F6B8, &D_psp_0915F4E0);
+                if (D_psp_0915FC1C != 0) {
+                    func_psp_091040A0(&D_psp_0915FC10);
+                }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
+                D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
@@ -557,14 +704,6 @@ void HandleVideoPlayback(void) {
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
-            if (temp == 96) {
-                prim2 = prim->next;
-#if defined(VERSION_US)
-                prim2->drawMode = DRAW_HIDE;
-#elif defined(VERSION_HD)
-                prim2->drawMode = DRAW_DEFAULT;
-#endif
-            }
             if (temp == 128) {
                 prim->p1 = 128;
                 g_GameStep++;
@@ -594,7 +733,7 @@ void HandleVideoPlayback(void) {
             break;
 
         case 5:
-            if (!g_IsUsingCd) {
+            if (!g_UseDisk || !g_IsUsingCd) {
                 D_8003C728 = 1;
                 g_CurrentStream = 1;
                 g_GameStep++;
@@ -640,8 +779,6 @@ void HandlePrologueEnd(void) {
 }
 
 void MainMenuHandler(void) {
-    s32 pad[0x40];
-
     switch (g_GameStep) {
     case 0:
         g_StageId = STAGE_SEL;
@@ -741,10 +878,10 @@ void HandleEnding(void) {
                 break;
             }
             LoadImage(&g_Vram.D_800ACDE0, (u_long*)STAGE_PRG_PTR);
-            LoadImage(&g_Vram.D_800ACDD8, (u_long*)0x80182000);
-            LoadImage(&g_Vram.D_800ACDB8, (u_long*)0x80192000);
+            LoadImage(&g_Vram.D_800ACDD8, (u_long*)&D_8D2FC40);
+            LoadImage(&g_Vram.D_800ACDB8, (u_long*)&D_8D3FC40);
             StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
-            LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x80194000);
+            LoadImage(&g_Vram.D_800ACDA8, (u_long*)&D_8D41C40);
             StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
@@ -822,11 +959,6 @@ void HandleEnding(void) {
         g_api.o.UpdateStageEntities();
         break;
     case 10:
-#if defined(VERSION_US)
-        PlaySfx(18);
-        PlaySfx(11);
-        MuteSound();
-#endif
         SetGameState(Game_Init);
         break;
     case 256:
@@ -845,11 +977,6 @@ void UpdateGame(void) {
     case Game_Title:
         HandleTitle();
         break;
-#if defined(VERSION_US)
-    case Game_99:
-        HandleTitle();
-        break;
-#endif
     case Game_Play:
         HandlePlay();
         break;

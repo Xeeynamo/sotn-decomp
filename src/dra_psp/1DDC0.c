@@ -518,7 +518,7 @@ s32 LoadFileSimToMem(SimKind kind) {
     return 0;
 }
 
-s32 func_psp_090FAB30(s32 fileId, SimFileType type, s32 arg2) {
+s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     char buf[40];
     char buf1[64];
     char buf2[64];
@@ -971,5 +971,5 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, s32 arg2) {
 }
 
 s32 LoadFileSim(s32 fileId, SimFileType type) {
-    return func_psp_090FAB30(fileId, type, 0);
+    return func_psp_090FAB30(fileId, type, false);
 }
