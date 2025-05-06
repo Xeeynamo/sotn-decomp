@@ -1,20 +1,4 @@
 # Matches in src or any subdirectory
 !.gitignore
-rooms.c
-sprites.c
-e_laydef.c
-e_layout.c
-graphics_banks.h
-layers.h
-palette_def.h
-sprite_banks.h
-tilemap_*.h
-tiledef_*.h
-cutscene_data*.h
-hud_*.h
-font_*.h
-subweapons_def.h
-blueprints_def.h
-
-weapon/w_*_1.h
-weapon/w_*_2.h
+gen_*.c
+gen_*.h

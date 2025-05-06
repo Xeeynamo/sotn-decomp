@@ -41,6 +41,10 @@ segments:
       - [0x0, data]
       - [0xA0C, .data, e_init]
       - [0xCF4, data]
+      - [0xD5C, .data, st_debug]
+      - [0xDDC, data]
+      - [0x1880, .data, e_secrets]
+      - [0x18B0, data, e_secrets]
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
       - [0x1974, .data, e_killer_fish]
@@ -81,6 +85,7 @@ segments:
       - [0x40D3C, .rodata, prim_helpers]
       - [0x40D44, c, st_debug]
       - [0x40FC8, c, first_c_file]
+      - [0x486F4, c, e_secrets]
       - [0x48E4C, c, e_bat]
       - [0x49130, c, e_killer_fish]
       - [0x49538, c, cutscene]

@@ -1841,7 +1841,7 @@ Entity* CreateEntFactoryFromEntity(
 }
 
 static FactoryBlueprint blueprints[] = {
-#include "blueprints_def.h"
+#include "gen_blueprints.h"
 };
 STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 

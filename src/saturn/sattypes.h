@@ -52,6 +52,18 @@ typedef struct {
     u16 unk2;
 } AnimationFrame;
 
+typedef struct Collider {
+    /* 0x00 */ u32 effects;
+    /* 0x04 */ s32 unk4; // possibly an x offset
+    /* 0x08 */ s32 unk8;
+    /* 0x0C */ s32 unkC;
+    /* 0x10 */ s32 unk10;
+    /* 0x14 */ s32 unk14; // Left edge of queried tile collision
+    /* 0x18 */ s32 unk18; // Top edge of queried tile collision
+    /* 0x1C */ s32 unk1C; // Right edge of queried tile collision
+    /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
+} Collider;               /* size=0x24 */
+
 struct Entity;
 
 typedef void (*PfnEntityUpdate)(struct Entity*);
@@ -121,10 +133,33 @@ typedef struct {
     /* 0x89 */ u8 unk89;
 } ET_ExplosionPuffOpaque;
 
+typedef struct {
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[2];
+#endif
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 subweaponId;
+    /* 0xB2 */ s16 unkB2;
+} ET_Subweapon;
+
 typedef union { // offset=0x7C
     u8 base[0x38];
     ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
     ET_ExplosionPuffOpaque opaquePuff;
+    ET_Subweapon subweapon;
 } Ext;
 
 typedef struct Entity {
@@ -165,7 +200,7 @@ typedef struct Entity {
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
-    /* 0x74 */ u16 unk74;
+    /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x1];
     /* 0x80 */ Ext ext;
     /* 0x88 */ char pad_88[0x2];
@@ -182,10 +217,6 @@ typedef struct Unk0600B344 {
     /* 0x14 */ s32 unk14;
     /* 0x18 */ s32 unk18;
 } Unk0600B344;
-
-typedef struct {
-    // structure still unknown
-} Collider;
 
 typedef struct {
     /* 8003C7F4 */ Entity* (*CreateEntFactoryFromEntity)(
@@ -339,7 +370,9 @@ typedef struct {
     /* 0x3B0 */ u32 padPressed;
     char pad3B4[0x14];
     /* 0x3C8 */ s16 timers[16]; // the array is bigger than PSX
-    char pad3E8[0x10];
+    char pad3E8[4];
+    /* 0x3EC */ s32 vram_flag;
+    char pad2[8];
     /* 0x3F8 */ u32 status;
     char pad3FC[0x34];
     /* 0x430 */ u16 unk44;
@@ -353,6 +386,11 @@ typedef struct {
     char pad43C[0x1C];
     /* 0x45C */ u16 unk70;
     /* 0x45E */ u16 unk72;
+    /* 0x460 */ u32 unk74;
+    /* 0x464 */ u16 unk78;
+    /* 0x466 */ u16 unk7A;
+    /* 0x468 */ u16 unk7C;
+    /* 0x46A */ u16 unk7E;
 } PlayerState;
 
 typedef enum {
@@ -436,5 +474,16 @@ extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
+
+#define NUM_HORIZONTAL_SENSORS 4
+#define NUM_VERTICAL_SENSORS 7
+
+// changed to s32
+typedef struct {
+    /* 0x0 */ s32 x;
+    /* 0x2 */ s32 y;
+} Point16; // size = 0x4
+
+#define FIX(x) (x << 16)
 
 #endif

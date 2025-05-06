@@ -3,14 +3,15 @@ package spritebanks
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"io"
-	"os"
-	"path"
-	"sort"
-	"strings"
 )
 
 type SpriteBanks struct {
@@ -84,7 +85,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 }
 
 func buildSprites(fileName string, outputDir string) error {
-	ovlName := path.Base(outputDir)
+	ovlName := filepath.Base(outputDir)
 	data, err := os.ReadFile(fileName)
 	if err != nil {
 		return err
@@ -124,8 +125,8 @@ func buildSprites(fileName string, outputDir string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(path.Join(outputDir, "sprites.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(outputDir, "gen_sprites.c"), []byte(sbData.String()), 0644); err != nil {
 		return err
 	}
-	return os.WriteFile(path.Join(outputDir, "sprite_banks.h"), []byte(sbHeader.String()), 0644)
+	return os.WriteFile(filepath.Join(outputDir, "gen_sprite_banks.h"), []byte(sbHeader.String()), 0644)
 }

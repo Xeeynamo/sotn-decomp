@@ -5,11 +5,12 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"gopkg.in/yaml.v2"
 	"io"
 	"os"
-	"path"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -50,9 +51,8 @@ type scriptSrc struct {
 	Script [][]string `yaml:"script"`
 }
 
-var version = os.Getenv("VERSION")
-
 func (h *handler) Build(e assets.BuildArgs) error {
+	platform := sotn.GetPlatform()
 	inFileName := assetPath(e.AssetDir, e.Name)
 	data, err := os.ReadFile(inFileName)
 	if err != nil {
@@ -80,7 +80,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 
 					// If the byte is in the PSP's upper language character position,
 					// output the hex literal
-					if version == "pspeu" && byteValue >= 0xA0 && byteValue <= 0xDF {
+					if platform == sotn.PlatformPSP && byteValue >= 0xA0 && byteValue <= 0xDF {
 						// TODO: This can probably output something like _SE() which
 						// can be handled by sotn_str
 						sb.WriteString(fmt.Sprintf("'\\x%02X',", byteValue))
@@ -125,14 +125,14 @@ func assetPath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return path.Join(dir, fmt.Sprintf("%s.yaml", name))
+	return filepath.Join(dir, fmt.Sprintf("%s.yaml", name))
 }
 
 func sourcePath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return path.Join(dir, fmt.Sprintf("%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
 }
 
 type cmdDef struct {
@@ -180,6 +180,7 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return nil, fmt.Errorf("unable to read cutscene script: %w", err)
 	}
+	platform := sotn.GetPlatform()
 
 	script := make([][]string, 0)
 	text := ""
@@ -225,7 +226,7 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 			script = append(script, command)
 		} else if op < 0x7F {
 			text += string([]byte{byte(op)})
-		} else if version == "pspeu" && op >= 0xA0 && op <= 0xDF {
+		} else if platform == sotn.PlatformPSP && op >= 0xA0 && op <= 0xDF {
 			// PSP has multi-language support with characters that exceed the ASCII range
 			text += fmt.Sprintf("\\x%02X", byte(op))
 		} else {
