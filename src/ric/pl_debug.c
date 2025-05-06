@@ -1,25 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-void RicDebugOff() { g_IsRicDebugEnter = false; }
+void RicDebugOff() { g_RicDebug.enabled = false; }
 
 static void RicDebugEnter(void) {
-    g_IsRicDebugEnter = true;
-    g_RicDebugCurFrame = PLAYER.animCurFrame;
-    g_RicDebugDrawFlags = PLAYER.drawFlags;
-    g_RicDebugPalette = PLAYER.palette;
+    g_RicDebug.enabled = true;
+    g_RicDebug.curFrame = PLAYER.animCurFrame;
+    g_RicDebug.drawFlags = PLAYER.drawFlags;
+    g_RicDebug.palette = PLAYER.palette;
 }
 
 static void RicDebugExit(void) {
-    g_IsRicDebugEnter = false;
-    PLAYER.animCurFrame = g_RicDebugCurFrame;
-    PLAYER.drawFlags = g_RicDebugDrawFlags;
-    PLAYER.palette = g_RicDebugPalette;
+    g_RicDebug.enabled = false;
+    PLAYER.animCurFrame = g_RicDebug.curFrame;
+    PLAYER.drawFlags = g_RicDebug.drawFlags;
+    PLAYER.palette = g_RicDebug.palette;
     PLAYER.hitParams = 0;
 }
 
 bool RicDebug(void) {
-    if (!g_IsRicDebugEnter) {
+    if (!g_RicDebug.enabled) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.demo_timer == 0) {
                 RicDebugEnter();

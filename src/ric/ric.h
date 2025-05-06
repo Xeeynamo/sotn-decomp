@@ -409,12 +409,8 @@ extern u8 uv_anim_801548F4[6][8];
 extern s8 D_80156A28;
 extern s8 D_80156904;
 
-extern ButtonComboState g_bladeDashButtons;
-extern ButtonComboState D_801758E4;
-extern s16 g_RicDebugCurFrame;
-extern s16 g_RicDebugDrawFlags;
-extern u16 g_RicDebugPalette;
-extern s16 g_IsRicDebugEnter;
+extern ButtonComboState g_RicComboButtons[2];
+extern DebugInfo g_RicDebug;
 extern s32 D_80175958[32];
 extern s32 D_801759D8[32];
 

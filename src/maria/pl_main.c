@@ -206,42 +206,42 @@ static void CheckBladeDashInput(void) {
     up = PAD_UP;
     down = PAD_DOWN;
 
-    switch (g_MarBladeDashButtons.buttonsCorrect) {
+    switch (g_MarComboButtons[0].buttonsCorrect) {
     case 0:
         if (g_Player.padTapped == up) {
-            g_MarBladeDashButtons.timer = 20;
-            g_MarBladeDashButtons.buttonsCorrect++;
+            g_MarComboButtons[0].timer = 20;
+            g_MarComboButtons[0].buttonsCorrect++;
         }
         break;
     case 1:
         if (pressed == down) {
-            g_MarBladeDashButtons.timer = 20;
-            g_MarBladeDashButtons.buttonsCorrect++;
+            g_MarComboButtons[0].timer = 20;
+            g_MarComboButtons[0].buttonsCorrect++;
             break;
         }
-        if (--g_MarBladeDashButtons.timer == 0) {
-            g_MarBladeDashButtons.buttonsCorrect = 0;
+        if (--g_MarComboButtons[0].timer == 0) {
+            g_MarComboButtons[0].buttonsCorrect = 0;
         }
         break;
     case 2:
         if (pressed == down_forward) {
-            g_MarBladeDashButtons.timer = 20;
-            g_MarBladeDashButtons.buttonsCorrect++;
+            g_MarComboButtons[0].timer = 20;
+            g_MarComboButtons[0].buttonsCorrect++;
             break;
         }
-        if (--g_MarBladeDashButtons.timer == 0) {
-            g_MarBladeDashButtons.buttonsCorrect = 0;
+        if (--g_MarComboButtons[0].timer == 0) {
+            g_MarComboButtons[0].buttonsCorrect = 0;
         }
         break;
     case 3:
-        if (--g_MarBladeDashButtons.timer == 0) {
-            g_MarBladeDashButtons.buttonsCorrect = 0;
+        if (--g_MarComboButtons[0].timer == 0) {
+            g_MarComboButtons[0].buttonsCorrect = 0;
         }
         if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK ||
             PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_JUMP ||
             PLAYER.step == PL_S_FALL) {
             if (g_Player.unk72) {
-                g_MarBladeDashButtons.buttonsCorrect = 0;
+                g_MarComboButtons[0].buttonsCorrect = 0;
             } else if (!g_Player.unk46 && (g_Player.padTapped & PAD_SQUARE)) {
                 MarSetBladeDash();
             }
@@ -251,29 +251,29 @@ static void CheckBladeDashInput(void) {
 }
 
 static void CheckHighJumpInput(void) {
-    switch (mar_801758E4.buttonsCorrect) {
+    switch (g_MarComboButtons[1].buttonsCorrect) {
     case 0:
         if (g_Player.padTapped & PAD_DOWN) {
             if (g_Player.padHeld == 0) {
-                mar_801758E4.timer = 16;
-                mar_801758E4.buttonsCorrect++;
+                g_MarComboButtons[1].timer = 16;
+                g_MarComboButtons[1].buttonsCorrect++;
                 return;
             }
         }
         break;
     case 1:
         if (g_Player.padTapped & PAD_UP) {
-            mar_801758E4.timer = 16;
-            mar_801758E4.buttonsCorrect++;
+            g_MarComboButtons[1].timer = 16;
+            g_MarComboButtons[1].buttonsCorrect++;
             return;
         }
-        if (--mar_801758E4.timer == 0) {
-            mar_801758E4.buttonsCorrect = 0;
+        if (--g_MarComboButtons[1].timer == 0) {
+            g_MarComboButtons[1].buttonsCorrect = 0;
         }
         break;
     case 2:
-        if (mar_801758E4.timer && --mar_801758E4.timer == 0) {
-            mar_801758E4.buttonsCorrect = 0;
+        if (g_MarComboButtons[1].timer && --g_MarComboButtons[1].timer == 0) {
+            g_MarComboButtons[1].buttonsCorrect = 0;
             return;
         }
         if (g_Player.padTapped & PAD_CROSS) {
@@ -281,10 +281,10 @@ static void CheckHighJumpInput(void) {
                 (PLAYER.step == PL_S_JUMP && PLAYER.velocityY > FIX(1)) ||
                 PLAYER.step == PL_S_FALL) {
                 if (g_Player.unk72) {
-                    mar_801758E4.buttonsCorrect = 0;
+                    g_MarComboButtons[1].buttonsCorrect = 0;
                 } else {
                     MarSetHighJump();
-                    mar_801758E4.buttonsCorrect = 0;
+                    g_MarComboButtons[1].buttonsCorrect = 0;
                 }
             }
         }

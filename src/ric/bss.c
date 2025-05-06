@@ -1,12 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-ButtonComboState g_bladeDashButtons;
-ButtonComboState D_801758E4;
+ButtonComboState g_RicComboButtons[2];
 STATIC_PAD_BSS(104);
-s16 g_RicDebugCurFrame;
-s16 g_RicDebugDrawFlags;
-u16 g_RicDebugPalette;
-s16 g_IsRicDebugEnter;
+DebugInfo g_RicDebug;
 s32 D_80175958[32];
 s32 D_801759D8[32];

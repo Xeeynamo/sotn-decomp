@@ -229,7 +229,7 @@ void func_8015E484(void) {
     s32 collision = 0;
     s16 startingPosY = PLAYER.posY.i.hi;
 
-    if (g_Player.vram_flag & 1 || g_IsRicDebugEnter || g_Player.unk78 == 1) {
+    if (g_Player.vram_flag & 1 || g_RicDebug.enabled || g_Player.unk78 == 1) {
         return;
     }
     if (PLAYER.posY.i.hi < 0x30) {

@@ -1894,6 +1894,14 @@ typedef struct {
     s16 timer;
 } ButtonComboState;
 
+// shared between DRA, RIC, MAR
+typedef struct {
+    s16 curFrame;
+    s16 drawFlags;
+    u16 palette;
+    s16 enabled;
+} DebugInfo;
+
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 

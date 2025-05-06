@@ -308,42 +308,42 @@ static void CheckBladeDashInput(void) {
     up = PAD_UP;
     down = PAD_DOWN;
 
-    switch (g_bladeDashButtons.buttonsCorrect) {
+    switch (g_RicComboButtons[0].buttonsCorrect) {
     case 0:
         if (g_Player.padTapped == up) {
-            g_bladeDashButtons.timer = 20;
-            g_bladeDashButtons.buttonsCorrect++;
+            g_RicComboButtons[0].timer = 20;
+            g_RicComboButtons[0].buttonsCorrect++;
         }
         break;
     case 1:
         if (pressed == down) {
-            g_bladeDashButtons.timer = 20;
-            g_bladeDashButtons.buttonsCorrect++;
+            g_RicComboButtons[0].timer = 20;
+            g_RicComboButtons[0].buttonsCorrect++;
             break;
         }
-        if (--g_bladeDashButtons.timer == 0) {
-            g_bladeDashButtons.buttonsCorrect = 0;
+        if (--g_RicComboButtons[0].timer == 0) {
+            g_RicComboButtons[0].buttonsCorrect = 0;
         }
         break;
     case 2:
         if (pressed == down_forward) {
-            g_bladeDashButtons.timer = 20;
-            g_bladeDashButtons.buttonsCorrect++;
+            g_RicComboButtons[0].timer = 20;
+            g_RicComboButtons[0].buttonsCorrect++;
             break;
         }
-        if (--g_bladeDashButtons.timer == 0) {
-            g_bladeDashButtons.buttonsCorrect = 0;
+        if (--g_RicComboButtons[0].timer == 0) {
+            g_RicComboButtons[0].buttonsCorrect = 0;
         }
         break;
     case 3:
-        if (--g_bladeDashButtons.timer == 0) {
-            g_bladeDashButtons.buttonsCorrect = 0;
+        if (--g_RicComboButtons[0].timer == 0) {
+            g_RicComboButtons[0].buttonsCorrect = 0;
         }
         if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK ||
             PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_JUMP ||
             PLAYER.step == PL_S_FALL) {
             if (g_Player.unk72) {
-                g_bladeDashButtons.buttonsCorrect = 0;
+                g_RicComboButtons[0].buttonsCorrect = 0;
             } else if (!g_Player.unk46 && (g_Player.padTapped & PAD_SQUARE)) {
                 RicSetBladeDash();
             }
@@ -353,29 +353,29 @@ static void CheckBladeDashInput(void) {
 }
 
 static void CheckHighJumpInput(void) {
-    switch (D_801758E4.buttonsCorrect) {
+    switch (g_RicComboButtons[1].buttonsCorrect) {
     case 0:
         if (g_Player.padTapped & PAD_DOWN) {
             if (g_Player.padHeld == 0) {
-                D_801758E4.timer = 16;
-                D_801758E4.buttonsCorrect++;
+                g_RicComboButtons[1].timer = 16;
+                g_RicComboButtons[1].buttonsCorrect++;
                 return;
             }
         }
         break;
     case 1:
         if (g_Player.padTapped & PAD_UP) {
-            D_801758E4.timer = 16;
-            D_801758E4.buttonsCorrect++;
+            g_RicComboButtons[1].timer = 16;
+            g_RicComboButtons[1].buttonsCorrect++;
             return;
         }
-        if (--D_801758E4.timer == 0) {
-            D_801758E4.buttonsCorrect = 0;
+        if (--g_RicComboButtons[1].timer == 0) {
+            g_RicComboButtons[1].buttonsCorrect = 0;
         }
         break;
     case 2:
-        if (D_801758E4.timer && --D_801758E4.timer == 0) {
-            D_801758E4.buttonsCorrect = 0;
+        if (g_RicComboButtons[1].timer && --g_RicComboButtons[1].timer == 0) {
+            g_RicComboButtons[1].buttonsCorrect = 0;
             return;
         }
         if (g_Player.padTapped & PAD_CROSS && !g_Player.unk46) {
@@ -383,10 +383,10 @@ static void CheckHighJumpInput(void) {
                 (PLAYER.step == PL_S_JUMP && PLAYER.velocityY > FIX(1)) ||
                 PLAYER.step == PL_S_FALL) {
                 if (g_Player.unk72) {
-                    D_801758E4.buttonsCorrect = 0;
+                    g_RicComboButtons[1].buttonsCorrect = 0;
                 } else {
                     RicSetHighJump();
-                    D_801758E4.buttonsCorrect = 0;
+                    g_RicComboButtons[1].buttonsCorrect = 0;
                 }
             }
         }
