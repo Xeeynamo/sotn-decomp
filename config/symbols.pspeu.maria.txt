@@ -161,6 +161,7 @@ wpn_cat_spr_7 = 0x092CC720;
 wpn_cat_spr_8 = 0x092CC7D8;
 D_pspeu_092CCF70 = 0x092CCF70;
 D_pspeu_092CE450 = 0x092CE450;
+maria_sprites = 0x092DECC8;
 D_pspeu_092DEE98 = 0x092DEE98;
 D_pspeu_092DFE38 = 0x092DFE38;
 D_pspeu_092E0C28 = 0x092E0C28;

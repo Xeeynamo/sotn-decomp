@@ -62,10 +62,12 @@ u8 D_pspeu_092CE450[] = {
 #include "gen_wpn_dragon_gfx.h"
 };
 
+#include "gen_maria.h"
+
 static void func_pspeu_092BFFB8(s32 paletteID, u16* palette) {
     s32 i;
 
-    for (i = 0; i < 0x10; i++) {
+    for (i = 0; i < COLORS_PER_PAL; i++) {
         if (palette[i] != 0) {
             palette[i] |= 0x8000;
         }
@@ -129,7 +131,6 @@ void func_pspeu_092C0248(void) {
 }
 
 extern PlayerOvl D_pspeu_092C0400;
-extern u8* D_pspeu_092DECC8[0x74];
 extern LangImg D_pspeu_092E5538;
 extern LangImg D_pspeu_092E5550;
 extern LangImg D_pspeu_092E5568;
@@ -141,7 +142,7 @@ extern s16 D_pspeu_092CC766;
 extern s16 D_pspeu_092CC81E;
 void MAR_Load(void) {
     memcpy(&g_PlOvl, &D_pspeu_092C0400, sizeof(PlayerOvl));
-    memcpy(&g_PlOvlSpritesheet, &D_pspeu_092DECC8, sizeof(D_pspeu_092DECC8));
+    memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
     func_91040A0(&D_pspeu_092E5538);
     func_91040A0(&D_pspeu_092E5550);
     func_91040A0(&D_pspeu_092E5568);

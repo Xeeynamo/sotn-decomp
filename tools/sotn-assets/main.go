@@ -28,6 +28,9 @@ func handlerConfigBuild(args []string) error {
 	if err != nil {
 		return err
 	}
+	if c.Version != "" {
+		_ = os.Setenv("VERSION", c.Version)
+	}
 	return buildFromConfig(c)
 }
 
