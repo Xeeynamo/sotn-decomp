@@ -48,7 +48,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err != nil {
 			return fmt.Errorf("failed to open palette file %s: %w", e.Args[0], err)
 		}
-		offset = 0x40000 + 32*0x20
 		_, _ = f.Seek(int64(offset), io.SeekStart)
 		data := make([]byte, 0x20)
 		read, err := f.Read(data)
