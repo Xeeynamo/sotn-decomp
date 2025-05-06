@@ -6,7 +6,3 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/1AD50", func_psp_090F76D0);
 INCLUDE_ASM("dra_psp/psp/dra_psp/1AD50", func_800E5498);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/1AD50", HandleGameOver);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/1AD50", func_psp_090F8348);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/1AD50", InitializeServant);

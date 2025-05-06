@@ -150,6 +150,7 @@ func_800E414C = 0x090f6430;
 ClearBackbuffer = 0x090F67E8;
 HandleTitle = 0x090f6800;
 func_800E493C = 0x090F6A50;
+func_800E4970 = 0x090F6A90;
 HandlePlay = 0x090f6b28;
 func_800E5498 = 0x090f77E8;
 HandleGameOver = 0x090f78c8;

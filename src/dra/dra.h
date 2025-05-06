@@ -459,7 +459,7 @@ typedef struct {
     /* 0x0E */ s16 verticalWave;
     /* 0x10 */ s16 horizontalWave;
     /* 0x12 */ u16 unk12; // unused
-    /* 0x14 */ u16 speed;
+    /* 0x14 */ s16 speed;
     /* 0x16 */ s16 waveTable[NOW_LOADING_PRIM_COUNT];
 } NowLoadingModel; // size=0x36
 
@@ -731,7 +731,6 @@ void SetGPUBuffRGB(u8 arg0);
 void func_800E34DC(s32 arg0);
 void SetGameState(GameState gameState);
 void func_800E4970(void);
-s32 LoadFileSim(s32 id, SimFileType type);
 void func_800E8DF0(void);
 s32 _peek_event(void);
 s32 _card_event_x(void);
