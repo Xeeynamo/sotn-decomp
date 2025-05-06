@@ -362,12 +362,8 @@ extern s32 mar_8015459C;
 extern u16 mar_80154574[];
 
 extern s16 mar_80154568[];
-extern ButtonComboState g_MarBladeDashButtons;
-extern ButtonComboState mar_801758E4;
-extern s16 g_MarDebugCurFrame;
-extern s16 g_MarDebugDrawFlags;
-extern u16 g_MarDebugPalette;
-extern s16 g_IsMarDebugEnter;
+extern ButtonComboState g_MarComboButtons[2];
+extern DebugInfo g_MarDebug;
 extern s32 mar_80175958[32];
 extern s32 mar_801759D8[32];
 

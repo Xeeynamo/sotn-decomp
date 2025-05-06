@@ -1,25 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-void MarDebugOff() { g_IsMarDebugEnter = false; }
+void MarDebugOff() { g_MarDebug.enabled = false; }
 
 static void MarDebugEnter(void) {
-    g_IsMarDebugEnter = true;
-    g_MarDebugCurFrame = PLAYER.animCurFrame;
-    g_MarDebugDrawFlags = PLAYER.drawFlags;
-    g_MarDebugPalette = PLAYER.palette;
+    g_MarDebug.enabled = true;
+    g_MarDebug.curFrame = PLAYER.animCurFrame;
+    g_MarDebug.drawFlags = PLAYER.drawFlags;
+    g_MarDebug.palette = PLAYER.palette;
 }
 
 static void MarDebugExit(void) {
-    g_IsMarDebugEnter = false;
-    PLAYER.animCurFrame = g_MarDebugCurFrame;
-    PLAYER.drawFlags = g_MarDebugDrawFlags;
-    PLAYER.palette = g_MarDebugPalette;
+    g_MarDebug.enabled = false;
+    PLAYER.animCurFrame = g_MarDebug.curFrame;
+    PLAYER.drawFlags = g_MarDebug.drawFlags;
+    PLAYER.palette = g_MarDebug.palette;
     PLAYER.hitParams = 0;
 }
 
 bool MarDebug(void) {
-    if (!g_IsMarDebugEnter) {
+    if (!g_MarDebug.enabled) {
         if (g_Player.padTapped & PAD_L2) {
             if (g_Player.demo_timer == 0) {
                 MarDebugEnter();

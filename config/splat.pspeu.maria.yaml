@@ -63,5 +63,5 @@ segments:
       - [0x3F568, .rodata, pl_steps]
       - [0x3F5A0, .rodata, pl_blueprints]
       - [0x3F6A0, .rodata, 18838]
-      - {type: bss, vram: 0x92E5900}
+      - [0x3F700, .bss, bss]
   - [0x3F700]

@@ -11,7 +11,7 @@ with open(sys.argv[1]) as yaml_file:
 c_subsegments = [
     seg
     for seg in config["segments"][1]["subsegments"]
-    if type(seg) == list and (seg[1] == "c" or seg[1] == ".data")
+    if type(seg) == list and (seg[1] == "c" or seg[1] == ".data" or seg[1] == ".bss")
 ]
 merged_functions = []
 for seg in c_subsegments:
