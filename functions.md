@@ -7,10 +7,10 @@
 | dra       | func_8011EDA0                            |        7 |          1 |        |                                 |       |
 | dra       | DebugUpdate                              |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
-| dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
 | dra       | LoadFileSim                              |        7 |          1 |        |                                 |       |
 | dra       | SetReverbDepth                           |        7 |          1 |        |                                 |       |
 | dra       | MenuSoundConfigDraw                      |        7 |          1 |        |                                 |       |
+| dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
 | dra       | func_psp_0913D610                        |        7 |          1 |        |                                 |       |
 | dra       | func_800F66BC                            |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F1CE0                        |        7 |          1 |        |                                 |       |
@@ -135,7 +135,6 @@
 | dra       | func_psp_090EDB70                        |       19 |          3 |        |                                 |       |
 | maria_psp | func_pspeu_092C0248                      |       19 |          3 |        |                                 |       |
 | dra       | func_8010427C                            |       19 |          4 |        |                                 |       |
-| dra       | 1DCE0.rodata                             |       20 |          0 | Yes    |                                 |       |
 | ric       | pl_setstep.rodata                        |       20 |          0 | Yes    |                                 |       |
 | lib       | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib       | e_flying_zombie.rodata                   |       20 |          0 | Yes    |                                 |       |
@@ -296,7 +295,6 @@
 | dra       | func_psp_09141878                        |       29 |          5 |        |                                 |       |
 | chi       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | lib       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
-| dra       | 1C030.rodata                             |       30 |          0 | Yes    |                                 |       |
 | chi       | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | lib       | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | st0       | prologue_scroll.rodata                   |       30 |          0 | Yes    |                                 |       |
@@ -476,7 +474,7 @@
 | maria     | MarSetInvincibilityFrames                |       41 |          5 |        |                                 |       |
 | dra       | func_8011B530                            |       41 |          6 |        |                                 |       |
 | dra       | SetStageDisplayBuffer                    |       41 |          6 |        |                                 |       |
-| dra       | func_psp_090F6A90                        |       41 |         15 |        |                                 |       |
+| dra       | func_800E4970                            |       41 |         15 |        |                                 |       |
 |           | bat.rodata                               |       42 |          0 | Yes    |                                 |       |
 | chi       | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | lib       | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
@@ -516,6 +514,7 @@
 | ric       | RicSetSlide                              |       43 |          8 |        |                                 |       |
 | dra       | DebugInputWait                           |       43 |          9 |        |                                 |       |
 | dra       | PlayerStepFall                           |       43 |         11 |        |                                 |       |
+| dra       | loading.rodata                           |       44 |          0 | Yes    |                                 |       |
 | chi       | en_venus_weed.rodata                     |       44 |          0 | Yes    |                                 |       |
 | dra       | SetVolumeCommand22_23                    |       44 |          3 |        |                                 |       |
 | st0       | CollectGold                              |       44 |          3 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
@@ -1453,7 +1452,7 @@
 | lib       | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra       | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
 | dra       | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
-| dra       | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 0.928 |
+| dra       | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 1.0   |
 | dra       | func_psp_090F5560                        |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
 | chi       | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | lib       | func_psp_092422F8                        |      374 |         35 |        |                                 |       |
