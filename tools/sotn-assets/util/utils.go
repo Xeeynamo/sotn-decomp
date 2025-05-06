@@ -158,10 +158,10 @@ func MakePaletteFromR5G5B5A1(data []byte, invertAlpha bool) []color.RGBA {
 		c := uint16(data[2*i]) | uint16(data[2*i+1])<<8
 		a := uint8(255)
 		if invertAlpha {
-			a = 0
+			a = 127
 		}
 		if c&0x8000 != 0 {
-			a = 0
+			a = 127
 			if invertAlpha {
 				a = 255
 			}

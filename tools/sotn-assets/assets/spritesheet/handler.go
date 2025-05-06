@@ -61,8 +61,23 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	} else {
 		palette = util.MakeGreyPalette(BPP)
 	}
+	headerFirst := sotn.GetPlatform() == sotn.PlatformPSX
+	start := e.Start
+	maxSpritCount := 0x100
 	r := bytes.NewReader(e.Data)
-	if err := e.RamBase.Sum(e.Start).MoveFile(r, e.RamBase); err != nil {
+	if !headerFirst {
+		start = e.End
+		maxSpritCount = 0
+		for {
+			addr := psx.GetAddr(e.Data[start-4 : start])
+			if addr.Real(e.RamBase) >= e.End || addr.Real(e.RamBase) < e.Start {
+				break
+			}
+			start -= 4
+			maxSpritCount++
+		}
+	}
+	if err := e.RamBase.Sum(start).MoveFile(r, e.RamBase); err != nil {
 		return err
 	}
 	if err := os.MkdirAll(filepath.Join(e.AssetDir, e.Name), 0755); err != nil && !os.IsExist(err) {
@@ -70,7 +85,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	}
 	eg := errgroup.Group{}
 	entries := make([]spriteEntry, 0, 0x100)
-	for {
+	for i := 0; i < maxSpritCount; i++ {
 		spritePtr := psx.ReadAddr(r)
 		if spritePtr < e.RamBase {
 			break
