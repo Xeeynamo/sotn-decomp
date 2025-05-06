@@ -572,6 +572,10 @@ $(BUILD_DIR)/$(ASSETS_DIR)/%/subweapons.yaml.o: $(ASSETS_DIR)/%/subweapons.yaml
 	touch $@
 $(BUILD_DIR)/$(ASSETS_DIR)/%/blueprints.yaml.o: $(ASSETS_DIR)/%/blueprints.yaml
 	touch $@
+$(BUILD_DIR)/$(ASSETS_DIR)/%/richter.yaml.o: $(ASSETS_DIR)/%/richter.yaml
+	touch $@
+$(BUILD_DIR)/$(ASSETS_DIR)/%/richter.o: $(ASSETS_DIR)/%/richter.yaml
+	touch $@
 
 ##@
 ##@ Disc Dumping Targets

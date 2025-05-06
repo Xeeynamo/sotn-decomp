@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "ric.h"
 
-extern u8* RIC_sprites;
+extern u8* richter_sprites[RIC_SPRITE_COUNT];
 void RicMain(void);
 void RicInit(u16 params);
 void RicUpdatePlayerEntities(void);
@@ -12,15 +12,12 @@ PlayerOvl RIC_player = {
     RicInit,
     RicUpdatePlayerEntities,
     RicGetPlayerSensor,
-#if defined(VERSION_PSP)
-    &RIC_sprites,
-    &RIC_sprites,
-    &RIC_sprites,
-    &RIC_sprites,
-#else
-    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
-    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
-    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
-    (u8**)((u8*)&RIC_player + sizeof(PlayerOvl)),
-#endif
+    richter_sprites,
+    richter_sprites,
+    richter_sprites,
+    richter_sprites,
 };
+
+#if !defined(VERSION_PSP)
+#include "gen_richter.h"
+#endif

@@ -3,9 +3,9 @@ package sotn
 import (
 	"bufio"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -55,16 +55,11 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 					if strings.Contains(valueStr, " |") { // ignore FLAG_1 | FLAG_2
 						continue
 					}
-					base := 10
-					if strings.HasPrefix(valueStr, "0x") {
-						valueStr = valueStr[2:]
-						base = 16
-					}
-					value, err := strconv.ParseInt(valueStr, base, 32)
+					value, err := util.ParseCNumber(valueStr)
 					if err != nil {
 						return nil, err
 					}
-					currentValue = int(value)
+					currentValue = value
 				}
 				enumMap[currentValue] = name
 				currentValue++
