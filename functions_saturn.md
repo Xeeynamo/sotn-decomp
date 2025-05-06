@@ -265,7 +265,7 @@
 | richter/f_nonmat/f60A81C4.s  | func_060A81C4   |       66 |          5 | https://decomp.me/scratch/pURT5 | 0.59  |
 | alucard/f_nonmat/f60AB308.s  | func_060AB308   |       66 |          6 |                                 |       |
 | zero/f_nonmat/f60078EC.s     | func_060078EC   |       66 |          6 |                                 |       |
-| richter/f_nonmat/f60BCA10.s  | func_060BCA10   |       66 |          7 |                                 |       |
+| richter/f_nonmat/f60BCA10.s  | func_060BCA10   |       66 |          7 | https://decomp.me/scratch/dVS8C | 0.506 |
 | alucard/f_nonmat/f60A5CD8.s  | func_060A5CD8   |       67 |          1 |                                 |       |
 | alucard/f_nonmat/f60BA9A0.s  | func_060BA9A0   |       67 |          2 |                                 |       |
 | zero/f_nonmat/f6012620.s     | func_06012620   |       67 |          2 |                                 |       |
