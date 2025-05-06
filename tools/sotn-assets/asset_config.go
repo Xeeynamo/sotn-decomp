@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
@@ -14,13 +17,12 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritesheet"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/subweaponsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
-	"os"
-	"strconv"
 )
 
 type assetSegmentEntry struct {
@@ -56,6 +58,7 @@ var handlers = func() map[string]assets.Handler {
 		skip.Handler,
 		spritebanks.Handler,
 		spriteset.Handler,
+		spritesheet.Handler,
 		subweaponsdef.Handler,
 	} {
 		m[handler.Name()] = handler

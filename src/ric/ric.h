@@ -4,6 +4,8 @@
 
 #define OVL_EXPORT(x) RIC_##x
 
+#define RIC_SPRITE_COUNT 197 // useful to sync PSX and PSP
+
 #define GAME_OVER 0x80000
 
 #define CHECK_GROUND 1

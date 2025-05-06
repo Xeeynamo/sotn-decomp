@@ -20,6 +20,8 @@ files:
         vram: 0x8013C000
         assets:
           - [0x0, skip]
+          - [0x20, spritesheet, richter, disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/f_game2.bin, 0x40400]
+          - [0x170AC, skip]
           - [0x18688, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
           - [0x188F4, skip]
           - [0x18A6C, blueprintsdef, blueprints, RicBlueprints, RicEntities]

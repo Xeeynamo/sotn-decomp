@@ -3,11 +3,14 @@ package util
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"image/color"
 	"os"
 	"path/filepath"
 	"slices"
+	"strconv"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
 
 func JoinMapKeys[T any](m map[string]T, sep string) string {
@@ -59,6 +62,20 @@ func Btoi(b bool) int {
 		return 1
 	}
 	return 0
+}
+
+// if the number starts with 0x, it parses it as a hexadecimal value, otherwise decimal
+func ParseCNumber(s string) (int, error) {
+	base := 10
+	if strings.HasPrefix(s, "0x") {
+		s = s[2:]
+		base = 16
+	}
+	value, err := strconv.ParseInt(s, base, 32)
+	if err != nil {
+		return 0, err
+	}
+	return int(value), nil
 }
 
 func SortUniqueOffsets(slice []psx.Addr) []psx.Addr {
@@ -117,4 +134,92 @@ func WriteBytesAsHex(sb *strings.Builder, content []byte) {
 		}
 	}
 	sb.WriteByte('\n')
+}
+
+func WriteWordsAsHex(sb *strings.Builder, content []uint16) {
+	const hex = "0123456789ABCDEF"
+	sb.Grow(len(content)*5 + (len(content) >> 4) + 2)
+	for i, b := range content {
+		sb.WriteString("0x")
+		sb.WriteByte(hex[(b>>12)&15])
+		sb.WriteByte(hex[(b>>8)&15])
+		sb.WriteByte(hex[(b>>4)&15])
+		sb.WriteByte(hex[(b>>0)&15])
+		sb.WriteByte(',')
+		if (i & 15) == 15 {
+			sb.WriteByte('\n')
+		}
+	}
+	sb.WriteByte('\n')
+}
+
+func MakePaletteFromR5G5B5A1(data []byte, invertAlpha bool) []color.RGBA {
+	colors := make([]color.RGBA, len(data)/2)
+	for i := 0; i < len(colors); i++ {
+		c := uint16(data[2*i]) | uint16(data[2*i+1])<<8
+		a := uint8(255)
+		if invertAlpha {
+			a = 0
+		}
+		if c&0x8000 != 0 {
+			a = 0
+			if invertAlpha {
+				a = 255
+			}
+		}
+		colors[i] = color.RGBA{
+			R: uint8(((c >> 0) & 0x1F) * 255 / 31),
+			G: uint8(((c >> 5) & 0x1F) * 255 / 31),
+			B: uint8(((c >> 10) & 0x1F) * 255 / 31),
+			A: a,
+		}
+	}
+	colors[0].A = 0
+	return colors
+}
+
+func MakeGreyPalette(bpp int) []color.RGBA {
+	switch bpp {
+	case 4:
+		colors := make([]color.RGBA, 16)
+		for i := range colors {
+			c := uint8(i << 4)
+			colors[i] = color.RGBA{R: c, G: c, B: c, A: 255}
+		}
+		return colors
+	case 8:
+		colors := make([]color.RGBA, 256)
+		for i := range colors {
+			c := uint8(i)
+			colors[i] = color.RGBA{R: c, G: c, B: c, A: 255}
+		}
+		return colors
+	default:
+		return nil
+	}
+}
+
+// ensure the returned bitmap is a 8bpp
+func MakeBitmap(data []byte, bpp int) ([]byte, error) {
+	switch bpp {
+	case 4:
+		out := make([]byte, len(data)*2)
+		for i := 0; i < len(data); i++ {
+			out[i*2+0] = data[i] & 15
+			out[i*2+1] = data[i] >> 4
+		}
+		return out, nil
+	case 8:
+		return data, nil
+	default:
+		return nil, fmt.Errorf("bpp %d invalid or not supported", bpp)
+	}
+}
+
+func Make4bppFromBitmap(data []byte) []byte {
+	out := make([]byte, len(data)/2)
+	for i := 0; i < len(data); i += 2 {
+		out[i>>1] = (data[i] & 0xF) | ((data[i+1] & 0xF) << 4)
+	}
+	return out
 }
