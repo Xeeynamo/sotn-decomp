@@ -1214,6 +1214,33 @@ void MarStepTeleport(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepBladeDash);
+void MarStepBladeDash(void) {
+    MarDecelerateX(FIX(0.109375));
+    if (PLAYER.poseTimer < 0) {
+        g_Player.unk46 = 0;
+        MarSetStand(0);
+    } else if (PLAYER.pose >= 0x10 && !(g_Player.vram_flag & 1)) {
+        g_Player.unk46 = 0;
+        g_Player.unk44 = 1;
+        MarSetFall();
+    } else {
+        if (PLAYER.pose >= 14) {
+            if ((g_Player.vram_flag & 1) == 1) {
+                g_Player.unk46 = 0;
+                MarSetWalk();
+            }
+        }
+        if (!(g_GameTimer & 3) && PLAYER.pose < 0x12 &&
+            g_Player.vram_flag & 1) {
+            MarCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+
+        if (PLAYER.pose == 18 && PLAYER.poseTimer == 1 &&
+            (g_Player.vram_flag & 1)) {
+            MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepHighJump);
