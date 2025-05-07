@@ -300,13 +300,13 @@ void RicStepFall(void) {
             CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
         return;
     }
-    RicDecelerateX(0x1000);
+    RicDecelerateX(FIX(1. / 16));
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
             RicSetJump();
         } else if (RicCheckFacing()) {
-            RicSetSpeedX(0xC000);
+            RicSetSpeedX(FIX(0.75));
         }
         break;
     }

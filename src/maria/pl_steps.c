@@ -229,7 +229,22 @@ void MarStepJump(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepFall);
+void MarStepFall(void) {
+    if (MarCheckInput(CHECK_GROUND | CHECK_FACING | CHECK_20 | CHECK_CRASH |
+                      CHECK_400 | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+        return;
+    }
+    MarDecelerateX(FIX(1. / 16));
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
+            MarSetJump(1);
+        } else if (MarCheckFacing()) {
+            MarSetSpeedX(FIX(0.75));
+        }
+        break;
+    }
+}
 
 void MarStepCrouch(void) {
     s32 i;
