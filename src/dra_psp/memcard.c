@@ -4,7 +4,7 @@
 
 extern MemcardInfo g_MemcardInfo[2];
 
-void func_psp_0913D610(void) {}
+void SetupEvents(void) {}
 
 void MemcardInit(void) { g_MemcardStep = 0; }
 

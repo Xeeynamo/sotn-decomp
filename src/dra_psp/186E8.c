@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
+#include "../dra/dra_bss.h"
+
 
 #include "../get_lang.h"
 
@@ -339,7 +341,7 @@ s32 DebugUpdate() { return 1; }
 
 extern s32 D_psp_08B42060;
 
-s32 func_psp_090F5188(void) {
+s32 LoadVabData(void) {
     char sp10[0x100];
 
     sprintf(&sp10, "%sSE/sd_j010.spk;1", D_psp_08B42060);
@@ -659,7 +661,17 @@ void func_psp_090F5B10(void) {
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 extern GpuUsage g_GpuMaxUsage;
+extern s32 g_DebugFreeze;
 extern s32 g_DebugHitboxViewMode;
+extern u32 D_801362B4;
+extern s32 D_801362B8;
+extern s32 D_801362BC;
+extern s32 g_DebugPalIdx;
+extern DebugColorChannel g_DebugColorChannel;
+extern u32 D_801362C8;
+extern s32 g_DebugIsRecordingVideo;
+extern OT_TYPE* g_CurrentOT;
+
 
 extern s32 D_psp_091FC4A0;
 extern s32 D_psp_091CE1E8;
@@ -756,6 +768,8 @@ loop_5:
     func_800EA538(0);
     ResetPendingGfxLoad();
 
+    // NOTE: Lots of values being assigned to 0! Direct mappings to PSX
+    // symbols are difficult. So some of these could be wrongly identified!
     g_DebugEnabled = 0;
     g_DebugHitboxViewMode = 0;
     D_801362B8 = 0;
@@ -768,7 +782,7 @@ loop_5:
     g_DebugColorChannel = DEBUG_COLOR_CHANNEL_RED;
     D_801362C8 = 0;
     g_DebugIsRecordingVideo = false;
-    D_8006C3AC = 0; //probs wrong spot
+    g_UseDisk = 0;
     g_DemoMode = Demo_None;
     g_CutsceneHasControl = 0;
     D_800973EC = 0;
