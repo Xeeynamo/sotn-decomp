@@ -3,14 +3,13 @@ package util
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"image/color"
 	"os"
 	"path/filepath"
 	"slices"
 	"strconv"
 	"strings"
-
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 )
 
 func JoinMapKeys[T any](m map[string]T, sep string) string {
@@ -159,10 +158,10 @@ func MakePaletteFromR5G5B5A1(data []byte, invertAlpha bool) []color.RGBA {
 		c := uint16(data[2*i]) | uint16(data[2*i+1])<<8
 		a := uint8(255)
 		if invertAlpha {
-			a = 0
+			a = 127
 		}
 		if c&0x8000 != 0 {
-			a = 0
+			a = 127
 			if invertAlpha {
 				a = 255
 			}

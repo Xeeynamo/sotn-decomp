@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"io"
 )
 
@@ -30,12 +31,19 @@ func readSpriteParts(r io.ReadSeeker, baseAddr, addr psx.Addr) (spriteParts, dat
 
 	var count uint16
 	if err := binary.Read(r, binary.LittleEndian, &count); err != nil {
+		if err == io.EOF {
+			// special case for PSP, where an empty sprite part will fall to the BSS section
+			return []sprite{}, datarange.DataRange{}, nil
+		}
 		return nil, datarange.DataRange{}, err
 	}
 	sprites := make([]sprite, count)
 	if err := binary.Read(r, binary.LittleEndian, sprites); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
-
-	return sprites, datarange.FromAlignedAddr(addr, 4+0x16*int(count)), nil
+	alignment := 4
+	if sotn.GetPlatform() == sotn.PlatformPSP {
+		alignment = 8
+	}
+	return sprites, datarange.FromAlignedAddr(addr, 4+0x16*int(count), alignment), nil
 }

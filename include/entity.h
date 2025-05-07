@@ -1711,6 +1711,12 @@ typedef struct {
 } ET_LockCamera;
 
 typedef struct {
+    s32 : 32;
+    s16 unk80;
+    s16 unk82;
+} ET_Maria092BEB40;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 jiggler;
     /* 0x84 */ s8 collision;
@@ -3099,6 +3105,7 @@ typedef union { // offset=0x7C
     ET_GuardText guardText;
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
+    ET_Maria092BEB40 maria092BEB40;
     ET_CavernDoor cavernDoor;
     ET_UnkSelEnts unkSelEnts;
     ET_ZombieSpawner zombieSpawner;

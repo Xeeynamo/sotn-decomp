@@ -52,7 +52,9 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 			return nil, datarange.DataRange{}, fmt.Errorf("unable to read sprites: %w", err)
 		}
 		bank[i] = &sprites
-		spriteRanges = append(spriteRanges, ranges)
+		if !ranges.Empty() {
+			spriteRanges = append(spriteRanges, ranges)
+		}
 	}
 
 	return bank, datarange.MergeDataRanges(append(spriteRanges, headerRange)), nil

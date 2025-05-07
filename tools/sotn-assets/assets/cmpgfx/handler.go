@@ -2,6 +2,7 @@ package cmpgfx
 
 import (
 	"fmt"
+	"image/color"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -22,8 +23,8 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if e.Start == e.End {
 		return fmt.Errorf("a compressed image cannot be 0 bytes long")
 	}
-	if len(e.Args) != 3 {
-		return fmt.Errorf("expected 3 arguments (width, height, bpp), got %d: %v", len(e.Args), e.Args)
+	if len(e.Args) < 3 || len(e.Args) > 4 {
+		return fmt.Errorf("invalid arguments, expected <width> <height> <bpp> <palette>")
 	}
 	width, err := strconv.Atoi(e.Args[0])
 	if err != nil {
@@ -37,7 +38,24 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("bpp value %v is not a number", e.Args[2])
 	}
-	palette := util.MakeGreyPalette(bpp)
+	var palette []color.RGBA
+	if len(e.Args) == 4 {
+		str := e.Args[3]
+		if len(str) > 2 {
+			str = str[2:]
+		}
+		palOffset, err := util.ParseCNumber(e.Args[3])
+		if err != nil {
+			return err
+		}
+		if palOffset < 0 || palOffset >= len(e.Data) {
+			return fmt.Errorf("palette offset value %s is out of bounds", e.Args[3])
+		}
+		palData := e.Data[int(palOffset) : palOffset+(1<<bpp)*2]
+		palette = util.MakePaletteFromR5G5B5A1(palData, false)
+	} else {
+		palette = util.MakeGreyPalette(bpp)
+	}
 	cmp := e.Data[e.Start:e.End]
 	dec := sotn.Inflate(cmp)
 	bitmap, err := util.MakeBitmap(dec, bpp)

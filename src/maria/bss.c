@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-u8 D_pspeu_092E7588[0x78]; // TODO unknown type
 s32 D_80174F80[11];
 u8 D_80174FAC;
 u8 D_80174FB0;
