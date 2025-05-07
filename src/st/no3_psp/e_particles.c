@@ -15,8 +15,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityWarg);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityUnkId4B);
 
-INCLUDE_ASM(
-    "st/no3_psp/psp/no3_psp/e_particles", EntityWargExplosionPuffTransparent);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityWargExplosionPuffTransparent);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", func_pspeu_092546E0);
 
