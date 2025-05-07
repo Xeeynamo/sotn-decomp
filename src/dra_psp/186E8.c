@@ -2,7 +2,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-
 #include "../get_lang.h"
 
 extern s32 g_DebugWaitInfoTimer;
@@ -672,7 +671,6 @@ extern u32 D_801362C8;
 extern s32 g_DebugIsRecordingVideo;
 extern OT_TYPE* g_CurrentOT;
 
-
 extern s32 D_psp_091FC4A0;
 extern s32 D_psp_091CE1E8;
 extern s32 D_psp_091CE2A0;
@@ -842,7 +840,7 @@ loop_5:
         PutDispEnv(&g_CurrentBuffer->disp);
         DrawOTag(g_CurrentOT);
         func_800EA7CC();
-        if(g_GameState == 10){
+        if (g_GameState == 10) {
             return;
         }
         func_801361F8();
