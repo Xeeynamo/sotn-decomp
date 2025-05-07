@@ -977,7 +977,28 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepSlide);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepRun);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_8015BB80);
+// same as DRA/func_80115C50
+static int func_8015BB80(void) {
+    if (g_StageId == STAGE_TOP) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+    if (g_StageId == (STAGE_TOP | STAGE_INVERTEDCASTLE_FLAG)) {
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 > 0) {
+            PLAYER.posX.i.hi--;
+        }
+
+        if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8384 < 0) {
+            PLAYER.posX.i.hi++;
+        }
+    }
+    return 0;
+}
 
 // Corresponding DRA function is PlayerStepTeleport
 void MarStepTeleport(void) {

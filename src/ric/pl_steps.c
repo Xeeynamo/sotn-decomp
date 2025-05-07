@@ -1343,7 +1343,7 @@ void RicStepSlide(void) {
 }
 
 // same as DRA/func_80115C50
-void func_8015BB80(void) {
+static void func_8015BB80(void) {
     if (g_StageId == STAGE_TOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;
