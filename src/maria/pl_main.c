@@ -171,8 +171,8 @@ void MarInit(s16 initParam) {
             g_CurrentEntity, FACTORY(BP_TELEPORT, 5), 0);
         MarSetInit(5);
     }
-    func_pspeu_092C0040();
-    func_pspeu_092C0248();
+    MarLoadPalettes();
+    MarLoadGraphics();
 #ifdef VERSION_PSP
     // ifdef'fed for the same reason in RicInit
     D_pspeu_092E5F20 = 30;

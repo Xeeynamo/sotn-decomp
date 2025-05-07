@@ -32,7 +32,7 @@ enum MarPalette {
     /* 0x811B */ PAL_WPN_DRAGON,
     /* 0x811C */ PAL_WPN_DRAGON_CRASH,
     /* 0x811D */ PAL_WPN_DOLL,
-    /* 0x811E */ PAL_UNK_811E,
+    /* 0x811E */ PAL_CRASH,
     /* 0x812E */ PAL_UNK_812E = 0x812E,
     /* 0x812F */ PAL_UNK_812F,
 };

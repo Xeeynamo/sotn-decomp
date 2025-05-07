@@ -2079,4 +2079,7 @@ typedef struct {
     s32 unk14;
 } LangImg;
 
+void func_892667C(s32 paletteID, u16* palette);
+void func_91040A0(LangImg* img);
+
 #endif

@@ -5,13 +5,13 @@
 #if defined(VERSION_PSP)
 void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
 extern s32 D_80180908;
-extern u8 D_pspeu_09253FB0[];
+extern u16 D_pspeu_09253FB0[];
 extern u8 D_pspeu_09253FF0[];
 extern u8 D_pspeu_09254300[];
 extern u8 D_pspeu_092545D8[];
 extern u8 D_pspeu_092548E8[];
 extern u8 D_pspeu_09254BD8[];
-extern u16 D_pspeu_09254E98[];
+extern LangImg D_pspeu_09254E98;
 extern u8* D_pspeu_09254EA4;
 #else
 static s32 D_80180908 = 0;
@@ -221,7 +221,7 @@ void EntityStageTitleCard(Entity* self) {
         D_pspeu_09254EA4 =
             GetLang(D_pspeu_09253FF0, D_pspeu_09254BD8, D_pspeu_092545D8,
                     D_pspeu_092548E8, D_pspeu_09254300);
-        func_91040A0(D_pspeu_09254E98);
+        func_91040A0(&D_pspeu_09254E98);
         func_892667C(0x8210, D_pspeu_09253FB0);
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
