@@ -10,13 +10,13 @@ extern char D_psp_09255948[]; // de
 extern char D_psp_092552A8[]; // it
 
 extern s32 g_UserLanguage;
-extern LangImg D_psp_092560A8;
+extern u_long* D_psp_092560A8[];
 extern u8* D_psp_092560B4;
 extern u8* D_psp_092560C0[];
 
 void func_psp_0923C0C0(void) {
     D_psp_092560B4 = D_psp_092560C0[g_UserLanguage - 1];
-    func_91040A0(&D_psp_092560A8);
+    func_91040A0(D_psp_092560A8);
 }
 
 // clang-format off

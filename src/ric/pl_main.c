@@ -83,8 +83,8 @@ extern u8 hud_fr[];
 extern u8 hud_sp[];
 extern u8 hud_ge[];
 extern u8 hud_it[];
-extern LangImg g_FontImage;
-extern LangImg g_HudImage;
+extern u_long* g_FontImage[];
+extern u_long* g_HudImage[];
 // Similar to AluInit
 void RicInit(s16 initParam) {
     Entity* e;
@@ -174,10 +174,10 @@ void RicInit(s16 initParam) {
     // or after loading a save. Not sure if a bugfix or QOL.
     D_pspeu_092D7A68 = 30;
 
-    func_91040A0(&g_FontImage);
-    g_HudImage.imgData = GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
-    if (g_HudImage.imgData) {
-        func_91040A0(&g_HudImage);
+    func_91040A0(g_FontImage);
+    g_HudImage[3] = (u_long*)GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
+    if (g_HudImage[3]) {
+        func_91040A0(g_HudImage);
     }
 #endif
 }
