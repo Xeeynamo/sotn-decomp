@@ -975,7 +975,60 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0E10);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepSlide);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepRun);
+void MarStepRun(void) {
+    s32 halt;
+    s32 var_s1;
+
+    halt = 0;
+    var_s1 = 0;
+    MarDecelerateX(FIX(0.375));
+    if (PLAYER.facingLeft == 0 && g_Player.vram_flag & 4) {
+        var_s1 = 1;
+    }
+    if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
+        var_s1 = 1;
+    }
+    if (PLAYER.posX.i.hi >= 252 && PLAYER.facingLeft == 0) {
+        var_s1 = 1;
+    }
+    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
+        var_s1 = 1;
+    }
+    if (var_s1 != 0) {
+        if (PLAYER.velocityX > FIX(1)) {
+            PLAYER.velocityX = FIX(2);
+        }
+        if (PLAYER.velocityX < FIX(-1)) {
+            PLAYER.velocityX = FIX(-2);
+        }
+    }
+    if (g_CurrentEntity->anim == D_pspeu_092C0668) {
+        if (PLAYER.velocityX == 0) {
+            halt = 1;
+        }
+        if (!(g_Player.vram_flag & 1)) {
+            halt = 1;
+            PLAYER.velocityX = 0;
+        }
+    } else if (g_Player.vram_flag & 1) {
+        if (PLAYER.velocityX == 0) {
+            halt = 1;
+        }
+    } else if (abs(PLAYER.velocityX) <= 0x20000) {
+        halt = 1;
+    }
+    if (g_Player.vram_flag & 0xC) {
+        halt = 1;
+        PLAYER.velocityX = 0;
+    }
+    if (halt) {
+        if (g_Player.vram_flag & 1) {
+            MarSetStand(0);
+            return;
+        }
+        MarSetFall();
+    }
+}
 
 // same as DRA/func_80115C50
 static int func_8015BB80(void) {
