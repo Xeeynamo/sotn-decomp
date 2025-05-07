@@ -1000,3 +1000,5 @@ g_MenuStr = 0x09237638;
 g_EnemyDefs = 0x09237640;
 g_AccessoryDefs = 0x09237648;
 g_EquipDefs = 0x09237650;
+ApplyJosephsCloakPalette = 0x090ECD78;
+D_8003C738 = 0x091FC430;
