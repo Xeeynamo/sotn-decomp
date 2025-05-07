@@ -5,6 +5,7 @@
 
 void func_8932CEC(bool, s8);
 
+extern NowLoadingModel g_NowLoadingModel;
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
 extern s32 D_8C630D4;
@@ -20,27 +21,31 @@ extern char D_psp_0914C3C8[];
 extern RECT D_psp_09156F40;
 extern u32 D_psp_09156F48;
 extern s32 D_psp_0915AF48;
-extern s32 D_psp_0915B148;
-extern s32 D_psp_0915BEC8;
-extern s32 D_psp_0915CC78;
-extern s32 D_psp_0915D808;
-extern s32 D_psp_0915E4E8;
-extern s32 D_psp_0915E4F4;
-extern char* D_psp_0915E500[];
 
-extern s32 D_psp_0915E5A0;
-extern s32 D_psp_0915E8B8;
-extern s32 D_psp_0915EB78;
-extern s32 D_psp_0915EEE0;
-extern s32 D_psp_0915F288;
-extern s32 D_psp_0915F4E0;
-extern s32 D_psp_0915F6B8;
-extern s32 D_psp_0915F940;
-extern s32 D_psp_0915FBF8;
-extern s32 D_psp_0915FC04;
-extern s32 D_psp_0915FC10;
-extern s32 D_psp_0915FC1C;
-extern NowLoadingModel g_NowLoadingModel;
+static u8 loading_fr[] = {
+#include "../dra/gen_loading_fr.h"
+};
+
+static u8 loading_it[] = {
+#include "../dra/gen_loading_it.h"
+};
+
+static u8 loading_ge[] = {
+#include "../dra/gen_loading_ge.h"
+};
+
+static u8 loading_sp[] = {
+#include "../dra/gen_loading_sp.h"
+};
+
+static u_long* D_psp_0915E4E8[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x180, 0x2A0, 128, 128, loading_sp),
+    GFX_TERMINATE(),
+};
+
+static char* D_psp_0915E500[] = {
+    D_psp_0914C3A8, D_psp_0914C3B8, D_psp_0914C3C8};
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     RECT sp48;
@@ -65,10 +70,10 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
 
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
     func_89264CC(0x81D0, &D_psp_0915AF48, 1);
-    D_psp_0915E4F4 = func_psp_090F6368(
-        0, &D_psp_0915B148, &D_psp_0915D808, &D_psp_0915CC78, &D_psp_0915BEC8);
-    if (D_psp_0915E4F4 != 0) {
-        func_psp_091040A0(&D_psp_0915E4E8);
+    D_psp_0915E4E8[3] = (u_long*)func_psp_090F6368(
+        NULL, loading_fr, loading_sp, loading_ge, loading_it);
+    if (D_psp_0915E4E8[3] != NULL) {
+        func_psp_091040A0(D_psp_0915E4E8);
     }
     switch (self->step) {
     case 0:
@@ -649,6 +654,49 @@ void HandleNowLoading(void) {
     }
 }
 
+static u8 intro_left_sp[] = {
+#include "../dra/gen_intro_left_sp.h"
+};
+
+static u8 intro_left_it[] = {
+#include "../dra/gen_intro_left_it.h"
+};
+
+static u8 intro_left_ge[] = {
+#include "../dra/gen_intro_left_ge.h"
+};
+
+static u8 intro_left_fr[] = {
+#include "../dra/gen_intro_left_fr.h"
+};
+
+static u8 intro_right_sp[] = {
+#include "../dra/gen_intro_right_sp.h"
+};
+
+static u8 intro_right_it[] = {
+#include "../dra/gen_intro_right_it.h"
+};
+
+static u8 intro_right_ge[] = {
+#include "../dra/gen_intro_right_ge.h"
+};
+
+static u8 intro_right_fr[] = {
+#include "../dra/gen_intro_right_fr.h"
+};
+
+static u_long* D_psp_0915FBF8[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x300, 128, 128, intro_left_sp),
+    GFX_TERMINATE(),
+};
+static u_long* D_psp_0915FC10[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x320, 128, 128, intro_right_sp),
+    GFX_TERMINATE(),
+};
+
 void HandleVideoPlayback(void) {
     Primitive* prim;
     Primitive* prim2;
@@ -660,17 +708,17 @@ void HandleVideoPlayback(void) {
             if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
-                D_psp_0915FC04 =
-                    func_psp_090F6368(0, &D_psp_0915EEE0, &D_psp_0915E5A0,
-                                      &D_psp_0915EB78, &D_psp_0915E8B8);
-                if (D_psp_0915FC04 != 0) {
-                    func_psp_091040A0(&D_psp_0915FBF8);
+                D_psp_0915FBF8[3] = (u_long*)func_psp_090F6368(
+                    NULL, intro_left_fr, intro_left_sp, intro_left_ge,
+                    intro_left_it);
+                if (D_psp_0915FBF8[3] != NULL) {
+                    func_psp_091040A0(D_psp_0915FBF8);
                 }
-                D_psp_0915FC1C =
-                    func_psp_090F6368(0, &D_psp_0915F940, &D_psp_0915F288,
-                                      &D_psp_0915F6B8, &D_psp_0915F4E0);
-                if (D_psp_0915FC1C != 0) {
-                    func_psp_091040A0(&D_psp_0915FC10);
+                D_psp_0915FC10[3] = (u_long*)func_psp_090F6368(
+                    NULL, intro_right_fr, intro_right_sp, intro_right_ge,
+                    intro_right_it);
+                if (D_psp_0915FC10[3] != NULL) {
+                    func_psp_091040A0(D_psp_0915FC10);
                 }
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;

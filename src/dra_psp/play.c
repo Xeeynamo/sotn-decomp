@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
+extern s32 D_psp_091CE348;
 extern s32 D_8013640C;
 extern s32 D_8C630D4;
 extern s32 D_8C630D8;
@@ -9,22 +10,56 @@ extern u32 D_8D45C40;
 extern u32 D_8D47C40;
 extern u8 D_psp_0914C318[];
 extern RECT D_psp_0914C328[];
+extern char D_psp_0914C3A8[];
 extern char D_psp_0914C3B8[];
 extern char D_psp_0914C3C8[];
-extern char* D_psp_0914C3D8[];
-extern s32 D_psp_0914C3E8;
-extern s32 D_psp_0914D850;
-extern s32 D_psp_0914EEB0;
-extern s32 D_psp_09150280;
-extern s32 D_psp_091518A8;
-extern s32 D_psp_09152B20;
-extern s32 D_psp_09154220;
-extern s32 D_psp_09155948;
-extern s32 D_psp_09156F10;
-extern s32 D_psp_09156F1C;
-extern s32 D_psp_09156F28;
-extern s32 D_psp_09156F34;
-extern s32 D_psp_091CE348;
+
+static char* D_psp_0914C3D8[] = {
+    D_psp_0914C3A8, D_psp_0914C3B8, D_psp_0914C3C8};
+
+static u8 game_over_left_it[] = {
+#include "../dra/gen_game_over_left_it.h"
+};
+
+static u8 game_over_left_sp[] = {
+#include "../dra/gen_game_over_left_sp.h"
+};
+
+static u8 game_over_left_fr[] = {
+#include "../dra/gen_game_over_left_fr.h"
+};
+
+static u8 game_over_left_ge[] = {
+#include "../dra/gen_game_over_left_ge.h"
+};
+
+static u8 game_over_right_it[] = {
+#include "../dra/gen_game_over_right_it.h"
+};
+
+static u8 game_over_right_sp[] = {
+#include "../dra/gen_game_over_right_sp.h"
+};
+
+static u8 game_over_right_fr[] = {
+#include "../dra/gen_game_over_right_fr.h"
+};
+
+static u8 game_over_right_ge[] = {
+#include "../dra/gen_game_over_right_ge.h"
+};
+
+static u_long* D_psp_09156F10[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x200, 128, 128, game_over_left_sp),
+    GFX_TERMINATE(),
+};
+
+static u_long* D_psp_09156F28[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x220, 128, 128, game_over_right_sp),
+    GFX_TERMINATE(),
+};
 
 void func_800E493C(void) {
     if (g_Settings.isSoundMono == false) {
@@ -528,15 +563,17 @@ void HandleGameOver(void) {
             }
             func_891CEB8(0, 0xF0);
         }
-        D_psp_09156F1C = func_psp_090F6368(0, &D_psp_0914EEB0, &D_psp_0914D850,
-                                           &D_psp_09150280, &D_psp_0914C3E8);
-        if (D_psp_09156F1C != 0) {
-            func_psp_091040A0(&D_psp_09156F10);
+        D_psp_09156F10[3] = (u_long*)func_psp_090F6368(
+            NULL, game_over_left_fr, game_over_left_sp, game_over_left_ge,
+            game_over_left_it);
+        if (D_psp_09156F10[3] != NULL) {
+            func_psp_091040A0(D_psp_09156F10);
         }
-        D_psp_09156F34 = func_psp_090F6368(0, &D_psp_09154220, &D_psp_09152B20,
-                                           &D_psp_09155948, &D_psp_091518A8);
-        if (D_psp_09156F34 != 0) {
-            func_psp_091040A0(&D_psp_09156F28);
+        D_psp_09156F28[3] = (u_long*)func_psp_090F6368(
+            NULL, game_over_right_fr, game_over_right_sp, game_over_right_ge,
+            game_over_right_it);
+        if (D_psp_09156F28[3] != NULL) {
+            func_psp_091040A0(D_psp_09156F28);
         }
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             PlaySfx(0x33B);
