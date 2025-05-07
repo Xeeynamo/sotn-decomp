@@ -300,13 +300,13 @@ void RicStepFall(void) {
             CHECK_GROUND | CHECK_FACING | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
         return;
     }
-    RicDecelerateX(0x1000);
+    RicDecelerateX(FIX(1. / 16));
     switch (PLAYER.step_s) {
     case 0:
         if (g_Player.timers[PL_T_5] && g_Player.padTapped & PAD_CROSS) {
             RicSetJump();
         } else if (RicCheckFacing()) {
-            RicSetSpeedX(0xC000);
+            RicSetSpeedX(FIX(0.75));
         }
         break;
     }
@@ -1282,10 +1282,10 @@ void RicStepSlide(void) {
     if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
+    if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
+    if (PLAYER.posX.i.hi <= 4 && PLAYER.facingLeft) {
         isTouchingGround = 1;
     }
     if ((PLAYER.facingLeft == 0 &&
@@ -1343,7 +1343,7 @@ void RicStepSlide(void) {
 }
 
 // same as DRA/func_80115C50
-void func_8015BB80(void) {
+static void func_8015BB80(void) {
     if (g_StageId == STAGE_TOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;

@@ -828,7 +828,6 @@ bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
-void func_80115C50(void);
 void func_80118894(Entity*);
 Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
