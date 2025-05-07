@@ -9,7 +9,7 @@ u8 D_80174FB8;
 Point16 D_80175000[32];
 s32 D_80154F7C[16];
 AnimationFrame g_MarEmptyAnimGroup[ZERO_LEN];
-u8 D_pspeu_092E7468[0x08]; // TODO unknown type
+s16 g_MarSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS];
 u8 D_pspeu_092E7460[0x08]; // TODO unknown type
 DebugInfo g_MarDebug;
 u8 dead_dissolve_bmp[0x1400];
