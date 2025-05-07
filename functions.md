@@ -1165,7 +1165,7 @@
 | dra       | KeyOnRange                               |      114 |         10 |        |                                 |       |
 | dra       | CreateEntFactoryFromEntity               |      114 |         12 |        | https://decomp.me/scratch/lK7y4 | 1.0   |
 | dra       | func_80118894                            |      114 |         16 |        | https://decomp.me/scratch/BMb8D | 0.994 |
-| maria_psp | MarStepBladeDash                         |      114 |         20 |        |                                 |       |
+| maria_psp | MarStepBladeDash                         |      114 |         20 |        | https://decomp.me/scratch/rXthg | 0.984 |
 | dra       | DrawMapCursor                            |      115 |          6 |        | https://decomp.me/scratch/fTMVz | 0.994 |
 | dra       | func_8012D024                            |      115 |         27 |        |                                 |       |
 | dra       | func_800FF494                            |      116 |         14 |        |                                 |       |
@@ -1295,7 +1295,7 @@
 | maria_psp | func_pspeu_092A7F78                      |      163 |         26 |        |                                 |       |
 | dra       | DrawHud                                  |      164 |         14 |        |                                 |       |
 | dra       | PlayerStepBossGrab                       |      164 |         24 |        |                                 |       |
-| maria_psp | MarStepRun                               |      164 |         28 |        |                                 |       |
+| maria_psp | MarStepRun                               |      164 |         28 |        | https://decomp.me/scratch/PO6Cz | 0.99  |
 | chi       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no4       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
@@ -1308,7 +1308,7 @@
 | ric       | func_8015C4AC                            |      168 |         15 |        |                                 |       |
 | lib       | UpdateAnimation                          |      169 |          7 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra       | func_800FBAC4                            |      169 |         15 |        |                                 |       |
-| maria_psp | MarStepHighJump                          |      169 |         26 |        |                                 |       |
+| maria_psp | MarStepHighJump                          |      169 |         26 |        | https://decomp.me/scratch/DCSlp | 0.989 |
 | dra       | func_80127CC8                            |      170 |         17 |        | https://decomp.me/scratch/TFP3q | 0.992 |
 | dra       | HandleTransformationMP                   |      170 |         34 |        |                                 |       |
 | no3       | EntityDeathSkySwirl                      |      171 |         21 |        |                                 |       |
@@ -1356,7 +1356,7 @@
 | dra       | 7879C.rodata                             |      194 |          0 | Yes    |                                 |       |
 | no3       | func_pspeu_0924C7A8                      |      194 |         19 |        |                                 |       |
 | dra       | func_800FE3C4                            |      194 |         20 |        |                                 |       |
-| maria_psp | MarStepSlide                             |      195 |         32 |        |                                 |       |
+| maria_psp | MarStepSlide                             |      195 |         32 |        | https://decomp.me/scratch/HWXl8 | 0.988 |
 | dra       | func_8010D59C                            |      196 |         22 |        |                                 |       |
 | dra       | PlayerStepMorphWolf                      |      196 |         35 | Yes    |                                 |       |
 | lib       | func_psp_09253E20                        |      197 |          1 |        | https://decomp.me/scratch/ykdyz | 1.0   |
