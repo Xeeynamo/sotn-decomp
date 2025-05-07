@@ -49,7 +49,7 @@ void MarStepStand(void) {
     if (!MarCheckInput(
             CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH | CHECK_400 |
             CHECK_800 | CHECK_ATTACK | CHECK_CROUCH | CHECK_SLIDE)) {
-        MarDecelerateX(0x2000);
+        MarDecelerateX(FIX(0.125));
         switch (PLAYER.step_s) {
         case 0:
             if (MarCheckFacing()) {
@@ -443,13 +443,13 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             func_8015CAAC(FIX(-1.25));
             PLAYER.step_s = 1;
             PLAYER.anim = mar_801556C4;
-            g_Player.unk40 = 0x8114; // TODO maria palette
+            g_Player.unk40 = PAL_MARIA;
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_HIT_BY_THUNDER, 0);
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x46), 0);
             g_Player.timers[PL_T_2] = 6;
-            g_api.PlaySfx(0x8F3);
+            g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
             break;
         } else {
             if (damageEffect & ELEMENT_ICE) {
@@ -465,7 +465,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 6;
                     PLAYER.anim = mar_anim_stun;
-                    g_api.PlaySfx(0x8F2);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
                     break;
@@ -476,7 +476,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(0x8F3);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
                     break;
                 case PL_S_JUMP:
                 case PL_S_FALL:
@@ -484,7 +484,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
-                    g_api.PlaySfx(0x8F2);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
                     break;
                 }
                 break;
@@ -510,7 +510,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = mar_anim_stun;
-                    g_api.PlaySfx(0x8F2);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
                     break;
                 case PL_S_CROUCH:
                     PLAYER.velocityY = 0;
@@ -519,7 +519,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, BP_SKID_SMOKE, 0);
-                    g_api.PlaySfx(0x8F3);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
                     break;
                 case PL_S_JUMP:
                 case PL_S_FALL:
@@ -527,7 +527,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     func_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
-                    g_api.PlaySfx(0x8F2);
+                    g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
                     break;
                 }
                 break;
@@ -689,7 +689,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         }
         break;
     case 5:
-        MarDecelerateX(0x2000);
+        MarDecelerateX(FIX(0.125));
         if (mar_hit_stun_timer) {
             if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
@@ -712,7 +712,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         PLAYER.poseTimer = PLAYER.pose = 0;
         break;
     case 6:
-        MarDecelerateX(0x2000);
+        MarDecelerateX(FIX(0.125));
         if (!(g_Player.vram_flag & 1)) {
             MarSetFall();
         }
