@@ -24,7 +24,71 @@ static void func_80158B04(u16 arg0) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepStand);
+void MarStepStand(void) {
+    s16 xMod;
+    s32 facing;
+
+    if (PLAYER.step < 64) {
+        if (mar_8015459C != 0) {
+            mar_8015459C--;
+        } else if (D_80097448[0] > 48) {
+            xMod = 4;
+            if (PLAYER.facingLeft) {
+                xMod = -xMod;
+            }
+            PLAYER.posX.i.hi += xMod;
+            PLAYER.posY.i.hi -= 16;
+            MarCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_EMBERS, 8), 0);
+            PLAYER.posY.i.hi += 16;
+            PLAYER.posX.i.hi -= xMod;
+            mar_8015459C = 0x60;
+        }
+    }
+
+    if (!MarCheckInput(
+            CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH | CHECK_400 |
+            CHECK_800 | CHECK_ATTACK | CHECK_CROUCH | CHECK_SLIDE)) {
+        MarDecelerateX(0x2000);
+        switch (PLAYER.step_s) {
+        case 0:
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+            } else if (g_Player.padPressed & PAD_UP) {
+                MarSetAnimation(mar_anim_press_up);
+                PLAYER.step_s = 1;
+                break;
+            }
+            break;
+        case 1:
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+            } else if (g_Player.padPressed & PAD_UP) {
+            } else {
+                MarSetStand(0);
+            }
+            break;
+        case 64:
+            DisableAfterImage(1, 1);
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+            } else if (PLAYER.poseTimer < 0) {
+                g_Player.unk46 = 0;
+                MarSetStand(0);
+            }
+            break;
+        case 66:
+            DisableAfterImage(1, 1);
+            if (MarCheckFacing()) {
+                MarSetWalk(0);
+            } else if (PLAYER.poseTimer < 0) {
+                g_Player.unk46 = 0;
+                MarSetStand(0);
+            }
+            break;
+        }
+    }
+}
 
 void MarStepWalk(void) {
     if (!MarCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |

@@ -408,6 +408,7 @@ extern s16* wpn_dragon_spr[];
 extern s16* wpn_doll_spr[];
 
 extern AnimationFrame* mar_8015538C[];
+extern AnimationFrame mar_anim_press_up[];
 extern AnimationFrame mar_anim_stand[];
 extern AnimationFrame mar_anim_stand_relax[];
 extern AnimationFrame mar_anim_walk[];
