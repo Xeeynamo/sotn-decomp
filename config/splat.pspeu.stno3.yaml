@@ -44,8 +44,15 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, no3_psp/pspeu]
+      - [0x80, c, no3_psp/first_c_file]
+      - [0x1AA80, c, no3_psp/e_particles]
+      - [0x1F830, c, no3_psp/e_misc]
+      - [0x21CC8, c, no3_psp/collision]
+      - [0x28140, c, no3_psp/e_room_fg]
       - [0x2A680, data]
-      - [0x61600, .rodata, no3_psp/pspeu]
+      - [0x61600, .rodata, no3_psp/first_c_file]
+      - [0x61810, .rodata, no3_psp/e_particles]
+      - [0x61880, .rodata, no3_psp/e_misc]
+      - [0x618A8, .rodata, no3_psp/collision]
       - {type: bss, vram: 0x9298F80}
   - [0x61900]

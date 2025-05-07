@@ -159,6 +159,10 @@ def split_c_files(version_name, overlay_name, new_segments):
 # Returns address as a string, representing hex location in the ROM (not RAM!)
 # Might return "4ADC8" for example.
 def get_symbol_addr(version_name, symbol_name, overlay_name):
+    if version_name != "pspeu":
+        rom_ram_offset = 0x80180000
+    else:
+        rom_ram_offset = 0x09237680
     overlay_name = overlay_name.replace(
         "_psp", ""
     )  # cleanup any psp suffix; lib_psp becomes lib
@@ -171,7 +175,7 @@ def get_symbol_addr(version_name, symbol_name, overlay_name):
         if symbol_name == lineparts[1]:
             address = int(lineparts[0], 16)
             # change from ram offset to rom offset
-            address -= 0x80180000
+            address -= rom_ram_offset
             return f"{address:X}"
 
 
