@@ -304,7 +304,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardPortrait);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECD58);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECD78);
+INCLUDE_ASM("dra_psp/psp/dra_psp/E588", ApplyJosephsCloakPalette);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardCloakPreview);
 

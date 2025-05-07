@@ -386,7 +386,7 @@ typedef enum {
     PLAYER_STATUS_UNK10000000 = 0x10000000,
     PLAYER_STATUS_UNK20000000 = 0x20000000,
     PLAYER_STATUS_UNK40000000 = 0x40000000,
-    PLAYER_STATUS_UNK80000000 = 0x80000000,
+    PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
 #define ANIMSET_OVL_FLAG 0x8000
@@ -2047,7 +2047,7 @@ extern s32 D_80097924;
 extern s32 D_80097928;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
-extern s32 D_80097C98;
+extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
