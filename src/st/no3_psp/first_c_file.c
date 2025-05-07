@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", func_pspeu_09237700);
@@ -76,7 +77,8 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityUnkId52);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityCastleBridge);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityDistantBackgroundTrees);
+INCLUDE_ASM(
+    "st/no3_psp/psp/no3_psp/first_c_file", EntityDistantBackgroundTrees);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityBackgroundCastleWall);
 
