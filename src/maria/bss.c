@@ -10,7 +10,7 @@ Point16 D_80175000[32];
 s32 D_80154F7C[16];
 AnimationFrame g_MarEmptyAnimGroup[ZERO_LEN];
 s16 g_MarSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS]; // TODO pl_sensors
-u8 D_pspeu_092E7460[0x08];                             // TODO unknown type
+s32 mar_hit_stun_timer;                                // TODO move to pl_steps
 DebugInfo g_MarDebug;
 u8 dead_dissolve_bmp[0x1400];
 s16 D_80174F68;

@@ -174,7 +174,7 @@ enum MarBlueprints {
     _BP_5,
     _BP_SUBWPN_HOLYWATER,
     _BP_HOLYWATER_FIRE,
-    _BP_HIT_BY_FIRE,
+    BP_HIT_BY_FIRE,
     _BP_HOLYWATER_FLAMES,
     BP_OWL,
     BP_MULTIPLE_EMBERS,
@@ -214,7 +214,7 @@ enum MarBlueprints {
     _BP_SUBWPN_DAGGER,
     _BP_CRASH_DAGGER,
     _BP_HIGH_JUMP,
-    _BP_HIT_BY_CUT,
+    BP_HIT_BY_CUT,
     BP_HIT_BY_ICE,
     // 0x30
     BP_HIT_BY_THUNDER,
@@ -240,13 +240,13 @@ enum MarBlueprints {
     _BP_CRASH_AGUNEA,
     _BP_CRASH_AGUNEA_THUNDER,
     _BP_CRASH_REBOUND_STONE_PARTICLES,
-    _BP_HIT_BY_DARK,
-    _BP_HIT_BY_HOLY,
+    BP_HIT_BY_DARK,
+    BP_HIT_BY_HOLY,
     _BP_AGUNEA_THUNDER,
     _BP_CRASH_STOPWATCH_LIGHTNING,
-    _BP_SMOKE_PUFF_2,
-    _BP_SKID_SMOKE_2,
-    _BP_SKID_SMOKE_3,
+    BP_SMOKE_PUFF_2,
+    BP_SKID_SMOKE_2,
+    BP_SKID_SMOKE_3,
     BP_TELEPORT,
     NUM_BLUEPRINTS,
 };
@@ -437,11 +437,15 @@ extern AnimationFrame mar_80155588[];
 extern AnimationFrame mar_801555A8[];
 extern AnimationFrame mar_801555C8[];
 extern AnimationFrame mar_801555E8[];
-extern AnimationFrame D_pspeu_092C0878[];
+extern AnimationFrame D_pspeu_092C0790[];
+extern AnimationFrame mar_80155704[];
 extern AnimationFrame D_pspeu_092C07E8[];
 extern AnimationFrame D_pspeu_092C0858[];
+extern AnimationFrame D_pspeu_092C0878[];
 extern AnimationFrame mar_801554E0[];
 extern FrameProperty mar_80155964[];
+extern AnimationFrame mar_8015569C[];
+extern AnimationFrame mar_80155704[];
 
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
