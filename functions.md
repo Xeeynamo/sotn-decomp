@@ -10,7 +10,7 @@
 | dra       | SetReverbDepth                           |        7 |          1 |        |                                 |       |
 | dra       | MenuSoundConfigDraw                      |        7 |          1 |        |                                 |       |
 | dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
-| dra       | func_psp_0913D610                        |        7 |          1 |        |                                 |       |
+| dra       | SetupEvents                              |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
 | dra       | func_800F66BC                            |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F1CE0                        |        7 |          1 |        |                                 |       |
@@ -193,7 +193,7 @@
 | dra       | func_psp_09140588                        |       22 |          3 |        |                                 |       |
 | maria     | func_pspeu_092BFF78                      |       22 |          3 |        |                                 |       |
 | maria_psp | func_pspeu_092B0E10                      |       22 |          3 |        |                                 |       |
-| dra       | func_psp_090F54E0                        |       22 |          4 |        |                                 |       |
+| dra       | VSyncHandler                             |       22 |          4 |        |                                 |       |
 | maria_psp | func_pspeu_092A9250                      |       22 |          4 |        |                                 |       |
 | dra       | func_80111938                            |       23 |          1 |        |                                 |       |
 | dra       | func_psp_090F5B10                        |       23 |          1 |        | https://decomp.me/scratch/55U3O | 0.759 |
@@ -596,7 +596,7 @@
 | maria     | MarDecelerateX                           |       47 |          5 |        |                                 |       |
 | ric       | RicDecelerateX                           |       47 |          5 |        |                                 |       |
 | st0       | func_801B0280                            |       47 |          6 |        |                                 |       |
-| dra       | func_psp_090F5188                        |       47 |          9 |        | https://decomp.me/scratch/n80wF | 0.986 |
+| dra       | LoadVabData                              |       47 |          9 |        |                                 |       |
 | maria     | 80.rodata                                |       48 |          0 | Yes    |                                 |       |
 | no4       | unk_2108.rodata                          |       48 |          0 | Yes    |                                 |       |
 | wrp       | warp.rodata                              |       48 |          0 | Yes    |                                 |       |
@@ -637,7 +637,7 @@
 | dra       | func_psp_09103E68                        |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra       | func_psp_091048B8                        |       51 |         10 |        |                                 |       |
 | dra       | GetLang                                  |       51 |         10 |        |                                 |       |
-| dra       | func_psp_090F6368                        |       51 |         10 |        |                                 |       |
+| dra       | func_psp_090F6368                        |       51 |         10 |        | https://decomp.me/scratch/MQBmB | 0.218 |
 | dra       | func_psp_090EAF08                        |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria     | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric       | GetLang                                  |       51 |         10 |        |                                 |       |
@@ -1754,7 +1754,7 @@
 | chi       | EntityBreakableWall                      |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra       | func_80104790                            |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
 | ric       | RicEntitySubwpnHolyWaterFlame            |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
-| dra       | func_psp_090DFFD0                        |      609 |         53 |        | https://decomp.me/scratch/oM6nP | 0.95  |
+| dra       | func_800EA7CC                            |      609 |         53 |        |                                 |       |
 | dra       | func_8011B5A4                            |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra       | CheckFloor                               |      611 |         62 |        |                                 |       |
 | st0       | EntityEquipItemDrop                      |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
@@ -1801,7 +1801,7 @@
 | st0       | func_801B1298                            |      705 |         69 |        | https://decomp.me/scratch/6QrSP | 0.987 |
 | no3       | EntityBoneScimitar                       |      709 |         98 | Yes    |                                 |       |
 | lib       | func_us_801B5068                         |      711 |         73 | Yes    |                                 |       |
-| dra       | HandleGameOver                           |      723 |        139 |        |                                 |       |
+| dra       | HandleGameOver                           |      723 |        139 |        | https://decomp.me/scratch/ULCNQ | 1.0   |
 | dra       | EntitySubwpnReboundStone                 |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
 | dra       | EntityGiantSpinningCross                 |      729 |         63 |        | https://decomp.me/scratch/SwVao | 0.999 |
 | tt_000    | UpdateBatAttackMode                      |      730 |         65 |        |                                 |       |
@@ -1833,7 +1833,7 @@
 | lib       | func_us_801B8234                         |      803 |         77 | Yes    |                                 |       |
 | dra       | func_80129864                            |      809 |         78 |        | https://decomp.me/scratch/Ggtu5 | 0.999 |
 | dra       | PlayerStepCrouch                         |      815 |        149 |        |                                 |       |
-| dra       | HandlePlay                               |      816 |        115 | Yes    |                                 |       |
+| dra       | HandlePlay                               |      816 |        115 | Yes    | https://decomp.me/scratch/KBuHO | 0.999 |
 | lib       | func_us_801B245C                         |      820 |         58 |        |                                 |       |
 | dra       | EntityPlayerOutline                      |      826 |         55 | Yes    | https://decomp.me/scratch/Z7J5l | 0.996 |
 | lib       | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
