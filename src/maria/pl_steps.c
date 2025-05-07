@@ -208,7 +208,7 @@ void MarStepJump(void) {
     case 0x70:
         if (g_Player.unk44 & 0x80) {
             MarSetJump(1);
-            if (!(g_Player.padPressed & 0x4000)) {
+            if (!(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-4.25);
             }
             g_Player.unk44 |= 0x40;
