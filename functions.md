@@ -133,7 +133,7 @@
 | dra       | func_8012CFF0                            |       19 |          2 |        |                                 |       |
 | lib       | UpdateFacingDirection                    |       19 |          2 |        |                                 |       |
 | dra       | func_psp_090EDB70                        |       19 |          3 |        |                                 |       |
-| maria_psp | func_pspeu_092C0248                      |       19 |          3 |        |                                 |       |
+| maria     | func_pspeu_092C0248                      |       19 |          3 |        |                                 |       |
 | dra       | func_8010427C                            |       19 |          4 |        |                                 |       |
 | ric       | pl_setstep.rodata                        |       20 |          0 | Yes    |                                 |       |
 | lib       | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
@@ -183,7 +183,7 @@
 | dra       | func_8010E3E0                            |       22 |          3 |        | https://decomp.me/scratch/OVtm6 | 0.805 |
 | dra       | PlayerStepSummonSpells                   |       22 |          3 |        |                                 |       |
 | dra       | func_psp_09140588                        |       22 |          3 |        |                                 |       |
-| maria_psp | func_pspeu_092BFF78                      |       22 |          3 |        |                                 |       |
+| maria     | func_pspeu_092BFF78                      |       22 |          3 |        |                                 |       |
 | maria_psp | func_pspeu_092B0E10                      |       22 |          3 |        |                                 |       |
 | dra       | func_psp_090F54E0                        |       22 |          4 |        |                                 |       |
 | maria_psp | func_pspeu_092A9250                      |       22 |          4 |        |                                 |       |
@@ -398,7 +398,7 @@
 | dra       | func_800F6568                            |       37 |          3 |        |                                 |       |
 | dra       | func_800F82F4                            |       37 |          3 |        |                                 |       |
 | dra       | func_psp_090EAFA8                        |       37 |          3 |        |                                 |       |
-| maria_psp | func_pspeu_092BEA38                      |       37 |          3 |        |                                 |       |
+| maria     | func_pspeu_092BEA38                      |       37 |          3 |        |                                 |       |
 | no4       | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
 | st0       | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
 | dra       | MenuReverseCloakDraw                     |       37 |          4 |        |                                 |       |
@@ -483,7 +483,7 @@
 | dra       | MemcardParse                             |       42 |          3 |        | https://decomp.me/scratch/wkv7d | 1.0   |
 | dra       | MenuDrawInt                              |       42 |          3 |        |                                 |       |
 | dra       | func_80102628                            |       42 |          4 |        |                                 |       |
-| maria_psp | func_pspeu_092BFFB8                      |       42 |          5 |        |                                 |       |
+| maria     | func_pspeu_092BFFB8                      |       42 |          5 |        |                                 |       |
 | chi       | FindFirstEntityBelow                     |       42 |          5 |        |                                 |       |
 | chi       | FindFirstEntityToTheLeft                 |       42 |          5 |        |                                 |       |
 | lib       | FindFirstEntityBelow                     |       42 |          5 |        |                                 |       |
@@ -505,7 +505,7 @@
 | no4       | func_pspeu_09238490                      |       43 |          4 |        |                                 |       |
 | dra       | ResetEntityArray                         |       43 |          5 |        |                                 |       |
 | dra       | CreateHPNumMove                          |       43 |          5 |        |                                 |       |
-| maria_psp | func_pspeu_092BEAB0                      |       43 |          5 |        |                                 |       |
+| maria     | func_pspeu_092BEAB0                      |       43 |          5 |        |                                 |       |
 | dra       | func_8010EA54                            |       43 |          6 |        |                                 |       |
 | dra       | SetCgiDisplayBuffer                      |       43 |          6 |        |                                 |       |
 | maria     | func_pspeu_092B22B8                      |       43 |          6 |        |                                 |       |
@@ -744,7 +744,7 @@
 | dra       | UnpauseSfxScripts                        |       67 |          8 |        |                                 |       |
 | dra       | func_800F1954                            |       67 |         10 |        |                                 |       |
 | lib       | SkeletonAttackCheck                      |       67 |         10 |        |                                 |       |
-| maria_psp | func_pspeu_092C0040                      |       67 |         12 |        |                                 |       |
+| maria     | func_pspeu_092C0040                      |       67 |         12 |        |                                 |       |
 | no4       | unk_26740.rodata                         |       68 |          0 | Yes    |                                 |       |
 | dra       | SetRoomBackgroundLayer                   |       68 |          2 |        |                                 |       |
 | dra       | SortTimeAttackEntries                    |       68 |          5 |        |                                 |       |
@@ -784,7 +784,6 @@
 | lib       | func_psp_09254CD0                        |       71 |          9 |        |                                 |       |
 | lib       | PrimToggleVisibility                     |       71 |          9 |        | https://decomp.me/scratch/8l5Dr | 1.0   |
 | dra       | UpdateCapePalette                        |       71 |         10 |        |                                 |       |
-| maria_psp | MAR_Load                                 |       71 |         10 |        |                                 |       |
 | dra       | BatFormFinished                          |       71 |         11 |        |                                 |       |
 | dra       | func_800FAF44                            |       72 |          5 |        |                                 |       |
 | dra       | func_8011B480                            |       72 |          7 |        | https://decomp.me/scratch/UO5p1 | 0.992 |
@@ -843,7 +842,7 @@
 | dra       | RevealSecretPassageOnMap                 |       78 |         12 |        |                                 |       |
 | dra       | CdFadeOut2                               |       78 |         13 |        |                                 |       |
 | dra       | func_psp_09141E30                        |       78 |         13 |        |                                 |       |
-| maria_psp | func_pspeu_092C0138                      |       78 |         14 |        |                                 |       |
+| maria     | func_pspeu_092C0138                      |       78 |         14 |        |                                 |       |
 | dra       | GetSpellDef                              |       79 |          5 |        |                                 |       |
 | lib       | func_psp_09258A38                        |       79 |          7 |        | https://decomp.me/scratch/YDvBh | 1.0   |
 | maria     | MarSetFall                               |       79 |          8 |        |                                 |       |
@@ -1003,6 +1002,7 @@
 | dra       | func_800F8754                            |      104 |         10 |        |                                 |       |
 | ric       | func_80160D2C                            |      104 |         10 |        |                                 |       |
 | wrp       | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
+| maria     | MAR_Load                                 |      104 |         12 |        |                                 |       |
 | dra       | CdSoundCommand8                          |      104 |         14 |        | https://decomp.me/scratch/hmJYM | 0.978 |
 | dra       | SetRoomForegroundLayer                   |      105 |          2 |        |                                 |       |
 | chi       | EntityGreyPuff                           |      105 |          8 |        |                                 |       |
