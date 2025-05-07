@@ -393,9 +393,9 @@ extern Point16 g_MarSensorsWall[];
 extern s16 g_MarSensorsCeilingDefault[];
 extern s16 g_MarSensorsFloorDefault[];
 extern s16 g_MarSensorsWallDefault[];
-extern s16 D_pspeu_092C5198[]; // unknown ceiling sensors
-extern s16 D_pspeu_092C51A0[]; // unknown floor sensors
-extern s16 D_pspeu_092C51A8[]; // unknown wall sensors
+extern s16 D_pspeu_092C5198[NUM_HORIZONTAL_SENSORS]; // unknown ceiling sensors
+extern s16 D_pspeu_092C51A0[NUM_HORIZONTAL_SENSORS]; // unknown floor sensors
+extern s16 D_pspeu_092C51A8[NUM_VERTICAL_SENSORS];   // unknown wall sensors
 extern s16 g_MarSensorsCeilingCrouch[];
 extern s16 g_MarSensorsWallCrouch[];
 
