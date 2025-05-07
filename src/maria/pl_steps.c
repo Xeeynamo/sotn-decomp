@@ -1243,4 +1243,57 @@ void MarStepBladeDash(void) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepHighJump);
+void MarStepHighJump(void) {
+    bool loadAnim;
+
+    loadAnim = false;
+    g_Player.high_jump_timer++;
+    switch (PLAYER.step_s) {
+    case 0:
+        if (g_Player.vram_flag & 2) {
+            PLAYER.velocityY = FIX(1.5);
+            PLAYER.step_s = 3;
+            g_Player.high_jump_timer = 0;
+        } else if (g_Player.high_jump_timer > 0x1C) {
+            PLAYER.step_s = 1;
+            PLAYER.velocityY = FIX(-6);
+        }
+        break;
+    case 1:
+        if (g_Player.vram_flag & 2) {
+            PLAYER.velocityY = FIX(1);
+            PLAYER.step_s = 3;
+            g_Player.high_jump_timer = 0;
+        } else {
+            PLAYER.velocityY += FIX(0.375);
+            if (PLAYER.velocityY > FIX(0.5)) {
+                PLAYER.velocityY = FIX(1.5);
+                PLAYER.step_s = 3;
+            }
+        }
+        break;
+    case 3:
+        if (g_Player.padPressed & PAD_RIGHT) {
+            PLAYER.facingLeft = 0;
+            PLAYER.velocityX = FIX(1.5);
+        } else if (g_Player.padPressed & PAD_LEFT) {
+            PLAYER.facingLeft = 1;
+            PLAYER.velocityX = FIX(-1.5);
+        } else {
+            PLAYER.velocityX = 0;
+        }
+        if (!(g_Player.padPressed & PAD_CROSS)) {
+            loadAnim = true;
+        }
+        MarCheckInput(1);
+        break;
+    }
+    if (loadAnim) {
+        MarSetAnimation(mar_80155534);
+        MarSetStep(PL_S_JUMP);
+        return;
+    }
+    if ((VSync(-1) % 15) == 0) {
+        func_9142FC8(0x68C);
+    }
+}
