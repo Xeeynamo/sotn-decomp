@@ -186,7 +186,124 @@ void MarInit(s16 initParam) {
     func_90E4C68();
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_main", CheckStageCollision);
+static void CheckStageCollision(bool arg0) {
+    Collider collider;
+    s16 argX;
+    s16 argY;
+    s32 xVel;
+    s32 i;
+    s32 j;
+    s32* vram_ptr;
+    s32* unk04_ptr;
+    s32 status;
+
+    vram_ptr = &g_Player.vram_flag;
+    unk04_ptr = &g_Player.unk04;
+    *unk04_ptr = *vram_ptr;
+    *vram_ptr = 0;
+    status = g_Player.status;
+
+    if (arg0) {
+        for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                if (status & PLAYER_STATUS_UNK80000000) {
+                    g_MarSensorsFloor[i].y = D_pspeu_092C51A0[i];
+                    g_MarSensorsCeiling[i].y = D_pspeu_092C5198[i];
+                } else {
+                    g_MarSensorsFloor[i].y = g_MarSensorsFloorDefault[i];
+                    g_MarSensorsCeiling[i].y = g_MarSensorsCeilingCrouch[i];
+                }
+            } else {
+                g_MarSensorsFloor[i].y = g_MarSensorsFloorDefault[i];
+                g_MarSensorsCeiling[i].y = g_MarSensorsCeilingDefault[i];
+            }
+        }
+        for (i = 0; i < NUM_VERTICAL_SENSORS; i++) {
+            if (status & PLAYER_STATUS_CROUCH) {
+                if (status & PLAYER_STATUS_UNK80000000) {
+                    g_MarSensorsWall[i].y = D_pspeu_092C51A8[i];
+                    g_MarSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                        D_pspeu_092C51A8[i];
+                } else {
+                    g_MarSensorsWall[i].y = g_MarSensorsWallCrouch[i];
+                    g_MarSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                        g_MarSensorsWallCrouch[i];
+                }
+            } else {
+                g_MarSensorsWall[i].y = g_MarSensorsWallDefault[i];
+                g_MarSensorsWall[i + NUM_VERTICAL_SENSORS].y =
+                    g_MarSensorsWallDefault[i];
+            }
+        }
+    }
+    xVel = PLAYER.velocityX;
+    if (PLAYER.velocityX < 0) {
+        if (!(*unk04_ptr & 8)) {
+            if ((*unk04_ptr & 0xF000) == 0xC000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0xD000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if (PLAYER.velocityX > 0) {
+        if (!(*unk04_ptr & 4)) {
+            if ((*unk04_ptr & 0xF000) == 0x8000) {
+                xVel = xVel * 10 / 16;
+            }
+            if ((*unk04_ptr & 0xF000) == 0x9000) {
+                xVel = xVel * 13 / 16;
+            }
+            PLAYER.posX.val += xVel;
+        }
+    }
+    if ((PLAYER.velocityY < 0) && !(*unk04_ptr & 2)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    if ((PLAYER.velocityY > 0) && !(*unk04_ptr & 1)) {
+        PLAYER.posY.val += PLAYER.velocityY;
+    }
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_MarSensorsFloor[i].x;
+        argY = PLAYER.posY.i.hi + g_MarSensorsFloor[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colFloor[i], 0);
+        if (g_Player.timers[PL_T_7] &&
+            (g_Player.colFloor[i].effects & EFFECT_SOLID_FROM_ABOVE)) {
+            g_api.CheckCollision(argX, argY + 0xC, &collider, 0);
+            if (!(collider.effects & EFFECT_SOLID)) {
+                g_Player.colFloor[i].effects = EFFECT_NONE;
+            }
+        }
+    }
+    MarCheckFloor();
+    for (i = 0; i < NUM_HORIZONTAL_SENSORS; i++) {
+        argX = PLAYER.posX.i.hi + g_MarSensorsCeiling[i].x;
+        argY = PLAYER.posY.i.hi + g_MarSensorsCeiling[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colCeiling[i], 0);
+    }
+    MarCheckCeiling();
+    if ((*vram_ptr & 1) && (PLAYER.velocityY >= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    if ((*vram_ptr & 2) && (PLAYER.velocityY <= 0)) {
+        PLAYER.posY.i.lo = 0;
+    }
+    for (i = 0; i < NUM_VERTICAL_SENSORS * 2; i++) {
+        argX = PLAYER.posX.i.hi + g_MarSensorsWall[i].x;
+        argY = PLAYER.posY.i.hi + g_MarSensorsWall[i].y;
+        g_api.CheckCollision(argX, argY, &g_Player.colWall[i], 0);
+    }
+    MarCheckWallRight();
+    MarCheckWallLeft();
+    if ((*vram_ptr & 4) && (PLAYER.velocityX > 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+    if ((*vram_ptr & 8) && (PLAYER.velocityX < 0)) {
+        PLAYER.posX.i.lo = 0;
+    }
+}
 
 static void CheckBladeDashInput(void) {
     s32 pressed;
