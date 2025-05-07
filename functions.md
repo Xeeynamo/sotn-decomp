@@ -6,12 +6,12 @@
 | dra       | func_801072DC                            |        7 |          1 |        |                                 |       |
 | dra       | func_8011EDA0                            |        7 |          1 |        |                                 |       |
 | dra       | DebugUpdate                              |        7 |          1 |        |                                 |       |
-| dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
 | dra       | LoadFileSim                              |        7 |          1 |        |                                 |       |
 | dra       | SetReverbDepth                           |        7 |          1 |        |                                 |       |
 | dra       | MenuSoundConfigDraw                      |        7 |          1 |        |                                 |       |
 | dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
 | dra       | func_psp_0913D610                        |        7 |          1 |        |                                 |       |
+| dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
 | dra       | func_800F66BC                            |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F1CE0                        |        7 |          1 |        |                                 |       |
 |           | unused_339C                              |        7 |          1 |        |                                 |       |
@@ -184,7 +184,7 @@
 | dra       | func_800F223C                            |       21 |          2 |        |                                 |       |
 | dra       | func_8010FAF4                            |       21 |          2 |        |                                 |       |
 | dra       | func_800F9DD0                            |       21 |          3 |        |                                 |       |
-| dra       | 1A1A0.rodata                             |       22 |          0 | Yes    |                                 |       |
+| dra       | play.rodata                              |       22 |          0 | Yes    |                                 |       |
 | chi       | en_breakable_wall.rodata                 |       22 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090E4C18                        |       22 |          2 |        |                                 |       |
 | dra       | DestroyAllPrimitives                     |       22 |          3 |        |                                 |       |
