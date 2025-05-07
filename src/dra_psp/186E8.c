@@ -925,7 +925,3 @@ loop_5:
 #endif
     }
 }
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", func_psp_090F6368);
-
-INCLUDE_ASM("dra_psp/psp/dra_psp/186E8", SetGameState);

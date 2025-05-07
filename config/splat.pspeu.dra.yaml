@@ -52,6 +52,7 @@ segments:
       - [0xA710, c, dra/5087C] # O4
       - [0xE588, c, dra_psp/E588]
       - [0x186E8, c, dra_psp/186E8]
+      - [0x199E8, c, dra_psp/199E8]
       - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/1A0D0]
       - [0x1A110, c, dra_psp/1A110]
