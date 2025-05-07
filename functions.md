@@ -1736,7 +1736,7 @@
 | ric       | RicCheckCeiling                          |      562 |         55 |        | https://decomp.me/scratch/XrVFn | 0.998 |
 | dra       | func_8012F178                            |      564 |         35 |        |                                 |       |
 | no4       | func_pspeu_09258E30                      |      564 |         51 | Yes    |                                 |       |
-| maria_psp | CheckStageCollision                      |      565 |         55 |        | https://decomp.me/scratch/GmZxv | 0.995 |
+| maria     | CheckStageCollision                      |      565 |         55 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | dra       | PlayerStepJump                           |      565 |        106 |        |                                 |       |
 | dra       | RenderTilemap                            |      570 |         35 |        | https://decomp.me/scratch/4wi95 | 0.999 |
 | dra       | CheckCeiling                             |      573 |         58 |        |                                 |       |
