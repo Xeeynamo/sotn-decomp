@@ -15,7 +15,10 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityWarg);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityUnkId4B);
 
+// clumsy thing, linter splits the line which breaks INCLUDE_ASM
+// clang-format off
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", EntityWargExplosionPuffTransparent);
+// clang-format on
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_particles", func_pspeu_092546E0);
 

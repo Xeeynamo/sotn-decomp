@@ -77,7 +77,10 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityUnkId52);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityCastleBridge);
 
+// clumsy thing, linter splits the line which breaks INCLUDE_ASM
+// clang-format off
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityDistantBackgroundTrees);
+// clang-format on
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/first_c_file", EntityBackgroundCastleWall);
 
