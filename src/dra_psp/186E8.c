@@ -681,6 +681,8 @@ extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
 
+extern s32 g_DebugEnabled2;
+
 #if defined(VERSION_PC)
 #define IS_QUIT_REQUESTED                                                      \
     (g_IsQuitRequested || (g_TimedExit && g_Timer >= g_TimeLimit))
@@ -770,7 +772,7 @@ loop_5:
 
     // NOTE: Lots of values being assigned to 0! Direct mappings to PSX
     // symbols are difficult. So some of these could be wrongly identified!
-    g_DebugEnabled = 0;
+    g_DebugEnabled2 = 0;
     g_DebugHitboxViewMode = 0;
     D_801362B8 = 0;
     D_801362BC = 0;
@@ -820,7 +822,7 @@ loop_5:
         if (D_8003C0EC[3] == 0 && D_800973EC == 0) {
             RenderTilemap();
             RenderEntitiesPSP();
-            if (g_GameState == Game_Play && g_DebugEnabled) {
+            if (g_GameState == Game_Play && g_DebugEnabled2) {
                 if (g_DebugHitboxViewMode != 0) {
                     DrawEntitiesHitbox(g_DebugHitboxViewMode);
                 }

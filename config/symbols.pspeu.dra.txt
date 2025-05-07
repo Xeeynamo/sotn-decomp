@@ -781,6 +781,7 @@ g_DebugHitboxViewMode = 0x091CE2E0;
 g_DebugFreeze = 0x091CE2E8;
 g_DebugCurPal = 0x091CE2F0;
 g_DebugMode = 0x091CE2F8;
+g_DebugEnabled2 = 0x091CE300;
 D_8013AEE4 = 0x091CE308;
 g_SimVabId = 0x091CE358;
 clutAddr = 0x091CE380;
