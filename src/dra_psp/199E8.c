@@ -7,3 +7,9 @@
 INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", func_psp_090F6368);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", SetGameState);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", func_800E414C);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", ClearBackbuffer);
+
+INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", HandleTitle);

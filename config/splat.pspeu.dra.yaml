@@ -53,7 +53,6 @@ segments:
       - [0xE588, c, dra_psp/E588]
       - [0x186E8, c, dra_psp/186E8]
       - [0x199E8, c, dra_psp/199E8]
-      - [0x19AB0, c, dra_psp/19AB0]
       - [0x1A0D0, c, dra_psp/play]
       - [0x1B9C8, c, dra_psp/loading] # O4
       - [0x1DDC0, c, dra_psp/1DDC0] # O4
@@ -143,7 +142,7 @@ segments:
       - [0xEE3E8, .rodata, dra/628AC]
       - [0xEE408, .rodata, dra/5087C]
       - [0xEE4C8, .rodata, dra_psp/E588]
-      - [0xEE570, .rodata, dra_psp/19AB0]
+      - [0xEE570, .rodata, dra_psp/199E8]
       - [0xEE590, .rodata, dra_psp/play]
       - [0xEE5C0, .rodata, dra_psp/loading]
       - [0xEE628, .rodata, dra_psp/1DDC0]
