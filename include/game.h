@@ -2080,6 +2080,6 @@ typedef struct {
 } LangImg;
 
 void func_892667C(s32 paletteID, u16* palette);
-void func_91040A0(LangImg* img);
+void func_91040A0(u_long** gfxBank);
 
 #endif
