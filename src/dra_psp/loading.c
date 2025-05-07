@@ -8,7 +8,6 @@ void func_8932CEC(bool, s8);
 extern Weapon D_8017A000;
 extern Weapon D_8017D000;
 extern s32 D_8C630D4;
-extern u8 D_8D2DC40[];
 extern u8 D_8D2FC40;
 extern u8 D_8D3FC40;
 extern u8 D_8D41C40;

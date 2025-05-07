@@ -213,7 +213,7 @@ void RunMainEngine(void) {
                 g_GameStep = Play_PrepareNextStage;
                 return;
             }
-            if (D_80097C98 < 0) {
+            if (D_80097C98 & 0x80000000) {
                 PlaySfx(SET_STOP_SEQ);
                 StoreSaveData(0x801EA000, 0, 0);
                 g_GameStep = Play_PrepareNextStage;
