@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-void SetPlayerStep(s16 step) {
+void SetDopplegangerStep(s16 step) {
     DOPPLEGANGER.step = step;
     DOPPLEGANGER.step_s = 0;
 }
@@ -145,7 +145,7 @@ void func_8010DA2C(AnimationFrame* frames) {
     g_CurrentEntity->pose = 0;
 }
 
-void SetPlayerAnim(u8 anim) {
+void SetDopplegangerAnim(u8 anim) {
     g_CurrentEntity->ext.player.anim = anim;
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;

@@ -22,12 +22,12 @@ void func_us_801C648C(s32 arg0) {
     }
 }
 
-void SetPlayerAnim(u8 anim);
+void SetDopplegangerAnim(u8 anim);
 bool func_us_801C5650(s32 branchFlags);
 
 extern PlayerState g_Dop;
 
-void PlayerStepHighJump(void) {
+void DopplegangerStepHighJump(void) {
     s32 temp;
     s32 var_s1;
 
@@ -48,14 +48,14 @@ void PlayerStepHighJump(void) {
                 DOPPLEGANGER.rotPivotY = 2;
                 DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTZ;
                 DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
-                SetPlayerAnim(0x2B);
+                SetDopplegangerAnim(0x2B);
             } else {
                 DOPPLEGANGER.step_s = 3;
             }
         } else if (g_Dop.unk4A > 28) {
             DOPPLEGANGER.step_s = 1;
             DOPPLEGANGER.velocityY = -0x60000;
-            SetPlayerAnim(0x1B);
+            SetDopplegangerAnim(0x1B);
         }
         break;
 
@@ -76,7 +76,7 @@ void PlayerStepHighJump(void) {
         DOPPLEGANGER.rotPivotX = 0;
         DOPPLEGANGER.rotPivotY = 2;
         if (g_Dop.unk4A > 56) {
-            SetPlayerAnim(0x2D);
+            SetDopplegangerAnim(0x2D);
             DOPPLEGANGER.rotZ = 0;
             DOPPLEGANGER.step_s = 4;
             DOPPLEGANGER.drawFlags &=
@@ -102,7 +102,7 @@ void PlayerStepHighJump(void) {
     if (var_s1 != 0) {
         temp = 0; // TODO: !FAKE
         if ((var_s1 - 1) != temp) {
-            SetPlayerAnim(0x1C);
+            SetDopplegangerAnim(0x1C);
         }
         DOPPLEGANGER.palette = PAL_OVL(0x200);
         DOPPLEGANGER.step_s = 1;
@@ -141,7 +141,7 @@ void func_us_801C6950(void) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerHandleDamage);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", PlayerStepKill);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerStepKill);
 
 extern PlayerState g_Dop;
 extern s16 D_us_80183B98[];
@@ -151,8 +151,8 @@ bool BatFormFinished(void) {
         return false;
     }
 
-    SetPlayerStep(10);
-    SetPlayerAnim(202);
+    SetDopplegangerStep(10);
+    SetDopplegangerAnim(202);
     D_us_80183B98[1] = 6;
     DOPPLEGANGER.palette = PAL_OVL(0x20D);
     g_Dop.unk66 = 0;
@@ -193,7 +193,7 @@ extern s16 D_us_80181300[];
 extern s16 D_us_80181318[][2];
 extern s16 D_us_80181328[][2];
 
-void PlayerStepUnmorphBat(void) {
+void DopplegangerStepUnmorphBat(void) {
     s32 i;
     s32 count;
     u8 _pad[40]; // must be between 33 & 40
@@ -255,7 +255,7 @@ s32 func_us_801C84F4(void) {
         return false;
     }
     CheckMoveDirection();
-    SetPlayerStep(15);
+    SetDopplegangerStep(15);
     return true;
 }
 
@@ -285,7 +285,7 @@ void ControlMistForm(void) {
             if (DOPPLEGANGER.velocityY < 0) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
-            SetPlayerAnim(0xCA);
+            SetDopplegangerAnim(0xCA);
             D_us_80183B98[1] = DOPPLEGANGER.animCurFrame;
             g_api.func_800EA538(5);
             g_api.func_800EA5E4(0x8801U);
@@ -414,7 +414,7 @@ extern s16 D_us_80181300[];
 extern s16 D_us_80181318[][2];
 extern s16 D_us_80181328[][2];
 
-void PlayerStepUnmorphMist(void) {
+void DopplegangerStepUnmorphMist(void) {
     s32 i;
     s32 count;
     u8 _pad[40];
@@ -449,9 +449,9 @@ void PlayerStepUnmorphMist(void) {
 
     if (count == 8) {
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-        SetPlayerAnim(0xCB);
+        SetDopplegangerAnim(0xCB);
         if (DOPPLEGANGER.step_s != 0) {
-            SetPlayerAnim(0xCC);
+            SetDopplegangerAnim(0xCC);
         }
 
         if (g_Entities[E_ID_50].step < 3) {
@@ -473,7 +473,7 @@ void PlayerStepUnmorphMist(void) {
 
 extern s32 D_us_801D331C;
 
-void PlayerStepSwordWarp(void) {
+void DopplegangerStepSwordWarp(void) {
     if (DOPPLEGANGER.step_s == 0) {
         if (g_Entities[E_BOSS_WEAPON].entityId == E_NONE) {
             D_us_801D331C = 0x10;
@@ -489,7 +489,7 @@ void PlayerStepSwordWarp(void) {
 extern s16 D_us_801813D8[]; // rotation angles
 extern s32 D_us_801D3320;
 
-void PlayerStepStone(s32 arg0) {
+void DopplegangerStepStone(s32 arg0) {
     switch (DOPPLEGANGER.step_s) {
     case 0:
         func_us_801C68CC();
@@ -517,7 +517,7 @@ void PlayerStepStone(s32 arg0) {
                 D_us_801D3320 = 0x20;
             }
             DOPPLEGANGER.palette = PAL_OVL(0x19E);
-            SetPlayerAnim(0x38);
+            SetDopplegangerAnim(0x38);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
             DOPPLEGANGER.step_s = 2;
         }
@@ -542,7 +542,7 @@ void PlayerStepStone(s32 arg0) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
 
             if (g_Dop.unk5E == 0) {
-                SetPlayerAnim(0x3B);
+                SetDopplegangerAnim(0x3B);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
                 g_api.PlaySfx(SFX_BO4_UNK_7DD);
                 DOPPLEGANGER.step = Dop_Hit;
@@ -1035,13 +1035,13 @@ static bool func_8011BD48(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CA68C);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", EntityDopplegangerBlinkWhite);
 
 extern s16* D_us_801B0B50[];
 extern s16 D_us_80181C00[24][5];
 extern u8* D_us_80184434[];
 
-void EntityPlayerOutline(Entity* self) {
+void EntityDopplegangerOutline(Entity* self) {
     s16* animFramePtr;
     u8* spritesheetPtr;
     s16 xOffset;
