@@ -109,7 +109,7 @@ void EntityDoppleganger10(void) {
             step = DOPPLEGANGER.step;
             step_s = DOPPLEGANGER.step_s;
             pos.x.val = D_us_8018120C[g_CurrentEntity->nFramesInvincibility];
-            SetPlayerStep(Dop_Kill);
+            SetDopplegangerStep(Dop_Kill);
         } else {
             for (i = 0; i < LEN(g_Dop.timers); i++) {
                 if (g_Dop.timers[i]) {
@@ -211,10 +211,10 @@ void EntityDoppleganger10(void) {
                     case 2:
                         break;
                     case 3:
-                        SetPlayerStep(Dop_Hit);
+                        SetDopplegangerStep(Dop_Hit);
                         break;
                     case 7:
-                        SetPlayerStep(Dop_StatusStone);
+                        SetDopplegangerStep(Dop_StatusStone);
                         break;
                     case 4:
                     case 5:
@@ -247,7 +247,7 @@ void EntityDoppleganger10(void) {
                     DOPPLEGANGER.facingLeft++;
                     DOPPLEGANGER.facingLeft &= 1;
                 }
-                SetPlayerStep(Dop_MorphBat);
+                SetDopplegangerStep(Dop_MorphBat);
                 g_Dop.unk66 = 0;
             }
             if ((g_Dop.padTapped & PAD_R2) &&
@@ -264,7 +264,7 @@ void EntityDoppleganger10(void) {
                     DOPPLEGANGER.facingLeft++;
                     DOPPLEGANGER.facingLeft &= 1;
                 }
-                SetPlayerStep(Dop_MorphMist);
+                SetDopplegangerStep(Dop_MorphMist);
                 g_api.PlaySfx(SFX_TRANSFORM_LOW);
             }
         }
@@ -274,46 +274,46 @@ void EntityDoppleganger10(void) {
 
     switch (DOPPLEGANGER.step) {
     case Dop_Stand:
-        PlayerStepStand();
+        DopplegangerStepStand();
         break;
     case Dop_Walk:
-        PlayerStepWalk();
+        DopplegangerStepWalk();
         break;
     case Dop_Crouch:
-        PlayerStepCrouch();
+        DopplegangerStepCrouch();
         break;
     case Dop_Fall:
-        PlayerStepFall();
+        DopplegangerStepFall();
         break;
     case Dop_Jump:
-        PlayerStepJump();
+        DopplegangerStepJump();
         break;
     case Dop_MorphBat:
         ControlBatForm();
         break;
     case Dop_UnmorphBat:
-        PlayerStepUnmorphBat();
+        DopplegangerStepUnmorphBat();
         break;
     case Dop_MorphMist:
         ControlMistForm();
         break;
     case Dop_UnmorphMist:
-        PlayerStepUnmorphMist();
+        DopplegangerStepUnmorphMist();
         break;
     case Dop_HighJump:
-        PlayerStepHighJump();
+        DopplegangerStepHighJump();
         break;
     case Dop_SwordWarp:
-        PlayerStepSwordWarp();
+        DopplegangerStepSwordWarp();
         break;
     case Dop_Hit:
         DopplegangerHandleDamage(&pos, step, step_s);
         break;
     case Dop_Kill:
-        PlayerStepKill(&pos, step, step_s);
+        DopplegangerStepKill(&pos, step, step_s);
         break;
     case Dop_StatusStone:
-        PlayerStepStone(var_s5);
+        DopplegangerStepStone(var_s5);
         break;
     }
 

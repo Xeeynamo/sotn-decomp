@@ -103,7 +103,7 @@ void func_8010E470(s32 arg0, s32 velocityX) {
     DOPPLEGANGER.velocityY = 0;
     DOPPLEGANGER.step = Dop_Crouch;
     DOPPLEGANGER.step_s = D_us_801813A4[arg0][0];
-    SetPlayerAnim(D_us_801813A4[arg0][1]);
+    SetDopplegangerAnim(D_us_801813A4[arg0][1]);
 }
 
 extern u8 D_us_801813AC[];
@@ -118,7 +118,7 @@ void func_8010E570(s32 arg0) {
 
     DOPPLEGANGER.velocityX = arg0;
     DOPPLEGANGER.velocityY = 0;
-    SetPlayerStep(Dop_Stand);
+    SetDopplegangerStep(Dop_Stand);
     if (g_Dop.unk48) {
         DOPPLEGANGER.step_s = 2;
         atLedge = false;
@@ -150,7 +150,7 @@ void func_8010E570(s32 arg0) {
         break;
     }
     anim += atLedge;
-    SetPlayerAnim(D_us_801813AC[anim]);
+    SetDopplegangerAnim(D_us_801813AC[anim]);
 }
 
 void func_8010E6AC(bool forceAnim13) {
@@ -163,14 +163,14 @@ void func_8010E6AC(bool forceAnim13) {
 
     SetSpeedX(FIX(1.5));
     DOPPLEGANGER.velocityY = 0;
-    SetPlayerStep(Dop_Walk);
+    SetDopplegangerStep(Dop_Walk);
 
     if (forceAnim13) {
         if (DOPPLEGANGER.ext.player.anim != 13) {
-            SetPlayerAnim(13);
+            SetDopplegangerAnim(13);
         }
     } else {
-        SetPlayerAnim(7);
+        SetDopplegangerAnim(7);
         // Factory blueprint 1 has child 2, which is EntitySmokePuff
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(1, 5), 0);
     }
@@ -190,16 +190,16 @@ void func_8010E6AC(bool forceAnim13) {
 
 void func_us_801C4EE4(void) {
     if (CheckMoveDirection() != 0) {
-        SetPlayerAnim(0x1A);
+        SetDopplegangerAnim(0x1A);
         SetSpeedX(FIX(3.0 / 2.0));
         g_Dop.unk44 = 0;
     } else {
-        SetPlayerAnim(0x16);
+        SetDopplegangerAnim(0x16);
         DOPPLEGANGER.velocityX = 0;
         g_Dop.unk44 = 4;
     }
     DOPPLEGANGER.velocityY = FIX(-4.875);
-    SetPlayerStep(5);
+    SetDopplegangerStep(5);
     if (g_Dop.prev_step == 2) {
         g_Dop.unk44 |= 0x10;
     }
@@ -208,14 +208,14 @@ void func_us_801C4EE4(void) {
 void func_us_801C4F90(void) {
     DOPPLEGANGER.velocityY = FIX(-4.25);
     g_Dop.unk44 |= 0x21;
-    SetPlayerAnim(0x20);
+    SetDopplegangerAnim(0x20);
     DOPPLEGANGER.step_s = 0;
 }
 
 void func_us_801C4FDC(void) {
-    SetPlayerStep(4);
+    SetDopplegangerStep(4);
     if (g_Dop.prev_step != 2) {
-        SetPlayerAnim(0x1C);
+        SetDopplegangerAnim(0x1C);
     }
     DOPPLEGANGER.velocityY = FIX(2.0);
     g_Dop.timers[ALU_T_5] = 8;
@@ -230,9 +230,9 @@ void func_us_801C504C(void) {
     } else {
         DOPPLEGANGER.velocityX = 0;
     }
-    SetPlayerStep(9);
+    SetDopplegangerStep(9);
     DOPPLEGANGER.velocityY = FIX(-12);
-    SetPlayerAnim(0x21);
+    SetDopplegangerAnim(0x21);
     g_Dop.unk4A = 0;
     g_Dop.unk44 &= 0xFFFE;
     CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
@@ -290,15 +290,15 @@ s32 func_us_801C5168(void) {
     switch (DOPPLEGANGER.step) {
     case Dop_Stand:
         animOffset = playerAnimOffset;
-        SetPlayerAnim(animBase + animOffset);
+        SetDopplegangerAnim(animBase + animOffset);
         break;
     case Dop_Crouch:
         animOffset = 2;
         if (DOPPLEGANGER.step_s == 2) {
             animOffset = playerAnimOffset;
-            SetPlayerStep(1);
+            SetDopplegangerStep(1);
         }
-        SetPlayerAnim(animBase + animOffset);
+        SetDopplegangerAnim(animBase + animOffset);
         break;
     }
     return 0;
@@ -306,8 +306,8 @@ s32 func_us_801C5168(void) {
 
 void func_8010ED54(u8 anim) {
     DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
-    SetPlayerStep(16);
-    SetPlayerAnim(anim);
+    SetDopplegangerStep(16);
+    SetDopplegangerAnim(anim);
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(61, 20), 0);
     g_Dop.unk48 = 0;
 }
@@ -343,16 +343,16 @@ s32 func_us_801C52F8(void) {
         switch (DOPPLEGANGER.step) {
         case Dop_Stand:
         case Dop_Walk:
-            SetPlayerAnim(0xB5);
+            SetDopplegangerAnim(0xB5);
             DOPPLEGANGER.step = Dop_Stand;
             break;
         case Dop_Crouch:
-            SetPlayerAnim(0xB6);
+            SetDopplegangerAnim(0xB6);
             DOPPLEGANGER.step = Dop_Crouch;
             break;
         case Dop_Fall:
         case Dop_Jump:
-            SetPlayerAnim(0xB7);
+            SetDopplegangerAnim(0xB7);
             DOPPLEGANGER.step = Dop_Jump;
             break;
         }
@@ -408,7 +408,7 @@ s32 func_us_801C52F8(void) {
         break;
     }
 
-    SetPlayerAnim(animBase + animOffset);
+    SetDopplegangerAnim(animBase + animOffset);
     g_Dop.timers[9] = 4;
 
     return 1;
@@ -425,7 +425,7 @@ void func_us_801C55EC(void) {
     DOPPLEGANGER.step_s = 3;
     SetSpeedX(FIX(-3.5));
     g_CurrentEntity->velocityY = FIX(0.0);
-    SetPlayerAnim(0xDB);
+    SetDopplegangerAnim(0xDB);
     CreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
 }
 
@@ -578,7 +578,7 @@ void func_80111CC0(void) {
     }
 }
 
-void PlayerStepStand(void) {
+void DopplegangerStepStand(void) {
     s32 anim;
     u16 var_s0;
 
@@ -639,7 +639,7 @@ void PlayerStepStand(void) {
             var_s0 |= 0x8000;
         }
         if (var_s0 & 2 && g_Dop.padPressed & PAD_UP && !g_Dop.unk48) {
-            SetPlayerAnim(anim);
+            SetDopplegangerAnim(anim);
             DOPPLEGANGER.step_s = 1;
             var_s0 |= 0x8000;
         }
@@ -654,7 +654,7 @@ void PlayerStepStand(void) {
     }
 }
 
-void PlayerStepWalk(void) {
+void DopplegangerStepWalk(void) {
     if (func_us_801C5650(0x4301C) == false) {
         SetSpeedX(FIX(1.5));
         if (CheckMoveDirection() == 0) {
@@ -665,7 +665,7 @@ void PlayerStepWalk(void) {
 
 extern s16 D_us_801813C0[];
 
-void PlayerStepJump(void) {
+void DopplegangerStepJump(void) {
     s32 moveDirection;
     s16 index;
 
@@ -690,19 +690,19 @@ void PlayerStepJump(void) {
         if (moveDirection) {
             if (DOPPLEGANGER.ext.player.anim == 22 ||
                 DOPPLEGANGER.ext.player.anim == 25) {
-                SetPlayerAnim(24);
+                SetDopplegangerAnim(24);
             }
             SetSpeedX(FIX(1.5));
         } else if (DOPPLEGANGER.ext.player.anim == 26 ||
                    DOPPLEGANGER.ext.player.anim == 24) {
-            SetPlayerAnim(25);
+            SetDopplegangerAnim(25);
         }
         if (moveDirection <= 0) {
             g_Dop.unk44 &= 0xFFEF;
         }
         if (DOPPLEGANGER.velocityY > 0) {
             if (DOPPLEGANGER.ext.player.anim != 27) {
-                SetPlayerAnim(27);
+                SetDopplegangerAnim(27);
             }
             DOPPLEGANGER.step_s = 1;
         }
@@ -736,14 +736,14 @@ void PlayerStepJump(void) {
                 index = 2;
             }
             DOPPLEGANGER.step_s = D_us_801813C0[index];
-            SetPlayerAnim((u8)D_us_801813C0[index + 1]);
+            SetDopplegangerAnim((u8)D_us_801813C0[index + 1]);
             func_8010FAF4();
         }
         break;
     }
 }
 
-void PlayerStepFall(void) {
+void DopplegangerStepFall(void) {
     if (func_us_801C5650(0x9029) == false) {
         DecelerateX(FIX(1.0 / 16.0));
         if (CheckMoveDirection() != 0) {
@@ -752,7 +752,7 @@ void PlayerStepFall(void) {
     }
 }
 
-void PlayerStepCrouch(void) {
+void DopplegangerStepCrouch(void) {
     s32 anim;
     s16 var_s0;
     u8 _pad[40]; // any size between 33-40 (inclusive);
@@ -776,7 +776,7 @@ void PlayerStepCrouch(void) {
             if (!(g_Dop.padPressed & PAD_DOWN)) {
                 // n.b.! var_s0 is set, but never used
                 var_s0 = 1;
-                SetPlayerAnim(0x13);
+                SetDopplegangerAnim(0x13);
                 DOPPLEGANGER.step_s = 2;
                 DOPPLEGANGER.pose = 1;
                 return;
@@ -828,13 +828,13 @@ void PlayerStepCrouch(void) {
         }
 
         if (var_s0 & 2 && g_Dop.unk4C) {
-            SetPlayerAnim(0x14);
+            SetDopplegangerAnim(0x14);
             DOPPLEGANGER.step_s = 0;
             var_s0 |= 0x8000;
         }
 
         if (var_s0 & 4 && !(g_Dop.padPressed & PAD_DOWN)) {
-            SetPlayerAnim(0x13);
+            SetDopplegangerAnim(0x13);
             DOPPLEGANGER.step_s = 2;
             var_s0 |= 0x8000;
         }
