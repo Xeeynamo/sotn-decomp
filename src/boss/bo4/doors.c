@@ -125,7 +125,7 @@ void func_us_801B4BF0(Entity* self) {
         dop = &DOPPLEGANGER;
         dop->zPriority = 0x56;
         if (D_us_801805A0 & 4) {
-            g_api.PlaySfx(0x92);
+            g_api.PlaySfx(SET_UNK_92);
             D_80097910 = 0x313;
             self->step++;
         }

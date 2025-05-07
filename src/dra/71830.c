@@ -1302,7 +1302,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 5:
             default:
                 PLAYER.velocityY = i + FIX(-4);
-                func_8010E3B8(FIX(-1.66666));
+                func_8010E3B8(FIX(-5.0 / 3));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {
                     PLAYER.ext.player.anim = 0x40;
@@ -1311,7 +1311,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 2:
             case 6:
                 PLAYER.velocityY = 0;
-                func_8010E3B8(FIX(-2.5));
+                func_8010E3B8(FIX(-5.0 / 2));
                 PLAYER.step_s = 7;
                 PLAYER.ext.player.anim = 0x23;
                 CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);

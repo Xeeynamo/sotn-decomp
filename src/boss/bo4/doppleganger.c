@@ -855,9 +855,7 @@ void func_us_801C37B4(Entity* self) {
     FntPrint("life:%02x\n", DOPPLEGANGER.hitPoints);
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C38C0);
-
-INCLUDE_ASM("boss/bo4/nonmatchings/doppleganger", func_us_801C3EEC);
+#include "../dop_floor.h"
 
 extern Point16 D_us_801812AC[];
 

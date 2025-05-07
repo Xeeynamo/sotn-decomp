@@ -502,9 +502,7 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C1DC8);
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C2D90);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C2EC0);
-
-INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C34EC);
+#include "../dop_floor.h"
 
 extern Point16 D_us_80181338[];
 

@@ -22,13 +22,13 @@ extern s32 D_pspeu_0926BC98;
 #endif
 
 void func_us_801B3690(Entity* self) {
-    s32 i;          // s2
-    Entity* dop;    // s0
-    Entity* entity; // s1
-    s32 offsetX;    // s4
-    s32 offsetY;    // s3
-    s32 tangent;    // s5
-    s16 angle;      // s6
+    s32 i;
+    Entity* dop;
+    Entity* entity;
+    s32 offsetX;
+    s32 offsetY;
+    s32 tangent;
+    s16 angle;
 
     FntPrint("pl_demo_timer:%02x\n", g_Player.demo_timer);
     FntPrint("step:%02x\n", self->step);
@@ -124,7 +124,7 @@ void func_us_801B3690(Entity* self) {
         dop = &DOPPLEGANGER;
         dop->zPriority = 0x56;
         if (D_us_801805B8 & 4) {
-            g_api.PlaySfx(0x92);
+            g_api.PlaySfx(SET_UNK_92);
 #ifdef VERSION_PSP
             D_80097910 = 0x313;
 #endif
@@ -345,7 +345,55 @@ void func_us_801B3B0C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B40A8);
+extern EInit D_us_8018046C;
+extern u8 D_us_801805E4[];
+extern u8 D_us_801805EC[];
+
+void func_us_801B40A8(Entity* self) {
+    s32 offsetX;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_8018046C);
+        self->rotZ = -0x400;
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+        if (self->params & 1) {
+            self->animCurFrame = 0x64;
+            self->velocityX = FIX(-0.5);
+        } else {
+            self->animCurFrame = 0x62;
+            self->velocityX = FIX(0.5);
+        }
+        self->zPriority = 0x5E;
+        // fallthrough
+
+    case 1:
+        MoveEntity();
+        if (self->params & 1) {
+            AnimateEntity(D_us_801805EC, self);
+        } else {
+            AnimateEntity(D_us_801805E4, self);
+        }
+        offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        if (self->velocityX > 0) {
+            if (offsetX > DISP_STAGE_W) {
+                self->step++;
+            }
+        } else if (offsetX < DISP_STAGE_W) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posX.i.hi = DISP_STAGE_W - g_Tilemap.scrollX.i.hi;
+        if (self->params & 1) {
+            self->animCurFrame = 0x64;
+        } else {
+            self->animCurFrame = 0x62;
+        }
+        break;
+    }
+}
 
 // light effects
 INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B4210);
@@ -430,7 +478,7 @@ void func_us_801B4A30(Entity* self) {
             zPointer++;
         }
         self->ext.et_801BE2C8.unkA0 = 0;
-        g_api.PlaySfx(0x7AE);
+        g_api.PlaySfx(SFX_RBO5_UNK_7AE);
         self->step++;
         break;
 

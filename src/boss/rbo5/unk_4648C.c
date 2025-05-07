@@ -126,7 +126,7 @@ void func_us_801C68CC(void) {
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
     DOPPLEGANGER.rotZ = 0;
-    if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_ID_22) {
+    if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_MIST) {
         func_8010FAF4();
     }
 }
@@ -139,7 +139,137 @@ void func_us_801C6950(void) {
     DOPPLEGANGER.entityRoomIndex = 1;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerHandleDamage);
+extern s16 D_us_801813C8[];
+
+void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
+    s32 sfxIndex;
+
+    switch (DOPPLEGANGER.step_s) {
+    case 0:
+        sfxIndex = 0;
+        func_us_801C68CC();
+        func_us_801C6950();
+        switch (damage->damageKind) {
+        case 3:
+            sfxIndex = (rand() & 1) + 3;
+            DOPPLEGANGER.velocityY = FIX(-4);
+            func_8010E3B8(FIX(-5.0 / 6));
+            DOPPLEGANGER.step_s = 1;
+            if (func_80113E68() == 0) {
+                DOPPLEGANGER.ext.player.anim = 0x40;
+            }
+            break;
+        case 2:
+            sfxIndex = (rand() & 1) + 5;
+            step--;
+            switch (step) {
+            case 0:
+            case 1:
+                DOPPLEGANGER.velocityY = 0;
+                func_8010E3B8(FIX(-5.0 / 3));
+                DOPPLEGANGER.step_s = 6;
+
+                DOPPLEGANGER.ext.player.anim = 0x31;
+                if (DOPPLEGANGER.entityRoomIndex != DOPPLEGANGER.facingLeft) {
+                    DOPPLEGANGER.ext.player.anim = 0x33;
+                }
+
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 6), 0);
+                break;
+            case 2:
+                DOPPLEGANGER.velocityY = 0;
+                func_8010E3B8(FIX(-1.25));
+                DOPPLEGANGER.step_s = 7;
+                DOPPLEGANGER.ext.player.anim = 0x23;
+                CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0, 0), 0);
+                break;
+            default:
+            case 3:
+            case 4:
+                DOPPLEGANGER.velocityY = FIX(-2);
+                func_8010E3B8(FIX(-1.25));
+                DOPPLEGANGER.step_s = 1;
+                func_80113E68();
+                break;
+            }
+            break;
+        default:
+            FntPrint("dam_kind:%04x\n", damage->damageKind);
+            break;
+        }
+
+        g_Dop.unk40 = 0x8166;
+        g_Dop.timers[2] = 6;
+        g_api.PlaySfx(D_us_801813C8[sfxIndex]);
+
+        if (damage->effects & EFFECT_UNK_8000) {
+            g_api.PlaySfx(SFX_FM_EXPLODE_SWISHES);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x45), 0);
+            g_Dop.unk40 = 0x8160;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(17, 1), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(18, 0), 0);
+            g_Dop.timers[2] = 0x10;
+        } else if (damage->effects & EFFECT_UNK_0100) {
+            g_Dop.timers[1] = 0x400;
+            g_Dop.unk40 = 0x8165;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 23), 0);
+        } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
+            g_Dop.timers[0] = 0x400;
+            g_Dop.unk40 = 0x8164;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 22), 0);
+        } else if (damage->effects & EFFECT_UNK_4000) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2D, 0), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x46), 0);
+            g_Dop.timers[2] = 0x18;
+            g_Dop.unk40 = 0x8202;
+        } else if (damage->effects & EFFECT_UNK_2000) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2E, 0), 0);
+            g_Dop.timers[2] = 0xC;
+            g_Dop.unk40 = 0x8169;
+            DOPPLEGANGER.ext.player.anim = 0x2E;
+        } else if (damage->effects & EFFECT_UNK_1000) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x72, 0), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x63), 0);
+            g_Dop.timers[2] = 8;
+            g_Dop.unk40 = 0x8164;
+        } else if (damage->effects & EFFECT_UNK_0800) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x71, 0), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x62), 0);
+            g_Dop.timers[2] = 16;
+            g_Dop.unk40 = 0x8164;
+        } else if (!(damage->effects &
+                     (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                      EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0200 |
+                      EFFECT_SOLID_FROM_BELOW | EFFECT_SOLID_FROM_ABOVE))) {
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x58), 0);
+        }
+        break;
+    case 1:
+        if ((func_us_801C5650(0x20280) == 0) && (DOPPLEGANGER.poseTimer < 0)) {
+            SetDopplegangerAnim(0x1C);
+            DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
+            return;
+        }
+        break;
+    case 8:
+        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        // fallthrough
+    case 6:
+    case 7:
+        DecelerateX(FIX(1.0 / 8));
+        if (!(g_Dop.vram_flag & 1)) {
+            func_us_801C4FDC();
+        }
+        if (DOPPLEGANGER.poseTimer < 0) {
+            if (DOPPLEGANGER.step_s == 6) {
+                func_8010E570(0);
+                return;
+            }
+            func_8010E470(0, DOPPLEGANGER.velocityX);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerStepKill);
 
@@ -190,8 +320,8 @@ INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", ControlBatForm);
 extern s16 D_us_80183B9C[][2];
 extern s16 D_us_801812F8[];
 extern s16 D_us_80181300[];
-extern s16 D_us_80181318[][2];
-extern s16 D_us_80181328[][2];
+extern Point16 g_DopSensorsCeiling[];
+extern Point16 g_DopSensorsFloor[];
 
 void DopplegangerStepUnmorphBat(void) {
     s32 i;
@@ -210,14 +340,14 @@ void DopplegangerStepUnmorphBat(void) {
     switch (DOPPLEGANGER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (D_us_80181328[i][1] < D_us_80181300[i]) {
-                D_us_80181328[i][1]++;
+            if (g_DopSensorsFloor[i].y < D_us_80181300[i]) {
+                g_DopSensorsFloor[i].y++;
             } else {
                 count++;
             }
 
-            if (D_us_80181318[i][1] > D_us_801812F8[i]) {
-                D_us_80181318[i][1]--;
+            if (g_DopSensorsCeiling[i].y > D_us_801812F8[i]) {
+                g_DopSensorsCeiling[i].y--;
             } else {
                 count++;
             }
@@ -411,8 +541,6 @@ void ControlMistForm(void) {
 }
 extern s16 D_us_801812F8[];
 extern s16 D_us_80181300[];
-extern s16 D_us_80181318[][2];
-extern s16 D_us_80181328[][2];
 
 void DopplegangerStepUnmorphMist(void) {
     s32 i;
@@ -432,13 +560,13 @@ void DopplegangerStepUnmorphMist(void) {
 
     for (i = 0; i < 4; i++) {
 
-        if (D_us_80181328[i][1] < D_us_80181300[i]) {
-            D_us_80181328[i][1]++;
+        if (g_DopSensorsFloor[i].y < D_us_80181300[i]) {
+            g_DopSensorsFloor[i].y++;
         } else {
             count += 1;
         }
-        if (D_us_80181318[i][1] > D_us_801812F8[i]) {
-            D_us_80181318[i][1]--;
+        if (g_DopSensorsCeiling[i].y > D_us_801812F8[i]) {
+            g_DopSensorsCeiling[i].y--;
         } else {
             count += 1;
         }
@@ -807,7 +935,153 @@ Entity* CreateEntFactoryFromEntity(
     return newFactory;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801C98BC);
+Entity* GetFreeEntityReverse(s16 start, s16 end);
+
+extern FactoryBlueprint D_us_8018153C[];
+extern u8 D_us_801817F0[NUM_BLUEPRINT_KIND][2];
+
+void func_us_801C98BC(Entity* self) {
+    Entity* newEntity;
+    s16 i;
+    s16 n;
+    s16 endIndex;
+    s16 startIndex;
+    u8* data;
+
+    if (self->step == 0) {
+        data = (u8*)&D_us_8018153C[self->params];
+        self->ext.factory.newEntityId = *data++;
+        self->ext.factory.amount = *data++;
+        self->ext.factory.nPerCycle = *data & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data++ >> 6) & 1;
+        self->ext.factory.tCycle = *data++;
+        self->ext.factory.kind = *data & 0xF;
+        self->ext.factory.origin = (s16)(*data++ >> 4) & 0xF;
+        self->ext.factory.delay = *data;
+        self->flags |= FLAG_UNK_10000000;
+
+        self->step++;
+
+        switch (self->ext.factory.origin) {
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_6:
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            break;
+        case B_ORIGIN_2:
+        case B_ORIGIN_4:
+        case B_ORIGIN_5:
+        case B_ORIGIN_7:
+            self->posX.val = DOPPLEGANGER.posX.val;
+            self->posY.val = DOPPLEGANGER.posY.val;
+            break;
+        }
+    } else {
+        switch (self->ext.factory.origin) {
+        case B_ORIGIN_DEFAULT:
+        case B_ORIGIN_1:
+        case B_ORIGIN_3:
+        case B_ORIGIN_5:
+        case B_ORIGIN_6:
+            break;
+        case B_ORIGIN_2:
+            self->posX.val = DOPPLEGANGER.posX.val;
+            self->posY.val = DOPPLEGANGER.posY.val;
+            break;
+        case B_ORIGIN_4:
+            self->posX.val = DOPPLEGANGER.posX.val;
+            self->posY.val = DOPPLEGANGER.posY.val;
+            if (DOPPLEGANGER.step != 2) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        case B_ORIGIN_7:
+            self->posX.val = DOPPLEGANGER.posX.val;
+            self->posY.val = DOPPLEGANGER.posY.val;
+            if (DOPPLEGANGER.step != 11) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        }
+    }
+
+    if (self->ext.factory.delay) {
+        if (--self->ext.factory.delay) {
+            return;
+        }
+        self->ext.factory.delay = self->ext.factory.tCycle;
+    }
+
+    // Save this value so we don't have to re-fetch on every for-loop cycle
+    n = self->ext.factory.nPerCycle;
+    for (i = 0; i < n; i++) {
+
+        // !FAKE, this should probably be &entity_ranges[unk9C] or similar,
+        // instead of doing &entity_ranges followed by +=
+        data = (u8*)&D_us_801817F0[0];
+        data += self->ext.factory.kind * 2;
+
+        startIndex = *data++;
+        endIndex = *data;
+
+        if (self->ext.factory.kind == 3) {
+            DestroyEntity(&g_Entities[startIndex]);
+            newEntity = &g_Entities[startIndex];
+            g_Dop.unk48 = 0;
+        } else if (self->ext.factory.kind == 0) {
+            newEntity = GetFreeEntityReverse(startIndex, endIndex + 1);
+        } else if (self->ext.factory.kind == 8) {
+            if ((self->ext.factory.spawnIndex % 3) == 0) {
+                newEntity = GetFreeEntity(81, 96);
+            }
+            if ((self->ext.factory.spawnIndex % 3) == 1) {
+                newEntity = GetFreeEntity(96, 112);
+            }
+            if ((self->ext.factory.spawnIndex % 3) == 2) {
+                newEntity = GetFreeEntity(112, 128);
+            }
+        } else {
+            newEntity = GetFreeEntity(startIndex, endIndex + 1);
+        }
+
+        if (newEntity == NULL) {
+            if (self->ext.factory.isNonCritical == 1) {
+                self->entityId = 0;
+            } else {
+                self->ext.factory.delay = self->ext.factory.tCycle;
+            }
+            return;
+        }
+
+        DestroyEntity(newEntity);
+        newEntity->entityId = self->ext.factory.newEntityId;
+        newEntity->params = self->ext.factory.paramsBase;
+        // The child  (newEntity) is not an ent factory, but because the factory
+        // creates many entities, we can't pick a particular extension. But
+        // we're not allowed to use generic, so i'll just reuse entFactory.
+        newEntity->ext.factory.parent = self->ext.factory.parent;
+        newEntity->posX.val = self->posX.val;
+        newEntity->posY.val = self->posY.val;
+        newEntity->facingLeft = self->facingLeft;
+        newEntity->zPriority = self->zPriority;
+
+        if (self->ext.factory.incParamsKind) {
+            newEntity->params += self->ext.factory.spawnIndex;
+        } else {
+            newEntity->params += i;
+        }
+
+        self->ext.factory.spawnIndex++;
+
+        if (self->ext.factory.spawnIndex == self->ext.factory.amount) {
+            self->entityId = 0;
+            return;
+        }
+    }
+    self->ext.factory.delay = self->ext.factory.tCycle;
+}
 
 extern EInit D_us_80180448;
 
@@ -835,7 +1109,7 @@ void func_us_801C9D58(Entity* self) {
 
 extern u8 D_us_801818A8[10];
 extern s16 D_us_80181804[];
-extern AnimationFrame D_us_80181834[];
+extern AnimationFrame D_800AD57C[];
 extern u8 D_us_80181898[NUM_VERTICAL_SENSORS * 2];
 extern s16 D_us_80181828[];
 extern s32 D_us_80181810[];
@@ -853,7 +1127,7 @@ void EntitySmokePuff(Entity* self) {
         paramsHi = self->params >> 8;
         paramsLo = self->params & 0xFF;
         self->animSet = 5;
-        self->anim = D_us_80181834;
+        self->anim = D_800AD57C;
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_OVL(0x195);
@@ -1412,7 +1686,7 @@ void EntityWingSmashTrail(Entity* self) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CC788);
 
-extern AnimationFrame D_us_80181834[];
+extern AnimationFrame D_800AD57C[];
 extern AnimationFrame D_us_80181DC8[];
 extern AnimationFrame D_us_80181E04[];
 
@@ -1439,7 +1713,7 @@ void func_8011EDA8(Entity* self) {
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
-                self->anim = D_us_80181834;
+                self->anim = D_800AD57C;
                 self->palette = PAL_OVL(0x170);
             }
         }
@@ -1469,14 +1743,14 @@ void func_8011EDA8(Entity* self) {
         self->rotY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        if ((self->pose == 8) && (self->anim != D_us_80181834)) {
+        if ((self->pose == 8) && (self->anim != D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(4, 4), 0);
             }
         }
 
-        if ((self->pose == 16) && (self->anim == D_us_80181834)) {
+        if ((self->pose == 16) && (self->anim == D_800AD57C)) {
             self->drawMode = DRAW_TPAGE;
         }
 
