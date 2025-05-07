@@ -973,28 +973,78 @@ INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0DC0);
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0E10);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", MarStepSlide);
+void MarStepSlide(void) {
+    s32 isTouchingGround;
+
+    isTouchingGround = 0;
+    if (PLAYER.facingLeft == 0 && (g_Player.vram_flag & 4)) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.facingLeft && (g_Player.vram_flag & 8)) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
+        isTouchingGround = 1;
+    }
+    if (PLAYER.posX.i.hi <= 4 && PLAYER.facingLeft) {
+        isTouchingGround = 1;
+    }
+    if ((PLAYER.facingLeft == 0 &&
+         (g_Player.colFloor[2].effects & EFFECT_UNK_8000)) ||
+        (PLAYER.facingLeft &&
+         (g_Player.colFloor[3].effects & EFFECT_UNK_8000))) {
+        isTouchingGround = 1;
+    }
+    if (isTouchingGround && PLAYER.pose < 2) {
+        PLAYER.pose = 2;
+        if (PLAYER.velocityX > FIX(1)) {
+            PLAYER.velocityX = FIX(2);
+        }
+        if (PLAYER.velocityX < FIX(-1)) {
+            PLAYER.velocityX = FIX(-2);
+        }
+        MarCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+    }
+    if (MarCheckInput(CHECK_FALL | CHECK_CRASH)) {
+        return;
+    }
+    MarDecelerateX(FIX(0.125));
+    switch (PLAYER.step_s) {
+    case 0:
+        if (!(g_GameTimer & 3) && PLAYER.pose < 2 && PLAYER.pose > 0) {
+            MarCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
+        }
+        if (PLAYER.pose == 2 && PLAYER.poseTimer == 1) {
+            MarCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        }
+        if (PLAYER.poseTimer < 0) {
+            MarSetCrouch(0, PLAYER.velocityX);
+        }
+        break;
+    }
+}
 
 void MarStepRun(void) {
     s32 halt;
-    s32 var_s1;
+    s32 isTouchingGround;
 
     halt = 0;
-    var_s1 = 0;
+    isTouchingGround = 0;
     MarDecelerateX(FIX(0.375));
     if (PLAYER.facingLeft == 0 && g_Player.vram_flag & 4) {
-        var_s1 = 1;
+        isTouchingGround = 1;
     }
     if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
-        var_s1 = 1;
+        isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi >= 252 && PLAYER.facingLeft == 0) {
-        var_s1 = 1;
+    if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
+        isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
-        var_s1 = 1;
+    if (PLAYER.posX.i.hi <= 4 && PLAYER.facingLeft) {
+        isTouchingGround = 1;
     }
-    if (var_s1 != 0) {
+    if (isTouchingGround) {
         if (PLAYER.velocityX > FIX(1)) {
             PLAYER.velocityX = FIX(2);
         }
@@ -1014,7 +1064,7 @@ void MarStepRun(void) {
         if (PLAYER.velocityX == 0) {
             halt = 1;
         }
-    } else if (abs(PLAYER.velocityX) <= 0x20000) {
+    } else if (abs(PLAYER.velocityX) <= FIX(2)) {
         halt = 1;
     }
     if (g_Player.vram_flag & 0xC) {

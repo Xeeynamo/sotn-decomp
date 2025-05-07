@@ -1282,10 +1282,10 @@ void RicStepSlide(void) {
     if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi >= 0xFC && PLAYER.facingLeft == 0) {
+    if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
         isTouchingGround = 1;
     }
-    if (PLAYER.posX.i.hi < 5 && PLAYER.facingLeft) {
+    if (PLAYER.posX.i.hi <= 4 && PLAYER.facingLeft) {
         isTouchingGround = 1;
     }
     if ((PLAYER.facingLeft == 0 &&

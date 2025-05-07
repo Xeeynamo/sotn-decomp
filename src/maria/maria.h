@@ -191,7 +191,7 @@ enum MarBlueprints {
     _BP_NOT_IMPLEMENTED_3,
     _BP_REVIVAL_COLUMN,
     _BP_MARIA_POWERS_APPLIED,
-    _BP_SLIDE,
+    BP_SLIDE,
     BP_25,
     BP_BLADE_DASH,
     _BP_BLUE_CIRCLE,
