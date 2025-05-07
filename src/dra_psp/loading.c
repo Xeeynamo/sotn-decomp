@@ -384,7 +384,7 @@ void HandleNowLoading(void) {
         g_GameStep = 3;
         break;
     case 3:
-        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != 0) {
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             func_8933130(1);
         } else {
             func_8933130(0);
