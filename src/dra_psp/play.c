@@ -333,7 +333,8 @@ void HandlePlay(void) {
                 break;
             }
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
-                LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) < 0) {
+                LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) <
+                    0) {
                 break;
             }
         }
