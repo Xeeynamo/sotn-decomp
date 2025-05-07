@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityEnemyBlood,
     EntityMessageBox,
     EntityDummy,
-    EntityDummy, // 0x10
+    EntityDummy,
     EntityCavernDoorVase,
     EntityLockCamera,
     EntityUnkId13,
@@ -131,7 +131,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCavernDoorLever,
     EntityCavernDoorPlatform,
     EntityCavernDoor,
-    EntityWeightsSwitch, // 0x20
+    EntityWeightsSwitch,
     EntityPathBlockSmallWeight,
     EntityPathBlockTallWeight,
     EntityTrapDoor,
@@ -147,7 +147,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFireWarg,
     EntityFireWargWaveAttack,
     EntityUnkId2F,
-    EntityUnkId30, // 0x30
+    EntityUnkId30,
     EntityUnkId31,
     EntityExplosion3,
     EntityFireWargDeathBeams,
@@ -163,7 +163,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityHighWaterSplash,
     EntityExplosion2,
     EntityDeadMerman,
-    EntityFallingObject2, // 0x40
+    EntityFallingObject2,
     EntityMerman,
     EntityMermanFireball,
     EntityFallingObject,
@@ -179,7 +179,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityZombieSpawner,
     EntityPushAlucard,
     EntityForegroundTree,
-    EntityUnkId50, // 0x50
+    EntityUnkId50,
     EntityBackgroundPineTrees,
     EntityUnkId52,
     EntityCastleDoorTransition,
@@ -195,6 +195,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFallingRock,
     EntityDeathScytheShadow,
     EntityFlyingOwlAndLeaves,
-    EntityFallingLeaf, // 0x60
+    EntityFallingLeaf,
     EntityWargExplosionPuffTransparent,
-    EntityExplosionPuffOpaque};
+    EntityExplosionPuffOpaque,
+};
