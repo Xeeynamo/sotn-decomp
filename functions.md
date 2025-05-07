@@ -850,7 +850,7 @@
 | dra       | func_800EA720                            |       73 |          1 |        |                                 |       |
 | lib       | MakeEntityFromId                         |       73 |          4 |        |                                 |       |
 | dra       | UpdatePadsRepeat                         |       73 |          7 |        |                                 |       |
-| dra       | func_psp_090ECD78                        |       73 |          7 |        |                                 |       |
+| dra       | ApplyJosephsCloakPalette                 |       73 |          7 |        |                                 |       |
 | chi       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
@@ -1372,7 +1372,7 @@
 | dra       | func_800F0940                            |      200 |         22 | Yes    |                                 |       |
 | lib       | func_psp_09256E08                        |      203 |         16 |        | https://decomp.me/scratch/NtwwC | 0.999 |
 | ric       | RicEntityMaria                           |      203 |         27 |        |                                 |       |
-| maria_psp | MarStepStand                             |      203 |         44 |        |                                 |       |
+| maria_psp | MarStepStand                             |      203 |         44 |        | https://decomp.me/scratch/2o2JI | 0.992 |
 | dra       | func_80111DE8                            |      204 |         31 |        |                                 |       |
 | dra       | func_800F8990                            |      205 |         22 |        |                                 |       |
 | dra       | EntitySubwpnHolyWater                    |      206 |         24 |        |                                 |       |
@@ -1869,7 +1869,7 @@
 | no4       | EntityStageNamePopup                     |     1004 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | lib       | func_psp_0926AED0                        |     1018 |        104 | Yes    | https://decomp.me/scratch/CgyWa | 0.998 |
 | dra       | EntityTransparentWhiteCircle             |     1022 |         72 |        | https://decomp.me/scratch/XMHKR | 1.0   |
-| maria_psp | MarStepHit                               |     1028 |        157 | Yes    |                                 |       |
+| maria_psp | MarStepHit                               |     1028 |        157 | Yes    | https://decomp.me/scratch/snd01 | 0.99  |
 | wrp       | EntityWarpRoom                           |     1033 |         83 | Yes    | https://decomp.me/scratch/4MUb6 | 0.984 |
 | dra       | PlayerStepStand                          |     1045 |        179 |        |                                 |       |
 | ric       | RicStepHit                               |     1050 |        167 | Yes    |                                 |       |
