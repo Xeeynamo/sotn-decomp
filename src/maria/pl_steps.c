@@ -961,17 +961,54 @@ void MarStepDead(
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0C70);
+void func_pspeu_092B0C70(void) {
+    if (PLAYER.poseTimer < 0) {
+        g_Player.unk4E = 1;
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+        return;
+    }
+    MarStepStand();
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0CD0);
+void func_pspeu_092B0CD0(void) {
+    if (g_Player.unk5C != 2) {
+        g_Player.unk4E = 1;
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0D20);
+void func_pspeu_092B0D20(void) {
+    if (g_Player.unk5C != 2) {
+        g_Player.unk4E = 1;
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0D70);
+void func_pspeu_092B0D70(void) {
+    if (g_Player.unk5C != 2) {
+        g_Player.unk4E = 1;
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0DC0);
+void func_pspeu_092B0DC0(void) {
+    if (g_Player.unk5C != 2) {
+        g_Player.unk4E = 1;
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_steps", func_pspeu_092B0E10);
+void func_pspeu_092B0E10(void) {
+    if (g_Player.unk7A == 0) {
+        MarSetStand(0);
+        g_Player.unk46 = 0;
+    }
+}
 
 void MarStepSlide(void) {
     s32 isTouchingGround;
