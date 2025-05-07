@@ -46,6 +46,6 @@ segments:
     subsegments:
       - [0x80, c, no3_psp/pspeu]
       - [0x2A680, data]
-      - [0x61600, .rodata, 80]
+      - [0x61600, .rodata, no3_psp/pspeu]
       - {type: bss, vram: 0x9298F80}
   - [0x61900]
