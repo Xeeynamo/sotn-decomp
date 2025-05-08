@@ -331,7 +331,11 @@ bool LoadFilePc(const struct FileUseContent* file) {
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         break;
     case 99:
-        InitPlayerArc(file);
+        switch (g_PlayableCharacter) {
+        case PLAYER_ALUCARD:
+            InitPlayerArc(file);
+            break;
+        }
         break;
     default:
         g_SimFile = sim;

@@ -40,6 +40,7 @@ set(SOURCE_FILES_PC
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
+    src/pc/pl_maria.c
     src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
@@ -249,6 +250,22 @@ set(SOURCE_FILES_RIC
     src/ric/d_18568.c
     src/ric/d_1859C.c
     src/ric/pl_anims.c
+)
+
+SET(SOURCE_FILES_MARIA
+    src/maria/pl_header.c
+    src/maria/pl_anims.c
+    src/maria/pl_subweapons.c
+    src/maria/pl_main.c
+    src/maria/pl_debug.c
+    src/maria/pl_steps.c
+    src/maria/pl_setstep.c
+    src/maria/pl_utils.c
+    src/maria/pl_sensors.c
+    src/maria/pl_collision.c
+    src/maria/pl_blueprints.c
+    src/maria/spritebank0.c
+    src/maria/ovl_load.c
 )
 
 set(SOURCE_FILES_TT_000
@@ -471,6 +488,7 @@ set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WE
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
+    ${SOURCE_FILES_MARIA}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
