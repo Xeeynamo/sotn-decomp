@@ -130,9 +130,9 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		if len(palette) != paletteContainer.ColorsPerPalette {
 			return fmt.Errorf("palette at %s has %d colors, expected %d", actualFileName, len(palette), paletteContainer.ColorsPerPalette)
 		}
-		for i, c := range palette {
+		for _, c := range palette {
 			transparencyBit := 0
-			if c.A < 128 && i > 0 {
+			if c.A < 128 {
 				transparencyBit = 0x8000
 			}
 			data = append(data, uint16(int(c.R)>>3|int(c.G)>>3<<5|int(c.B)>>3<<10|transparencyBit))
