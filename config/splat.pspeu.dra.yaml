@@ -114,7 +114,6 @@ segments:
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, data]
       - [0xA0578, .data, dra/692E8]
-      - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
       - [0xA6888, .data, dra/70394]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
