@@ -2541,6 +2541,4 @@ void func_801361F8(void) {
 }
 
 #pragma optimization_level 0
-void func_psp_09144C80(void) {
-    g_SoundInitialized;
-}
+void func_psp_09144C80(void) { g_SoundInitialized; }
