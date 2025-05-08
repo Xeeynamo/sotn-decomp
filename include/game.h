@@ -250,7 +250,7 @@ typedef enum {
 #define STAGE_PRG_PTR D_8D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
 #ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
+#define DEMO_KEY_PTR D_8D95C40
 #endif
 #define SIM_CHR0 D_8C6BC40
 #define SIM_CHR1 D_8C6FC40
@@ -260,6 +260,7 @@ extern u8 g_BmpCastleMap[0x20000];
 extern u8 D_8C6BC40[];
 extern u8 D_8C6FC40[];
 extern u8 D_8D2DC40[];
+extern u8 D_8D95C40[];
 
 #endif
 

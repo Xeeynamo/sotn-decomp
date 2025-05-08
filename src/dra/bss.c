@@ -422,7 +422,7 @@ padding u16 D_8013AEE2;
 s32 D_8013AEE4;
 u8 D_8013AEE8;
 padding u8 D_8013AEE9[3];
-u8 g_SoundInitialized;
+volatile u8 g_SoundInitialized;
 padding u8 D_8013AEED[3];
 s16 g_SeqVolume2;
 padding s16 D_8013AEF2;

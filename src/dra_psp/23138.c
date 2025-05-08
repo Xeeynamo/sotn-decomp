@@ -1,4 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/23138", func_psp_090FFAB8);
+extern s32 g_CurrentStream;
+
+void func_psp_090FFAB8(void) {
+    s32 var_a1 = 0;
+    switch (g_CurrentStream) {
+    case 0:
+        var_a1 = 8;
+        break;
+    case 1:
+        var_a1 = 8;
+        break;
+    case 2:
+        var_a1 = 0x6008;
+        break;
+    case 3:
+        var_a1 = 0x6008;
+        break;
+    }
+    func_8912820(g_CurrentStream, var_a1);
+    D_8003C728 = 0;
+    g_IsUsingCd = 0;
+}
