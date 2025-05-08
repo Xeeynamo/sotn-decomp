@@ -66,7 +66,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			paletteNames[i] = filepath.Join(e.Name, fileName)
 		}
 	}
-	if err := os.Mkdir(filepath.Join(e.AssetDir, e.Name), 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(filepath.Join(e.AssetDir, e.Name), 0755); err != nil && !os.IsExist(err) {
 		return err
 	}
 	var eg errgroup.Group
