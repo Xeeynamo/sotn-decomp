@@ -18,6 +18,8 @@ files:
           - [0x778A0, cmpgfx, game_over_right_fr, 128, 128, 4]
           - [0x78FC8, cmpgfx, game_over_right_ge, 128, 128, 4]
           - [0x7A590, skip]
+          - [0x7A5C8, cmpgfx, D_psp_09156F48, 128, 128, 4, 0x7E5C8]
+          - [0x7E5C8, palette, D_psp_0915AF48, png, 256]
           - [0x7E7C8, cmpgfx, loading_fr, 128, 128, 4]
           - [0x7F548, cmpgfx, loading_it, 128, 128, 4]
           - [0x802F8, cmpgfx, loading_ge, 128, 128, 4]
