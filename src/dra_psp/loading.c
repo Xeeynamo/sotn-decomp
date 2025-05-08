@@ -19,8 +19,13 @@ extern char D_psp_0914C3A8[];
 extern char D_psp_0914C3B8[];
 extern char D_psp_0914C3C8[];
 extern RECT D_psp_09156F40;
-extern u32 D_psp_09156F48;
-extern s32 D_psp_0915AF48;
+
+u8 D_psp_09156F48[] = {
+#include "../dra/gen_D_psp_09156F48.h"
+};
+u16 D_psp_0915AF48[] = {
+#include "../dra/gen_D_psp_0915AF48.h"
+};
 
 static u8 loading_fr[] = {
 #include "../dra/gen_loading_fr.h"
