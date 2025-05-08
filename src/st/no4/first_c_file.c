@@ -83,7 +83,7 @@ void func_us_801C542C(Entity* self) {
 extern s16 D_us_8018162C[];
 
 void func_us_801C5518(Entity* self) {
-    Tilemap* tmap = &g_Tilemap;
+    Tilemap* tmap;
     u16 diff;
     s16* dataPtr;
 
@@ -92,12 +92,12 @@ void func_us_801C5518(Entity* self) {
         self->animSet = 0;
     }
 
+    tmap = &g_Tilemap;
     dataPtr = &D_us_8018162C[self->params << 2];
-    diff = ((s16)PLAYER.posX.i.hi + (s16)tmap->scrollX.i.hi - (s16)*dataPtr++);
+    diff = PLAYER.posX.i.hi + tmap->scrollX.i.hi - *dataPtr++;
 
     if (*dataPtr++ >= diff) {
-        diff = (((s16)PLAYER.posY.i.hi + (s16)tmap->scrollY.i.hi) -
-                (s16)*dataPtr++);
+        diff = PLAYER.posY.i.hi + tmap->scrollY.i.hi - *dataPtr++;
         if (*dataPtr >= diff) {
             if (PLAYER.velocityY < 0) {
                 PLAYER.velocityY *= 7;
