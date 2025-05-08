@@ -242,6 +242,7 @@ segments:
       # - [0x420B4, .rodata, 91EBC] # func_80134F50
       # - [0x42354, .rodata, 91EBC] # func_801353A0
       - [0x42398, c, 42398]
+      - [0x44124, c, 44124]
       - [0x4493C, c, play]
       - [0x45D30, c, loading]
       - [0x47BB8, c, 47BB8]
