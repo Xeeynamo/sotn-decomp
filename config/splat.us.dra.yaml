@@ -37,7 +37,7 @@ segments:
     subsegments:
       - [0x0, .data, dra_header]
       - [0x144, .data, 42398]
-      - [0x160, .data, play]
+      - [0x160, .data, 44124]
       - [0x240, .data, loading]
       - [0x248, .data, 47BB8]
       - [0x510, .data, save_mgr_pre]
@@ -148,8 +148,8 @@ segments:
       # - [0x3B430, .rodata, 42398] # func_800E2B00
       # - [0x3B44C, .rodata, 42398] # func_800E2F3C
       # - [0x3B524, .rodata, 42398] # func_800E31C0
-      - [0x3B530, .rodata, play] # func_800E4A14
-      # - [0x3B560, .rodata, play] # HandleGameOver
+      - [0x3B530, .rodata, 44124] # func_800E4A14
+      # - [0x3B560, .rodata, 44124] # HandleGameOver
       - [0x3B720, .rodata, loading] # func_800E6358
       # - [0x3B7E8, .rodata, loading] # func_800E6FD4
       # - [0x3B808, .rodata, loading] # func_800E7458
@@ -243,7 +243,6 @@ segments:
       # - [0x42354, .rodata, 91EBC] # func_801353A0
       - [0x42398, c, 42398]
       - [0x44124, c, 44124]
-      - [0x4493C, c, play]
       - [0x45D30, c, loading]
       - [0x47BB8, c, 47BB8]
       - [0x48D24, c, pads]
