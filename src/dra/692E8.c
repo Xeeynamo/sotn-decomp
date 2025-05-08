@@ -6,7 +6,7 @@
 // data order is slightly different between US and HD
 // maybe this suggests a file split
 
-#ifdef VERSION_US
+#if defined(VERSION_US)
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 s32 D_800ACE00[] = {
@@ -25,32 +25,26 @@ RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
 // BSS
 extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-extern s32 D_80137FBC;
 
 #elif defined(VERSION_HD)
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
+s32 D_800ACEDC_hd = 0;
+s32 D_800ACE44 = 0;
 s32 D_800ACE48[] = {
     0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
 };
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+
 s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
-
-// BSS
-s32 D_800ACEDC_hd = 0;
-s32 D_800ACE44 = 0;
-s32 D_800ACDF8 = 0;
-s32 D_800ACDFC = 0;
-
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
 
 #elif defined(VERSION_PSP)
 
@@ -122,9 +116,11 @@ s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 static s32 D_psp_09234B88 = 0;
 static s32 D_psp_09234B90 = 0;
+#endif
+
+// BSS
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
-#endif
 
 #include "../get_lang.h"
 
