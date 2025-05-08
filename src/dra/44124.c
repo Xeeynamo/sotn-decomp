@@ -11,8 +11,6 @@ void SetGameState(GameState gameState) {
     g_backbufferY = 0;
 }
 
-// TODO split file here
-
 // BSS
 extern s32 D_8013640C;
 extern s32 D_80136410;

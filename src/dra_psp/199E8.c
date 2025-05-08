@@ -4,7 +4,12 @@
 
 #include "../get_lang.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", SetGameState);
+void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
+    g_backbufferX = 0;
+    g_backbufferY = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", func_800E414C);
 
