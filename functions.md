@@ -32,8 +32,8 @@
 | dra       | EntityNull                               |        9 |          1 |        |                                 |       |
 | dra       | func_8011E0E4                            |        9 |          1 |        |                                 |       |
 | dra       | func_80131F28                            |        9 |          1 |        |                                 |       |
+| dra       | func_psp_09144C80                        |        9 |          1 |        | https://decomp.me/scratch/xwGbt | 1.0   |
 | dra       | MemcardInit                              |        9 |          1 |        |                                 |       |
-| dra       | func_psp_09144C80                        |        9 |          1 |        | https://decomp.me/scratch/1zDsK | 1.0   |
 | maria     | MarEntityDummy                           |        9 |          1 |        |                                 |       |
 | maria     | MarDebugOff                              |        9 |          1 |        |                                 |       |
 | maria_psp | func_pspeu_092B91A8                      |        9 |          1 |        |                                 |       |
@@ -637,7 +637,7 @@
 | dra       | func_psp_09103E68                        |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra       | func_psp_091048B8                        |       51 |         10 |        |                                 |       |
 | dra       | GetLang                                  |       51 |         10 |        |                                 |       |
-| dra       | func_psp_090F6368                        |       51 |         10 |        | https://decomp.me/scratch/MQBmB | 0.218 |
+| dra       | func_psp_090F6368                        |       51 |         10 |        | https://decomp.me/scratch/MQBmB | 1.0   |
 | dra       | func_psp_090EAF08                        |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria     | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric       | GetLang                                  |       51 |         10 |        |                                 |       |
@@ -1724,7 +1724,7 @@
 | maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        |                                 |       |
 | ric       | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra       | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
-| maria_psp | func_pspeu_092B92F0                      |      550 |         56 | Yes    |                                 |       |
+| maria_psp | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.946 |
 | dra       | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra       | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib       | func_us_801B7DF8                         |      556 |         54 |        |                                 |       |
