@@ -1128,10 +1128,6 @@ void func_800F9E18(s32 arg0) {
 
 #define ShowText(str, id) func_800F99B8(str, id, 0);
 
-char D_800DC6EC[] = {
-    "　　　　　　　　　　　　　　　　　　　　　",
-};
-
 void func_800F9F40(void) {
     char buffer[38];
     u8 spellId;
@@ -1141,7 +1137,7 @@ void func_800F9F40(void) {
         spellId = g_Status.spells[i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
-            STRCPY(buffer, D_800DC6EC);
+            STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
             ShowText(buffer, 0x80 + i);
         }
