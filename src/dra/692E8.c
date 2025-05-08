@@ -25,6 +25,8 @@ RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
 // BSS
 extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+extern s32 D_80137FBC;
 
 #elif defined(VERSION_HD)
 s16 D_800ACE20[] = {
@@ -45,6 +47,9 @@ s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
+
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
 
 #elif defined(VERSION_PSP)
 
@@ -116,11 +121,9 @@ s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 static s32 D_psp_09234B88 = 0;
 static s32 D_psp_09234B90 = 0;
-#endif
-
-// BSS
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
+#endif
 
 #include "../get_lang.h"
 
