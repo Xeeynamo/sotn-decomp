@@ -18,7 +18,7 @@ extern u8 D_psp_09146401;
 extern char D_psp_0914C3A8[];
 extern char D_psp_0914C3B8[];
 extern char D_psp_0914C3C8[];
-extern RECT D_psp_09156F40;
+RECT D_psp_09156F40 = {0x340, 0x180, 0x40, 0x40};
 
 u8 D_psp_09156F48[] = {
 #include "../dra/gen_D_psp_09156F48.h"
@@ -72,7 +72,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     sp48.y = 0x80;
     sp48.w = 0x40;
     sp48.h = 0x40;
-
+    // These two lines load up the SOTN logo in the lower right.
+    // First line loads palettized image, second loads the palette
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
     func_89264CC(0x81D0, &D_psp_0915AF48, 1);
     D_psp_0915E4E8[3] = (u_long*)func_psp_090F6368(

@@ -8,7 +8,6 @@ g_EInitInteractable = 0x80180BBC;
 g_EInitCommon = 0x80180BE0;
 g_EInitDamageNum = 0x80180BEC;
 g_EInitSpearGuard = 0x80180C88;
-NO4_BackgroundBlockInit = 0x80180D04;
 NO4_RedDoorTiles = 0x80180D2C;
 g_SplashSfx = 0x80180EE4;
 g_SurfacingSfx = 0x80180EE6;
