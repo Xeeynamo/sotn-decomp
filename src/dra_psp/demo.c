@@ -4,11 +4,7 @@
 // BSS
 extern s32 D_8C630D4;
 extern s32 D_psp_08C630DC;
-extern u8 D_8D95C40[];
 extern s32 g_DemoKeyIdx;
-
-#undef DEMO_KEY_PTR
-#define DEMO_KEY_PTR D_8D95C40
 
 static u8* g_DemoPtr = DEMO_KEY_PTR;
 static u8 D_800A243C[] = {

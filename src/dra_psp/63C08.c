@@ -26,7 +26,7 @@ SpuVoiceAttr* D_801390C8;
 SpuVoiceAttr* D_801390CC;
 SpuVoiceAttr* D_psp_09237578;
 s32 D_8013B69C;
-u8 g_SoundInitialized;
+volatile u8 g_SoundInitialized;
 s16 g_SeqAccessNum;
 s32 g_SeqPointers[10];
 s16 D_80138FBC;
@@ -2540,4 +2540,7 @@ void func_801361F8(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/63C08", func_psp_09144C80);
+#pragma optimization_level 0
+void func_psp_09144C80(void) {
+    g_SoundInitialized;
+}
