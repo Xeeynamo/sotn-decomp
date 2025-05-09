@@ -255,12 +255,6 @@ bool InitGame(struct InitGameParams* params) {
         return false;
     }
 
-    if (!FileAsString(InitBlueprintData, "assets/dra/factory_blueprint.json",
-                      g_FactoryBlueprints)) {
-        ERRORF("failed to init dra blueprint data");
-        return false;
-    }
-
     return true;
 }
 
