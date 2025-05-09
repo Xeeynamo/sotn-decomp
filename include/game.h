@@ -828,7 +828,7 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 hitboxState; // hitbox state
+    /* 0x3C */ u16 hitboxState;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ u16 attackElement;
@@ -1605,7 +1605,7 @@ typedef struct {
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
-    /* 8003C8A0 */ void* unused12C;
+    /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
     /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
