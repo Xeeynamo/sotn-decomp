@@ -100,7 +100,7 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       #- [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
-      - [0x6FA58, .data, dra_psp/199E8]
+      - [0x6FA28, .data, dra_psp/199E8]
       - [0x832A8, .data, dra_psp/1DDC0]
       - [0x84028, .data, dra/4B758]
       - [0x84080, .data, dra_psp/demo]

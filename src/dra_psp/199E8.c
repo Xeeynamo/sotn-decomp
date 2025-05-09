@@ -292,12 +292,9 @@ extern u32 D_8D45C40;
 extern u32 D_8D47C40;
 extern u8 D_psp_0914C318[];
 extern RECT D_psp_0914C328[];
-extern char D_psp_0914C3A8[];
-extern char D_psp_0914C3B8[];
-extern char D_psp_0914C3C8[];
 
 static char* D_psp_0914C3D8[] = {
-    D_psp_0914C3A8, D_psp_0914C3B8, D_psp_0914C3C8};
+    "alucard ", "richter ", "maria   "};
 
 static u8 game_over_left_it[] = {
 #include "../dra/gen_game_over_left_it.h"
@@ -436,11 +433,11 @@ void HandlePlay(void) {
                 STRCPY(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
                 g_IsTimeAttackUnlocked = true;
                 if (D_8C630D8 == 1) {
-                    STRCPY(g_Status.saveName, D_psp_0914C3B8);
+                    STRCPY(g_Status.saveName, "richter ");
                     g_PlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
                 } else if (D_8C630D8 == 2) {
-                    STRCPY(g_Status.saveName, D_psp_0914C3C8);
+                    STRCPY(g_Status.saveName, "maria   ");
                     g_PlayableCharacter = PLAYER_MARIA;
                     g_IsTimeAttackUnlocked = true;
                 } else {
@@ -986,9 +983,6 @@ extern u8 D_8D41C40;
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
-extern char D_psp_0914C3A8[];
-extern char D_psp_0914C3B8[];
-extern char D_psp_0914C3C8[];
 RECT D_psp_09156F40 = {0x340, 0x180, 0x40, 0x40};
 
 u8 D_psp_09156F48[] = {
@@ -1021,7 +1015,7 @@ static u_long* D_psp_0915E4E8[] = {
 };
 
 static char* D_psp_0915E500[] = {
-    D_psp_0914C3A8, D_psp_0914C3B8, D_psp_0914C3C8};
+    "alucard ", "richter ", "maria   "};
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     RECT sp48;
@@ -1263,18 +1257,18 @@ void HandleNowLoading(void) {
                 D_800978B4 = g_StageId - 0xF0;
                 SetGameState(Game_Ending);
             } else {
-                STRCPY(g_Status.saveName, D_psp_0914C3A8);
+                STRCPY(g_Status.saveName, "alucard ");
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
                     STRCPY(
                         g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
                     g_IsTimeAttackUnlocked = true;
                     if (g_PlayableCharacter == PLAYER_RICHTER) {
-                        STRCPY(g_Status.saveName, D_psp_0914C3B8);
+                        STRCPY(g_Status.saveName, "richter ");
                         g_PlayableCharacter = PLAYER_RICHTER;
                         g_IsTimeAttackUnlocked = true;
                     } else if (g_PlayableCharacter == PLAYER_MARIA) {
-                        STRCPY(g_Status.saveName, D_psp_0914C3C8);
+                        STRCPY(g_Status.saveName, "maria   ");
                         g_PlayableCharacter = PLAYER_MARIA;
                         g_IsTimeAttackUnlocked = true;
                     } else {
