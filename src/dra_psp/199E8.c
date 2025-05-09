@@ -101,7 +101,7 @@ void func_800E414C(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", ClearBackbuffer);
+void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", HandleTitle);
 
