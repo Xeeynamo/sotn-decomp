@@ -806,15 +806,15 @@ void HandleGameOver(void) {
             }
             func_891CEB8(0, 0xF0);
         }
-        D_psp_09156F10[3] = (u_long*)GetLang(
-            NULL, game_over_left_fr, game_over_left_sp, game_over_left_ge,
-            game_over_left_it);
+        D_psp_09156F10[3] =
+            (u_long*)GetLang(NULL, game_over_left_fr, game_over_left_sp,
+                             game_over_left_ge, game_over_left_it);
         if (D_psp_09156F10[3] != NULL) {
             func_psp_091040A0(D_psp_09156F10);
         }
-        D_psp_09156F28[3] = (u_long*)GetLang(
-            NULL, game_over_right_fr, game_over_right_sp, game_over_right_ge,
-            game_over_right_it);
+        D_psp_09156F28[3] =
+            (u_long*)GetLang(NULL, game_over_right_fr, game_over_right_sp,
+                             game_over_right_ge, game_over_right_it);
         if (D_psp_09156F28[3] != NULL) {
             func_psp_091040A0(D_psp_09156F28);
         }
@@ -1036,8 +1036,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     // First line loads palettized image, second loads the palette
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
     func_89264CC(0x81D0, &D_psp_0915AF48, 1);
-    D_psp_0915E4E8[3] = (u_long*)GetLang(
-        NULL, loading_fr, loading_sp, loading_ge, loading_it);
+    D_psp_0915E4E8[3] =
+        (u_long*)GetLang(NULL, loading_fr, loading_sp, loading_ge, loading_it);
     if (D_psp_0915E4E8[3] != NULL) {
         func_psp_091040A0(D_psp_0915E4E8);
     }
@@ -1674,15 +1674,15 @@ void HandleVideoPlayback(void) {
             if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
-                D_psp_0915FBF8[3] = (u_long*)GetLang(
-                    NULL, intro_left_fr, intro_left_sp, intro_left_ge,
-                    intro_left_it);
+                D_psp_0915FBF8[3] =
+                    (u_long*)GetLang(NULL, intro_left_fr, intro_left_sp,
+                                     intro_left_ge, intro_left_it);
                 if (D_psp_0915FBF8[3] != NULL) {
                     func_psp_091040A0(D_psp_0915FBF8);
                 }
-                D_psp_0915FC10[3] = (u_long*)GetLang(
-                    NULL, intro_right_fr, intro_right_sp, intro_right_ge,
-                    intro_right_it);
+                D_psp_0915FC10[3] =
+                    (u_long*)GetLang(NULL, intro_right_fr, intro_right_sp,
+                                     intro_right_ge, intro_right_it);
                 if (D_psp_0915FC10[3] != NULL) {
                     func_psp_091040A0(D_psp_0915FC10);
                 }

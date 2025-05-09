@@ -3,7 +3,6 @@
 #include "dra_bss.h"
 #include "lba.h"
 
-
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
