@@ -527,14 +527,20 @@ void HandlePlay(void) {
 #endif
         }
         if (D_80097C98 & 0x08000000) {
+#ifdef VERSION_PSP
             func_892A620(0, 1);
             func_892A620(1, 1);
+#endif
             func_800E4970();
             return;
         }
+        #ifdef VERSION_PSP
         if (D_8C630D4 == 0) {
             g_StageId = func_800F16D0();
         }
+        #else
+        g_StageId = func_800F16D0();
+        #endif
         g_GpuBuffers[1].draw.isbg = 0;
         g_GpuBuffers[0].draw.isbg = 0;
         HideAllBackgroundLayers();
@@ -602,8 +608,11 @@ void HandlePlay(void) {
                 g_LoadOvlIdx = STAGE_LIB;
             }
         }
-        g_GpuBuffers[1].draw.isbg = 1;
-        g_GpuBuffers[0].draw.isbg = 1;
+        #ifndef VERSION_PSP
+        MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
+        #endif
+        
+        g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
         D_8013640C = AllocPrimitives(PRIM_GT4, 16);
         for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL;
              i++) {
@@ -647,7 +656,9 @@ void HandlePlay(void) {
             break;
         }
         g_GameStep++;
+        #ifdef VERSION_PSP
         func_8932AD4(g_StageId);
+        #endif
         break;
     case Play_LoadStageSfx:
         func_800E4A04();
@@ -656,6 +667,17 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_LoadOvlIdx = g_StageId;
         } else {
+            #ifndef VERSION_PSP
+            if (LoadFileSim(0, SimFileType_StageChr) < 0) {
+                break;
+            }
+            if (LoadFileSim(0, SimFileType_Vh) < 0) {
+                break;
+            }
+            if (LoadFileSim(0, SimFileType_Vb) < 0) {
+                break;
+            }
+            #else
             if (!func_8932B74()) {
                 break;
             }
@@ -668,6 +690,7 @@ void HandlePlay(void) {
             if (func_psp_090FAB30(0, SimFileType_Vb, true) < 0) {
                 break;
             }
+            #endif
         }
         g_GameStep++;
         break;
@@ -693,9 +716,15 @@ void HandlePlay(void) {
                 break;
             }
         } else {
+            #ifndef VERSION_PSP
+            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
+            #else
             if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
                 break;
             }
+            #endif
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
                 LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) <
                     0) {
