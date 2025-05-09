@@ -2395,12 +2395,12 @@ void EntityPlayerBlinkWhite(Entity* self) {
         sp5c = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xD) {
-        sp5c = (s16*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+        sp5c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
     }
     if (PLAYER.animSet == 0xF) {
         if (sp48 != 0) {
             if (D_801396E0 == 0xD) {
-                sp5c = (s16*)D_800CFE48[D_801396EC & 0x7FFF];
+                sp5c = D_800CFE48[D_801396EC & 0x7FFF];
 #ifdef VERSION_PSP
                 if (sp5c) {
 #endif

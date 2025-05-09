@@ -1506,7 +1506,7 @@ block_160:
         g_CurrentEntity->nFramesInvincibility = 0;
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
-            sp3c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+            sp3c = (unkstr_800cfe48*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
 #ifdef VERSION_US

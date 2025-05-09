@@ -302,9 +302,33 @@ void DrawRelicsMenu(MenuContext* ctx) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardPortrait);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ECD58);
+// Equivalent of floor(number * .75)
+// Cloak color components are 5 bit.
+// Examples: 31->23, 15->11
+static s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", ApplyJosephsCloakPalette);
+// Creates light and dark versions of cloak colors in BGR555 format
+void ApplyJosephsCloakPalette(void) {
+    const int LiningDark = 0;
+    const int LiningLight = 1;
+    const int ExteriorDark = 2;
+    const int ExteriorLight = 3;
+
+    g_JosephsCloakColors[LiningDark] =
+        0x8000 + DarkenCloakColor(g_Settings.cloakColors[3]) +
+        (DarkenCloakColor(g_Settings.cloakColors[4]) << 5) +
+        (DarkenCloakColor(g_Settings.cloakColors[5]) << 10);
+    g_JosephsCloakColors[LiningLight] =
+        0x8000 + g_Settings.cloakColors[3] + (g_Settings.cloakColors[4] << 5) +
+        (g_Settings.cloakColors[5] << 10);
+    g_JosephsCloakColors[ExteriorDark] =
+        0x8000 + DarkenCloakColor(g_Settings.cloakColors[0]) +
+        (DarkenCloakColor(g_Settings.cloakColors[1]) << 5) +
+        (DarkenCloakColor(g_Settings.cloakColors[2]) << 10);
+    g_JosephsCloakColors[ExteriorLight] =
+        0x8000 + g_Settings.cloakColors[0] + (g_Settings.cloakColors[1] << 5) +
+        (g_Settings.cloakColors[2] << 10);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawAlucardCloakPreview);
 
