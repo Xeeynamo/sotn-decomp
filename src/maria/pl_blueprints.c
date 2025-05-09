@@ -181,7 +181,7 @@ void func_pspeu_092BF950(Entity* self);
 void func_pspeu_092AAA38(Entity* self);
 void func_pspeu_092AB1C0(Entity* self);
 void func_80161C2C(Entity* self);
-void func_pspeu_092B92F0(Entity* self);
+void EntityMariaOwl(Entity* self);
 void func_pspeu_092AAC80(Entity* self);
 void func_pspeu_092A82E0(Entity* self);
 void func_pspeu_092A8AE8(Entity* self);
@@ -218,7 +218,7 @@ static PfnEntityUpdate entity_functions[] = {
     func_pspeu_092AAA38,
     func_pspeu_092AB1C0,
     func_80161C2C,
-    func_pspeu_092B92F0,
+    EntityMariaOwl,
     func_pspeu_092AAC80,
     MarEntityDummy,
     func_pspeu_092A82E0,
@@ -1153,7 +1153,131 @@ static u16 D_pspeu_092C59E8[][2] = {
     POSE(5, 1, 0),  POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(3, 5, 0),
     POSE(3, 6, 0),  POSE(2, 7, 0), POSE(4, 8, 0), POSE(2, 7, 0), POSE(3, 9, 0),
     POSE(3, 10, 0), POSE(1, 4, 0), POSE(1, 3, 0), POSE(1, 2, 0), POSE_LOOP(0)};
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B92F0);
+void EntityMariaOwl(Entity* self) {
+    s32 sp8C;
+
+    sp8C = 0x40;
+    switch (self->step) {
+    case 0:
+        self->flags = 0x0C100000;
+        self->unk5A = 0x18;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = 0x8115;
+        self->animSet = 0x8000 | 17;
+        MarSetAnimation(D_pspeu_092C59E8);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0x40000;
+        self->posX.i.hi = PLAYER.posX.i.hi + (PLAYER.facingLeft ? -4 : 4);
+        self->posY.i.hi = PLAYER.posY.i.hi - 0xC;
+        if (PLAYER.step == 2) {
+            self->posY.i.hi += 12;
+        }
+        self->ext.ILLEGAL.s16[3] += self->facingLeft ? 0 : 0x800;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 16;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.ILLEGAL.s16[0x1A] = 0;
+        func_pspeu_092B91B8(self, 0xC, 0x1000, 2, 0x28, 0x10, 1, 0);
+        self->ext.ILLEGAL.s16[0] = 0;
+        self->step++;
+        break;
+    case 1:
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->ext.ILLEGAL.s16[0]++;
+        if (self->ext.ILLEGAL.s16[0] >= 15) {
+            self->step++;
+            return;
+        }
+        break;
+    case 2:
+        self->velocityY = 0x10000;
+        self->posY.val -= self->velocityY;
+        self->ext.ILLEGAL.s16[1]++;
+        self->velocityX += FIX(-0.5) + FIX(-0.5);
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        if (self->velocityX <= 0) {
+            self->facingLeft = self->facingLeft ? 0 : 1;
+            self->velocityX = 0;
+            self->step++;
+            return;
+        }
+        break;
+    case 3:
+        self->velocityY = 0x10000;
+        self->posY.val -= self->velocityY;
+        self->ext.ILLEGAL.s16[1]++;
+        self->ext.ILLEGAL.s16[0]++;
+        if (self->ext.ILLEGAL.s16[0] >= 0x14) {
+            self->ext.ILLEGAL.s16[0] = 0xF;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.ILLEGAL.s16[2] = 0;
+        self->step++;
+        break;
+    case 5: {
+        MATRIX sp6C;
+        VECTOR sp5C = {0, 0, 0};
+        VECTOR sp4C;
+        SVECTOR sp44;
+        s32 sp40;
+        s32 sp3C;
+        s32 sp38;
+        s32 var_s0;
+        sp3C = PLAYER.posX.i.hi;
+        sp38 = PLAYER.posY.i.hi +
+               (PLAYER.step == 2 || PLAYER.step == 0x17 ? -0xC : -0x18);
+        if (abs(sp3C - self->posX.i.hi) < 0xC &&
+            abs(sp38 - self->posY.i.hi) < 0xC) {
+            self->step++;
+            return;
+        }
+        self->ext.ILLEGAL.s16[3] =
+            func_pspeu_092B9298(self->ext.ILLEGAL.s16[3]);
+        var_s0 = func_pspeu_092B9298(
+            ratan2(sp38 - self->posY.i.hi, sp3C - self->posX.i.hi));
+        if (self->ext.ILLEGAL.s16[3] < var_s0) {
+            if (var_s0 - self->ext.ILLEGAL.s16[3] < 0x800) {
+                self->ext.ILLEGAL.s16[3] += 0x80;
+            } else {
+                self->ext.ILLEGAL.s16[3] -= 0x80;
+            }
+        } else {
+            if (self->ext.ILLEGAL.s16[3] - var_s0 < 0x800) {
+                self->ext.ILLEGAL.s16[3] -= 0x80;
+            } else {
+                self->ext.ILLEGAL.s16[3] += 0x80;
+            }
+        }
+        self->ext.ILLEGAL.s16[2] += sp8C;
+        if (self->ext.ILLEGAL.s16[2] > 0x400) {
+            self->ext.ILLEGAL.s16[2] = 0x400;
+        }
+        SetGeomOffset(0, 0);
+        func_89285A0(self->ext.ILLEGAL.s16[3], &sp6C); // rotate matirx by angle
+        TransMatrix(&sp6C, &sp5C);
+        SetRotMatrix(&sp6C);
+        SetTransMatrix(&sp6C);
+        sp44.vx = self->ext.ILLEGAL.s16[2];
+        sp44.vy = 0;
+        sp44.vz = 0;
+        func_892796C(&sp44, &sp4C, &sp40);
+        self->velocityX = sp4C.vx << 8;
+        self->velocityY = sp4C.vy << 8;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->velocityX != 0) {
+            self->facingLeft = self->velocityX < 0 ? 1 : 0;
+            return;
+        }
+    } break;
+    case 6:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 // same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {
