@@ -104,7 +104,7 @@ enum MarEntities {
     E_UNK_7,                  // func_pspeu_092AAA38
     E_UNK_8,                  // func_pspeu_092AB1C0
     E_80161C2C,               // func_80161C2C
-    E_UNK_10,                 // func_pspeu_092B92F0
+    E_MARIA_OWL,              // EntityMariaOwl
     E_UNK_11,                 // func_pspeu_092AAC80
     E_DUMMY_12,               // MarEntityDummy
     E_UNK_13,                 // func_pspeu_092A82E0
