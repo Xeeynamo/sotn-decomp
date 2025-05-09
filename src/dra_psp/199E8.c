@@ -283,14 +283,6 @@ void func_800E4970(void) {
 
 void func_800E4A04(void) { s32 pad[3]; }
 
-extern s32 D_psp_091CE348;
-extern s32 D_8013640C;
-extern s32 D_8C630D4;
-extern s32 D_8C630D8;
-extern u32 D_8D35C40;
-extern u32 D_8D45C40;
-extern u32 D_8D47C40;
-
 s16 g_ButtonMask[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_L1,     PAD_R1,     PAD_SHOULDERS,
@@ -389,6 +381,14 @@ static u_long* D_psp_09156F28[] = {
     GFX_ENTRY(0x000, 0x220, 128, 128, game_over_right_sp),
     GFX_TERMINATE(),
 };
+
+extern s32 D_psp_091CE348; // BSS
+// All external to the game; could be PSP system or from Dracula X Chronicles
+extern s32 D_8C630D4;
+extern s32 D_8C630D8;
+extern u32 D_8D35C40;
+extern u32 D_8D45C40;
+extern u32 D_8D47C40;
 
 void HandlePlay(void) {
     s32 i;
