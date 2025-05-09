@@ -130,7 +130,7 @@ segments:
       #- [0x1D1C8, .data, 91EBC] # g_VabAddrs
       #- [0x1D1E0, .data, 91EBC] # g_SeqInfo
       - [0x1D224, assets, music_xa, g_XaMusicConfigs]
-      - [0x1F554, assets, sfx, g_SfxData]
+      - [0x1F554, .data, d_sfx_psx]
       - [0x2097C, .data, sfx_scripts]
       - [0x2217C, cmp, D_800C217C]
       - [0x227B0, cmp, D_800C27B0]

@@ -135,6 +135,7 @@ segments:
       - [0xAA8A0, .data, dra_psp/63C08]
       - [0xAD460, .data, dra/d_37d8]
       - [0xAF398, data]
+      - [0xB16F0, .data, dra/d_sfx_psp]
       - [0xB2C40, .data, dra/sfx_scripts]
       - [0xB4548, data]
       - [0xEE380, .rodata, dra/62EB8]
