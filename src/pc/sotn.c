@@ -215,9 +215,9 @@ bool InitGame(struct InitGameParams* params) {
     api.LearnSpell = LearnSpell;
     api.DebugInputWait = DebugInputWait;
     api.CalcDealDamageMaria = NULL;
-    api.unused130 = NULL;
-    api.unused134 = NULL;
-    api.unused138 = NULL;
+    api.CalcPlayerDamageMaria = NULL;
+    api.func_ptr_91CF86C = NULL;
+    api.func_ptr_91CF870 = NULL;
     api.unused13C = NULL;
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
