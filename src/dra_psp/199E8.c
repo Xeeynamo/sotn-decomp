@@ -348,6 +348,7 @@ static RECT D_800A01C0[] = {
     {64, 0, 128, 0},      // unknown usage
 };
 
+#ifdef VERSION_PSP
 static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
 
 static u8 game_over_left_it[] = {
@@ -401,6 +402,7 @@ extern s32 D_8C630D8;
 extern u32 D_8D35C40;
 extern u32 D_8D45C40;
 extern u32 D_8D47C40;
+#endif
 
 void HandlePlay(void) {
     s32 i;

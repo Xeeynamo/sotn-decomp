@@ -348,6 +348,62 @@ static RECT D_800A01C0[] = {
     {64, 0, 128, 0},      // unknown usage
 };
 
+#ifdef VERSION_PSP
+static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
+
+static u8 game_over_left_it[] = {
+#include "../dra/gen_game_over_left_it.h"
+};
+
+static u8 game_over_left_sp[] = {
+#include "../dra/gen_game_over_left_sp.h"
+};
+
+static u8 game_over_left_fr[] = {
+#include "../dra/gen_game_over_left_fr.h"
+};
+
+static u8 game_over_left_ge[] = {
+#include "../dra/gen_game_over_left_ge.h"
+};
+
+static u8 game_over_right_it[] = {
+#include "../dra/gen_game_over_right_it.h"
+};
+
+static u8 game_over_right_sp[] = {
+#include "../dra/gen_game_over_right_sp.h"
+};
+
+static u8 game_over_right_fr[] = {
+#include "../dra/gen_game_over_right_fr.h"
+};
+
+static u8 game_over_right_ge[] = {
+#include "../dra/gen_game_over_right_ge.h"
+};
+
+static u_long* D_psp_09156F10[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x200, 128, 128, game_over_left_sp),
+    GFX_TERMINATE(),
+};
+
+static u_long* D_psp_09156F28[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x220, 128, 128, game_over_right_sp),
+    GFX_TERMINATE(),
+};
+
+extern s32 D_psp_091CE348; // BSS
+// All external to the game; could be PSP system or from Dracula X Chronicles
+extern s32 D_8C630D4;
+extern s32 D_8C630D8;
+extern u32 D_8D35C40;
+extern u32 D_8D45C40;
+extern u32 D_8D47C40;
+#endif
+
 void HandlePlay(void) {
     s32 i;
     u8* ptr;
