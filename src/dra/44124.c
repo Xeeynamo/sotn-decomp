@@ -255,6 +255,34 @@ void HandleTitle(void) {
     }
 }
 
+void func_800E493C(void) {
+    if (g_Settings.isSoundMono == false) {
+        PlaySfx(SET_SOUNDMODE_STEREO);
+    } else {
+        PlaySfx(SET_SOUNDMODE_MONO);
+    }
+}
+
+void func_800E4970(void) {
+    SetGameState(Game_NowLoading);
+    g_GameStep = NowLoading_2;
+    ClearBackbuffer();
+    SetStageDisplayBuffer();
+    func_800EAD7C();
+    DestroyEntitiesFromIndex(0);
+    DestroyAllPrimitives();
+    func_800EA538(0);
+    HideAllBackgroundLayers();
+    ResetPendingGfxLoad();
+    func_800EDAE4();
+    PlaySfx(SET_UNK_12);
+    PlaySfx(SET_UNK_0B);
+    MuteSound();
+    func_800E493C();
+}
+
+void func_800E4A04(void) { s32 pad[3]; }
+
 s16 g_ButtonMask[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
@@ -301,34 +329,6 @@ RECT D_800A01C0[] = {
     {0, 0, 64, 0},        // unknown usage
     {64, 0, 128, 0},      // unknown usage
 };
-
-void func_800E493C(void) {
-    if (g_Settings.isSoundMono == false) {
-        PlaySfx(SET_SOUNDMODE_STEREO);
-    } else {
-        PlaySfx(SET_SOUNDMODE_MONO);
-    }
-}
-
-void func_800E4970(void) {
-    SetGameState(Game_NowLoading);
-    g_GameStep = NowLoading_2;
-    ClearBackbuffer();
-    SetStageDisplayBuffer();
-    func_800EAD7C();
-    DestroyEntitiesFromIndex(0);
-    DestroyAllPrimitives();
-    func_800EA538(0);
-    HideAllBackgroundLayers();
-    ResetPendingGfxLoad();
-    func_800EDAE4();
-    PlaySfx(SET_UNK_12);
-    PlaySfx(SET_UNK_0B);
-    MuteSound();
-    func_800E493C();
-}
-
-void func_800E4A04(void) { s32 pad[3]; }
 
 void HandlePlay(void) {
     s32 i;
