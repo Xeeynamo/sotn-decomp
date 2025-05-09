@@ -2,8 +2,6 @@
 #include "dra.h"
 
 // BSS shared
-extern s32 D_8013640C;
-extern s32 D_80136410;
 extern s32 g_MemcardRetryCount;
 extern s32 g_MemcardFd;
 

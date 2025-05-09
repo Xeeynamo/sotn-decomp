@@ -2,7 +2,9 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
+#ifdef VERSION_PSP
 #include "../get_lang.h"
+#endif
 
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
@@ -54,7 +56,9 @@ void func_800E414C(void) {
                 g_LoadFile = CdFile_StageChr | 0x8000;
             }
             g_LoadOvlIdx = D_8003C710;
+            #ifdef VERSION_PSP
             func_8932AD4(g_LoadOvlIdx);
+            #endif
             D_8003C708.unk2++;
             return;
         }
@@ -102,6 +106,10 @@ void func_800E414C(void) {
 }
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
+
+// BSS
+extern s32 D_8013640C;
+extern s32 D_80136410;
 
 void HandleTitle(void) {
     void (*callback)();

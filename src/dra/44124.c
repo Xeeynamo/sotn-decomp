@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-#include "lba.h"
+
+#ifdef VERSION_PSP
+#include "../get_lang.h"
+#endif
 
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
@@ -10,35 +13,29 @@ void SetGameState(GameState gameState) {
     g_backbufferY = 0;
 }
 
-// BSS
-extern s32 D_8013640C;
-extern s32 D_80136410;
-
 void func_800E414C(void) {
-    RoomTeleport* temp_a1;
-    s32 temp_a0;
+    RoomTeleport* tele;
 
     if (!(D_8003C708.flags & FLAG_UNK_40)) {
         return;
     }
 
     func_8010DFF0(1, 1);
-    if (D_8003C708.unk2 != 0 &&
-        !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi < 249)) {
+    if (D_8003C708.unk2 &&
+        !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi <= 248)) {
         return;
     }
 
     switch (D_8003C708.unk2) {
     case 0:
         func_800EA538(1);
-        temp_a1 = &D_800A245C[D_8003C708.zPriority];
-        temp_a0 = g_StageId & STAGE_INVERTEDCASTLE_FLAG;
-        D_8003C710 = temp_a1->stageId;
-        if (temp_a0 != 0) {
+        tele = &D_800A245C[D_8003C708.zPriority];
+        D_8003C710 = tele->stageId;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             D_8003C710 ^= STAGE_INVERTEDCASTLE_FLAG;
         }
-        D_8003C712 = temp_a1->unk6;
-        if (temp_a0 != 0) {
+        D_8003C712 = tele->unk6;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
         }
         PlaySfx(0x80);
@@ -59,6 +56,9 @@ void func_800E414C(void) {
                 g_LoadFile = CdFile_StageChr | 0x8000;
             }
             g_LoadOvlIdx = D_8003C710;
+            #ifdef VERSION_PSP
+            func_8932AD4(g_LoadOvlIdx);
+            #endif
             D_8003C708.unk2++;
             return;
         }
@@ -74,7 +74,7 @@ void func_800E414C(void) {
             g_LoadOvlIdx = D_8003C710;
             D_8003C708.unk2++;
         }
-        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi >= 0x89) {
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi > 0x88) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -87,7 +87,7 @@ void func_800E414C(void) {
         if (!g_UseDisk) {
             break;
         }
-        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi >= 0x89) {
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi > 0x88) {
             func_801073C0();
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -106,6 +106,10 @@ void func_800E414C(void) {
 }
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
+
+// BSS
+extern s32 D_8013640C;
+extern s32 D_80136410;
 
 void HandleTitle(void) {
     void (*callback)(void);
