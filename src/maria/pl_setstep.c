@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
+#include "sfx.h"
 
 void MarSetDebug() { MarSetStep(PL_S_DEBUG); }
 
@@ -180,7 +181,10 @@ static s32 MarCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-extern s16 D_pspeu_092C5040[];
+static s16 D_pspeu_092C5040[] = {
+    SFX_VO_MAR_8E6, SFX_VO_MAR_ATTACK_C, SFX_VO_MAR_8E8,
+    SFX_VO_MAR_8E9, SFX_VO_MAR_8EA,
+};
 static void PlayGruntAttackSoundEffect(s32 max) {
     s16 sfxIndex;
 
@@ -232,7 +236,7 @@ bool MarDoAttack(void) {
         }
         g_Player.timers[PL_T_ATTACK] = 4;
         g_Player.timers[PL_T_8] = 13;
-        g_api_PlaySfx(SFX_BONE_SWORD_SWISH_C);
+        g_api.PlaySfx(SFX_BONE_SWORD_SWISH_C);
         PlayGruntAttackSoundEffect(10);
         return true;
     }
@@ -392,6 +396,17 @@ void MarSetSlide(void) {
     g_Player.timers[PL_T_12] = 4;
 }
 
+static AnimationFrame mar_anim_blade_dash[] = {
+    POSE(2, 56, 1),  POSE(2, 57, 1),  POSE(3, 58, 1),  POSE(4, 100, 6),
+    POSE(3, 101, 6), POSE(4, 102, 6), POSE(2, 103, 6), POSE(2, 104, 6),
+    POSE(1, 105, 6), POSE(2, 106, 6), POSE(1, 107, 6), POSE(2, 58, 1),
+    POSE(1, 44, 1),  POSE(1, 45, 1),  POSE(7, 46, 1),  POSE(4, 47, 1),
+    POSE(5, 48, 1),  POSE(4, 49, 1),  POSE(7, 46, 1),  POSE(4, 47, 1),
+    POSE(2, 32, 1),  POSE(2, 33, 1),  POSE(4, 34, 1),  POSE(2, 35, 1),
+    POSE(5, 36, 1),  POSE(5, 37, 1),  POSE(2, 31, 1),  POSE(2, 29, 1),
+    POSE(2, 28, 1),  POSE(3, 1, 1),   POSE(3, 2, 1),   POSE(4, 68, 1),
+    POSE(3, 69, 1),  POSE(3, 70, 1),  POSE(3, 71, 1),  POSE(2, 72, 1),
+    POSE_END};
 void MarSetBladeDash(void) {
     MarSetStep(PL_S_BLADEDASH);
     MarSetAnimation(mar_anim_blade_dash);

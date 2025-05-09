@@ -197,9 +197,9 @@ void MarLoadGraphics(void) {
     func_91040A0(items_img);
 }
 
-extern PlayerOvl D_pspeu_092C0400;
+extern PlayerOvl MARIA_player;
 void MAR_Load(void) {
-    memcpy(&g_PlOvl, &D_pspeu_092C0400, sizeof(PlayerOvl));
+    memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
     func_91040A0(wpn_owl_img);
     func_91040A0(wpn_turtle_img);
