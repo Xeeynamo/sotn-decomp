@@ -112,7 +112,7 @@ extern s32 D_8013640C;
 extern s32 D_80136410;
 
 void HandleTitle(void) {
-    void (*callback)(void);
+    void (*callback)();
 
     switch (g_GameStep) {
     case 0:
@@ -135,6 +135,9 @@ void HandleTitle(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Sel;
         }
+        #ifdef VERSION_PSP
+        D_800974A4 = 0;
+        #endif
         g_GameStep++;
         break;
 #if defined(VERSION_US)
@@ -145,11 +148,11 @@ void HandleTitle(void) {
             rect.y = 0;
             rect.w = 0x280;
             rect.h = 0x100;
-            LoadImage(&rect, (u32*)0x80180014);
+            LoadImage(&rect, (u_long*)0x80180014);
 
             rect.x = 0;
             rect.y = 0x100;
-            LoadImage(&rect, (u32*)0x80180014);
+            LoadImage(&rect, (u_long*)0x80180014);
 
             SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 0x280, 0x100);
             SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
@@ -227,24 +230,27 @@ void HandleTitle(void) {
                 break;
             }
         }
-        g_GameEngineStep = Engine_Init;
         g_GameStep++;
+        g_GameEngineStep = Engine_Init;
         break;
     case 6:
 #if defined(VERSION_US)
         if (g_GameState == Game_Title) {
             callback = g_api.o.HitDetection;
+            callback();
         } else {
             callback = g_api.o.InitRoomEntities;
+            callback();
         }
 #else
         if (g_GameState == Game_Init) {
             callback = g_api.o.InitRoomEntities;
+            callback();
         } else {
             callback = g_api.o.HitDetection;
+            callback();
         }
 #endif
-        callback();
         break;
     }
 }

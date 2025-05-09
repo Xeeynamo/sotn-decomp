@@ -135,7 +135,9 @@ void HandleTitle(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Sel;
         }
+        #ifdef VERSION_PSP
         D_800974A4 = 0;
+        #endif
         g_GameStep++;
         break;
 #if defined(VERSION_US)
@@ -164,7 +166,7 @@ void HandleTitle(void) {
     case 101:
         SetDispMask(1);
         if (D_8013640C == 0 || --D_8013640C == 0) {
-            ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
+            ClearImage(&g_Vram.D_800ACDF0, 0, 0, 0);
             SetStageDisplayBuffer();
             g_StageId = STAGE_SEL;
             if (g_UseDisk) {
@@ -235,8 +237,10 @@ void HandleTitle(void) {
 #if defined(VERSION_US)
         if (g_GameState == Game_Title) {
             callback = g_api.o.HitDetection;
+            callback();
         } else {
             callback = g_api.o.InitRoomEntities;
+            callback();
         }
 #else
         if (g_GameState == Game_Init) {
