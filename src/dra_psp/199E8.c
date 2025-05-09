@@ -311,7 +311,7 @@ s16 g_ButtonMask[] = {
     STAGE_MAD, STAGE_HAGI_LOAD, STAGE_IGA_LOAD, STAGE_IWA_LOAD, STAGE_TE1,     \
         STAGE_TE2, STAGE_TE3, STAGE_TE4, STAGE_TE5
 
-u8 g_StageSelectOrder[] = {
+static u8 g_StageSelectOrder[] = {
     STAGE_MEMORYCARD, STAGE_ST0,     UPRIGHT_STAGES,
 #ifndef VERSION_PSP
     REVERSE_STAGES,   DEBUG_STAGES,  BOSSES,
@@ -322,16 +322,31 @@ u8 g_StageSelectOrder[] = {
 #endif
 };
 
-static u8 D_psp_0914C318[] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2};
-static RECT D_psp_0914C328[] = {
-    {0x80, 0x00, 0xC0, 0x00}, {0xC0, 0x00, 0xFF, 0x00},
-    {0xFF, 0x00, 0xFF, 0x40}, {0xFF, 0x40, 0xFF, 0x80},
-    {0xFF, 0x80, 0xFF, 0xC0}, {0xFF, 0xC0, 0xFF, 0xFF},
-    {0xFF, 0xFF, 0xC0, 0xFF}, {0xC0, 0xFF, 0x80, 0xFF},
-    {0x80, 0xFF, 0x40, 0xFF}, {0x40, 0xFF, 0x00, 0xFF},
-    {0x00, 0xFF, 0x00, 0xC0}, {0x00, 0xC0, 0x00, 0x80},
-    {0x00, 0x80, 0x00, 0x40}, {0x00, 0x40, 0x00, 0x00},
-    {0x00, 0x00, 0x40, 0x00}, {0x40, 0x00, 0x80, 0x00}};
+// A value is selected at random on every overlay change (including to/from
+// bosses) The selected value + 0x80 is then assigned to
+// g_CastleFlags[NO1_WEATHER]
+static u8 g_NO1WeatherOptions[] = {
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,
+};
+
+static RECT D_800A01C0[] = {
+    {128, 0, 192, 0},     // unknown usage
+    {192, 0, 255, 0},     // unknown usage
+    {255, 0, 255, 64},    // unknown usage
+    {255, 64, 255, 128},  // unknown usage
+    {255, 128, 255, 192}, // unknown usage
+    {255, 192, 255, 255}, // unknown usage
+    {255, 255, 192, 255}, // unknown usage
+    {192, 255, 128, 255}, // unknown usage
+    {128, 255, 64, 255},  // unknown usage
+    {64, 255, 0, 255},    // unknown usage
+    {0, 255, 0, 192},     // unknown usage
+    {0, 192, 0, 128},     // unknown usage
+    {0, 128, 0, 64},      // unknown usage
+    {0, 64, 0, 0},        // unknown usage
+    {0, 0, 64, 0},        // unknown usage
+    {64, 0, 128, 0},      // unknown usage
+};
 
 static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
 
@@ -519,7 +534,7 @@ void HandlePlay(void) {
         func_800EDAE4();
         func_801024DC();
         if (g_CastleFlags[NO1_WEATHER] & 0x80) {
-            g_CastleFlags[NO1_WEATHER] = D_psp_0914C318[rand() & 0xF] + 0x80;
+            g_CastleFlags[NO1_WEATHER] = g_NO1WeatherOptions[rand() & 0xF] + 0x80;
         }
         g_GameStep++;
         break;
@@ -580,10 +595,10 @@ void HandlePlay(void) {
         D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 16);
         prim = &g_PrimBuf[D_8013640C];
         for (i = 0, D_psp_091CE348 = 0; prim != NULL; i++) {
-            prim->x0 = D_psp_0914C328[i].x;
-            prim->y0 = D_psp_0914C328[i].y;
-            prim->x1 = D_psp_0914C328[i].w;
-            prim->y1 = D_psp_0914C328[i].h;
+            prim->x0 = D_800A01C0[i].x;
+            prim->y0 = D_800A01C0[i].y;
+            prim->x1 = D_800A01C0[i].w;
+            prim->y1 = D_800A01C0[i].h;
             prim->x2 =
                 0x80 +
                 ((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_psp_091CE348 >> 10);
@@ -596,10 +611,10 @@ void HandlePlay(void) {
             prim->y3 =
                 0x80 -
                 ((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_psp_091CE348 >> 10);
-            prim->u0 = D_psp_0914C328[i].x;
-            prim->v0 = D_psp_0914C328[i].y;
-            prim->u1 = D_psp_0914C328[i].w;
-            prim->v1 = D_psp_0914C328[i].h;
+            prim->u0 = D_800A01C0[i].x;
+            prim->v0 = D_800A01C0[i].y;
+            prim->u1 = D_800A01C0[i].w;
+            prim->v1 = D_800A01C0[i].h;
             prim->u2 = 0x80;
             prim->v2 = 0x80;
             prim->u3 = 0x80;

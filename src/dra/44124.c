@@ -311,12 +311,13 @@ s16 g_ButtonMask[] = {
     STAGE_MAD, STAGE_HAGI_LOAD, STAGE_IGA_LOAD, STAGE_IWA_LOAD, STAGE_TE1,     \
         STAGE_TE2, STAGE_TE3, STAGE_TE4, STAGE_TE5
 
-u8 g_StageSelectOrder[] = {
+static u8 g_StageSelectOrder[] = {
     STAGE_MEMORYCARD, STAGE_ST0,     UPRIGHT_STAGES,
 #ifndef VERSION_PSP
     REVERSE_STAGES,   DEBUG_STAGES,  BOSSES,
     REVERSE_BOSSES,   STAGE_TOP_ALT, STAGE_ENDING,
 #else
+    BOSSES, REVERSE_STAGES, REVERSE_BOSSES,
     0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5 // What are these???
 #endif
 };
@@ -324,11 +325,11 @@ u8 g_StageSelectOrder[] = {
 // A value is selected at random on every overlay change (including to/from
 // bosses) The selected value + 0x80 is then assigned to
 // g_CastleFlags[NO1_WEATHER]
-u8 g_NO1WeatherOptions[] = {
+static u8 g_NO1WeatherOptions[] = {
     0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,
 };
 
-RECT D_800A01C0[] = {
+static RECT D_800A01C0[] = {
     {128, 0, 192, 0},     // unknown usage
     {192, 0, 255, 0},     // unknown usage
     {255, 0, 255, 64},    // unknown usage
