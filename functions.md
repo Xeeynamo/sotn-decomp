@@ -302,9 +302,9 @@
 | st0       | func_801B1198                            |       29 |          2 |        | https://decomp.me/scratch/CDarj | 1.0   |
 | dra       | func_800FB0FC                            |       29 |          3 |        |                                 |       |
 | no3       | func_pspeu_09252C78                      |       29 |          3 |        |                                 |       |
+| maria     | func_pspeu_092B9298                      |       29 |          4 |        |                                 |       |
 | maria_psp | func_pspeu_092A7F20                      |       29 |          4 |        |                                 |       |
 | maria_psp | func_pspeu_092A9920                      |       29 |          4 |        |                                 |       |
-| maria_psp | func_pspeu_092B9298                      |       29 |          4 |        |                                 |       |
 |           | DestroyServantEntity                     |       29 |          4 |        |                                 |       |
 | dra       | func_psp_09141878                        |       29 |          5 |        |                                 |       |
 | chi       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
@@ -716,7 +716,7 @@
 | lib       | func_us_801AE84C                         |       60 |          8 |        |                                 |       |
 | dra       | func_8010E4D0                            |       60 |         11 |        |                                 |       |
 | dra       | RestoreSfxScriptData                     |       61 |          1 |        |                                 |       |
-| maria_psp | func_pspeu_092B91B8                      |       61 |          3 |        |                                 |       |
+| maria     | MarSetWeaponParams                       |       61 |          3 |        |                                 |       |
 | dra       | func_8011690C                            |       61 |          5 |        | https://decomp.me/scratch/U8Zb8 | 0.739 |
 | lib       | func_us_801CCED0                         |       61 |          5 |        |                                 |       |
 | dra       | func_800E5498                            |       61 |          6 |        |                                 |       |
@@ -1724,7 +1724,7 @@
 | maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        |                                 |       |
 | ric       | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra       | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
-| maria_psp | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
+| maria     | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
 | dra       | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra       | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib       | func_us_801B7DF8                         |      556 |         54 |        |                                 |       |
