@@ -11,7 +11,95 @@ void SetGameState(GameState gameState) {
     g_backbufferY = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", func_800E414C);
+void func_800E414C(void) {
+    RoomTeleport* tele;
+
+    if (!(D_8003C708.flags & FLAG_UNK_40)) {
+        return;
+    }
+
+    func_8010DFF0(1, 1);
+    if (D_8003C708.unk2 &&
+        !(PLAYER.posX.i.hi >= 8 && PLAYER.posX.i.hi <= 248)) {
+        return;
+    }
+
+    switch (D_8003C708.unk2) {
+    case 0:
+        func_800EA538(1);
+        tele = &D_800A245C[D_8003C708.zPriority];
+        D_8003C710 = tele->stageId;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            D_8003C710 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        D_8003C712 = tele->unk6;
+        if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
+            D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
+        }
+        PlaySfx(0x80);
+        D_80097928 = 1;
+        if (D_8003C708.flags == FLAG_UNK_40) {
+            g_Player.demo_timer = 24;
+            g_Player.padSim = PAD_LEFT;
+        } else {
+            g_Player.demo_timer = 24;
+            g_Player.padSim = PAD_RIGHT;
+        }
+        D_8003C708.unk2++;
+        return;
+    case 1:
+        if (!func_80131F68()) {
+            if (g_UseDisk != 0) {
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_StageChr | 0x8000;
+            }
+            g_LoadOvlIdx = D_8003C710;
+            func_8932AD4(g_LoadOvlIdx);
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 2:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi < 0x78) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_LoadOvlIdx = D_8003C710;
+            D_8003C708.unk2++;
+        }
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi > 0x88) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_LoadOvlIdx = D_8003C710;
+            D_8003C708.unk2++;
+            return;
+        }
+        break;
+    case 3:
+        if (!g_UseDisk) {
+            break;
+        }
+        if (D_8003C708.flags == FLAG_UNK_40 && PLAYER.posX.i.hi > 0x88) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_LoadOvlIdx = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        if (D_8003C708.flags == 0x41 && PLAYER.posX.i.hi < 0x78) {
+            func_801073C0();
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StageChr;
+            g_LoadOvlIdx = D_8003C712;
+            D_8003C708.unk2 = 2;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", ClearBackbuffer);
 
