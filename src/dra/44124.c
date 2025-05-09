@@ -401,6 +401,7 @@ extern s32 D_8C630D8;
 extern u32 D_8D35C40;
 extern u32 D_8D45C40;
 extern u32 D_8D47C40;
+s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
 void HandlePlay(void) {
@@ -483,13 +484,47 @@ void HandlePlay(void) {
         RunMainEngine();
         break;
     case Play_PrepareNextStage:
+#ifdef VERSION_PSP
+        func_891B0DC(0, 0x100);
+        func_891B6FC();
+#endif
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
         MuteSound();
+#ifdef VERSION_PSP
+        func_892A620(0, 1);
+        func_892A620(1, 1);
+#endif
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
             DemoInit(2);
+#ifndef VERSION_PSP
             return;
+#else
+            if (D_8C630D4 != 0) {
+                STRCPY(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
+                g_IsTimeAttackUnlocked = true;
+                if (D_8C630D8 == 1) {
+                    STRCPY(g_Status.saveName, "richter ");
+                    g_PlayableCharacter = PLAYER_RICHTER;
+                    g_IsTimeAttackUnlocked = true;
+                } else if (D_8C630D8 == 2) {
+                    STRCPY(g_Status.saveName, "maria   ");
+                    g_PlayableCharacter = PLAYER_MARIA;
+                    g_IsTimeAttackUnlocked = true;
+                } else {
+                    g_PlayableCharacter = PLAYER_ALUCARD;
+                    g_IsTimeAttackUnlocked = false;
+                }
+            }
+            if (D_8C630D4 == 1) {
+                DemoInit(1);
+            } else if (D_8C630D4 == 2) {
+                DemoInit(0);
+            } else {
+                break;
+            }
+#endif
         }
         if (D_80097C98 & 0x08000000) {
             func_800E4970();
@@ -567,7 +602,8 @@ void HandlePlay(void) {
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
         D_8013640C = AllocPrimitives(PRIM_GT4, 16);
-        for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL; i++) {
+        for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL;
+             i++) {
             sx = &D_800A01C0[i].x;
             sy = &D_800A01C0[i].y;
             ex = &D_800A01C0[i].w;
@@ -577,17 +613,13 @@ void HandlePlay(void) {
             prim->x1 = *ex;
             prim->y1 = *ey;
             prim->x2 =
-                0x80 +
-                ((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
+                0x80 + ((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
             prim->y2 =
-                0x80 -
-                ((rsin(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
+                0x80 - ((rsin(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
             prim->x3 =
-                0x80 +
-                ((rcos(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
+                0x80 + ((rcos(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
             prim->y3 =
-                0x80 -
-                ((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
+                0x80 - ((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
             sx = &D_800A01C0[i].x;
             sy = &D_800A01C0[i].y;
             ex = &D_800A01C0[i].w;
