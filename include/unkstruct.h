@@ -20,8 +20,10 @@ typedef struct {
 
 #define PAL_COPY 1
 #define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
-#define PAL_COPY_DATA(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
-#define PAL_COPY_DATA_(dst, data, len) (u_long*)(dst), (u_long*)(len), (u_long*)(data)
+#define PAL_COPY_DATA(dst, data)                                               \
+    (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+#define PAL_COPY_DATA_(dst, data, len)                                         \
+    (u_long*)(dst), (u_long*)(len), (u_long*)(data)
 
 #define PAL_UNK_OP2 2
 #define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)

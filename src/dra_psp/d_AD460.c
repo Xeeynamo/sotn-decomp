@@ -14,7 +14,8 @@ u16 D_psp_09189E20[] = {0x90A1, 0x9102, 0xA821, 0xCC42};
 u16 D_psp_09189E28[] = {0x90C9, 0x94EB, 0x85E4, 0xA2CD};
 u16 D_psp_09189E30[] = {0x842C, 0x8C6F, 0x8018, 0x98DD};
 u16 D_psp_09189E38[] = {0x994A, 0xA5CE, 0x0000, 0xBC0F};
-u16 D_psp_09189E40[] = {0x8433, 0x843A, 0x0000, 0x0000, 0x0000, 0x0000, 0xCC21, 0xFC42, 0xA4A8, 0xAD0A};
+u16 D_psp_09189E40[] = {0x8433, 0x843A, 0x0000, 0x0000, 0x0000,
+                        0x0000, 0xCC21, 0xFC42, 0xA4A8, 0xAD0A};
 
 u_long* D_psp_09189E58[] = {GFX_TERMINATE()};
 
@@ -138,10 +139,14 @@ extern u8 D_psp_09161588[0x100];
 extern u8 D_psp_09161788[0x100];
 
 u_long* D_psp_0918B980[] = {
-    MAKE_PAL_OP(PAL_UNK_OP3, 4),  PAL_UNK_OP3_INFO(0x1600, LEN(D_psp_09160F88)),
-    PAL_UNK_OP3_DATA(D_psp_09160F88), PAL_UNK_OP3_DATA(D_psp_09161188),
-    PAL_UNK_OP3_DATA(D_psp_09161388), PAL_UNK_OP3_DATA(D_psp_09161588),
-    PAL_UNK_OP3_DATA(D_psp_09161788), PAL_TERMINATE(),
+    MAKE_PAL_OP(PAL_UNK_OP3, 4),
+    PAL_UNK_OP3_INFO(0x1600, LEN(D_psp_09160F88)),
+    PAL_UNK_OP3_DATA(D_psp_09160F88),
+    PAL_UNK_OP3_DATA(D_psp_09161188),
+    PAL_UNK_OP3_DATA(D_psp_09161388),
+    PAL_UNK_OP3_DATA(D_psp_09161588),
+    PAL_UNK_OP3_DATA(D_psp_09161788),
+    PAL_TERMINATE(),
 };
 
 extern u8 D_psp_09160DC8[0x10];
@@ -151,10 +156,14 @@ extern u8 D_psp_09160E28[0x10];
 extern u8 D_psp_09160E48[0x10];
 
 u_long* D_psp_0918B9A8[] = {
-    MAKE_PAL_OP(PAL_UNK_OP3, 4),  PAL_UNK_OP3_INFO(0x17E0, LEN(D_psp_09160DC8)),
-    PAL_UNK_OP3_DATA(D_psp_09160DC8), PAL_UNK_OP3_DATA(D_psp_09160DE8),
-    PAL_UNK_OP3_DATA(D_psp_09160E08), PAL_UNK_OP3_DATA(D_psp_09160E28),
-    PAL_UNK_OP3_DATA(D_psp_09160E48), PAL_TERMINATE(),
+    MAKE_PAL_OP(PAL_UNK_OP3, 4),
+    PAL_UNK_OP3_INFO(0x17E0, LEN(D_psp_09160DC8)),
+    PAL_UNK_OP3_DATA(D_psp_09160DC8),
+    PAL_UNK_OP3_DATA(D_psp_09160DE8),
+    PAL_UNK_OP3_DATA(D_psp_09160E08),
+    PAL_UNK_OP3_DATA(D_psp_09160E28),
+    PAL_UNK_OP3_DATA(D_psp_09160E48),
+    PAL_TERMINATE(),
 };
 
 extern u8 D_psp_09160E68[0x10];
@@ -164,10 +173,14 @@ extern u8 D_psp_09160EC8[0x10];
 extern u8 D_psp_09160EE8[0x10];
 
 u_long* D_psp_0918B9D0[] = {
-    MAKE_PAL_OP(PAL_UNK_OP3, 4),  PAL_UNK_OP3_INFO(0x17F0, LEN(D_psp_09160E68)),
-    PAL_UNK_OP3_DATA(D_psp_09160E68), PAL_UNK_OP3_DATA(D_psp_09160E88),
-    PAL_UNK_OP3_DATA(D_psp_09160EA8), PAL_UNK_OP3_DATA(D_psp_09160EC8),
-    PAL_UNK_OP3_DATA(D_psp_09160EE8), PAL_TERMINATE(),
+    MAKE_PAL_OP(PAL_UNK_OP3, 4),
+    PAL_UNK_OP3_INFO(0x17F0, LEN(D_psp_09160E68)),
+    PAL_UNK_OP3_DATA(D_psp_09160E68),
+    PAL_UNK_OP3_DATA(D_psp_09160E88),
+    PAL_UNK_OP3_DATA(D_psp_09160EA8),
+    PAL_UNK_OP3_DATA(D_psp_09160EC8),
+    PAL_UNK_OP3_DATA(D_psp_09160EE8),
+    PAL_TERMINATE(),
 };
 
 u_long* D_psp_0918B9F8[] = {
@@ -324,11 +337,16 @@ u_long* D_psp_0918BBC0[] = {
     PAL_COPY_DATA(0x1000, D_psp_09160BC8),
 };
 
-u_long** D_psp_0918BBD0[] = {D_psp_09189E58, D_psp_0918B830, D_psp_09189E58, D_psp_0918B8A8, D_psp_0918B8C8};
-u_long** D_psp_0918BBE8[] = {D_psp_09189E58, D_psp_0918B890, D_psp_09189E58, D_psp_0918B8A8, D_psp_0918B8C8};
-u_long** D_psp_0918BC00[] = {D_psp_09189E58, D_psp_0918B860, D_psp_09189E58, D_psp_0918B8A8, D_psp_0918B8C8};
-u_long** D_psp_0918BC18[] = {D_psp_09189E58, D_psp_0918B848, D_psp_09189E58, D_psp_0918B8A8, D_psp_0918B8C8};
-u_long** D_psp_0918BC30[] = {D_psp_09189E58, D_psp_0918B878, D_psp_09189E58, D_psp_0918B8A8, D_psp_0918B8C8};
+u_long** D_psp_0918BBD0[] = {D_psp_09189E58, D_psp_0918B830, D_psp_09189E58,
+                             D_psp_0918B8A8, D_psp_0918B8C8};
+u_long** D_psp_0918BBE8[] = {D_psp_09189E58, D_psp_0918B890, D_psp_09189E58,
+                             D_psp_0918B8A8, D_psp_0918B8C8};
+u_long** D_psp_0918BC00[] = {D_psp_09189E58, D_psp_0918B860, D_psp_09189E58,
+                             D_psp_0918B8A8, D_psp_0918B8C8};
+u_long** D_psp_0918BC18[] = {D_psp_09189E58, D_psp_0918B848, D_psp_09189E58,
+                             D_psp_0918B8A8, D_psp_0918B8C8};
+u_long** D_psp_0918BC30[] = {D_psp_09189E58, D_psp_0918B878, D_psp_09189E58,
+                             D_psp_0918B8A8, D_psp_0918B8C8};
 
 extern s16* D_psp_0916A060[];
 extern s16* D_psp_0916C850[];
@@ -346,14 +364,22 @@ extern s16* D_psp_0916B630[];
 extern s16* D_psp_0916C7B8[];
 
 s16** D_800A3B70[] = {
-    NULL,       D_800CF324, D_psp_0916A060, D_psp_0916C850, D_psp_0916C690, D_psp_0916F148,
-    D_psp_0916EC78, D_psp_0916F6A0, D_psp_09168228, D_psp_0916B178, D_psp_091684B8, D_psp_0916EEF8,
-    D_psp_0916EF90, (s16**)D_800CFE48, D_psp_0916F4B0, D_psp_0916B630, D_psp_0916B630, D_psp_0916C7B8};
+    NULL,           D_800CF324,        D_psp_0916A060, D_psp_0916C850,
+    D_psp_0916C690, D_psp_0916F148,    D_psp_0916EC78, D_psp_0916F6A0,
+    D_psp_09168228, D_psp_0916B178,    D_psp_091684B8, D_psp_0916EEF8,
+    D_psp_0916EF90, (s16**)D_800CFE48, D_psp_0916F4B0, D_psp_0916B630,
+    D_psp_0916B630, D_psp_0916C7B8};
 
 u_long* D_800A3BB8[] = {
-    (u_long*)D_psp_0918B908, (u_long*)D_psp_0918B938, (u_long*)D_psp_0918B948, (u_long*)D_psp_0918B958, (u_long*)D_psp_0918B968, (u_long*)D_psp_0918B980,
-    (u_long*)D_psp_0918B9A8, (u_long*)D_psp_0918B9D0, (u_long*)D_psp_0918B920, (u_long*)D_psp_0918B9F8, (u_long*)D_psp_0918BA08, (u_long*)D_psp_0918BA18,
-    (u_long*)D_psp_0918BA28, (u_long*)D_psp_0918BA48, (u_long*)D_psp_0918BA58, (u_long*)D_psp_0918BA68, (u_long*)D_psp_0918BA78, (u_long*)D_psp_0918BA90,
-    (u_long*)D_psp_0918BA38, (u_long*)D_psp_0918B9F8, (u_long*)D_psp_0918B9F8, (u_long*)D_psp_0918BAA0, (u_long*)D_psp_0918BBC0, (u_long*)D_psp_0918BB50,
-    (u_long*)D_psp_0918BAD0, (u_long*)D_psp_0918BAE8, (u_long*)D_psp_0918BAB8, (u_long*)D_psp_0918BB68, (u_long*)D_psp_0918BB78, (u_long*)D_psp_0918BB90,
-    (u_long*)D_psp_0918BB00, (u_long*)D_psp_0918BBA8, (u_long*)D_psp_0918BB20, (u_long*)D_psp_0918BB38};
+    (u_long*)D_psp_0918B908, (u_long*)D_psp_0918B938, (u_long*)D_psp_0918B948,
+    (u_long*)D_psp_0918B958, (u_long*)D_psp_0918B968, (u_long*)D_psp_0918B980,
+    (u_long*)D_psp_0918B9A8, (u_long*)D_psp_0918B9D0, (u_long*)D_psp_0918B920,
+    (u_long*)D_psp_0918B9F8, (u_long*)D_psp_0918BA08, (u_long*)D_psp_0918BA18,
+    (u_long*)D_psp_0918BA28, (u_long*)D_psp_0918BA48, (u_long*)D_psp_0918BA58,
+    (u_long*)D_psp_0918BA68, (u_long*)D_psp_0918BA78, (u_long*)D_psp_0918BA90,
+    (u_long*)D_psp_0918BA38, (u_long*)D_psp_0918B9F8, (u_long*)D_psp_0918B9F8,
+    (u_long*)D_psp_0918BAA0, (u_long*)D_psp_0918BBC0, (u_long*)D_psp_0918BB50,
+    (u_long*)D_psp_0918BAD0, (u_long*)D_psp_0918BAE8, (u_long*)D_psp_0918BAB8,
+    (u_long*)D_psp_0918BB68, (u_long*)D_psp_0918BB78, (u_long*)D_psp_0918BB90,
+    (u_long*)D_psp_0918BB00, (u_long*)D_psp_0918BBA8, (u_long*)D_psp_0918BB20,
+    (u_long*)D_psp_0918BB38};
