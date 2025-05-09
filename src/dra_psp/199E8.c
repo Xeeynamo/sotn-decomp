@@ -290,6 +290,34 @@ extern s32 D_8C630D8;
 extern u32 D_8D35C40;
 extern u32 D_8D45C40;
 extern u32 D_8D47C40;
+
+#define BOSSES STAGE_MAR, STAGE_BO0, STAGE_BO1, STAGE_BO2, STAGE_BO3,\
+      STAGE_BO4,  STAGE_BO5, STAGE_BO6, STAGE_BO7
+#define DEBUG_STAGES STAGE_MAD, STAGE_HAGI_LOAD, STAGE_IGA_LOAD, \
+      STAGE_IWA_LOAD, STAGE_TE1, STAGE_TE2, STAGE_TE3, STAGE_TE4, STAGE_TE5
+u8 g_StageSelectOrder[] = {
+    STAGE_MEMORYCARD, STAGE_ST0,      STAGE_ARE,      STAGE_CAT,  STAGE_CEN,
+    STAGE_CHI,        STAGE_DAI,      STAGE_DRE,      STAGE_LIB,  STAGE_NO0,
+    STAGE_NO1,        STAGE_NO2,      STAGE_NO3,      STAGE_NO4,  STAGE_NP3,
+    STAGE_NZ0,        STAGE_NZ1,      STAGE_TOP,      STAGE_WRP,  
+    BOSSES,
+    STAGE_RARE,
+    STAGE_RCAT,       STAGE_RCEN,     STAGE_RCHI,     STAGE_RDAI, STAGE_RLIB,
+    STAGE_RNO0,       STAGE_RNO1,     STAGE_RNO2,     STAGE_RNO3, STAGE_RNO4,
+    STAGE_RNZ0,       STAGE_RNZ1,     STAGE_RTOP,     STAGE_RWRP, 
+#ifndef VERSION_PSP
+    DEBUG_STAGES,
+#endif
+    STAGE_RBO0, STAGE_RBO1, 
+    STAGE_RBO2,       STAGE_RBO3,     STAGE_RBO4,     STAGE_RBO5, STAGE_RBO6, 
+    STAGE_RBO7,       STAGE_RBO8,     
+    #ifndef VERSION_PSP
+    STAGE_TOP_ALT,  STAGE_ENDING,
+    #else
+    0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5 // What are these???
+    #endif
+};
+
 static u8 D_psp_0914C318[] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2};
 static RECT D_psp_0914C328[] = {
     {0x80, 0x00, 0xC0, 0x00},
