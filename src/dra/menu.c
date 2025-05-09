@@ -900,7 +900,7 @@ void MenuDrawAlucardPortrait(MenuContext* ctx) {
 // Equivalent of floor(number * .75)
 // Cloak color components are 5 bit.
 // Examples: 31->23, 15->11
-s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
+static s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
 // Creates light and dark versions of cloak colors in BGR555 format
 void ApplyJosephsCloakPalette(void) {
@@ -910,21 +910,19 @@ void ApplyJosephsCloakPalette(void) {
     const int ExteriorLight = 3;
 
     g_JosephsCloakColors[LiningDark] =
-        DarkenCloakColor(g_Settings.cloakColors[3]) +
-        ((DarkenCloakColor(g_Settings.cloakColors[4]) << 5) - 0x8000) +
-        (DarkenCloakColor(g_Settings.cloakColors[5]) << 0xA);
+        0x8000 + DarkenCloakColor(g_Settings.cloakColors[3]) +
+        (DarkenCloakColor(g_Settings.cloakColors[4]) << 5) +
+        (DarkenCloakColor(g_Settings.cloakColors[5]) << 10);
     g_JosephsCloakColors[LiningLight] =
-        (g_Settings.cloakColors[3] +
-         ((g_Settings.cloakColors[4] << 5) - 0x8000)) +
-        ((u32)g_Settings.cloakColors[5] << 0xA);
+        0x8000 + g_Settings.cloakColors[3] + (g_Settings.cloakColors[4] << 5) +
+        (g_Settings.cloakColors[5] << 10);
     g_JosephsCloakColors[ExteriorDark] =
-        DarkenCloakColor(g_Settings.cloakColors[0]) +
-        ((DarkenCloakColor(g_Settings.cloakColors[1]) << 5) - 0x8000) +
-        (DarkenCloakColor(g_Settings.cloakColors[2]) << 0xA);
+        0x8000 + DarkenCloakColor(g_Settings.cloakColors[0]) +
+        (DarkenCloakColor(g_Settings.cloakColors[1]) << 5) +
+        (DarkenCloakColor(g_Settings.cloakColors[2]) << 10);
     g_JosephsCloakColors[ExteriorLight] =
-        g_Settings.cloakColors[0] +
-        ((g_Settings.cloakColors[1] << 5) - 0x8000) +
-        ((u32)g_Settings.cloakColors[2] << 0xA);
+        0x8000 + g_Settings.cloakColors[0] + (g_Settings.cloakColors[1] << 5) +
+        (g_Settings.cloakColors[2] << 10);
 }
 
 void MenuDrawAlucardCloakPreview(MenuContext* ctx) {
