@@ -850,7 +850,7 @@
 | dra       | func_800EA720                            |       73 |          1 |        |                                 |       |
 | lib       | MakeEntityFromId                         |       73 |          4 |        |                                 |       |
 | dra       | UpdatePadsRepeat                         |       73 |          7 |        |                                 |       |
-| dra       | ApplyJosephsCloakPalette                 |       73 |          7 |        |                                 |       |
+| dra       | ApplyJosephsCloakPalette                 |       73 |          7 |        | https://decomp.me/scratch/ebIzv | 0.958 |
 | chi       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
@@ -1343,7 +1343,7 @@
 | no4       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
 | st0       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
 | lib       | EntityChair                              |      186 |         25 |        |                                 |       |
-| dra       | HandleTitle                              |      186 |         35 | Yes    |                                 |       |
+| dra       | HandleTitle                              |      186 |         35 | Yes    | https://decomp.me/scratch/VQCcV | 0.966 |
 | no4       | func_pspeu_09241870                      |      187 |         21 |        |                                 |       |
 | dra       | MainMenuHandler                          |      187 |         28 | Yes    | https://decomp.me/scratch/PgIaV | 1.0   |
 | ric       | RicEntitySubwpnBibleTrail                |      188 |         14 |        |                                 |       |
@@ -1473,7 +1473,7 @@
 |           | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
 | no4       | func_pspeu_09241E38                      |      258 |         19 |        |                                 |       |
 | no4       | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
-| dra       | func_800E414C                            |      258 |         36 |        |                                 |       |
+| dra       | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | no4       | func_pspeu_09240CD0                      |      261 |         21 |        |                                 |       |
 | maria     | MarDoCrash                               |      261 |         51 |        |                                 |       |
 | st0       | func_801A8328                            |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
@@ -1724,7 +1724,7 @@
 | maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        |                                 |       |
 | ric       | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra       | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
-| maria_psp | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.946 |
+| maria_psp | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
 | dra       | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
 | dra       | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib       | func_us_801B7DF8                         |      556 |         54 |        |                                 |       |
