@@ -395,12 +395,10 @@ static u_long* D_psp_09156F28[] = {
     GFX_TERMINATE(),
 };
 
-// All external to the game; could be PSP system or from Dracula X Chronicles
+// I think these are external to the game.
+// could be PSP system or from Dracula X Chronicles
 extern s32 D_8C630D4;
 extern s32 D_8C630D8;
-extern u32 D_8D35C40;
-extern u32 D_8D45C40;
-extern u32 D_8D47C40;
 s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
@@ -818,11 +816,20 @@ void HandleGameOver(void) {
         func_800EDAE4();
         HideAllBackgroundLayers();
         func_800EAD7C();
+        #ifdef VERSION_PSP
+        func_891B6FC();
+        func_892F83C();
+        #endif
         g_GameStep++;
         break;
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
+            #ifndef VERSION_PSP
             MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
+            #else
+            func_891B0DC(0x40, 0);
+            func_891AE04();
+            #endif
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
@@ -853,7 +860,11 @@ void HandleGameOver(void) {
 
             for (i = 0; i < 0x100; i++) {
                 SetTexturedPrimRect(prim, i, 0, 1, 0xF0, i & 0x3F, 0);
+                #ifndef VERSION_PSP
                 prim->tpage = (i / 0x40) + 0x10C;
+                #else
+                prim->tpage = (i / 0x40) + 0x101;
+                #endif
                 prim->priority = 0x1FF;
                 prim->drawMode = DRAW_DEFAULT;
                 prim->p1 = (rand() & 0x1F) + 1;
@@ -898,11 +909,11 @@ void HandleGameOver(void) {
                 break;
             }
             LoadImage(&g_Vram.D_800ACDD0, (u_long*)STAGE_PRG_PTR);
-            LoadImage(&g_Vram.D_800ACDD8, (u_long*)0x80188000);
-            LoadImage(&g_Vram.D_800ACDB8, (u_long*)0x80198000);
+            LoadImage(&g_Vram.D_800ACDD8, (u_long*)STAGE_PRG_PTR + 0x2000);
+            LoadImage(&g_Vram.D_800ACDB8, (u_long*)STAGE_PRG_PTR + 0x6000);
             StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
-            LoadImage(&g_Vram.D_800ACDA8, (u_long*)0x8019A000);
-            StoreImage(&g_Vram.D_800ACDA8, (u_long*)&g_Clut);
+            LoadImage(&g_Vram.D_800ACDA8, (u_long*)STAGE_PRG_PTR + 0x6800);
+            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut);
         } else {
             if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
