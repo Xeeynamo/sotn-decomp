@@ -532,13 +532,13 @@ void HandlePlay(void) {
             func_800E4970();
             return;
         }
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         if (D_8C630D4 == 0) {
             g_StageId = func_800F16D0();
         }
-        #else
+#else
         g_StageId = func_800F16D0();
-        #endif
+#endif
         g_GpuBuffers[1].draw.isbg = 0;
         g_GpuBuffers[0].draw.isbg = 0;
         HideAllBackgroundLayers();
@@ -606,10 +606,10 @@ void HandlePlay(void) {
                 g_LoadOvlIdx = STAGE_LIB;
             }
         }
-        #ifndef VERSION_PSP
+#ifndef VERSION_PSP
         MoveImage(&g_Vram.D_800ACD80, 0, 0x100);
-        #endif
-        
+#endif
+
         g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
         D_8013640C = AllocPrimitives(PRIM_GT4, 16);
         for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL;
@@ -654,9 +654,9 @@ void HandlePlay(void) {
             break;
         }
         g_GameStep++;
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         func_8932AD4(g_StageId);
-        #endif
+#endif
         break;
     case Play_LoadStageSfx:
         func_800E4A04();
@@ -665,7 +665,7 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_LoadOvlIdx = g_StageId;
         } else {
-            #ifndef VERSION_PSP
+#ifndef VERSION_PSP
             if (LoadFileSim(0, SimFileType_StageChr) < 0) {
                 break;
             }
@@ -675,7 +675,7 @@ void HandlePlay(void) {
             if (LoadFileSim(0, SimFileType_Vb) < 0) {
                 break;
             }
-            #else
+#else
             if (!func_8932B74()) {
                 break;
             }
@@ -688,7 +688,7 @@ void HandlePlay(void) {
             if (func_psp_090FAB30(0, SimFileType_Vb, true) < 0) {
                 break;
             }
-            #endif
+#endif
         }
         g_GameStep++;
         break;
@@ -714,15 +714,15 @@ void HandlePlay(void) {
                 break;
             }
         } else {
-            #ifndef VERSION_PSP
+#ifndef VERSION_PSP
             if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
                 break;
             }
-            #else
+#else
             if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
                 break;
             }
-            #endif
+#endif
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
                 LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) <
                     0) {
@@ -816,20 +816,20 @@ void HandleGameOver(void) {
         func_800EDAE4();
         HideAllBackgroundLayers();
         func_800EAD7C();
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         func_891B6FC();
         func_892F83C();
-        #endif
+#endif
         g_GameStep++;
         break;
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
-            #ifndef VERSION_PSP
+#ifndef VERSION_PSP
             MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
-            #else
+#else
             func_891B0DC(0x40, 0);
             func_891AE04();
-            #endif
+#endif
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
@@ -860,11 +860,11 @@ void HandleGameOver(void) {
 
             for (i = 0; i < 0x100; i++) {
                 SetTexturedPrimRect(prim, i, 0, 1, 0xF0, i & 0x3F, 0);
-                #ifndef VERSION_PSP
+#ifndef VERSION_PSP
                 prim->tpage = (i / 0x40) + 0x10C;
-                #else
+#else
                 prim->tpage = (i / 0x40) + 0x101;
-                #endif
+#endif
                 prim->priority = 0x1FF;
                 prim->drawMode = DRAW_DEFAULT;
                 prim->p1 = (rand() & 0x1F) + 1;
@@ -927,6 +927,9 @@ void HandleGameOver(void) {
             if (LoadFileSim(11, SimFileType_System) < 0) {
                 break;
             }
+#ifndef VERSION_PSP
+        }
+#else
             func_891CEB8(0, 0xF0);
         }
         D_psp_09156F10[3] =
@@ -941,6 +944,10 @@ void HandleGameOver(void) {
         if (D_psp_09156F28[3] != NULL) {
             func_psp_091040A0(D_psp_09156F28);
         }
+#endif
+#if defined(VERSION_US)
+        PlaySfx(MU_LAND_OF_BENEDICTION);
+#else
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
             PlaySfx(0x33B);
         } else {
@@ -978,6 +985,7 @@ void HandleGameOver(void) {
                 PlaySfx(0x33B);
             }
         }
+#endif
         g_GameStep++;
         break;
     case Gameover_5:
