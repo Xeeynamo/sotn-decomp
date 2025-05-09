@@ -44,7 +44,6 @@ void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void CreateEntityFromLayout(Entity* entity, LayoutEntity* initDesc);
 void DestroyEntity(Entity*);
 void DestroyEntitiesFromIndex(s16 index);
-void MoveEntity();
 void FallEntity(void);
 Entity* AllocEntity(Entity* start, Entity* end);
 
