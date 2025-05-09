@@ -401,6 +401,7 @@ extern s32 D_8C630D8;
 extern u32 D_8D35C40;
 extern u32 D_8D45C40;
 extern u32 D_8D47C40;
+s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
 void HandlePlay(void) {
@@ -595,7 +596,7 @@ void HandlePlay(void) {
         }
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
-        D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 16);
+        D_8013640C = AllocPrimitives(PRIM_GT4, 16);
         for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL; i++) {
             sx = &D_800A01C0[i].x;
             sy = &D_800A01C0[i].y;
@@ -794,7 +795,7 @@ void HandleGameOver(void) {
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
             g_GpuBuffers[0].draw.isbg = 1;
-            D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 0x103);
+            D_8013640C = AllocPrimitives(PRIM_GT4, 0x103);
             prim = &g_PrimBuf[D_8013640C];
 
             SetTexturedPrimRect(prim, 0, 0x60, 0xFF, 0x20, 0, 0);
@@ -1120,7 +1121,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     switch (self->step) {
     case 0:
         self->primIndex =
-            (s16)AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
+            AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
         if (self->primIndex == -1) {
             return;
         }
@@ -1765,7 +1766,7 @@ void HandleVideoPlayback(void) {
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
-                D_8013640C = (s16)AllocPrimitives(PRIM_GT4, 2);
+                D_8013640C = AllocPrimitives(PRIM_GT4, 2);
                 prim = &g_PrimBuf[D_8013640C];
                 SetTexturedPrimRect(prim, 44, 96, 232, 32, 0, 0);
                 func_801072BC(prim);
