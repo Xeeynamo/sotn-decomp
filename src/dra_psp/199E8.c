@@ -103,7 +103,146 @@ void func_800E414C(void) {
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/199E8", HandleTitle);
+void HandleTitle(void) {
+    void (*callback)();
+
+    switch (g_GameStep) {
+    case 0:
+        ClearBackbuffer();
+        InitRenderer();
+        func_800EAD7C();
+        HideAllBackgroundLayers();
+        DestroyAllPrimitives();
+        func_800EDAE4();
+        ResetEntityArray();
+        DestroyEntitiesFromIndex(0);
+        func_800EA538(0);
+        ResetPendingGfxLoad();
+        SetStageDisplayBuffer();
+        g_StageId = STAGE_SEL;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                return;
+            }
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_Sel;
+        }
+        D_800974A4 = 0;
+        g_GameStep++;
+        break;
+#if defined(VERSION_US)
+    case 100:
+        if (!g_IsUsingCd) {
+            RECT rect;
+            rect.x = 0;
+            rect.y = 0;
+            rect.w = 0x280;
+            rect.h = 0x100;
+            LoadImage(&rect, (u_long*)0x80180014);
+
+            rect.x = 0;
+            rect.y = 0x100;
+            LoadImage(&rect, (u_long*)0x80180014);
+
+            SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, 0x280, 0x100);
+            SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 0x100, 0x280, 0x100);
+            SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, 0x280, 0x100);
+            SetDispMask(0);
+            D_8013640C = 110;
+            g_GameStep++;
+        }
+        break;
+    case 101:
+        SetDispMask(1);
+        if (D_8013640C == 0 || --D_8013640C == 0) {
+            ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
+            SetStageDisplayBuffer();
+            g_StageId = STAGE_SEL;
+            if (g_UseDisk) {
+                if (g_IsUsingCd) {
+                    break;
+                }
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_Sel;
+            }
+            g_GameStep = 1;
+        }
+        break;
+#endif
+    case 1:
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (LoadFileSim(2, SimFileType_System) < 0) {
+                break;
+            }
+            if (LoadFileSim(0, SimFileType_System) < 0) {
+                break;
+            }
+        }
+        g_GameStep++;
+        break;
+    case 2:
+#if defined(VERSION_US)
+        g_GameStep = 3;
+#else
+        g_GameStep++;
+#endif
+        break;
+    case 3:
+#if defined(VERSION_US)
+        g_GameStep = 4;
+#else
+        g_GameStep++;
+#endif
+        break;
+    case 4:
+        if (g_UseDisk) {
+            g_CdStep = CdStep_LoadInit;
+            g_LoadFile = CdFile_StagePrg;
+        }
+#if defined(VERSION_US)
+        g_GameStep = 5;
+#else
+        g_GameStep++;
+#endif
+        break;
+    case 5:
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+        } else {
+            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+                break;
+            }
+        }
+        g_GameStep++;
+        g_GameEngineStep = Engine_Init;
+        break;
+    case 6:
+#if defined(VERSION_US)
+        if (g_GameState == Game_Title) {
+            callback = g_api.o.HitDetection;
+        } else {
+            callback = g_api.o.InitRoomEntities;
+        }
+#else
+        if (g_GameState == Game_Init) {
+            callback = g_api.o.InitRoomEntities;
+            callback();
+
+        } else {
+            callback = g_api.o.HitDetection;
+            callback();
+        }
+#endif
+        break;
+    }
+}
 
 extern s32 D_psp_091CE348;
 extern s32 D_8013640C;
