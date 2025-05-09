@@ -56,9 +56,9 @@ void func_800E414C(void) {
                 g_LoadFile = CdFile_StageChr | 0x8000;
             }
             g_LoadOvlIdx = D_8003C710;
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             func_8932AD4(g_LoadOvlIdx);
-            #endif
+#endif
             D_8003C708.unk2++;
             return;
         }
@@ -135,9 +135,9 @@ void HandleTitle(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Sel;
         }
-        #ifdef VERSION_PSP
+#ifdef VERSION_PSP
         D_800974A4 = 0;
-        #endif
+#endif
         g_GameStep++;
         break;
 #if defined(VERSION_US)
@@ -284,59 +284,56 @@ void func_800E4970(void) {
 void func_800E4A04(void) { s32 pad[3]; }
 
 s16 g_ButtonMask[] = {
-    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS,     PAD_TRIANGLE,
+#ifdef VERSION_PSP
     PAD_L1,     PAD_R1,     PAD_SHOULDERS,
+#else
+    PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
+#endif
 };
 
-#define BOSSES STAGE_MAR, STAGE_BO0, STAGE_BO1, STAGE_BO2, STAGE_BO3,\
-      STAGE_BO4,  STAGE_BO5, STAGE_BO6, STAGE_BO7
-#define DEBUG_STAGES STAGE_MAD, STAGE_HAGI_LOAD, STAGE_IGA_LOAD, \
-      STAGE_IWA_LOAD, STAGE_TE1, STAGE_TE2, STAGE_TE3, STAGE_TE4, STAGE_TE5
+#define UPRIGHT_STAGES                                                         \
+    STAGE_ARE, STAGE_CAT, STAGE_CEN, STAGE_CHI, STAGE_DAI, STAGE_DRE,          \
+        STAGE_LIB, STAGE_NO0, STAGE_NO1, STAGE_NO2, STAGE_NO3, STAGE_NO4,      \
+        STAGE_NP3, STAGE_NZ0, STAGE_NZ1, STAGE_TOP, STAGE_WRP
+#define REVERSE_STAGES                                                         \
+    STAGE_RARE, STAGE_RCAT, STAGE_RCEN, STAGE_RCHI, STAGE_RDAI, STAGE_RLIB,    \
+        STAGE_RNO0, STAGE_RNO1, STAGE_RNO2, STAGE_RNO3, STAGE_RNO4,            \
+        STAGE_RNZ0, STAGE_RNZ1, STAGE_RTOP, STAGE_RWRP
+
+#define BOSSES                                                                 \
+    STAGE_MAR, STAGE_BO0, STAGE_BO1, STAGE_BO2, STAGE_BO3, STAGE_BO4,          \
+        STAGE_BO5, STAGE_BO6, STAGE_BO7
+#define REVERSE_BOSSES                                                         \
+    STAGE_RBO0, STAGE_RBO1, STAGE_RBO2, STAGE_RBO3, STAGE_RBO4, STAGE_RBO5,    \
+        STAGE_RBO6, STAGE_RBO7, STAGE_RBO8
+#define DEBUG_STAGES                                                           \
+    STAGE_MAD, STAGE_HAGI_LOAD, STAGE_IGA_LOAD, STAGE_IWA_LOAD, STAGE_TE1,     \
+        STAGE_TE2, STAGE_TE3, STAGE_TE4, STAGE_TE5
+
 u8 g_StageSelectOrder[] = {
-    STAGE_MEMORYCARD, STAGE_ST0,      STAGE_ARE,      STAGE_CAT,  STAGE_CEN,
-    STAGE_CHI,        STAGE_DAI,      STAGE_DRE,      STAGE_LIB,  STAGE_NO0,
-    STAGE_NO1,        STAGE_NO2,      STAGE_NO3,      STAGE_NO4,  STAGE_NP3,
-    STAGE_NZ0,        STAGE_NZ1,      STAGE_TOP,      STAGE_WRP,  
-    BOSSES,
-    STAGE_RARE,
-    STAGE_RCAT,       STAGE_RCEN,     STAGE_RCHI,     STAGE_RDAI, STAGE_RLIB,
-    STAGE_RNO0,       STAGE_RNO1,     STAGE_RNO2,     STAGE_RNO3, STAGE_RNO4,
-    STAGE_RNZ0,       STAGE_RNZ1,     STAGE_RTOP,     STAGE_RWRP, 
+    STAGE_MEMORYCARD, STAGE_ST0,     UPRIGHT_STAGES,
 #ifndef VERSION_PSP
-    DEBUG_STAGES,
-#endif
-    STAGE_RBO0, STAGE_RBO1, 
-    STAGE_RBO2,       STAGE_RBO3,     STAGE_RBO4,     STAGE_RBO5, STAGE_RBO6, 
-    STAGE_RBO7,       STAGE_RBO8,     
-    #ifndef VERSION_PSP
-    STAGE_TOP_ALT,  STAGE_ENDING,
-    #else
+    REVERSE_STAGES,   DEBUG_STAGES,  BOSSES, REVERSE_BOSSES,
+    STAGE_TOP_ALT,    STAGE_ENDING,
+#else
+    BOSSES, REVERSE_STAGES, REVERSE_BOSSES,
     0xF0, 0xF1, 0xF2, 0xF3, 0xF4, 0xF5 // What are these???
-    #endif
+#endif
 };
 
 static u8 D_psp_0914C318[] = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2};
 static RECT D_psp_0914C328[] = {
-    {0x80, 0x00, 0xC0, 0x00},
-    {0xC0, 0x00, 0xFF, 0x00},
-    {0xFF, 0x00, 0xFF, 0x40},
-    {0xFF, 0x40, 0xFF, 0x80},
-    {0xFF, 0x80, 0xFF, 0xC0},
-    {0xFF, 0xC0, 0xFF, 0xFF},
-    {0xFF, 0xFF, 0xC0, 0xFF},
-    {0xC0, 0xFF, 0x80, 0xFF},
-    {0x80, 0xFF, 0x40, 0xFF},
-    {0x40, 0xFF, 0x00, 0xFF},
-    {0x00, 0xFF, 0x00, 0xC0},
-    {0x00, 0xC0, 0x00, 0x80},
-    {0x00, 0x80, 0x00, 0x40},
-    {0x00, 0x40, 0x00, 0x00},
-    {0x00, 0x00, 0x40, 0x00},
-    {0x40, 0x00, 0x80, 0x00}
-};
+    {0x80, 0x00, 0xC0, 0x00}, {0xC0, 0x00, 0xFF, 0x00},
+    {0xFF, 0x00, 0xFF, 0x40}, {0xFF, 0x40, 0xFF, 0x80},
+    {0xFF, 0x80, 0xFF, 0xC0}, {0xFF, 0xC0, 0xFF, 0xFF},
+    {0xFF, 0xFF, 0xC0, 0xFF}, {0xC0, 0xFF, 0x80, 0xFF},
+    {0x80, 0xFF, 0x40, 0xFF}, {0x40, 0xFF, 0x00, 0xFF},
+    {0x00, 0xFF, 0x00, 0xC0}, {0x00, 0xC0, 0x00, 0x80},
+    {0x00, 0x80, 0x00, 0x40}, {0x00, 0x40, 0x00, 0x00},
+    {0x00, 0x00, 0x40, 0x00}, {0x40, 0x00, 0x80, 0x00}};
 
-static char* D_psp_0914C3D8[] = {
-    "alucard ", "richter ", "maria   "};
+static char* D_psp_0914C3D8[] = {"alucard ", "richter ", "maria   "};
 
 static u8 game_over_left_it[] = {
 #include "../dra/gen_game_over_left_it.h"
@@ -1064,8 +1061,7 @@ static u_long* D_psp_0915E4E8[] = {
     GFX_TERMINATE(),
 };
 
-static char* D_psp_0915E500[] = {
-    "alucard ", "richter ", "maria   "};
+static char* D_psp_0915E500[] = {"alucard ", "richter ", "maria   "};
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     RECT sp48;
