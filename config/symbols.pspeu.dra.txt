@@ -787,6 +787,7 @@ g_DebugMode = 0x091CE2F8;
 g_DebugEnabled2 = 0x091CE300;
 D_8013AEE4 = 0x091CE308;
 g_NowLoadingModel = 0x091CE310;
+D_80136410 = 0x091CE348;
 D_8013640C = 0x091CE350;
 g_SimVabId = 0x091CE358;
 clutAddr = 0x091CE380;

@@ -395,7 +395,6 @@ static u_long* D_psp_09156F28[] = {
     GFX_TERMINATE(),
 };
 
-extern s32 D_psp_091CE348; // BSS
 // All external to the game; could be PSP system or from Dracula X Chronicles
 extern s32 D_8C630D4;
 extern s32 D_8C630D8;
@@ -407,7 +406,7 @@ extern u32 D_8D47C40;
 void HandlePlay(void) {
     s32 i;
     u8* ptr;
-    u16 *sx, *sy, *ex, *ey;
+    s16 *sx, *sy, *ex, *ey;
     Primitive* prim;
 
     switch (g_GameStep) {
@@ -568,9 +567,7 @@ void HandlePlay(void) {
         g_GpuBuffers[1].draw.isbg = 1;
         g_GpuBuffers[0].draw.isbg = 1;
         D_8013640C = AllocPrimitives(PRIM_GT4, 16);
-        D_80136410 = 0;
-        prim = &g_PrimBuf[D_8013640C];
-        for (i = 0; prim != NULL; i++) {
+        for (prim = &g_PrimBuf[D_8013640C], i = 0, D_80136410 = 0; prim != NULL; i++) {
             sx = &D_800A01C0[i].x;
             sy = &D_800A01C0[i].y;
             ex = &D_800A01C0[i].w;
@@ -581,16 +578,20 @@ void HandlePlay(void) {
             prim->y1 = *ey;
             prim->x2 =
                 0x80 +
-                (((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_80136410) >> 10);
+                ((rcos(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
             prim->y2 =
                 0x80 -
-                (((rsin(0x400 - ((i + 0) << 8)) >> 4) * D_80136410) >> 10);
+                ((rsin(0x400 - ((i + 0) << 8)) >> 4) * D_80136410 >> 10);
             prim->x3 =
                 0x80 +
-                (((rcos(0x400 - ((i + 1) << 8)) >> 4) * D_80136410) >> 10);
+                ((rcos(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
             prim->y3 =
                 0x80 -
-                (((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_80136410) >> 10);
+                ((rsin(0x400 - ((i + 1) << 8)) >> 4) * D_80136410 >> 10);
+            sx = &D_800A01C0[i].x;
+            sy = &D_800A01C0[i].y;
+            ex = &D_800A01C0[i].w;
+            ey = &D_800A01C0[i].h;
             prim->u0 = *sx;
             prim->v0 = *sy;
             prim->u1 = *ex;
