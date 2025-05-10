@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rawgfx"
 	"os"
 	"strconv"
 
@@ -56,6 +57,7 @@ var handlers = func() map[string]assets.Handler {
 		layout.Handler,
 		paldef.Handler,
 		palette.Handler,
+		rawgfx.Handler,
 		rooms.Handler,
 		skip.Handler,
 		spritebanks.Handler,

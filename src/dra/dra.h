@@ -542,7 +542,6 @@ extern u8 aPbav_1[0x2000]; // TODO: extract file
 extern u8 aPbav_2[0x2000]; // TODO: extract file
 
 extern s16 g_ButtonMask[];
-extern u8 g_StageSelectOrder[];
 extern u16 D_800A04CC[];
 extern u32 D_800A04F8;
 extern s32 D_800A2438;
@@ -747,7 +746,6 @@ void HideAllBackgroundLayers(void);
 void DestroyAllPrimitives(void);
 s32 func_800EDAE4(void);
 DR_ENV* func_800EDB08(Primitive* prim);
-s32 AllocPrimitives(u8 type, s32 count);
 s32 func_800EDD9C(u8 primitives, s32 count);
 void DemoGameInit(s32 arg0);
 void FreePrimitives(s32 index);

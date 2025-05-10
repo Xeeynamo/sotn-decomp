@@ -66,7 +66,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			paletteNames[i] = filepath.Join(e.Name, fileName)
 		}
 	}
-	if err := os.Mkdir(filepath.Join(e.AssetDir, e.Name), 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(filepath.Join(e.AssetDir, e.Name), 0755); err != nil && !os.IsExist(err) {
 		return err
 	}
 	var eg errgroup.Group
@@ -130,9 +130,9 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		if len(palette) != paletteContainer.ColorsPerPalette {
 			return fmt.Errorf("palette at %s has %d colors, expected %d", actualFileName, len(palette), paletteContainer.ColorsPerPalette)
 		}
-		for i, c := range palette {
+		for _, c := range palette {
 			transparencyBit := 0
-			if c.A < 128 && i > 0 {
+			if c.A < 128 {
 				transparencyBit = 0x8000
 			}
 			data = append(data, uint16(int(c.R)>>3|int(c.G)>>3<<5|int(c.B)>>3<<10|transparencyBit))
