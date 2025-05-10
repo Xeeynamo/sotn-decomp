@@ -1825,7 +1825,7 @@ void HandleNowLoading(void) {
         break;
     }
 }
-
+#ifdef VERSION_PSP
 static u8 intro_left_sp[] = {
 #include "../dra/gen_intro_left_sp.h"
 };
@@ -1868,7 +1868,7 @@ static u_long* D_psp_0915FC10[] = {
     GFX_ENTRY(0x100, 0x320, 128, 128, intro_right_sp),
     GFX_TERMINATE(),
 };
-
+#endif
 void HandleVideoPlayback(void) {
     Primitive* prim;
     Primitive* prim2;
@@ -1880,6 +1880,7 @@ void HandleVideoPlayback(void) {
             if (!g_IsUsingCd) {
                 func_800EA538(0);
                 func_800EA5E4(0x1A);
+                #ifdef VERSION_PSP
                 D_psp_0915FBF8[3] =
                     (u_long*)GetLang(NULL, intro_left_fr, intro_left_sp,
                                      intro_left_ge, intro_left_it);
@@ -1892,6 +1893,7 @@ void HandleVideoPlayback(void) {
                 if (D_psp_0915FC10[3] != NULL) {
                     func_psp_091040A0(D_psp_0915FC10);
                 }
+                #endif
                 g_CdStep = CdStep_LoadInit;
                 g_LoadFile = CdFile_24;
                 SetCgiDisplayBuffer(0x140);
@@ -1923,6 +1925,17 @@ void HandleVideoPlayback(void) {
             prim = &g_PrimBuf[D_8013640C];
             temp = prim->r0 + 1;
             func_80107250(prim, temp);
+#ifndef VERSION_PSP
+            if (temp == 96) {
+                prim2 = prim->next;
+#if defined(VERSION_US)
+                prim2->drawMode = DRAW_HIDE;
+#elif defined(VERSION_HD)
+                prim2->drawMode = DRAW_DEFAULT;
+#endif
+            }
+#endif
+
             if (temp == 128) {
                 prim->p1 = 128;
                 g_GameStep++;
@@ -1952,7 +1965,11 @@ void HandleVideoPlayback(void) {
             break;
 
         case 5:
+        #ifdef VERSION_PSP
             if (!g_UseDisk || !g_IsUsingCd) {
+        #else
+            if (!g_IsUsingCd) {
+        #endif
                 D_8003C728 = 1;
                 g_CurrentStream = 1;
                 g_GameStep++;
@@ -1998,6 +2015,8 @@ void HandlePrologueEnd(void) {
 }
 
 void MainMenuHandler(void) {
+    s32 pad[0x40];
+
     switch (g_GameStep) {
     case 0:
         g_StageId = STAGE_SEL;
