@@ -543,12 +543,7 @@ def make_config_psx(ovl_path: str, version: str, options: Options):
     )
 
     # find well-known segment offsets
-    match_configs = []
-    for source_name in reference_overlays(version):
-        match_config = evaluate_segments(ovl_name, version, source_name)
-        match_configs.append(match_config)
-
-    matches = match_existing(ovl_path, match_configs)
+    matches = find_matches(ovl_name, version)
 
     known_segments = {}
     for doc in matches:
@@ -624,12 +619,7 @@ def make_config_psp(ovl_path: str, version: str):
     )
 
     # find well-known segment offsets
-    match_configs = []
-    for source_name in reference_overlays(version):
-        match_config = evaluate_segments(ovl_name, version, source_name)
-        match_configs.append(match_config)
-
-    matches = match_existing(ovl_path, match_configs)
+    matches = find_matches(ovl_name, version)
 
     known_segments = {}
     for doc in matches:
@@ -761,6 +751,24 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
     return pairs
 
 
+def find_matches(ovl_name: str, version: str) -> list[dict[str, any]]:
+    """
+    Find matching segments in ovl_name by evaluating segments returned
+    by `reference_overlays`
+
+    Returns:
+        a list of matching segments
+    """
+    match_configs = []
+    for source_name in reference_overlays(version):
+        match_config = evaluate_segments(ovl_name, version, source_name)
+        if match_config is not None:
+            match_configs.append(match_config)
+
+    ovl_path = make_ovl_path(ovl_name, version)
+    return match_existing(ovl_path, match_configs)
+
+
 def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
     """
     Creates a configuration file containing fingerprints for all segments
@@ -780,13 +788,20 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
     """
     build_dir = f"build/{version}"
     match_config_path = f"{build_dir}/match.{source_name}.yaml"
+
+    map_path = f"{build_dir}/{source_name}.map"
+    elf_path = f"{build_dir}/{source_name}.elf"
+
+    if not os.path.exists(map_path) or not os.path.exists(elf_path):
+        return None
+
     exec(
         "bin/mipsmatch",
         "--output",
         match_config_path,
         "evaluate",
-        f"{build_dir}/{source_name}.map",
-        f"{build_dir}/{source_name}.elf",
+        map_path,
+        elf_path,
     )
 
     # clean up any OVL_EXPORT prefixes that may be in symbols
@@ -797,7 +812,9 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
     return match_config_path
 
 
-def match_existing(ovl_path: str, match_config_paths: [str]) -> list[dict[str, any]]:
+def match_existing(
+    ovl_path: str, match_config_paths: list[str]
+) -> list[dict[str, any]]:
     """
     Uses the match config files created in `evaluate_segments` to finds
     any segment and symbols in `ovl_path`. Any number of `match_config_paths`
@@ -810,8 +827,12 @@ def match_existing(ovl_path: str, match_config_paths: [str]) -> list[dict[str, a
 
     Returns:
         a list of match documents containing the matched segment and
-        symbols within that segment as well as offsets for each.
+        symbols within that segment as well as offsets for each. If
+        the reference elf or map do not exist, this will return `None`
     """
+    if not match_config_paths:
+        return []
+
     match_stream = exec("bin/mipsmatch", "scan", *match_config_paths, ovl_path)
     return yaml.load_all(match_stream, Loader=yaml.SafeLoader)
 
@@ -1179,13 +1200,9 @@ def hydrate_psp_matching_symbols(
     match_configs = []
 
     # find well-known segment offsets
-    for source_name in reference_overlays(version):
-        match_config = evaluate_segments(ovl_name, version, source_name)
-        match_configs.append(match_config)
+    matches = find_matches(ovl_name, version)
 
     ovl_path = make_ovl_path(ovl_name, version)
-    matches = match_existing(ovl_path, match_configs)
-
     ovl_header = get_metrowerk_ovl_header(ovl_path)
     vram = ovl_header["vram"]
     target_name = os.path.basename(get_asm_path(splat_config)).upper()
@@ -1278,12 +1295,7 @@ def hydrate_psx_matching_symbols(
     match_configs = []
 
     # find well-known segment offsets
-    for source_name in reference_overlays(version):
-        match_config = evaluate_segments(ovl_name, version, source_name)
-        match_configs.append(match_config)
-
-    ovl_path = make_ovl_path(ovl_name, version)
-    matches = match_existing(ovl_path, match_configs)
+    matches = find_matches(ovl_name, version)
 
     vram = vram_offset_psx(ovl_name)
     target_name = os.path.basename(get_asm_path(splat_config)).upper()
