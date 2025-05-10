@@ -1155,6 +1155,24 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     s16 ex;
     s16 ey;
 
+    #ifdef VERSION_PSP
+    RECT sp48;
+
+    sp48.x = 0x740;
+    sp48.y = 0x80;
+    sp48.w = 0x40;
+    sp48.h = 0x40;
+    // These two lines load up the SOTN logo in the lower right.
+    // First line loads palettized image, second loads the palette
+    LoadImage(&sp48, (u_long*)&D_psp_09156F48);
+    func_89264CC(0x81D0, &D_psp_0915AF48, 1);
+    D_psp_0915E4E8[3] =
+        (u_long*)GetLang(NULL, loading_fr, loading_sp, loading_ge, loading_it);
+    if (D_psp_0915E4E8[3] != NULL) {
+        func_psp_091040A0(D_psp_0915E4E8);
+    }
+    #endif
+
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);

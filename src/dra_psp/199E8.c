@@ -1142,20 +1142,21 @@ static char* D_psp_0915E500[] = {"alucard ", "richter ", "maria   "};
 #endif
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
-    RECT sp48;
-    s32 horizontalWave;
-    s16 sy;
-    s16 sx;
-    s16 ey;
     Primitive* prim;
-    s16 verticalWave;
-    s16 posY;
-    s16 posX;
-    s16 angle;
-    s32 primIndex;
     s32 i;
-    s16 ex;
+    s16 posX;
+    s16 posY;
+    s16 angle;
+    s16 verticalWave;
+    s32 horizontalWave;
     s32 baseY;
+    s16 sx;
+    s16 sy;
+    s16 ex;
+    s16 ey;
+
+    #ifdef VERSION_PSP
+    RECT sp48;
 
     sp48.x = 0x740;
     sp48.y = 0x80;
@@ -1170,6 +1171,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     if (D_psp_0915E4E8[3] != NULL) {
         func_psp_091040A0(D_psp_0915E4E8);
     }
+    #endif
+
     switch (self->step) {
     case 0:
         self->primIndex = AllocPrimitives(PRIM_GT4, NOW_LOADING_PRIM_COUNT + 1);
