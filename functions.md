@@ -725,8 +725,8 @@
 | dra       | func_8010A3F0                            |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
 | lib       | func_psp_09253D58                        |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
 | no3       | func_pspeu_09237700                      |       61 |         10 |        | https://decomp.me/scratch/pG66O | 0.997 |
-| no4       | func_pspeu_0923D4A0                      |       61 |         10 |        |                                 |       |
 | no4       | GetLangAt                                |       61 |         10 |        |                                 |       |
+| no4       | func_pspeu_0923D4A0                      |       61 |         10 |        |                                 |       |
 | st0       | GetLangAt                                |       61 |         10 |        |                                 |       |
 | dra       | func_8012CC30                            |       61 |         12 |        |                                 |       |
 | dra       | 71830.rodata                             |       62 |          0 | Yes    |                                 |       |
