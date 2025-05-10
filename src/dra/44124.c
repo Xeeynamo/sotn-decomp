@@ -1149,7 +1149,6 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     s16 angle;
     s32 verticalWave;
     s32 horizontalWave;
-    s32 baseY;
     s16 sx;
     s16 sy;
     s16 ex;
@@ -1272,9 +1271,8 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         prim->x3 = ex + (posX + prim->u3) - 0x80;
         prim->y0 = posY + sy;
         prim->y1 = posY + ey;
-        baseY = 0x18;
-        prim->y2 = posY + (sy + baseY);
-        prim->y3 = posY + (ey + baseY);
+        prim->y2 = posY + 0x18 + sy ;
+        prim->y3 = posY + 0x18 + ey ;
         self->waveTable[i] += self->speed;
         prim = prim->next;
     }
