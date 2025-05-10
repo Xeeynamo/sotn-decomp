@@ -1305,20 +1305,27 @@ void HandleNowLoading(void) {
     s32 weaponId, weaponId1, weaponId2;
     NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
-    if (g_GameStep >= 4 && g_GameStep < 16) {
+    #ifdef VERSION_PSP
+    #define ANIM_LIMIT Play_PrepareNextStage
+    #else
+    #define ANIM_LIMIT Play_Default
+    #endif
+    if (g_GameStep >= ANIM_LIMIT && g_GameStep < Play_16) {
         AnimateNowLoading(nowLoadingModel, 0x40, 0x70, false);
     }
     switch (g_GameStep) {
-    case 0:
+    case Play_Reset:
         D_8003C730 = 0;
         D_80097924 = -1;
+        #ifdef VERSION_PSP
         D_8006C378 = -1;
+        #endif
         ClearBackbuffer();
         SetStageDisplayBuffer();
         g_GameStep++;
         g_GameEngineStep = Engine_Init;
         break;
-    case 1:
+    case Play_Init:
         if (g_pads[0].repeat & PAD_RIGHT) {
             PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 += 1;
@@ -1335,6 +1342,7 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4 -= 8;
         }
+        #ifdef VERSION_PSP
         if (g_pads[0].repeat & PAD_SELECT) {
             g_PlayableCharacter++;
             g_PlayableCharacter %= 3;
@@ -1345,13 +1353,28 @@ void HandleNowLoading(void) {
         if (D_800987B4 >= 0x3AU) {
             D_800987B4 = 0;
         }
+        #else
+        if (D_800987B4 >= 0x3F) {
+            D_800987B4 -= 0x3F;
+        }
+        if (D_800987B4 < 0) {
+            D_800987B4 += 0x3F;
+        }
+        #endif
         g_StageId = g_StageSelectOrder[D_800987B4];
+        #ifdef VERSION_PSP
         FntPrint("Player:%s\n", D_psp_0915E500[g_PlayableCharacter]);
+        #endif
         FntPrint("%02x (%02x)\n", D_800987B4, g_StageId);
         if (g_StageId == STAGE_MEMORYCARD) {
             FntPrint("memory card load\n");
+        #ifdef VERSION_PSP
         } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
             FntPrint("ending(type%d)\n", g_StageId - 0xF0);
+        #else
+        } else if (g_StageId == STAGE_ENDING) {
+            FntPrint("ending\n");
+        #endif
         } else if (g_StageId == STAGE_IWA_LOAD) {
             FntPrint("iwa load\n");
         } else if (g_StageId == STAGE_IGA_LOAD) {
@@ -1365,9 +1388,13 @@ void HandleNowLoading(void) {
             PlaySfx(SFX_START_SLAM_B);
             if (g_StageId == STAGE_MEMORYCARD) {
                 SetGameState(Game_MainMenu);
+            #ifdef VERSION_PSP
             } else if ((g_StageId >= 0xF0) && (g_StageId < 0xFF)) {
                 D_800978B4 = g_StageId - 0xF0;
-                SetGameState(Game_Ending);
+            #else
+            } else if (g_StageId == STAGE_ENDING) {
+            #endif
+            SetGameState(Game_Ending);
             } else {
                 STRCPY(g_Status.saveName, "alucard ");
                 g_DemoMode = Demo_None;
@@ -1397,7 +1424,7 @@ void HandleNowLoading(void) {
             }
         }
         break;
-    case 2:
+    case Play_PrepareDemo:
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             if (g_PlayableCharacter == PLAYER_MARIA) {
                 func_8932FD4(2);
@@ -1412,7 +1439,7 @@ void HandleNowLoading(void) {
         g_GameStep = 0x64;
         break;
 
-    case 0x64:
+    case Gameover_Init_Alt:
         if (!func_8933000()) {
             break;
         }
@@ -1469,7 +1496,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep = 3;
         break;
-    case 3:
+    case Play_Default:
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             func_8933130(1);
         } else {
@@ -1478,7 +1505,7 @@ void HandleNowLoading(void) {
         g_GameStep = 0x65;
         break;
 
-    case 0x65:
+    case Gameover_AllocResources_Alt:
         if (!func_893315C()) {
             break;
         }
@@ -1502,7 +1529,7 @@ void HandleNowLoading(void) {
         func_8932AD4(g_StageId);
         g_GameStep = 4;
         break;
-    case 4:
+    case Play_PrepareNextStage:
         if (!func_8932B74(g_GameStep, 5)) {
             break;
         }
@@ -1513,7 +1540,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 5:
+    case Play_LoadStageChr:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1525,14 +1552,14 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 6:
+    case Play_WaitStageChr:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageSfx;
         }
         g_GameStep++;
         break;
-    case 7:
+    case Play_LoadStageSfx:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1547,14 +1574,14 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 8:
+    case Play_WaitStageSfx:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StagePrg;
         }
         g_GameStep++;
         break;
-    case 9:
+    case Play_LoadStagePrg:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1570,7 +1597,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 10:
+    case Play_WaitStagePrg:
         if (g_DemoMode == Demo_None) {
             InitStatsAndGear(0);
         }
@@ -1607,7 +1634,7 @@ void HandleNowLoading(void) {
             g_GameStep++;
         }
         break;
-    case 11:
+    case GameStep_Unk11:
         if (!func_8932D34(0)) {
             break;
         }
@@ -1651,7 +1678,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 12:
+    case GameStep_Unk12:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Weapon1;
@@ -1667,7 +1694,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case 13:
+    case GameStep_Unk13:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1687,7 +1714,7 @@ void HandleNowLoading(void) {
         CheckWeaponCombo();
         g_GameStep++;
         break;
-    case 14:
+    case GameStep_Unk14:
         g_Servant = func_800E6300();
         if (g_Servant == 0) {
             g_GameStep += 2;
@@ -1701,7 +1728,7 @@ void HandleNowLoading(void) {
         func_8932E78(g_Servant - 1);
         g_GameStep++;
         break;
-    case 15:
+    case GameStep_Unk15:
         if (!func_8932EA4()) {
             break;
         }
@@ -1715,7 +1742,7 @@ void HandleNowLoading(void) {
         g_ServantLoaded = g_Servant;
         g_GameStep++;
         break;
-    case 16:
+    case Play_16:
         AnimateNowLoading(nowLoadingModel, 64, 112, true);
         if (D_8003C730 != 4) {
             if (g_StageId > 0x34) {
