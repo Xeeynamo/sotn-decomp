@@ -591,11 +591,11 @@ typedef enum {
     Play_LoadStagePrg,
     // Wait until the previous operation is complete
     Play_WaitStagePrg,
-    GameStep_Unk11,
-    GameStep_Unk12,
-    GameStep_Unk13,
-    GameStep_Unk14,
-    GameStep_Unk15,
+    Play_Unk11,
+    Play_Unk12,
+    Play_Unk13,
+    Play_Unk14,
+    Play_Unk15,
     // Used by the ST0 prologue scroll and now loading screen
     Play_16,
 

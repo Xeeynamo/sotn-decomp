@@ -1687,7 +1687,7 @@ void HandleNowLoading(void) {
             g_GameStep++;
         }
         break;
-    case GameStep_Unk11:
+    case Play_Unk11:
 #ifdef VERSION_PSP
         if (!func_8932D34(0)) {
             break;
@@ -1733,7 +1733,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case GameStep_Unk12:
+    case Play_Unk12:
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_Weapon1;
@@ -1749,7 +1749,7 @@ void HandleNowLoading(void) {
         }
         g_GameStep++;
         break;
-    case GameStep_Unk13:
+    case Play_Unk13:
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1769,7 +1769,7 @@ void HandleNowLoading(void) {
         CheckWeaponCombo();
         g_GameStep++;
         break;
-    case GameStep_Unk14:
+    case Play_Unk14:
         g_Servant = func_800E6300();
         if (g_Servant == 0) {
             g_GameStep += 2;
@@ -1785,7 +1785,7 @@ void HandleNowLoading(void) {
 #endif
         g_GameStep++;
         break;
-    case GameStep_Unk15:
+    case Play_Unk15:
 #ifdef VERSION_PSP
         if (!func_8932EA4()) {
             break;
