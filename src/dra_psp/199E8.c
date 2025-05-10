@@ -712,15 +712,9 @@ void HandlePlay(void) {
                 break;
             }
         } else {
-#ifndef VERSION_PSP
-            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StagePrg) < 0) {
                 break;
             }
-#else
-            if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
-                break;
-            }
-#endif
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
                 LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) <
                     0) {
@@ -1283,15 +1277,13 @@ void InitializeServant(InitializeMode mode) {
 
 void func_800E6250(void) {
     if (g_Servant != 0) {
-        while (func_psp_090FAB30(g_Servant - 1, SimFileType_FamiliarPrg, true))
+        while (LOADFILESIM_PSPALT(g_Servant - 1, SimFileType_FamiliarPrg))
             ;
-        while (func_psp_090FAB30(g_Servant - 1, SimFileType_FamiliarChr, true))
+        while (LOADFILESIM_PSPALT(g_Servant - 1, SimFileType_FamiliarChr))
             ;
-        while (func_psp_090FAB30(
-            ((g_Servant + 2) * 2) + 0x8000, SimFileType_Vh, true))
+        while (LOADFILESIM_PSPALT((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh))
             ;
-        while (func_psp_090FAB30(
-            ((g_Servant + 2) * 2) + 0x8001, SimFileType_Vb, true))
+        while (LOADFILESIM_PSPALT((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb))
             ;
     }
 }
@@ -1433,26 +1425,25 @@ void HandleNowLoading(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_GameChr;
         } else {
-            if (g_StageId == STAGE_ST0 ||
-                g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
                 if (g_PlayableCharacter == PLAYER_MARIA) {
-                    if (func_psp_090FAB30(5, SimFileType_System, true) < 0) {
+                    if (LOADFILESIM_PSPALT(5, SimFileType_System) < 0) {
                         break;
                     }
-                    if (func_psp_090FAB30(0x8014, SimFileType_Vh, true) < 0) {
+                    if (LOADFILESIM_PSPALT(0x8014, SimFileType_Vh) < 0) {
                         break;
                     }
-                    if (func_psp_090FAB30(0x8015, SimFileType_Vb, true) < 0) {
+                    if (LOADFILESIM_PSPALT(0x8015, SimFileType_Vb) < 0) {
                         break;
                     }
                 } else {
-                    if (func_psp_090FAB30(5, SimFileType_System, true) < 0) {
+                    if (LOADFILESIM_PSPALT(5, SimFileType_System) < 0) {
                         break;
                     }
-                    if (func_psp_090FAB30(0x8002, SimFileType_Vh, true) < 0) {
+                    if (LOADFILESIM_PSPALT(0x8002, SimFileType_Vh) < 0) {
                         break;
                     }
-                    if (func_psp_090FAB30(0x8003, SimFileType_Vb, true) < 0) {
+                    if (LOADFILESIM_PSPALT(0x8003, SimFileType_Vb) < 0) {
                         break;
                     }
                     if (g_StageId == STAGE_ST0) {
@@ -1466,13 +1457,13 @@ void HandleNowLoading(void) {
                     }
                 }
             } else {
-                if (func_psp_090FAB30(4, SimFileType_System, true) < 0) {
+                if (LOADFILESIM_PSPALT(4, SimFileType_System) < 0) {
                     break;
                 }
-                if (func_psp_090FAB30(0x8000, SimFileType_Vh, true) < 0) {
+                if (LOADFILESIM_PSPALT(0x8000, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (func_psp_090FAB30(0x8001, SimFileType_Vb, true) < 0) {
+                if (LOADFILESIM_PSPALT(0x8001, SimFileType_Vb) < 0) {
                     break;
                 }
             }
@@ -1499,11 +1490,11 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-                if (func_psp_090FAB30(13, SimFileType_System, true) < 0) {
+                if (LOADFILESIM_PSPALT(13, SimFileType_System) < 0) {
                     break;
                 }
             } else {
-                if (func_psp_090FAB30(1, SimFileType_System, true) < 0) {
+                if (LOADFILESIM_PSPALT(1, SimFileType_System) < 0) {
                     break;
                 }
             }
@@ -1529,7 +1520,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (func_psp_090FAB30(0, SimFileType_StageChr, true) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StageChr) < 0) {
                 break;
             }
         }
@@ -1548,10 +1539,10 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (func_psp_090FAB30(0, SimFileType_Vh, true) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vh) < 0) {
                 break;
             }
-            if (func_psp_090FAB30(0, SimFileType_Vb, true) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vb) < 0) {
                 break;
             }
         }
@@ -1570,7 +1561,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StagePrg) < 0) {
                 break;
             }
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
@@ -1638,7 +1629,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            if (func_psp_090FAB30(weaponId, SimFileType_Weapon0Prg, true) < 0) {
+            if (LOADFILESIM_PSPALT(weaponId, SimFileType_Weapon0Prg) < 0) {
                 break;
             }
             g_EquippedWeaponIds[0] = weaponId;
@@ -1652,7 +1643,7 @@ void HandleNowLoading(void) {
             if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
                 weaponId = g_EquipDefs[0xD8].weaponId;
             }
-            if (func_psp_090FAB30(weaponId, SimFileType_Weapon1Prg, true) < 0) {
+            if (LOADFILESIM_PSPALT(weaponId, SimFileType_Weapon1Prg) < 0) {
                 break;
             }
             g_EquippedWeaponIds[1] = weaponId;
@@ -1685,12 +1676,12 @@ void HandleNowLoading(void) {
             pfnWeapon = D_8017D000.LoadWeaponPalette;
             pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else {
-            if (func_psp_090FAB30(
-                    g_EquippedWeaponIds[0], SimFileType_Weapon0Chr, true) < 0) {
+            if (LOADFILESIM_PSPALT(
+                    g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) < 0) {
                 break;
             }
-            if (func_psp_090FAB30(
-                    g_EquippedWeaponIds[1], SimFileType_Weapon1Chr, true) < 0) {
+            if (LOADFILESIM_PSPALT(
+                    g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) < 0) {
                 break;
             }
         }

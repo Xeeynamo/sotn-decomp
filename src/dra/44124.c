@@ -712,15 +712,9 @@ void HandlePlay(void) {
                 break;
             }
         } else {
-#ifndef VERSION_PSP
-            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StagePrg) < 0) {
                 break;
             }
-#else
-            if (func_psp_090FAB30(0, SimFileType_StagePrg, true) < 0) {
-                break;
-            }
-#endif
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
                 LoadFileSim(g_StagesLba[g_StageId].seqIdx, SimFileType_Seq) <
                     0) {
@@ -1283,13 +1277,13 @@ void InitializeServant(InitializeMode mode) {
 
 void func_800E6250(void) {
     if (g_Servant != 0) {
-        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarPrg))
+        while (LOADFILESIM_PSPALT(g_Servant - 1, SimFileType_FamiliarPrg))
             ;
-        while (LoadFileSim(g_Servant - 1, SimFileType_FamiliarChr))
+        while (LOADFILESIM_PSPALT(g_Servant - 1, SimFileType_FamiliarChr))
             ;
-        while (LoadFileSim((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh))
+        while (LOADFILESIM_PSPALT((g_Servant + 2) * 2 + 0x8000, SimFileType_Vh))
             ;
-        while (LoadFileSim((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb))
+        while (LOADFILESIM_PSPALT((g_Servant + 2) * 2 + 0x8001, SimFileType_Vb))
             ;
     }
 }
@@ -1399,8 +1393,7 @@ void HandleNowLoading(void) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_GameChr;
         } else {
-            if (g_StageId == STAGE_ST0 ||
-                g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
                 if (LoadFileSim(5, SimFileType_System) < 0) {
                     break;
                 }
