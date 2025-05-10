@@ -673,7 +673,7 @@ extern s16 D_800B08A8[];
 
 extern s16 g_CdVolumeTable[];
 extern struct SeqData g_SeqInfo[];
-extern struct XaMusicConfig g_XaMusicConfigs[563];
+extern struct XaMusicConfig g_XaMusicConfigs[];
 extern s32 g_DebugEnabled;
 extern s32 D_800BD1C4;
 extern s32 g_VabAddrs[6];
@@ -700,7 +700,7 @@ extern const char aRgb02x02x02x;
 extern const char aSp03x;
 extern const char aSp1603x;
 extern const char aTile03x;
-extern Unkstruct_800BF554 g_SfxData[737];
+extern Unkstruct_800BF554 g_SfxData[];
 
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
