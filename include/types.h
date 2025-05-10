@@ -19,6 +19,7 @@ typedef unsigned int size_t;
 #define INT16_MAX (0x7FFF)
 #else
 
+#include <sys/types.h>
 typedef unsigned char u_char;
 typedef unsigned short u_short;
 
@@ -32,12 +33,10 @@ typedef unsigned long u_long;
 #endif
 
 #elif defined(__APPLE__)
-#include <sys/types.h>
 #include <limits.h>
 #include <sys/syslimits.h>
 
 #elif defined(__linux__)
-#include <sys/types.h>
 #include <limits.h>
 #include <linux/limits.h>
 typedef unsigned long u_long;
