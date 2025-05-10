@@ -5,13 +5,13 @@
 | dra       | func_801072BC                            |        7 |          1 |        |                                 |       |
 | dra       | func_801072DC                            |        7 |          1 |        |                                 |       |
 | dra       | func_8011EDA0                            |        7 |          1 |        |                                 |       |
+| dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
+| dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
 | dra       | DebugUpdate                              |        7 |          1 |        |                                 |       |
 | dra       | LoadFileSim                              |        7 |          1 |        |                                 |       |
 | dra       | SetReverbDepth                           |        7 |          1 |        |                                 |       |
 | dra       | MenuSoundConfigDraw                      |        7 |          1 |        |                                 |       |
-| dra       | nullsub_9                                |        7 |          1 |        |                                 |       |
 | dra       | SetupEvents                              |        7 |          1 |        |                                 |       |
-| dra       | func_psp_090F6B20                        |        7 |          1 |        |                                 |       |
 | dra       | func_800F66BC                            |        7 |          1 |        |                                 |       |
 | dra       | func_psp_090F1CE0                        |        7 |          1 |        |                                 |       |
 |           | unused_339C                              |        7 |          1 |        |                                 |       |
@@ -46,6 +46,7 @@
 |           | unused_1560                              |        9 |          1 |        |                                 |       |
 | no4       | func_pspeu_0923D0B8                      |        9 |          1 |        |                                 |       |
 | dra       | func_8010E0B8                            |       11 |          1 |        |                                 |       |
+| dra       | ClearBackbuffer                          |       11 |          1 |        |                                 |       |
 | dra       | func_psp_090DFC68                        |       11 |          1 |        |                                 |       |
 | dra       | func_psp_090DFC80                        |       11 |          1 |        |                                 |       |
 | dra       | CdSoundCommandQueueEmpty                 |       11 |          1 |        |                                 |       |
@@ -55,7 +56,6 @@
 | dra       | func_psp_09141860                        |       11 |          1 |        |                                 |       |
 | dra       | MemcardClose                             |       11 |          1 |        |                                 |       |
 | dra       | MemcardInfoInit                          |       11 |          1 |        |                                 |       |
-| dra       | ClearBackbuffer                          |       11 |          1 |        |                                 |       |
 | dra       | func_800FAC30                            |       11 |          1 |        |                                 |       |
 | lib       | func_psp_09264E08                        |       11 |          1 |        |                                 |       |
 | dra       | func_800EB4F8                            |       13 |          1 |        |                                 |       |
@@ -70,8 +70,8 @@
 | dra       | func_psp_090E4C68                        |       15 |          1 |        |                                 |       |
 | dra       | func_801025F4                            |       15 |          1 |        |                                 |       |
 | dra       | SetPlayerStep                            |       15 |          1 |        |                                 |       |
-| dra       | func_800F97DC                            |       15 |          1 |        |                                 |       |
 | dra       | SetGameState                             |       15 |          1 |        |                                 |       |
+| dra       | func_800F97DC                            |       15 |          1 |        |                                 |       |
 | dra       | func_800FAC0C                            |       15 |          1 |        |                                 |       |
 | maria     | MarSetStep                               |       15 |          1 |        |                                 |       |
 | ric       | RicSetStep                               |       15 |          1 |        |                                 |       |
@@ -112,7 +112,6 @@
 | dra       | 62EB8.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra       | 84B88.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra       | 8A0A4.rodata                             |       18 |          0 | Yes    |                                 |       |
-| dra       | 19AB0.rodata                             |       18 |          0 | Yes    |                                 |       |
 | lib       | e_life_up.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib       | unk_3B53C.rodata                         |       18 |          0 | Yes    |                                 |       |
 | no4       | e_skeleton_ape.rodata                    |       18 |          0 | Yes    |                                 |       |
@@ -184,7 +183,6 @@
 | dra       | func_800F223C                            |       21 |          2 |        |                                 |       |
 | dra       | func_8010FAF4                            |       21 |          2 |        |                                 |       |
 | dra       | func_800F9DD0                            |       21 |          3 |        |                                 |       |
-| dra       | play.rodata                              |       22 |          0 | Yes    |                                 |       |
 | chi       | en_breakable_wall.rodata                 |       22 |          0 | Yes    |                                 |       |
 | dra       | func_psp_090E4C18                        |       22 |          2 |        |                                 |       |
 | dra       | DestroyAllPrimitives                     |       22 |          3 |        |                                 |       |
@@ -543,7 +541,6 @@
 | ric       | RicSetSlide                              |       43 |          8 |        |                                 |       |
 | dra       | DebugInputWait                           |       43 |          9 |        |                                 |       |
 | dra       | PlayerStepFall                           |       43 |         11 |        |                                 |       |
-| dra       | loading.rodata                           |       44 |          0 | Yes    |                                 |       |
 | chi       | en_venus_weed.rodata                     |       44 |          0 | Yes    |                                 |       |
 | dra       | SetVolumeCommand22_23                    |       44 |          3 |        |                                 |       |
 | st0       | CollectGold                              |       44 |          3 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
@@ -636,8 +633,8 @@
 | ric       | RicSetSlideKick                          |       51 |          8 |        |                                 |       |
 | dra       | func_psp_09103E68                        |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra       | func_psp_091048B8                        |       51 |         10 |        |                                 |       |
-| dra       | GetLang                                  |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090F6368                        |       51 |         10 |        | https://decomp.me/scratch/MQBmB | 1.0   |
+| dra       | GetLang                                  |       51 |         10 |        |                                 |       |
 | dra       | func_psp_090EAF08                        |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria     | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric       | GetLang                                  |       51 |         10 |        |                                 |       |
@@ -842,6 +839,7 @@
 | lib       | PrimToggleVisibility                     |       71 |          9 |        | https://decomp.me/scratch/8l5Dr | 1.0   |
 | dra       | UpdateCapePalette                        |       71 |         10 |        |                                 |       |
 | dra       | BatFormFinished                          |       71 |         11 |        |                                 |       |
+| dra       | game_handlers.rodata                     |       72 |          0 | Yes    |                                 |       |
 | dra       | func_800FAF44                            |       72 |          5 |        |                                 |       |
 | dra       | func_8011B480                            |       72 |          7 |        | https://decomp.me/scratch/UO5p1 | 0.992 |
 | lib       | PlayerIsWithinHitbox                     |       72 |          7 |        | https://decomp.me/scratch/2JQMy | 0.997 |
@@ -1000,8 +998,8 @@
 | no3       | func_pspeu_09249738                      |       93 |         19 |        |                                 |       |
 | lib       | func_psp_0924C6C0                        |       94 |          8 |        |                                 |       |
 | chi       | func_pspeu_092469A0                      |       95 |          1 |        | https://decomp.me/scratch/DhW59 | 0.859 |
-| lib       | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/YcR3D | 0.996 |
-| no4       | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/YcR3D | 0.996 |
+| lib       | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
+| no4       | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
 | maria     | MarEntitySlideKick                       |       95 |          9 |        |                                 |       |
 | ric       | RicEntitySlideKick                       |       95 |          9 |        |                                 |       |
 | lib       | func_us_801B3FB4                         |       95 |          9 |        |                                 |       |
@@ -1451,7 +1449,7 @@
 | dra       | func_8013136C                            |      245 |         26 | Yes    |                                 |       |
 | dra       | LoadFileSimToMem                         |      245 |         39 | Yes    |                                 |       |
 | dra       | CheckHellfireInput                       |      246 |         41 |        |                                 |       |
-| no4       | func_pspeu_09237BE8                      |      247 |          1 |        |                                 |       |
+| no4       | func_pspeu_09237BE8                      |      247 |          1 |        | https://decomp.me/scratch/Nzq8O | 1.0   |
 | dra       | InitRenderer                             |      247 |         31 |        |                                 |       |
 | no4       | func_pspeu_092391D8                      |      248 |         34 |        |                                 |       |
 | lib       | EntityCandleTable                        |      249 |         35 |        |                                 |       |
