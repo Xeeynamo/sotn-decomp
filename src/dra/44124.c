@@ -673,7 +673,7 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_LoadOvlIdx = g_StageId;
         } else {
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             if (!func_8932B74()) {
                 break;
             }
@@ -1301,9 +1301,8 @@ s32 func_800E6300(void) {
 }
 
 void HandleNowLoading(void) {
-    void (*pfnWeapon)(u8);
-    s8 var_a0;
-    s32 weaponId;
+    void (*pfnWeapon)(s32);
+    s32 weaponId, weaponId1, weaponId2;
     NowLoadingModel* nowLoadingModel = &g_NowLoadingModel;
 
     if (g_GameStep >= 3 && g_GameStep < 16) {
