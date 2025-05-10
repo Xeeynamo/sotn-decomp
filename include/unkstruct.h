@@ -4,16 +4,6 @@
 #ifndef UNKSTRUCT_H
 #define UNKSTRUCT_H
 
-typedef struct {
-    /* 0x00 */ u8 vabid;
-    /* 0x01 */ u8 prog;
-    /* 0x02 */ u8 note;
-    /* 0x03 */ s8 volume;
-    /* 0x04 */ u8 mode;
-    /* 0x05 */ u8 tone;
-    /* 0x06 */ u8 unk6;
-} Unkstruct_800BF554; // size = 0x7
-
 #define MAKE_PAL_OP(kind, freq) (u_long*)((kind) | ((freq) << 0x10))
 #define GET_PAL_OP_KIND(x) (LOHU(x))
 #define GET_PAL_OP_FREQ(x) (HIH(x))

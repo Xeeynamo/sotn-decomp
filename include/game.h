@@ -1339,6 +1339,7 @@ typedef struct Collider {
     /* 0x20 */ s32 unk20; // Bottom edge of queried tile collision
 } Collider;               /* size=0x24 */
 
+// referenced in tools/sotn-assets/assets/xamusicconfig/handler.go
 typedef struct XaMusicConfig {
     u32 cd_addr;
     s32 unk228;
@@ -1348,6 +1349,17 @@ typedef struct XaMusicConfig {
     u8 unk22f;
     u32 unk230;
 } XaMusicConfig;
+
+// referenced in tools/sotn-assets/assets/sfxconfig/handler.go
+typedef struct {
+    /* 0x00 */ u8 vabid;
+    /* 0x01 */ u8 prog;
+    /* 0x02 */ u8 note;
+    /* 0x03 */ s8 volume;
+    /* 0x04 */ u8 mode;
+    /* 0x05 */ u8 tone;
+    /* 0x06 */ u8 unk6;
+} Unkstruct_800BF554; // size = 0x7
 
 typedef struct {
     /* 0x00 */ const char* name;
