@@ -1649,41 +1649,53 @@ void HandleNowLoading(void) {
         g_EquippedWeaponIds[0] = -1;
         g_EquippedWeaponIds[1] = -1;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-            g_GameStep = 0x10;
+            g_GameStep = Play_16;
         } else {
-            g_CdStep = CdStep_LoadInit;
-            g_LoadFile = CdFile_Weapon0;
-            weaponId = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
-            if (weaponId == 0xFF) {
-                weaponId = 1;
-            }
-            if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
-                weaponId = g_EquipDefs[0xD8].weaponId;
-                weaponId1 = weaponId;
-                weaponId2 = weaponId;
-            } else {
-                weaponId1 =
-                    g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
-                if (weaponId1 == 0xFF) {
-                    weaponId1 = 1;
+            #ifdef VERSION_PSP
+            if(1){
+            #else
+            if (g_UseDisk) {
+            #endif
+                g_CdStep = CdStep_LoadInit;
+                g_LoadFile = CdFile_Weapon0;
+                weaponId = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
+                if (weaponId == 0xFF) {
+                    weaponId = 1;
                 }
-                weaponId2 =
-                    g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
-                weaponId2 = weaponId2 == 0xFF ? 1 : weaponId2;
+                if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+                    weaponId = g_EquipDefs[0xD8].weaponId;
+                #ifdef VERSION_PSP
+                    weaponId1 = weaponId;
+                    weaponId2 = weaponId;
+                } else {
+                    weaponId1 =
+                        g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].weaponId;
+                    if (weaponId1 == 0xFF) {
+                        weaponId1 = 1;
+                    }
+                    weaponId2 =
+                        g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].weaponId;
+                    weaponId2 = weaponId2 == 0xFF ? 1 : weaponId2;
+                #endif
+                }
+                g_EquippedWeaponIds[0] = weaponId;
+                #ifdef VERSION_PSP
+                func_8932CEC(0, weaponId1);
+                func_8932CEC(1, weaponId2);
+                #endif
             }
-            g_EquippedWeaponIds[0] = weaponId;
-            func_8932CEC(0, weaponId1);
-            func_8932CEC(1, weaponId2);
             g_GameStep++;
         }
         break;
     case GameStep_Unk11:
+        #ifdef VERSION_PSP
         if (!func_8932D34(0)) {
             break;
         }
         if (!func_8932D34(1)) {
             break;
         }
+        #endif
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1745,12 +1757,12 @@ void HandleNowLoading(void) {
             pfnWeapon = D_8017D000.LoadWeaponPalette;
             pfnWeapon(g_EquipDefs[g_EquippedWeaponIds[1]].palette);
         } else {
-            if (LOADFILESIM_PSPALT(
-                    g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) < 0) {
+            if (LOADFILESIM_PSPALT(g_EquippedWeaponIds[0], SimFileType_Weapon0Chr) <
+                0) {
                 break;
             }
-            if (LOADFILESIM_PSPALT(
-                    g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) < 0) {
+            if (LOADFILESIM_PSPALT(g_EquippedWeaponIds[1], SimFileType_Weapon1Chr) <
+                0) {
                 break;
             }
         }
@@ -1768,13 +1780,17 @@ void HandleNowLoading(void) {
             g_LoadFile = CdFile_ServantChr;
             g_LoadOvlIdx = g_Servant - 1;
         }
+        #ifdef VERSION_PSP
         func_8932E78(g_Servant - 1);
+        #endif
         g_GameStep++;
         break;
     case GameStep_Unk15:
+        #ifdef VERSION_PSP
         if (!func_8932EA4()) {
             break;
         }
+        #endif
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1787,8 +1803,12 @@ void HandleNowLoading(void) {
         break;
     case Play_16:
         AnimateNowLoading(nowLoadingModel, 64, 112, true);
+        #ifdef VERSION_PSP
         if (D_8003C730 != 4) {
-            if (g_StageId > 0x34) {
+        #else
+        if(1){
+        #endif
+            if ((s32)g_StageId > 0x34) {
                 D_8006C374 = g_StagesLba[g_StageId].unk28;
             } else {
                 D_8006C374 =
