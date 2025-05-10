@@ -1259,7 +1259,6 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     prim = &g_PrimBuf[self->primIndex];
     verticalWave = self->verticalWave;
     horizontalWave = self->horizontalWave;
-    baseY = posY + 0x18;
     for (i = 0; i < NOW_LOADING_PRIM_COUNT; i++) {
         angle = self->waveTable[i];
         sy = -(rsin(angle) >> 5) * verticalWave / 0x100;
@@ -1273,6 +1272,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         prim->x3 = ex + (posX + prim->u3) - 0x80;
         prim->y0 = posY + sy;
         prim->y1 = posY + ey;
+        baseY = posY + 0x18;
         prim->y2 = baseY + sy;
         prim->y3 = baseY + ey;
         self->waveTable[i] += self->speed;
