@@ -7,6 +7,13 @@
 #include "../get_lang.h"
 #endif
 
+// Function used in a good number of places throughout
+#ifdef VERSION_PSP
+#define LOADFILESIM_PSPALT(F,T) func_psp_090FAB30(F,T,true)
+#else
+#define LOADFILESIM_PSPALT(F,T) LoadFileSim(F,T)
+#endif
+
 void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
@@ -666,30 +673,20 @@ void HandlePlay(void) {
             g_LoadFile = CdFile_StageSfx;
             g_LoadOvlIdx = g_StageId;
         } else {
-#ifndef VERSION_PSP
-            if (LoadFileSim(0, SimFileType_StageChr) < 0) {
-                break;
-            }
-            if (LoadFileSim(0, SimFileType_Vh) < 0) {
-                break;
-            }
-            if (LoadFileSim(0, SimFileType_Vb) < 0) {
-                break;
-            }
-#else
+            #ifdef VERSION_PSP
             if (!func_8932B74()) {
                 break;
             }
-            if (func_psp_090FAB30(0, SimFileType_StageChr, true) < 0) {
-                break;
-            }
-            if (func_psp_090FAB30(0, SimFileType_Vh, true) < 0) {
-                break;
-            }
-            if (func_psp_090FAB30(0, SimFileType_Vb, true) < 0) {
-                break;
-            }
 #endif
+            if (LOADFILESIM_PSPALT(0, SimFileType_StageChr) < 0) {
+                break;
+            }
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vh) < 0) {
+                break;
+            }
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vb) < 0) {
+                break;
+            }
         }
         g_GameStep++;
         break;
