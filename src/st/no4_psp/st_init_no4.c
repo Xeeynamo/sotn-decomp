@@ -107,6 +107,8 @@ static u8* cutscene_data_ferryman_right_unused;
 u8* cutscene_data_ferryman_left;
 static u8* cutscene_data_ferryman_left_unused;
 
+#include "../get_lang_at.h"
+
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
     E_ID(ID_12) = 0x12;
@@ -192,28 +194,28 @@ void InitEntityIds(void) {
 
 void func_psp_09254120(void) {
     cutscene_data_ferryman_right = GetLangAt(
-        0, (u8*)cutscene_data_ferryman_right_en,
+        NULL, (u8*)cutscene_data_ferryman_right_en,
         (u8*)cutscene_data_ferryman_right_fr,
         (u8*)cutscene_data_ferryman_right_sp,
         (u8*)cutscene_data_ferryman_right_ge,
         (u8*)cutscene_data_ferryman_right_it);
 
     cutscene_data_ferryman_right_unused = GetLangAt(
-        0, (u8*)cutscene_data_ferryman_right_en,
+        NULL, (u8*)cutscene_data_ferryman_right_en,
         (u8*)cutscene_data_ferryman_right_fr,
         (u8*)cutscene_data_ferryman_right_sp,
         (u8*)cutscene_data_ferryman_right_ge,
         (u8*)cutscene_data_ferryman_right_it);
 
     cutscene_data_ferryman_left = GetLangAt(
-        0, (u8*)cutscene_data_ferryman_left_en,
+        NULL, (u8*)cutscene_data_ferryman_left_en,
         (u8*)cutscene_data_ferryman_left_fr,
         (u8*)cutscene_data_ferryman_left_sp,
         (u8*)cutscene_data_ferryman_left_ge,
         (u8*)cutscene_data_ferryman_left_it);
 
     cutscene_data_ferryman_left_unused = GetLangAt(
-        0, (u8*)cutscene_data_ferryman_left_en,
+        NULL, (u8*)cutscene_data_ferryman_left_en,
         (u8*)cutscene_data_ferryman_left_fr,
         (u8*)cutscene_data_ferryman_left_sp,
         (u8*)cutscene_data_ferryman_left_ge,

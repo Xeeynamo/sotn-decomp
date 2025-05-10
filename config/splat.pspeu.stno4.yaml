@@ -43,7 +43,6 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, no4/e_bat]
-      - [0x4A0, c, no4_psp/lang]
       - [0x568, c, no4_psp/st_init_no4]
       - [0xA98, c, no4_psp/e_breakable]
       - [0xEA0, c, no4/st_debug]
