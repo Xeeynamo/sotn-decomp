@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include "servant.h"
 
 #ifdef VERSION_PSP
 #include "../get_lang.h"
@@ -1068,6 +1069,9 @@ void HandleGameOver(void) {
         if (temp) {
             break;
         }
+        #ifdef VERSION_PSP
+        func_891AE68();
+        #endif
         FreePrimitives(D_8013640C);
         g_GameStep++;
         break;
@@ -1077,6 +1081,9 @@ void HandleGameOver(void) {
     case Gameover_11:
     case Gameover_11_Alt:
         if (g_GameStep == Gameover_11_Alt) {
+            #ifdef VERSION_PSP
+            func_892A998();
+            #endif
             SetGameState(Game_Title);
         } else if (g_StageId == STAGE_ST0) {
             SetGameState(Game_PrologueEnd);
@@ -1087,15 +1094,52 @@ void HandleGameOver(void) {
     }
 }
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "dra.h"
-#include "dra_bss.h"
-#include "servant.h"
-
-RECT D_800A0240 = {0x0340, 0x0180, 64, 64};
+static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
 // BSS
 extern NowLoadingModel g_NowLoadingModel;
+
+#ifdef VERSION_PSP
+void func_8932CEC(bool, s8);
+extern s32 D_8C630D4;
+extern u8 D_8D2FC40;
+extern u8 D_8D3FC40;
+extern u8 D_8D41C40;
+extern u8 D_psp_091463F8;
+extern u8 D_psp_09146400;
+extern u8 D_psp_09146401;
+
+u8 D_psp_09156F48[] = {
+#include "../dra/gen_D_psp_09156F48.h"
+};
+u16 D_psp_0915AF48[] = {
+#include "../dra/gen_D_psp_0915AF48.h"
+};
+
+static u8 loading_fr[] = {
+#include "../dra/gen_loading_fr.h"
+};
+
+static u8 loading_it[] = {
+#include "../dra/gen_loading_it.h"
+};
+
+static u8 loading_ge[] = {
+#include "../dra/gen_loading_ge.h"
+};
+
+static u8 loading_sp[] = {
+#include "../dra/gen_loading_sp.h"
+};
+
+static u_long* D_psp_0915E4E8[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x180, 0x2A0, 128, 128, loading_sp),
+    GFX_TERMINATE(),
+};
+
+static char* D_psp_0915E500[] = {"alucard ", "richter ", "maria   "};
+#endif
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     Primitive* prim;

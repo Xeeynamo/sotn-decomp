@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
+#include "servant.h"
 
 #ifdef VERSION_PSP
 #include "../get_lang.h"
@@ -1068,7 +1069,9 @@ void HandleGameOver(void) {
         if (temp) {
             break;
         }
+        #ifdef VERSION_PSP
         func_891AE68();
+        #endif
         FreePrimitives(D_8013640C);
         g_GameStep++;
         break;
@@ -1078,7 +1081,9 @@ void HandleGameOver(void) {
     case Gameover_11:
     case Gameover_11_Alt:
         if (g_GameStep == Gameover_11_Alt) {
+            #ifdef VERSION_PSP
             func_892A998();
+            #endif
             SetGameState(Game_Title);
         } else if (g_StageId == STAGE_ST0) {
             SetGameState(Game_PrologueEnd);
@@ -1089,16 +1094,13 @@ void HandleGameOver(void) {
     }
 }
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dra/dra.h"
-#include "../dra/dra_bss.h"
-#include "servant.h"
+static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
-void func_8932CEC(bool, s8);
-
+// BSS
 extern NowLoadingModel g_NowLoadingModel;
-extern Weapon D_8017A000;
-extern Weapon D_8017D000;
+
+#ifdef VERSION_PSP
+void func_8932CEC(bool, s8);
 extern s32 D_8C630D4;
 extern u8 D_8D2FC40;
 extern u8 D_8D3FC40;
@@ -1106,7 +1108,6 @@ extern u8 D_8D41C40;
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
-RECT D_psp_09156F40 = {0x340, 0x180, 0x40, 0x40};
 
 u8 D_psp_09156F48[] = {
 #include "../dra/gen_D_psp_09156F48.h"
@@ -1138,6 +1139,7 @@ static u_long* D_psp_0915E4E8[] = {
 };
 
 static char* D_psp_0915E500[] = {"alucard ", "richter ", "maria   "};
+#endif
 
 void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     RECT sp48;
@@ -1217,7 +1219,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
         if (isDone) {
             FreePrimitives(self->primIndex);
             self->step = 0;
-            ClearImage(&D_psp_09156F40, 0, 0, 0);
+            ClearImage(&D_800A0240, 0, 0, 0);
             return;
         }
         if (g_pads[0].pressed & PAD_UP) {
