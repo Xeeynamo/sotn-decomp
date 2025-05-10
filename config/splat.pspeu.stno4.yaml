@@ -43,7 +43,9 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, no4/e_bat]
-      - [0x4A0, c, no4_psp/unk_4A0]
+      - [0x4A0, c, no4_psp/lang]
+      - [0x568, c, no4_psp/st_init_no4]
+      - [0xA98, c, no4_psp/e_breakable]
       - [0xEA0, c, no4/st_debug]
       - [0x11E0, c, no4/e_killer_fish]
       - [0x1798, c, no4_psp/e_secrets]
@@ -108,6 +110,8 @@ segments:
       - [0x68C00, .rodata, no4/e_spear_guard]
       - [0x68C38, .rodata, no4_psp/unk_26740]
       - [0x68D00, bss, 68D00]
+      - [0x68D10, .bss, no4_psp/st_init_no4]
+      - [0x68FB0, bss, 68FB0]
       - [0x68FB8, .bss, no4/st_debug]
       - [0x68FC0, bss, 68FC0]
       - [0x68FD0, .bss, no4/create_entity]
