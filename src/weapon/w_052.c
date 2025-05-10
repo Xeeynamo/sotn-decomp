@@ -2,8 +2,8 @@
 // Weapon ID #52. Used by weapons:
 // Alucard shield, Unknown#214
 #include "weapon_private.h"
-#include "gen_w_052_1.h"
-#include "gen_w_052_2.h"
+#include "gen/w_052_1.h"
+#include "gen/w_052_2.h"
 #define g_Animset w_052_1
 #define g_Animset2 w_052_2
 #include "sfx.h"

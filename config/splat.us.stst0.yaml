@@ -39,7 +39,7 @@ segments:
       - [0xA0, .data, header] # palette definitions
       - [0x124, .data, header] # layers
       - [0x1A4, .data, header] # graphics banks
-      - [0x314, .data, gen_e_laydef] # layout entries header
+      - [0x314, .data, gen/e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
       - [0x65C, .data, e_lock_camera]
       - [0x674, .data, 2805C] # func_801A805C
@@ -60,13 +60,13 @@ segments:
       - [0x1E5C, .data, e_misc]
       - [0x1F54, .data, e_particles]
       - [0x1FD4, .data, e_room_fg]
-      - [0x2060, .data, gen_rooms]
+      - [0x2060, .data, gen/rooms]
       - [0x2084, .data, 3AB08] # 3AB08 EntityClouds
       - [0x2184, .data, 3AB08] # EntityClockTower3D
       - [0x2438, .data, 3AB08] # EntityCutscenePhotograph
       - [0x24E8, .data, 3C5C0]
       - [0x2690, .data, 3D8F0]
-      - [0x26B8, .data, gen_e_layout] # layout entries data
+      - [0x26B8, .data, gen/e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
       - [0x2C4C, .data, 3101C]
       - [0x3124, cmpgfx, richter_subweapons, 128, 128, 4]
@@ -112,7 +112,7 @@ segments:
       - [0x1B210, pal, D_8019B210] # unused
       - [0x1B2D0, .data, tile_data] # tile data
       - [0x1E6D0, .data, tile_data] # tile definitions
-      - [0x226E0, .data, gen_sprites]
+      - [0x226E0, .data, gen/sprites]
       - [0x27984, .rodata, 2805C]
       - [0x279E8, .rodata, cutscene] # ST0_EntityCutscene
       - [0x27A74, .rodata, 2A218] # EntityCutscene

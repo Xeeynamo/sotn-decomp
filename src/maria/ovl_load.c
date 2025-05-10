@@ -2,100 +2,100 @@
 #include "maria.h"
 
 static u16 maria_pal[] = {
-#include "gen_maria_pal.h"
+#include "gen/maria_pal.h"
 };
 
-#include "gen_wpn_owl_spr.h"
+#include "gen/wpn_owl_spr.h"
 static u16 wpn_owl_pal[] = {
-#include "gen_wpn_owl_pal.h"
+#include "gen/wpn_owl_pal.h"
 };
 static u8 wpn_owl_gfx[] = {
-#include "gen_wpn_owl_gfx.h"
+#include "gen/wpn_owl_gfx.h"
 };
 
-#include "gen_wpn_doll_spr.h"
+#include "gen/wpn_doll_spr.h"
 static u16 wpn_doll_pal[] = {
-#include "gen_wpn_doll_pal.h"
+#include "gen/wpn_doll_pal.h"
 };
 static u8 wpn_doll_gfx[] = {
-#include "gen_wpn_doll_gfx.h"
+#include "gen/wpn_doll_gfx.h"
 };
 
-#include "gen_wpn_turtle_spr.h"
+#include "gen/wpn_turtle_spr.h"
 static u16 wpn_turtle_pal[] = {
-#include "gen_wpn_turtle_pal.h"
+#include "gen/wpn_turtle_pal.h"
 };
 static u16 wpn_turtle2_pal[] = {
-#include "gen_wpn_turtle2_pal.h"
+#include "gen/wpn_turtle2_pal.h"
 };
 static u8 wpn_turtle_gfx[] = {
-#include "gen_wpn_turtle_gfx.h"
+#include "gen/wpn_turtle_gfx.h"
 };
 
-#include "gen_wpn_cardinal_spr.h"
+#include "gen/wpn_cardinal_spr.h"
 static u16 wpn_cardinal_pal[] = {
-#include "gen_wpn_cardinal_pal.h"
+#include "gen/wpn_cardinal_pal.h"
 };
 static u8 wpn_cardinal_gfx[] = {
-#include "gen_wpn_cardinal_gfx.h"
+#include "gen/wpn_cardinal_gfx.h"
 };
 
-#include "gen_wpn_cat_spr.h"
+#include "gen/wpn_cat_spr.h"
 static u16 wpn_cat_pal[] = {
-#include "gen_wpn_cat_pal.h"
+#include "gen/wpn_cat_pal.h"
 };
 static u16 wpn_cat2_pal[] = {
-#include "gen_wpn_cat2_pal.h"
+#include "gen/wpn_cat2_pal.h"
 };
 static u8 wpn_cat_gfx[] = {
-#include "gen_wpn_cat_gfx.h"
+#include "gen/wpn_cat_gfx.h"
 };
 
-#include "gen_wpn_dragon_spr.h"
+#include "gen/wpn_dragon_spr.h"
 static u16 wpn_dragon_pal[] = {
-#include "gen_wpn_dragon_pal.h"
+#include "gen/wpn_dragon_pal.h"
 };
 static u16 wpn_dragon2_pal[] = {
-#include "gen_wpn_dragon2_pal.h"
+#include "gen/wpn_dragon2_pal.h"
 };
 static u8 wpn_dragon_gfx[] = {
-#include "gen_wpn_dragon_gfx.h"
+#include "gen/wpn_dragon_gfx.h"
 };
 
-#include "gen_maria.h"
+#include "gen/maria.h"
 
 static u8 items_gfx[] = {
-#include "gen_items_gfx.h"
+#include "gen/items_gfx.h"
 };
 
 static u8 hud_en[] = {
-#include "gen_hud_en.h"
+#include "gen/hud_en.h"
 };
 
 static u8 crash_turtle_gfx[] = {
-#include "gen_crash_turtle_gfx.h"
+#include "gen/crash_turtle_gfx.h"
 };
 static u8 crash_dragon_gfx[] = {
-#include "gen_crash_dragon_gfx.h"
+#include "gen/crash_dragon_gfx.h"
 };
 static u8 crash_cardinal_gfx[] = {
-#include "gen_crash_cardinal_gfx.h"
+#include "gen/crash_cardinal_gfx.h"
 };
 static u8 crash_cat_gfx[] = {
-#include "gen_crash_cat_gfx.h"
+#include "gen/crash_cat_gfx.h"
 };
 
 static u16 crash_cat_pal[] = {
-#include "gen_crash_cat_pal.h"
+#include "gen/crash_cat_pal.h"
 };
 static u16 crash_turtle_pal[] = {
-#include "gen_crash_turtle_pal.h"
+#include "gen/crash_turtle_pal.h"
 };
 static u16 crash_dragon_pal[] = {
-#include "gen_crash_dragon_pal.h"
+#include "gen/crash_dragon_pal.h"
 };
 static u16 crash_cardinal_pal[] = {
-#include "gen_crash_cardinal_pal.h"
+#include "gen/crash_cardinal_pal.h"
 };
 
 // clang-format

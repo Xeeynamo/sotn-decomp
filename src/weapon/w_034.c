@@ -2,8 +2,8 @@
 // Weapon ID #34. Used by weapons:
 // Shotel, Unknown#176
 #include "weapon_private.h"
-#include "gen_w_034_1.h"
-#include "gen_w_034_2.h"
+#include "gen/w_034_1.h"
+#include "gen/w_034_2.h"
 #define g_Animset w_034_1
 #define g_Animset2 w_034_2
 

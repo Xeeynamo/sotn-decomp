@@ -40,7 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data, header]
-      - [0x1EC, data, gen_e_laydef]
+      - [0x1EC, data, gen/e_laydef]
       - [0x390, .data, e_init]
       - [0x510, .data, st_debug]
       - [0x590, data] # e_breakable

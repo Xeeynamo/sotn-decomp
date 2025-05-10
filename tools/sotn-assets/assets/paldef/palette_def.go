@@ -73,7 +73,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	content.WriteString("    PAL_TERMINATE(),\n")
 	content.WriteString("};\n")
 	content.WriteString("u_long* OVL_EXPORT(cluts)[] = {pal_def};\n")
-	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(content.String()), 0644)
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(content.String()))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -128,7 +128,7 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }
 
 type paletteEntry struct {

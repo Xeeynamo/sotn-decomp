@@ -16,7 +16,7 @@ static u8 D_80154674[][4] = {
     {16, 47, 63, 127}};
 
 static SubweaponDef subweapons_def[] = {
-#include "gen_subweapons.h"
+#include "gen/subweapons.h"
 };
 STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
@@ -372,7 +372,7 @@ Entity* MarCreateEntFactoryFromEntity(
 }
 
 static FactoryBlueprint blueprints[] = {
-#include "gen_blueprints.h"
+#include "gen/blueprints.h"
 };
 STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {

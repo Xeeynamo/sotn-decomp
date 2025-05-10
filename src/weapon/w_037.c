@@ -2,8 +2,8 @@
 // Weapon ID #37. Used by weapons:
 // Short sword, Jewel sword, Stone sword, Unknown#198
 #include "weapon_private.h"
-#include "gen_w_037_1.h"
-#include "gen_w_037_2.h"
+#include "gen/w_037_1.h"
+#include "gen/w_037_2.h"
 #define g_Animset w_037_1
 #define g_Animset2 w_037_2
 #include "sfx.h"

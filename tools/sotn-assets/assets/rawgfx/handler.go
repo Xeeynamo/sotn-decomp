@@ -103,7 +103,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
 	util.WriteBytesAsHex(&sb, data)
-	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()), 0644)
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -115,5 +115,5 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }

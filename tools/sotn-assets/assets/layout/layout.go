@@ -285,7 +285,7 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	sbHeader.WriteString(fmt.Sprintf("};\n"))
 
 	sbData := strings.Builder{}
-	sbData.WriteString(fmt.Sprintf("#include \"%s.h\"\n\n", ovlName))
+	sbData.WriteString(fmt.Sprintf("#include \"../%s.h\"\n\n", ovlName))
 	sbData.WriteString("// clang-format off\n")
 	sbData.WriteString(fmt.Sprintf("u16 %s_x[] = {\n", symbolName))
 	if err := writeLayoutEntries(&sbData, makeSortedBanks(el.Entities, true), false); err != nil {
@@ -298,8 +298,8 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 	}
 	sbData.WriteString(fmt.Sprintf("};\n"))
 
-	if err := os.WriteFile(filepath.Join(outputDir, "gen_e_layout.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := util.WriteFile(filepath.Join(outputDir, "gen/e_layout.c"), []byte(sbData.String())); err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(outputDir, "gen_e_laydef.c"), []byte(sbHeader.String()), 0644)
+	return util.WriteFile(filepath.Join(outputDir, "gen/e_laydef.c"), []byte(sbHeader.String()))
 }

@@ -2,8 +2,8 @@
 // Weapon ID #17. Used by weapons:
 // Pentagram, Bat Pentagram
 #include "weapon_private.h"
-#include "gen_w_017_1.h"
-#include "gen_w_017_2.h"
+#include "gen/w_017_1.h"
+#include "gen/w_017_2.h"
 #define g_Animset w_017_1
 #define g_Animset2 w_017_2
 #include "sfx.h"

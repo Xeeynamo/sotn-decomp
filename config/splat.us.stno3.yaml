@@ -39,7 +39,7 @@ segments:
       - [0x0, .data, header]
       - [0x1C4, .data, header] # layers
       - [0x5A4, .data, header] # GfxBanks
-      - [0x77C, .data, gen_e_laydef] # layout entries header
+      - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xAAC, data]
       - [0xDC0, .data, 377D4]
@@ -71,8 +71,8 @@ segments:
       - [0x3B50, .data, e_bone_scimitar]
       - [0x3C44, .data, e_bat]
       - [0x3C7C, data]
-      - [0x3CC4, .data, gen_rooms]
-      - [0x3DC8, .data, gen_e_layout] # layout entries data
+      - [0x3CC4, .data, gen/rooms]
+      - [0x3DC8, .data, gen/e_layout] # layout entries data
       - [0x4CE0, .data, cutscene_data]
       - [0x4E60, data]
       - [0x4E74, cmpgfx, stage_title_jp, 128, 128, 4]
@@ -128,7 +128,7 @@ segments:
       - [0x18778, pal, D_80198778] # unused
       - [0x18838, .data, tile_data] # tile data
       - [0x26638, .data, tile_data] # tile definitions
-      - [0x2EA68, .data, gen_sprites]
+      - [0x2EA68, .data, gen/sprites]
       - [0x373E0, data]
       - [0x373E8, .rodata, entrance_stage_entities] # EntityCastleDoor
       - [0x37400, .rodata, entrance_stage_entities] # EntityStairwayPiece

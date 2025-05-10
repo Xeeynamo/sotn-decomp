@@ -284,7 +284,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		}
 	}
 	sb.WriteString("};\n")
-	return os.WriteFile(filepath.Join(outputDir, "gen_layers.h"), []byte(sb.String()), 0644)
+	return util.WriteFile(filepath.Join(outputDir, "gen/layers.h"), []byte(sb.String()))
 }
 
 func makeSymbolFromFileName(fileName string) string {
@@ -329,11 +329,11 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	}
 	sb.WriteString("};\n")
 
-	return os.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)), []byte(sb.String()), 0644)
+	return util.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol)), []byte(sb.String()))
 }
 
-func buildTiledefs(fileName string, symbol string, outputDir string) error {
-	data, err := os.ReadFile(fileName)
+func buildTiledefs(inFileName string, symbol string, outputDir string) error {
+	data, err := os.ReadFile(inFileName)
 	if err != nil {
 		return err
 	}
@@ -343,32 +343,36 @@ func buildTiledefs(fileName string, symbol string, outputDir string) error {
 		return err
 	}
 
-	f, err := os.Create(filepath.Join(outputDir, fmt.Sprintf("gen_%s.h", symbol)))
+	outFileName := filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol))
+	if err := os.MkdirAll(filepath.Dir(outFileName), 0755); err != nil {
+		return err
+	}
+	f, err := os.Create(outFileName)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
 	tilesSymbol := makeSymbolFromFileName(tiledef.Tiles)
-	tilesFileName := filepath.Join(filepath.Dir(fileName), tiledef.Tiles)
+	tilesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Tiles)
 	if err := writeStaticU8(f, tilesFileName, tilesSymbol); err != nil {
 		return err
 	}
 
 	pagesSymbol := makeSymbolFromFileName(tiledef.Pages)
-	pagesFileName := filepath.Join(filepath.Dir(fileName), tiledef.Pages)
+	pagesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Pages)
 	if err := writeStaticU8(f, pagesFileName, pagesSymbol); err != nil {
 		return err
 	}
 
 	clutsSymbol := makeSymbolFromFileName(tiledef.Cluts)
-	clutsFileName := filepath.Join(filepath.Dir(fileName), tiledef.Cluts)
+	clutsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Cluts)
 	if err := writeStaticU8(f, clutsFileName, clutsSymbol); err != nil {
 		return err
 	}
 
 	colsSymbol := makeSymbolFromFileName(tiledef.Collisions)
-	colsFileName := filepath.Join(filepath.Dir(fileName), tiledef.Collisions)
+	colsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Collisions)
 	if err := writeStaticU8(f, colsFileName, colsSymbol); err != nil {
 		return err
 	}

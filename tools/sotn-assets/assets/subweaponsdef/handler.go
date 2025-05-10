@@ -161,7 +161,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 			entry.Unk11,
 			entry.EntityRoomIndex))
 	}
-	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []uint8(sb.String()), 0644)
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []uint8(sb.String()))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -173,7 +173,7 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }
 
 func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {

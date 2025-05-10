@@ -9,7 +9,7 @@ s32 g_IsPrologueStage = 0;
 
 #if defined(VERSION_PSP)
 u8 font_eu[] = {
-#include "gen_font_eu.h"
+#include "gen/font_eu.h"
 };
 u_long* g_FontImage[] = {
     (u_long*)GFX_BANK_COMPRESSED,
@@ -18,16 +18,16 @@ u_long* g_FontImage[] = {
 };
 
 u8 hud_sp[] = {
-#include "gen_hud_sp.h"
+#include "gen/hud_sp.h"
 };
 u8 hud_it[] = {
-#include "gen_hud_it.h"
+#include "gen/hud_it.h"
 };
 u8 hud_ge[] = {
-#include "gen_hud_ge.h"
+#include "gen/hud_ge.h"
 };
 u8 hud_fr[] = {
-#include "gen_hud_fr.h"
+#include "gen/hud_fr.h"
 };
 u_long* g_HudImage[] = {
     (u_long*)GFX_BANK_COMPRESSED,

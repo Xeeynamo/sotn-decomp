@@ -32,7 +32,7 @@ Overlay OVL_EXPORT(Overlay) = {
 };
 
 // D_80180040: spriteBanks
-#include "gen_sprite_banks.h"
+#include "gen/sprite_banks.h"
 
 // Palette Data -- These addresses are to the binary data
 extern u16* bn_pal_unused_0[0x30]; // Unused (US)
@@ -61,7 +61,7 @@ static u_long* OVL_EXPORT(cluts)[] = {
 
 // D_801800E8: layers
 // D_80180218: rooms_layers
-#include "gen_layers.h"
+#include "gen/layers.h"
 
 // Gfx Bank Data -- These addresses are to the binary data
 extern u8 bn_gfx_stage_name_jp_sm[];
