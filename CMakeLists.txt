@@ -172,8 +172,7 @@ set(SOURCE_FILES_3RD
 
 set(SOURCE_FILES_DRA
     src/dra/42398.c
-    src/dra/play.c
-    src/dra/loading.c
+    src/dra/44124.c
     src/dra/pads.c
     src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
