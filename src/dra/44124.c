@@ -1149,7 +1149,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     s16 angle;
     s16 verticalWave;
     s16 horizontalWave;
-    s16 baseY;
+    s32 baseY;
     s16 sx;
     s16 sy;
     s16 ex;
