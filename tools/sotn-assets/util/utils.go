@@ -173,7 +173,6 @@ func MakePaletteFromR5G5B5A1(data []byte, invertAlpha bool) []color.RGBA {
 			A: a,
 		}
 	}
-	colors[0].A = 0
 	return colors
 }
 
