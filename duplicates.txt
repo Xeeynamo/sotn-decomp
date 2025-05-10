@@ -2480,11 +2480,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2666,10 +2661,6 @@
 | 1.00 | true     | DebugShowWaitInfo                   | asm/us/ric/matchings/pl_collision/DebugShowWaitInfo.s 
 | 1.00 | true     | DebugShowWaitInfo                   | asm/us/st/no1/matchings/unk_381E8/DebugShowWaitInfo.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SetGameState                        | asm/us/dra/matchings/42398/SetGameState.s 
-| 1.00 | true     | SetGameState                        | asm/us/st/sel/matchings/2C048/SetGameState.s 
-| 1.00 | true     | SetGameState                        | asm/us/st/st0/matchings/prologue_scroll/SetGameState.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800EAD7C                       | asm/us/dra/matchings/4A538/func_800EAD7C.s 
 | 1.00 | true     | func_801B1DA8                       | asm/us/st/sel/matchings/2C048/func_801B1DA8.s 
 | 1.00 | true     | InitClutIndices                     | asm/us/st/st0/matchings/prologue_scroll/InitClutIndices.s 
@@ -2682,6 +2673,10 @@
 | 1.00 | true     | PrimDecreaseBrightness              | asm/us/ric/matchings/2F8E8/PrimDecreaseBrightness.s 
 | 0.93 | true     | PrimDecreaseBrightness              | asm/us/st/mad/matchings/prim_helpers/PrimDecreaseBrightness.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SetGameState                        | asm/us/dra/matchings/game_handlers/SetGameState.s 
+| 1.00 | true     | SetGameState                        | asm/us/st/sel/matchings/2C048/SetGameState.s 
+| 1.00 | true     | SetGameState                        | asm/us/st/st0/matchings/prologue_scroll/SetGameState.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MenuDrawInt                         | asm/us/dra/matchings/menu/MenuDrawInt.s 
 | 0.91 | true     | MenuDrawTime                        | asm/us/dra/matchings/menu/MenuDrawTime.s 
 | 0.93 | true     | func_801B2BD4                       | asm/us/st/sel/matchings/2C048/func_801B2BD4.s 
@@ -2693,6 +2688,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -2932,9 +2931,6 @@
 | 1.00 | true     | func_us_801B4A30                    | asm/us/boss/rbo5/matchings/doors/func_us_801B4A30.s 
 | 0.98 | true     | func_us_801BE2C8                    | asm/us/st/no1/matchings/unk_3D8AC/func_us_801BE2C8.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | ClearBackbuffer                     | asm/us/dra/matchings/42398/ClearBackbuffer.s 
-| 1.00 | true     | func_801B18F4                       | asm/us/st/sel/matchings/2C048/func_801B18F4.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800E34DC                       | asm/us/dra/matchings/42398/func_800E34DC.s 
 | 1.00 | true     | func_801B195C                       | asm/us/st/sel/matchings/2C048/func_801B195C.s 
 -------------------------------------------------------------------------------
@@ -3049,6 +3045,9 @@
 | 1.00 | true     | func_801073E8                       | asm/us/dra/matchings/cd/func_801073E8.s 
 | 1.00 | true     | StreamDiskIsReady                   | asm/us/st/sel/matchings/stream/StreamDiskIsReady.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | ClearBackbuffer                     | asm/us/dra/matchings/game_handlers/ClearBackbuffer.s 
+| 1.00 | true     | func_801B18F4                       | asm/us/st/sel/matchings/2C048/func_801B18F4.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MenuHide                            | asm/us/dra/matchings/menu/MenuHide.s 
 | 1.00 | true     | MenuShow                            | asm/us/dra/matchings/menu/MenuShow.s 
 -------------------------------------------------------------------------------
@@ -3150,6 +3149,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
