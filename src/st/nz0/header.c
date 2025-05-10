@@ -4,7 +4,7 @@
 void Update();
 void HitDetection();
 void UpdateRoomPosition();
-void InitRoomEntities();
+void InitRoomEntities(s32 objLayoutId);
 void UpdateStageEntities();
 
 extern s16** OVL_EXPORT(spriteBanks)[];

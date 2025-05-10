@@ -77,11 +77,20 @@ struct DIRENTRY* my_nextfile(struct DIRENTRY* outEntry) {
 
     while (entry) {
         // filter by regular files
-        if (entry->d_type == DT_REG) {
+#ifdef _GNU_SOURCE
+        // rely on the GNU extension to skip the need of 'stat'
+        if (entry->d_type == DT_REG)
+#else
+        char fullpath[PATH_MAX];
+        snprintf(
+            fullpath, sizeof(fullpath), "%s/%s", outEntry->name, entry->d_name);
+        struct stat st;
+        if (stat(fullpath, &st) == 0 && S_ISREG(st.st_mode))
+#endif
+        {
             _populate_entry(outEntry, entry);
             return outEntry;
         }
-
         entry = readdir(dir);
     }
 

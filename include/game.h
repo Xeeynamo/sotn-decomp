@@ -224,7 +224,7 @@ typedef enum {
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
 
-#if defined(VERSION_US) || defined(VERSION_HD)
+#if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020
@@ -1610,17 +1610,12 @@ typedef struct {
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
+
+    // exclusive to PSP
     /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
-    // this matches on both versions but doing this to show the difference
-#if defined(VERSION_PSP)
     /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
-#else
-    /* 8003C8A4 */ void* unused130;
-    /* 8003C8A8 */ void* unused134;
-    /* 8003C8AC */ void* unused138;
-#endif
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 

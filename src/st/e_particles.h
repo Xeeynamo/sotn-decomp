@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+// the signature is purposely wrong for this file
+// this is how the original source code worked
+void MoveEntity(Entity*);
+
 #if defined(VERSION_HD)
 static u32 padding = 0;
 #endif

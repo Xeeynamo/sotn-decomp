@@ -232,10 +232,10 @@ u_long MyPadRead(int id) {
     // opposite directional buttons are not supposed to be pressed at the same
     // time due to physical limitations of PlayStation game controllers.
     // this fixes an undefined behaviour on Richter's whip
-    if (pressed & (PAD_LEFT | PAD_RIGHT)) {
+    if ((pressed & (PAD_LEFT | PAD_RIGHT)) == (PAD_LEFT | PAD_RIGHT)) {
         pressed &= ~(PAD_LEFT | PAD_RIGHT);
     }
-    if (pressed & (PAD_UP | PAD_DOWN)) {
+    if ((pressed & (PAD_UP | PAD_DOWN)) == (PAD_UP | PAD_DOWN)) {
         pressed &= ~(PAD_UP | PAD_DOWN);
     }
 
