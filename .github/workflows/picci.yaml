@@ -61,6 +61,7 @@ jobs:
         compiler: ["clang", "gcc"]
         build_type: ["Debug", "RelWithDebInfo"]
         sound_engine: ["lle", "custom"]
+        standard: ["c17"]
         arch: ["x86_64"]
     runs-on: ubuntu-24.04
     needs: extract-assets
@@ -87,7 +88,7 @@ jobs:
         run: make -j build_assets
       - name: Build
         run: |
-          export PC_FLAGS=""
+          export PC_FLAGS="-DCMAKE_C_FLAGS='-std=${{ matrix.standard }}' -DCMAKE_CXX_FLAGS='-std=${{ matrix.standard }}' "
           if [[ "${{ matrix.sound_engine }}" == "lle" ]]; then
             export PC_FLAGS="-DWANT_LIBSND_LLE=1"
           fi
