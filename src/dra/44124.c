@@ -1399,25 +1399,65 @@ void HandleNowLoading(void) {
                 STRCPY(g_Status.saveName, "alucard ");
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
+                    #ifdef VERSION_PSP
+                    STRCPY(g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
+                    g_IsTimeAttackUnlocked = true;
+                    if (g_PlayableCharacter == PLAYER_RICHTER) {
+                    #else
                     if (g_pads[1].pressed & PAD_UP) {
+                    #endif
                         STRCPY(g_Status.saveName, "richter ");
                         g_PlayableCharacter = PLAYER_RICHTER;
                         g_IsTimeAttackUnlocked = true;
+                    #ifdef VERSION_PSP
+                    } else if (g_PlayableCharacter == PLAYER_MARIA) {
+                        STRCPY(g_Status.saveName, "maria   ");
+                        g_PlayableCharacter = PLAYER_MARIA;
+                        g_IsTimeAttackUnlocked = true;
+                    #endif
                     } else {
                         g_PlayableCharacter = PLAYER_ALUCARD;
                         g_IsTimeAttackUnlocked = false;
                     }
+                    #ifdef VERSION_PSP
+                    if (D_8C630D4 == 1) {
+                        DemoInit(1);
+                    } else if (D_8C630D4 == 2) {
+                        DemoInit(0);
+                    }
+                    #else
                     if (g_pads[1].pressed & PAD_CIRCLE) {
                         DemoInit(1);
                     } else if (g_pads[1].pressed & PAD_CROSS) {
                         DemoInit(0);
                     }
+                    #endif
                 }
                 g_GameStep++;
             }
         }
         break;
     case Play_PrepareDemo:
+#ifdef VERSION_PSP
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            if (g_PlayableCharacter == PLAYER_MARIA) {
+                func_8932FD4(2);
+            } else if (g_StageId == STAGE_ST0) {
+                func_8932FD4(3);
+            } else {
+                func_8932FD4(1);
+            }
+        } else {
+            func_8932FD4(0);
+        }
+        g_GameStep = Gameover_Init_Alt;
+        break;
+
+    case Gameover_Init_Alt:
+        if (!func_8933000()) {
+            break;
+        }
+#endif
         D_800978C4 = 0;
         if (g_IsUsingCd) {
             break;
@@ -1427,40 +1467,84 @@ void HandleNowLoading(void) {
             g_LoadFile = CdFile_GameChr;
         } else {
             if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-                if (LoadFileSim(5, SimFileType_System) < 0) {
-                    break;
-                }
-                if (LoadFileSim(0x8002, SimFileType_Vh) < 0) {
-                    break;
-                }
-                if (LoadFileSim(0x8003, SimFileType_Vb) < 0) {
-                    break;
-                }
-                if (g_StageId == STAGE_ST0) {
-                    if (LoadFileSim(0x8004, SimFileType_Vh) < 0) {
+                #ifndef VERSION_PSP
+                if(0){ //to align curly braces
+                #else
+                if (g_PlayableCharacter == PLAYER_MARIA) {
+                    if (LOADFILESIM_PSPALT(5, SimFileType_System) < 0) {
                         break;
                     }
-                    if (LoadFileSim(0x8005, SimFileType_Vb) < 0) {
+                    if (LOADFILESIM_PSPALT(0x8014, SimFileType_Vh) < 0) {
                         break;
+                    }
+                    if (LOADFILESIM_PSPALT(0x8015, SimFileType_Vb) < 0) {
+                        break;
+                    }
+                #endif
+                } else {
+                    if (LOADFILESIM_PSPALT(5, SimFileType_System) < 0) {
+                        break;
+                    }
+                    if (LOADFILESIM_PSPALT(0x8002, SimFileType_Vh) < 0) {
+                        break;
+                    }
+                    if (LOADFILESIM_PSPALT(0x8003, SimFileType_Vb) < 0) {
+                        break;
+                    }
+                    if (g_StageId == STAGE_ST0) {
+                        #ifdef VERSION_PSP
+                        // BUGS: wrong signature
+                        if (LoadFileSim(0x8004, SimFileType_Vh, true) < 0) {
+                            break;
+                        }
+                        if (LoadFileSim(0x8005, SimFileType_Vb, true) < 0) {
+                            break;
+                        }
+                        #else
+                        if (LoadFileSim(0x8004, SimFileType_Vh) < 0) {
+                            break;
+                        }
+                        if (LoadFileSim(0x8005, SimFileType_Vb) < 0) {
+                            break;
+                        }
+                        #endif
                     }
                 }
             } else {
-                if (LoadFileSim(4, SimFileType_System) < 0) {
+                if (LOADFILESIM_PSPALT(4, SimFileType_System) < 0) {
                     break;
                 }
-                if (LoadFileSim(0x8000, SimFileType_Vh) < 0) {
+                if (LOADFILESIM_PSPALT(0x8000, SimFileType_Vh) < 0) {
                     break;
                 }
-                if (LoadFileSim(0x8001, SimFileType_Vb) < 0) {
+                if (LOADFILESIM_PSPALT(0x8001, SimFileType_Vb) < 0) {
                     break;
                 }
             }
         }
+        #ifdef VERSION_PSP
+        g_GameStep = Play_Default;
+        #else
         nowLoadingModel->step = 0;
         AnimateNowLoading(nowLoadingModel, 64, 112, false);
         g_GameStep++;
+        #endif
         break;
     case Play_Default:
+#ifdef VERSION_PSP
+        if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
+            func_8933130(1);
+        } else {
+            func_8933130(0);
+        }
+        g_GameStep = Gameover_AllocResources_Alt;
+        break;
+
+    case Gameover_AllocResources_Alt:
+        if (!func_893315C()) {
+            break;
+        }
+#endif
         if (g_UseDisk) {
             if (g_IsUsingCd) {
                 break;
@@ -1468,18 +1552,30 @@ void HandleNowLoading(void) {
         } else {
             if (g_StageId == STAGE_ST0 ||
                 g_PlayableCharacter != PLAYER_ALUCARD) {
-                if (LoadFileSim(13, SimFileType_System) < 0) {
+                if (LOADFILESIM_PSPALT(13, SimFileType_System) < 0) {
                     break;
                 }
             } else {
-                if (LoadFileSim(1, SimFileType_System) < 0) {
+                if (LOADFILESIM_PSPALT(1, SimFileType_System) < 0) {
                     break;
                 }
             }
+        #ifdef VERSION_PSP
+            func_891CEB8(0, 0xFD);
+        }
+        func_8932AD4(g_StageId);
+        g_GameStep = Play_PrepareNextStage;
+        #else
         }
         g_GameStep++;
+        #endif
         break;
     case Play_PrepareNextStage:
+        #ifdef VERSION_PSP
+        if (!func_8932B74(g_GameStep, 5)) {
+            break;
+        }
+        #endif
         if (g_UseDisk) {
             g_CdStep = CdStep_LoadInit;
             g_LoadFile = CdFile_StageChr;
@@ -1493,7 +1589,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_StageChr) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StageChr) < 0) {
                 break;
             }
         }
@@ -1512,10 +1608,10 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_Vh) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vh) < 0) {
                 break;
             }
-            if (LoadFileSim(0, SimFileType_Vb) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_Vb) < 0) {
                 break;
             }
         }
@@ -1534,7 +1630,7 @@ void HandleNowLoading(void) {
                 break;
             }
         } else {
-            if (LoadFileSim(0, SimFileType_StagePrg) < 0) {
+            if (LOADFILESIM_PSPALT(0, SimFileType_StagePrg) < 0) {
                 break;
             }
             if (g_StagesLba[g_StageId].seqIdx >= 0 &&
