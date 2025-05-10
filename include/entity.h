@@ -2111,6 +2111,25 @@ typedef struct {
     s16 boolDidSound;
 } ET_RicMaria;
 
+typedef struct {
+    s16 timer;
+    s16 unk7E;
+    s16 velocityX;
+    s16 angle;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 unkB0;
+} ET_MariaOwl;
+
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
 // ET_BatFam and this be ET_Bat? Seems familiars should all be labeled since
@@ -3155,6 +3174,7 @@ typedef union { // offset=0x7C
     ET_ExpandingCircle circleExpand;
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
+    ET_MariaOwl mariaOwl;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;

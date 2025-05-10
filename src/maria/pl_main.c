@@ -84,8 +84,8 @@ extern u8 hud_fr[];
 extern u8 hud_sp[];
 extern u8 hud_ge[];
 extern u8 hud_it[];
-extern LangImg g_FontImage;
-extern LangImg g_HudImage;
+extern u_long* g_FontImage[];
+extern u_long* g_HudImage[];
 void MarInit(s16 initParam) {
     Entity* e;
     s16 radius;
@@ -177,10 +177,10 @@ void MarInit(s16 initParam) {
     // ifdef'fed for the same reason in RicInit
     D_pspeu_092E5F20 = 30;
 
-    func_91040A0(&g_FontImage);
-    g_HudImage.imgData = GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
-    if (g_HudImage.imgData) {
-        func_91040A0(&g_HudImage);
+    func_91040A0(g_FontImage);
+    g_HudImage[3] = (u_long*)GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
+    if (g_HudImage[3]) {
+        func_91040A0(g_HudImage);
     }
 #endif
     func_90E4C68();

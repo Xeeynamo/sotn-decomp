@@ -104,7 +104,7 @@ enum MarEntities {
     E_UNK_7,                  // func_pspeu_092AAA38
     E_UNK_8,                  // func_pspeu_092AB1C0
     E_80161C2C,               // func_80161C2C
-    E_UNK_10,                 // func_pspeu_092B92F0
+    E_MARIA_OWL,              // EntityMariaOwl
     E_UNK_11,                 // func_pspeu_092AAC80
     E_DUMMY_12,               // MarEntityDummy
     E_UNK_13,                 // func_pspeu_092A82E0
@@ -162,6 +162,7 @@ enum MarEntities {
     E_DUMMY_65,               // MarEntityDummy
     E_TELEPORT,               // MarEntityTeleport
     E_DUMMY_67,               // MarEntityDummy
+    NUM_ENTITIES,
 };
 
 // all enums with an underscore as prefix are unconfirmed
@@ -174,7 +175,7 @@ enum MarBlueprints {
     _BP_5,
     _BP_SUBWPN_HOLYWATER,
     _BP_HOLYWATER_FIRE,
-    _BP_HIT_BY_FIRE,
+    BP_HIT_BY_FIRE,
     _BP_HOLYWATER_FLAMES,
     BP_OWL,
     BP_MULTIPLE_EMBERS,
@@ -191,7 +192,7 @@ enum MarBlueprints {
     _BP_NOT_IMPLEMENTED_3,
     _BP_REVIVAL_COLUMN,
     _BP_MARIA_POWERS_APPLIED,
-    _BP_SLIDE,
+    BP_SLIDE,
     BP_25,
     BP_BLADE_DASH,
     _BP_BLUE_CIRCLE,
@@ -214,7 +215,7 @@ enum MarBlueprints {
     _BP_SUBWPN_DAGGER,
     _BP_CRASH_DAGGER,
     _BP_HIGH_JUMP,
-    _BP_HIT_BY_CUT,
+    BP_HIT_BY_CUT,
     BP_HIT_BY_ICE,
     // 0x30
     BP_HIT_BY_THUNDER,
@@ -240,13 +241,13 @@ enum MarBlueprints {
     _BP_CRASH_AGUNEA,
     _BP_CRASH_AGUNEA_THUNDER,
     _BP_CRASH_REBOUND_STONE_PARTICLES,
-    _BP_HIT_BY_DARK,
-    _BP_HIT_BY_HOLY,
+    BP_HIT_BY_DARK,
+    BP_HIT_BY_HOLY,
     _BP_AGUNEA_THUNDER,
     _BP_CRASH_STOPWATCH_LIGHTNING,
-    _BP_SMOKE_PUFF_2,
-    _BP_SKID_SMOKE_2,
-    _BP_SKID_SMOKE_3,
+    BP_SMOKE_PUFF_2,
+    BP_SKID_SMOKE_2,
+    BP_SKID_SMOKE_3,
     BP_TELEPORT,
     NUM_BLUEPRINTS,
 };
@@ -407,40 +408,39 @@ extern s16* wpn_cardinal_spr[];
 extern s16* wpn_dragon_spr[];
 extern s16* wpn_doll_spr[];
 
-extern AnimationFrame* mar_8015538C[];
-extern AnimationFrame mar_anim_stand[];
 extern AnimationFrame mar_anim_stand_relax[];
-extern AnimationFrame mar_anim_walk[];
+extern AnimationFrame D_pspeu_092C0450[];
+extern AnimationFrame D_pspeu_092C0498[];
+extern AnimationFrame D_pspeu_092C04A8[];
+extern AnimationFrame D_pspeu_092C04B8[];
 extern AnimationFrame mar_anim_crouch[];
 extern AnimationFrame mar_anim_crouch_from_stand[];
-extern AnimationFrame mar_80155534[];
-extern AnimationFrame mar_80155544[];
-extern AnimationFrame mar_anim_run[];
-extern AnimationFrame mar_anim_high_jump[];
-extern AnimationFrame mar_anim_stun[];
-extern AnimationFrame mar_801556C4[];
-extern AnimationFrame mar_80155750[];
-extern AnimationFrame mar_8015591C[];
-extern AnimationFrame mar_80155950[];
-extern AnimationFrame D_pspeu_092C0630[];
-extern AnimationFrame D_pspeu_092C04B8[];
-extern AnimationFrame mar_anim_blade_dash[];
-extern AnimationFrame D_pspeu_092C04A8[];
-extern AnimationFrame D_pspeu_092C0498[];
+extern AnimationFrame mar_801554E0[];
 extern AnimationFrame D_pspeu_092C0528[];
-extern AnimationFrame D_pspeu_092C0620[];
+extern AnimationFrame mar_80155534[];
 extern AnimationFrame D_pspeu_092C05A0[];
+extern AnimationFrame D_pspeu_092C0620[];
+extern AnimationFrame D_pspeu_092C0630[];
 extern AnimationFrame D_pspeu_092C0668[];
 extern AnimationFrame D_pspeu_092C06A0[];
+extern AnimationFrame mar_80155750[];
 extern AnimationFrame mar_80155588[];
-extern AnimationFrame mar_801555A8[];
 extern AnimationFrame mar_801555C8[];
-extern AnimationFrame mar_801555E8[];
-extern AnimationFrame D_pspeu_092C0878[];
+extern AnimationFrame mar_801555A8[];
+extern AnimationFrame mar_anim_high_jump[];
+extern AnimationFrame mar_anim_stun[];
+extern AnimationFrame D_pspeu_092C0790[];
+extern AnimationFrame mar_80155704[];
 extern AnimationFrame D_pspeu_092C07E8[];
+extern AnimationFrame mar_80155544[];
 extern AnimationFrame D_pspeu_092C0858[];
-extern AnimationFrame mar_801554E0[];
+extern AnimationFrame mar_anim_press_up[];
+extern AnimationFrame D_pspeu_092C0878[];
+extern AnimationFrame mar_801556C4[];
+extern AnimationFrame mar_8015591C[];
+extern AnimationFrame mar_80155950[];
 extern FrameProperty mar_80155964[];
+extern AnimationFrame* mar_8015538C[];
 
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);

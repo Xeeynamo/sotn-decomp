@@ -214,7 +214,7 @@ bool InitGame(struct InitGameParams* params) {
     api.CalcPlayerDamage = CalcPlayerDamage;
     api.LearnSpell = LearnSpell;
     api.DebugInputWait = DebugInputWait;
-    api.unused12C = NULL;
+    api.CalcDealDamageMaria = NULL;
     api.unused130 = NULL;
     api.unused134 = NULL;
     api.unused138 = NULL;

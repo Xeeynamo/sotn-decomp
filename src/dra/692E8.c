@@ -13,54 +13,116 @@ s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
-
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
-
 s32 D_800ACE44 = 0;
-
 s32 D_800ACE48[] = {
     0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
 };
-
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
-#else
+// BSS
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+extern s32 D_80137FBC;
+
+#elif defined(VERSION_HD)
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
     0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
 };
-
 s32 D_800ACEDC_hd = 0;
-
 s32 D_800ACE44 = 0;
-
-#ifndef VERSION_PSP
 s32 D_800ACE48[] = {
     0x0000, 0x0000, 0x8000, 0x801F, 0x01FF, 0x81FF,
 };
-#else
-s32 D_800ACE48[] = {
-    0x8000, 0x8000, 0x8000, 0x801F, 0x81FF, 0x81FF,
-};
-#endif
-
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
 s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 
-// PSP has a whole bunch more data here, and then D_800ACE00.
-// Other data not yet imported.
-#ifndef VERSION_PSP
 s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
-#endif
 
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
+
+#elif defined(VERSION_PSP)
+
+extern s32 D_psp_09148C10[];
+extern s32 D_psp_091490B0[];
+extern s32 D_psp_09149550[];
+extern s32 D_psp_091499F0[];
+
+s16 D_800ACE20[] = {
+    0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
+    0xFFD7, 0xFFCF, 0xFFCD, 0xFFCD, 0xFFD6, 0xFFD7, 0xFFE3, 0xFFE3, 0x0000,
+};
+s32 D_800ACE48[] = {
+    0x8000, 0x8000, 0x8000, 0x801F, 0x81FF, 0x81FF,
+};
+RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
+
+static u8 font_eu[] = {
+#include "gen_font_eu.h"
+};
+
+static u8 D_psp_0917DCA8[] = {
+#include "gen_D_psp_0917DCA8.h"
+};
+
+static u8 D_psp_0917ED60[] = {
+#include "gen_D_psp_0917ED60.h"
+};
+
+static u8 D_psp_0917FF10[] = {
+#include "gen_D_psp_0917FF10.h"
+};
+
+static u8 D_psp_09180EC0[] = {
+#include "gen_D_psp_09180EC0.h"
+};
+
+static u8 D_psp_09182028[] = {
+#include "gen_D_psp_09182028.h"
+};
+
+static u_long* g_FontImage[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x380, 128, 128, font_eu),
+    GFX_TERMINATE(),
+};
+
+static u_long* D_psp_09183150[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x280, 128, 128, D_psp_0917DCA8),
+    GFX_TERMINATE(),
+};
+
+static u_long* D_psp_09183168[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x3C0, 32, 128, D_psp_09148C10),
+    GFX_TERMINATE(),
+};
+
+s32 D_800ACE00[] = {
+    PAD_SQUARE, PAD_CIRCLE, PAD_CROSS,       PAD_TRIANGLE,
+    PAD_L1,     PAD_R1,     PAD_L1 | PAD_R1, 0,
+};
+
+// BSS
+s32 D_800ACEDC_hd = 0;
+s32 D_800ACE44 = 0;
+s32 D_800ACDF8 = 0;
+s32 D_800ACDFC = 0;
+static s32 D_psp_09234B88 = 0;
+static s32 D_psp_09234B90 = 0;
+extern s32 D_80137FB4;
+extern s32 D_80137FB8;
 #endif
 
 #include "../get_lang.h"
@@ -140,29 +202,6 @@ void func_801093C4(void) {
         prim->drawMode = DRAW_UNK_800;
     }
 }
-
-// BSS
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-#if defined(VERSION_US)
-extern s32 D_80137FBC;
-#endif
-
-extern s32 D_psp_09148C10[];
-extern s32 D_psp_091490B0[];
-extern s32 D_psp_09149550[];
-extern s32 D_psp_091499F0[];
-
-extern s32 D_psp_0917DCA8[];
-extern s32 D_psp_0917ED60[];
-extern s32 D_psp_0917FF10[];
-extern s32 D_psp_09180EC0[];
-extern s32 D_psp_09182028[];
-extern s32 D_psp_09183138;
-extern s32 D_psp_09183150;
-extern s32* D_psp_0918315C;
-extern s32 D_psp_09183168;
-extern s32* D_psp_09183174;
 
 // Corresponding RIC function is RicInit
 void AluInit() {
@@ -271,14 +310,14 @@ void AluInit() {
         }
     }
 #ifdef VERSION_PSP
-    func_psp_091040A0(&D_psp_09183138);
-    D_psp_0918315C = GetLang(D_psp_0917DCA8, D_psp_09180EC0, D_psp_0917ED60,
-                             D_psp_09182028, D_psp_0917FF10);
-    func_psp_091040A0(&D_psp_09183150);
-    D_psp_09183174 = GetLang(
-        0, D_psp_09149550, D_psp_09148C10, D_psp_091499F0, D_psp_091490B0);
-    if (D_psp_09183174 != 0) {
-        func_psp_091040A0(&D_psp_09183168);
+    func_psp_091040A0(g_FontImage);
+    D_psp_09183150[3] = GetLang(D_psp_0917DCA8, D_psp_09180EC0, D_psp_0917ED60,
+                                D_psp_09182028, D_psp_0917FF10);
+    func_psp_091040A0(D_psp_09183150);
+    D_psp_09183168[3] = GetLang(
+        NULL, D_psp_09149550, D_psp_09148C10, D_psp_091499F0, D_psp_091490B0);
+    if (D_psp_09183168[3] != NULL) {
+        func_psp_091040A0(D_psp_09183168);
     }
 #endif
 }
@@ -578,12 +617,6 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
 
     return TELEPORT_CHECK_NONE;
 }
-
-#if defined(VERSION_PSP)
-static s32 D_psp_09234B88 = 0;
-static s32 D_psp_09234B90 = 0;
-extern s32 D_800ACE00[];
-#endif
 
 void EntityAlucard() {
 #if defined(VERSION_PSP)
@@ -1473,7 +1506,7 @@ block_160:
         g_CurrentEntity->nFramesInvincibility = 0;
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
-            sp3c = D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+            sp3c = (unkstr_800cfe48*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
 #ifdef VERSION_US

@@ -80,14 +80,14 @@ void func_pspeu_09246B10(void) {
     memcpy((u8*)&g_api, (u8*)&OVL_EXPORT(Overlay), sizeof(Overlay));
 }
 
-extern LangImg D_pspeu_0925D660;
-extern LangImg D_pspeu_0925D678;
-extern LangImg D_pspeu_0925D690;
-extern LangImg D_pspeu_0925D6A8;
+extern u_long* D_pspeu_0925D660[];
+extern u_long* D_pspeu_0925D678[];
+extern u_long* D_pspeu_0925D690[];
+extern u_long* D_pspeu_0925D6A8[];
 
 void func_pspeu_09246B88(void) {
-    func_91040A0(&D_pspeu_0925D660);
-    func_91040A0(&D_pspeu_0925D678);
-    func_91040A0(&D_pspeu_0925D690);
-    func_91040A0(&D_pspeu_0925D6A8);
+    func_91040A0(D_pspeu_0925D660);
+    func_91040A0(D_pspeu_0925D678);
+    func_91040A0(D_pspeu_0925D690);
+    func_91040A0(D_pspeu_0925D6A8);
 }

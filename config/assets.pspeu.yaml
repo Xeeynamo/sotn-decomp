@@ -34,8 +34,20 @@ files:
           - [0x82D38, cmpgfx, intro_right_ge, 128, 128, 4]
           - [0x82FC0, cmpgfx, intro_right_fr, 128, 128, 4]
           - [0x83278, skip]
+          - [0xA05C0, cmpgfx, font_eu, 128, 128, 4]
+          - [0xA1328, cmpgfx, D_psp_0917DCA8, 128, 128, 4]
+          - [0xA23E0, cmpgfx, D_psp_0917ED60, 128, 128, 4]
+          - [0xA3590, cmpgfx, D_psp_0917FF10, 128, 128, 4]
+          - [0xA4540, cmpgfx, D_psp_09180EC0, 128, 128, 4]
+          - [0xA56A8, cmpgfx, D_psp_09182028, 128, 128, 4]
+          - [0xA67B8, skip]
           - [0xA6FD8, blueprintsdef, blueprints, AluBlueprints, AluEntities]
           - [0xA72BC, skip]
+          - [0xAD4E0, cmpgfx, D_psp_09189E60, 128, 128, 4]
+          - [0xADD10, cmpgfx, D_psp_0918A690, 128, 128, 4]
+          - [0xAE228, cmpgfx, D_psp_0918ABA8, 128, 128, 4]
+          - [0xAE820, cmpgfx, D_psp_0918B1A0, 128, 128, 4]
+          - [0xAEEB0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
     asset_path: assets/ric
     src_path: src/ric

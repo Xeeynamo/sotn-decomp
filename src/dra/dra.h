@@ -611,7 +611,7 @@ typedef union {
 } unionD_800ACFB4;
 extern unionD_800ACFB4 D_800ACFB4[];
 extern s16* D_800CF324[];
-extern unkstr_800cfe48* D_800CFE48[18];
+extern s16* D_800CFE48[18];
 extern PfnEntityUpdate D_800AD0C4[];
 extern s16 D_800AD54C[6];
 extern s32 D_800AD558[6];
@@ -826,7 +826,6 @@ bool CheckSwordBrothersInput();
 void func_80111928(void);
 void func_80111CC0(void);
 bool func_80111D24(void);
-void func_80115C50(void);
 void func_80118894(Entity*);
 Entity* func_80118970(void);
 void func_80118C28(s32 arg0);

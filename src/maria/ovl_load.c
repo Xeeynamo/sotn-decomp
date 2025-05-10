@@ -98,20 +98,52 @@ static u16 crash_cardinal_pal[] = {
 #include "gen_crash_cardinal_pal.h"
 };
 
-static LangImg wpn_owl_img = {4, 0, {0x000, 0x180, 128, 128}, wpn_owl_gfx, -1};
-static LangImg wpn_turtle_img = {
-    4, 0, {0x000, 0x100, 128, 128}, wpn_turtle_gfx, -1};
-static LangImg wpn_cat_img = {4, 0, {0x000, 0x140, 128, 128}, wpn_cat_gfx, -1};
-static LangImg wpn_cardinal_img = {
-    4, 0, {0x000, 0x120, 128, 128}, wpn_cardinal_gfx, -1};
-static LangImg wpn_dragon_img = {
-    4, 0, {0x000, 0x160, 128, 128}, wpn_dragon_gfx, -1};
-static LangImg wpn_doll_img = {
-    4, 0, {0x000, 0x1A0, 128, 128}, wpn_doll_gfx, -1};
-static LangImg crash_img = {
-    4, 0, {0x000, 0x1C0, 128, 128}, crash_turtle_gfx, -1};
-static LangImg hud_img = {4, 0, {0x100, 0x2C0, 128, 128}, hud_en, -1};
-static LangImg items_img = {4, 0, {0x180, 0x3A0, 128, 128}, items_gfx, -1};
+// clang-format
+static u_long* wpn_owl_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x180, 128, 128, wpn_owl_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* wpn_turtle_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x100, 128, 128, wpn_turtle_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* wpn_cat_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x140, 128, 128, wpn_cat_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* wpn_cardinal_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x120, 128, 128, wpn_cardinal_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* wpn_dragon_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x160, 128, 128, wpn_dragon_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* wpn_doll_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x1A0, 128, 128, wpn_doll_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* crash_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x000, 0x1C0, 128, 128, crash_turtle_gfx),
+    GFX_TERMINATE(),
+};
+static u_long* hud_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x2C0, 128, 128, hud_en),
+    GFX_TERMINATE(),
+};
+static u_long* items_img[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x180, 0x3A0, 128, 128, items_gfx),
+    GFX_TERMINATE(),
+};
 
 static void LoadPatchedPalette(s32 paletteID, u16* palette) {
     s32 i;
@@ -141,40 +173,40 @@ void MarLoadPalettes(void) {
 void func_pspeu_092C0138(s32 arg0) {
     switch (arg0) {
     case 1:
-        crash_img.imgData = crash_cardinal_gfx;
+        crash_img[3] = (u_long*)crash_cardinal_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_cardinal_pal);
         break;
     case 2:
-        crash_img.imgData = crash_cat_gfx;
+        crash_img[3] = (u_long*)crash_cat_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_cat_pal);
         break;
     case 3:
-        crash_img.imgData = crash_turtle_gfx;
+        crash_img[3] = (u_long*)crash_turtle_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_turtle_pal);
         break;
     case 4:
-        crash_img.imgData = crash_dragon_gfx;
+        crash_img[3] = (u_long*)crash_dragon_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_dragon_pal);
         break;
     }
-    func_91040A0(&crash_img);
+    func_91040A0(crash_img);
 }
 
 void MarLoadGraphics(void) {
-    func_91040A0(&hud_img);
-    func_91040A0(&items_img);
+    func_91040A0(hud_img);
+    func_91040A0(items_img);
 }
 
-extern PlayerOvl D_pspeu_092C0400;
+extern PlayerOvl MARIA_player;
 void MAR_Load(void) {
-    memcpy(&g_PlOvl, &D_pspeu_092C0400, sizeof(PlayerOvl));
+    memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
-    func_91040A0(&wpn_owl_img);
-    func_91040A0(&wpn_turtle_img);
-    func_91040A0(&wpn_cat_img);
-    func_91040A0(&wpn_cardinal_img);
-    func_91040A0(&wpn_dragon_img);
-    func_91040A0(&wpn_doll_img);
+    func_91040A0(wpn_owl_img);
+    func_91040A0(wpn_turtle_img);
+    func_91040A0(wpn_cat_img);
+    func_91040A0(wpn_cardinal_img);
+    func_91040A0(wpn_dragon_img);
+    func_91040A0(wpn_doll_img);
 
     if (((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx == -48) {
         ((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx--;

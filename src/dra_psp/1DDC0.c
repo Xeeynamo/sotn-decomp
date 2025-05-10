@@ -3,9 +3,10 @@
 #include "../dra/dra_bss.h"
 #include "lba.h"
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/1DDC0", func_psp_090FA740);
-
 extern u_long D_8D6DC40;
+extern s32 D_psp_091CE360;
+extern s32 D_psp_091CE368;
+extern s32 D_psp_091CE370;
 extern u_long* D_psp_091CE378;
 extern u_long* clutAddr;
 extern s32 D_8B42064;
@@ -14,6 +15,15 @@ extern s32 g_SimVabId;
 extern SimFile D_80136450;
 extern u8 g_ServantDesc;
 extern s32 g_UserLanguage;
+
+void func_psp_090FA740(void) {
+    D_psp_091CE368++;
+    D_psp_091CE370 = (D_psp_091CE368 >> 2) & 0x1F;
+    func_psp_09144C80();
+    if (D_psp_091CE360 == 0) {
+        D_psp_091CE360 = 0;
+    }
+}
 
 SimFile D_800A024C[] = {
     {

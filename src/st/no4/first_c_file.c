@@ -80,7 +80,34 @@ void func_us_801C542C(Entity* self) {
     self->rotZ += D_us_801815FC[params];
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5518);
+extern s16 D_us_8018162C[];
+
+void func_us_801C5518(Entity* self) {
+    Tilemap* tmap;
+    u16 diff;
+    s16* dataPtr;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+    }
+
+    tmap = &g_Tilemap;
+    dataPtr = &D_us_8018162C[self->params << 2];
+    diff = PLAYER.posX.i.hi + tmap->scrollX.i.hi - *dataPtr++;
+
+    if (*dataPtr++ >= diff) {
+        diff = PLAYER.posY.i.hi + tmap->scrollY.i.hi - *dataPtr++;
+        if (*dataPtr >= diff) {
+            if (PLAYER.velocityY < 0) {
+                PLAYER.velocityY *= 7;
+                PLAYER.velocityY /= 8;
+            } else if (PLAYER.velocityY > 0) {
+                PLAYER.nFramesInvincibility = 1;
+            }
+        }
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5628);
 

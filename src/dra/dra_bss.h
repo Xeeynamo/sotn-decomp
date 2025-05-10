@@ -187,7 +187,7 @@ extern u8 D_8018B4E0[108048]; // VAB file
 extern u8 D_801A9C80[64496];  // VAB file
 extern u16 g_CurSfxVol22_23;
 extern u8 D_8013AEE8;
-extern u8 g_SoundInitialized;
+volatile extern u8 g_SoundInitialized;
 extern s16 g_SeqVolume2;
 extern s32 D_8013AEF4;
 extern s32 D_8013B158;

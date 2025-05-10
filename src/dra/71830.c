@@ -1984,7 +1984,7 @@ void PlayerStepUnk17(void) {
 }
 
 // same as RIC/func_8015BB80
-void func_80115C50(void) {
+static void func_80115C50(void) {
     if (g_StageId == STAGE_TOP) {
         if (abs((g_Tilemap.left << 8) + g_PlayerX) - 8000 > 0) {
             PLAYER.posX.i.hi--;

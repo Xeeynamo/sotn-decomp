@@ -250,7 +250,7 @@ typedef enum {
 #define STAGE_PRG_PTR D_8D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
 #ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR 0x801E8000
+#define DEMO_KEY_PTR D_8D95C40
 #endif
 #define SIM_CHR0 D_8C6BC40
 #define SIM_CHR1 D_8C6FC40
@@ -260,6 +260,7 @@ extern u8 g_BmpCastleMap[0x20000];
 extern u8 D_8C6BC40[];
 extern u8 D_8C6FC40[];
 extern u8 D_8D2DC40[];
+extern u8 D_8D95C40[];
 
 #endif
 
@@ -832,7 +833,7 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 hitboxState; // hitbox state
+    /* 0x3C */ u16 hitboxState;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ u16 attackElement;
@@ -1609,7 +1610,7 @@ typedef struct {
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
-    /* 8003C8A0 */ void* unused12C;
+    /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     // this matches on both versions but doing this to show the difference
 #if defined(VERSION_PSP)
     /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
@@ -2075,16 +2076,8 @@ typedef enum {
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
-typedef struct {
-    s16 unk00;
-    s16 unk02;
-    RECT rect;
-    u8* imgData;
-    s32 unk10;
-    s32 unk14;
-} LangImg;
-
 void func_892667C(s32 paletteID, u16* palette);
-void func_91040A0(LangImg* img);
+void func_892796C(SVECTOR* in, VECTOR* out, s32* arg3);
+void func_91040A0(u_long** gfxBank);
 
 #endif

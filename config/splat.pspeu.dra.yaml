@@ -109,7 +109,6 @@ segments:
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, data]
       - [0xA0578, .data, dra/692E8]
-      - [0xA05C0, data]
       - [0xA6820, .data, dra/71830]
       - [0xA6888, .data, dra/70394]
       - [0xA6890, .data, dra/704D0] # Strings in hellfire and sword brothers
@@ -129,7 +128,8 @@ segments:
       - [0xAA578, .data, dra/66590]
       - [0xAA6E8, .data, dra_psp/62FE0]
       - [0xAA8A0, .data, dra_psp/63C08]
-      - [0xAD460, data]
+      - [0xAD460, .data, dra/d_37d8]
+      - [0xAF398, data]
       - [0xB2C40, .data, dra/sfx_scripts]
       - [0xB4548, data]
       - [0xEE380, .rodata, dra/62EB8]
