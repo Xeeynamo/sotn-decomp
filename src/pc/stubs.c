@@ -132,7 +132,7 @@ s16 D_800AC958[] = {
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
 SeqData g_SeqInfo[22];
-struct XaMusicConfig g_XaMusicConfigs[563] = {0};
+struct XaMusicConfig g_XaMusicConfigs[563];
 
 // other stubs
 s32 D_800974A4;
