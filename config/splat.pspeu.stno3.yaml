@@ -44,14 +44,14 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, no3_psp/first_c_file]
+      - [0x80, c, no3_psp/st_init_no3]
       - [0xD90, c, no3_psp/D90]
       - [0x1AA80, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
       - [0x21CC8, c, no3_psp/collision]
       - [0x28140, c, no3_psp/e_room_fg]
       - [0x2A680, data]
-      - [0x33D60, .data, no3_psp/first_c_file]
+      - [0x33D60, .data, no3_psp/st_init_no3]
       - [0x33EA8, data]
       - [0x33FB0, .data, no3_psp/cutscene_data]
       - [0x347E0, data]
