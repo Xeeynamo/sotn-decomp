@@ -7,7 +7,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F8D8);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F970);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F9F8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AnimateEntity);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FB68);
 
@@ -23,7 +23,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FD40);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FFF8);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092602D8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AllocEntity);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260348);
 
@@ -31,11 +31,11 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092603F0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260470);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260568);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", SetStep);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092605B8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", SetSubStep);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092605F8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", InitializeEntity);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", EntityDummy);
 
