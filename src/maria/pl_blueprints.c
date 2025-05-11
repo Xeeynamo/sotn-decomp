@@ -16,7 +16,7 @@ static u8 D_80154674[][4] = {
     {16, 47, 63, 127}};
 
 static SubweaponDef subweapons_def[] = {
-#include "gen_subweapons.h"
+#include "gen/subweapons.h"
 };
 STATIC_ASSERT(LEN(subweapons_def) == NUM_WEAPONS, "weapons array wrong size");
 
@@ -119,14 +119,14 @@ s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
 }
 
 // Corresponding DRA function is func_80119E78
-u8 uv_anim_801548F4[6][8] = {
+static u8 uv_anim_801548F4[6][8] = {
     {0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60},
     {0x10, 0x50, 0x20, 0x50, 0x10, 0x60, 0x20, 0x60},
     {0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50},
     {0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38},
     {0x78, 0x30, 0x80, 0x30, 0x78, 0x38, 0x80, 0x38},
     {0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40}};
-s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
+static s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     s16 offset;
     s32 ret;
     u8* uvAnim;
@@ -181,7 +181,7 @@ void func_pspeu_092BF950(Entity* self);
 void func_pspeu_092AAA38(Entity* self);
 void func_pspeu_092AB1C0(Entity* self);
 void func_80161C2C(Entity* self);
-void func_pspeu_092B92F0(Entity* self);
+void EntityMariaOwl(Entity* self);
 void func_pspeu_092AAC80(Entity* self);
 void func_pspeu_092A82E0(Entity* self);
 void func_pspeu_092A8AE8(Entity* self);
@@ -218,7 +218,7 @@ static PfnEntityUpdate entity_functions[] = {
     func_pspeu_092AAA38,
     func_pspeu_092AB1C0,
     func_80161C2C,
-    func_pspeu_092B92F0,
+    EntityMariaOwl,
     func_pspeu_092AAC80,
     MarEntityDummy,
     func_pspeu_092A82E0,
@@ -372,7 +372,7 @@ Entity* MarCreateEntFactoryFromEntity(
 }
 
 static FactoryBlueprint blueprints[] = {
-#include "gen_blueprints.h"
+#include "gen/blueprints.h"
 };
 STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
@@ -1145,15 +1145,158 @@ void func_80162604(Entity* self) {
 
 INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B91A8);
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B91B8);
+// not to be confused with MarSetSubweaponParams
+void MarSetWeaponParams(Entity* entity, s32 attack, s32 attackElement,
+                        s32 hitboxState, s32 nFramesInvincibility,
+                        s32 stunFrames, s32 hitEffect, s32 entityRoomIndex) {
+    entity->attack = attack;
+    entity->attackElement = attackElement;
+    entity->hitboxState = hitboxState;
+    entity->nFramesInvincibility = nFramesInvincibility;
+    entity->stunFrames = stunFrames;
+    entity->hitEffect = hitEffect;
+    entity->entityRoomIndex = entityRoomIndex;
+    entity->attack = g_api.CalcDealDamageMaria(entity->attack);
+    func_8015F9F0(entity);
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B9298);
+static s32 NormalizeAngle(s32 angle) {
+    angle %= 0x1000;
+    if (angle < 0) {
+        angle += 0x1000;
+    }
+    return angle;
+}
 
 static u16 D_pspeu_092C59E8[][2] = {
     POSE(5, 1, 0),  POSE(1, 2, 0), POSE(1, 3, 0), POSE(1, 4, 0), POSE(3, 5, 0),
     POSE(3, 6, 0),  POSE(2, 7, 0), POSE(4, 8, 0), POSE(2, 7, 0), POSE(3, 9, 0),
     POSE(3, 10, 0), POSE(1, 4, 0), POSE(1, 3, 0), POSE(1, 2, 0), POSE_LOOP(0)};
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B92F0);
+void EntityMariaOwl(Entity* self) {
+    s32 acceleration;
+
+    acceleration = 0x40;
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_POS_CAMERA_LOCKED;
+        self->unk5A = 0x18;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_OWL;
+        self->animSet = ANIMSET_OVL(17);
+        MarSetAnimation(D_pspeu_092C59E8);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = FIX(4);
+        self->posX.i.hi = PLAYER.posX.i.hi + (PLAYER.facingLeft ? -4 : 4);
+        self->posY.i.hi = PLAYER.posY.i.hi - 0xC;
+        if (PLAYER.step == PL_S_CROUCH) {
+            self->posY.i.hi += 12;
+        }
+        self->ext.mariaOwl.angle += self->facingLeft ? 0 : 0x800;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 16;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.mariaOwl.unkB0 = 0;
+        MarSetWeaponParams(self, 12, ELEMENT_HOLY, 2, 40, 16, 1, 0);
+        self->ext.mariaOwl.timer = 0;
+        self->step++;
+        break;
+    case 1:
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->ext.mariaOwl.timer++;
+        if (self->ext.mariaOwl.timer >= 15) {
+            self->step++;
+            return;
+        }
+        break;
+    case 2:
+        self->velocityY = FIX(1);
+        self->posY.val -= self->velocityY;
+        self->ext.mariaOwl.unk7E++;
+        self->velocityX += FIX(-0.5) + FIX(-0.5);
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        if (self->velocityX <= 0) {
+            self->facingLeft = self->facingLeft ? 0 : 1;
+            self->velocityX = 0;
+            self->step++;
+            return;
+        }
+        break;
+    case 3:
+        self->velocityY = FIX(1);
+        self->posY.val -= self->velocityY;
+        self->ext.mariaOwl.unk7E++;
+        self->ext.mariaOwl.timer++;
+        if (self->ext.mariaOwl.timer >= 20) {
+            self->ext.mariaOwl.timer = 15;
+            self->step++;
+        }
+        break;
+    case 4:
+        self->ext.mariaOwl.velocityX = 0;
+        self->step++;
+        break;
+    case 5: {
+        MATRIX sp6C;
+        VECTOR sp5C = {0, 0, 0};
+        VECTOR sp4C;
+        SVECTOR sp44;
+        s32 sp40;
+        s32 x;
+        s32 y;
+        s32 var_s0;
+        x = PLAYER.posX.i.hi;
+        y = PLAYER.posY.i.hi +
+            (PLAYER.step == PL_S_CROUCH || PLAYER.step == PL_S_SLIDE ? -12
+                                                                     : -24);
+        if (abs(x - self->posX.i.hi) < 12 && abs(y - self->posY.i.hi) < 12) {
+            self->step++;
+            return;
+        }
+        self->ext.mariaOwl.angle = NormalizeAngle(self->ext.mariaOwl.angle);
+        var_s0 =
+            NormalizeAngle(ratan2(y - self->posY.i.hi, x - self->posX.i.hi));
+        if (self->ext.mariaOwl.angle < var_s0) {
+            if (var_s0 - self->ext.mariaOwl.angle < 0x800) {
+                self->ext.mariaOwl.angle += 0x80;
+            } else {
+                self->ext.mariaOwl.angle -= 0x80;
+            }
+        } else {
+            if (self->ext.mariaOwl.angle - var_s0 < 0x800) {
+                self->ext.mariaOwl.angle -= 0x80;
+            } else {
+                self->ext.mariaOwl.angle += 0x80;
+            }
+        }
+        self->ext.mariaOwl.velocityX += acceleration;
+        if (self->ext.mariaOwl.velocityX > 0x400) {
+            self->ext.mariaOwl.velocityX = 0x400;
+        }
+        SetGeomOffset(0, 0);
+        func_89285A0(self->ext.mariaOwl.angle, &sp6C); // rotate matirx by angle
+        TransMatrix(&sp6C, &sp5C);
+        SetRotMatrix(&sp6C);
+        SetTransMatrix(&sp6C);
+        sp44.vx = self->ext.mariaOwl.velocityX;
+        sp44.vy = 0;
+        sp44.vz = 0;
+        func_892796C(&sp44, &sp4C, &sp40);
+        self->velocityX = sp4C.vx << 8;
+        self->velocityY = sp4C.vy << 8;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->velocityX != 0) {
+            self->facingLeft = self->velocityX < 0 ? 1 : 0;
+            return;
+        }
+    } break;
+    case 6:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 // same as DRA/func_8011BD48
 bool func_80162E9C(Entity* entity) {

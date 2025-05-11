@@ -13,7 +13,7 @@ type palettePng struct{}
 
 func (_ *palettePng) Export(w io.Writer, colors []color.RGBA) error {
 	width := 16
-	height := min(len(colors)>>4, 1)
+	height := max(len(colors)>>4, 1)
 	data := make([]byte, len(colors))
 	for i := 0; i < len(colors); i++ {
 		data[i] = byte(i)

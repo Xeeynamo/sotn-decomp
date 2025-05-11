@@ -214,10 +214,10 @@ bool InitGame(struct InitGameParams* params) {
     api.CalcPlayerDamage = CalcPlayerDamage;
     api.LearnSpell = LearnSpell;
     api.DebugInputWait = DebugInputWait;
-    api.unused12C = NULL;
-    api.unused130 = NULL;
-    api.unused134 = NULL;
-    api.unused138 = NULL;
+    api.CalcDealDamageMaria = NULL;
+    api.CalcPlayerDamageMaria = NULL;
+    api.func_ptr_91CF86C = NULL;
+    api.func_ptr_91CF870 = NULL;
     api.unused13C = NULL;
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
@@ -252,12 +252,6 @@ bool InitGame(struct InitGameParams* params) {
 
     if (!FileAsString(InitXaData, "assets/dra/music_xa.json", NULL)) {
         ERRORF("failed to init xa data");
-        return false;
-    }
-
-    if (!FileAsString(InitBlueprintData, "assets/dra/factory_blueprint.json",
-                      g_FactoryBlueprints)) {
-        ERRORF("failed to init dra blueprint data");
         return false;
     }
 

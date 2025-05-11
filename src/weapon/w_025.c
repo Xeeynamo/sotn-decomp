@@ -4,8 +4,8 @@
 #include "weapon_private.h"
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
-#include "gen_w_025_1.h"
-#include "gen_w_025_2.h"
+#include "gen/w_025_1.h"
+#include "gen/w_025_2.h"
 #define g_Animset w_025_1
 #define g_Animset2 w_025_2
 #include "shared.h"

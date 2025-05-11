@@ -52,10 +52,7 @@ segments:
       - [0xA710, c, dra/5087C] # O4
       - [0xE588, c, dra_psp/E588]
       - [0x186E8, c, dra_psp/186E8]
-      - [0x199E8, c, dra_psp/199E8]
-      - [0x19AB0, c, dra_psp/19AB0]
-      - [0x1A0D0, c, dra_psp/play]
-      - [0x1B9C8, c, dra_psp/loading] # O4
+      - [0x199E8, c, dra/game_handlers] # O4
       - [0x1DDC0, c, dra_psp/1DDC0] # O4
       - [0x1FB60, c, dra/4B758] # O0
       - [0x21FC8, c, dra_psp/demo] # O0
@@ -103,9 +100,7 @@ segments:
       - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
       #- [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
       - [0x6DE50, data]
-      - [0x6FA58, .data, dra_psp/play]
-      - [0x7A5C0, data]
-      - [0x7E7C8, .data, dra_psp/loading]
+      - [0x6F948, .data, dra/game_handlers]
       - [0x832A8, .data, dra_psp/1DDC0]
       - [0x84028, .data, dra/4B758]
       - [0x84080, .data, dra_psp/demo]
@@ -145,9 +140,7 @@ segments:
       - [0xEE3E8, .rodata, dra/628AC]
       - [0xEE408, .rodata, dra/5087C]
       - [0xEE4C8, .rodata, dra_psp/E588]
-      - [0xEE570, .rodata, dra_psp/19AB0]
-      - [0xEE590, .rodata, dra_psp/play]
-      - [0xEE5C0, .rodata, dra_psp/loading]
+      - [0xEE570, .rodata, dra/game_handlers]
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra/5D5BC]
       - [0xEE6C8, .rodata, dra/4AEA4]

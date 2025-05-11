@@ -224,7 +224,7 @@ typedef enum {
 #define WEAPON_0_END (WEAPON_1_START - 1)
 #define WEAPON_1_START 0xF0
 
-#if defined(VERSION_US) || defined(VERSION_HD)
+#if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
 #define DRA_PRG_PTR 0x800A0000
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020
@@ -591,8 +591,13 @@ typedef enum {
     Play_LoadStagePrg,
     // Wait until the previous operation is complete
     Play_WaitStagePrg,
+    Play_Unk11,
+    Play_Unk12,
+    Play_Unk13,
+    Play_Unk14,
+    Play_Unk15,
     // Used by the ST0 prologue scroll and now loading screen
-    Play_16 = 16,
+    Play_16,
 
     // Deallocate stage resources
     Gameover_Init = 0,
@@ -828,7 +833,7 @@ typedef struct Entity {
     /* 0x34 */ s32 flags;
     /* 0x38 */ s16 unk38;
     /* 0x3A */ u16 enemyId;
-    /* 0x3C */ u16 hitboxState; // hitbox state
+    /* 0x3C */ u16 hitboxState;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
     /* 0x42 */ u16 attackElement;
@@ -1617,17 +1622,12 @@ typedef struct {
     /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
-    /* 8003C8A0 */ void* unused12C;
-    // this matches on both versions but doing this to show the difference
-#if defined(VERSION_PSP)
+
+    // exclusive to PSP
+    /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
     /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
     /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
     /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
-#else
-    /* 8003C8A4 */ void* unused130;
-    /* 8003C8A8 */ void* unused134;
-    /* 8003C8AC */ void* unused138;
-#endif
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
@@ -2084,6 +2084,7 @@ typedef enum {
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
 void func_892667C(s32 paletteID, u16* palette);
+void func_892796C(SVECTOR* in, VECTOR* out, s32* arg3);
 void func_91040A0(u_long** gfxBank);
 
 #endif

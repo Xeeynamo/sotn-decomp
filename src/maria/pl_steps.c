@@ -792,21 +792,11 @@ enum DeathKind {
     DEATH_BY_THUNDER,
     DEATH_BY_ICE,
 };
-#if defined(VERSION_PSP)
 extern u8 dead_dissolve_bmp[0x1400];
 extern s16 D_80174F68;
 extern s16 D_80174F6C;
 extern enum DeathKind death_kind;
-// RECT D_801545A0 = {512, 256, 32, 80};
-extern RECT D_801545A0;
-#else
-static u8 dead_dissolve_bmp[0x1400];
-static s16 D_80174F68;
-STATIC_PAD_BSS(2);
-static s16 D_80174F6C;
-STATIC_PAD_BSS(2);
-static enum DeathKind death_kind;
-#endif
+static RECT D_801545A0 = {512, 256, 32, 80};
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
     s32 j;

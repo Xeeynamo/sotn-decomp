@@ -5,10 +5,10 @@ files:
     src_path: src/dra
     splat_config_path: config/splat.pspeu.dra.yaml
     segments:
-      - start: 0x80
-        vram: 0x090DCA00
+      - start: 0
+        vram: 0x090DC980
         assets:
-          - [0x80, skip]
+          - [0x0, skip]
           - [0x6FA68, cmpgfx, game_over_left_it, 128, 128, 4]
           - [0x70ED0, cmpgfx, game_over_left_sp, 128, 128, 4]
           - [0x72530, cmpgfx, game_over_left_fr, 128, 128, 4]
@@ -18,6 +18,8 @@ files:
           - [0x778A0, cmpgfx, game_over_right_fr, 128, 128, 4]
           - [0x78FC8, cmpgfx, game_over_right_ge, 128, 128, 4]
           - [0x7A590, skip]
+          - [0x7A5C8, rawgfx, D_psp_09156F48, 128, 128, 8, 0x7E5C8]
+          - [0x7E5C8, palette, D_psp_0915AF48, png, 256]
           - [0x7E7C8, cmpgfx, loading_fr, 128, 128, 4]
           - [0x7F548, cmpgfx, loading_it, 128, 128, 4]
           - [0x802F8, cmpgfx, loading_ge, 128, 128, 4]

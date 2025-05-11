@@ -3,6 +3,7 @@ package spritebanks
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"os"
 	"path/filepath"
@@ -125,8 +126,8 @@ func buildSprites(fileName string, outputDir string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := os.WriteFile(filepath.Join(outputDir, "gen_sprites.c"), []byte(sbData.String()), 0644); err != nil {
+	if err := util.WriteFile(filepath.Join(outputDir, "gen/sprites.c"), []byte(sbData.String())); err != nil {
 		return err
 	}
-	return os.WriteFile(filepath.Join(outputDir, "gen_sprite_banks.h"), []byte(sbHeader.String()), 0644)
+	return util.WriteFile(filepath.Join(outputDir, "gen/sprite_banks.h"), []byte(sbHeader.String()))
 }

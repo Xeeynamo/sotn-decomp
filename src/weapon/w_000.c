@@ -6,8 +6,8 @@
 // Mourneblade, Badelaire, Unknown#169
 
 #include "weapon_private.h"
-#include "gen_w_000_1.h"
-#include "gen_w_000_2.h"
+#include "gen/w_000_1.h"
+#include "gen/w_000_2.h"
 #define g_Animset w_000_1
 #define g_Animset2 w_000_2
 #include "sfx.h"

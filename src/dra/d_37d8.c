@@ -51,19 +51,19 @@ extern u16 D_800DB1F4[0xE0];
 #ifdef VERSION_PSP
 
 u8 D_psp_09189E60[] = {
-#include "../dra/gen_D_psp_09189E60.h"
+#include "../dra/gen/D_psp_09189E60.h"
 };
 
 u8 D_psp_0918A690[] = {
-#include "../dra/gen_D_psp_0918A690.h"
+#include "../dra/gen/D_psp_0918A690.h"
 };
 
 u8 D_psp_0918ABA8[] = {
-#include "../dra/gen_D_psp_0918ABA8.h"
+#include "../dra/gen/D_psp_0918ABA8.h"
 };
 
 u8 D_psp_0918B1A0[] = {
-#include "../dra/gen_D_psp_0918B1A0.h"
+#include "../dra/gen/D_psp_0918B1A0.h"
 };
 
 #endif

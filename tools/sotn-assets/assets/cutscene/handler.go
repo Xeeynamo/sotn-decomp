@@ -114,7 +114,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		sb.WriteString(strings.Join(args[1:], ","))
 		sb.WriteString("),\n")
 	}
-	return os.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()), 0644)
+	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -132,7 +132,7 @@ func sourcePath(dir, name string) string {
 	if name == "" {
 		name = "cutscene_script"
 	}
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }
 
 type cmdDef struct {

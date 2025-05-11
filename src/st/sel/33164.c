@@ -348,7 +348,7 @@ s32 func_801B3E2C(void) {
     blockId = g_SaveSummary[port].slot[slot];
     switch (g_MemCardRStep) {
     case 0:
-        MemcardInit(slot, blockId);
+        MemcardInit();
         g_MemCardRetryCount = 10;
         g_MemCardRStep++;
         break;

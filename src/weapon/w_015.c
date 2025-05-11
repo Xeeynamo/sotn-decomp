@@ -5,8 +5,8 @@
 extern u16* g_WeaponCluts[];
 extern s32 g_HandId;
 #include "shared.h"
-#include "gen_w_015_1.h"
-#include "gen_w_015_2.h"
+#include "gen/w_015_1.h"
+#include "gen/w_015_2.h"
 #define g_Animset w_015_1
 #define g_Animset2 w_015_2
 #include "sfx.h"
