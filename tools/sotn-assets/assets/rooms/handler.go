@@ -45,7 +45,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 func (h *handler) Build(e assets.BuildArgs) error {
 	inPath := assetPath(e.AssetDir, e.Name)
 	outPath := sourcePath(e.SrcDir, e.Name)
-	ovlName := filepath.Base(filepath.Dir(outPath))
+	ovlName := filepath.Base(filepath.Dir(inPath))
 	data, err := os.ReadFile(inPath)
 	if err != nil {
 		return err
@@ -66,7 +66,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		content.WriteString(s)
 	}
 	content.WriteString("    0x40\n};\n")
-	return os.WriteFile(outPath, []byte(content.String()), 0644)
+	return util.WriteFile(outPath, []byte(content.String()))
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -101,7 +101,7 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.c", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.c", name))
 }
 
 func (r Room) isTerminator() bool {

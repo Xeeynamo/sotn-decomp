@@ -3,8 +3,8 @@
 // Shield rod, Unknown#173
 #define FUNC_04_VOID
 #include "weapon_private.h"
-#include "gen_w_007_1.h"
-#include "gen_w_007_2.h"
+#include "gen/w_007_1.h"
+#include "gen/w_007_2.h"
 #define g_Animset w_007_1
 #define g_Animset2 w_007_2
 #include "sfx.h"

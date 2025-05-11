@@ -40,7 +40,7 @@ segments:
       - [0xA0, .data, header] # palette definitions
       - [0xE8, .data, header] # layers
       - [0x128, .data, header] # graphics banks
-      - [0x220, .data, gen_e_laydef] # layout entries header
+      - [0x220, .data, gen/e_laydef] # layout entries header
       - [0x3C8, data]
       - [0x580, .data, st_debug]
       - [0x610, data]
@@ -60,9 +60,9 @@ segments:
       - [0x1270, .data, e_misc]
       - [0x12D4, .data, e_misc]
       - [0x138C, data]
-      - [0x1498, .data, gen_rooms]
+      - [0x1498, .data, gen/rooms]
       - [0x14AC, data]
-      - [0x1608, .data, gen_e_layout] # layout entries data
+      - [0x1608, .data, gen/e_layout] # layout entries data
       - [0x16C0, data]
       - [0x16C8, .data, cutscene_data]
       - [0x1D08, data] # unused
@@ -91,7 +91,7 @@ segments:
       - [0xB448, pal, D_8018B448] # unused
       - [0xB548, .data, tile_data] # tile data
       - [0xBD48, .data, tile_data] # tile definitions
-      - [0x10168, .data, gen_sprites]
+      - [0x10168, .data, gen/sprites]
       - [0x1171C, .rodata, 11E34]
       - [0x11728, .rodata, succubus] # EntitySuccubus
       - [0x11808, .rodata, cutscene]

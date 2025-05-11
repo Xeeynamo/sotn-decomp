@@ -43,7 +43,7 @@ segments:
       - [0x8C, .data, header] # palette definitions
       - [0xCC, .data, header] # layers
       - [0xF4, .data, header] # graphics banks
-      - [0x168, .data, gen_e_laydef] # layout entries header
+      - [0x168, .data, gen/e_laydef] # layout entries header
       - [0x310, .data, e_init]
       - [0x4E8, .data, st_debug]
       - [0x568, .data, e_breakable]
@@ -60,9 +60,9 @@ segments:
       - [0x1174, .data, e_particles]
       - [0x11F4, .data, e_room_fg]
       - [0x1280, data, clock_room]
-      - [0x12EC, .data, gen_rooms]
+      - [0x12EC, .data, gen/rooms]
       - [0x1308, .data, e_life_up]
-      - [0x135C, .data, gen_e_layout] # layout entries data
+      - [0x135C, .data, gen/e_layout] # layout entries data
       - [0x1424, .data, cutscene_data]
       - [0x15DC, data]
       - [0x15F0, raw, cutscene_alucard]
@@ -76,7 +76,7 @@ segments:
       - [0x52E0, pal, D_801852E0]
       - [0x5300, .data, tile_data] # tile data
       - [0x5700, .data, tile_data] # tile definitions
-      - [0x9710, .data, gen_sprites]
+      - [0x9710, .data, gen/sprites]
       - [0xA9D4, .rodata, cutscene] # actor names
       - [0xA9EC, .rodata, cutscene]
       - [0xAA70, .rodata, CA94]

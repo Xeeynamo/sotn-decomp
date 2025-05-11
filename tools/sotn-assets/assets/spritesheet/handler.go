@@ -133,7 +133,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err != nil {
 			return fmt.Errorf("yaml error: %w", err)
 		}
-		return os.WriteFile(assetPath(e.AssetDir, e.Name), asYaml, 0644)
+		return util.WriteFile(assetPath(e.AssetDir, e.Name), asYaml)
 	})
 	return eg.Wait()
 }
@@ -247,5 +247,5 @@ func assetPath(dir, name string) string {
 }
 
 func sourcePath(dir, name string) string {
-	return filepath.Join(dir, fmt.Sprintf("gen_%s.h", name))
+	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
 }

@@ -292,13 +292,13 @@ set(SOURCE_FILES_STAGE_SEL
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
-    src/st/cen/gen_e_laydef.c
+    src/st/cen/gen/e_laydef.c
     src/st/cen/e_init.c
-    src/st/cen/gen_rooms.c
-    src/st/cen/gen_e_layout.c
+    src/st/cen/gen/rooms.c
+    src/st/cen/gen/e_layout.c
     src/st/cen/cutscene_data.c
     src/st/cen/tile_data.c
-    src/st/cen/gen_sprites.c
+    src/st/cen/gen/sprites.c
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
     src/st/cen/DB18.c
@@ -323,13 +323,13 @@ set(SOURCE_FILES_STAGE_CEN
 set(SOURCE_FILES_STAGE_NZ0
     src/pc/stages/stage_nz0.c
     src/st/nz0/header.c
-    src/st/nz0/gen_e_laydef.c
+    src/st/nz0/gen/e_laydef.c
     src/st/nz0/e_init.c
-    src/st/nz0/gen_rooms.c
-    src/st/nz0/gen_e_layout.c
+    src/st/nz0/gen/rooms.c
+    src/st/nz0/gen/e_layout.c
     src/st/nz0/cutscene_data.c
     src/st/nz0/tile_data.c
-    src/st/nz0/gen_sprites.c
+    src/st/nz0/gen/sprites.c
     src/st/nz0/st_debug.c
     src/st/nz0/e_lock_camera.c
     src/st/nz0/e_breakable.c
@@ -370,12 +370,12 @@ set(SOURCE_FILES_STAGE_NZ0
 set (SOURCE_FILES_STAGE_ST0
     src/pc/stages/stage_st0.c
     src/st/st0/header.c
-    src/st/st0/gen_e_laydef.c
+    src/st/st0/gen/e_laydef.c
     src/st/st0/e_init.c
-    src/st/st0/gen_rooms.c
-    src/st/st0/gen_e_layout.c
+    src/st/st0/gen/rooms.c
+    src/st/st0/gen/e_layout.c
     src/st/st0/tile_data.c
-    src/st/st0/gen_sprites.c
+    src/st/st0/gen/sprites.c
     src/st/st0/e_lock_camera.c
     src/st/st0/2805C.c
     src/st/st0/cutscene.c
@@ -407,15 +407,15 @@ set (SOURCE_FILES_STAGE_ST0
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
-    src/st/wrp/gen_e_laydef.c
+    src/st/wrp/gen/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/st_debug.c
     src/st/wrp/e_breakable.c
     src/st/wrp/d_prize_drops.c
-    src/st/wrp/gen_rooms.c
-    src/st/wrp/gen_e_layout.c
+    src/st/wrp/gen/rooms.c
+    src/st/wrp/gen/e_layout.c
     src/st/wrp/tile_data.c
-    src/st/wrp/gen_sprites.c
+    src/st/wrp/gen/sprites.c
     src/st/wrp/warp.c
     src/st/wrp/st_update.c
     src/st/wrp/collision.c

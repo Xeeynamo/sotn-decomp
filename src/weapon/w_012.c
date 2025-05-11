@@ -2,8 +2,8 @@
 // Weapon ID #12. Used by weapons:
 // Chakram, Vorpal blade, Crissaegrim
 #include "weapon_private.h"
-#include "gen_w_012_1.h"
-#include "gen_w_012_2.h"
+#include "gen/w_012_1.h"
+#include "gen/w_012_2.h"
 #define g_Animset w_012_1
 #define g_Animset2 w_012_2
 

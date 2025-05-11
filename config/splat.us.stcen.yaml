@@ -40,7 +40,7 @@ segments:
       - [0xA0, .data, header] # palette definitions
       - [0xDC, .data, header] # layers
       - [0x134, .data, header] # graphics banks
-      - [0x1EC, .data, gen_e_laydef] # layout entries header
+      - [0x1EC, .data, gen/e_laydef] # layout entries header
       - [0x394, .data, e_init]
       - [0x4D4, .data, st_debug]
       - [0x554, .data, e_breakable]
@@ -56,8 +56,8 @@ segments:
       - [0x1110, .data, e_misc]
       - [0x11C8, .data, e_particles]
       - [0x1248, .data, e_room_fg]
-      - [0x12D4, .data, gen_rooms]
-      - [0x1300, .data, gen_e_layout] # layout entries data
+      - [0x12D4, .data, gen/rooms]
+      - [0x1300, .data, gen/e_layout] # layout entries data
       - [0x13F0, .data, cutscene_data]
       - [0x1658, cmpgfx, stage_title_jp, 128, 128, 4]
       - [0x199C, cmpgfx, stage_placeholder, 128, 128, 4]
@@ -74,7 +74,7 @@ segments:
       - [0x69AC, pal, e_elevator_cen_p]
       - [0x69EC, .data, tile_data] # tile data
       - [0x81EC, .data, tile_data] # tile definitions
-      - [0xC60C, .data, gen_sprites]
+      - [0xC60C, .data, gen/sprites]
       - [0xD414, .rodata, e_init]
       - [0xD42C, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]

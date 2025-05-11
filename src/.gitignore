@@ -2,3 +2,5 @@
 !.gitignore
 gen_*.c
 gen_*.h
+**/gen/*.c
+**/gen/*.h

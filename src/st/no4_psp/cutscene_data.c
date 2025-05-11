@@ -4,42 +4,42 @@
 
 // Played when the ferryman takes the player right across the river
 u8 cutscene_data_ferryman_right_it[] = {
-#include "gen_cutscene_data_ferryman_right_it.h"
+#include "gen/cutscene_data_ferryman_right_it.h"
 };
 
 u8 cutscene_data_ferryman_right_sp[] = {
-#include "gen_cutscene_data_ferryman_right_sp.h"
+#include "gen/cutscene_data_ferryman_right_sp.h"
 };
 
 u8 cutscene_data_ferryman_right_fr[] = {
-#include "gen_cutscene_data_ferryman_right_fr.h"
+#include "gen/cutscene_data_ferryman_right_fr.h"
 };
 
 u8 cutscene_data_ferryman_right_ge[] = {
-#include "gen_cutscene_data_ferryman_right_ge.h"
+#include "gen/cutscene_data_ferryman_right_ge.h"
 };
 
 u8 cutscene_data_ferryman_right_en[] = {
-#include "gen_cutscene_data_ferryman_right_en.h"
+#include "gen/cutscene_data_ferryman_right_en.h"
 };
 
 // Played when the ferryman takes the player left across the river
 u8 cutscene_data_ferryman_left_it[] = {
-#include "gen_cutscene_data_ferryman_left_it.h"
+#include "gen/cutscene_data_ferryman_left_it.h"
 };
 
 u8 cutscene_data_ferryman_left_sp[] = {
-#include "gen_cutscene_data_ferryman_left_sp.h"
+#include "gen/cutscene_data_ferryman_left_sp.h"
 };
 
 u8 cutscene_data_ferryman_left_fr[] = {
-#include "gen_cutscene_data_ferryman_left_fr.h"
+#include "gen/cutscene_data_ferryman_left_fr.h"
 };
 
 u8 cutscene_data_ferryman_left_ge[] = {
-#include "gen_cutscene_data_ferryman_left_ge.h"
+#include "gen/cutscene_data_ferryman_left_ge.h"
 };
 
 u8 cutscene_data_ferryman_left_en[] = {
-#include "gen_cutscene_data_ferryman_left_en.h"
+#include "gen/cutscene_data_ferryman_left_en.h"
 };
