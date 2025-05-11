@@ -49,7 +49,7 @@ void func_pspeu_0923B288(Entity* self);
 void func_pspeu_0923B378(Entity* self);
 void func_pspeu_0923C460(Entity* self);
 void func_pspeu_0923D0B8(Entity* self);
-void func_pspeu_09238490(Entity* self);
+void func_us_801C123C(Entity* self);
 void func_pspeu_09241870(Entity* self);
 void func_pspeu_09241B28(Entity* self);
 void func_pspeu_09241E38(Entity* self);
@@ -147,7 +147,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x31 */ EntityDummy,
     /* 0x32 */ EntityDummy,
     /* 0x33 */ EntityDummy,
-    /* 0x34 */ func_pspeu_09238490,
+    /* 0x34 */ func_us_801C123C,
     /* 0x35 */ func_pspeu_09241870,
     /* 0x36 */ func_pspeu_09241B28,
     /* 0x37 */ func_pspeu_09241E38,
@@ -193,7 +193,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x5F */ func_pspeu_09243320,
 };
 
-EInit D_pspeu_09267A90 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
+EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
