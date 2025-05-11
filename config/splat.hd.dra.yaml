@@ -118,14 +118,14 @@ segments:
       - [0x18140, raw, vh_3] # aPbav_1
       - [0x1A140, data] # aPqes_1
       - [0x1D140, .data, 91EBC] # g_CdVolumeTable
-      - [0x1D260, .data, 91EBC] # g_VolumeTable
-      - [0x1D284, .data, 91EBC] # g_DebugEnabled
-      - [0x1D288, .data, 91EBC] # D_800BD1C4
-      - [0x1D28C, .data, 91EBC] # g_VabAddrs
-      - [0x1D2A4, .data, 91EBC] # g_SeqInfo
-      - [0x1D2E8, data, assets, music_xa, g_XaMusicConfigs] # g_XaMusicConfigs
-      - [0x1F5F8, assets, sfx, g_SfxData] # g_SfxData
-      - [0x20A20, .data, sfx_scripts]
+      # - [0x1D260, .data, 91EBC] # g_VolumeTable
+      # - [0x1D284, .data, 91EBC] # g_DebugEnabled
+      # - [0x1D288, .data, 91EBC] # D_800BD1C4
+      # - [0x1D28C, .data, 91EBC] # g_VabAddrs
+      - [0x1D2A4, .data, d_sfx] # g_SeqInfo
+      # - [0x1D2E8, .data, d_sfx] # g_XaMusicConfigs
+      # - [0x1F5F8, .data, d_sfx] # g_SfxData
+      # - [0x20A20, .data, d_sfx] # g_SfxScripts
       - [0x22220, cmp, D_800C217C]
       - [0x22854, cmp, D_800C27B0]
       - [0x23604, cmp, D_800C3560]

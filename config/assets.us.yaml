@@ -11,6 +11,9 @@ files:
           - [0x0, skip]
           - [0xD1D4, blueprintsdef, blueprints, AluBlueprints, AluEntities]
           - [0xD4B8, skip]
+          - [0x1D224, xamusicconfig, xa_music_config]
+          - [0x1F554, sfxconfig, sfx_config]
+          - [0x2097B, skip]
   - target: disks/us/BIN/RIC.BIN
     asset_path: assets/ric
     src_path: src/ric

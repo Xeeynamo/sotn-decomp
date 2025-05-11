@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/sfxconfig"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rawgfx"
 	"os"
 	"strconv"
@@ -59,11 +61,13 @@ var handlers = func() map[string]assets.Handler {
 		palette.Handler,
 		rawgfx.Handler,
 		rooms.Handler,
+		sfxconfig.Handler,
 		skip.Handler,
 		spritebanks.Handler,
 		spriteset.Handler,
 		spritesheet.Handler,
 		subweaponsdef.Handler,
+		xamusicconfig.Handler,
 	} {
 		m[handler.Name()] = handler
 	}

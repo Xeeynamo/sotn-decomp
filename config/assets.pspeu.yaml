@@ -48,6 +48,9 @@ files:
           - [0xAE228, cmpgfx, D_psp_0918ABA8, 128, 128, 4]
           - [0xAE820, cmpgfx, D_psp_0918B1A0, 128, 128, 4]
           - [0xAEEB0, skip]
+          - [0xAF3E0, xamusicconfig, xa_music_config]
+          - [0xB16F0, sfxconfig, sfx_config]
+          - [0xB2C40, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/ric.bin
     asset_path: assets/ric
     src_path: src/ric
