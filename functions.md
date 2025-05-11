@@ -529,7 +529,7 @@
 | dra       | MenuDrawAlucardCloakPreview              |       43 |          3 |        |                                 |       |
 | dra       | MenuDrawAlucardPortrait                  |       43 |          3 |        |                                 |       |
 | dra       | func_psp_090ED9E0                        |       43 |          4 |        |                                 |       |
-| no4       | func_pspeu_09238490                      |       43 |          4 |        |                                 |       |
+| no4       | func_pspeu_09238490                      |       43 |          4 |        | https://decomp.me/scratch/CaLmA | 1.0   |
 | dra       | ResetEntityArray                         |       43 |          5 |        |                                 |       |
 | dra       | CreateHPNumMove                          |       43 |          5 |        |                                 |       |
 | maria     | func_pspeu_092BEAB0                      |       43 |          5 |        |                                 |       |
@@ -603,7 +603,7 @@
 | chi       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | lib       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | no3       | func_pspeu_09260348                      |       49 |          5 |        |                                 |       |
-| no3       | func_pspeu_09238360                      |       49 |          5 |        |                                 |       |
+| no3       | func_pspeu_09238360                      |       49 |          5 |        | https://decomp.me/scratch/C3ATv | 0.98  |
 | no4       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | st0       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | wrp       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
@@ -1457,7 +1457,7 @@
 | maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        |                                 |       |
 | no3       | EntityShuttingWindow                     |      252 |         32 |        |                                 |       |
 | dra       | PlayerStepUnmorphMist                    |      252 |         38 |        |                                 |       |
-| no3       | func_pspeu_09237F80                      |      253 |          1 |        |                                 |       |
+| no3       | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
 | no3       | EntityPushAlucard                        |      253 |         24 | Yes    |                                 |       |
 | maria_psp | func_pspeu_092A95A8                      |      254 |         30 | Yes    |                                 |       |
 | dra       | CheckWallRight                           |      254 |         34 |        |                                 |       |
@@ -1661,7 +1661,7 @@
 | ric       | RicEntitySubwpnThrownVibhuti             |      435 |         44 |        |                                 |       |
 | chi       | SetupPrimsForEntitySpriteParts           |      437 |         25 |        |                                 |       |
 | ric       | RicEntitySubwpnCrashCross                |      438 |         38 |        | https://decomp.me/scratch/K9fsm | 0.999 |
-| no3       | EntityCastleDoor                         |      442 |         47 | Yes    |                                 |       |
+| no3       | EntityCastleDoor                         |      442 |         47 | Yes    | https://decomp.me/scratch/UeFXe | 0.997 |
 | dra       | EntitySummonSpirit                       |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
 | ric       | RicEntitySubwpnAgunea                    |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric       | RicStepDeadPrologue                      |      445 |         51 | Yes    |                                 |       |
@@ -1713,7 +1713,7 @@
 | dra       | EntitySubwpnHolyWaterFlame               |      519 |         37 |        |                                 |       |
 | lib       | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | chi       | EntityGremlin                            |      521 |         71 |        |                                 |       |
-| no3       | EntityBackgroundLightning                |      527 |         63 |        |                                 |       |
+| no3       | EntityBackgroundLightning                |      527 |         63 |        | https://decomp.me/scratch/MsNjR | 0.995 |
 | no3       | func_pspeu_0923C528                      |      531 |         20 |        |                                 |       |
 | lib       | func_psp_0923DCC8                        |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib       | func_us_801AFE0C                         |      534 |         67 | Yes    |                                 |       |
