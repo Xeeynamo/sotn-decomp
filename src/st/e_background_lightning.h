@@ -202,7 +202,8 @@ void EntityBackgroundLightning(Entity* self) {
             self->ext.backgroundLightning.unk84++;
             D_80097928 = 1;
 #ifdef VERSION_PSP
-            D_80097910 = MU_METAMORPHOSIS_III;
+            //TODO: SFX enum needs entries changed for PSP
+            D_80097910 = 0x329;
 #else
             D_80097910 = SE_INTRO_WIND_QUIET;
 #endif
