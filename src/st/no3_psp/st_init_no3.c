@@ -18,11 +18,6 @@ extern u8* OVL_EXPORT(cutscene_data); // bss
 
 #include "../get_lang_at.h"
 
-// Weird for this entity to be here. But the static GetLangAt
-// above this, and the func_pspeu_09238360 below, must be
-// in the same file, so this, sandwiched, must also be.
-#include "../e_background_lightning.h"
-
 extern s32 E_ID(ID_11);
 extern s32 E_ID(ID_12);
 extern s32 E_ID(ID_13);
@@ -105,6 +100,11 @@ extern s32 E_ID(ID_5F);
 extern s32 E_ID(FLYING_OWL_UNK60);
 extern s32 E_ID(WARG_EXP_TRANSP);
 extern s32 E_ID(WARG_EXP_OPAQUE);
+
+// Weird for this entity to be here. But the static GetLangAt
+// above this, and the func_pspeu_09238360 below, must be
+// in the same file, so this, sandwiched, must also be.
+#include "../e_background_lightning.h"
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;

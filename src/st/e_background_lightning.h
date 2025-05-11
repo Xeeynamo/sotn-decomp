@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern s32 E_ID(LIGHTNING_THUNDER);
-extern s32 E_ID(LIGHTNING_CLOUD);
 #if defined(STAGE_IS_NO3)
 static u8 D_80180EA0[] = {
     0x09, 0x04, 0x27, 0x28, 0x2A, 0x2C, 0x2F, 0x32, 0x36, 0x3F, 0x4A, 0x56,
