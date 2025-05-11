@@ -169,9 +169,9 @@
 | lib       | func_psp_09243920                        |       21 |          1 |        |                                 |       |
 | lib       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | lib       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| no3       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3       | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
-| no3       | func_pspeu_092605B8                      |       21 |          1 |        |                                 |       |
-| no3       | func_pspeu_09248EC0                      |       21 |          1 |        |                                 |       |
+| no3       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4       | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | no4       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -230,8 +230,8 @@
 | lib       | GetSineScaled                            |       25 |          1 |        | https://decomp.me/scratch/pKD67 | 0.995 |
 | lib       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | lib       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
+| no3       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
 | no3       | func_pspeu_0925FCB8                      |       25 |          1 |        |                                 |       |
-| no3       | func_pspeu_09260568                      |       25 |          1 |        |                                 |       |
 | no4       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | no4       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
 | st0       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -427,7 +427,7 @@
 | dra       | PerformTetraSpirit                       |       37 |          6 |        |                                 |       |
 | chi       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | lib       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
-| no3       | func_pspeu_092602D8                      |       37 |          6 |        |                                 |       |
+| no3       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | no4       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | st0       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp       | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
@@ -446,7 +446,7 @@
 | lib       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | lib       | CreateEntityFromEntity                   |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | lib       | GetAngleBetweenEntitiesShifted           |       39 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
-| no3       | func_pspeu_092468F0                      |       39 |          2 |        |                                 |       |
+| no3       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | no3       | func_pspeu_09246978                      |       39 |          2 |        |                                 |       |
 | no4       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | no4       | CreateEntityFromEntity                   |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
@@ -552,8 +552,8 @@
 | dra       | func_8010E334                            |       45 |          6 |        |                                 |       |
 | dra       | SetMenuDisplayBuffer                     |       45 |          6 |        |                                 |       |
 | lib       | func_us_801BED48                         |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
-| no3       | func_pspeu_09252E60                      |       45 |          6 |        |                                 |       |
 | no3       | func_pspeu_09249878                      |       45 |          6 |        |                                 |       |
+| no3       | func_pspeu_09252E60                      |       45 |          6 |        |                                 |       |
 | maria     | MarSetBladeDash                          |       45 |          7 |        |                                 |       |
 | st0       | func_pspeu_09242F68                      |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | maria     | pl_main.rodata                           |       46 |          0 | Yes    |                                 |       |
@@ -602,8 +602,8 @@
 | dra       | func_800F9F40                            |       49 |          5 |        |                                 |       |
 | chi       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | lib       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
-| no3       | func_pspeu_09260348                      |       49 |          5 |        |                                 |       |
 | no3       | func_pspeu_09238360                      |       49 |          5 |        | https://decomp.me/scratch/C3ATv | 0.98  |
+| no3       | func_pspeu_09260348                      |       49 |          5 |        |                                 |       |
 | no4       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | st0       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | wrp       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
@@ -735,8 +735,8 @@
 | lib       | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib       | func_us_801B7C94                         |       62 |          5 |        |                                 |       |
-| no3       | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
 | no3       | EntityUnkId16                            |       62 |          5 |        |                                 |       |
+| no3       | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
 | no4       | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | no4       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | st0       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
@@ -851,9 +851,9 @@
 | dra       | ApplyJosephsCloakPalette                 |       73 |          7 |        | https://decomp.me/scratch/ebIzv | 0.958 |
 | chi       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
-| no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
 | no3       | EntityDeadMerman                         |       73 |          7 |        |                                 |       |
 | no3       | func_pspeu_09239020                      |       73 |          7 |        |                                 |       |
+| no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
 | no4       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | wrp       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | func_psp_0926ADD8                        |       73 |          8 |        | https://decomp.me/scratch/sz59k | 1.0   |
@@ -1049,7 +1049,7 @@
 | st0       | func_801AF6D0                            |      101 |          5 |        | https://decomp.me/scratch/GIjGF | 0.993 |
 | chi       | AnimateEntity                            |      101 |          7 |        |                                 |       |
 | lib       | AnimateEntity                            |      101 |          7 |        |                                 |       |
-| no3       | func_pspeu_0925F9F8                      |      101 |          7 |        |                                 |       |
+| no3       | AnimateEntity                            |      101 |          7 |        |                                 |       |
 | no4       | AnimateEntity                            |      101 |          7 |        |                                 |       |
 | st0       | AnimateEntity                            |      101 |          7 |        |                                 |       |
 | wrp       | AnimateEntity                            |      101 |          7 |        |                                 |       |
@@ -1128,7 +1128,7 @@
 | no3       | func_pspeu_09252CD8                      |      111 |         19 |        |                                 |       |
 | chi       | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | lib       | InitializeEntity                         |      112 |          2 |        |                                 |       |
-| no3       | func_pspeu_092605F8                      |      112 |          2 |        |                                 |       |
+| no3       | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | no4       | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | st0       | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | wrp       | InitializeEntity                         |      112 |          2 |        |                                 |       |
@@ -1145,9 +1145,9 @@
 | lib       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | lib       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | lib       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
-| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245B78                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245D10                      |      113 |         13 |        |                                 |       |
+| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | no4       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
@@ -1333,7 +1333,7 @@
 | dra       | PlayerStepUnmorphWolf                    |      185 |         25 |        |                                 |       |
 | no4       | func_pspeu_09248D90                      |      185 |         27 |        | https://decomp.me/scratch/wRJ5x | 0.999 |
 | no4       | func_pspeu_0923D180                      |      185 |         27 |        |                                 |       |
-| no3       | first_c_file.rodata                      |      186 |          0 | Yes    |                                 |       |
+| no3       | D90.rodata                               |      186 |          0 | Yes    |                                 |       |
 | dra       | EntitySubwpnBibleTrail                   |      186 |         14 |        |                                 |       |
 | chi       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
 | lib       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
@@ -1426,8 +1426,8 @@
 | no3       | EntityPathBlockTallWeight                |      232 |         23 |        |                                 |       |
 | dra       | PlayerStepHighJump                       |      232 |         32 |        |                                 |       |
 | dra       | func_800F4994                            |      233 |         18 |        | https://decomp.me/scratch/iweZP | 0.984 |
-| no3       | EntityWaterDrop                          |      233 |         25 |        |                                 |       |
 | no3       | EntityBackgroundTrees                    |      233 |         25 |        |                                 |       |
+| no3       | EntityWaterDrop                          |      233 |         25 |        |                                 |       |
 | no4       | EntityWaterDrop                          |      233 |         25 |        |                                 |       |
 | dra       | func_801119C4                            |      235 |         31 |        |                                 |       |
 | lib       | EntityBackgroundShadow                   |      236 |         29 |        |                                 |       |
