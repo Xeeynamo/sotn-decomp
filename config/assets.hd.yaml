@@ -11,6 +11,9 @@ files:
           - [0x0, skip]
           - [0xD298, blueprintsdef, blueprints, AluBlueprints, AluEntities]
           - [0xD57C, skip]
+          - [0x1D2E8, xamusicconfig, xa_music_config]
+          - [0x1F5F8, sfxconfig, sfx_config]
+          - [0x20A20, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin
     asset_path: assets/ric
     src_path: src/ric

@@ -128,10 +128,10 @@ segments:
       # - [0x1D1C0, .data, 91EBC] # g_DebugEnabled
       # - [0x1D1C4, .data, 91EBC] # D_800BD1C4
       # - [0x1D1C8, .data, 91EBC] # g_VabAddrs
-      - [0x1D1E0, .data, d_sfx_psx] # g_SeqInfo
-      # - [0x1D224, .data, d_sfx_psx] # g_XaMusicConfigs
-      # - [0x1F554, .data, d_sfx_psx] # g_SfxData
-      - [0x2097C, .data, sfx_scripts]
+      - [0x1D1E0, .data, d_sfx] # g_SeqInfo
+      # - [0x1D224, .data, d_sfx] # g_XaMusicConfigs
+      # - [0x1F554, .data, d_sfx] # g_SfxData
+      # - [0x2097C, .data, d_sfx] # g_SfxScripts
       - [0x2217C, cmp, D_800C217C]
       - [0x227B0, cmp, D_800C27B0]
       - [0x23560, cmp, D_800C3560]
