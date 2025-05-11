@@ -18,7 +18,7 @@ typedef enum EntityIDs {
     // /* 0x09 */ E_STAGE_NAME_POPUP,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
     // /* 0x0B */ E_RELIC_ORB,
-    // /* 0x0C */ E_HEART_DROP,
+    /* 0x0C */ E_HEART_DROP = 0x0C,
     // /* 0x0D */ E_ENEMY_BLOOD,
     // /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
@@ -59,7 +59,7 @@ typedef enum EntityIDs {
     // /* 0x32 */ E_ID_32,
     // /* 0x33 */ E_ID_33,
     // /* 0x34 */ E_ID_34,
-    // /* 0x35 */ E_ID_35,
+    /* 0x35 */ E_ID_35 = 0x35,
     // /* 0x36 */ E_ID_36,
     // /* 0x37 */ E_ID_37,
     // /* 0x38 */ E_ID_38,
@@ -102,7 +102,7 @@ typedef enum EntityIDs {
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
 
-// extern EInit D_us_80180B8C;
+extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;

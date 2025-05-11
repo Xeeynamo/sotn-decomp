@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", EntityBreakable);
-
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C123C);
-
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C12B0);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C15F8);
