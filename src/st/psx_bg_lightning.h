@@ -1,3 +1,5 @@
+extern s32 E_ID(LIGHTNING_THUNDER);
+extern s32 E_ID(LIGHTNING_CLOUD);
 #if defined(STAGE_IS_NO3)
 static u8 D_80180EA0[] = {
     0x09, 0x04, 0x27, 0x28, 0x2A, 0x2C, 0x2F, 0x32, 0x36, 0x3F, 0x4A, 0x56,
@@ -88,14 +90,14 @@ void EntityBackgroundLightning(Entity* self) {
         case 0:
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_LIGHTNING_THUNDER, otherEnt);
+                CreateEntityFromCurrentEntity(E_ID(LIGHTNING_THUNDER), otherEnt);
                 randOf3 = Random() & 3;
                 otherEnt->posX.i.hi = lightningThunderXY[randOf3][0];
                 otherEnt->posY.i.hi = lightningThunderXY[randOf3][1];
             }
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_LIGHTNING_CLOUD, otherEnt);
+                CreateEntityFromCurrentEntity(E_ID(LIGHTNING_CLOUD), otherEnt);
                 if (randOf3 > 2) {
                     randOf3 = 0;
                 }
@@ -199,7 +201,11 @@ void EntityBackgroundLightning(Entity* self) {
             g_api.PlaySfx(SET_UNK_90);
             self->ext.backgroundLightning.unk84++;
             D_80097928 = 1;
+#ifdef VERSION_PSP
+            D_80097910 = MU_METAMORPHOSIS_III;
+#else
             D_80097910 = SE_INTRO_WIND_QUIET;
+#endif
             break;
         case 1:
             if (g_api.func_80131F68() == false) {
