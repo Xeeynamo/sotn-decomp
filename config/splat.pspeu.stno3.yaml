@@ -45,6 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, no3_psp/first_c_file]
+      - [0xD90, c, no3_psp/D90]
       - [0x1AA80, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
       - [0x21CC8, c, no3_psp/collision]
@@ -54,7 +55,7 @@ segments:
       - [0x33EA8, data]
       - [0x33FB0, .data, no3_psp/cutscene_data]
       - [0x347E0, data]
-      - [0x61600, .rodata, no3_psp/first_c_file]
+      - [0x61600, .rodata, no3_psp/D90]
       - [0x61810, .rodata, no3_psp/e_particles]
       - [0x61880, .rodata, no3_psp/e_misc]
       - [0x618A8, .rodata, no3_psp/collision]
