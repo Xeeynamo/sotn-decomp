@@ -245,16 +245,6 @@ bool InitGame(struct InitGameParams* params) {
     FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
     InitVbVh();
 
-    /*if (!FileAsString(InitSfxData, "assets/dra/sfx.json", NULL)) {
-        ERRORF("failed to init sfx");
-        return false;
-    }
-
-    if (!FileAsString(InitXaData, "assets/dra/music_xa.json", NULL)) {
-        ERRORF("failed to init xa data");
-        return false;
-    }*/
-
     return true;
 }
 
