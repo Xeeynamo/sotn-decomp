@@ -18,7 +18,7 @@ extern u8* OVL_EXPORT(cutscene_data); // bss
 
 #include "../get_lang_at.h"
 
-#include "psp_bg_lightning.h"
+#include "../e_background_lightning.h"
 
 extern s32 E_ID(ID_11);
 extern s32 E_ID(ID_12);

@@ -27,7 +27,7 @@ void EntityUnkId16(Entity* self) {
     }
 }
 
-#include "psx_bg_lightning.h"
+#include "e_background_lightning.h"
 
 static SVECTOR window_vec1 = {0, -120, 0};
 static SVECTOR window_vec2 = {25, -120, 0};
