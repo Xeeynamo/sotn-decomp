@@ -99,6 +99,7 @@ EntitySideWaterSplash = 0x0925E610;
 EntitySmallWaterDrop = 0x0925EB38;
 EntityWaterDrop = 0x0925EE68;
 EntityRoomForeground = 0x0925F7C0;
+DestroyEntity = 0x0925F8D8;
 AnimateEntity = 0x0925F9F8;
 AllocEntity = 0x092602D8;
 SetStep = 0x09260568;

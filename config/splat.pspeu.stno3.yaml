@@ -55,7 +55,8 @@ segments:
       - [0x33EA8, data]
       - [0x33FB0, .data, no3_psp/cutscene_data]
       - [0x347E0, data]
-      - [0x5E430, data] # start of CastleDoor
+      - [0x5E430, .data, no3_psp/D90] #CastleDoor
+      - [0x5E530, data]
       - [0x61600, .rodata, no3_psp/D90]
       - [0x61810, .rodata, no3_psp/e_particles]
       - [0x61880, .rodata, no3_psp/e_misc]
