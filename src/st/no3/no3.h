@@ -122,7 +122,7 @@ typedef enum EntityIDs {
     /* 0x62 */ E_WARG_EXP_OPAQUE,
 } EntityIDs;
 
-extern void CreateEntityFromCurrentEntity(u16, Entity*);
+extern void CreateEntityFromCurrentEntity(s32, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
