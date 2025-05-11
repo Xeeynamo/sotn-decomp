@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern s32 E_ID(LIGHTNING_THUNDER);
 extern s32 E_ID(LIGHTNING_CLOUD);
 #if defined(STAGE_IS_NO3)
@@ -90,7 +91,8 @@ void EntityBackgroundLightning(Entity* self) {
         case 0:
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(LIGHTNING_THUNDER), otherEnt);
+                CreateEntityFromCurrentEntity(
+                    E_ID(LIGHTNING_THUNDER), otherEnt);
                 randOf3 = Random() & 3;
                 otherEnt->posX.i.hi = lightningThunderXY[randOf3][0];
                 otherEnt->posY.i.hi = lightningThunderXY[randOf3][1];
