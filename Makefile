@@ -170,6 +170,7 @@ endef
 define list_st_src_files
 	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
 	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
+	$(foreach dir,$(ASM_DIR)/$(1)/data/gen,$(wildcard $(dir)/**.s))
 	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
 	$(foreach dir,$(SRC_DIR)/$(1)/gen,$(wildcard $(dir)/**.c))
 	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_801*.bin))
