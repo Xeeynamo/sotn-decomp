@@ -131,8 +131,6 @@ s16 D_800AC958[] = {
     0x0300, 0x0320, 0x0300, 0x0320, 0x0340, 0x0360, 0x0340, 0x0360,
     0x0380, 0x03A0, 0x0380, 0x03A0, 0x03C0, 0x03E0, 0x03C0, 0x03E0,
 };
-SeqData g_SeqInfo[22];
-struct XaMusicConfig g_XaMusicConfigs[563];
 
 // other stubs
 s32 D_800974A4;
@@ -165,7 +163,6 @@ ImgSrc* g_imgUnk8013C200 = &g_imgUnk8013C200_impl;
 ImgSrc* g_imgUnk8013C270 = &g_imgUnk8013C200_impl;
 PlayerOvl g_PlOvl = {0};
 u8** g_PlOvlAluBatSpritesheet[1] = {0};
-Unkstruct_800BF554 g_SfxData[737];
 
 // sound stubs
 
