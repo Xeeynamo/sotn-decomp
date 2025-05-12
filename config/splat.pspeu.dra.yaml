@@ -91,7 +91,6 @@ segments:
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       #- [0x6A8F8, .data, dra/5F60C]
-      - [0x6AB40, data]
       - [0x6AB40, .data, dra/5087C]
       - [0x6B420, data]
       - [0x6DA20, .data, dra_psp/E588]
