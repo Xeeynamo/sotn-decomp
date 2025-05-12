@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #define UVWH(u, v, w, h) u, v, w, h
 
 static u8 bush_uvwh[] = {

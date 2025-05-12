@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 static SVECTOR doorvec1 = {-8, -128, -48};
 static SVECTOR doorvec2 = {8, -128, -48};
 static SVECTOR doorvec3 = {-8, 0, -48};
