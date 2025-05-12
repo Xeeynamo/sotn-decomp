@@ -724,7 +724,6 @@ typedef struct {
     /* 0x24 */ char* name;
     /* 0x28 */ u8 unk28;
     /* 0x29 */ s8 seqIdx; // index of D_800ACCF8
-    /* 0x2A */ u16 unk2A;
 } Lba; /* size=0x2C */
 
 typedef struct {
