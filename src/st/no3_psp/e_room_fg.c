@@ -3,7 +3,7 @@
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", EntityRoomForeground);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F8D8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", DestroyEntity);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F970);
 

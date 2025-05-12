@@ -75,6 +75,7 @@ RotTransPers4 = 0x8927AF8;
 RotAverage3 = 0x8927B88;
 RotAverage4 = 0x08927B90;
 RotAverageNclip3 = 0x8927BB8;
+RotAverageNclip4 = 0x8927BF0;
 SquareRoot0 = 0x08927CC4;
 SquareRoot12 = 0x08927CCC;
 ratan2 = 0x08927CFC;
