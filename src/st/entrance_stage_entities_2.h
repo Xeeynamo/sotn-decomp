@@ -1,5 +1,3 @@
-#include "e_castle_door.h"
-
 #define UVWH(u, v, w, h) u, v, w, h
 
 static u8 bush_uvwh[] = {
