@@ -46,13 +46,29 @@ def is_stage(ovl_name: str) -> bool:
     )
 
 
-def add_c_psx(nw: ninja_syntax.Writer, version: str, file_name: str):
+def add_c_psx(
+    nw: ninja_syntax.Writer, version: str, file_name: str, implicit: list[str]
+):
     output = f"build/{version}/{file_name}.o"
     if output in entries:
         return
     entries[output] = {}
     nw.build(
-        rule="psx-cc", outputs=output, inputs=file_name, implicit=["include/game.h"]
+        rule="psx-cc",
+        outputs=output,
+        inputs=file_name,
+        implicit=[
+            "include/types.h",
+            "include/common.h",
+            "include/game.h",
+            "include/entity.h",
+        ],
+        variables={"version": version},
+    )
+    nw.build(
+        rule="phony",
+        outputs=file_name,
+        implicit=implicit,
     )
     return output
 
@@ -101,7 +117,54 @@ def add_copy_psx(
     return output
 
 
-def add_c_psp(nw: ninja_syntax.Writer, version: str, file_name: str):
+def add_memcard_img_psx(
+    nw: ninja_syntax.Writer,
+    version: str,
+    in_file_name: str,
+    out_file_name: str,
+    ld_script_path: str,
+):
+    output_gfx = f"build/{version}/{out_file_name}.png"
+    output_pal = f"build/{version}/{out_file_name}.pal"
+    if output_gfx in entries:
+        return
+    if output_pal in entries:
+        return
+    entries[output_gfx] = {}
+    entries[output_pal] = {}
+    slot_id = out_file_name.split("memcard_")[1]
+    nw.build(
+        rule="psx-as",
+        outputs=[f"{output_gfx}.o"],
+        inputs=[f"{output_gfx}.s"],
+    )
+    nw.build(
+        rule="psx-as",
+        outputs=[f"{output_pal}.o"],
+        inputs=[f"{output_pal}.s"],
+    )
+    nw.build(
+        rule="memcard-encode",
+        outputs=[f"{output_gfx}.s", f"{output_pal}.s"],
+        inputs=[in_file_name],
+        variables={
+            "out_gfx": f"{output_gfx}.s",
+            "out_pal": f"{output_pal}.s",
+            "sym_gfx": f"g_saveIcon{slot_id}",
+            "sym_pal": f"g_saveIconPal{slot_id}",
+        },
+    )
+    nw.build(
+        rule="phony",
+        outputs=[in_file_name],
+        implicit=[ld_script_path],
+    )
+    return [f"{output_gfx}.o", f"{output_pal}.o"]
+
+
+def add_c_psp(
+    nw: ninja_syntax.Writer, version: str, file_name: str, implicit: list[str]
+):
     return None
 
 
@@ -109,25 +172,34 @@ def add_s_psp(nw: ninja_syntax.Writer, version: str, file_name: str, linker_path
     return None
 
 
-def add_assets_config(nw: ninja_syntax.Writer, gen_dir: str, asset_config_name: str):
-    output = f"{gen_dir}/done"
-    if output in entries:
+def add_assets_config(nw: ninja_syntax.Writer, version: str, gen_done_path: str):
+    if gen_done_path in entries:
         return
-    entries[output] = {}
+    entries[gen_done_path] = {}
     nw.build(
         rule="assets-build",
-        inputs=asset_config_name,
-        outputs=output,
-        implicit="bin/sotn-assets",
+        inputs=f"config/assets.{version}.yaml",
+        outputs=gen_done_path,
+        implicit=f"assets/done_{version}",
     )
     return None
 
 
-def add_gfx_stage(nw: ninja_syntax.Writer, asset_path: str, output_name: str):
+def add_gfx_stage(
+    nw: ninja_syntax.Writer, target_path: str, asset_path: str, output_name: str
+):
+    nw.build(
+        rule="gfxstage-decode",
+        outputs=f"{asset_path}_0.png",
+        inputs=target_path,
+        variables={
+            "path": asset_path,
+        },
+    )
     nw.build(
         rule="gfxstage-encode",
         outputs=[output_name],
-        # TODO inputs
+        inputs=[f"{asset_path}_0.png"],
         variables={
             "path": asset_path,
         },
@@ -137,22 +209,28 @@ def add_gfx_stage(nw: ninja_syntax.Writer, asset_path: str, output_name: str):
 def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     with open(file_name) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
-    platform = splat_config["options"]["platform"]
-    ovl_name = splat_config["options"]["basename"]
-    target_path = splat_config["options"]["target_path"]
-    asset_path = splat_config["options"]["asset_path"]
-    ld_script_path = splat_config["options"]["ld_script_path"]
-    symbol_paths = splat_config["options"]["symbol_addrs_path"]
-    undefined_funcs_auto_path = splat_config["options"]["undefined_funcs_auto_path"]
-    undefined_syms_auto_path = splat_config["options"]["undefined_syms_auto_path"]
-    asm_path = splat_config["options"]["asm_path"]
-    src_path = splat_config["options"]["src_path"]
-    if ovl_name == "stmad":  # TODO currently broken
-        return
+    platform = str(splat_config["options"]["platform"])
+    ovl_name = str(splat_config["options"]["basename"])
+    target_path = str(splat_config["options"]["target_path"])
+    asset_path = str(splat_config["options"]["asset_path"])
+    ld_script_path = str(splat_config["options"]["ld_script_path"])
+    symbol_paths = list[str](splat_config["options"]["symbol_addrs_path"])
+    undefined_funcs_auto_path = str(
+        splat_config["options"]["undefined_funcs_auto_path"]
+    )
+    undefined_syms_auto_path = str(splat_config["options"]["undefined_syms_auto_path"])
+    asm_path = str(splat_config["options"]["asm_path"])
+    src_path = str(splat_config["options"]["src_path"])
     if ovl_name == "main":  # TODO currently broken
         return
     if ovl_name == "weapon":  # TODO currently broken
         return
+    gen_done_path = os.path.join(src_path, "gen", f"done_{version}")
+    if src_path == "src/st":
+        # useful for overlays that share source files, like on RWRP or PSP
+        gen_done_path = os.path.join(
+            src_path, ovl_name.replace("st", ""), "gen", f"done_{version}"
+        )
     nw.build(
         rule="splat",
         outputs=[ld_script_path],
@@ -171,23 +249,31 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     for segment in splat_config["segments"]:
         if not "subsegments" in segment:
             continue
+        if segment["type"] == "data":
+            asm_name = f"{asm_path}/data/{segment["name"]}.data.s"
+            objs.append(add_s(nw, version, asm_name, ld_script_path))
+            continue
         for subsegment in segment["subsegments"]:
-            if len(subsegment) < 2:  # for subsegment entries without a kind
-                continue
             offset = int(subsegment[0])
-            kind = str(subsegment[1])
-            if len(subsegment) > 2:
-                name = str(subsegment[2])
+            if len(subsegment) < 2:  # for subsegment entries without a kind
+                kind = "data"
+                name = segment["name"]
             else:
-                name = str.format("{0:X}", offset)
+                kind = str(subsegment[1])
+                if len(subsegment) > 2:
+                    name = str(subsegment[2])
+                else:
+                    name = str.format("{0:X}", offset)
             if kind == "c" or kind == ".data" or kind == ".rodata" or kind == ".bss":
-                objs.append(add_c(nw, version, f"{src_path}/{name}.c"))
-            elif kind == "data" or kind == "rodata" or kind == "bss":
+                objs.append(add_c(nw, version, f"{src_path}/{name}.c", [gen_done_path]))
+            elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 objs.append(
                     add_s(
                         nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_script_path
                     )
                 )
+            elif kind == "asm":
+                objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_script_path))
             elif kind == "raw" or kind == "cmp":
                 objs.append(
                     add_copy_psx(
@@ -218,10 +304,22 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                         ld_script_path,
                     )
                 )
+            elif kind == "palette":
+                objs_memcard = add_memcard_img_psx(
+                    nw,
+                    version,
+                    f"{asset_path}/{name}.png",
+                    f"{asset_path}/{name}",
+                    ld_script_path,
+                )
+                objs += objs_memcard
             else:
                 # TODO splat_ext assets
                 continue
     output_elf = f"build/{version}/{ovl_name}.elf"
+    sym_version = version
+    if ovl_name == "stmad":
+        sym_version = "beta"
     nw.build(
         rule="psx-ld",
         outputs=[output_elf],
@@ -232,7 +330,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             "symbols_arg": str.join(
                 " ",
                 [
-                    f"-T config/undefined_syms.{version}.txt",
+                    f"-T config/undefined_syms.{sym_version}.txt",
                     f"-T {undefined_funcs_auto_path}",
                     f"-T {undefined_syms_auto_path}",
                 ],
@@ -240,23 +338,39 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         },
     )
     nw.build(
-        rule="psx-strip",
+        rule=(
+            "psx-strip"
+            if not is_servant(ovl_name) or is_hd(version)
+            else "psx-strip-servant"
+        ),
         outputs=[f"build/{version}/{os.path.basename(target_path)}"],
         inputs=[output_elf],
     )
-    add_assets_config(
-        nw, os.path.join(src_path, "gen"), f"config/assets.{version}.yaml"
-    )
+    add_assets_config(nw, version, gen_done_path)
     if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name != "stsel":
-        add_gfx_stage(
-            nw, asset_path, f"build/{version}/F_{os.path.basename(target_path)}"
-        )
+        gfx_name = f"F_{os.path.basename(target_path)}"
+        if is_hd(version):
+            gfx_name = f"f_{os.path.basename(target_path)}"
+        stage_gfx_path = f"build/{version}/{gfx_name}"
+        target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
+        add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
 
 
-def add_checksum(nw: ninja_syntax.Writer, file_name: str):
+def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
     with open(file_name) as f:
         lines = f.readlines()
     binaries = [line.split(" ")[2].strip() for line in lines]
+    binaries = [binary for binary in binaries if not "main" in binary]
+    binaries = [binary for binary in binaries if not "WEAPON0" in binary]
+    if version == "us":
+        dirt = "build/us/dra.dirt.done"
+        binaries.append(dirt)
+        nw.build(
+            rule="dirt",
+            outputs=dirt,
+            inputs="config/dirt.us.json",
+            implicit="build/us/DRA.BIN",
+        )
     nw.build(
         rule="check",
         outputs=["🆗"],
@@ -271,12 +385,12 @@ with open("build.ninja", "w") as f:
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
-        command="splat split $in && touch $out",
+        command="splat split $in 2> /dev/null && touch $out",
         description="splat $in",
     )
     nw.rule(
         "psx-cc",
-        command="VERSION=us mipsel-linux-gnu-cpp -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_us -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
+        command="VERSION=$version mipsel-linux-gnu-cpp -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
         description="psx cc $in",
     )
     nw.rule(
@@ -292,7 +406,7 @@ with open("build.ninja", "w") as f:
     nw.rule(
         "psx-ld",
         command="mipsel-linux-gnu-ld -nostdlib --no-check-sections -Map $map_out -T $in $symbols_arg -o $out",
-        description="VERSION=us mipsel-linux-gnu-ld -nostdlib --no-check-sections -Map $map_out -T $in $symbols_arg -o $out",
+        description="mipsel-linux-gnu-ld -nostdlib --no-check-sections -Map $map_out -T $in $symbols_arg -o $out",
     )
     nw.rule(
         "psx-strip",
@@ -300,13 +414,23 @@ with open("build.ninja", "w") as f:
         description="psx strip $in",
     )
     nw.rule(
+        "psx-strip-servant",
+        command="mipsel-linux-gnu-objcopy -O binary $in $out && truncate -c -s 40960 $out",
+        description="psx strip $in",
+    )
+    nw.rule(
+        "dirt",
+        command="python3 tools/dirt_patcher.py $in && touch $out",
+        description="dirt $in",
+    )
+    nw.rule(
         "sotn-assets",
-        command="go build -o $out tools/sotn-assets",
+        command="go build -C tools/sotn-assets -o ../../$out .",
         description="build assets-tool",
     )
     nw.rule(
         "assets-extract",
-        command="bin/sotn-assets extract $in",
+        command="bin/sotn-assets extract $in && touch $out",
         description="extract $in",
     )
     nw.rule(
@@ -315,22 +439,41 @@ with open("build.ninja", "w") as f:
         description="build $in",
     )
     nw.rule(
+        "gfxstage-decode",
+        command="python3 tools/gfxstage.py d $in $path",
+        description="gfxstage decode $in",
+    )
+    nw.rule(
         "gfxstage-encode",
         command="python3 tools/gfxstage.py e $path $out",
         description="gfxstage encode $in",
+    )
+    nw.rule(
+        "memcard-encode",
+        command="python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
+        description="memcard icon encode $in",
     )
     nw.rule("check", command="sha1sum --check $in", description="check $in")
 
     nw.build(
         rule="sotn-assets",
-        outputs=["bin/sotn-assets"],
+        outputs="bin/sotn-assets",
         implicit="tools/sotn-assets/go.mod",
     )
 
-    for version in ["us"]:
+    actual_version = os.getenv("VERSION")
+    if not actual_version:
+        actual_version = "us"
+    for version in [actual_version]:
         for entry in os.scandir("config/"):
             if not entry.name.startswith(f"splat.{version}."):
                 continue
             add_splat_config(nw, version, entry.path)
-        add_checksum(nw, f"config/check.{version}.sha")
+        nw.build(
+            rule="assets-extract",
+            outputs=f"assets/done_{version}",
+            inputs=f"config/assets.{version}.yaml",
+            implicit="bin/sotn-assets",
+        )
+        add_checksum(nw, version, f"config/check.{version}.sha")
     nw.close()
