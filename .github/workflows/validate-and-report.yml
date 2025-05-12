@@ -77,12 +77,10 @@ jobs:
         run: cat dependencies/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk
-      - name: Split game data
-        run: make -j extract
       - name: Build binaries
-        run: make -j build
-      - name: Check if they match
-        run: make check
+        run: |
+          python3 tools/build-system/gen.py && \
+          ninja
       - name: progress dry run
         run: .venv/bin/python3 tools/progress.py --dry-run --version ${{ matrix.version }}
       - name: Remove clutter from build folder
