@@ -91,6 +91,7 @@
 | chi       | en_red_door.rodata                       |       16 |          0 | Yes    |                                 |       |
 | chi       | en_stage_name.rodata                     |       16 |          0 | Yes    |                                 |       |
 | lib       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
+| no3       | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | no4       | e_fishhead.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no4       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | st0       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
@@ -573,7 +574,7 @@
 |           | DestroyEntity                            |       46 |          5 |        |                                 |       |
 | chi       | DestroyEntity                            |       46 |          5 |        |                                 |       |
 | lib       | DestroyEntity                            |       46 |          5 |        |                                 |       |
-| no3       | func_pspeu_0925F8D8                      |       46 |          5 |        |                                 |       |
+| no3       | DestroyEntity                            |       46 |          5 |        |                                 |       |
 | no4       | DestroyEntity                            |       46 |          5 |        |                                 |       |
 | st0       | DestroyEntity                            |       46 |          5 |        |                                 |       |
 | wrp       | DestroyEntity                            |       46 |          5 |        |                                 |       |
@@ -1314,6 +1315,7 @@
 | st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
+| no3       | 13C8.rodata                              |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
 | no3       | EntityExplosion2                         |      177 |         19 |        |                                 |       |
@@ -1333,7 +1335,6 @@
 | dra       | PlayerStepUnmorphWolf                    |      185 |         25 |        |                                 |       |
 | no4       | func_pspeu_09248D90                      |      185 |         27 |        | https://decomp.me/scratch/wRJ5x | 0.999 |
 | no4       | func_pspeu_0923D180                      |      185 |         27 |        |                                 |       |
-| no3       | D90.rodata                               |      186 |          0 | Yes    |                                 |       |
 | dra       | EntitySubwpnBibleTrail                   |      186 |         14 |        |                                 |       |
 | chi       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
 | lib       | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
