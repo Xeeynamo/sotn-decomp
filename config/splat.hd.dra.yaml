@@ -108,7 +108,8 @@ segments:
       - [0xDC98, .data, d_DBD4]
       - [0xE358, .data, d_E294]
       - [0x106EE, .data, 84B88]
-      - [0x1085C, .data, d_10798]
+      - [0x1085C, .data, 8BEF8]
+      - [0x108E4, .data, d_10798]
       - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
