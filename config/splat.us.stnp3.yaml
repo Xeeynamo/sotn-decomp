@@ -165,6 +165,7 @@ segments:
       - [0x32830, c, entrance_stage_entities]
       - [0x32F30, c, e_castle_door]
       - [0x332A8, c, entrance_stage_entities_2]
+      - [0x35F60, c, e_heartroom]
       - [0x3644C, c, e_tilemap_shuffler]
       - [0x3653C, c, e_explosion_puff_opaque]
       - [0x36990, c, slogra]
