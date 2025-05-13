@@ -103,32 +103,30 @@ s32 MemcardParse(s32 nPort, s32 nCard) {
             g_MemcardStep = 2;
             return -1;
         }
-    } else {
-        if (g_MemcardStep == 1) {
-            dirent = &g_MemcardInfo[nPort].entries[g_MemcardBlockRead];
-            if (nextfile(dirent) == dirent) {
-                g_MemcardBlockRead++;
-                return -1;
-            } else {
-                g_MemcardStep++;
-            }
+    } else if (g_MemcardStep == 1) {
+        dirent = &g_MemcardInfo[nPort].entries[g_MemcardBlockRead];
+        if (nextfile(dirent) == dirent) {
+            g_MemcardBlockRead++;
+            return -1;
         } else {
-            g_MemcardInfo[nPort].nBlockUsed = g_MemcardBlockRead;
-            dirent = &g_MemcardInfo[nPort].entries;
-            totalEntrySize = 0;
-            for (i = 0; i < g_MemcardBlockRead; i++) {
-                totalEntrySize += dirent[i].size;
-            }
-
-            totalEntrySize /= CARD_BLOCK_SIZE;
-            g_MemcardInfo[nPort].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
-            do {
-                if (g_MemcardInfo[nPort].nFreeBlock <= 0) {
-                    return 0;
-                }
-            } while (0);
-            return g_MemcardInfo[nPort].nFreeBlock;
+            g_MemcardStep++;
         }
+    } else {
+        g_MemcardInfo[nPort].nBlockUsed = g_MemcardBlockRead;
+        dirent = &g_MemcardInfo[nPort].entries;
+        totalEntrySize = 0;
+        for (i = 0; i < g_MemcardBlockRead; i++) {
+            totalEntrySize += dirent[i].size;
+        }
+
+        totalEntrySize /= CARD_BLOCK_SIZE;
+        g_MemcardInfo[nPort].nFreeBlock = BLOCK_PER_CARD - totalEntrySize;
+        do {
+            if (g_MemcardInfo[nPort].nFreeBlock <= 0) {
+                return 0;
+            }
+        } while (0);
+        return g_MemcardInfo[nPort].nFreeBlock;
     }
     return -1;
 }
@@ -137,33 +135,31 @@ s32 GetMemcardFreeBlockCount(s32 nPort) {
     return g_MemcardInfo[nPort].nFreeBlock;
 }
 
-s32 MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
+bool MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
     s32 nBlocks;
     s32 didNotMatch;
-    s32 i;
-    s32 j;
-    s32 isCastlevaniaSave;
+    s32 i, j;
+    bool isCastlevaniaSave;
     struct DIRENTRY* entries;
 
-    isCastlevaniaSave = 0;
+    isCastlevaniaSave = false;
     entries = g_MemcardInfo[nPort].entries;
     nBlocks = g_MemcardInfo[nPort].nBlockUsed;
     for (i = 0; i < nBlocks; i++) {
         didNotMatch = 0;
         for (j = 0; j <= 20; j++) {
             char ch = expectedSaveName[j];
-            if (ch != '\0') {
-                if (ch != entries[i].name[j]) {
-                    didNotMatch++;
-                    break;
-                }
-            } else {
+            if (ch == '\0') {
+                break;
+            }
+            if (ch != entries[i].name[j]) {
+                didNotMatch++;
                 break;
             }
         }
 
         if (didNotMatch == 0) {
-            isCastlevaniaSave = 1;
+            isCastlevaniaSave = true;
             break;
         }
     }
@@ -172,7 +168,7 @@ s32 MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
     return isCastlevaniaSave;
 }
 
-u8 IsMemcardBlockUsed(u32 nPort, u32 block) {
+s32 IsMemcardBlockUsed(u32 nPort, u32 block) {
     return g_MemcardInfo[nPort].blocks[block];
 }
 
@@ -300,7 +296,6 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
             g_MemcardStep = 4;
             break;
         }
-
         break;
 
     case 2:
@@ -349,6 +344,38 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return memcard->unk25C;
 }
 
+
+
+s32 MemcardFormat(s32 nPort, s32 nCard) {
+    char savePath[0x8];
+    s32 ret;
+
+    D_8006C3AC &= g_MemcardPortMask[nPort];
+    sprintf(savePath, "bu%1d%1d:", nPort, nCard);
+    _clear_event_x();
+    format(savePath);
+    ret = _card_event_x();
+
+    if (ret != 1) {
+        if (ret == 3) {
+            ret = -1;
+        } else {
+            ret = -3;
+        }
+    }
+    return ret;
+}
+
+void GetSavePalette(u8* dst, s32 palIdx) {
+    u16* dst_u16 = (u16*)dst;
+    s32 i;
+    u16* src = g_saveIconPal0;
+
+    src += palIdx * 16;
+    for (i = 0; i < COLORS_PER_PAL; i++) {
+        *dst_u16++ = *src++;
+    }
+}
 extern u8 g_saveIcon0[];
 extern u8 g_saveIcon1[];
 extern u8 g_saveIcon2[];
@@ -373,6 +400,17 @@ u8* g_saveIconTexture[] = {
     g_saveIcon12, g_saveIcon13, g_saveIcon14, g_saveIcon15,
 };
 
+void GetSaveIcon(u8* dst, s32 iconIdx) {
+    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
+    s32 i;
+    u8* src;
+
+    src = g_saveIconTexture[iconIdx];
+    for (i = 0; i < IconSize; i++) {
+        *dst++ = *src++;
+    }
+}
+
 #if defined(VERSION_US)
 s32 g_saveUnkData[] = {
     1, 1, 3, 1, 1, 1, 3, 1, 2, 2, 1, 1, 1, 1, 1, 2,
@@ -390,7 +428,7 @@ char g_AsciiSet[] = {
     'w', 'x', 'y', 'z', '&', '!', '-', '.', '\'', ' ', ' ',
 };
 
-const char* g_ShiftJisSet[] = {
+char* g_ShiftJisSet[] = {
     "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
     "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
     "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "　",
@@ -478,64 +516,22 @@ const char* g_SaveAreaNames[] = {
     "",
 };
 
-s32 MemcardFormat(s32 nPort, s32 nCard) {
-    char savePath[0x8];
-    s32 ret;
-
-    D_8006C3AC &= g_MemcardPortMask[nPort];
-    sprintf(savePath, "bu%1d%1d:", nPort, nCard);
-    _clear_event_x();
-    format(savePath);
-    ret = _card_event_x();
-
-    if (ret != 1) {
-        if (ret == 3) {
-            ret = -1;
-        } else {
-            ret = -3;
-        }
-    }
-    return ret;
-}
-
-void GetSavePalette(u16* dst, s32 palIdx) {
-    s32 i;
-    u16* src = g_saveIconPal0[0];
-
-    src = g_saveIconPal0[palIdx];
-    for (i = 0; i < COLORS_PER_PAL; i++) {
-        *dst++ = *src++;
-    }
-}
-
-void GetSaveIcon(u8* dst, s32 iconIdx) {
-    const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
-    s32 i;
-    u8* src;
-
-    src = g_saveIconTexture[iconIdx];
-    for (i = 0; i < IconSize; i++) {
-        *dst++ = *src++;
-    }
-}
-
 void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     const int RoomCount = 942;
     MemcardHeader h;
-    char saveTitle[64];
 
-    u32* saveRaw;
-    s32 roomPercentage;
-    SaveData* dst;
-    s32 saveNameLen;
-    s32 i;
-    s32 j;
-
+    MemcardHeader* dstHeader;
     PlayerStatus* dstStatus;
     MenuNavigation* dstNav;
     GameSettings* dstSettings;
 
-    saveRaw = save;
+    char saveTitle[64];
+    u32* saveRaw;
+    SaveData* dst;
+    s32 saveNameLen;
+    s32 i, j;
+
+    saveRaw = (u32*)save;
     for (i = 0; i < 0x800; i++) {
         *saveRaw++ = 0;
     }
@@ -554,7 +550,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
 #if defined(VERSION_US)
     STRCPY(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
-#elif defined(VERSION_HD)
+#else
     STRCPY(h.Title, "ドラキュラＸ−");
 #endif
 
@@ -597,14 +593,14 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
     // writes room completion percentage
     strcat(h.Title, "　");
-    i = roomPercentage = g_RoomCount * 100 / RoomCount;
+    i = g_RoomCount * 100 / RoomCount;
     if (i >= 100) {
         STRCPY(saveTitle, "０００");
         saveTitle[1] += i / 100;
-        saveTitle[3] += i / 10 - i / 100 * 10;
+        saveTitle[3] += (i / 10) % 10;
         saveTitle[5] += i % 10;
         strcat(h.Title, saveTitle);
-    } else if (i >= 10) {
+    } else if (i > 9) {
         STRCPY(saveTitle, "００");
         saveTitle[1] += i / 10;
         saveTitle[3] += i % 10;
@@ -620,10 +616,12 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     GetSaveIcon(h.Icon, cardIcon);
 
     dst = save;
-    dstStatus = &save->status;
-    dstNav = &save->menuNavigation;
-    dstSettings = &save->settings;
-    dst->header = h;
+    dstHeader = &dst->header;
+    dstStatus = &dst->status;
+    dstNav = &dst->menuNavigation;
+    dstSettings = &dst->settings;
+
+    *dstHeader = h;
     for (i = 0; i < 10; i++) {
         dst->info.name[i] = g_Status.saveName[i];
     }
@@ -633,15 +631,14 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->info.playHours = g_Status.timerHours;
     dst->info.playMinutes = g_Status.timerMinutes;
     dst->info.playSeconds = g_Status.timerSeconds;
-    dst->info.stage = g_StageId;
     dst->info.cardIcon = cardIcon;
+    dst->info.stage = g_StageId;
     dst->info.endGameFlags = g_IsTimeAttackUnlocked;
     dst->info.character = g_PlayableCharacter;
     dst->info.nRoomsExplored = g_RoomCount;
     dst->info.roomX = g_Tilemap.left;
     dst->info.roomY = g_Tilemap.top;
     dst->info.saveSize = sizeof(SaveData);
-
     *dstStatus = g_Status;
     *dstNav = g_MenuNavigation;
     *dstSettings = g_Settings;
@@ -664,39 +661,40 @@ s32 LoadSaveData(SaveData* save) {
     PlayerStatus* srcStatus;
     MenuNavigation* srcNav;
     GameSettings* settings;
+    SaveData* savePtr = save;
 
-    if (save->info.saveSize != (sizeof(SaveData))) {
+    if (savePtr->info.saveSize != (sizeof(SaveData))) {
         return -1;
     }
+    srcStatus = &savePtr->status;
+    srcNav = &savePtr->menuNavigation;
+    settings = &savePtr->settings;
 
-    g_StageId = save->info.stage;
-    g_IsTimeAttackUnlocked = save->info.endGameFlags;
-    g_PlayableCharacter = save->info.character;
-    g_RoomCount = save->info.nRoomsExplored;
-    g_Tilemap.left = save->info.roomX;
-    g_Tilemap.top = save->info.roomY;
+    g_StageId = savePtr->info.stage;
+    g_IsTimeAttackUnlocked = savePtr->info.endGameFlags;
+    g_PlayableCharacter = savePtr->info.character;
+    g_RoomCount = savePtr->info.nRoomsExplored;
+    g_Tilemap.left = savePtr->info.roomX;
+    g_Tilemap.top = savePtr->info.roomY;
 
-    srcStatus = &save->status;
-    srcNav = &save->menuNavigation;
-    settings = &save->settings;
-    __builtin_memcpy(&g_Status, srcStatus, sizeof(g_Status));
-    __builtin_memcpy(&g_MenuNavigation, srcNav, sizeof(g_MenuNavigation));
+    g_Status = *srcStatus;
+    g_MenuNavigation = *srcNav;
 
     prevCompletionFlags1 = g_Settings.D_8003CB00;
     prevCompletionFlags2 = g_Settings.D_8003CB04;
-    __builtin_memcpy(&g_Settings, settings, sizeof(g_Settings));
+    g_Settings = *settings;
     g_Settings.D_8003CB00 |= prevCompletionFlags1;
     g_Settings.D_8003CB04 |= prevCompletionFlags2;
 
     for (i = 0; i < LEN(g_CastleFlags); i++) {
-        g_CastleFlags[i] = save->castleFlags[i];
+        g_CastleFlags[i] = savePtr->castleFlags[i];
     }
 
     for (i = 0; i < LEN(g_CastleMap); i++) {
-        g_CastleMap[i] = save->castleMap[i];
+        g_CastleMap[i] = savePtr->castleMap[i];
     }
 
-    g_randomNext = save->rng;
+    g_randomNext = savePtr->rng;
     return 0;
 }
 
