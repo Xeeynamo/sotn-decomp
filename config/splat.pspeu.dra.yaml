@@ -84,7 +84,6 @@ segments:
       - [0x62FE0, c, dra_psp/62FE0] # O4
       - [0x63C08, c, dra_psp/63C08] # O4
       - [0x68310, c, dra/collider] # O4
-      - [0x68D80, data]
       - [0x68E00, .data, dra/62EB8]
       - [0x69578, .data, dra/628AC]
       - [0x69600, .data, dra/lba_stage]
@@ -95,9 +94,7 @@ segments:
       - [0x6B420, data]
       - [0x6DA20, .data, dra_psp/E588]
       - [0x6DCA8, data]
-      - [0x6DDE8, .data, dra_psp/186E8] # "\no\n"
-      #- [0x6DDF0, .data, dra_psp/186E8] # func_psp_090F5188 strings
-      - [0x6DE50, data]
+      - [0x6DDE8, .data, dra_psp/186E8]
       - [0x6F948, .data, dra/game_handlers]
       - [0x832A8, .data, dra_psp/1DDC0]
       - [0x84028, .data, dra/4B758]
@@ -121,8 +118,8 @@ segments:
       - [0xA8120, .data, dra/8D3E8]
       - [0xA8888, data]
       - [0xA88C8, .data, dra_psp/cd]
-      - [0xA88D8, data]
-      - [0xAA3B0, .data, dra_psp/memcard]
+      - [0xA88D8, .data, dra/d_CD80]
+      - [0xA8948, .data, dra_psp/memcard]
       - [0xAA578, .data, dra/66590]
       - [0xAA6E8, .data, dra_psp/62FE0]
       - [0xAA8A0, .data, dra_psp/63C08]

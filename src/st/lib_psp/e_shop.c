@@ -2050,7 +2050,7 @@ static char* D_psp_092A4270[] = {
     _S("Tor der heiligen Geister"),
     _S("Fest der Diener"),
     _S("Land der Segnung"),
-    _S("Requiem für die Gぉtter"),
+    _S("Requiem für die Götter"),
     _S("Kristallträne"),
     _S("Verlassende Grube"),
     _S("Regenbogenfriedhof"),
