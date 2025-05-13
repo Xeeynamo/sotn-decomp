@@ -1,7 +1,42 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/13C8", EntityHeartRoomSwitch);
+void EntityHeartRoomSwitch(Entity* self) {
+    s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
+    s32 worldPos;
+    Entity* player;
+    
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitStInteractable);
+        self->animCurFrame = 9;
+        self->zPriority = 0x5E;
+        if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
+            self->posY.i.hi += 4;
+            self->step = 2;
+        }
+        break;
+
+    case 1:
+        if (collision != 0) {
+            player = &PLAYER;
+            player->posY.i.hi++;
+            self->posY.val += FIX(0.25);
+            worldPos = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            if (worldPos > 193) {
+                self->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
+                g_CastleFlags[WRP_TO_NP3_SHORTCUT] = 1;
+#if defined(STAGE_IS_NO3)
+                g_api.PlaySfx(SFX_STONE_MOVE_B);
+#else
+                g_api.PlaySfx(SFX_SWITCH_CLICK);
+#endif
+                self->step++;
+            }
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/13C8", EntityHeartRoomGoldDoor);
 

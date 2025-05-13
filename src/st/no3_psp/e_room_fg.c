@@ -43,7 +43,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092607D8);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260928);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260AB8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetPlayerCollisionWith);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260F90);
 
