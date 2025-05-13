@@ -164,6 +164,8 @@ segments:
       - [0x37B98, c, entrance_stage_entities]
       - [0x38564, c, e_castle_door]
       - [0x38A74, c, entrance_stage_entities_2]
+      - [0x3BF38, c, e_heartroom]
+      - [0x3C3FC, c, e_tilemap_shuffler]
       - [0x3C4EC, c]
       - [0x3E134, c]
       - [0x3E544, c, cutscene]
