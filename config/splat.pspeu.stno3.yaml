@@ -47,7 +47,8 @@ segments:
       - [0x80, c, no3_psp/st_init_no3]
       - [0xD90, c, no3/e_castle_door]
       - [0x13C8, c, no3/e_heartroom]
-      - [0x19A0, c, no3_psp/19A0]
+      - [0x19A0, c, no3/entrance_weights]
+      - [0x22C0, c, no3_psp/22C0]
       - [0x1AA80, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
       - [0x21CC8, c, no3_psp/collision]
@@ -60,7 +61,7 @@ segments:
       - [0x5E430, .data, no3/e_castle_door]
       - [0x5E530, data]
       - [0x61600, .rodata, no3/e_castle_door]
-      - [0x61618, .rodata, no3_psp/19A0] # EntityPushAlucard
+      - [0x61618, .rodata, no3_psp/22C0] # EntityPushAlucard
       - [0x61810, .rodata, no3_psp/e_particles]
       - [0x61880, .rodata, no3_psp/e_misc]
       - [0x618A8, .rodata, no3_psp/collision]
