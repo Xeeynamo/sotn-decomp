@@ -2,12 +2,9 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-s16 D_800B0884[] = {0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005,
-                    0x0005, 0x0005, 0x0005, 0x0005, 0x0005, 0x0005,
-                    0x0005, 0x0004, 0x0003, 0x0002, 0x0001};
-s16 D_800B08A8[] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0,
-                    0x00AA, 0x00AA, 0x00AA, 0x00AA, 0x00AA, 0x00A0,
-                    0x0080, 0x0060, 0x0040, 0x0020, 0x0000};
+s16 D_800B0884[] = {0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 2, 1};
+s16 D_800B08A8[] = {0x00, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xAA, 0xAA, 0xAA,
+                    0xAA, 0xAA, 0xA0, 0x80, 0x60, 0x40, 0x20, 0x00};
 
 typedef struct {
     s32 : 32;
@@ -41,7 +38,7 @@ void EntityBatEcho(Entity* self) {
     if ((self->ext.batEcho.unk8A % 384) == 0) {
         PlaySfx(SFX_BAT_ECHO_B);
     }
-    self->ext.batEcho.unk8A += 1;
+    self->ext.batEcho.unk8A++;
     if (self->ext.batEcho.unk88) {
         self->step = 3;
     }
@@ -54,7 +51,7 @@ void EntityBatEcho(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
-        prim = (Primitive*)&g_PrimBuf[self->primIndex];
+        prim = &g_PrimBuf[self->primIndex];
         self->ext.batEcho.unk84 = prim;
         for (i = 0; i < 0x11; i++) {
             prim->type = PRIM_TILE;
