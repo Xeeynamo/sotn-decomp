@@ -460,97 +460,829 @@ extern u8 D_psp_091C9560;
 extern u8 D_psp_091CA398;
 extern u8 D_psp_091C9C90;
 
-extern u8 D_psp_0914A918;
-extern u8 D_psp_0914BBE0;
-extern u8 D_psp_0914ADB8;
-extern u8 D_psp_0914B748;
-extern u8 D_psp_0914B260;
+extern char* D_psp_091CE248;
+extern char* D_psp_091CE240;
+extern char* D_psp_091CE238;
+extern char* D_psp_091CE230;
+extern char* D_psp_091CE228;
+extern char* D_psp_091CE220;
+extern char* D_psp_091CE218;
+extern char* D_psp_091CE210;
+extern char* D_psp_091CE208;
+extern char* D_psp_091CE200;
+extern char* D_psp_091CE1F8;
+extern char* D_psp_091CE1F0;
 
-extern u8 D_psp_0914AB00;
-extern u8 D_psp_0914BE60;
-extern u8 D_psp_0914AFF8;
-extern u8 D_psp_0914B960;
-extern u8 D_psp_0914B4A0;
-
-extern void* D_psp_091CE250;
-
-extern s32* D_psp_091CE248;
-extern s32* D_psp_091CE240;
-extern s32* D_psp_091CE238;
-extern s32* D_psp_091CE230;
-extern s32* D_psp_091CE228;
-extern s32* D_psp_091CE220;
-extern s32* D_psp_091CE218;
-extern s32* D_psp_091CE210;
-extern s32* D_psp_091CE208;
-extern s32* D_psp_091CE200;
-extern s32* D_psp_091CE1F8;
-extern s32* D_psp_091CE1F0;
-
-extern s32 D_psp_0914C240;
-extern s32 D_psp_0914C250;
-extern s32 D_psp_0914C268;
-extern s32 D_psp_0914C278;
-extern s32 D_psp_0914C288;
-extern s32 D_psp_0914C298;
-extern s32 D_psp_0914C000;
-extern s32 D_psp_0914C2A0;
-extern s32 D_psp_0914C2A8;
-extern s32 D_psp_0914C170;
-extern s32 D_psp_0914C2B0;
-extern s32 D_psp_0914C2C0;
-
-extern s32 D_psp_0914C190;
-extern s32 D_psp_0914C1A8;
-extern s32 D_psp_0914C1C0;
-extern s32 D_psp_0914C1D8;
-extern s32 D_psp_0914C1F0;
-extern s32 D_psp_0914C200;
-extern s32 D_psp_0914C208;
-extern s32 D_psp_0914C210;
-extern s32 D_psp_0914C218;
-extern s32 D_psp_0914C220;
-extern s32 D_psp_0914C228;
-extern s32 D_psp_0914C230;
-
-extern s32 D_psp_0914C0F0;
-extern s32 D_psp_0914C108;
-extern s32 D_psp_0914C120;
-extern s32 D_psp_0914C138;
-extern s32 D_psp_0914C148;
-extern s32 D_psp_0914C158;
-extern s32 D_psp_0914C000;
-extern s32 D_psp_0914C160;
-extern s32 D_psp_0914C168;
-extern s32 D_psp_0914C170;
-extern s32 D_psp_0914C178;
-extern s32 D_psp_0914C180;
-
-extern s32 D_psp_0914C038;
-extern s32 D_psp_0914C048;
-extern s32 D_psp_0914C060;
-extern s32 D_psp_0914C078;
-extern s32 D_psp_0914C090;
-extern s32 D_psp_0914C0A8;
-extern s32 D_psp_0914C0B0;
-extern s32 D_psp_0914C0B8;
-extern s32 D_psp_0914C0C0;
-extern s32 D_psp_0914C0C8;
-extern s32 D_psp_0914C0D0;
-extern s32 D_psp_0914C0E0;
-
-extern s32 D_psp_0914BFA0;
-extern s32 D_psp_0914BFB0;
-extern s32 D_psp_0914BFC0;
-extern s32 D_psp_0914BFD0;
-extern s32 D_psp_0914BFE8;
-extern s32 D_psp_0914BFF8;
-extern s32 D_psp_0914C000;
-extern s32 D_psp_0914C008;
-extern s32 D_psp_0914C010;
-extern s32 D_psp_0914C018;
-extern s32 D_psp_0914C020;
-extern s32 D_psp_0914C030;
+char* D_psp_0914A918[] = {
+    _S("Marble"),
+    _S("Outer"),
+    _S("Long"),
+    _S("Catacombs"),
+    _S("Olrox's"),
+    _S("Abandoned"),
+    _S("Royal"),
+    _S("Entrance"),
+    _S("Centre of"),
+    _S("Underground"),
+    _S("Colosseum"),
+    _S("Castle"),
+    _S("Alchemy"),
+    _S("Clock Tower"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Castle"),
+    _S("Black Marble"),
+    _S("Reverse"),
+    _S("Forbidden"),
+    _S("Floating"),
+    _S("Death Wing's"),
+    _S("Cave"),
+    _S("Anti-Chapel"),
+    _S("Reverse"),
+    _S("Reverse "),
+    _S("Reverse"),
+    _S("Reverse"),
+    _S("Reverse"),
+    _S("Necromancy"),
+    _S("Reverse "),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Entrance"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914AB00[] = {
+    _S("Gallery"),
+    _S("Wall"),
+    _S("Library"),
+    _S(""),
+    _S("Quarters"),
+    _S("Mine"),
+    _S("Chapel"),
+    _S(""),
+    _S("Castle"),
+    _S("Caverns"),
+    _S(""),
+    _S("Keep"),
+    _S("Laboratory"),
+    _S(""),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(past)"),
+    _S("Gallery"),
+    _S("Outer Wall"),
+    _S("Library"),
+    _S("Catacombs"),
+    _S("Lair"),
+    _S(""),
+    _S(""),
+    _S("Entrance"),
+    _S("CentreCastle"),
+    _S("Caverns"),
+    _S("Colosseum"),
+    _S("Keep"),
+    _S("Laboratory"),
+    _S("Clock Tower"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Entrance"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914ADB8[] = {
+    _S("Galería de"),
+    _S("Muro"),
+    _S("Biblioteca"),
+    _S("Catacumbas"),
+    _S("Aposentos"),
+    _S("Mina"),
+    _S("Capilla"),
+    _S("Entrada"),
+    _S("Centro del"),
+    _S("Cavernas"),
+    _S("Coliseo"),
+    _S("Torreón del"),
+    _S("Laboratorio"),
+    _S("Torre del"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Castillo"),
+    _S("Galería de"),
+    _S("Muro exter."),
+    _S("Biblioteca"),
+    _S("Catacumbas"),
+    _S("Guarida de"),
+    _S("Cueva"),
+    _S("Anti-capilla"),
+    _S("Entrada a"),
+    _S("Cast.central"),
+    _S("Cavernas de"),
+    _S("Coliseo de"),
+    _S("Torreón de"),
+    _S("Laboratorio"),
+    _S("Torre reloj"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Entrada"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914AFF8[] = {
+    _S("mármol"),
+    _S("exterior"),
+    _S("larga"),
+    _S(""),
+    _S("de Olrox"),
+    _S("abandonada"),
+    _S("Real"),
+    _S(""),
+    _S("castillo"),
+    _S("subterráneas"),
+    _S(""),
+    _S("castillo"),
+    _S("de alquimia"),
+    _S("reloj"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(pasado)"),
+    _S("mármol negro"),
+    _S("de trasmundo"),
+    _S("prohibida"),
+    _S("flotantes"),
+    _S("Ala mortal"),
+    _S(""),
+    _S(""),
+    _S("trasmundo"),
+    _S("de trasmundo"),
+    _S("trasmundo"),
+    _S("trasmundo"),
+    _S("trasmundo"),
+    _S("necromántico"),
+    _S("de trasmundo"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("trasmundo"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914B260[] = {
+    _S("Galleria"),
+    _S("Muro"),
+    _S("Biblioteca"),
+    _S("Catacombe"),
+    _S("Quartieri"),
+    _S("Miniera"),
+    _S("Cappella"),
+    _S("Ingresso"),
+    _S("Centro del"),
+    _S("Caverne"),
+    _S("Colosseo"),
+    _S("Torrione del"),
+    _S("Laboratorio"),
+    _S("Torre Orol."),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Castello"),
+    _S("Galleria di"),
+    _S("Muro Esterno"),
+    _S("Biblioteca"),
+    _S("Catacombe"),
+    _S("Rifugio Ala"),
+    _S("Grotta"),
+    _S("AntiCappella"),
+    _S("Ingresso"),
+    _S("CastelCentro"),
+    _S("Caverne"),
+    _S("Colosseo"),
+    _S("Torrione"),
+    _S("Laboratorio"),
+    _S("TorreOrolog."),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Ingresso"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914B4A0[] = {
+    _S("di Marmo"),
+    _S("Esterno"),
+    _S("Lunga"),
+    _S(""),
+    _S("di Olrox"),
+    _S("Abbandonata"),
+    _S("Reale"),
+    _S(""),
+    _S("Castello"),
+    _S("Sotterranee"),
+    _S(""),
+    _S("Castello"),
+    _S("Alchemico"),
+    _S(""),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(passato)"),
+    _S("Marmo Nero"),
+    _S("Rovesciato"),
+    _S("Proibita"),
+    _S("Fluttuanti"),
+    _S("della Morte"),
+    _S(""),
+    _S(""),
+    _S("Rovesciato"),
+    _S("Rovesciato"),
+    _S("Rovesciate"),
+    _S("Rovesciato"),
+    _S("Rovesciato"),
+    _S("Negromantico"),
+    _S("Rovesciata"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Rovesciato"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914B748[] = {
+    _S("Marmor-"),
+    _S("Äußere"),
+    _S("Lange"),
+    _S("Katakomben"),
+    _S("Olrox'"),
+    _S("Verlassene"),
+    _S("Königliche"),
+    _S("Eingang"),
+    _S("Zentrum des"),
+    _S("Unterird."),
+    _S("Kolosseum"),
+    _S("Burg-"),
+    _S("Alchemie-"),
+    _S("Uhrenturm"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Schloss"),
+    _S("Schwarze"),
+    _S("Umgekehrte"),
+    _S("Verbotene"),
+    _S("Schwebende"),
+    _S("Lager v. To-"),
+    _S("Höhle"),
+    _S("Anti-Kapelle"),
+    _S("Umgekehrter"),
+    _S("Umgekehrtes"),
+    _S("Umgekehrte"),
+    _S("Umgekehrtes"),
+    _S("Umgekehrter"),
+    _S("Nekromanten-"),
+    _S("Umgekehrter"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Eingang"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914B960[] = {
+    _S("gallerie"),
+    _S("Mauer"),
+    _S("Bibliothek"),
+    _S(""),
+    _S("Quartier"),
+    _S("Mine"),
+    _S("Kapelle"),
+    _S(""),
+    _S("Schlosses"),
+    _S("Kavernen"),
+    _S(""),
+    _S("fried"),
+    _S("labor"),
+    _S(""),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(vergangen)"),
+    _S("Marmorgal."),
+    _S("Außenmauer"),
+    _S("Bibliothek"),
+    _S("Katakomben"),
+    _S("desschwinge"),
+    _S(""),
+    _S(""),
+    _S("Eingang"),
+    _S("Schlossz."),
+    _S("Kavernen"),
+    _S("Kolosseum"),
+    _S("Burgfried"),
+    _S("labor"),
+    _S("Uhrenturm"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Eingang"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914BBE0[] = {
+    _S("Galerie en"),
+    _S("Mur"),
+    _S("Grande"),
+    _S("Catacombes"),
+    _S("Quartiers"),
+    _S("Mine"),
+    _S("Chapelle"),
+    _S("Entrée"),
+    _S("Centre du"),
+    _S("Grottes"),
+    _S("Colisée"),
+    _S("Donjon"),
+    _S("Laboratoire"),
+    _S("Tour de"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Château"),
+    _S("Galerie en"),
+    _S("Mur extér."),
+    _S("Bibliothèque"),
+    _S("Catacombes"),
+    _S("Repaire aile"),
+    _S("Grotte"),
+    _S("Anti-"),
+    _S("Entrée"),
+    _S("Centre chât."),
+    _S("Cavernes"),
+    _S("Colisée"),
+    _S("Donjon"),
+    _S("Labo de"),
+    _S("Tour horloge"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("Entrée"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
+char* D_psp_0914BE60[] = {
+    _S("marbre"),
+    _S("extérieur"),
+    _S("bibliothèque"),
+    _S(""),
+    _S("d'Olrox"),
+    _S("abandonnée"),
+    _S("royale"),
+    _S(""),
+    _S("château"),
+    _S("souterraines"),
+    _S(""),
+    _S("du château"),
+    _S("d'alchimie"),
+    _S("l'horloge"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(passé)"),
+    _S("marbre noir"),
+    _S("(inversé)"),
+    _S("interdite"),
+    _S("flottantes"),
+    _S("de la mort"),
+    _S(""),
+    _S("chapelle"),
+    _S("(inversée)"),
+    _S("(inversé)"),
+    _S("(inversées) "),
+    _S("(inversé)"),
+    _S("(inversé)"),
+    _S("nécromancie"),
+    _S("(inversée)"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    _S("(inversée)"),
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""};
 
 void func_psp_090F5560(void) {
     g_EquipDefs = GetLang(&D_psp_09192EB0, &D_psp_091A4CE8, &D_psp_09197640,
@@ -565,82 +1297,82 @@ void func_psp_090F5560(void) {
                           &D_psp_091C8158, &D_psp_091C7CD8);
     g_RelicDefs = GetLang(&D_psp_091C8E40, &D_psp_091CAB00, &D_psp_091C9560,
                           &D_psp_091CA398, &D_psp_091C9C90);
-    g_SaveAreaNames = GetLang(&D_psp_0914A918, &D_psp_0914BBE0, &D_psp_0914ADB8,
-                              &D_psp_0914B748, &D_psp_0914B260);
+    g_SaveAreaNames = GetLang(D_psp_0914A918, D_psp_0914BBE0, D_psp_0914ADB8,
+                              D_psp_0914B748, D_psp_0914B260);
     g_SaveAreaNamesSecondPart =
-        GetLang(&D_psp_0914AB00, &D_psp_0914BE60, &D_psp_0914AFF8,
-                &D_psp_0914B960, &D_psp_0914B4A0);
+        GetLang(D_psp_0914AB00, D_psp_0914BE60, D_psp_0914AFF8, D_psp_0914B960,
+                D_psp_0914B4A0);
     switch (g_UserLanguage) {
     case LANG_EN:
     default:
-        D_psp_091CE248 = &D_psp_0914BFA0;
-        D_psp_091CE240 = &D_psp_0914BFB0;
-        D_psp_091CE238 = &D_psp_0914BFC0;
-        D_psp_091CE230 = &D_psp_0914BFD0;
-        D_psp_091CE228 = &D_psp_0914BFE8;
-        D_psp_091CE220 = &D_psp_0914BFF8;
-        D_psp_091CE218 = &D_psp_0914C000;
-        D_psp_091CE210 = &D_psp_0914C008;
-        D_psp_091CE208 = &D_psp_0914C010;
-        D_psp_091CE200 = &D_psp_0914C018;
-        D_psp_091CE1F8 = &D_psp_0914C020;
-        D_psp_091CE1F0 = &D_psp_0914C030;
+        D_psp_091CE248 = "Wish to save?";
+        D_psp_091CE240 = "Overwrite data?";
+        D_psp_091CE238 = "Data saved.";
+        D_psp_091CE230 = "Not enough free ";
+        D_psp_091CE228 = "space to save.";
+        D_psp_091CE220 = "Yes";
+        D_psp_091CE218 = "No";
+        D_psp_091CE210 = "select";
+        D_psp_091CE208 = "your";
+        D_psp_091CE200 = "destiny";
+        D_psp_091CE1F8 = "new game";
+        D_psp_091CE1F0 = "no data";
         break;
     case LANG_FR:
-        D_psp_091CE248 = &D_psp_0914C038;
-        D_psp_091CE240 = &D_psp_0914C048;
-        D_psp_091CE238 = &D_psp_0914C060;
-        D_psp_091CE230 = &D_psp_0914C078;
-        D_psp_091CE228 = &D_psp_0914C090;
-        D_psp_091CE220 = &D_psp_0914C0A8;
-        D_psp_091CE218 = &D_psp_0914C0B0;
-        D_psp_091CE210 = &D_psp_0914C0B8;
-        D_psp_091CE208 = &D_psp_0914C0C0;
-        D_psp_091CE200 = &D_psp_0914C0C8;
-        D_psp_091CE1F8 = &D_psp_0914C0D0;
-        D_psp_091CE1F0 = &D_psp_0914C0E0;
+        D_psp_091CE248 = "Enregistrer ?";
+        D_psp_091CE240 = _SE("Ecraser données ?");
+        D_psp_091CE238 = _SE("Sauvegarde réussie");
+        D_psp_091CE230 = "Espace insuffisant";
+        D_psp_091CE228 = "pour sauvegarder.";
+        D_psp_091CE220 = "Oui";
+        D_psp_091CE218 = "Non";
+        D_psp_091CE210 = "select.";
+        D_psp_091CE208 = "votre";
+        D_psp_091CE200 = "destin";
+        D_psp_091CE1F8 = "demarrer";
+        D_psp_091CE1F0 = "0 donnee";
         break;
     case LANG_SP:
-        D_psp_091CE248 = &D_psp_0914C0F0;
-        D_psp_091CE240 = &D_psp_0914C108;
-        D_psp_091CE238 = &D_psp_0914C120;
-        D_psp_091CE230 = &D_psp_0914C138;
-        D_psp_091CE228 = &D_psp_0914C148;
-        D_psp_091CE220 = &D_psp_0914C158;
-        D_psp_091CE218 = &D_psp_0914C000;
-        D_psp_091CE210 = &D_psp_0914C160;
-        D_psp_091CE208 = &D_psp_0914C168;
-        D_psp_091CE200 = &D_psp_0914C170;
-        D_psp_091CE1F8 = &D_psp_0914C178;
-        D_psp_091CE1F0 = &D_psp_0914C180;
+        D_psp_091CE248 = _SE("¿Quieres guardar?");
+        D_psp_091CE240 = _SE("¿Sobrescribir datos?");
+        D_psp_091CE238 = "Datos guardados.";
+        D_psp_091CE230 = "Espacio libre";
+        D_psp_091CE228 = "insuficiente.";
+        D_psp_091CE220 = _SE("Sí");
+        D_psp_091CE218 = "No";
+        D_psp_091CE210 = "elige";
+        D_psp_091CE208 = "tu";
+        D_psp_091CE200 = "destino";
+        D_psp_091CE1F8 = "nueva";
+        D_psp_091CE1F0 = "no datos";
         break;
     case LANG_GE:
-        D_psp_091CE248 = &D_psp_0914C190;
-        D_psp_091CE240 = &D_psp_0914C1A8;
-        D_psp_091CE238 = &D_psp_0914C1C0;
-        D_psp_091CE230 = &D_psp_0914C1D8;
-        D_psp_091CE228 = &D_psp_0914C1F0;
-        D_psp_091CE220 = &D_psp_0914C200;
-        D_psp_091CE218 = &D_psp_0914C208;
-        D_psp_091CE210 = &D_psp_0914C210;
-        D_psp_091CE208 = &D_psp_0914C218;
-        D_psp_091CE200 = &D_psp_0914C220;
-        D_psp_091CE1F8 = &D_psp_0914C228;
-        D_psp_091CE1F0 = &D_psp_0914C230;
+        D_psp_091CE248 = _SE("Möchtest Du speichern?");
+        D_psp_091CE240 = _SE("Daten überschreiben?");
+        D_psp_091CE238 = "Daten gespeichert.";
+        D_psp_091CE230 = "Nicht genug Platz";
+        D_psp_091CE228 = "zum Speichern.";
+        D_psp_091CE220 = "Ja";
+        D_psp_091CE218 = "Nein";
+        D_psp_091CE210 = _SE("wähle");
+        D_psp_091CE208 = "deinen";
+        D_psp_091CE200 = "weg";
+        D_psp_091CE1F8 = "neu";
+        D_psp_091CE1F0 = "k. daten";
         break;
     case LANG_IT:
-        D_psp_091CE248 = &D_psp_0914C240;
-        D_psp_091CE240 = &D_psp_0914C250;
-        D_psp_091CE238 = &D_psp_0914C268;
-        D_psp_091CE230 = &D_psp_0914C278;
-        D_psp_091CE228 = &D_psp_0914C288;
-        D_psp_091CE220 = &D_psp_0914C298;
-        D_psp_091CE218 = &D_psp_0914C000;
-        D_psp_091CE210 = &D_psp_0914C2A0;
-        D_psp_091CE208 = &D_psp_0914C2A8;
-        D_psp_091CE200 = &D_psp_0914C170;
-        D_psp_091CE1F8 = &D_psp_0914C2B0;
-        D_psp_091CE1F0 = &D_psp_0914C2C0;
+        D_psp_091CE248 = "Vuoi salvare?";
+        D_psp_091CE240 = "Sovrascrivo dati?";
+        D_psp_091CE238 = "Dati salvati.";
+        D_psp_091CE230 = "Spazio libero";
+        D_psp_091CE228 = "insufficiente.";
+        D_psp_091CE220 = _SE("Sì");
+        D_psp_091CE218 = "No";
+        D_psp_091CE210 = "selez.";
+        D_psp_091CE208 = "il tuo";
+        D_psp_091CE200 = "destino";
+        D_psp_091CE1F8 = "n. part.";
+        D_psp_091CE1F0 = "no dati";
         break;
     }
 }
