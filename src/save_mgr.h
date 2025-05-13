@@ -344,8 +344,6 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return memcard->unk25C;
 }
 
-
-
 s32 MemcardFormat(s32 nPort, s32 nCard) {
     char savePath[0x8];
     s32 ret;

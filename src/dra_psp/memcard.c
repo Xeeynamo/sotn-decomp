@@ -194,22 +194,9 @@ u8 memcard_15[] = {
 };
 
 u8* g_saveIconTexture[] = {
-    memcard_0,
-    memcard_1,
-    memcard_2,
-    memcard_3,
-    memcard_4,
-    memcard_5,
-    memcard_6,
-    memcard_7,
-    memcard_8,
-    memcard_9,
-    memcard_10,
-    memcard_11,
-    memcard_12,
-    memcard_13,
-    memcard_14,
-    memcard_15,
+    memcard_0,  memcard_1,  memcard_2,  memcard_3,  memcard_4,  memcard_5,
+    memcard_6,  memcard_7,  memcard_8,  memcard_9,  memcard_10, memcard_11,
+    memcard_12, memcard_13, memcard_14, memcard_15,
 };
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
