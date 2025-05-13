@@ -102,7 +102,7 @@ segments:
       - [0x832A8, .data, dra_psp/1DDC0]
       - [0x84028, .data, dra/4B758]
       - [0x84080, .data, dra_psp/demo]
-      - [0x841C0, data]
+      - [0x841C0, .data, dra/8BEF8]
       - [0x84210, .data, dra/5D5BC]
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, data]
