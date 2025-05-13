@@ -4,9 +4,9 @@ typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 // The two weights hang from chains. The chains are prims
 // that are 32 px in height. This function places them
 // all at the right locations to stack up above the weight.
-void UpdateWeightChains(WeightSelect weight) {
-    s32 posY = g_CurrentEntity->posY.i.hi;
+static void UpdateWeightChains(WeightSelect weight) {
     s32 posX = g_CurrentEntity->posX.i.hi;
+    s32 posY = g_CurrentEntity->posY.i.hi;
     Primitive* prim;
 
     if (weight != WEIGHT_SMALL) {
@@ -15,46 +15,44 @@ void UpdateWeightChains(WeightSelect weight) {
         posY -= 16;
     }
 
-    prim = g_CurrentEntity->ext.prim;
-
-    while (posY > 0) {
-        prim->y2 = prim->y3 = posY;
+    for(prim = g_CurrentEntity->ext.prim;posY > 0; prim = prim->next) {
         prim->x0 = prim->x2 = posX - 8;
         prim->x1 = prim->x3 = posX + 8;
+        prim->y2 = prim->y3 = posY;
         posY -= 32;
         prim->y0 = prim->y1 = posY;
         prim->drawMode = DRAW_UNK02;
-        prim = prim->next;
     }
-    posY -= 32;
 
-    while (prim != NULL) {
+    for (;prim != NULL; prim = prim->next) {
         prim->drawMode = DRAW_HIDE;
-        prim = prim->next;
     }
 }
 
 // switch to lower the weights to the right of Cube of Zoe
 void EntityWeightsSwitch(Entity* self) {
     s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
-    Entity* player = &PLAYER;
-
+    s32 worldPos;
+    Entity* player;
+    
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
-        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
-            self->step = 2;
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
             self->posY.i.hi += 4;
+            self->step = 2;
         }
         break;
 
     case 1:
         if (collision) {
+            player = &PLAYER;
             player->posY.i.hi++;
             self->posY.val += FIX(0.75);
-            if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 160) {
+            worldPos = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            if (worldPos > 160) {
                 self->posY.i.hi = 160 - g_Tilemap.scrollY.i.hi;
                 g_api.PlaySfx(SFX_SWITCH_CLICK);
                 g_CastleFlags[NO0_TO_NP3_SHORTCUT] = 1;
@@ -67,7 +65,9 @@ void EntityWeightsSwitch(Entity* self) {
 
 // smaller weight blocking path near cube of zoe
 void EntityPathBlockSmallWeight(Entity* self) {
-    s16 primIndex;
+    s32 worldPos;
+    s32 collision;
+    s32 primIndex;
     Primitive* prim;
     s32 var_a1;
     s32 i;
@@ -83,11 +83,10 @@ void EntityPathBlockSmallWeight(Entity* self) {
             DestroyEntity(self);
             return;
         }
-
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
 
         while (prim != NULL) {
             prim->tpage = 0xF;
@@ -104,21 +103,22 @@ void EntityPathBlockSmallWeight(Entity* self) {
         self->posX.i.hi = 416 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 64 - g_Tilemap.scrollY.i.hi;
 #endif
-        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
             self->posY.i.hi += 111;
             self->step = 3;
         }
         break;
 
     case 1:
-        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT] != 0) {
+        if (g_CastleFlags[NO0_TO_NP3_SHORTCUT]) {
             self->step++;
         }
         break;
 
     case 2:
         self->posY.val += FIX(0.5);
-        if ((self->posY.i.hi + g_Tilemap.scrollY.i.hi) >= 175) {
+        worldPos = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (worldPos >= 175) {
 #if !defined(STAGE_IS_NO3)
             PlaySfxPositional(SFX_START_SLAM_B);
 #endif
@@ -130,16 +130,19 @@ void EntityPathBlockSmallWeight(Entity* self) {
     case 3:
         for (var_a1 = 0x179, i = 0; i < 2; var_a1 -= 0x20, i++) {
             g_Tilemap.fg[var_a1] = 0x4FA;
-            g_Tilemap.fg[var_a1 + 1] = 0x4FA;
+            *(&g_Tilemap.fg[var_a1] + 1) = 0x4FA;
         }
         self->step++;
         break;
     }
 
-    if (self->step < 3 && GetPlayerCollisionWith(self, 16, 16, 5) & 4) {
+    if (self->step < 3){
+        collision = GetPlayerCollisionWith(self, 16, 16, 5);
+        if(collision & 4){
         Entity* player = &PLAYER;
 
         player->posY.i.hi++;
+        }
     }
     UpdateWeightChains(WEIGHT_SMALL);
 }
