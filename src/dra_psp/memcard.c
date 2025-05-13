@@ -114,12 +114,14 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return 1;
 }
 
-extern u16 g_saveIconPal0[0x10][0x10];
+u16 g_saveIconPal0[] = {
+#include "../dra/gen/g_saveIconPal0.h"
+};
 
 void GetSavePalette(u8* dst, s32 palIdx) {
     u16* dst_u16 = (u16*)dst;
     s32 i;
-    u16* src = g_saveIconPal0[0];
+    u16* src = g_saveIconPal0;
 
     src += palIdx * 16;
     for (i = 0; i < COLORS_PER_PAL; i++) {
@@ -127,7 +129,88 @@ void GetSavePalette(u8* dst, s32 palIdx) {
     }
 }
 
-extern u8* g_saveIconTexture[0x10];
+u8 memcard_0[] = {
+#include "../dra/gen/memcard_0.h"
+};
+
+u8 memcard_1[] = {
+#include "../dra/gen/memcard_1.h"
+};
+
+u8 memcard_2[] = {
+#include "../dra/gen/memcard_2.h"
+};
+
+u8 memcard_3[] = {
+#include "../dra/gen/memcard_3.h"
+};
+
+u8 memcard_4[] = {
+#include "../dra/gen/memcard_4.h"
+};
+
+u8 memcard_5[] = {
+#include "../dra/gen/memcard_5.h"
+};
+
+u8 memcard_6[] = {
+#include "../dra/gen/memcard_6.h"
+};
+
+u8 memcard_7[] = {
+#include "../dra/gen/memcard_7.h"
+};
+
+u8 memcard_8[] = {
+#include "../dra/gen/memcard_8.h"
+};
+
+u8 memcard_9[] = {
+#include "../dra/gen/memcard_9.h"
+};
+
+u8 memcard_10[] = {
+#include "../dra/gen/memcard_10.h"
+};
+
+u8 memcard_11[] = {
+#include "../dra/gen/memcard_11.h"
+};
+
+u8 memcard_12[] = {
+#include "../dra/gen/memcard_12.h"
+};
+
+u8 memcard_13[] = {
+#include "../dra/gen/memcard_13.h"
+};
+
+u8 memcard_14[] = {
+#include "../dra/gen/memcard_14.h"
+};
+
+u8 memcard_15[] = {
+#include "../dra/gen/memcard_15.h"
+};
+
+u8* g_saveIconTexture[] = {
+    memcard_0,
+    memcard_1,
+    memcard_2,
+    memcard_3,
+    memcard_4,
+    memcard_5,
+    memcard_6,
+    memcard_7,
+    memcard_8,
+    memcard_9,
+    memcard_10,
+    memcard_11,
+    memcard_12,
+    memcard_13,
+    memcard_14,
+    memcard_15,
+};
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
     const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
@@ -140,7 +223,11 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-extern char g_AsciiSet[];
+char g_AsciiSet[] = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
+    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',  'u', 'v',
+    'w', 'x', 'y', 'z', '&', '!', '-', '.', '\'', ' ', ' ',
+};
 char* g_ShiftJisSet[] = {
     "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
     "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
