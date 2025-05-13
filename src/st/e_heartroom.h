@@ -1,8 +1,9 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 void EntityHeartRoomSwitch(Entity* self) {
     s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
     s32 worldPos;
     Entity* player;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
