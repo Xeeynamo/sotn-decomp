@@ -1422,9 +1422,9 @@
 | lib       | EntityBackgroundBookcase                 |      227 |         29 |        |                                 |       |
 | maria     | MarCheckWallLeft                         |      228 |         29 |        |                                 |       |
 | ric       | RicCheckWallLeft                         |      228 |         29 |        |                                 |       |
-| no3       | EntityPathBlockSmallWeight               |      229 |         25 |        |                                 |       |
+| no3       | EntityPathBlockSmallWeight               |      229 |         25 |        | https://decomp.me/scratch/mQ0R4 | 0.955 |
 | lib       | func_us_801B12D0                         |      231 |         11 |        |                                 |       |
-| no3       | EntityPathBlockTallWeight                |      232 |         23 |        |                                 |       |
+| no3       | EntityPathBlockTallWeight                |      232 |         23 |        | https://decomp.me/scratch/qXk9X | 0.967 |
 | dra       | PlayerStepHighJump                       |      232 |         32 |        |                                 |       |
 | dra       | func_800F4994                            |      233 |         18 |        | https://decomp.me/scratch/iweZP | 0.984 |
 | no3       | EntityBackgroundTrees                    |      233 |         25 |        |                                 |       |
@@ -1810,7 +1810,6 @@
 | ric       | RicEntityCrashBible                      |      742 |         48 | Yes    | https://decomp.me/scratch/O1hL7 | 1.0   |
 | ric       | RicEntityCrashCrossBeam                  |      743 |         63 |        | https://decomp.me/scratch/ijdVw | 0.999 |
 | dra       | CheckStageCollision                      |      746 |         77 |        | https://decomp.me/scratch/GmZxv | 0.995 |
-| dra       | CheckCollision                           |      748 |         90 |        | https://decomp.me/scratch/hVHDS | 0.997 |
 | dra       | EntitySubwpnThrownDagger                 |      749 |         52 |        |                                 |       |
 | ric       | RicEntitySubwpnReboundStone              |      754 |        126 |        |                                 |       |
 | maria     | MarEntityHitByCutBlood                   |      757 |         84 | Yes    |                                 |       |
@@ -1820,6 +1819,7 @@
 | no3       | EntityBackgroundPineTrees                |      766 |         43 |        |                                 |       |
 | lib       | func_psp_0923A538                        |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra       | EntityGuardText                          |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
+| dra       | CheckCollision                           |      780 |         91 |        | https://decomp.me/scratch/hVHDS | 0.997 |
 | no3       | EntitySplashWater                        |      785 |         68 |        |                                 |       |
 | no4       | EntitySplashWater                        |      785 |         68 |        |                                 |       |
 | ric       | RicEntitySubwpnKnife                     |      786 |         53 |        |                                 |       |
