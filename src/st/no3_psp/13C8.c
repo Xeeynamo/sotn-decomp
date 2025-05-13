@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../no3/no3.h"
 
-#include "heartroom_psp.h"
+#include "../heartroom_psx.h"
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/13C8", func_pspeu_09239020);
 
