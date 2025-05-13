@@ -1,3 +1,6 @@
+#ifdef VERSION_PSP
+extern s32 E_ID(CAVERN_DOOR_PLATFORM);
+#endif
 // When cavern door or heart door are opened, a cascade
 // of single blue pixels flies out of the door as it slides down.
 // This function manages the physics for those pixel-prims.
@@ -48,24 +51,27 @@ void DoorCascadePhysics(EntranceCascadePrim* prim) {
 void EntityCavernDoorLever(Entity* self) {
     s32 posX;
     s32 posY;
+    Entity* platform;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 18;
-        self->rotZ = -0x200;
         self->drawFlags |= FLAG_DRAW_ROTZ;
-        CreateEntityFromEntity(E_CAVERN_DOOR_PLATFORM, self, self + 1);
-        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT] != 0) {
+        self->rotZ = -0x200;
+        platform = self + 1;
+        CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
+        if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
             self->rotZ = 0;
         }
 
     case 1:
-        if ((self + 1)->ext.cavernDoor.collision != 0) {
+        platform = self + 1;
+        if (platform->ext.cavernDoor.collision) {
             self->rotZ += 4;
             if (self->rotZ > 0) {
                 self->rotZ = 0;
-                if (g_CastleFlags[NO4_TO_NP3_SHORTCUT] == 0) {
+                if (!g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
                     g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
                 g_CastleFlags[NO4_TO_NP3_SHORTCUT] = 1;
@@ -75,13 +81,13 @@ void EntityCavernDoorLever(Entity* self) {
         }
         break;
     }
-
+    platform = self + 1;
     posX = self->posX.val;
     posY = self->posY.val;
-    posX += rcos(self->rotZ) * 0x280;
-    posY += rsin(self->rotZ) * 0x280;
-    (self + 1)->posX.val = posX;
-    (self + 1)->posY.val = posY;
+    posX += rcos(self->rotZ) * 0x28 << 4;
+    posY += rsin(self->rotZ) * 0x28 << 4;
+    platform->posX.val = posX;
+    platform->posY.val = posY;
 }
 
 // platform attached to lever at cavern door
@@ -102,7 +108,7 @@ void EntityCavernDoorPlatform(Entity* self) {
         self->ext.cavernDoor.collision = collision;
 
         if (collision != 0) {
-            xDiff = self->posX.i.hi - self->ext.cavernDoor.xCoord.i.hi;
+            xDiff = self->posX.i.hi - FIX_TO_I(self->ext.cavernDoor.xCoord.val);
             player = &PLAYER;
             player->posX.i.hi += xDiff;
             player->posY.i.hi += 1;
