@@ -117,7 +117,7 @@ void EntityCavernDoorPlatform(Entity* self) {
     }
 }
 
-static u16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0};
+static s16 cavernDoorTiles[] = {0x6D0, 0x04FA, 0x04FA, 0x0551, 0, 0};
 
 // door blocking way to the Underground Caverns
 void EntityCavernDoor(Entity* self) {
@@ -236,7 +236,7 @@ void EntityCavernDoor(Entity* self) {
         for (prim = self->ext.cavernDoor.prim; prim != NULL;
              prim = prim->next) {
             if (prim->p3) {
-                DoorCascadePhysics(prim);
+                DoorCascadePhysics((EntranceCascadePrim*)prim);
             }
         }
     }

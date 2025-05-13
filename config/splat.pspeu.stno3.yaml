@@ -60,7 +60,8 @@ segments:
       - [0x33FB0, .data, no3_psp/cutscene_data]
       - [0x347E0, data]
       - [0x5E430, .data, no3/e_castle_door]
-      - [0x5E530, data]
+      - [0x5E530, .data, no3_psp/e_cavern_door]
+      - [0x5E540, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3_psp/2C60] # EntityPushAlucard
       - [0x61810, .rodata, no3_psp/e_particles]
