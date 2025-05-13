@@ -30,25 +30,25 @@ s32 GetMemcardFreeBlockCount(s32 nPort) {
     return g_MemcardInfo[nPort].nFreeBlock;
 }
 
-s32 MemcardDetectSave(s32 nPort, s32 expectedSaveName, s32 block) {
-    bool result;
+bool MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
+    bool isCastlevaniaSave;
     bool found;
 
-    result = false;
+    isCastlevaniaSave = false;
     if (nPort == 0) {
         if (func_8919188(expectedSaveName) >= 0) {
             found = true;
         } else {
             found = false;
         }
-        result = found;
+        isCastlevaniaSave = found;
     }
-    g_MemcardInfo[nPort].blocks[block] = result;
-    return result;
+    g_MemcardInfo[nPort].blocks[block] = isCastlevaniaSave;
+    return isCastlevaniaSave;
 }
 
-s32 IsMemcardBlockUsed(s32 cardNum, s32 blockNum) {
-    return g_MemcardInfo[cardNum].blocks[blockNum];
+s32 IsMemcardBlockUsed(u32 nPort, u32 block) {
+    return g_MemcardInfo[nPort].blocks[block];
 }
 
 s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
@@ -114,12 +114,14 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return 1;
 }
 
-extern u16 g_saveIconPal0[0x10][0x10];
+u16 g_saveIconPal0[] = {
+#include "../dra/gen/g_saveIconPal0.h"
+};
 
 void GetSavePalette(u8* dst, s32 palIdx) {
     u16* dst_u16 = (u16*)dst;
     s32 i;
-    u16* src = g_saveIconPal0[0];
+    u16* src = g_saveIconPal0;
 
     src += palIdx * 16;
     for (i = 0; i < COLORS_PER_PAL; i++) {
@@ -127,7 +129,75 @@ void GetSavePalette(u8* dst, s32 palIdx) {
     }
 }
 
-extern u8* g_saveIconTexture[0x10];
+u8 memcard_0[] = {
+#include "../dra/gen/memcard_0.h"
+};
+
+u8 memcard_1[] = {
+#include "../dra/gen/memcard_1.h"
+};
+
+u8 memcard_2[] = {
+#include "../dra/gen/memcard_2.h"
+};
+
+u8 memcard_3[] = {
+#include "../dra/gen/memcard_3.h"
+};
+
+u8 memcard_4[] = {
+#include "../dra/gen/memcard_4.h"
+};
+
+u8 memcard_5[] = {
+#include "../dra/gen/memcard_5.h"
+};
+
+u8 memcard_6[] = {
+#include "../dra/gen/memcard_6.h"
+};
+
+u8 memcard_7[] = {
+#include "../dra/gen/memcard_7.h"
+};
+
+u8 memcard_8[] = {
+#include "../dra/gen/memcard_8.h"
+};
+
+u8 memcard_9[] = {
+#include "../dra/gen/memcard_9.h"
+};
+
+u8 memcard_10[] = {
+#include "../dra/gen/memcard_10.h"
+};
+
+u8 memcard_11[] = {
+#include "../dra/gen/memcard_11.h"
+};
+
+u8 memcard_12[] = {
+#include "../dra/gen/memcard_12.h"
+};
+
+u8 memcard_13[] = {
+#include "../dra/gen/memcard_13.h"
+};
+
+u8 memcard_14[] = {
+#include "../dra/gen/memcard_14.h"
+};
+
+u8 memcard_15[] = {
+#include "../dra/gen/memcard_15.h"
+};
+
+u8* g_saveIconTexture[] = {
+    memcard_0,  memcard_1,  memcard_2,  memcard_3,  memcard_4,  memcard_5,
+    memcard_6,  memcard_7,  memcard_8,  memcard_9,  memcard_10, memcard_11,
+    memcard_12, memcard_13, memcard_14, memcard_15,
+};
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
     const s32 IconSize = sizeof(((MemcardHeader*)0)->Icon);
@@ -140,7 +210,12 @@ void GetSaveIcon(u8* dst, s32 iconIdx) {
     }
 }
 
-extern char g_AsciiSet[];
+char g_AsciiSet[] = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',  'j', 'k',
+    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',  'u', 'v',
+    'w', 'x', 'y', 'z', '&', '!', '-', '.', '\'', ' ', ' ',
+};
+
 char* g_ShiftJisSet[] = {
     "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
     "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
@@ -150,17 +225,17 @@ char* g_ShiftJisSet[] = {
 void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     const int RoomCount = 942;
     MemcardHeader h;
-    SaveData* dst2;
-    char saveTitle[64];
 
+    MemcardHeader* dstHeader;
     PlayerStatus* dstStatus;
     MenuNavigation* dstNav;
     GameSettings* dstSettings;
+
+    char saveTitle[64];
     u32* saveRaw;
-    s32 saveNameLen;
     SaveData* dst;
-    s32 j;
-    s32 i;
+    s32 saveNameLen;
+    s32 i, j;
 
     saveRaw = (u32*)save;
     for (i = 0; i < 0x800; i++) {
@@ -181,9 +256,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
 #if defined(VERSION_US)
     STRCPY(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
-#elif defined(VERSION_HD)
-    STRCPY(h.Title, "ドラキュラＸ−");
-#elif defined(VERSION_PSP)
+#else
     STRCPY(h.Title, "ドラキュラＸ−");
 #endif
 
@@ -251,11 +324,12 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     GetSaveIcon(h.Icon, cardIcon);
 
     dst = save;
-    dst2 = dst;
+    dstHeader = &dst->header;
     dstStatus = &dst->status;
     dstNav = &dst->menuNavigation;
     dstSettings = &dst->settings;
-    dst2->header = h;
+
+    *dstHeader = h;
     for (i = 0; i < 10; i++) {
         dst->info.name[i] = g_Status.saveName[i];
     }
@@ -273,7 +347,6 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->info.roomX = g_Tilemap.left;
     dst->info.roomY = g_Tilemap.top;
     dst->info.saveSize = sizeof(SaveData);
-
     *dstStatus = g_Status;
     *dstNav = g_MenuNavigation;
     *dstSettings = g_Settings;

@@ -110,7 +110,7 @@ u8 g_saveIcon12[0x180];
 u8 g_saveIcon13[0x180];
 u8 g_saveIcon14[0x180];
 u8 g_saveIcon15[0x180];
-u16 g_saveIconPal0[0x10][0x10];
+u16 g_saveIconPal0[0x100];
 s32 D_8003C0EC[4] = {0};
 Unkstruct_8006C3C4 D_8006C3C4[32] = {0};
 GfxLoad g_GfxLoad[0x10] = {0};
