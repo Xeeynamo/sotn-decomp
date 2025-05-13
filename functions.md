@@ -308,7 +308,7 @@
 | dra       | func_psp_09141878                        |       29 |          5 |        |                                 |       |
 | chi       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | lib       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
-| no3       | func_pspeu_09261588                      |       29 |          5 |        |                                 |       |
+| no3       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | chi       | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | lib       | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | st0       | prologue_scroll.rodata                   |       30 |          0 | Yes    |                                 |       |
@@ -448,7 +448,7 @@
 | lib       | CreateEntityFromEntity                   |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | lib       | GetAngleBetweenEntitiesShifted           |       39 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | no3       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
-| no3       | func_pspeu_09246978                      |       39 |          2 |        |                                 |       |
+| no3       | CreateEntityFromEntity                   |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | no4       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
 | no4       | CreateEntityFromEntity                   |       39 |          2 |        | https://decomp.me/scratch/yFFD0 | 0.997 |
 | st0       | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
@@ -853,7 +853,7 @@
 | chi       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no3       | EntityDeadMerman                         |       73 |          7 |        |                                 |       |
-| no3       | func_pspeu_09239020                      |       73 |          7 |        |                                 |       |
+| no3       | func_pspeu_09239020                      |       73 |          7 |        | https://decomp.me/scratch/MS6uL | 1.0   |
 | no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
 | no4       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | wrp       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
@@ -1061,7 +1061,7 @@
 | ric       | func_80159C04                            |      101 |         14 |        | https://decomp.me/scratch/BsYZP | 0.967 |
 | dra       | MenuDrawRect                             |      102 |          6 |        |                                 |       |
 | dra       | MenuDrawLine                             |      102 |          8 |        |                                 |       |
-| no3       | EntityHeartRoomSwitch                    |      102 |         11 |        |                                 |       |
+| no3       | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
 | dra       | InitWeapon                               |      102 |         12 |        |                                 |       |
 | no3       | EntityDeathScytheShadow                  |      102 |         13 |        |                                 |       |
 | dra       | PlaySfxScript                            |      103 |          2 |        |                                 |       |
@@ -1241,7 +1241,7 @@
 | dra       | GetStatusAilmentTimer                    |      145 |         15 | Yes    |                                 |       |
 | dra       | func_80132A04                            |      145 |         15 |        |                                 |       |
 | lib       | func_us_801CD9EC                         |      146 |         18 |        |                                 |       |
-| no3       | func_pspeu_09239940                      |      147 |         13 |        |                                 |       |
+| no3       | DoorCascadePhysics                       |      147 |         13 |        |                                 |       |
 | no3       | EntityFallingRock2                       |      147 |         17 |        |                                 |       |
 | no3       | EntityFallingRock                        |      147 |         19 |        |                                 |       |
 | ric       | CheckHighJumpInput                       |      148 |         25 |        |                                 |       |
@@ -1315,7 +1315,7 @@
 | st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
-| no3       | 13C8.rodata                              |      176 |          0 | Yes    |                                 |       |
+| no3       | 19A0.rodata                              |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
 | no3       | EntityExplosion2                         |      177 |         19 |        |                                 |       |
@@ -1565,7 +1565,7 @@
 | dra       | DealDamage                               |      331 |         39 |        | https://decomp.me/scratch/rZ44e | 0.999 |
 | maria_psp | func_pspeu_092A6280                      |      332 |         40 |        |                                 |       |
 | lib       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
-| no3       | func_pspeu_09260AB8                      |      332 |         41 |        |                                 |       |
+| no3       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | no4       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | ric       | RicDoCrash                               |      333 |         60 | Yes    |                                 |       |
 | lib       | func_psp_09257BF8                        |      334 |         15 |        | https://decomp.me/scratch/EXmKW | 1.0   |
