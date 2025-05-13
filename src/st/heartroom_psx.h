@@ -1,23 +1,26 @@
 void EntityHeartRoomSwitch(Entity* self) {
     s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
-    Entity* player = &PLAYER;
-
+    s32 worldPos;
+    Entity* player;
+    
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 9;
         self->zPriority = 0x5E;
         if (g_CastleFlags[WRP_TO_NP3_SHORTCUT]) {
-            self->step = 2;
             self->posY.i.hi += 4;
+            self->step = 2;
         }
         break;
 
     case 1:
         if (collision != 0) {
+            player = &PLAYER;
             player->posY.i.hi++;
             self->posY.val += FIX(0.25);
-            if ((g_Tilemap.scrollY.i.hi + self->posY.i.hi) > 193) {
+            worldPos = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+            if (worldPos > 193) {
                 self->posY.i.hi = 193 - g_Tilemap.scrollY.i.hi;
                 g_CastleFlags[WRP_TO_NP3_SHORTCUT] = 1;
 #if defined(STAGE_IS_NO3)

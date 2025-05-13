@@ -35,6 +35,7 @@ void EntityHeartRoomSwitch(Entity* self) {
     }
 }
 
+// door preventing access to warp room / heart
 void EntityHeartRoomGoldDoor(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
