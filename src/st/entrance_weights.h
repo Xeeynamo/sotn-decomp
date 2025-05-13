@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 typedef enum { WEIGHT_SMALL, WEIGHT_TALL } WeightSelect;
 
 // To the right of Cube of Zoe is the weight system.
@@ -15,7 +16,7 @@ static void UpdateWeightChains(WeightSelect weight) {
         posY -= 16;
     }
 
-    for(prim = g_CurrentEntity->ext.prim;posY > 0; prim = prim->next) {
+    for (prim = g_CurrentEntity->ext.prim; posY > 0; prim = prim->next) {
         prim->x0 = prim->x2 = posX - 8;
         prim->x1 = prim->x3 = posX + 8;
         prim->y2 = prim->y3 = posY;
@@ -24,7 +25,7 @@ static void UpdateWeightChains(WeightSelect weight) {
         prim->drawMode = DRAW_UNK02;
     }
 
-    for (;prim != NULL; prim = prim->next) {
+    for (; prim != NULL; prim = prim->next) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -34,7 +35,7 @@ void EntityWeightsSwitch(Entity* self) {
     s32 collision = GetPlayerCollisionWith(self, 8, 4, 4);
     s32 worldPos;
     Entity* player;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
@@ -136,12 +137,12 @@ void EntityPathBlockSmallWeight(Entity* self) {
         break;
     }
 
-    if (self->step < 3){
+    if (self->step < 3) {
         collision = GetPlayerCollisionWith(self, 16, 16, 5);
-        if(collision & 4){
-        Entity* player = &PLAYER;
+        if (collision & 4) {
+            Entity* player = &PLAYER;
 
-        player->posY.i.hi++;
+            player->posY.i.hi++;
         }
     }
     UpdateWeightChains(WEIGHT_SMALL);

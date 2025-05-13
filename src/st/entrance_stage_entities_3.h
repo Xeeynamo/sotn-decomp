@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 static s32 g_TrapDoorFlag = 0; // 0 = Closed, 1 = Open
 
 static u8 trapdoor_anim[] = {
