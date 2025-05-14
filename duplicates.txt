@@ -2480,11 +2480,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -2693,6 +2688,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -3151,6 +3150,9 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3388,6 +3390,15 @@
 | 1.00 | true     | EntityBat                           | asm/us/st/no3/matchings/e_bat/EntityBat.s 
 | 1.00 | true     | EntityBat                           | asm/us/st/np3/matchings/e_bat/EntityBat.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | DoorCascadePhysics                  | asm/us/st/no3/matchings/e_cavern_door/DoorCascadePhysics.s 
+| 1.00 | true     | DoorCascadePhysics                  | asm/us/st/np3/matchings/e_cavern_door/DoorCascadePhysics.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityCavernDoor                    | asm/us/st/no3/matchings/e_cavern_door/EntityCavernDoor.s 
+| 0.93 | true     | EntityCavernDoor                    | asm/us/st/np3/matchings/e_cavern_door/EntityCavernDoor.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityCavernDoorLever               | asm/us/st/no3/matchings/e_cavern_door/EntityCavernDoorLever.s 
+| 1.00 | true     | EntityCavernDoorLever               | asm/us/st/np3/matchings/e_cavern_door/EntityCavernDoorLever.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_801CC5A4                       | asm/us/st/no3/matchings/e_fire_warg/func_801CC5A4.s 
 | 1.00 | true     | func_801CF438                       | asm/us/st/no3/matchings/e_fire_warg/func_801CF438.s 
 -------------------------------------------------------------------------------
@@ -3412,20 +3423,11 @@
 | 1.00 | true     | EntityUnkId16                       | asm/us/st/no3/matchings/entrance_stage_entities/EntityUnkId16.s 
 | 1.00 | true     | EntityUnkId16                       | asm/us/st/np3/matchings/entrance_stage_entities/EntityUnkId16.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | DoorCascadePhysics                  | asm/us/st/no3/matchings/entrance_stage_entities_2/DoorCascadePhysics.s 
-| 1.00 | true     | DoorCascadePhysics                  | asm/us/st/np3/matchings/entrance_stage_entities_2/DoorCascadePhysics.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntityBackgroundBushes              | asm/us/st/no3/matchings/entrance_stage_entities_2/EntityBackgroundBushes.s 
 | 1.00 | true     | EntityBackgroundBushes              | asm/us/st/np3/matchings/entrance_stage_entities_2/EntityBackgroundBushes.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBackgroundTrees               | asm/us/st/no3/matchings/entrance_stage_entities_2/EntityBackgroundTrees.s 
 | 1.00 | true     | EntityBackgroundTrees               | asm/us/st/np3/matchings/entrance_stage_entities_2/EntityBackgroundTrees.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityCavernDoor                    | asm/us/st/no3/matchings/entrance_stage_entities_2/EntityCavernDoor.s 
-| 0.93 | true     | EntityCavernDoor                    | asm/us/st/np3/matchings/entrance_stage_entities_2/EntityCavernDoor.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityCavernDoorLever               | asm/us/st/no3/matchings/entrance_stage_entities_2/EntityCavernDoorLever.s 
-| 1.00 | true     | EntityCavernDoorLever               | asm/us/st/np3/matchings/entrance_stage_entities_2/EntityCavernDoorLever.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityTransparentWater              | asm/us/st/no3/matchings/entrance_stage_entities_2/EntityTransparentWater.s 
 | 1.00 | true     | EntityTransparentWater              | asm/us/st/np3/matchings/entrance_stage_entities_2/EntityTransparentWater.s 
