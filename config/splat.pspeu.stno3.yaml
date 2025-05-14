@@ -49,7 +49,7 @@ segments:
       - [0x13C8, c, no3/e_heartroom]
       - [0x19A0, c, no3/entrance_weights]
       - [0x22C0, c, no3/e_cavern_door]
-      - [0x2C60, c, no3_psp/e_transparent_water]
+      - [0x2C60, c, no3/e_transparent_water]
       - [0x3050, c, no3_psp/3050]
       - [0x1AA80, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
@@ -62,7 +62,7 @@ segments:
       - [0x347E0, data]
       - [0x5E430, .data, no3/e_castle_door]
       - [0x5E530, .data, no3/e_cavern_door]
-      - [0x5E540, .data, no3_psp/e_transparent_water]
+      - [0x5E540, .data, no3/e_transparent_water]
       - [0x5E580, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3_psp/3050] # EntityPushAlucard
