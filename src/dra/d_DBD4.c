@@ -164,3 +164,7 @@ s32 D_800AE284 = 0x3F;
 s32 D_800AE288 = 0x7F;
 s32 D_800AE28C = 0x3F;
 s32 D_800AE290 = 0x7F;
+
+AnimationFrame D_800AE294[] = {
+    POSE(8, 1, 0), POSE(8, 2, 0), POSE(8, 3, 0), POSE(8, 4, 0), POSE_END,
+};
