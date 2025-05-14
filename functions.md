@@ -1315,7 +1315,7 @@
 | st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
-| no3       | 22C0.rodata                              |      176 |          0 | Yes    |                                 |       |
+| no3       | 2C60.rodata                              |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
 | no3       | EntityExplosion2                         |      177 |         19 |        |                                 |       |
@@ -1753,7 +1753,7 @@
 | chi       | EntityBreakableWall                      |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra       | func_80104790                            |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
 | ric       | RicEntitySubwpnHolyWaterFlame            |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
-| dra       | func_800EA7CC                            |      609 |         53 |        | https://decomp.me/scratch/0A1Uy | 0.955 |
+| dra       | func_800EA7CC                            |      609 |         53 |        | https://decomp.me/scratch/0A1Uy | 0.958 |
 | dra       | func_8011B5A4                            |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra       | CheckFloor                               |      611 |         62 |        |                                 |       |
 | st0       | EntityEquipItemDrop                      |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
