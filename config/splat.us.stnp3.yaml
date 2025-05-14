@@ -166,6 +166,7 @@ segments:
       - [0x32830, c, entrance_stage_entities]
       - [0x32F30, c, e_castle_door]
       - [0x332A8, c, entrance_stage_entities_2]
+      - [0x339CC, c, e_transparent_water]
       - [0x33D24, c, e_cavern_door]
       - [0x344B4, c, entrance_weights]
       - [0x34BE8, c, entrance_stage_entities_3]
