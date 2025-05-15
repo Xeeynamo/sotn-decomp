@@ -170,9 +170,9 @@
 | lib       | func_psp_09243920                        |       21 |          1 |        |                                 |       |
 | lib       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | lib       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| no3       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3       | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no3       | SetSubStep                               |       21 |          1 |        |                                 |       |
+| no3       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4       | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | no4       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -553,8 +553,8 @@
 | dra       | func_8010E334                            |       45 |          6 |        |                                 |       |
 | dra       | SetMenuDisplayBuffer                     |       45 |          6 |        |                                 |       |
 | lib       | func_us_801BED48                         |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
-| no3       | func_pspeu_09249878                      |       45 |          6 |        |                                 |       |
 | no3       | func_pspeu_09252E60                      |       45 |          6 |        |                                 |       |
+| no3       | func_pspeu_09249878                      |       45 |          6 |        |                                 |       |
 | maria     | MarSetBladeDash                          |       45 |          7 |        |                                 |       |
 | st0       | func_pspeu_09242F68                      |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | maria     | pl_main.rodata                           |       46 |          0 | Yes    |                                 |       |
@@ -736,8 +736,8 @@
 | lib       | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib       | func_us_801B7C94                         |       62 |          5 |        |                                 |       |
-| no3       | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | no3       | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
+| no3       | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | no4       | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | no4       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | st0       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
@@ -853,8 +853,8 @@
 | chi       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no3       | func_pspeu_09239020                      |       73 |          7 |        | https://decomp.me/scratch/MS6uL | 1.0   |
-| no3       | EntityDeadMerman                         |       73 |          7 |        |                                 |       |
 | no3       | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
+| no3       | EntityDeadMerman                         |       73 |          7 |        |                                 |       |
 | no4       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | wrp       | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib       | func_psp_0926ADD8                        |       73 |          8 |        | https://decomp.me/scratch/sz59k | 1.0   |
@@ -1146,9 +1146,9 @@
 | lib       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | lib       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | lib       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
+| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245B78                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245D10                      |      113 |         13 |        |                                 |       |
-| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | no4       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
@@ -1315,7 +1315,7 @@
 | st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
-| no3       | 2C60.rodata                              |      176 |          0 | Yes    |                                 |       |
+| no3       | working_on.rodata                        |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
 | no3       | EntityExplosion2                         |      177 |         19 |        |                                 |       |
