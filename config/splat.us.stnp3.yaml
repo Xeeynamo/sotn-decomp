@@ -47,6 +47,7 @@ segments:
       - [0xF0C, .data, e_castle_door]
       - [0x1008, .data, e_background_bushes_trees]
       - [0x1104, .data, entrance_stage_entities_3]
+      - [0x11CC, .data, entrance_stage_entities_2]
       - [0x122C, data]
       - [0x1300, data]
       - [0x14B4, .data, gaibon]
@@ -136,7 +137,7 @@ segments:
       - [0x21CF4, .data, tile_data] # tile definitions
       - [0x2A124, .data, gen/sprites]
       - [0x31EA0, .rodata, e_castle_door]
-      - [0x31EB0, .rodata, entrance_stage_entities_3] # EntityStairwayPiece
+      - [0x31EB0, .rodata, entrance_stage_entities_2] # EntityStairwayPiece
       - [0x31EBC, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x31ED0, .rodata, slogra] # EntitySlogra .rodata, 36990
       - [0x31EDC, .rodata, gaibon] # EntityGaibon .rodata, 36990
@@ -170,6 +171,7 @@ segments:
       - [0x33D24, c, e_cavern_door]
       - [0x344B4, c, entrance_weights]
       - [0x34BE8, c, entrance_stage_entities_3]
+      - [0x35790, c, entrance_stage_entities_2]
       - [0x35F60, c, e_heartroom]
       - [0x3644C, c, e_tilemap_shuffler]
       - [0x3653C, c, e_explosion_puff_opaque]
