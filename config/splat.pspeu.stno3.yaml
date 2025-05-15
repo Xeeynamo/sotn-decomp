@@ -50,7 +50,8 @@ segments:
       - [0x19A0, c, no3/entrance_weights]
       - [0x22C0, c, no3/e_cavern_door]
       - [0x2C60, c, no3/e_transparent_water]
-      - [0x3050, c, no3_psp/3050]
+      - [0x3050, c, no3/e_background_bushes_trees]
+      - [0x3958, c, no3_psp/3958]
       - [0x1AA80, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
       - [0x21CC8, c, no3_psp/collision]
@@ -63,11 +64,14 @@ segments:
       - [0x5E430, .data, no3/e_castle_door]
       - [0x5E530, .data, no3/e_cavern_door]
       - [0x5E540, .data, no3/e_transparent_water]
-      - [0x5E580, data]
+      - [0x5E580, .data, no3/e_background_bushes_trees]
+      - [0x5E630, data]
       - [0x61600, .rodata, no3/e_castle_door]
-      - [0x61618, .rodata, no3_psp/3050] # EntityPushAlucard
+      - [0x61618, .rodata, no3_psp/3958] # EntityPushAlucard
       - [0x61810, .rodata, no3_psp/e_particles]
       - [0x61880, .rodata, no3_psp/e_misc]
       - [0x618A8, .rodata, no3_psp/collision]
-      - {type: bss, vram: 0x9298F80}
-  - [0x61900]
+      - [0x61900, bss, 61900]
+      - [0x61BB0, .bss, no3/e_background_bushes_trees]
+      - [0x61BC0, bss, 61BC0]
+  - [0x62280]

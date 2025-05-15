@@ -8,18 +8,16 @@ static u8 bush_uvwh[] = {
 // Seems to be used when continuing a bush from one of the above starts?
 static u8 bush_uvwh_cont[] = {
     UVWH(0x80, 0x80, 0x38, 0x42), UVWH(0x80, 0x80, 0x2C, 0x34)};
-// clang-format off
-static s16 bush_unk_data[] = {0, 20, 0, 32, 1, 32, 0, 8, 2, 20, 1, 16, 0xFFFF, 0,
-                           3, 63, 0xFFFF, 0,
-                           4, 64, 4, 96, 0xFFFF, 0,
-                           5, 80, 5, 96, 5, 32, 0xFFFF, 0};
-// clang-format on
+static s16 bush_unk_1[] = {0, 20, 0, 32, 1, 32, 0, 8, 2, 20, 1, 16, 0xFFFF, 0};
+static s16 bush_unk_2[] = {3, 63, 0xFFFF, 0};
+static s16 bush_unk_3[] = {4, 64, 4, 96, 0xFFFF, 0};
+static s16 bush_unk_4[] = {5, 80, 5, 96, 5, 32, 0xFFFF, 0};
 // VZ, Priority, Clut, and an X value. 4 such sets.
 static s16 bush_render_data[] = {
     0x00C0, 0x005E, 0x0017, 0x0080, 0x0200, 0x005B, 0x0014, 0x003F,
     0x0140, 0x005D, 0x003C, 0x00A0, 0x01C0, 0x005C, 0x003C, 0x00D0};
-static s16* bush_unk_starts[] = {&bush_unk_data[0], &bush_unk_data[14],
-                                 &bush_unk_data[18], &bush_unk_data[24]};
+static s16* bush_unk_starts[] = {
+    bush_unk_1, bush_unk_2, bush_unk_3, bush_unk_4};
 static s16 backgroundTreePositions[][2] = {
     {0x200, 0}, {0x280, 12}, {0x300, 4}, {0x380, 16}};
 static u16 backgroundTreeCluts[] = {0x15, 0x46, 0x47, 0x48};
@@ -40,9 +38,9 @@ void EntityBackgroundBushes(Entity* self) {
     s32 yOffset;
     s16 xPos;
     s16 yPos;
-    s32 rotTransXYResult;
-    s32 unused1; // return args for rottranspers
-    s32 unused2; // we don't use them.
+    long rotTransXYResult;
+    long unused1; // return args for rottranspers
+    long unused2; // we don't use them.
     VECTOR trans;
     MATRIX m;
 
