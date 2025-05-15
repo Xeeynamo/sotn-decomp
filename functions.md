@@ -1243,7 +1243,7 @@
 | lib       | func_us_801CD9EC                         |      146 |         18 |        |                                 |       |
 | no3       | DoorCascadePhysics                       |      147 |         13 |        |                                 |       |
 | no3       | EntityFallingRock2                       |      147 |         17 |        |                                 |       |
-| no3       | EntityFallingRock                        |      147 |         19 |        |                                 |       |
+| no3       | EntityFallingRock                        |      147 |         19 |        | https://decomp.me/scratch/qC6Ep | 0.994 |
 | ric       | CheckHighJumpInput                       |      148 |         25 |        |                                 |       |
 | dra       | func_8011F074                            |      149 |         13 |        |                                 |       |
 | ric       | RicEntityHitByDark                       |      149 |         13 |        |                                 |       |
@@ -1657,7 +1657,7 @@
 | st0       | EntitySecretStairs                       |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | lib       | EntityLesserDemonSpit                    |      425 |         35 | Yes    |                                 |       |
 | no4       | func_pspeu_0923DD38                      |      428 |         36 |        |                                 |       |
-| no3       | EntityStairwayPiece                      |      434 |         43 |        |                                 |       |
+| no3       | EntityStairwayPiece                      |      434 |         43 |        | https://decomp.me/scratch/EJfLO | 0.992 |
 | dra       | func_8012E040                            |      434 |         82 |        | https://decomp.me/scratch/SQeEq | 0.991 |
 | ric       | RicEntitySubwpnThrownVibhuti             |      435 |         44 |        |                                 |       |
 | chi       | SetupPrimsForEntitySpriteParts           |      437 |         25 |        |                                 |       |
