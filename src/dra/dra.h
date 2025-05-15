@@ -684,7 +684,7 @@ extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;
 extern u8 g_GfxEquipIcon[320][16 * 16 / 2];
-extern u16 g_PalEquipIcon[320 * 16];
+extern u16 g_PalEquipIcon[];
 extern const char aDr03x;
 extern const char aEff03x;
 extern const char aEnv03x;
