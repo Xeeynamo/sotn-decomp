@@ -105,7 +105,7 @@ static u_long* D_psp_09183150[] = {
 
 static u_long* D_psp_09183168[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x3C0, 32, 128, D_psp_09148C10),
+    GFX_ENTRY(0x100, 0x3C0, 128, 32, D_psp_09148C10),
     GFX_TERMINATE(),
 };
 
