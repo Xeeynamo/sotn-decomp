@@ -103,7 +103,7 @@ segments:
       - [0x84210, .data, dra/5D5BC]
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, .data, dra_psp/d_84248]
-      - [0x92DB8, data]
+      - [0x92E80, data]
       - [0xA0578, .data, dra/692E8]
       - [0xA6820, .data, dra/71830]
       - [0xA6888, .data, dra/70394]
