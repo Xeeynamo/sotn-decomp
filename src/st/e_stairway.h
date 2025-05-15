@@ -1,15 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 // Stairway piece you can break before Death encounter
-void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
-    Primitive *prim, *prim2, *prim3;
+void EntityStairwayPiece(Entity* self) {
+    u16 page;
+    u16 clut;
+    u8* pagePtr;
+    u8* indexPtr;
+    u8* clutPtr;
+
+    u8 left;
+    u8 top;
+    u16 packed_uv;
+    
+    Primitive* prim;
     Entity* newEntity;
     Collider collider;
-    s16 primIndex;
-    s32 temp;
+    s32 primIndex;
     s16 x, y;
-    u8 v1;
     s32 i;
+
 
     switch (self->step) {
     case 0:
@@ -32,7 +41,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         break;
 
     case 1:
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
         }
 
@@ -67,24 +76,27 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
         UnkPolyFunc2(prim);
-        v1 = g_Tilemap.tileDef->gfxIndex[0x409];
-        arg1 = v1;
-        temp = g_Tilemap.tileDef->gfxPage[0x409];
-        prim->clut = g_Tilemap.tileDef->clut[0x409];
-        prim->tpage = temp + 8;
-        arg1 *= 16;
-        arg3 = 0xF;
-        arg3 = arg1 | arg3;
-        prim->u0 = prim->u2 = arg1;
-        arg2 = v1 & 0xF0 | 0xF;
-        prim->v0 = prim->v1 = v1 & 0xF0;
-        prim->u1 = prim->u3 = arg3;
-        prim->v2 = prim->v3 = arg2;
+        pagePtr = g_Tilemap.tileDef->gfxPage;
+        indexPtr = g_Tilemap.tileDef->gfxIndex;
+        clutPtr = g_Tilemap.tileDef->clut;
+
+        packed_uv = indexPtr[0x409];
+        left = packed_uv << 4;
+        top = packed_uv & 0xF0;
+        page = pagePtr[0x409];
+        clut = clutPtr[0x409];
+        prim->clut = clut;
+        prim->tpage = page + 8;
+
+        prim->u0 = prim->u2 = left;
+        prim->u1 = prim->u3 = left + 15;
+        prim->v0 = prim->v1 = top;
+        prim->v2 = prim->v3 = top + 15;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
         LOW(prim->next->u0) = 0xFFFF0000;
@@ -93,22 +105,20 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         LOH(prim->next->b2) = 16;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK02;
+        prim = prim->next;
         self->step++;
 
     case 3:
         prim = self->ext.prim;
-        prim2 = prim->next;
-        prim2->tpage -= 0x20;
-        prim2 = prim->next;
-        LOW(prim2->r1) += 0x2000;
+        prim->next->tpage -= 0x20;
+        LOW(prim->next->r1) += 0x2000;
         UnkPrimHelper(prim);
-        prim3 = prim->next;
-        x = prim3->x1;
-        y = prim3->y0;
-        g_api.CheckCollision(x, (s16)(y + 8), &collider, 0);
+        x = prim->next->x1;
+        y = prim->next->y0 + 8;
+        g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posX.i.hi = x;
-            self->posY.i.hi = y - 4;
+            self->posY.i.hi = y - 12;
             self->step++;
         }
         break;
@@ -125,7 +135,7 @@ void EntityStairwayPiece(Entity* self, u8 arg1, u8 arg2, u8 arg3) {
         for (i = 0; i < 6; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_FALLING_ROCK, self, newEntity);
+                CreateEntityFromEntity(E_ID(FALLING_ROCK), self, newEntity);
                 newEntity->params = Random() & 3;
                 if (newEntity->params == 3) {
                     newEntity->params = 0;
