@@ -624,10 +624,10 @@ void PlayerStepUnmorphWolf(void) {
             g_Player.unk66 = 1;
             if (g_Player.unk68) {
                 PLAYER.step_s = 2;
-                D_800AFDA4[1] = 0xC7;
+                D_800AFDA4[0].pose = 0xC7;
             } else {
                 PLAYER.step_s = 1;
-                D_800AFDA4[1] = 0x5F;
+                D_800AFDA4[0].pose = 0x5F;
             }
         }
         break;
@@ -773,7 +773,7 @@ void PlayerStepMorphWolf(void) {
             var_s0--;
         }
         // Might be misusing D_800AFFB8 here
-        D_800AFFB8[i * 2] = var_s0;
+        ((u16*)D_800AFFB8)[i * 2] = var_s0;
     }
     if (D_80138430 < 0x600) {
         D_80138430 = 0x600;

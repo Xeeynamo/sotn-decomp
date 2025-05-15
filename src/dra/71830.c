@@ -1933,7 +1933,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             PlaySfx(SFX_STONE_MOVE_B);
         }
         if (--D_80137FF0 == 0) {
-            D_800AFC50[1] |= PLAYER.animCurFrame;
+            D_800AFC50[0].pose |= PLAYER.animCurFrame;
             PLAYER.palette = 0x810D;
             SetPlayerAnim(0x3E);
             // Blueprint 16 has child 2, EntitySmokePuff
@@ -2332,7 +2332,7 @@ bool BatFormFinished(void) {
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
-        D_800AFDA4[1] = 6;
+        D_800AFDA4[0].pose = 6;
         g_Entities->palette = PAL_OVL(0x10D);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
@@ -2536,7 +2536,7 @@ void ControlBatForm(void) {
         if (g_Entities[16].entityId == 0x22) {
             PLAYER.unk5A = 0;
             PLAYER.animSet = 13;
-            D_800AFDA4[1] = 6;
+            D_800AFDA4[0].pose = 6;
             PLAYER.ext.player.anim = 0xCA;
             if (!func_8011203C()) {
                 return;
@@ -2563,7 +2563,7 @@ void ControlBatForm(void) {
                 }
             }
             SetPlayerAnim(0xCA);
-            D_800AFDA4[1] = PLAYER.animCurFrame;
+            D_800AFDA4[0].pose = PLAYER.animCurFrame;
             PLAYER.palette = 0x810D;
             if (g_Player.unk66 == 1) {
                 return;
@@ -2571,7 +2571,7 @@ void ControlBatForm(void) {
             if (g_Player.unk66 == 2) {
                 PLAYER.unk5A = 0;
                 PLAYER.animSet = 0xD;
-                D_800AFDA4[1] = 6;
+                D_800AFDA4[0].pose = 6;
                 return;
             }
         }
@@ -2896,10 +2896,10 @@ void PlayerStepUnmorphBat(void) {
             g_Player.unk66 = 1;
             if (g_Player.unk68) {
                 PLAYER.step_s = 2;
-                D_800AFDA4[1] = 0xC7;
+                D_800AFDA4[0].pose = 0xC7;
             } else {
                 PLAYER.step_s = 1;
-                D_800AFDA4[1] = 0x5F;
+                D_800AFDA4[0].pose = 0x5F;
             }
         }
         break;
@@ -3074,7 +3074,7 @@ void ControlMistForm(void) {
             PLAYER.velocityY = -ySpeedOrtho;
         }
         SetPlayerAnim(0xCA);
-        D_800AFDA4[1] = PLAYER.animCurFrame;
+        D_800AFDA4[0].pose = PLAYER.animCurFrame;
         func_800EA538(8);
         if (!IsRelicActive(RELIC_GAS_CLOUD)) {
             func_800EA5E4(0x11CU);

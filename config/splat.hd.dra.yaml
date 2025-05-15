@@ -106,7 +106,7 @@ segments:
       - [0xD298, .data, 7879C] # blueprints
       - [0xD57C, .data, 7E4BC]
       - [0xDC98, .data, d_DBD4]
-      - [0xE358, .data, d_E294]
+      - [0xE36C, .data, d_E294]
       - [0x106EE, .data, 84B88]
       - [0x1085C, .data, 8BEF8]
       - [0x108E4, .data, d_10798]

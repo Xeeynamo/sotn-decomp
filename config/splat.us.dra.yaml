@@ -111,7 +111,7 @@ segments:
       - [0xD1D4, .data, 7879C] # blueprints
       - [0xD4CC, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
-      - [0xE294, .data, d_E294]
+      - [0xE2A8, .data, d_E294]
       - [0x10628, .data, 84B88]
       - [0x10884, .data, 8BEF8]
       - [0x108CC, .data, d_10798]
