@@ -1354,7 +1354,7 @@ void func_psp_090F5560(void) {
         D_psp_091CE228 = "zum Speichern.";
         D_psp_091CE220 = "Ja";
         D_psp_091CE218 = "Nein";
-        D_psp_091CE210 = _SE("wähle");
+        D_psp_091CE210 = _SE("wÄhle");
         D_psp_091CE208 = "deinen";
         D_psp_091CE200 = "weg";
         D_psp_091CE1F8 = "neu";
