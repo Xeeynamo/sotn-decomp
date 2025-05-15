@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#ifdef VERSION_PSP
+extern s32 E_ID(FALLING_ROCK);
+#endif
+
 // Stairway piece you can break before Death encounter
 void EntityStairwayPiece(Entity* self) {
     u16 page;
@@ -149,19 +153,19 @@ void EntityStairwayPiece(Entity* self) {
 // falling rock with puff of smoke when it disappears. I think part of the
 // merman room breakable rock
 void EntityFallingRock(Entity* self) {
-    s32 animFrame = self->params & 0xF;
     Collider collider;
     Entity* newEntity;
-    s16 rndAngle;
     s32 rnd;
+    s32 x, y;
+    s32 animFrame = self->params & 0xF;
+    s16 rndAngle;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
-        self->rotY = 0x60;
-        self->rotX = 0x60;
         self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->rotX = self->rotY = 0x60;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -175,9 +179,9 @@ void EntityFallingRock(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.125);
         self->rotZ -= 0x20;
-
-        g_api.CheckCollision(
-            self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
+        x = self->posX.i.hi;
+        y = self->posY.i.hi + 8;
+        g_api.CheckCollision(x, y, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
