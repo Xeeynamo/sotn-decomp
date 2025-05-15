@@ -15,14 +15,13 @@ void EntityStairwayPiece(Entity* self) {
     u8 left;
     u8 top;
     u16 packed_uv;
-    
+
     Primitive* prim;
     Entity* newEntity;
     Collider collider;
     s32 primIndex;
     s16 x, y;
     s32 i;
-
 
     switch (self->step) {
     case 0:
