@@ -1468,7 +1468,6 @@ typedef struct {
     /* 0x14 */ u16 entityRoomIndex;
     /* 0x16 */ u16 attackElement;
     /* 0x18 */ s16 attack;
-    /* 0x1A */ s16 unk1A;
 } SpellDef;
 
 typedef struct {
