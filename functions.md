@@ -231,8 +231,8 @@
 | lib       | GetSineScaled                            |       25 |          1 |        | https://decomp.me/scratch/pKD67 | 0.995 |
 | lib       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | lib       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
+| no3       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | no3       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
-| no3       | func_pspeu_0925FCB8                      |       25 |          1 |        |                                 |       |
 | no4       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | no4       | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
 | st0       | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -329,7 +329,7 @@
 | dra       | func_800F5E68                            |       31 |          2 |        |                                 |       |
 | chi       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | lib       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
-| no3       | func_pspeu_092616E0                      |       31 |          2 |        |                                 |       |
+| no3       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | no4       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | st0       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | wrp       | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
@@ -1573,7 +1573,7 @@
 | dra       | CheckSoulStealInput                      |      335 |         45 | Yes    |                                 |       |
 | chi       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | lib       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
-| no3       | func_pspeu_09261088                      |      338 |         36 |        |                                 |       |
+| no3       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | no4       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | st0       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | wrp       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
