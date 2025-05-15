@@ -93,7 +93,7 @@ bool WolfFormFinished(void) {
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
         SetPlayerAnim(0xCA);
-        D_800AFDA4[1] = 1;
+        D_800AFDA4[0].pose = 1;
         PLAYER.palette = 0x810D;
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
