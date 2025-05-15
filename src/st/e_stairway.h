@@ -110,7 +110,7 @@ void EntityStairwayPiece(Entity* self) {
 
     case 3:
         prim = self->ext.prim;
-        prim->next->tpage -= 0x20;
+        LOH(prim->next->tpage) -= 0x20; // has to be loaded signed on psp
         LOW(prim->next->r1) += 0x2000;
         UnkPrimHelper(prim);
         x = prim->next->x1;
