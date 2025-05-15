@@ -112,3 +112,31 @@ u8 D_800C4864[] = {
 u8 D_800C3560[] = {
 #include "../dra/gen/D_800C3560.h"
 };
+
+#include "../dra/gen/D_800D34B8.h"
+
+#include "../dra/gen/D_800D3B88.h"
+
+#include "../dra/gen/D_800CFF10.h"
+
+#include "../dra/gen/D_800D372C.h"
+
+#include "../dra/gen/D_800D5868.h"
+
+#include "../dra/gen/D_800D2BF4.h"
+
+#include "../dra/gen/D_800D684C.h"
+
+#include "../dra/gen/D_800D0F68.h"
+
+#include "../dra/gen/D_800D2FFC.h"
+
+#include "../dra/gen/D_800D5628.h"
+
+#include "../dra/gen/D_800D327C.h"
+
+#include "../dra/gen/D_800D2CF8.h"
+
+#include "../dra/gen/D_800D56AC.h"
+
+#include "../dra/gen/D_800D3428.h"
