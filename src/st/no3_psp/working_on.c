@@ -4,10 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityStairwayPiece);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFallingRock);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanRockLeftSide);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanRockRightSide);
