@@ -4,19 +4,17 @@
 extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
-#ifdef VERSION_PSP
 #define EXTRA_TILES 6
 static u16 mermanRockTiles[] = {
-    0x026C, 0x0273, 0x027A, 0x026D, 0x0274, 0x027B,
-#else
-#define EXTRA_TILES 0
-static u16 mermanRockTiles[] = {
-#endif
-    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA,
-    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5, 0, 0,
-    0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
-    // Initial tiles. On PSP, starts at 5E664. PSP symbols are 8-aligned,
-    // so this must not be its own variable.
+    0x026C, 0x0273, 0x027A, 0x026D, 
+    0x0274, 0x027B, 0x06B2, 0x0000, 
+    0x06C5, 0x06B3, 0x06D9, 0x06DA,
+    // Index 12 of mermanRockTiles
+    0x06B2, 0x0000, 0x06C5, 0x06B3, 
+    0x06B4, 0x06B5, 0,           0,
+    0x0332, 0x033A, 0x0351, 0x0000, 
+    0x0000, 0x0000,
+    // Index 26 of mermanRockTiles
     0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
 };
 static u16 mermanRockTiles2[] = {
@@ -68,7 +66,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tilePos = 0x1F1;
-            tileLayoutPtr = &mermanRockTiles[6 + EXTRA_TILES];
+            tileLayoutPtr = &mermanRockTiles[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
@@ -81,7 +79,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 1:
         if (self->hitFlags) {
-            tileLayoutPtr = &(mermanRockTiles[self->ext.mermanRock.unk84 * 6]) + EXTRA_TILES;
+            tileLayoutPtr = &(mermanRockTiles[self->ext.mermanRock.unk84 * 6]) + 6;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -153,7 +151,7 @@ void EntityMermanRockRightSide(Entity* self) {
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
-        tileLayoutPtr = &mermanRockTiles[58];
+        tileLayoutPtr = &mermanRockTiles2[26];
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
@@ -163,7 +161,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tilePos = 0x1FD;
-            tileLayoutPtr = &mermanRockTiles[44];
+            tileLayoutPtr = &mermanRockTiles2[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
