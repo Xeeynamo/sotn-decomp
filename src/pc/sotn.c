@@ -59,6 +59,8 @@ u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
 u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
 
+extern u16 g_PalEquipIcon[320 * 16];
+
 // list of exposed API
 void FreePrimitives(s32 index);
 s32 AllocPrimitives(u8 primType, s32 count);
