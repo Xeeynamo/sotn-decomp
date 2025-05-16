@@ -131,6 +131,7 @@ segments:
       # - [0xB16F0, .data, dra/d_sfx] # g_SfxData
       # - [0xB2C40, .data, dra/d_sfx] # g_SfxScripts
       - [0xB4548, data]
+      - [0xE8BB8, .data, dra_psp/d_B4548]
       - [0xEE380, .rodata, dra/62EB8]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]
