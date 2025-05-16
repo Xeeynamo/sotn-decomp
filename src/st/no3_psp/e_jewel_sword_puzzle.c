@@ -247,7 +247,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 2:
-        for (tileLayoutPtr = &rockTiles2[47], i = 0; i < 3; i++) {
+        for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
