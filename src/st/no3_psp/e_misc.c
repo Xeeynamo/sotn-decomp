@@ -19,4 +19,4 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", func_pspeu_09258EF0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityIntenseExplosion);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", func_pspeu_092591F0);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", PlaySfxPositional);

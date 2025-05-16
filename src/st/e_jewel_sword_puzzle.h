@@ -1,17 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-static u16 leftRockTiles[][6] = {
-    {0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA},
-    {0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5},
-    {0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000}};
+#ifdef VERSION_PSP
+extern s32 E_ID(FALLING_ROCK_2);
+#endif
+
+#ifdef VERSION_PSP
+#define EXTRA_TILES 6
+static u16 leftRockTiles[] = {
+    0x026C, 0x0273, 0x027A, 0x026D, 0x0274, 0x027B,
+#else
+#define EXTRA_TILES 0
+static u16 leftRockTiles[] = {
+#endif
+    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA,
+    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5,
+    0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000};
 
 static u16 leftRockInitTiles[][6] = {
     {0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E},
     {0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5}};
-static u16 rightRockTiles[][6] = {
-    {0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6},
-    {0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6},
-    {0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E}};
+static u16 rightRockTiles[] = {
+    0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6,
+    0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6,
+    0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E};
 // Accesses and offsets are weird, so I'm just making this a big chunk of data.
 // This feels like 3 arrays, but if I split them up, they get zero-padded to
 // align 4.
@@ -48,22 +59,20 @@ void EntityMermanRockLeftSide(Entity* self) {
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
-        tileLayoutPtr = &leftRockInitTiles;
+        tileLayoutPtr = &leftRockInitTiles[0][0];
         tilePos = 0x1F1;
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
-            tileLayoutPtr++;
+            *(&g_BgLayers[0].layout[tilePos] + 1) = *(tileLayoutPtr + 3);
             tilePos += 0x30;
         }
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
-            tileLayoutPtr = &leftRockTiles[1];
             tilePos = 0x1F1;
-            for (i = 0; i < 3; i++) {
+            tileLayoutPtr = &leftRockTiles[6 + EXTRA_TILES];
+            for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
-                tileLayoutPtr++;
+                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
                 tilePos += 0x30;
             }
             self->hitboxState = 1;
@@ -72,13 +81,12 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 1:
-        if (self->hitFlags != 0) {
-            tileLayoutPtr = &leftRockTiles[self->ext.mermanRock.unk84];
+        if (self->hitFlags) {
+            tileLayoutPtr = &(leftRockTiles[self->ext.mermanRock.unk84 * 6]) + EXTRA_TILES;
             tilePos = 0x1F1;
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
-                tileLayoutPtr++;
+                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
                 tilePos += 0x30;
             }
 
@@ -98,9 +106,9 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
+                    CreateEntityFromEntity(E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
-                    newEntity->velocityX = -0x8000 - (Random() << 8);
+                    newEntity->velocityX = (-Random() << 8) -0x8000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
@@ -108,7 +116,7 @@ void EntityMermanRockLeftSide(Entity* self) {
             self->ext.mermanRock.unk84++;
         }
 
-        if (self->ext.mermanRock.unk84 >= 2) {
+        if (self->ext.mermanRock.unk84 > 1) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 192);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
@@ -121,7 +129,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->hitFlags != 0) &&
+        if ((self->hitFlags) &&
             (g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= wolfFlag;
         }
@@ -148,20 +156,18 @@ void EntityMermanRockRightSide(Entity* self) {
 
         tileLayoutPtr = &remainingRockTiles[0];
         tilePos = 0x1FD;
-        for (i = 0; i < 3; i++) {
+        for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
-            g_BgLayers[0].layout[tilePos + 1] = *(tileLayoutPtr + 3);
-            tileLayoutPtr++;
+            *(&g_BgLayers[0].layout[tilePos] + 1) = *(tileLayoutPtr + 3);
             tilePos += 0x30;
         }
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
-            tileLayoutPtr = &rightRockTiles[1];
             tilePos = 0x1FD;
-            for (i = 0; i < 3; i++) {
+            tileLayoutPtr = &rightRockTiles[12];
+            for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
-                tileLayoutPtr++;
+                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
                 tilePos += 0x30;
             }
             self->hitboxState = 1;
@@ -170,13 +176,12 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 1:
-        if (self->hitFlags != 0) {
-            tileLayoutPtr = &rightRockTiles[self->ext.mermanRock.unk84];
+        if (self->hitFlags) {
+            tileLayoutPtr = &rightRockTiles[self->ext.mermanRock.unk84 * 6] + 6;
             tilePos = 0x1FD;
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-                g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 3);
-                tileLayoutPtr++;
+                *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
                 tilePos += 0x30;
             }
 
@@ -196,18 +201,18 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_FALLING_ROCK_2, self, newEntity);
+                    CreateEntityFromEntity(E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
-                    newEntity->facingLeft = 1;
                     newEntity->posY.i.hi += -16 + (i * 16);
+                    newEntity->facingLeft = 1;
                 }
             }
             self->ext.mermanRock.unk84++;
         }
 
-        if (self->ext.mermanRock.unk84 >= 2) {
+        if (self->ext.mermanRock.unk84 > 1) {
             g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= rockBroken;
             self->hitboxState = 1;
             self->step++;
@@ -215,7 +220,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->hitFlags != 0) &&
+        if ((self->hitFlags) &&
             (g_Player.status & PLAYER_STATUS_BAT_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= batFlag;
         }
