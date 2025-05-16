@@ -9,11 +9,9 @@ static u16 tilesStart[] = {
     0x0274, 0x027B, 0x06B2, 0x0000, 
     0x06C5, 0x06B3, 0x06D9, 0x06DA};
 static u16 mermanRockTiles[] = {
-    0x06B2, 0x0000, 0x06C5, 0x06B3, 
-    0x06B4, 0x06B5, 0,           0,
-    0x0332, 0x033A, 0x0351, 0x0000, 
-    0x0000, 0x0000,
-    // Index 26 of mermanRockTiles
+    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5};
+static u16 initRockTiles[] = {
+    0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
     0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
 };
 static u16 mermanRockTiles2[] = {
@@ -65,7 +63,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
-        tileLayoutPtr = &mermanRockTiles[14];
+        tileLayoutPtr = &initRockTiles[6];
         tilePos = 0x1F1;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
