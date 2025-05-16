@@ -22,6 +22,8 @@ void EntityBackgroundBlock(Entity* self) {
 #if defined(STAGE_IS_NO3) || defined(STAGE_IS_NP3)
         self->facingLeft = objInit->facingLeft;
         self->unk5A = objInit->unk5A;
+#elif defined(VERSION_PSP)
+        self->unk5A = LOHU(objInit->facingLeft);
 #else
         self->unk5A = LOH(objInit->facingLeft);
 #endif
