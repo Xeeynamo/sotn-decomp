@@ -164,7 +164,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tilePos = 0x1FD;
-            tileLayoutPtr = &rightRockTiles[12];
+            tileLayoutPtr = &rightRockTiles[6];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
@@ -177,7 +177,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 1:
         if (self->hitFlags) {
-            tileLayoutPtr = &rightRockTiles[self->ext.mermanRock.unk84 * 6] + 6;
+            tileLayoutPtr = &rightRockTiles[self->ext.mermanRock.unk84 * 6];
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
