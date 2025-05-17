@@ -69,7 +69,7 @@ void func_pspeu_09256330(Entity* self);
 void func_pspeu_09258910(Entity* self);
 void func_pspeu_09258E30(Entity* self);
 void func_pspeu_09259648(Entity* self);
-void func_pspeu_09238E18(Entity* self);
+void EntityBreakableCrystalFloor(Entity* self);
 void EntitySpearGuard(Entity* self);
 void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
@@ -77,8 +77,8 @@ void EntityBoneArcherArrow(Entity* self);
 void func_pspeu_0923D180(Entity* self);
 void func_pspeu_0925E548(Entity* self);
 void func_pspeu_09242200(Entity* self);
-void func_pspeu_092391D8(Entity* self);
-void func_pspeu_09239568(Entity* self);
+void EntityBreakableWall(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
 void func_pspeu_092423C8(Entity* self);
 void func_pspeu_092427C8(Entity* self);
 void EntityKillerFish(Entity* self);
@@ -167,7 +167,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x45 */ func_pspeu_09258910,
     /* 0x46 */ func_pspeu_09258E30,
     /* 0x47 */ func_pspeu_09259648,
-    /* 0x48 */ func_pspeu_09238E18,
+    /* 0x48 */ EntityBreakableCrystalFloor,
     /* 0x49 */ EntitySpearGuard,
     /* 0x4A */ EntityThrownSpear,
     /* 0x4B */ EntityBoneArcher,
@@ -175,8 +175,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4D */ func_pspeu_0923D180,
     /* 0x4E */ func_pspeu_0925E548,
     /* 0x4F */ func_pspeu_09242200,
-    /* 0x50 */ func_pspeu_092391D8,
-    /* 0x51 */ func_pspeu_09239568,
+    /* 0x50 */ EntityBreakableWall,
+    /* 0x51 */ EntityBreakableWallDebris,
     /* 0x52 */ func_pspeu_092423C8,
     /* 0x53 */ func_pspeu_092427C8,
     /* 0x54 */ EntityKillerFish,

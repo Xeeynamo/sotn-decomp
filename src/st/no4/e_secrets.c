@@ -40,7 +40,7 @@ static s16 breakable_wall_tile_layout[] = {
 // clang-format on
 
 #ifdef VERSION_PSP
-extern s32 D_psp_E_SECRET_WALL_DEBRIS;
+extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 
 void EntityBreakableCrystalFloor(Entity* self) {
@@ -67,6 +67,8 @@ void EntityBreakableCrystalFloor(Entity* self) {
             i = 0;
         }
         tileLayoutPtr = &crystal_floor_tile_layout[i];
+        // Looks like a copy-paste bug
+        tilePos = 0x2D3;
         tilePos = 0x2D3;
         (&g_BgLayers[0].layout[tilePos])[1] = 0x3FE;
         (&g_BgLayers[0].layout[tilePos])[2] = 0x3FF;
@@ -193,7 +195,7 @@ void EntityBreakableWall(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_ID(SECRET_WALL_DEBRIS), self, newEntity);
+                        E_ID(BREAKABLE_WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (Random() & 0xF) - 4;
                     newEntity->posY.i.hi += (i * 4) - 0x1F;
                     newEntity->velocityX = (Random() << 8) + FIX(0.5);

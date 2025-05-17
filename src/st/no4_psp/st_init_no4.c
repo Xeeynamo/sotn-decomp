@@ -86,7 +86,7 @@ static s32 E_ID(ID_4E);
 s32 E_ID(ID_4F);
 static s32 E_ID(ID_50);
 static s32 E_ID(ID_51);
-s32 E_ID(ID_52);
+s32 E_ID(BREAKABLE_WALL_DEBRIS);
 static s32 E_ID(ID_53);
 s32 E_ID(ID_54);
 static s32 E_ID(ID_55);
@@ -175,7 +175,7 @@ void InitEntityIds(void) {
     E_ID(ID_4F) = 0x4F;
     E_ID(ID_50) = 0x50;
     E_ID(ID_51) = 0x51;
-    E_ID(ID_52) = 0x52;
+    E_ID(BREAKABLE_WALL_DEBRIS) = 0x52;
     E_ID(ID_53) = 0x53;
     E_ID(ID_54) = 0x54;
     E_ID(ID_55) = 0x55;

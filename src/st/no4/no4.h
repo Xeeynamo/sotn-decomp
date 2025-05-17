@@ -88,7 +88,7 @@ typedef enum EntityIDs {
     // /* 0x4F */ E_ID_4F,
     // /* 0x50 */ E_ID_50,
     // /* 0x51 */ E_ID_51,
-    /* 0x52 */ E_SECRET_WALL_DEBRIS = 0x52,
+    /* 0x52 */ E_BREAKABLE_WALL_DEBRIS = 0x52,
     // /* 0x53 */ E_ID_53,
     // /* 0x54 */ E_ID_54,
     // /* 0x55 */ E_ID_55,
