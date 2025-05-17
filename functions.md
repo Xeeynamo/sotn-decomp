@@ -1518,7 +1518,7 @@
 | dra       | func_8010D800                            |      288 |         19 |        |                                 |       |
 | maria     | func_8015C6D4                            |      288 |         19 |        |                                 |       |
 | ric       | func_8015C6D4                            |      288 |         19 |        |                                 |       |
-| no3       | EntityMermanRockRightSide                |      288 |         30 |        |                                 |       |
+| no3       | EntityMermanRockRightSide                |      288 |         30 |        | https://decomp.me/scratch/m1vzB | 0.997 |
 | lib       | func_psp_09238EC8                        |      290 |         42 |        | https://decomp.me/scratch/9ZS8x | 0.999 |
 | dra       | DrawHudSubweapon2                        |      292 |         59 |        |                                 |       |
 |           | ProcessEvent                             |      293 |         42 |        |                                 |       |
@@ -1886,7 +1886,7 @@
 | no3       | EntityRelicOrb                           |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | no4       | EntityRelicOrb                           |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | wrp       | EntityRelicOrb                           |     1185 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
-| no3       | EntityMerman                             |     1185 |        174 | Yes    | https://decomp.me/scratch/njGp9 | 0.996 |
+| no3       | EntityMerman                             |     1185 |        174 | Yes    | https://decomp.me/scratch/m1vzB | 0.997 |
 | dra       | EntityPlayerDissolves                    |     1188 |         81 |        | https://decomp.me/scratch/lFr9T | 0.998 |
 | maria     | MarMain                                  |     1197 |        200 | Yes    |                                 |       |
 | tt_000    | UpdateServantDefault                     |     1198 |        126 | Yes    | https://decomp.me/scratch/3R7YH | 0.984 |
