@@ -1027,7 +1027,7 @@
 | lib       | func_us_801D00C4                         |       97 |          7 |        |                                 |       |
 | chi       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | lib       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
-| no3       | func_pspeu_092591F0                      |       97 |         12 |        |                                 |       |
+| no3       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | no4       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | wrp       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | maria     | pl_blueprints.rodata                     |       98 |          0 | Yes    |                                 |       |
@@ -1715,7 +1715,7 @@
 | lib       | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/kV3Tv | 0.999 |
 | chi       | EntityGremlin                            |      521 |         71 |        |                                 |       |
 | no3       | EntityBackgroundLightning                |      527 |         63 |        | https://decomp.me/scratch/MsNjR | 0.995 |
-| no3       | func_pspeu_0923C528                      |      531 |         20 |        |                                 |       |
+| no3       | func_pspeu_0923C528                      |      531 |         20 |        | https://decomp.me/scratch/BVXN7 | 0.998 |
 | lib       | func_psp_0923DCC8                        |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib       | func_us_801AFE0C                         |      534 |         67 | Yes    |                                 |       |
 | dra       | MainGame                                 |      539 |         84 |        | https://decomp.me/scratch/xoBh0 | 0.985 |
