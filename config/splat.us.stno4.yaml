@@ -46,7 +46,6 @@ segments:
       - [0xECC, data] # additional water_effects data
       - [0xF18, data]
       - [0x1880, .data, e_secrets]
-      - [0x18B0, data, e_secrets]
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
       - [0x1974, .data, e_killer_fish]

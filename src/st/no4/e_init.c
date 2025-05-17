@@ -77,8 +77,8 @@ void EntityBoneArcherArrow(Entity* self);
 void func_us_801C801C(Entity* self);
 void func_us_801C9A54(Entity* self);
 void func_us_801C4BD8(Entity* self);
-void func_us_801C89F4(Entity* self);
-void func_us_801C8CC4(Entity* self);
+void EntityBreakableWall(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
 void func_us_801C4D2C(Entity* self);
 void func_us_801C5020(Entity* self);
 void EntityKillerFish(Entity* self);
@@ -175,8 +175,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4D */ func_us_801C801C,
     /* 0x4E */ func_us_801C9A54,
     /* 0x4F */ func_us_801C4BD8,
-    /* 0x50 */ func_us_801C89F4,
-    /* 0x51 */ func_us_801C8CC4,
+    /* 0x50 */ EntityBreakableWall,
+    /* 0x51 */ EntityBreakableWallDebris,
     /* 0x52 */ func_us_801C4D2C,
     /* 0x53 */ func_us_801C5020,
     /* 0x54 */ EntityKillerFish,
