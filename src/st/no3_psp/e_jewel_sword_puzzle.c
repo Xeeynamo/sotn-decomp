@@ -84,7 +84,7 @@ void EntityMermanRockLeftSide(Entity* self) {
     case 1:
         if (self->hitFlags) {
             // +6 at the end is explicitly in the asm
-            tileLayoutPtr = &(tilesStart[self->ext.mermanRock.unk84 * 6]) + 6;
+            tileLayoutPtr = &(tilesStart[self->ext.mermanRock.unk84 * 6]) + EXTRA_TILES;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -253,7 +253,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 2:
-        for (tileLayoutPtr = &rockTiles3[21], i = 0; i < 3; i++) {
+        for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
