@@ -81,6 +81,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
     case 1:
         if (self->hitFlags) {
+            // +6 at the end is explicitly in the asm
             tileLayoutPtr = &(tilesStart[self->ext.mermanRock.unk84 * 6]) + 6;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
