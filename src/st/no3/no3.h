@@ -161,8 +161,6 @@ extern SVECTOR D_801811F0[];
 extern u8 D_801811F8;
 extern u8 D_80181218[];
 extern u8 D_80181224[];
-extern u16 D_80181258[];
-extern u16 D_80181264[];
 extern u16 D_8018127C[];
 extern u16 D_801812A0[];
 extern u16 D_801812E2[];
