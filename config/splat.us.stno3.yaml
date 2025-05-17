@@ -52,7 +52,7 @@ segments:
       - [0x1044, .data, e_castle_door]
       - [0x1140, .data, e_background_bushes_trees]
       - [0x123C, .data, entrance_stage_entities_3]
-      - [0x1264, .data, e_jewel_sword_puzzle]
+      - [0x1258, .data, e_jewel_sword_puzzle]
       - [0x1358, .data, entrance_stage_entities_2]
       - [0x13A8, data]
       - [0x1ACC, .data, cutscene]
