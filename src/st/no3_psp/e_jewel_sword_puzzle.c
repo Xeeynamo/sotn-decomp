@@ -5,10 +5,8 @@ extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
 static u16 tilesStart[] = {
-    0x026C, 0x0273, 0x027A, 0x026D, 
-    0x0274, 0x027B, 0x06B2, 0x0000, 
-    0x06C5, 0x06B3, 0x06D9, 0x06DA};
-static u16 mermanRockTiles[] = {
+    0x026C, 0x0273, 0x027A, 0x026D, 0x0274, 0x027B, 
+    0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA,
     0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5};
 static u16 initRockTiles[] = {
     0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
@@ -63,7 +61,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tilePos = 0x1F1;
-            tileLayoutPtr = &mermanRockTiles[0];
+            tileLayoutPtr = &tilesStart[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
