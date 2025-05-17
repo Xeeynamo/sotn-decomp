@@ -1686,7 +1686,7 @@ extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, s16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
-extern void (*g_api_func_800F1FC4)(s32 arg0);
+extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
 extern void (*g_api_func_800F2288)(s32 arg0);
 extern void (*g_api_GetServantStats)(
     Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);

@@ -100,7 +100,8 @@ void EntityBreakableCrystalFloor(Entity* self) {
             }
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             g_CastleFlags[NO4_SECRET_FLOOR_OPEN] = 1;
-            g_api_func_800F1FC4(NO4_SECRET_FLOOR_OPEN);
+            g_api.RevealSecretPassageAtPlayerPositionOnMap(
+                NO4_SECRET_FLOOR_OPEN);
             DestroyEntity(self);
             return;
         }
