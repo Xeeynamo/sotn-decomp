@@ -232,20 +232,21 @@ void EntityMermanRockRightSide(Entity* self) {
 
 void EntityJewelSwordDoor(Entity* self) {
     u16* tileLayoutPtr;
-    s32 tileLayoutPos;
     s32 i;
     s32 j;
+    s32 tileLayoutPos;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        if (g_CastleFlags[JEWEL_SWORD_ROOM_OPEN] != 0) {
+        if (g_CastleFlags[JEWEL_SWORD_ROOM_OPEN]) {
             self->step = 2;
         }
         break;
 
     case 1:
-        if ((g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 12) == 12) {
+        if ((g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 4) && 
+            (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 8)) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
