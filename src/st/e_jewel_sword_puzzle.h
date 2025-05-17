@@ -14,12 +14,13 @@ static u16 tilesStart[] = {
 #endif
     0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA,
     0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5};
-
+// PSP zero-padding between these suggests a split in arrays
 static u16 initRockTiles[] = {
     0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
-    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
-    0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5};
-static u16 rightRockTiles[] = {
+    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E};
+
+static u16 rockTiles2[] = {
+    0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5,
     0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6,
     0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6,
     0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E};
@@ -164,7 +165,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
         if (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & rockBroken) {
             tilePos = 0x1FD;
-            tileLayoutPtr = &rightRockTiles[6];
+            tileLayoutPtr = &rockTiles2[12];
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
                 *(&g_Tilemap.fg[tilePos] + 1) = *(tileLayoutPtr + 3);
@@ -177,7 +178,7 @@ void EntityMermanRockRightSide(Entity* self) {
 
     case 1:
         if (self->hitFlags) {
-            tileLayoutPtr = &rightRockTiles[self->ext.mermanRock.unk84 * 6];
+            tileLayoutPtr = &rockTiles2[self->ext.mermanRock.unk84 * 6] + 6;
             tilePos = 0x1FD;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
