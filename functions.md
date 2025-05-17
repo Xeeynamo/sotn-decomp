@@ -1247,7 +1247,7 @@
 | ric       | CheckHighJumpInput                       |      148 |         25 |        |                                 |       |
 | dra       | func_8011F074                            |      149 |         13 |        |                                 |       |
 | ric       | RicEntityHitByDark                       |      149 |         13 |        |                                 |       |
-| no4       | func_pspeu_09239568                      |      149 |         19 |        |                                 |       |
+| no4       | func_pspeu_09239568                      |      149 |         19 |        | https://decomp.me/scratch/JlFI8 | 0.998 |
 | dra       | func_8010EB5C                            |      149 |         27 |        |                                 |       |
 | ric       | RicStepHighJump                          |      149 |         28 |        |                                 |       |
 | chi       | InitRoomEntities                         |      150 |         10 |        | https://decomp.me/scratch/nAzIb | 0.996 |
@@ -1452,7 +1452,7 @@
 | dra       | CheckHellfireInput                       |      246 |         41 |        |                                 |       |
 | no4       | func_pspeu_09237BE8                      |      247 |          1 |        | https://decomp.me/scratch/Nzq8O | 1.0   |
 | dra       | InitRenderer                             |      247 |         31 |        |                                 |       |
-| no4       | func_pspeu_092391D8                      |      248 |         34 |        |                                 |       |
+| no4       | func_pspeu_092391D8                      |      248 |         34 |        | https://decomp.me/scratch/zAICA | 0.996 |
 | lib       | EntityCandleTable                        |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                     |      250 |         34 |        |                                 |       |
 | maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        |                                 |       |
