@@ -45,5 +45,3 @@ void EntityTrapDoor(Entity* entity) {
         break;
     }
 }
-
-

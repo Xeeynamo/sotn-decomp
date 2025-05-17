@@ -4,6 +4,8 @@
 extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
+// Tiles come in sets of 6. Keep them aligned as such.
+// clang-format off
 #ifdef VERSION_PSP
 #define EXTRA_TILES 6
 static u16 leftRockTiles[] = {
@@ -38,7 +40,11 @@ static u16 rockTiles4[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
     0x0350, 0x0000, 0x034E, 0x0339, 0x0000, 
     0x034E, 0x0339, 0x0350, 0x032F, 0x0000, 0x034F, 
-    0x033A, 0x0351, 0x0330, 0x0000, 0x0350, 0x032F, 0x034E, 0x0339, 0x0000};
+    0x033A, 0x0351, 0x0330, 0x0000, 0x0350, 0x032F, 
+    0x034E, 0x0339, 0x0000};
+
+// clang-format on
+
 static u16 rockYOffsets[] = {12, 6, 7, 0};
 
 static u8 newRockParams[] = {1, 2, 1, 2, 1};
@@ -84,7 +90,8 @@ void EntityMermanRockLeftSide(Entity* self) {
     case 1:
         if (self->hitFlags) {
             // +6 at the end is explicitly in the asm
-            tileLayoutPtr = &(leftRockTiles[self->ext.mermanRock.unk84 * 6]) + EXTRA_TILES;
+            tileLayoutPtr =
+                &(leftRockTiles[self->ext.mermanRock.unk84 * 6]) + EXTRA_TILES;
             tilePos = 0x1F1;
             for (i = 0; i < 3; i++, tileLayoutPtr++) {
                 g_Tilemap.fg[tilePos] = *tileLayoutPtr;
@@ -108,9 +115,10 @@ void EntityMermanRockLeftSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(FALLING_ROCK_2), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
-                    newEntity->velocityX = (-Random() << 8) -0x8000;
+                    newEntity->velocityX = (-Random() << 8) - 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
                     newEntity->posY.i.hi += -16 + (i * 16);
                 }
@@ -131,8 +139,7 @@ void EntityMermanRockLeftSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->hitFlags) &&
-            (g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
+        if ((self->hitFlags) && (g_Player.status & PLAYER_STATUS_WOLF_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= wolfFlag;
         }
         break;
@@ -203,7 +210,8 @@ void EntityMermanRockRightSide(Entity* self) {
             for (i = 0; i < 3; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_ID(FALLING_ROCK_2), self, newEntity);
+                    CreateEntityFromEntity(
+                        E_ID(FALLING_ROCK_2), self, newEntity);
                     newEntity->params = *params++;
                     newEntity->velocityX = (Random() << 8) + 0x8000;
                     newEntity->velocityY = -Random() * 0x100;
@@ -222,8 +230,7 @@ void EntityMermanRockRightSide(Entity* self) {
         break;
 
     case 2:
-        if ((self->hitFlags) &&
-            (g_Player.status & PLAYER_STATUS_BAT_FORM)) {
+        if ((self->hitFlags) && (g_Player.status & PLAYER_STATUS_BAT_FORM)) {
             g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] |= batFlag;
         }
         break;
@@ -245,7 +252,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 1:
-        if ((g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 4) && 
+        if ((g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 4) &&
             (g_CastleFlags[JEWEL_SWORD_ROOM_STEPS] & 8)) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
