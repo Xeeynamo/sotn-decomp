@@ -17,19 +17,19 @@ static u16 tilesStart[] = {
 // PSP zero-padding between these suggests a split in arrays
 static u16 initRockTiles[] = {
     0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
-    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E};
+    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
+};
 
 static u16 rockTiles2[] = {
     0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5,
     0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6,
     0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6,
-    0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E};
-// Accesses and offsets are weird, so I'm just making this a big chunk of data.
-// This feels like 3 arrays, but if I split them up, they get zero-padded to
-// align 4.
-static u16 remainingRockTiles[] = {
-    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E, 0x02D2, 0x02D2, 0x02D2,
-    0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D6, 0x02D4,
+    };
+static u16 rockTiles3[] = {
+    0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E,
+    0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E, 
+    0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 
+    0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D6, 0x02D4,
     0x02D6, 0x02D8, 0x02D7,
     // Offset 21 gets used later
     0x06BA, 0x0000, 0x0000, 0x06BD, 0x06BF, 0x06BB, 0x0000, 0x0000, 0x06BE,
@@ -155,7 +155,7 @@ void EntityMermanRockRightSide(Entity* self) {
         self->hitboxWidth = 16;
         self->hitboxHeight = 24;
 
-        tileLayoutPtr = &remainingRockTiles[0];
+        tileLayoutPtr = &rockTiles3[6];
         tilePos = 0x1FD;
         for (i = 0; i < 3; i++, tileLayoutPtr++) {
             g_BgLayers[0].layout[tilePos] = *tileLayoutPtr;
@@ -251,14 +251,14 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 2:
-        for (tileLayoutPtr = &remainingRockTiles[21], i = 0; i < 3; i++) {
+        for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
             }
         }
 
-        for (tileLayoutPtr = &remainingRockTiles[51], i = 0; i < 3; i++) {
+        for (tileLayoutPtr = &rockTiles3[57], i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; j++, tileLayoutPtr++) {
                 g_BgLayers[0].layout[tileLayoutPos] = *tileLayoutPtr;

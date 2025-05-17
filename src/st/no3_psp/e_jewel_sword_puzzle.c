@@ -19,8 +19,9 @@ static u16 initRockTiles[] = {
     0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
     0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
 };
+
 static u16 rockTiles2[] = {
-    0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5, 
+    0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5,
     0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6,
     0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6};
 static u16 rockTiles3[] = {
@@ -251,7 +252,7 @@ void EntityJewelSwordDoor(Entity* self) {
         break;
 
     case 2:
-        for (tileLayoutPtr = &rockTiles3[27], i = 0; i < 3; i++) {
+        for (tileLayoutPtr = &rockTiles3[21], i = 0; i < 3; i++) {
             tileLayoutPos = 0x420 + i;
             for (j = 0; j < 5; tileLayoutPos += 0x30, j++, tileLayoutPtr++) {
                 g_Tilemap.fg[tileLayoutPos] = *tileLayoutPtr;
