@@ -194,4 +194,23 @@ void EntityLightningThunder(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_sky_entities", EntityLightningCloud);
+extern s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
+
+// When lightning strikes, we get a bright bolt, but it is against a cloud
+// as a background. It's subtle and hard to see, but it's there.
+void EntityLightningCloud(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitStInteractable);
+        self->zPriority = 0x29;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        // There are 3 shapes of cloud, this picks which one.
+        self->animCurFrame = self->params + 0x22;
+        self->posX.i.hi = cloudPos[self->params][0];
+        self->posY.i.hi = cloudPos[self->params][1];
+        self->ext.backgroundLightning.timer = 5;
+    }
+
+    if (!--self->ext.backgroundLightning.timer) {
+        DestroyEntity(self);
+    }
+}
