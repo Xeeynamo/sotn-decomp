@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void func_801B246C(Entity* self);
+void EntityBackgroundBlock(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -110,7 +110,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    func_801B246C,
+    EntityBackgroundBlock,
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -237,7 +237,7 @@ static u8 D_80180C00[] = {0x10, 0x2D, 0x00};
 static u8 D_80180C04[] = {0x10, 0x2E, 0x00};
 static u8 D_80180C08[] = {0x10, 0x37, 0x00};
 static u8 D_80180C0C[] = {0x10, 0x02, 0x00};
-ObjInit2 D_80180C10[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {0x8001, 0x0069, 0, 0, 0x0000, 0x00, 0x00, 0x00000000, D_80180BD4},
     {0x8001, 0x0069, 0, 0, 0x0000, 0x00, 0x30, 0x00000000, D_80180BD8},
     {0x8001, 0x00C0, 0, 0, 0x8068, 0x00, 0x00, 0x00000000, D_80180BE4},

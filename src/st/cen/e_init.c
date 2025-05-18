@@ -66,7 +66,7 @@ EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 
 static u8 D_80180488[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 D_8018048C[] = {0x40, 0x07, 0xFF, 0x00};
-ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {.animSet = ANIMSET_OVL(2),
      .zPriority = 129,
      .unk5A = 0,

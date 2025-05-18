@@ -43,10 +43,27 @@ EInit g_EInitSmallRocks = {ANIMSET_OVL(1), 0, 0x00, 0x000, 5};
 
 static u8 D_801804D0[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 D_801804D4[] = {0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00};
-ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
-    {0x0006, 0x01FA, 0x0000, 0x0000, 0x00, 0x10, 0x00000000, D_801804D0},
-    {0x8001, 0x00C0, 0x0000, 0x0000, 0x03, 0x30, 0x00000000, D_801804D4},
-};
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+    {
+        .animSet = 0x0006,
+        .zPriority = 0x01FA,
+        .unk5A = 0x0000,
+        .palette = PAL_DRA(0),
+        .drawFlags = 0x00,
+        .drawMode = 0x10,
+        .flags = 0x00000000,
+        .animFrames = D_801804D0,
+    },
+    {
+        .animSet = 0x8001,
+        .zPriority = 0x00C0,
+        .unk5A = 0,
+        .palette = PAL_DRA(0),
+        .drawFlags = 0x03,
+        .drawMode = 0x30,
+        .flags = 0x00000000,
+        .animFrames = D_801804D4,
+    }};
 
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles

@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
-void func_801B246C(Entity* self) {
-    ObjInit2* objInit = &D_80180C10[self->params];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
+extern u16 g_EInitCommon[];
 
-    if (self->step == 0) {
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
+void EntityBackgroundBlock(Entity* self) {
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
@@ -13,11 +17,10 @@ void func_801B246C(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->flags != 0) {
+        if (objInit->flags) {
             self->flags = objInit->flags;
         }
     }
-
     AnimateEntity(objInit->animFrames, self);
 }
 

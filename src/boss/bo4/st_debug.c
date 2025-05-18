@@ -3,23 +3,23 @@
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
+
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
 void EntityBackgroundBlock(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
-
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        // this is the same as boss/mar, maybe a boss thing?
-        self->unk5A = LOH(objInit->facingLeft); // bug?
+        self->unk5A = LOH(objInit->facingLeft);
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->flags != 0) {
+        if (objInit->flags) {
             self->flags = objInit->flags;
         }
     }
-
     AnimateEntity(objInit->animFrames, self);
 }
 

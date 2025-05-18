@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void func_us_8018AC0C(Entity* self);
+void EntityBackgroundBlock(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -51,7 +51,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    func_us_8018AC0C,
+    EntityBackgroundBlock,
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -98,7 +98,7 @@ static u16 unused[][6] = {
 };
 
 static u8 D_us_801804B0[] = {0x40, 0x2F, 0xFF, 0x00};
-ObjInit2 D_80180C10[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {0x8001, 0x007F, 0, 0, 0x0000, 0x00, 0x30, 0x00000000, D_us_801804B0},
 };
 
