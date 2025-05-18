@@ -232,9 +232,6 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
-	git clean -fdx src/*/gen/*
-	git clean -fdx src/st/*/gen/*
-
 
 ##@
 ##@ Misc Targets
