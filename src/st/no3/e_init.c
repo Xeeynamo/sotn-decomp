@@ -61,12 +61,12 @@ void EntityMerman2(Entity* self);
 void EntityMermanWaterSplash(Entity* self);
 void EntityMediumWaterSplash(Entity* self);
 void EntityHighWaterSplash(Entity* self);
-void EntityExplosion2(Entity* self);
+void EntityMermanFireSpit(Entity* self);
 void EntityDeadMerman(Entity* self);
-void EntityFallingObject2(Entity* self);
+void EntityMerman2JumpAir(Entity* self);
 void EntityMerman(Entity* self);
 void EntityMermanFireball(Entity* self);
-void EntityFallingObject(Entity* self);
+void EntityMermanJumpAir(Entity* self);
 void EntityMermanExplosion(Entity* self);
 void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
@@ -161,12 +161,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMermanWaterSplash,
     EntityMediumWaterSplash,
     EntityHighWaterSplash,
-    EntityExplosion2,
+    EntityMermanFireSpit,
     EntityDeadMerman,
-    EntityFallingObject2, // 0x40
+    EntityMerman2JumpAir, // 0x40
     EntityMerman,
     EntityMermanFireball,
-    EntityFallingObject,
+    EntityMermanJumpAir,
     EntityMermanExplosion,
     EntityMermanSpawner,
     EntityBoneScimitar,

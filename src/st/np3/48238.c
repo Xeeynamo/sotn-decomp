@@ -121,7 +121,7 @@ void EntityMerman(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_MERMAN_JUMP_WATER, self, newEntity);
+                        E_MERMAN_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 20;
                     newEntity->zPriority = self->zPriority;
                 }

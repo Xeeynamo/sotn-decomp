@@ -271,7 +271,7 @@ s32 func_us_801C5168(void) {
     targetCount = 3;
     for (entity = &g_Entities[E_ID_60], i = 0, entityCount = 0; i < 16; i++,
         entity++) {
-        if (entity->entityId == E_ID_14) {
+        if (entity->entityId == E_EXPLOSION_VARIANTS) {
             entityCount++;
         }
         if (entityCount >= targetCount) {

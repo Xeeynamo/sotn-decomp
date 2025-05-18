@@ -45,7 +45,7 @@ typedef enum {
     E_DUMMY_10,
 
     E_AXE_KNIGHT_AXE = 0x2A,
-    E_BONE_SCIMITAR_HEAD = 0x28,
+    E_BONE_SCIMITAR_PARTS = 0x28,
     E_FIRE = 0x38,
     E_SLOGRA_SPEAR = 0x41,
     E_SLOGRA_SPEAR_PROJECTILE = 0x42,
