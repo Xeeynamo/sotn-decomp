@@ -2,6 +2,7 @@
 
 #include "../no3/no3.h"
 
+#if defined(STAGE_IS_NO3)
 static SVECTOR vec_negneg = {-0x100, 0, -0x100};
 static SVECTOR vec_posneg = {0x100, 0, -0x100};
 static SVECTOR vec_negpos = {-0x100, 0, 0x100};
@@ -176,11 +177,13 @@ void EntityDeathSkySwirl(Entity* self) {
     }
 }
 
+#endif
+
 static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};
 
 void EntityLightningThunder(Entity* self) {
     s32 sfxPan;
-    
+
     if (!self->step) {
         InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
