@@ -308,17 +308,16 @@ typedef struct {
 
 // Defines armor, cloak and rings
 typedef struct {
-    /* 00 */ const char* name;
-    /* 04 */ const char* description;
-    /* 08 */ u32 unk08;
-    /* 0C */ u32 unk0C;
-    /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
-    /* 18 */ u16 icon;
-    /* 1A */ u16 palette;
-    /* 1C */ u16 equipType;
-    /* 1E */ u16 unk1E;
-} Accessory; /* size=0x20 */
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ u32 unk08;
+    /* 0x0C */ u32 unk0C;
+    /* 0x10 */ u32 unk10;
+    /* 0x14 */ u32 unk14;
+    /* 0x18 */ u16 icon;
+    /* 0x1A */ u16 palette;
+    /* 0x1C */ u16 equipType;
+} Accessory; /* size=0x1E */
 
 typedef struct {
     /* 0x00 */ const char* name;
