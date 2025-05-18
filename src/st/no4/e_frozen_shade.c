@@ -17,7 +17,31 @@ static void func_us_801D9560(FrozenShadePrim* prim) {
     prim->y3 = dy + (prim->u3 / 4 + 2);
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801D95EC);
+extern s16 D_us_80182890[];
+extern s16 D_us_801828A0[];
+
+void func_us_801D95EC(Entity* self) {
+    Entity* player;
+    s16 posY;
+    s16 posX;
+    s16 angle;
+
+    player = &PLAYER;
+
+    if (!(self->ext.et_801D96FC.unk86 & 0x1F)) {
+        angle = Random() & 7;
+        posY = self->ext.et_801D96FC.unkA2 - self->posY.i.hi +
+               D_us_80182890[angle] - g_Tilemap.scrollY.i.hi;
+        posX = self->ext.et_801D96FC.unkA0 - self->posX.i.hi +
+               D_us_801828A0[angle] - g_Tilemap.scrollX.i.hi;
+        self->ext.et_801D96FC.unk88 = (s16)ratan2(posY, posX);
+    }
+    self->ext.et_801D96FC.unk86++;
+    angle = self->ext.et_801D96FC.unk7E = GetNormalizedAngle(
+        0x40, self->ext.et_801D96FC.unk7E, self->ext.et_801D96FC.unk88);
+    self->posX.val += (rcos(angle) * 128) / 16;
+    self->posY.val += (rsin(angle) * 128) / 16;
+}
 
 extern u8 D_us_801827F0[];
 extern u8 D_us_80182800[];
@@ -755,10 +779,303 @@ void func_us_801D96FC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB194);
+// Frozen shade crystal shield
+void func_us_801DB194(struct Entity* self) {
+    if (!self->step) {
+        InitializeEntity(D_us_80180C70);
+        self->hitboxState |= 6;
+    }
+}
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB1E8);
+extern s16 D_us_80182A64[][3];
+extern u8 D_us_80182AA0[];
+extern s16 D_us_80182AC0[];
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DB65C);
+void func_us_801DB1E8(Entity* self) {
+    Primitive* prim;
+    u8* iptr;
+    s16* ptr;
+    s16* point;
+    s32 i;
 
-INCLUDE_ASM("st/no4/nonmatchings/unk_59560", func_us_801DBBEC);
+    SVECTOR* points[4];
+    Point16* sxy[4];
+    CVECTOR* primaryColor;
+    CVECTOR* color;
+    VECTOR tempVector;
+    MATRIX* mat;
+    long* p;
+    long* flag;
+
+    SetGeomScreen(0x100);
+    SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
+
+    points[0] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[0]));
+    points[1] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[1]));
+    points[2] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[2]));
+    points[3] = (SVECTOR*)SP(offsetof(NO4_SCRATCHPAD, points[3]));
+    sxy[0] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[0]));
+    sxy[1] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[1]));
+    sxy[2] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[2]));
+    sxy[3] = (Point16*)SP(offsetof(NO4_SCRATCHPAD, sxy[3]));
+    p = (long*)SP(offsetof(NO4_SCRATCHPAD, p));
+    flag = (long*)SP(offsetof(NO4_SCRATCHPAD, flag));
+    primaryColor = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, primaryColor));
+    color = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, color));
+    mat = (MATRIX*)SP(offsetof(NO4_SCRATCHPAD, mat));
+
+    primaryColor->r = self->ext.et_801DB1E8.unk88;
+    primaryColor->g = self->ext.et_801DB1E8.unk89;
+    primaryColor->b = self->ext.et_801DB1E8.unk8A;
+
+    mat->m[0][0] = mat->m[1][1] = mat->m[2][2] = 0x1000;
+    mat->m[0][1] = mat->m[0][2] = mat->m[1][0] = mat->m[1][2] = mat->m[2][0] =
+        mat->m[2][1] = 0;
+    mat = RotMatrixY(self->ext.et_801D96FC.unk7C, mat);
+    mat = RotMatrixZ(self->ext.et_801D96FC.unk7E, mat);
+    SetLightMatrix(mat);
+    tempVector.vy = self->ext.et_801DB1E8.unk82;
+    tempVector.vx = tempVector.vz = self->ext.et_801DB1E8.unk80;
+    ScaleMatrix(mat, &tempVector);
+    SetRotMatrix(mat);
+    tempVector.vx = tempVector.vy = 0;
+    tempVector.vz = 0x100;
+    TransMatrix(mat, &tempVector);
+    SetTransMatrix(mat);
+    mat->m[0][0] = mat->m[1][0] = mat->m[2][0] = -0x600;
+    mat->m[0][1] = mat->m[1][1] = mat->m[2][1] = 0x600;
+    mat->m[0][2] = mat->m[1][2] = mat->m[2][2] = 0x1000;
+    SetColorMatrix(mat);
+    SetBackColor(0x60, 0x60, 0x80);
+    iptr = D_us_80182AA0;
+    point = D_us_80182AC0;
+    prim = &g_PrimBuf[self->primIndex];
+
+    while (prim != NULL) {
+        for (i = 0; i < 4; iptr++, i++) {
+            ptr = D_us_80182A64[*iptr];
+            points[i]->vx = *ptr++;
+            points[i]->vy = *ptr++;
+            points[i]->vz = *ptr;
+        }
+
+        i = RotAverage4(
+            points[0], points[1], points[2], points[3], (long*)sxy[0],
+            (long*)sxy[1], (long*)sxy[2], (long*)sxy[3], p, flag);
+        points[0]->vx = *point++;
+        points[0]->vy = *point++;
+        points[0]->vz = *point++;
+        NormalColorCol(points[0], primaryColor, color);
+        prim->x0 = sxy[0]->x;
+        prim->x1 = sxy[1]->x;
+        prim->x2 = sxy[2]->x;
+        prim->x3 = sxy[3]->x;
+        prim->y0 = sxy[0]->y;
+        prim->y1 = sxy[1]->y;
+        prim->y2 = sxy[2]->y;
+        prim->y3 = sxy[3]->y;
+        PRED(prim) = color->r;
+        PGRN(prim) = color->g;
+        PBLU(prim) = color->b;
+        prim->priority = self->zPriority + 0x42 - i;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->p3 = 1;
+        prim = prim->next;
+    }
+}
+
+// Frozen shade ice shards
+extern s16 D_us_80182AF0[];
+extern s16 D_us_80182B00[];
+
+void func_us_801DB65C(Entity* self) {
+    Entity* entity;
+    Primitive* prim;
+    s32 primIndex;
+    s16 velocity;
+    u16 i;
+
+    if (self->hitFlags & 0x80) {
+        entity = &PLAYER;
+        self->ext.et_801DB1E8.posX = self->posX.i.hi - entity->posX.i.hi;
+        self->ext.et_801DB1E8.posY = self->posY.i.hi - entity->posY.i.hi;
+        self->ext.et_801DB1E8.unk84 = 0;
+        self->step = 6;
+    }
+
+    entity = self->ext.et_801DB1E8.unk8C;
+    if ((self->flags & 0x100 || (entity->flags & 0x100 && self->step != 4)) &&
+        self->step < 5) {
+        if (self->step < 2) {
+            DestroyEntity(self);
+            return;
+        }
+        self->step = 5;
+        self->ext.et_801DB1E8.unk84 = 0;
+        self->ext.et_801DB1E8.unk86 =
+            (self->ext.et_801DB1E8.unk7E + 0x400) & 0xFFF;
+        g_api.PlaySfx(0x68B);
+    }
+
+    entity = self->unk60;
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 8);
+        if (primIndex == -1) {
+            return;
+        }
+
+        entity = AllocEntity(self, &g_Entities[192]);
+        if (entity == NULL) {
+            return;
+        }
+
+        CreateEntityFromCurrentEntity(0x48, entity);
+        self->unk60 = entity;
+        entity->unk60 = self;
+        entity->unk5C = self;
+        InitializeEntity(D_us_80180C7C);
+        self->primIndex = primIndex;
+        self->flags |= FLAG_HAS_PRIMS;
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        self->ext.et_801DB1E8.unk7C = 0;
+        self->ext.et_801DB1E8.unk7E = 0;
+        self->ext.et_801DB1E8.unk82 = 0x1200;
+        self->ext.et_801DB1E8.unk80 = 0;
+        self->ext.et_801DB1E8.unk84 = 0;
+        self->ext.et_801DB1E8.unk88 = 0x10;
+        self->ext.et_801DB1E8.unk89 = 0x10;
+        self->ext.et_801DB1E8.unk8A = 0x10;
+        break;
+    case 1:
+        self->ext.et_801DB1E8.unk7C += 0x20;
+        self->ext.et_801DB1E8.unk82 -= 0x80;
+        self->ext.et_801DB1E8.unk80 += 0x78;
+        self->ext.et_801DB1E8.unk88 += 1;
+        self->ext.et_801DB1E8.unk89 += 3;
+        self->ext.et_801DB1E8.unk8A += 7;
+
+        if (++self->ext.et_801DB1E8.unk84 > 0x10) {
+            self->step++;
+            self->ext.et_801DB1E8.unk84 = (((self->params) * 0x18) + 0x20);
+            self->hitboxState = 0xE;
+        }
+        func_us_801DB1E8(self);
+        break;
+    case 2:
+        self->ext.et_801DB1E8.unk7C += 0x20;
+        if (!(--self->ext.et_801DB1E8.unk84)) {
+            self->step++;
+            self->ext.et_801DB1E8.unk84 = 0;
+            self->ext.et_801DB1E8.unk86 =
+                (GetAngleBetweenEntities(self, &PLAYER) - 0x400) & 0xFFF;
+        }
+        func_us_801DB1E8(self);
+        break;
+    case 3:
+        self->ext.et_801DB1E8.unk7C += 0x20;
+        i = GetNormalizedAngle(
+            0x40, self->ext.et_801DB1E8.unk7E, self->ext.et_801DB1E8.unk86);
+        self->ext.et_801DB1E8.unk7E = i;
+        if (self->ext.et_801DB1E8.unk86 == i) {
+            self->step++;
+            PlaySfxPositional(0x6A4);
+            self->ext.et_801DB1E8.unk84 = 8;
+            self->ext.et_801DB1E8.unk86 += 0x400;
+        }
+        func_us_801DB1E8(self);
+        break;
+    case 4:
+        self->ext.et_801DB1E8.unk7C += 0x20;
+        if (!self->ext.et_801DB1E8.unk84) {
+            UnkEntityFunc0(self->ext.et_801DB1E8.unk86, 0x600);
+            MoveEntity(self);
+        } else {
+            self->ext.et_801DB1E8.unk84--;
+        }
+        func_us_801DB1E8(self);
+        break;
+    case 5:
+        if (++self->ext.et_801DB1E8.unk84 >= 0x20) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.et_801DB1E8.unk88--;
+        self->ext.et_801DB1E8.unk89 -= 2;
+        self->ext.et_801DB1E8.unk8A -= 4;
+        prim = &g_PrimBuf[self->primIndex];
+        i = 0;
+        func_us_801DB1E8(self);
+        while (prim != NULL) {
+            UnkEntityFunc0(
+                (self->ext.et_801DB1E8.unk86 + D_us_80182AF0[i]) & 0xFFF,
+                D_us_80182B00[i] * self->ext.et_801DB1E8.unk84);
+            velocity = F(self->velocityX).i.hi;
+            prim->x0 += velocity;
+            prim->x1 += velocity;
+            prim->x2 += velocity;
+            prim->x3 += velocity;
+            velocity = F(self->velocityY).i.hi;
+            prim->y0 += velocity;
+            prim->y1 += velocity;
+            ;
+            prim->y2 += velocity;
+            ;
+            prim->y3 += velocity;
+            ;
+            prim = prim->next;
+            i++;
+        }
+
+        break;
+    case 6:
+        entity = &PLAYER;
+        self->posX.i.hi = entity->posX.i.hi + self->ext.et_801DB1E8.posX;
+        self->posY.i.hi = entity->posY.i.hi + self->ext.et_801DB1E8.posY;
+        if (++self->ext.et_801DB1E8.unk84 >= 0x20) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.et_801DB1E8.unk88--;
+        self->ext.et_801DB1E8.unk89 -= 2;
+        self->ext.et_801DB1E8.unk8A -= 4;
+        func_us_801DB1E8(self);
+        break;
+    }
+
+    entity->params = (self->ext.et_801DB1E8.unk7E + 0x400) & 0xFFF;
+}
+
+void func_us_801DBBEC(Entity* self) {
+    Entity* parent;
+
+    parent = self->unk60;
+    if ((parent->entityId != 0x47) || (parent->unk60 != self)) {
+        DestroyEntity(self);
+    }
+
+    if (!self->step) {
+        InitializeEntity(D_us_80180C7C);
+        self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
+                         FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
+        self->hitboxWidth = 2;
+        self->hitboxHeight = 2;
+    }
+
+    self->posX.val = parent->posX.val;
+    self->posY.val = parent->posY.val;
+    if (parent->hitboxState) {
+        self->hitboxState = parent->hitboxState | 1;
+    } else {
+        self->hitboxState = 0;
+    }
+    UnkEntityFunc0(self->params, 0x1800);
+    MoveEntity(self);
+}
