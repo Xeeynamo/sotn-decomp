@@ -19,20 +19,17 @@ static s32 posX_jitter[] = {0x0001FD80, 0x0001F600, 0x0001E9C0, 0x0001D8C0,
                             0x0001C320, 0x0001A940, 0x00018B40, 0x00016980};
 static s32 posY_jitter[] = {0x00003220, 0x000063E0, 0x000094A0, 0x0000C3E0,
                             0x0000F160, 0x00011C80, 0x000144C0, 0x00016A00};
-static u8 pos_jitter_idx[] = {0x05, 0x03, 0x04, 0x01, 0x06, 0x03, 0x02, 0x04,
-                              0x00, 0x06, 0x03, 0x05, 0x07, 0x01, 0x04, 0x02};
+static u8 pos_jitter_idx[] = {5, 3, 4, 1, 6, 3, 2, 4, 0, 6, 3, 5, 7, 1, 4, 2};
 static s16 posY_offsets[] = {-8, -8, -8, -4, 8, 8, 8, 4};
 static s16 posX_offsets[] = {-8, 0, 8, 4, -8, 0, 8, -4};
+// SVECTOR parts { vx, vy, vz }
 static s16 D_us_801828B0[][3] = {
-    {0x0000, 0xFFDC, 0x0000}, {0x0014, 0xFFF0, 0x0000},
-    {0xFFEC, 0xFFF0, 0x0000}, {0x0014, 0x0010, 0x0000},
-    {0xFFEC, 0x0010, 0x0000}, {0x0000, 0x0024, 0x0000},
-    {0x0000, 0xFFEC, 0xFFF0}, {0x000A, 0xFFF6, 0xFFF0},
-    {0xFFF6, 0xFFF6, 0xFFF0}, {0x000A, 0x000A, 0xFFF0},
-    {0xFFF6, 0x000A, 0xFFF0}, {0x0000, 0x0014, 0xFFF0},
-    {0x0000, 0xFFEC, 0x0010}, {0x000A, 0xFFF6, 0x0010},
-    {0xFFF6, 0xFFF6, 0x0010}, {0x000A, 0x000A, 0x0010},
-    {0xFFF6, 0x000A, 0x0010}, {0x0000, 0x0014, 0x0010}};
+    {0, -36, 0},     {20, -16, 0},  {-20, -16, 0},  {20, 16, 0},
+    {-20, 16, 0},    {0, 36, 0},    {0, -20, -16},  {10, -10, -16},
+    {-10, -10, -16}, {10, 10, -16}, {-10, 10, -16}, {0, 20, -16},
+    {0, -20, 16},    {10, -10, 16}, {-10, -10, 16}, {10, 10, 16},
+    {-10, 10, 16},   {0, 20, 16}};
+
 static u8 D_us_8018291C[] = {
     0x02, 0x00, 0x08, 0x06, 0x00, 0x01, 0x06, 0x07, 0x02, 0x08, 0x04,
     0x0A, 0x07, 0x01, 0x09, 0x03, 0x04, 0x0A, 0x05, 0x0B, 0x05, 0x0B,
@@ -42,47 +39,38 @@ static u8 D_us_8018291C[] = {
     0x0F, 0x0E, 0x0C, 0x10, 0x0D, 0x10, 0x0D, 0x11, 0x0F};
 // SVECTOR parts { vx, vy, vz }
 static s16 D_us_8018295C[][3] = {
-    {0x0800, 0x0800, 0x1000}, {0xF800, 0x0800, 0x1000},
-    {0x0C00, 0x0000, 0x1000}, {0xF400, 0x0000, 0x1000},
-    {0x0800, 0xF800, 0x1000}, {0xF800, 0xF800, 0x1000},
-    {0x0000, 0x0000, 0x1000}, {0x0000, 0x0000, 0x1000},
-    {0x0800, 0x0800, 0xF000}, {0xF800, 0x0800, 0xF000},
-    {0x0C00, 0x0000, 0xF000}, {0xF400, 0x0000, 0xF000},
-    {0x0800, 0xF800, 0xF000}, {0xF800, 0xF800, 0xF000},
-    {0x0000, 0x0000, 0xF000}, {0x0000, 0x0000, 0xF000}};
+    {2048, 2048, 4096},   {-2048, 2048, 4096},   {3072, 0, 4096},
+    {-3072, 0, 4096},     {2048, -2048, 4096},   {-2048, -2048, 4096},
+    {0, 0, 4096},         {0, 0, 4096},          {2048, 2048, -4096},
+    {-2048, 2048, -4096}, {3072, 0, -4096},      {-3072, 0, -4096},
+    {2048, -2048, -4096}, {-2048, -2048, -4096}, {0, 0, -4096},
+    {0, 0, -4096}};
 
 static s16 unused[] = {
-    0x4040, 0x4080, 0x8040, 0x6060, 0x30A0, 0x6030, 0x1010, 0x3040, 0x6030,
-    0x6060, 0x80A0, 0xC080, 0x0000, 0xFFF4, 0x000C, 0xFFF4, 0x000C, 0xFFF4,
-    0x000C, 0x0000, 0x0000, 0xFFE6, 0x0000, 0xFFF4, 0xFFE6, 0xFFE6, 0xFFF4,
-    0xFFF4, 0xFFF4, 0xFFE6, 0x0000, 0x0000, 0x0000, 0x0000, 0x000C, 0x001A,
-    0x000C, 0x000C, 0x001A, 0x001A, 0x0000, 0x0000, 0x0019, 0x000C, 0xFFF0,
-    0xFFFC, 0xFFFC, 0x0014, 0xFFFC, 0x0014, 0x0014, 0x0020, 0xFFE0, 0xFFFA,
-    0xFFF0, 0xFFFC, 0xFFFA, 0x0016, 0xFFFC, 0x0014, 0x0014, 0x0016, 0x0020,
-    0x0030, 0x0020, 0x0030, 0x0014, 0x0016, 0xFFFC, 0x0014, 0xFFFA, 0x0016,
-    0xFFE0, 0xFFF0, 0xFFFA, 0xFFFC};
+    16448,  16512,  -32704, 24672, 12448, 24624, 4112, 12352, 24624, 24672,
+    -32608, -16256, 0,      -12,   12,    -12,   12,   -12,   12,    0,
+    0,      -26,    0,      -12,   -26,   -26,   -12,  -12,   -12,   -26,
+    0,      0,      0,      0,     12,    26,    12,   12,    26,    26,
+    0,      0,      25,     12,    -16,   -4,    -4,   20,    -4,    20,
+    20,     32,     -32,    -6,    -16,   -4,    -6,   22,    -4,    20,
+    20,     22,     32,     48,    32,    48,    20,   22,    -4,    20,
+    -6,     22,     -32,    -16,   -6,    -4};
 
 static s16 icicle_posX_offsets[] = {-32, 16, 32, -16};
 static s16 icicle_posY_offsets[] = {0, -24, 0, -24};
 
 // SVECTOR parts { vx, vy, vz }
 static s16 D_us_80182A64[][3] = {
-    {0x0000, 0xFFE8, 0x0000}, {0xFFF5, 0xFFFD, 0x0000},
-    {0x0000, 0xFFFD, 0xFFF5}, {0x000B, 0xFFFD, 0x0000},
-    {0x0000, 0xFFFD, 0x000B}, {0xFFF8, 0x0008, 0xFFF8},
-    {0x0008, 0x0008, 0xFFF8}, {0x0008, 0x0008, 0x0008},
-    {0xFFF8, 0x0008, 0x0008}, {0x0000, 0x0038, 0x0000}};
-static u8 D_us_80182AA0[] = {
-    0x01, 0x00, 0x05, 0x02, 0x02, 0x00, 0x06, 0x03, 0x03, 0x00, 0x07,
-    0x04, 0x04, 0x00, 0x08, 0x01, 0x05, 0x02, 0x09, 0x06, 0x06, 0x03,
-    0x09, 0x07, 0x07, 0x04, 0x09, 0x08, 0x08, 0x01, 0x09, 0x05};
+    {0, -24, 0}, {-11, -3, 0}, {0, -3, -11}, {11, -3, 0}, {0, -3, 11},
+    {-8, 8, -8}, {8, 8, -8},   {8, 8, 8},    {-8, 8, 8},  {0, 56, 0}};
+static u8 D_us_80182AA0[] = {1, 0, 5, 2, 2, 0, 6, 3, 3, 0, 7, 4, 4, 0, 8, 1,
+                             5, 2, 9, 6, 6, 3, 9, 7, 7, 4, 9, 8, 8, 1, 9, 5};
 
 // SVECTOR parts { vx, vy, vz }
 static s16 D_us_80182AC0[][3] = {
-    {0x0800, 0x0400, 0x0800}, {0xF800, 0x0400, 0x0800},
-    {0xF800, 0x0400, 0xF800}, {0x0800, 0x0400, 0xF800},
-    {0x0000, 0xFD00, 0x0C00}, {0xF400, 0xFD00, 0x0000},
-    {0x0000, 0xFD00, 0xF400}, {0x0C00, 0xFD00, 0x0000}};
+    {2048, 1024, 2048},  {-2048, 1024, 2048}, {-2048, 1024, -2048},
+    {2048, 1024, -2048}, {0, -768, 3072},     {-3072, -768, 0},
+    {0, -768, -3072},    {3072, -768, 0}};
 
 static s16 ice_shard_angles[] = {
     -512, 128, 800, -704, 1856, 1088, -1312, -1792};
@@ -892,9 +880,9 @@ void func_us_801DB1E8(Entity* self) {
     color = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, color));
     mat = (MATRIX*)SP(offsetof(NO4_SCRATCHPAD, mat));
 
-    primaryColor->r = self->ext.frozenShadeIcicle.unk88;
-    primaryColor->g = self->ext.frozenShadeIcicle.unk89;
-    primaryColor->b = self->ext.frozenShadeIcicle.unk8A;
+    primaryColor->r = self->ext.frozenShadeIcicle.r;
+    primaryColor->g = self->ext.frozenShadeIcicle.g;
+    primaryColor->b = self->ext.frozenShadeIcicle.b;
 
     mat->m[0][0] = mat->m[1][1] = mat->m[2][2] = 0x1000;
     mat->m[0][1] = mat->m[0][2] = mat->m[1][0] = mat->m[1][2] = mat->m[2][0] =
@@ -978,7 +966,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
         }
         self->step = 5;
         self->ext.frozenShadeIcicle.unk84 = 0;
-        self->ext.frozenShadeIcicle.unk86 =
+        self->ext.frozenShadeIcicle.angle =
             (self->ext.frozenShadeIcicle.unk7E + 0x400) & 0xFFF;
         g_api.PlaySfx(SFX_DRA_GLASS_BREAK);
     }
@@ -1015,17 +1003,17 @@ void EntityFrozenShadeIcicle(Entity* self) {
         self->ext.frozenShadeIcicle.unk82 = 0x1200;
         self->ext.frozenShadeIcicle.unk80 = 0;
         self->ext.frozenShadeIcicle.unk84 = 0;
-        self->ext.frozenShadeIcicle.unk88 = 0x10;
-        self->ext.frozenShadeIcicle.unk89 = 0x10;
-        self->ext.frozenShadeIcicle.unk8A = 0x10;
+        self->ext.frozenShadeIcicle.r = 0x10;
+        self->ext.frozenShadeIcicle.g = 0x10;
+        self->ext.frozenShadeIcicle.b = 0x10;
         break;
     case 1:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
         self->ext.frozenShadeIcicle.unk82 -= 0x80;
         self->ext.frozenShadeIcicle.unk80 += 0x78;
-        self->ext.frozenShadeIcicle.unk88 += 1;
-        self->ext.frozenShadeIcicle.unk89 += 3;
-        self->ext.frozenShadeIcicle.unk8A += 7;
+        self->ext.frozenShadeIcicle.r += 1;
+        self->ext.frozenShadeIcicle.g += 3;
+        self->ext.frozenShadeIcicle.b += 7;
 
         if (++self->ext.frozenShadeIcicle.unk84 > 0x10) {
             self->step++;
@@ -1040,7 +1028,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
         if (!(--self->ext.frozenShadeIcicle.unk84)) {
             self->step++;
             self->ext.frozenShadeIcicle.unk84 = 0;
-            self->ext.frozenShadeIcicle.unk86 =
+            self->ext.frozenShadeIcicle.angle =
                 (GetAngleBetweenEntities(self, &PLAYER) - 0x400) & 0xFFF;
         }
         func_us_801DB1E8(self);
@@ -1048,20 +1036,20 @@ void EntityFrozenShadeIcicle(Entity* self) {
     case 3:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
         i = GetNormalizedAngle(0x40, self->ext.frozenShadeIcicle.unk7E,
-                               self->ext.frozenShadeIcicle.unk86);
+                               self->ext.frozenShadeIcicle.angle);
         self->ext.frozenShadeIcicle.unk7E = i;
-        if (self->ext.frozenShadeIcicle.unk86 == i) {
+        if (self->ext.frozenShadeIcicle.angle == i) {
             self->step++;
             PlaySfxPositional(SFX_UI_TINK);
             self->ext.frozenShadeIcicle.unk84 = 8;
-            self->ext.frozenShadeIcicle.unk86 += 0x400;
+            self->ext.frozenShadeIcicle.angle += 0x400;
         }
         func_us_801DB1E8(self);
         break;
     case 4:
         self->ext.frozenShadeIcicle.unk7C += 0x20;
         if (!self->ext.frozenShadeIcicle.unk84) {
-            UnkEntityFunc0(self->ext.frozenShadeIcicle.unk86, 0x600);
+            UnkEntityFunc0(self->ext.frozenShadeIcicle.angle, 0x600);
             MoveEntity(self);
         } else {
             self->ext.frozenShadeIcicle.unk84--;
@@ -1073,15 +1061,15 @@ void EntityFrozenShadeIcicle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->ext.frozenShadeIcicle.unk88--;
-        self->ext.frozenShadeIcicle.unk89 -= 2;
-        self->ext.frozenShadeIcicle.unk8A -= 4;
+        self->ext.frozenShadeIcicle.r--;
+        self->ext.frozenShadeIcicle.g -= 2;
+        self->ext.frozenShadeIcicle.b -= 4;
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         func_us_801DB1E8(self);
         while (prim != NULL) {
             UnkEntityFunc0(
-                (self->ext.frozenShadeIcicle.unk86 + ice_shard_angles[i]) &
+                (self->ext.frozenShadeIcicle.angle + ice_shard_angles[i]) &
                     0xFFF,
                 ice_shard_speeds[i] * self->ext.frozenShadeIcicle.unk84);
             velocity = F(self->velocityX).i.hi;
@@ -1107,9 +1095,9 @@ void EntityFrozenShadeIcicle(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->ext.frozenShadeIcicle.unk88--;
-        self->ext.frozenShadeIcicle.unk89 -= 2;
-        self->ext.frozenShadeIcicle.unk8A -= 4;
+        self->ext.frozenShadeIcicle.r--;
+        self->ext.frozenShadeIcicle.g -= 2;
+        self->ext.frozenShadeIcicle.b -= 4;
         func_us_801DB1E8(self);
         break;
     }

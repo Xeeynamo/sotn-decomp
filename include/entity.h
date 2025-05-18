@@ -2959,10 +2959,10 @@ typedef struct {
     /* 0x80 */ u16 unk80;
     /* 0x82 */ u16 unk82;
     /* 0x84 */ u16 unk84;
-    /* 0x86 */ u16 unk86;
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
-    /* 0x8A */ u8 unk8A;
+    /* 0x86 */ u16 angle;
+    /* 0x88 */ u8 r;
+    /* 0x89 */ u8 g;
+    /* 0x8A */ u8 b;
     /* 0x8B */ u8 : 8;
     /* 0x8C */ struct Entity* unk8C;
     /* 0x90 */ s16 posX;
