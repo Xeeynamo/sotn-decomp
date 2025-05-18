@@ -512,6 +512,46 @@ def reference_overlays(version: str) -> list[str]:
     return {}
 
 
+def append_segments(
+    segments: list[str],
+    section_start: int,
+    next_segment_offset: int,
+    prefix: str,
+    default_segment: str,
+    known_segments: dict[int, dict],
+):
+    if len(known_segments) == 0:
+        segments.append(
+            f"      - [0x{section_start:X}, c, {prefix}{default_segment}]\n"
+        )
+        return
+
+    last_offset = section_start
+    for offset in sorted(known_segments.keys()):
+        segment = known_segments[offset]
+        if offset == section_start:
+            segments.append(
+                f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+            )
+            last_offset = offset + segment["size"]
+            continue
+
+        if offset > last_offset:
+            segments.append(
+                f"      # - [0x{last_offset:X}, c, {prefix}{default_segment}]\n"
+            )
+
+        segments.append(
+            f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+        )
+        last_offset = offset + segment["size"]
+
+    if next_segment_offset > 0 and last_offset < next_segment_offset:
+        segments.append(
+            f"      # - [0x{last_offset:X}, c, {prefix}{default_segment}]\n"
+        )
+
+
 def make_config_psx(ovl_path: str, version: str, options: Options):
     class IndentDumper(yaml.Dumper):
         def increase_indent(self, flow=False, indentless=False):
@@ -559,20 +599,7 @@ def make_config_psx(ovl_path: str, version: str, options: Options):
         else:
             subsegments.append(f"      - [0x{rodata_off:X}, rodata]\n")
     if text_off >= 0:
-        last_offset = text_off
-        for offset in sorted(known_segments.keys()):
-            if offset > last_offset:
-                subsegments.append(
-                    f"      - [0x{last_offset:X}, c, {version}_{last_offset:X}]\n"
-                )
-            segment = known_segments[offset]
-            subsegments.append(f"      - [0x{offset:X}, c, {segment["name"]}]\n")
-            last_offset = offset + segment["size"]
-        if bss_off >= 0 and last_offset != bss_off:
-            subsegments.append(
-                f"      - [0x{text_off:X}, c, {version}_{last_offset:X}]\n"
-            )
-
+        append_segments(subsegments, text_off, bss_off, "", version, known_segments)
     if bss_off >= 0:
         subsegments.append(f"      - [0x{bss_off:X}, sbss]\n")
 
@@ -644,19 +671,9 @@ def make_config_psp(ovl_path: str, version: str):
         rodata_start = data_start + data_len
 
     text_segments = []
-    if not 0x80 in known_segments:
-        text_segments.append("      - [0x80, c, 80]\n")
-    last_offset = 0x80
-    for offset in sorted(known_segments.keys()):
-        if offset > last_offset:
-            text_segments.append(
-                f"      - [0x{last_offset:X}, c, {ovl_name}_psp/{last_offset:X}]\n"
-            )
-        segment = known_segments[offset]
-        text_segments.append(
-            f"      - [0x{offset:X}, c, {ovl_name}_psp/{segment["name"]}]\n"
-        )
-        last_offset = offset + segment["size"]
+    append_segments(
+        text_segments, 0x80, data_start, f"{ovl_name}_psp/", "80", known_segments
+    )
 
     # set global vram address to allow mapping of global symbols
     config["options"]["global_vram_start"] = HexInt(0x08000000)
@@ -727,6 +744,12 @@ def cargo_run(*args):
     return exec("cargo", *run_args)
 
 
+def cargo_run_manifest(tool_path, *args):
+    run_args = ["run", "--release", "--manifest-path", f"{tool_path}/Cargo.toml", "--"]
+    run_args.extend(args)
+    return exec("cargo", *run_args)
+
+
 def find_dups(threshold, dir1, dir2) -> dict[str, str]:
     os.chdir("tools/dups")
     dir1 = os.path.join("../../", dir1)
@@ -749,6 +772,13 @@ def find_dups(threshold, dir1, dir2) -> dict[str, str]:
             continue
         pairs[left] = right
     return pairs
+
+
+def mipsmatch(command: str, *args: list[str]) -> str:
+    """
+    Runs `mipsmatch` with the provided arguments. stdout is returned.
+    """
+    return cargo_run_manifest("tools/mipsmatch", command, *args)
 
 
 def find_matches(ovl_name: str, version: str) -> list[dict[str, any]]:
@@ -795,8 +825,7 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
     if not os.path.exists(map_path) or not os.path.exists(elf_path):
         return None
 
-    exec(
-        "bin/mipsmatch",
+    mipsmatch(
         "--output",
         match_config_path,
         "evaluate",
@@ -804,10 +833,14 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
         elf_path,
     )
 
-    # clean up any OVL_EXPORT prefixes that may be in symbols
+    # OVL_EXPORT symbols prefix the function with the overlay name. At this
+    # point we know what the overlay name is so we can do a straight forward
+    # string replacement and rename these to match the new overlay. These
+    # uniform names should become the most popular when choosing the final
+    # symbol name.
     source_ovl = make_ovl_name_from_fullname(source_name).upper()
     target_ovl = make_ovl_name_from_fullname(ovl_name).upper()
-    exec("sed", "-i''", f"s/{source_ovl}_/{target_ovl}_/", match_config_path)
+    exec("sed", "-i", f"s/{source_ovl}_/{target_ovl}_/", match_config_path)
 
     return match_config_path
 
@@ -833,7 +866,7 @@ def match_existing(
     if not match_config_paths:
         return []
 
-    match_stream = exec("bin/mipsmatch", "scan", *match_config_paths, ovl_path)
+    match_stream = mipsmatch("scan", *match_config_paths, ovl_path)
     return yaml.load_all(match_stream, Loader=yaml.SafeLoader)
 
 
@@ -1017,36 +1050,40 @@ def add_symbol_unique(
     offset: int,
     source: str = None,
     options: Options = None,
-):
+) -> bool:
     with open(symbol_file_name, "r") as f:
         lines = f.readlines()
     symbol_already_in_the_list = False
     for i in range(len(lines)):
+        if lines[i].startswith(f"{name} = "):
+            symbol_already_in_the_list = True
+            return False
+
         if f"0x{offset:08X}" in lines[i]:
             symbol_already_in_the_list = True
             if not lines[i].startswith("func_"):
-                return
+                return False
             if not lines[i].startswith("D_"):
-                return
+                return False
             if name.startswith("func_"):
-                return
+                return False
             if name.startswith("D_"):
-                return
+                return False
             # replace the existing default splat symbol with the good name
             lines[i] = f"{name} = 0x{offset:08X};"
             with open(symbol_file_name, "w") as f:
                 f.writelines(lines)
-            return
-    if not symbol_already_in_the_list:
-        with open(symbol_file_name, "a") as f:
-            f.write(f"{name} = 0x{offset:08X};")
-            if (
-                options is not None
-                and options.show_symbol_source
-                and source is not None
-            ):
-                f.write(f" // source={source}")
-            f.write("\n")
+            return False
+
+    if symbol_already_in_the_list:
+        return False
+
+    with open(symbol_file_name, "a") as f:
+        f.write(f"{name} = 0x{offset:08X};")
+        f.write(f" // source={source}")
+        f.write("\n")
+
+    return True
 
 
 def add_symbol(
@@ -1077,7 +1114,8 @@ def add_symbol(
     # add symbol to the overlay symbol list
     symbol_file_name = splat_config["options"]["symbol_addrs_path"][1]
     sym_prefix = get_symbol_prefix(splat_config)
-    add_symbol_unique(symbol_file_name, name, offset, source, options)
+    if not add_symbol_unique(symbol_file_name, name, offset, source, options):
+        return
     sort_symbols_from_file(symbol_file_name)
 
     # do a find & replace on the extracted C code
