@@ -24,7 +24,7 @@ extern u8* OVL_EXPORT(cutscene_data); // bss
 extern s32 E_ID(ID_11);
 extern s32 E_ID(ID_12);
 extern s32 E_ID(ID_13);
-extern s32 E_ID(ID_14);
+extern s32 E_ID(EXPLOSION_VARIANTS);
 extern s32 E_ID(GREY_PUFF);
 extern s32 E_ID(ID_16);
 extern s32 E_ID(ID_17);
@@ -89,7 +89,7 @@ void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
     E_ID(ID_12) = 0x12;
     E_ID(ID_13) = 0x13;
-    E_ID(ID_14) = 0x14;
+    E_ID(EXPLOSION_VARIANTS) = 0x14;
     E_ID(GREY_PUFF) = 0x15;
     E_ID(ID_16) = 0x16;
     E_ID(ID_17) = 0x17;
