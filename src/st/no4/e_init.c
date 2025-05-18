@@ -65,10 +65,10 @@ void EntityFishheadParticles(Entity* self);
 void EntityFishheadDeathParts(Entity* self);
 void EntityFishheadFireBreath(Entity* self);
 void EntityBat(Entity* self);
-void func_us_801D96FC(Entity* self);
-void func_us_801DB194(Entity* self);
-void func_us_801DB65C(Entity* self);
-void func_us_801DBBEC(Entity* self);
+void EntityFrozenShade(Entity* self);
+void EntityFrozenShadeCrystal(Entity* self);
+void EntityFrozenShadeIcicle(Entity* self);
+void EntityFrozenShadeIcicleUnk(Entity* self);
 void EntityBreakableCrystalFloor(Entity* self);
 void EntitySpearGuard(Entity* self);
 void EntityThrownSpear(Entity* self);
@@ -77,8 +77,8 @@ void EntityBoneArcherArrow(Entity* self);
 void func_us_801C801C(Entity* self);
 void func_us_801C9A54(Entity* self);
 void func_us_801C4BD8(Entity* self);
-void func_us_801C89F4(Entity* self);
-void func_us_801C8CC4(Entity* self);
+void EntityBreakableWall(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
 void func_us_801C4D2C(Entity* self);
 void func_us_801C5020(Entity* self);
 void EntityKillerFish(Entity* self);
@@ -163,10 +163,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x41 */ EntityFishheadDeathParts,
     /* 0x42 */ EntityFishheadFireBreath,
     /* 0x43 */ EntityBat,
-    /* 0x44 */ func_us_801D96FC,
-    /* 0x45 */ func_us_801DB194,
-    /* 0x46 */ func_us_801DB65C,
-    /* 0x47 */ func_us_801DBBEC,
+    /* 0x44 */ EntityFrozenShade,
+    /* 0x45 */ EntityFrozenShadeCrystal,
+    /* 0x46 */ EntityFrozenShadeIcicle,
+    /* 0x47 */ EntityFrozenShadeIcicleUnk,
     /* 0x48 */ EntityBreakableCrystalFloor,
     /* 0x49 */ EntitySpearGuard,
     /* 0x4A */ EntityThrownSpear,
@@ -175,8 +175,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4D */ func_us_801C801C,
     /* 0x4E */ func_us_801C9A54,
     /* 0x4F */ func_us_801C4BD8,
-    /* 0x50 */ func_us_801C89F4,
-    /* 0x51 */ func_us_801C8CC4,
+    /* 0x50 */ EntityBreakableWall,
+    /* 0x51 */ EntityBreakableWallDebris,
     /* 0x52 */ func_us_801C4D2C,
     /* 0x53 */ func_us_801C5020,
     /* 0x54 */ EntityKillerFish,
@@ -211,9 +211,9 @@ EInit g_EInitFishheadFireball = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x116};
 EInit g_EInitFishheadPieces = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x002};
 EInit g_EInitFishheadFireBreath = {ANIMSET_OVL(0x04), 0x00, 0x4A, 0x206, 0x117};
 EInit g_EInitBat = {ANIMSET_OVL(0x06), 0x00, 0x4F, 0x216, 0x040};
-EInit D_us_80180C64 = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x219, 0x063};
-EInit D_us_80180C70 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
-EInit D_us_80180C7C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0D2};
+EInit g_EInitFrozenShade = {ANIMSET_OVL(0x07), 0x01, 0x4C, 0x219, 0x063};
+EInit g_EInitFrozenShadeCrystal = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x064};
+EInit g_EInitFrozenShadeIcicle = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x0D2};
 EInit g_EInitSpearGuard = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x05D};
 EInit g_EInitThrownSpear = {ANIMSET_OVL(0x02), 0x05, 0x48, 0x201, 0x060};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x08), 0x01, 0x4E, 0x21A, 0x06C};
