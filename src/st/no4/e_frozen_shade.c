@@ -1,28 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-static u8 D_us_801827F0[] = {0x0A, 0x01, 0x0A, 0x02, 0x0A, 0x03, 0x0A, 0x04,
-                             0x0A, 0x05, 0x0A, 0x04, 0x0A, 0x03, 0x00, 0x00};
-static u8 D_us_80182800[] = {0x20, 0x01, 0x08, 0x06, 0x08, 0x07, 0x08, 0x08,
-                             0x18, 0x09, 0x06, 0x0A, 0x04, 0x0E, 0xFF, 0x00};
-static u8 D_us_80182810[] = {0x06, 0x0F, 0x06, 0x10, 0x06, 0x11, 0x00, 0x00};
-static u8 D_us_80182818[] = {
+static u8 anim_idle[] = {0x0A, 0x01, 0x0A, 0x02, 0x0A, 0x03, 0x0A, 0x04,
+                         0x0A, 0x05, 0x0A, 0x04, 0x0A, 0x03, 0x00, 0x00};
+static u8 anim_crystal[] = {0x20, 0x01, 0x08, 0x06, 0x08, 0x07, 0x08, 0x08,
+                            0x18, 0x09, 0x06, 0x0A, 0x04, 0x0E, 0xFF, 0x00};
+// chill attack anim
+static u8 anim_ice_wind[] = {0x06, 0x0F, 0x06, 0x10, 0x06, 0x11, 0x00, 0x00};
+// end chill anim
+static u8 anim_ice_wind_end[] = {
     0x08, 0x0E, 0x08, 0x0B, 0x08, 0x0C, 0x08, 0x0D, 0x08, 0x0C,
     0x08, 0x0B, 0x08, 0x0A, 0x08, 0x02, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_8018282C[] = {
+static u8 anim_rotate[] = {
     0x36, 0x12, 0x08, 0x13, 0x08, 0x14, 0x08, 0x15, 0x36, 0x16,
     0x08, 0x15, 0x08, 0x14, 0x08, 0x13, 0x00, 0x00, 0x00, 0x00};
 
-static s32 D_us_80182840[] = {0x0001FD80, 0x0001F600, 0x0001E9C0, 0x0001D8C0,
-                              0x0001C320, 0x0001A940, 0x00018B40, 0x00016980};
-static s32 D_us_80182860[] = {0x00003220, 0x000063E0, 0x000094A0, 0x0000C3E0,
-                              0x0000F160, 0x00011C80, 0x000144C0, 0x00016A00};
-static u8 D_us_80182880[] = {0x05, 0x03, 0x04, 0x01, 0x06, 0x03, 0x02, 0x04,
-                             0x00, 0x06, 0x03, 0x05, 0x07, 0x01, 0x04, 0x02};
-static s16 D_us_80182890[] = {
-    0xFFF8, 0xFFF8, 0xFFF8, 0xFFFC, 0x0008, 0x0008, 0x0008, 0x0004};
-static s16 D_us_801828A0[] = {
-    0xFFF8, 0x0000, 0x0008, 0x0004, 0xFFF8, 0x0000, 0x0008, 0xFFFC};
+static s32 posX_jitter[] = {0x0001FD80, 0x0001F600, 0x0001E9C0, 0x0001D8C0,
+                            0x0001C320, 0x0001A940, 0x00018B40, 0x00016980};
+static s32 posY_jitter[] = {0x00003220, 0x000063E0, 0x000094A0, 0x0000C3E0,
+                            0x0000F160, 0x00011C80, 0x000144C0, 0x00016A00};
+static u8 pos_jitter_idx[] = {0x05, 0x03, 0x04, 0x01, 0x06, 0x03, 0x02, 0x04,
+                              0x00, 0x06, 0x03, 0x05, 0x07, 0x01, 0x04, 0x02};
+static s16 posY_offsets[] = {-8, -8, -8, -4, 8, 8, 8, 4};
+static s16 posX_offsets[] = {-8, 0, 8, 4, -8, 0, 8, -4};
 static s16 D_us_801828B0[][3] = {
     {0x0000, 0xFFDC, 0x0000}, {0x0014, 0xFFF0, 0x0000},
     {0xFFEC, 0xFFF0, 0x0000}, {0x0014, 0x0010, 0x0000},
@@ -40,13 +40,16 @@ static u8 D_us_8018291C[] = {
     0x00, 0x0E, 0x0C, 0x00, 0x01, 0x0C, 0x0D, 0x02, 0x0E, 0x04, 0x10,
     0x0D, 0x01, 0x0F, 0x03, 0x04, 0x10, 0x05, 0x11, 0x05, 0x11, 0x03,
     0x0F, 0x0E, 0x0C, 0x10, 0x0D, 0x10, 0x0D, 0x11, 0x0F};
-static s16 D_us_8018295C[] = {
-    0x0800, 0x0800, 0x1000, 0xF800, 0x0800, 0x1000, 0x0C00, 0x0000,
-    0x1000, 0xF400, 0x0000, 0x1000, 0x0800, 0xF800, 0x1000, 0xF800,
-    0xF800, 0x1000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000, 0x1000,
-    0x0800, 0x0800, 0xF000, 0xF800, 0x0800, 0xF000, 0x0C00, 0x0000,
-    0xF000, 0xF400, 0x0000, 0xF000, 0x0800, 0xF800, 0xF000, 0xF800,
-    0xF800, 0xF000, 0x0000, 0x0000, 0xF000, 0x0000, 0x0000, 0xF000};
+// SVECTOR parts { vx, vy, vz }
+static s16 D_us_8018295C[][3] = {
+    {0x0800, 0x0800, 0x1000}, {0xF800, 0x0800, 0x1000},
+    {0x0C00, 0x0000, 0x1000}, {0xF400, 0x0000, 0x1000},
+    {0x0800, 0xF800, 0x1000}, {0xF800, 0xF800, 0x1000},
+    {0x0000, 0x0000, 0x1000}, {0x0000, 0x0000, 0x1000},
+    {0x0800, 0x0800, 0xF000}, {0xF800, 0x0800, 0xF000},
+    {0x0C00, 0x0000, 0xF000}, {0xF400, 0x0000, 0xF000},
+    {0x0800, 0xF800, 0xF000}, {0xF800, 0xF800, 0xF000},
+    {0x0000, 0x0000, 0xF000}, {0x0000, 0x0000, 0xF000}};
 
 static s16 unused[] = {
     0x4040, 0x4080, 0x8040, 0x6060, 0x30A0, 0x6030, 0x1010, 0x3040, 0x6030,
@@ -59,9 +62,10 @@ static s16 unused[] = {
     0x0030, 0x0020, 0x0030, 0x0014, 0x0016, 0xFFFC, 0x0014, 0xFFFA, 0x0016,
     0xFFE0, 0xFFF0, 0xFFFA, 0xFFFC};
 
-static s16 D_us_80182A54[] = {0xFFE0, 0x0010, 0x0020, 0xFFF0};
-static s16 D_us_80182A5C[] = {0x0000, 0xFFE8, 0x0000, 0xFFE8};
+static s16 icicle_posX_offsets[] = {-32, 16, 32, -16};
+static s16 icicle_posY_offsets[] = {0, -24, 0, -24};
 
+// SVECTOR parts { vx, vy, vz }
 static s16 D_us_80182A64[][3] = {
     {0x0000, 0xFFE8, 0x0000}, {0xFFF5, 0xFFFD, 0x0000},
     {0x0000, 0xFFFD, 0xFFF5}, {0x000B, 0xFFFD, 0x0000},
@@ -72,15 +76,17 @@ static u8 D_us_80182AA0[] = {
     0x01, 0x00, 0x05, 0x02, 0x02, 0x00, 0x06, 0x03, 0x03, 0x00, 0x07,
     0x04, 0x04, 0x00, 0x08, 0x01, 0x05, 0x02, 0x09, 0x06, 0x06, 0x03,
     0x09, 0x07, 0x07, 0x04, 0x09, 0x08, 0x08, 0x01, 0x09, 0x05};
-static s16 D_us_80182AC0[] = {
-    0x0800, 0x0400, 0x0800, 0xF800, 0x0400, 0x0800, 0xF800, 0x0400,
-    0xF800, 0x0800, 0x0400, 0xF800, 0x0000, 0xFD00, 0x0C00, 0xF400,
-    0xFD00, 0x0000, 0x0000, 0xFD00, 0xF400, 0x0C00, 0xFD00, 0x0000};
 
-static s16 D_us_80182AF0[] = {
-    0xFE00, 0x0080, 0x0320, 0xFD40, 0x0740, 0x0440, 0xFAE0, 0xF900};
-static s16 D_us_80182B00[] = {
-    0x0200, 0x0140, 0x01A0, 0x00E0, 0x0120, 0x0280, 0x0180, 0x0100};
+// SVECTOR parts { vx, vy, vz }
+static s16 D_us_80182AC0[][3] = {
+    {0x0800, 0x0400, 0x0800}, {0xF800, 0x0400, 0x0800},
+    {0xF800, 0x0400, 0xF800}, {0x0800, 0x0400, 0xF800},
+    {0x0000, 0xFD00, 0x0C00}, {0xF400, 0xFD00, 0x0000},
+    {0x0000, 0xFD00, 0xF400}, {0x0C00, 0xFD00, 0x0000}};
+
+static s16 ice_shard_angles[] = {
+    -512, 128, 800, -704, 1856, 1088, -1312, -1792};
+static s16 ice_shard_speeds[] = {512, 320, 416, 224, 288, 640, 384, 256};
 
 #define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
 typedef struct {
@@ -117,22 +123,22 @@ static void func_us_801D95EC(Entity* self) {
 
     player = &PLAYER;
 
-    if (!(self->ext.et_801D96FC.unk86 & 0x1F)) {
+    if (!(self->ext.frozenShade.unk86 & 0x1F)) {
         angle = Random() & 7;
-        posY = self->ext.et_801D96FC.unkA2 - self->posY.i.hi +
-               D_us_80182890[angle] - g_Tilemap.scrollY.i.hi;
-        posX = self->ext.et_801D96FC.unkA0 - self->posX.i.hi +
-               D_us_801828A0[angle] - g_Tilemap.scrollX.i.hi;
-        self->ext.et_801D96FC.unk88 = (s16)ratan2(posY, posX);
+        posY = self->ext.frozenShade.unkA2 - self->posY.i.hi +
+               posY_offsets[angle] - g_Tilemap.scrollY.i.hi;
+        posX = self->ext.frozenShade.unkA0 - self->posX.i.hi +
+               posX_offsets[angle] - g_Tilemap.scrollX.i.hi;
+        self->ext.frozenShade.unk88 = (s16)ratan2(posY, posX);
     }
-    self->ext.et_801D96FC.unk86++;
-    angle = self->ext.et_801D96FC.unk7E = GetNormalizedAngle(
-        0x40, self->ext.et_801D96FC.unk7E, self->ext.et_801D96FC.unk88);
+    self->ext.frozenShade.unk86++;
+    angle = self->ext.frozenShade.unk7E = GetNormalizedAngle(
+        0x40, self->ext.frozenShade.unk7E, self->ext.frozenShade.unk88);
     self->posX.val += (rcos(angle) * 128) / 16;
     self->posY.val += (rsin(angle) * 128) / 16;
 }
 
-void func_us_801D96FC(Entity* self) {
+void EntityFrozenShade(Entity* self) {
     u8 u0, u1;
     s16 var_s4;
     s16 var_s0_3;
@@ -155,44 +161,44 @@ void func_us_801D96FC(Entity* self) {
     s16 i, j;
 
     tilemap = &g_Tilemap;
-    self->ext.et_801D96FC.unk9E++;
+    self->ext.frozenShade.unk9E++;
     if (self->step && !(self->flags & FLAG_DEAD)) {
-        self->ext.et_801D96FC.unk7C++;
-        if (self->ext.et_801D96FC.unk7C & 0x40) {
-            self->unk6C = (u8)(self->ext.et_801D96FC.unk7C & 0x3F) + 0x40;
+        self->ext.frozenShade.unk7C++;
+        if (self->ext.frozenShade.unk7C & 0x40) {
+            self->unk6C = (u8)(self->ext.frozenShade.unk7C & 0x3F) + 0x40;
         } else {
-            self->unk6C = 0x80 - (u8)(self->ext.et_801D96FC.unk7C & 0x3F);
+            self->unk6C = 0x80 - (u8)(self->ext.frozenShade.unk7C & 0x3F);
         }
     }
     tempEntity = &PLAYER;
     if ((self->flags & FLAG_DEAD) && (self->step != 4)) {
         SetStep(4);
     }
-    if (self->ext.et_801D96FC.unk82) {
+    if (self->ext.frozenShade.unk82) {
         prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
         j = 0;
-        if (self->ext.et_801D96FC.unk82 != 2) {
-            if ((self->ext.et_801D96FC.unkA4 & 0x1F) == 0) {
+        if (self->ext.frozenShade.unk82 != 2) {
+            if ((self->ext.frozenShade.unkA4 & 0x1F) == 0) {
                 PlaySfxPositional(SFX_GLASS_SHARDS);
             }
-            self->ext.et_801D96FC.unkA4++;
+            self->ext.frozenShade.unkA4++;
         }
         while (prim != NULL) {
             if (!prim->v2) {
                 if (!prim->p3) {
                     if (self->facingLeft) {
-                        prim->posX.val += D_us_80182840[prim->u2];
+                        prim->posX.val += posX_jitter[prim->u2];
                     } else {
-                        prim->posX.val -= D_us_80182840[prim->u2];
+                        prim->posX.val -= posX_jitter[prim->u2];
                     }
                     prim->posY.val +=
-                        D_us_80182860[prim->u2] - (prim->u3++ << 10);
+                        posY_jitter[prim->u2] - (prim->u3++ << 10);
                     func_us_801D9560(prim);
                     PRED(prim)--;
                     PGRN(prim)--;
                     PBLU(prim) -= 3;
                     if (prim->p2) {
-                        tempEntity = &g_Entities[self->ext.et_801D96FC
+                        tempEntity = &g_Entities[self->ext.frozenShade
                                                      .unkA8[prim->p2 - 1]];
                         if (tempEntity->hitFlags) {
                             for (i = 0; i < 11; i++) {
@@ -205,10 +211,10 @@ void func_us_801D96FC(Entity* self) {
                         }
                     }
                     prim->p2 = 0;
-                    if (prim->p1 == (self->ext.et_801D96FC.unk9E & 3) &&
+                    if (prim->p1 == (self->ext.frozenShade.unk9E & 3) &&
                         prim->u3 < 0x30) {
                         tempEntity =
-                            &g_Entities[self->ext.et_801D96FC.unkA8[j]];
+                            &g_Entities[self->ext.frozenShade.unkA8[j]];
                         tempEntity->posX.i.hi =
                             prim->posX.i.hi - tilemap->scrollX.i.hi;
                         tempEntity->posY.i.hi =
@@ -224,25 +230,25 @@ void func_us_801D96FC(Entity* self) {
                     }
                 }
             } else if (prim->v2 != 0xFF) {
-                if ((self->ext.et_801D96FC.unk82 == 2 ||
+                if ((self->ext.frozenShade.unk82 == 2 ||
                      (self->flags & FLAG_DEAD)) &&
                     !prim->p3) {
                     prim->v2 = 0xFF;
-                    if (self->ext.et_801D96FC.unk81 >= 0x1F) {
-                        self->ext.et_801D96FC.unk82 = 0;
+                    if (self->ext.frozenShade.unk81 >= 0x1F) {
+                        self->ext.frozenShade.unk82 = 0;
                         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                                        FLAG_UNK_20000000;
                     } else {
-                        self->ext.et_801D96FC.unk81++;
+                        self->ext.frozenShade.unk81++;
                     }
                     prim = prim->next;
                     continue;
                 }
                 prim->v2--;
                 if (!prim->v2) {
-                    prim->p1 = self->ext.et_801D96FC.unk83;
-                    prim->u2 = D_us_80182880[prim->p1];
+                    prim->p1 = self->ext.frozenShade.unk83;
+                    prim->u2 = pos_jitter_idx[prim->p1];
                     prim->p1 &= 3;
                     prim->u3 = 0;
                     prim->p2 = 0;
@@ -272,15 +278,15 @@ void func_us_801D96FC(Entity* self) {
                             (self->posX.val + tilemap->scrollX.val) - FIX(14);
                     }
                     func_us_801D9560(prim);
-                    self->ext.et_801D96FC.unk83++;
-                    self->ext.et_801D96FC.unk83 &= 0xF;
+                    self->ext.frozenShade.unk83++;
+                    self->ext.frozenShade.unk83 &= 0xF;
                 }
             }
             prim = prim->next;
         }
         for (i = j; i < 8; i++) {
-            tempEntity = &g_Entities[self->ext.et_801D96FC.unkA8[i]];
-            if (self->ext.et_801D96FC.unk82) {
+            tempEntity = &g_Entities[self->ext.frozenShade.unkA8[i]];
+            if (self->ext.frozenShade.unk82) {
                 tempEntity->hitboxWidth = 0;
             } else {
                 DestroyEntity(tempEntity);
@@ -289,23 +295,23 @@ void func_us_801D96FC(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180C64);
+        InitializeEntity(g_EInitFrozenShade);
         self->unk6C = 0x40;
         self->palette += self->params;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_UNK8;
-        self->ext.et_801D96FC.unk7C = 0;
+        self->ext.frozenShade.unk7C = 0;
         if (self->posX.val < tempEntity->posX.val) {
             self->facingLeft = true;
-            self->ext.et_801D96FC.unk7E = 0;
+            self->ext.frozenShade.unk7E = 0;
         } else {
-            self->ext.et_801D96FC.unk7E = 0x800;
+            self->ext.frozenShade.unk7E = 0x800;
         }
-        self->ext.et_801D96FC.unk8C = self->posY.val;
-        self->ext.et_801D96FC.unkA0 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        self->ext.et_801D96FC.unkA2 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        self->ext.et_801D96FC.unk84 = 0x10;
-        self->ext.et_801D96FC.unk80 = 0;
+        self->ext.frozenShade.unk8C = self->posY.val;
+        self->ext.frozenShade.unkA0 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        self->ext.frozenShade.unkA2 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        self->ext.frozenShade.unk84 = 0x10;
+        self->ext.frozenShade.unk80 = 0;
         self->velocityY = FIX(0.25);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 0x20);
         if (primIndex != -1) {
@@ -324,7 +330,7 @@ void func_us_801D96FC(Entity* self) {
         break;
 
     case 1:
-        AnimateEntity(D_us_801827F0, self);
+        AnimateEntity(anim_idle, self);
         tempVar = GetDistanceToPlayerX();
         var_s4 = tempEntity->posX.i.hi - self->posX.i.hi;
         if (tempVar < 0x10) {
@@ -333,7 +339,7 @@ void func_us_801D96FC(Entity* self) {
                    (var_s4 >= 0 && !self->facingLeft)) {
             SetStep(2);
         }
-        if ((self->posX.i.hi & 0x100) == 0 && !--self->ext.et_801D96FC.unk84) {
+        if ((self->posX.i.hi & 0x100) == 0 && !--self->ext.frozenShade.unk84) {
             if (tempVar < 0x60 && GetDistanceToPlayerY() < 0x40 && rand() & 3) {
                 j = 0xA0;
                 var_s0_3 = 0;
@@ -341,7 +347,7 @@ void func_us_801D96FC(Entity* self) {
                      tempEntity < &g_Entities[192]; tempEntity++) {
                     if (!tempEntity->entityId) {
                         DestroyEntity(tempEntity);
-                        self->ext.et_801D96FC.unkA8[var_s0_3++] = j;
+                        self->ext.frozenShade.unkA8[var_s0_3++] = j;
                         if (var_s0_3 >= 8) {
                             break;
                         }
@@ -351,28 +357,30 @@ void func_us_801D96FC(Entity* self) {
                 if (var_s0_3 == 8) {
                     for (i = 0; i < 8; i++) {
                         tempEntity =
-                            &g_Entities[self->ext.et_801D96FC.unkA8[i]];
-                        CreateEntityFromCurrentEntity(E_ID_46, tempEntity);
+                            &g_Entities[self->ext.frozenShade.unkA8[i]];
+                        CreateEntityFromCurrentEntity(
+                            E_FROZEN_SHADE_CRYSTAL, tempEntity);
                         tempEntity->hitboxWidth = 0;
                     }
                     SetStep(3);
                     PlaySfxPositional(SFX_UI_TINK);
-                    self->ext.et_801D96FC.unk98 = 0;
-                    self->ext.et_801D96FC.unk8A = 0;
+                    self->ext.frozenShade.unk98 = 0;
+                    self->ext.frozenShade.unk8A = 0;
                 } else {
                     self->step = 5;
-                    self->ext.et_801D96FC.unk8A = 0;
+                    self->ext.frozenShade.unk8A = 0;
                 }
             } else {
                 self->step = 5;
-                self->ext.et_801D96FC.unk8A = 0;
+                self->ext.frozenShade.unk8A = 0;
             }
         }
         func_us_801D95EC(self);
         break;
 
     case 2:
-        AnimateEntity(D_us_8018282C, self);
+        // Player has switched sides, rotate to face
+        AnimateEntity(anim_rotate, self);
         tempVar = GetDistanceToPlayerX();
         if (tempVar > 0x10) {
             tempVar = self->posX.i.hi - tempEntity->posX.i.hi;
@@ -381,24 +389,24 @@ void func_us_801D96FC(Entity* self) {
                     if (self->pose == 5) {
                         SetStep(1);
                         self->facingLeft = false;
-                        AnimateEntity(D_us_801827F0, self);
+                        AnimateEntity(anim_idle, self);
                     }
                 } else {
                     if (self->pose == 1) {
                         SetStep(1);
-                        AnimateEntity(D_us_801827F0, self);
+                        AnimateEntity(anim_idle, self);
                     }
                 }
             } else if (tempVar < 0) {
                 if (self->pose == 5) {
                     SetStep(1);
                     self->facingLeft = true;
-                    AnimateEntity(D_us_801827F0, self);
+                    AnimateEntity(anim_idle, self);
                 }
             } else {
                 if (self->pose == 1) {
                     SetStep(1);
-                    AnimateEntity(D_us_801827F0, self);
+                    AnimateEntity(anim_idle, self);
                 }
             }
         }
@@ -406,6 +414,7 @@ void func_us_801D96FC(Entity* self) {
         break;
 
     case 3:
+        // Enter crystal state then begin wind attack
         switch (self->step_s) {
         case 0:
             if (self->velocityY < 0) {
@@ -413,9 +422,9 @@ void func_us_801D96FC(Entity* self) {
             } else if (self->velocityY > 0) {
                 self->velocityY -= 0x200;
             }
-            tempVar = AnimateEntity(D_us_80182800, self);
-            j = self->ext.et_801D96FC.unk8A++;
-            self->ext.et_801D96FC.unk98 += 0x20;
+            tempVar = AnimateEntity(anim_crystal, self);
+            j = self->ext.frozenShade.unk8A++;
+            self->ext.frozenShade.unk98 += 0x20;
             SetGeomScreen(0x100);
             if (self->facingLeft) {
                 var_s4 = self->posX.i.hi + 1;
@@ -454,7 +463,7 @@ void func_us_801D96FC(Entity* self) {
             mat->m[0][0] = mat->m[1][1] = mat->m[2][2] = 0x1000;
             mat->m[0][1] = mat->m[0][2] = mat->m[1][0] = mat->m[1][2] =
                 mat->m[2][0] = mat->m[2][1] = 0;
-            mat = RotMatrixY(self->ext.et_801D96FC.unk98, mat);
+            mat = RotMatrixY(self->ext.frozenShade.unk98, mat);
             SetLightMatrix(mat);
             tempVector.vx = tempVector.vy = tempVector.vz = var_s4;
             ScaleMatrix(mat, &tempVector);
@@ -470,7 +479,7 @@ void func_us_801D96FC(Entity* self) {
             SetBackColor(0x60, 0x60, 0x60);
             var_s4 = 0;
             iptr = D_us_8018291C;
-            point = D_us_8018295C;
+            point = D_us_8018295C[0];
             prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
             while (prim != NULL) {
                 for (i = 0; i < 4; i++) {
@@ -526,11 +535,11 @@ void func_us_801D96FC(Entity* self) {
                 self->step_s++;
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->ext.et_801D96FC.unk84 = 0x80;
-                self->ext.et_801D96FC.unkA4 = 0;
-                self->ext.et_801D96FC.unk82++;
-                self->ext.et_801D96FC.unk83 = 0;
-                self->ext.et_801D96FC.unk81 = 0;
+                self->ext.frozenShade.unk84 = 0x80;
+                self->ext.frozenShade.unkA4 = 0;
+                self->ext.frozenShade.unk82++;
+                self->ext.frozenShade.unk83 = 0;
+                self->ext.frozenShade.unk81 = 0;
                 self->velocityY = 0;
                 if (self->facingLeft) {
                     self->velocityX = FIX(-0.75);
@@ -551,7 +560,7 @@ void func_us_801D96FC(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_us_80182810, self);
+            AnimateEntity(anim_ice_wind, self);
             if (self->velocityX != 0) {
                 if (self->facingLeft) {
                     self->velocityX += 0x600;
@@ -559,20 +568,20 @@ void func_us_801D96FC(Entity* self) {
                     self->velocityX -= 0x600;
                 }
             }
-            if (!--self->ext.et_801D96FC.unk84) {
+            if (!--self->ext.frozenShade.unk84) {
                 self->step_s++;
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->ext.et_801D96FC.unk82++;
+                self->ext.frozenShade.unk82++;
             }
             MoveEntity(self);
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_80182818, self)) {
+            if (!AnimateEntity(anim_ice_wind_end, self)) {
                 SetStep(1);
-                self->ext.et_801D96FC.unk7E = 0xC00;
-                self->ext.et_801D96FC.unk84 = (rand() & 0x1F) + 0x80;
+                self->ext.frozenShade.unk7E = 0xC00;
+                self->ext.frozenShade.unk84 = (rand() & 0x1F) + 0x80;
             }
             break;
         }
@@ -583,13 +592,13 @@ void func_us_801D96FC(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 9;
-            self->ext.et_801D96FC.unk84 = 0x10;
+            self->ext.frozenShade.unk84 = 0x10;
             g_api.PlaySfx(SFX_FROZEN_SHADE_SCREAM);
             self->step_s++;
             break;
 
         case 1:
-            if (!self->ext.et_801D96FC.unk84) {
+            if (!self->ext.frozenShade.unk84) {
                 prim2 = &g_PrimBuf[self->primIndex];
                 while (prim2 != NULL) {
                     if (prim2->p3) {
@@ -603,16 +612,16 @@ void func_us_801D96FC(Entity* self) {
                     if (prim2->drawMode == DRAW_HIDE) {
                         tempVar--;
                         if (tempVar) {
-                            self->ext.et_801D96FC.unk90 = prim2;
+                            self->ext.frozenShade.unk90 = prim2;
                         } else {
-                            self->ext.et_801D96FC.unk94 = prim2;
+                            self->ext.frozenShade.unk94 = prim2;
                             break;
                         }
                     }
                     prim2 = prim2->next;
                 }
                 if (!tempVar) {
-                    prim2 = self->ext.et_801D96FC.unk90;
+                    prim2 = self->ext.frozenShade.unk90;
                     prim2->type = 4;
                     if (self->facingLeft) {
                         tempVar = self->posX.i.hi - 9;
@@ -645,7 +654,7 @@ void func_us_801D96FC(Entity* self) {
                     prim2->v2 = prim2->v3 = 0x40;
                     prim2->p3 = 2;
 
-                    prim2 = self->ext.et_801D96FC.unk94;
+                    prim2 = self->ext.frozenShade.unk94;
                     prim2->type = 4;
                     prim2->x0 = prim2->x2 = tempVar;
                     prim2->x1 = prim2->x3 = tempVar + 0x10;
@@ -674,15 +683,15 @@ void func_us_801D96FC(Entity* self) {
                     break;
                 }
             } else {
-                self->ext.et_801D96FC.unk84--;
+                self->ext.frozenShade.unk84--;
             }
             break;
 
         case 2:
-            tempVar = self->ext.et_801D96FC.unk84;
+            tempVar = self->ext.frozenShade.unk84;
             var_s4 = 0;
 #ifdef VERSION_PSP
-            prim2 = self->ext.et_801D96FC.unk90;
+            prim2 = self->ext.frozenShade.unk90;
             if (tempVar < 0x30) {
                 prim2->v2 = prim2->v3--;
                 prim2->y2 = prim2->y3--;
@@ -691,17 +700,17 @@ void func_us_801D96FC(Entity* self) {
             }
 #else
             if (tempVar < 0x30) {
-                prim2 = self->ext.et_801D96FC.unk90;
+                prim2 = self->ext.frozenShade.unk90;
                 prim2->v2 = prim2->v3--;
                 prim2->y2 = prim2->y3--;
             } else if (tempVar == 0x30) {
-                prim2 = self->ext.et_801D96FC.unk90;
+                prim2 = self->ext.frozenShade.unk90;
                 prim2->drawMode = DRAW_HIDE;
             }
 #endif
             var_s4 = prim2->y2;
             var_s0_3 = prim2->x2;
-            prim2 = self->ext.et_801D96FC.unk94;
+            prim2 = self->ext.frozenShade.unk94;
             if (tempVar < 0x30) {
                 prim2->v0 = prim2->v1--;
                 prim2->y0 = prim2->y1--;
@@ -719,7 +728,7 @@ void func_us_801D96FC(Entity* self) {
                 PGREY(prim2, 2) = PGREY(prim2, 3) = 0;
             }
             var_s4 = 1;
-            if (self->ext.et_801D96FC.unk84 < 0x40) {
+            if (self->ext.frozenShade.unk84 < 0x40) {
                 prim = (FrozenShadePrim*)&g_PrimBuf[self->primIndex];
                 while (prim != NULL) {
                     if (prim->drawMode == DRAW_HIDE) {
@@ -760,8 +769,8 @@ void func_us_801D96FC(Entity* self) {
                     prim = prim->next;
                 }
             }
-            self->ext.et_801D96FC.unk84++;
-            if (self->ext.et_801D96FC.unk84 > 0x50) {
+            self->ext.frozenShade.unk84++;
+            if (self->ext.frozenShade.unk84 > 0x50) {
                 DestroyEntity(self);
             }
             break;
@@ -783,7 +792,7 @@ void func_us_801D96FC(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(D_us_801827F0, self);
+        AnimateEntity(anim_idle, self);
         switch (self->step_s) {
         case 0:
             if (self->velocityY < 0) {
@@ -791,9 +800,9 @@ void func_us_801D96FC(Entity* self) {
             } else if (self->velocityY > 0) {
                 self->velocityY -= 0x200;
             }
-            if (++self->ext.et_801D96FC.unk8A > 0x40) {
-                self->ext.et_801D96FC.unk8A = 0;
-                self->ext.et_801D96FC.unk9C = rand() & 3;
+            if (++self->ext.frozenShade.unk8A > 0x40) {
+                self->ext.frozenShade.unk8A = 0;
+                self->ext.frozenShade.unk9C = rand() & 3;
                 PlaySfxPositional(SFX_TINK_JINGLE);
                 self->step_s++;
             }
@@ -801,28 +810,28 @@ void func_us_801D96FC(Entity* self) {
 
         case 1:
 #ifdef VERSION_PSP
-            if (!self->ext.et_801D96FC.unk8A++) {
+            if (!self->ext.frozenShade.unk8A++) {
 #else
-            if (++self->ext.et_801D96FC.unk8A == 1) {
+            if (++self->ext.frozenShade.unk8A == 1) {
 #endif
-                tempVar = self->ext.et_801D96FC.unk9C;
+                tempVar = self->ext.frozenShade.unk9C;
                 for (i = 0; i < 3; i++) {
                     tempEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (tempEntity != NULL) {
-                        CreateEntityFromCurrentEntity(E_ID_47, tempEntity);
-                        tempEntity->posX.i.hi += D_us_80182A54[tempVar];
-                        tempEntity->posY.i.hi += D_us_80182A5C[tempVar];
+                        CreateEntityFromCurrentEntity(
+                            E_FROZEN_SHADE_ICICLE, tempEntity);
+                        tempEntity->posX.i.hi += icicle_posX_offsets[tempVar];
+                        tempEntity->posY.i.hi += icicle_posY_offsets[tempVar];
                         tempEntity->params = i;
-                        // probably uses a different ext struct
-                        tempEntity->ext.et_801D96FC.unk8C = (u32)self;
+                        tempEntity->ext.frozenShadeIcicle.unk8C = self;
                         tempVar++;
                         tempVar &= 3;
                     }
                 }
             }
-            if (self->ext.et_801D96FC.unk8A >= 0x40) {
-                self->ext.et_801D96FC.unk84 = (rand() & 0x1F) + 0x80;
+            if (self->ext.frozenShade.unk8A >= 0x40) {
+                self->ext.frozenShade.unk84 = (rand() & 0x1F) + 0x80;
                 SetStep(1);
             }
             break;
@@ -843,10 +852,9 @@ void func_us_801D96FC(Entity* self) {
     }
 }
 
-// Frozen shade crystal shield
-void func_us_801DB194(struct Entity* self) {
+void EntityFrozenShadeCrystal(struct Entity* self) {
     if (!self->step) {
-        InitializeEntity(D_us_80180C70);
+        InitializeEntity(g_EInitFrozenShadeCrystal);
         self->hitboxState |= 6;
     }
 }
@@ -884,18 +892,18 @@ void func_us_801DB1E8(Entity* self) {
     color = (CVECTOR*)SP(offsetof(NO4_SCRATCHPAD, color));
     mat = (MATRIX*)SP(offsetof(NO4_SCRATCHPAD, mat));
 
-    primaryColor->r = self->ext.et_801DB1E8.unk88;
-    primaryColor->g = self->ext.et_801DB1E8.unk89;
-    primaryColor->b = self->ext.et_801DB1E8.unk8A;
+    primaryColor->r = self->ext.frozenShadeIcicle.unk88;
+    primaryColor->g = self->ext.frozenShadeIcicle.unk89;
+    primaryColor->b = self->ext.frozenShadeIcicle.unk8A;
 
     mat->m[0][0] = mat->m[1][1] = mat->m[2][2] = 0x1000;
     mat->m[0][1] = mat->m[0][2] = mat->m[1][0] = mat->m[1][2] = mat->m[2][0] =
         mat->m[2][1] = 0;
-    mat = RotMatrixY(self->ext.et_801D96FC.unk7C, mat);
-    mat = RotMatrixZ(self->ext.et_801D96FC.unk7E, mat);
+    mat = RotMatrixY(self->ext.frozenShade.unk7C, mat);
+    mat = RotMatrixZ(self->ext.frozenShade.unk7E, mat);
     SetLightMatrix(mat);
-    tempVector.vy = self->ext.et_801DB1E8.unk82;
-    tempVector.vx = tempVector.vz = self->ext.et_801DB1E8.unk80;
+    tempVector.vy = self->ext.frozenShadeIcicle.unk82;
+    tempVector.vx = tempVector.vz = self->ext.frozenShadeIcicle.unk80;
     ScaleMatrix(mat, &tempVector);
     SetRotMatrix(mat);
     tempVector.vx = tempVector.vy = 0;
@@ -908,7 +916,7 @@ void func_us_801DB1E8(Entity* self) {
     SetColorMatrix(mat);
     SetBackColor(0x60, 0x60, 0x80);
     iptr = D_us_80182AA0;
-    point = D_us_80182AC0;
+    point = D_us_80182AC0[0];
     prim = &g_PrimBuf[self->primIndex];
 
     while (prim != NULL) {
@@ -945,8 +953,7 @@ void func_us_801DB1E8(Entity* self) {
     }
 }
 
-// Frozen shade ice shards
-void func_us_801DB65C(Entity* self) {
+void EntityFrozenShadeIcicle(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
@@ -955,24 +962,25 @@ void func_us_801DB65C(Entity* self) {
 
     if (self->hitFlags & 0x80) {
         entity = &PLAYER;
-        self->ext.et_801DB1E8.posX = self->posX.i.hi - entity->posX.i.hi;
-        self->ext.et_801DB1E8.posY = self->posY.i.hi - entity->posY.i.hi;
-        self->ext.et_801DB1E8.unk84 = 0;
+        self->ext.frozenShadeIcicle.posX = self->posX.i.hi - entity->posX.i.hi;
+        self->ext.frozenShadeIcicle.posY = self->posY.i.hi - entity->posY.i.hi;
+        self->ext.frozenShadeIcicle.unk84 = 0;
         self->step = 6;
     }
 
-    entity = self->ext.et_801DB1E8.unk8C;
-    if ((self->flags & 0x100 || (entity->flags & 0x100 && self->step != 4)) &&
+    entity = self->ext.frozenShadeIcicle.unk8C;
+    if ((self->flags & FLAG_DEAD ||
+         (entity->flags & FLAG_DEAD && self->step != 4)) &&
         self->step < 5) {
         if (self->step < 2) {
             DestroyEntity(self);
             return;
         }
         self->step = 5;
-        self->ext.et_801DB1E8.unk84 = 0;
-        self->ext.et_801DB1E8.unk86 =
-            (self->ext.et_801DB1E8.unk7E + 0x400) & 0xFFF;
-        g_api.PlaySfx(0x68B);
+        self->ext.frozenShadeIcicle.unk84 = 0;
+        self->ext.frozenShadeIcicle.unk86 =
+            (self->ext.frozenShadeIcicle.unk7E + 0x400) & 0xFFF;
+        g_api.PlaySfx(SFX_DRA_GLASS_BREAK);
     }
 
     entity = self->unk60;
@@ -988,11 +996,11 @@ void func_us_801DB65C(Entity* self) {
             return;
         }
 
-        CreateEntityFromCurrentEntity(0x48, entity);
+        CreateEntityFromCurrentEntity(E_FROZEN_SHADE_ICICLE_UNK, entity);
         self->unk60 = entity;
         entity->unk60 = self;
         entity->unk5C = self;
-        InitializeEntity(D_us_80180C7C);
+        InitializeEntity(g_EInitFrozenShadeIcicle);
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
         self->hitboxState = 0;
@@ -1002,78 +1010,80 @@ void func_us_801DB65C(Entity* self) {
             prim = prim->next;
         }
 
-        self->ext.et_801DB1E8.unk7C = 0;
-        self->ext.et_801DB1E8.unk7E = 0;
-        self->ext.et_801DB1E8.unk82 = 0x1200;
-        self->ext.et_801DB1E8.unk80 = 0;
-        self->ext.et_801DB1E8.unk84 = 0;
-        self->ext.et_801DB1E8.unk88 = 0x10;
-        self->ext.et_801DB1E8.unk89 = 0x10;
-        self->ext.et_801DB1E8.unk8A = 0x10;
+        self->ext.frozenShadeIcicle.unk7C = 0;
+        self->ext.frozenShadeIcicle.unk7E = 0;
+        self->ext.frozenShadeIcicle.unk82 = 0x1200;
+        self->ext.frozenShadeIcicle.unk80 = 0;
+        self->ext.frozenShadeIcicle.unk84 = 0;
+        self->ext.frozenShadeIcicle.unk88 = 0x10;
+        self->ext.frozenShadeIcicle.unk89 = 0x10;
+        self->ext.frozenShadeIcicle.unk8A = 0x10;
         break;
     case 1:
-        self->ext.et_801DB1E8.unk7C += 0x20;
-        self->ext.et_801DB1E8.unk82 -= 0x80;
-        self->ext.et_801DB1E8.unk80 += 0x78;
-        self->ext.et_801DB1E8.unk88 += 1;
-        self->ext.et_801DB1E8.unk89 += 3;
-        self->ext.et_801DB1E8.unk8A += 7;
+        self->ext.frozenShadeIcicle.unk7C += 0x20;
+        self->ext.frozenShadeIcicle.unk82 -= 0x80;
+        self->ext.frozenShadeIcicle.unk80 += 0x78;
+        self->ext.frozenShadeIcicle.unk88 += 1;
+        self->ext.frozenShadeIcicle.unk89 += 3;
+        self->ext.frozenShadeIcicle.unk8A += 7;
 
-        if (++self->ext.et_801DB1E8.unk84 > 0x10) {
+        if (++self->ext.frozenShadeIcicle.unk84 > 0x10) {
             self->step++;
-            self->ext.et_801DB1E8.unk84 = (((self->params) * 0x18) + 0x20);
+            self->ext.frozenShadeIcicle.unk84 =
+                (((self->params) * 0x18) + 0x20);
             self->hitboxState = 0xE;
         }
         func_us_801DB1E8(self);
         break;
     case 2:
-        self->ext.et_801DB1E8.unk7C += 0x20;
-        if (!(--self->ext.et_801DB1E8.unk84)) {
+        self->ext.frozenShadeIcicle.unk7C += 0x20;
+        if (!(--self->ext.frozenShadeIcicle.unk84)) {
             self->step++;
-            self->ext.et_801DB1E8.unk84 = 0;
-            self->ext.et_801DB1E8.unk86 =
+            self->ext.frozenShadeIcicle.unk84 = 0;
+            self->ext.frozenShadeIcicle.unk86 =
                 (GetAngleBetweenEntities(self, &PLAYER) - 0x400) & 0xFFF;
         }
         func_us_801DB1E8(self);
         break;
     case 3:
-        self->ext.et_801DB1E8.unk7C += 0x20;
-        i = GetNormalizedAngle(
-            0x40, self->ext.et_801DB1E8.unk7E, self->ext.et_801DB1E8.unk86);
-        self->ext.et_801DB1E8.unk7E = i;
-        if (self->ext.et_801DB1E8.unk86 == i) {
+        self->ext.frozenShadeIcicle.unk7C += 0x20;
+        i = GetNormalizedAngle(0x40, self->ext.frozenShadeIcicle.unk7E,
+                               self->ext.frozenShadeIcicle.unk86);
+        self->ext.frozenShadeIcicle.unk7E = i;
+        if (self->ext.frozenShadeIcicle.unk86 == i) {
             self->step++;
-            PlaySfxPositional(0x6A4);
-            self->ext.et_801DB1E8.unk84 = 8;
-            self->ext.et_801DB1E8.unk86 += 0x400;
+            PlaySfxPositional(SFX_UI_TINK);
+            self->ext.frozenShadeIcicle.unk84 = 8;
+            self->ext.frozenShadeIcicle.unk86 += 0x400;
         }
         func_us_801DB1E8(self);
         break;
     case 4:
-        self->ext.et_801DB1E8.unk7C += 0x20;
-        if (!self->ext.et_801DB1E8.unk84) {
-            UnkEntityFunc0(self->ext.et_801DB1E8.unk86, 0x600);
+        self->ext.frozenShadeIcicle.unk7C += 0x20;
+        if (!self->ext.frozenShadeIcicle.unk84) {
+            UnkEntityFunc0(self->ext.frozenShadeIcicle.unk86, 0x600);
             MoveEntity(self);
         } else {
-            self->ext.et_801DB1E8.unk84--;
+            self->ext.frozenShadeIcicle.unk84--;
         }
         func_us_801DB1E8(self);
         break;
     case 5:
-        if (++self->ext.et_801DB1E8.unk84 >= 0x20) {
+        if (++self->ext.frozenShadeIcicle.unk84 >= 0x20) {
             DestroyEntity(self);
             return;
         }
-        self->ext.et_801DB1E8.unk88--;
-        self->ext.et_801DB1E8.unk89 -= 2;
-        self->ext.et_801DB1E8.unk8A -= 4;
+        self->ext.frozenShadeIcicle.unk88--;
+        self->ext.frozenShadeIcicle.unk89 -= 2;
+        self->ext.frozenShadeIcicle.unk8A -= 4;
         prim = &g_PrimBuf[self->primIndex];
         i = 0;
         func_us_801DB1E8(self);
         while (prim != NULL) {
             UnkEntityFunc0(
-                (self->ext.et_801DB1E8.unk86 + D_us_80182AF0[i]) & 0xFFF,
-                D_us_80182B00[i] * self->ext.et_801DB1E8.unk84);
+                (self->ext.frozenShadeIcicle.unk86 + ice_shard_angles[i]) &
+                    0xFFF,
+                ice_shard_speeds[i] * self->ext.frozenShadeIcicle.unk84);
             velocity = F(self->velocityX).i.hi;
             prim->x0 += velocity;
             prim->x1 += velocity;
@@ -1082,11 +1092,8 @@ void func_us_801DB65C(Entity* self) {
             velocity = F(self->velocityY).i.hi;
             prim->y0 += velocity;
             prim->y1 += velocity;
-            ;
             prim->y2 += velocity;
-            ;
             prim->y3 += velocity;
-            ;
             prim = prim->next;
             i++;
         }
@@ -1094,32 +1101,35 @@ void func_us_801DB65C(Entity* self) {
         break;
     case 6:
         entity = &PLAYER;
-        self->posX.i.hi = entity->posX.i.hi + self->ext.et_801DB1E8.posX;
-        self->posY.i.hi = entity->posY.i.hi + self->ext.et_801DB1E8.posY;
-        if (++self->ext.et_801DB1E8.unk84 >= 0x20) {
+        self->posX.i.hi = entity->posX.i.hi + self->ext.frozenShadeIcicle.posX;
+        self->posY.i.hi = entity->posY.i.hi + self->ext.frozenShadeIcicle.posY;
+        if (++self->ext.frozenShadeIcicle.unk84 >= 0x20) {
             DestroyEntity(self);
             return;
         }
-        self->ext.et_801DB1E8.unk88--;
-        self->ext.et_801DB1E8.unk89 -= 2;
-        self->ext.et_801DB1E8.unk8A -= 4;
+        self->ext.frozenShadeIcicle.unk88--;
+        self->ext.frozenShadeIcicle.unk89 -= 2;
+        self->ext.frozenShadeIcicle.unk8A -= 4;
         func_us_801DB1E8(self);
         break;
     }
 
-    entity->params = (self->ext.et_801DB1E8.unk7E + 0x400) & 0xFFF;
+    entity->params = (self->ext.frozenShadeIcicle.unk7E + 0x400) & 0xFFF;
 }
 
-void func_us_801DBBEC(Entity* self) {
+// Not certain what this is, appears to be something related to
+// despawning the icicles
+void EntityFrozenShadeIcicleUnk(Entity* self) {
     Entity* parent;
 
     parent = self->unk60;
-    if ((parent->entityId != 0x47) || (parent->unk60 != self)) {
+    if ((parent->entityId != E_FROZEN_SHADE_ICICLE) ||
+        (parent->unk60 != self)) {
         DestroyEntity(self);
     }
 
     if (!self->step) {
-        InitializeEntity(D_us_80180C7C);
+        InitializeEntity(g_EInitFrozenShadeIcicle);
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
         self->hitboxWidth = 2;

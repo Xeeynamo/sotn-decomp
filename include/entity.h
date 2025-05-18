@@ -2951,7 +2951,7 @@ typedef struct {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 : 16;
     /* 0xA8 */ u8 unkA8[8];
-} ET_801D96FC;
+} ET_FrozenShade;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -2967,7 +2967,7 @@ typedef struct {
     /* 0x8C */ struct Entity* unk8C;
     /* 0x90 */ s16 posX;
     /* 0x92 */ s16 posY;
-} ET_801DB1E8;
+} ET_FrozenShadeIcicle;
 
 typedef struct {
     /* 0x7C */ u32 : 32;
@@ -3259,8 +3259,8 @@ typedef union { // offset=0x7C
     ET_Clouds clouds;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
-    ET_801D96FC et_801D96FC;
-    ET_801DB1E8 et_801DB1E8;
+    ET_FrozenShade frozenShade;
+    ET_FrozenShadeIcicle frozenShadeIcicle;
     ET_DopplegangerBGLight dopBGLight;
     ET_FrogToad frogToad;
     ET_Fishhead fishhead;
