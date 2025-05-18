@@ -76,9 +76,9 @@ typedef enum EntityIDs {
     /* 0x43 */ E_FISHHEAD_FIRE_BREATH,
     // /* 0x44 */ E_ID_44,
     // /* 0x45 */ E_ID_45,
-    /* 0x46 */ E_ID_46 = 0x46,
-    /* 0x47 */ E_ID_47,
-    // /* 0x48 */ E_ID_48,
+    /* 0x46 */ E_FROZEN_SHADE_CRYSTAL = 0x46,
+    /* 0x47 */ E_FROZEN_SHADE_ICICLE,
+    /* 0x48 */ E_FROZEN_SHADE_ICICLE_UNK,
     // /* 0x49 */ E_ID_49,
     /* 0x4A */ E_SPEAR_GUARD = 0x4A,
     /* 0x4B */ E_THROWN_SPEAR,
@@ -120,9 +120,9 @@ extern EInit g_EInitFishheadFireball;
 extern EInit g_EInitFishheadPieces;
 extern EInit g_EInitFishheadFireBreath;
 extern EInit g_EInitBat;
-extern EInit D_us_80180C64;
-// extern EInit D_us_80180C70;
-// extern EInit D_us_80180C7C;
+extern EInit g_EInitFrozenShade;
+extern EInit g_EInitFrozenShadeCrystal;
+extern EInit g_EInitFrozenShadeIcicle;
 extern EInit g_EInitSpearGuard;
 extern EInit g_EInitThrownSpear;
 extern EInit g_EInitBoneArcher;
