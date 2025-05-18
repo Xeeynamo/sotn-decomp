@@ -29,7 +29,7 @@ typedef enum EntityIDs {
     E_UNK_11,
     E_UNK_12,
     E_UNK_13,
-    E_ID_14,
+    E_EXPLOSION_VARIANTS,
     E_GREY_PUFF,
     E_WARP,
     E_SMALL_ROCKS,

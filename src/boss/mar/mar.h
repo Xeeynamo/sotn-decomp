@@ -25,7 +25,7 @@ typedef enum {
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
 
-    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_CLOCKROOM_CONTROLLER,
     /* 0x17 */ E_CLOCK_HANDS,

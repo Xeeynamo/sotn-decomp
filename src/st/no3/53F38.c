@@ -135,7 +135,7 @@ void EntityMerman(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_MERMAN_JUMP_WATER, self, newEntity);
+                        E_MERMAN_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 20;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -432,7 +432,7 @@ void EntityMermanFireball(Entity* self) {
 }
 
 // some sort of falling object
-void EntityFallingObject(Entity* arg0) {
+void EntityMermanJumpAir(Entity* arg0) {
     if (arg0->step == 0) {
         InitializeEntity(D_80180B60);
         arg0->animCurFrame = 0;

@@ -48,7 +48,7 @@ void EntityRoomTransition2(Entity* self) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(E_ID_59, gents, newEntity);
+                CreateEntityFromEntity(E_DEATH_STOLEN_ITEM, gents, newEntity);
                 newEntity->params = localVar;
             }
             g_Player.padSim = 0x10000;

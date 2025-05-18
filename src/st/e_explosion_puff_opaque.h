@@ -10,7 +10,8 @@ void CreateExplosionPuff() {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, g_CurrentEntity, entity);
+            CreateEntityFromEntity(
+                E_EXPLODE_PUFF_OPAQUE, g_CurrentEntity, entity);
             entity->params = 2;
             entity->ext.opaquePuff.unk89 = 6 - i;
             entity->ext.opaquePuff.unk84 = temp_s3;

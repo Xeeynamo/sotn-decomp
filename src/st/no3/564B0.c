@@ -12,7 +12,7 @@ void EntityZombie(Entity* self) {
         // Spawn Zombie explosion
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, newEntity);
+            CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
             newEntity->params = 3;
             newEntity->posY.i.hi += 12;

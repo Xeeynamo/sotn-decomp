@@ -152,7 +152,7 @@ void EntityForegroundTree(Entity* self) {
         if (*ptrParams <= 352) {
             ent = AllocEntity(EntRange, &EntRange[64]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, ent);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = *ptrParams++;
                 y = *ptrParams++;
                 ent->params = (y >> 8) + self->params;
@@ -175,7 +175,7 @@ void EntityForegroundTree(Entity* self) {
         if (temp_s4 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, ent);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = temp_s4 - ptrParams[0] + 368;
                 y = ptrParams[1];
                 ent->params = (y >> 8) + self->params;
@@ -185,21 +185,21 @@ void EntityForegroundTree(Entity* self) {
                     ent->unk6C = 0x60;
                 } else if (self->ext.foregroundTree.unk7C == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_ID_11, ent, ent2);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
                     ent2->unk68 = var_s3;
                     ent2->unk6C = 0x40;
                     ent2->posY.i.hi -= 16;
                 } else if (self->ext.foregroundTree.unk7C == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_ID_11, ent, ent2);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
                     ent2->unk68 = var_s3;
                     ent2->unk6C = 0x40;
                     ent2->posY.i.hi += 48;
                 } else if (self->ext.foregroundTree.unk7C == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
-                    CreateEntityFromEntity(E_ID_11, ent, ent2);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
                     ent2->unk68 = var_s3;
                     ent2->unk6C = 0x40;
@@ -231,7 +231,7 @@ void EntityUnkId50(Entity* self) {
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr++;
                 newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
@@ -255,7 +255,7 @@ void EntityUnkId50(Entity* self) {
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = ptr[1];
@@ -463,7 +463,7 @@ void EntityUnkId52(Entity* self) {
         while (*ptr <= 288) {
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr;
                 newEntity->params = 0x10;
                 newEntity->unk68 = 0x18;
@@ -486,7 +486,7 @@ void EntityUnkId52(Entity* self) {
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
@@ -780,12 +780,12 @@ void EntityBackgroundCastleWall(Entity* entity) {
 
     newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+        CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
         newEntity->params = 0xC;
         newEntity->unk68 = 0x80;
         newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_ID_11, newEntity);
+            CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
             newEntity->params = 0xB;
             newEntity->posY.i.hi = 0x80;
             newEntity->unk68 = 0xC0;

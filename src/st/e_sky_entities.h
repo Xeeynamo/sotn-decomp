@@ -10,7 +10,7 @@ static s16 D_80181370[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 
 // See also: UnkRecursivePrimFunc1. Strong overlap, but also some different
 // logic.
-Primitive* func_801BB548(
+static Primitive* SkySwirlHelper(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
     s32 i;
@@ -104,7 +104,7 @@ Primitive* func_801BB548(
                 }
             }
         } else {
-            dstPrim = func_801BB548(
+            dstPrim = SkySwirlHelper(
                 &points[idx1], &points[idx2], &points[idx3], &points[idx4],
                 tempPrim, iterations - 1, dstPrim, dataPtr);
         }
@@ -165,8 +165,8 @@ void EntityDeathSkySwirl(Entity* self) {
     prim->drawMode = DRAW_COLORS;
 
     prim2 = prim->next;
-    prim2 = func_801BB548(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
-                          prim, 3, prim2, 0x1F800000);
+    prim2 = SkySwirlHelper(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
+                           prim, 3, prim2, 0x1F800000);
     prim->drawMode = DRAW_HIDE;
     while (prim2 != NULL) {
         prim2->drawMode = DRAW_HIDE;
