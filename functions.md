@@ -629,8 +629,8 @@
 | dra       | GetFreeEntity                            |       51 |          5 |        |                                 |       |
 | maria     | MarGetFreeEntity                         |       51 |          5 |        |                                 |       |
 | ric       | RicGetFreeEntity                         |       51 |          5 |        |                                 |       |
-| no3       | EntityFallingObject                      |       51 |          7 |        |                                 |       |
-| no3       | EntityFallingObject2                     |       51 |          7 |        |                                 |       |
+| no3       | EntityMerman2JumpAir                     |       51 |          7 |        |                                 |       |
+| no3       | EntityMermanJumpAir                      |       51 |          7 |        |                                 |       |
 | ric       | RicSetSlideKick                          |       51 |          8 |        |                                 |       |
 | dra       | func_psp_09103E68                        |       51 |         10 |        | https://decomp.me/scratch/DqKHA | 1.0   |
 | dra       | func_psp_091048B8                        |       51 |         10 |        |                                 |       |
@@ -797,7 +797,7 @@
 | no4       | unk_26740.rodata                         |       68 |          0 | Yes    |                                 |       |
 | dra       | SetRoomBackgroundLayer                   |       68 |          2 |        |                                 |       |
 | dra       | SortTimeAttackEntries                    |       68 |          5 |        |                                 |       |
-| no3       | EntityCavernDoorVase                     |       68 |          5 |        |                                 |       |
+| no3       | EntityBackgroundBlock                    |       68 |          5 |        |                                 |       |
 | no4       | func_pspeu_0923B288                      |       68 |          5 |        |                                 |       |
 | dra       | DecrementStatBuffTimers                  |       68 |          6 | Yes    | https://decomp.me/scratch/vEngY | 1.0   |
 | maria     | MarCreateEntFactoryFromEntity            |       68 |          6 |        |                                 |       |
@@ -1318,7 +1318,7 @@
 | no3       | working_on.rodata                        |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
-| no3       | EntityExplosion2                         |      177 |         19 |        |                                 |       |
+| no3       | EntityMermanFireSpit                     |      177 |         19 |        |                                 |       |
 | lib       | EntityBloodDrips                         |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra       | func_psp_090E4968                        |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | lib       | func_psp_0923DA30                        |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
