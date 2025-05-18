@@ -72,7 +72,8 @@ segments:
       - [0x5E630, .data, no3/e_jewel_sword_puzzle]
       - [0x5E740, data]
       - [0x5E778, .data, no3/e_sky_entities]
-      - [0x5E7E0, data]
+      - [0x5E7E0, .data, no3_psp/e_trapdoor]
+      - [0x5E7F0, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3_psp/working_on] # EntityPushAlucard
       - [0x61810, .rodata, no3_psp/e_particles]
@@ -80,5 +81,6 @@ segments:
       - [0x618A8, .rodata, no3_psp/collision]
       - [0x61900, bss, 61900]
       - [0x61BB0, .bss, no3/e_background_bushes_trees]
-      - [0x61BC0, bss, 61BC0]
+      - [0x61BC0, .bss, no3_psp/e_trapdoor]
+      - [0x61BC8, bss, 61BC8]
   - [0x62280]
