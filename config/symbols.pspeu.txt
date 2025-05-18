@@ -68,6 +68,7 @@ main_ = 0x08926994;
 Krom2RawAdd = 0x892728C;
 ScaleMatrix = 0x892752C;
 CompMatrix = 0x8927678;
+DpqColor = 0x0892788C;
 NormalColorDpq = 0x089278B0;
 NormalClip = 0x089278D4;
 RotTransPers = 0x89279C4;

@@ -800,8 +800,8 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0x4];
-    /* 0x84 */ u16 unk84;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
 } ET_DeathSkySwirl;
 
 typedef struct {
