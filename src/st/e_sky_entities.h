@@ -166,7 +166,7 @@ void EntityDeathSkySwirl(Entity* self) {
 
     prim2 = prim->next;
     prim2 = SkySwirlHelper(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
-                          prim, 3, prim2, 0x1F800000);
+                           prim, 3, prim2, 0x1F800000);
     prim->drawMode = DRAW_HIDE;
     while (prim2 != NULL) {
         prim2->drawMode = DRAW_HIDE;

@@ -483,7 +483,8 @@ void EntityFireWarg(Entity* self) {
                     ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
-                        CreateEntityFromCurrentEntity(E_FIRE_WARG_ATTACK, ent_s0);
+                        CreateEntityFromCurrentEntity(
+                            E_FIRE_WARG_ATTACK, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
                         ent_s0->posY.i.hi += 0x28;
                         if (self->facingLeft) {

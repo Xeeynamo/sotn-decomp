@@ -53,8 +53,7 @@ void EntityFlyingOwlAndLeaves(Entity* entity) {
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromCurrentEntity(
-                        E_FALLING_LEAF, newEntity);
+                    CreateEntityFromCurrentEntity(E_FALLING_LEAF, newEntity);
                     newEntity->params = i;
                 }
             }

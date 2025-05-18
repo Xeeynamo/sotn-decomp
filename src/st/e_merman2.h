@@ -376,7 +376,8 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 i = 0;
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MEDIUM_WATER_SPLASH, self, newEntity);
+                    CreateEntityFromEntity(
+                        E_MEDIUM_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
