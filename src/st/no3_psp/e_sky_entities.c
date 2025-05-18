@@ -176,6 +176,22 @@ void EntityDeathSkySwirl(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_sky_entities", EntityLightningThunder);
+static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};
+
+void EntityLightningThunder(Entity* self) {
+    s32 sfxPan;
+    
+    if (!self->step) {
+        InitializeEntity(g_EInitStInteractable);
+        self->zPriority = 0x2A;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        self->facingLeft = Random() & 1;
+        sfxPan = (self->posX.i.hi >> 0x4) - 8;
+        g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, sfxPan);
+    }
+    if (AnimateEntity(thunder_anim, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_sky_entities", EntityLightningCloud);
