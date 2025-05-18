@@ -50,7 +50,7 @@ bool CheckMermanEnteringWater(s16 yOffset) {
             newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(
-                    E_MERMAN_JUMP_WATER, g_CurrentEntity, newEntity);
+                    E_MERMAN_WATER_SPLASH, g_CurrentEntity, newEntity);
                 newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
@@ -231,7 +231,7 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
-                        E_MERMAN_JUMP_WATER, self, newEntity);
+                        E_MERMAN_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
@@ -376,7 +376,7 @@ void EntityMerman2(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 i = 0;
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_MERMAN2_UNK1, self, newEntity);
+                    CreateEntityFromEntity(E_MEDIUM_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
@@ -593,7 +593,7 @@ void EntityMerman2(Entity* self) {
 }
 
 // some sort of explosion
-void EntityExplosion2(Entity* self) {
+void EntityMermanFireSpit(Entity* self) {
     Primitive* prim;
     s16 primIndex;
 
@@ -610,7 +610,7 @@ void EntityExplosion2(Entity* self) {
             }
             prim = &g_PrimBuf[primIndex];
             self->primIndex = primIndex;
-            self->ext.entityExplosion2.prim = prim;
+            self->ext.EntityMermanFireSpit.prim = prim;
             self->flags |= FLAG_HAS_PRIMS;
             UnkPolyFunc2(prim);
             prim->u0 = 0;
@@ -633,7 +633,7 @@ void EntityExplosion2(Entity* self) {
     }
 
     if (self->params != 0) {
-        prim = self->ext.entityExplosion2.prim;
+        prim = self->ext.EntityMermanFireSpit.prim;
         UnkPrimHelper(prim);
         prim->next->b3 += 252;
         LOH(prim->next->u1) -= 128;
@@ -642,8 +642,8 @@ void EntityExplosion2(Entity* self) {
         }
     }
 
-    self->ext.entityExplosion2.unk84++;
-    if (!(self->ext.entityExplosion2.unk84 % 4)) {
+    self->ext.EntityMermanFireSpit.unk84++;
+    if (!(self->ext.EntityMermanFireSpit.unk84 % 4)) {
         self->posY.i.hi++;
     }
 
@@ -791,7 +791,7 @@ void EntityMermanWaterSplash(Entity* self) {
     }
 }
 
-void EntityFallingObject2(Entity* self) {
+void EntityMerman2JumpAir(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitWaterObject);
         self->animCurFrame = 0;

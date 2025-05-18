@@ -19,7 +19,7 @@ typedef enum {
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
 
-    /* 0x14 */ E_ID_14 = 0x14,
+    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x17 */ E_ID_17 = 0x17,
     /* 0x19 */ E_ID_19 = 0x19,

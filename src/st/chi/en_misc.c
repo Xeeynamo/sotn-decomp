@@ -32,7 +32,7 @@ void EntityGreyPuff(Entity* self);
 // D_801813B0: explode_yVel
 // D_801813C8: explode_startFrame
 // D_801813CC: explode_lifetime
-// func_801A54C4: [E_ID_14] EntityExplosionVariants
+// func_801A54C4: [E_EXPLOSION_VARIANTS] EntityExplosionVariants
 // func_801A55B4: [E_GREY_PUFF] EntityGreyPuff
 // D_801813D4: g_olroxDroolCollOffsets
 // func_801A56A8: EntityOlroxDrool

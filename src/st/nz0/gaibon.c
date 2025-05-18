@@ -528,7 +528,7 @@ void EntityGaibon(Entity* self) {
                 PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(E_WARG_EXP_OPAQUE, self, other);
+                    CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, other);
                     other->posY.i.hi += 28;
                     // Scatter bones randomly between +- 32
                     other->posX.i.hi += ((Random() & 63) - 32);

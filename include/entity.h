@@ -1820,7 +1820,7 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
-} ET_EntityExplosion2;
+} ET_EntityMermanFireSpit;
 // ====== CHI ENTITIES ======
 
 typedef struct {
@@ -3136,7 +3136,7 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
-    ET_EntityExplosion2 entityExplosion2;
+    ET_EntityMermanFireSpit EntityMermanFireSpit;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
