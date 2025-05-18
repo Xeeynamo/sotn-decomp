@@ -70,6 +70,9 @@ segments:
       - [0x5E580, .data, no3/e_background_bushes_trees]
       - [0x5E630, .data, no3/e_jewel_sword_puzzle]
       - [0x5E740, data]
+      - [0x5E778, .data, no3_psp/e_sky_entities]
+      - [0x5E7C0, data]
+
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3_psp/working_on] # EntityPushAlucard
       - [0x61810, .rodata, no3_psp/e_particles]
