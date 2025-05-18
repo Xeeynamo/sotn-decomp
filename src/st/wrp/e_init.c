@@ -49,9 +49,9 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .zPriority = 0x01FA,
         .unk5A = 0x0000,
         .palette = PAL_DRA(0),
-        .drawFlags = 0x00,
-        .drawMode = 0x10,
-        .flags = 0x00000000,
+        .drawFlags = FLAG_DRAW_DEFAULT,
+        .drawMode = DRAW_TPAGE,
+        .flags = 0,
         .animFrames = D_801804D0,
     },
     {
@@ -59,9 +59,9 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .zPriority = 0x00C0,
         .unk5A = 0,
         .palette = PAL_DRA(0),
-        .drawFlags = 0x03,
-        .drawMode = 0x30,
-        .flags = 0x00000000,
+        .drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX,
+        .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
+        .flags = 0,
         .animFrames = D_801804D4,
     }};
 
