@@ -283,7 +283,7 @@
 | maria     | pl_steps.rodata                          |       28 |          0 | Yes    |                                 |       |
 | lib       | e_lesser_demon.rodata                    |       28 |          0 | Yes    |                                 |       |
 | lib       | e_mudman.rodata                          |       28 |          0 | Yes    |                                 |       |
-| no4       | unk_1E818.rodata                         |       28 |          0 | Yes    |                                 |       |
+| no4       | e_frozen_shade.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0       | e_collect.rodata                         |       28 |          0 | Yes    |                                 |       |
 | st0       | title_card.rodata                        |       28 |          0 | Yes    |                                 |       |
 | dra       | FreePrimitives                           |       28 |          2 |        | https://decomp.me/scratch/ypQK3 | 1.0   |
@@ -921,7 +921,7 @@
 | maria     | MarSetJump                               |       79 |         14 |        |                                 |       |
 |           | CheckEntityValid                         |       79 |         15 |        |                                 |       |
 | dra       | func_psp_090EBFA8                        |       80 |          3 |        |                                 |       |
-| no4       | func_pspeu_09259648                      |       80 |         10 |        |                                 |       |
+| no4       | func_pspeu_09259648                      |       80 |         10 |        | https://decomp.me/scratch/fpuzN | 0.999 |
 | no4       | func_pspeu_09242D08                      |       81 |          5 |        |                                 |       |
 | dra       | func_80102D70                            |       81 |         11 | Yes    |                                 |       |
 | ric       | 319C4.rodata                             |       82 |          0 | Yes    |                                 |       |
@@ -1552,7 +1552,7 @@
 | no3       | EntityCavernDoor                         |      313 |         39 |        |                                 |       |
 | ric       | RicEntitySubwpnStopwatchCircle           |      314 |         24 |        | https://decomp.me/scratch/kbgQU | 1.0   |
 | lib       | func_us_801BBAB4                         |      315 |         26 |        |                                 |       |
-| no4       | func_pspeu_09258960                      |      317 |         18 |        | https://decomp.me/scratch/6JUYI | 0.597 |
+| no4       | func_pspeu_09258960                      |      317 |         18 |        | https://decomp.me/scratch/6JUYI | 1.0   |
 | maria     | MarInit                                  |      317 |         34 |        |                                 |       |
 | wrp       | EntityWarpSmallRocks                     |      318 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
 | no4       | func_pspeu_09238860                      |      320 |         54 |        | https://decomp.me/scratch/aJLfo | 0.999 |
@@ -1734,7 +1734,7 @@
 | maria     | MarCheckCeiling                          |      562 |         55 |        | https://decomp.me/scratch/FMvjc | 0.997 |
 | ric       | RicCheckCeiling                          |      562 |         55 |        | https://decomp.me/scratch/XrVFn | 0.998 |
 | dra       | func_8012F178                            |      564 |         35 |        |                                 |       |
-| no4       | func_pspeu_09258E30                      |      564 |         51 | Yes    |                                 |       |
+| no4       | func_pspeu_09258E30                      |      564 |         51 | Yes    | https://decomp.me/scratch/WBFY7 | 0.998 |
 | maria     | CheckStageCollision                      |      565 |         55 |        | https://decomp.me/scratch/GmZxv | 0.995 |
 | dra       | PlayerStepJump                           |      565 |        106 |        |                                 |       |
 | dra       | RenderTilemap                            |      570 |         35 |        | https://decomp.me/scratch/4wi95 | 0.999 |
