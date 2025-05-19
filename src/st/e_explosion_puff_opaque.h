@@ -88,7 +88,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->unk6C -= 4;
             break;
         }
-        
+
         break;
 
     case 3:
@@ -98,12 +98,14 @@ void EntityExplosionPuffOpaque(Entity* self) {
             case 1:
                 if (self->ext.opaquePuff.speed > 3) {
                     self->ext.opaquePuff.speed -= 3;
-                    self->ext.opaquePuff.angle = self->ext.opaquePuff.angle - 0x800;
+                    self->ext.opaquePuff.angle =
+                        self->ext.opaquePuff.angle - 0x800;
                 }
                 break;
 
             case 2:
-                self->ext.opaquePuff.angle += (self->ext.opaquePuff.speed * 0xC0);
+                self->ext.opaquePuff.angle +=
+                    (self->ext.opaquePuff.speed * 0xC0);
                 break;
             }
             self->ext.opaquePuff.angle &= 0xFFF;
