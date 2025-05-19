@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
+#endif
+
 void CreateExplosionPuff() {
     Entity* puff;
     s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
