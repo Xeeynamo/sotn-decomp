@@ -6,5 +6,5 @@
 // clang-format off
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_explosion_puff_opaque", func_pspeu_0923D348);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_explosion_puff_opaque",EntityExplosionPuffOpaque);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_explosion_puff_opaque", EntityExplosionPuffOpaque);
 // clang-format on
