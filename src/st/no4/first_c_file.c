@@ -84,7 +84,16 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5020);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C50FC);
+void func_us_801C50FC(void) {
+    u16* tileIdx;
+    s16 i;
+
+    tileIdx = &g_Tilemap.fg[691];
+
+    for (i = 0; i < 10; i++, tileIdx++) {
+        *tileIdx = 0;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5134);
 
