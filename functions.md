@@ -722,7 +722,7 @@
 | dra       | LoadGfxAsync                             |       61 |          7 |        | https://decomp.me/scratch/HDCYU | 0.901 |
 | maria     | func_8015F9F0                            |       61 |          8 |        |                                 |       |
 | ric       | func_8015F9F0                            |       61 |          8 |        |                                 |       |
-| no3       | EntityLightningThunder                   |       61 |          8 |        |                                 |       |
+| no3       | EntityLightningThunder                   |       61 |          8 |        | https://decomp.me/scratch/p80dP | 0.996 |
 | dra       | func_8010A3F0                            |       61 |          9 |        | https://decomp.me/scratch/gGvkT | 0.951 |
 | lib       | func_psp_09253D58                        |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
 | no3       | func_pspeu_09237700                      |       61 |         10 |        | https://decomp.me/scratch/pG66O | 0.997 |
@@ -820,7 +820,7 @@
 | dra       | func_800F2404                            |       71 |          5 |        |                                 |       |
 | dra       | func_801024DC                            |       71 |          5 |        |                                 |       |
 | ric       | RicSetSubweaponParams                    |       71 |          5 |        |                                 |       |
-| no3       | EntityLightningCloud                     |       71 |          5 |        |                                 |       |
+| no3       | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | dra       | PlaySfxVolPan                            |       71 |          7 |        |                                 |       |
 | dra       | func_800F96F4                            |       71 |          7 |        |                                 |       |
 | chi       | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
@@ -1174,7 +1174,7 @@
 |           | IsMovementAllowed                        |      117 |         23 |        |                                 |       |
 | dra       | EntitySmallRisingHeart                   |      118 |         10 |        |                                 |       |
 | no3       | func_pspeu_09249590                      |      118 |         27 |        |                                 |       |
-| no3       | EntityTrapDoor                           |      119 |         14 |        |                                 |       |
+| no3       | EntityTrapDoor                           |      119 |         14 |        | https://decomp.me/scratch/MGGMN | 0.955 |
 | dra       | func_8011A870                            |      119 |         19 |        |                                 |       |
 | st0       | CollectSubweapon                         |      120 |          9 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra       | MenuTimeAttackDraw                       |      120 |         11 |        |                                 |       |
