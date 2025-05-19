@@ -41,7 +41,6 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4738);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4980);
 
-
 void func_us_801C4BD8(Entity* self) {
     Tilemap* tmap;
     s16* dataPtr;
@@ -80,7 +79,6 @@ void func_us_801C4BD8(Entity* self) {
     g_api_PlaySfxVolPan(0x797, offsetX, *dataPtr++);
     D_us_80181108 = 1;
 }
-
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
 
