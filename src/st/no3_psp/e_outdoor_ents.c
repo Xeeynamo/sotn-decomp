@@ -2,10 +2,12 @@
 
 #include "../no3/no3.h"
 
+// long imports get split wrongly
+// clang-format off
+
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityPushAlucard);
 
-INCLUDE_ASM(
-    "st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityCastleDoorTransition);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityCastleDoorTransition);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityForegroundTree);
 
@@ -17,12 +19,12 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityUnkId52);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityCastleBridge);
 
-INCLUDE_ASM(
-    "st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityDistantBackgroundTrees);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityDistantBackgroundTrees);
 
-INCLUDE_ASM(
-    "st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundCastleWall);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundCastleWall);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFlyingOwlAndLeaves);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFallingLeaf);
+
+// clang-format on
