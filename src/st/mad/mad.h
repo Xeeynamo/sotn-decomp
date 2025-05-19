@@ -35,7 +35,7 @@ typedef enum {
     E_DUMMY_0E,
     E_DUMMY_0F,
     E_DUMMY_10,
-    E_ID_14 = 0x14,
+    E_EXPLOSION_VARIANTS = 0x14,
     E_GREY_PUFF
 } EntityIDs;
 

@@ -800,8 +800,8 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0x4];
-    /* 0x84 */ u16 unk84;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 unk84;
 } ET_DeathSkySwirl;
 
 typedef struct {
@@ -1820,7 +1820,7 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
-} ET_EntityExplosion2;
+} ET_EntityMermanFireSpit;
 // ====== CHI ENTITIES ======
 
 typedef struct {
@@ -2936,8 +2936,8 @@ typedef struct {
     /* 0x82 */ u8 unk82;
     /* 0x83 */ u8 unk83;
     /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 : 16;
-    /* 0x88 */ s16 : 16;
+    /* 0x86 */ u16 unk86;
+    /* 0x88 */ u16 unk88;
     /* 0x8A */ u16 unk8A;
     /* 0x8C */ u32 unk8C;
     /* 0x90 */ struct Primitive* unk90;
@@ -2951,7 +2951,23 @@ typedef struct {
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 : 16;
     /* 0xA8 */ u8 unkA8[8];
-} ET_801D96FC;
+} ET_FrozenShade;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ u16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ u16 angle;
+    /* 0x88 */ u8 r;
+    /* 0x89 */ u8 g;
+    /* 0x8A */ u8 b;
+    /* 0x8B */ u8 : 8;
+    /* 0x8C */ struct Entity* unk8C;
+    /* 0x90 */ s16 posX;
+    /* 0x92 */ s16 posY;
+} ET_FrozenShadeIcicle;
 
 typedef struct {
     /* 0x7C */ u32 : 32;
@@ -3136,7 +3152,7 @@ typedef union { // offset=0x7C
     ET_Statue statue;
     ET_StoneDoor stoneDoor;
     ET_DisableAfterImage disableAfterImage;
-    ET_EntityExplosion2 entityExplosion2;
+    ET_EntityMermanFireSpit EntityMermanFireSpit;
     ET_EntityExplosion3 entityExplosion3;
     ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
@@ -3243,7 +3259,8 @@ typedef union { // offset=0x7C
     ET_Clouds clouds;
     ET_801C0B9C et_801C0B9C;
     ET_unkDoor unkDoor;
-    ET_801D96FC et_801D96FC;
+    ET_FrozenShade frozenShade;
+    ET_FrozenShadeIcicle frozenShadeIcicle;
     ET_DopplegangerBGLight dopBGLight;
     ET_FrogToad frogToad;
     ET_Fishhead fishhead;

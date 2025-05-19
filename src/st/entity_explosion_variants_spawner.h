@@ -21,7 +21,7 @@ void EntityExplosionVariantsSpawner(
     for (i = 0; i < count; i++) {
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            newEntity->entityId = E_ID_14;
+            newEntity->entityId = E_EXPLOSION_VARIANTS;
             newEntity->pfnUpdate = EntityExplosionVariants;
             newEntity->params = params;
             newEntity->posX.i.hi = newX + i * xGap;

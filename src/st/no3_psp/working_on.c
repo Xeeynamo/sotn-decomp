@@ -4,24 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanRockLeftSide);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanRockRightSide);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityJewelSwordDoor);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFallingRock2);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_0923C528);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathSkySwirl);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityLightningThunder);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityLightningCloud);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityTrapDoor);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_0923D348);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityExplosionPuffOpaque);
@@ -64,7 +46,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityShuttingWindow);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBreakable);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityCavernDoorVase);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBackgroundBlock);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId16);
 
@@ -162,13 +144,13 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_0924D9C0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMerman2);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityExplosion2);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanFireSpit);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMediumWaterSplash);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanWaterSplash);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFallingObject2);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMerman2JumpAir);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityHighWaterSplash);
 
@@ -180,7 +162,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMerman);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanFireball);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFallingObject);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanJumpAir);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanExplosion);
 

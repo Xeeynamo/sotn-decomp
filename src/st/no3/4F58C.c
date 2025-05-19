@@ -329,7 +329,7 @@ void EntityWarg(Entity* self) {
         if (++self->ext.warg.unk80 & 1) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_WARG_EXP_TRANSP, otherEnt);
+                CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
                 // Is this divide?
                 otherEnt->params =
                     ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)

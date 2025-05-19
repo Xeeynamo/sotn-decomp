@@ -10,7 +10,7 @@ static s16 D_80181370[] = {0, 1, 3, 4, 1, 2, 4, 5, 3, 4, 6, 7, 4, 5, 7, 8};
 
 // See also: UnkRecursivePrimFunc1. Strong overlap, but also some different
 // logic.
-Primitive* func_801BB548(
+static Primitive* SkySwirlHelper(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
     s32 i;
@@ -18,7 +18,8 @@ Primitive* func_801BB548(
     s16* indices;
     SVECTOR* points;
     uvPair* uv_values;
-    long p, flag;
+    long flag;
+    long p;
     s32 rotTransResult;
 
     if (dstPrim == NULL) {
@@ -104,7 +105,7 @@ Primitive* func_801BB548(
                 }
             }
         } else {
-            dstPrim = func_801BB548(
+            dstPrim = SkySwirlHelper(
                 &points[idx1], &points[idx2], &points[idx3], &points[idx4],
                 tempPrim, iterations - 1, dstPrim, dataPtr);
         }
@@ -116,12 +117,12 @@ Primitive* func_801BB548(
 void EntityDeathSkySwirl(Entity* self) {
     Primitive* prim;
     Primitive* prim2;
-    s16 primIndex;
+    s32 primIndex;
     SVECTOR sVec;
     VECTOR vec;
     MATRIX mtx;
 
-    if (self->step == 0) {
+    if (!self->step) {
         if (g_CastleFlags[IVE_BEEN_ROBBED]) {
             DestroyEntity(self);
             return;
@@ -132,10 +133,10 @@ void EntityDeathSkySwirl(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.deathSkySwirl.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.deathSkySwirl.prim = prim;
         prim->tpage = 0x12;
         prim->clut = 0x1F;
         prim->u0 = prim->u2 = 0;
@@ -155,8 +156,8 @@ void EntityDeathSkySwirl(Entity* self) {
     sVec.vy = self->ext.deathSkySwirl.unk84;
     sVec.vz = 0;
     RotMatrix(&sVec, &mtx);
-    vec.vy = -0xC0;
     vec.vx = 0;
+    vec.vy = -0xC0;
     vec.vz = 0x200;
     TransMatrix(&mtx, &vec);
     SetRotMatrix(&mtx);
@@ -165,8 +166,8 @@ void EntityDeathSkySwirl(Entity* self) {
     prim->drawMode = DRAW_COLORS;
 
     prim2 = prim->next;
-    prim2 = func_801BB548(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
-                          prim, 3, prim2, 0x1F800000);
+    prim2 = SkySwirlHelper(&vec_negneg, &vec_posneg, &vec_negpos, &vec_pospos,
+                           prim, 3, prim2, (u8*)SPAD(0));
     prim->drawMode = DRAW_HIDE;
     while (prim2 != NULL) {
         prim2->drawMode = DRAW_HIDE;
@@ -179,12 +180,15 @@ void EntityDeathSkySwirl(Entity* self) {
 static u8 thunder_anim[] = {4, 23, 3, 24, 2, 25, 2, 26, 255, 0, 0, 0};
 
 void EntityLightningThunder(Entity* self) {
-    if (self->step == 0) {
+    s32 sfxPan;
+
+    if (!self->step) {
         InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x2A;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->facingLeft = Random() & 1;
-        g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, (self->posX.i.hi >> 0x4) - 8);
+        sfxPan = (self->posX.i.hi >> 0x4) - 8;
+        g_api.PlaySfxVolPan(SFX_THUNDER_B, 0x40, sfxPan);
     }
     if (AnimateEntity(thunder_anim, self) == 0) {
         DestroyEntity(self);
@@ -196,7 +200,7 @@ extern s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
 // When lightning strikes, we get a bright bolt, but it is against a cloud
 // as a background. It's subtle and hard to see, but it's there.
 void EntityLightningCloud(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitStInteractable);
         self->zPriority = 0x29;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
@@ -207,7 +211,7 @@ void EntityLightningCloud(Entity* self) {
         self->ext.backgroundLightning.timer = 5;
     }
 
-    if (--self->ext.backgroundLightning.timer == 0) {
+    if (!--self->ext.backgroundLightning.timer) {
         DestroyEntity(self);
     }
 }

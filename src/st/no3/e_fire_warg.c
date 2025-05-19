@@ -11,7 +11,7 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
     for (i = 0; i < count; ++i) {
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
-            newEnt->entityId = E_ID_14;
+            newEnt->entityId = E_EXPLOSION_VARIANTS;
             newEnt->pfnUpdate = EntityExplosionVariants;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;
@@ -483,7 +483,8 @@ void EntityFireWarg(Entity* self) {
                     ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (ent_s0 != NULL) {
                         // PSP version 0x1E
-                        CreateEntityFromCurrentEntity(E_ID_2E, ent_s0);
+                        CreateEntityFromCurrentEntity(
+                            E_FIRE_WARG_ATTACK, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
                         ent_s0->posY.i.hi += 0x28;
                         if (self->facingLeft) {
@@ -550,7 +551,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent_s0 != NULL) {
                     // PSP version 0x23
-                    CreateEntityFromCurrentEntity(E_ID_33, ent_s0);
+                    CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, ent_s0);
                     ent_s0->unk5A = self->unk5A;
                     if (self->hitEffect) {
                         ent_s0->palette = self->hitEffect;
@@ -818,7 +819,7 @@ void EntityUnkId31(Entity* self) {
         for (i = 0; i < 3; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity) {
-                CreateEntityFromCurrentEntity(E_ID_32, entity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION_3, entity);
                 if (self->facingLeft != 0) {
                     entity->posX.i.hi -= *hitboxPtr++;
                 } else {
@@ -1422,7 +1423,7 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
     for (i = 0; i < count; ++i) {
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEnt != NULL) {
-            newEnt->entityId = E_ID_14;
+            newEnt->entityId = E_EXPLOSION_VARIANTS;
             newEnt->pfnUpdate = EntityExplosionVariants;
             newEnt->params = params;
             newEnt->posX.i.hi = x + i * xOfst;

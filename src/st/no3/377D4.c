@@ -2,8 +2,7 @@
 #include "no3.h"
 #include "sfx.h"
 
-// vase in the room with the door to the caverns
-void EntityCavernDoorVase(Entity* self) {
+void EntityBackgroundBlock(Entity* self) {
     ObjInit2* objInit = &D_80180BFC[self->params];
 
     if (self->step == 0) {

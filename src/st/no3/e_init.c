@@ -16,7 +16,7 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void EntityCavernDoorVase(Entity* self);
+void EntityBackgroundBlock(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -61,12 +61,12 @@ void EntityMerman2(Entity* self);
 void EntityMermanWaterSplash(Entity* self);
 void EntityMediumWaterSplash(Entity* self);
 void EntityHighWaterSplash(Entity* self);
-void EntityExplosion2(Entity* self);
+void EntityMermanFireSpit(Entity* self);
 void EntityDeadMerman(Entity* self);
-void EntityFallingObject2(Entity* self);
+void EntityMerman2JumpAir(Entity* self);
 void EntityMerman(Entity* self);
 void EntityMermanFireball(Entity* self);
-void EntityFallingObject(Entity* self);
+void EntityMermanJumpAir(Entity* self);
 void EntityMermanExplosion(Entity* self);
 void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    EntityCavernDoorVase,
+    EntityBackgroundBlock,
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -161,12 +161,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMermanWaterSplash,
     EntityMediumWaterSplash,
     EntityHighWaterSplash,
-    EntityExplosion2,
+    EntityMermanFireSpit,
     EntityDeadMerman,
-    EntityFallingObject2, // 0x40
+    EntityMerman2JumpAir, // 0x40
     EntityMerman,
     EntityMermanFireball,
-    EntityFallingObject,
+    EntityMermanJumpAir,
     EntityMermanExplosion,
     EntityMermanSpawner,
     EntityBoneScimitar,
