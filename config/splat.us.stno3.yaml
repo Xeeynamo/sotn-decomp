@@ -138,7 +138,6 @@ segments:
       - [0x373E0, .rodata, e_castle_door]
       - [0x37400, .rodata, e_stairway]
       - [0x37414, .rodata, 3C4EC]
-      - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
       - [0x37440, .rodata, cutscene] # actor names
       - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
       - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
@@ -178,7 +177,6 @@ segments:
       - [0x3BF38, c, e_heartroom]
       - [0x3C3FC, c, e_tilemap_shuffler]
       - [0x3C4EC, c]
-      - [0x3E134, c]
       - [0x3E544, c, cutscene]
       - [0x3FF00, c]
       - [0x413F8, c, e_explosion_puff_opaque]
