@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 static s32 g_TrapDoorFlag = 0; // 0 = Closed, 1 = Open
 
-static u8 trapdoor_anim[] = {
-    1,   27, 6,   28, 6,   29, 129, 30, 255};
+static u8 trapdoor_anim[] = {1, 27, 6, 28, 6, 29, 129, 30, 255};
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
 void EntityTrapDoor(Entity* self) {
     Entity* player;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
