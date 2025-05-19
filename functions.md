@@ -764,7 +764,7 @@
 | lib       | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | dra       | CheckWeaponCombo                         |       64 |          5 |        |                                 |       |
 | dra       | func_801026BC                            |       64 |          7 |        |                                 |       |
-| no3       | func_pspeu_0923D348                      |       64 |          8 |        |                                 |       |
+| no3       | func_pspeu_0923D348                      |       64 |          8 |        | https://decomp.me/scratch/nncWb | 0.996 |
 | dra       | func_8011A9D8                            |       65 |          8 |        |                                 |       |
 | chi       | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | lib       | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -1545,7 +1545,7 @@
 | dra       | func_80103ED4                            |      310 |         46 | Yes    | https://decomp.me/scratch/h7bvM | 0.998 |
 | no3       | EntityFlyingOwlAndLeaves                 |      310 |         46 |        |                                 |       |
 | dra       | EntityStopWatchExpandingCircle           |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
-| no4       | func_pspeu_0923D568                      |      312 |         27 |        |                                 |       |
+| no4       | func_pspeu_0923D568                      |      312 |         27 |        | https://decomp.me/scratch/wnx44 | 1.0   |
 | dra       | CdSoundCommand14                         |      312 |         36 | Yes    |                                 |       |
 | ric       | RicEntitySubwpnCrashCrossParticles       |      313 |         30 |        | https://decomp.me/scratch/K9fsm | 0.999 |
 | ric       | RicInit                                  |      313 |         33 |        |                                 |       |
@@ -1608,7 +1608,7 @@
 | lib       | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra       | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
 | dra       | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
-| no3       | EntityExplosionPuffOpaque                |      372 |         50 |        |                                 |       |
+| no3       | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.704 |
 | dra       | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 1.0   |
 | dra       | func_psp_090F5560                        |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
 | chi       | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
