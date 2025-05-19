@@ -41,7 +41,46 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4738);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4980);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4BD8);
+
+void func_us_801C4BD8(Entity* self) {
+    Tilemap* tmap;
+    s16* dataPtr;
+    s32 offsetX;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+    }
+
+    tmap = &g_Tilemap;
+    dataPtr = &D_us_8018159C[self->params * 4];
+
+    offsetX = (PLAYER.posX.i.hi + tmap->scrollX.i.hi - *dataPtr++);
+    offsetX = (offsetX * *dataPtr++) / 4096;
+    offsetX += *dataPtr++;
+
+    if (offsetX < 0) {
+        offsetX = 0;
+    } else if (offsetX >= 0x80) {
+        offsetX = 0x7F;
+    }
+
+    if (offsetX == 0) {
+        if (D_us_80181108 != 0) {
+            D_us_80181108 = 0;
+            g_api_PlaySfx(0xA6);
+            return;
+        }
+    }
+    if (D_us_80181108 != 0) {
+        g_api_func_80134678(offsetX, *dataPtr++);
+        return;
+    }
+
+    g_api_PlaySfxVolPan(0x797, offsetX, *dataPtr++);
+    D_us_80181108 = 1;
+}
+
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
 
