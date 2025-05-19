@@ -1608,7 +1608,7 @@
 | lib       | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra       | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
 | dra       | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
-| no3       | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.704 |
+| no3       | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
 | dra       | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 1.0   |
 | dra       | func_psp_090F5560                        |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
 | chi       | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
