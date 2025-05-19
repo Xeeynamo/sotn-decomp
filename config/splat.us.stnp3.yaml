@@ -47,7 +47,7 @@ segments:
       - [0xF0C, .data, e_castle_door]
       - [0x1008, .data, e_background_bushes_trees]
       - [0x1104, .data, e_trapdoor]
-      - [0x1120, .data, e_jewel_sword_puzzle]
+      - [0x1114, .data, e_jewel_sword_puzzle]
       - [0x11CC, .data, e_sky_entities]
       - [0x122C, data]
       - [0x1300, data]

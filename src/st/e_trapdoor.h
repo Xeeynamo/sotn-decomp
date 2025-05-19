@@ -2,8 +2,7 @@
 static s32 g_TrapDoorFlag = 0; // 0 = Closed, 1 = Open
 
 static u8 trapdoor_anim[] = {
-    1,   27, 6,   28, 6,   29, 129, 30, 255, 0, 0,   0,
-    108, 2,  115, 2,  122, 2,  109, 2,  116, 2, 123, 2};
+    1,   27, 6,   28, 6,   29, 129, 30, 255};
 
 // trap door that leads to underground garden in saturn version.
 // also opens the one leading to the save room
