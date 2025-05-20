@@ -88,6 +88,7 @@ EntityRelicOrb = 0x09256EB0;
 EntityHeartDrop = 0x09257FE8;
 EntityMessageBox = 0x092581B8;
 EntityUnkId13 = 0x09258930;
+EntityExplosionVariantsSpawner = 0x09258A78;
 EntityExplosionVariants = 0x09258BF8;
 EntityGreyPuff = 0x09258D70;
 EntityIntenseExplosion = 0x09259080;

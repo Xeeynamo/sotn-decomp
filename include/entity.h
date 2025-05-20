@@ -882,7 +882,7 @@ typedef struct {
 } ET_MermanWaterSplash;
 
 typedef struct {
-    /* 0x7C */ s32 playerVelocity;
+    /* 0x7C */ u32 playerVelocity;
 } ET_CastleDoorTransition;
 
 typedef struct {

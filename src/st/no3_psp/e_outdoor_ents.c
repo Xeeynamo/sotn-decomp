@@ -87,7 +87,49 @@ void EntityPushAlucard(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityCastleDoorTransition);
+// Pushes Alucard through the castle door at the entrance
+void EntityCastleDoorTransition(Entity* self) {
+    Entity* player = &PLAYER;
+    Tilemap* tilemap = &g_Tilemap;
+    switch (self->step) {
+    case 0:
+        if (g_CastleFlags[PROLOGUE_COMPLETE]) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(g_EInitSpawner);
+        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+        g_Player.padSim = PAD_RIGHT;
+        g_Player.demo_timer = 255;
+        player->posX.i.hi = 8;
+        self->ext.castleDoorTransition.playerVelocity = FIX(2.5);
+        break;
+
+    case 1:
+        player->posX.val += self->ext.castleDoorTransition.playerVelocity;
+        g_Player.demo_timer = 1;
+        if ((player->posX.i.hi + tilemap->scrollX.i.hi) > 120) {
+            g_Player.padSim = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (self->ext.castleDoorTransition.playerVelocity != 0) {
+            self->ext.castleDoorTransition.playerVelocity -= FIX(5.0/32);
+            EntityExplosionVariantsSpawner(
+                player, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
+        } else {
+            self->step++;
+            g_PauseAllowed = true;
+        }
+        player->posX.val += self->ext.castleDoorTransition.playerVelocity;
+        g_Player.demo_timer = 1;
+        break;
+    case 3:
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityForegroundTree);
 
