@@ -772,12 +772,12 @@ typedef struct {
 } ET_80192998;
 
 typedef struct {
-    /* 0x7C */ u8 pad0[0x4];
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ u8* anim;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ u8 pad86[2];
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 puffStyle;
+    /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
 typedef struct {

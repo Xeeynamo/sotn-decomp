@@ -72,11 +72,10 @@ typedef struct {
 } Unkstruct_80102CD8;
 
 typedef struct {
-    /* 0x0 */ s16 animSet;
-    /* 0x2 */ s16 unk2; // Entity::unk5A
+    /* 0x0 */ u16 animSet;
+    /* 0x2 */ u16 unk2; // Entity::unk5A
     /* 0x4 */ u16 palette;
-    /* 0x6 */ s8 drawMode;
-    /* 0x7 */ char pad_7;
+    /* 0x6 */ u16 drawMode;
     /* 0x8 */ u8* anim;
 } Unkstruct_80180FE0;
 

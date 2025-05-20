@@ -4,28 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityPushAlucard);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityCastleDoorTransition);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityForegroundTree);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId50);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBackgroundPineTrees);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId52);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityCastleBridge);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDistantBackgroundTrees);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBackgroundCastleWall);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFlyingOwlAndLeaves);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFallingLeaf);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityRoomTransition2);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathStolenItem);
