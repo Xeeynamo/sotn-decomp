@@ -17,7 +17,7 @@ void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void EntityBackgroundBlock(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
@@ -65,7 +65,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     EntityDummy,
-    EntityBackgroundBlock,
+    OVL_EXPORT(EntityBackgroundBlock),
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,

@@ -6,7 +6,7 @@ extern u16 g_EInitCommon[];
 
 // params: Index of ObjInit to use
 //         (== 1) Use a different hardcoded rotY and rotX value
-void EntityBackgroundBlock(Entity* self) {
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);

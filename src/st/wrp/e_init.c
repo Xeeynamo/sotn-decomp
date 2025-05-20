@@ -2,7 +2,7 @@
 #include "wrp.h"
 
 void OVL_EXPORT(EntityRedDoor)(Entity*);
-void EntityBackgroundBlock(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
@@ -27,8 +27,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    EntityBackgroundBlock, // unused
-    EntityLockCamera,      // unused? looks debugging stuff
+    OVL_EXPORT(EntityBackgroundBlock), // unused
+    EntityLockCamera,                  // unused? looks debugging stuff
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,

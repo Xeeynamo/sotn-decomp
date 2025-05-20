@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void EntityBackgroundBlock(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void EntityLockCamera(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
@@ -110,7 +110,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    EntityBackgroundBlock,
+    OVL_EXPORT(EntityBackgroundBlock),
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
