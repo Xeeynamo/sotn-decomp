@@ -9,6 +9,15 @@ files:
         vram: 0x090DC980
         assets:
           - [0x0, skip]
+          - [0x6C290, cmpgfx, D_psp_09148C10, 128, 32, 4]
+          - [0x6C730, cmpgfx, D_psp_091490B0, 128, 32, 4]
+          - [0x6CBD0, cmpgfx, D_psp_09149550, 128, 32, 4]
+          - [0x6D070, cmpgfx, D_psp_091499F0, 128, 32, 4]
+          - [0x6D510, cmpgfx, D_psp_09149E90, 96, 16, 4]
+          - [0x6D630, cmpgfx, D_psp_09149FB0, 96, 16, 4]
+          - [0x6D750, cmpgfx, D_psp_0914A0D0, 96, 16, 4]
+          - [0x6D8C8, cmpgfx, D_psp_0914A248, 96, 16, 4]
+          - [0x6DA08, skip]
           - [0x6FA68, cmpgfx, game_over_left_it, 128, 128, 4]
           - [0x70ED0, cmpgfx, game_over_left_sp, 128, 128, 4]
           - [0x72530, cmpgfx, game_over_left_fr, 128, 128, 4]
