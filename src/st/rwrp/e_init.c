@@ -4,7 +4,7 @@
 
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -29,7 +29,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock), // unused
-    EntityLockCamera,                  // unused? looks debugging stuff
+    OVL_EXPORT(EntityLockCamera),      // unused? looks debugging stuff
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
