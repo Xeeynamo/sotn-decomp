@@ -155,9 +155,10 @@ extern s32 D_80072F20; // Player's collision detection
 extern Primitive D_us_80181644;
 
 // Function that runs when the player is in the switch room to activate the
-// skeleton ape that can destroy the bridge in underground caverns. Location
-// here (X: 21, Y: 33)
+// skeleton ape that can destroy the bridge in underground caverns.
+// Location (X: 21, Y: 33)
 // https://guides.gamercorner.net/sotn/areas/underground-caverns
+
 void func_us_801C5628(Entity* self) {
     Entity* newEnt;
 
