@@ -1436,25 +1436,23 @@ typedef struct {
     /* 0x2C */ u16 icon;
     /* 0x2E */ u16 iconPalette;
     /* 0x30 */ u16 criticalRate;
-    /* 0x32 */ u16 unk32;
-} Equipment; /* size=0x34 */
+} Equipment; /* size=0x32 */
 
 // Defines armor, cloak and rings
 typedef struct {
-    /* 00 */ const char* name;
-    /* 04 */ const char* description;
-    /* 08 */ s16 attBonus;
-    /* 0A */ s16 defBonus;
-    /* 0C */ u8 statsBonus[4];
-    /* 10 */ u16 weakToElements;
-    /* 12 */ u16 resistElements;
-    /* 14 */ u16 immuneElements;
-    /* 16 */ u16 absorbElements;
-    /* 18 */ u16 icon;
-    /* 1A */ u16 iconPalette;
-    /* 1C */ u16 equipType;
-    /* 1E */ u16 unk1E;
-} Accessory; /* size=0x20 */
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attBonus;
+    /* 0x0A */ s16 defBonus;
+    /* 0x0C */ u8 statsBonus[4];
+    /* 0x10 */ u16 weakToElements;
+    /* 0x12 */ u16 resistElements;
+    /* 0x14 */ u16 immuneElements;
+    /* 0x16 */ u16 absorbElements;
+    /* 0x18 */ u16 icon;
+    /* 0x1A */ u16 iconPalette;
+    /* 0x1C */ u16 equipType;
+} Accessory; /* size=0x1E */
 
 typedef struct {
     /* 0x00 */ const char* name;
