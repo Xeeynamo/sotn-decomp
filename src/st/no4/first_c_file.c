@@ -157,7 +157,39 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C582C);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5868);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C58A0);
+void func_us_801C58A0(Entity* self) {
+    Entity* newEnt;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+            func_us_801C5868();
+            DestroyEntity(self);
+        }
+        break;
+    case 1:
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+            newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (newEnt != NULL) {
+                CreateEntityFromCurrentEntity(E_SKELETON_APE, newEnt);
+                newEnt->params = 2;
+                newEnt->posY.i.hi = newEnt->posY.i.hi - 96;
+                newEnt->posX.i.hi = newEnt->posX.i.hi + 96;
+                self->ext.prim = (Primitive*)(newEnt + 2); // I dont like this
+            }
+            self->step += 1;
+        }
+        break;
+    case 2:
+        if (self->ext.prim->x3 == 4U) {
+            func_us_801C5868();
+            func_us_801C5134();
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C59E0);
 
