@@ -888,7 +888,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u8 unk7C;
     s32 : 24;
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ u32 unk80;
 } ET_AlucardController;
 
 typedef struct {

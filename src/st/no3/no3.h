@@ -307,7 +307,6 @@ extern u16 g_EntityCastleBridgePriorities[];
 extern u8 g_EntityCastleBridgeUVs[];
 extern s16 g_EntityCastleBridgeUVOffsets[];
 extern u8 g_EntityCastleBridgePages[];
-extern u16 g_EInitSpawner[];
 extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;
