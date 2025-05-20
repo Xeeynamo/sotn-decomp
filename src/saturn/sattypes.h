@@ -303,8 +303,7 @@ typedef struct {
     /* 0x2C */ u16 icon;
     /* 0x2E */ u16 palette;
     /* 0x30 */ u16 criticalRate;
-    /* 0x32 */ u16 unk32;
-} Equipment; /* size=0x34 */
+} Equipment; /* size=0x32 */
 
 // Defines armor, cloak and rings
 typedef struct {
