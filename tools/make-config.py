@@ -480,6 +480,7 @@ def reference_overlays(version: str) -> list[str]:
             "stmad",
             "stno0",
             "stno1",
+            "stno3",
             "stno4",
             "stnp3",
             "stnz0",
@@ -515,6 +516,7 @@ def reference_overlays(version: str) -> list[str]:
 def append_segments(
     segments: list[str],
     section_start: int,
+    alignment: int,
     next_segment_offset: int,
     prefix: str,
     default_segment: str,
@@ -533,7 +535,7 @@ def append_segments(
             segments.append(
                 f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
             )
-            last_offset = offset + segment["size"]
+            last_offset = align(offset + segment["size"], alignment)
             continue
 
         if offset > last_offset:
@@ -544,7 +546,7 @@ def append_segments(
         segments.append(
             f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
         )
-        last_offset = offset + segment["size"]
+        last_offset = align(offset + segment["size"], alignment)
 
     if next_segment_offset > 0 and last_offset < next_segment_offset:
         segments.append(
@@ -599,7 +601,7 @@ def make_config_psx(ovl_path: str, version: str, options: Options):
         else:
             subsegments.append(f"      - [0x{rodata_off:X}, rodata]\n")
     if text_off >= 0:
-        append_segments(subsegments, text_off, bss_off, "", version, known_segments)
+        append_segments(subsegments, text_off, 4, bss_off, "", version, known_segments)
     if bss_off >= 0:
         subsegments.append(f"      - [0x{bss_off:X}, sbss]\n")
 
@@ -672,7 +674,7 @@ def make_config_psp(ovl_path: str, version: str):
 
     text_segments = []
     append_segments(
-        text_segments, 0x80, data_start, f"{ovl_name}_psp/", "80", known_segments
+        text_segments, 0x80, 8, data_start, f"{ovl_name}_psp/", "80", known_segments
     )
 
     # set global vram address to allow mapping of global symbols
@@ -791,7 +793,7 @@ def find_matches(ovl_name: str, version: str) -> list[dict[str, any]]:
     """
     match_configs = []
     for source_name in reference_overlays(version):
-        match_config = evaluate_segments(ovl_name, version, source_name)
+        match_config = fingerprint_segments(ovl_name, version, source_name)
         if match_config is not None:
             match_configs.append(match_config)
 
@@ -799,7 +801,7 @@ def find_matches(ovl_name: str, version: str) -> list[dict[str, any]]:
     return match_existing(ovl_path, match_configs)
 
 
-def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
+def fingerprint_segments(ovl_name: str, version: str, source_name: str) -> str:
     """
     Creates a configuration file containing fingerprints for all segments
     and text symbols for the provided `source_name`. Any symbols which
@@ -817,7 +819,7 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
         match_config_path (str): the path to the generated config
     """
     build_dir = f"build/{version}"
-    match_config_path = f"{build_dir}/match.{source_name}.yaml"
+    match_config_path = f"{build_dir}/fingerprint.{source_name}.yaml"
 
     map_path = f"{build_dir}/{source_name}.map"
     elf_path = f"{build_dir}/{source_name}.elf"
@@ -828,7 +830,7 @@ def evaluate_segments(ovl_name: str, version: str, source_name: str) -> str:
     mipsmatch(
         "--output",
         match_config_path,
-        "evaluate",
+        "fingerprint",
         map_path,
         elf_path,
     )
@@ -849,7 +851,7 @@ def match_existing(
     ovl_path: str, match_config_paths: list[str]
 ) -> list[dict[str, any]]:
     """
-    Uses the match config files created in `evaluate_segments` to finds
+    Uses the match config files created in `fingerprint_segments` to finds
     any segment and symbols in `ovl_path`. Any number of `match_config_paths`
     can be provided.
 
