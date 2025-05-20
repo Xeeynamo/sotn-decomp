@@ -1435,7 +1435,7 @@
 | ric       | RicDoAttack                              |      236 |         46 |        |                                 |       |
 | maria     | func_80162604                            |      238 |         17 |        |                                 |       |
 | ric       | func_80162604                            |      238 |         17 |        |                                 |       |
-| no4       | func_pspeu_0923D9E0                      |      238 |         26 |        |                                 |       |
+| no4       | func_pspeu_0923D9E0                      |      238 |         26 |        | https://decomp.me/scratch/Ma2ug | 1.0   |
 | no4       | EntityBreakable                          |      238 |         35 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | dra       | DrawEntitiesHitbox                       |      240 |         15 |        | https://decomp.me/scratch/tjxvc | 0.997 |
 | st0       | EntitySecretButton                       |      240 |         36 |        | https://decomp.me/scratch/qQwps | 0.995 |
@@ -1502,7 +1502,7 @@
 | dra       | MenuHandleCursorInput                    |      275 |         39 | Yes    |                                 |       |
 | dra       | func_801042C4                            |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4       | func_pspeu_0923FF60                      |      277 |         31 |        |                                 |       |
-| no4       | func_pspeu_092423C8                      |      277 |         33 |        |                                 |       |
+| no4       | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/Absyx | 0.418 |
 | dra       | func_80124164                            |      279 |         17 |        |                                 |       |
 | maria     | func_80165DD8                            |      279 |         17 |        |                                 |       |
 | ric       | func_80165DD8                            |      279 |         17 |        |                                 |       |
@@ -1656,7 +1656,7 @@
 | no4       | func_pspeu_0924A260                      |      420 |         78 |        | https://decomp.me/scratch/7WKgl | 0.999 |
 | st0       | EntitySecretStairs                       |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | lib       | EntityLesserDemonSpit                    |      425 |         35 | Yes    |                                 |       |
-| no4       | func_pspeu_0923DD38                      |      428 |         36 |        |                                 |       |
+| no4       | func_pspeu_0923DD38                      |      428 |         36 |        | https://decomp.me/scratch/jpibD | 0.531 |
 | no3       | EntityStairwayPiece                      |      434 |         43 |        | https://decomp.me/scratch/EJfLO | 0.992 |
 | dra       | func_8012E040                            |      434 |         82 |        | https://decomp.me/scratch/SQeEq | 0.991 |
 | ric       | RicEntitySubwpnThrownVibhuti             |      435 |         44 |        |                                 |       |
