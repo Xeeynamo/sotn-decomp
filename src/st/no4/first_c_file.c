@@ -151,7 +151,62 @@ void func_us_801C5518(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5628);
+extern s32 D_80072F20; // Player's collision detection
+extern Primitive D_us_80181644;
+
+// Function that runs when the player is in the switch room to activate the
+// skeleton ape that can destroy the bridge in underground caverns. Location
+// here (X: 21, Y: 33)
+// https://guides.gamercorner.net/sotn/areas/underground-caverns
+void func_us_801C5628(Entity* self) {
+    Entity* newEnt;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 40;
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 0) {
+            self->posX.i.hi = 52;
+        } else {
+            self->posX.i.hi = 44;
+        }
+    }
+
+    // Idk why it wants to store the entity before but it works so ¯\_(ツ)_/¯
+    newEnt = g_Entities;
+
+    if ((((GetPlayerCollisionWith(self, 8, 16, 5) & 1) && (D_80072F20 & 1)) &&
+         (g_pads->pressed & PAD_LEFT)) &&
+        (PLAYER.step == 1)) {
+        if (self->ext.skeletonApe.unk7C != 0) { // ext.xxx.unk7C
+            self->ext.skeletonApe.unk7C--;
+        } else {
+            if (self->posX.i.hi >= 45) {
+                self->posX.i.hi--;
+                PLAYER.posX.i.hi--;
+                if (self->posX.i.hi == 44) {
+                    g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] = 1;
+                    PlaySfxPositional(SFX_SWITCH_CLICK);
+                    self->step++;
+                }
+            }
+            self->ext.skeletonApe.unk7C = 2;
+        }
+    }
+
+    if ((self->step == 2) && (newEnt->posX.i.hi >= 129)) {
+        g_api.PlaySfxVolPan(SFX_WALL_DEBRIS_A, 127, 8);
+        newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEnt != 0) {
+            CreateEntityFromCurrentEntity(14, newEnt);
+            newEnt->posX.i.hi = 128;
+            newEnt->posY.i.hi = 176;
+            newEnt->ext.prim = &D_us_80181644;
+            newEnt->params = 0x100;
+        }
+        self->step++;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C582C);
 
