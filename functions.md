@@ -92,6 +92,7 @@
 | chi       | en_stage_name.rodata                     |       16 |          0 | Yes    |                                 |       |
 | lib       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no3       | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
+| no3       | e_outdoor_ents.rodata                    |       16 |          0 | Yes    |                                 |       |
 | no4       | e_fishhead.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no4       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | st0       | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
@@ -764,7 +765,7 @@
 | lib       | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | dra       | CheckWeaponCombo                         |       64 |          5 |        |                                 |       |
 | dra       | func_801026BC                            |       64 |          7 |        |                                 |       |
-| no3       | func_pspeu_0923D348                      |       64 |          8 |        | https://decomp.me/scratch/nncWb | 0.996 |
+| no3       | CreateExplosionPuff                      |       64 |          8 |        |                                 |       |
 | dra       | func_8011A9D8                            |       65 |          8 |        |                                 |       |
 | chi       | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | lib       | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -1299,6 +1300,7 @@
 | no3       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no4       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | wrp       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
+| no3       | working_on.rodata                        |      166 |          0 | Yes    |                                 |       |
 | dra       | func_8012E7A4                            |      166 |         16 |        | https://decomp.me/scratch/huJsJ | 0.984 |
 | dra       | func_800F1B08                            |      166 |         19 |        |                                 |       |
 | st0       | EntityDraculaMeteorball                  |      166 |         24 |        | https://decomp.me/scratch/w4afZ | 0.995 |
@@ -1315,7 +1317,6 @@
 | st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
-| no3       | working_on.rodata                        |      176 |          0 | Yes    |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
 | no3       | EntityUnkId4B                            |      176 |         24 |        |                                 |       |
 | no3       | EntityMermanFireSpit                     |      177 |         19 |        |                                 |       |
