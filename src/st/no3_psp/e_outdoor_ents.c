@@ -2,9 +2,6 @@
 
 #include "../no3/no3.h"
 
-// long imports get split wrongly
-// clang-format off
-
 // pushes alucard to the right
 void EntityPushAlucard(Entity* self) {
     Entity* player = &PLAYER;
@@ -74,8 +71,7 @@ void EntityPushAlucard(Entity* self) {
         break;
 
     case 5:
-        if ((player->velocityY > 0) &&
-            !self->ext.alucardController.unk7C) {
+        if ((player->velocityY > 0) && !self->ext.alucardController.unk7C) {
             g_Player.padSim = PAD_CROSS;
             self->ext.alucardController.unk7C = true;
         } else {
@@ -116,7 +112,7 @@ void EntityCastleDoorTransition(Entity* self) {
 
     case 2:
         if (self->ext.castleDoorTransition.playerVelocity != 0) {
-            self->ext.castleDoorTransition.playerVelocity -= FIX(5.0/32);
+            self->ext.castleDoorTransition.playerVelocity -= FIX(5.0 / 32);
             EntityExplosionVariantsSpawner(
                 player, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
@@ -131,8 +127,110 @@ void EntityCastleDoorTransition(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityForegroundTree);
+static u16 D_801813DC[] = {
+    0x0080, 0x0290, 0x0130, 0x0498, 0x01E0, 0x0480, 0x0290, 0x028A, 0x0340,
+    0x0298, 0x03F8, 0x0290, 0x04A0, 0x0480, 0x0554, 0x0288, 0x0608, 0x0498,
+    0x06B6, 0x0494, 0x0760, 0x0284, 0x0810, 0x0290, 0x08C0, 0x0498, 0x0970,
+    0x028E, 0x0A20, 0x0298, 0x0AD0, 0x0482, 0x0B88, 0x0288, 0x0C38, 0x0280,
+    0x0CE0, 0x0498, 0x0D90, 0x0286, 0x0E50, 0x0286, 0x0F10, 0x0286, 0x0FD8,
+    0x0286, 0x10A0, 0x0286, 0x1160, 0x0286, 0x1240, 0x0286, 0x1320, 0x0286,
+    0x1400, 0x0286, 0x14E8, 0x0286, 0x15D0, 0x0286, 0x16C0, 0x0286, 0x17C0,
+    0x0286, 0x18D0, 0x0286, 0x19A0, 0x0286, 0xFFFF, 0x0290, 0x0000, 0x0000};
+static u16 D_80181468[] = {
+    0x0040, 0x0290, 0x00C0, 0x0498, 0x0140, 0x0480, 0x01C0, 0x028A, 0x0240,
+    0x0298, 0x02C8, 0x0290, 0x0348, 0x0480, 0x03C0, 0x0288, 0x0440, 0x0498,
+    0x04C8, 0x0494, 0x0548, 0x0284, 0x05C0, 0x0290, 0x0640, 0x0498, 0x06C0,
+    0x028E, 0x0740, 0x0298, 0x07C0, 0x0482, 0x0848, 0x0288, 0x08C8, 0x0280,
+    0x0940, 0x0498, 0x09C0, 0x0286, 0x0A48, 0x0286, 0x0AD0, 0x0290, 0x0B58,
+    0x0482, 0x0BE0, 0x0298, 0x0C70, 0x0288, 0x0D00, 0x0286, 0x0D90, 0x0480,
+    0x0E30, 0x0292, 0x0EE0, 0x0296, 0x0FC0, 0x0488, 0x10C0, 0x0294, 0x1200,
+    0x0482, 0xFFFF, 0x0290, 0x0000, 0x0000};
+// large foreground tree during intro
+void EntityForegroundTree(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    u16* ptrParams;
+    u16 var_s4;
+    u16 var_s3;
+    Entity *ent, *ent2;
 
+    if (self->params) {
+        var_s4 = 320;
+        ptrParams = &D_80181468[self->ext.foregroundTree.unk7C * 2];
+    } else {
+        var_s4 = 448;
+        ptrParams = &D_801813DC[self->ext.foregroundTree.unk7C * 2];
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitSpawner);
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        self->unk68 = var_s4;
+    label:
+        if (*ptrParams <= 352) {
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (ent != NULL) {
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
+                ent->posX.i.hi = *ptrParams++;
+                var_s3 = *ptrParams++;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
+                    ent->unk6C = 0x60;
+                }
+            } else {
+                ptrParams += 2;
+            }
+            self->ext.foregroundTree.unk7C++;
+            goto label;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = 128;
+        var_s3 = tilemap->scrollX.i.hi * var_s4 / 256 + 352;
+        if (var_s3 >= *ptrParams) {
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (ent != NULL) {
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
+                ent->posX.i.hi = var_s3 - *ptrParams++ + 368;
+                var_s3 = *ptrParams;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
+                    ent->unk6C = 0x60;
+                } else if (self->ext.foregroundTree.unk7C == 7) {
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2->params = 0x12;
+                    ent2->posY.i.hi -= 16;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
+                } else if (self->ext.foregroundTree.unk7C == 10) {
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2->params = 0x13;
+                    ent2->posY.i.hi += 48;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
+                } else if (self->ext.foregroundTree.unk7C == 15) {
+                    ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
+                    CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
+                    ent2->params = 0x14;
+                    ent2->posY.i.hi += 4;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
+                }
+            }
+            self->ext.foregroundTree.unk7C++;
+        }
+    }
+}
+
+// long imports get split wrongly
+// clang-format off
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityUnkId50);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundPineTrees);
