@@ -1197,7 +1197,7 @@ void MenuSoundConfigDraw(MenuContext* ctx) {
         ctx, g_Settings.isSoundMono, cursorX + 2, cursorY + 2, ImgW, 12, 4, 1);
 }
 
-u8 StatChangeArrow(u16 arg0, u16 arg1) {
+char StatChangeArrow(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
         return 0xE4; // Right arrow
     } else if (arg0 < arg1) {
@@ -1225,44 +1225,42 @@ void MenuStatChangesDraw(void) {
     s32 ycoord;
     s32 i;
     MenuContext* ctx;
-    s32 arrow;
+    char arrow;
 
-    if ((g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C != 0) ||
-        (D_80137948 == 0)) {
-        return;
-    }
-    ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
-    // Print the destination value for the square attack item
-    MenuDrawInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
-    // Show arrow icon for increasing, decreasing, or staying the same
-    arrow = StatChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
-    MenuDrawChar(arrow, 0x13C, 0x50, ctx);
+    if (!g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
+        ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
+        // Print the destination value for the square attack item
+        MenuDrawInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
+        // Show arrow icon for increasing, decreasing, or staying the same
+        arrow = StatChangeArrow(g_Status.attackHands[0], g_NewAttackRightHand);
+        MenuDrawChar(arrow, 0x13C, 0x50, ctx);
 
-    // Same but for the circle attack item
-    MenuDrawInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
-    arrow = StatChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
-    MenuDrawChar(arrow, 0x13C, 0x5A, ctx);
-    // And repeat for defense.
-    MenuDrawInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
-    arrow = StatChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
-    MenuDrawChar(arrow, 0x13C, 0x6A, ctx);
+        // Same but for the circle attack item
+        MenuDrawInt(g_NewAttackLeftHand, 0x154, 0x5A, ctx);
+        arrow = StatChangeArrow(g_Status.attackHands[1], g_NewAttackLeftHand);
+        MenuDrawChar(arrow, 0x13C, 0x5A, ctx);
+        // And repeat for defense.
+        MenuDrawInt(g_NewDefenseEquip, 0x154, 0x6A, ctx);
+        arrow = StatChangeArrow(g_Status.defenseEquip, g_NewDefenseEquip);
+        MenuDrawChar(arrow, 0x13C, 0x6A, ctx);
 
-    // Iterate through the 4 stats (STR CON INT LCK) doing the same.
-    xcoord = 0x108;
-    for (i = 0; i < 4; i++) {
-        ycoord = 0x22 + i * 10;
-        // Name of the stat
-        MenuDrawStr(g_MenuStr[1 + i], xcoord, ycoord, ctx);
-        // Current value for the stat
-        MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
-                    xcoord + 0x2C, ycoord, ctx);
-        // Indication of change
-        arrow =
-            StatChangeArrow((g_Status.statsBase[i] + g_Status.statsEquip[i]),
-                            g_NewPlayerStatsTotal[i]);
-        MenuDrawChar(arrow, xcoord + 0x34, ycoord, ctx);
-        // Final value for the stat
-        MenuDrawInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
+        // Iterate through the 4 stats (STR CON INT LCK) doing the same.
+        xcoord = 0x108;
+        for (i = 0; i < 4; i++) {
+            ycoord = 0x22 + i * 10;
+            // Name of the stat
+            MenuDrawStr(g_MenuStr[1 + i], xcoord, ycoord, ctx);
+            // Current value for the stat
+            MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
+                        xcoord + 0x2C, ycoord, ctx);
+            // Indication of change
+            arrow = StatChangeArrow(
+                (g_Status.statsBase[i] + g_Status.statsEquip[i]),
+                g_NewPlayerStatsTotal[i]);
+            MenuDrawChar(arrow, xcoord + 0x34, ycoord, ctx);
+            // Final value for the stat
+            MenuDrawInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
+        }
     }
 }
 

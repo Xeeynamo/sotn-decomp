@@ -20,6 +20,7 @@ typedef struct {
 
 void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
 extern s32 D_80137614;
+extern s32 D_80137948;
 extern u8* D_8013794C;
 extern s32 D_80137950;
 extern s32 D_80137954;
@@ -1053,7 +1054,7 @@ void func_psp_090EDA78(MenuContext* ctx) {
                   0x10, 0, 1);
 }
 
-u8 func_psp_090EDB70(u16 arg0, u16 arg1) {
+char StatChangeArrow(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
         return 0xE4; // Right arrow
     } else if (arg0 < arg1) {
@@ -1071,12 +1072,52 @@ void func_psp_090EDBA0(void) {
     D_psp_091CDDA8 = g_Status.defenseEquip;
 
     for (i = 0; i < 4; i++) {
-        D_psp_091CDD98[i] =
-            g_Status.statsBase[i] + g_Status.statsEquip[i];
+        D_psp_091CDD98[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuStatChangesDraw);
+void MenuStatChangesDraw(void) {
+    s32 xcoord;
+    s32 ycoord;
+    s32 i;
+    MenuContext* ctx;
+    char arrow;
+
+    if (!g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
+        ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
+        // Print the destination value for the square attack item
+        MenuDrawInt(D_psp_091CDDB8, 0x154, 0x50, ctx);
+        // Show arrow icon for increasing, decreasing, or staying the same
+        arrow = StatChangeArrow(g_Status.attackHands[0], D_psp_091CDDB8);
+        MenuDrawChar(arrow, 0x13C, 0x50, ctx);
+
+        // Same but for the circle attack item
+        MenuDrawInt(D_psp_091CDDB0, 0x154, 0x5A, ctx);
+        arrow = StatChangeArrow(g_Status.attackHands[1], D_psp_091CDDB0);
+        MenuDrawChar(arrow, 0x13C, 0x5A, ctx);
+        // And repeat for defense.
+        MenuDrawInt(D_psp_091CDDA8, 0x154, 0x6A, ctx);
+        arrow = StatChangeArrow(g_Status.defenseEquip, D_psp_091CDDA8);
+        MenuDrawChar(arrow, 0x13C, 0x6A, ctx);
+
+        xcoord = 0x108;
+        for (i = 0; i < 4; i++) {
+            ycoord = 0x22 + i * 10;
+            // Name of the stat
+            MenuDrawStr(g_MenuStr[i + 1], xcoord, ycoord, ctx);
+            // Current value for the stat
+            MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
+                        xcoord + 0x2C, ycoord, ctx);
+            // Indication of change
+            arrow =
+                StatChangeArrow(g_Status.statsBase[i] + g_Status.statsEquip[i],
+                                D_psp_091CDD98[i]);
+            MenuDrawChar(arrow, xcoord + 0x34, ycoord, ctx);
+            // Final value for the stat
+            MenuDrawInt(D_psp_091CDD98[i], xcoord + 0x4C, ycoord, ctx);
+        }
+    }
+}
 
 void MenuDrawStats(s32 menuDialogue) {
     MenuContext* ctx;
