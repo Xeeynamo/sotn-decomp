@@ -1200,10 +1200,8 @@ void MenuSoundConfigDraw(MenuContext* ctx) {
 u8 StatChangeArrow(u16 arg0, u16 arg1) {
     if (arg0 == arg1) {
         return 0xE4; // Right arrow
-    }
-    if (arg0 < arg1) {
+    } else if (arg0 < arg1) {
         return 0xE3; // Right-Up arrow
-
     } else {
         return 0xE5; // Right-Down arrow
     }

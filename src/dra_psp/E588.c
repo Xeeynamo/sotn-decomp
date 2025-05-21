@@ -32,6 +32,7 @@ extern u8 D_psp_0914A0D0[];
 extern u8 D_psp_09149E90[];
 extern u8 D_psp_0914A248[];
 extern u8 D_psp_09149FB0[];
+extern s32 D_psp_091CDD40;
 extern u_long* D_psp_0914A388[];
 extern s32 D_801375CC;
 extern s32 D_801375D4;
@@ -43,6 +44,10 @@ extern s32 g_IsSelectingEquipment;
 extern s32 D_80137608;
 extern s32 D_80137844[];
 extern s32 D_80137848[];
+extern s32 D_psp_091CDDB8;
+extern s32 D_psp_091CDDB0;
+extern s32 D_psp_091CDDA8;
+extern s32 D_psp_091CDD98[];
 
 extern char** D_800A2D48;
 extern char** D_800A2D68;
@@ -1023,13 +1028,53 @@ void MenuReverseCloakDraw(MenuContext* ctx) {
 
 void MenuSoundConfigDraw(MenuContext* ctx) {}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090ED9E0);
+void func_psp_090ED9E0(MenuContext* ctx) {
+    s32 cursorX = ctx->cursorX;
+    s32 cursorY = ctx->cursorY;
+    MenuDrawStr(D_800A2D68[30], cursorX + 8, cursorY + 2, ctx);
+    MenuDrawStr(D_800A2D68[31], cursorX + 8, cursorY + 18, ctx);
+    func_800F5E68(ctx, D_psp_091CDD40, cursorX + 2, cursorY, 0x3D, 0x10, 0, 1);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDA78);
+void func_psp_090EDA78(MenuContext* ctx) {
+    s32 cursorX = ctx->cursorX;
+    s32 cursorY = ctx->cursorY;
+    func_800F66BC(D_800A2D68[27], cursorX + 12, cursorY + 4, ctx, 1);
+    if (D_8006C378 != -1) {
+        D_psp_091CE1E0 = 0;
+    } else {
+        D_psp_091CE1E0 = 1;
+    }
+    func_800F66BC(
+        D_800A2D68[28], cursorX + 12, cursorY + 20, ctx, D_8006C378 != -1);
+    D_psp_091CE1E0 = 0;
+    func_800F66BC(D_800A2D68[29], cursorX + 12, cursorY + 36, ctx, 1);
+    func_800F5E68(ctx, g_MenuNavigation.cursorMain, cursorX + 2, cursorY, 0x58,
+                  0x10, 0, 1);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDB70);
+u8 func_psp_090EDB70(u16 arg0, u16 arg1) {
+    if (arg0 == arg1) {
+        return 0xE4; // Right arrow
+    } else if (arg0 < arg1) {
+        return 0xE3; // Right-Up arrow
+    } else {
+        return 0xE5; // Right-Down arrow
+    }
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EDBA0);
+void func_psp_090EDBA0(void) {
+    s32 i;
+
+    D_psp_091CDDB8 = g_Status.attackHands[0];
+    D_psp_091CDDB0 = g_Status.attackHands[1];
+    D_psp_091CDDA8 = g_Status.defenseEquip;
+
+    for (i = 0; i < 4; i++) {
+        D_psp_091CDD98[i] =
+            g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuStatChangesDraw);
 
@@ -1945,21 +1990,15 @@ void func_800FB9BC(void) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
 
-extern s32 D_80137614;
 extern s32 g_ServantPrevious;
 extern s32 D_801375DC;
 extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 g_IsCloakLiningUnlocked;
 extern s32 g_IsCloakColorUnlocked;
 extern s32 D_80137958;
-extern const char* D_800A2D64[];
-extern s32 D_80137608;
 extern s32 g_EquipOrderType;
 extern bool D_psp_091CDD48;
 extern s32 g_UserLanguage;
-extern s32 D_psp_091CDD40;
-
-extern s32 D_8013784C;
 
 extern const char* D_800A2D10[];
 extern const char* D_800A2D14[];
