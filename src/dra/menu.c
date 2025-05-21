@@ -529,51 +529,50 @@ u8 func_800F548C(u8 arg0) {
     return temp << 4;
 }
 
-static u32 IsOutsideDrawArea(
-    s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* context) {
-    if (context->unk1.x >= x1) {
+static u32 IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* ctx) {
+    if (ctx->unk1.x >= x1) {
         return true;
     }
-    if (context->unk1.y >= y1) {
+    if (ctx->unk1.y >= y1) {
         return true;
     }
-    if (context->unk1.x + context->unk1.w <= x0) {
+    if (ctx->unk1.x + ctx->unk1.w <= x0) {
         return true;
     }
-    if (context->unk1.y + context->unk1.h <= y0) {
+    if (ctx->unk1.y + ctx->unk1.h <= y0) {
         return true;
     }
     return false;
 }
 
-bool ScissorPolyG4(POLY_G4* poly, MenuContext* context) {
+bool ScissorPolyG4(POLY_G4* poly, MenuContext* ctx) {
     s32 scissorX;
     s32 scissorY;
     s32 diff;
 
-    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, context))
+    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, ctx))
         return true;
 
-    if (poly->x0 < context->unk1.x) {
-        diff = context->unk1.x - poly->x0;
+    if (poly->x0 < ctx->unk1.x) {
+        diff = ctx->unk1.x - poly->x0;
         poly->x0 += diff;
         poly->x2 += diff;
     }
 
-    if (poly->y0 < context->unk1.y) {
-        diff = context->unk1.y - poly->y0;
+    if (poly->y0 < ctx->unk1.y) {
+        diff = ctx->unk1.y - poly->y0;
         poly->y0 += diff;
         poly->y1 += diff;
     }
 
-    scissorX = context->unk1.x + context->unk1.w;
+    scissorX = ctx->unk1.x + ctx->unk1.w;
     if (scissorX < poly->x1) {
         diff = poly->x1 - scissorX;
         poly->x1 -= diff;
         poly->x3 -= diff;
     }
 
-    scissorY = context->unk1.y + context->unk1.h;
+    scissorY = ctx->unk1.y + ctx->unk1.h;
     if (scissorY < poly->y2) {
         diff = poly->y2 - scissorY;
         poly->y2 -= diff;
@@ -583,31 +582,31 @@ bool ScissorPolyG4(POLY_G4* poly, MenuContext* context) {
     return false;
 }
 
-bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
+bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* ctx) {
     s32 scissorX;
     s32 scissorY;
     s32 diff;
 
-    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, context))
+    if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, ctx))
         return true;
 
-    if (poly->x0 < context->unk1.x) {
-        diff = context->unk1.x - poly->x0;
+    if (poly->x0 < ctx->unk1.x) {
+        diff = ctx->unk1.x - poly->x0;
         poly->x0 += diff;
         poly->x2 += diff;
         poly->u0 += diff;
         poly->u2 += diff;
     }
 
-    if (poly->y0 < context->unk1.y) {
-        diff = context->unk1.y - poly->y0;
+    if (poly->y0 < ctx->unk1.y) {
+        diff = ctx->unk1.y - poly->y0;
         poly->y0 += diff;
         poly->y1 += diff;
         poly->v0 += diff;
         poly->v1 += diff;
     }
 
-    scissorX = context->unk1.x + context->unk1.w;
+    scissorX = ctx->unk1.x + ctx->unk1.w;
     if (scissorX < poly->x1) {
         diff = poly->x1 - scissorX;
         poly->x1 -= diff;
@@ -616,7 +615,7 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
         poly->u3 -= diff;
     }
 
-    scissorY = context->unk1.y + context->unk1.h;
+    scissorY = ctx->unk1.y + ctx->unk1.h;
     if (scissorY < poly->y2) {
         diff = poly->y2 - scissorY;
         poly->y2 -= diff;
@@ -628,7 +627,7 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* context) {
     return false;
 }
 
-bool ScissorSprite(SPRT* sprite, MenuContext* context) {
+bool ScissorSprite(SPRT* sprite, MenuContext* ctx) {
     s32 scissorY;
     s32 scissorX;
     s32 spriteX;
@@ -636,31 +635,31 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     s32 diff;
 
     if (IsOutsideDrawArea(sprite->x0, sprite->x0 + sprite->w, sprite->y0,
-                          sprite->y0 + sprite->h, context))
+                          sprite->y0 + sprite->h, ctx))
         return true;
 
-    if (context->unk1.x > sprite->x0) {
-        diff = context->unk1.x - sprite->x0;
+    if (ctx->unk1.x > sprite->x0) {
+        diff = ctx->unk1.x - sprite->x0;
         sprite->x0 += diff;
         sprite->u0 += diff;
         sprite->w -= diff;
     }
 
-    if (context->unk1.y > sprite->y0) {
-        diff = context->unk1.y - sprite->y0;
+    if (ctx->unk1.y > sprite->y0) {
+        diff = ctx->unk1.y - sprite->y0;
         sprite->y0 += diff;
         sprite->v0 += diff;
         sprite->h -= diff;
     }
 
-    scissorX = context->unk1.x + context->unk1.w;
+    scissorX = ctx->unk1.x + ctx->unk1.w;
     spriteX = sprite->x0 + sprite->w;
     if (spriteX > scissorX) {
         diff = spriteX - scissorX;
         sprite->w -= diff;
     }
 
-    scissorY = context->unk1.y + context->unk1.h;
+    scissorY = ctx->unk1.y + ctx->unk1.h;
     spriteY = sprite->y0 + sprite->h;
     if (spriteY > scissorY) {
         diff = spriteY - scissorY;
@@ -670,7 +669,7 @@ bool ScissorSprite(SPRT* sprite, MenuContext* context) {
     return false;
 }
 
-void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
+void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 clut, s32 tpage, bool disableTexShade, s32 c) {
     s32 otIdx;
     SPRT* sp;
@@ -686,10 +685,10 @@ void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
         clut = 0x15D;
     }
 #endif
-    if (menu == NULL) {
+    if (ctx == NULL) {
         otIdx = 0x1FF;
     } else {
-        otIdx = menu->otIdx + 2;
+        otIdx = ctx->otIdx + 2;
     }
     SetSemiTrans(sp, 0);
     SetShadeTex(sp, disableTexShade);
@@ -699,7 +698,7 @@ void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
     sp->h = h;
     sp->u0 = u;
     sp->v0 = v;
-    if (menu == NULL || !ScissorSprite(sp, menu)) {
+    if (ctx == NULL || !ScissorSprite(sp, ctx)) {
         sp->r0 = c;
         sp->g0 = c;
         sp->b0 = c;
@@ -714,24 +713,24 @@ void func_800F5A90(void) {
     MenuDrawImg(NULL, 96, 96, 64, 64, 0, 0, 0, 0x114, 1, 0);
 }
 
-void func_800F5AE4(MenuContext* menu) {
+void func_800F5AE4(MenuContext* ctx) {
     s32 i, x;
 
     for (i = 0, x = 72; i < 3; i++, x += 128)
-        MenuDrawImg(menu, x, 201, 128, 16, (i & 1) << 7, func_800F548C(2),
-                    0x1A1, (i / 2) + 6, 1, 0);
+        MenuDrawImg(ctx, x, 201, 128, 16, (i & 1) << 7, func_800F548C(2), 0x1A1,
+                    (i / 2) + 6, 1, 0);
 }
 
 void MenuDrawSprite(
-    MenuContext* context, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
+    MenuContext* ctx, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v,
     s32 clut, s32 tpage, s32 isAlpha, s32 colorIntensity, s32 fade) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
-    s32 otIdx = context->otIdx + 2;
+    s32 otIdx = ctx->otIdx + 2;
     POLY_GT4* poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     u32 polyColorIntensity;
     s32 temp;
 
-    if (context == &g_MenuData.menus[MENU_DG_BG]) {
+    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
         otIdx--;
     }
 
@@ -739,7 +738,7 @@ void MenuDrawSprite(
     setShadeTex(poly, isAlpha);
     SetTexturedPrimRect((Primitive*)poly, x, y, width, height, u, v);
 
-    if (!ScissorPolyGT4(poly, context)) {
+    if (!ScissorPolyGT4(poly, ctx)) {
         poly->tpage = tpage;
         poly->clut = g_ClutIds[clut];
         func_80107250(poly, colorIntensity);
@@ -760,11 +759,11 @@ void MenuDrawSprite(
 }
 
 // NOTE: used to draw the menu cursor
-void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
-                  s32 height, s32 r, s32 g, s32 b) {
+void MenuDrawRect(MenuContext* ctx, s32 posX, s32 posY, s32 width, s32 height,
+                  s32 r, s32 g, s32 b) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
-    s32 otIdx = context->otIdx + 1;
+    s32 otIdx = ctx->otIdx + 1;
     u32 temp;
 
     setSemiTrans(poly, 0);
@@ -779,7 +778,7 @@ void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
     poly->x3 = posX + width;
     poly->y3 = posY + height;
 
-    if (!ScissorPolyG4(poly, context)) {
+    if (!ScissorPolyG4(poly, ctx)) {
         poly->r0 = poly->r1 = poly->r2 = poly->r3 = r;
         poly->g0 = poly->g1 = poly->g2 = poly->g3 = g;
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
@@ -789,8 +788,8 @@ void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
     }
 }
 
-void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
-                   s32 h, s32 yGap, s32 bColorMode) {
+void func_800F5E68(MenuContext* ctx, s32 cursorIdx, s32 x, s32 y, s32 w, s32 h,
+                   s32 yGap, s32 bColorMode) {
     s32 r;
 
     if (bColorMode) {
@@ -802,7 +801,7 @@ void func_800F5E68(MenuContext* context, s32 cursorIdx, s32 x, s32 y, s32 w,
     } else {
         r = 0x80;
     }
-    MenuDrawRect(context, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
+    MenuDrawRect(ctx, x, y + (cursorIdx * (h + yGap)), w, h, r, 0, 0);
 }
 
 void DrawRelicsMenu(MenuContext* ctx) {
@@ -920,7 +919,7 @@ void MenuDrawAlucardCloakPreview(MenuContext* ctx) {
     MenuDrawSprite(ctx, 0x100, 0x80, 0x40, 0x40, 0x80, 0xB0, 0x100, 7, 1, 0, 0);
 }
 
-void func_800F6508(MenuContext* context, s32 x, s32 y) {
+void func_800F6508(MenuContext* ctx, s32 x, s32 y) {
     s32 yellow;
 
     if (g_Timer & 0x10) {
@@ -928,23 +927,23 @@ void func_800F6508(MenuContext* context, s32 x, s32 y) {
     } else {
         yellow = 0x7F - (g_Timer & 0xF);
     }
-    MenuDrawRect(context, x, y, 0x70, 0xB, yellow, yellow, 0);
+    MenuDrawRect(ctx, x, y, 0x70, 0xB, yellow, yellow, 0);
 }
 
 // Draw main menu cursor
-void func_800F6568(MenuContext* context) {
+void func_800F6568(MenuContext* ctx) {
     s32 height;
     s32 r;
 
-    height = context->cursorH / 5;
+    height = ctx->cursorH / 5;
     if (g_Timer & 0x20) {
         r = 0x40 + (g_Timer & 0x1F);
     } else {
         r = 0x5F - (g_Timer & 0x1F);
     }
-    MenuDrawRect(context, context->cursorX,
-                 context->cursorY + (g_MenuNavigation.cursorMain * height),
-                 context->cursorW, height, r, 0, 0);
+    MenuDrawRect(ctx, ctx->cursorX,
+                 ctx->cursorY + (g_MenuNavigation.cursorMain * height),
+                 ctx->cursorW, height, r, 0, 0);
 }
 
 // Draw equip menu cursor
@@ -966,7 +965,7 @@ void func_800F6618(s32 menuDialogue, s32 bColorMode) {
 }
 
 void func_800F66BC(
-    const char* str, s32 x, s32 y, MenuContext* context, bool disableTexShade) {
+    const char* str, s32 x, s32 y, MenuContext* ctx, bool disableTexShade) {
     u16 temp;
     const int ChWidth = 12;
     const int ChHeight = 16;
@@ -982,18 +981,18 @@ loop_1:
     unk = unk != 0;
     temp = ch;
     temp = temp >> 5;
-    MenuDrawImg(context, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
+    MenuDrawImg(ctx, x, y, ChWidth, ChHeight, (ch & 0xF) * ChWidth,
                 temp * ChHeight, 0x1A1, unk + 6, disableTexShade, 0x40);
     x += ChWidth;
     goto loop_1;
 }
 
-void MenuDrawChar(char ch, s32 x, s32 y, MenuContext* context) {
-    MenuDrawImg(context, x, y, 8, 8, (ch & 0xF) * 8, (ch & 0xF0) >> 1, 0x196,
-                0x1E, 1, 0);
+void MenuDrawChar(char ch, s32 x, s32 y, MenuContext* ctx) {
+    MenuDrawImg(
+        ctx, x, y, 8, 8, (ch & 0xF) * 8, (ch & 0xF0) >> 1, 0x196, 0x1E, 1, 0);
 }
 
-void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* context) {
+void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx) {
     const s32 ChWidth = 8;
     const s32 ChHeight = 8;
     s32 temp;
@@ -1030,27 +1029,27 @@ void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* context) {
                 x -= ChWidth;
             }
         }
-        MenuDrawChar(ch, xcopy, ycopy, context);
+        MenuDrawChar(ch, xcopy, ycopy, ctx);
         x += ChWidth;
     }
     D_80137614 = 1;
-    func_800F53D4(0x1E, context->otIdx + 2);
+    func_800F53D4(0x1E, ctx->otIdx + 2);
 }
 
-void MenuDrawInt(s32 number, s32 x, s32 y, MenuContext* context) {
+void MenuDrawInt(s32 number, s32 x, s32 y, MenuContext* ctx) {
     const s32 ChWidth = 8;
     do {
-        MenuDrawChar((number % 10) + CH('0'), x, y, context);
+        MenuDrawChar((number % 10) + CH('0'), x, y, ctx);
         number /= 10;
         x -= ChWidth;
     } while (number != 0);
 }
 
 // Draw a number with a limit of N digits
-void MenuDrawTime(s32 number, s32 x, s32 y, MenuContext* context, s32 digits) {
+void MenuDrawTime(s32 number, s32 x, s32 y, MenuContext* ctx, s32 digits) {
     const s32 ChWidth = 8;
     do {
-        MenuDrawChar((number % 10) + CH('0'), x, y, context);
+        MenuDrawChar((number % 10) + CH('0'), x, y, ctx);
         number /= 10;
         x -= ChWidth;
         digits--;
@@ -1062,7 +1061,7 @@ void func_800F6A48(void) {
     func_800EA5E4(0x411);
 }
 
-void MenuJosephsCloakDraw(MenuContext* context) {
+void MenuJosephsCloakDraw(MenuContext* ctx) {
     s32 row1Ypos;
     s32 row2Ypos;
     s32 i;
@@ -1070,7 +1069,7 @@ void MenuJosephsCloakDraw(MenuContext* context) {
     s32 x_RGB;
     const char** exteriorInterior;
 
-    MenuContext* ctx = &g_MenuData.menus[7];
+    MenuContext* menu = &g_MenuData.menus[MENU_DG_SETTINGS];
 #if defined(VERSION_US)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
@@ -1089,25 +1088,25 @@ void MenuJosephsCloakDraw(MenuContext* context) {
     // 3 iterations, each iteration does Exterior and Lining for one letter
     for (; i < 3; row1Ypos += 0xC, chsRgb++, row2Ypos += 0xC, i++) {
         // Write "Exterior"
-        MenuDrawStr(exteriorInterior[0], x_Start, row1Ypos, ctx);
+        MenuDrawStr(exteriorInterior[0], x_Start, row1Ypos, menu);
         // Write R, G, or B
-        MenuDrawChar(*chsRgb, x_RGB, row1Ypos, ctx);
+        MenuDrawChar(*chsRgb, x_RGB, row1Ypos, menu);
         // Write "Lining"
-        MenuDrawStr(exteriorInterior[1], x_Start, row2Ypos, ctx);
+        MenuDrawStr(exteriorInterior[1], x_Start, row2Ypos, menu);
         // Write R, G, or B
-        MenuDrawChar(*chsRgb, x_RGB, row2Ypos, ctx);
+        MenuDrawChar(*chsRgb, x_RGB, row2Ypos, menu);
     }
     for (i = 0; i < 6; i++) {
         MenuDrawInt(g_Settings.cloakColors[i], x_Start + number_spacing + 0x48,
-                    0x28 + 0xC * i, ctx);
+                    0x28 + 0xC * i, menu);
     }
-    func_800F5E68(ctx, g_MenuNavigation.cursorCloak, x_Start - 2, 0x26,
+    func_800F5E68(menu, g_MenuNavigation.cursorCloak, x_Start - 2, 0x26,
                   number_spacing + 0x58, 0xC, 0, 1);
     ApplyJosephsCloakPalette();
     func_800F6A48();
 }
 
-void MenuWindowColorsDraw(MenuContext* context) {
+void MenuWindowColorsDraw(MenuContext* ctx) {
 #if defined(VERSION_HD)
     s32 x = 128;
 #else
@@ -1117,11 +1116,11 @@ void MenuWindowColorsDraw(MenuContext* context) {
 
     for (i = 0; i < LEN(g_ChRgb); i++) {
         s32 y = 80 + i * 12;
-        MenuDrawChar(g_ChRgb[i], x + 32, y, context);
-        MenuDrawInt(g_Settings.windowColors[i], x + 72, y, context);
+        MenuDrawChar(g_ChRgb[i], x + 32, y, ctx);
+        MenuDrawInt(g_Settings.windowColors[i], x + 72, y, ctx);
     }
     func_800F5E68(
-        context, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
+        ctx, g_MenuNavigation.cursorWindowColors, x - 2, 78, 120, 12, 0, 1);
 }
 
 void SortTimeAttackEntries(void) {
@@ -1230,7 +1229,7 @@ void MenuButtonConfigDraw(MenuContext* ctx) {
 #undef XVAR
 }
 
-void MenuReverseCloakDraw(MenuContext* context) {
+void MenuReverseCloakDraw(MenuContext* ctx) {
 #if defined(VERSION_US)
     const int StrX = 176;
     const int ImgW = 64;
@@ -1239,26 +1238,26 @@ void MenuReverseCloakDraw(MenuContext* context) {
     const int ImgW = 40;
 #endif
 
-    MenuDrawStr(g_MenuStr[30], StrX, 48, context);
-    MenuDrawStr(g_MenuStr[31], StrX, 64, context);
-    func_800F5E68(context, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW,
-                  12, 4, 1);
+    MenuDrawStr(g_MenuStr[30], StrX, 48, ctx);
+    MenuDrawStr(g_MenuStr[31], StrX, 64, ctx);
+    func_800F5E68(
+        ctx, g_Settings.isCloakLiningReversed, StrX - 2, 46, ImgW, 12, 4, 1);
 }
 
-void MenuSoundConfigDraw(MenuContext* context) {
+void MenuSoundConfigDraw(MenuContext* ctx) {
 #if defined(VERSION_US)
     const int ImgW = 53;
 #elif defined(VERSION_HD)
     const int ImgW = 37;
 #endif
 
-    s16 cursorX = context->cursorX;
-    s16 cursorY = context->cursorY;
+    s16 cursorX = ctx->cursorX;
+    s16 cursorY = ctx->cursorY;
     s32 subMenuX = cursorX + 4;
-    MenuDrawStr(g_MenuStr[33], subMenuX, cursorY + 4, context);
-    MenuDrawStr(g_MenuStr[34], subMenuX, cursorY + 0x14, context);
-    func_800F5E68(context, g_Settings.isSoundMono, cursorX + 2, cursorY + 2,
-                  ImgW, 12, 4, 1);
+    MenuDrawStr(g_MenuStr[33], subMenuX, cursorY + 4, ctx);
+    MenuDrawStr(g_MenuStr[34], subMenuX, cursorY + 0x14, ctx);
+    func_800F5E68(
+        ctx, g_Settings.isSoundMono, cursorX + 2, cursorY + 2, ImgW, 12, 4, 1);
 }
 
 u8 StatChangeArrow(u16 arg0, u16 arg1) {
@@ -1563,7 +1562,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
 #endif
 }
 
-void MenuFamiliarsDraw(MenuContext* menu) {
+void MenuFamiliarsDraw(MenuContext* ctx) {
     s32 i;
     s32 baseX;
     s32 x;
@@ -1572,9 +1571,9 @@ void MenuFamiliarsDraw(MenuContext* menu) {
     s32 new_var;
 
 #if defined(VERSION_US)
-    MenuDrawStr(g_MenuStr[97], 120, 40, menu);
+    MenuDrawStr(g_MenuStr[97], 120, 40, ctx);
 #elif defined(VERSION_HD)
-    func_800F66BC(D_800A2D68[26], 136, 36, menu, 1);
+    func_800F66BC(D_800A2D68[26], 136, 36, ctx, 1);
 #endif
     for (i = 0; i < NUM_FAMILIARS; i++) {
         if (D_801375E0[i] == 0) {
@@ -1588,43 +1587,42 @@ void MenuFamiliarsDraw(MenuContext* menu) {
             x = baseX + 220;
         }
         strId = i + 46;
-        MenuDrawStr(g_MenuStr[strId], x, y + 68, menu);
+        MenuDrawStr(g_MenuStr[strId], x, y + 68, ctx);
         strId = 43;
         if (i < FAM_STATS_YOUSEI) {
             if (1) {
                 strId = 8;
             }
         }
-        MenuDrawStr(g_MenuStr[strId], x + 56, y + 68, menu);
-        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, menu);
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 68, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, ctx);
         strId = 44;
         if (i < FAM_STATS_YOUSEI) {
             strId = 5;
         }
-        MenuDrawStr(g_MenuStr[strId], x + 56, y + 84, menu);
-        MenuDrawInt(
-            g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, menu);
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 84, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, ctx);
         switch (i) {
         case FAM_STATS_BAT:
-            MenuDrawImg(menu, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
             break;
         case FAM_STATS_GHOST:
-            MenuDrawImg(menu, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
             break;
         case FAM_STATS_FAERIE:
-            MenuDrawImg(menu, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
             break;
         case FAM_STATS_DEMON:
-            MenuDrawImg(menu, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
             break;
         case FAM_STATS_SWORD:
-            MenuDrawImg(menu, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
             break;
         case FAM_STATS_YOUSEI:
-            MenuDrawImg(menu, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
             break;
         case FAM_STATS_NOSE_DEMON:
-            MenuDrawImg(menu, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
+            MenuDrawImg(ctx, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
             break;
         }
     }
@@ -1733,36 +1731,36 @@ void func_800F86E4(void) {
 }
 
 #if defined(VERSION_US)
-void func_800F8754(MenuContext* menu, s32 x, s32 y) {
+void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
     if (D_801375DC == 0) {
         D_8013784C = 1;
     }
 
-    MenuDrawStr(g_MenuStr[93], x + 14, y + 20, menu);
+    MenuDrawStr(g_MenuStr[93], x + 14, y + 20, ctx);
     if (D_801375E0[NUM_FAMILIARS] == 0) {
         D_8013784C = 1;
     } else {
         D_8013784C = 0;
     }
 
-    MenuDrawStr(g_MenuStr[96], x + 2, y + 68, menu);
+    MenuDrawStr(g_MenuStr[96], x + 2, y + 68, ctx);
     D_8013784C = 0;
-    MenuDrawStr(g_MenuStr[92], x + 18, y + 4, menu);
-    MenuDrawStr(g_MenuStr[94], x + 14, y + 36, menu);
-    MenuDrawStr(g_MenuStr[95], x + 14, y + 52, menu);
+    MenuDrawStr(g_MenuStr[92], x + 18, y + 4, ctx);
+    MenuDrawStr(g_MenuStr[94], x + 14, y + 36, ctx);
+    MenuDrawStr(g_MenuStr[95], x + 14, y + 52, ctx);
 }
 #elif defined(VERSION_HD)
-void func_800F8754(MenuContext* menu, s32 x, s32 y) {
-    func_800F66BC(D_800A2D68[3], x + 0xC, y, menu, true);
-    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, menu, D_801375DC != 0);
-    func_800F66BC(D_800A2D68[5], x + 6, y + 0x20, menu, true);
-    func_800F66BC(D_800A2D68[6], x, y + 0x30, menu, true);
+void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
+    func_800F66BC(D_800A2D68[3], x + 0xC, y, ctx, true);
+    func_800F66BC(D_800A2D68[4], x + 6, y + 0x10, ctx, D_801375DC != 0);
+    func_800F66BC(D_800A2D68[5], x + 6, y + 0x20, ctx, true);
+    func_800F66BC(D_800A2D68[6], x, y + 0x30, ctx, true);
     func_800F66BC(
-        D_800A2D68[25], x + 6, y + 0x40, menu, D_801375E0[NUM_FAMILIARS] != 0);
+        D_800A2D68[25], x + 6, y + 0x40, ctx, D_801375E0[NUM_FAMILIARS] != 0);
 }
 #endif
 
-void MenuEquipSortDraw(MenuContext* context) {
+void MenuEquipSortDraw(MenuContext* ctx) {
 #if defined(VERSION_US)
     const int TextY = 8;
     const int UnkX = 72;
@@ -1781,20 +1779,19 @@ void MenuEquipSortDraw(MenuContext* context) {
     for (; i < ITEM_END; i++) {
 #if defined(VERSION_US)
         MenuDrawStr(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
-                    context->cursorX + 4, context->cursorY + y, context);
+                    ctx->cursorX + 4, ctx->cursorY + y, ctx);
 #elif defined(VERSION_HD)
-        func_800F66BC(
-            pStrEquipTypes[g_Settings.equipOrderTypes[i]], context->cursorX + 4,
-            context->cursorY + y, context, true);
+        func_800F66BC(pStrEquipTypes[g_Settings.equipOrderTypes[i]],
+                      ctx->cursorX + 4, ctx->cursorY + y, ctx, true);
 #endif
         y += 16;
     }
-    func_800F5E68(context, g_EquipOrderType, context->cursorX + 2,
-                  context->cursorY + 4, UnkX, 16, 0, true);
+    func_800F5E68(ctx, g_EquipOrderType, ctx->cursorX + 2, ctx->cursorY + 4,
+                  UnkX, 16, 0, true);
 }
 
-void func_800F892C(s32 index, s32 x, s32 y, MenuContext* menu) {
-    MenuDrawImg(menu, x, y, 16, 16, (index & 7) * 16,
+void func_800F892C(s32 index, s32 x, s32 y, MenuContext* ctx) {
+    MenuDrawImg(ctx, x, y, 16, 16, (index & 7) * 16,
                 ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
