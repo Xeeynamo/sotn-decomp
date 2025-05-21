@@ -2121,7 +2121,7 @@ void func_800F9690(void) {
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-    if (g_MenuData.menus[4].unk1C != 0) {
+    if (g_MenuData.menus[MENU_DG_INFO_BAR].unk1C != 0) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -2858,31 +2858,28 @@ void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
     func_800F9808(2);
 
-    if (count > 0) {
-        D_80137608 = 1;
-        ShowText(str, 2);
-        LoadEquipIcon(equipIcon, palette, 0x1F);
+    if (!count) {
+        return;
     }
+    D_80137608 = 1;
+    ShowText(str, 2);
+    LoadEquipIcon(equipIcon, palette, 0x1F);
 }
 
 void func_800FADC0(void) {
-    const char* description;
     s32 cursorEquip;
-    u16 equipIcon;
-    u16 palette;
 
     if (g_MenuNavigation.cursorEquip < 2) {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
-        description = g_EquipDefs[cursorEquip].description;
-        equipIcon = g_EquipDefs[cursorEquip].icon;
-        palette = g_EquipDefs[cursorEquip].iconPalette;
+        func_800FAD34(g_EquipDefs[cursorEquip].description, 1,
+                      g_EquipDefs[cursorEquip].icon,
+                      g_EquipDefs[cursorEquip].iconPalette);
     } else {
         cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
-        description = g_AccessoryDefs[cursorEquip].description;
-        equipIcon = g_AccessoryDefs[cursorEquip].icon;
-        palette = g_AccessoryDefs[cursorEquip].iconPalette;
+        func_800FAD34(g_AccessoryDefs[cursorEquip].description, 1,
+                      g_AccessoryDefs[cursorEquip].icon,
+                      g_AccessoryDefs[cursorEquip].iconPalette);
     }
-    func_800FAD34(description, 0x1, equipIcon, palette);
 }
 
 void func_800FAE98(void) {
@@ -2890,7 +2887,7 @@ void func_800FAE98(void) {
     g_MenuStep = MENU_STEP_EQUIP;
 }
 
-void func_800FAEC4(s32 cursor, u16 count, const char* str, u16 icon, u16 pal) {
+void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
     g_IsSelectingEquipment = 0;
     func_800FAC98();
     func_800FAD34(str, count, icon, pal);

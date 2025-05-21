@@ -36,8 +36,13 @@ extern u_long* D_psp_0914A388[];
 extern s32 D_801375CC;
 extern s32 D_801375D4;
 extern s32 D_psp_091CE1E0;
+extern s32 D_psp_091CDF14;
 extern s32 D_psp_091CDE30[];
 extern s32 D_psp_091CDDC0[];
+extern s32 g_IsSelectingEquipment;
+extern s32 D_80137608;
+extern s32 D_80137844[];
+extern s32 D_80137848[];
 
 extern char** D_800A2D48;
 extern char** D_800A2D68;
@@ -1523,7 +1528,18 @@ void MenuDraw(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9690);
+void func_800F9690(void) {
+    Primitive* prim = &g_PrimBuf[D_psp_091CDF14];
+
+    if (D_80137608 != 0) {
+        prim->drawMode = DRAW_MENU;
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+    if (g_MenuData.menus[MENU_DG_INFO_BAR].unk1C != 0) {
+        prim->drawMode = DRAW_HIDE;
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F96F4);
 
@@ -1754,32 +1770,77 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", InitWeapon);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAB1C);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuHide);
+void MenuHide(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 1;
+    g_MenuData.menus[menuDialogue].unk1D = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuShow);
+void MenuShow(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 3;
+    g_MenuData.menus[menuDialogue].unk1D = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FABEC);
+void func_800FABEC(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC0C);
+void func_800FAC0C(s32 menuDialogue) {
+    g_MenuData.menus[menuDialogue].unk1C = 2;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC30);
+void func_800FAC30(void) {
+    D_80137844[0] = 0;
+    D_80137848[0] = 0;
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAC48);
+void func_800FAC48(void) {
+    ClearImage(&g_Vram.D_800ACD90, 0, 0, 0);
+    ClearImage(&g_Vram.D_800ACDC8, 0, 0, 0);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE0);
+void func_800FAC98(void) { func_800F9808(2); }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE8);
 
-void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette);
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAD34);
+void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette) {
+    D_80137608 = 0;
+    func_800F9808(2);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FADC0);
+    if (!count) {
+        return;
+    }
+    D_80137608 = 1;
+    ShowText(str, 2);
+    LoadEquipIcon(equipIcon, palette, 0x1F);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1EA0);
+void func_800FADC0(void) {
+    s32 cursorEquip;
 
-void func_800FAEC4(
-    s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAEC4);
+    if (g_MenuNavigation.cursorEquip < 2) {
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        func_800FAD34(g_EquipDefs[cursorEquip].description, 1,
+                      g_EquipDefs[cursorEquip].icon,
+                      g_EquipDefs[cursorEquip].iconPalette);
+    } else {
+        cursorEquip = g_Status.equipment[g_MenuNavigation.cursorEquip];
+        func_800FAD34(g_AccessoryDefs[cursorEquip].description, 1,
+                      g_AccessoryDefs[cursorEquip].icon,
+                      g_AccessoryDefs[cursorEquip].iconPalette);
+    }
+}
+
+void func_psp_090F1EA0(void) {
+    func_800FADC0();
+    g_MenuStep = MENU_STEP_EQUIP;
+}
+
+void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
+    g_IsSelectingEquipment = 0;
+    func_800FAC98();
+    func_800FAD34(str, count, icon, pal);
+    g_MenuStep++;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAF44);
 
