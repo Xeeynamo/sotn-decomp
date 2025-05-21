@@ -4,6 +4,20 @@
 #include "../dra/menu.h"
 #include "servant.h" // for InitializeMode enum
 
+typedef struct EquipMenuHelper {
+    s32 equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
 void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
 extern s32 D_80137614;
 extern u8* D_8013794C;
@@ -1668,14 +1682,14 @@ void func_800F9DD0(const char* src, char* dst) {
     }
 }
 
-RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
-
 void func_800F9E18(s32 arg0) {
     char buffer[38];
     const int ItemsPerRow = 2;
     s32 i = arg0 * 5;
     s32 nHalfScreenSize;
     s32 nItems = i + 5;
+
+    static RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 
     if (arg0 == 0) {
         ClearImage(&D_800A2D90, 0, 0, 0);
@@ -1756,23 +1770,20 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE8);
 
+void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette);
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAD34);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FADC0);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1EA0);
 
+void func_800FAEC4(
+    s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAEC4);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAF44);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB004);
-
-typedef struct EquipMenuHelper {
-    s32 equipTypeFilter;
-    s32 index;
-    s32 isAccessory;
-} EquipMenuHelper;
 
 EquipMenuHelper g_EquipMenuHelper[] = {
     {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
@@ -1820,14 +1831,6 @@ extern u32 D_psp_08B42054; // psp triangle button
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB23C);
 
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ u16 cursorW;
-    /* 0x06 */ u16 cursorH;
-    /* 0x08 */ s32 otIdx;
-} MenuContextInit; // size = 0x0C
-
 MenuContextInit g_MenuInit[NUM_MENU] = {
     {142, 100, 84, 112, 0x40}, // MENU_DG_MAIN
     {0, 24, 360, 200, 0x10},   // MENU_DG_BG
@@ -1859,7 +1862,7 @@ void func_800FB9BC(void) {
     s32 i;
     MenuContext* context;
 
-    context = &g_MenuData.menus[0];
+    context = g_MenuData.menus;
     for (i = 0; i < NUM_MENU; i++, context++) {
         context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
         context->cursorX += 12;
@@ -1873,16 +1876,14 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 =
-        ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
-        YScrollPerElement;
+    g_MenuData.menus[MENU_DG_RELICS].h =
+        g_MenuData.menus[MENU_DG_RELICS].unk16 =
+            ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
+            YScrollPerElement;
 }
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
 
-void func_800FAEC4(
-    s32* cursor_unused, u16 count, const char* str, u16 icon, u16 pal);
-void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette);
 extern s32 D_80137614;
 extern s32 g_ServantPrevious;
 extern s32 D_801375DC;

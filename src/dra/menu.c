@@ -121,62 +121,6 @@ u8 g_ChRgb[] = {CH('R'), CH('G'), CH('B')};
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
 
-#if defined(VERSION_US)
-RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
-#endif
-
-EquipMenuHelper g_EquipMenuHelper[] = {
-    {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
-    {EQUIP_HAND, 0, false},     // RIGHT_HAND_SLOT
-    {EQUIP_HEAD, 0, true},      // HEAD_SLOT
-    {EQUIP_ARMOR, 1, true},     // ARMOR_SLOT
-    {EQUIP_CAPE, 2, true},      // CAPE_SLOT
-    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_1_SLOT
-    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
-};
-
-s32 D_800A2DEC[] = {
-    0x1A, 0x00, 0x30, 0x39, 0x39,
-};
-
-MenuContextInit g_MenuInit[NUM_MENU] = {
-#if defined(VERSION_US)
-    {158, 100, 76, 80, 0x40},  // MENU_DG_MAIN
-    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
-    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
-    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
-    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
-    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
-    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
-    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
-    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
-    {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
-    {172, 44, 65, 32, 0x30},   // MENU_DG_CLOAK_LINING
-    {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
-    {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
-    {12, 32, 340, 153, 0x30},  // MENU_DG_TIME_ATTACK
-    {276, 32, 77, 183, 0x50},  // MENU_DG_EQUIP_SORT
-    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
-#elif defined(VERSION_HD)
-    {172, 100, 48, 80, 0x40},  // MENU_DG_MAIN
-    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
-    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
-    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
-    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
-    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
-    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
-    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
-    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
-    {124, 44, 160, 112, 0x30}, // MENU_DG_CFG_BUTTONS
-    {124, 44, 44, 32, 0x30},   // MENU_DG_CLOAK_LINING
-    {124, 112, 41, 32, 0x30},  // MENU_DG_CFG_SOUND
-    {124, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
-    {112, 32, 240, 153, 0x30}, // MENU_DG_TIME_ATTACK
-    {296, 32, 45, 183, 0x50},  // MENU_DG_EQUIP_SORT
-    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
-#endif
-};
-
 // BSS
 extern EquipKind D_801375CC;
 extern s32 D_801375D0;
@@ -2452,6 +2396,8 @@ void func_800F9E18(s32 arg0) {
     s32 i = (arg0 * 5) + 5;
     s32 nItems = i;
 
+    static RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
+
     if (arg0 == 0) {
         ClearImage(&D_800A2D90, 0, 0, 0);
         DrawSync(0);
@@ -3006,14 +2952,22 @@ void func_800FB004(void) {
     }
 }
 
+EquipMenuHelper g_EquipMenuHelper[] = {
+    {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
+    {EQUIP_HAND, 0, false},     // RIGHT_HAND_SLOT
+    {EQUIP_HEAD, 0, true},      // HEAD_SLOT
+    {EQUIP_ARMOR, 1, true},     // ARMOR_SLOT
+    {EQUIP_CAPE, 2, true},      // CAPE_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_1_SLOT
+    {EQUIP_ACCESSORY, 3, true}, // ACCESSORY_2_SLOT
+};
+
 void func_800FB0FC(void) {
     EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
-    s32 index = helper->index;
-    s32 isAccessory = helper->isAccessory;
 
     D_801375CC = helper->equipTypeFilter;
-    D_801375D4 = index;
-    func_800FAF44(isAccessory);
+    D_801375D4 = helper->index;
+    func_800FAF44(helper->isAccessory);
     func_800FB004();
 }
 
@@ -3038,6 +2992,48 @@ bool func_800FB1EC(s32 arg0) {
 
     return false;
 }
+
+s32 D_800A2DEC[] = {
+    0x1A, 0x00, 0x30, 0x39, 0x39,
+};
+
+MenuContextInit g_MenuInit[NUM_MENU] = {
+#if defined(VERSION_US)
+    {158, 100, 76, 80, 0x40},  // MENU_DG_MAIN
+    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+    {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+    {172, 44, 65, 32, 0x30},   // MENU_DG_CLOAK_LINING
+    {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
+    {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+    {12, 32, 340, 153, 0x30},  // MENU_DG_TIME_ATTACK
+    {276, 32, 77, 183, 0x50},  // MENU_DG_EQUIP_SORT
+    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
+#elif defined(VERSION_HD)
+    {172, 100, 48, 80, 0x40},  // MENU_DG_MAIN
+    {0, 24, 360, 200, 0x10},   // MENU_DG_BG
+    {0, 24, 360, 97, 0x20},    // MENU_DG_EQUIP_OVERVIEW
+    {0, 120, 360, 74, 0x20},   // MENU_DG_EQUIP_SELECTOR
+    {0, 193, 360, 31, 0x40},   // MENU_DG_INFO_BAR
+    {0, 24, 360, 170, 0x20},   // MENU_DG_RELICS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SPELLS
+    {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
+    {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
+    {124, 44, 160, 112, 0x30}, // MENU_DG_CFG_BUTTONS
+    {124, 44, 44, 32, 0x30},   // MENU_DG_CLOAK_LINING
+    {124, 112, 41, 32, 0x30},  // MENU_DG_CFG_SOUND
+    {124, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
+    {112, 32, 240, 153, 0x30}, // MENU_DG_TIME_ATTACK
+    {296, 32, 45, 183, 0x50},  // MENU_DG_EQUIP_SORT
+    {0, 24, 360, 200, 0x18},   // MENU_DG_FAMILIARS
+#endif
+};
 
 #if defined(VERSION_US)
 #define PAD_MENU_SELECT_ALT (PAD_CROSS)
@@ -3254,7 +3250,7 @@ void func_800FB9BC(void) {
     s32 i;
     MenuContext* context;
 
-    context = &g_MenuData.menus[0];
+    context = g_MenuData.menus;
     for (i = 0; i < NUM_MENU; i++, context++) {
         context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
         context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
@@ -3267,9 +3263,10 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    g_MenuData.menus[5].h = g_MenuData.menus[5].unk16 =
-        -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
-        YScrollPerElement;
+    g_MenuData.menus[MENU_DG_RELICS].h =
+        g_MenuData.menus[MENU_DG_RELICS].unk16 =
+            -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
+            YScrollPerElement;
 }
 
 void func_800FBAC4(void) {
