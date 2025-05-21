@@ -2972,7 +2972,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 : 32;
     /* 0x80 */ Primitive* prim;
-    /* 0x84 */ u8 unk84;
+    /* 0x84 */ u8 unk84; // maybe not last block marker?
 } ET_DopplegangerBGLight;
 
 typedef struct {

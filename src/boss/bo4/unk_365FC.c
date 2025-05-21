@@ -128,7 +128,7 @@ void func_us_801B65FC(Entity* self) {
         if (blockYPos < self->posY.i.hi) {
             if (blockIndex != 4) {
                 next = self + 1;
-                next->ext.ILLEGAL.u8[8] = 1;
+                next->ext.dopBGLight.unk84 = 1;
             }
             self->posY.i.hi = blockYPos;
             tilemapIndex = 0xDE;
