@@ -11,6 +11,9 @@ extern s32 D_pspeu_0926BCA8;
 #endif
 
 // 4-segment block doors
+// n.b.! the equivalent RBO5 function, `func_us_801B54F0`
+//       appears the same as the PSP version of this BO4
+//       version.
 void func_us_801B65FC(Entity* self) {
     Entity* next;
     s32 i;
@@ -26,13 +29,13 @@ void func_us_801B65FC(Entity* self) {
     case 0:
         // are you coming from the left door or right door
         if (PLAYER.posX.i.hi < 0x80) {
-            g_Player.padSim = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
 #ifdef VERSION_PSP
             leftBlockFlag = 0;
             rightBlockFlag = 0x100;
 #endif
         } else {
-            g_Player.padSim = 0x8000;
+            g_Player.padSim = PAD_LEFT;
 #ifdef VERSION_PSP
             leftBlockFlag = 0x100;
             rightBlockFlag = 0;
@@ -48,24 +51,21 @@ void func_us_801B65FC(Entity* self) {
             self->params += leftBlockFlag;
             next = self + 1;
             for (i = 1; i < 4; i++, next++) {
-
-#ifdef VERSION_PSP
                 // no declaration
-                CreateEntityFromCurrentEntity(D_pspeu_0926BCA8, next);
+                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+#ifdef VERSION_PSP
                 next->params = i + leftBlockFlag;
 #else
-                CreateEntityFromCurrentEntity(0x1B, next);
                 next->params = i;
 #endif
             }
 
             for (i = 0; i < 4; i++, next++) {
-#ifdef VERSION_PSP
                 // no declaration
-                CreateEntityFromCurrentEntity(D_pspeu_0926BCA8, next);
+                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
+#ifdef VERSION_PSP
                 next->params = i + rightBlockFlag;
 #else
-                CreateEntityFromCurrentEntity(0x1B, next);
                 next->params = 0x100 + i;
 #endif
             }
@@ -96,7 +96,7 @@ void func_us_801B65FC(Entity* self) {
 #ifdef VERSION_PSP
         if (!self->params) {
 #endif
-            g_Player.padSim = 0;
+            g_Player.padSim = PAD_NONE;
             g_Player.demo_timer = 4;
 
 #ifdef VERSION_PSP

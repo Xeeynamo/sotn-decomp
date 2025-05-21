@@ -39,12 +39,12 @@ void func_us_801B54F0(Entity* self) {
             self->params += leftBlockFlag;
             next = self + 1;
             for (i = 1; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(0x1B, next);
+                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
                 next->params = i + leftBlockFlag;
             }
 
             for (i = 0; i < 4; i++, next++) {
-                CreateEntityFromCurrentEntity(0x1B, next);
+                CreateEntityFromCurrentEntity(E_ID(ID_1B), next);
                 next->params = i + rightBlockFlag;
             }
         }

@@ -24,7 +24,8 @@ typedef enum {
     /* 0x17 */ E_ID_17 = 0x17,
     /* 0x19 */ E_ID_19 = 0x19,
     /* 0x1A */ E_ID_1A,
-    /* 0x1C */ E_ID_1C = 0x1C,
+    /* 0x1B */ E_ID_1B,
+    /* 0x1C */ E_ID_1C,
     /* 0x1D */ E_ID_1D,
 
     /* 0x22 */ E_MIST = 0x22,
