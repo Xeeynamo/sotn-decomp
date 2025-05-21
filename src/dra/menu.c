@@ -1158,38 +1158,31 @@ void SortTimeAttackEntries(void) {
 }
 
 void MenuTimeAttackDraw(MenuContext* ctx) {
-    s16 padX;
-    s16 cursorX;
-    s32 cursorY;
-    s32 entryIdx;
-    s32 offsetY;
     s32 i;
-    s32 hours;
+    s32 entryIdx;
     s32 seconds;
+    s32 cursorX;
+    s32 cursorY;
 
-    for (i = 0, offsetY = 8; i < 12; i++, offsetY += 12) {
-        cursorX = ctx->cursorX;
+    for (i = 0; i < 12; i++) {
         entryIdx = i + g_MenuNavigation.cursorTimeAttack;
-        cursorY = ctx->cursorY + offsetY;
-        MenuDrawInt(entryIdx + 1, cursorX + 16, cursorY, ctx);
+        cursorX = ctx->cursorX + 8;
+        cursorY = ctx->cursorY + 8 + i * 12;
+        MenuDrawInt(entryIdx + 1, cursorX + 8, cursorY, ctx);
         seconds = g_TimeAttackEntryTimes[entryIdx];
         if (seconds == 1000000) {
-            MenuDrawStr(g_MenuStr[41], cursorX + 29, cursorY, ctx);
+            MenuDrawStr(g_MenuStr[41], cursorX + 21, cursorY, ctx);
         } else {
             MenuDrawStr(g_MenuStr[53 + c_strTimeAttackEntry[entryIdx]],
-                        cursorX + 29, cursorY, ctx);
-            hours = seconds / 10000;
-#if defined(VERSION_HD)
-            padX = -100;
-#elif defined(VERSION_US)
-            padX = 0;
+                        cursorX + 21, cursorY, ctx);
+#ifdef VERSION_HD
+            cursorX -= 100;
 #endif
-            MenuDrawInt(hours, cursorX + 276 + padX, cursorY, ctx);
-            MenuDrawChar(0x1A, cursorX + 284 + padX, cursorY, ctx);
-            MenuDrawTime((seconds / 100) - (hours * 100), cursorX + 300 + padX,
-                         cursorY, ctx, 2);
-            MenuDrawChar(0x1A, cursorX + 308 + padX, cursorY, ctx);
-            MenuDrawTime(seconds % 100, cursorX + 324 + padX, cursorY, ctx, 2);
+            MenuDrawInt(seconds / 10000, cursorX + 268, cursorY, ctx);
+            MenuDrawChar(CH(':'), cursorX + 276, cursorY, ctx);
+            MenuDrawTime((seconds / 100) % 100, cursorX + 292, cursorY, ctx, 2);
+            MenuDrawChar(CH(':'), cursorX + 300, cursorY, ctx);
+            MenuDrawTime(seconds % 100, cursorX + 316, cursorY, ctx, 2);
         }
     }
 }
@@ -2288,7 +2281,7 @@ void func_800F98AC(const char* str, u32 arg1) {
 }
 
 #if defined(VERSION_US)
-void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
+void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
@@ -2419,8 +2412,8 @@ void func_800F99B8(const char* str, s32 arg1, s32 arg2) {
 }
 #endif
 
-void func_800F9D40(const char* str, s32 arg1, s32 arg2) {
-    if (arg2 != 0) {
+void func_800F9D40(const char* str, s32 arg1, bool arg2) {
+    if (arg2) {
         D_8013794C = g_Pix[2];
     }
 
@@ -2430,30 +2423,26 @@ void func_800F9D40(const char* str, s32 arg1, s32 arg2) {
 }
 
 #if defined(VERSION_US)
-void func_800F9D88(const char* str, s32 arg1, s32 arg2) {
-    if (arg2 != 0) {
+void func_800F9D88(const char* str, s32 arg1, bool arg2) {
+    if (arg2) {
         D_8013794C = g_Pix[2];
     }
     D_80137950 = 0;
     D_80137954 = 0x100;
-    func_800F99B8(str, arg1, 0);
+    func_800F99B8(str, arg1, false);
 }
 #endif
 
-void func_800F9DD0(u8* arg0, u8* arg1) {
+void func_800F9DD0(const char* src, char* dst) {
     s32 i;
 
     for (i = 0; i < 16; i++) {
-        if (*arg0 == 0)
+        if (*src == 0)
             break;
-        *arg1++ = *arg0++;
-        *arg1++ = *arg0++;
+        *dst++ = *src++;
+        *dst++ = *src++;
     }
 }
-
-const char D_800DC6EC[] = {
-    "　　　　　　　　　　　　　　　　　　　　　",
-};
 
 #if defined(VERSION_US)
 void func_800F9E18(s32 arg0) {
@@ -2471,16 +2460,16 @@ void func_800F9E18(s32 arg0) {
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, true);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, true);
         }
 
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 640, true);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 771, 1);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 771, true);
         }
     }
 }
@@ -2492,7 +2481,7 @@ void func_800F9E18(s32 arg0) {
     s32 i;
 
     for (i = arg0 * 5; i < nItems; i++) {
-        STRCPY(buffer, D_800DC6EC);
+        STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 0].name, buffer[0]);
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 1].name, buffer[1]);
         if ((i % ItemsPerRow) == 0) {
@@ -2513,7 +2502,7 @@ void func_800F9F40(void) {
         spellId = g_Status.spells[i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
-            STRCPY(buffer, D_800DC6EC);
+            STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
             ShowText(buffer, 0x80 + i);
         }

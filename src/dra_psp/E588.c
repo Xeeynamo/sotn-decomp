@@ -935,7 +935,32 @@ void SortTimeAttackEntries(void) {
     } while (isLooping);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuTimeAttackDraw);
+void MenuTimeAttackDraw(MenuContext* ctx) {
+    s32 i;
+    s32 entryIdx;
+    s32 seconds;
+    s32 cursorX;
+    s32 cursorY;
+
+    for (i = 0; i < 12; i++) {
+        entryIdx = g_MenuNavigation.cursorTimeAttack + i;
+        cursorX = ctx->cursorX + 8;
+        cursorY = ctx->cursorY + 8 + i * 12;
+        MenuDrawInt(entryIdx + 1, cursorX + 8, cursorY, ctx);
+        seconds = D_psp_091CDE30[entryIdx];
+        if (seconds == 1000000) {
+            MenuDrawStr(g_MenuStr[41], cursorX + 21, cursorY, ctx);
+        } else {
+            MenuDrawStr(g_MenuStr[53 + D_psp_091CDDC0[entryIdx]], cursorX + 21,
+                        cursorY, ctx);
+            MenuDrawInt(seconds / 10000, cursorX + 268, cursorY, ctx);
+            MenuDrawChar(CH(':'), cursorX + 276, cursorY, ctx);
+            MenuDrawTime((seconds / 100) % 100, cursorX + 292, cursorY, ctx, 2);
+            MenuDrawChar(CH(':'), cursorX + 300, cursorY, ctx);
+            MenuDrawTime(seconds % 100, cursorX + 316, cursorY, ctx, 2);
+        }
+    }
+}
 
 void MenuButtonConfigDraw(MenuContext* ctx) {
     s32 i;
@@ -1498,7 +1523,7 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9808);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F98AC);
 
-void func_800F99B8(char* str, s32 arg1, bool arg2) {
+void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     // See src/st/blit_char.h
     const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
@@ -1623,9 +1648,25 @@ void func_800F99B8(char* str, s32 arg1, bool arg2) {
     D_8013794C += sp4c;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9D88);
+void func_800F9D88(const char* str, s32 arg1, bool arg2) {
+    if (arg2) {
+        D_8013794C = g_Pix[2];
+    }
+    D_80137950 = 0;
+    D_80137954 = 0x100;
+    func_800F99B8(str, arg1, false);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9DD0);
+void func_800F9DD0(const char* src, char* dst) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        if (*src == 0)
+            break;
+        *dst++ = *src++;
+        *dst++ = *src++;
+    }
+}
 
 RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 
@@ -1683,7 +1724,6 @@ void func_800F9F40(void) {
 }
 
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
-
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuHandleCursorInput);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1418);
