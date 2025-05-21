@@ -335,7 +335,7 @@ void func_800F53A4(void) {
     CalcDefense();
 }
 
-void func_psp_090EBE50(s32 tpage, s32 otIdx) {
+void func_800F53D4(s32 tpage, s32 otIdx) {
     OT_TYPE* ot = g_CurrentBuffer->ot;
     DR_MODE* drawMode = &g_CurrentBuffer->drawModes[g_GpuUsage.drawModes];
 
@@ -531,7 +531,7 @@ void MenuDrawImg(MenuContext* menu, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
         sp->clut = g_ClutIds[clut];
         AddPrim(&ot[otIdx], sp);
         g_GpuUsage.sp++;
-        func_psp_090EBE50(tpage, otIdx);
+        func_800F53D4(tpage, otIdx);
     }
 }
 
@@ -580,7 +580,7 @@ void MenuDrawSprite(
         }
         AddPrim(&ot[otIdx], poly);
         g_GpuUsage.gt4++;
-        func_psp_090EBE50(tpage, otIdx);
+        func_800F53D4(tpage, otIdx);
     }
 }
 
@@ -609,7 +609,7 @@ void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
         poly->b0 = poly->b1 = poly->b2 = poly->b3 = b;
         AddPrim(&ot[otIdx], poly);
         g_GpuUsage.g4++;
-        func_psp_090EBE50(0, otIdx);
+        func_800F53D4(0, otIdx);
     }
 }
 
@@ -822,7 +822,7 @@ void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* context) {
         x += ChWidth;
     }
     D_80137614 = 1;
-    func_psp_090EBE50(0x1E, context->otIdx + 2);
+    func_800F53D4(0x1E, context->otIdx + 2);
 }
 
 void MenuDrawInt(s32 number, s32 x, s32 y, MenuContext* context) {
