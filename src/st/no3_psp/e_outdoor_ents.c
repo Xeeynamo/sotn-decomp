@@ -279,10 +279,189 @@ void EntityUnkId50(Entity* self) {
     }
 }
 
+static u16 pineSet1[] = {0x0010,0x000B,0x0031,0x0003,0x0040,0x0102,0x0068,0x0104,0x0088,0x0005,0x00AC,0x0103,0x00D1,0x0107,0x00F3,0x0105,0x011C,0x000A,0x0132,0x0107,0x0151,0x010B,0x0178,0x010B,0x0190,0x0002,0x01A6,0x010A,0x01D0,0x0100,0x01F2,0x0102,0x0220,0x0005,0x0231,0x0108,0x0250,0x0106,0x0270,0x0007,0x0288,0x0105,0x02C0,0x0009,0x02E4,0x010A,0x0308,0x010B,0x0324,0x0104,0x0354,0x0102,0x036B,0x0004,0x038C,0x010B,0x03A8,0x0107,0x03D1,0x0108,0x03F4,0x0005,0x0418,0x0102,0x0440,0x0101,0x046C,0x0102,0x0484,0x0005,0x04B0,0x0001,0x04CC,0x0102,0x04EF,0x0107,0x0514,0x0107,0x0538,0x0006,0x055B,0x0002,0x0587,0x0103,0x05A1,0x010B,0x05C0,0x0000,0x05E6,0x0105,0x0602,0x0003,0x062A,0x010A,0x064E,0x0100,0x0678,0x0002,0x069A,0x0107,0x06C0,0x0104,0x06EC,0x0002,0x0714,0x0104,0x073C,0x0106,0x0764,0x000B,0x0790,0x0107,0x07A0,0x0002,0x07D0,0x0105,0x0810,0x0001,0xFFFF,0x0000};
+static u16 pineSet2[] = {0x000C,0x0100,0x002A,0x010A,0x0048,0x0004,0x0066,0x0100,0x0084,0x000A,0x00A2,0x0101,0x00C0,0x000B,0x00DE,0x0104,0x00FD,0x0103,0x011A,0x000B,0x0138,0x0104,0x0155,0x0006,0x0173,0x0101,0x0191,0x0102,0x01B0,0x0104,0x01CE,0x010B,0x01EC,0x0007,0x0209,0x0100,0x0228,0x0104,0x0246,0x0101,0x0264,0x0105,0x0282,0x0009,0x02A0,0x010B,0x02BE,0x0103,0x02DC,0x0009,0x02FB,0x0001,0x031A,0x0108,0x0339,0x000B,0x035A,0x0105,0x037A,0x0006,0x039C,0x0104,0x03BE,0x0101,0x03E0,0x0104,0x0402,0x0101,0xFFFF,0x0000,0x0000,0x0000};
+static u16 pineSet3[] = {0x000A,0x0105,0x0026,0x0100,0x0041,0x0007,0x005D,0x0101,0x0078,0x0008,0x0094,0x0101,0x00B1,0x0004,0x00CD,0x0102,0x00E9,0x0107,0x0105,0x010B,0x0122,0x0005,0x013E,0x0103,0x015C,0x0000,0x0179,0x0107,0x019A,0x010A,0x01BA,0x0002,0x01DA,0x0106,0x01FE,0x0000,0xFFFF,0x0000,0x0000,0x0000};
+static u16 D_801817D4[] = {0x80, 0x40, 0x20};
+static u16 D_801817DC[] = {0x100, 0xD8, 0xB0};
+static u8 D_801817E4[] = {0x80, 0x60, 0x40};
+static u16 D_801817E8[] = {0x17, 0x49, 0, 0};
+static u16* D_801817EC[] = {pineSet1, pineSet2, pineSet3};
+
+// part of parallax background with pine trees
+void EntityBackgroundPineTrees(Entity* self) {
+    Tilemap* gTilemap = &g_Tilemap;
+    u16 selfUnk68;
+    s32 primIndex;
+    u16* var_s5;
+    u16 var_s4;
+    u16 width;
+    u16 xpos;
+    Primitive* prim_s1;
+    Primitive* prim_s0;
+
+    xpos = self->params; // Temporary reuse of xpos var for params
+    selfUnk68 = D_801817D4[xpos];
+    var_s5 = D_801817EC[xpos];
+    var_s5 += self->ext.ILLEGAL.u16[0] * 2;
+    var_s4 = D_801817DC[xpos];
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitSpawner);
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        self->unk68 = selfUnk68;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
+        if (primIndex == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+
+        for (prim_s0 = &g_PrimBuf[primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            prim_s0->drawMode = DRAW_HIDE;
+        }
+
+        for (prim_s0 = &g_PrimBuf[primIndex]; true; prim_s0 = prim_s1->next) {
+            if (*var_s5 >= 0x121) {
+                return;
+            }
+            self->ext.ILLEGAL.u16[0]++;
+            for (; prim_s0 != NULL; prim_s0 = prim_s0->next) {
+                if (prim_s0->drawMode == DRAW_HIDE) {
+                    break;
+                }
+            }
+            if (prim_s0 == NULL) {
+                return;
+            }
+
+            for (prim_s1 = prim_s0->next; prim_s1 != NULL;
+                 prim_s1 = prim_s1->next) {
+                if (prim_s1->drawMode == DRAW_HIDE) {
+                    break;
+                }
+            }
+            if (prim_s1 == NULL) {
+                return;
+            }
+            prim_s0->tpage = 0xE;
+            prim_s0->u0 = prim_s0->u2 = 0x80;
+            prim_s0->u1 = prim_s0->u3 = 0x80 + 0x28;
+            prim_s0->v0 = prim_s0->v1 = 0x80;
+            prim_s0->v2 = prim_s0->v3 = 0x80 + 0x50;
+
+            prim_s1->tpage = 0xF;
+            prim_s1->u0 = prim_s1->u2 = 0xB0;
+            prim_s1->u1 = prim_s1->u3 = 0xB0 + 0x08;
+            prim_s1->v0 = prim_s1->v1 = 0xC8;
+            prim_s1->v2 = prim_s1->v3 = 0xC8 + 0x30;
+
+            xpos = *var_s5++;
+            width = var_s4 * 20 / 256;
+
+            prim_s0->x0 = prim_s0->x2 = xpos - width;
+            prim_s0->x1 = prim_s0->x3 = xpos + width;
+
+            width = var_s4 * 4 / 256;
+
+            prim_s1->x0 = prim_s1->x2 = xpos - width + 1;
+            prim_s1->x1 = prim_s1->x3 = xpos + width + 1;
+
+            xpos = *var_s5++;
+
+            prim_s0->clut = prim_s1->clut = D_801817E8[(xpos >> 8) & 0xFF];
+
+            prim_s0->y2 = prim_s0->y3 =
+                0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
+
+            prim_s0->y0 = prim_s0->y1 = prim_s0->y2 - (var_s4 * 80 / 256);
+
+            prim_s1->y2 = prim_s1->y3 = 0x9C;
+            prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
+            // Set all colors for both prims.
+            PCOL(prim_s0) = PCOL(prim_s1) = D_801817E4[self->params];
+            prim_s0->priority = 0x3F - (self->params * 2);
+            prim_s1->priority = prim_s0->priority - 1;
+            prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
+        }
+    case 1:
+        xpos = 0x80 - self->posX.i.hi;
+        self->posX.i.hi = 0x80;
+
+        for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            if (prim_s0->drawMode != DRAW_HIDE) {
+                prim_s0->x0 = prim_s0->x2 -= xpos;
+                prim_s0->x1 = prim_s0->x3 -= xpos;
+                if (prim_s0->x1 <= 0) {
+                    prim_s0->drawMode = DRAW_HIDE;
+                }
+            }
+        }
+        xpos = gTilemap->scrollX.i.hi * selfUnk68 / 256 + 0x120;
+
+        if (xpos < *var_s5) {
+            return;
+        }
+        self->ext.ILLEGAL.u16[0]++;
+        for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
+             prim_s0 = prim_s0->next) {
+            if (prim_s0->drawMode == DRAW_HIDE) {
+                for (prim_s1 = prim_s0->next; prim_s1 != NULL;
+                     prim_s1 = prim_s1->next) {
+                    if (prim_s1->drawMode == DRAW_HIDE) {
+                        prim_s0->tpage = 0xE;
+                        prim_s0->u0 = prim_s0->u2 = 0x80;
+                        prim_s0->u1 = prim_s0->u3 = 0x80 + 0x28;
+                        prim_s0->v0 = prim_s0->v1 = 0x80;
+                        prim_s0->v2 = prim_s0->v3 = 0x80 + 0x50;
+
+                        prim_s1->tpage = 0xF;
+                        prim_s1->u0 = prim_s1->u2 = 0xB0;
+                        prim_s1->u1 = prim_s1->u3 = 0xB0 + 0x08;
+                        prim_s1->v0 = prim_s1->v1 = 0xC8;
+                        prim_s1->v2 = prim_s1->v3 = 0xC8 + 0x30;
+
+                        xpos = 0x120 - (xpos - *var_s5++);
+                        width = var_s4 * 20 / 256;
+
+                        prim_s0->x0 = prim_s0->x2 = xpos - width;
+                        prim_s0->x1 = prim_s0->x3 = xpos + width;
+
+                        width = var_s4 * 4 / 256;
+
+                        prim_s1->x0 = prim_s1->x2 = xpos - width + 1;
+                        prim_s1->x1 = prim_s1->x3 = xpos + width + 1;
+
+                        xpos = *var_s5;
+                        prim_s0->clut = prim_s1->clut =
+                            D_801817E8[(xpos >> 8) & 0xFF];
+                        prim_s0->y2 = prim_s0->y3 =
+                            0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
+                        prim_s0->y0 = prim_s0->y1 =
+                            prim_s0->y2 - (var_s4 * 80 / 256);
+                        prim_s1->y2 = prim_s1->y3 = 0x9C;
+                        prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
+                        // Set all colors for both prims.
+                        PCOL(prim_s0) = PCOL(prim_s1) =
+                            D_801817E4[self->params];
+                        prim_s0->priority = 0x3F - (self->params * 2);
+                        prim_s1->priority = prim_s0->priority - 1;
+                        prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        break;
+    }
+}
+
 // long imports get split wrongly
 // clang-format off
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundPineTrees);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityUnkId52);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityCastleBridge);
