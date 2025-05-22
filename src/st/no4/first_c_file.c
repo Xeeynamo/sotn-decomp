@@ -301,7 +301,68 @@ void func_us_801C7FAC(void) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C801C);
+void func_us_801C801C(Entity* self) {
+    Entity* newEnt;
+    s16 offsetY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        if (g_CastleFlags[BOATMAN_GATE_OPEN] != 0) {
+            func_us_801C7FAC();
+            DestroyEntity(self);
+            return;
+        }
+        self->animCurFrame = 24;
+        return;
+    case 1:
+        if (g_CastleFlags[BOATMAN_GATE_OPEN] != 0) {
+            GetPlayerCollisionWith(self, 16, 56, 3);
+            func_us_801C7FAC();
+            self->ext.et_801C801C.unk80 = 0;
+            self->step++;
+            return;
+        }
+        break;
+    case 2:
+        if (!(self->ext.et_801C801C.unk80++ & 0xF)) {
+            PlaySfxPositional(SFX_STONE_MOVE_C);
+        }
+
+        self->posY.i.hi--;
+        offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+
+        if (offsetY >= 125) {
+            if (self->ext.et_801C801C.unk7C != 0) {
+                self->ext.et_801C801C.unk7C--;
+            } else {
+                newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEnt != NULL) {
+                    CreateEntityFromCurrentEntity(24, newEnt);
+                    newEnt->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
+                    newEnt->posX.i.hi = (s16)(newEnt->posX.i.hi - 16) +
+                                        (self->ext.et_801C801C.unk7E * 8);
+                    newEnt->params = 0x8000;
+                    newEnt->ext.et_801C801C.unk88 = 23;
+                    newEnt->zPriority = 155;
+                }
+
+                self->ext.et_801C801C.unk7E++;
+                if (self->ext.et_801C801C.unk7E >= 5) {
+                    self->ext.et_801C801C.unk7E = 0;
+                }
+                self->ext.et_801C801C.unk7C = 1;
+            }
+        }
+
+        GetPlayerCollisionWith(self, 16, 60, 3);
+
+        if (offsetY < 36) {
+            DestroyEntity(self);
+        }
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8248);
 
