@@ -3,6 +3,7 @@
 #include "../dra/dra_bss.h"
 #include "../dra/menu.h"
 
+extern void* func_psp_090EAF08(void*, void*, void*, void*, void*);
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EAF08);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090EAFA8);
@@ -364,8 +365,6 @@ char D_psp_0914A3D0[] = {CH('R'), CH('V'), CH('B')}; // fr
 char D_psp_0914A3D8[] = {CH('R'), CH('G'), CH('B')}; // ge
 
 extern u8* g_ChRgb[];
-
-extern u8* func_psp_090EAF08(void*, void*, void*, void*, void*);
 
 void MenuWindowColorsDraw(MenuContext* context) {
     s32 x = 188;
@@ -1106,12 +1105,11 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9D88);
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9DD0);
 
-extern u8* D_psp_0914A394;
-extern s32 D_psp_0914A0D0;
-extern s32 D_psp_09149E90;
-extern s32 D_psp_0914A248;
-extern s32 D_psp_09149FB0;
-extern s32 D_psp_0914A388;
+extern u8 D_psp_0914A0D0[];
+extern u8 D_psp_09149E90[];
+extern u8 D_psp_0914A248[];
+extern u8 D_psp_09149FB0[];
+extern u_long* D_psp_0914A388[];
 
 RECT D_800A2D90 = {0x180, 0x30, 0x80, 0x80};
 
@@ -1127,10 +1125,10 @@ void func_800F9E18(s32 arg0) {
         DrawSync(0);
     }
 
-    D_psp_0914A394 = func_psp_090EAF08(
-        0, &D_psp_0914A0D0, &D_psp_09149E90, &D_psp_0914A248, &D_psp_09149FB0);
-    if (D_psp_0914A394) {
-        func_psp_091040A0(&D_psp_0914A388);
+    D_psp_0914A388[3] = (u_long*)func_psp_090EAF08(
+        NULL, D_psp_0914A0D0, D_psp_09149E90, D_psp_0914A248, D_psp_09149FB0);
+    if (D_psp_0914A388[3] != NULL) {
+        func_psp_091040A0(D_psp_0914A388);
     }
 
     for (nHalfScreenSize = i; i < nItems; i++, nHalfScreenSize++) {

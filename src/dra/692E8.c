@@ -53,10 +53,10 @@ extern s32 D_80137FB8;
 
 #elif defined(VERSION_PSP)
 
-extern s32 D_psp_09148C10[];
-extern s32 D_psp_091490B0[];
-extern s32 D_psp_09149550[];
-extern s32 D_psp_091499F0[];
+extern u8 D_psp_09148C10[];
+extern u8 D_psp_091490B0[];
+extern u8 D_psp_09149550[];
+extern u8 D_psp_091499F0[];
 
 s16 D_800ACE20[] = {
     0xFFD0, 0xFFD0, 0xFFD1, 0xFFD8, 0xFFD7, 0xFFE2, 0xFFE1, 0xFFE2, 0xFFD7,
