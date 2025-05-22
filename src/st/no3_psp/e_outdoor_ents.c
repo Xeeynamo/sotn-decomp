@@ -776,10 +776,29 @@ void EntityDistantBackgroundTrees(Entity* self) {
     }
 }
 
+// shows part of the parallax background castle wall
+void EntityBackgroundCastleWall(Entity* entity) {
+    Entity* newEntity;
+
+    newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+    if (newEntity != NULL) {
+        CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+        newEntity->params = 0xC;
+        newEntity->unk68 = 0x80;
+        newEntity = AllocEntity(newEntity, &g_Entities[256]);
+        if (newEntity != NULL) {
+            CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+            newEntity->posX.i.hi += 0x40;
+            newEntity->posY.i.hi = 0x80;
+            newEntity->params = 0xB;
+            newEntity->unk68 = 0xC0;
+        }
+    }
+    DestroyEntity(entity);
+}
+
 // long imports get split wrongly
 // clang-format off
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundCastleWall);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFlyingOwlAndLeaves);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFallingLeaf);
