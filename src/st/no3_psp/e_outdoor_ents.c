@@ -229,10 +229,58 @@ void EntityForegroundTree(Entity* self) {
     }
 }
 
+static u16 D_801814EC[] = {0x0020,0x0006,0x003E,0x0007,0x005E,0x0008,0x007E,0x0007,0x009C,0x0009,0x00E0,0x0006,0x00FE,0x0008,0x011C,0x0009,0x0170,0x0006,0x018E,0x0008,0x01AE,0x0007,0x01CE,0x0007,0x01EE,0x0008,0x020E,0x0007,0x022C,0x0009,0x02A0,0x0006,0x02BE,0x0007,0x02DE,0x0008,0x02FC,0x0009,0x0360,0x0006,0x037E,0x0007,0x039E,0x0008,0x03BE,0x0007,0x03DE,0x0007,0x03FC,0x0009,0x0460,0x0006,0x047E,0x0007,0x049E,0x0007,0x04BE,0x0008,0x04DE,0x0007,0x04FE,0x0007,0x051E,0x0008,0x053C,0x0009,0x0620,0x0006,0x063E,0x0007,0x065E,0x0008,0x067E,0x0007,0x069C,0x0009,0x06E0,0x0006,0x06FE,0x0008,0x071C,0x0009,0x0770,0x0006,0x078E,0x0008,0x07AE,0x0007,0x07CE,0x0007,0x07EE,0x0008,0x080E,0x0007,0x082C,0x0009,0x08A0,0x0006,0x08BE,0x0007,0x08DE,0x0008,0x08FC,0x0009,0x0960,0x0006,0x097E,0x0007,0x099E,0x0008,0x09BE,0x0007,0x09DE,0x0007,0x09FC,0x0009,0x0A60,0x0006,0x0A7E,0x0007,0x0A9E,0x0007,0x0ABE,0x0008,0x0ADE,0x0007,0x0AFE,0x0007,0x0B1E,0x0008,0x0B3C,0x0009,0x0BB0,0x0006,0x0BCE,0x0007,0x0BEE,0x0007,0x0C0E,0x0008,0x0C2C,0x0009,0xFFFF,0x0002};
+
+void EntityUnkId50(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
+    Entity* newEntity;
+    u16 temp_s3;
+    u16* ptr;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitSpawner);
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        self->unk68 = 0xC0;
+        self->ext.et_801BCC4C.unk7C = 0;
+        ptr = D_801814EC;
+    label:
+        if (*ptr <= 288) {
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                newEntity->posX.i.hi = *ptr++;
+                newEntity->params = *ptr++;
+                newEntity->unk68 = 0xC0;
+            } else {
+                ptr += 2;
+            }
+            self->ext.et_801BCC4C.unk7C++;
+            goto label;
+        }
+        break;
+
+    case 1:
+        self->posX.i.hi = 128;
+        ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
+        temp_s3 = tilemap->scrollX.i.hi * 0xC0 / 0x100 + 288;
+        if (temp_s3 >= ptr[0]) {
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
+                newEntity->posX.i.hi = temp_s3 - *ptr++ + 288;
+                newEntity->posX.i.lo = self->posX.i.lo;
+                newEntity->params = *ptr++;
+                newEntity->unk68 = 0xC0;
+            }
+            self->ext.et_801BCC4C.unk7C++;
+        }
+        break;
+    }
+}
+
 // long imports get split wrongly
 // clang-format off
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityUnkId50);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityBackgroundPineTrees);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityUnkId52);
