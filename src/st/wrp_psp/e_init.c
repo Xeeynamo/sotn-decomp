@@ -8,8 +8,8 @@ u16 OVL_EXPORT(RedDoorTiles)[][8] = {
 
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityDamageDisplay(Entity*);
-void EntityBackgroundBlock(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityWarpRoom(Entity*);
 void EntityWarpSmallRocks(Entity*);
@@ -32,8 +32,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 418 */ EntityMessageBox,
     /* 41C */ EntityDummy,
     /* 420 */ EntityDummy,
-    /* 424 */ EntityBackgroundBlock, // unused
-    /* 428 */ EntityLockCamera,      // unused? looks debugging stuff
+    /* 424 */ OVL_EXPORT(EntityBackgroundBlock), // unused
+    /* 428 */ OVL_EXPORT(EntityLockCamera), // unused? looks debugging stuff
     /* 42C */ EntityUnkId13,
     /* 430 */ EntityExplosionVariants,
     /* 434 */ EntityGreyPuff,

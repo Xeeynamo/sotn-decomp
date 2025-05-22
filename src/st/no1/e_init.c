@@ -18,7 +18,7 @@ void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
 void EntityEnvTile(Entity* self);
-void EntityLockCamera(Entity* self);
+void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -114,7 +114,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
     /* 0x10 */ EntityEnvTile,
-    /* 0x11 */ EntityLockCamera,
+    /* 0x11 */ OVL_EXPORT(EntityLockCamera),
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,

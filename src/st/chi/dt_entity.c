@@ -22,8 +22,8 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
-void EntityBackgroundBlock(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -70,9 +70,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    EntityBackgroundBlock,
-    EntityLockCamera, // EntityCameraLock
-    EntityUnkId13,    // EntityParticleTrail
+    OVL_EXPORT(EntityBackgroundBlock),
+    OVL_EXPORT(EntityLockCamera), // EntityCameraLock
+    EntityUnkId13,                // EntityParticleTrail
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityDemonSwitchWall,
@@ -182,7 +182,7 @@ static u8 AnimFrames_80180734[] = {
 
 // Background Block
 // D_80180740
-ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {
         .animSet = ANIMSET_DRA(6),
         .zPriority = 0x1FA,
