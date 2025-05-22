@@ -798,7 +798,7 @@
 | no4       | unk_26740.rodata                         |       68 |          0 | Yes    |                                 |       |
 | dra       | SetRoomBackgroundLayer                   |       68 |          2 |        |                                 |       |
 | dra       | SortTimeAttackEntries                    |       68 |          5 |        |                                 |       |
-| no3       | EntityBackgroundBlock                    |       68 |          5 |        |                                 |       |
+| no3       | NO3_EntityBackgroundBlock                |       68 |          5 |        |                                 |       |
 | no4       | func_pspeu_0923B288                      |       68 |          5 |        |                                 |       |
 | dra       | DecrementStatBuffTimers                  |       68 |          6 | Yes    | https://decomp.me/scratch/vEngY | 1.0   |
 | maria     | MarCreateEntFactoryFromEntity            |       68 |          6 |        |                                 |       |
@@ -869,8 +869,8 @@
 | dra       | func_801139CC                            |       74 |          7 |        |                                 |       |
 | ric       | RicStepRun                               |       74 |         16 |        |                                 |       |
 | lib       | func_us_801B40F0                         |       75 |          1 |        |                                 |       |
-| chi       | EntityBackgroundBlock                    |       75 |          6 |        |                                 |       |
-| wrp       | EntityBackgroundBlock                    |       75 |          6 |        |                                 |       |
+| chi       | CHI_EntityBackgroundBlock                |       75 |          6 |        |                                 |       |
+| wrp       | WRP_EntityBackgroundBlock                |       75 |          6 |        |                                 |       |
 | dra       | func_80111D24                            |       75 |         10 |        |                                 |       |
 | ric       | RicStepThrowDaggers                      |       75 |         10 |        |                                 |       |
 | dra       | func_800FD6C4                            |       75 |         14 |        |                                 |       |
@@ -1099,7 +1099,7 @@
 | no4       | EntityGreyPuff                           |      105 |          8 |        |                                 |       |
 | st0       | EntityGreyPuff                           |      105 |          8 |        |                                 |       |
 | wrp       | EntityGreyPuff                           |      105 |          8 |        |                                 |       |
-| no3       | EntityFallingLeaf                        |      105 |         10 |        |                                 |       |
+| no3       | EntityFallingLeaf                        |      105 |         10 |        | https://decomp.me/scratch/tLGbd | 0.998 |
 | dra       | CdSoundCommand6                          |      105 |         15 |        |                                 |       |
 | dra       | func_80110394                            |      106 |         11 |        |                                 |       |
 | dra       | EntityPlayerSleepZ                       |      106 |         12 |        |                                 |       |
@@ -1261,7 +1261,7 @@
 | dra       | func_800F9808                            |      151 |         12 |        |                                 |       |
 | dra       | CheckBackForwardInput                    |      152 |         23 |        |                                 |       |
 | dra       | CheckGravityBootsInput                   |      152 |         28 |        |                                 |       |
-| no3       | EntityDistantBackgroundTrees             |      153 |         14 |        |                                 |       |
+| no3       | EntityDistantBackgroundTrees             |      153 |         14 |        | https://decomp.me/scratch/ZWE1R | 0.999 |
 | maria_psp | func_pspeu_092A7950                      |      153 |         16 |        |                                 |       |
 | no4       | func_pspeu_09242AD0                      |      153 |         23 |        |                                 |       |
 | dra       | func_80118970                            |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
@@ -1276,7 +1276,7 @@
 | dra       | func_80119E78                            |      158 |          6 |        | https://decomp.me/scratch/jxhNr | 0.979 |
 | dra       | AddCdSoundCommand                        |      158 |         10 |        |                                 |       |
 | chi       | EntitySalemWitchTriboltLaunch            |      158 |         24 |        |                                 |       |
-| no3       | EntityUnkId50                            |      159 |         16 |        | https://decomp.me/scratch/8rBCg | 0.996 |
+| no3       | EntityUnkId50                            |      159 |         16 |        | https://decomp.me/scratch/o9oBy | 0.996 |
 | no4       | func_pspeu_092398B8                      |      159 |         18 |        |                                 |       |
 | dra       | func_8012CCE4                            |      159 |         21 |        |                                 |       |
 | dra       | LoadSaveData                             |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
@@ -1296,10 +1296,10 @@
 | dra       | DrawHud                                  |      164 |         14 |        |                                 |       |
 | dra       | PlayerStepBossGrab                       |      164 |         24 |        |                                 |       |
 | maria     | MarStepRun                               |      164 |         28 |        | https://decomp.me/scratch/PO6Cz | 0.99  |
-| chi       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
-| no3       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
-| no4       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
-| wrp       | EntityLockCamera                         |      165 |         18 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
+| chi       | CHI_EntityLockCamera                     |      165 |         18 |        |                                 |       |
+| no3       | NO3_EntityLockCamera                     |      165 |         18 |        |                                 |       |
+| no4       | NO4_EntityLockCamera                     |      165 |         18 |        |                                 |       |
+| wrp       | WRP_EntityLockCamera                     |      165 |         18 |        |                                 |       |
 | no3       | working_on.rodata                        |      166 |          0 | Yes    |                                 |       |
 | dra       | func_8012E7A4                            |      166 |         16 |        | https://decomp.me/scratch/huJsJ | 0.984 |
 | dra       | func_800F1B08                            |      166 |         19 |        |                                 |       |
@@ -1314,7 +1314,7 @@
 | dra       | HandleTransformationMP                   |      170 |         34 |        |                                 |       |
 | no3       | EntityDeathSkySwirl                      |      171 |         21 |        |                                 |       |
 | dra       | CheckQuarterCircleForwardInput           |      172 |         25 |        |                                 |       |
-| st0       | EntityLockCamera                         |      173 |         13 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
+| st0       | ST0_EntityLockCamera                     |      173 |         13 |        |                                 |       |
 | no3       | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | dra       | InitSoundVars1                           |      175 |          6 |        |                                 |       |
 | dra       | CalcAttack                               |      176 |         11 |        | https://decomp.me/scratch/i1lPI | 0.994 |
@@ -1544,7 +1544,7 @@
 | dra       | DrawRichterHud                           |      310 |         19 |        | https://decomp.me/scratch/t5hJ4 | 0.987 |
 | dra       | func_801028AC                            |      310 |         32 | Yes    |                                 |       |
 | dra       | func_80103ED4                            |      310 |         46 | Yes    | https://decomp.me/scratch/h7bvM | 0.998 |
-| no3       | EntityFlyingOwlAndLeaves                 |      310 |         46 |        |                                 |       |
+| no3       | EntityFlyingOwlAndLeaves                 |      310 |         46 |        | https://decomp.me/scratch/Wkub1 | 0.945 |
 | dra       | EntityStopWatchExpandingCircle           |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
 | no4       | func_pspeu_0923D568                      |      312 |         27 |        | https://decomp.me/scratch/wnx44 | 1.0   |
 | dra       | CdSoundCommand14                         |      312 |         36 | Yes    |                                 |       |
@@ -1678,7 +1678,7 @@
 | dra       | ControlMistForm                          |      466 |         93 |        |                                 |       |
 | ric       | RicStepJump                              |      469 |         84 |        |                                 |       |
 | dra       | func_800F0CD8                            |      473 |         40 |        | https://decomp.me/scratch/5y14u | 0.954 |
-| lib       | EntityLockCamera                         |      473 |         53 |        | https://decomp.me/scratch/EQ1iu | 0.992 |
+| lib       | LIB_EntityLockCamera                     |      473 |         53 |        |                                 |       |
 | no3       | EntityExplosion3                         |      480 |         31 |        |                                 |       |
 | dra       | StoreSaveData                            |      481 |         49 |        | https://decomp.me/scratch/XT9jU | 0.997 |
 | dra       | EntitySubwpnBible                        |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
