@@ -777,7 +777,7 @@ void EntityDistantBackgroundTrees(Entity* self) {
 }
 
 // shows part of the parallax background castle wall
-void EntityBackgroundCastleWall(Entity* entity) {
+void EntityBackgroundCastleWall(Entity* self) {
     Entity* newEntity;
 
     newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
@@ -794,13 +794,108 @@ void EntityBackgroundCastleWall(Entity* entity) {
             newEntity->unk68 = 0xC0;
         }
     }
-    DestroyEntity(entity);
+    DestroyEntity(self);
 }
 
-// long imports get split wrongly
-// clang-format off
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFlyingOwlAndLeaves);
+static u8 D_801819D0[] = {5, 56, 5, 57, 5, 58, 3, 59, 0, 0, 0, 0, 0, 0, 0, 0};
+static u8 D_801819DC[] = {6, 56, 6, 57, 6, 58, 4, 59, 0, 0, 0, 0, 0, 0, 0, 0};
+
+// intro owl and leaves
+void EntityFlyingOwlAndLeaves(Entity* self) {
+    Tilemap* tilemap;
+    Entity* newEntity;
+    u16 animFlag = true;
+    u16 i;
+
+    tilemap = &g_Tilemap;
+    
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 56;
+        if (self->params) {
+            self->drawFlags =
+                FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
+            self->rotX = 0x180;
+            self->rotY = 0x180;
+            self->unk6C = 0x60;
+            self->posY.i.hi = -16;
+            self->zPriority = 0xC1;
+        } else {
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->unk6C = 0x20;
+            self->zPriority = 0xBF;
+        }
+        self->unk68 = 0x1C0;
+        break;
+
+    case 1:
+        if (self->posX.i.hi < 224) {
+            self->ext.ILLEGAL.u16[0] = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (!(self->ext.ILLEGAL.u16[0]++ & 7)) {
+            g_api.PlaySfx(SE_TREE_BRANCH);
+        }
+        if (self->posX.i.hi < 192) {
+            SetStep(3);
+            if (self->params) {
+                self->velocityX = FIX(8);
+                self->velocityY = FIX(3);
+                break;
+            }
+            self->velocityX = FIX(10);
+            self->velocityY = FIX(1.625);
+            for (i = 0; i < 8; i++) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != NULL) {
+                    CreateEntityFromCurrentEntity(E_FALLING_LEAF, newEntity);
+                    newEntity->params = i;
+                }
+            }
+        }
+        break;
+
+    case 3:
+        if (self->params) {
+            animFlag = AnimateEntity(D_801819DC, self);
+            self->velocityY -= 0xA00;
+        } else {
+            animFlag = AnimateEntity(D_801819D0, self);
+            if (self->velocityY > (s32)0xFFFE0000) {
+                self->velocityY -= FIX(0.03125);
+            }
+        }
+        MoveEntity();
+        if (!self->params && (tilemap->scrollX.i.hi > 0xD80)) {
+            self->step++;
+        }
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 4:
+        if (self->velocityY > (s32)0xFFFE0000) {
+            self->velocityY -= FIX(0.03125);
+        }
+        animFlag = AnimateEntity(D_801819D0, self);
+        MoveEntity();
+        if (self->unk6C < 0x78) {
+            self->unk6C += 2;
+        }
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
+            DestroyEntity(self);
+        }
+    }
+
+    if (!animFlag) {
+        PlaySfxPositional(SFX_WING_FLAP_A);
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFallingLeaf);
-
-// clang-format on

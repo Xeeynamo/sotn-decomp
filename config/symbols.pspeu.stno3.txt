@@ -126,6 +126,7 @@ NO3_EntityUpdates = 0x0926B0D8;
 g_EInitParticle = 0x0926B280;
 g_EInitSpawner = 0x0926B290;
 g_EInitInteractable = 0x0926B2A0;
+g_EInitCommon = 0x0926B2D0;
 g_EInitStInteractable = 0x0926B2F0;
 g_Rooms = 0x0926B528;
 NO3_Overlay = 0x09295A80;
