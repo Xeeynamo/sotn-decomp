@@ -2179,6 +2179,15 @@
 | 0.93 | true     | SetCutsceneScript                   | asm/us/st/sel/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/st0/matchings/cutscene/SetCutsceneScript.s 
 -------------------------------------------------------------------------------
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | MemCardSetPort                      | asm/us/dra/matchings/62DEC/MemCardSetPort.s 
 | 1.00 | true     | func_800FAC30                       | asm/us/dra/matchings/menu/func_800FAC30.s 
 | 1.00 | true     | MemcardInfoInit                     | asm/us/dra/matchings/save_mgr/MemcardInfoInit.s 
@@ -2203,14 +2212,6 @@
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/sel/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/st0/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | false    | CutsceneUnk3                        | asm/us/st/no4/nonmatchings/cutscene/CutsceneUnk3.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/91EBC/SetReverbDepth.s 
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801072DC                       | asm/us/dra/matchings/66590/func_801072DC.s 
 | 1.00 | true     | func_800FAC98                       | asm/us/dra/matchings/menu/func_800FAC98.s 
@@ -2349,10 +2350,10 @@
 | 1.00 | true     | func_8010DA2C                       | asm/us/dra/matchings/alu_anim/func_8010DA2C.s 
 | 1.00 | true     | RicSetAnimation                     | asm/us/ric/matchings/pl_utils/RicSetAnimation.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C44C8                    | asm/us/boss/bo4/matchings/doppleganger/func_us_801C44C8.s 
-| 0.97 | true     | func_us_801C4710                    | asm/us/boss/bo4/matchings/doppleganger/func_us_801C4710.s 
-| 1.00 | true     | func_us_801C3AC8                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C3AC8.s 
-| 0.97 | true     | func_us_801C3D10                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C3D10.s 
+| 0.97 | true     | BO4_CheckWallLeft                   | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckWallLeft.s 
+| 1.00 | true     | BO4_CheckWallRight                  | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckWallRight.s 
+| 0.97 | true     | RBO5_CheckWallLeft                  | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckWallLeft.s 
+| 1.00 | true     | RBO5_CheckWallRight                 | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckWallRight.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/bo4/matchings/unk_45354/CheckMoveDirection.s 
 | 1.00 | true     | CheckMoveDirection                  | asm/us/boss/rbo5/matchings/unk_44954/CheckMoveDirection.s 
@@ -2478,6 +2479,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -2688,10 +2694,6 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
@@ -2771,11 +2773,23 @@
 | 1.00 | true     | func_us_801B4BF0                    | asm/us/boss/bo4/matchings/doors/func_us_801B4BF0.s 
 | 0.93 | true     | func_us_801B3690                    | asm/us/boss/rbo5/matchings/doors/func_us_801B3690.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | BO4_CheckCeiling                    | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckCeiling.s 
+| 1.00 | true     | RBO5_CheckCeiling                   | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckCeiling.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | BO4_CheckFloor                      | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckFloor.s 
+| 1.00 | true     | RBO5_CheckFloor                     | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckFloor.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | BO4_CheckStageCollision             | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckStageCollision.s 
+| 1.00 | true     | RBO5_CheckStageCollision            | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckStageCollision.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityDoppleganger10                | asm/us/boss/bo4/matchings/doppleganger/EntityDoppleganger10.s 
 | 0.97 | true     | EntityDoppleganger40                | asm/us/boss/rbo5/matchings/doppleganger/EntityDoppleganger40.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C1A38                    | asm/us/boss/bo4/matchings/doppleganger/func_us_801C1A38.s 
 | 0.96 | true     | func_us_801C096C                    | asm/us/boss/rbo5/matchings/doppleganger/func_us_801C096C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801B65FC                    | asm/us/boss/bo4/matchings/unk_365FC/func_us_801B65FC.s 
+| 0.92 | true     | func_us_801B54F0                    | asm/us/boss/rbo5/matchings/unk_354F0/func_us_801B54F0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DopplegangerStepCrouch              | asm/us/boss/bo4/matchings/unk_45354/DopplegangerStepCrouch.s 
 | 1.00 | true     | DopplegangerStepCrouch              | asm/us/boss/rbo5/matchings/unk_44954/DopplegangerStepCrouch.s 
@@ -2831,6 +2845,9 @@
 | 1.00 | true     | CreateEntFactoryFromEntity          | asm/us/boss/bo4/matchings/unk_46E7C/CreateEntFactoryFromEntity.s 
 | 1.00 | true     | CreateEntFactoryFromEntity          | asm/us/boss/rbo5/matchings/unk_4648C/CreateEntFactoryFromEntity.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | DopplegangerHandleDamage            | asm/us/boss/bo4/matchings/unk_46E7C/DopplegangerHandleDamage.s 
+| 1.00 | true     | DopplegangerHandleDamage            | asm/us/boss/rbo5/matchings/unk_4648C/DopplegangerHandleDamage.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | DopplegangerStepStone               | asm/us/boss/bo4/matchings/unk_46E7C/DopplegangerStepStone.s 
 | 1.00 | true     | DopplegangerStepStone               | asm/us/boss/rbo5/matchings/unk_4648C/DopplegangerStepStone.s 
 -------------------------------------------------------------------------------
@@ -2855,6 +2872,9 @@
 | 1.00 | true     | func_us_801CA014                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA014.s 
 | 1.00 | true     | func_us_801C9624                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9624.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CA2AC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA2AC.s 
+| 1.00 | true     | func_us_801C98BC                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C98BC.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801CA748                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA748.s 
 | 1.00 | true     | func_us_801C9D58                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9D58.s 
 -------------------------------------------------------------------------------
@@ -2864,32 +2884,14 @@
 | 1.00 | false    | func_us_801B5774                    | asm/us/boss/bo4/nonmatchings/doors/func_us_801B5774.s 
 | 0.97 | false    | func_us_801B4210                    | asm/us/boss/rbo5/nonmatchings/doors/func_us_801B4210.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C1CB0                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C1CB0.s 
-| 1.00 | false    | func_us_801C0C00                    | asm/us/boss/rbo5/nonmatchings/doppleganger/func_us_801C0C00.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C38C0                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C38C0.s 
-| 1.00 | false    | func_us_801C2EC0                    | asm/us/boss/rbo5/nonmatchings/doppleganger/func_us_801C2EC0.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C3EEC                    | asm/us/boss/bo4/nonmatchings/doppleganger/func_us_801C3EEC.s 
-| 1.00 | false    | func_us_801C34EC                    | asm/us/boss/rbo5/nonmatchings/doppleganger/func_us_801C34EC.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801B65FC                    | asm/us/boss/bo4/nonmatchings/unk_365FC/func_us_801B65FC.s 
-| 0.92 | false    | func_us_801B54F0                    | asm/us/boss/rbo5/nonmatchings/unk_354F0/func_us_801B54F0.s 
--------------------------------------------------------------------------------
 | 1.00 | false    | ControlBatForm                      | asm/us/boss/bo4/nonmatchings/unk_46E7C/ControlBatForm.s 
 | 1.00 | false    | ControlBatForm                      | asm/us/boss/rbo5/nonmatchings/unk_4648C/ControlBatForm.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | DopplegangerHandleDamage            | asm/us/boss/bo4/nonmatchings/unk_46E7C/DopplegangerHandleDamage.s 
-| 1.00 | false    | DopplegangerHandleDamage            | asm/us/boss/rbo5/nonmatchings/unk_4648C/DopplegangerHandleDamage.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | DopplegangerStepKill                | asm/us/boss/bo4/nonmatchings/unk_46E7C/DopplegangerStepKill.s 
 | 1.00 | false    | DopplegangerStepKill                | asm/us/boss/rbo5/nonmatchings/unk_4648C/DopplegangerStepKill.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | EntityDopplegangerBlinkWhite        | asm/us/boss/bo4/nonmatchings/unk_46E7C/EntityDopplegangerBlinkWhite.s 
 | 1.00 | false    | EntityDopplegangerBlinkWhite        | asm/us/boss/rbo5/nonmatchings/unk_4648C/EntityDopplegangerBlinkWhite.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801CA2AC                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CA2AC.s 
-| 1.00 | false    | func_us_801C98BC                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801C98BC.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801CD178                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CD178.s 
 | 1.00 | false    | func_us_801CC788                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801CC788.s 
@@ -3149,9 +3151,6 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -3178,9 +3177,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | CdControl                           | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControl.s 
 | 0.95 | false    | CdControlF                          | asm/us/main/nonmatchings/psxsdk/libcd/sys/CdControlF.s 
