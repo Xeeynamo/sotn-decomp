@@ -514,9 +514,9 @@ void EntityUnkId52(Entity* self) {
 static s16 D_80181808[] = {-338, -20, -338, 12, -304, -20, -304, 12, -306, -15, -306, 13, -274, -15, -274, 13, -242, -15, -242, 13, -210, -15, -210, 13, -178, -15, -178, 13, -146, -15, -146, 13, -114, -15, -114, 13, -82, -15, -82, 13, -50, -15, -50, 13, -18, -15, -18, 13, 10, -15, 10, 13};
 static s16 D_80181870[] = {-4, -8, 24, -8, -4, 8, 24, 8, 12, -3, 40, -3, 12, 4, 40, 4, 28, -8, 56, -8, 28, 8, 56, 8, 44, -3, 72, -3, 44, 4, 72, 4, 60, -8, 88, -8, 60, 8, 88, 8, 76, -3, 104, -3, 76, 4, 104, 4, 92, -8, 120, -8, 92, 8, 120, 8, 108, -3, 136, -3, 108, 4, 136, 4, 124, -8, 152, -8, 124, 8, 152, 8, 140, -3, 168, -3, 140, 4, 168, 4, 156, -8, 184, -8, 156, 8, 184, 8, 172, -3, 200, -3, 172, 4, 200, 4, 188, -8, 216, -8, 188, 8, 216, 8};
 static u8 g_EntityCastleBridgeUVs[] = {16, 50, 224, 255, 58, 90, 226, 254, 130, 162, 98, 126, 170, 198, 192, 208, 74, 102, 129, 136, 170, 198, 208, 192};
-extern s16 g_EntityCastleBridgeUVOffsets[] = {0, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 12, 16, 12, 16, 20, 16, 12, 16, 12, 16, 12, 16, 12};
-extern u8 g_EntityCastleBridgePages[] = {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14};
-extern u16 g_EntityCastleBridgePriorities[] = {192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191};
+static s16 g_EntityCastleBridgeUVOffsets[] = {0, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 12, 16, 12, 16, 20, 16, 12, 16, 12, 16, 12, 16, 12};
+static u8 g_EntityCastleBridgePages[] = {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14};
+static u16 g_EntityCastleBridgePriorities[] = {192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191};
 
 
 void EntityCastleBridge(Entity* self) {
@@ -898,4 +898,34 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_outdoor_ents", EntityFallingLeaf);
+#define XY(x,y) FIX(x), FIX(y)
+static s32 D_801819E8[] = {XY(3,0), XY(5,1), XY(6.375, 1.25), XY(4.5, 2.5), XY(6, -0.75), XY(7, 1.75), XY(5.25,2), XY(4, -1.0/32)};
+// a single leaf from when the owl comes out in the intro
+void EntityFallingLeaf(Entity* self) {
+    volatile int pad;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = (self->params & 1) + 63;
+        self->zPriority = 0xC1;
+        self->velocityX = D_801819E8[self->params * 2];
+        self->velocityY = D_801819E8[self->params * 2 + 1];
+        self->unk68 = 0x1C0;
+        break;
+
+    case 1:
+        if (self->velocityX > 0) {
+            self->velocityX -= FIX(1.0/16);
+        }
+        if (self->velocityY < FIX(1.0)) {
+            self->velocityY += FIX(1.0/64);
+        }
+        if (self->velocityY > FIX(1.0)) {
+            self->velocityY -= FIX(1.0/64);
+        }
+        MoveEntity();
+        break;
+    }
+}
