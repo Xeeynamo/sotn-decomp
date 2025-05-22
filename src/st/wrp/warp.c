@@ -17,7 +17,7 @@ static WarpCoord WarpRoomCoords[] = {
     {0x23, 0x2C}, // Abandoned pit to the Catacomb
     {0x3B, 0x11}, // Outer Wall
     {0x28, 0x0C}, // Castle Keep
-    {0x25, 0x15}, // Orlox's Quarters
+    {0x25, 0x15}, // Olrox's Quarters
 };
 
 #ifdef VERSION_PSP
