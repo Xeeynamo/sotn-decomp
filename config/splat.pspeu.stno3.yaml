@@ -78,7 +78,7 @@ segments:
       - [0x5E7F0, .data, no3/e_explosion_puff_opaque]
       - [0x5E860, data]
       - [0x5E878, .data, no3_psp/e_outdoor_ents]
-      - [0x5ECB0, data]
+      - [0x5ECC0, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3_psp/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3_psp/working_on]
