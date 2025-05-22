@@ -1,21 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "stage.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
+#endif
+
 void CreateExplosionPuff() {
-    Entity* entity;
-    s8 temp_s4 = Random() & 3;
-    s16 temp_s3 = ((Random() & 0xF) << 8) - 0x800;
+    Entity* puff;
+    s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
+    s16 initAngle = ((Random() & 0xF) << 8) - 0x800;
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (entity != NULL) {
+        puff = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (puff != NULL) {
             CreateEntityFromEntity(
-                E_EXPLODE_PUFF_OPAQUE, g_CurrentEntity, entity);
-            entity->params = 2;
-            entity->ext.opaquePuff.unk89 = 6 - i;
-            entity->ext.opaquePuff.unk84 = temp_s3;
-            entity->ext.opaquePuff.unk88 = temp_s4;
+                E_ID(EXPLODE_PUFF_OPAQUE), g_CurrentEntity, puff);
+            puff->params = 2;
+            puff->ext.opaquePuff.speed = 6 - i;
+            puff->ext.opaquePuff.angle = initAngle;
+            puff->ext.opaquePuff.puffStyle = rand3;
         }
     }
 }
@@ -24,14 +28,8 @@ extern Unkstruct_80180FE0 D_80180FE0[];
 
 void EntityExplosionPuffOpaque(Entity* self) {
     Unkstruct_80180FE0* obj;
-    s32 velocityX;
-    s32 velocityY;
     s32 params;
-    s32 temp_s0;
-    s32 adjVelocityX;
-    s32 adjVelocityY;
-    u32 temp_v0;
-    s32 rnd;
+    s32 speed;
 
     switch (self->step) {
     case 0:
@@ -45,9 +43,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
         self->ext.opaquePuff.anim = obj->anim;
         self->step = params + 1;
 
-        temp_v0 = self->params & 0xFF00;
-        if (temp_v0 != 0) {
-            self->zPriority = temp_v0 >> 8;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
         }
 
         if (self->params & 0xF0) {
@@ -70,71 +67,58 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 2:
-        if (AnimateEntity(self->ext.opaquePuff.anim, self) != 0) {
-            switch (self->step_s) {
-            case 0:
-                self->drawFlags = FLAG_DRAW_UNK8;
-                self->unk6C = 0x80;
-                self->step_s++;
-                break;
-
-            case 1:
-                if (self->pose == 5) {
-                    self->step_s++;
-                }
-                break;
-
-            case 2:
-                self->unk6C += 0xFC;
-                break;
-            }
-        } else {
+        if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
+            break;
         }
+        switch (self->step_s) {
+        case 0:
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->unk6C = 0x80;
+            self->step_s++;
+            break;
+
+        case 1:
+            if (self->pose == 5) {
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            self->unk6C -= 4;
+            break;
+        }
+
         break;
 
     case 3:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->drawFlags |= FLAG_DRAW_ROTZ;
-            switch (self->ext.opaquePuff.unk88) {
+            switch (self->ext.opaquePuff.puffStyle) {
             case 1:
-                if (self->ext.opaquePuff.unk89 >= 0x4) {
-                    self->ext.opaquePuff.unk89 += 0xFD;
-                    self->ext.opaquePuff.unk84 -= 0x800;
+                if (self->ext.opaquePuff.speed > 3) {
+                    self->ext.opaquePuff.speed -= 3;
+                    self->ext.opaquePuff.angle =
+                        self->ext.opaquePuff.angle - 0x800;
                 }
                 break;
 
             case 2:
-                self->ext.opaquePuff.unk84 =
-                    (u16)self->ext.opaquePuff.unk84 +
-                    ((u8)self->ext.opaquePuff.unk89 * 0xC0);
+                self->ext.opaquePuff.angle +=
+                    (self->ext.opaquePuff.speed * 0xC0);
                 break;
             }
-            self->ext.opaquePuff.unk84 = self->ext.opaquePuff.unk84 & 0xFFF;
-            self->rotZ = self->ext.opaquePuff.unk84 & 0xFFF;
-            temp_s0 = self->ext.opaquePuff.unk89 * 0x140;
-            temp_s0 /= 28;
-            self->velocityX = temp_s0 * rsin(self->ext.opaquePuff.unk84);
-            self->velocityY = -(temp_s0 * rcos(self->ext.opaquePuff.unk84));
+            self->ext.opaquePuff.angle &= 0xFFF;
+            self->rotZ = self->ext.opaquePuff.angle;
+            speed = self->ext.opaquePuff.speed * 0x140 / 28;
+            self->velocityX = speed * rsin(self->ext.opaquePuff.angle);
+            self->velocityY = -(speed * rcos(self->ext.opaquePuff.angle));
             self->step_s++;
         }
 
-        if (self->pose >= 13) {
-            velocityX = self->velocityX;
-            if (velocityX < 0) {
-                adjVelocityX = velocityX + 3;
-            } else {
-                adjVelocityX = velocityX;
-            }
-            self->velocityX = velocityX - (adjVelocityX >> 2);
-
-            velocityY = self->velocityY;
-            if (velocityY < 0) {
-                adjVelocityY = velocityY + 3;
-            } else {
-                adjVelocityY = velocityY;
-            }
-            self->velocityY = velocityY - (adjVelocityY >> 2);
+        if (self->pose > 12) {
+            self->velocityX -= self->velocityX / 4;
+            self->velocityY -= self->velocityY / 4;
         }
         MoveEntity();
         if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
@@ -143,13 +127,12 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 4:
-        if (self->step_s == 0) {
-            rnd = Random();
-            self->velocityY = FIX(-0.75);
-            self->facingLeft = rnd & 1;
-            self->rotX = 0xC0;
+        if (!self->step_s) {
+            self->facingLeft = Random() & 1;
             self->drawFlags |= FLAG_DRAW_ROTX;
+            self->rotX = 0xC0;
             self->step_s++;
+            self->velocityY = FIX(-0.75);
         }
         MoveEntity();
         if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
