@@ -319,8 +319,8 @@ static s32 func_us_801C820C(void) {
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", ControlBatForm);
 
-extern s16 D_us_8018126C[];
-extern s16 D_us_80181274[];
+extern s16 g_DopSensorsCeilingDefault[];
+extern s16 g_DopSensorsFloorDefault[];
 extern Point16 g_DopSensorsCeiling[];
 extern Point16 g_DopSensorsFloor[];
 extern s16 D_us_80183B0C[][2];
@@ -342,13 +342,13 @@ void DopplegangerStepUnmorphBat(void) {
     switch (DOPPLEGANGER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (g_DopSensorsFloor[i].y < D_us_80181274[i]) {
+            if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
                 g_DopSensorsFloor[i].y++;
             } else {
                 count++;
             }
 
-            if (g_DopSensorsCeiling[i].y > D_us_8018126C[i]) {
+            if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
                 g_DopSensorsCeiling[i].y--;
             } else {
                 count++;
@@ -560,12 +560,12 @@ void DopplegangerStepUnmorphMist(void) {
 
     for (i = 0; i < 4; i++) {
 
-        if (g_DopSensorsFloor[i].y < D_us_80181274[i]) {
+        if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
             g_DopSensorsFloor[i].y++;
         } else {
             count += 1;
         }
-        if (g_DopSensorsCeiling[i].y > D_us_8018126C[i]) {
+        if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
             g_DopSensorsCeiling[i].y--;
         } else {
             count += 1;
@@ -1115,7 +1115,7 @@ extern AnimationFrame D_us_801817A8[];
 extern u8 D_us_8018180C[NUM_VERTICAL_SENSORS * 2];
 extern s16 D_us_8018179C[];
 extern s32 D_us_80181784[];
-extern Point16 D_us_801812AC[NUM_VERTICAL_SENSORS * 2]; // g_SensorsWall
+extern Point16 g_DopSensorsWall[NUM_VERTICAL_SENSORS * 2];
 
 void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
@@ -1179,9 +1179,9 @@ void EntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                DOPPLEGANGER.posX.i.hi + D_us_801812AC[D_us_8018180C[i]].x;
+                DOPPLEGANGER.posX.i.hi + g_DopSensorsWall[D_us_8018180C[i]].x;
             self->posY.i.hi =
-                DOPPLEGANGER.posY.i.hi + D_us_801812AC[D_us_8018180C[i]].y;
+                DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_8018180C[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotX = D_us_8018179C[1] + 0x40;
             self->rotY = self->rotX;
@@ -1200,9 +1200,9 @@ void EntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                DOPPLEGANGER.posX.i.hi + D_us_801812AC[D_us_8018181C[i]].x;
+                DOPPLEGANGER.posX.i.hi + g_DopSensorsWall[D_us_8018181C[i]].x;
             self->posY.i.hi =
-                DOPPLEGANGER.posY.i.hi + D_us_801812AC[D_us_8018181C[i]].y;
+                DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_8018181C[i]].y;
             self->velocityY = D_us_80181784[paramsLo];
             self->rotX = D_us_8018179C[paramsLo] + 0x20;
             self->rotY = self->rotX;

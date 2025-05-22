@@ -317,11 +317,11 @@ static s32 func_us_801C781C(void) {
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", ControlBatForm);
 
-extern s16 D_us_80183B9C[][2];
-extern s16 D_us_801812F8[];
-extern s16 D_us_80181300[];
+extern s16 g_DopSensorsCeilingDefault[];
+extern s16 g_DopSensorsFloorDefault[];
 extern Point16 g_DopSensorsCeiling[];
 extern Point16 g_DopSensorsFloor[];
+extern s16 D_us_80183B9C[][2];
 
 void DopplegangerStepUnmorphBat(void) {
     s32 i;
@@ -340,13 +340,13 @@ void DopplegangerStepUnmorphBat(void) {
     switch (DOPPLEGANGER.step_s) {
     case 0:
         for (i = 0; i < 4; i++) {
-            if (g_DopSensorsFloor[i].y < D_us_80181300[i]) {
+            if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
                 g_DopSensorsFloor[i].y++;
             } else {
                 count++;
             }
 
-            if (g_DopSensorsCeiling[i].y > D_us_801812F8[i]) {
+            if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
                 g_DopSensorsCeiling[i].y--;
             } else {
                 count++;
@@ -539,8 +539,8 @@ void ControlMistForm(void) {
         }
     }
 }
-extern s16 D_us_801812F8[];
-extern s16 D_us_80181300[];
+extern s16 g_DopSensorsCeilingDefault[];
+extern s16 g_DopSensorsFloorDefault[];
 
 void DopplegangerStepUnmorphMist(void) {
     s32 i;
@@ -560,12 +560,12 @@ void DopplegangerStepUnmorphMist(void) {
 
     for (i = 0; i < 4; i++) {
 
-        if (g_DopSensorsFloor[i].y < D_us_80181300[i]) {
+        if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
             g_DopSensorsFloor[i].y++;
         } else {
             count += 1;
         }
-        if (g_DopSensorsCeiling[i].y > D_us_801812F8[i]) {
+        if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
             g_DopSensorsCeiling[i].y--;
         } else {
             count += 1;
@@ -1113,7 +1113,7 @@ extern AnimationFrame D_800AD57C[];
 extern u8 D_us_80181898[NUM_VERTICAL_SENSORS * 2];
 extern s16 D_us_80181828[];
 extern s32 D_us_80181810[];
-extern Point16 D_us_80181338[NUM_VERTICAL_SENSORS * 2]; // g_SensorsWall
+extern Point16 g_DopSensorsWall[NUM_VERTICAL_SENSORS * 2]; // g_SensorsWall
 
 void EntitySmokePuff(Entity* self) {
     byte stackpad[40];
@@ -1177,9 +1177,9 @@ void EntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                DOPPLEGANGER.posX.i.hi + D_us_80181338[D_us_80181898[i]].x;
+                DOPPLEGANGER.posX.i.hi + g_DopSensorsWall[D_us_80181898[i]].x;
             self->posY.i.hi =
-                DOPPLEGANGER.posY.i.hi + D_us_80181338[D_us_80181898[i]].y;
+                DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_80181898[i]].y;
             self->velocityY = FIX(-0.25);
             self->rotX = D_us_80181828[1] + 0x40;
             self->rotY = self->rotX;
@@ -1198,9 +1198,9 @@ void EntitySmokePuff(Entity* self) {
                 return;
             }
             self->posX.i.hi =
-                DOPPLEGANGER.posX.i.hi + D_us_80181338[D_us_801818A8[i]].x;
+                DOPPLEGANGER.posX.i.hi + g_DopSensorsWall[D_us_801818A8[i]].x;
             self->posY.i.hi =
-                DOPPLEGANGER.posY.i.hi + D_us_80181338[D_us_801818A8[i]].y;
+                DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_801818A8[i]].y;
             self->velocityY = D_us_80181810[paramsLo];
             self->rotX = D_us_80181828[paramsLo] + 0x20;
             self->rotY = self->rotX;
