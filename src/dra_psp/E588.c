@@ -1747,7 +1747,36 @@ static void func_800F97DC(void) {
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9808);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F98AC);
+void func_800F98AC(const char* str, u32 arg1) {
+    u8 type;
+    s32 y;
+    s32 x;
+    s32 i;
+    u32 ch16;
+    u8* bitmap;
+
+    x = 0;
+    if (arg1 & 0x100) {
+        x = 0x40;
+    }
+    y = func_800F548C(arg1);
+    while (*str != 0) {
+        // Loads a big-endian u16 from str.
+        // This is connected to shift-jis.
+        ch16 = func_psp_0913F960(str, &type);
+        if (type > 0) {
+            str += type;
+        }
+        bitmap = (u8*)func_psp_0913FA28(ch16, 0);
+        for (i = 0; i < 0x60; i++) {
+            D_8013794C[i] = *bitmap++;
+        }
+        LoadTPage(
+            (u_long*)D_8013794C, 0, 0, D_80137950 + x, D_80137954 + y, 12, 16);
+        D_8013794C += 0x60;
+        x += 3;
+    }
+}
 
 void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     // See src/st/blit_char.h
@@ -1949,8 +1978,124 @@ void func_800F9F40(void) {
     }
 }
 
-void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2);
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuHandleCursorInput);
+void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
+    const int ItemsPerPage = 12;
+    s32 limit;
+    u8 prevCursor = *nav;
+
+    switch (arg2) {
+    case 3:
+        if (g_pads[0].repeat & PAD_UP) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 0:
+        if (g_pads[0].repeat & PAD_UP) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 4:
+        if (g_pads[0].repeat & PAD_LEFT) {
+            if (*nav) {
+                *nav -= 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            if (*nav != nOptions - 1) {
+                *nav += 1;
+            }
+        }
+        break;
+    case 5:
+        if (g_pads[0].repeat & PAD_LEFT) {
+            *nav -= 1;
+            if (*nav == -1) {
+                *nav = nOptions - 1;
+            }
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            *nav += 1;
+            if (*nav == nOptions) {
+                *nav = 0;
+            }
+        }
+        break;
+    case 1:
+    case 2:
+        if (g_pads[0].repeat & PAD_UP) {
+            if (*nav >= 2) {
+                *nav -= 2;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            if (*nav == nOptions - 2) {
+                if (*nav & 1) {
+                    *nav += 1;
+                }
+            }
+            if (*nav < nOptions - 2) {
+                *nav += 2;
+            }
+        }
+        if (g_pads[0].repeat & (PAD_LEFT | PAD_RIGHT)) {
+            *nav ^= 1;
+            if (*nav == nOptions) {
+                *nav ^= 1;
+            }
+        }
+        if (arg2 == 2) {
+            if (g_pads[0].repeat & PAD_L1) {
+                if (*nav >= ItemsPerPage) {
+                    *nav -= ItemsPerPage;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
+                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                    }
+                } else {
+                    *nav = 0;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                }
+            }
+            if (g_pads[0].repeat & PAD_R1) {
+                if (*nav < nOptions - ItemsPerPage) {
+                    *nav += ItemsPerPage;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
+                    limit = (((nOptions - 1) / 2) - 5) * -ItemsPerPage;
+                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
+                        limit) {
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
+                    }
+                } else {
+                    *nav = nOptions - 1;
+                    if (nOptions > ItemsPerPage) {
+                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                            (((nOptions - 1) / 2) - 5) * -ItemsPerPage;
+                    }
+                }
+            }
+        }
+        break;
+    }
+    if (prevCursor != *nav) {
+        PlaySfx(SFX_UI_MOVE);
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1418);
 
@@ -2068,14 +2213,8 @@ s32 D_800A2DEC[] = {
     0x1A, 0x00, 0x30, 0x39, 0x39,
 };
 
-extern bool func_800FB1EC(u16 arg0);
 extern u32 D_801375D0;
 extern s32* D_801375D8;
-extern s32 D_80137844[1];
-extern s32 D_80137848[1];
-extern s32 D_80137948;
-extern s32 g_IsSelectingEquipment;
-extern s32 g_EquipmentCursor;
 
 extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button

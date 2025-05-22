@@ -2183,35 +2183,34 @@ void func_800F9808(u32 arg0) {
 }
 
 void func_800F98AC(const char* str, u32 arg1) {
-    u32 temp_s2;
+    s32 x;
+    u32 y;
     s32 i;
-    u8* data_ptr;
-    s32 var_s1;
-    u8* var_a1;
-    u32 loaded_data;
+    u8* bitmap;
+    u32 ch16;
 
-    temp_s2 = arg1;
-    var_s1 = (temp_s2 >> 2) & 0x40;
-    temp_s2 = func_800F548C(temp_s2);
+    y = arg1;
+    x = (y >> 2) & 0x40;
+    y = func_800F548C(arg1);
 
 #ifdef VERSION_PC
     NOT_IMPLEMENTED;
     return;
 #endif
 
-    for (data_ptr = str; *data_ptr != 0;) {
-        // Loads a big-endian u16 from data_ptr.
+    while (*str != 0) {
+        // Loads a big-endian u16 from str.
         // This is connected to shift-jis.
-        loaded_data = *data_ptr++ << 8;
-        loaded_data += *data_ptr++;
-        var_a1 = func_80106A28(loaded_data, 0);
+        ch16 = *str++ << 8;
+        ch16 += *str++;
+        bitmap = (u8*)func_80106A28(ch16, 0);
         for (i = 0; i < 0x60; i++) {
-            D_8013794C[i] = *var_a1++;
+            D_8013794C[i] = *bitmap++;
         }
-        LoadTPage((PixPattern*)D_8013794C, 0, 0, var_s1 + D_80137950,
-                  temp_s2 + D_80137954, 0xC, 0x10);
+        LoadTPage(
+            (u_long*)D_8013794C, 0, 0, D_80137950 + x, D_80137954 + y, 12, 16);
         D_8013794C += 0x60;
-        var_s1 += 3;
+        x += 3;
     }
 }
 
@@ -2448,11 +2447,9 @@ void func_800F9F40(void) {
 
 void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     const int ItemsPerPage = 12;
-    const int Unk16 = 72;
     s32 limit;
-    u8 prevCursor;
+    u8 prevCursor = *nav;
 
-    prevCursor = *nav;
     switch (arg2) {
     case 3:
         if (g_pads[0].repeat & PAD_UP) {
@@ -2523,7 +2520,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                 *nav += 2;
             }
         }
-        if (g_pads[0].repeat & (PAD_RIGHT | PAD_LEFT)) {
+        if (g_pads[0].repeat & (PAD_LEFT | PAD_RIGHT)) {
             *nav ^= 1;
             if (*nav == nOptions) {
                 *nav ^= 1;
@@ -2533,7 +2530,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += Unk16;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
                     if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                     }
@@ -2546,16 +2543,16 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= Unk16;
+                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
                     if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
                         limit) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
                     }
                 } else {
                     *nav = nOptions - 1;
-                    if (nOptions >= 13) {
+                    if (nOptions > ItemsPerPage) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
-                            (*nav / 2 - 5) * -ItemsPerPage;
+                            ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     }
                 }
             }
@@ -2886,9 +2883,7 @@ void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
 }
 
 void func_800FAF44(s32 isAccessory) {
-    s32 var_a0;
     s32 i;
-    s32 j;
     s32* var_a1;
 
     D_801375D8 = g_Pix[3];
