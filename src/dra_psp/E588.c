@@ -39,6 +39,7 @@ extern s32 D_801375CC;
 extern s32 D_801375D4;
 extern s32 D_psp_091CE1E0;
 extern s32 D_psp_091CDF14;
+extern s32 D_psp_091CDF18;
 extern s32 D_psp_091CDE30[];
 extern s32 D_psp_091CDDC0[];
 extern s32 g_IsSelectingEquipment;
@@ -49,6 +50,10 @@ extern s32 D_psp_091CDDB8;
 extern s32 D_psp_091CDDB0;
 extern s32 D_psp_091CDDA8;
 extern s32 D_psp_091CDD98[];
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 g_IsCloakColorUnlocked;
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 D_801375DC;
 
 extern char** D_800A2D48;
 extern char** D_800A2D68;
@@ -1351,21 +1356,126 @@ void MenuSpellsDraw(MenuContext* ctx) {
                  17, colorIntensity, colorIntensity, 0);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuFamiliarsDraw);
+void MenuFamiliarsDraw(MenuContext* ctx) {
+    s32 i;
+    s32 x, y;
+    s32 strId;
+
+    MenuDrawStr(D_800A2D68[26], 120, 40, ctx);
+    for (i = 0; i < 7; i++) {
+        if (!D_801375E0[i]) {
+            continue;
+        }
+        x = ((i & 1) * 172) + 48;
+        y = ((i / 2) * 40) + 68;
+        if (i == FAM_STATS_NOSE_DEMON) {
+            x += 172;
+        }
+        strId = i + 46;
+        MenuDrawStr(g_MenuStr[strId], x, y, ctx);
+        if (i < FAM_STATS_YOUSEI) {
+            strId = 8;
+        } else {
+            strId = 43;
+        }
+        MenuDrawStr(g_MenuStr[strId], x + 56, y, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y, ctx);
+        if (i < FAM_STATS_YOUSEI) {
+            strId = 5;
+        } else {
+            strId = 44;
+        }
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 16, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].exp % 100, x + 112, y + 16, ctx);
+        switch (i) {
+        case FAM_STATS_BAT:
+            MenuDrawImg(ctx, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_GHOST:
+            MenuDrawImg(ctx, 176, 64, 40, 30, 32, 161, 0x1D1, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_FAERIE:
+            MenuDrawImg(ctx, 12, 104, 32, 30, 72, 129, 0x1D4, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_DEMON:
+            MenuDrawImg(ctx, 180, 104, 32, 30, 0, 225, 0x1D6, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_SWORD:
+            MenuDrawImg(ctx, 12, 144, 32, 54, 0, 129, 0x1D0, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_YOUSEI:
+            MenuDrawImg(ctx, 176, 144, 40, 30, 32, 129, 0x1D3, 0x1E, 1, 0);
+            break;
+        case FAM_STATS_NOSE_DEMON:
+            MenuDrawImg(ctx, 180, 184, 32, 38, 0, 185, 0x1D5, 0x1E, 1, 0);
+            break;
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F82F4);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuSystemDraw);
+void MenuSystemDraw(MenuContext* ctx) {
+    s32 strIdx;
+
+    func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, 0x80, 12, 4,
+                  g_MenuStep == MENU_STEP_SYSTEM);
+    MenuDrawStr(g_MenuStr[16], 0x20, 0x30, ctx);
+
+    strIdx = g_IsCloakLiningUnlocked ? 17 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x40, ctx);
+
+    strIdx = g_IsCloakColorUnlocked ? 18 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x50, ctx);
+    MenuDrawStr(g_MenuStr[35], 0x20, 0x60, ctx);
+
+    strIdx = g_IsTimeAttackUnlocked ? 36 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x70, ctx);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F84CC);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F86E4);
+void func_800F86E4(void) {
+    s32 i;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F8754);
+    for (i = 0; i < NUM_MENU; i++) {
+        FreePrimitives(D_801377FC[i]);
+    }
+
+    FreePrimitives(D_psp_091CDF14);
+    FreePrimitives(D_psp_091CDF18);
+}
+
+void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
+    D_psp_091CE1E0 = 0;
+    MenuDrawStr(D_800A2D68[3], x + 3, y + 2, ctx);
+    if (D_801375DC == 0) {
+        D_psp_091CE1E0 = 1;
+    }
+    MenuDrawStr(D_800A2D68[4], x + 3, y + 0x12, ctx);
+    D_psp_091CE1E0 = 0;
+    MenuDrawStr(D_800A2D68[5], x + 3, y + 0x22, ctx);
+    D_psp_091CE1E0 = 0;
+    MenuDrawStr(D_800A2D68[6], x + 3, y + 0x32, ctx);
+    if (D_801375E0[NUM_FAMILIARS] == 0) {
+        D_psp_091CE1E0 = 1;
+    } else {
+        D_psp_091CE1E0 = 0;
+    }
+    MenuDrawStr(D_800A2D68[25], x + 3, y + 0x42, ctx);
+    D_psp_091CE1E0 = ~D_8006C378 == 0;
+    MenuDrawStr(D_800A2D68[28], x + 3, y + 0x52, ctx);
+    D_psp_091CE1E0 = 0;
+    MenuDrawStr(D_800A2D68[29], x + 3, y + 0x62, ctx);
+    D_psp_091CE1E0 = 0;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipSortDraw);
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F892C);
+void func_800F892C(s32 index, s32 x, s32 y, MenuContext* ctx) {
+    MenuDrawImg(ctx, x, y, 16, 16, (index & 7) * 16,
+                ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F8990);
 
@@ -2032,10 +2142,6 @@ void func_800FB9BC(void) {
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
 
 extern s32 g_ServantPrevious;
-extern s32 D_801375DC;
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 g_IsCloakColorUnlocked;
 extern s32 D_80137958;
 extern s32 g_EquipOrderType;
 extern bool D_psp_091CDD48;

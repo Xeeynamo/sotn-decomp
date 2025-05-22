@@ -1497,11 +1497,8 @@ void MenuSpellsDraw(MenuContext* ctx) {
 
 void MenuFamiliarsDraw(MenuContext* ctx) {
     s32 i;
-    s32 baseX;
-    s32 x;
-    s32 y;
+    s32 x, y;
     s32 strId;
-    s32 new_var;
 
 #if defined(VERSION_US)
     MenuDrawStr(g_MenuStr[97], 120, 40, ctx);
@@ -1512,29 +1509,27 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
         if (D_801375E0[i] == 0) {
             continue;
         }
-        baseX = (i & 1) * 172;
-        y = new_var = (i / 2) * 40;
-        new_var = y + 68;
-        x = baseX + 48;
+        x = ((i & 1) * 172) + 48;
+        y = ((i / 2) * 40) + 68;
         if (i == FAM_STATS_NOSE_DEMON) {
-            x = baseX + 220;
+            x += 172;
         }
         strId = i + 46;
-        MenuDrawStr(g_MenuStr[strId], x, y + 68, ctx);
-        strId = 43;
+        MenuDrawStr(g_MenuStr[strId], x, y, ctx);
         if (i < FAM_STATS_YOUSEI) {
-            if (1) {
-                strId = 8;
-            }
+            strId = 8;
+        } else {
+            strId = 43;
         }
-        MenuDrawStr(g_MenuStr[strId], x + 56, y + 68, ctx);
-        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y + 68, ctx);
-        strId = 44;
+        MenuDrawStr(g_MenuStr[strId], x + 56, y, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].level, x + 112, y, ctx);
         if (i < FAM_STATS_YOUSEI) {
             strId = 5;
+        } else {
+            strId = 44;
         }
-        MenuDrawStr(g_MenuStr[strId], x + 56, y + 84, ctx);
-        MenuDrawInt(g_Status.statsFamiliars[i].exp % 100, x + 112, y + 84, ctx);
+        MenuDrawStr(g_MenuStr[strId], x + 56, y + 16, ctx);
+        MenuDrawInt(g_Status.statsFamiliars[i].exp % 100, x + 112, y + 16, ctx);
         switch (i) {
         case FAM_STATS_BAT:
             MenuDrawImg(ctx, 16, 64, 24, 30, 104, 129, 0x1D2, 0x1E, 1, 0);
@@ -1585,20 +1580,20 @@ void MenuSystemDraw(MenuContext* ctx) {
 
     s32 strIdx;
     func_800F5E68(ctx, g_MenuNavigation.cursorSettings, 30, 46, Width, 12, 4,
-                  g_MenuStep == 0x101);
+                  g_MenuStep == MENU_STEP_SYSTEM);
 
     MenuDrawStr(g_MenuStr[16], 0x20, 0x30, ctx);
 
-    strIdx = g_IsCloakLiningUnlocked ? 0x11 : 0x13;
-    MenuDrawStr(g_MenuStr[strIdx], 32, 64, ctx);
+    strIdx = g_IsCloakLiningUnlocked ? 17 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x40, ctx);
 
-    strIdx = g_IsCloakColorUnlocked ? 0x12 : 0x13;
-    MenuDrawStr(g_MenuStr[strIdx], 32, 80, ctx);
-    MenuDrawStr(g_MenuStr[35], 32, 96, ctx);
-    MenuDrawStr(g_MenuStr[32], 32, 112, ctx);
+    strIdx = g_IsCloakColorUnlocked ? 18 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x50, ctx);
+    MenuDrawStr(g_MenuStr[35], 0x20, 0x60, ctx);
+    MenuDrawStr(g_MenuStr[32], 0x20, 0x70, ctx);
 
-    strIdx = g_IsTimeAttackUnlocked ? 0x24 : 0x13;
-    MenuDrawStr(g_MenuStr[strIdx], 32, 128, ctx);
+    strIdx = g_IsTimeAttackUnlocked ? 36 : 19;
+    MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x80, ctx);
 }
 
 void func_800F84CC(void) {
