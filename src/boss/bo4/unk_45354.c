@@ -41,9 +41,11 @@ void func_8010E0B8(void) {
     g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
 }
 
-void func_us_801C5430(s16 a0, s16 a1) {
-    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= a1) {
-        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = a1;
+// similar to DRA's func_8010E168. share's the function signature but
+// not the entity creation logic, a0 is ignored
+void func_us_801C5430(s16 a0, s16 minTime) {
+    if (g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] <= minTime) {
+        g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES] = minTime;
     }
 }
 
