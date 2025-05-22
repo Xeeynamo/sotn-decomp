@@ -151,7 +151,6 @@ void func_us_801C5518(Entity* self) {
     }
 }
 
-extern s32 D_80072F20; // Player's collision detection
 extern Primitive D_us_80181644;
 
 // Function that runs when the player is in the switch room to activate the
@@ -176,11 +175,12 @@ void func_us_801C5628(Entity* self) {
     // Idk why it wants to store the entity before but it works so ¯\_(ツ)_/¯
     newEnt = g_Entities;
 
-    if ((((GetPlayerCollisionWith(self, 8, 16, 5) & 1) && (D_80072F20 & 1)) &&
+    if ((((GetPlayerCollisionWith(self, 0x8, 16, 5) & 0x1) &&
+          (g_Player.vram_flag & 0x1)) &&
          (g_pads->pressed & PAD_LEFT)) &&
         (PLAYER.step == 1)) {
-        if (self->ext.skeletonApe.unk7C != 0) { // ext.xxx.unk7C
-            self->ext.skeletonApe.unk7C--;
+        if (self->ext.timer.t != 0) { // ext.xxx.unk7C
+            self->ext.timer.t--;
         } else {
             if (self->posX.i.hi >= 45) {
                 self->posX.i.hi--;
@@ -191,7 +191,7 @@ void func_us_801C5628(Entity* self) {
                     self->step++;
                 }
             }
-            self->ext.skeletonApe.unk7C = 2;
+            self->ext.timer.t = 2;
         }
     }
 
