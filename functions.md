@@ -1793,7 +1793,7 @@
 | st0       | EntityClouds                             |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
 | ric       | RicEntitySubwpnThrownAxe                 |      694 |         57 |        |                                 |       |
 | dra       | EntityTeleport                           |      694 |         76 |        | https://decomp.me/scratch/VHtVZ | 0.992 |
-| no3       | EntityCastleBridge                       |      698 |         54 |        |                                 |       |
+| no3       | EntityCastleBridge                       |      698 |         54 |        | https://decomp.me/scratch/nt53C | 0.998 |
 | dra       | EntityHitByIce                           |      700 |         67 |        | https://decomp.me/scratch/sNxRn | 0.998 |
 | maria     | MarEntityTeleport                        |      700 |         78 |        |                                 |       |
 | ric       | RicEntityTeleport                        |      700 |         78 |        | https://decomp.me/scratch/zdUhe | 0.959 |
@@ -1817,7 +1817,7 @@
 | ric       | RicEntityHitByCutBlood                   |      757 |         84 | Yes    | https://decomp.me/scratch/SOVeg | 0.999 |
 | dra       | func_80106A28                            |      764 |         30 |        | https://decomp.me/scratch/WIxRo | 0.758 |
 | dra       | func_psp_0913FA28                        |      764 |         30 |        | https://decomp.me/scratch/Boq55 | 1.0   |
-| no3       | EntityBackgroundPineTrees                |      766 |         43 |        |                                 |       |
+| no3       | EntityBackgroundPineTrees                |      766 |         43 |        | https://decomp.me/scratch/77ose | 0.993 |
 | lib       | func_psp_0923A538                        |      768 |        100 | Yes    | https://decomp.me/scratch/9mPG2 | 0.996 |
 | dra       | EntityGuardText                          |      772 |         55 | Yes    | https://decomp.me/scratch/yxTZF | 0.997 |
 | dra       | CheckCollision                           |      780 |         91 |        | https://decomp.me/scratch/hVHDS | 0.997 |
