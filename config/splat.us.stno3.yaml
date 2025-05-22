@@ -55,6 +55,8 @@ segments:
       - [0x124C, .data, e_jewel_sword_puzzle]
       - [0x1358, .data, e_sky_entities]
       - [0x13A8, data]
+      - [0x13DC, .data, e_outdoor_ents]
+      - [0x14EC, data]
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
       - [0x1B40, data]
