@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
 #include "../no3/no3.h"
 
 // pushes alucard to the right
@@ -10,7 +9,9 @@ void EntityPushAlucard(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
+        #ifdef VERSION_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
+        #endif
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = 0;
         g_Player.demo_timer = 255;
