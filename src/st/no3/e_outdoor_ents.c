@@ -308,7 +308,7 @@ void EntityBackgroundPineTrees(Entity* self) {
     xpos = self->params; // Temporary reuse of xpos var for params
     selfUnk68 = D_801817D4[xpos];
     var_s5 = D_801817EC[xpos];
-    var_s5 += (u16)self->ext.timer.t * 2;
+    var_s5 += self->ext.ILLEGAL.u16[0] * 2;
     var_s4 = D_801817DC[xpos];
     switch (self->step) {
     case 0:
@@ -332,7 +332,7 @@ void EntityBackgroundPineTrees(Entity* self) {
             if (*var_s5 >= 0x121) {
                 return;
             }
-            self->ext.timer.t++;
+            self->ext.ILLEGAL.u16[0]++;
             for (; prim_s0 != NULL; prim_s0 = prim_s0->next) {
                 if (prim_s0->drawMode == DRAW_HIDE) {
                     break;
@@ -410,7 +410,7 @@ void EntityBackgroundPineTrees(Entity* self) {
         if (xpos < *var_s5) {
             return;
         }
-        self->ext.timer.t++;
+        self->ext.ILLEGAL.u16[0]++;
         for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
              prim_s0 = prim_s0->next) {
             if (prim_s0->drawMode == DRAW_HIDE) {
