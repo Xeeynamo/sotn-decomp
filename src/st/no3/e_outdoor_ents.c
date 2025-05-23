@@ -238,24 +238,21 @@ static u16 D_801814EC[] = {0x0020,0x0006,0x003E,0x0007,0x005E,0x0008,0x007E,0x00
 void EntityUnkId50(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
-    Entity* temp;
     u16 temp_s3;
-    s32 var_v0;
     u16* ptr;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        ptr = D_801814EC;
-        temp = &g_Entities[192];
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = 0xC0;
         self->ext.et_801BCC4C.unk7C = 0;
-        self->flags |= FLAG_POS_CAMERA_LOCKED;
+        ptr = D_801814EC;
         while(true){
             if (*ptr > 288) {
                 break;
             }
-            newEntity = AllocEntity(temp, &temp[64]);
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr++;
@@ -271,19 +268,14 @@ void EntityUnkId50(Entity* self) {
     case 1:
         self->posX.i.hi = 128;
         ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
-        var_v0 = tilemap->scrollX.i.hi * 0xC0;
-
-        if (var_v0 < 0) {
-            var_v0 += 0xFF;
-        }
-        temp_s3 = (var_v0 >> 8) + 288;
+        temp_s3 = tilemap->scrollX.i.hi * 0xC0 / 0x100 + 288;
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
-                newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
+                newEntity->posX.i.hi = temp_s3 - *ptr++ + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
-                newEntity->params = ptr[1];
+                newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
             }
             self->ext.et_801BCC4C.unk7C++;
