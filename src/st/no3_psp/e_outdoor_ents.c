@@ -524,7 +524,6 @@ static s16 g_EntityCastleBridgeUVOffsets[] = {0, 8, 4, 8, 4, 8, 4, 8, 4, 8, 4, 1
 static u8 g_EntityCastleBridgePages[] = {14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14};
 static u16 g_EntityCastleBridgePriorities[] = {192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191};
 
-
 void EntityCastleBridge(Entity* self) {
     const u32 primCount = 24;
 
