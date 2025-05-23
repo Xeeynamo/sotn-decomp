@@ -63,22 +63,25 @@ MAIN_O_FILES    := $(addprefix $(BUILD_DIR)/,$(MAIN_O_FILES))
 DEPENDENCIES	+= $(MASPSX_APP) 
 
 # PSX specific targets
-extract_us: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_US_EXTRACT_TARGETS)))
-	$(PNG2S) bdecode config/gfx.game.json disks/us assets/game
-	make extract_assets
-	make build_assets
-extract_hd: $(addprefix $(BUILD_DIR)/,$(addsuffix .ld,$(PSX_HD_EXTRACT_TARGETS)))
-	echo $(PSX_HD_EXTRACT_TARGETS)
-	make extract_assets
-	make build_assets
+.PHONY: ninja
+ninja: $(CC1PSX) $(MASPSX_APP)
+	python3 tools/build-system/gen.py
+	ninja --verbose
+
+.PHONY: extract_us
+extract_us:
+.PHONY: extract_hd
+extract_hd:
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
 extract_disk_psx%: $(SOTNDISK)
 	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
 
-build_us: $(PSX_US_BUILD_TARGETS)
-build_hd: $(PSX_HD_BUILD_TARGETS)
+.PHONY: build_us
+build_us: ninja
+.PHONY: build_hd
+build_hd: ninja
 
 # todo: these should have an explicit dependency on extract disk
 $(BUILD_DIR)/main.ld: $(CONFIG_DIR)/splat.$(VERSION).main.yaml | main_dirs

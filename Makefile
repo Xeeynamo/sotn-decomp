@@ -337,11 +337,13 @@ ff:
 
 .PHONY: patch
 patch:
-	$(DIRT_PATCHER) config/dirt.$(VERSION).json
 
-.PHONY: check
+.PHONY: check, check_us, check_hd, check_pspeu
 check: ##@ compare built files to original game files
-check: config/check.$(VERSION).sha patch $(CHECK_FILES)
+check: check_$(VERSION)
+check_us:
+check_hd:
+check_pspeu: config/check.pspeu.sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
         printf "%s\t[ ", $$1; \
         if ($$2 == "OK") \
