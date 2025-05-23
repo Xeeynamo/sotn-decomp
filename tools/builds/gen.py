@@ -522,14 +522,24 @@ with open("build.ninja", "w") as f:
         command="cat $in > $out",
         description="concat to $out",
     )
+    cpp_defs = "-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
+    cc_command = (
+        "VERSION=$version"
+        f" mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} $in"
+        " | tools/sotn_str/target/release/sotn_str process"
+        " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
+        " | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
+        " | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34"
+        " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out"
+    )
     nw.rule(
         "psx-cc",
-        command="VERSION=$version mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
+        command=cc_command,
         description="psx cc $in",
     )
     nw.rule(
         "psx-cc-2_21",
-        command="VERSION=$version mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.21 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
+        command=cc_command.replace("--aspsx-version=2.34", "--aspsx-version=2.21"),
         description="psx cc $in",
     )
     nw.rule(
