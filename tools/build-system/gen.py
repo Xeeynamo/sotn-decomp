@@ -513,7 +513,7 @@ with open("build.ninja", "w") as f:
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
-        command="splat split $in 2> /dev/null && touch $out",
+        command=".venv/bin/splat split $in 2> /dev/null && touch $out",
         description="splat $in",
     )
     nw.rule(
@@ -563,7 +563,7 @@ with open("build.ninja", "w") as f:
     )
     nw.rule(
         "dirt",
-        command="python3 tools/dirt_patcher.py $in && touch $out",
+        command=".venv/bin/python3 tools/dirt_patcher.py $in && touch $out",
         description="dirt $in",
     )
     nw.rule(
@@ -583,22 +583,22 @@ with open("build.ninja", "w") as f:
     )
     nw.rule(
         "gfxstage-decode",
-        command="python3 tools/gfxstage.py d $in $path",
+        command=".venv/bin/python3 tools/gfxstage.py d $in $path",
         description="gfxstage decode $in",
     )
     nw.rule(
         "gfxstage-encode",
-        command="python3 tools/gfxstage.py e $path $out",
+        command=".venv/bin/python3 tools/gfxstage.py e $path $out",
         description="gfxstage encode $in",
     )
     nw.rule(
         "gfxweapon-encode",
-        command="python3 tools/png2bin.py $in $out",
+        command=".venv/bin/python3 tools/png2bin.py $in $out",
         description="gfxweapon encode $in",
     )
     nw.rule(
         "memcard-encode",
-        command="python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
+        command=".venv/bin/python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
         description="memcard icon encode $in",
     )
     nw.rule(
