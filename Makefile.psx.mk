@@ -65,13 +65,17 @@ DEPENDENCIES	+= $(MASPSX_APP)
 # PSX specific targets
 .PHONY: ninja
 ninja: $(CC1PSX) $(MASPSX_APP)
-	python3 tools/build-system/gen.py
-	ninja --verbose
+	VERSION=$(VERSION) python3 tools/build-system/gen.py
+	ninja
 
 .PHONY: extract_us
 extract_us:
+	VERSION=us python3 tools/build-system/gen.py
+	ninja build/us/dra.ld
 .PHONY: extract_hd
 extract_hd:
+	VERSION=hd python3 tools/build-system/gen.py
+	ninja build/hd/dra.ld
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
