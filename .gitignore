@@ -25,5 +25,6 @@ format-symbols.run
 /assets/
 
 # ninja stuff
+.ninja_lock
 .ninja_log
 build.ninja
