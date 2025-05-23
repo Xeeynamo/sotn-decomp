@@ -905,9 +905,10 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
     }
 }
 
+#define XY(x,y) FIX(x), FIX(y)
+static s32 D_801819E8[] = {XY(3,0), XY(5,1), XY(6.375, 1.25), XY(4.5, 2.5), XY(6, -0.75), XY(7, 1.75), XY(5.25,2), XY(4, -1.0/32)};
 // a single leaf from when the owl comes out in the intro
 void EntityFallingLeaf(Entity* self) {
-    volatile int pad;
 
     switch (self->step) {
     case 0:
@@ -916,19 +917,19 @@ void EntityFallingLeaf(Entity* self) {
         self->animCurFrame = (self->params & 1) + 63;
         self->zPriority = 0xC1;
         self->velocityX = D_801819E8[self->params * 2];
-        self->velocityY = D_801819EC[self->params * 2];
+        self->velocityY = D_801819E8[self->params * 2 + 1];
         self->unk68 = 0x1C0;
         break;
 
     case 1:
         if (self->velocityX > 0) {
-            self->velocityX -= FIX(0.0625);
+            self->velocityX -= FIX(1.0/16);
         }
         if (self->velocityY < FIX(1.0)) {
-            self->velocityY += 0x400;
+            self->velocityY += FIX(1.0/64);
         }
         if (self->velocityY > FIX(1.0)) {
-            self->velocityY -= 0x400;
+            self->velocityY -= FIX(1.0/64);
         }
         MoveEntity();
         break;
