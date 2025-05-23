@@ -605,7 +605,7 @@ void EntityCastleBridge(Entity* self) {
                   (player->posX.i.hi + tilemap->scrollX.i.hi);
 
         // divide by zero check
-        if (xOffset >= 0 && cosZ != 0) {
+        if (xOffset >= 0 && cosZ) {
 
             // sinZ / cosZ is suspiciously like a tangent
             xOffset = 172 - ((cosZ * 12) >> 12) - ((xOffset * sinZ) / cosZ);
@@ -639,7 +639,7 @@ void EntityCastleBridge(Entity* self) {
     vector = (SVECTOR*)SP(0);
     rotatedVector = (VECTOR*)SP(8);
     size = (s16*)SP(0x18);
-    // idself matrix
+    // identity matrix
     matrix = (MATRIX*)SP(0x20);
     matrix->m[0][0] = matrix->m[1][1] = matrix->m[2][2] = 0x1000; // pain.
     matrix->m[0][1] = matrix->m[0][2] = matrix->m[1][0] = matrix->m[1][2] =
@@ -649,10 +649,8 @@ void EntityCastleBridge(Entity* self) {
     SetRotMatrix(matrix);
     positionsPtr = D_80181808;
     xOffset = 4563 - tilemap->scrollX.i.hi;
-    vector->vz = 0;
-    prim = &g_PrimBuf[self->primIndex];
 
-    for (primIndex = 0; primIndex < 11; primIndex++) {
+    for (primIndex = 0, vector->vz = 0, prim = &g_PrimBuf[self->primIndex]; primIndex < 11; primIndex++) {
         if (primIndex < 2) {
             vector->vx = *positionsPtr++;
             vector->vy = *positionsPtr++;

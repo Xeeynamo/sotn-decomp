@@ -735,6 +735,8 @@ void EntityCastleBridge(Entity* self) {
     }
 }
 
+// Mostly just shadows in the far distance.
+// Use texture viewer to confirm.
 void EntityDistantBackgroundTrees(Entity* self) {
     const s32 X_SPACING = 30;
     Primitive* prim;
