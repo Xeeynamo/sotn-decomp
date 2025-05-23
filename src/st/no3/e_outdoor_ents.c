@@ -471,15 +471,14 @@ void EntityUnkId52(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     u16 temp_s3;
-    s32 var_v0;
     u16* ptr;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        ptr = D_801817F8;
-        self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
+        self->ext.et_801BCC4C.unk7C = 0;
+        ptr = D_801817F8;
         while(true){
             if (*ptr > 288) {
                 break;
@@ -499,12 +498,7 @@ void EntityUnkId52(Entity* self) {
     case 1:
         self->posX.i.hi = 0x80;
         ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
-
-        var_v0 = tilemap->scrollX.i.hi * 0x18;
-        if (var_v0 < 0) {
-            var_v0 += 0xFF;
-        }
-        temp_s3 = (var_v0 >> 8) + 288;
+        temp_s3 = tilemap->scrollX.i.hi * 0x18 / 0x100 + 288;
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -513,7 +507,7 @@ void EntityUnkId52(Entity* self) {
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
                 if (self->ext.et_801BCC4C.unk7C == 5) {
-                    newEntity->params = 0x11;
+                    newEntity->params++;
                 }
                 newEntity->unk68 = 0x18;
             }
