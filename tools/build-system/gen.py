@@ -601,7 +601,11 @@ with open("build.ninja", "w") as f:
         command="python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
         description="memcard icon encode $in",
     )
-    nw.rule("check", command="sha1sum --check $in", description="check $in")
+    nw.rule(
+        "check",
+        command=".venv/bin/python3 tools/build-system/check.py $in",
+        description="check $in",
+    )
 
     nw.build(
         rule="sotn-assets",
