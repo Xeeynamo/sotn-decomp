@@ -795,28 +795,33 @@ void EntityBackgroundCastleWall(Entity* self) {
         newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
-            newEntity->params = 0xB;
-            newEntity->posY.i.hi = 0x80;
-            newEntity->unk68 = 0xC0;
             newEntity->posX.i.hi += 0x40;
+            newEntity->posY.i.hi = 0x80;
+            newEntity->params = 0xB;
+            newEntity->unk68 = 0xC0;
         }
     }
     DestroyEntity(self);
 }
 
+static u8 D_801819D0[] = {5, 56, 5, 57, 5, 58, 3, 59, 0};
+static u8 D_801819DC[] = {6, 56, 6, 57, 6, 58, 4, 59, 0};
+
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* self) {
-    Tilemap* tilemap = &g_Tilemap;
+    Tilemap* tilemap;
     Entity* newEntity;
     u16 animFlag = true;
     u16 i;
+
+    tilemap = &g_Tilemap;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
-        if (self->params != 0) {
+        if (self->params) {
             self->drawFlags =
                 FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
             self->rotX = 0x180;
@@ -834,18 +839,18 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     case 1:
         if (self->posX.i.hi < 224) {
-            self->ext.timer.t = 0;
+            self->ext.ILLEGAL.u16[0] = 0;
             self->step++;
         }
         break;
 
     case 2:
-        if (!(self->ext.timer.t++ & 7)) {
+        if (!(self->ext.ILLEGAL.u16[0]++ & 7)) {
             g_api.PlaySfx(SE_TREE_BRANCH);
         }
         if (self->posX.i.hi < 192) {
             SetStep(3);
-            if (self->params != 0) {
+            if (self->params) {
                 self->velocityX = FIX(8);
                 self->velocityY = FIX(3);
                 break;
@@ -863,28 +868,26 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         break;
 
     case 3:
-        if (self->params != 0) {
+        if (self->params) {
             animFlag = AnimateEntity(D_801819DC, self);
             self->velocityY -= 0xA00;
         } else {
             animFlag = AnimateEntity(D_801819D0, self);
-            if (self->velocityY > (s32)0xFFFE0000) {
+            if (self->velocityY > FIX(-2)) {
                 self->velocityY -= FIX(0.03125);
             }
         }
         MoveEntity();
-        if ((self->params == 0) && (tilemap->scrollX.i.hi > 0xD80)) {
+        if (!self->params && (tilemap->scrollX.i.hi > 0xD80)) {
             self->step++;
         }
-        if (self->posX.i.hi > 288) {
-            DestroyEntity(self);
-        } else if (self->posY.i.hi < -16) {
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
             DestroyEntity(self);
         }
         break;
 
     case 4:
-        if (self->velocityY > (s32)0xFFFE0000) {
+        if (self->velocityY > FIX(-2)) {
             self->velocityY -= FIX(0.03125);
         }
         animFlag = AnimateEntity(D_801819D0, self);
@@ -892,9 +895,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         if (self->unk6C < 0x78) {
             self->unk6C += 2;
         }
-        if (self->posX.i.hi > 288) {
-            DestroyEntity(self);
-        } else if (self->posY.i.hi < -16) {
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
             DestroyEntity(self);
         }
     }

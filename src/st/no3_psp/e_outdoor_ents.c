@@ -804,8 +804,8 @@ void EntityBackgroundCastleWall(Entity* self) {
     DestroyEntity(self);
 }
 
-static u8 D_801819D0[] = {5, 56, 5, 57, 5, 58, 3, 59, 0, 0, 0, 0, 0, 0, 0, 0};
-static u8 D_801819DC[] = {6, 56, 6, 57, 6, 58, 4, 59, 0, 0, 0, 0, 0, 0, 0, 0};
+static u8 D_801819D0[] = {5, 56, 5, 57, 5, 58, 3, 59, 0};
+static u8 D_801819DC[] = {6, 56, 6, 57, 6, 58, 4, 59, 0};
 
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* self) {
@@ -815,7 +815,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
     u16 i;
 
     tilemap = &g_Tilemap;
-    
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
@@ -873,7 +873,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
             self->velocityY -= 0xA00;
         } else {
             animFlag = AnimateEntity(D_801819D0, self);
-            if (self->velocityY > (s32)0xFFFE0000) {
+            if (self->velocityY > FIX(-2)) {
                 self->velocityY -= FIX(0.03125);
             }
         }
@@ -887,7 +887,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         break;
 
     case 4:
-        if (self->velocityY > (s32)0xFFFE0000) {
+        if (self->velocityY > FIX(-2)) {
             self->velocityY -= FIX(0.03125);
         }
         animFlag = AnimateEntity(D_801819D0, self);
