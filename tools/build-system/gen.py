@@ -1,5 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja -j1
+from posixpath import basename
+
 import ninja_syntax
 import os
 import yaml
@@ -26,7 +28,12 @@ def is_servant(ovl_name: str) -> bool:
 
 
 def is_base_ovl(ovl_name: str) -> bool:
-    return ovl_name == "dra" or ovl_name == "ric" or ovl_name == "maria"
+    return (
+        ovl_name == "main"
+        or ovl_name == "dra"
+        or ovl_name == "ric"
+        or ovl_name == "maria"
+    )
 
 
 def is_boss(ovl_name: str) -> bool:
@@ -60,8 +67,11 @@ def add_c_psx(
     if output in entries:
         return
     entries[output] = {}
+    rule = "psx-cc"
+    if file_name == "src/main/psxsdk/libgpu/sys.c":
+        rule = "psx-cc-2_21"
     nw.build(
-        rule="psx-cc",
+        rule=rule,
         outputs=output,
         inputs=file_name,
         implicit=[
@@ -319,6 +329,11 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 raise Exception(f"unknown subsegment type {kind}")
             objs.append(obj)
         step_elf = f"build/{ver}/weapon/w{hand_id}_{weapon_id}.elf"
+        symbols_lists = [
+            f"-T config/undefined_syms.{ver}.txt",
+            f"-T {undefined_funcs_auto_path}",
+            f"-T {undefined_syms_auto_path}",
+        ]
         nw.build(
             rule="psx-ld",
             outputs=step_elf,
@@ -328,14 +343,7 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 "version": ver,
                 "obj_files": objs,
                 "map_out": f"build/{ver}/weapon/w{hand_id}_{weapon_id}.map",
-                "symbols_arg": str.join(
-                    " ",
-                    [
-                        f"-T config/undefined_syms.{ver}.txt",
-                        f"-T {undefined_funcs_auto_path}",
-                        f"-T {undefined_syms_auto_path}",
-                    ],
-                ),
+                "symbols_arg": str.join(" ", symbols_lists),
             },
         )
         step_bin = f"build/{ver}/weapon/w{hand_id}_{weapon_id}.bin"
@@ -370,8 +378,6 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     undefined_syms_auto_path = str(splat_config["options"]["undefined_syms_auto_path"])
     asm_path = str(splat_config["options"]["asm_path"])
     src_path = str(splat_config["options"]["src_path"])
-    if ovl_name == "main":  # TODO currently broken
-        return
     gen_done_path = os.path.join(src_path, "gen", f"done_{version}")
     if src_path == "src/st":
         # useful for overlays that share source files, like on RWRP or PSP
@@ -393,6 +399,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     else:
         raise Exception(f"platform {platform} not recognized")
     objs = []
+    if ovl_name == "main":
+        objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_script_path))
     for segment in splat_config["segments"]:
         if not "type" in segment:
             continue
@@ -469,6 +477,12 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         sym_version = version
         if ovl_name == "stmad":
             sym_version = "beta"
+        symbols_lists = [
+            f"-T config/undefined_syms.{sym_version}.txt",
+            f"-T {undefined_syms_auto_path}",
+        ]
+        if ovl_name != "main":
+            symbols_lists.append(f"-T {undefined_funcs_auto_path}")
         nw.build(
             rule="psx-ld",
             outputs=[output_elf],
@@ -476,22 +490,18 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             implicit=[x for x in objs if x],
             variables={
                 "map_out": f"build/{version}/{ovl_name}.map",
-                "symbols_arg": str.join(
-                    " ",
-                    [
-                        f"-T config/undefined_syms.{sym_version}.txt",
-                        f"-T {undefined_funcs_auto_path}",
-                        f"-T {undefined_syms_auto_path}",
-                    ],
-                ),
+                "symbols_arg": str.join(" ", symbols_lists),
             },
         )
         strip_rule = "psx-strip"
         if not is_hd(version) and is_servant(ovl_name):
             strip_rule = "psx-strip-servant"
+        output_name = os.path.basename(target_path)
+        if ovl_name == "main":
+            output_name = "main.exe"
         nw.build(
             rule=strip_rule,
-            outputs=[f"build/{version}/{os.path.basename(target_path)}"],
+            outputs=[f"build/{version}/{output_name}"],
             inputs=[output_elf],
         )
     add_assets_config(nw, version, gen_done_path)
@@ -544,6 +554,11 @@ with open("build.ninja", "w") as f:
     nw.rule(
         "psx-cc",
         command="VERSION=$version mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
+        description="psx cc $in",
+    )
+    nw.rule(
+        "psx-cc-2_21",
+        command="VERSION=$version mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR $in | tools/sotn_str/target/release/sotn_str process | iconv --from-code=UTF-8 --to-code=Shift-JIS | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.21 | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out",
         description="psx cc $in",
     )
     nw.rule(
