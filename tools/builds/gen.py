@@ -1,5 +1,6 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
+
 import ninja_syntax
 import os
 import yaml
@@ -603,7 +604,7 @@ with open("build.ninja", "w") as f:
     )
     nw.rule(
         "check",
-        command=".venv/bin/python3 tools/build-system/check.py $in",
+        command=".venv/bin/python3 tools/builds/check.py $in",
         description="check $in",
     )
 
