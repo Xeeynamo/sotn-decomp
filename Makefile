@@ -281,6 +281,7 @@ format-src: bin/clang-format
 .PHONY: format-tools
 format-tools:
 	$(BLACK) tools/*.py
+	$(BLACK) tools/builds/gen.py
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
