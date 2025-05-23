@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
-#include "../e_stage_name.h"
-
-#include "../entity_soul_steal_orb.h"
-
-#include "../entity_enemy_blood.h"
-
-#include "sfx.h"
-
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &D_80182764[entity->params];
 
