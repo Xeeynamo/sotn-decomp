@@ -150,82 +150,82 @@ static u16 D_80181468[] = {
 // large foreground tree during intro
 void EntityForegroundTree(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
-    Entity *EntRange, *ent, *ent2;
     u16* ptrParams;
-    u16 temp_s4;
-    s16 var_s3;
-    u16 y;
+    u16 var_s4;
+    u16 var_s3;
+    Entity *ent, *ent2;
 
-    if (self->params != 0) {
-        var_s3 = 320;
+    if (self->params) {
+        var_s4 = 320;
         ptrParams = &D_80181468[self->ext.foregroundTree.unk7C * 2];
     } else {
-        var_s3 = 448;
+        var_s4 = 448;
         ptrParams = &D_801813DC[self->ext.foregroundTree.unk7C * 2];
     }
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        EntRange = &g_Entities[192];
-        self->unk68 = var_s3;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        if (*ptrParams <= 352) {
-            ent = AllocEntity(EntRange, &EntRange[64]);
+        self->unk68 = var_s4;
+        // This is a weird way to make a while-loop.
+        while(true){
+            if (*ptrParams > 352) {
+                break;
+            }
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = *ptrParams++;
-                y = *ptrParams++;
-                ent->params = (y >> 8) + self->params;
-                ent->posY.i.hi = y & 255;
-                ent->unk68 = var_s3;
-                if (self->params != 0) {
+                var_s3 = *ptrParams++;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
                     ent->unk6C = 0x60;
                 }
             } else {
                 ptrParams += 2;
             }
             self->ext.foregroundTree.unk7C++;
-            goto label;
         }
         break;
 
     case 1:
         self->posX.i.hi = 128;
-        temp_s4 = var_s3 * tilemap->scrollX.i.hi / 256 + 352;
-        if (temp_s4 >= *ptrParams) {
+        var_s3 = tilemap->scrollX.i.hi * var_s4 / 256 + 352;
+        if (var_s3 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
-                ent->posX.i.hi = temp_s4 - ptrParams[0] + 368;
-                y = ptrParams[1];
-                ent->params = (y >> 8) + self->params;
-                ent->posY.i.hi = y & 255;
-                ent->unk68 = var_s3;
-                if (self->params != 0) {
+                ent->posX.i.hi = var_s3 - *ptrParams++ + 368;
+                var_s3 = *ptrParams;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
                     ent->unk6C = 0x60;
                 } else if (self->ext.foregroundTree.unk7C == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi -= 16;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
                 } else if (self->ext.foregroundTree.unk7C == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi += 48;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
                 } else if (self->ext.foregroundTree.unk7C == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi += 4;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
                 }
             }
             self->ext.foregroundTree.unk7C++;
@@ -249,8 +249,10 @@ void EntityUnkId50(Entity* self) {
         self->unk68 = 0xC0;
         self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        while (*ptr <= 288) {
+        while(true){
+            if (*ptr > 288) {
+                break;
+            }
             newEntity = AllocEntity(temp, &temp[64]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
@@ -261,7 +263,6 @@ void EntityUnkId50(Entity* self) {
                 ptr += 2;
             }
             self->ext.et_801BCC4C.unk7C++;
-            goto label;
         }
         break;
 
@@ -469,7 +470,6 @@ void EntityBackgroundPineTrees(Entity* self) {
 void EntityUnkId52(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
-    Entity* temp;
     u16 temp_s3;
     s32 var_v0;
     u16* ptr;
@@ -478,12 +478,13 @@ void EntityUnkId52(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSpawner);
         ptr = D_801817F8;
-        temp = &g_Entities[192];
         self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        while (*ptr <= 288) {
-            newEntity = AllocEntity(temp, &temp[64]);
+        while(true){
+            if (*ptr > 288) {
+                break;
+            }
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr;
@@ -492,7 +493,6 @@ void EntityUnkId52(Entity* self) {
             }
             ptr++;
             self->ext.et_801BCC4C.unk7C++;
-            goto label;
         }
         break;
 

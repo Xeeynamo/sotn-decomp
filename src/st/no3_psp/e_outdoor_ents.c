@@ -168,8 +168,11 @@ void EntityForegroundTree(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = var_s4;
-    label:
-        if (*ptrParams <= 352) {
+        // This is a weird way to make a while-loop.
+        while(true){
+            if (*ptrParams > 352) {
+                break;
+            }
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
@@ -185,7 +188,6 @@ void EntityForegroundTree(Entity* self) {
                 ptrParams += 2;
             }
             self->ext.foregroundTree.unk7C++;
-            goto label;
         }
         break;
 
@@ -246,8 +248,10 @@ void EntityUnkId50(Entity* self) {
         self->unk68 = 0xC0;
         self->ext.et_801BCC4C.unk7C = 0;
         ptr = D_801814EC;
-    label:
-        if (*ptr <= 288) {
+        while(true){
+            if (*ptr > 288) {
+                break;
+            }
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
@@ -258,7 +262,6 @@ void EntityUnkId50(Entity* self) {
                 ptr += 2;
             }
             self->ext.et_801BCC4C.unk7C++;
-            goto label;
         }
         break;
 
@@ -476,8 +479,10 @@ void EntityUnkId52(Entity* self) {
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->ext.et_801BCC4C.unk7C = 0;
         ptr = D_801817F8;
-    label:
-        if (*ptr <= 288) {
+        while(true){
+            if (*ptr > 288) {
+                break;
+            }
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
@@ -487,7 +492,6 @@ void EntityUnkId52(Entity* self) {
             }
             ptr++;
             self->ext.et_801BCC4C.unk7C++;
-            goto label;
         }
         break;
 
