@@ -16,4 +16,3 @@ n64img==0.3.3
 pygfxd
 pillow
 toml
-ninja_syntax
