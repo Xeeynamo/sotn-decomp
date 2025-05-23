@@ -311,12 +311,15 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
             kind = subsegment[1]
             if kind == "data":
                 obj = add_s(nw, ver, f"{asm_path}/data/w_{weapon_id}.data.s", ld_path)
+                objs.append(obj)
             elif kind == "sbss":
                 obj = add_s(nw, ver, f"{asm_path}/data/w_{weapon_id}.sbss.s", ld_path)
+                objs.append(obj)
             elif kind == "c":
                 obj = add_c(
                     nw, ver, f"{src_path}/w_{weapon_id}.c", [gen_done_path], cpp_flags
                 )
+                objs.insert(0, obj) # the C file needs to always be linked first
             elif kind == ".data":
                 continue
             elif kind == ".rodata":
@@ -327,7 +330,6 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
-            objs.append(obj)
         step_elf = f"build/{ver}/weapon/w{hand_id}_{weapon_id}.elf"
         symbols_lists = [
             f"-T config/undefined_syms.{ver}.txt",
