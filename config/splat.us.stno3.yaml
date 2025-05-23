@@ -56,7 +56,7 @@ segments:
       - [0x1358, .data, e_sky_entities]
       - [0x13A8, data]
       - [0x13DC, .data, e_outdoor_ents]
-      - [0x17F8, data]
+      - [0x1808, data]
       - [0x1ACC, .data, cutscene]
       - [0x1AD4, data]
       - [0x1B40, data]

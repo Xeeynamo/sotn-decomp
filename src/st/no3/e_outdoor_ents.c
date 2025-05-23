@@ -465,6 +465,8 @@ void EntityBackgroundPineTrees(Entity* self) {
     }
 }
 
+static u16 D_801817F8[] = {0x20, 0x60, 0xA0, 0xE0, 0x120, 0x15F, 0xFFFF};
+
 void EntityUnkId52(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
