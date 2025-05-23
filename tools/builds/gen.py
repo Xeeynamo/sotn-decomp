@@ -68,14 +68,9 @@ def add_c_psx(
     nw.build(
         rule=rule,
         outputs=output,
-        inputs=file_name,
         implicit=[
             f"src/.assets_build_done_{ver}",
             ld_path,
-            "include/types.h",
-            "include/common.h",
-            "include/game.h",
-            "include/entity.h",
         ],
         variables={
             "version": version,
@@ -525,7 +520,7 @@ with open("build.ninja", "w") as f:
     cpp_defs = "-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
     cc_command = (
         "VERSION=$version"
-        f" mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} $in"
+        f" mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin -MD -MF $out.d {cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process"
         " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
         " | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
@@ -535,11 +530,13 @@ with open("build.ninja", "w") as f:
     nw.rule(
         "psx-cc",
         command=cc_command,
+        depfile="$out.d",
         description="psx cc $in",
     )
     nw.rule(
         "psx-cc-2_21",
         command=cc_command.replace("--aspsx-version=2.34", "--aspsx-version=2.21"),
+        depfile="$out.d",
         description="psx cc $in",
     )
     nw.rule(
