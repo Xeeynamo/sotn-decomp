@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
-#include "sfx.h"
+
+#ifdef VERSION_PSP
+extern s32 E_ID(BG_LIGHTNING);
+extern s32 E_ID(DEATH_STOLEN_ITEM);
+#endif
 
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
     // Used as both a loop variable and a temp
     s32 localVar;
-    Entity* gents = g_Entities;
     Tilemap* tilemap = &g_Tilemap;
+    Entity* otherEnt = &PLAYER;
 
     if (self->ext.roomTransition2.unk80 == 0 && self->step < 4) {
         g_api.PlaySfx(SFX_DEATH_AMBIENCE);
@@ -20,20 +24,19 @@ void EntityRoomTransition2(Entity* self) {
     case 0:
         InitializeEntity(g_EInitSpawner);
         tilemap->y = 0xFC;
-        g_Player.padSim = PAD_RIGHT;
         g_PauseAllowed = false;
+        g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
-        g_CutsceneFlags |= 0x100;
         break;
 
     case 1:
-        // Evil use of local 'gents' instead of PLAYER
-        if (gents->posX.i.hi < 52) {
+        // other ent is player right now
+        if (otherEnt->posX.i.hi < 52) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = 1;
             g_Player.padSim = PAD_RIGHT;
         } else {
-            g_Player.padSim = 0;
             g_CutsceneFlags |= 0x80;
+            g_Player.padSim = 0;
             self->step++;
         }
         g_Player.demo_timer = 1;
@@ -48,10 +51,10 @@ void EntityRoomTransition2(Entity* self) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(E_DEATH_STOLEN_ITEM, gents, newEntity);
+                CreateEntityFromEntity(E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
                 newEntity->params = localVar;
             }
-            g_Player.padSim = 0x10000;
+            g_Player.padSim = PAD_SIM_UNK10000;
             self->ext.roomTransition2.timer = 16;
             self->step++;
         }
@@ -62,15 +65,16 @@ void EntityRoomTransition2(Entity* self) {
         if (g_CutsceneFlags & 0x40 && !(--self->ext.roomTransition2.timer)) {
             localVar = g_api.AllocPrimitives(PRIM_TILE, 1);
             if (localVar != -1) {
-                prim = &g_PrimBuf[localVar];
                 self->primIndex = localVar;
                 self->flags |= FLAG_HAS_PRIMS;
-                prim->u0 = 0xFF;
-                prim->v0 = 0xFF;
-                prim->priority = 0x50;
+                prim = &g_PrimBuf[localVar];
                 prim->x0 = 0;
                 prim->y0 = 0;
+                prim->u0 = 0xFF;
+                prim->v0 = 0xFF;
+                // Ugh, RBG
                 prim->r0 = prim->b0 = prim->g0 = 0;
+                prim->priority = 0x50;
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
                 self->step++;
@@ -84,13 +88,13 @@ void EntityRoomTransition2(Entity* self) {
 
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        prim->r0 = prim->g0 = prim->b0 = prim->b0 + 8;
+        PGREY(prim,0) += 8;
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
             g_BgLayers[0].flags |= 1;
-            g_api.PlaySfx(0xA1);
-            g_api.PlaySfx(0x30F);
+            g_api.PlaySfx(SET_RELEASE_RATE_HIGH_20_21);
+            g_api.PlaySfx(MU_DRACULAS_CASTLE);
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
@@ -98,14 +102,14 @@ void EntityRoomTransition2(Entity* self) {
 
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-        prim->r0 = prim->g0 = prim->b0 = prim->b0 - 8;
-        if (prim->r0 == 0) {
+        PGREY(prim,0) -= 8;
+        if (!prim->r0) {
             DestroyEntity(self);
-            gents = &g_Entities[192];
             tilemap->y = 0;
             g_PauseAllowed = true;
-            DestroyEntity(gents);
-            CreateEntityFromCurrentEntity(E_BG_LIGHTNING, gents);
+            otherEnt = &g_Entities[192];
+            DestroyEntity(otherEnt);
+            CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), otherEnt);
         }
         g_Player.padSim = 0;
         g_Player.demo_timer = 1;
@@ -114,37 +118,29 @@ void EntityRoomTransition2(Entity* self) {
 }
 
 static u16 D_80181AD4[] = {123, 16, 184, 214, 225, 247};
-extern u16 D_80181AE0[] = {48, 56, 40, 64, 32, 72};
+static u16 D_80181AE0[] = {48, 56, 40, 64, 32, 72};
 static s16 D_80181AEC[] = {-256, 1024, -640, 640, 512, 768, -896, 1024, 0, 512, 256, 896};
 
 // Displays items took by Death in the cutscene
 void EntityDeathStolenItem(Entity* self) {
     u16 params = self->params;
     u16 itemId = D_80181AD4[params];
-    volatile char pad;
     Primitive* prim;
     s32 primIndex;
-    u16 temp1;
-    u16 temp3;
-    u16 temp4;
-    u16 temp6;
-    s32 temp2;
-    s32 temp8;
-    u8 temp7;
-    u8 temp5;
+    u16 size;
+    u16 timer;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
         break;
-
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             break;
         }
-        self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
 
         if (itemId < NUM_HAND_ITEMS) {
             g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
@@ -159,86 +155,67 @@ void EntityDeathStolenItem(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         prim->tpage = 0x1A;
         prim->clut = params + 0x1D0;
-        prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-            prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 =
-                128;
+        
+        prim->u0 = prim->u2 = ((params & 7) << 4) + 1;
+        prim->u1 = prim->u3 = prim->u0 + 14;
+        prim->v0 = prim->v1 = ((params & 0x18) << 1) + 0x81;
+        prim->v2 = prim->v3 = prim->v0 + 14;
+        PCOL(prim) = 128;
         prim->priority = 0x80;
-        prim->u0 = prim->u2 = (params & 7) << 4 | 1;
-        prim->u1 = prim->u3 = (params & 7) << 4 | 0xF;
-        prim->v0 = prim->v1 = (params & 0x18) << 1 | 0x81;
-        prim->v2 = prim->v3 = (params & 0x18) << 1 | 0x8F;
         prim->drawMode = DRAW_HIDE;
         self->step++;
         break;
-
     case 2:
         UnkEntityFunc0(D_80181AEC[params * 2], D_80181AEC[params * 2 + 1]);
-        self->ext.deathStolenItems.unk7C = 16;
+        self->ext.utimer.t = 16;
         self->step++;
         break;
-
     case 3:
-        self->ext.deathStolenItems.unk7C--;
-        temp6 = self->ext.deathStolenItems.unk7C;
+        timer = --self->ext.utimer.t;
         MoveEntity();
-        temp8 = (16 - temp6) * 7;
-        if (temp8 < 0) {
-            temp8 += 15;
-        }
+        size = (16 - timer) * 7 / 16;
         prim = &g_PrimBuf[self->primIndex];
-        temp1 = temp8 >> 4;
-        prim->x0 = prim->x2 = self->posX.i.hi - temp1;
-        prim->y0 = prim->y1 = self->posY.i.hi - temp1;
+        prim->x0 = prim->x2 = self->posX.i.hi - size;
+        prim->y0 = prim->y1 = self->posY.i.hi - size;
+        size *= 2;
+        prim->x1 = prim->x3 = prim->x0 + size;
+        prim->y2 = prim->y3 = prim->y0 + size;
         prim->drawMode = DRAW_COLORS | DRAW_UNK02;
-        temp2 = temp1 << 1;
-        prim->x1 = prim->x3 = prim->x0 + temp2;
-        prim->y2 = prim->y3 = prim->y0 + temp2;
-        if (temp6 == 0) {
-            self->ext.deathStolenItems.unk7C = D_80181AE0[params];
+        if (!timer) {
+            self->ext.utimer.t = D_80181AE0[params];
             self->step++;
         }
         break;
-
     case 4:
-        if (--self->ext.deathStolenItems.unk7C == 0) {
-            self->ext.deathStolenItems.unk7C = 8;
+        if (!--self->ext.utimer.t) {
+            self->ext.utimer.t = 8;
             g_api.PlaySfx(SE_ITEM_YOINK);
             self->step++;
         }
-
         prim = &g_PrimBuf[self->primIndex];
-        if (self->ext.deathStolenItems.unk7C & 2) {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = 192;
-            prim->g0 = prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                prim->b2 = prim->b3 = 64;
+        if (self->ext.utimer.t & 2) {
+            PRED(prim) = 192;
+            PGRN(prim) = PBLU(prim) = 64;
         } else {
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 128;
+            PCOL(prim) = 128;
         }
         break;
-
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-        prim->y0 = prim->y1 = prim->y1 - 0x20;
-        if (self->ext.deathStolenItems.unk7C >= 2) {
-            temp3 = prim->x2;
-            temp4 = prim->x3;
-            prim->x2 = temp3 + 1;
-            prim->x0 = temp3;
-            prim->x3 = temp4 - 1;
-            prim->x1 = temp4;
+        prim->y0 = prim->y1 -= 0x20;
+        if (self->ext.utimer.t > 1) {
+            prim->x0 = prim->x2++;
+            prim->x1 = prim->x3--;
         }
-        if (--self->ext.deathStolenItems.unk7C == 0) {
-            self->ext.deathStolenItems.unk7C = 16;
+        if (!--self->ext.utimer.t) {
+            self->ext.utimer.t = 16;
             self->step++;
         }
         break;
-
     case 6:
         prim = &g_PrimBuf[self->primIndex];
-        prim->y2 = prim->y3 = prim->y3 - 0x10;
-        if (--self->ext.deathStolenItems.unk7C == 0) {
+        prim->y2 = prim->y3 -= 0x10;
+        if (!--self->ext.utimer.t) {
             self->step++;
             DestroyEntity(self);
         }
@@ -246,19 +223,43 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
+extern s32 E_ID(DEATH_SCYTHE_SHADOW);
+extern s32 E_ID(DEATH_SCYTHE);
+#endif
+
+static u8 D_80181B04[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
+static u8 D_80181B28[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
+static u8 D_80181B34[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
+extern u8 D_80181B40[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
+extern u8 D_80181B4C[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
+static u8 D_80181B58[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
+static u8 D_80181B68[] = {14, 28, 9, 29, 4, 30, 255, 0};
+static u8 D_80181B70[] = {16, 30, 255, 0};
+static u8 D_80181B74[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
+static u8 D_80181B84[] = {9, 1, 11, 8, 22, 10, 255, 0};
+static u8 D_80181B8C[] = {20, 10, 11, 8, 2, 1, 255, 0};
+static u8 D_80181B94[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
+static u8 D_80181BB4[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
+static u8 D_80181BC8[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
+static u8 D_80181BE0[] = {5, 56, 16, 55, 255, 0};
+static u8* D_80181BE8[] = {D_80181B04, D_80181B28, D_80181B34, D_80181B40, 
+    D_80181B4C, D_80181B58, D_80181B68, D_80181B70,
+    D_80181B74, D_80181B84, D_80181B94, D_80181BB4,
+    D_80181BC8, D_80181BE0};
+    
 void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
     Primitive* prim;
-    s16 left, right;
     s32 primIndex;
     s32 x, y;
     s32 i;
 
     if ((self->step >= 4) && (self->step < 13)) {
-        if (self->ext.death.moveTimer != 0) {
+        if (self->ext.death.moveTimer) {
             self->ext.death.moveTimer--;
         } else {
-            if (self->ext.death.moveDirection != 0) {
+            if (self->ext.death.moveDirection) {
                 self->ext.death.moveDirection = 0;
             } else {
                 self->ext.death.moveDirection = 1;
@@ -266,7 +267,7 @@ void EntityDeath(Entity* self) {
             self->ext.death.moveTimer = 127;
         }
 
-        if (self->ext.death.moveDirection != 0) {
+        if (self->ext.death.moveDirection) {
             self->velocityY += 0x200;
         } else {
             self->velocityY -= 0x200;
@@ -297,15 +298,15 @@ void EntityDeath(Entity* self) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
                 InitializeEntity(g_EInitCommon);
+                self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
                 self->animSet = ANIMSET_OVL(8);
+                self->animCurFrame = 0;
                 self->palette = 0x2D6;
                 self->unk5A = 0x44;
-                self->primIndex = primIndex;
-                self->animCurFrame = 0;
                 self->ext.death.unk7C = 0;
-                self->flags |= FLAG_HAS_PRIMS;
                 DestroyEntity(newEntity);
-                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE, newEntity);
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE), newEntity);
                 prim = &g_PrimBuf[primIndex];
 
                 for (i = 0; prim != NULL; i++) {
@@ -318,14 +319,12 @@ void EntityDeath(Entity* self) {
                         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE |
                                          DRAW_COLORS | DRAW_TRANSP;
                     }
-                    prim->tpage = self->unk5A >> 2;
+                    prim->tpage = self->unk5A / 4;
                     prim->u0 = prim->u2 = 0x10;
                     prim->u1 = prim->u3 = 0x38;
                     prim->v0 = prim->v1 = 0xB0;
                     prim->v2 = prim->v3 = 0xFF;
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                        prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                            prim->b2 = prim->b3 = 0;
+                    PCOL(prim) = 0;
                     prim->priority = self->zPriority + i + 1;
                     prim = prim->next;
                 }
@@ -347,27 +346,18 @@ void EntityDeath(Entity* self) {
 
     case 2:
         self->rotZ -= 0x40;
-        if (self->rotZ == 0) {
+        if (!self->rotZ) {
             SetStep(3);
             self->drawFlags = FLAG_DRAW_DEFAULT;
         }
 
-        x = (0x1000 - self->rotZ) * 0x1D;
-        if (x < 0) {
-            x += 0xFFF;
-        }
-        self->posX.i.hi = self->ext.death.posX + (x >> 0xC);
-
-        y = (0x1000 - self->rotZ) * 0x28;
-        if (y < 0) {
-            y += 0xFFF;
-        }
-        self->posY.i.hi = self->ext.death.posY - (y >> 0xC);
+        self->posX.i.hi = self->ext.death.posX + (0x1000 - self->rotZ) * 0x1D / 0x1000;
+        self->posY.i.hi = self->ext.death.posY - (0x1000 - self->rotZ) * 0x28 / 0x1000;
 
         if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -404,24 +394,18 @@ void EntityDeath(Entity* self) {
         }
 
         while (prim != NULL) {
-            left = self->posX.i.hi - 14;
-            right = self->posX.i.hi + 26;
-            prim->x0 = prim->x2 = left;
-            prim->x1 = prim->x3 = right;
-            left = self->posY.i.hi - 40;
-            right = self->posY.i.hi + 39;
-            prim->y0 = prim->y1 = left;
-            prim->y2 = prim->y3 = right;
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = self->ext.death.unk7C;
+            prim->x0 = prim->x2 = self->posX.i.hi - 14;
+            prim->x1 = prim->x3 = prim->x0 + 40;
+            prim->y0 = prim->y1 = self->posY.i.hi - 40;
+            prim->y2 = prim->y3 = prim->y0 + 79;
+            PCOL(prim) = self->ext.death.unk7C;
             prim = prim->next;
         }
         break;
 
     case 5:
         AnimateEntity(D_80181B34, self);
-        if (--self->ext.death.unk7C == 0) {
+        if (!--self->ext.death.unk7C) {
             SetStep(6);
         }
         break;
@@ -540,16 +524,16 @@ void EntityDeath(Entity* self) {
 
     case 19:
         AnimateEntity(D_80181B8C, self);
-        if (self->animCurFrame == 1) {
-            newEntity->ext.death.unk7C = 1;
-        } else {
+        if (self->animCurFrame != 1) {
             newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
         }
 
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_DEATH_SCYTHE_SHADOW, newEntity);
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
@@ -560,14 +544,12 @@ void EntityDeath(Entity* self) {
         if (self->posY.i.hi < -32) {
             g_CutsceneFlags |= 0x40;
             DestroyEntity(self);
-            DestroyEntity(&self[1]);
+            DestroyEntity(self + 1);
         }
         break;
     }
 }
 
-// Not 100% sure about this entity, but since it's making scythe shadows,
-// going to guess it's the scythe.
 void EntityDeathScythe(Entity* self) {
     u16 tempstep;
     // this is Death.
@@ -601,7 +583,7 @@ void EntityDeathScythe(Entity* self) {
                     break;
                 }
                 CreateEntityFromCurrentEntity(
-                    E_DEATH_SCYTHE_SHADOW, otherEntity);
+                    E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
                 otherEntity->animCurFrame = self->animCurFrame;
                 otherEntity->params = 1;
                 break;
@@ -617,17 +599,17 @@ void EntityDeathScythe(Entity* self) {
 // copies of itself. This entity represents those semi-transparent copies.
 // Identified through NOP-out in emulator.
 void EntityDeathScytheShadow(Entity* self) {
-    s16 animCurFrame;
+    u16 animCurFrame;
 
     switch (self->step) {
     case 0:
         animCurFrame = self->animCurFrame;
         InitializeEntity(g_EInitCommon);
-        self->animCurFrame = animCurFrame;
         self->animSet = ANIMSET_OVL(8);
+        self->animCurFrame = animCurFrame;
         self->palette = 0x2D6;
         self->unk5A = 0x44;
-        if (self->params != 0) {
+        if (self->params) {
             self->drawFlags = FLAG_DRAW_UNK8;
             self->ext.deathScythe.timer = 0x40;
         } else {
@@ -643,10 +625,10 @@ void EntityDeathScytheShadow(Entity* self) {
             DestroyEntity(self);
             break;
         }
-        if (self->params != 0) {
+        if (self->params) {
             self->unk6C--;
         } else {
-            self->unk6C += -2;
+            self->unk6C -= 2;
         }
         break;
     }

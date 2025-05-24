@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
 #include "../no3/no3.h"
 
+#ifdef VERSION_PSP
 extern s32 E_ID(BG_LIGHTNING);
 extern s32 E_ID(DEATH_STOLEN_ITEM);
+#endif
 
 void EntityRoomTransition2(Entity* self) {
     Entity* newEntity;
@@ -71,6 +72,7 @@ void EntityRoomTransition2(Entity* self) {
                 prim->y0 = 0;
                 prim->u0 = 0xFF;
                 prim->v0 = 0xFF;
+                // Ugh, RBG
                 prim->r0 = prim->b0 = prim->g0 = 0;
                 prim->priority = 0x50;
                 prim->drawMode =
@@ -86,7 +88,7 @@ void EntityRoomTransition2(Entity* self) {
 
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        prim->r0 = prim->g0 = prim->b0 += 8;
+        PGREY(prim,0) += 8;
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
@@ -100,7 +102,7 @@ void EntityRoomTransition2(Entity* self) {
 
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-        prim->r0 = prim->g0 = prim->b0 -= 8;
+        PGREY(prim,0) -= 8;
         if (!prim->r0) {
             DestroyEntity(self);
             tilemap->y = 0;
@@ -221,24 +223,31 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
+#ifdef VERSION_PSP
 extern s32 E_ID(DEATH_SCYTHE_SHADOW);
 extern s32 E_ID(DEATH_SCYTHE);
+#endif
 
 static u8 D_80181B04[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
 static u8 D_80181B28[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
 static u8 D_80181B34[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
-extern u8 D_80181B40[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
-extern u8 D_80181B4C[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
+static u8 D_80181B40[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
+static u8 D_80181B4C[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
 static u8 D_80181B58[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
 static u8 D_80181B68[] = {14, 28, 9, 29, 4, 30, 255, 0};
 static u8 D_80181B70[] = {16, 30, 255, 0};
 static u8 D_80181B74[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
 static u8 D_80181B84[] = {9, 1, 11, 8, 22, 10, 255, 0};
-static u8 D_80181B8C[] = {20, 10, 11, 8, 2, 1, 255, 0};
+static u8 D_80181B8C[] = {20, 10, 11, 8, 2, 1, 255, 0}; // Array skips this one
 static u8 D_80181B94[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
 static u8 D_80181BB4[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
 static u8 D_80181BC8[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
 static u8 D_80181BE0[] = {5, 56, 16, 55, 255, 0};
+static u8* D_80181BE8[] = {D_80181B04, D_80181B28, D_80181B34, D_80181B40, 
+                           D_80181B4C, D_80181B58, D_80181B68, D_80181B70,
+                           D_80181B74, D_80181B84, D_80181B94, D_80181BB4,
+                           D_80181BC8, D_80181BE0};
+
 
 void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
@@ -316,9 +325,7 @@ void EntityDeath(Entity* self) {
                     prim->u1 = prim->u3 = 0x38;
                     prim->v0 = prim->v1 = 0xB0;
                     prim->v2 = prim->v3 = 0xFF;
-                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                        prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                            prim->b2 = prim->b3 = 0;
+                    PCOL(prim) = 0;
                     prim->priority = self->zPriority + i + 1;
                     prim = prim->next;
                 }
