@@ -1586,7 +1586,7 @@
 | ric       | RicEntityCrashHydroStorm                 |      346 |         37 |        | https://decomp.me/scratch/EpsEj | 0.972 |
 | lib       | func_us_801CCF6C                         |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric       | RicEntityCrashVibhuti                    |      349 |         43 |        |                                 |       |
-| no3       | EntityRoomTransition2                    |      350 |         35 | Yes    |                                 |       |
+| no3       | EntityRoomTransition2                    |      350 |         35 | Yes    | https://decomp.me/scratch/8CGjr | 0.995 |
 | dra       | CheckSwordBrothersInput                  |      350 |         56 |        |                                 |       |
 | no3       | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | no4       | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
@@ -1697,7 +1697,7 @@
 | dra       | func_8010FDF8                            |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
 | maria_psp | func_pspeu_092A8AE8                      |      500 |         44 |        |                                 |       |
 | maria_psp | func_pspeu_092A6E50                      |      501 |         49 | Yes    |                                 |       |
-| no3       | EntityDeathStolenItem                    |      502 |         28 | Yes    |                                 |       |
+| no3       | EntityDeathStolenItem                    |      502 |         28 | Yes    | https://decomp.me/scratch/EJUYk | 0.985 |
 | ric       | RicEntityFactory                         |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
 | no4       | EntitySkeletonApe                        |      507 |         90 | Yes    | https://decomp.me/scratch/jTy3E | 0.992 |
 | maria     | MarStepDead                              |      508 |         59 |        |                                 |       |
@@ -1863,7 +1863,7 @@
 | no4       | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
 | no3       | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp       | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
-| no3       | EntityDeath                              |      990 |        134 | Yes    |                                 |       |
+| no3       | EntityDeath                              |      990 |        134 | Yes    | https://decomp.me/scratch/EJUYk | 0.985 |
 | chi       | EntityStageNamePopup                     |     1000 |         92 | Yes    | https://decomp.me/scratch/DqmOT | 1.0   |
 | lib       | EntityStageNamePopup                     |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4       | EntityStageNamePopup                     |     1004 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
