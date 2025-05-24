@@ -115,7 +115,111 @@ void EntityRoomTransition2(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeathStolenItem);
+static u16 D_80181AD4[] = {123, 16, 184, 214, 225, 247};
+static u16 D_80181AE0[] = {48, 56, 40, 64, 32, 72};
+static s16 D_80181AEC[] = {-256, 1024, -640, 640, 512, 768, -896, 1024, 0, 512, 256, 896};
+
+// Displays items took by Death in the cutscene
+void EntityDeathStolenItem(Entity* self) {
+    u16 params = self->params;
+    u16 itemId = D_80181AD4[params];
+    Primitive* prim;
+    s32 primIndex;
+    u16 size;
+    u16 timer;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        break;
+    case 1:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (primIndex == -1) {
+            break;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+
+        if (itemId < NUM_HAND_ITEMS) {
+            g_api.LoadEquipIcon(g_api.equipDefs[itemId].icon,
+                                g_api.equipDefs[itemId].iconPalette, params);
+        } else {
+            itemId -= NUM_HAND_ITEMS;
+            g_api.LoadEquipIcon(
+                g_api.accessoryDefs[itemId].icon,
+                g_api.accessoryDefs[itemId].iconPalette, params);
+        }
+
+        prim = &g_PrimBuf[primIndex];
+        prim->tpage = 0x1A;
+        prim->clut = params + 0x1D0;
+        
+        prim->u0 = prim->u2 = ((params & 7) << 4) + 1;
+        prim->u1 = prim->u3 = prim->u0 + 14;
+        prim->v0 = prim->v1 = ((params & 0x18) << 1) + 0x81;
+        prim->v2 = prim->v3 = prim->v0 + 14;
+        PCOL(prim) = 128;
+        prim->priority = 0x80;
+        prim->drawMode = DRAW_HIDE;
+        self->step++;
+        break;
+    case 2:
+        UnkEntityFunc0(D_80181AEC[params * 2], D_80181AEC[params * 2 + 1]);
+        self->ext.utimer.t = 16;
+        self->step++;
+        break;
+    case 3:
+        timer = --self->ext.utimer.t;
+        MoveEntity();
+        size = (16 - timer) * 7 / 16;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = prim->x2 = self->posX.i.hi - size;
+        prim->y0 = prim->y1 = self->posY.i.hi - size;
+        size *= 2;
+        prim->x1 = prim->x3 = prim->x0 + size;
+        prim->y2 = prim->y3 = prim->y0 + size;
+        prim->drawMode = DRAW_COLORS | DRAW_UNK02;
+        if (!timer) {
+            self->ext.utimer.t = D_80181AE0[params];
+            self->step++;
+        }
+        break;
+    case 4:
+        if (!--self->ext.utimer.t) {
+            self->ext.utimer.t = 8;
+            g_api.PlaySfx(SE_ITEM_YOINK);
+            self->step++;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        if (self->ext.utimer.t & 2) {
+            PRED(prim) = 192;
+            PGRN(prim) = PBLU(prim) = 64;
+        } else {
+            PCOL(prim) = 128;
+        }
+        break;
+    case 5:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->y0 = prim->y1 -= 0x20;
+        if (self->ext.utimer.t > 1) {
+            prim->x0 = prim->x2++;
+            prim->x1 = prim->x3--;
+        }
+        if (!--self->ext.utimer.t) {
+            self->ext.utimer.t = 16;
+            self->step++;
+        }
+        break;
+    case 6:
+        prim = &g_PrimBuf[self->primIndex];
+        prim->y2 = prim->y3 -= 0x10;
+        if (!--self->ext.utimer.t) {
+            self->step++;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeath);
 

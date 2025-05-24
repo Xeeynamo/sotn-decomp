@@ -113,6 +113,10 @@ void EntityRoomTransition2(Entity* self) {
     }
 }
 
+static u16 D_80181AD4[] = {123, 16, 184, 214, 225, 247};
+extern u16 D_80181AE0[] = {48, 56, 40, 64, 32, 72};
+static s16 D_80181AEC[] = {-256, 1024, -640, 640, 512, 768, -896, 1024, 0, 512, 256, 896};
+
 // Displays items took by Death in the cutscene
 void EntityDeathStolenItem(Entity* self) {
     u16 params = self->params;
@@ -168,7 +172,7 @@ void EntityDeathStolenItem(Entity* self) {
         break;
 
     case 2:
-        UnkEntityFunc0(D_80181AEC[params].x, D_80181AEC[params].y);
+        UnkEntityFunc0(D_80181AEC[params * 2], D_80181AEC[params * 2 + 1]);
         self->ext.deathStolenItems.unk7C = 16;
         self->step++;
         break;

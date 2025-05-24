@@ -108,6 +108,7 @@ DestroyEntity = 0x0925F8D8;
 AnimateEntity = 0x0925F9F8;
 MoveEntity = 0x0925FCB8;
 AllocEntity = 0x092602D8;
+UnkEntityFunc0 = 0x09260348;
 SetStep = 0x09260568;
 SetSubStep = 0x092605B8;
 InitializeEntity = 0x092605F8;
