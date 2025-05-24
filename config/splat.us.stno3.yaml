@@ -143,9 +143,9 @@ segments:
       - [0x37414, .rodata, e_outdoor_ents]
       - [0x37440, .rodata, cutscene] # actor names
       - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
-      - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
-      - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
-      - [0x37514, .rodata, 3FF00] # EntityDeath
+      - [0x374DC, .rodata, e_death] # EntityRoomTransition2
+      - [0x374F4, .rodata, e_death] # EntityDeathStolenItems
+      - [0x37514, .rodata, e_death] # EntityDeath
       - [0x37564, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x37578, .rodata, e_red_door] # EntityRedDoor
       - [0x37590, .rodata, e_collect] # CollectGold text
@@ -183,7 +183,7 @@ segments:
       - [0x3C3FC, c, e_tilemap_shuffler]
       - [0x3C4EC, c, e_outdoor_ents]
       - [0x3E544, c, cutscene]
-      - [0x3FF00, c]
+      - [0x3FF00, c, e_death]
       - [0x413F8, c, e_explosion_puff_opaque]
       - [0x4184C, c, st_update]
       - [0x41C80, c, collision]
