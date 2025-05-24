@@ -109,7 +109,7 @@ typedef enum EntityIDs {
     /* 0x55 */ E_DIST_BG_TREES,
     /* 0x56 */ E_BACKGROUND_WALL,
     /* 0x57 */ E_CUTSCENE,
-    /* 0x58 */ E_ROOM_TRANSITION_2,
+    /* 0x58 */ E_DEATH_SCENE_MGR,
     /* 0x59 */ E_DEATH_STOLEN_ITEM,
     /* 0x5A */ E_DEATH,
     /* 0x5B */ E_DEATH_SCYTHE,
@@ -185,24 +185,6 @@ extern u16 D_8018304C[];
 extern Point16 D_80183054[];
 extern Point16 D_80183060[];
 
-// *** EntityDeath Animations *** //
-extern u8 D_80181B04[];
-extern u8 D_80181B28[];
-extern u8 D_80181B34[];
-extern u8 D_80181B58[];
-extern u8 D_80181B68[];
-extern u8 D_80181B70[];
-extern u8 D_80181B74[];
-extern u8 D_80181B84[];
-extern u8 D_80181B8C[];
-extern u8 D_80181B94[];
-extern u8 D_80181BB4[];
-extern u8 D_80181BC8[];
-extern u8 D_80181BE0[];
-
-extern u8 D_80181B40[];
-extern u8 D_80181B4C[];
-extern s16 D_801820C4[];
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
 extern u16 D_801823F4[];

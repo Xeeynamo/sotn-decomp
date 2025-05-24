@@ -6,7 +6,7 @@ extern s32 E_ID(BG_LIGHTNING);
 extern s32 E_ID(DEATH_STOLEN_ITEM);
 #endif
 
-void EntityRoomTransition2(Entity* self) {
+void EntityDeathCutsceneManager(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
     // Used as both a loop variable and a temp

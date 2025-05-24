@@ -142,7 +142,7 @@ segments:
       - [0x37414, .rodata, e_outdoor_ents]
       - [0x37440, .rodata, cutscene] # actor names
       - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
-      - [0x374DC, .rodata, e_death] # EntityRoomTransition2
+      - [0x374DC, .rodata, e_death] # EntityDeathCutsceneManager
       - [0x374F4, .rodata, e_death] # EntityDeathStolenItems
       - [0x37514, .rodata, e_death] # EntityDeath
       - [0x37564, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
