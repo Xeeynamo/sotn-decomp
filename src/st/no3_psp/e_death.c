@@ -27,6 +27,9 @@ void EntityRoomTransition2(Entity* self) {
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
+        #if !defined(VERSION_PSP)
+        g_CutsceneFlags |= 0x100;
+        #endif
         break;
 
     case 1:
@@ -244,10 +247,9 @@ static u8 D_80181BB4[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 
 static u8 D_80181BC8[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
 static u8 D_80181BE0[] = {5, 56, 16, 55, 255, 0};
 static u8* D_80181BE8[] = {D_80181B04, D_80181B28, D_80181B34, D_80181B40, 
-                           D_80181B4C, D_80181B58, D_80181B68, D_80181B70,
-                           D_80181B74, D_80181B84, D_80181B94, D_80181BB4,
-                           D_80181BC8, D_80181BE0};
-
+                            D_80181B4C, D_80181B58, D_80181B68, D_80181B70,
+                            D_80181B74, D_80181B84, D_80181B94, D_80181BB4,
+                            D_80181BC8, D_80181BE0};
 
 void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
