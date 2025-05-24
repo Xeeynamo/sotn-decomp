@@ -27,9 +27,9 @@ void EntityDeathCutsceneManager(Entity* self) {
         g_PauseAllowed = false;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 1;
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         g_CutsceneFlags |= 0x100;
-        #endif
+#endif
         break;
 
     case 1:
@@ -54,7 +54,8 @@ void EntityDeathCutsceneManager(Entity* self) {
                 if (newEntity == NULL) {
                     break;
                 }
-                CreateEntityFromEntity(E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
+                CreateEntityFromEntity(
+                    E_ID(DEATH_STOLEN_ITEM), otherEnt, newEntity);
                 newEntity->params = localVar;
             }
             g_Player.padSim = PAD_SIM_UNK10000;
@@ -91,7 +92,7 @@ void EntityDeathCutsceneManager(Entity* self) {
 
     case 4:
         prim = &g_PrimBuf[self->primIndex];
-        PGREY(prim,0) += 8;
+        PGREY(prim, 0) += 8;
         if (prim->r0 >= 240) {
             self->step++;
             DestroyEntity(&g_Entities[208]);
@@ -105,7 +106,7 @@ void EntityDeathCutsceneManager(Entity* self) {
 
     case 5:
         prim = &g_PrimBuf[self->primIndex];
-        PGREY(prim,0) -= 8;
+        PGREY(prim, 0) -= 8;
         if (!prim->r0) {
             DestroyEntity(self);
             tilemap->y = 0;
@@ -124,7 +125,8 @@ static u16 stolenItemIDs[] = {123, 16, 184, 214, 225, 247};
 static u16 stolenItemTimers[] = {48, 56, 40, 64, 32, 72};
 // Slope and speed that get called into UnkEntityFunc0
 #define SS(sl, sp) sl, sp
-static s16 stolenItemVels[] = {SS(-256, 1024), SS(-640, 640), SS(512, 768), SS(-896, 1024), SS(0, 512), SS(256, 896)};
+static s16 stolenItemVels[] = {SS(-256, 1024), SS(-640, 640), SS(512, 768),
+                               SS(-896, 1024), SS(0, 512),    SS(256, 896)};
 
 // Displays items took by Death in the cutscene
 void EntityDeathStolenItem(Entity* self) {
@@ -160,7 +162,7 @@ void EntityDeathStolenItem(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         prim->tpage = 0x1A;
         prim->clut = params + 0x1D0;
-        
+
         prim->u0 = prim->u2 = ((params & 7) << 4) + 1;
         prim->u1 = prim->u3 = prim->u0 + 14;
         prim->v0 = prim->v1 = ((params & 0x18) << 1) + 0x81;
@@ -171,7 +173,8 @@ void EntityDeathStolenItem(Entity* self) {
         self->step++;
         break;
     case 2:
-        UnkEntityFunc0(stolenItemVels[params * 2], stolenItemVels[params * 2 + 1]);
+        UnkEntityFunc0(
+            stolenItemVels[params * 2], stolenItemVels[params * 2 + 1]);
         self->ext.utimer.t = 16;
         self->step++;
         break;
@@ -233,7 +236,9 @@ extern s32 E_ID(DEATH_SCYTHE_SHADOW);
 extern s32 E_ID(DEATH_SCYTHE);
 #endif
 
-static u8 deathAnim1[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
+static u8 deathAnim1[] = {
+    8, 1,  8, 2, 8,  3,  6, 4, 6,  5, 10, 11, 11, 6, 8, 4,   8,
+    2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8,  6,  7,  1, 1, 255, 0};
 static u8 deathAnim2[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
 static u8 deathAnim3[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
 static u8 deathAnim4[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
@@ -241,18 +246,23 @@ static u8 deathAnim5[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
 static u8 deathAnim6[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
 static u8 deathAnim7[] = {14, 28, 9, 29, 4, 30, 255, 0};
 static u8 deathAnim8[] = {16, 30, 255, 0};
-static u8 deathAnim9[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
+static u8 deathAnim9[] = {
+    16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
 static u8 deathAnim10[] = {9, 1, 11, 8, 22, 10, 255, 0};
 static u8 deathAnim11[] = {20, 10, 11, 8, 2, 1, 255, 0}; // Array skips this one
-static u8 deathAnim12[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
-static u8 deathAnim13[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
-static u8 deathAnim14[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
+static u8 deathAnim12[] = {
+    5,  1, 10, 36, 12, 1,  5,  37, 3,  38, 4,  37, 5, 1, 10,  36,
+    12, 2, 8,  43, 9,  42, 35, 44, 10, 39, 12, 2,  2, 1, 255, 0};
+static u8 deathAnim13[] = {
+    8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
+static u8 deathAnim14[] = {2, 45, 6, 51, 3, 46, 4, 47, 2,  48, 5,   51,
+                           3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
 static u8 deathAnim15[] = {5, 56, 16, 55, 255, 0};
 // Unused array.
-static u8* deathAnims[] = {deathAnim1, deathAnim2, deathAnim3, deathAnim4, 
-                            deathAnim5, deathAnim6, deathAnim7, deathAnim8,
-                            deathAnim9, deathAnim10, deathAnim12, deathAnim13,
-                            deathAnim14, deathAnim15};
+static u8* deathAnims[] = {
+    deathAnim1,  deathAnim2,  deathAnim3,  deathAnim4, deathAnim5,
+    deathAnim6,  deathAnim7,  deathAnim8,  deathAnim9, deathAnim10,
+    deathAnim12, deathAnim13, deathAnim14, deathAnim15};
 
 void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
@@ -357,13 +367,16 @@ void EntityDeath(Entity* self) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
         }
 
-        self->posX.i.hi = self->ext.death.posX + (0x1000 - self->rotZ) * 0x1D / 0x1000;
-        self->posY.i.hi = self->ext.death.posY - (0x1000 - self->rotZ) * 0x28 / 0x1000;
+        self->posX.i.hi =
+            self->ext.death.posX + (0x1000 - self->rotZ) * 0x1D / 0x1000;
+        self->posY.i.hi =
+            self->ext.death.posY - (0x1000 - self->rotZ) * 0x28 / 0x1000;
 
         if (!(self->rotZ & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
-                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                CreateEntityFromCurrentEntity(
+                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->rotZ = self->rotZ;
                 newEntity->animCurFrame = 0x3A;
             }
@@ -539,7 +552,8 @@ void EntityDeath(Entity* self) {
         if ((self->ext.death.moveTimer & 3) == 0) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                CreateEntityFromCurrentEntity(
+                    E_ID(DEATH_SCYTHE_SHADOW), newEntity);
                 newEntity->animCurFrame = self->animCurFrame;
                 newEntity->params = 1;
             }
