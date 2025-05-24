@@ -9,7 +9,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityMessageBox);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityUnkId13);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", func_pspeu_09258A78);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityExplosionVariantsSpawner);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityExplosionVariants);
 

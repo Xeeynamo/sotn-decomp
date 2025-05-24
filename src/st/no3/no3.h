@@ -101,9 +101,9 @@ typedef enum EntityIDs {
     /* 0x4D */ E_ZOMBIE_SPAWNER,
     /* 0x4E */ E_PUSH_ALUCARD,
     /* 0x4F */ E_FOREGROUND_TREE,
-    /* 0x50 */ E_ID_50,
+    /* 0x50 */ E_FOLIAGE_MAKER,
     /* 0x51 */ E_BACKGROUND_PINE_TREES,
-    /* 0x52 */ E_ID_52,
+    /* 0x52 */ E_BACKGROUND_PINE_MAKER,
     /* 0x53 */ E_CASTLE_DOOR_TRANSITION,
     /* 0x54 */ E_CASTLE_BRIDGE,
     /* 0x55 */ E_DIST_BG_TREES,
@@ -166,8 +166,8 @@ extern u16 D_801812A0[];
 extern u16 D_801812E2[];
 extern u16 D_8018131E[];
 extern s16 g_WaterXTbl[];
-extern Point16 D_801813DC[];
-extern Point16 D_80181468[];
+extern u16 D_801813DC[];
+extern u16 D_80181468[];
 extern u16 D_801814EC[];
 extern u16 D_801817F8[];
 extern u8 D_801819D0[];
@@ -301,13 +301,5 @@ extern s32 g_IsCutsceneDone;
 extern u16 D_801D7D60;
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
-extern s16 D_80181808[];
-
-extern u16 g_EntityCastleBridgePriorities[];
-extern u8 g_EntityCastleBridgeUVs[];
-extern s16 g_EntityCastleBridgeUVOffsets[];
-extern u8 g_EntityCastleBridgePages[];
-extern u16 g_EInitSpawner[];
-extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;

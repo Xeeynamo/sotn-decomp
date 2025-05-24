@@ -79,9 +79,9 @@ void EntityZombie(Entity* self);
 void EntityZombieSpawner(Entity* self);
 void EntityPushAlucard(Entity* self);
 void EntityForegroundTree(Entity* self);
-void EntityUnkId50(Entity* self);
+void EntityFoliageMaker(Entity* self);
 void EntityBackgroundPineTrees(Entity* self);
-void EntityUnkId52(Entity* self);
+void EntityDistantTreeMaker(Entity* self);
 void EntityCastleDoorTransition(Entity* self);
 void EntityCastleBridge(Entity* self);
 void EntityDistantBackgroundTrees(Entity* self);
@@ -179,9 +179,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityZombieSpawner,
     EntityPushAlucard,
     EntityForegroundTree,
-    EntityUnkId50, // 0x50
+    EntityFoliageMaker, // 0x50
     EntityBackgroundPineTrees,
-    EntityUnkId52,
+    EntityDistantTreeMaker,
     EntityCastleDoorTransition,
     EntityCastleBridge,
     EntityDistantBackgroundTrees,
