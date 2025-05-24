@@ -589,4 +589,41 @@ void EntityDeathScythe(Entity* self) {
     self->ext.deathScythe.extStep = 0;
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeathScytheShadow);
+// When meeting Death, the scythe spins around, leaving behind semi-transparent
+// copies of itself. This entity represents those semi-transparent copies.
+// Identified through NOP-out in emulator.
+void EntityDeathScytheShadow(Entity* self) {
+    u16 animCurFrame;
+
+    switch (self->step) {
+    case 0:
+        animCurFrame = self->animCurFrame;
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(8);
+        self->animCurFrame = animCurFrame;
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
+        if (self->params) {
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x40;
+        } else {
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->ext.deathScythe.timer = 0x20;
+        }
+        self->unk6C = 0x40;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        break;
+
+    case 1:
+        if (!(--self->ext.deathScythe.timer)) {
+            DestroyEntity(self);
+            break;
+        }
+        if (self->params) {
+            self->unk6C--;
+        } else {
+            self->unk6C -= 2;
+        }
+        break;
+    }
+}
