@@ -80,7 +80,7 @@ extern s32 D_8013843C;
 extern s32 D_80138440;
 extern s32 D_80138444;
 
-// BSS 91EBC.c
+// BSS sound.c
 extern s32 D_80138454;
 extern s16 g_CurrentXaConfigId;
 extern s16 D_8013845C;
