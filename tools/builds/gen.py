@@ -578,11 +578,6 @@ with open("build.ninja", "w") as f:
         description="dirt $in",
     )
     nw.rule(
-        "sotn-assets",
-        command="go build -C tools/sotn-assets -o ../../$out .",
-        description="build assets-tool",
-    )
-    nw.rule(
         "assets-extract",
         command="bin/sotn-assets extract $in && touch $out",
         description="extract $in",
@@ -616,12 +611,6 @@ with open("build.ninja", "w") as f:
         "check",
         command=".venv/bin/python3 tools/builds/check.py $in",
         description="check $in",
-    )
-
-    nw.build(
-        rule="sotn-assets",
-        outputs="bin/sotn-assets",
-        implicit="tools/sotn-assets/go.mod",
     )
 
     actual_version = os.getenv("VERSION")

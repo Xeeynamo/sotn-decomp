@@ -100,8 +100,7 @@ SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
-SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
-SOTNASSETS      := $(GOPATH)/bin/sotn-assets
+SOTNASSETS      := bin/sotn-assets
 
 # Build functions
 define get_src_files
@@ -548,7 +547,7 @@ $(GO):
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
-	cd tools/sotn-assets; $(GO) install
+	$(GO) build -C tools/sotn-assets -o ../../$@ . 
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json

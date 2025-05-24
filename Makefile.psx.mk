@@ -1,5 +1,5 @@
 .PHONY: ninja
-ninja: bin/cc1-psx-26 $(MASPSX_APP)
+ninja: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=$(VERSION) python3 tools/builds/gen.py
 	ninja
 
