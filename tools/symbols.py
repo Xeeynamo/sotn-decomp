@@ -98,7 +98,10 @@ def sort_symbols(syms):
         if len(parts) >= 3:
             offset = int(parts[2].rstrip(";"), 16)
             offsets.append((line, offset))
+    original_offsets = offsets.copy()
     offsets.sort(key=lambda x: x[1])
+    if original_offsets == offsets:
+        return None
     return list(OrderedDict.fromkeys([line[0] for line in offsets]))
 
 
@@ -106,9 +109,13 @@ def sort_symbols(syms):
 def sort_symbols_from_file(symbol_file_name):
     with open(symbol_file_name, "r") as symbol_file:
         sorted_lines = sort_symbols(symbol_file)
-    add_newline_if_missing(sorted_lines)
-    with open(symbol_file_name, "w") as symbol_file:
-        symbol_file.writelines(sorted_lines)
+
+    # avoid writing the file if no symbols were reordered. touching the file
+    # will cause a rebuild of all dependent sources of that overlay
+    if sorted_lines:
+        add_newline_if_missing(sorted_lines)
+        with open(symbol_file_name, "w") as symbol_file:
+            symbol_file.writelines(sorted_lines)
 
 
 def sort(base_path):
@@ -328,7 +335,11 @@ def remove_orphans(symbol_file_name, symbols_set):
             # ignore comments
             continue
 
-        if len(sym_def) > 4 and sym_def.find("ignore:true") == -1:
+        if (
+            len(sym_def) > 4
+            and sym_def.find("ignore:true") == -1
+            and sym_def.lower().find("allow_duplicated:true") == -1
+        ):
             sym_tokenized = sym_def.split("=")
             if len(sym_tokenized) >= 2:
                 sym = sym_tokenized[0].strip()
@@ -337,8 +348,12 @@ def remove_orphans(symbol_file_name, symbols_set):
         symbols_unorphaned.append(sym_def)
     add_newline_if_missing(symbols_unorphaned)
 
-    with open(symbol_file_name, "w") as symbol_file_ref:
-        symbol_file_ref.writelines(symbols_unorphaned)
+    # lines are only ever removed so if len is different, it must be smaller
+    # if it's the same, avoid touching the file which would cause a rebuild
+    # of all dependent sources of that overlay
+    if len(symbols_unorphaned) != len(symbols_defined):
+        with open(symbol_file_name, "w") as symbol_file_ref:
+            symbol_file_ref.writelines(symbols_unorphaned)
 
 
 def remove_orphans_from_config(config_yaml):

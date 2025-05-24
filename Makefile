@@ -272,7 +272,7 @@ format-src: bin/clang-format
 	@#                                                          ensure files with characters xargs uses as delimiters are
 	@#                                                          properly handled
 	find $(SRC_DIR) $(INCLUDE_DIR) \
-        -type d \( -name 3rd -o -name CMakeFiles \) -prune \
+        -type d \( -name 3rd -o -name CMakeFiles -o -name gen \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
@@ -286,41 +286,23 @@ format-tools:
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
 	$(BLACK) diff_settings.py
 	$(BLACK) tools/function_finder/*.py
-format-symbols:
+
+.PHONY: format-symbols format-symbols-%
+format-symbols-us-sort:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
+format-symbols-us-%: format-symbols-us-sort
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.$*.yaml
+format-symbols-us: $(patsubst config/splat.us.%.yaml,format-symbols-us-%,$(wildcard config/splat.us.*.yaml))
+format-symbols-hd-sort:
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
+format-symbols-hd-%: format-symbols-hd-sort
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.$*.yaml
+format-symbols-hd: $(patsubst config/splat.hd.%.yaml,format-symbols-hd-%,$(wildcard config/splat.hd.*.yaml))
+format-symbols-pspeu-sort:
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.dra.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.dra.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.ric.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.ric.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stcen.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stcen.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stchi.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stdre.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stlib.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno0.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno1.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno3.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stno4.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnp3.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stnz0.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stsel.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stst0.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stwrp.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.stwrp.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.strwrp.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bomar.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.bobo4.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo3.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.borbo5.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_000.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.tt_000.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_001.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_002.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_003.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.tt_004.yaml
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.stmad.yaml
+format-symbols-pspeu: format-symbols-pspeu-sort
+format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
+
 format-license:
 	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
