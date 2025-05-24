@@ -113,12 +113,12 @@ segments:
       - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
-      - [0x11140, raw, vh_0] # aPbav
-      - [0x14140, raw, vh_1] # aPbav_0
-      - [0x16140, raw, vh_2] # aPbav_2
-      - [0x18140, raw, vh_3] # aPbav_1
-      - [0x1A140, data] # aPqes_1
-      - [0x1D140, .data, sound] # g_CdVolumeTable
+      - [0x11140, .data, sound] # aPbav
+      # - [0x14140, .data, sound] # aPbav_0
+      # - [0x16140, .data, sound] # aPbav_2
+      # - [0x18140, .data, sound] # aPbav_1
+      # - [0x1A140, .data, sound] # aPqes_1
+      # - [0x1D140, .data, sound] # g_CdVolumeTable
       # - [0x1D260, .data, sound] # g_VolumeTable
       # - [0x1D284, .data, sound] # g_DebugEnabled
       # - [0x1D288, .data, sound] # D_800BD1C4

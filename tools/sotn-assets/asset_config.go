@@ -2,13 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/sfxconfig"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rawgfx"
-	"os"
-	"strconv"
-
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary_s"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
@@ -17,16 +13,21 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/palette"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rawgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/rooms"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/sfxconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/skip"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritebanks"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritesheet"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/subweaponsdef"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
+	"os"
+	"strconv"
 )
 
 type assetSegmentEntry struct {
@@ -51,6 +52,8 @@ type assetConfig struct {
 var handlers = func() map[string]assets.Handler {
 	m := make(map[string]assets.Handler)
 	for _, handler := range []assets.Handler{
+		binary.Handler,
+		binary_s.Handler,
 		blueprintsdef.Handler,
 		cmpgfx.Handler,
 		cutscene.Handler,

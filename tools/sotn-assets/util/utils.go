@@ -134,6 +134,22 @@ func WriteBytesAsHex(sb *strings.Builder, content []byte) {
 	}
 	sb.WriteByte('\n')
 }
+func WriteBytesAsHexAsm(sb *strings.Builder, content []byte) {
+	const hex = "0123456789ABCDEF"
+	sb.Grow(len(content)*5 + (len(content) >> 4) + 2)
+	sb.WriteString(".byte ")
+	for i, b := range content {
+		sb.WriteString("0x")
+		sb.WriteByte(hex[b>>4])
+		sb.WriteByte(hex[b&15])
+		if (i & 15) == 15 {
+			sb.WriteString("\n.byte ")
+		} else if i < len(content)-1 { // on asm, a trail comma without data automatically appends a 0x00
+			sb.WriteByte(',')
+		}
+	}
+	sb.WriteByte('\n')
+}
 
 func WriteWordsAsHex(sb *strings.Builder, content []uint16) {
 	const hex = "0123456789ABCDEF"
