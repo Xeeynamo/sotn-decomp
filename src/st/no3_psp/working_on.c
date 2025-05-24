@@ -4,16 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityRoomTransition2);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathStolenItem);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeath);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathScythe);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathScytheShadow);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityTilemapShufflerUnused);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityShuttingWindow);
