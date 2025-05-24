@@ -177,6 +177,7 @@ typedef enum {
     PAD_DOWN = 0x4000,
     PAD_LEFT = 0x8000,
 #endif
+    PAD_SIM_UNK10000 = 0x10000,
     PAD_SIM_UNK20000 = 0x20000,
     PAD_DIRECTION_MASK = PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT,
 } PlayerPad;

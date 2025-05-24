@@ -985,10 +985,10 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
     }
 }
 
-#define XY(x, y) FIX(x), FIX(y)
+#define VXY(x, y) FIX(x), FIX(y)
 static s32 leafVelocities[] = {
-    XY(3, 0),     XY(5, 1),    XY(6.375, 1.25), XY(4.5, 2.5),
-    XY(6, -0.75), XY(7, 1.75), XY(5.25, 2),     XY(4, -1.0 / 32)};
+    VXY(3, 0),     VXY(5, 1),    VXY(6.375, 1.25), VXY(4.5, 2.5),
+    VXY(6, -0.75), VXY(7, 1.75), VXY(5.25, 2),     VXY(4, -1.0 / 32)};
 // a single leaf from when the owl comes out in the intro
 void EntityFallingLeaf(Entity* self) {
 
