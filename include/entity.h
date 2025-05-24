@@ -780,9 +780,6 @@ typedef struct {
     /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_801BCC4C;
 
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
@@ -890,10 +887,6 @@ typedef struct {
     s32 : 24;
     /* 0x80 */ u32 unk80;
 } ET_AlucardController;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_ForegroundTree;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -3105,7 +3098,6 @@ typedef union { // offset=0x7C
     ET_ExplosionPuffOpaque opaquePuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
-    ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;
     ET_DeathSkySwirl deathSkySwirl;
@@ -3119,7 +3111,6 @@ typedef union { // offset=0x7C
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
     ET_AlucardController alucardController;
-    ET_ForegroundTree foregroundTree;
     ET_FadeToWhite fadeToWhite;
     ET_DeathStolenItems deathStolenItems;
     ET_Death death;
