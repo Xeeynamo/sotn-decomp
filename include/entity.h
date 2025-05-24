@@ -780,7 +780,6 @@ typedef struct {
     /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
-
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
