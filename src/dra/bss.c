@@ -275,7 +275,7 @@ s32 D_80138448;
 s32 D_8013844C;
 s32 D_80138450;
 
-// 91EBC.c
+// sound.c
 s32 D_80138454;
 s16 g_CurrentXaConfigId;
 padding s16 g_CurrentXaConfigId_;

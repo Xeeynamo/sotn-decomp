@@ -1,11 +1,4 @@
 D_800ACE88 = 0x800ACE88; // ignore:true
-aPbav = 0x800B107C;
-aPbav_0 = 0x800B407C;
-aPbav_2 = 0x800B607C;
-aPbav_1 = 0x800B807C;
-aPqes_1 = 0x800BA07C;
-aPqes = 0x800BC37D;
-aPqes_0 = 0x800BCAC3;
 g_SfxScripts = 0x800C1ECC;
 D_80137EF8 = 0x80137EF8;
 g_PlOvl = 0x8013C000;

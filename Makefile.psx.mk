@@ -4,13 +4,9 @@ ninja: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	ninja
 
 .PHONY: extract_us
-extract_us:
-	VERSION=us .venv/bin/python3 tools/builds/gen.py
-	ninja build/us/dra.ld
+extract_us: extract_assets
 .PHONY: extract_hd
-extract_hd:
-	VERSION=hd .venv/bin/python3 tools/builds/gen.py
-	ninja build/hd/dra.ld
+extract_hd: extract_assets
 
 extract_disk_us: extract_disk_psxus
 extract_disk_hd: extract_disk_pspeu
