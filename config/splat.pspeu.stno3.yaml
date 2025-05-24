@@ -82,7 +82,7 @@ segments:
       - [0x5E860, data]
       - [0x5E878, .data, no3/e_outdoor_ents]
       - [0x5EEF8, .data, no3_psp/e_death]
-      - [0x5EF20, data]
+      - [0x5F020, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3_psp/e_death]

@@ -221,8 +221,372 @@ void EntityDeathStolenItem(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeath);
+extern s32 E_ID(DEATH_SCYTHE_SHADOW);
+extern s32 E_ID(DEATH_SCYTHE);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeathScythe);
+static u8 D_80181B04[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
+static u8 D_80181B28[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
+static u8 D_80181B34[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
+extern u8 D_80181B40[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
+extern u8 D_80181B4C[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
+static u8 D_80181B58[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
+static u8 D_80181B68[] = {14, 28, 9, 29, 4, 30, 255, 0};
+static u8 D_80181B70[] = {16, 30, 255, 0};
+static u8 D_80181B74[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
+static u8 D_80181B84[] = {9, 1, 11, 8, 22, 10, 255, 0};
+static u8 D_80181B8C[] = {20, 10, 11, 8, 2, 1, 255, 0};
+static u8 D_80181B94[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
+static u8 D_80181BB4[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
+static u8 D_80181BC8[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
+static u8 D_80181BE0[] = {5, 56, 16, 55, 255, 0};
+
+void EntityDeath(Entity* self) {
+    Entity* newEntity = self + 1;
+    Primitive* prim;
+    s32 primIndex;
+    s32 x, y;
+    s32 i;
+
+    if ((self->step >= 4) && (self->step < 13)) {
+        if (self->ext.death.moveTimer) {
+            self->ext.death.moveTimer--;
+        } else {
+            if (self->ext.death.moveDirection) {
+                self->ext.death.moveDirection = 0;
+            } else {
+                self->ext.death.moveDirection = 1;
+            }
+            self->ext.death.moveTimer = 127;
+        }
+
+        if (self->ext.death.moveDirection) {
+            self->velocityY += 0x200;
+        } else {
+            self->velocityY -= 0x200;
+        }
+        MoveEntity();
+    }
+
+    if ((self->step >= 13) && (self->step < 18)) {
+        if (self->velocityY != 0) {
+            if (self->velocityY < 0) {
+                self->velocityY += 0x200;
+            } else {
+                self->velocityY -= 0x200;
+            }
+            MoveEntity();
+        }
+    }
+
+    if (self->step >= 19) {
+        self->velocityX -= 0xC00;
+        self->velocityY -= FIX(0.15625);
+        MoveEntity();
+    }
+
+    switch (self->step) {
+    case 0:
+        if (g_CutsceneFlags & 0x80) {
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+            if (primIndex != -1) {
+                InitializeEntity(g_EInitCommon);
+                self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
+                self->animSet = ANIMSET_OVL(8);
+                self->animCurFrame = 0;
+                self->palette = 0x2D6;
+                self->unk5A = 0x44;
+                self->ext.death.unk7C = 0;
+                DestroyEntity(newEntity);
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE), newEntity);
+                prim = &g_PrimBuf[primIndex];
+
+                for (i = 0; prim != NULL; i++) {
+                    if (i != 0) {
+                        prim->clut = self->palette;
+                        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE |
+                                         DRAW_COLORS | DRAW_TRANSP;
+                    } else {
+                        prim->clut = 0x15F;
+                        prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE |
+                                         DRAW_COLORS | DRAW_TRANSP;
+                    }
+                    prim->tpage = self->unk5A / 4;
+                    prim->u0 = prim->u2 = 0x10;
+                    prim->u1 = prim->u3 = 0x38;
+                    prim->v0 = prim->v1 = 0xB0;
+                    prim->v2 = prim->v3 = 0xFF;
+                    prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                        prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                            prim->b2 = prim->b3 = 0;
+                    prim->priority = self->zPriority + i + 1;
+                    prim = prim->next;
+                }
+            }
+        }
+        break;
+
+    case 1:
+        if (AnimateEntity(D_80181BC8, self) == 0) {
+            SetStep(2);
+            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->rotZ = 0x1000;
+            self->posY.i.hi += 16;
+            self->animCurFrame = 0x3A;
+            self->ext.death.posX = self->posX.i.hi;
+            self->ext.death.posY = self->posY.i.hi;
+        }
+        break;
+
+    case 2:
+        self->rotZ -= 0x40;
+        if (!self->rotZ) {
+            SetStep(3);
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+        }
+
+        self->posX.i.hi = self->ext.death.posX + (0x1000 - self->rotZ) * 0x1D / 0x1000;
+        self->posY.i.hi = self->ext.death.posY - (0x1000 - self->rotZ) * 0x28 / 0x1000;
+
+        if (!(self->rotZ & 0x70)) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != 0) {
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                newEntity->rotZ = self->rotZ;
+                newEntity->animCurFrame = 0x3A;
+            }
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(D_80181BE0, self) == 0) {
+            SetStep(4);
+            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
+            self->ext.death.moveTimer = 64;
+            self->ext.death.moveDirection = 0;
+        }
+        self->posX.i.hi = self->ext.death.posX;
+        self->posY.i.hi = self->ext.death.posY - 16;
+        break;
+
+    case 4:
+        prim = &g_PrimBuf[self->primIndex];
+        self->ext.death.unk7C += 4;
+        if (self->ext.death.unk7C == 96) {
+            g_CutsceneFlags |= 1;
+        }
+
+        if (self->ext.death.unk7C == 128) {
+            while (prim != NULL) {
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+            self->animCurFrame = 16;
+            self->ext.death.unk7C = 32;
+            SetStep(5);
+            break;
+        }
+
+        while (prim != NULL) {
+            prim->x0 = prim->x2 = self->posX.i.hi - 14;
+            prim->x1 = prim->x3 = prim->x0 + 40;
+            prim->y0 = prim->y1 = self->posY.i.hi - 40;
+            prim->y2 = prim->y3 = prim->y0 + 79;
+            PCOL(prim) = self->ext.death.unk7C;
+            prim = prim->next;
+        }
+        break;
+
+    case 5:
+        AnimateEntity(D_80181B34, self);
+        if (!--self->ext.death.unk7C) {
+            SetStep(6);
+        }
+        break;
+
+    case 6:
+        AnimateEntity(D_80181B28, self);
+        if (g_CutsceneFlags & 2) {
+            SetStep(7);
+        }
+        break;
+
+    case 7:
+        if (AnimateEntity(D_80181B04, self) == 0) {
+            SetStep(8);
+        }
+        if ((self->animCurFrame >= 7) && (self->animCurFrame < 11)) {
+            newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
+        }
+
+        if (g_CutsceneFlags & 4) {
+            SetStep(9);
+        }
+        break;
+
+    case 8:
+        AnimateEntity(D_80181B28, self);
+        if (g_CutsceneFlags & 4) {
+            SetStep(9);
+        }
+        break;
+
+    case 9:
+        if (AnimateEntity(D_80181BB4, self) == 0) {
+            SetStep(10);
+        }
+        newEntity->ext.death.unk7C = 1;
+
+        if (g_CutsceneFlags & 8) {
+            SetStep(11);
+        }
+        break;
+
+    case 10:
+        AnimateEntity(D_80181B28, self);
+        if (g_CutsceneFlags & 8) {
+            SetStep(11);
+        }
+        break;
+
+    case 11:
+        if (AnimateEntity(D_80181B94, self) == 0) {
+            SetStep(12);
+        }
+        newEntity->ext.death.unk7C = 1;
+
+        if (g_CutsceneFlags & 0x10) {
+            SetStep(13);
+        }
+        break;
+
+    case 12:
+        AnimateEntity(D_80181B28, self);
+        if (g_CutsceneFlags & 0x10) {
+            SetStep(13);
+        }
+        break;
+
+    case 13:
+        if (AnimateEntity(D_80181B58, self) == 0) {
+            SetStep(14);
+        }
+        newEntity->ext.death.unk7C = 1;
+        break;
+
+    case 14:
+        if (AnimateEntity(D_80181B68, self) == 0) {
+            g_api.PlaySfx(SE_VO_DEATH_STEALS);
+            SetStep(15);
+        }
+        break;
+
+    case 15:
+        if (AnimateEntity(D_80181B70, self) == 0) {
+            SetStep(16);
+            g_CutsceneFlags |= 0x20;
+        }
+        break;
+
+    case 16:
+        if (AnimateEntity(D_80181B74, self) == 0) {
+            SetStep(18);
+        }
+
+        if (self->animCurFrame != 30) {
+            newEntity->ext.death.unk7C = 1;
+        }
+        break;
+
+    case 18:
+        if (AnimateEntity(D_80181B84, self) == 0) {
+            SetStep(19);
+            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
+            self->velocityX = FIX(1.0);
+            self->velocityY = FIX(5.0);
+            self->ext.death.moveTimer = 0;
+        }
+
+        if (self->animCurFrame != 1) {
+            newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
+        }
+        break;
+
+    case 19:
+        AnimateEntity(D_80181B8C, self);
+        if (self->animCurFrame != 1) {
+            newEntity->ext.death.unk7C = 2;
+        } else {
+            newEntity->ext.death.unk7C = 1;
+        }
+
+        if ((self->ext.death.moveTimer & 3) == 0) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromCurrentEntity(E_ID(DEATH_SCYTHE_SHADOW), newEntity);
+                newEntity->animCurFrame = self->animCurFrame;
+                newEntity->params = 1;
+            }
+            newEntity->ext.death.unk7C = 3;
+        }
+        self->ext.death.moveTimer++;
+
+        if (self->posY.i.hi < -32) {
+            g_CutsceneFlags |= 0x40;
+            DestroyEntity(self);
+            DestroyEntity(self + 1);
+        }
+        break;
+    }
+}
+
+void EntityDeathScythe(Entity* self) {
+    u16 tempstep;
+    // this is Death.
+    Entity* otherEntity = self - 1;
+    self->posX.i.hi = otherEntity->posX.i.hi;
+    self->posY.i.hi = otherEntity->posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(8);
+        self->animCurFrame = 0;
+        self->palette = 0x2D6;
+        self->unk5A = 0x44;
+        break;
+
+    case 1:
+        tempstep = self->ext.deathScythe.extStep;
+        if (tempstep) {
+            switch (tempstep) {
+            case 1:
+                AnimateEntity(D_80181B40, self);
+                break;
+            case 2:
+                AnimateEntity(D_80181B4C, self);
+                break;
+            case 3:
+                AnimateEntity(D_80181B4C, self);
+                otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (otherEntity == NULL) {
+                    break;
+                }
+                CreateEntityFromCurrentEntity(
+                    E_ID(DEATH_SCYTHE_SHADOW), otherEntity);
+                otherEntity->animCurFrame = self->animCurFrame;
+                otherEntity->params = 1;
+                break;
+            }
+        } else {
+            self->animCurFrame = 0;
+        }
+    }
+    self->ext.deathScythe.extStep = 0;
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_death", EntityDeathScytheShadow);
