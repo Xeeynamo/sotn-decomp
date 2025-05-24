@@ -6,6 +6,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -20,6 +21,9 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
+	if slices.Contains(e.Args, "--skip-build") {
+		return nil
+	}
 	data, err := os.ReadFile(assetPath(e.AssetDir, e.Name+extension(e.Args)))
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)

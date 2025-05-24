@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary_s"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
@@ -53,7 +52,6 @@ var handlers = func() map[string]assets.Handler {
 	m := make(map[string]assets.Handler)
 	for _, handler := range []assets.Handler{
 		binary.Handler,
-		binary_s.Handler,
 		blueprintsdef.Handler,
 		cmpgfx.Handler,
 		cutscene.Handler,

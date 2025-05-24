@@ -20,13 +20,13 @@ u8 aPbav_1[] = {
 __asm__(".pushsection .data\n"
         ".globl aPqes_1\n"
         "aPqes_1:\n"
-        ".include \"src/dra/gen/sd_eve1.s\"\n"
+        ".incbin \"assets/dra/sd_eve1.seq\"\n"
         ".globl aPqes\n"
         "aPqes:\n"
-        ".include \"src/dra/gen/sd_eve3.s\"\n"
+        ".incbin \"assets/dra/sd_eve3.seq\"\n"
         ".globl aPqes_0\n"
         "aPqes_0:\n"
-        ".include \"src/dra/gen/sd_eve2.s\"\n"
+        ".incbin \"assets/dra/sd_eve2.seq\"\n"
         ".popsection\n");
 #endif
 
