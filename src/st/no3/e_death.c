@@ -120,14 +120,16 @@ void EntityDeathCutsceneManager(Entity* self) {
     }
 }
 
-static u16 D_80181AD4[] = {123, 16, 184, 214, 225, 247};
-static u16 D_80181AE0[] = {48, 56, 40, 64, 32, 72};
-static s16 D_80181AEC[] = {-256, 1024, -640, 640, 512, 768, -896, 1024, 0, 512, 256, 896};
+static u16 stolenItemIDs[] = {123, 16, 184, 214, 225, 247};
+static u16 stolenItemTimers[] = {48, 56, 40, 64, 32, 72};
+// Slope and speed that get called into UnkEntityFunc0
+#define SS(sl, sp) sl, sp
+static s16 stolenItemVels[] = {SS(-256, 1024), SS(-640, 640), SS(512, 768), SS(-896, 1024), SS(0, 512), SS(256, 896)};
 
 // Displays items took by Death in the cutscene
 void EntityDeathStolenItem(Entity* self) {
     u16 params = self->params;
-    u16 itemId = D_80181AD4[params];
+    u16 itemId = stolenItemIDs[params];
     Primitive* prim;
     s32 primIndex;
     u16 size;
@@ -169,7 +171,7 @@ void EntityDeathStolenItem(Entity* self) {
         self->step++;
         break;
     case 2:
-        UnkEntityFunc0(D_80181AEC[params * 2], D_80181AEC[params * 2 + 1]);
+        UnkEntityFunc0(stolenItemVels[params * 2], stolenItemVels[params * 2 + 1]);
         self->ext.utimer.t = 16;
         self->step++;
         break;
@@ -185,7 +187,7 @@ void EntityDeathStolenItem(Entity* self) {
         prim->y2 = prim->y3 = prim->y0 + size;
         prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         if (!timer) {
-            self->ext.utimer.t = D_80181AE0[params];
+            self->ext.utimer.t = stolenItemTimers[params];
             self->step++;
         }
         break;
@@ -231,25 +233,26 @@ extern s32 E_ID(DEATH_SCYTHE_SHADOW);
 extern s32 E_ID(DEATH_SCYTHE);
 #endif
 
-static u8 D_80181B04[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
-static u8 D_80181B28[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
-static u8 D_80181B34[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
-static u8 D_80181B40[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
-static u8 D_80181B4C[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
-static u8 D_80181B58[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
-static u8 D_80181B68[] = {14, 28, 9, 29, 4, 30, 255, 0};
-static u8 D_80181B70[] = {16, 30, 255, 0};
-static u8 D_80181B74[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
-static u8 D_80181B84[] = {9, 1, 11, 8, 22, 10, 255, 0};
-static u8 D_80181B8C[] = {20, 10, 11, 8, 2, 1, 255, 0}; // Array skips this one
-static u8 D_80181B94[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
-static u8 D_80181BB4[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
-static u8 D_80181BC8[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
-static u8 D_80181BE0[] = {5, 56, 16, 55, 255, 0};
-static u8* D_80181BE8[] = {D_80181B04, D_80181B28, D_80181B34, D_80181B40, 
-                            D_80181B4C, D_80181B58, D_80181B68, D_80181B70,
-                            D_80181B74, D_80181B84, D_80181B94, D_80181BB4,
-                            D_80181BC8, D_80181BE0};
+static u8 deathAnim1[] = {8, 1, 8, 2, 8, 3, 6, 4, 6, 5, 10, 11, 11, 6, 8, 4, 8, 2, 10, 8, 6, 10, 56, 9, 3, 10, 9, 8, 6, 7, 1, 1, 255, 0};
+static u8 deathAnim2[] = {6, 12, 5, 13, 5, 14, 4, 15, 0};
+static u8 deathAnim3[] = {5, 16, 5, 17, 5, 18, 4, 19, 0};
+static u8 deathAnim4[] = {5, 20, 5, 21, 5, 22, 4, 23, 0};
+static u8 deathAnim5[] = {5, 24, 5, 25, 5, 26, 4, 27, 0};
+static u8 deathAnim6[] = {8, 1, 7, 2, 5, 3, 5, 4, 6, 5, 4, 6, 4, 4, 255, 0};
+static u8 deathAnim7[] = {14, 28, 9, 29, 4, 30, 255, 0};
+static u8 deathAnim8[] = {16, 30, 255, 0};
+static u8 deathAnim9[] = {16, 30, 11, 34, 8, 35, 7, 4, 7, 3, 11, 2, 2, 1, 255, 0};
+static u8 deathAnim10[] = {9, 1, 11, 8, 22, 10, 255, 0};
+static u8 deathAnim11[] = {20, 10, 11, 8, 2, 1, 255, 0}; // Array skips this one
+static u8 deathAnim12[] = {5, 1, 10, 36, 12, 1, 5, 37, 3, 38, 4, 37, 5, 1, 10, 36, 12, 2, 8, 43, 9, 42, 35, 44, 10, 39, 12, 2, 2, 1, 255, 0};
+static u8 deathAnim13[] = {8, 1, 9, 2, 9, 39, 5, 40, 49, 41, 7, 39, 10, 2, 2, 1, 255, 0};
+static u8 deathAnim14[] = {2, 45, 6, 51, 3, 46, 4, 47, 2, 48, 5, 51, 3, 49, 4, 50, 5, 51, 5, 52, 16, 53, 255, 0};
+static u8 deathAnim15[] = {5, 56, 16, 55, 255, 0};
+// Unused array.
+static u8* deathAnims[] = {deathAnim1, deathAnim2, deathAnim3, deathAnim4, 
+                            deathAnim5, deathAnim6, deathAnim7, deathAnim8,
+                            deathAnim9, deathAnim10, deathAnim12, deathAnim13,
+                            deathAnim14, deathAnim15};
 
 void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
@@ -336,7 +339,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 1:
-        if (AnimateEntity(D_80181BC8, self) == 0) {
+        if (AnimateEntity(deathAnim14, self) == 0) {
             SetStep(2);
             self->drawFlags = FLAG_DRAW_ROTZ;
             self->rotZ = 0x1000;
@@ -368,7 +371,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 3:
-        if (AnimateEntity(D_80181BE0, self) == 0) {
+        if (AnimateEntity(deathAnim15, self) == 0) {
             SetStep(4);
             g_api.PlaySfx(SE_VO_DEATH_LAUGH);
             self->ext.death.moveTimer = 64;
@@ -407,21 +410,21 @@ void EntityDeath(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(D_80181B34, self);
+        AnimateEntity(deathAnim3, self);
         if (!--self->ext.death.unk7C) {
             SetStep(6);
         }
         break;
 
     case 6:
-        AnimateEntity(D_80181B28, self);
+        AnimateEntity(deathAnim2, self);
         if (g_CutsceneFlags & 2) {
             SetStep(7);
         }
         break;
 
     case 7:
-        if (AnimateEntity(D_80181B04, self) == 0) {
+        if (AnimateEntity(deathAnim1, self) == 0) {
             SetStep(8);
         }
         if ((self->animCurFrame >= 7) && (self->animCurFrame < 11)) {
@@ -436,14 +439,14 @@ void EntityDeath(Entity* self) {
         break;
 
     case 8:
-        AnimateEntity(D_80181B28, self);
+        AnimateEntity(deathAnim2, self);
         if (g_CutsceneFlags & 4) {
             SetStep(9);
         }
         break;
 
     case 9:
-        if (AnimateEntity(D_80181BB4, self) == 0) {
+        if (AnimateEntity(deathAnim13, self) == 0) {
             SetStep(10);
         }
         newEntity->ext.death.unk7C = 1;
@@ -454,14 +457,14 @@ void EntityDeath(Entity* self) {
         break;
 
     case 10:
-        AnimateEntity(D_80181B28, self);
+        AnimateEntity(deathAnim2, self);
         if (g_CutsceneFlags & 8) {
             SetStep(11);
         }
         break;
 
     case 11:
-        if (AnimateEntity(D_80181B94, self) == 0) {
+        if (AnimateEntity(deathAnim12, self) == 0) {
             SetStep(12);
         }
         newEntity->ext.death.unk7C = 1;
@@ -472,35 +475,35 @@ void EntityDeath(Entity* self) {
         break;
 
     case 12:
-        AnimateEntity(D_80181B28, self);
+        AnimateEntity(deathAnim2, self);
         if (g_CutsceneFlags & 0x10) {
             SetStep(13);
         }
         break;
 
     case 13:
-        if (AnimateEntity(D_80181B58, self) == 0) {
+        if (AnimateEntity(deathAnim6, self) == 0) {
             SetStep(14);
         }
         newEntity->ext.death.unk7C = 1;
         break;
 
     case 14:
-        if (AnimateEntity(D_80181B68, self) == 0) {
+        if (AnimateEntity(deathAnim7, self) == 0) {
             g_api.PlaySfx(SE_VO_DEATH_STEALS);
             SetStep(15);
         }
         break;
 
     case 15:
-        if (AnimateEntity(D_80181B70, self) == 0) {
+        if (AnimateEntity(deathAnim8, self) == 0) {
             SetStep(16);
             g_CutsceneFlags |= 0x20;
         }
         break;
 
     case 16:
-        if (AnimateEntity(D_80181B74, self) == 0) {
+        if (AnimateEntity(deathAnim9, self) == 0) {
             SetStep(18);
         }
 
@@ -510,7 +513,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 18:
-        if (AnimateEntity(D_80181B84, self) == 0) {
+        if (AnimateEntity(deathAnim10, self) == 0) {
             SetStep(19);
             g_api.PlaySfx(SE_VO_DEATH_LAUGH);
             self->velocityX = FIX(1.0);
@@ -526,7 +529,7 @@ void EntityDeath(Entity* self) {
         break;
 
     case 19:
-        AnimateEntity(D_80181B8C, self);
+        AnimateEntity(deathAnim11, self);
         if (self->animCurFrame != 1) {
             newEntity->ext.death.unk7C = 2;
         } else {
@@ -574,13 +577,13 @@ void EntityDeathScythe(Entity* self) {
         if (tempstep) {
             switch (tempstep) {
             case 1:
-                AnimateEntity(D_80181B40, self);
+                AnimateEntity(deathAnim4, self);
                 break;
             case 2:
-                AnimateEntity(D_80181B4C, self);
+                AnimateEntity(deathAnim5, self);
                 break;
             case 3:
-                AnimateEntity(D_80181B4C, self);
+                AnimateEntity(deathAnim5, self);
                 otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEntity == NULL) {
                     break;
