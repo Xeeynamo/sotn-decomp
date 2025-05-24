@@ -39,7 +39,7 @@ check_saturn:
 
 .PHONY: build_saturn
 build_saturn: $(SATURN_TOOLCHAIN)
-	python3 ./tools/saturn/build.py && ninja
+	python3 ./tools/builds/saturn.py && ninja
 
 .PHONY: extract_saturn
 extract_saturn: $(SATURN_SPLITTER_APP)
