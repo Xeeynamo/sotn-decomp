@@ -1405,7 +1405,7 @@
 | dra       | PlayerStepHellfire                       |      219 |         43 |        |                                 |       |
 | no3       | EntitySmallWaterDrop                     |      220 |         22 |        |                                 |       |
 | no4       | EntitySmallWaterDrop                     |      220 |         22 |        |                                 |       |
-| no4       | func_pspeu_0923E368                      |      221 |         22 |        | https://decomp.me/scratch/nprgi | 0.42  |
+| no4       | func_pspeu_0923E368                      |      221 |         22 |        | https://decomp.me/scratch/nprgi | 1.0   |
 | dra       | CheckSummonSpiritInput                   |      221 |         35 |        |                                 |       |
 | maria     | MarStepTeleport                          |      221 |         40 | Yes    |                                 |       |
 | ric       | RicStepTeleport                          |      221 |         40 | Yes    |                                 |       |
@@ -1495,7 +1495,7 @@
 | dra       | func_8011EDA8                            |      270 |         27 |        | https://decomp.me/scratch/fBpkl | 0.984 |
 | maria     | func_80161C2C                            |      270 |         27 |        |                                 |       |
 | ric       | func_80161C2C                            |      270 |         27 |        |                                 |       |
-| no4       | func_pspeu_0923E690                      |      272 |         23 |        |                                 |       |
+| no4       | func_pspeu_0923E690                      |      272 |         23 |        | https://decomp.me/scratch/2teRw | 1.0   |
 | ric       | RicEntityRevivalColumn                   |      273 |         26 |        | https://decomp.me/scratch/9WUIk | 0.999 |
 | no3       | EntityTransparentWater                   |      274 |         26 |        |                                 |       |
 | lib       | func_us_801B29C4                         |      274 |         43 |        | https://decomp.me/scratch/RW5KI | 0.999 |
@@ -1527,7 +1527,7 @@
 | lib       | EntityBreakable                          |      294 |         47 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | no3       | EntityForegroundTree                     |      296 |         32 |        | https://decomp.me/scratch/2bPO1 | 0.988 |
 | dra       | HandleEnding                             |      298 |         60 |        | https://decomp.me/scratch/MP6vj | 0.999 |
-| no4       | func_pspeu_0923EA80                      |      300 |         26 |        |                                 |       |
+| no4       | func_pspeu_0923EA80                      |      300 |         26 |        | https://decomp.me/scratch/TnwHN | 1.0   |
 | no3       | EntityMermanRockLeftSide                 |      303 |         33 |        | https://decomp.me/scratch/njGp9 | 0.996 |
 | dra       | func_8013572C                            |      303 |         47 |        | https://decomp.me/scratch/NrPlO | 0.964 |
 | dra       | func_8012C600                            |      305 |         25 |        |                                 |       |
