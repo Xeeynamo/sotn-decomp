@@ -234,8 +234,11 @@ void EntityForegroundTree(Entity* self) {
 }
 
 // Entries are all pairs of (Xpos, params).
+// Ultimately, ends up creating a huge number of entities showing animations
+// of frames 41, 42, 43, 44 from animset 0x8001. These are generally bushes
+// and foliage - use display_animation.py to confirm.
 #define XP(x, p) x, p
-static u16 D_801814EC[] = {
+static u16 foliageParams[] = {
     XP(32, 6),   XP(62, 7),   XP(94, 8),   XP(126, 7),  XP(156, 9),
     XP(224, 6),  XP(254, 8),  XP(284, 9),  XP(368, 6),  XP(398, 8),
     XP(430, 7),  XP(462, 7),  XP(494, 8),  XP(526, 7),  XP(556, 9),
@@ -253,7 +256,7 @@ static u16 D_801814EC[] = {
     XP(3116, 9), XP(65535, 2)};
 
 // Uses the table above to create a lot of E_BACKGROUND_BLOCK entities.
-void EntityUnkId50(Entity* self) {
+void EntityFoliageMaker(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     u16 temp_s3;
@@ -265,7 +268,7 @@ void EntityUnkId50(Entity* self) {
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->unk68 = 0xC0;
         self->ext.et_801BCC4C.unk7C = 0;
-        ptr = D_801814EC;
+        ptr = foliageParams;
         while (true) {
             if (*ptr > 288) {
                 break;
@@ -285,7 +288,7 @@ void EntityUnkId50(Entity* self) {
 
     case 1:
         self->posX.i.hi = 128;
-        ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
+        ptr = &foliageParams[self->ext.et_801BCC4C.unk7C * 2];
         temp_s3 = tilemap->scrollX.i.hi * 0xC0 / 0x100 + 288;
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
@@ -332,11 +335,11 @@ static u16 pineSet3[] = {
     0x00E9, 0x0107, 0x0105, 0x010B, 0x0122, 0x0005, 0x013E, 0x0103,
     0x015C, 0x0000, 0x0179, 0x0107, 0x019A, 0x010A, 0x01BA, 0x0002,
     0x01DA, 0x0106, 0x01FE, 0x0000, 0xFFFF};
-static u16 D_801817D4[] = {0x80, 0x40, 0x20};
-static u16 D_801817DC[] = {0x100, 0xD8, 0xB0};
-static u8 D_801817E4[] = {0x80, 0x60, 0x40};
-static u16 D_801817E8[] = {0x17, 0x49};
-static u16* D_801817EC[] = {pineSet1, pineSet2, pineSet3};
+static u16 pinesUnk68[] = {0x80, 0x40, 0x20};
+static u16 pineWidths[] = {0x100, 0xD8, 0xB0};
+static u8 pineColors[] = {0x80, 0x60, 0x40};
+static u16 pineCluts[] = {0x17, 0x49};
+static u16* pineSets[] = {pineSet1, pineSet2, pineSet3};
 
 // part of parallax background with pine trees
 void EntityBackgroundPineTrees(Entity* self) {
@@ -351,10 +354,10 @@ void EntityBackgroundPineTrees(Entity* self) {
     Primitive* prim_s0;
 
     xpos = self->params; // Temporary reuse of xpos var for params
-    selfUnk68 = D_801817D4[xpos];
-    var_s5 = D_801817EC[xpos];
+    selfUnk68 = pinesUnk68[xpos];
+    var_s5 = pineSets[xpos];
     var_s5 += self->ext.ILLEGAL.u16[0] * 2;
-    var_s4 = D_801817DC[xpos];
+    var_s4 = pineWidths[xpos];
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
@@ -421,7 +424,7 @@ void EntityBackgroundPineTrees(Entity* self) {
 
             xpos = *var_s5++;
 
-            prim_s0->clut = prim_s1->clut = D_801817E8[(xpos >> 8) & 0xFF];
+            prim_s0->clut = prim_s1->clut = pineCluts[(xpos >> 8) & 0xFF];
 
             prim_s0->y2 = prim_s0->y3 =
                 0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
@@ -431,7 +434,7 @@ void EntityBackgroundPineTrees(Entity* self) {
             prim_s1->y2 = prim_s1->y3 = 0x9C;
             prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
             // Set all colors for both prims.
-            PCOL(prim_s0) = PCOL(prim_s1) = D_801817E4[self->params];
+            PCOL(prim_s0) = PCOL(prim_s1) = pineColors[self->params];
             prim_s0->priority = 0x3F - (self->params * 2);
             prim_s1->priority = prim_s0->priority - 1;
             prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
@@ -487,7 +490,7 @@ void EntityBackgroundPineTrees(Entity* self) {
 
                         xpos = *var_s5;
                         prim_s0->clut = prim_s1->clut =
-                            D_801817E8[(xpos >> 8) & 0xFF];
+                            pineCluts[(xpos >> 8) & 0xFF];
                         prim_s0->y2 = prim_s0->y3 =
                             0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
                         prim_s0->y0 = prim_s0->y1 =
@@ -496,7 +499,7 @@ void EntityBackgroundPineTrees(Entity* self) {
                         prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
                         // Set all colors for both prims.
                         PCOL(prim_s0) = PCOL(prim_s1) =
-                            D_801817E4[self->params];
+                            pineColors[self->params];
                         prim_s0->priority = 0x3F - (self->params * 2);
                         prim_s1->priority = prim_s0->priority - 1;
                         prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
@@ -510,9 +513,13 @@ void EntityBackgroundPineTrees(Entity* self) {
     }
 }
 
-static u16 D_801817F8[] = {0x20, 0x60, 0xA0, 0xE0, 0x120, 0x15F, 0xFFFF};
+// Creates background blocks at the specified X locations.
+// Params is always 0x10. The background block's objinit2 array says item
+// 0x10 is using animset 0x8001, and animFrames at 0x80180be0. This pulls
+// animation frame number 0x2D, or 45. That's distant background trees.
+static u16 treeXLocations[] = {0x20, 0x60, 0xA0, 0xE0, 0x120, 0x15F, 0xFFFF};
 
-void EntityUnkId52(Entity* self) {
+void EntityDistantTreeMaker(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
     u16 temp_s3;
@@ -523,7 +530,7 @@ void EntityUnkId52(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->ext.et_801BCC4C.unk7C = 0;
-        ptr = D_801817F8;
+        ptr = treeXLocations;
         while (true) {
             if (*ptr > 288) {
                 break;
@@ -542,7 +549,7 @@ void EntityUnkId52(Entity* self) {
 
     case 1:
         self->posX.i.hi = 0x80;
-        ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
+        ptr = &treeXLocations[self->ext.et_801BCC4C.unk7C];
         temp_s3 = tilemap->scrollX.i.hi * 0x18 / 0x100 + 288;
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
@@ -562,19 +569,26 @@ void EntityUnkId52(Entity* self) {
     }
 }
 
-static s16 D_80181808[] = {
-    -338, -20, -338, 12,  -304, -20, -304, 12,  -306, -15, -306, 13,  -274, -15,
-    -274, 13,  -242, -15, -242, 13,  -210, -15, -210, 13,  -178, -15, -178, 13,
-    -146, -15, -146, 13,  -114, -15, -114, 13,  -82,  -15, -82,  13,  -50,  -15,
-    -50,  13,  -18,  -15, -18,  13,  10,   -15, 10,   13};
-static s16 D_80181870[] = {
-    -4,  -8,  24,  -8,  -4,  8,   24,  8,   12,  -3,  40,  -3,  12,  4,   40,
-    4,   28,  -8,  56,  -8,  28,  8,   56,  8,   44,  -3,  72,  -3,  44,  4,
-    72,  4,   60,  -8,  88,  -8,  60,  8,   88,  8,   76,  -3,  104, -3,  76,
-    4,   104, 4,   92,  -8,  120, -8,  92,  8,   120, 8,   108, -3,  136, -3,
-    108, 4,   136, 4,   124, -8,  152, -8,  124, 8,   152, 8,   140, -3,  168,
-    -3,  140, 4,   168, 4,   156, -8,  184, -8,  156, 8,   184, 8,   172, -3,
-    200, -3,  172, 4,   200, 4,   188, -8,  216, -8,  188, 8,   216, 8};
+#define XY(x, y) x, y
+static s16 g_EntityCastleBridgeVecXY1[] = {
+    XY(-338, -20), XY(-338, 12),  XY(-304, -20), XY(-304, 12),  XY(-306, -15),
+    XY(-306, 13),  XY(-274, -15), XY(-274, 13),  XY(-242, -15), XY(-242, 13),
+    XY(-210, -15), XY(-210, 13),  XY(-178, -15), XY(-178, 13),  XY(-146, -15),
+    XY(-146, 13),  XY(-114, -15), XY(-114, 13),  XY(-82, -15),  XY(-82, 13),
+    XY(-50, -15),  XY(-50, 13),   XY(-18, -15),  XY(-18, 13),   XY(10, -15),
+    XY(10, 13)};
+static s16 g_EntityCastleBridgeVecXY2[] = {
+    XY(-4, -8),  XY(24, -8),  XY(-4, 8),   XY(24, 8),   XY(12, -3),
+    XY(40, -3),  XY(12, 4),   XY(40, 4),   XY(28, -8),  XY(56, -8),
+    XY(28, 8),   XY(56, 8),   XY(44, -3),  XY(72, -3),  XY(44, 4),
+    XY(72, 4),   XY(60, -8),  XY(88, -8),  XY(60, 8),   XY(88, 8),
+    XY(76, -3),  XY(104, -3), XY(76, 4),   XY(104, 4),  XY(92, -8),
+    XY(120, -8), XY(92, 8),   XY(120, 8),  XY(108, -3), XY(136, -3),
+    XY(108, 4),  XY(136, 4),  XY(124, -8), XY(152, -8), XY(124, 8),
+    XY(152, 8),  XY(140, -3), XY(168, -3), XY(140, 4),  XY(168, 4),
+    XY(156, -8), XY(184, -8), XY(156, 8),  XY(184, 8),  XY(172, -3),
+    XY(200, -3), XY(172, 4),  XY(200, 4),  XY(188, -8), XY(216, -8),
+    XY(188, 8),  XY(216, 8)};
 static u8 g_EntityCastleBridgeUVs[] = {
     16,  50,  224, 255, 58, 90,  226, 254, 130, 162, 98,  126,
     170, 198, 192, 208, 74, 102, 129, 136, 170, 198, 208, 192};
@@ -711,7 +725,7 @@ void EntityCastleBridge(Entity* self) {
 
     matrix = RotMatrixZ(self->rotZ, matrix);
     SetRotMatrix(matrix);
-    positionsPtr = D_80181808;
+    positionsPtr = g_EntityCastleBridgeVecXY1;
     xOffset = 4563 - tilemap->scrollX.i.hi;
 
     for (primIndex = 0, vector->vz = 0, prim = &g_PrimBuf[self->primIndex];
@@ -770,7 +784,7 @@ void EntityCastleBridge(Entity* self) {
         ratan2(-352 - rotatedVector->vy, -(rotatedVector->vx - 128)), matrix);
     SetRotMatrix(matrix);
 
-    positionsPtr = D_80181870;
+    positionsPtr = g_EntityCastleBridgeVecXY2;
     while (prim != NULL) {
         vector->vx = *positionsPtr++;
         vector->vy = *positionsPtr++;
@@ -871,8 +885,8 @@ void EntityBackgroundCastleWall(Entity* self) {
     DestroyEntity(self);
 }
 
-static u8 D_801819D0[] = {5, 56, 5, 57, 5, 58, 3, 59, 0};
-static u8 D_801819DC[] = {6, 56, 6, 57, 6, 58, 4, 59, 0};
+static u8 owlAnim1[] = {5, 56, 5, 57, 5, 58, 3, 59, 0};
+static u8 owlAnim2[] = {6, 56, 6, 57, 6, 58, 4, 59, 0};
 
 // intro owl and leaves
 void EntityFlyingOwlAndLeaves(Entity* self) {
@@ -935,10 +949,10 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     case 3:
         if (self->params) {
-            animFlag = AnimateEntity(D_801819DC, self);
+            animFlag = AnimateEntity(owlAnim2, self);
             self->velocityY -= 0xA00;
         } else {
-            animFlag = AnimateEntity(D_801819D0, self);
+            animFlag = AnimateEntity(owlAnim1, self);
             if (self->velocityY > FIX(-2)) {
                 self->velocityY -= FIX(0.03125);
             }
@@ -956,7 +970,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         if (self->velocityY > FIX(-2)) {
             self->velocityY -= FIX(0.03125);
         }
-        animFlag = AnimateEntity(D_801819D0, self);
+        animFlag = AnimateEntity(owlAnim1, self);
         MoveEntity();
         if (self->unk6C < 0x78) {
             self->unk6C += 2;
@@ -972,7 +986,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 }
 
 #define XY(x, y) FIX(x), FIX(y)
-static s32 D_801819E8[] = {
+static s32 leafVelocities[] = {
     XY(3, 0),     XY(5, 1),    XY(6.375, 1.25), XY(4.5, 2.5),
     XY(6, -0.75), XY(7, 1.75), XY(5.25, 2),     XY(4, -1.0 / 32)};
 // a single leaf from when the owl comes out in the intro
@@ -984,8 +998,8 @@ void EntityFallingLeaf(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = (self->params & 1) + 63;
         self->zPriority = 0xC1;
-        self->velocityX = D_801819E8[self->params * 2];
-        self->velocityY = D_801819E8[self->params * 2 + 1];
+        self->velocityX = leafVelocities[self->params * 2];
+        self->velocityY = leafVelocities[self->params * 2 + 1];
         self->unk68 = 0x1C0;
         break;
 
