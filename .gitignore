@@ -23,3 +23,8 @@ format-symbols.run
 # Matches in repo root folder only
 /*.map
 /assets/
+
+# ninja stuff
+.ninja_lock
+.ninja_log
+build.ninja

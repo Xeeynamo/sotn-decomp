@@ -1,31 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
-#include "sfx.h"
 
-// puts garbled hp max up text on screen
-void EntityUnkId11(Entity* entity) {
-    ObjInit* obj = (ObjInit*)&D_80180528[entity->params * 10];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
+extern u16 g_EInitCommon[];
 
-    if (entity->step == 0) {
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        entity->animSet = obj->animSet;
-        entity->zPriority = obj->zPriority;
-        entity->unk5A = obj->unk5A;
-        entity->palette = obj->palette;
-        entity->drawFlags = obj->drawFlags;
-        entity->drawMode = obj->drawMode;
-
-        if (obj->flags != 0) {
-            entity->flags = obj->flags;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->unk5A = LOH(objInit->facingLeft);
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
+        if (objInit->flags) {
+            self->flags = objInit->flags;
         }
-
-        if (entity->params == 1) {
-            entity->rotY = 0x200;
-            entity->rotX = 0x200;
+        if (self->params == 1) {
+            self->rotX = self->rotY = 0x0200;
         }
     }
-
-    AnimateEntity(obj->animFrames, entity);
+    AnimateEntity(objInit->animFrames, self);
 }
 
 #include "../entity_lock_camera.h"

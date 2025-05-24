@@ -18,7 +18,7 @@ void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -66,7 +66,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
-    EntityLockCamera,
+    OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -115,7 +115,7 @@ EInit g_EInitDraculaRainAttack = {0x8002, 0x0000, 0x0050, 0x0202, 0x00AE};
 EInit g_EInitSecretStairs = {0x8006, 0x0000, 0x004C, 0x0228, 0x0005};
 
 static u8 D_80180634[] = {0x40, 0x01, 0xFF, 0x00};
-ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x01FA,
      .unk5A = 0x0000,
@@ -123,7 +123,7 @@ ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_TPAGE,
      .flags = 0,
-     D_80180634},
+     .animFrames = D_80180634},
 };
 
 u16 OVL_EXPORT(RedDoorTiles)[][8] = {

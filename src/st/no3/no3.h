@@ -148,7 +148,7 @@ extern u16 g_EInitWaterSplash[];
 extern u16 D_80180B6C[];
 extern u16 g_EInitBat[];
 extern u16 D_80180BA8[];
-extern ObjInit2 D_80180BFC[];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
 extern u16 D_80180DD0[];

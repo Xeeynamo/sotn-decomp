@@ -100,8 +100,7 @@ SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
-SOTNASSETS_DIR  := $(TOOLS_DIR)/sotn-assets/
-SOTNASSETS      := $(GOPATH)/bin/sotn-assets
+SOTNASSETS      := bin/sotn-assets
 
 # Build functions
 define get_src_files
@@ -281,6 +280,7 @@ format-src: bin/clang-format
 .PHONY: format-tools
 format-tools:
 	$(BLACK) tools/*.py
+	$(BLACK) tools/builds/gen.py
 	$(BLACK) tools/splat_ext/*.py
 	$(BLACK) tools/split_jpt_yaml/*.py
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
@@ -337,11 +337,13 @@ ff:
 
 .PHONY: patch
 patch:
-	$(DIRT_PATCHER) config/dirt.$(VERSION).json
 
-.PHONY: check
+.PHONY: check, check_us, check_hd, check_pspeu
 check: ##@ compare built files to original game files
-check: config/check.$(VERSION).sha patch $(CHECK_FILES)
+check: check_$(VERSION)
+check_us:
+check_hd:
+check_pspeu: config/check.pspeu.sha patch $(CHECK_FILES)
 	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
         printf "%s\t[ ", $$1; \
         if ($$2 == "OK") \
@@ -545,7 +547,7 @@ $(GO):
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
-	cd tools/sotn-assets; $(GO) install
+	$(GO) build -C tools/sotn-assets -o ../../$@ . 
 
 # Handles assets
 $(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json

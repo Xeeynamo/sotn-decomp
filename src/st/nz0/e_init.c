@@ -18,7 +18,7 @@ void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -97,7 +97,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
-    EntityLockCamera,
+    OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -188,10 +188,27 @@ EInit g_EInitGaibonLargeProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x0100};
 static u32 D_80180D54[] = {0x00000B10};
 static u32 D_80180D58[] = {0x0D080C08, 0x0F080E08, 0x00001008};
 
-ObjInit OVL_EXPORT(BackgroundBlockInit)[] = {
-    {0x8001, 0x0069, 0x0000, 0x0000, 0x00, 0x00, 0x00000000, D_80180D54},
-    {0x8001, 0x0069, 0x0000, 0x0000, 0x00, 0x30, 0x00000000, D_80180D58},
-};
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
+    {
+        .animSet = 0x8001,
+        .zPriority = 0x0069,
+        .unk5A = 0,
+        .palette = PAL_DRA(0),
+        .drawFlags = FLAG_DRAW_DEFAULT,
+        .drawMode = DRAW_DEFAULT,
+        .flags = 0,
+        .animFrames = D_80180D54,
+    },
+    {
+        .animSet = 0x8001,
+        .zPriority = 0x0069,
+        .unk5A = 0,
+        .palette = PAL_DRA(0),
+        .drawFlags = FLAG_DRAW_DEFAULT,
+        .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
+        .flags = 0,
+        .animFrames = D_80180D58,
+    }};
 
 // Owned by EntityRedDoor to animate the tiles behind the door itself.
 // There is a loop in EntityRedDoor that forces to write those tiles
