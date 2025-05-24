@@ -1083,7 +1083,7 @@
 | dra       | 8D3E8.rodata                             |      104 |          0 | Yes    |                                 |       |
 | dra       | PauseSfxScripts                          |      104 |          3 |        |                                 |       |
 | lib       | EntityExplosionVariantsSpawner           |      104 |          5 |        |                                 |       |
-| no3       | func_pspeu_09258A78                      |      104 |          5 |        |                                 |       |
+| no3       | EntityExplosionVariantsSpawner           |      104 |          5 |        |                                 |       |
 | maria_psp | func_pspeu_092BFD30                      |      104 |          8 |        |                                 |       |
 | dra       | func_800F8754                            |      104 |         10 |        |                                 |       |
 | ric       | func_80160D2C                            |      104 |         10 |        |                                 |       |
@@ -1270,13 +1270,13 @@
 | dra       | func_80135D8C                            |      155 |         10 |        | https://decomp.me/scratch/4iCJL | 1.0   |
 | maria_psp | func_pspeu_092AAA38                      |      155 |         10 |        |                                 |       |
 | dra       | func_80123F78                            |      155 |         14 |        | https://decomp.me/scratch/rLwSV | 0.967 |
-| no3       | EntityUnkId52                            |      155 |         16 |        |                                 |       |
+| no3       | EntityDistantTreeMaker                   |      155 |         16 |        |                                 |       |
 | dra       | func_8012ED30                            |      156 |         26 |        |                                 |       |
 | dra       | EntityHellfireNormalFireball             |      157 |         18 |        | https://decomp.me/scratch/Rzlhs | 0.996 |
 | dra       | func_80119E78                            |      158 |          6 |        | https://decomp.me/scratch/jxhNr | 0.979 |
 | dra       | AddCdSoundCommand                        |      158 |         10 |        |                                 |       |
 | chi       | EntitySalemWitchTriboltLaunch            |      158 |         24 |        |                                 |       |
-| no3       | EntityUnkId50                            |      159 |         16 |        | https://decomp.me/scratch/o9oBy | 0.996 |
+| no3       | EntityFoliageMaker                       |      159 |         16 |        |                                 |       |
 | no4       | func_pspeu_092398B8                      |      159 |         18 |        |                                 |       |
 | dra       | func_8012CCE4                            |      159 |         21 |        |                                 |       |
 | dra       | LoadSaveData                             |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
