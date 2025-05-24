@@ -268,7 +268,6 @@ void EntityDeath(Entity* self) {
     Entity* newEntity = self + 1;
     Primitive* prim;
     s32 primIndex;
-    s32 x, y;
     s32 i;
 
     if ((self->step >= 4) && (self->step < 13)) {
