@@ -732,13 +732,14 @@
 | st0       | GetLangAt                                |       61 |         10 |        |                                 |       |
 | dra       | func_8012CC30                            |       61 |         12 |        |                                 |       |
 | dra       | 71830.rodata                             |       62 |          0 | Yes    |                                 |       |
+| no3       | working_on.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra       | GetPlayerSensor                          |       62 |          5 |        |                                 |       |
 | chi       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib       | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib       | func_us_801B7C94                         |       62 |          5 |        |                                 |       |
-| no3       | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
 | no3       | EntityUnkId16                            |       62 |          5 |        |                                 |       |
+| no3       | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
 | no4       | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | no4       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | st0       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
@@ -763,6 +764,7 @@
 |           | ServantUnk0                              |       63 |         12 |        |                                 |       |
 | dra       | E588.rodata                              |       64 |          0 | Yes    |                                 |       |
 | lib       | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
+| no3       | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | dra       | CheckWeaponCombo                         |       64 |          5 |        |                                 |       |
 | dra       | func_801026BC                            |       64 |          7 |        |                                 |       |
 | no3       | CreateExplosionPuff                      |       64 |          8 |        |                                 |       |
@@ -1176,7 +1178,6 @@
 | no3       | func_pspeu_09249590                      |      118 |         27 |        |                                 |       |
 | no3       | EntityTrapDoor                           |      119 |         14 |        | https://decomp.me/scratch/MGGMN | 0.955 |
 | dra       | func_8011A870                            |      119 |         19 |        |                                 |       |
-| no3       | working_on.rodata                        |      120 |          0 | Yes    |                                 |       |
 | st0       | CollectSubweapon                         |      120 |          9 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra       | MenuTimeAttackDraw                       |      120 |         11 |        |                                 |       |
 | dra       | GetEquipProperties                       |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
