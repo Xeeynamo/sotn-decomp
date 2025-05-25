@@ -701,7 +701,7 @@
 | dra       | SetVolume22_23                           |       59 |          3 |        |                                 |       |
 | maria     | MarSetSubweaponParams                    |       59 |          3 |        | https://decomp.me/scratch/jDtfS | 0.998 |
 | st0       | ReplaceBreakableWithItemDrop             |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
-| maria_psp | func_pspeu_092BFEB0                      |       59 |          8 |        |                                 |       |
+| maria_psp | func_pspeu_092BFEB0                      |       59 |          8 |        | https://decomp.me/scratch/QZnFn | 1.0   |
 | dra       | DoGravityJump                            |       59 |         10 |        |                                 |       |
 | dra       | SetMonoStereo                            |       59 |         10 |        |                                 |       |
 | dra       | DemoInit                                 |       59 |         10 |        |                                 |       |
@@ -1485,7 +1485,7 @@
 | ric       | func_801641A0                            |      265 |         13 |        |                                 |       |
 | no4       | func_pspeu_0923FB88                      |      265 |         22 |        |                                 |       |
 | st0       | func_801A805C                            |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| maria_psp | func_pspeu_092BF950                      |      269 |         26 |        |                                 |       |
+| maria_psp | func_pspeu_092BF950                      |      269 |         26 |        | https://decomp.me/scratch/uJ00p | 1.0   |
 | chi       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | lib       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | no3       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
