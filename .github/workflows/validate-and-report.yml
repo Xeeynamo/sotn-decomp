@@ -155,7 +155,7 @@ jobs:
       - name: Generate duplicates report
         run: |
           make force_symbols
-          make -j extract
+          make build
           .venv/bin/python3 tools/function_finder/fix_matchings.py
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
@@ -221,7 +221,7 @@ jobs:
             wait
       - name: Generate function report
         run: |
-            make clean && make -j extract
+            make clean && make build
             find asm -print
             .venv/bin/python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
       - name: Commit all reports
