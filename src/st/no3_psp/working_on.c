@@ -4,26 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09242C00);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09242CA0);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09242FB8);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243040);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243108);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243168);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243378);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092433B0);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243748);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityCutscene);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityLockCamera);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09245A58);
