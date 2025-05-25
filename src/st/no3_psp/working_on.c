@@ -4,8 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityTilemapShufflerUnused);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityShuttingWindow);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBreakable);
