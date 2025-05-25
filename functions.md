@@ -366,7 +366,6 @@
 | dra       | PerformSoulSteal                         |       33 |          6 |        |                                 |       |
 | dra       | func_psp_090F21F8                        |       33 |          6 |        |                                 |       |
 | dra       | func_800EAD0C                            |       33 |          8 |        |                                 |       |
-| maria     | 18838.rodata                             |       34 |          0 | Yes    |                                 |       |
 | lib       | unk_3B200.rodata                         |       34 |          0 | Yes    |                                 |       |
 | st0       | 2C564.rodata                             |       34 |          0 | Yes    |                                 |       |
 | st0       | 3D8F0.rodata                             |       34 |          0 | Yes    |                                 |       |
@@ -550,7 +549,7 @@
 | maria_psp | func_pspeu_092A9D48                      |       45 |          1 |        |                                 |       |
 | maria_psp | func_pspeu_092A9DE8                      |       45 |          1 |        |                                 |       |
 |           | CalculateAngleToEntity                   |       45 |          2 |        |                                 |       |
-| maria_psp | func_pspeu_092BF8B8                      |       45 |          5 |        |                                 |       |
+| maria     | func_pspeu_092BF8B8                      |       45 |          5 |        |                                 |       |
 | dra       | func_8010E334                            |       45 |          6 |        |                                 |       |
 | dra       | SetMenuDisplayBuffer                     |       45 |          6 |        |                                 |       |
 | lib       | func_us_801BED48                         |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
@@ -701,7 +700,7 @@
 | dra       | SetVolume22_23                           |       59 |          3 |        |                                 |       |
 | maria     | MarSetSubweaponParams                    |       59 |          3 |        | https://decomp.me/scratch/jDtfS | 0.998 |
 | st0       | ReplaceBreakableWithItemDrop             |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
-| maria_psp | func_pspeu_092BFEB0                      |       59 |          8 |        | https://decomp.me/scratch/QZnFn | 1.0   |
+| maria     | func_pspeu_092BFEB0                      |       59 |          8 |        | https://decomp.me/scratch/QZnFn | 1.0   |
 | dra       | DoGravityJump                            |       59 |         10 |        |                                 |       |
 | dra       | SetMonoStereo                            |       59 |         10 |        |                                 |       |
 | dra       | DemoInit                                 |       59 |         10 |        |                                 |       |
@@ -1032,7 +1031,6 @@
 | no3       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | no4       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | wrp       | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
-| maria     | pl_blueprints.rodata                     |       98 |          0 | Yes    |                                 |       |
 | dra       | func_8010DA70                            |       98 |         10 |        |                                 |       |
 | ric       | RicSetFall                               |       98 |         10 |        |                                 |       |
 | chi       | CreateEntitiesBelow                      |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
@@ -1085,7 +1083,7 @@
 | dra       | PauseSfxScripts                          |      104 |          3 |        |                                 |       |
 | lib       | EntityExplosionVariantsSpawner           |      104 |          5 |        |                                 |       |
 | no3       | EntityExplosionVariantsSpawner           |      104 |          5 |        |                                 |       |
-| maria_psp | func_pspeu_092BFD30                      |      104 |          8 |        |                                 |       |
+| maria     | func_pspeu_092BFD30                      |      104 |          8 |        |                                 |       |
 | dra       | func_800F8754                            |      104 |         10 |        |                                 |       |
 | ric       | func_80160D2C                            |      104 |         10 |        |                                 |       |
 | no3       | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
@@ -1191,6 +1189,7 @@
 | ric       | RicEntityCrashReboundStone               |      124 |         11 | Yes    |                                 |       |
 | no3       | EntityZombieSpawner                      |      125 |         15 |        |                                 |       |
 | dra       | func_8012D28C                            |      125 |         22 |        |                                 |       |
+| maria     | pl_blueprints.rodata                     |      126 |          0 | Yes    |                                 |       |
 |           | UpdatePrimWhenAlucardIsBat               |      126 |          5 |        |                                 |       |
 | dra       | EntityWingSmashTrail                     |      126 |         10 |        |                                 |       |
 | no4       | func_pspeu_09242200                      |      126 |         15 |        |                                 |       |
@@ -1485,7 +1484,7 @@
 | ric       | func_801641A0                            |      265 |         13 |        |                                 |       |
 | no4       | func_pspeu_0923FB88                      |      265 |         22 |        |                                 |       |
 | st0       | func_801A805C                            |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| maria_psp | func_pspeu_092BF950                      |      269 |         26 |        | https://decomp.me/scratch/uJ00p | 1.0   |
+| maria     | func_pspeu_092BF950                      |      269 |         26 |        | https://decomp.me/scratch/uJ00p | 1.0   |
 | chi       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | lib       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | no3       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -1853,7 +1852,7 @@
 | maria     | MarEntityShrinkingPowerUpRing            |      931 |         62 |        |                                 |       |
 | ric       | RicEntityShrinkingPowerUpRing            |      931 |         62 |        | https://decomp.me/scratch/O6Eko | 0.999 |
 | dra       | DrawHudSubweapon                         |      934 |         73 |        |                                 |       |
-| maria_psp | func_pspeu_092BEB40                      |      944 |         70 | Yes    | https://decomp.me/scratch/ADRXc | 1.0   |
+| maria     | func_pspeu_092BEB40                      |      944 |         70 | Yes    | https://decomp.me/scratch/ADRXc | 1.0   |
 |           | UpdateBatBlueTrailEntities               |      963 |         44 |        |                                 |       |
 | lib       | func_psp_09239650                        |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
 | chi       | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
