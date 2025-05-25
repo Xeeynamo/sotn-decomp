@@ -25,7 +25,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FFF8);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AllocEntity);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260348);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", UnkEntityFunc0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092603F0);
 

@@ -69,7 +69,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 print("Overlay animation")
                 assert ovl_name != "dra"
                 spritebank = anim_num & 0x7FFF
-                main_array_file = f"src/st/{ovl_name}/sprite_banks.h"
+                main_array_file = f"src/st/{ovl_name}/gen/sprite_banks.h"
                 main_array = "spriteBanks"
                 animset_file = f"src/st/{ovl_name}/gen/sprites.c"
 

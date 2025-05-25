@@ -1,6 +1,6 @@
 options:
   platform: psp
-  basename: dra
+  basename: stwrp
   base_path: ..
   build_path: build/pspeu
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin

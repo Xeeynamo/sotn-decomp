@@ -4,7 +4,9 @@
 
 #include <weapon.h>
 
+#if !defined(WEAPON0) && !defined(WEAPON1)
 #define WEAPON0 // forces WEAPON0 for the time being
+#endif
 
 #if defined(WEAPON0)
 #define HAND_ID 0

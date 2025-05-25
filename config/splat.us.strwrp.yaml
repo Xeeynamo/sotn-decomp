@@ -77,7 +77,7 @@ segments:
       - [0x8DF0, c, rwrp/st_debug]
       - [0x908C, c, rwrp/e_breakable]
       - [0x91C0, c, rwrp/warp]
-      - [0xA148, c, wrp/st_update]
+      - [0xA168, c, wrp/st_update]
       - [0xA59C, c, wrp/collision]
       - [0xBD58, c, rwrp/create_entity]
       - [0xC8D0, c, rwrp/e_red_door]

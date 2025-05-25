@@ -20,8 +20,8 @@ void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
 void EntityDummy(Entity* self);
-void func_801A7D64(Entity* self);
-void EntityLockCamera(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
+void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -54,8 +54,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    func_801A7D64,
-    EntityLockCamera,
+    OVL_EXPORT(EntityBackgroundBlock),
+    OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -94,7 +94,7 @@ EInit D_us_801804B0 = {ANIMSET_OVL(1), 0x0000, 0x0000, PAL_DRA(0), 0x0005};
 EInit D_us_801804BC = {ANIMSET_OVL(2), 0x0000, 0x0000, PAL_DRA(0), 0x0005};
 
 static u8 anim_frames[] = {0x40, 0x01, 0xFF, 0x00};
-ObjInit2 D_us_801804CC[] = {
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x01FA,
      .facingLeft = 0,

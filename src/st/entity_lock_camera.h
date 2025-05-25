@@ -30,7 +30,7 @@ static u16 entityLockCameraTilemapProps[] = {
 
 extern u16 g_EInitLockCamera[];
 // params: Which camera lock config to use
-void EntityLockCamera(Entity* self) {
+void OVL_EXPORT(EntityLockCamera)(Entity* self) {
     u16 var_s0;
     u16 params;
     u16* tilemapProps;

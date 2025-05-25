@@ -35,6 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ matrix.version }}
+      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
+      FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
+      DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
@@ -83,8 +86,6 @@ jobs:
         run: make -j build
       - name: Check if they match
         run: make check
-      - name: progress dry run
-        run: .venv/bin/python3 tools/progress.py --dry-run --version ${{ matrix.version }}
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder
@@ -93,51 +94,11 @@ jobs:
         with:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
-
-  generate-progress-report:
-    strategy:
-      matrix:
-        version: ["us", "hd", "pspeu"]
-        include:
-          - dependency: us
-            version: us
-          - dependency: pspeu
-            version: hd
-          - dependency: pspeu
-            version: pspeu
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    env:
-      VERSION: ${{ matrix.version }}
-      FROGRESS_API_BASE_URL: ${{ secrets.FROGRESS_API_BASE_URL }}
-      FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
-      DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
-    steps:
-      - name: Clone main repository
-        uses: actions/checkout@v4
-        with:
-          submodules: false
-      - name: Install requirements
-        run: make update-dependencies
-      - name: Get dependencies
-        uses: actions/cache@v4
-        with:
-          path: 'disks/dependencies'
-          key: sotn-${{ matrix.dependency }}-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/* | tar -zxf -
-      - name: Extract dependencies
-        run: make extract_disk
-      - name: Split game data
-        run: make -j extract
-      - name: Obtain built binaries
-        uses: actions/download-artifact@v4
-        with:
-          name: build_${{ matrix.version }}
-          path: build/${{ matrix.version }}
-      - name: Generate and send progress report
+      - name: Report progress (dry run)
+        if: github.ref != 'refs/heads/master'
+        run: .venv/bin/python3 tools/progress.py --dry-run --version ${{ matrix.version }}
+      - name: Report progress (online)
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         run: .venv/bin/python3 tools/progress.py --version ${{ matrix.version }}
 
   generate-duplicates-report:
@@ -153,6 +114,8 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v4
         with:
@@ -194,7 +157,7 @@ jobs:
       - name: Generate duplicates report
         run: |
           make force_symbols
-          make -j extract
+          make build
           .venv/bin/python3 tools/function_finder/fix_matchings.py
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
@@ -223,6 +186,8 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v4
         with:
@@ -260,7 +225,7 @@ jobs:
             wait
       - name: Generate function report
         run: |
-            make clean && make -j extract
+            make clean && make build
             find asm -print
             .venv/bin/python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
       - name: Commit all reports

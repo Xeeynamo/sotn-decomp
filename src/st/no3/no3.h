@@ -101,15 +101,15 @@ typedef enum EntityIDs {
     /* 0x4D */ E_ZOMBIE_SPAWNER,
     /* 0x4E */ E_PUSH_ALUCARD,
     /* 0x4F */ E_FOREGROUND_TREE,
-    /* 0x50 */ E_ID_50,
+    /* 0x50 */ E_FOLIAGE_MAKER,
     /* 0x51 */ E_BACKGROUND_PINE_TREES,
-    /* 0x52 */ E_ID_52,
+    /* 0x52 */ E_BACKGROUND_PINE_MAKER,
     /* 0x53 */ E_CASTLE_DOOR_TRANSITION,
     /* 0x54 */ E_CASTLE_BRIDGE,
     /* 0x55 */ E_DIST_BG_TREES,
     /* 0x56 */ E_BACKGROUND_WALL,
     /* 0x57 */ E_CUTSCENE,
-    /* 0x58 */ E_ROOM_TRANSITION_2,
+    /* 0x58 */ E_DEATH_SCENE_MGR,
     /* 0x59 */ E_DEATH_STOLEN_ITEM,
     /* 0x5A */ E_DEATH,
     /* 0x5B */ E_DEATH_SCYTHE,
@@ -148,7 +148,7 @@ extern u16 g_EInitWaterSplash[];
 extern u16 D_80180B6C[];
 extern u16 g_EInitBat[];
 extern u16 D_80180BA8[];
-extern ObjInit2 D_80180BFC[];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
 extern u16 D_80180DD0[];
@@ -166,17 +166,14 @@ extern u16 D_801812A0[];
 extern u16 D_801812E2[];
 extern u16 D_8018131E[];
 extern s16 g_WaterXTbl[];
-extern Point16 D_801813DC[];
-extern Point16 D_80181468[];
+extern u16 D_801813DC[];
+extern u16 D_80181468[];
 extern u16 D_801814EC[];
 extern u16 D_801817F8[];
 extern u8 D_801819D0[];
 extern u8 D_801819DC[];
 extern s32 D_801819E8[];
 extern s32 D_801819EC[];
-extern s16 D_80181AD4[];
-extern s16 D_80181AE0[];
-extern Point16 D_80181AEC[];
 extern s16 D_801836BC[];
 extern u16 D_80180B9C[];
 
@@ -188,24 +185,6 @@ extern u16 D_8018304C[];
 extern Point16 D_80183054[];
 extern Point16 D_80183060[];
 
-// *** EntityDeath Animations *** //
-extern u8 D_80181B04[];
-extern u8 D_80181B28[];
-extern u8 D_80181B34[];
-extern u8 D_80181B58[];
-extern u8 D_80181B68[];
-extern u8 D_80181B70[];
-extern u8 D_80181B74[];
-extern u8 D_80181B84[];
-extern u8 D_80181B8C[];
-extern u8 D_80181B94[];
-extern u8 D_80181BB4[];
-extern u8 D_80181BC8[];
-extern u8 D_80181BE0[];
-
-extern u8 D_80181B40[];
-extern u8 D_80181B4C[];
-extern s16 D_801820C4[];
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
 extern u16 D_801823F4[];
@@ -301,13 +280,5 @@ extern s32 g_IsCutsceneDone;
 extern u16 D_801D7D60;
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
-extern s16 D_80181808[];
-
-extern u16 g_EntityCastleBridgePriorities[];
-extern u8 g_EntityCastleBridgeUVs[];
-extern s16 g_EntityCastleBridgeUVOffsets[];
-extern u8 g_EntityCastleBridgePages[];
-extern u16 g_EInitSpawner[];
-extern s16 D_80181870[];
 
 extern Dialogue g_Dialogue;

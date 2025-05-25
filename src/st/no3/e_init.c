@@ -16,8 +16,8 @@ void EntityHeartDrop(Entity* self);
 void EntityEnemyBlood(Entity* self);
 void EntityMessageBox(Entity* self);
 void EntityDummy(Entity* self);
-void EntityBackgroundBlock(Entity* self);
-void EntityLockCamera(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
+void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
@@ -79,15 +79,15 @@ void EntityZombie(Entity* self);
 void EntityZombieSpawner(Entity* self);
 void EntityPushAlucard(Entity* self);
 void EntityForegroundTree(Entity* self);
-void EntityUnkId50(Entity* self);
+void EntityFoliageMaker(Entity* self);
 void EntityBackgroundPineTrees(Entity* self);
-void EntityUnkId52(Entity* self);
+void EntityDistantTreeMaker(Entity* self);
 void EntityCastleDoorTransition(Entity* self);
 void EntityCastleBridge(Entity* self);
 void EntityDistantBackgroundTrees(Entity* self);
 void EntityBackgroundCastleWall(Entity* self);
 void NO3_EntityCutscene(Entity* self);
-void EntityRoomTransition2(Entity* self);
+void EntityDeathCutsceneManager(Entity* self);
 void EntityDeathStolenItem(Entity* self);
 void EntityDeath(Entity* self);
 void EntityDeathScythe(Entity* self);
@@ -116,8 +116,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy, // 0x10
-    EntityBackgroundBlock,
-    EntityLockCamera,
+    OVL_EXPORT(EntityBackgroundBlock),
+    OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -179,15 +179,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityZombieSpawner,
     EntityPushAlucard,
     EntityForegroundTree,
-    EntityUnkId50, // 0x50
+    EntityFoliageMaker, // 0x50
     EntityBackgroundPineTrees,
-    EntityUnkId52,
+    EntityDistantTreeMaker,
     EntityCastleDoorTransition,
     EntityCastleBridge,
     EntityDistantBackgroundTrees,
     EntityBackgroundCastleWall,
     NO3_EntityCutscene,
-    EntityRoomTransition2,
+    EntityDeathCutsceneManager,
     EntityDeathStolenItem,
     EntityDeath,
     EntityDeathScythe,

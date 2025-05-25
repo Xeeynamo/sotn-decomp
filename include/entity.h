@@ -780,10 +780,6 @@ typedef struct {
     /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
 
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_801BCC4C;
-
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
@@ -882,28 +878,20 @@ typedef struct {
 } ET_MermanWaterSplash;
 
 typedef struct {
-    /* 0x7C */ s32 playerVelocity;
+    /* 0x7C */ u32 playerVelocity;
 } ET_CastleDoorTransition;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
     s32 : 24;
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ u32 unk80;
 } ET_AlucardController;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_ForegroundTree;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x7E */ u16 unk7E;
     /* 0x80 */ s16 unk80;
 } ET_FadeToWhite;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_DeathStolenItems;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -2972,7 +2960,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 : 32;
     /* 0x80 */ Primitive* prim;
-    /* 0x84 */ u8 unk84;
+    /* 0x84 */ u8 unk84; // maybe not last block marker?
 } ET_DopplegangerBGLight;
 
 typedef struct {
@@ -3105,7 +3093,6 @@ typedef union { // offset=0x7C
     ET_ExplosionPuffOpaque opaquePuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
-    ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;
     ET_DeathSkySwirl deathSkySwirl;
@@ -3119,9 +3106,7 @@ typedef union { // offset=0x7C
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
     ET_AlucardController alucardController;
-    ET_ForegroundTree foregroundTree;
     ET_FadeToWhite fadeToWhite;
-    ET_DeathStolenItems deathStolenItems;
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;

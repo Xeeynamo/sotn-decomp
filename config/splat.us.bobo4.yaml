@@ -43,7 +43,7 @@ segments:
       # - [0x94, data, header] # pallet_def
       # - [0xF0, data, header] # layers
       # - [0x118, data, header] # graphics banks
-      # - [0x188, data, gen/e_laydef]
+      # - [0x188, data, e_laydef]
       - [0x32C, data, e_init]
       - [0x4BC, .data, st_debug]
       - [0x53C, .data, e_breakable]
@@ -59,7 +59,7 @@ segments:
       - [0xFA4, .data, e_misc]
       - [0x10C0, .data, e_particles]
       - [0x1140, .data, e_room_fg]
-      - [0x11CC, data, gen/rooms.c]
+      - [0x11CC, data, rooms]
       - [0x11E8, data, doppleganger]
       - [0x12E4, .data, dop_anim]
       - [0x1318, data]

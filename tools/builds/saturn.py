@@ -1,27 +1,27 @@
 # usage
-# python3 ./tools/saturn/build.py && ninja -j1
+# python3 ./tools/builds/build.py && ninja
 
 import ninja_syntax
 import os
 import shutil
 
 # write out current pwd to open it as a disk
-with open('./tools/saturn/.dosemurc', 'w') as f:
+with open('./tools/builds/.dosemurc', 'w') as f:
     f.write(f'$_hdimage = \'+0 {os.getcwd()} +1\'\n')
 
 # copy cygnus into a 8.3 folder
-if not os.path.exists('tools/saturn/GCCSH'):
-    shutil.copytree('bin/cygnus-2.7-96Q3-bin', 'tools/saturn/GCCSH')
+if not os.path.exists('tools/builds/GCCSH'):
+    shutil.copytree('bin/cygnus-2.7-96Q3-bin', 'tools/builds/GCCSH')
 
 ninja = ninja_syntax.Writer(open("build.ninja", "w"))
 
 ninja.rule('compile',
-           command='sh ./tools/saturn/dosemu_wrapper.sh $in $out $args $tmpdir',
+           command='sh ./tools/builds/dosemu_wrapper.sh $in $out $args $tmpdir',
            description='Building $out from $in')
 
 ninja.rule(
         'check',
-        command='sha1sum --check config/check.saturn.sha',
+        command='.venv/bin/python3 tools/builds/check.py config/check.saturn.sha',
         description='Checking that $in matches')
 
 ninja.rule('coff2elf',

@@ -1,6 +1,8 @@
 # Matches in src or any subdirectory
 !.gitignore
+.assets_build_done_*
 gen_*.c
 gen_*.h
 **/gen/*.c
 **/gen/*.h
+**/gen/*.s

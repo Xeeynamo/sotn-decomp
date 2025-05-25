@@ -13,4 +13,4 @@ in=$(echo "$1" | tr '/' '\\')
 out=$(echo "$2" | tr '/' '\\')
 
 # we need BUILD.BAT to define the path so GO32 works
-dosemu -quiet -dumb -f ./dosemurc -K . -E "TOOLS\SATURN\BUILD.BAT $in $out $3"
+dosemu -quiet -dumb -f ./dosemurc -K . -E "TOOLS\BUILDS\BUILD.BAT $in $out $3"

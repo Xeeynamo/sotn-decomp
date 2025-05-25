@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
-#include "sfx.h"
 
-void EntityBackgroundBlock(Entity* self) {
-    ObjInit2* objInit = &D_80180BFC[self->params];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
+extern u16 g_EInitCommon[];
 
-    if (self->step == 0) {
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
@@ -14,11 +17,10 @@ void EntityBackgroundBlock(Entity* self) {
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->flags != 0) {
+        if (objInit->flags) {
             self->flags = objInit->flags;
         }
     }
-
     AnimateEntity(objInit->animFrames, self);
 }
 

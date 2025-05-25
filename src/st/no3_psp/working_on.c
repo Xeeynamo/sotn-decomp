@@ -4,23 +4,9 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityRoomTransition2);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathStolenItem);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeath);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathScythe);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeathScytheShadow);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityTilemapShufflerUnused);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityShuttingWindow);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBreakable);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityBackgroundBlock);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityBackgroundBlock);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId16);
 
@@ -44,7 +30,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09243748);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityCutscene);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityLockCamera);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityLockCamera);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09245A58);
 

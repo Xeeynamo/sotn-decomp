@@ -113,20 +113,20 @@ segments:
       - [0x109E8, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10B00, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10BF8, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
-      - [0x11140, raw, vh_0] # aPbav
-      - [0x14140, raw, vh_1] # aPbav_0
-      - [0x16140, raw, vh_2] # aPbav_2
-      - [0x18140, raw, vh_3] # aPbav_1
-      - [0x1A140, data] # aPqes_1
-      - [0x1D140, .data, 91EBC] # g_CdVolumeTable
-      # - [0x1D260, .data, 91EBC] # g_VolumeTable
-      # - [0x1D284, .data, 91EBC] # g_DebugEnabled
-      # - [0x1D288, .data, 91EBC] # D_800BD1C4
-      # - [0x1D28C, .data, 91EBC] # g_VabAddrs
-      - [0x1D2A4, .data, d_sfx] # g_SeqInfo
-      # - [0x1D2E8, .data, d_sfx] # g_XaMusicConfigs
-      # - [0x1F5F8, .data, d_sfx] # g_SfxData
-      # - [0x20A20, .data, d_sfx] # g_SfxScripts
+      - [0x11140, .data, sound] # aPbav
+      # - [0x14140, .data, sound] # aPbav_0
+      # - [0x16140, .data, sound] # aPbav_2
+      # - [0x18140, .data, sound] # aPbav_1
+      # - [0x1A140, .data, sound] # aPqes_1
+      # - [0x1D140, .data, sound] # g_CdVolumeTable
+      # - [0x1D260, .data, sound] # g_VolumeTable
+      # - [0x1D284, .data, sound] # g_DebugEnabled
+      # - [0x1D288, .data, sound] # D_800BD1C4
+      # - [0x1D28C, .data, sound] # g_VabAddrs
+      - [0x1D2A4, .data, sound_data] # g_SeqInfo
+      # - [0x1D2E8, .data, sound_data] # g_XaMusicConfigs
+      # - [0x1F5F8, .data, sound_data] # g_SfxData
+      # - [0x20A20, .data, sound_data] # g_SfxScripts
       - [0x22220, cmp, D_800C217C]
       - [0x22854, cmp, D_800C27B0]
       - [0x23604, cmp, D_800C3560]
@@ -167,7 +167,7 @@ segments:
       - [0x41DAC, .rodata, 8A0A4]
       - [0x41DCC, .rodata, 8D3E8]
       - [0x41E4C, .rodata, 8D3E8]
-      - [0x41F50, .rodata, 91EBC]
+      - [0x41F50, .rodata, sound]
       - [0x422B4, c, 42398]
       - [0x44890, c, game_handlers]
       - [0x48250, c, 47BB8]
@@ -207,7 +207,7 @@ segments:
       - [0x8BB50, c, 8BEF8]
       - [0x8C28C, c, 8C600]
       - [0x8D050, c, 8D3E8]
-      - [0x91A98, c, 91EBC]
+      - [0x91A98, c, sound]
       - [0x95E88, .bss, bss]
   - name: dra_data
     type: data
