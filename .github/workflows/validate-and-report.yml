@@ -114,6 +114,8 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v4
         with:
@@ -184,6 +186,8 @@ jobs:
     env:
       VERSION: ${{ matrix.version }}
     steps:
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
         uses: actions/checkout@v4
         with:
