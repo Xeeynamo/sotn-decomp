@@ -162,6 +162,7 @@ segments:
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c, st_debug]
+      - [0x378A8, c, e_lock_camera]
       - [0x37A64, c, e_breakable]
       - [0x37B98, c, entrance_stage_entities]
       - [0x38254, c, e_shutting_window]
