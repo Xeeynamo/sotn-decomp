@@ -465,6 +465,9 @@ $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	$(GO) build -C tools/sotn-assets -o ../../$@ . 
 
+build/$(VERSION)/src/%.o: src/%
+	ninja $@
+
 ##@
 ##@ Disc Dumping Targets
 ##@
