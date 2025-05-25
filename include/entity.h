@@ -1705,6 +1705,13 @@ typedef struct {
 } ET_Maria092BEAB0;
 
 typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 crashId;
+    s16 timer;
+} ET_MariaCrashSummon;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s32 jiggler;
     /* 0x84 */ s8 collision;
@@ -3143,6 +3150,7 @@ typedef union { // offset=0x7C
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
     ET_Maria092BEAB0 maria092BEAB0;
+    ET_MariaCrashSummon mariaCrashSummon;
     ET_CavernDoor cavernDoor;
     ET_UnkSelEnts unkSelEnts;
     ET_ZombieSpawner zombieSpawner;

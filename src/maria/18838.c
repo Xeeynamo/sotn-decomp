@@ -280,9 +280,80 @@ void func_pspeu_092BEB40(Entity* self) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BF8B8);
+s32 func_pspeu_092BF8B8(s32 crashId) {
+    Entity* entity;
 
-INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BF950);
+    entity = (Entity*)MarGetFreeEntity(8, 16);
+    if (entity == NULL) {
+        g_Player.unk5C = 1;
+        return -1;
+    }
+    DestroyEntity(entity);
+    entity->entityId = E_UNK_6;
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
+    entity->ext.mariaCrashSummon.crashId = crashId;
+    return 0;
+}
+
+void func_pspeu_092BF950(Entity* self) {
+    s32 x;
+    s32 y;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            g_Player.unk5C = 1;
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->unk5A = 0x1C;
+        self->zPriority = 0x1C0;
+        func_pspeu_092C0138(self->ext.mariaCrashSummon.crashId);
+        MarSetInvincibilityFrames(0, 999);
+        self->ext.mariaCrashSummon.timer = 0x200;
+        self->step = 1;
+        break;
+    case 1:
+        self->ext.mariaCrashSummon.timer -= 0x10;
+        if (self->ext.mariaCrashSummon.timer > 0) {
+            prim = &g_PrimBuf[self->primIndex];
+            prim->tpage = 7;
+            prim->clut = 0x11E;
+            prim->priority = 0x1C0;
+            x = (self->ext.mariaCrashSummon.timer * 128) / 256;
+            y = (self->ext.mariaCrashSummon.timer * 112) / 256;
+            prim->x0 = self->posX.i.hi - x / 2;
+            prim->y0 = self->posY.i.hi - y / 2;
+            prim->x1 = x + (self->posX.i.hi - x / 2);
+            prim->y1 = self->posY.i.hi - y / 2;
+            prim->x2 = self->posX.i.hi - x / 2;
+            prim->y2 = y + (self->posY.i.hi - y / 2);
+            prim->x3 = x + (self->posX.i.hi - x / 2);
+            prim->y3 = y + (self->posY.i.hi - y / 2);
+            prim->u0 = 0;
+            prim->v0 = 0;
+            prim->u1 = 0x7F;
+            prim->v1 = 0;
+            prim->u2 = 0;
+            prim->v2 = 0x70;
+            prim->u3 = 0x7F;
+            prim->v3 = 0x70;
+            prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
+            return;
+        }
+        self->step = 2;
+        break;
+    case 2:
+        g_Player.timers[PL_T_INVINCIBLE_SCENE] = 0;
+        g_Player.unk5C = 1;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BFD30);
 
