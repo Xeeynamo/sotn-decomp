@@ -20,5 +20,3 @@ void EntityUnkId16(Entity* self) {
         break;
     }
 }
-
-#include "e_background_lightning.h"
