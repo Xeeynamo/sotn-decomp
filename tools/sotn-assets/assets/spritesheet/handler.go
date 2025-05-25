@@ -215,7 +215,11 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	sbHeader.WriteString("};\n")
 
-	f, err := os.Create(sourcePath(e.SrcDir, e.Name))
+	dstFile := sourcePath(e.SrcDir, e.Name)
+	if err := os.MkdirAll(filepath.Dir(dstFile), 0755); err != nil {
+		return fmt.Errorf("failed to create directory: %w", err)
+	}
+	f, err := os.Create(dstFile)
 	if err != nil {
 		return err
 	}
