@@ -37,8 +37,8 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4228);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4520);
 
-extern s16 D_us_801811D6;  // Final water level's surface height
-extern s16 D_us_801812B8;  // Final water level's background height
+extern s16 D_us_801811D6;  // water surface sprite height
+extern s16 D_us_801812B8;  // water background sprite height
 extern u8 D_us_80181588[]; // Water flow animation that needs to be blocked by
                            // the crate
 
