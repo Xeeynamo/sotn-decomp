@@ -43,7 +43,7 @@ segments:
       - [0x220, .data, gen/e_laydef] # layout entries header
       - [0x3C8, data]
       - [0x580, .data, st_debug]
-      - [0x610, data]
+      - [0x600, data]
       - [0x630, data]
       - [0x640, data]
       - [0x650, data]
