@@ -42,7 +42,9 @@ segments:
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xAAC, data]
-      - [0xDC0, .data, e_background_block]
+      - [0xBB4, .data, e_background_block]
+      - [0xDA0, data]
+      - [0xDC0, .data, e_lock_camera]
       - [0xE40, .data, e_breakable]
       - [0xEA0, .data, entrance_stage_entities]
       - [0x1044, .data, e_castle_door]
