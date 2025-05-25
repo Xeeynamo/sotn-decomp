@@ -37,7 +37,81 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4228);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4520);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4738);
+extern s16 D_us_801811D6;  // Final water level's surface height
+extern s16 D_us_801812B8;  // Final water level's background height
+extern u8 D_us_80181588[]; // Water flow animation that needs to be blocked by
+                           // the crate
+
+// Does something with the water level that kills the 4 spear guards in the
+// alcove
+void func_us_801C4738(Entity* self) {
+    Entity* newEnt;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->palette = 68;
+        self->drawFlags = FLAG_DRAW_UNK10;
+        self->posX.i.hi = 0x711 - g_Tilemap.scrollX.i.hi;
+        if (g_CastleFlags[NO4_WATER_BLOCKED] != 0) {
+            self->ext.et_waterAlcove.waterHeight = 64;
+        } else {
+            newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEnt != NULL) {
+                CreateEntityFromCurrentEntity(39, newEnt);
+                newEnt->params = 1;
+            }
+            self->ext.et_waterAlcove.entity7E = newEnt;
+
+            newEnt = AllocEntity(newEnt, &g_Entities[256]);
+            if (newEnt != NULL) {
+                CreateEntityFromCurrentEntity(38, newEnt);
+                newEnt->params = 1;
+            }
+            self->ext.et_waterAlcove.entity82 = newEnt;
+            self->ext.et_waterAlcove.waterHeight = 0;
+        }
+    }
+
+    // Animates the small flow of water that needs to be blocked by the crate
+    AnimateEntity(D_us_80181588, self);
+
+    if (g_CastleFlags[NO4_WATER_BLOCKED] != 0) {
+        if (self->ext.et_waterAlcove.waterHeight < 64) {
+            if (!(self->ext.et_waterAlcove.unk90 & 0x7)) {
+                if (self->ext.et_waterAlcove.waterHeight == 0) {
+                    g_api_PlaySfx(SFX_WATER_BUBBLE);
+                }
+                self->ext.et_waterAlcove.waterHeight++;
+                if (self->ext.et_waterAlcove.waterHeight == 20) {
+                    g_CastleFlags[NO4_WATER_BLOCKED]++;
+                }
+                if (self->ext.et_waterAlcove.waterHeight == 52) {
+                    g_CastleFlags[NO4_WATER_BLOCKED]++;
+                }
+            }
+            self->ext.et_waterAlcove.unk90++;
+        }
+
+        if (self->ext.et_waterAlcove.entity7E != 0) {
+            DestroyEntity(self->ext.et_waterAlcove.entity7E);
+            self->ext.et_waterAlcove.entity7E = NULL;
+        }
+
+        if (self->ext.et_waterAlcove.entity82 != 0) {
+            DestroyEntity(self->ext.et_waterAlcove.entity82);
+            self->ext.et_waterAlcove.entity82 = NULL;
+        }
+        self->animCurFrame = 0;
+    }
+
+    D_us_801812B8 = 177 - self->ext.et_waterAlcove.waterHeight;
+    D_us_801811D6 = 176 - self->ext.et_waterAlcove.waterHeight;
+
+    if (self->ext.et_waterAlcove.waterHeight >= 64) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4980);
 

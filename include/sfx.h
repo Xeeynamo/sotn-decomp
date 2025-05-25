@@ -290,6 +290,7 @@ enum SfxModes {
 // STAGE NO4
 #define SFX_TOAD_CROAK 0x71A
 #define SFX_FROG_CROAK 0x71B
+#define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_BO4_UNK_7D7 0x7D7
