@@ -25,4 +25,3 @@ static u8 g_eBreakableDrawModes[] = {
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 #include "../e_breakable.h"
-
