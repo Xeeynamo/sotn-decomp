@@ -24,7 +24,6 @@ void EntityShuttingWindow(Entity* self) {
     SVEC4* svec4;
     VECTOR vec;
     MATRIX mtx;
-
     s32 i;
 
     switch (self->step) {
