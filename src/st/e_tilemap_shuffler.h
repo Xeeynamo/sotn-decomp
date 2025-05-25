@@ -2,7 +2,7 @@
 // Appears totally unused. Never created by any entity creation call,
 // doesn't show up in the e_layout either.
 void EntityTilemapShufflerUnused(Entity* self) {
-    u16 temp;
+    u32 temp; // u32 even though the values we're shuffling are all u16
 
     switch (self->step) {
     case 0:
