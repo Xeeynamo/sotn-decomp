@@ -205,7 +205,7 @@ void MarEntityBladeDash(Entity* self);
 void func_801623E0(Entity* self);
 void func_80162604(Entity* self);
 void func_80160F0C(Entity* self);
-void func_pspeu_092B91A8(Entity* self);
+void MarEntityNotImplemented4(Entity* self);
 void MarEntityPlayerBlinkWhite(Entity* self);
 void MarEntityShrinkingPowerUpRing(Entity* self);
 void func_pspeu_092A7950(Entity* self);
@@ -249,7 +249,7 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityDummy,
     func_80160F0C,
-    func_pspeu_092B91A8,
+    MarEntityNotImplemented4,
     MarEntityPlayerBlinkWhite,
     MarEntityDummy,
     MarEntityDummy,
@@ -1288,7 +1288,7 @@ void func_80162604(Entity* self) {
     prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B91A8);
+void MarEntityNotImplemented4(Entity* self) {}
 
 // not to be confused with MarSetSubweaponParams
 void MarSetWeaponParams(Entity* entity, s32 attack, s32 attackElement,

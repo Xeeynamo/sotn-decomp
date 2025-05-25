@@ -124,7 +124,7 @@ enum MarEntities {
     E_DUMMY_27,               // MarEntityDummy
     E_DUMMY_28,               // MarEntityDummy
     E_80160F0C,               // func_80160F0C
-    E_UNK_30,                 // func_pspeu_092B91A8
+    E_NOT_IMPLEMENTED_4,      // MarEntityNotImplemented4
     E_BLINK_WHITE,            // MarEntityPlayerBlinkWhite
     E_DUMMY_32,               // MarEntityDummy
     E_DUMMY_33,               // MarEntityDummy
@@ -201,7 +201,7 @@ enum MarBlueprints {
     _BP_MARIA_POWERS_INVOKED,
     _BP_31,
     // 0x20
-    _BP_NOT_IMPLEMENTED_4,
+    BP_NOT_IMPLEMENTED_4,
     BP_MAR_BLINK,
     _BP_CRASH_CROSS_PARTICLES,
     _BP_35,
