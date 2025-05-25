@@ -88,7 +88,7 @@ enum MarTimers {
     PL_T_10,
     PL_T_RUN,
     PL_T_12,
-    PL_T_INVINCIBLE_SCENE, // "dying" in the prologue
+    PL_T_INVINCIBLE_SCENE,
     PL_T_INVINCIBLE,
     PL_T_AFTERIMAGE_DISABLE,
 };

@@ -170,8 +170,8 @@ void MarLoadPalettes(void) {
     LoadPatchedPalette(PAL_CRASH, crash_cat_pal);
 }
 
-void func_pspeu_092C0138(s32 arg0) {
-    switch (arg0) {
+void func_pspeu_092C0138(s32 crashId) {
+    switch (crashId) {
     case 1:
         crash_img[3] = (u_long*)crash_cardinal_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_cardinal_pal);
