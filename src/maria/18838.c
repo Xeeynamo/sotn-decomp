@@ -386,7 +386,26 @@ void func_pspeu_092BFD30(Entity* self) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BFEB0);
+s32 func_pspeu_092BFEB0(Entity* parent) {
+    Entity* entity;
+    s32 amount;
+
+    amount = g_Player.unk24 / 20;
+    if (amount <= 0) {
+        amount = 1;
+    }
+    while (amount-- > 0) {
+        entity = (Entity*)MarGetFreeEntity(8, 0x10);
+        if (entity == NULL) {
+            return -1;
+        }
+        DestroyEntity(entity);
+        entity->entityId = 0x12;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+    }
+    return 0;
+}
 
 void func_pspeu_092BFF78(Entity* self) {
     if (g_Player.unk28) {

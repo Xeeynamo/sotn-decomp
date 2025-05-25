@@ -1830,7 +1830,7 @@ typedef struct {
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 warp_flag;
     /* 80072F40 */ s32 unk20;
-    /* 80072F44 */ s32 unk24;
+    /* 80072F44 */ u32 unk24; // exclusive to maria?
     /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
     /* 80072F50 */ s32 unk30;
