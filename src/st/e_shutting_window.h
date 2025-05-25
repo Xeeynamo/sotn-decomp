@@ -78,8 +78,8 @@ void EntityShuttingWindow(Entity* self) {
     SetGeomScreen(0x400);
     SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
 
-    for (prim = self->ext.shuttingWindow.prim, svec4 = windowVectors, i = 0; 
-        i < 2; svec4++, prim = prim->next, i++) {
+    for (prim = self->ext.shuttingWindow.prim, svec4 = windowVectors, i = 0;
+         i < 2; svec4++, prim = prim->next, i++) {
         svec.vx = 0;
         if (i != 0) {
             svec.vy = self->ext.shuttingWindow.unk80;
