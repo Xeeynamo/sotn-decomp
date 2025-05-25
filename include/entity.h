@@ -1702,7 +1702,7 @@ typedef struct {
     s32 : 32;
     s16 unk80;
     s16 unk82;
-} ET_Maria092BEB40;
+} ET_Maria092BEAB0;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -2117,6 +2117,23 @@ typedef struct {
     s32 : 32;
     s16 unkB0;
 } ET_MariaOwl;
+
+typedef struct {
+    u8 digits[4];
+    s16 value;
+    s16 kind;
+    s16 nDigits;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 width;
+    s16 height;
+    s16 timer;
+    s16 x;
+    s16 direction;
+    s16 distance;
+    s16 angle;
+} ET_Maria092BEB40;
 
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
@@ -3125,7 +3142,7 @@ typedef union { // offset=0x7C
     ET_GuardText guardText;
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
-    ET_Maria092BEB40 maria092BEB40;
+    ET_Maria092BEAB0 maria092BEAB0;
     ET_CavernDoor cavernDoor;
     ET_UnkSelEnts unkSelEnts;
     ET_ZombieSpawner zombieSpawner;
@@ -3176,6 +3193,7 @@ typedef union { // offset=0x7C
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
     ET_MariaOwl mariaOwl;
+    ET_Maria092BEB40 maria092BEB40;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
