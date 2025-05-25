@@ -895,10 +895,6 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
-} ET_DeathStolenItems;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
     /* 0x7E */ char pad_7E[0x2];
     /* 0x80 */ s16 posX;
     /* 0x82 */ s16 posY;
@@ -3111,7 +3107,6 @@ typedef union { // offset=0x7C
     ET_CastleDoorTransition castleDoorTransition;
     ET_AlucardController alucardController;
     ET_FadeToWhite fadeToWhite;
-    ET_DeathStolenItems deathStolenItems;
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;

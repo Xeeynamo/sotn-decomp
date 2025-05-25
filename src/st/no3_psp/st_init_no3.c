@@ -89,7 +89,7 @@ extern s32 E_ID(CASTLE_BRIDGE);
 extern s32 E_ID(DIST_BG_TREES);
 extern s32 E_ID(BACKGROUND_WALL);
 extern s32 E_ID(CUTSCENE);
-extern s32 E_ID(ROOM_TRANSITION_2);
+extern s32 E_ID(DEATH_SCENE_MGR);
 extern s32 E_ID(DEATH_STOLEN_ITEM);
 extern s32 E_ID(DEATH);
 extern s32 E_ID(DEATH_SCYTHE);
@@ -178,7 +178,7 @@ void InitEntityIds(void) {
     E_ID(DIST_BG_TREES) = 0x55;
     E_ID(BACKGROUND_WALL) = 0x56;
     E_ID(CUTSCENE) = 0x57;
-    E_ID(ROOM_TRANSITION_2) = 0x58;
+    E_ID(DEATH_SCENE_MGR) = 0x58;
     E_ID(DEATH_STOLEN_ITEM) = 0x59;
     E_ID(DEATH) = 0x5A;
     E_ID(DEATH_SCYTHE) = 0x5B;
