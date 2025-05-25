@@ -89,7 +89,18 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", MarSetSubweaponParams);
+void MarSetSubweaponParams(Entity* entity) {
+    SubweaponDef* subwpn = &subweapons_def[entity->ext.subweapon.subweaponId];
+    entity->attack = subwpn->attack;
+    entity->attackElement = subwpn->attackElement;
+    entity->hitboxState = subwpn->hitboxState + 0;
+    entity->nFramesInvincibility = subwpn->nFramesInvincibility;
+    entity->stunFrames = subwpn->stunFrames;
+    entity->hitEffect = subwpn->hitEffect;
+    entity->entityRoomIndex = subwpn->entityRoomIndex;
+    entity->attack = g_api.CalcDealDamageMaria(entity->attack);
+    func_8015F9F0(entity);
+}
 
 s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
@@ -194,7 +205,7 @@ void MarEntityBladeDash(Entity* self);
 void func_801623E0(Entity* self);
 void func_80162604(Entity* self);
 void func_80160F0C(Entity* self);
-void func_pspeu_092B91A8(Entity* self);
+void MarEntityNotImplemented4(Entity* self);
 void MarEntityPlayerBlinkWhite(Entity* self);
 void MarEntityShrinkingPowerUpRing(Entity* self);
 void func_pspeu_092A7950(Entity* self);
@@ -238,7 +249,7 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityDummy,
     func_80160F0C,
-    func_pspeu_092B91A8,
+    MarEntityNotImplemented4,
     MarEntityPlayerBlinkWhite,
     MarEntityDummy,
     MarEntityDummy,
@@ -384,7 +395,141 @@ static u8 entity_ranges[NUM_BLUEPRINT_KIND][2] = {
     {0x30, 0x30}, // B_CUTSCENE_MARIA
     {0x10, 0x2F}, // B_WEAPON_CHILDREN
 };
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", MarEntityFactory);
+void MarEntityFactory(Entity* self) {
+    Entity* newEntity;
+    s16 nPerCycle;
+    s16 i;
+    s16 startIndex;
+    s16 endIndex;
+    u8* data;
+
+    if (self->step == 0) {
+        data = (u8*)&blueprints[self->params];
+        self->ext.factory.newEntityId = *data++;
+        self->ext.factory.amount = *data++;
+        self->ext.factory.nPerCycle = *data & 0x3F;
+        self->ext.factory.isNonCritical = (s16)(*data >> 7) & 1;
+        self->ext.factory.incParamsKind = (s16)(*data++ >> 6) & 1;
+        self->ext.factory.tCycle = *data++;
+        self->ext.factory.kind = *data & 0x7;
+        self->ext.factory.origin = (s16)(*data++ >> 3) & 0x1F;
+        self->ext.factory.delay = *data;
+        self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->step++;
+        switch (self->ext.factory.origin) {
+        case B_ORIGIN_DEFAULT:
+            self->flags |= FLAG_POS_CAMERA_LOCKED;
+            break;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING:
+            self->flags |= FLAG_UNK_20000;
+        case B_ORIGIN_FOLLOW_PLAYER:
+            // case B_ORIGIN_SUBWEAPON_CRASH_PARTICLE: // missing on Maria
+            // compared to Richter
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            break;
+        case B_ORIGIN_FOLLOW_PARENT_ENTITY:
+            self->flags |= FLAG_POS_PLAYER_LOCKED;
+            self->posX.val = self->ext.factory.parent->posX.val;
+            self->posY.val = self->ext.factory.parent->posY.val;
+            break;
+        }
+    } else {
+        switch (self->ext.factory.origin) {
+        case B_ORIGIN_DEFAULT:
+            break;
+        case B_ORIGIN_SUBWEAPON_CRASH_PARTICLE:
+        case B_ORIGIN_FOLLOW_PLAYER:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            break;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_RUNNING:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            self->entityId = 0;
+            return;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            if (PLAYER.step == PL_S_HIT) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        case B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT:
+            self->posX.val = PLAYER.posX.val;
+            self->posY.val = PLAYER.posY.val;
+            if (PLAYER.step != PL_S_HIT) {
+                self->entityId = 0;
+                return;
+            }
+            break;
+        case B_ORIGIN_FOLLOW_PARENT_ENTITY:
+            self->posX.val = self->ext.factory.parent->posX.val;
+            self->posY.val = self->ext.factory.parent->posY.val;
+            break;
+        }
+    }
+    if (self->ext.factory.delay) {
+        if (--self->ext.factory.delay) {
+            return;
+        }
+        self->ext.factory.delay = self->ext.factory.tCycle;
+    }
+    nPerCycle = self->ext.factory.nPerCycle;
+    for (i = 0; i < nPerCycle; i++) {
+        data = entity_ranges[0];
+        data += self->ext.factory.kind * 2;
+        startIndex = *data++;
+        endIndex = *data;
+        if (self->ext.factory.kind == B_DECORATION) {
+            newEntity = MarGetFreeEntityReverse(startIndex, endIndex + 1);
+        } else if (self->ext.factory.kind == B_WHIP) {
+            newEntity = &g_Entities[31];
+        } else if (self->ext.factory.kind == B_CUTSCENE_MARIA) {
+            newEntity = &g_Entities[48];
+        } else {
+            newEntity = MarGetFreeEntity(startIndex, endIndex + 1);
+        }
+        if (newEntity == NULL) {
+            if (self->ext.factory.isNonCritical == 1) {
+                self->entityId = 0;
+            } else {
+                self->ext.factory.delay = self->ext.factory.tCycle;
+            }
+            return;
+        }
+        DestroyEntity(newEntity);
+        newEntity->entityId =
+            self->ext.factory.newEntityId + self->ext.factory.entityIdMod;
+        newEntity->params = self->ext.factory.paramsBase;
+        // The child  (newEntity) is not an ent factory, but because the
+        // factory creates many entities, we can't pick a particular extension.
+        // But we're not allowed to use generic, so i'll just reuse entFactory.
+        newEntity->ext.factory.parent = self->ext.factory.parent;
+        newEntity->posX.val = self->posX.val;
+        newEntity->posY.val = self->posY.val;
+        newEntity->facingLeft = self->facingLeft;
+        newEntity->zPriority = self->zPriority;
+        if (self->flags & FLAG_UNK_10000) {
+            newEntity->flags |= FLAG_UNK_10000;
+        }
+        if (self->ext.factory.incParamsKind) {
+            newEntity->params += self->ext.factory.spawnIndex;
+        } else {
+            newEntity->params += i;
+        }
+        self->ext.factory.spawnIndex++;
+        if (self->ext.factory.spawnIndex == self->ext.factory.amount) {
+            self->entityId = 0;
+            return;
+        }
+    }
+    self->ext.factory.delay = self->ext.factory.tCycle;
+}
 
 void MarEntitySlideKick(Entity* entity) {
     if (PLAYER.step != PL_S_SLIDE) {
@@ -1143,7 +1288,7 @@ void func_80162604(Entity* self) {
     prim->y3 = self->posY.i.hi + self->ext.circleExpand.height;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", func_pspeu_092B91A8);
+void MarEntityNotImplemented4(Entity* self) {}
 
 // not to be confused with MarSetSubweaponParams
 void MarSetWeaponParams(Entity* entity, s32 attack, s32 attackElement,
