@@ -699,7 +699,7 @@
 | dra       | func_800E6250                            |       58 |          9 |        |                                 |       |
 | dra       | func_800F087C                            |       58 |         10 |        |                                 |       |
 | dra       | SetVolume22_23                           |       59 |          3 |        |                                 |       |
-| maria_psp | MarSetSubweaponParams                    |       59 |          3 |        |                                 |       |
+| maria_psp | MarSetSubweaponParams                    |       59 |          3 |        | https://decomp.me/scratch/jDtfS | 0.998 |
 | st0       | ReplaceBreakableWithItemDrop             |       59 |          4 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | maria_psp | func_pspeu_092BFEB0                      |       59 |          8 |        |                                 |       |
 | dra       | DoGravityJump                            |       59 |         10 |        |                                 |       |
@@ -1687,7 +1687,7 @@
 | no4       | func_pspeu_0923B378                      |      485 |         30 |        |                                 |       |
 | maria     | MarEntitySmokePuff                       |      487 |         42 |        |                                 |       |
 | ric       | RicEntitySmokePuff                       |      487 |         42 |        | https://decomp.me/scratch/zTa6L | 0.995 |
-| maria_psp | MarEntityFactory                         |      489 |         37 | Yes    |                                 |       |
+| maria_psp | MarEntityFactory                         |      489 |         37 | Yes    | https://decomp.me/scratch/37DOG | 0.998 |
 | ric       | RicEntitySubwpnBible                     |      490 |         41 |        | https://decomp.me/scratch/DjAnf | 0.998 |
 | dra       | func_800F99B8                            |      493 |         37 |        |                                 |       |
 | chi       | EntityCerberusGateDebug                  |      493 |         50 | Yes    |                                 |       |
@@ -1853,7 +1853,7 @@
 | maria     | MarEntityShrinkingPowerUpRing            |      931 |         62 |        |                                 |       |
 | ric       | RicEntityShrinkingPowerUpRing            |      931 |         62 |        | https://decomp.me/scratch/O6Eko | 0.999 |
 | dra       | DrawHudSubweapon                         |      934 |         73 |        |                                 |       |
-| maria_psp | func_pspeu_092BEB40                      |      944 |         70 | Yes    |                                 |       |
+| maria_psp | func_pspeu_092BEB40                      |      944 |         70 | Yes    | https://decomp.me/scratch/ADRXc | 0.97  |
 |           | UpdateBatBlueTrailEntities               |      963 |         44 |        |                                 |       |
 | lib       | func_psp_09239650                        |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
 | chi       | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
