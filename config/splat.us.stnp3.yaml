@@ -168,6 +168,7 @@ segments:
       - [0x3246C, c, st_debug]
       - [0x326FC, c, e_breakable]
       - [0x32830, c, entrance_stage_entities]
+      - [0x32C20, c, e_shutting_window]
       - [0x32F30, c, e_castle_door]
       - [0x332A8, c, e_background_bushes_trees]
       - [0x339CC, c, e_transparent_water]
