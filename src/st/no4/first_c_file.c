@@ -58,7 +58,7 @@ void func_us_801C4738(Entity* self) {
         } else {
             newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(39, newEnt);
+                CreateEntityFromCurrentEntity(E_ID_27, newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity7E = newEnt;
@@ -118,7 +118,7 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4980);
 void func_us_801C4BD8(Entity* self) {
     Tilemap* tmap;
     s16* dataPtr;
-    s32 offsetX;
+    s32 volume;
 
     if (self->step == 0) {
         InitializeEntity(g_EInitInteractable);
@@ -128,29 +128,29 @@ void func_us_801C4BD8(Entity* self) {
     tmap = &g_Tilemap;
     dataPtr = &D_us_8018159C[self->params * 4];
 
-    offsetX = (PLAYER.posX.i.hi + tmap->scrollX.i.hi - *dataPtr++);
-    offsetX = (offsetX * *dataPtr++) / 4096;
-    offsetX += *dataPtr++;
+    volume = PLAYER.posX.i.hi + tmap->scrollX.i.hi - *dataPtr++;
+    volume = (volume * *dataPtr++) / 4096;
+    volume += *dataPtr++;
 
-    if (offsetX < 0) {
-        offsetX = 0;
-    } else if (offsetX >= 0x80) {
-        offsetX = 0x7F;
+    if (volume < 0) {
+        volume = 0;
+    } else if (volume >= 128) {
+        volume = 127;
     }
 
-    if (offsetX == 0) {
+    if (volume == 0) {
         if (D_us_80181108 != 0) {
             D_us_80181108 = 0;
-            g_api_PlaySfx(0xA6);
+            g_api.PlaySfx(SET_UNK_A6);
             return;
         }
     }
     if (D_us_80181108 != 0) {
-        g_api_func_80134678(offsetX, *dataPtr++);
+        g_api.SetVolumeCommand22_23(volume, *dataPtr++);
         return;
     }
 
-    g_api_PlaySfxVolPan(0x797, offsetX, *dataPtr++);
+    g_api.PlaySfxVolPan(SFX_UNK_797, volume, *dataPtr++);
     D_us_80181108 = 1;
 }
 
@@ -272,8 +272,8 @@ void func_us_801C5628(Entity* self) {
     if ((self->step == 2) && (newEnt->posX.i.hi >= 129)) {
         g_api.PlaySfxVolPan(SFX_WALL_DEBRIS_A, 127, 8);
         newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEnt != 0) {
-            CreateEntityFromCurrentEntity(14, newEnt);
+        if (newEnt != NULL) {
+            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, newEnt);
             newEnt->posX.i.hi = 128;
             newEnt->posY.i.hi = 176;
             newEnt->ext.prim = &D_us_80181644;
@@ -413,7 +413,7 @@ void func_us_801C801C(Entity* self) {
             } else {
                 newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(24, newEnt);
+                    CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEnt);
                     newEnt->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     newEnt->posX.i.hi = (s16)(newEnt->posX.i.hi - 16) +
                                         (self->ext.et_801C801C.unk7E * 8);

@@ -60,6 +60,7 @@ enum SfxModes {
 #define SET_UNK_90 0x90
 #define SET_RELEASE_RATE_HIGH_20_21 0xa1
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
+#define SET_UNK_A6 0xA6
 #define SET_RELEASE_RATE_LOW_22_23 0xa7
 #define SET_KEY_ON_20_21 0xa4
 #define SET_KEY_ON_22_23 0xa8
@@ -630,6 +631,7 @@ enum Sfx {
     SFX_WARG_GROWL,
     SFX_GHOST_ENEMY_HOWL = 1849,
     SFX_CTULHU_LAUGH = 1880,
+    SFX_UNK_797 = 1943,
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
