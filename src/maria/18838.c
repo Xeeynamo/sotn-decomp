@@ -355,7 +355,36 @@ void func_pspeu_092BF950(Entity* self) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BFD30);
+void func_pspeu_092BFD30(Entity* self) {
+    if (PLAYER.step_s != 0x70) {
+        DestroyEntity(self);
+        return;
+    }
+    self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
+    self->facingLeft = PLAYER.facingLeft;
+    self->posY.i.hi = PLAYER.posY.i.hi;
+    self->posX.i.hi = PLAYER.posX.i.hi;
+    g_Player.unk44 &= ~0x80;
+    if (self->step == 0) {
+        self->attack = 30;
+        self->attackElement = ELEMENT_HIT;
+        self->hitboxState = 2;
+        self->nFramesInvincibility = 16;
+        self->stunFrames = 16;
+        self->hitEffect = 1;
+        self->entityRoomIndex = 0;
+        func_8015F9F0(self);
+        self->hitboxOffX = 9;
+        self->hitboxOffY = 21;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 5;
+        self->step++;
+        return;
+    }
+    if (self->hitFlags == 1) {
+        g_Player.unk44 |= 0x80;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/18838", func_pspeu_092BFEB0);
 
