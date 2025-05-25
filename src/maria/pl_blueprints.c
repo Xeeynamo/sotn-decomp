@@ -2783,7 +2783,7 @@ void func_pspeu_092BEB40(Entity* self) {
             prim->u3 = u + 0x28;
             prim->v3 = 0x49;
             if (self->ext.maria092BEB40.nDigits < i) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
             }
             prim = prim->next;
         }
