@@ -9,6 +9,26 @@ import yaml
 # useful to avoid adding multiple rules for the same output file
 entries = dict()
 
+psp_o4_files = [
+    "3250.c",
+    "E588.c",
+    "186E8.c",
+    "1DDC0.c",
+    "23138.c",
+    "4AEA4.c",
+    "4CE2C.c",
+    "4DA70.c",
+    "5087C.c",
+    "624DC.c",
+    "628AC.c",
+    "62EB8.c",
+    "62FE0.c",
+    "63C08.c",
+    "66590.c",
+    "collider.c",
+    "game_handlers.c",
+]
+
 
 def is_psp(version: str) -> bool:
     return version.startswith("psp")
@@ -52,7 +72,11 @@ def is_stage(ovl_name: str) -> bool:
 def get_cc_flags_for_exceptional_files(version: str, file_name: str):
     if version == "us" and file_name == "src/weapon/w_029.c":
         return "-O1"
-    return ""
+    if not is_psp(version):
+        return ""  # PSX is almost always -O2
+    if file_name.startswith("src/dra") and os.path.basename(file_name) in psp_o4_files:
+        return "-O4,p"
+    return "-Op"
 
 
 def add_c_psx(
@@ -181,11 +205,53 @@ def add_memcard_img_psx(
 def add_c_psp(
     nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
 ):
-    return None
+    output = f"build/{ver}/{file_name}.o"
+    if output in entries:
+        return
+    entries[output] = {}
+    nw.build(
+        rule="psp-cc",
+        outputs=output,
+        inputs=file_name,
+        implicit=[
+            f"src/.assets_build_done_{ver}",
+            ld_path,
+            "include/types.h",
+            "include/common.h",
+            "include/game.h",
+            "include/entity.h",
+        ],
+        variables={
+            "version": version,
+            "cpp_flags": cpp_flags,
+            "opt_level": get_cc_flags_for_exceptional_files(version, file_name),
+            "src_dir": os.path.dirname(file_name),
+        },
+    )
+    nw.build(
+        rule="phony",
+        outputs=file_name,
+        implicit=[f"src/.assets_build_done_{ver}"],
+    )
+    return output
 
 
-def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, linker_path: str):
-    return None
+def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
+    output = f"build/{ver}/{file_name}.o"
+    if output in entries:
+        return
+    entries[output] = {}
+    nw.build(
+        rule="psp-as",
+        outputs=[output],
+        inputs=[file_name],
+    )
+    nw.build(
+        rule="phony",
+        outputs=[file_name],
+        implicit=[ld_path],
+    )
+    return output
 
 
 def add_assets_config(nw: ninja_syntax.Writer, version: str):
@@ -326,6 +392,7 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
             variables={
                 "version": ver,
                 "obj_files": objs,
+                "ld_flags": "--gc-sections" if platform == "psp" else "",
                 "map_out": f"build/{ver}/weapon/w{hand_id}_{weapon_id}.map",
                 "symbols_arg": str.join(" ", symbols_lists),
             },
@@ -387,6 +454,16 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             objs.append(add_s(nw, version, asm_name, ld_path))
             continue
         for subsegment in segment["subsegments"]:
+            if isinstance(subsegment, dict):  # handle PSP BSS
+                if not "start" in subsegment:  # skip malformed BSS
+                    continue
+                subsegment_as_obj = subsegment
+                subsegment = [  # normalize subsegment
+                    subsegment["start"],
+                    subsegment["type"],
+                ]
+                if "name" in subsegment_as_obj:
+                    subsegment.append(subsegment_as_obj["name"])
             offset = int(subsegment[0])
             if len(subsegment) < 2:  # for subsegment entries without a kind
                 kind = "data"
@@ -445,45 +522,51 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
-    else:
-        output_elf = f"build/{version}/{ovl_name}.elf"
-        sym_version = version
-        if ovl_name == "stmad":
-            sym_version = "beta"
-        symbols_lists = [
-            f"-T config/undefined_syms.{sym_version}.txt",
-            f"-T {undefined_syms_auto_path}",
-        ]
-        if ovl_name != "main":
-            symbols_lists.append(f"-T {undefined_funcs_auto_path}")
-        nw.build(
-            rule="psx-ld",
-            outputs=[output_elf],
-            inputs=[ld_path],
-            implicit=[x for x in objs if x],
-            variables={
-                "map_out": f"build/{version}/{ovl_name}.map",
-                "symbols_arg": str.join(" ", symbols_lists),
-            },
-        )
-        strip_rule = "psx-strip"
-        if not is_hd(version) and is_servant(ovl_name):
-            strip_rule = "psx-strip-servant"
-        output_name = os.path.basename(target_path)
-        if ovl_name == "main":
-            output_name = "main.exe"
-        nw.build(
-            rule=strip_rule,
-            outputs=[f"build/{version}/{output_name}"],
-            inputs=[output_elf],
-        )
-    if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name != "stsel":
-        gfx_name = f"F_{os.path.basename(target_path)}"
-        if is_hd(version):
-            gfx_name = f"f_{os.path.basename(target_path)}"
-        stage_gfx_path = f"build/{version}/{gfx_name}"
-        target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
-        add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
+    if platform == "psp" and file_name != "PS.ELF":
+        mwo = os.path.join(asset_path, "mwo_header.bin")
+        objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
+    output_elf = f"build/{version}/{ovl_name}.elf"
+    sym_version = version
+    if ovl_name == "stmad":
+        sym_version = "beta"
+    symbols_lists = [
+        f"-T config/undefined_syms.{sym_version}.txt",
+        f"-T {undefined_syms_auto_path}",
+    ]
+    if ovl_name != "main":
+        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+    if platform == "psp":
+        symbols_lists.append(f"-T config/symexport.{version}.{ovl_name}.txt")
+    nw.build(
+        rule="psx-ld",
+        outputs=[output_elf],
+        inputs=[ld_path],
+        implicit=[x for x in objs if x],
+        variables={
+            "ld_flags": "--gc-sections" if platform == "psp" else "",
+            "map_out": f"build/{version}/{ovl_name}.map",
+            "symbols_arg": str.join(" ", symbols_lists),
+        },
+    )
+    strip_rule = "psx-strip"
+    if platform != "psp" and not is_hd(version) and is_servant(ovl_name):
+        strip_rule = "psx-strip-servant"
+    output_name = os.path.basename(target_path)
+    if ovl_name == "main":
+        output_name = "main.exe"
+    nw.build(
+        rule=strip_rule,
+        outputs=[f"build/{version}/{output_name}"],
+        inputs=[output_elf],
+    )
+    if platform == "psx":
+        if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name != "stsel":
+            gfx_name = f"F_{os.path.basename(target_path)}"
+            if is_hd(version):
+                gfx_name = f"f_{os.path.basename(target_path)}"
+            stage_gfx_path = f"build/{version}/{gfx_name}"
+            target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
+            add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
     return
 
 
@@ -554,7 +637,7 @@ with open("build.ninja", "w") as f:
     )
     nw.rule(
         "psx-ld",
-        command="mipsel-linux-gnu-ld -nostdlib --no-check-sections -Map $map_out -T $in $symbols_arg -o $out $obj_files",
+        command="mipsel-linux-gnu-ld -nostdlib --no-check-sections $ld_flags -Map $map_out -T $in $symbols_arg -o $out $obj_files",
         description="mipsel-linux-gnu-ld -nostdlib --no-check-sections -Map $map_out -T $in $symbols_arg -o $out",
     )
     nw.rule(
@@ -571,6 +654,24 @@ with open("build.ninja", "w") as f:
         "psx-strip-weapon",
         command="mipsel-linux-gnu-objcopy -O binary $in $out && truncate -c -s 12288 $out",
         description="psx strip $in",
+    )
+    nw.rule(
+        "psp-cc",
+        command=(
+            "VERSION=$version"
+            " tools/sotn_str/target/release/sotn_str process -p -f $in"
+            " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
+            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as"
+            " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
+            " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
+            " $opt_level -opt nointrinsics"
+        ),
+        description="psp cc $in",
+    )
+    nw.rule(
+        "psp-as",
+        command="bin/allegrex-as -EL -I include/ -G0 -march=allegrex -mabi=eabi -o $out $in",
+        description="psp as $in",
     )
     nw.rule(
         "dirt",

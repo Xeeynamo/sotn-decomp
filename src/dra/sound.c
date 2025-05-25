@@ -2,6 +2,34 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+u8 aPbav[] = {
+#include "gen/vh_0.h"
+};
+u8 aPbav_0[] = {
+#include "gen/vh_1.h"
+};
+u8 aPbav_2[] = {
+#include "gen/vh_2.h"
+};
+u8 aPbav_1[] = {
+#include "gen/vh_3.h"
+};
+
+// files included as headers as data should not be aligned by 4
+#if !defined(VERSION_PC)
+__asm__(".pushsection .data\n"
+        ".globl aPqes_1\n"
+        "aPqes_1:\n"
+        ".incbin \"assets/dra/sd_eve1.seq\"\n"
+        ".globl aPqes\n"
+        "aPqes:\n"
+        ".incbin \"assets/dra/sd_eve3.seq\"\n"
+        ".globl aPqes_0\n"
+        "aPqes_0:\n"
+        ".incbin \"assets/dra/sd_eve2.seq\"\n"
+        ".popsection\n");
+#endif
+
 s16 g_CdVolumeTable[] = {
     0x0000, 0x0002, 0x0004, 0x0006, 0x0008, 0x000A, 0x000C, 0x000E, 0x0010,
     0x0012, 0x0014, 0x0016, 0x0018, 0x001A, 0x001C, 0x001E, 0x0020, 0x0022,

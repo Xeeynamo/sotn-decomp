@@ -13,12 +13,7 @@ muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use 
 
 # Utility functions
 rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
-to_upper	= $(shell echo $(1) | tr '[:lower:]' '[:upper:]')
-to_lower	= $(shell echo $(1) | tr '[:upper:]' '[:lower:]')
-if_version	= $(if $(filter $(1),$(VERSION)),$(2),$(3))
 wget		= wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1)
-# Use $(call get_targets,prefixed) when stages and bosses need to be prefixed
-get_targets = $(GAME) $(addprefix $(if $(1),st),$(STAGES)) $(addprefix $(if $(1),bo),$(BOSSES)) $(SERVANTS)
 
 # System related variables
 OS 				:= $(subst Darwin,macOS,$(shell uname -s))
@@ -33,9 +28,7 @@ SHELL 			:= $(BASH) $(BASH_FLAGS)
 # Directories
 BIN_DIR			:= bin
 ASM_DIR         := asm/$(VERSION)
-ASM_SUBDIRS 	:= data/ $(call if_version,us hd,psxsdk/ handwritten/)
 SRC_DIR         := src
-SRC_SUBDIRS 	:= $(call if_version,us hd,psxsdk/)
 INCLUDE_DIR     := include
 ASSETS_DIR      := assets
 CONFIG_DIR      := config
@@ -54,12 +47,6 @@ FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
 FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
 FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
 FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
-
-# Active overlays
-STAGES		:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).st%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).st*.yaml))
-BOSSES   	:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).bo%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).bo*.yaml))
-SERVANTS	:= $(patsubst $(CONFIG_DIR)/splat.$(VERSION).tt_%.yaml,tt_%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).tt_*.yaml))
-GAME		:= $(filter-out $(call get_targets,prefixed),$(patsubst $(CONFIG_DIR)/splat.$(VERSION).%.yaml,%,$(wildcard $(CONFIG_DIR)/splat.$(VERSION).*.yaml)))
 
 # Toolchain
 CROSS           := mipsel-linux-gnu-
@@ -102,36 +89,6 @@ SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
 SOTNDISK        := $(GOPATH)/bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
 
-# Build functions
-define get_src_files
-	$(foreach dir,$(ASM_DIR)/$(1)/ $(addprefix $(ASM_DIR)/$(1)/,$(ASM_SUBDIRS)),$(wildcard $(dir)/*.s))
-	$(foreach dir,$(SRC_DIR)/$(1)/ $(addprefix $(SRC_DIR)/$(1)/,$(if $(2),,$(SRC_SUBDIRS))),$(wildcard $(dir)/*.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(if $(2),$(addprefix $(dir)/,$(ST_ASSETS)),$(dir)/*)))
-endef
-get_shared_src_files = $(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-# sel doesn't follow the same pattern as other stages, so we ignore $(2) for it in get_o_files/get_src_files
-2_IGNORE_SEL = $(if $(filter-out st/sel,$(1)),$(2))
-get_o_files = $(subst //,/,$(foreach file,$(call get$(3)_src_files,$(1),$(2_IGNORE_SEL)),$(BUILD_DIR)/$(file).o))
-define link
-	$(muffle)echo -e "Linking $(1)"
-	$(muffle)$(LD) $(LD_FLAGS) -o $(2) \
-		-Map $(BUILD_DIR)/$(1).map \
-		-T $(BUILD_DIR)/$(1).ld \
-		$(call if_version,pspeu,-T $(CONFIG_DIR)/symexport.$(VERSION).$(1).txt) \
-		$(if $(wildcard $(UNDEFINED_SYMS)),-T $(UNDEFINED_SYMS)) \
-		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_syms%)) \
-		$(if $(wildcard $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)),-T $(CONFIG_DIR)/$(AUTO_UNDEFINED:TYPE%=undefined_funcs%)) \
-		$(3)
-endef
-get_conf_merged = $(shell $(PYTHON) $(TOOLS_DIR)/list_ovl_files.py $(CONFIG_DIR)/splat.$(VERSION).$(2)$(1).yaml $(1))
-get_auto_merge = $(addsuffix .o,$(wildcard $(subst _psp,,$(filter-out $(wildcard src/$(2)/$(1)_psp/*.c),src/$(2)/$(1)_psp/$(AUTO_MERGE_FILES)))))
-get_merged_o_files = $(addprefix $(BUILD_DIR)/src/$(2)/$(1)/,$(addsuffix .c.o,$(call get_conf_merged,$(1),$(2)))) $(addprefix $(BUILD_DIR)/,$(call get_auto_merge,$(1),$(2)))
-get_psp_o_files = $(subst //,/,$(call get_merged_o_files,$(1),$(2)) $(call get_o_files,$(2)/$(1)_psp) $(if $(filter-out dra,$(1)),$(BUILD_DIR)/assets/$(2)/$(1)/mwo_header.bin.o))
-get_build_dirs = $(subst //,/,$(addsuffix /,$(addprefix $(BUILD_DIR)/,$(1))))
-get_ovl_from_path = $(word $(or $(2),1),$(filter $(call get_targets),$(subst /, ,$(1))))
-add_ovl_prefix = $(if $(filter $(call to_lower,$(1)),$(STAGES)),$(or $(2),st),$(if $(filter $(call to_lower,$(1)),$(BOSSES)),$(or $(3),bo)))$(call to_lower,$(1))
-### End new header ###
-### Start old header, to be removed when all targets have been transitioned ###
 # Directories
 DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
 
@@ -147,59 +104,13 @@ M2C             := $(PYTHON) $(M2C_APP)
 M2C_ARGS        := -P 4
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
-MASPSX          := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.34
-MASPSX_21       := $(PYTHON) $(MASPSX_APP) --expand-div --aspsx-version=2.21
 
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
-# Functions
-define list_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/handwritten,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(SRC_DIR)/$(1)/gen,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(SRC_DIR)/$(1)/psxsdk,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/**))
-endef
-define list_st_src_files
-	$(foreach dir,$(ASM_DIR)/$(1),$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(ASM_DIR)/$(1)/data/gen,$(wildcard $(dir)/**.s))
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/**.c))
-	$(foreach dir,$(SRC_DIR)/$(1)/gen,$(wildcard $(dir)/**.c))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/D_801*.bin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.gfxbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/*.palbin))
-	$(foreach dir,$(ASSETS_DIR)/$(1),$(wildcard $(dir)/cutscene_*.bin))
-endef
-
-define list_o_files
-	$(foreach file,$(call list_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define list_st_o_files
-	$(foreach file,$(call list_st_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-
-define list_shared_src_files
-	$(foreach dir,$(SRC_DIR)/$(1),$(wildcard $(dir)/*.c))
-endef
-
-define list_shared_o_files
-	$(foreach file,$(call list_shared_src_files,$(1)),$(BUILD_DIR)/$(file).o)
-endef
-### End old header ###
-
-ifneq (,$(filter $(VERSION),us hd)) # Both us and hd versions use the PSX platform
-include Makefile.psx.mk
-else ifeq ($(VERSION),pspeu)
-include Makefile.psp.mk
-else ifeq ($(VERSION),saturn)
+ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
 endif
 
@@ -214,13 +125,33 @@ endif
 all: ##@ (Default) build and check
 all: build check
 
+.PHONY: extract_assets
+extract_assets:
+extract_assets: $(SOTNASSETS)
+	$(SOTNASSETS) extract config/assets.$(VERSION).yaml
+.PHONY: build_assets
+build_assets:
+build_assets: $(SOTNASSETS)
+	$(SOTNASSETS) build config/assets.$(VERSION).yaml
 .PHONY: extract
-extract: ##@ split game files into assets and assembly
+extract: ##@ extract assets
 extract: extract_$(VERSION)
+extract_us: extract_assets
+extract_hd: extract_assets
+extract_pspeu: extract_assets
 
 .PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
+build_us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
+	VERSION=us .venv/bin/python3 tools/builds/gen.py
+	ninja
+build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
+	VERSION=hd .venv/bin/python3 tools/builds/gen.py
+	ninja
+build_pspeu: $(SOTNSTR_APP) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
+	ninja
 
 .PHONY: clean
 clean: ##@ clean extracted files, assets, and build artifacts
@@ -335,27 +266,8 @@ ff: MAKEFLAGS += --jobs
 ff:
 	$(MAKE) format
 
-.PHONY: patch
-patch:
-
-.PHONY: check, check_us, check_hd, check_pspeu
-check: ##@ compare built files to original game files
-check: check_$(VERSION)
-check_us:
-check_hd:
-check_pspeu: config/check.pspeu.sha patch $(CHECK_FILES)
-	@$(SHASUM) --check $< | awk 'BEGIN{ FS=": " }; { \
-        printf "%s\t[ ", $$1; \
-        if ($$2 == "OK") \
-            color = 28;   \
-        else \
-            color = 196;   \
-        system("tput setaf " color "; printf " $$2 "; tput sgr0"); \
-        printf " ]\n"; \
-    }' | column --separator $$'\t' --table
-
 .PHONY: expected
-expected: check
+expected: build
 	mkdir -p expected/build
 	rm -rf expected/build/$(VERSION)
 	cp -r build/$(VERSION) expected/build/
@@ -469,6 +381,10 @@ disk_debug: disk_prepare
 	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
 
 # put this here as both PSX HD and PSP use it
+extract_disk_us: extract_disk_psxus
+extract_disk_hd: extract_disk_pspeu
+extract_disk_psx%: $(SOTNDISK)
+	$(SOTNDISK) extract disks/sotn.$*.cue disks/$* > /dev/null
 extract_disk_psp%:
 	mkdir -p disks/psp$*
 	7z x -y disks/sotn.psp$*.iso -odisks/psp$*/
@@ -548,32 +464,6 @@ $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	$(GO) build -C tools/sotn-assets -o ../../$@ . 
-
-# Handles assets
-$(BUILD_DIR)/$(ASSETS_DIR)/dra/%.json.o: $(ASSETS_DIR)/dra/%.json
-	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/dra/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/ric/%.json.o: $(ASSETS_DIR)/ric/%.json
-	$(PYTHON) ./tools/splat_ext/assets.py $< $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
-	$(AS) $(AS_FLAGS) -o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.o $(BUILD_DIR)/$(ASSETS_DIR)/ric/$*.s
-$(BUILD_DIR)/$(ASSETS_DIR)/%.bin.o: $(ASSETS_DIR)/%.bin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.gfxbin.o: $(ASSETS_DIR)/%.gfxbin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.palbin.o: $(ASSETS_DIR)/%.palbin
-	mkdir -p $(dir $@)
-	$(LD) -r -b binary -o $(BUILD_DIR)/$(ASSETS_DIR)/$*.o $<
-$(BUILD_DIR)/$(ASSETS_DIR)/%.dec.o: $(ASSETS_DIR)/%.dec
-# for now '.dec' files are ignored
-	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%.png.o: $(ASSETS_DIR)/%.png
-	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%.yaml.o: $(ASSETS_DIR)/%.yaml
-	touch $@
-$(BUILD_DIR)/$(ASSETS_DIR)/%.o: $(ASSETS_DIR)/%.yaml
-	touch $@
 
 ##@
 ##@ Disc Dumping Targets
