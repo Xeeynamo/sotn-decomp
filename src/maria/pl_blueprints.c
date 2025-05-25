@@ -3085,7 +3085,7 @@ s32 func_pspeu_092BFEB0(Entity* parent) {
             return -1;
         }
         DestroyEntity(entity);
-        entity->entityId = 0x12;
+        entity->entityId = E_UNK_18;
         entity->posX.val = parent->posX.val;
         entity->posY.val = parent->posY.val;
     }
