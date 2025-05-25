@@ -4,8 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", NO3_EntityBackgroundBlock);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId16);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09242C00);
