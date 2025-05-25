@@ -166,7 +166,7 @@ segments:
       - [0x377D4, c, e_background_block]
       - [0x378A8, c, e_lock_camera]
       - [0x37A64, c, e_breakable]
-      - [0x37B98, c, entrance_stage_entities]
+      - [0x37B98, c, e_unkId16]
       - [0x37C4C, c, e_background_lightning]
       - [0x38254, c, e_shutting_window]
       - [0x38564, c, e_castle_door]
