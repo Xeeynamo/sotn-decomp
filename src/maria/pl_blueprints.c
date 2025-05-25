@@ -89,7 +89,18 @@ void func_8015FA5C(s32 arg0) {
     D_80174FB8 = D_80154674[arg0][3];
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/pl_blueprints", MarSetSubweaponParams);
+void MarSetSubweaponParams(Entity* entity) {
+    SubweaponDef* subwpn = &subweapons_def[entity->ext.subweapon.subweaponId];
+    entity->attack = subwpn->attack;
+    entity->attackElement = subwpn->attackElement;
+    entity->hitboxState = subwpn->hitboxState + 0;
+    entity->nFramesInvincibility = subwpn->nFramesInvincibility;
+    entity->stunFrames = subwpn->stunFrames;
+    entity->hitEffect = subwpn->hitEffect;
+    entity->entityRoomIndex = subwpn->entityRoomIndex;
+    entity->attack = g_api.CalcDealDamageMaria(entity->attack);
+    func_8015F9F0(entity);
+}
 
 s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
