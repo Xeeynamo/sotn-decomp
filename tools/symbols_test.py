@@ -19,8 +19,10 @@ class TestSortSymbols(unittest.TestCase):
         )
 
     def test_remove_duplicates_with_same_name_and_offset(self):
-        sorted = sort_symbols(["func_stuff = 0x1234;", "func_stuff = 0x1234;"])
-        self.assertEqual(sorted, ["func_stuff = 0x1234;"])
+        sorted = sort_symbols(
+            ["func_stuff = 0x1234;", "func_stuff = 0x1234;", "out_of_order = 0x0;"]
+        )
+        self.assertEqual(sorted, ["out_of_order = 0x0;", "func_stuff = 0x1234;"])
 
 
 class TestTokenizeAssembly(unittest.TestCase):
