@@ -831,7 +831,7 @@
 | lib       | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | lib       | func_us_801B0FBC                         |       71 |          7 |        |                                 |       |
 | no3       | func_pspeu_09255068                      |       71 |          7 |        |                                 |       |
-| no3       | func_pspeu_09260F90                      |       71 |          7 |        |                                 |       |
+| no3       | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | no4       | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | no4       | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | st0       | GetNormalizedAngle                       |       71 |          7 |        |                                 |       |
@@ -1088,8 +1088,8 @@
 | maria_psp | func_pspeu_092BFD30                      |      104 |          8 |        |                                 |       |
 | dra       | func_800F8754                            |      104 |         10 |        |                                 |       |
 | ric       | func_80160D2C                            |      104 |         10 |        |                                 |       |
-| no3       | EntityWeightsSwitch                      |      104 |         11 |        |                                 |       |
 | no3       | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
+| no3       | EntityWeightsSwitch                      |      104 |         11 |        |                                 |       |
 | wrp       | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | maria     | MAR_Load                                 |      104 |         12 |        |                                 |       |
 | dra       | CdSoundCommand8                          |      104 |         14 |        | https://decomp.me/scratch/hmJYM | 0.978 |
