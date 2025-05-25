@@ -605,7 +605,7 @@
 | chi       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | lib       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | no3       | func_pspeu_09238360                      |       49 |          5 |        | https://decomp.me/scratch/C3ATv | 0.98  |
-| no3       | func_pspeu_09260348                      |       49 |          5 |        |                                 |       |
+| no3       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | no4       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | st0       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | wrp       | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
@@ -646,6 +646,7 @@
 | no3       | func_pspeu_09242C00                      |       51 |         10 |        |                                 |       |
 | no4       | GetLang                                  |       51 |         10 |        |                                 |       |
 | st0       | GetLang                                  |       51 |         10 |        |                                 |       |
+| no3       | e_death.rodata                           |       52 |          0 | Yes    |                                 |       |
 | chi       | SalemWitchTrySpawnShadow                 |       52 |          5 |        |                                 |       |
 | dra       | func_800EDD9C                            |       52 |          6 |        | https://decomp.me/scratch/qAogY | 0.659 |
 | st0       | func_801AD838                            |       52 |         10 |        | https://decomp.me/scratch/2pNca | 0.995 |
@@ -1064,7 +1065,7 @@
 | dra       | MenuDrawLine                             |      102 |          8 |        |                                 |       |
 | no3       | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
 | dra       | InitWeapon                               |      102 |         12 |        |                                 |       |
-| no3       | EntityDeathScytheShadow                  |      102 |         13 |        |                                 |       |
+| no3       | EntityDeathScytheShadow                  |      102 |         13 |        | https://decomp.me/scratch/WWVqj | 0.957 |
 | dra       | PlaySfxScript                            |      103 |          2 |        |                                 |       |
 | dra       | func_psp_09125DB8                        |      103 |          4 |        | https://decomp.me/scratch/ezh6e | 0.944 |
 | chi       | EntityExplosionVariants                  |      103 |          8 |        |                                 |       |
@@ -1177,10 +1178,11 @@
 | no3       | func_pspeu_09249590                      |      118 |         27 |        |                                 |       |
 | no3       | EntityTrapDoor                           |      119 |         14 |        | https://decomp.me/scratch/MGGMN | 0.955 |
 | dra       | func_8011A870                            |      119 |         19 |        |                                 |       |
+| no3       | working_on.rodata                        |      120 |          0 | Yes    |                                 |       |
 | st0       | CollectSubweapon                         |      120 |          9 |        | https://decomp.me/scratch/IDaI6 | 0.993 |
 | dra       | MenuTimeAttackDraw                       |      120 |         11 |        |                                 |       |
 | dra       | GetEquipProperties                       |      120 |         13 |        | https://decomp.me/scratch/iWljb | 0.997 |
-| no3       | EntityDeathScythe                        |      120 |         20 |        |                                 |       |
+| no3       | EntityDeathScythe                        |      120 |         20 |        | https://decomp.me/scratch/WWVqj | 0.957 |
 | dra       | func_800F2860                            |      120 |         21 | Yes    |                                 |       |
 | maria     | func_8015FB84                            |      121 |         11 |        |                                 |       |
 | ric       | func_8015FB84                            |      121 |         11 |        |                                 |       |
@@ -1300,7 +1302,6 @@
 | no3       | NO3_EntityLockCamera                     |      165 |         18 |        |                                 |       |
 | no4       | NO4_EntityLockCamera                     |      165 |         18 |        |                                 |       |
 | wrp       | WRP_EntityLockCamera                     |      165 |         18 |        |                                 |       |
-| no3       | working_on.rodata                        |      166 |          0 | Yes    |                                 |       |
 | dra       | func_8012E7A4                            |      166 |         16 |        | https://decomp.me/scratch/huJsJ | 0.984 |
 | dra       | func_800F1B08                            |      166 |         19 |        |                                 |       |
 | st0       | EntityDraculaMeteorball                  |      166 |         24 |        | https://decomp.me/scratch/w4afZ | 0.995 |
@@ -1457,7 +1458,7 @@
 | lib       | EntityCandleTable                        |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                     |      250 |         34 |        |                                 |       |
 | maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        |                                 |       |
-| no3       | EntityShuttingWindow                     |      252 |         32 |        |                                 |       |
+| no3       | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
 | dra       | PlayerStepUnmorphMist                    |      252 |         38 |        |                                 |       |
 | no3       | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
 | no3       | EntityPushAlucard                        |      253 |         24 | Yes    | https://decomp.me/scratch/X2aDB | 0.981 |
@@ -1586,7 +1587,7 @@
 | ric       | RicEntityCrashHydroStorm                 |      346 |         37 |        | https://decomp.me/scratch/EpsEj | 0.972 |
 | lib       | func_us_801CCF6C                         |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric       | RicEntityCrashVibhuti                    |      349 |         43 |        |                                 |       |
-| no3       | EntityRoomTransition2                    |      350 |         35 | Yes    | https://decomp.me/scratch/8CGjr | 0.995 |
+| no3       | EntityDeathCutsceneManager               |      350 |         35 | Yes    |                                 |       |
 | dra       | CheckSwordBrothersInput                  |      350 |         56 |        |                                 |       |
 | no3       | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | no4       | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
@@ -1697,7 +1698,7 @@
 | dra       | func_8010FDF8                            |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
 | maria_psp | func_pspeu_092A8AE8                      |      500 |         44 |        |                                 |       |
 | maria_psp | func_pspeu_092A6E50                      |      501 |         49 | Yes    |                                 |       |
-| no3       | EntityDeathStolenItem                    |      502 |         28 | Yes    | https://decomp.me/scratch/EJUYk | 0.985 |
+| no3       | EntityDeathStolenItem                    |      502 |         28 | Yes    | https://decomp.me/scratch/EJUYk | 0.997 |
 | ric       | RicEntityFactory                         |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
 | no4       | EntitySkeletonApe                        |      507 |         90 | Yes    | https://decomp.me/scratch/jTy3E | 0.992 |
 | maria     | MarStepDead                              |      508 |         59 |        |                                 |       |
@@ -1863,7 +1864,7 @@
 | no4       | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
 | no3       | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp       | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
-| no3       | EntityDeath                              |      990 |        134 | Yes    | https://decomp.me/scratch/EJUYk | 0.985 |
+| no3       | EntityDeath                              |      990 |        134 | Yes    | https://decomp.me/scratch/H9Iof | 0.997 |
 | chi       | EntityStageNamePopup                     |     1000 |         92 | Yes    | https://decomp.me/scratch/DqmOT | 1.0   |
 | lib       | EntityStageNamePopup                     |     1002 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | no4       | EntityStageNamePopup                     |     1004 |         86 |        | https://decomp.me/scratch/DqmOT | 1.0   |
