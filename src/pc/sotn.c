@@ -52,13 +52,6 @@ extern u_long* D_800A3BB8[];
 FactoryBlueprint g_FactoryBlueprints[0xC0] = {0};
 u8 g_BmpCastleMap[0x20000];
 
-#define MAX_SIZE_FOR_COMPRESSED_GFX 8192
-u8 D_800C217C[MAX_SIZE_FOR_COMPRESSED_GFX];
-u8 D_800C27B0[MAX_SIZE_FOR_COMPRESSED_GFX];
-u8 D_800C3560[MAX_SIZE_FOR_COMPRESSED_GFX];
-u8 D_800C4864[MAX_SIZE_FOR_COMPRESSED_GFX];
-u8 D_800C4A90[MAX_SIZE_FOR_COMPRESSED_GFX];
-
 extern u16 g_PalEquipIcon[320 * 16];
 
 // list of exposed API
@@ -125,7 +118,6 @@ void MyDrawSyncCallback(int mode) {
 // called before MainGame
 bool InitPlatform(void);
 void InitStrings(void);
-static void InitAssets(void);
 bool InitEquipDefs(const char* jsonContent);
 bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
@@ -225,7 +217,6 @@ bool InitGame(struct InitGameParams* params) {
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     InitStrings();
-    InitAssets();
 
     g_DemoPtr = g_DemoRecordingBuffer;
 
@@ -272,24 +263,6 @@ void InitStrings(void) {
     for (int i = 0; i < LEN(g_goldCollectTexts); i++) {
         g_goldCollectTexts[i] = AnsiToSotnMenuString(g_goldCollectTexts[i]);
     }
-}
-
-static bool ReadCmpGfx(const struct FileOpenRead* f) {
-    if (f->length > MAX_SIZE_FOR_COMPRESSED_GFX) {
-        ERRORF("file '%s' too big, max size is %d ", f->filename,
-               MAX_SIZE_FOR_COMPRESSED_GFX);
-        return false;
-    }
-    fread(f->param, f->length, 1, f->file);
-    return true;
-}
-
-static void InitAssets() {
-    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C217C.bin", D_800C217C);
-    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C27B0.bin", D_800C27B0);
-    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C3560.bin", D_800C3560);
-    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4864.bin", D_800C4864);
-    FileOpenRead(ReadCmpGfx, "assets/dra/D_800C4A90.bin", D_800C4A90);
 }
 
 void (*g_VsyncCallback)() = NULL;
