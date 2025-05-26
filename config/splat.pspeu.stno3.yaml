@@ -106,5 +106,6 @@ segments:
       - [0x61BC0, .bss, no3/e_trapdoor]
       - [0x61BC8, .bss, no3/e_shutting_window]
       - [0x61BD8, .bss, no3/e_breakable]
-      - [0x61BE0, bss, 61BE0]
+      - [0x61BE0, .bss, no3_psp/cutscene]
+      - [0x61BE8, bss, 61BE8]
   - [0x62280]

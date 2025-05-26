@@ -128,7 +128,7 @@ extern s16 D_80181A3C[];
 extern const char D_801813F0[];
 
 //BSS
-extern s32 g_IsCutsceneDone; // 9260
+s32 g_IsCutsceneDone; // 9260
 extern u8 D_80181A2C[];
 extern s32 g_SkipCutscene; // 9860
 extern u32 g_CutsceneFlags;
