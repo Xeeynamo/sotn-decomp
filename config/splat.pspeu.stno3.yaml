@@ -111,5 +111,6 @@ segments:
       - [0x61BD8, .bss, no3/e_breakable]
       - [0x61BE0, .bss, no3_psp/cutscene]
       - [0x621F0, .bss, no3/e_lock_camera]
-      - [0x621F8, bss, 621F8]
+      - [0x621F8, .bss, no3_psp/create_entity]
+      - [0x62218, bss, 62218]
   - [0x62280]
