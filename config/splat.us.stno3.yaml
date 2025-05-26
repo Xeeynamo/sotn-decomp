@@ -206,6 +206,6 @@ segments:
       - [0x564B0, c]
       - [0x56880, c, prim_helpers]
       - [0x570B0, .bss, create_entity]
-      - [0x57120, .bss, bss]
+      - [0x57120, .bss, cutscene]
       - [0x57DD8, .bss, e_collect]
   - [0x57E18]
