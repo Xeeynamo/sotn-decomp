@@ -10,6 +10,7 @@ gcc-mipsel-linux-gnu
 git
 libelf-dev
 make
+ninja-build
 p7zip-full
 python3-pip
 python3-venv

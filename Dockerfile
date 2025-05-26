@@ -12,7 +12,7 @@
 # make update-dependencies
 #
 # 4. you now prepared an image that can help you build and work SOTN
-# make -j extract && make -j -O build && make expected
+# make expected
 #
 # 5. from now on, to re-use the same container execute the following:
 # docker start -ai sotn-work
