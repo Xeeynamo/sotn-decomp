@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-void SetCutsceneEnd(u8* ptr) {
+static void SetCutsceneEnd(u8* ptr) {
 #if !defined(VERSION_PSP)
     g_Dialogue.scriptEnd = ptr + 0x100000;
 #else

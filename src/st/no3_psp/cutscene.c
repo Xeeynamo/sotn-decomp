@@ -125,7 +125,17 @@ void CutsceneUnk1(void) {
 
 #include "../set_cutscene_script.h"
 
-#include "../set_cutscene_end.h"
+// This exists in a .h file, but that uses a static declaration.
+// The main cutscene function does not match if this one is static.
+void SetCutsceneEnd(u8* ptr) {
+#if !defined(VERSION_PSP)
+    g_Dialogue.scriptEnd = ptr + 0x100000;
+#else
+    g_Dialogue.scriptEnd = ptr;
+#endif
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
+}
 
 #include "../cutscene_run.h"
 
