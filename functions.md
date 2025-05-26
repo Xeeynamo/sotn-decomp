@@ -398,7 +398,7 @@
 | maria     | func_pspeu_092B2040                      |       36 |          4 |        |                                 |       |
 | chi       | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | lib       | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
-| no3       | func_pspeu_09245EA8                      |       36 |          4 |        |                                 |       |
+| no3       | func_pspeu_09245EA8                      |       36 |          4 |        | https://decomp.me/scratch/HzPAR | 0.23  |
 | no4       | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | st0       | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | wrp       | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
@@ -491,7 +491,7 @@
 | dra       | func_8011A328                            |       41 |          3 |        |                                 |       |
 | chi       | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | lib       | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
-| no3       | func_pspeu_0925FC30                      |       41 |          3 |        |                                 |       |
+| no3       | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | no4       | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | st0       | func_801ADAC8                            |       41 |          3 |        | https://decomp.me/scratch/GbDkQ | 0.969 |
 | st0       | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
@@ -1148,9 +1148,9 @@
 | lib       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | lib       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | lib       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
-| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245B78                      |      113 |         13 |        |                                 |       |
 | no3       | func_pspeu_09245D10                      |      113 |         13 |        |                                 |       |
+| no3       | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | no4       | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | no4       | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
