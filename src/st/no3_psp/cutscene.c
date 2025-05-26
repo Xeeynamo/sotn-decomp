@@ -75,16 +75,16 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 #include "../cutscene_actor_name_psp.h"
 
 //BSS
-u32 g_CutsceneFlags;
-s32 g_SkipCutscene;
-Dialogue g_Dialogue;
-u8 D_pspeu_09299818;
-u8* D_pspeu_092997F8[8];
-u8 D_pspeu_09299478[0x380];
-u16 D_pspeu_09299278[0x100];
-s32 g_CutsceneHasControl;
-u8 D_80181A2C[2];
-s32 g_IsCutsceneDone;
+u32 g_CutsceneFlags; // Not static, used in EntityDeathCutsceneManager
+static s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+static u8 D_pspeu_09299818;
+static u8* D_pspeu_092997F8[8];
+static u8 D_pspeu_09299478[0x380];
+static u16 D_pspeu_09299278[0x100];
+static s32 g_CutsceneHasControl;
+static u8 D_80181A2C[2];
+static s32 g_IsCutsceneDone;
 
 
 void CutsceneUnk3(s16 yOffset) {
