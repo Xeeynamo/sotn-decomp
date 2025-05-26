@@ -188,7 +188,7 @@ static void SetCutsceneEnd(u8* ptr) {
 }
 
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
-void CutsceneRun(void) {
+static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
 
@@ -238,7 +238,7 @@ void CutsceneRun(void) {
     }
 }
 
-void CutsceneSkip(Entity* self) {
+static void CutsceneSkip(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {
         g_SkipCutscene = true;
         g_api.FreePrimitives(self->primIndex);
