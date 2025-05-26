@@ -176,6 +176,22 @@ void func_pspeu_092433B0(void) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/cutscene", func_pspeu_09243748);
+// CutsceneSkip
+void func_pspeu_09243748(Entity* self) {
+    if (g_pads[0].tapped == PAD_START) {
+        g_SkipCutscene = true;
+        g_api.FreePrimitives(self->primIndex);
+        self->flags ^= FLAG_HAS_PRIMS;
+        if (g_Dialogue.primIndex[1] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[1]);
+        }
+        if (g_Dialogue.primIndex[0] != -1) {
+            g_api.FreePrimitives(g_Dialogue.primIndex[0]);
+        }
+        g_api.PlaySfx(SET_STOP_MUSIC);
+        self->step = 1;
+        self->step_s = 0;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/cutscene", NO3_EntityCutscene);
