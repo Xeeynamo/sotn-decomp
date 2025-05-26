@@ -83,7 +83,7 @@ static u8* D_pspeu_092997F8[8];
 static u8 D_pspeu_09299478[0x380];
 static u16 D_pspeu_09299278[0x100];
 static s32 g_CutsceneHasControl;
-static u8 D_80181A2C[2];
+static u8 D_80181A2C[2]; // Can't get this one to go where it should
 static s32 g_IsCutsceneDone;
 
 
