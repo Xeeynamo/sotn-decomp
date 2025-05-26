@@ -113,7 +113,17 @@ static u8 func_pspeu_09243168(u8* script) {
     return 0;
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/cutscene", func_pspeu_09243378);
+//SetCutsceneEnd
+static void func_pspeu_09243378(u8* ptr) {
+#if !defined(VERSION_PSP)
+    g_Dialogue.scriptEnd = ptr + 0x100000;
+#else
+    g_Dialogue.scriptEnd = ptr;
+#endif
+    g_Dialogue.timer = 0;
+    g_Dialogue.unk3C = 1;
+}
+    
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/cutscene", func_pspeu_092433B0);
 
