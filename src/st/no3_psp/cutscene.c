@@ -72,7 +72,6 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../../get_lang.h"
 
-#include "../cutscene_actor_name_psp.h"
 
 // BSS
 u32 g_CutsceneFlags; // Not static, used in EntityDeathCutsceneManager
@@ -85,6 +84,8 @@ static u16 D_pspeu_09299278[0x100];
 static s32 g_CutsceneHasControl;
 static u8 D_80181A2C[2]; // Can't get this one to go where it should
 static s32 g_IsCutsceneDone;
+
+#include "../cutscene_actor_name_psp.h"
 
 void CutsceneUnk3(s16 yOffset) {
     RECT rect;
