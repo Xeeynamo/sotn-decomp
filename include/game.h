@@ -1829,7 +1829,7 @@ typedef struct {
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 warp_flag;
-    /* 80072F40 */ s32 unk20;
+    /* 80072F40 */ s32 unk20; // used as an Entity for maria
     /* 80072F44 */ u32 unk24; // exclusive to maria?
     /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
