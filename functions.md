@@ -194,7 +194,7 @@
 | maria     | func_pspeu_092BFF78                      |       22 |          3 |        |                                 |       |
 | maria     | func_pspeu_092B0E10                      |       22 |          3 |        |                                 |       |
 | dra       | VSyncHandler                             |       22 |          4 |        |                                 |       |
-| maria_psp | func_pspeu_092A9250                      |       22 |          4 |        |                                 |       |
+| maria     | func_pspeu_092A9250                      |       22 |          4 |        |                                 |       |
 | dra       | func_80111938                            |       23 |          1 |        |                                 |       |
 | dra       | func_psp_090F5B10                        |       23 |          1 |        | https://decomp.me/scratch/55U3O | 0.759 |
 | maria     | MarDebugEnter                            |       23 |          1 |        |                                 |       |
@@ -294,7 +294,7 @@
 | no4       | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | dra       | StopSeq                                  |       28 |          4 |        |                                 |       |
 | lib       | CutsceneUnk1                             |       29 |          1 |        |                                 |       |
-| no3       | func_pspeu_09243108                      |       29 |          1 |        |                                 |       |
+| no3       | func_pspeu_09243108                      |       29 |          1 |        | https://decomp.me/scratch/CElim | 0.917 |
 | st0       | CutsceneUnk1                             |       29 |          1 |        |                                 |       |
 | wrp       | func_psp_09244760                        |       29 |          1 |        |                                 |       |
 | dra       | DecompressReadNibble                     |       29 |          2 |        |                                 |       |
@@ -302,9 +302,9 @@
 | st0       | func_801B1198                            |       29 |          2 |        | https://decomp.me/scratch/CDarj | 1.0   |
 | dra       | func_800FB0FC                            |       29 |          3 |        |                                 |       |
 | no3       | func_pspeu_09252C78                      |       29 |          3 |        |                                 |       |
+| maria     | func_pspeu_092A9920                      |       29 |          4 |        |                                 |       |
 | maria     | func_pspeu_092B9298                      |       29 |          4 |        |                                 |       |
 | maria_psp | func_pspeu_092A7F20                      |       29 |          4 |        |                                 |       |
-| maria_psp | func_pspeu_092A9920                      |       29 |          4 |        |                                 |       |
 |           | DestroyServantEntity                     |       29 |          4 |        |                                 |       |
 | dra       | func_psp_09141878                        |       29 |          5 |        |                                 |       |
 | chi       | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
@@ -546,8 +546,8 @@
 | dra       | SetVolumeCommand22_23                    |       44 |          3 |        |                                 |       |
 | st0       | CollectGold                              |       44 |          3 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | dra       | KeyOnChannels20_21                       |       45 |          1 |        |                                 |       |
-| maria_psp | func_pspeu_092A9D48                      |       45 |          1 |        |                                 |       |
-| maria_psp | func_pspeu_092A9DE8                      |       45 |          1 |        |                                 |       |
+| maria     | func_pspeu_092A9D48                      |       45 |          1 |        |                                 |       |
+| maria     | func_pspeu_092A9DE8                      |       45 |          1 |        |                                 |       |
 |           | CalculateAngleToEntity                   |       45 |          2 |        |                                 |       |
 | maria     | func_pspeu_092BF8B8                      |       45 |          5 |        |                                 |       |
 | dra       | func_8010E334                            |       45 |          6 |        |                                 |       |
@@ -642,7 +642,7 @@
 | lib       | func_psp_0924B2E0                        |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib       | GetLang                                  |       51 |         10 |        |                                 |       |
 | lib       | func_psp_0925D430                        |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
-| no3       | func_pspeu_09242C00                      |       51 |         10 |        |                                 |       |
+| no3       | func_pspeu_09242C00                      |       51 |         10 |        | https://decomp.me/scratch/pRD5u | 0.218 |
 | no4       | GetLang                                  |       51 |         10 |        |                                 |       |
 | st0       | GetLang                                  |       51 |         10 |        |                                 |       |
 | no3       | e_death.rodata                           |       52 |          0 | Yes    |                                 |       |
@@ -664,7 +664,7 @@
 | ric       | RicSetWalk                               |       54 |          9 |        |                                 |       |
 | dra       | func_80103148                            |       55 |          1 |        |                                 |       |
 | dra       | KeyOn12_19                               |       55 |          2 |        |                                 |       |
-| no3       | func_pspeu_09243040                      |       55 |          2 |        |                                 |       |
+| no3       | func_pspeu_09243040                      |       55 |          2 |        | https://decomp.me/scratch/MOQfd | 0.324 |
 | dra       | GetFreeEntityReverse                     |       55 |          5 |        |                                 |       |
 | maria     | MarGetFreeEntityReverse                  |       55 |          5 |        |                                 |       |
 | ric       | RicGetFreeEntityReverse                  |       55 |          5 |        |                                 |       |
@@ -951,8 +951,8 @@
 | dra       | PlaySeq                                  |       86 |          9 |        |                                 |       |
 | dra       | func_80113D7C                            |       86 |         11 |        |                                 |       |
 | dra       | DoCdCommand                              |       86 |         12 |        |                                 |       |
+| maria     | func_pspeu_092A9C28                      |       86 |         17 |        |                                 |       |
 | maria_psp | func_pspeu_092A81C0                      |       86 |         17 |        |                                 |       |
-| maria_psp | func_pspeu_092A9C28                      |       86 |         17 |        |                                 |       |
 | dra       | MenuButtonConfigDraw                     |       87 |          7 |        | https://decomp.me/scratch/UXNOu | 0.906 |
 | lib       | func_psp_09269FF0                        |       87 |          8 |        | https://decomp.me/scratch/ERUMB | 0.999 |
 | st0       | EntityCutscenePhotographFire             |       87 |         10 |        |                                 |       |
@@ -1193,7 +1193,7 @@
 | maria     | pl_blueprints.rodata                     |      126 |          0 | Yes    |                                 |       |
 |           | UpdatePrimWhenAlucardIsBat               |      126 |          5 |        |                                 |       |
 | dra       | EntityWingSmashTrail                     |      126 |         10 |        |                                 |       |
-| no4       | func_pspeu_09242200                      |      126 |         15 |        |                                 |       |
+| no4       | func_pspeu_09242200                      |      126 |         15 |        | https://decomp.me/scratch/x22Pj | 0.993 |
 | dra       | LoadEquipIcon                            |      127 |          9 |        | https://decomp.me/scratch/ro2ER | 1.0   |
 | chi       | EntityHeartDrop                          |      127 |         11 |        |                                 |       |
 | lib       | EntityHeartDrop                          |      127 |         11 |        |                                 |       |
@@ -1270,7 +1270,7 @@
 | dra       | UnknownEntId49                           |      154 |         11 |        |                                 |       |
 | ric       | RicEntityArmBrandishWhip                 |      154 |         15 |        |                                 |       |
 | dra       | func_80135D8C                            |      155 |         10 |        | https://decomp.me/scratch/4iCJL | 1.0   |
-| maria_psp | func_pspeu_092AAA38                      |      155 |         10 |        |                                 |       |
+| maria     | func_pspeu_092AAA38                      |      155 |         10 |        | https://decomp.me/scratch/hnxZ5 | 0.996 |
 | dra       | func_80123F78                            |      155 |         14 |        | https://decomp.me/scratch/rLwSV | 0.967 |
 | no3       | EntityDistantTreeMaker                   |      155 |         16 |        |                                 |       |
 | dra       | func_8012ED30                            |      156 |         26 |        |                                 |       |
@@ -1350,7 +1350,7 @@
 | ric       | RicEntitySubwpnBibleTrail                |      188 |         14 |        |                                 |       |
 | maria     | CheckBladeDashInput                      |      189 |         29 |        |                                 |       |
 | ric       | CheckBladeDashInput                      |      189 |         29 |        |                                 |       |
-| maria_psp | func_pspeu_092A9978                      |      191 |         30 |        |                                 |       |
+| maria     | func_pspeu_092A9978                      |      191 |         30 |        | https://decomp.me/scratch/Gn1Se | 0.999 |
 |           | UpdatePrimitives                         |      192 |          6 |        |                                 |       |
 | st0       | EntityDraculaRainAttack                  |      192 |         37 |        | https://decomp.me/scratch/y31mz | 0.997 |
 | no4       | func_pspeu_09249FA0                      |      193 |         24 |        | https://decomp.me/scratch/cLBEx | 0.999 |
@@ -1385,7 +1385,7 @@
 | dra       | PlayerStepKillWater                      |      209 |         21 |        |                                 |       |
 | no4       | EntityThrownBarrel                       |      209 |         23 |        |                                 |       |
 | no3       | EntityUnkId2F                            |      209 |         25 |        |                                 |       |
-| maria_psp | func_pspeu_092A9288                      |      211 |         19 |        |                                 |       |
+| maria     | func_pspeu_092A9288                      |      211 |         19 |        | https://decomp.me/scratch/tpmLi | 0.995 |
 | dra       | CheckAndDoLevelUp                        |      211 |         20 |        |                                 |       |
 | lib       | e_shop.rodata                            |      212 |          0 | Yes    |                                 |       |
 | maria     | func_801623E0                            |      212 |         12 |        |                                 |       |
@@ -1580,7 +1580,7 @@
 | st0       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | wrp       | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | dra       | func_80123B40                            |      342 |         25 |        |                                 |       |
-| maria_psp | func_pspeu_092AB1C0                      |      344 |         32 |        |                                 |       |
+| maria     | func_pspeu_092AB1C0                      |      344 |         32 |        | https://decomp.me/scratch/zL9P3 | 0.999 |
 | dra       | func_800FE044                            |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
 | maria     | MarEntityApplyMariaPowerAnim             |      346 |         27 |        |                                 |       |
 | ric       | RicEntityApplyMariaPowerAnim             |      346 |         27 |        | https://decomp.me/scratch/YzZxq | 0.999 |
@@ -1620,7 +1620,7 @@
 | st0       | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | wrp       | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
 | dra       | AluInit                                  |      374 |         48 |        |                                 |       |
-| maria_psp | func_pspeu_092AAC80                      |      377 |         41 | Yes    |                                 |       |
+| maria     | func_pspeu_092AAC80                      |      377 |         41 | Yes    | https://decomp.me/scratch/r2wfw | 0.999 |
 | dra       | func_80121F58                            |      381 |         27 |        |                                 |       |
 | lib       | EntityBloodSplatter                      |      382 |         41 |        | https://decomp.me/scratch/UwC1g | 0.999 |
 | maria     | MarStepCrouch                            |      384 |         75 |        |                                 |       |
@@ -1828,7 +1828,7 @@
 | lib       | func_psp_0923FCD8                        |      787 |        114 |        | https://decomp.me/scratch/8TzeH | 0.995 |
 | chi       | EntityFallingStairs                      |      791 |         88 |        | https://decomp.me/scratch/Bg0u3 | 0.997 |
 | st0       | EntityPrizeDrop                          |      797 |         92 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
-| maria_psp | func_pspeu_092A9E88                      |      800 |         95 |        |                                 |       |
+| maria_psp | func_pspeu_092A9E88                      |      800 |         95 |        | https://decomp.me/scratch/pSjYO | 0.978 |
 | maria     | MarEntityHitByIce                        |      802 |         82 |        |                                 |       |
 | ric       | RicEntityHitByIce                        |      802 |         82 |        | https://decomp.me/scratch/gPKNt | 0.997 |
 | lib       | func_us_801B8234                         |      803 |         77 | Yes    |                                 |       |
@@ -1937,8 +1937,8 @@
 | no3       | EntityFireWarg                           |     2168 |        322 | Yes    |                                 |       |
 | lib       | LIB_EntityCutscene                       |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra       | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
-| st0       | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.906 |
-| no3       | NO3_EntityCutscene                       |     2232 |        204 | Yes    |                                 |       |
+| st0       | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.919 |
+| no3       | NO3_EntityCutscene                       |     2232 |        204 | Yes    | https://decomp.me/scratch/390gi | 0.989 |
 | no4       | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra       | EntityAlucard                            |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra       | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
