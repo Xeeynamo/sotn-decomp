@@ -20,7 +20,7 @@ typedef enum EntityIDs {
     // /* 0x0B */ E_RELIC_ORB,
     /* 0x0C */ E_HEART_DROP = 0x0C,
     // /* 0x0D */ E_ENEMY_BLOOD,
-    // /* 0x0E */ E_MESSAGE_BOX = 0x0E,
+    /* 0x0E */ E_MESSAGE_BOX = 0x0E,
     // /* 0x0F */ E_DUMMY_0F,
     // /* 0x10 */ E_DUMMY_10,
     // /* 0x11 */ E_ID_11 = 0x11,
@@ -44,8 +44,8 @@ typedef enum EntityIDs {
     // /* 0x23 */ E_ID_23,
     // /* 0x24 */ E_ID_24,
     // /* 0x25 */ E_ID_25,
-    // /* 0x26 */ E_ID_26,
-    // /* 0x27 */ E_ID_27,
+    /* 0x26 */ E_ID_26 = 0x26,
+    /* 0x27 */ E_ID_27 = 0x27,
     // /* 0x28 */ E_ID_28,
     // /* 0x29 */ E_ID_29,
     // /* 0x2A */ E_ID_2A,
@@ -133,6 +133,9 @@ extern EInit g_EInitSkeletonApeBarrel;
 extern EInit g_EInitSkeletonApePunch;
 extern EInit g_EInitKillerFish;
 
+extern void (*g_api_func_80134678)(s32, s16);
+extern s32 D_us_80181108;
+extern s16 D_us_8018159C[];
 extern s16 D_us_801DF788;
 extern s16 D_us_801DF78A;
 extern s8 D_us_801DF78E;

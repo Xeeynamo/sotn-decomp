@@ -61,6 +61,7 @@ enum SfxModes {
 #define SET_UNK_92 0x92
 #define SET_RELEASE_RATE_HIGH_20_21 0xa1
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
+#define SET_UNK_A6 0xA6
 #define SET_RELEASE_RATE_LOW_22_23 0xa7
 #define SET_KEY_ON_20_21 0xa4
 #define SET_KEY_ON_22_23 0xa8
@@ -291,6 +292,7 @@ enum SfxModes {
 // STAGE NO4
 #define SFX_TOAD_CROAK 0x71A
 #define SFX_FROG_CROAK 0x71B
+#define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_RBO5_UNK_7AE 0x7AE
@@ -631,6 +633,7 @@ enum Sfx {
     SFX_WARG_GROWL,
     SFX_GHOST_ENEMY_HOWL = 1849,
     SFX_CTULHU_LAUGH = 1880,
+    SFX_UNK_797 = 1943,
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,

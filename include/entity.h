@@ -3080,6 +3080,24 @@ typedef struct {
     /* 0x80 */ u32 swimCount;
 } ET_KillerFish;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 unk88;
+} ET_801C801C;
+
+typedef struct {
+    /* 0x7C */ u16 waterHeight;
+    /* 0x7E */ struct Entity* entity7E;
+    /* 0x82 */ struct Entity* entity82;
+    /* 0x86 */ u8 pad86[8];
+    /* 0x90 */ u16 unk90;
+} ET_WaterAlcove;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3344,6 +3362,8 @@ typedef union { // offset=0x7C
     ET_FrogToad frogToad;
     ET_Fishhead fishhead;
     ET_KillerFish killerFish;
+    ET_801C801C et_801C801C;
+    ET_WaterAlcove et_waterAlcove;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
