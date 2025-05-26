@@ -941,40 +941,40 @@ void HandleGameOver(void) {
         PlaySfx(MU_LAND_OF_BENEDICTION);
 #else
         if (g_PlayableCharacter != PLAYER_ALUCARD) {
-            PlaySfx(0x33B);
+            PlaySfx(MU_LAND_OF_BENEDICTION);
         } else {
             if (g_StageId == STAGE_BO6) {
                 switch (rand() % 3) {
                 case 0:
-                    PlaySfx(0x3DA);
+                    PlaySfx(VO_GAMEOVER_RICHTER_TAUNT_1);
                     break;
                 case 1:
-                    PlaySfx(0x3DB);
+                    PlaySfx(VO_GAMEOVER_RICHTER_TAUNT_2);
                     break;
                 case 2:
-                    PlaySfx(0x3DC);
+                    PlaySfx(VO_GAMEOVER_RICHTER_TAUNT_3);
                     break;
                 }
             } else if (g_StageId == STAGE_DRE) {
-                PlaySfx(0x391);
+                PlaySfx(VO_GAMEOVER_SUCCUBUS_TAUNT);
             } else if (g_StageId == STAGE_RBO2) {
                 switch (rand() % 3) {
                 case 0:
-                    PlaySfx(0x52E);
+                    PlaySfx(VO_GAMEOVER_DEATH_TAUNT_1);
                     break;
                 case 1:
-                    PlaySfx(0x52F);
+                    PlaySfx(VO_GAMEOVER_DEATH_TAUNT_2);
                     break;
                 case 2:
-                    PlaySfx(0x530);
+                    PlaySfx(VO_GAMEOVER_DEATH_TAUNT_3);
                     break;
                 }
             } else if (TimeAttackController(TIMEATTACK_EVENT_FIRST_MARIA_MEET,
                                             TIMEATTACK_GET_RECORD) &&
                        (rand() & 7) == 0) {
-                PlaySfx(0x3CE);
+                PlaySfx(VO_GAMEOVER_MARIA);
             } else {
-                PlaySfx(0x33B);
+                PlaySfx(MU_LAND_OF_BENEDICTION);
             }
         }
 #endif

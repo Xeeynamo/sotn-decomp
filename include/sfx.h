@@ -79,8 +79,9 @@ enum SfxModes {
 
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
-typedef enum {
-    // mostly follows D_psp_091893B8
+enum {
+    // us: includes US build
+    // jp: includes HD and PSP builds
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
     /* us:0x302, jp:0x302 */ MU_LOST_PAINTING_LOOP_POINT,
     /* us:0x303, jp:0x303 */ MU_CURSE_ZONE,
@@ -120,9 +121,9 @@ typedef enum {
     /* us:0x325, jp:0x325 */ MU_THE_DOOR_TO_THE_ABYSS,
     /* us:0x326, jp:0x326 */ MU_THE_DOOR_TO_THE_ABYSS_LOOP_POINT,
 #if defined(VERSION_US)
-    /* us:0x327, jp:?     */ MU_METAMORPHOSIS,
-    /* us:0x328, jp:?     */ MU_METAMORPHOSIS_II,
-    /* us:0x329, jp:?     */ MU_METAMORPHOSIS_III,
+    /* us:0x327           */ MU_METAMORPHOSIS,
+    /* us:0x328           */ MU_METAMORPHOSIS_II,
+    /* us:0x329           */ MU_METAMORPHOSIS_III,
 #endif
     /* us:0x32A, jp:0x327 */ SE_INTRO_WIND,
     /* us:0x32B, jp:0x328 */ SE_INTRO_WIND_LOOP_POINT,
@@ -147,7 +148,16 @@ typedef enum {
     /* us:0x33E, jp:0x33B */ MU_LAND_OF_BENEDICTION,
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
-} BGMs;
+
+    /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
+    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
+    /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
+    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2 = 0x3DB,
+    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3 = 0x3DC,
+    /*           jp:0x52E */ VO_GAMEOVER_DEATH_TAUNT_1 = 0x52E,
+    /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2 = 0x52F,
+    /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3 = 0x530,
+};
 
 // japanese intro narration
 #define JP_VO_KATSUTE 0x341 // Narrator says "Katsute ..."
