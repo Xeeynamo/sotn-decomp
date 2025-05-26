@@ -273,7 +273,6 @@ extern u16 D_80181A30[];
 extern u16 D_80181A34[];
 extern u16 D_80181A38[];
 extern s16 D_80181A3C[];
-extern const char D_801813F0[];
 extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;

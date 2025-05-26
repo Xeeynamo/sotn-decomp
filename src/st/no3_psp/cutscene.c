@@ -74,8 +74,20 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../cutscene_actor_name_psp.h"
 
-
+//BSS
+s32 g_IsCutsceneDone; // 9260
+extern u8 D_80181A2C[];
+extern s32 g_CutsceneHasControl;
+extern u16 D_pspeu_09299278[];
 extern u8 D_pspeu_09299478[];
+extern u8* D_pspeu_092997F8[];
+extern u8 D_pspeu_09299818;
+extern Dialogue g_Dialogue;
+extern s32 g_SkipCutscene; // 9860
+extern u32 g_CutsceneFlags;
+
+
+
 void CutsceneUnk3(s16 yOffset) {
     RECT rect;
 
@@ -125,13 +137,7 @@ static u16 D_80181A30[] = {0x2E0, 0x2E8};
 static u16 D_80181A34[] = {0x100, 0x120};
 static u16 D_80181A38[] = {0x1A1, 0x1A1};
 extern s16 D_80181A3C[] = {8, 19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47, 19, 25, 77, 75, 23, 29, 18, 2, 27, 42, 80, 69, 50, 13, 42, 77, 6, 39, 7, 72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11, 73, 66, 61, 42, 1, 12, 27, 52, 65, 53, 8, 14, 77, 17, 52, 65, 41, 72,};
-extern const char D_801813F0[];
 
-//BSS
-s32 g_IsCutsceneDone; // 9260
-extern u8 D_80181A2C[];
-extern s32 g_SkipCutscene; // 9860
-extern u32 g_CutsceneFlags;
 extern u16 D_801D7D60;
 extern s32 D_801D7D5C;
 extern u16 D_80180B3C[];
@@ -139,7 +145,6 @@ extern Dialogue g_Dialogue;
 extern u8* OVL_EXPORT(cutscene_data);
 
 extern s32 E_ID(BG_LIGHTNING);
-extern u16 D_pspeu_09299278[];
 extern s32 D_pspeu_09299820;
 extern u8 D_pspeu_09296D28[];
 extern s32 D_pspeu_09296D30[];
@@ -155,9 +160,7 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 extern u_long D_8943B8C;
 
-extern u8* D_pspeu_092997F8[];
 
-extern u8 D_pspeu_09299818;
 
 void OVL_EXPORT(EntityCutscene)(Entity* self) {
     s16 uCoord; //sp4e
