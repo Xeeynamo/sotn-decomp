@@ -149,6 +149,44 @@ enum {
     /* us:0x33F, jp:0x33C */ MU_NOCTURNE,
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
+#if defined(VERSION_US)
+    // japanese intro: "Katsute ..."
+    /* us:0x341           */ JP_VO_NARRATOR_KATSUTE,
+
+    // japanese intro: "Soshite 5 nen no tsukihi ga nagareta"
+    /* us:0x342           */ JP_VO_NARRATOR_SOSHITE,
+
+    // japanese intro: "Akumajo Dracula X Gekka no Yasoukyoku"
+    /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO,
+
+#elif defined(VERSION_PSP)
+    __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
+#endif
+
+    // used for the japanese sound test, messages from the developers
+    /* us:0x344, jp:0x342 */ JP_VO_FUKAMI_RIKA_MESSAGE,      // Fukami Rika
+    /* us:0x345, jp:0x343 */ JP_VO_SHIINA_HEKIRU_MESSAGE,    // Shiina Hekiru
+    /* us:0x346, jp:0x344 */ JP_VO_YANADA_KIYOYUKI_MESSAGE,  // Yanada Kiyoyuki
+    /* us:0x347, jp:0x345 */ JP_VO_OKIAYU_RYOUTAROU_MESSAGE, // Okiayu Ryoutarou
+    /* us:0x348, jp:0x346 */ JP_VO_SATOU_MASAHARU_MESSAGE,   // Satou Masaharu
+    /* us:0x349, jp:0x347 */ JP_VO_WAKAMOTO_NORIO_MESSAGE,   // Wakamoto Norio
+    /* us:0x34A, jp:0x348 */ JP_VO_YOKOYAMA_CHISA_MESSAGE,   // Yokoyama Chisa
+    /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
+
+    // various voice actors saying konami
+    /* us:0x34C           */ JP_VO_KONAMI_1,  // woman says konami
+    /* us:0x34D           */ JP_VO_KONAMI_2,  // woman says konami
+    /* us:0x34E           */ JP_VO_KONAMI_3,  // woman says konami
+    /* us:0x34F           */ JP_VO_KONAMI_4,  // man says kona (mi cut off?)
+    /* us:0x350           */ JP_VO_KONAMI_5,  // man says kona (mi cut off?)
+    /* us:0x351           */ JP_VO_KONAMI_6,  // man says konami
+    /* us:0x352           */ JP_VO_KONAMI_7,  // man says konami
+    /* us:0x353           */ JP_VO_KONAMI_8,  // man says konami
+    /* us:0x354           */ JP_VO_KONAMI_9,  // woman says konami
+    /* us:0x355           */ JP_VO_KONAMI_10, // woman says konami
+    /* us:0x356           */ JP_VO_KONAMI_11, // man says konami
+    /* us:0x357           */ JP_VO_KONAMI_12, // man says konami
+
     /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
     /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
     /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
@@ -158,48 +196,6 @@ enum {
     /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2 = 0x52F,
     /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3 = 0x530,
 };
-
-// japanese intro narration
-#define JP_VO_KATSUTE 0x341 // Narrator says "Katsute ..."
-#define JP_VO_SOSHITE                                                          \
-    0x342 // Narrator says "Soshite 5 nen no tsukihi ga nagareta"
-#define JP_VO_AKUMAJO                                                          \
-    0x343 // Narrator says "Akumajo Dracula X Gekka no Yasoukyoku"
-
-// japanese voice actor messages
-#ifdef VERSION_PSP
-#define JP_VO_FUKAMI_RIKA_MESSAGE 0x342      // Message from Fukami Rika
-#define JP_VO_SHIINA_HEKIRU_MESSAGE 0x343    // Message from Shiina Hekiru
-#define JP_VO_YANADA_KIYOYUKI_MESSAGE 0x344  // Message from Yanada Kiyoyuki
-#define JP_VO_OKIAYU_RYOUTAROU_MESSAGE 0x345 // Message from Okiayu Ryoutarou
-#define JP_VO_SATOU_MASAHARU_MESSAGE 0x346   // Message from Satou Masaharu
-#define JP_VO_WAKAMOTO_NORIO_MESSAGE 0x347   // Message from Wakamoto Norio
-#define JP_VO_YOKOYAMA_CHISA_MESSAGE 0x348   // Message from Yokoyama Chisa
-#define JP_VO_YANAMI_JYOUJI_MESSAGE 0x349    // Message from Yanami Jyouji
-#else
-#define JP_VO_FUKAMI_RIKA_MESSAGE 0x344      // Message from Fukami Rika
-#define JP_VO_SHIINA_HEKIRU_MESSAGE 0x345    // Message from Shiina Hekiru
-#define JP_VO_YANADA_KIYOYUKI_MESSAGE 0x346  // Message from Yanada Kiyoyuki
-#define JP_VO_OKIAYU_RYOUTAROU_MESSAGE 0x347 // Message from Okiayu Ryoutarou
-#define JP_VO_SATOU_MASAHARU_MESSAGE 0x348   // Message from Satou Masaharu
-#define JP_VO_WAKAMOTO_NORIO_MESSAGE 0x349   // Message from Wakamoto Norio
-#define JP_VO_YOKOYAMA_CHISA_MESSAGE 0x34A   // Message from Yokoyama Chisa
-#define JP_VO_YANAMI_JYOUJI_MESSAGE 0x34B    // Message from Yanami Jyouji
-#endif
-
-// various voice actors saying konami
-#define JP_VO_KONAMI_1 0x34C  // woman says konami
-#define JP_VO_KONAMI_2 0x34D  // woman says konami
-#define JP_VO_KONAMI_3 0x34E  // woman says konami
-#define JP_VO_KONAMI_4 0x34F  // man says kona (mi cut off?)
-#define JP_VO_KONAMI_5 0x350  // man says kona (mi cut off?)
-#define JP_VO_KONAMI_6 0x351  // man says konami
-#define JP_VO_KONAMI_7 0x352  // man says konami
-#define JP_VO_KONAMI_8 0x353  // man says konami
-#define JP_VO_KONAMI_9 0x354  // woman says konami
-#define JP_VO_KONAMI_10 0x355 // woman says konami
-#define JP_VO_KONAMI_11 0x356 // man says konami
-#define JP_VO_KONAMI_12 0x357 // man says konami
 
 // Prologue cutscene
 #define NA_VO_RI_DIE_MONSTER 0x358 // Richter says "Die monster ..."
