@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
-#include "sfx.h"
 
 // pushes alucard to the right
-void EntityPushAlucard(Entity* entity) {
+void EntityPushAlucard(Entity* self) {
     Entity* player = &PLAYER;
     Tilemap* tilemap = &g_Tilemap;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
+#ifdef VERSION_PSP
+        g_CastleFlags[PROLOGUE_COMPLETE] = 0;
+#endif
         g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
         g_Player.padSim = 0;
         g_Player.demo_timer = 255;
@@ -24,7 +26,7 @@ void EntityPushAlucard(Entity* entity) {
         if (tilemap->scrollX.i.hi > 0x800) {
             g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
             g_Player.padSim = PAD_RIGHT;
-            entity->step++;
+            self->step++;
         }
         player->animCurFrame = 0;
         g_Player.demo_timer = 1;
@@ -35,8 +37,8 @@ void EntityPushAlucard(Entity* entity) {
         player->posX.val += FIX(8.5);
         g_unkGraphicsStruct.unkC += 4;
         if (g_unkGraphicsStruct.unkC == 192) {
-            entity->ext.alucardController.unk80 = FIX(4.5);
-            entity->step++;
+            self->step++;
+            self->ext.alucardController.unk80 = FIX(4.5);
         }
         g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
@@ -45,13 +47,13 @@ void EntityPushAlucard(Entity* entity) {
     case 3:
         if (g_unkGraphicsStruct.unkC > 128) {
             g_unkGraphicsStruct.unkC -= 1;
-            entity->ext.alucardController.unk80 = FIX(3.5);
+            self->ext.alucardController.unk80 = FIX(3.5);
         } else {
-            entity->ext.alucardController.unk80 = FIX(4.5);
+            self->ext.alucardController.unk80 = FIX(4.5);
         }
-        player->posX.val += entity->ext.alucardController.unk80;
-        if (entity->ext.alucardController.unk80 == FIX(4.5)) {
-            entity->step++;
+        player->posX.val += self->ext.alucardController.unk80;
+        if (self->ext.alucardController.unk80 == FIX(4.5)) {
+            self->step++;
         }
         g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
@@ -62,35 +64,35 @@ void EntityPushAlucard(Entity* entity) {
         if (tilemap->scrollX.i.hi > 0xF80) {
             g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
-            entity->ext.alucardController.unk7C = false;
-            entity->step++;
+            self->ext.alucardController.unk7C = false;
+            self->step++;
         }
         g_Player.demo_timer = 1;
         g_api.func_8010E0A8();
         break;
 
     case 5:
-        if ((player->velocityY > 0) &&
-            (entity->ext.alucardController.unk7C == false)) {
+        if ((player->velocityY > 0) && !self->ext.alucardController.unk7C) {
             g_Player.padSim = PAD_CROSS;
-            entity->ext.alucardController.unk7C = true;
+            self->ext.alucardController.unk7C = true;
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
         g_api.func_8010E0A8();
-        g_Player.demo_timer = 1;
         player->posX.val += FIX(4.5);
+        g_Player.demo_timer = 1;
     }
 }
 
 // Pushes Alucard through the castle door at the entrance
-void EntityCastleDoorTransition(Entity* entity) {
+void EntityCastleDoorTransition(Entity* self) {
     Entity* player = &PLAYER;
+    Tilemap* tilemap = &g_Tilemap;
 
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         if (g_CastleFlags[PROLOGUE_COMPLETE]) {
-            DestroyEntity(entity);
+            DestroyEntity(self);
             return;
         }
         InitializeEntity(g_EInitSpawner);
@@ -98,138 +100,180 @@ void EntityCastleDoorTransition(Entity* entity) {
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 8;
-        entity->ext.castleDoorTransition.playerVelocity = 0x28000;
+        self->ext.castleDoorTransition.playerVelocity = FIX(2.5);
         break;
 
     case 1:
-        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
+        player->posX.val += self->ext.castleDoorTransition.playerVelocity;
         g_Player.demo_timer = 1;
-        if ((player->posX.i.hi + g_Tilemap.scrollX.i.hi) > 120) {
+        if ((player->posX.i.hi + tilemap->scrollX.i.hi) > 120) {
             g_Player.padSim = 0;
-            entity->step++;
+            self->step++;
         }
         break;
 
     case 2:
-        if (entity->ext.castleDoorTransition.playerVelocity != 0) {
-            entity->ext.castleDoorTransition.playerVelocity -= 0x2800;
+        if (self->ext.castleDoorTransition.playerVelocity != 0) {
+            self->ext.castleDoorTransition.playerVelocity -= FIX(5.0 / 32);
             EntityExplosionVariantsSpawner(
-                &PLAYER, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
+                player, 1, 1, 4, 0x18, (Random() & 3) + 1, -4);
         } else {
+            self->step++;
             g_PauseAllowed = true;
-            entity->step++;
         }
-        player->posX.val += entity->ext.castleDoorTransition.playerVelocity;
+        player->posX.val += self->ext.castleDoorTransition.playerVelocity;
         g_Player.demo_timer = 1;
+        break;
+    case 3:
         break;
     }
 }
 
+static u16 foregroundTreeData1[] = {
+    0x0080, 0x0290, 0x0130, 0x0498, 0x01E0, 0x0480, 0x0290, 0x028A, 0x0340,
+    0x0298, 0x03F8, 0x0290, 0x04A0, 0x0480, 0x0554, 0x0288, 0x0608, 0x0498,
+    0x06B6, 0x0494, 0x0760, 0x0284, 0x0810, 0x0290, 0x08C0, 0x0498, 0x0970,
+    0x028E, 0x0A20, 0x0298, 0x0AD0, 0x0482, 0x0B88, 0x0288, 0x0C38, 0x0280,
+    0x0CE0, 0x0498, 0x0D90, 0x0286, 0x0E50, 0x0286, 0x0F10, 0x0286, 0x0FD8,
+    0x0286, 0x10A0, 0x0286, 0x1160, 0x0286, 0x1240, 0x0286, 0x1320, 0x0286,
+    0x1400, 0x0286, 0x14E8, 0x0286, 0x15D0, 0x0286, 0x16C0, 0x0286, 0x17C0,
+    0x0286, 0x18D0, 0x0286, 0x19A0, 0x0286, 0xFFFF, 0x0290};
+static u16 foregroundTreeData2[] = {
+    0x0040, 0x0290, 0x00C0, 0x0498, 0x0140, 0x0480, 0x01C0, 0x028A, 0x0240,
+    0x0298, 0x02C8, 0x0290, 0x0348, 0x0480, 0x03C0, 0x0288, 0x0440, 0x0498,
+    0x04C8, 0x0494, 0x0548, 0x0284, 0x05C0, 0x0290, 0x0640, 0x0498, 0x06C0,
+    0x028E, 0x0740, 0x0298, 0x07C0, 0x0482, 0x0848, 0x0288, 0x08C8, 0x0280,
+    0x0940, 0x0498, 0x09C0, 0x0286, 0x0A48, 0x0286, 0x0AD0, 0x0290, 0x0B58,
+    0x0482, 0x0BE0, 0x0298, 0x0C70, 0x0288, 0x0D00, 0x0286, 0x0D90, 0x0480,
+    0x0E30, 0x0292, 0x0EE0, 0x0296, 0x0FC0, 0x0488, 0x10C0, 0x0294, 0x1200,
+    0x0482, 0xFFFF, 0x0290};
 // large foreground tree during intro
 void EntityForegroundTree(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
-    Entity *EntRange, *ent, *ent2;
     u16* ptrParams;
-    u16 temp_s4;
-    s16 var_s3;
-    u16 y;
+    u16 var_s4;
+    u16 var_s3;
+    Entity *ent, *ent2;
 
-    if (self->params != 0) {
-        var_s3 = 320;
-        ptrParams = &D_80181468[self->ext.foregroundTree.unk7C].x;
+    if (self->params) {
+        var_s4 = 320;
+        ptrParams = &foregroundTreeData2[self->ext.utimer.t * 2];
     } else {
-        var_s3 = 448;
-        ptrParams = &D_801813DC[self->ext.foregroundTree.unk7C].x;
+        var_s4 = 448;
+        ptrParams = &foregroundTreeData1[self->ext.utimer.t * 2];
     }
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        EntRange = &g_Entities[192];
-        self->unk68 = var_s3;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        if (*ptrParams <= 352) {
-            ent = AllocEntity(EntRange, &EntRange[64]);
+        self->unk68 = var_s4;
+        // This is a weird way to make a while-loop.
+        while (true) {
+            if (*ptrParams > 352) {
+                break;
+            }
+            ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
                 ent->posX.i.hi = *ptrParams++;
-                y = *ptrParams++;
-                ent->params = (y >> 8) + self->params;
-                ent->posY.i.hi = y & 255;
-                ent->unk68 = var_s3;
-                if (self->params != 0) {
+                var_s3 = *ptrParams++;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
                     ent->unk6C = 0x60;
                 }
             } else {
                 ptrParams += 2;
             }
-            self->ext.foregroundTree.unk7C++;
-            goto label;
+            self->ext.utimer.t++;
         }
         break;
 
     case 1:
         self->posX.i.hi = 128;
-        temp_s4 = var_s3 * tilemap->scrollX.i.hi / 256 + 352;
-        if (temp_s4 >= *ptrParams) {
+        var_s3 = tilemap->scrollX.i.hi * var_s4 / 256 + 352;
+        if (var_s3 >= *ptrParams) {
             ent = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (ent != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, ent);
-                ent->posX.i.hi = temp_s4 - ptrParams[0] + 368;
-                y = ptrParams[1];
-                ent->params = (y >> 8) + self->params;
-                ent->posY.i.hi = y & 255;
-                ent->unk68 = var_s3;
-                if (self->params != 0) {
+                ent->posX.i.hi = var_s3 - *ptrParams++ + 368;
+                var_s3 = *ptrParams;
+                ent->params = ((var_s3 >> 8) & 0xFF) + self->params;
+                ent->posY.i.hi = var_s3 & 255;
+                ent->unk68 = var_s4;
+                if (self->params) {
                     ent->unk6C = 0x60;
-                } else if (self->ext.foregroundTree.unk7C == 7) {
+                } else if (self->ext.utimer.t == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi -= 16;
-                } else if (self->ext.foregroundTree.unk7C == 10) {
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
+                } else if (self->ext.utimer.t == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi += 48;
-                } else if (self->ext.foregroundTree.unk7C == 15) {
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
+                } else if (self->ext.utimer.t == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
-                    ent2->unk68 = var_s3;
-                    ent2->unk6C = 0x40;
                     ent2->posY.i.hi += 4;
+                    ent2->unk68 = var_s4;
+                    ent2->unk6C = 0x40;
                 }
             }
-            self->ext.foregroundTree.unk7C++;
+            self->ext.utimer.t++;
         }
     }
 }
 
-void EntityUnkId50(Entity* self) {
+// Entries are all pairs of (Xpos, params).
+// Ultimately, ends up creating a huge number of entities showing animations
+// of frames 41, 42, 43, 44 from animset 0x8001. These are generally bushes
+// and foliage - use display_animation.py to confirm.
+#define XP(x, p) x, p
+static u16 foliageParams[] = {
+    XP(32, 6),   XP(62, 7),   XP(94, 8),   XP(126, 7),  XP(156, 9),
+    XP(224, 6),  XP(254, 8),  XP(284, 9),  XP(368, 6),  XP(398, 8),
+    XP(430, 7),  XP(462, 7),  XP(494, 8),  XP(526, 7),  XP(556, 9),
+    XP(672, 6),  XP(702, 7),  XP(734, 8),  XP(764, 9),  XP(864, 6),
+    XP(894, 7),  XP(926, 8),  XP(958, 7),  XP(990, 7),  XP(1020, 9),
+    XP(1120, 6), XP(1150, 7), XP(1182, 7), XP(1214, 8), XP(1246, 7),
+    XP(1278, 7), XP(1310, 8), XP(1340, 9), XP(1568, 6), XP(1598, 7),
+    XP(1630, 8), XP(1662, 7), XP(1692, 9), XP(1760, 6), XP(1790, 8),
+    XP(1820, 9), XP(1904, 6), XP(1934, 8), XP(1966, 7), XP(1998, 7),
+    XP(2030, 8), XP(2062, 7), XP(2092, 9), XP(2208, 6), XP(2238, 7),
+    XP(2270, 8), XP(2300, 9), XP(2400, 6), XP(2430, 7), XP(2462, 8),
+    XP(2494, 7), XP(2526, 7), XP(2556, 9), XP(2656, 6), XP(2686, 7),
+    XP(2718, 7), XP(2750, 8), XP(2782, 7), XP(2814, 7), XP(2846, 8),
+    XP(2876, 9), XP(2992, 6), XP(3022, 7), XP(3054, 7), XP(3086, 8),
+    XP(3116, 9), XP(65535, 2)};
+
+// Uses the table above to create a lot of E_BACKGROUND_BLOCK entities.
+void EntityFoliageMaker(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
-    Entity* temp;
     u16 temp_s3;
-    s32 var_v0;
     u16* ptr;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        ptr = D_801814EC;
-        temp = &g_Entities[192];
-        self->unk68 = 0xC0;
-        self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        while (*ptr <= 288) {
-            newEntity = AllocEntity(temp, &temp[64]);
+        self->unk68 = 0xC0;
+        self->ext.utimer.t = 0;
+        ptr = foliageParams;
+        while (true) {
+            if (*ptr > 288) {
+                break;
+            }
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr++;
@@ -238,40 +282,65 @@ void EntityUnkId50(Entity* self) {
             } else {
                 ptr += 2;
             }
-            self->ext.et_801BCC4C.unk7C++;
-            goto label;
+            self->ext.utimer.t++;
         }
         break;
 
     case 1:
         self->posX.i.hi = 128;
-        ptr = &D_801814EC[self->ext.et_801BCC4C.unk7C * 2];
-        var_v0 = tilemap->scrollX.i.hi * 0xC0;
-
-        if (var_v0 < 0) {
-            var_v0 += 0xFF;
-        }
-        temp_s3 = (var_v0 >> 8) + 288;
+        ptr = &foliageParams[self->ext.utimer.t * 2];
+        temp_s3 = tilemap->scrollX.i.hi * 0xC0 / 0x100 + 288;
         if (temp_s3 >= ptr[0]) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
-                newEntity->posX.i.hi = temp_s3 - ptr[0] + 288;
+                newEntity->posX.i.hi = temp_s3 - *ptr++ + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
-                newEntity->params = ptr[1];
+                newEntity->params = *ptr++;
                 newEntity->unk68 = 0xC0;
             }
-            self->ext.et_801BCC4C.unk7C++;
+            self->ext.utimer.t++;
         }
         break;
     }
 }
 
-extern u16 D_801817D4[];
-extern u16 D_801817DC[];
-extern u8 D_801817E4[];
-extern u16 D_801817E8[];
-extern u16* D_801817EC[];
+static u16 pineSet1[] = {
+    0x0010, 0x000B, 0x0031, 0x0003, 0x0040, 0x0102, 0x0068, 0x0104, 0x0088,
+    0x0005, 0x00AC, 0x0103, 0x00D1, 0x0107, 0x00F3, 0x0105, 0x011C, 0x000A,
+    0x0132, 0x0107, 0x0151, 0x010B, 0x0178, 0x010B, 0x0190, 0x0002, 0x01A6,
+    0x010A, 0x01D0, 0x0100, 0x01F2, 0x0102, 0x0220, 0x0005, 0x0231, 0x0108,
+    0x0250, 0x0106, 0x0270, 0x0007, 0x0288, 0x0105, 0x02C0, 0x0009, 0x02E4,
+    0x010A, 0x0308, 0x010B, 0x0324, 0x0104, 0x0354, 0x0102, 0x036B, 0x0004,
+    0x038C, 0x010B, 0x03A8, 0x0107, 0x03D1, 0x0108, 0x03F4, 0x0005, 0x0418,
+    0x0102, 0x0440, 0x0101, 0x046C, 0x0102, 0x0484, 0x0005, 0x04B0, 0x0001,
+    0x04CC, 0x0102, 0x04EF, 0x0107, 0x0514, 0x0107, 0x0538, 0x0006, 0x055B,
+    0x0002, 0x0587, 0x0103, 0x05A1, 0x010B, 0x05C0, 0x0000, 0x05E6, 0x0105,
+    0x0602, 0x0003, 0x062A, 0x010A, 0x064E, 0x0100, 0x0678, 0x0002, 0x069A,
+    0x0107, 0x06C0, 0x0104, 0x06EC, 0x0002, 0x0714, 0x0104, 0x073C, 0x0106,
+    0x0764, 0x000B, 0x0790, 0x0107, 0x07A0, 0x0002, 0x07D0, 0x0105, 0x0810,
+    0x0001, 0xFFFF};
+static u16 pineSet2[] = {
+    0x000C, 0x0100, 0x002A, 0x010A, 0x0048, 0x0004, 0x0066, 0x0100, 0x0084,
+    0x000A, 0x00A2, 0x0101, 0x00C0, 0x000B, 0x00DE, 0x0104, 0x00FD, 0x0103,
+    0x011A, 0x000B, 0x0138, 0x0104, 0x0155, 0x0006, 0x0173, 0x0101, 0x0191,
+    0x0102, 0x01B0, 0x0104, 0x01CE, 0x010B, 0x01EC, 0x0007, 0x0209, 0x0100,
+    0x0228, 0x0104, 0x0246, 0x0101, 0x0264, 0x0105, 0x0282, 0x0009, 0x02A0,
+    0x010B, 0x02BE, 0x0103, 0x02DC, 0x0009, 0x02FB, 0x0001, 0x031A, 0x0108,
+    0x0339, 0x000B, 0x035A, 0x0105, 0x037A, 0x0006, 0x039C, 0x0104, 0x03BE,
+    0x0101, 0x03E0, 0x0104, 0x0402, 0x0101, 0xFFFF};
+static u16 pineSet3[] = {
+    0x000A, 0x0105, 0x0026, 0x0100, 0x0041, 0x0007, 0x005D, 0x0101,
+    0x0078, 0x0008, 0x0094, 0x0101, 0x00B1, 0x0004, 0x00CD, 0x0102,
+    0x00E9, 0x0107, 0x0105, 0x010B, 0x0122, 0x0005, 0x013E, 0x0103,
+    0x015C, 0x0000, 0x0179, 0x0107, 0x019A, 0x010A, 0x01BA, 0x0002,
+    0x01DA, 0x0106, 0x01FE, 0x0000, 0xFFFF};
+static u16 pinesUnk68[] = {0x80, 0x40, 0x20};
+static u16 pineWidths[] = {0x100, 0xD8, 0xB0};
+static u8 pineColors[] = {0x80, 0x60, 0x40};
+static u16 pineCluts[] = {0x17, 0x49};
+static u16* pineSets[] = {pineSet1, pineSet2, pineSet3};
+
 // part of parallax background with pine trees
 void EntityBackgroundPineTrees(Entity* self) {
     Tilemap* gTilemap = &g_Tilemap;
@@ -285,10 +354,10 @@ void EntityBackgroundPineTrees(Entity* self) {
     Primitive* prim_s0;
 
     xpos = self->params; // Temporary reuse of xpos var for params
-    selfUnk68 = D_801817D4[xpos];
-    var_s5 = D_801817EC[xpos];
-    var_s5 += (u16)self->ext.timer.t * 2;
-    var_s4 = D_801817DC[xpos];
+    selfUnk68 = pinesUnk68[xpos];
+    var_s5 = pineSets[xpos];
+    var_s5 += self->ext.utimer.t * 2;
+    var_s4 = pineWidths[xpos];
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
@@ -311,7 +380,7 @@ void EntityBackgroundPineTrees(Entity* self) {
             if (*var_s5 >= 0x121) {
                 return;
             }
-            self->ext.timer.t++;
+            self->ext.utimer.t++;
             for (; prim_s0 != NULL; prim_s0 = prim_s0->next) {
                 if (prim_s0->drawMode == DRAW_HIDE) {
                     break;
@@ -355,7 +424,7 @@ void EntityBackgroundPineTrees(Entity* self) {
 
             xpos = *var_s5++;
 
-            prim_s0->clut = prim_s1->clut = D_801817E8[(xpos >> 8) & 0xFF];
+            prim_s0->clut = prim_s1->clut = pineCluts[(xpos >> 8) & 0xFF];
 
             prim_s0->y2 = prim_s0->y3 =
                 0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
@@ -365,7 +434,7 @@ void EntityBackgroundPineTrees(Entity* self) {
             prim_s1->y2 = prim_s1->y3 = 0x9C;
             prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
             // Set all colors for both prims.
-            PCOL(prim_s0) = PCOL(prim_s1) = D_801817E4[self->params];
+            PCOL(prim_s0) = PCOL(prim_s1) = pineColors[self->params];
             prim_s0->priority = 0x3F - (self->params * 2);
             prim_s1->priority = prim_s0->priority - 1;
             prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
@@ -389,7 +458,7 @@ void EntityBackgroundPineTrees(Entity* self) {
         if (xpos < *var_s5) {
             return;
         }
-        self->ext.timer.t++;
+        self->ext.utimer.t++;
         for (prim_s0 = &g_PrimBuf[self->primIndex]; prim_s0 != NULL;
              prim_s0 = prim_s0->next) {
             if (prim_s0->drawMode == DRAW_HIDE) {
@@ -421,7 +490,7 @@ void EntityBackgroundPineTrees(Entity* self) {
 
                         xpos = *var_s5;
                         prim_s0->clut = prim_s1->clut =
-                            D_801817E8[(xpos >> 8) & 0xFF];
+                            pineCluts[(xpos >> 8) & 0xFF];
                         prim_s0->y2 = prim_s0->y3 =
                             0x9C - ((0x2C - (xpos & 0xFF)) * var_s4 / 256);
                         prim_s0->y0 = prim_s0->y1 =
@@ -430,7 +499,7 @@ void EntityBackgroundPineTrees(Entity* self) {
                         prim_s1->y0 = prim_s1->y1 = 0x9C - 0x30;
                         // Set all colors for both prims.
                         PCOL(prim_s0) = PCOL(prim_s1) =
-                            D_801817E4[self->params];
+                            pineColors[self->params];
                         prim_s0->priority = 0x3F - (self->params * 2);
                         prim_s1->priority = prim_s0->priority - 1;
                         prim_s0->drawMode = prim_s1->drawMode = DRAW_COLORS;
@@ -444,24 +513,29 @@ void EntityBackgroundPineTrees(Entity* self) {
     }
 }
 
-void EntityUnkId52(Entity* self) {
+// Creates background blocks at the specified X locations.
+// Params is always 0x10. The background block's objinit2 array says item
+// 0x10 is using animset 0x8001, and animFrames at 0x80180be0. This pulls
+// animation frame number 0x2D, or 45. That's distant background trees.
+static u16 treeXLocations[] = {0x20, 0x60, 0xA0, 0xE0, 0x120, 0x15F, 0xFFFF};
+
+void EntityDistantTreeMaker(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     Entity* newEntity;
-    Entity* temp;
     u16 temp_s3;
-    s32 var_v0;
     u16* ptr;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
-        ptr = D_801817F8;
-        temp = &g_Entities[192];
-        self->ext.et_801BCC4C.unk7C = 0;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-    label:
-        while (*ptr <= 288) {
-            newEntity = AllocEntity(temp, &temp[64]);
+        self->ext.utimer.t = 0;
+        ptr = treeXLocations;
+        while (true) {
+            if (*ptr > 288) {
+                break;
+            }
+            newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
                 newEntity->posX.i.hi = *ptr;
@@ -469,20 +543,14 @@ void EntityUnkId52(Entity* self) {
                 newEntity->unk68 = 0x18;
             }
             ptr++;
-            self->ext.et_801BCC4C.unk7C++;
-            goto label;
+            self->ext.utimer.t++;
         }
         break;
 
     case 1:
         self->posX.i.hi = 0x80;
-        ptr = &D_801817F8[self->ext.et_801BCC4C.unk7C];
-
-        var_v0 = tilemap->scrollX.i.hi * 0x18;
-        if (var_v0 < 0) {
-            var_v0 += 0xFF;
-        }
-        temp_s3 = (var_v0 >> 8) + 288;
+        ptr = &treeXLocations[self->ext.utimer.t];
+        temp_s3 = tilemap->scrollX.i.hi * 0x18 / 0x100 + 288;
         if (temp_s3 >= *ptr) {
             newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
             if (newEntity != NULL) {
@@ -490,18 +558,50 @@ void EntityUnkId52(Entity* self) {
                 newEntity->posX.i.hi = temp_s3 - *ptr + 288;
                 newEntity->posX.i.lo = self->posX.i.lo;
                 newEntity->params = 0x10;
-                if (self->ext.et_801BCC4C.unk7C == 5) {
-                    newEntity->params = 0x11;
+                if (self->ext.utimer.t == 5) {
+                    newEntity->params++;
                 }
                 newEntity->unk68 = 0x18;
             }
-            self->ext.et_801BCC4C.unk7C++;
+            self->ext.utimer.t++;
         }
         break;
     }
 }
 
-// func_psp_0923F328
+#define XY(x, y) x, y
+static s16 g_EntityCastleBridgeVecXY1[] = {
+    XY(-338, -20), XY(-338, 12),  XY(-304, -20), XY(-304, 12),  XY(-306, -15),
+    XY(-306, 13),  XY(-274, -15), XY(-274, 13),  XY(-242, -15), XY(-242, 13),
+    XY(-210, -15), XY(-210, 13),  XY(-178, -15), XY(-178, 13),  XY(-146, -15),
+    XY(-146, 13),  XY(-114, -15), XY(-114, 13),  XY(-82, -15),  XY(-82, 13),
+    XY(-50, -15),  XY(-50, 13),   XY(-18, -15),  XY(-18, 13),   XY(10, -15),
+    XY(10, 13)};
+static s16 g_EntityCastleBridgeVecXY2[] = {
+    XY(-4, -8),  XY(24, -8),  XY(-4, 8),   XY(24, 8),   XY(12, -3),
+    XY(40, -3),  XY(12, 4),   XY(40, 4),   XY(28, -8),  XY(56, -8),
+    XY(28, 8),   XY(56, 8),   XY(44, -3),  XY(72, -3),  XY(44, 4),
+    XY(72, 4),   XY(60, -8),  XY(88, -8),  XY(60, 8),   XY(88, 8),
+    XY(76, -3),  XY(104, -3), XY(76, 4),   XY(104, 4),  XY(92, -8),
+    XY(120, -8), XY(92, 8),   XY(120, 8),  XY(108, -3), XY(136, -3),
+    XY(108, 4),  XY(136, 4),  XY(124, -8), XY(152, -8), XY(124, 8),
+    XY(152, 8),  XY(140, -3), XY(168, -3), XY(140, 4),  XY(168, 4),
+    XY(156, -8), XY(184, -8), XY(156, 8),  XY(184, 8),  XY(172, -3),
+    XY(200, -3), XY(172, 4),  XY(200, 4),  XY(188, -8), XY(216, -8),
+    XY(188, 8),  XY(216, 8)};
+static u8 g_EntityCastleBridgeUVs[] = {
+    16,  50,  224, 255, 58, 90,  226, 254, 130, 162, 98,  126,
+    170, 198, 192, 208, 74, 102, 129, 136, 170, 198, 208, 192};
+static s16 g_EntityCastleBridgeUVOffsets[] = {
+    0,  8,  4,  8,  4,  8,  4,  8,  4,  8,  4,  12,
+    16, 12, 16, 20, 16, 12, 16, 12, 16, 12, 16, 12};
+static u8 g_EntityCastleBridgePages[] = {
+    14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14,
+    15, 14, 15, 14, 15, 14, 15, 14, 15, 14, 15, 14};
+static u16 g_EntityCastleBridgePriorities[] = {
+    192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 192, 191,
+    192, 191, 192, 191, 192, 191, 192, 191, 192, 191, 192, 191};
+
 void EntityCastleBridge(Entity* self) {
     const u32 primCount = 24;
 
@@ -583,7 +683,7 @@ void EntityCastleBridge(Entity* self) {
                   (player->posX.i.hi + tilemap->scrollX.i.hi);
 
         // divide by zero check
-        if (xOffset >= 0 && cosZ != 0) {
+        if (xOffset >= 0 && cosZ) {
 
             // sinZ / cosZ is suspiciously like a tangent
             xOffset = 172 - ((cosZ * 12) >> 12) - ((xOffset * sinZ) / cosZ);
@@ -625,12 +725,11 @@ void EntityCastleBridge(Entity* self) {
 
     matrix = RotMatrixZ(self->rotZ, matrix);
     SetRotMatrix(matrix);
-    positionsPtr = D_80181808;
+    positionsPtr = g_EntityCastleBridgeVecXY1;
     xOffset = 4563 - tilemap->scrollX.i.hi;
-    vector->vz = 0;
-    prim = &g_PrimBuf[self->primIndex];
 
-    for (primIndex = 0; primIndex < 11; primIndex++) {
+    for (primIndex = 0, vector->vz = 0, prim = &g_PrimBuf[self->primIndex];
+         primIndex < 11; primIndex++) {
         if (primIndex < 2) {
             vector->vx = *positionsPtr++;
             vector->vy = *positionsPtr++;
@@ -685,7 +784,7 @@ void EntityCastleBridge(Entity* self) {
         ratan2(-352 - rotatedVector->vy, -(rotatedVector->vx - 128)), matrix);
     SetRotMatrix(matrix);
 
-    positionsPtr = D_80181870;
+    positionsPtr = g_EntityCastleBridgeVecXY2;
     while (prim != NULL) {
         vector->vx = *positionsPtr++;
         vector->vy = *positionsPtr++;
@@ -715,67 +814,58 @@ void EntityCastleBridge(Entity* self) {
     }
 }
 
-// ID 0x55
 // Mostly just shadows in the far distance.
 // Use texture viewer to confirm.
 void EntityDistantBackgroundTrees(Entity* self) {
+    const s32 X_SPACING = 30;
     Primitive* prim;
-    s16 primIndex;
-    s16 temp_v0_2;
-    s16 var_a2;
+    s32 primIndex;
+    s16 xPos;
 
-    do { //! FAKE:
-        switch (self->step) {
-        case 0:
-            InitializeEntity(g_EInitSpawner);
-            primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
-            if (primIndex == 0) {
-                DestroyEntity(self);
-                return;
-            }
-            prim = &g_PrimBuf[primIndex];
-            var_a2 = 0;
-            self->posX.i.hi = 128;
-            self->primIndex = primIndex;
-            self->unk68 = 0x10;
-            self->flags |= FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-
-            while (prim != NULL) {
-                prim->x0 = prim->x2 = var_a2;
-                var_a2 += 0x1E;
-                prim->tpage = 0xE;
-                prim->clut = 0x67;
-                prim->u0 = prim->u2 = 0x61;
-                prim->u1 = prim->u3 = 0x7F;
-                prim->v0 = prim->v1 = 0xE1;
-                prim->v2 = prim->v3 = 0xFF;
-                prim->x1 = prim->x3 = var_a2;
-                prim->y0 = prim->y1 = 0xC0;
-                prim->y2 = prim->y3 = 0xE3;
-                prim->priority = 0x40;
-                prim->drawMode = DRAW_DEFAULT;
-                prim = prim->next;
-            }
-            break;
-
-        case 1:
-            var_a2 = 128 - self->posX.i.hi;
-            self->posX.i.hi = 0x80;
-            primIndex = self->primIndex;
-            prim = &g_PrimBuf[self->primIndex];
-            while (prim != NULL) {
-                temp_v0_2 = prim->x2 - var_a2;
-                prim->x0 = prim->x2 = temp_v0_2;
-                prim->x1 = prim->x3 = temp_v0_2 + 0x1E;
-                prim = prim->next;
-            }
-            break;
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitSpawner);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
+        if (primIndex == 0) {
+            DestroyEntity(self);
+            return;
         }
-    } while (0);
+        self->flags |= FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        self->posX.i.hi = 128;
+        self->unk68 = 0x10;
+        for (prim = &g_PrimBuf[primIndex], xPos = 0; prim != NULL;
+             prim = prim->next) {
+            prim->tpage = 0xE;
+            prim->clut = 0x67;
+            prim->u0 = prim->u2 = 0x61;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v0 = prim->v1 = 0xE1;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->x0 = prim->x2 = xPos;
+            xPos += X_SPACING;
+            prim->x1 = prim->x3 = xPos;
+            prim->y0 = prim->y1 = 0xC0;
+            prim->y2 = prim->y3 = 0xE3;
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_DEFAULT;
+        }
+        break;
+
+    case 1:
+        xPos = 128 - self->posX.i.hi;
+        self->posX.i.hi = 0x80;
+        for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+             prim = prim->next) {
+            prim->x0 = prim->x2 -= xPos;
+            prim->x1 = prim->x3 = prim->x0 + X_SPACING;
+        }
+        break;
+    }
 }
 
 // shows part of the parallax background castle wall
-void EntityBackgroundCastleWall(Entity* entity) {
+void EntityBackgroundCastleWall(Entity* self) {
     Entity* newEntity;
 
     newEntity = AllocEntity(&g_Entities[192], &g_Entities[256]);
@@ -786,11 +876,144 @@ void EntityBackgroundCastleWall(Entity* entity) {
         newEntity = AllocEntity(newEntity, &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromCurrentEntity(E_BACKGROUND_BLOCK, newEntity);
-            newEntity->params = 0xB;
-            newEntity->posY.i.hi = 0x80;
-            newEntity->unk68 = 0xC0;
             newEntity->posX.i.hi += 0x40;
+            newEntity->posY.i.hi = 0x80;
+            newEntity->params = 0xB;
+            newEntity->unk68 = 0xC0;
         }
     }
-    DestroyEntity(entity);
+    DestroyEntity(self);
+}
+
+static u8 owlAnim1[] = {5, 56, 5, 57, 5, 58, 3, 59, 0};
+static u8 owlAnim2[] = {6, 56, 6, 57, 6, 58, 4, 59, 0};
+
+// intro owl and leaves
+void EntityFlyingOwlAndLeaves(Entity* self) {
+    Tilemap* tilemap;
+    Entity* newEntity;
+    u16 animFlag = true;
+    u16 i;
+
+    tilemap = &g_Tilemap;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 56;
+        if (self->params) {
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
+            self->rotX = 0x180;
+            self->rotY = 0x180;
+            self->unk6C = 0x60;
+            self->posY.i.hi = -16;
+            self->zPriority = 0xC1;
+        } else {
+            self->drawFlags = FLAG_DRAW_UNK8;
+            self->unk6C = 0x20;
+            self->zPriority = 0xBF;
+        }
+        self->unk68 = 0x1C0;
+        break;
+
+    case 1:
+        if (self->posX.i.hi < 224) {
+            self->ext.utimer.t = 0;
+            self->step++;
+        }
+        break;
+
+    case 2:
+        if (!(self->ext.utimer.t++ & 7)) {
+            g_api.PlaySfx(SE_TREE_BRANCH);
+        }
+        if (self->posX.i.hi < 192) {
+            SetStep(3);
+            if (self->params) {
+                self->velocityX = FIX(8);
+                self->velocityY = FIX(3);
+                break;
+            }
+            self->velocityX = FIX(10);
+            self->velocityY = FIX(1.625);
+            for (i = 0; i < 8; i++) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != NULL) {
+                    CreateEntityFromCurrentEntity(E_FALLING_LEAF, newEntity);
+                    newEntity->params = i;
+                }
+            }
+        }
+        break;
+
+    case 3:
+        if (self->params) {
+            animFlag = AnimateEntity(owlAnim2, self);
+            self->velocityY -= 0xA00;
+        } else {
+            animFlag = AnimateEntity(owlAnim1, self);
+            if (self->velocityY > FIX(-2)) {
+                self->velocityY -= FIX(0.03125);
+            }
+        }
+        MoveEntity();
+        if (!self->params && (tilemap->scrollX.i.hi > 0xD80)) {
+            self->step++;
+        }
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
+            DestroyEntity(self);
+        }
+        break;
+
+    case 4:
+        if (self->velocityY > FIX(-2)) {
+            self->velocityY -= FIX(0.03125);
+        }
+        animFlag = AnimateEntity(owlAnim1, self);
+        MoveEntity();
+        if (self->unk6C < 0x78) {
+            self->unk6C += 2;
+        }
+        if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
+            DestroyEntity(self);
+        }
+    }
+
+    if (!animFlag) {
+        PlaySfxPositional(SFX_WING_FLAP_A);
+    }
+}
+
+#define VXY(x, y) FIX(x), FIX(y)
+static s32 leafVelocities[] = {
+    VXY(3, 0),     VXY(5, 1),    VXY(6.375, 1.25), VXY(4.5, 2.5),
+    VXY(6, -0.75), VXY(7, 1.75), VXY(5.25, 2),     VXY(4, -1.0 / 32)};
+// a single leaf from when the owl comes out in the intro
+void EntityFallingLeaf(Entity* self) {
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = (self->params & 1) + 63;
+        self->zPriority = 0xC1;
+        self->velocityX = leafVelocities[self->params * 2];
+        self->velocityY = leafVelocities[self->params * 2 + 1];
+        self->unk68 = 0x1C0;
+        break;
+
+    case 1:
+        if (self->velocityX > 0) {
+            self->velocityX -= FIX(1.0 / 16);
+        }
+        if (self->velocityY < FIX(1.0)) {
+            self->velocityY += FIX(1.0 / 64);
+        }
+        if (self->velocityY > FIX(1.0)) {
+            self->velocityY -= FIX(1.0 / 64);
+        }
+        MoveEntity();
+        break;
+    }
 }

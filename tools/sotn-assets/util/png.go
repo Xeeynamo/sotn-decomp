@@ -16,8 +16,8 @@ func PngEncode(w io.Writer, data []byte, width, height int, palette []color.RGBA
 	if width <= 0 || height <= 0 {
 		return fmt.Errorf("invalid size %dx%d", width, height)
 	}
-	if len(data) != width*height {
-		return fmt.Errorf("data length (%d) ≠ width*height (%d)", len(data), width*height)
+	if len(data) < width*height {
+		return fmt.Errorf("data length (%d) < width*height (%d)", len(data), width*height)
 	}
 	if len(palette) == 0 || len(palette) > 256 {
 		return fmt.Errorf("palette size must be 1–256, got %d", len(palette))

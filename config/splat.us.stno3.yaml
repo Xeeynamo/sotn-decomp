@@ -42,22 +42,23 @@ segments:
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xAAC, data]
-      - [0xDC0, .data, 377D4]
-      - [0xDD0, .data, 377D4]
-      - [0xE50, data]
-      - [0xE70, data]
-      - [0xE80, data]
-      - [0xE90, data]
-      - [0xEA0, .data, entrance_stage_entities]
+      - [0xBB4, .data, e_background_block]
+      - [0xDA0, data]
+      - [0xDC0, .data, e_lock_camera]
+      - [0xE40, .data, e_breakable]
+      - [0xEA0, .data, e_background_lightning]
       - [0x1044, .data, e_castle_door]
       - [0x1140, .data, e_background_bushes_trees]
       - [0x123C, .data, e_trapdoor]
-      - [0x1258, .data, e_jewel_sword_puzzle]
-      - [0x1358, .data, e_sky_entities]
+      - [0x124C, .data, e_jewel_sword_puzzle]
+      - [0x1358, .data, e_death_sky_swirl]
+      - [0x1390, .data, e_sky_entities]
       - [0x13A8, data]
+      - [0x13DC, .data, e_outdoor_ents]
+      - [0x1A28, data]
       - [0x1ACC, .data, cutscene]
-      - [0x1AD4, data]
-      - [0x1B40, data]
+      - [0x1AD4, .data, e_death]
+      - [0x1C20, .data, e_explosion_puff_opaque]
       - [0x1C8C, .data, d_prize_drops]
       - [0x1CA0, .data, st_update]
       - [0x1CEC, .data, collision]
@@ -65,7 +66,8 @@ segments:
       - [0x20C4, .data, st_common]
       - [0x22C4, .data, e_collect]
       - [0x25B4, .data, e_misc]
-      - [0x26D0, data]
+      - [0x26D0, .data, e_particles]
+      - [0x2750, data]
       - [0x3180, data]
       - [0x3858, .data, water_effects]
       - [0x3914, data]
@@ -136,13 +138,12 @@ segments:
       - [0x2EA68, .data, gen/sprites]
       - [0x373E0, .rodata, e_castle_door]
       - [0x37400, .rodata, e_stairway]
-      - [0x37414, .rodata, 3C4EC]
-      - [0x3742C, .rodata, 3E134] #EntityFlyingOwlAndLeaves
+      - [0x37414, .rodata, e_outdoor_ents]
       - [0x37440, .rodata, cutscene] # actor names
       - [0x37458, .rodata, cutscene] # NO3_EntityCutscene
-      - [0x374DC, .rodata, 3FF00] # EntityRoomTransition2
-      - [0x374F4, .rodata, 3FF00] # EntityDeathStolenItems
-      - [0x37514, .rodata, 3FF00] # EntityDeath
+      - [0x374DC, .rodata, e_death] # EntityDeathCutsceneManager
+      - [0x374F4, .rodata, e_death] # EntityDeathStolenItems
+      - [0x37514, .rodata, e_death] # EntityDeath
       - [0x37564, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x37578, .rodata, e_red_door] # EntityRedDoor
       - [0x37590, .rodata, e_collect] # CollectGold text
@@ -150,21 +151,24 @@ segments:
       - [0x37600, .rodata, e_collect] # EntityEquipItemDrop
       - [0x37618, .rodata, e_misc]
       - [0x37650, .rodata, e_misc]
-      - [0x37664, .rodata, 4AFF0] # EntityStageNamePopup
+      - [0x37664, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
       - [0x376D0, .rodata, e_fire_warg] # EntityFireWargWaveAttack
       - [0x376E8, .rodata, e_fire_warg] # EntityUnkId2F
       - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
       - [0x37704, .rodata, 4F58C] # EntityWarg
       - [0x37738, .rodata, e_merman2]
-      - [0x3775C, .rodata, 53F38]
+      - [0x3775C, .rodata, e_merman]
       - [0x37784, .rodata, e_bone_scimitar]
       - [0x377A4, .rodata, e_bat] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
-      - [0x377D4, c]
+      - [0x377D4, c, e_background_block]
+      - [0x378A8, c, e_lock_camera]
       - [0x37A64, c, e_breakable]
-      - [0x37B98, c, entrance_stage_entities]
+      - [0x37B98, c, e_unkId16]
+      - [0x37C4C, c, e_background_lightning]
+      - [0x38254, c, e_shutting_window]
       - [0x38564, c, e_castle_door]
       - [0x38A74, c, e_background_bushes_trees]
       - [0x39198, c, e_transparent_water]
@@ -173,28 +177,31 @@ segments:
       - [0x3A348, c, e_trapdoor]
       - [0x3A4C0, c, e_jewel_sword_puzzle]
       - [0x3AEF0, c, e_stairway]
-      - [0x3B548, c, e_sky_entities]
+      - [0x3B548, c, e_death_sky_swirl]
+      - [0x3BDC0, c, e_sky_entities]
       - [0x3BF38, c, e_heartroom]
       - [0x3C3FC, c, e_tilemap_shuffler]
-      - [0x3C4EC, c]
-      - [0x3E134, c]
+      - [0x3C4EC, c, e_outdoor_ents]
       - [0x3E544, c, cutscene]
-      - [0x3FF00, c]
+      - [0x3FF00, c, e_death]
       - [0x413F8, c, e_explosion_puff_opaque]
       - [0x4184C, c, st_update]
       - [0x41C80, c, collision]
       - [0x4343C, c, create_entity]
       - [0x43FB4, c, e_red_door]
       - [0x44C64, c, st_common]
-      - [0x45BC0, c, e_collect]
+      - [0x46114, c, e_collect]
       - [0x47680, c, blit_char]
       - [0x47930, c, e_misc]
-      - [0x4AFF0, c]
+      - [0x4AE20, c, e_stage_name]
+      - [0x4BC74, c, e_particles]
+      - [0x4C4B8, c, e_room_fg]
       - [0x4C5A4, c, e_fire_warg]
       - [0x4F58C, c]
+      - [0x506FC, c, popup]
       - [0x50A2C, c, water_effects]
       - [0x52D40, c, e_merman2]
-      - [0x53F38, c]
+      - [0x54B20, c, e_merman]
       - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c, e_bat]
       - [0x564B0, c]

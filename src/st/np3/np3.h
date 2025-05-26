@@ -124,7 +124,7 @@ extern u16 g_EInitGaibonLargeProjectileNP3[];
 extern u16 g_EInitGurkhaHammer[];
 extern u16 g_EInitGurkhaSword[];
 extern u16 g_EInitGurkhaBlade[];
-extern ObjInit2 D_80180C10[];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 D_8018112C[];
 extern u16 D_80181144[];
 extern u16 D_8018115C[]; // this could be a struct
@@ -132,7 +132,6 @@ extern u16 D_80181168[];
 extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
-extern Unkstruct_80180FE0 D_8018129C[];
 
 // *** Merman properties START ***
 

@@ -568,5 +568,3 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         DestroyEntity(entity);
     }
 }
-
-#include "../popup.h"

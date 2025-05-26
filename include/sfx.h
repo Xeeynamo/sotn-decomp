@@ -58,6 +58,7 @@ enum SfxModes {
 #define SET_UNK_12 0x12
 #define SET_UNK_82 0x82
 #define SET_UNK_90 0x90
+#define SET_UNK_92 0x92
 #define SET_RELEASE_RATE_HIGH_20_21 0xa1
 #define SET_RELEASE_RATE_LOW_20_21 0xa3
 #define SET_UNK_A6 0xA6
@@ -294,6 +295,7 @@ enum SfxModes {
 #define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
+#define SFX_RBO5_UNK_7AE 0x7AE
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7DC 0x7DC
 #define SFX_BO4_UNK_7DD 0x7DD
@@ -648,6 +650,7 @@ enum Sfx {
     /* 0x8EE */ SFX_VO_MAR_8EE,
     /* 0x8EF */ SFX_VO_MAR_8EF,
     /* 0x8F0 */ SFX_VO_MAR_8F0,
+    /* 0x8F1 */ SFX_VO_MAR_8F1,
     /* 0x8F2 */ SFX_VO_MAR_PAIN_B = 0x8F2,
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,

@@ -118,20 +118,20 @@ segments:
       - [0x10924, .data, 8D3E8] # D_800B0924 to D_800B09F8
       - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
       - [0x10B34, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
-      - [0x1107C, raw, vh_0] # aPbav
-      - [0x1407C, raw, vh_1] # aPbav_0
-      - [0x1607C, raw, vh_2] # aPbav_2
-      - [0x1807C, raw, vh_3] # aPbav_1
-      - [0x1A07C, data] # aPqes_1
-      - [0x1D07C, .data, 91EBC] # g_CdVolumeTable
-      # - [0x1D19C, .data, 91EBC] # g_VolumeTable
-      # - [0x1D1C0, .data, 91EBC] # g_DebugEnabled
-      # - [0x1D1C4, .data, 91EBC] # D_800BD1C4
-      # - [0x1D1C8, .data, 91EBC] # g_VabAddrs
-      - [0x1D1E0, .data, d_sfx] # g_SeqInfo
-      # - [0x1D224, .data, d_sfx] # g_XaMusicConfigs
-      # - [0x1F554, .data, d_sfx] # g_SfxData
-      # - [0x2097C, .data, d_sfx] # g_SfxScripts
+      - [0x1107C, .data, sound] # aPbav
+      # - [0x1407C, .data, sound] # aPbav_0
+      # - [0x1607C, .data, sound] # aPbav_2
+      # - [0x1807C, .data, sound] # aPbav_1
+      # - [0x1A07C, .data, sound] # aPqes_1
+      # - [0x1D07C, .data, sound] # g_CdVolumeTable
+      # - [0x1D19C, .data, sound] # g_VolumeTable
+      # - [0x1D1C0, .data, sound] # g_DebugEnabled
+      # - [0x1D1C4, .data, sound] # D_800BD1C4
+      # - [0x1D1C8, .data, sound] # g_VabAddrs
+      - [0x1D1E0, .data, sound_data] # g_SeqInfo
+      # - [0x1D224, .data, sound_data] # g_XaMusicConfigs
+      # - [0x1F554, .data, sound_data] # g_SfxData
+      # - [0x2097C, .data, sound_data] # g_SfxScripts
       - [0x2217C, cmp, D_800C217C]
       - [0x227B0, cmp, D_800C27B0]
       - [0x23560, cmp, D_800C3560]
@@ -235,12 +235,12 @@ segments:
       # - [0x41FD8, .rodata, 90264] # func_80130E94
       # - [0x42000, .rodata, 90264] # func_8013136C
       # - [0x42024, .rodata, 90264] # func_801315F8
-      - [0x42034, .rodata, 91EBC] # CdSoundCommand4
-      # - [0x4205C, .rodata, 91EBC] # CdSoundCommand6
-      # - [0x42074, .rodata, 91EBC] # CdSoundCommand12
-      # - [0x4208C, .rodata, 91EBC] # CdSoundCommand14
-      # - [0x420B4, .rodata, 91EBC] # func_80134F50
-      # - [0x42354, .rodata, 91EBC] # func_801353A0
+      - [0x42034, .rodata, sound] # CdSoundCommand4
+      # - [0x4205C, .rodata, sound] # CdSoundCommand6
+      # - [0x42074, .rodata, sound] # CdSoundCommand12
+      # - [0x4208C, .rodata, sound] # CdSoundCommand14
+      # - [0x420B4, .rodata, sound] # func_80134F50
+      # - [0x42354, .rodata, sound] # func_801353A0
       - [0x42398, c, 42398]
       - [0x44124, c, game_handlers]
       - [0x47BB8, c, 47BB8]
@@ -280,7 +280,7 @@ segments:
       - [0x8BEF8, c, 8BEF8]
       - [0x8C600, c, 8C600]
       - [0x8D3E8, c, 8D3E8]
-      - [0x91EBC, c, 91EBC]
+      - [0x91EBC, c, sound]
       - [0x962AC, .bss, bss]
   - name: dra_data
     type: data

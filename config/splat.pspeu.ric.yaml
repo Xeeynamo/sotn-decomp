@@ -92,5 +92,5 @@ segments:
       # - [0x30370, .rodata, pl_blueprints] # RicEntityPlayerBlinkWhite
       - [0x303B0, .rodata, pl_subweapon_holywater] # RicEntitySubwpnHolyWater
       - [0x303C8, .rodata, pl_subweapon_cross]
-      - {type: bss, vram: 0x92D6600}
+      - {start: 0x30400, type: bss, vram: 0x92D6600}
   - [0x30400]

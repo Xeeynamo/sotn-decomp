@@ -43,13 +43,15 @@ segments:
       - [0x8D0, .data, e_init]
       - [0xD98, .data, st_debug]
       - [0xE18, .data, e_breakable]
-      - [0xE78, .data, entrance_stage_entities]
+      - [0xE78, .data, e_background_lightning]
       - [0xF0C, .data, e_castle_door]
       - [0x1008, .data, e_background_bushes_trees]
       - [0x1104, .data, e_trapdoor]
-      - [0x1120, .data, e_jewel_sword_puzzle]
+      - [0x1114, .data, e_jewel_sword_puzzle]
       - [0x11CC, .data, e_sky_entities]
       - [0x122C, data]
+      - [0x1260, .data, e_explosion_puff_opaque]
+      - [0x12CC, data]
       - [0x1300, data]
       - [0x14B4, .data, gaibon]
       - [0x1618, data, d_prize_drops]
@@ -148,7 +150,7 @@ segments:
       - [0x31FD8, .rodata, e_misc] # EntityMessageBox
       - [0x31FEC, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x32020, .rodata, e_merman2] # EntityMerman2
-      - [0x32044, .rodata, 48238] # EntityMerman
+      - [0x32044, .rodata, e_merman] # EntityMerman
       - [0x3206C, .rodata, e_bone_scimitar] # EntityBoneScimitar data
       - [0x3208C, .rodata, e_bat] # EntityBat
       - [0x320A0, .rodata, 49BC8] # EntityZombie
@@ -165,7 +167,9 @@ segments:
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c, st_debug]
       - [0x326FC, c, e_breakable]
-      - [0x32830, c, entrance_stage_entities]
+      - [0x32830, c, e_unkId16]
+      - [0x328E4, c, e_background_lightning]
+      - [0x32C20, c, e_shutting_window]
       - [0x32F30, c, e_castle_door]
       - [0x332A8, c, e_background_bushes_trees]
       - [0x339CC, c, e_transparent_water]
@@ -188,13 +192,13 @@ segments:
       - [0x3D984, c, e_collect]
       - [0x3EEF0, c, blit_char]
       - [0x3F1A0, c, e_misc]
-      - [0x42860, c, e_stage_name]
+      - [0x42690, c, e_stage_name]
       - [0x434E4, c, e_particles]
       - [0x43D28, c, e_room_fg]
       - [0x43E14, c, popup]
       - [0x44144, c, water_effects]
       - [0x46458, c, e_merman2] # Merman Entities
-      - [0x48238, c] # Merman Entities (2)
+      - [0x48238, c, e_merman]
       - [0x490E8, c, e_bone_scimitar] # EntityBoneScimitar
       - [0x4997C, c, e_bat]
       - [0x49BC8, c]

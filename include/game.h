@@ -177,6 +177,7 @@ typedef enum {
     PAD_DOWN = 0x4000,
     PAD_LEFT = 0x8000,
 #endif
+    PAD_SIM_UNK10000 = 0x10000,
     PAD_SIM_UNK20000 = 0x20000,
     PAD_DIRECTION_MASK = PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT,
 } PlayerPad;
@@ -651,7 +652,7 @@ typedef enum {
 
 typedef enum {
     TIMEATTACK_EVENT_DRACULA_DEFEAT,
-    TIMEATTACK_EVENT_ORLOX_DEFEAT,
+    TIMEATTACK_EVENT_OLROX_DEFEAT,
     TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
     TIMEATTACK_EVENT_GRANFALOON_DEFEAT,
     TIMEATTACK_EVENT_MINOTAUR_WEREWOLF_DEFEAT,
@@ -1436,25 +1437,23 @@ typedef struct {
     /* 0x2C */ u16 icon;
     /* 0x2E */ u16 iconPalette;
     /* 0x30 */ u16 criticalRate;
-    /* 0x32 */ u16 unk32;
-} Equipment; /* size=0x34 */
+} Equipment; /* size=0x32 */
 
 // Defines armor, cloak and rings
 typedef struct {
-    /* 00 */ const char* name;
-    /* 04 */ const char* description;
-    /* 08 */ s16 attBonus;
-    /* 0A */ s16 defBonus;
-    /* 0C */ u8 statsBonus[4];
-    /* 10 */ u16 weakToElements;
-    /* 12 */ u16 resistElements;
-    /* 14 */ u16 immuneElements;
-    /* 16 */ u16 absorbElements;
-    /* 18 */ u16 icon;
-    /* 1A */ u16 iconPalette;
-    /* 1C */ u16 equipType;
-    /* 1E */ u16 unk1E;
-} Accessory; /* size=0x20 */
+    /* 0x00 */ const char* name;
+    /* 0x04 */ const char* description;
+    /* 0x08 */ s16 attBonus;
+    /* 0x0A */ s16 defBonus;
+    /* 0x0C */ u8 statsBonus[4];
+    /* 0x10 */ u16 weakToElements;
+    /* 0x12 */ u16 resistElements;
+    /* 0x14 */ u16 immuneElements;
+    /* 0x16 */ u16 absorbElements;
+    /* 0x18 */ u16 icon;
+    /* 0x1A */ u16 iconPalette;
+    /* 0x1C */ u16 equipType;
+} Accessory; /* size=0x1E */
 
 typedef struct {
     /* 0x00 */ const char* name;
@@ -1830,8 +1829,12 @@ typedef struct {
     // unk18 & 0xFA00 give elemental status of damage received
     /* 80072F38 */ s32 unk18;
     /* 80072F3C */ s32 warp_flag;
-    /* 80072F40 */ s32 unk20;
-    /* 80072F44 */ s32 unk24;
+#if defined(VERSION_PC)
+    /* 80072F40 */ signed long long unk20; // used as an Entity for maria
+#else
+    /* 80072F40 */ s32 unk20; // used as an Entity for maria
+#endif
+    /* 80072F44 */ u32 unk24; // exclusive to maria?
     /* 80072F48 */ PfnEntityUpdate unk28;
     /* 80072F4C */ s32 unk2C;
     /* 80072F50 */ s32 unk30;
@@ -2081,8 +2084,10 @@ typedef enum {
 } Language;
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
+// PSP exclusive functions in PS.ELF
 void func_892667C(s32 paletteID, u16* palette);
 void func_892796C(SVECTOR* in, VECTOR* out, s32* arg3);
+s16 func_90E0E30(PrimitiveType, s32);
 void func_91040A0(u_long** gfxBank);
 
 #endif

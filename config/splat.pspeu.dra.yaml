@@ -91,7 +91,7 @@ segments:
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, .data, dra/5087C]
-      - [0x6B420, data]
+      - [0x6B420, .data, dra_psp/d_6B420]
       - [0x6DA20, .data, dra_psp/E588]
       - [0x6DCA8, data]
       - [0x6DDE8, .data, dra_psp/186E8]
@@ -116,7 +116,7 @@ segments:
       - [0xA6C38, .data, dra/7879C]
       - [0xA6FD8, data] # blueprints
       - [0xA72E4, .data, dra/7E4BC]
-      - [0xA79D0, data]
+      - [0xA79D0, .data, dra/d_DBD4]
       - [0xA8120, .data, dra/8D3E8]
       - [0xA8888, data]
       - [0xA88C8, .data, dra_psp/cd]
@@ -126,12 +126,11 @@ segments:
       - [0xAA6E8, .data, dra_psp/62FE0]
       - [0xAA8A0, .data, dra_psp/63C08]
       - [0xAD460, .data, dra/d_37d8]
-      - [0xAF398, .data, dra/d_sfx] # g_SeqInfo
-      # - [0xAF3E0, .data, dra/d_sfx] # g_XaMusicConfigs
-      # - [0xB16F0, .data, dra/d_sfx] # g_SfxData
-      # - [0xB2C40, .data, dra/d_sfx] # g_SfxScripts
-      - [0xB4548, data]
-      - [0xD2F50, .data, dra_psp/d_B4548]
+      - [0xAF398, .data, dra/sound_data] # g_SeqInfo
+      # - [0xAF3E0, .data, dra/sound_data] # g_XaMusicConfigs
+      # - [0xB16F0, .data, dra/sound_data] # g_SfxData
+      # - [0xB2C40, .data, dra/sound_data] # g_SfxScripts
+      - [0xB4548, .data, dra_psp/d_B4548]
       - [0xEE380, .rodata, dra/62EB8]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE3C0, .rodata, dra/628AC]

@@ -354,11 +354,6 @@ bool InitPalEquipIcons(const struct FileOpenRead* r) {
 }
 
 void InitVbVh() {
-    ReadToArray("assets/dra/vh_0.bin", aPbav, LEN(aPbav));
-    ReadToArray("assets/dra/vh_1.bin", aPbav_0, LEN(aPbav_0));
-    ReadToArray("assets/dra/vh_2.bin", aPbav_2, LEN(aPbav_2));
-    ReadToArray("assets/dra/vh_3.bin", aPbav_1, LEN(aPbav_1));
-
     ReadToArray("assets/dra/vb_0.bin", D_8013B6A0, LEN(D_8013B6A0));
     ReadToArray("assets/dra/vb_1.bin", D_8017D350, LEN(D_8017D350));
     ReadToArray("assets/dra/vb_2.bin", D_8018B4E0, LEN(D_8018B4E0));

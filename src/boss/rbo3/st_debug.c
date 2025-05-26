@@ -1,24 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo3.h"
 
-extern ObjInit D_us_801804CC[];
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
+extern u16 g_EInitCommon[];
 
-void func_801A7D64(Entity* self) {
-    ObjInit* objInit = &D_us_801804CC[self->params];
-
-    if (self->step == 0) {
+// params: Index of ObjInit to use
+//         (== 1) Use a different hardcoded rotY and rotX value
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->unk5A = objInit->unk5A;
+        self->unk5A = LOH(objInit->facingLeft);
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
-        if (objInit->flags != 0) {
+        if (objInit->flags) {
             self->flags = objInit->flags;
         }
     }
-
     AnimateEntity(objInit->animFrames, self);
 }
 

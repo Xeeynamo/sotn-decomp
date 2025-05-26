@@ -10,7 +10,7 @@ static u16 lockCamera_mapScroll[] = {
     0x0000, 0x00FB, 0x0100, 0x01FB, 0x0000, 0x00FB, 0x0100, 0x01FB,
     0x0000, 0x00FB, 0x0600, 0x01FB, 0x0000, 0x0000, 0x0600, 0x01FB,
 };
-void EntityLockCamera(Entity* self) {
+void OVL_EXPORT(EntityLockCamera)(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     u16* dataPtr;
     // These vars are all reused for things; hard to make good names :(

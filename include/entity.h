@@ -772,17 +772,13 @@ typedef struct {
 } ET_80192998;
 
 typedef struct {
-    /* 0x7C */ u8 pad0[0x4];
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ u8* anim;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ u8 pad86[2];
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 unk89;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 puffStyle;
+    /* 0x89 */ u8 speed;
 } ET_ExplosionPuffOpaque;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_801BCC4C;
 
 typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
@@ -882,28 +878,20 @@ typedef struct {
 } ET_MermanWaterSplash;
 
 typedef struct {
-    /* 0x7C */ s32 playerVelocity;
+    /* 0x7C */ u32 playerVelocity;
 } ET_CastleDoorTransition;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
     s32 : 24;
-    /* 0x80 */ s32 unk80;
+    /* 0x80 */ u32 unk80;
 } ET_AlucardController;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_ForegroundTree;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x7E */ u16 unk7E;
     /* 0x80 */ s16 unk80;
 } ET_FadeToWhite;
-
-typedef struct {
-    /* 0x7C */ u16 unk7C;
-} ET_DeathStolenItems;
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
@@ -1714,7 +1702,14 @@ typedef struct {
     s32 : 32;
     s16 unk80;
     s16 unk82;
-} ET_Maria092BEB40;
+} ET_Maria092BEAB0;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 crashId;
+    s16 timer;
+} ET_MariaCrashSummon;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -2112,23 +2107,103 @@ typedef struct {
 } ET_RicMaria;
 
 typedef struct {
-    s16 timer;
-    s16 unk7E;
-    s16 velocityX;
-    s16 angle;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
-    s16 unkB0;
+    /* 0x7C */ u8 digits[4];
+    /* 0x80 */ s16 value;
+    /* 0x82 */ s16 kind;
+    /* 0x84 */ s16 nDigits;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 : 16;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 width;
+    /* 0x8E */ s16 height;
+    /* 0x90 */ s16 timer;
+    /* 0x92 */ s16 x;
+    /* 0x94 */ s16 direction;
+    /* 0x96 */ s16 distance;
+    /* 0x98 */ s16 angle;
+} ET_Maria092BEB40;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 velocityX;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
 } ET_MariaOwl;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+} ET_Maria092A9288;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 hitboxState;
+    /* 0x84 */ s16 rotation;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+} ET_Maria092AB1C0;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x7C */ s16 timer2;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 timer3;
+} ET_Maria092AAC80;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 x;
+} ET_Maria092AAA38;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    Point16 pos1;
+    Point16 pos2;
+    Point16 pos3;
+    Point16 pos4;
+} ET_Maria092A9E88;
 
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
@@ -2972,7 +3047,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 : 32;
     /* 0x80 */ Primitive* prim;
-    /* 0x84 */ u8 unk84;
+    /* 0x84 */ u8 unk84; // maybe not last block marker?
 } ET_DopplegangerBGLight;
 
 typedef struct {
@@ -3123,7 +3198,6 @@ typedef union { // offset=0x7C
     ET_ExplosionPuffOpaque opaquePuff;
     ET_FireWarg fireWarg;
     ET_FireWargHelper fireWargHelper;
-    ET_801BCC4C et_801BCC4C;
     ET_ShuttingWindow shuttingWindow;
     ET_CastleDoor castleDoor;
     ET_DeathSkySwirl deathSkySwirl;
@@ -3137,9 +3211,7 @@ typedef union { // offset=0x7C
     ET_HeartRoomGoldDoor heartRoomGoldDoor;
     ET_CastleDoorTransition castleDoorTransition;
     ET_AlucardController alucardController;
-    ET_ForegroundTree foregroundTree;
     ET_FadeToWhite fadeToWhite;
-    ET_DeathStolenItems deathStolenItems;
     ET_Death death;
     ET_SpittleBone spittleBone;
     ET_Player player;
@@ -3158,7 +3230,8 @@ typedef union { // offset=0x7C
     ET_GuardText guardText;
     ET_Dissolve dissolve;
     ET_LockCamera lockCamera;
-    ET_Maria092BEB40 maria092BEB40;
+    ET_Maria092BEAB0 maria092BEAB0;
+    ET_MariaCrashSummon mariaCrashSummon;
     ET_CavernDoor cavernDoor;
     ET_UnkSelEnts unkSelEnts;
     ET_ZombieSpawner zombieSpawner;
@@ -3208,7 +3281,13 @@ typedef union { // offset=0x7C
     ET_ExpandingCircle circleExpand;
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
+    ET_Maria092BEB40 maria092BEB40;
     ET_MariaOwl mariaOwl;
+    ET_Maria092A9288 maria092A9288;
+    ET_Maria092AB1C0 maria092AB1C0;
+    ET_Maria092AAC80 maria092AAC80;
+    ET_Maria092AAA38 maria092AAA38;
+    ET_Maria092A9E88 maria092A9E88;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
