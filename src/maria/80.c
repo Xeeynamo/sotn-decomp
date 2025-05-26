@@ -110,7 +110,51 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A9DE8);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A9E88);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092AAA38);
+extern AnimationFrame D_pspeu_092C0A50[];
+void func_pspeu_092AAA38(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x10;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = 0x8116;
+        self->animSet = ANIMSET_OVL(18);
+        MarSetAnimation(D_pspeu_092C0A50);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->ext.maria092AAA38.x = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi + self->ext.maria092AAA38.x;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 48;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->attack = 255;
+        self->attackElement = 0;
+        self->hitboxState = 4;
+        self->nFramesInvincibility = 6;
+        self->stunFrames = 0;
+        self->hitEffect = 1;
+        self->entityRoomIndex = 1;
+        g_Player.unk7A = 1;
+        self->ext.maria092AAA38.timer = 0;
+        self->step++;
+        break;
+    case 1:
+        self->posX.i.hi = PLAYER.posX.i.hi + self->ext.maria092AAA38.x;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->ext.maria092AAA38.timer++;
+        if (self->ext.maria092AAA38.timer >= 180) {
+            self->step++;
+        }
+        break;
+    case 2:
+        g_Player.unk7A = 0;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 extern AnimationFrame D_pspeu_092C0A60[];
 void func_pspeu_092AAC80(Entity* self) {
