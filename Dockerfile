@@ -12,10 +12,7 @@
 # make update-dependencies
 #
 # 4. you now prepared an image that can help you build and work SOTN
-# make -j extract && make -j -O build && make expected
-#
-# or by using the new Ninja build system (US build only):
-# make
+# make expected
 #
 # 5. from now on, to re-use the same container execute the following:
 # docker start -ai sotn-work
