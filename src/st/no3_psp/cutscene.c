@@ -121,9 +121,9 @@ void CutsceneUnk1(void) {
 #include "../cutscene_skip.h"
 
 static u8 D_80181A28[] = {0, 64};
-extern u16 D_80181A30[];
-extern u16 D_80181A34[];
-extern u16 D_80181A38[];
+static u16 D_80181A30[] = {0x2E0, 0x2E8};
+static u16 D_80181A34[] = {0x100, 0x120};
+static u16 D_80181A38[] = {0x1A1, 0x1A1};
 extern s16 D_80181A3C[];
 extern const char D_801813F0[];
 
