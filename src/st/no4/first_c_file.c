@@ -65,7 +65,7 @@ void func_us_801C4738(Entity* self) {
 
             newEnt = AllocEntity(newEnt, &g_Entities[256]);
             if (newEnt != NULL) {
-                CreateEntityFromCurrentEntity(38, newEnt);
+                CreateEntityFromCurrentEntity(E_ID_26, newEnt);
                 newEnt->params = 1;
             }
             self->ext.et_waterAlcove.entity82 = newEnt;
