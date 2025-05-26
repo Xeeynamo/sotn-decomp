@@ -3,13 +3,7 @@
 static u8 entityLockCameraHitbox[] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};
 
-#ifndef VERSION_PSP
-static u8 entityLockCameraData[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-#else
-// moved to BSS
-static u8 entityLockCameraData[] = {0};
-#endif
+static u8 entityLockCameraData[8] = {0};
 
 static u16 entityLockCameraTilemapProps[] = {
 #if defined(STAGE_IS_NO1)
