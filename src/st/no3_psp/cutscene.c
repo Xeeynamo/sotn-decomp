@@ -669,8 +669,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     nextChar = nextChar - 0x11;
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
-                break;
             }
+            break;
         } // Close the giant while loop
 
         var_s6 = (u8*)&D_pspeu_092997F8;
