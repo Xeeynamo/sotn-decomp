@@ -71,7 +71,7 @@ void RunMainEngine(void) {
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
-            D_80097910 = MU_METAMORPHOSIS;
+            D_80097910 = SE_INTRO_WIND;
         }
         if ((D_8003C730 == 4) ||
             (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {

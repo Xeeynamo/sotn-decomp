@@ -5170,7 +5170,7 @@ static u16 D_us_80181978[] = {
     MU_FINAL_TOCATTA,
     MU_BLACK_BANQUET,
     MU_METAMORPHOSIS_III,
-    MU_I_AM_THE_WIND,
+    MU_STAFF_CREDITS,
 };
 
 void func_us_801B8958(Primitive* prim, Entity* self) {
