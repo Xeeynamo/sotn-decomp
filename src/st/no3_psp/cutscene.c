@@ -76,15 +76,15 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 //BSS
 s32 g_IsCutsceneDone; // 9260
-extern u8 D_80181A2C[];
-extern s32 g_CutsceneHasControl;
-extern u16 D_pspeu_09299278[];
-extern u8 D_pspeu_09299478[];
-extern u8* D_pspeu_092997F8[];
-extern u8 D_pspeu_09299818;
-extern Dialogue g_Dialogue;
-extern s32 g_SkipCutscene; // 9860
-extern u32 g_CutsceneFlags;
+u8 D_80181A2C[2];
+s32 g_CutsceneHasControl;
+u16 D_pspeu_09299278[0x200];
+u8 D_pspeu_09299478[0x380];
+u8* D_pspeu_092997F8[0x20];
+u8 D_pspeu_09299818;
+Dialogue g_Dialogue;
+s32 g_SkipCutscene; // 9860
+u32 g_CutsceneFlags;
 
 
 
