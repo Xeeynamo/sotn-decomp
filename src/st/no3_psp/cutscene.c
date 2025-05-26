@@ -72,7 +72,6 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../../get_lang.h"
 
-
 // BSS
 u32 g_CutsceneFlags; // Not static, used in EntityDeathCutsceneManager
 static s32 g_SkipCutscene;
