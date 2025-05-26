@@ -13,7 +13,7 @@ extern u16 actor_names_it[];
 
 // Creates primitives for the actor name at the head of the dialogue
 void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
-                           u8* arg3, s32* arg4, s32 nActors) {
+                           u8* arg3, u8* arg4, s32 nActors) {
     Primitive* prim;
     u16 ch;
     u16 i;

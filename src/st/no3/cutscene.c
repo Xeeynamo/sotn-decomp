@@ -3,7 +3,27 @@
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
 
+static u8 D_80181A28[] = {0, 64};
+static u8 D_80181A2C[2] = {0, 0};
+static u16 D_80181A30[] = {0x2E0, 0x2E8};
+static u16 D_80181A34[] = {0x100, 0x120};
+static u16 D_80181A38[] = {0x1A1, 0x1A1};
+static s16 D_80181A3C[] = {
+    8,  19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47,
+    19, 25, 77, 75, 23, 29, 18, 2,  27, 42, 80, 69, 50, 13, 42, 77, 6,  39,
+    7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
+    73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72,
+};
+
 static const char* actor_names[] = {_S("Alucard"), _S("Death")};
+
+// BSS
+STATIC_PAD_BSS(0xC00);
+u32 g_SkipCutscene;
+Dialogue g_Dialogue;
+u32 D_801D7D68[26];
+u32 g_CutsceneFlags;
+s32 g_IsCutsceneDone;
 
 // similar but not an exact duplicate
 static void CutsceneUnk1(void) {

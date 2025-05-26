@@ -218,10 +218,6 @@ extern u8 D_80183C84[];
 extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
-extern s32 g_SkipCutscene;
-extern s32 D_801D7D54;
-extern s32 D_801D7D58;
-extern u32 g_CutsceneFlags;
 
 // *** EntityFireWarg properties START ***
 
@@ -263,22 +259,3 @@ extern s16 g_ESoulStealOrbSprt[];
 extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
-
-extern SVECTOR g_CastleDoorVector;
-
-// For NO3_EntityCutscene
-extern u8 D_80181A28[];
-extern u8 D_80181A2C[];
-extern u16 D_80181A30[];
-extern u16 D_80181A34[];
-extern u16 D_80181A38[];
-extern s16 D_80181A3C[];
-extern const char D_801813F0[];
-extern s32 g_SkipCutscene;
-extern u32 g_CutsceneFlags;
-extern s32 g_IsCutsceneDone;
-extern u16 D_801D7D60;
-extern s32 D_801D7D5C;
-extern u16 D_80180B3C[];
-
-extern Dialogue g_Dialogue;
