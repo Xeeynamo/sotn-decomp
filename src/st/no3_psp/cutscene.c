@@ -76,7 +76,7 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 
 extern u8 D_pspeu_09299478[];
-static void CutsceneUnk3(s16 yOffset) {
+void CutsceneUnk3(s16 yOffset) {
     RECT rect;
 
     rect.x = 384;
@@ -86,7 +86,7 @@ static void CutsceneUnk3(s16 yOffset) {
     ClearImage(&rect, 0, 0, 0);
     func_890A3C0(&D_pspeu_09299478, 0, 0x380);
 }
-static void CutsceneUnk4(void) {
+void CutsceneUnk4(void) {
     Primitive* prim;
 
     CutsceneUnk3(g_Dialogue.nextCharY);
@@ -103,7 +103,7 @@ static void CutsceneUnk4(void) {
     prim->drawMode = DRAW_DEFAULT;
 }
 
-static void CutsceneUnk1(void) {
+void CutsceneUnk1(void) {
     g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
     g_Dialogue.nextCharX = g_Dialogue.nextLineX = 0x180;
     g_Dialogue.nextCharY = 0;
@@ -112,7 +112,7 @@ static void CutsceneUnk1(void) {
     g_Dialogue.unk17 = 2;
 }
 
-static u8 SetCutsceneScript(u8* script) {
+u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
 
     g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT,
@@ -177,7 +177,7 @@ static u8 SetCutsceneScript(u8* script) {
     return 0;
 }
 
-static void SetCutsceneEnd(u8* ptr) {
+void SetCutsceneEnd(u8* ptr) {
 #if !defined(VERSION_PSP)
     g_Dialogue.scriptEnd = ptr + 0x100000;
 #else
@@ -188,7 +188,7 @@ static void SetCutsceneEnd(u8* ptr) {
 }
 
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
-static void CutsceneRun(void) {
+void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
 
@@ -238,7 +238,7 @@ static void CutsceneRun(void) {
     }
 }
 
-static void CutsceneSkip(Entity* self) {
+void CutsceneSkip(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {
         g_SkipCutscene = true;
         g_api.FreePrimitives(self->primIndex);
@@ -420,7 +420,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     }
                     // fake reuse of i?
                     i = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[5];
+                    prim = g_Dialogue.prim[4];
                     j = *g_Dialogue.scriptCur++;
                     var_s7 = j & 1;
                     uCoord = D_80181A28[var_s7];
@@ -464,7 +464,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     }
                     g_Dialogue.startX = *g_Dialogue.scriptCur++;
                     g_Dialogue.startY = *g_Dialogue.scriptCur++;
-                    prim = g_Dialogue.prim[5];
+                    prim = g_Dialogue.prim[4];
                     prim = prim->next;
                     prim->y0 = prim->y1 = g_Dialogue.startY;
                     prim->y2 = prim->y3 = g_Dialogue.startY + 0x48;
@@ -785,7 +785,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         break;
     case 3:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.prim[4];
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -800,7 +800,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         break;
     case 4:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.prim[4];
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -852,7 +852,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             if (!uCoord) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[0]);
                 g_Dialogue.primIndex[0] = -1;
-                prim = g_Dialogue.prim[5];
+                prim = g_Dialogue.prim[4];
                 prim = prim->next;
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
@@ -862,7 +862,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             break;
         case 2:
             uCoord = 0;
-            prim = g_Dialogue.prim[5];
+            prim = g_Dialogue.prim[4];
             prim = prim->next;
             if (prim->r0 < 0x10) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -890,7 +890,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         break;
     case 6:
-        prim = g_Dialogue.prim[5];
+        prim = g_Dialogue.prim[4];
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 0xC) {
