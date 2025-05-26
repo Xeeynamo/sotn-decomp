@@ -112,7 +112,126 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A9E88);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092AAA38);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092AAC80);
+extern AnimationFrame D_pspeu_092C0A60[];
+void func_pspeu_092AAC80(Entity* self) {
+    s32 x;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_POS_CAMERA_LOCKED;
+        self->unk5A = 0x10;
+        self->zPriority = PLAYER.zPriority - 6;
+        self->palette = 0x8116;
+        self->animSet = ANIMSET_OVL(18);
+        MarSetAnimation(D_pspeu_092C0A60);
+        self->facingLeft = PLAYER.facingLeft;
+        if (PLAYER.facingLeft) {
+            x = -74;
+        } else {
+            x = 74;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + x;
+        self->posY.i.hi = PLAYER.posY.i.hi - 16;
+        self->rotX = 0;
+        self->rotY = 0;
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        g_Player.unk28 = NULL;
+#if defined(VERSION_PC)
+        g_Player.unk20 = (signed long long)self;
+#else
+        g_Player.unk20 = (s32)self;
+#endif
+        g_Player.unk24 = 0;
+        self->ext.maria092AAC80.timer = 0;
+        self->ext.maria092AAC80.timer2 = 0;
+        g_Player.unk2C = -1;
+        self->step = 1;
+        func_pspeu_092BF8B8(3);
+        func_pspeu_092BEA38(self, 0);
+        return;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            MarCreateEntFactoryFromEntity(self, 0xE, 0);
+            self->step = 3;
+        }
+        break;
+    case 3:
+        self->ext.maria092AAC80.timer2 += 16;
+        if (self->ext.maria092AAC80.timer2 >= 128) {
+            func_pspeu_092BEA38(self, 0x80);
+            self->step = 2;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092AAC80.timer2);
+        break;
+    case 2:
+        if (self->rotX < 256) {
+            self->rotX += 16;
+            self->rotY += 16;
+        } else {
+            self->drawFlags &= ~(FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+        }
+        if ((self->ext.maria092AAC80.timer % 60) == 0) {
+            g_api_PlaySfx(SFX_MAGIC_NOISE_SWEEP);
+        }
+        self->ext.maria092AAC80.timer++;
+        if (self->ext.maria092AAC80.timer >= 0xFF) {
+            self->step = 5;
+        }
+        break;
+    case 5:
+        if (self->rotX > 0x80) {
+            self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+            self->rotX -= 0x20;
+            self->rotY -= 0x20;
+            self->rotZ += 0xF78;
+            return;
+        }
+        self->ext.maria092AAC80.timer2 = 0x80;
+        self->step = 4;
+        break;
+    case 4:
+        self->ext.maria092AAC80.timer2 -= 0x10;
+        if (self->ext.maria092AAC80.timer2 <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->step = 6;
+            func_pspeu_092BFEB0(g_Player.unk20);
+            g_Player.unk2C = 0xB4;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092AAC80.timer2);
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+        break;
+    case 6:
+        if (g_Player.unk28 == NULL) {
+            self->step = 7;
+            self->ext.maria092AAC80.timer3 = 0;
+            return;
+        }
+        if (g_Player.unk2C == 0) {
+            g_api_PlaySfx(SFX_HEALTH_PICKUP);
+            g_Player.unk56 = 1;
+            g_Player.unk58 = g_Player.unk24;
+            self->step = 7;
+            self->ext.maria092AAC80.timer3 = 0;
+            return;
+        }
+        g_Player.unk2C--;
+        break;
+    case 7:
+        self->ext.maria092AAC80.timer3++;
+        if (self->ext.maria092AAC80.timer3 > 60) {
+            g_Player.unk28 = NULL;
+            g_Player.unk20 = 0;
+            g_Player.unk5C = 0;
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 AnimationFrame D_pspeu_092C0A58[];
 void func_pspeu_092AB1C0(Entity* self) {
