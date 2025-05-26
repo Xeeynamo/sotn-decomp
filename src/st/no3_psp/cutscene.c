@@ -75,17 +75,16 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 #include "../cutscene_actor_name_psp.h"
 
 //BSS
-s32 g_IsCutsceneDone; // 9260
-u8 D_80181A2C[2];
-s32 g_CutsceneHasControl;
-u16 D_pspeu_09299278[0x200];
-u8 D_pspeu_09299478[0x380];
-u8* D_pspeu_092997F8[0x20];
-u8 D_pspeu_09299818;
-Dialogue g_Dialogue;
-s32 g_SkipCutscene; // 9860
 u32 g_CutsceneFlags;
-
+s32 g_SkipCutscene;
+Dialogue g_Dialogue;
+u8 D_pspeu_09299818;
+u8* D_pspeu_092997F8[8];
+u8 D_pspeu_09299478[0x380];
+u16 D_pspeu_09299278[0x100];
+s32 g_CutsceneHasControl;
+u8 D_80181A2C[2];
+s32 g_IsCutsceneDone;
 
 
 void CutsceneUnk3(s16 yOffset) {
