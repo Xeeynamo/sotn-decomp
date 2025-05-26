@@ -74,7 +74,7 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../cutscene_actor_name_psp.h"
 
-//BSS
+// BSS
 u32 g_CutsceneFlags; // Not static, used in EntityDeathCutsceneManager
 static s32 g_SkipCutscene;
 static Dialogue g_Dialogue;
@@ -85,7 +85,6 @@ static u16 D_pspeu_09299278[0x100];
 static s32 g_CutsceneHasControl;
 static u8 D_80181A2C[2]; // Can't get this one to go where it should
 static s32 g_IsCutsceneDone;
-
 
 void CutsceneUnk3(s16 yOffset) {
     RECT rect;
@@ -135,9 +134,14 @@ static u8 D_80181A28[] = {0, 64};
 static u16 D_80181A30[] = {0x2E0, 0x2E8};
 static u16 D_80181A34[] = {0x100, 0x120};
 static u16 D_80181A38[] = {0x1A1, 0x1A1};
-static s16 D_80181A3C[] = {8, 19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47, 19, 25, 77, 75, 23, 29, 18, 2, 27, 42, 80, 69, 50, 13, 42, 77, 6, 39, 7, 72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11, 73, 66, 61, 42, 1, 12, 27, 52, 65, 53, 8, 14, 77, 17, 52, 65, 41, 72,};
-static u8 D_pspeu_09296D28[] = {3,2};
-static u8 D_pspeu_09296D30[] = {3,2};
+static s16 D_80181A3C[] = {
+    8,  19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47,
+    19, 25, 77, 75, 23, 29, 18, 2,  27, 42, 80, 69, 50, 13, 42, 77, 6,  39,
+    7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
+    73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72,
+};
+static u8 D_pspeu_09296D28[] = {3, 2};
+static u8 D_pspeu_09296D30[] = {3, 2};
 
 extern u8* OVL_EXPORT(cutscene_data);
 
@@ -155,21 +159,19 @@ extern u_long D_894490C;
 extern u_long D_894568C;
 extern u_long D_8943B8C;
 
-
-
 void OVL_EXPORT(EntityCutscene)(Entity* self) {
-    s16 uCoord; //sp4e
-    s16 vCoord; //sp4c
-    s32 primIndex; //sp48
+    s16 uCoord;    // sp4e
+    s16 vCoord;    // sp4c
+    s32 primIndex; // sp48
     Entity* sp44;
     s32 sp40;
-    RECT rect; //sp38
+    RECT rect; // sp38
     s32 i;
-    s32 j; //s5
+    s32 j; // s5
     u16 nextChar;
     s32 var_s7;
     u8* var_s6;
-    u_long ptr; //s4
+    u_long ptr; // s4
     u32 var_s3;
     Primitive* prim;
     u8* var_s1;
@@ -180,7 +182,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
             CutsceneSkip(self);
         }
-        
     }
     if (self->step && g_Dialogue.unk3C) {
         CutsceneRun();
@@ -189,8 +190,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 0:
         sp44 = &g_Entities[192];
         CreateEntityFromCurrentEntity(E_ID(BG_LIGHTNING), sp44);
-        if ((!g_CutsceneHasControl && 
-            g_CastleFlags[IVE_BEEN_ROBBED]) ||
+        if ((!g_CutsceneHasControl && g_CastleFlags[IVE_BEEN_ROBBED]) ||
             (g_PlayableCharacter != PLAYER_ALUCARD)) {
             g_PauseAllowed = true;
             DestroyEntity(self);
@@ -205,7 +205,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             g_IsCutsceneDone = 0;
             g_SkipCutscene = 0;
             self->step++;
-            if(!g_CastleFlags[IVE_BEEN_ROBBED] && (g_PlayableCharacter == PLAYER_ALUCARD)){
+            if (!g_CastleFlags[IVE_BEEN_ROBBED] &&
+                (g_PlayableCharacter == PLAYER_ALUCARD)) {
                 g_CutsceneHasControl = 1;
             } else {
                 g_CutsceneHasControl = 0;
@@ -222,7 +223,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         while (1) {
             nextChar = *g_Dialogue.scriptCur++;
             sp40 = 0;
-            if(func_8919BA8() & 8){
+            if (func_8919BA8() & 8) {
                 g_Dialogue.nextCharTimer = 0;
             }
             if ((g_Dialogue.nextCharTimer) && !g_SkipCutscene) {
@@ -230,7 +231,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.scriptCur--;
                 return;
             }
-            if(!(nextChar & 0x80)){
+            if (!(nextChar & 0x80)) {
                 switch (nextChar) {
                 case CSOP_END_CUTSCENE:
                     self->step = 7;
@@ -291,7 +292,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     uCoord = D_80181A28[var_s7];
                     vCoord = D_80181A2C[var_s7];
                     prim->clut = D_80181A30[i];
-                    prim->tpage = 0x94; // Weird, this is 0x90 in other cutscenes
+                    prim->tpage =
+                        0x94; // Weird, this is 0x90 in other cutscenes
                     prim->u0 = prim->u2 = uCoord;
                     prim->u1 = prim->u3 = uCoord + 0x2F;
                     prim->v0 = prim->v1 = vCoord;
@@ -305,7 +307,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     CutsceneUnk4();
                     prim->priority = 0x1FE;
                     prim->drawMode = DRAW_DEFAULT;
-                    DrawCutsceneActorName(i, self, D_pspeu_09299278, D_pspeu_09296D28, D_pspeu_09296D30, 2);
+                    DrawCutsceneActorName(
+                        i, self, D_pspeu_09299278, D_pspeu_09296D28,
+                        D_pspeu_09296D30, 2);
                     g_Dialogue.portraitAnimTimer = 6;
                     self->step = 3;
                     return;
@@ -324,7 +328,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     return;
                 case CSOP_SET_POS:
                     if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur+=2;
+                        g_Dialogue.scriptCur += 2;
                         continue;
                     }
                     g_Dialogue.startX = *g_Dialogue.scriptCur++;
@@ -349,7 +353,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     return;
                 case CSOP_PLAY_SOUND:
                     if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur+=2;
+                        g_Dialogue.scriptCur += 2;
                         continue;
                     }
                     nextChar = *g_Dialogue.scriptCur++;
@@ -398,7 +402,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += (u_long)OVL_EXPORT(cutscene_data);
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
-    
+
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
@@ -445,40 +449,40 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
                         ptr <<= 4;
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
-                        switch(ptr){
-                            case 0:
-                                ptr = (u_long)&D_pspeu_09278B98;
-                                break;
-                            case 1:
-                                ptr = (u_long)&D_893DD0C;
-                                break;
-                            case 2:
-                                ptr = (u_long)&D_893EA8C;
-                                break;
-                            case 3:
-                                ptr = (u_long)&D_893F80C;
-                                break;
-                            case 4:
-                                ptr = (u_long)&D_pspeu_09279918;
-                                break;
-                            case 5:
-                                ptr = (u_long)&D_894130C;
-                                break;
-                            case 6:
-                                ptr = (u_long)&D_894208C;
-                                break;
-                            case 7:
-                                ptr = (u_long)&D_8942E0C;
-                                break;
-                            case 8:
-                                ptr = (u_long)&D_8943B8C;
-                                break;
-                            case 9:
-                                ptr = (u_long)&D_894490C;
-                                break;
-                            case 10:
-                                ptr = (u_long)&D_894568C;
-                                break;
+                        switch (ptr) {
+                        case 0:
+                            ptr = (u_long)&D_pspeu_09278B98;
+                            break;
+                        case 1:
+                            ptr = (u_long)&D_893DD0C;
+                            break;
+                        case 2:
+                            ptr = (u_long)&D_893EA8C;
+                            break;
+                        case 3:
+                            ptr = (u_long)&D_893F80C;
+                            break;
+                        case 4:
+                            ptr = (u_long)&D_pspeu_09279918;
+                            break;
+                        case 5:
+                            ptr = (u_long)&D_894130C;
+                            break;
+                        case 6:
+                            ptr = (u_long)&D_894208C;
+                            break;
+                        case 7:
+                            ptr = (u_long)&D_8942E0C;
+                            break;
+                        case 8:
+                            ptr = (u_long)&D_8943B8C;
+                            break;
+                        case 9:
+                            ptr = (u_long)&D_894490C;
+                            break;
+                        case 10:
+                            ptr = (u_long)&D_894568C;
+                            break;
                         }
                         j = g_Dialogue.scriptCur++[0];
                         LoadTPage((u_long*)ptr, 1, 0, D_80181A34[j], 0x100,
@@ -515,18 +519,18 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
                     sp40 = 1;
                 } // Close the switch
-                if(sp40 != 0){
+                if (sp40 != 0) {
                     break; // This breaks the big while-loop!
                 }
                 continue;
             } else {
-                if(g_SkipCutscene){
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     continue;
                 }
-                if(0xA7 <= nextChar && nextChar < 0xAD){
+                if (0xA7 <= nextChar && nextChar < 0xAD) {
                     nextChar = nextChar + 0x27;
-                } else if(nextChar == 0xA6){
+                } else if (nextChar == 0xA6) {
                     nextChar = 0xCC;
                 } else if (nextChar == 0xDD) {
                     nextChar = 0xCD;
@@ -545,100 +549,103 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         rect.h = 8;
         vCoord = (g_Dialogue.nextCharY * 0xC) + 0x100;
         StoreImage(&rect, (u_long*)var_s6);
-        for(i = 0; i < 32; i++){
+        for (i = 0; i < 32; i++) {
             // swaps the upper and lower 4 bits of each member
             var_s6[i] = ((var_s6[i] & 0x0F) << 4) | ((var_s6[i] & 0xF0) >> 4);
         }
-        while(true){
+        while (true) {
             if (nextChar == 0x20) {
                 break;
             }
-            for(i = 0; i < 8; i++){
-                if(var_s6[(i << 3)/2] & 0xF0){
+            for (i = 0; i < 8; i++) {
+                if (var_s6[(i << 3) / 2] & 0xF0) {
                     break;
                 }
             }
-            if(i != 8){
+            if (i != 8) {
                 break;
             }
-            for(i = 0; i < 8; i++){
+            for (i = 0; i < 8; i++) {
                 // lots of byte shuffling here
-                var_s1 = &var_s6[(i << 3)/2];
+                var_s1 = &var_s6[(i << 3) / 2];
                 var_s3 = (var_s1[0] << 0x18);
                 var_s3 |= (var_s1[1] << 0x10);
                 var_s3 |= (var_s1[2] << 0x08);
                 var_s3 |= (var_s1[3]);
-                var_s3 <<=4;
+                var_s3 <<= 4;
                 var_s1[0] = (var_s3 >> 0x18) & 0xFF;
                 var_s1[1] = (var_s3 >> 0x10) & 0xFF;
                 var_s1[2] = (var_s3 >> 0x08) & 0xFF;
                 var_s1[3] = (var_s3) & 0xFF;
-
             }
-            
         }
-        for(i = 0, var_s7 = 0; i < 8; i++){
-            for(j = 0; j < 8; j++){
-               if((var_s6[j/2 + (i << 3)/2]) & (0xF0 >> ((j & 1) * 4))){
-                   if(j > var_s7){
-                       var_s7 = j;
-                   }
-               };
+        for (i = 0, var_s7 = 0; i < 8; i++) {
+            for (j = 0; j < 8; j++) {
+                if ((var_s6[j / 2 + (i << 3) / 2]) & (0xF0 >> ((j & 1) * 4))) {
+                    if (j > var_s7) {
+                        var_s7 = j;
+                    }
+                };
             }
         }
         var_s7 += 2;
-        for(i = 0; i < 32; i++){
+        for (i = 0; i < 32; i++) {
             // swaps the upper and lower 4 bits of each member
             var_s6[i] = ((var_s6[i] & 0x0F) << 4) | ((var_s6[i] & 0xF0) >> 4);
         }
         rect.w = var_s7;
         var_s6 = (u8*)&D_pspeu_092997F8;
-        for(i = 0; i < 8; i++){
+        for (i = 0; i < 8; i++) {
             // lots of byte shuffling here
-            var_s1 = &D_pspeu_09299478[((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) + (i * 112)];
-            if((g_Dialogue.nextCharX - g_Dialogue.nextLineX) & 1){
+            var_s1 = &D_pspeu_09299478
+                         [((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) +
+                          (i * 112)];
+            if ((g_Dialogue.nextCharX - g_Dialogue.nextLineX) & 1) {
                 var_s1[0] = (var_s1[0] & 0xF0) | ((var_s6[0] & 0x0F) << 4);
-                var_s1[1] = ((var_s6[0] & 0xF0) >> 4) | ((var_s6[1] & 0x0F) << 4);
-                var_s1[2] = ((var_s6[1] & 0xF0) >> 4) | ((var_s6[2] & 0x0F) << 4);
-                var_s1[3] = ((var_s6[2] & 0xF0) >> 4) | ((var_s6[3] & 0x0F) << 4);
+                var_s1[1] =
+                    ((var_s6[0] & 0xF0) >> 4) | ((var_s6[1] & 0x0F) << 4);
+                var_s1[2] =
+                    ((var_s6[1] & 0xF0) >> 4) | ((var_s6[2] & 0x0F) << 4);
+                var_s1[3] =
+                    ((var_s6[2] & 0xF0) >> 4) | ((var_s6[3] & 0x0F) << 4);
                 var_s1[4] = ((var_s6[3] & 0xF0) >> 4);
-                var_s6+=4;
+                var_s6 += 4;
             } else {
                 var_s1[0] = var_s6[0];
                 var_s1[1] = var_s6[1];
                 var_s1[2] = var_s6[2];
                 var_s1[3] = var_s6[3];
-                var_s6+=4;
+                var_s6 += 4;
             }
         }
-        LoadTPage((u_long*)D_pspeu_09299478, 0, 0, g_Dialogue.nextLineX, vCoord, 0xE0, 8);
+        LoadTPage((u_long*)D_pspeu_09299478, 0, 0, g_Dialogue.nextLineX, vCoord,
+                  0xE0, 8);
         if (nextChar != 0x20) {
             g_Dialogue.nextCharX += rect.w;
         } else {
             g_Dialogue.nextCharX += 4;
         }
         // This seems like a mistake.
-        if(((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) < 0x70){
-            
+        if (((g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2) < 0x70) {
         };
         D_pspeu_09299818 = nextChar;
         break;
     case 2:
         ptr = g_Dialogue.nextCharY;
         ptr = (ptr + 1) & 3;
-        if(!self->step_s){
+        if (!self->step_s) {
             prim = g_Dialogue.prim[ptr];
             prim->v0 += 2;
             prim->v1 -= 2;
-            if(!prim->v1){
+            if (!prim->v1) {
                 self->step_s++;
                 prim->drawMode = DRAW_HIDE;
             }
         }
         // probably 17cc
-        //1844
-        for(i = 0; i < 4; i++){
-            if(i == ptr){
+        // 1844
+        for (i = 0; i < 4; i++) {
+            if (i == ptr) {
                 continue;
             }
             prim = g_Dialogue.prim[i];
