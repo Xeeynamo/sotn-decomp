@@ -67,11 +67,7 @@ void RunMainEngine(void) {
         }
         D_80097910 = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
-#if defined(VERSION_US)
             D_80097910 = SE_INTRO_WIND;
-#elif defined(VERSION_HD)
-            D_80097910 = MU_METAMORPHOSIS;
-#endif
         }
         if ((D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(D_80097910);

@@ -100,6 +100,7 @@ def add_c_psx(
             "include/common.h",
             "include/game.h",
             "include/entity.h",
+            "include/sfx.h",
         ],
         variables={
             "version": version,
