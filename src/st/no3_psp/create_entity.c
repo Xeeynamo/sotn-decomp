@@ -19,7 +19,43 @@ void func_pspeu_09245A58(Entity* entity, LayoutEntity* initDesc) {
     entity->unk68 = (initDesc->entityId >> 0xA) & 7;
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/create_entity", func_pspeu_09245B78);
+// CreateEntityWhenInVerticalRange
+void func_pspeu_09245B78(LayoutEntity* obj) {
+    s16 yClose;
+    s16 yFar;
+    s16 posY;
+    Entity* entity;
+    Tilemap* tilemap;
+
+    tilemap = &g_Tilemap;
+    posY = tilemap->scrollY.i.hi;
+    yClose = posY - 0x40;
+    yFar = posY + 0x120;
+    if (yClose < 0) {
+        yClose = 0;
+    }
+
+    posY = obj->posY;
+    if (posY < yClose || posY > yFar) {
+        return;
+    }
+    switch (obj->entityId & 0xE000) {
+    case 0x0:
+        entity =
+            g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
+        if (!entity->entityId) {
+            func_pspeu_09245A58(entity, obj);
+        }
+        break;
+    case 0xA000:
+        entity =
+            g_Entities + STAGE_ENTITY_START + (obj->entityRoomIndex & 0xFF);
+            func_pspeu_09245A58(entity, obj);
+        break;
+    case 0x8000:
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/create_entity", func_pspeu_09245D10);
 
