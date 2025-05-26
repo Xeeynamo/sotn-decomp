@@ -120,14 +120,16 @@ void CutsceneUnk1(void) {
 
 #include "../cutscene_skip.h"
 
-extern u8 D_80181A28[];
-extern u8 D_80181A2C[];
+static u8 D_80181A28[] = {0, 64};
 extern u16 D_80181A30[];
 extern u16 D_80181A34[];
 extern u16 D_80181A38[];
 extern s16 D_80181A3C[];
 extern const char D_801813F0[];
+
+//BSS
 extern s32 g_IsCutsceneDone; // 9260
+extern u8 D_80181A2C[];
 extern s32 g_SkipCutscene; // 9860
 extern u32 g_CutsceneFlags;
 extern u16 D_801D7D60;

@@ -92,7 +92,7 @@ segments:
       - [0x5F070, .data, no3/e_breakable]
       - [0x5F0C0, .data, no3/e_background_block]
       - [0x5F2F0, .data, no3_psp/cutscene]
-      - [0x5F5F8, data]
+      - [0x5F600, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
