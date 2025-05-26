@@ -647,6 +647,7 @@ enum Sfx {
     /* 0x8EE */ SFX_VO_MAR_8EE,
     /* 0x8EF */ SFX_VO_MAR_8EF,
     /* 0x8F0 */ SFX_VO_MAR_8F0,
+    /* 0x8F1 */ SFX_VO_MAR_8F1,
     /* 0x8F2 */ SFX_VO_MAR_PAIN_B = 0x8F2,
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,
