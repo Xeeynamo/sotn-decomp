@@ -118,6 +118,7 @@ func enqueueExtractAssetEntry(
 	end int,
 	args []string,
 	ramBase psx.Addr,
+	symbol func(psx.Addr) string,
 	splatConfig *splat.Config) {
 	eg.Go(func() error {
 		defer func() {
@@ -135,6 +136,7 @@ func enqueueExtractAssetEntry(
 			Name:        name,
 			Args:        args,
 			SplatConfig: splatConfig,
+			Symbol:      symbol,
 		}); err != nil {
 			return fmt.Errorf("unable to extract asset %q in %q: %v", name, assetDir, err)
 		}
@@ -152,6 +154,9 @@ func extractAssetFile(file assetFileEntry) error {
 	if err != nil {
 		return fmt.Errorf("unable to read splat config at %q: %v", file.SplatConfigPath, err)
 	}
+	symbols := make(map[psx.Addr]string)
+	addSplatSymbols(symbols, splatConfig)
+	addAssetSymbols(symbols, &file)
 	for _, segment := range file.Segments {
 		if len(segment.Assets) == 0 {
 			continue
@@ -178,7 +183,12 @@ func extractAssetFile(file assetFileEntry) error {
 					}
 					start := int(off) - segment.Start
 					end := start + size
-					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram, splatConfig)
+					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram, func(addr psx.Addr) string {
+						if sym, ok := symbols[addr]; ok {
+							return sym
+						}
+						return ""
+					}, splatConfig)
 				} else {
 					return fmt.Errorf("handler %q not found", kind)
 				}
@@ -264,4 +274,49 @@ func buildFromConfig(c *assetConfig) error {
 		})
 	}
 	return eg.Wait()
+}
+
+func addAssetSymbols(m map[psx.Addr]string, a *assetFileEntry) {
+	for _, segment := range a.Segments {
+		for _, asset := range segment.Assets {
+			offset, kind, args, err := parseArgs(asset)
+			if err != nil {
+				continue
+			}
+			if kind == "skip" {
+				continue
+			}
+			sym := ""
+			if len(args) > 0 {
+				sym = args[0]
+			}
+			m[segment.Vram.Sum(int(offset))] = sym
+		}
+	}
+}
+
+func addSplatSymbols(m map[psx.Addr]string, c *splat.Config) {
+	for _, segment := range c.Segments {
+		for _, subsegment := range segment.Subsegments {
+			if len(subsegment) < 3 {
+				continue
+			}
+			off := subsegment[0].(int)
+			addr := psx.Addr(segment.VRAM).Sum(off)
+			if len(subsegment) > 2 {
+				switch subsegment[1] {
+				case "c":
+				case "data":
+				case ".data":
+				case "rodata":
+				case ".rodata":
+				case "bss":
+				case ".bss":
+				case "sbss":
+				default:
+					m[addr] = subsegment[2].(string)
+				}
+			}
+		}
+	}
 }

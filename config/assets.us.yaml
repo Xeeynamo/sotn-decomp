@@ -235,6 +235,48 @@ files:
           - [0x2084, skip]
           - [0x29D8, cutscene, cutscene_data]
           - [0x2C4C, skip]
+          - [0x3124, cmpgfx, richter_subweapons, 128, 128, 4]
+          - [0x3D1C, cmpgfx, e_dracula1_g0, 128, 128, 4, 0x1A750]
+          - [0x487C, cmpgfx, e_dracula1_g1, 128, 128, 4, 0x1A750]
+          - [0x586C, cmpgfx, e_dracula1_g2, 128, 128, 4, 0x1A790]
+          - [0x68D4, cmpgfx, e_dracula1_g3, 128, 128, 4, 0x1A750]
+          - [0x7454, cmpgfx, e_dracula2_g1, 128, 128, 4, 0x1A7D0]
+          - [0x85BC, cmpgfx, e_dracula2_g2, 128, 128, 4, 0x1A7D0]
+          - [0x9488, cmpgfx, e_dracula2_g3, 128, 128, 4, 0x1A7D0]
+          - [0xA218, cmpgfx, e_dracula2_g4, 128, 128, 4, 0x1A7D0]
+          - [0xAD38, cmpgfx, e_dracula2_g5, 128, 128, 4, 0x1A7D0]
+          - [0xBB28, cmpgfx, e_dracula2_g6, 128, 128, 4, 0x1A7D0]
+          - [0xCAA8, cmpgfx, e_dracula_particles_g, 128, 128, 4, 0x1A790]
+          - [0xDE38, cmpgfx, e_dracula1_g9, 128, 128, 4, 0x1A750]
+          - [0xE3D0, cmpgfx, e_dracula2_g9, 128, 128, 4, 0x1A7D0]
+          - [0xF130, binary, cutscene_richter]
+          - [0xFEB0, binary, cutscene_dracula]
+          - [0x10C30, cmpgfx, stage_title_st0_jp, 128, 128, 4, 0x1AD30] # unused
+          - [0x111D8, cmpgfx, e_breakables_g, 128, 128, 4, 0x1AC30]
+          - [0x11B8C, cmpgfx, D_80191B8C, 128, 128, 4, 0x1AD70] # unseen?
+          - [0x13DB0, cmpgfx, bg_moon, 128, 128, 4, 0x1B010] # unseen?
+          - [0x14448, cmpgfx, richter_hud, 128, 128, 4]
+          - [0x15284, cmpgfx, bg_sky, 128, 128, 4] # unseen?
+          - [0x15EE0, cmpgfx, bg_tower_g0, 128, 128, 4] # also found in the tileset
+          - [0x177C4, cmpgfx, bg_tower_g1, 128, 128, 4] # unseen?
+          - [0x17F80, cmpgfx, richter_cutscene, 128, 128, 4]
+          - [0x187BC, cmpgfx, e_secret_stairs_g, 128, 128, 4, 0x1AF50]
+          - [0x19628, cmpgfx, e_smoke_g, 128, 128, 4, 0x1ADD0]
+          - [0x1A40C, cmpgfx, stage_title_st0_us, 128, 128, 4, 0x1AD50]
+          - [0x1A750, palette, e_dracula_p, png, 16]
+          - [0x1A830, palette, D_8019A830, png, 16]
+          - [0x1A930, palette, D_8019A930, png, 16] # unused
+          - [0x1AA30, palette, D_8019AA30, png, 16]
+          - [0x1AB30, palette, D_8019AB30, png, 16] # unused
+          - [0x1AC30, palette, e_breakables_p, png, 16]
+          - [0x1AD30, palette, stage_title_p, png, 16]
+          - [0x1AD70, palette, D_8019AD70, png, 16]
+          - [0x1ADD0, palette, e_smoke_p, png, 16]
+          - [0x1AE70, palette, D_8019AE70, png, 16]
+          - [0x1AF30, palette, e_secret_stairs_p, png, 16]
+          - [0x1B010, palette, bg_moon_p, png, 16]
+          - [0x1B210, palette, D_8019B210, png, 16] # unused
+          - [0x1B2D0, skip]
   - target: disks/us/ST/WRP/WRP.BIN
     asset_path: assets/st/wrp
     src_path: src/st/wrp

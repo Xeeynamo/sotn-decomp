@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"path/filepath"
@@ -60,7 +59,7 @@ type GfxBanks struct {
 	Indices []int     `json:"indices"`
 }
 
-func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, splatConfig *splat.Config) (GfxBanks, datarange.DataRange, error) {
+func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.Addr) string) (GfxBanks, datarange.DataRange, error) {
 	if err := addr.MoveFile(r, ramBase); err != nil {
 		return GfxBanks{}, datarange.DataRange{}, err
 	}
@@ -116,7 +115,7 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, splatConfig *splat.Co
 			_ = binary.Read(r, binary.LittleEndian, &entry.Height)
 			_ = binary.Read(r, binary.LittleEndian, &entry.addr)
 			if !entry.isEmpty() {
-				entry.Name = splatConfig.GetSymbolName(entry.addr.Real(ramBase))
+				entry.Name = symbol(entry.addr)
 				if entry.Name == "" {
 					entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
 				}
