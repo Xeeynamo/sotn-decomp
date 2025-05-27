@@ -4,30 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092493F8);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09249590);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09249738);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09249878);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFireWarg);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId30);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId31);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityExplosion3);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_0924C7A8);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFireWargWaveAttack);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityUnkId2F);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityFireWargDeathBeams);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_0924D9C0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMerman2);
