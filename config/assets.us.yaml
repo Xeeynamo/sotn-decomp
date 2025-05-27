@@ -529,6 +529,13 @@ files:
           - [0x3E4, skip]
           - [0x11AC, rooms, rooms]
           - [0x1228, skip]
+          - [0x1420, cmpgfx, stage_title_jp, 128, 128, 4]
+          - [0x1764, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x1D08, palette, D_80181D08, png, 16]
+          - [0x1F08, palette, D_80181F08, png, 16] # unused
+          - [0x1FC8, skip] # tile data
+          - [0x2BC8, skip] # tile definitions
+          - [0x6FE8, skip] # sprites
   - target: disks/us/BOSS/MAR/MAR.BIN
     asset_path: assets/boss/mar
     src_path: src/boss/mar
