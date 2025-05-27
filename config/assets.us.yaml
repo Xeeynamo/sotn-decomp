@@ -315,6 +315,59 @@ files:
           - [0x8D0, skip]
           - [0x3A7C, rooms, rooms]
           - [0x3B68, skip]
+          - [0x49E0, cmpgfx, stage_title_jp, 128, 128, 4]
+          - [0x4D24, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x52C8, cmpgfx, e_skyswirl_g0, 128, 128, 4, 0x14C54] # unused
+          - [0x6434, cmpgfx, e_skyswirl_g1, 128, 128, 4, 0x14C54] # unused
+          - [0x773C, cmpgfx, e_merman_g0, 128, 128, 4, 0x15A94]
+          - [0x83DC, cmpgfx, e_merman_g1, 128, 128, 4, 0x15A94]
+          - [0x9018, cmpgfx, e_merman_g2, 128, 128, 4, 0x15A94]
+          - [0xA028, cmpgfx, e_merman_g3, 128, 128, 4, 0x15A94]
+          - [0xA92C, cmpgfx, e_slinger_g, 128, 128, 4, 0x16154]
+          - [0xB508, cmpgfx, e_ghost_bat_g, 128, 128, 4, 0x161B4]
+          - [0xBFCC, cmpgfx, e_zombie_g, 128, 128, 4, 0x16214]
+          - [0xC69C, cmpgfx, e_bloody_zombie_g, 128, 128, 4, 0x16274]
+          - [0xD354, cmpgfx, e_owlknight_g0, 128, 128, 4, 0x162D4]
+          - [0xE3D8, cmpgfx, e_owlknight_g1, 128, 128, 4, 0x162F4]
+          - [0xF250, cmpgfx, e_owlknight_g2, 128, 128, 4, 0x162F4]
+          - [0xFF68, cmpgfx, e_explosion_g, 128, 128, 4, 0x163B4]
+          - [0x10EE4, cmpgfx, e_slogra_g0, 128, 128, 4, 0x16674]
+          - [0x119D8, cmpgfx, e_slogra_g1, 128, 128, 4, 0x16674]
+          - [0x123C0, cmpgfx, e_slogra_g2, 128, 128, 4, 0x16674]
+          - [0x12C84, cmpgfx, e_gaibon_g0, 128, 128, 4, 0x166D4]
+          - [0x139F4, cmpgfx, e_gaibon_g1, 128, 128, 4, 0x166D4]
+          - [0x141B4, cmpgfx, e_gurkha_g, 128, 128, 4, 0x167D4]
+          - [0x14914, palette, e_skyswirl_p, png, 16]
+          - [0x15A94, palette, e_merman_p, png, 16]
+          - [0x15B54, palette, D_80195B54, png, 16] # unused
+          - [0x15B74, palette, D_80195B74, png, 16]
+          - [0x15BB4, palette, D_80195BB4, png, 16]
+          - [0x15BF4, palette, D_80195BF4, png, 16]
+          - [0x15C34, palette, D_80195C34, png, 16]
+          - [0x15C74, palette, D_80195C74, png, 16]
+          - [0x15CB4, palette, D_80195CB4, png, 16]
+          - [0x15CF4, palette, D_80195CF4, png, 16]
+          - [0x15D34, palette, D_80195D34, png, 16]
+          - [0x15D74, palette, D_80195D74, png, 16]
+          - [0x15DB4, palette, D_80195DB4, png, 16]
+          - [0x15DF4, palette, D_80195DF4, png, 16]
+          - [0x15E34, palette, D_80195E34, png, 16]
+          - [0x15E74, palette, D_80195E74, png, 16]
+          - [0x15EB4, palette, D_80195EB4, png, 16]
+          - [0x15EF4, palette, D_80195EF4, png, 16]
+          - [0x16154, palette, e_slinger_p, png, 16]
+          - [0x161B4, palette, e_ghost_bat_p, png, 16]
+          - [0x16214, palette, e_zombie_p, png, 16]
+          - [0x16274, palette, e_bloody_zombie_p, png, 16]
+          - [0x162D4, palette, e_owlknight_p, png, 16]
+          - [0x163B4, palette, e_explosion_p, png, 16]
+          - [0x165B4, palette, D_801965B4, png, 16] # unused
+          - [0x16674, palette, e_slogra_p, png, 16] # overlaps with D_801966D4
+          - [0x166D4, palette, e_gaibon_p, png, 16]
+          - [0x167D4, palette, e_gurkha_p, png, 16]
+          - [0x168F4, skip] # tile data
+          - [0x21CF4, skip] # tile definitions
+          - [0x2A124, skip] # sprites
   - target: disks/us/ST/NZ0/NZ0.BIN
     asset_path: assets/st/nz0
     src_path: src/st/nz0
