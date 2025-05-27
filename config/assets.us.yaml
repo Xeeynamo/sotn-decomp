@@ -245,6 +245,60 @@ files:
           - [0x3DC8, skip]
           - [0x4CE0, cutscene, cutscene_data]
           - [0x4E60, skip]
+          - [0x4E74, cmpgfx, stage_title_jp, 128, 128, 4]
+          - [0x51B8, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x575C, cmpgfx, e_skyswirl_g0, 128, 128, 4, 0x16AB8] # TODO rename palette
+          - [0x68C8, cmpgfx, e_skyswirl_g1, 128, 128, 4, 0x16AB8] # TODO rename palette
+          - [0x7BD0, cmpgfx, e_merman_g0, 128, 128, 4, 0x17838]
+          - [0x8870, cmpgfx, e_merman_g1, 128, 128, 4, 0x17838]
+          - [0x94AC, cmpgfx, e_merman_g2, 128, 128, 4, 0x17838]
+          - [0xA4BC, cmpgfx, e_merman_g3, 128, 128, 4, 0x17838]
+          - [0xADC0, cmpgfx, e_slinger_g, 128, 128, 4, 0x17EF8]
+          - [0xB99C, cmpgfx, e_ghost_bat_g, 128, 128, 4, 0x17F58]
+          - [0xC460, cmpgfx, e_warg_rider_g0, 128, 128, 4, 0x17FB8]
+          - [0xD5EC, cmpgfx, e_warg_rider_g1, 128, 128, 4, 0x17FB8]
+          - [0xE6CC, cmpgfx, e_warg_rider_g2, 128, 128, 4, 0x17FB8]
+          - [0xF870, cmpgfx, e_warg_rider_g3, 128, 128, 4, 0x17FB8]
+          - [0x10958, cmpgfx, e_warg_rider_g4, 128, 128, 4, 0x17FD8]
+          - [0x114B8, cmpgfx, e_zombie_g, 128, 128, 4, 0x180B8]
+          - [0x11B88, binary, cutscene_alucard]
+          - [0x12908, binary, cutscene_death]
+          - [0x13688, cmpgfx, e_death_g0, 128, 128, 4, 0x18518]
+          - [0x14688, cmpgfx, e_death_g1, 128, 128, 4, 0x18518]
+          - [0x150CC, cmpgfx, e_death_g2, 128, 128, 4, 0x18518]
+          - [0x1573C, cmpgfx, e_explosion_g, 128, 128, 4, 0x18578]
+          - [0x166B8, palette, e_skyswirl_p, png, 16]
+          - [0x17838, palette, e_merman_p, png, 16]
+          - [0x178F8, palette, D_801978F8, png, 16] # unused
+          - [0x17918, palette, D_80197918, png, 16]
+          - [0x17958, palette, D_80197958, png, 16]
+          - [0x17998, palette, D_80197998, png, 16]
+          - [0x179D8, palette, D_801979D8, png, 16]
+          - [0x17A18, palette, D_80197A18, png, 16]
+          - [0x17A58, palette, D_80197A58, png, 16]
+          - [0x17A98, palette, D_80197A98, png, 16]
+          - [0x17AD8, palette, D_80197AD8, png, 16]
+          - [0x17B18, palette, D_80197B18, png, 16]
+          - [0x17B58, palette, D_80197B58, png, 16]
+          - [0x17B98, palette, D_80197B98, png, 16]
+          - [0x17BD8, palette, D_80197BD8, png, 16]
+          - [0x17C18, palette, D_80197C18, png, 16]
+          - [0x17C58, palette, D_80197C58, png, 16]
+          - [0x17C98, palette, D_80197C98, png, 16]
+          - [0x17EF8, palette, e_slinger_p, png, 16]
+          - [0x17F58, palette, e_ghost_bat_p, png, 16]
+          - [0x17FB8, palette, e_warg_rider_p, png, 16]
+          - [0x180B8, palette, e_zombie_p, png, 16]
+          - [0x18118, palette, D_80198118, png, 16]
+          - [0x18218, palette, D_80198218, png, 16] # unused
+          - [0x18318, palette, D_80198318, png, 16]
+          - [0x18418, palette, D_80198418, png, 16] # unused
+          - [0x18518, palette, e_death_p, png, 16]
+          - [0x18578, palette, e_explosion_p, png, 16]
+          - [0x18778, palette, D_80198778, png, 16] # unused
+          - [0x18838, skip] # tile data
+          - [0x26638, skip] # tile definitions
+          - [0x2EA68, skip] # sprites
   - target: disks/us/ST/NP3/NP3.BIN
     asset_path: assets/st/np3
     src_path: src/st/np3
