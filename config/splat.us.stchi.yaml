@@ -75,27 +75,7 @@ segments:
       # Binary data
       - [0x195C, .data, gen/rooms]
       - [0x19F8, .data, gen/e_layout] # layout entities data
-      - [0x20D8, cmpgfx, bn_gfx_stage_name_jp_sm, 128, 128, 4]
-      - [0x2508, cmpgfx, bn_gfx_stage_name_jp_lg, 128, 128, 4]
-      - [0x2A60, cmpgfx, bn_gfx_gremlin, 128, 128, 4, 0xA300]
-      - [0x3480, cmpgfx, bn_gfx_salem_witch_1, 128, 128, 4, 0xA380]
-      - [0x41F8, cmpgfx, bn_gfx_salem_witch_2, 128, 128, 4, 0xA380]
-      - [0x4DBC, cmpgfx, bn_gfx_salem_witch_3, 128, 128, 4, 0xA380]
-      - [0x5BA0, cmpgfx, bn_gfx_salem_witch_4, 128, 128, 4, 0xA380]
-      - [0x6B1C, cmpgfx, bn_gfx_salem_witch_5, 128, 128, 4, 0xA380]
-      - [0x70F8, cmpgfx, bn_gfx_thornweed_corpseweed, 128, 128, 4, 0xA3C0]
-      - [0x7E84, cmpgfx, bn_gfx_venus_weed_1, 128, 128, 4, 0xA440]
-      - [0x8A10, cmpgfx, bn_gfx_venus_weed_2, 128, 128, 4, 0xA440]
-      - [0x9B38, cmpgfx, bn_gfx_stage_name_en, 128, 128, 4]
-      - [0x9FE0, pal, bn_pal_unused_0]  # Unused
-      - [0xA040, pal, bn_pal_salem_witch_projectiles]
-      - [0xA240, pal, bn_pal_unused_1]  # Unused
-      - [0xA300, pal, bn_pal_gremlin]
-      - [0xA380, pal, bn_pal_salem_witch]
-      - [0xA3C0, pal, bn_pal_thornweed_corpseweed]
-      - [0xA440, pal, bn_pal_venus_weed]
-      - [0xA960, .data, tile_data] # tile data
-      - [0xF760, .data, tile_data] # tile definitions
+      - [0x20D8, .data, stage_data]
       - [0x17B90, .data, gen/sprites]
       - [0x1B100, .rodata, en_demon_switch_wall]      # jtbl_8019B100 [EntityDemonSwitchWall]
       - [0x1B144, .rodata, en_breakable_wall]         # jtbl_8018B144 [EntityBreakableWall]
