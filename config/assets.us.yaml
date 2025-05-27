@@ -28,25 +28,25 @@ files:
           - [0x24864, cmpgfx, load_room_tile, 80, 16, 4]
           - [0x24A90, cmpgfx, save_room_tile, 80, 16, 4]
           - [0x24CEC, skip]
-          - [0x368D4, palette, D_800D68D4, png, 16]
-          - [0x368F4, palette, D_800D68F4, png, 16]
-          - [0x36914, palette, D_800D6914, png, 16]
-          - [0x36934, palette, D_800D6934, png, 16]
-          - [0x36954, palette, D_800D6954, png, 16]
-          - [0x36974, palette, D_800D6974, png, 16]
-          - [0x36994, palette, D_800D6994, png, 16]
-          - [0x369B4, palette, D_800D69B4, png, 16]
-          - [0x369D4, palette, D_800D69D4, png, 16]
-          - [0x369F4, palette, D_800D69F4, png, 16]
-          - [0x36A14, palette, D_800D6A14, png, 16]
-          - [0x36A34, palette, D_800D6A34, png, 16]
-          - [0x36AD4, palette, D_800D6AD4, png, 16]
-          - [0x36CD4, palette, D_800D6CD4, png, 16]
-          - [0x36ED4, palette, D_800D6ED4, png, 16]
-          - [0x370D4, palette, D_800D70D4, png, 16]
-          - [0x372D4, palette, D_800D72D4, png, 16]
+          - [0x368D4, palette, D_800D68D4, 16]
+          - [0x368F4, palette, D_800D68F4, 16]
+          - [0x36914, palette, D_800D6914, 16]
+          - [0x36934, palette, D_800D6934, 16]
+          - [0x36954, palette, D_800D6954, 16]
+          - [0x36974, palette, D_800D6974, 16]
+          - [0x36994, palette, D_800D6994, 16]
+          - [0x369B4, palette, D_800D69B4, 16]
+          - [0x369D4, palette, D_800D69D4, 16]
+          - [0x369F4, palette, D_800D69F4, 16]
+          - [0x36A14, palette, D_800D6A14, 16]
+          - [0x36A34, palette, D_800D6A34, 16]
+          - [0x36AD4, palette, D_800D6AD4, 16]
+          - [0x36CD4, palette, D_800D6CD4, 16]
+          - [0x36ED4, palette, D_800D6ED4, 16]
+          - [0x370D4, palette, D_800D70D4, 16]
+          - [0x372D4, palette, D_800D72D4, 16]
           - [0x388D4, skip]
-          - [0x3B1F4, palette, D_800DB1F4, png, 16]
+          - [0x3B1F4, palette, D_800DB1F4, 16]
           - [0x3B3B4, skip]
   - target: disks/us/BIN/RIC.BIN
     asset_path: assets/ric
@@ -87,12 +87,12 @@ files:
           - [0x3A40, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x698C]
           - [0x4B70, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x698C]
           - [0x5830, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69AC]
-          - [0x658C, palette, D_8018658C, png, 16]
-          - [0x668C, palette, D_8018668C, png, 16] # unused
-          - [0x678C, palette, D_8018678C, png, 16]
-          - [0x688C, palette, D_8018688C, png, 16] # unused
-          - [0x698C, palette, e_maria_cen_p, png, 16]
-          - [0x69AC, palette, e_elevator_cen_p, png, 16]
+          - [0x658C, palette, D_8018658C, 16]
+          - [0x668C, palette, D_8018668C, 16] # unused
+          - [0x678C, palette, D_8018678C, 16]
+          - [0x688C, palette, D_8018688C, 16] # unused
+          - [0x698C, palette, e_maria_cen_p, 16]
+          - [0x69AC, palette, e_elevator_cen_p, 16]
           - [0x69EC, skip] # tile data
           - [0x81EC, skip] # tile definitions
           - [0xC60C, skip] # sprites
@@ -123,13 +123,13 @@ files:
           - [0x7E84, cmpgfx, bn_gfx_venus_weed_1, 128, 128, 4, 0xA440]
           - [0x8A10, cmpgfx, bn_gfx_venus_weed_2, 128, 128, 4, 0xA440]
           - [0x9B38, cmpgfx, bn_gfx_stage_name_en, 128, 128, 4]
-          - [0x9FE0, palette, bn_pal_unused_0, png, 16]  # Unused
-          - [0xA040, palette, bn_pal_salem_witch_projectiles, png, 16]
-          - [0xA240, palette, bn_pal_unused_1, png, 16]  # Unused
-          - [0xA300, palette, bn_pal_gremlin, png, 16]
-          - [0xA380, palette, bn_pal_salem_witch, png, 16]
-          - [0xA3C0, palette, bn_pal_thornweed_corpseweed, png, 16]
-          - [0xA440, palette, bn_pal_venus_weed, png, 16]
+          - [0x9FE0, palette, bn_pal_unused_0, 16]  # Unused
+          - [0xA040, palette, bn_pal_salem_witch_projectiles, 16]
+          - [0xA240, palette, bn_pal_unused_1, 16]  # Unused
+          - [0xA300, palette, bn_pal_gremlin, 16]
+          - [0xA380, palette, bn_pal_salem_witch, 16]
+          - [0xA3C0, palette, bn_pal_thornweed_corpseweed, 16]
+          - [0xA440, palette, bn_pal_venus_weed, 16]
           - [0xA960, skip] # tile data
           - [0xF760, skip] # tile definitions
           - [0x17B90, skip] # sprites
@@ -165,15 +165,15 @@ files:
           - [0x8D8C, binary, cutscene_mother]
           - [0x9B0C, binary, cutscene_succubus]
           - [0xA88C, cmpgfx, stage_title_us, 128, 128, 4]
-          - [0xABE8, palette, D_8018ABE8, png, 16]
-          - [0xADE8, palette, D_8018ADE8, png, 16] # unused
-          - [0xAEA8, palette, e_succubus_p, png, 16]
-          - [0xAF48, palette, D_8018AF48, png, 16]
-          - [0xB048, palette, D_8018B048, png, 16] # unused
-          - [0xB148, palette, D_8018B148, png, 16]
-          - [0xB248, palette, D_8018B248, png, 16] # unused
-          - [0xB348, palette, D_8018B348, png, 16]
-          - [0xB448, palette, D_8018B448, png, 16] # unused
+          - [0xABE8, palette, D_8018ABE8, 16]
+          - [0xADE8, palette, D_8018ADE8, 16] # unused
+          - [0xAEA8, palette, e_succubus_p, 16]
+          - [0xAF48, palette, D_8018AF48, 16]
+          - [0xB048, palette, D_8018B048, 16] # unused
+          - [0xB148, palette, D_8018B148, 16]
+          - [0xB248, palette, D_8018B248, 16] # unused
+          - [0xB348, palette, D_8018B348, 16]
+          - [0xB448, palette, D_8018B448, 16] # unused
           - [0xB548, skip] # tile data
           - [0xBD48, skip] # tile definitions
           - [0x10168, skip] # sprites
@@ -267,35 +267,35 @@ files:
           - [0x14688, cmpgfx, e_death_g1, 128, 128, 4, 0x18518]
           - [0x150CC, cmpgfx, e_death_g2, 128, 128, 4, 0x18518]
           - [0x1573C, cmpgfx, e_explosion_g, 128, 128, 4, 0x18578]
-          - [0x166B8, palette, e_skyswirl_p, png, 16]
-          - [0x17838, palette, e_merman_p, png, 16]
-          - [0x178F8, palette, D_801978F8, png, 16] # unused
-          - [0x17918, palette, D_80197918, png, 16]
-          - [0x17958, palette, D_80197958, png, 16]
-          - [0x17998, palette, D_80197998, png, 16]
-          - [0x179D8, palette, D_801979D8, png, 16]
-          - [0x17A18, palette, D_80197A18, png, 16]
-          - [0x17A58, palette, D_80197A58, png, 16]
-          - [0x17A98, palette, D_80197A98, png, 16]
-          - [0x17AD8, palette, D_80197AD8, png, 16]
-          - [0x17B18, palette, D_80197B18, png, 16]
-          - [0x17B58, palette, D_80197B58, png, 16]
-          - [0x17B98, palette, D_80197B98, png, 16]
-          - [0x17BD8, palette, D_80197BD8, png, 16]
-          - [0x17C18, palette, D_80197C18, png, 16]
-          - [0x17C58, palette, D_80197C58, png, 16]
-          - [0x17C98, palette, D_80197C98, png, 16]
-          - [0x17EF8, palette, e_slinger_p, png, 16]
-          - [0x17F58, palette, e_ghost_bat_p, png, 16]
-          - [0x17FB8, palette, e_warg_rider_p, png, 16]
-          - [0x180B8, palette, e_zombie_p, png, 16]
-          - [0x18118, palette, D_80198118, png, 16]
-          - [0x18218, palette, D_80198218, png, 16] # unused
-          - [0x18318, palette, D_80198318, png, 16]
-          - [0x18418, palette, D_80198418, png, 16] # unused
-          - [0x18518, palette, e_death_p, png, 16]
-          - [0x18578, palette, e_explosion_p, png, 16]
-          - [0x18778, palette, D_80198778, png, 16] # unused
+          - [0x166B8, palette, e_skyswirl_p, 16]
+          - [0x17838, palette, e_merman_p, 16]
+          - [0x178F8, palette, D_801978F8, 16] # unused
+          - [0x17918, palette, D_80197918, 16]
+          - [0x17958, palette, D_80197958, 16]
+          - [0x17998, palette, D_80197998, 16]
+          - [0x179D8, palette, D_801979D8, 16]
+          - [0x17A18, palette, D_80197A18, 16]
+          - [0x17A58, palette, D_80197A58, 16]
+          - [0x17A98, palette, D_80197A98, 16]
+          - [0x17AD8, palette, D_80197AD8, 16]
+          - [0x17B18, palette, D_80197B18, 16]
+          - [0x17B58, palette, D_80197B58, 16]
+          - [0x17B98, palette, D_80197B98, 16]
+          - [0x17BD8, palette, D_80197BD8, 16]
+          - [0x17C18, palette, D_80197C18, 16]
+          - [0x17C58, palette, D_80197C58, 16]
+          - [0x17C98, palette, D_80197C98, 16]
+          - [0x17EF8, palette, e_slinger_p, 16]
+          - [0x17F58, palette, e_ghost_bat_p, 16]
+          - [0x17FB8, palette, e_warg_rider_p, 16]
+          - [0x180B8, palette, e_zombie_p, 16]
+          - [0x18118, palette, D_80198118, 16]
+          - [0x18218, palette, D_80198218, 16] # unused
+          - [0x18318, palette, D_80198318, 16]
+          - [0x18418, palette, D_80198418, 16] # unused
+          - [0x18518, palette, e_death_p, 16]
+          - [0x18578, palette, e_explosion_p, 16]
+          - [0x18778, palette, D_80198778, 16] # unused
           - [0x18838, skip] # tile data
           - [0x26638, skip] # tile definitions
           - [0x2EA68, skip] # sprites
@@ -337,34 +337,34 @@ files:
           - [0x12C84, cmpgfx, e_gaibon_g0, 128, 128, 4, 0x166D4]
           - [0x139F4, cmpgfx, e_gaibon_g1, 128, 128, 4, 0x166D4]
           - [0x141B4, cmpgfx, e_gurkha_g, 128, 128, 4, 0x167D4]
-          - [0x14914, palette, e_skyswirl_p, png, 16]
-          - [0x15A94, palette, e_merman_p, png, 16]
-          - [0x15B54, palette, D_80195B54, png, 16] # unused
-          - [0x15B74, palette, D_80195B74, png, 16]
-          - [0x15BB4, palette, D_80195BB4, png, 16]
-          - [0x15BF4, palette, D_80195BF4, png, 16]
-          - [0x15C34, palette, D_80195C34, png, 16]
-          - [0x15C74, palette, D_80195C74, png, 16]
-          - [0x15CB4, palette, D_80195CB4, png, 16]
-          - [0x15CF4, palette, D_80195CF4, png, 16]
-          - [0x15D34, palette, D_80195D34, png, 16]
-          - [0x15D74, palette, D_80195D74, png, 16]
-          - [0x15DB4, palette, D_80195DB4, png, 16]
-          - [0x15DF4, palette, D_80195DF4, png, 16]
-          - [0x15E34, palette, D_80195E34, png, 16]
-          - [0x15E74, palette, D_80195E74, png, 16]
-          - [0x15EB4, palette, D_80195EB4, png, 16]
-          - [0x15EF4, palette, D_80195EF4, png, 16]
-          - [0x16154, palette, e_slinger_p, png, 16]
-          - [0x161B4, palette, e_ghost_bat_p, png, 16]
-          - [0x16214, palette, e_zombie_p, png, 16]
-          - [0x16274, palette, e_bloody_zombie_p, png, 16]
-          - [0x162D4, palette, e_owlknight_p, png, 16]
-          - [0x163B4, palette, e_explosion_p, png, 16]
-          - [0x165B4, palette, D_801965B4, png, 16] # unused
-          - [0x16674, palette, e_slogra_p, png, 16] # overlaps with D_801966D4
-          - [0x166D4, palette, e_gaibon_p, png, 16]
-          - [0x167D4, palette, e_gurkha_p, png, 16]
+          - [0x14914, palette, e_skyswirl_p, 16]
+          - [0x15A94, palette, e_merman_p, 16]
+          - [0x15B54, palette, D_80195B54, 16] # unused
+          - [0x15B74, palette, D_80195B74, 16]
+          - [0x15BB4, palette, D_80195BB4, 16]
+          - [0x15BF4, palette, D_80195BF4, 16]
+          - [0x15C34, palette, D_80195C34, 16]
+          - [0x15C74, palette, D_80195C74, 16]
+          - [0x15CB4, palette, D_80195CB4, 16]
+          - [0x15CF4, palette, D_80195CF4, 16]
+          - [0x15D34, palette, D_80195D34, 16]
+          - [0x15D74, palette, D_80195D74, 16]
+          - [0x15DB4, palette, D_80195DB4, 16]
+          - [0x15DF4, palette, D_80195DF4, 16]
+          - [0x15E34, palette, D_80195E34, 16]
+          - [0x15E74, palette, D_80195E74, 16]
+          - [0x15EB4, palette, D_80195EB4, 16]
+          - [0x15EF4, palette, D_80195EF4, 16]
+          - [0x16154, palette, e_slinger_p, 16]
+          - [0x161B4, palette, e_ghost_bat_p, 16]
+          - [0x16214, palette, e_zombie_p, 16]
+          - [0x16274, palette, e_bloody_zombie_p, 16]
+          - [0x162D4, palette, e_owlknight_p, 16]
+          - [0x163B4, palette, e_explosion_p, 16]
+          - [0x165B4, palette, D_801965B4, 16] # unused
+          - [0x16674, palette, e_slogra_p, 16] # overlaps with D_801966D4
+          - [0x166D4, palette, e_gaibon_p, 16]
+          - [0x167D4, palette, e_gurkha_p, 16]
           - [0x168F4, skip] # tile data
           - [0x21CF4, skip] # tile definitions
           - [0x2A124, skip] # sprites
@@ -411,29 +411,29 @@ files:
           - [0x13BA4, binary, cutscene_maria]
           - [0x14924, binary, cutscene_alucard]
           - [0x156A4, cmpgfx, stage_title_nz0_us, 128, 128, 4]
-          - [0x15C3C, palette, e_blood_skeleton_p, png, 16]
-          - [0x15CBC, palette, D_80195CBC, png, 16] # unused
-          - [0x15CDC, palette, e_slinger_p, png, 16]
-          - [0x15CFC, palette, D_80195CFC, png, 16] # unused
-          - [0x15D3C, palette, e_axe_knight_p, png, 16]
-          - [0x15DBC, palette, e_bloody_zombie_p, png, 16]
-          - [0x15E1C, palette, e_skeleton_p, png, 16]
-          - [0x15E3C, palette, e_skelerang_p, png, 16]
-          - [0x15E9C, palette, e_table_with_globe_p, png, 16]
-          - [0x15F1C, palette, e_table_with_alembic_p, png, 16]
-          - [0x15F9C, palette, e_table_blue_flame_p, png, 16]
-          - [0x1601C, palette, e_explosion_p, png, 16]
-          - [0x1621C, palette, D_8019621C, png, 16] # unused
-          - [0x162DC, palette, e_cloche_p, png, 16]
-          - [0x1641C, palette, e_slogra_p, png, 16]
-          - [0x1647C, palette, e_gaibon_p, png, 16]
-          - [0x1657C, palette, e_sealed_door_p, png, 16]
-          - [0x1661C, palette, D_8019661C, png, 16] # unused
-          - [0x1663C, palette, e_maria_nz0_p, png, 16]
-          - [0x1665C, palette, D_8019665C, png, 16]
-          - [0x1675C, palette, D_8019675C, png, 16] # unused
-          - [0x1685C, palette, D_8019685C, png, 16]
-          - [0x1695C, palette, D_8019695C, png, 16] # unused
+          - [0x15C3C, palette, e_blood_skeleton_p, 16]
+          - [0x15CBC, palette, D_80195CBC, 16] # unused
+          - [0x15CDC, palette, e_slinger_p, 16]
+          - [0x15CFC, palette, D_80195CFC, 16] # unused
+          - [0x15D3C, palette, e_axe_knight_p, 16]
+          - [0x15DBC, palette, e_bloody_zombie_p, 16]
+          - [0x15E1C, palette, e_skeleton_p, 16]
+          - [0x15E3C, palette, e_skelerang_p, 16]
+          - [0x15E9C, palette, e_table_with_globe_p, 16]
+          - [0x15F1C, palette, e_table_with_alembic_p, 16]
+          - [0x15F9C, palette, e_table_blue_flame_p, 16]
+          - [0x1601C, palette, e_explosion_p, 16]
+          - [0x1621C, palette, D_8019621C, 16] # unused
+          - [0x162DC, palette, e_cloche_p, 16]
+          - [0x1641C, palette, e_slogra_p, 16]
+          - [0x1647C, palette, e_gaibon_p, 16]
+          - [0x1657C, palette, e_sealed_door_p, 16]
+          - [0x1661C, palette, D_8019661C, 16] # unused
+          - [0x1663C, palette, e_maria_nz0_p, 16]
+          - [0x1665C, palette, D_8019665C, 16]
+          - [0x1675C, palette, D_8019675C, 16] # unused
+          - [0x1685C, palette, D_8019685C, 16]
+          - [0x1695C, palette, D_8019695C, 16] # unused
           - [0x16A5C, skip] # tile data
           - [0x20A5C, skip] # tile definitions
           - [0x26E8C, skip] # sprites
@@ -483,19 +483,19 @@ files:
           - [0x187BC, cmpgfx, e_secret_stairs_g, 128, 128, 4, 0x1AF50]
           - [0x19628, cmpgfx, e_smoke_g, 128, 128, 4, 0x1ADD0]
           - [0x1A40C, cmpgfx, stage_title_st0_us, 128, 128, 4, 0x1AD50]
-          - [0x1A750, palette, e_dracula_p, png, 16]
-          - [0x1A830, palette, D_8019A830, png, 16]
-          - [0x1A930, palette, D_8019A930, png, 16] # unused
-          - [0x1AA30, palette, D_8019AA30, png, 16]
-          - [0x1AB30, palette, D_8019AB30, png, 16] # unused
-          - [0x1AC30, palette, e_breakables_p, png, 16]
-          - [0x1AD30, palette, stage_title_p, png, 16]
-          - [0x1AD70, palette, D_8019AD70, png, 16]
-          - [0x1ADD0, palette, e_smoke_p, png, 16]
-          - [0x1AE70, palette, D_8019AE70, png, 16]
-          - [0x1AF30, palette, e_secret_stairs_p, png, 16]
-          - [0x1B010, palette, bg_moon_p, png, 16]
-          - [0x1B210, palette, D_8019B210, png, 16] # unused
+          - [0x1A750, palette, e_dracula_p, 16]
+          - [0x1A830, palette, D_8019A830, 16]
+          - [0x1A930, palette, D_8019A930, 16] # unused
+          - [0x1AA30, palette, D_8019AA30, 16]
+          - [0x1AB30, palette, D_8019AB30, 16] # unused
+          - [0x1AC30, palette, e_breakables_p, 16]
+          - [0x1AD30, palette, stage_title_p, 16]
+          - [0x1AD70, palette, D_8019AD70, 16]
+          - [0x1ADD0, palette, e_smoke_p, 16]
+          - [0x1AE70, palette, D_8019AE70, 16]
+          - [0x1AF30, palette, e_secret_stairs_p, 16]
+          - [0x1B010, palette, bg_moon_p, 16]
+          - [0x1B210, palette, D_8019B210, 16] # unused
           - [0x1B2D0, skip]
   - target: disks/us/ST/WRP/WRP.BIN
     asset_path: assets/st/wrp
@@ -515,8 +515,8 @@ files:
           - [0x1228, skip]
           - [0x1420, cmpgfx, stage_title_jp, 128, 128, 4]
           - [0x1764, cmpgfx, stage_placeholder, 128, 128, 4]
-          - [0x1D08, palette, D_80181D08, png, 16]
-          - [0x1D28, palette, D_80181D28, png, 16]
+          - [0x1D08, palette, D_80181D08, 16]
+          - [0x1D28, palette, D_80181D28, 16]
           - [0x1D68, skip] # tile data
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites
@@ -538,8 +538,8 @@ files:
           - [0x1228, skip]
           - [0x1420, cmpgfx, stage_title_jp, 128, 128, 4]
           - [0x1764, cmpgfx, stage_placeholder, 128, 128, 4]
-          - [0x1D08, palette, D_80181D08, png, 16]
-          - [0x1F08, palette, D_80181F08, png, 16] # unused
+          - [0x1D08, palette, D_80181D08, 16]
+          - [0x1F08, palette, D_80181F08, 16] # unused
           - [0x1FC8, skip] # tile data
           - [0x2BC8, skip] # tile definitions
           - [0x6FE8, skip] # sprites
