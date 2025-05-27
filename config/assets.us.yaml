@@ -80,7 +80,22 @@ files:
           - [0x12D4, rooms, rooms]
           - [0x1300, skip]
           - [0x13F0, cutscene, cutscene_data]
-          - [0x1658, skip]
+          - [0x1658, cmpgfx, stage_title_jp, 128, 128, 4]
+          - [0x199C, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x1F40, binary, cutscene_alucard]
+          - [0x2CC0, binary, cutscene_maria]
+          - [0x3A40, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x698C]
+          - [0x4B70, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x698C]
+          - [0x5830, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69AC]
+          - [0x658C, palette, D_8018658C, png, 16]
+          - [0x668C, palette, D_8018668C, png, 16] # unused
+          - [0x678C, palette, D_8018678C, png, 16]
+          - [0x688C, palette, D_8018688C, png, 16] # unused
+          - [0x698C, palette, e_maria_cen_p, png, 16]
+          - [0x69AC, palette, e_elevator_cen_p, png, 16]
+          - [0x69EC, skip] # tile data
+          - [0x81EC, skip] # tile definitions
+          - [0xC60C, skip] # sprites
   - target: disks/us/ST/CHI/CHI.BIN
     asset_path: assets/st/chi
     src_path: src/st/chi
