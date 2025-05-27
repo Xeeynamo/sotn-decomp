@@ -67,10 +67,10 @@ u8 e_maria_nz0_g0[] = {
 u8 e_maria_nz0_g1[] = {
 #include "gen/e_maria_nz0_g1.h"
 };
-u8 cutscene_maria[] = {
+u8 cutscene_nz0_maria[] = {
 #include "gen/cutscene_maria.h"
 };
-u8 cutscene_alucard[] = {
+u8 cutscene_nz0_alucard[] = {
 #include "gen/cutscene_alucard.h"
 };
 u8 stage_title_nz0_us[] = {

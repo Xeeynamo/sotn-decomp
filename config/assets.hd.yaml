@@ -79,8 +79,8 @@ files:
           - [0x394, skip]
           - [0x1308, rooms, rooms]
           - [0x1334, skip]
-          - [0x1678, cmpgfx, stage_title_jp, 128, 128, 4]
-          - [0x19BC, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x1678, cmpgfx, stage_title_cen_jp, 128, 128, 4]
+          - [0x19BC, cmpgfx, stage_placeholder_cen, 128, 128, 4]
           - [0x1F60, binary, D_80181F60]
           - [0x3A60, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x69AC]
           - [0x4B90, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x69AC]
@@ -109,8 +109,8 @@ files:
           - [0x3E4, skip]
           - [0x11B0, rooms, rooms]
           - [0x122C, skip]
-          - [0x1424, cmpgfx, stage_title_jp, 128, 128, 4]
-          - [0x1768, cmpgfx, stage_placeholder, 128, 128, 4]
+          - [0x1424, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
+          - [0x1768, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
           - [0x1D0C, palette, D_80181D08, 16]
           - [0x1D2C, palette, D_80181D28, 16] # unused
           - [0x1D6C, skip] # tile data

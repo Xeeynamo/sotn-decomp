@@ -1,24 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-u8 stage_title_jp[] = {
-#include "gen/stage_title_jp.h"
+u8 stage_title_cen_jp[] = {
+#include "gen/stage_title_cen_jp.h"
 };
-u8 stage_placeholder[] = {
-#include "gen/stage_placeholder.h"
+u8 stage_placeholder_cen[] = {
+#include "gen/stage_placeholder_cen.h"
 };
 
 #if defined(VERSION_HD)
 // most likely the cutscene data is mis-extracted
-u8 cutscene_alucard[] = {
+u8 cutscene_cen_alucard[] = {
 #include "gen/D_80181F60.h"
 };
 
 #else
-u8 cutscene_alucard[] = {
+u8 cutscene_cen_alucard[] = {
 #include "gen/cutscene_alucard.h"
 };
-u8 cutscene_maria[] = {
+u8 cutscene_cen_maria[] = {
 #include "gen/cutscene_maria.h"
 };
 

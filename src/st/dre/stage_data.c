@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-u8 stage_title_jp[] = {
-#include "gen/stage_title_jp.h"
+u8 stage_title_dre_jp[] = {
+#include "gen/stage_title_dre_jp.h"
 };
-u8 stage_placeholder[] = {
-#include "gen/stage_placeholder.h"
+u8 stage_placeholder_dre[] = {
+#include "gen/stage_placeholder_dre.h"
 };
 u8 e_succubus_g0[] = {
 #include "gen/e_succubus_g0.h"
