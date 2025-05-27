@@ -121,6 +121,7 @@ ReplaceBreakableWithItemDrop = 0x09260F90;
 UnkPrimHelper = 0x09261088;
 FindFirstUnkPrim = 0x09261588;
 UnkPolyFunc2 = 0x092616E0;
+PrimDecreaseBrightness = 0x09261748;
 EntityZombie = 0x09261818;
 EntityZombieSpawner = 0x09261B38;
 g_SpriteBanks = 0x0926A980;

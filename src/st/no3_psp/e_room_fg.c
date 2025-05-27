@@ -55,7 +55,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092615D8);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", UnkPolyFunc2);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09261748);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", PrimDecreaseBrightness);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", EntityZombie);
 
