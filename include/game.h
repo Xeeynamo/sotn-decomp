@@ -1647,25 +1647,26 @@ extern void (*g_api_FreePrimitives)(s32);
 extern s16 (*g_api_AllocPrimitives)(PrimitiveType type, s32 count);
 extern void (*g_api_CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 extern void (*g_api_func_80102CD8)(s32 arg0);
-extern void (*g_api_UpdateAnim)(FrameProperty* frameProps, s32* arg1);
+extern void (*g_api_UpdateAnim)(
+    FrameProperty* frameProps, AnimationFrame** anims);
 extern void (*g_api_SetSpeedX)(s32 value);
 extern Entity* (*g_api_GetFreeEntity)(s16 start, s16 end);
 extern void (*g_api_GetEquipProperties)(
     s32 handId, Equipment* res, s32 equipId);
 extern s32 (*g_api_func_800EA5E4)(u32);
-extern void (*g_api_LoadGfxAsync)(s32);
+extern void (*g_api_LoadGfxAsync)(s32 gfxId);
 extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
 extern void (*g_api_func_800EA538)(s32 arg0);
-extern void (*g_api_g_pfn_800EA5AC)(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+extern void (*g_api_g_pfn_800EA5AC)(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 extern Entity* (*g_api_CreateEntFactoryFromEntity)(
     Entity* self, u32 flags, s32 arg2);
 extern bool (*g_api_func_80131F68)(void);
 extern DR_ENV* (*g_api_func_800EDB08)(POLY_GT4* poly);
-extern u16* (*g_api_func_80106A28)(u16 arg0, u16 kind);
+extern u16* (*g_api_func_80106A28)(u32 arg0, u16 kind);
 extern void (*g_api_func_80118894)(Entity*);
 extern EnemyDef* g_api_enemyDefs;
-extern u32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
+extern s32 (*g_api_UpdateUnarmedAnim)(s8* frameProps, u16** frames);
 extern void (*g_api_PlayAnimation)(s8*, AnimationFrame** frames);
 extern void (*g_api_func_8010E168)(s32 arg0, s16 arg1);
 extern void (*g_api_func_8010DFF0)(s32 arg0, s32 arg1);
@@ -1678,10 +1679,10 @@ extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
 extern void* (*g_api_func_8010E0A8)(void);
 extern void (*g_api_func_800FE044)(s32, s32);
-extern void (*g_api_AddToInventory)(u16 id, EquipKind kind);
+extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicOrb* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
-extern s32 (*g_api_SetVolumeCommand22_23)(s16 vol, s16 distance);
+extern s32 (*g_api_SetVolumeCommand22_23)(s32 vol, s16 distance);
 extern void (*g_api_func_800F53A4)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
@@ -1696,9 +1697,9 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_CalcPlayerDamage)(DamageParam* arg0);
+extern s32 (*g_api_CalcPlayerDamage)(DamageParam* damageParam);
 extern void (*g_api_LearnSpell)(s32 spellId);
-extern void (*g_api_func_800E2438)(const char* str);
+extern void (*g_api_DebugInputWait)(const char* str);
 /***************************/
 
 typedef struct {
