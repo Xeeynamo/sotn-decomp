@@ -130,7 +130,7 @@ extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
 extern s16 D_80182A38[];
 extern u8 D_80182A48[];
-extern u16 D_80182A4C[];
+extern s16 D_80182A4C[];
 extern u16 D_80182E1C[];
 extern u16 D_80182F9C[];
 extern u16 D_80182FA8[];
