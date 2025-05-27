@@ -9,9 +9,9 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925F970);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AnimateEntity);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FB68);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetDistanceToPlayerX);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FBD8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetDistanceToPlayerY);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetSideToPlayer);
 
