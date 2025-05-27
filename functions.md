@@ -58,6 +58,7 @@
 | dra       | MemcardClose                             |       11 |          1 |        |                                 |       |
 | dra       | MemcardInfoInit                          |       11 |          1 |        |                                 |       |
 | lib       | func_psp_09264E08                        |       11 |          1 |        |                                 |       |
+| no3       | jtbl_pspeu_09298DF0                      |       12 |          0 | Yes    |                                 |       |
 | dra       | func_800EB4F8                            |       13 |          1 |        |                                 |       |
 | dra       | func_800FDE00                            |       13 |          1 |        |                                 |       |
 | dra       | func_80105408                            |       13 |          1 |        |                                 |       |
@@ -171,9 +172,9 @@
 | lib       | func_psp_09243920                        |       21 |          1 |        |                                 |       |
 | lib       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | lib       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| no3       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3       | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no3       | SetSubStep                               |       21 |          1 |        |                                 |       |
-| no3       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4       | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | no4       | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4       | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -290,7 +291,7 @@
 | dra       | FreePrimitives                           |       28 |          2 |        | https://decomp.me/scratch/ypQK3 | 1.0   |
 | chi       | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | lib       | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
-| no3       | func_pspeu_0925FBD8                      |       28 |          2 |        |                                 |       |
+| no3       | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | no4       | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | dra       | StopSeq                                  |       28 |          4 |        |                                 |       |
 | lib       | CutsceneUnk1                             |       29 |          1 |        |                                 |       |
@@ -367,11 +368,13 @@
 | dra       | func_psp_090F21F8                        |       33 |          6 |        |                                 |       |
 | dra       | func_800EAD0C                            |       33 |          8 |        |                                 |       |
 | lib       | unk_3B200.rodata                         |       34 |          0 | Yes    |                                 |       |
+| no3       | e_fire_warg.rodata                       |       34 |          0 | Yes    |                                 |       |
+| no3       | working_on.rodata                        |       34 |          0 | Yes    |                                 |       |
 | st0       | 2C564.rodata                             |       34 |          0 | Yes    |                                 |       |
 | st0       | 3D8F0.rodata                             |       34 |          0 | Yes    |                                 |       |
 | chi       | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | lib       | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
-| no3       | func_pspeu_0925FB68                      |       34 |          2 |        |                                 |       |
+| no3       | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | no4       | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | dra       | HasEnoughMp                              |       34 |          4 |        | https://decomp.me/scratch/ZUbXu | 0.68  |
 | dra       | func_800FAB1C                            |       34 |          4 |        |                                 |       |
@@ -553,8 +556,8 @@
 | dra       | func_8010E334                            |       45 |          6 |        |                                 |       |
 | dra       | SetMenuDisplayBuffer                     |       45 |          6 |        |                                 |       |
 | lib       | func_us_801BED48                         |       45 |          6 |        | https://decomp.me/scratch/upIJQ | 1.0   |
-| no3       | func_pspeu_09252E60                      |       45 |          6 |        |                                 |       |
 | no3       | func_pspeu_09249878                      |       45 |          6 |        |                                 |       |
+| no3       | func_pspeu_09252E60                      |       45 |          6 |        |                                 |       |
 | maria     | MarSetBladeDash                          |       45 |          7 |        |                                 |       |
 | st0       | func_pspeu_09242F68                      |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | maria     | pl_main.rodata                           |       46 |          0 | Yes    |                                 |       |
@@ -732,7 +735,6 @@
 | st0       | GetLangAt                                |       61 |         10 |        |                                 |       |
 | dra       | func_8012CC30                            |       61 |         12 |        |                                 |       |
 | dra       | 71830.rodata                             |       62 |          0 | Yes    |                                 |       |
-| no3       | working_on.rodata                        |       62 |          0 | Yes    |                                 |       |
 | dra       | GetPlayerSensor                          |       62 |          5 |        |                                 |       |
 | chi       | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib       | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
@@ -754,7 +756,7 @@
 | ric       | func_pspeu_092B4688                      |       63 |          7 |        |                                 |       |
 | chi       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | lib       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
-| no3       | func_pspeu_09261748                      |       63 |          7 |        |                                 |       |
+| no3       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | no4       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | st0       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | wrp       | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
@@ -1897,9 +1899,9 @@
 | dra       | HandleNowLoading                         |     1203 |        196 |        | https://decomp.me/scratch/zP7X0 | 0.999 |
 | ric       | RicMain                                  |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.993 |
 | lib       | func_us_801B6F30                         |     1229 |        132 | Yes    |                                 |       |
+| no3       | NO3_EntityRedDoor                        |     1232 |        112 | Yes    | https://decomp.me/scratch/UqXDf | 0.002 |
 | chi       | CHI_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
 | lib       | LIB_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
-| no3       | NO3_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
 | no4       | NO4_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
 | st0       | ST0_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
 | wrp       | WRP_EntityRedDoor                        |     1247 |        112 | Yes    |                                 |       |
@@ -1937,7 +1939,7 @@
 | no3       | EntityFireWarg                           |     2168 |        322 | Yes    |                                 |       |
 | lib       | LIB_EntityCutscene                       |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra       | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
-| st0       | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/4h8ZK | 0.919 |
+| st0       | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/bgWcS | 0.92  |
 | no3       | NO3_EntityCutscene                       |     2232 |        204 | Yes    | https://decomp.me/scratch/j05ot | 0.999 |
 | no4       | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra       | EntityAlucard                            |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
