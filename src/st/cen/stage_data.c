@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include <stage.h>
 
 u8 stage_title_jp[] = {
 #include "gen/stage_title_jp.h"
