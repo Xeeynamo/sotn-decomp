@@ -58,6 +58,7 @@ Random = 0x09248EC0;
 Update = 0x09248F00;
 UpdateStageEntities = 0x092492E0;
 func_801CC5A4 = 0x092493F8;
+func_801CC6F8 = 0x09249590;
 EntityFireWarg = 0x09249910;
 EntityUnkId30 = 0x0924B8B0;
 EntityUnkId31 = 0x0924BAF0;

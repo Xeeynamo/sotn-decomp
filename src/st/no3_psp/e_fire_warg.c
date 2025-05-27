@@ -25,7 +25,52 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_09249590);
+static void func_801CC6F8(Entity* self) {
+    u16 distance = GetDistanceToPlayerX();
+    bool buttNearScreenEdge;
+
+    self->velocityX = 0;
+    self->ext.fireWarg.unk86 = 0x100;
+
+    if (self->params) {
+        SetStep(12);
+        return;
+    }
+
+    // This will test if we're facing left, with high X, or facing right with
+    // low X.
+    buttNearScreenEdge = false;
+    if (self->facingLeft) {
+        if (self->posX.i.hi > 0x70) {
+            buttNearScreenEdge = true;
+        }
+    } else {
+        if (self->posX.i.hi < 0x90) {
+            buttNearScreenEdge = true;
+        }
+    }
+
+    if (distance < 0x70) {
+        if (!(Random() & 3) && !buttNearScreenEdge) {
+            SetStep(9);
+        } else {
+            SetStep(6);
+            PlaySfxPositional(SFX_WARG_GROWL);
+            self->ext.fireWarg.unk80 = 0x20;
+        }
+    } else {
+        if ((Random() & 3) && !buttNearScreenEdge) {
+            SetStep(9);
+            if (!(Random() & 3)) {
+                self->ext.fireWarg.unk86 = 0;
+            }
+        } else {
+            SetStep(6);
+            PlaySfxPositional(SFX_WARG_GROWL);
+            self->ext.fireWarg.unk80 = 0x20;
+        }
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_09249738);
 
