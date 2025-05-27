@@ -266,4 +266,4 @@ extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 g_EInitMaria[];
+extern u16 g_EInitSpawner[];

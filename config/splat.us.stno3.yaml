@@ -41,7 +41,6 @@ segments:
       - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
-      - [0xAAC, data]
       - [0xBB4, .data, e_background_block]
       - [0xDA0, data]
       - [0xDC0, .data, e_lock_camera]

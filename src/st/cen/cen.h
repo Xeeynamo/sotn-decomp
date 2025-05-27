@@ -48,7 +48,7 @@ void EntityGreyPuff(Entity* entity);
 /*** Initializers ***/
 extern EInit OVL_EXPORT(EInitBreakable);
 extern u16 g_EInitObtainable[];
-extern u16 g_EInitMaria[];
+extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitParticle[];

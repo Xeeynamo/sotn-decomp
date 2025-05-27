@@ -349,7 +349,7 @@ void EntityMaria(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        InitializeEntity(g_EInitMaria);
+        InitializeEntity(g_EInitSpawner);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 10;
