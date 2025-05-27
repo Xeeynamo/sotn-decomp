@@ -72,7 +72,36 @@ static void func_801CC6F8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_09249738);
+// Only called by the EntityFireWarg
+static void func_801CC820(Entity* self) {
+    u16 distance;
+
+    if ((self->facingLeft == GetSideToPlayer()) & 1) {
+        if (self->params) {
+            SetStep(4);
+        } else {
+            SetStep(5);
+        }
+        return;
+    }
+    if (!self->ext.fireWarg.unk86) {
+        func_801CC6F8(self);
+        return;
+    }
+    distance = GetDistanceToPlayerX();
+    if ((distance < 0x48) && (self->step != 4)) {
+        SetStep(4);
+        return;
+    }
+    SetStep(3);
+    if (distance < 0x60) {
+        self->ext.fireWarg.unk7C = 1;
+    } else {
+        self->ext.fireWarg.unk7C = 0;
+    }
+    self->ext.fireWarg.unk80 = 0;
+    self->ext.fireWarg.unk82 = 0x20;
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_09249878);
 
