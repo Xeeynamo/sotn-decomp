@@ -4,12 +4,6 @@
 
 #include "../no3/no3.h"
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", Random);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", Update);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", UpdateStageEntities);
-
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092493F8);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09249590);
