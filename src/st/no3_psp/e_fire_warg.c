@@ -103,7 +103,21 @@ static void func_801CC820(Entity* self) {
     self->ext.fireWarg.unk82 = 0x20;
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_09249878);
+// duplicate of func_801CF6D8
+static void func_801CC90C(Entity* self) {
+    u16 xDist = GetDistanceToPlayerX();
+
+    if (self->ext.fireWarg.unk86) {
+        if (xDist < 0x60) {
+            self->ext.fireWarg.unk86 -= 2;
+            if (self->ext.fireWarg.unk86 < 0) {
+                self->ext.fireWarg.unk86 = 0;
+            }
+        } else {
+            self->ext.fireWarg.unk86--;
+        }
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", EntityFireWarg);
 

@@ -60,6 +60,7 @@ UpdateStageEntities = 0x092492E0;
 func_801CC5A4 = 0x092493F8;
 func_801CC6F8 = 0x09249590;
 func_801CC820 = 0x09249738;
+func_801CC90C = 0x09249878;
 EntityFireWarg = 0x09249910;
 EntityUnkId30 = 0x0924B8B0;
 EntityUnkId31 = 0x0924BAF0;
