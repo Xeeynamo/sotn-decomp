@@ -48,7 +48,7 @@ segments:
       - [0x8CC, .data, en_breakable_wall]
       - [0x974, .data, en_falling_stairs]
       - [0x9E4, .data, dt_prize_drops]
-      - [0xA20, .data, st_update]
+      - [0xA00, .data, st_update]
       - [0xA4C, .data, st_collision]
       - [0xE0C, .data, en_red_door]
       - [0xE24, .data, ut_common]
