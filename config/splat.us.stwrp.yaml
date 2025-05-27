@@ -56,12 +56,7 @@ segments:
       - [0x1120, .data, e_room_fg]
       - [0x11AC, .data, gen/rooms]
       - [0x1228, .data, gen/e_layout] # layout entries data
-      - [0x1420, cmpgfx, stage_title_jp, 128, 128, 4]
-      - [0x1764, cmpgfx, stage_placeholder, 128, 128, 4]
-      - [0x1D08, pal, D_80181D08]
-      - [0x1D28, pal, D_80181D28]
-      - [0x1D68, .data, tile_data] # tile data
-      - [0x2968, .data, tile_data] # tile definitions
+      - [0x1420, .data, stage_data]
       - [0x6D88, .data, gen/sprites]
       - [0x6E30, .rodata, warp] # warp strings
       - [0x6E70, .rodata, warp] # EntityWarpRoom
