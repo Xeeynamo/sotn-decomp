@@ -2182,9 +2182,9 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 : 16;
-    /* 0x7C */ s16 timer2;
-    /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 timer3;
+    /* 0x80 */ s16 timer2;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 timer3;
 } ET_Maria092AAC80;
 
 typedef struct {
@@ -2204,6 +2204,13 @@ typedef struct {
     Point16 pos3;
     Point16 pos4;
 } ET_Maria092A9E88;
+
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 opacity;
+    /* 0x82 */ s16 nSpawn;
+} ET_Maria092A95A8;
 
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
@@ -3288,6 +3295,7 @@ typedef union { // offset=0x7C
     ET_Maria092AAC80 maria092AAC80;
     ET_Maria092AAA38 maria092AAA38;
     ET_Maria092A9E88 maria092A9E88;
+    ET_Maria092A95A8 maria092A95A8;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;

@@ -96,7 +96,84 @@ void func_pspeu_092A9288(Entity* self) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A95A8);
+extern AnimationFrame D_pspeu_092C0A28[];
+void func_pspeu_092A95A8(Entity* self) {
+    s32 var_s0;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x11;
+        self->zPriority = 0x1C0;
+        self->palette = 0x811A;
+        self->animSet = ANIMSET_OVL(20);
+        MarSetAnimation(D_pspeu_092C0A28);
+        self->facingLeft = PLAYER.facingLeft;
+        if (PLAYER.facingLeft) {
+            var_s0 = 24;
+        } else {
+            var_s0 = -24;
+        }
+        self->posX.i.hi = PLAYER.posX.i.hi + var_s0;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+#if defined(VERSION_PC)
+        g_Player.unk20 = (signed long long)self;
+#else
+        g_Player.unk20 = (s32)self;
+#endif
+        self->ext.maria092A95A8.timer = 0;
+        self->ext.maria092A95A8.nSpawn = 0;
+        self->ext.maria092A95A8.opacity = 0;
+        self->step = 1;
+        func_pspeu_092BF8B8(1);
+        func_pspeu_092BEA38(self, 0);
+        break;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            g_api_PlaySfx(SFX_VO_MAR_8F1);
+            self->step = 3;
+        }
+        break;
+    case 3:
+        self->ext.maria092A95A8.opacity += 16;
+        if (self->ext.maria092A95A8.opacity >= 128) {
+            func_pspeu_092BEA38(self, 128);
+            self->step = 2;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A95A8.opacity);
+        }
+        break;
+    case 2:
+        if (self->ext.maria092A95A8.timer > 300) {
+            self->ext.maria092A95A8.opacity = 128;
+            self->step = 4;
+        }
+        break;
+    case 4:
+        self->posY.i.hi -= 4;
+        self->ext.maria092A95A8.opacity -= 16;
+        if (self->ext.maria092A95A8.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->step = 5;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A95A8.opacity);
+        }
+        break;
+    case 5:
+        g_Player.unk20 = 0;
+        g_Player.unk5C = 0;
+        DestroyEntity(self);
+        break;
+    }
+    self->ext.maria092A95A8.timer++;
+    if (g_Player.unk5C == 1 && self->step == 2 &&
+        self->ext.maria092A95A8.timer < 240 &&
+        (self->ext.maria092A95A8.timer % 5) == 0) {
+        MarCreateEntFactoryFromEntity(self, _BP_VIBHUTI, 0);
+        self->ext.maria092A95A8.nSpawn++;
+    }
+}
 
 static s32 func_pspeu_092A9920(s32 arg0) {
     arg0 %= 0x1000;
