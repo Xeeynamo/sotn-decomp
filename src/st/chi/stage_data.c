@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
 u8 bn_gfx_stage_name_jp_sm[] = {
