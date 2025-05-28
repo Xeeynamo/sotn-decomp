@@ -15,7 +15,64 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7560);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7950);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7B80);
+AnimationFrame D_pspeu_092C09B0[];
+void func_pspeu_092A7B80(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->unk5A = 0x15;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DRAGON;
+        self->animSet = ANIMSET_OVL(21);
+        MarSetAnimation(D_pspeu_092C09B0);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi + (PLAYER.facingLeft ? 0x20 : -0x20);
+        self->posY.i.hi = PLAYER.posY.i.hi - 8;
+        self->ext.maria092A7B80.y = self->posY.i.hi;
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A7B80.unkB0 = 0;
+        MarSetWeaponParams(self, 42, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_Player.unk7A = 1;
+        self->ext.maria092A7B80.timer = 0;
+        self->step = 2;
+        // fallthrough
+    case 2:
+        self->ext.maria092A7B80.opacity += 16;
+        if (self->ext.maria092A7B80.opacity >= 128) {
+            func_pspeu_092BEA38(self, 128);
+            self->step = 1;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092A7B80.opacity);
+        break;
+    case 1:
+        self->velocityX += FIX(0.25);
+        if (self->velocityX > FIX(3)) {
+            self->velocityX = FIX(3);
+        }
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->posY.i.hi =
+            self->ext.maria092A7B80.y +
+            -rsin(self->ext.maria092A7B80.timer << 6) * 0x18 / 0x1000;
+        if ((self->ext.maria092A7B80.timer % 60) == 0) {
+            g_api_PlaySfx(SFX_WING_FLAP_B);
+        }
+        self->ext.maria092A7B80.timer++;
+        if (self->posX.i.hi < -16 || self->posX.i.hi > 272) {
+            self->step = 3;
+            return;
+        }
+        break;
+    case 3:
+        g_Player.unk7A = 0;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 static s32 func_pspeu_092A7F20(s32 angle) {
     angle %= 0x1000;
