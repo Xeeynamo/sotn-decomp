@@ -28,6 +28,7 @@ options:
     - ".bss"
     - ".sbss"
   ld_generate_symbol_per_data_segment: true
+sha1: bc2fabbe5ef0d1288490b6f1ddbf11092a2c0c57
 segments:
   - name: stst0
     type: code

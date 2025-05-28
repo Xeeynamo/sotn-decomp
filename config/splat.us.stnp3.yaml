@@ -28,6 +28,7 @@ options:
     - ".bss"
     - ".sbss"
   ld_generate_symbol_per_data_segment: true
+sha1: 7c78a2bec6a26acfb62456e7f517915fe0c0e3f5
 segments:
   - name: stnp3
     type: code
