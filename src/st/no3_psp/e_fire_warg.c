@@ -1404,12 +1404,21 @@ void EntityFireWargDeathBeams(Entity* self) {
     u16 hiddenPrimCount;
     u16 palette;
     s32 primIndex;
+
+    #if !defined(VERSION_PSP)
+    s32 temp_s1;
+    u16 temp_s1_u16;
+    #else
     u16 temp_s1;
+    #endif
 
     switch (self->step) {
     case 0:
         temp_s1 = self->unk5A + 3;
         palette = self->palette + 4;
+        #if !defined(VERSION_PSP)
+        temp_s1_u16 = (u16)temp_s1;
+        #endif
 
         InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
@@ -1418,9 +1427,13 @@ void EntityFireWargDeathBeams(Entity* self) {
             prim = &g_PrimBuf[primIndex];
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-    
+
             while (prim != NULL) {
+                #if !defined(VERSION_PSP)
+                prim->tpage = temp_s1_u16 >> 2;
+                #else
                 prim->tpage = temp_s1 >> 2;
+                #endif
                 prim->clut = palette;
                 prim->u1 = prim->u0 = ((temp_s1 & 1) << 7) + 0x21;
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
