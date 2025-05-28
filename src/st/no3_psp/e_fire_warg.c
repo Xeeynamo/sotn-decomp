@@ -1433,7 +1433,6 @@ void EntityFireWargDeathBeams(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        
         break;
     case 1:
         if ((!self->ext.fireWargDeathBeams.unk7C) &&

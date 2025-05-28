@@ -1416,9 +1416,9 @@ void EntityFireWargDeathBeams(Entity* self) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
 
         if (primIndex != -1) {
-            self->primIndex = primIndex;
-            self->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
 
             while (prim != NULL) {
                 prim->tpage = temp_s1_u16 / 4;
