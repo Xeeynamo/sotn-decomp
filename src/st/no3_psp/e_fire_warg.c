@@ -892,12 +892,6 @@ static s16 D_80182FC8[] = {
 static s16 D_80182FE8[] = {
     0,  0, 0,  0, 0,  0, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4,
     -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 8};
-static u8 D_80183028[] = {24, 55, 56, 87, 88, 127, 56, 87, 56, 87, 56, 87};
-static s32 D_80183034[] = {FIX(-3), FIX(-5), FIX(-1), FIX(-7), FIX(4), FIX(-4)};
-static s16 D_8018304C[] = {-32, -128, 24, 0};
-static s16 D_80183054[] = {512, 22, 440, 25, 512, 22};
-static s16 D_80183060[] = {
-    0, 8, 6, 6, 8, 0, 6, -6, 0, -8, -6, -6, -8, 0, -6, 6};
 
 void EntityUnkId31(Entity* self) {
     Entity* explosion;
@@ -1014,6 +1008,13 @@ void EntityUnkId31(Entity* self) {
     self->hitboxWidth = *hitboxPtr++;
     self->hitboxHeight = *hitboxPtr;
 }
+
+static u8 D_80183028[] = {24, 55, 56, 87, 88, 127, 56, 87, 56, 87, 56, 87};
+static s32 D_80183034[] = {FIX(-3), FIX(-5), FIX(-1), FIX(-7), FIX(4), FIX(-4)};
+static s16 D_8018304C[] = {-32, -128, 24, 0};
+static s16 D_80183054[] = {512, 22, 440, 25, 512, 22};
+static s16 D_80183060[] = {
+    0, 8, 6, 6, 8, 0, 6, -6, 0, -8, -6, -6, -8, 0, -6, 6};
 
 void EntityExplosion3(Entity* entity) {
     Entity* newEntity;

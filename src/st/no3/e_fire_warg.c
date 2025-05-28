@@ -1,6 +1,65 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
-#include "sfx.h"
+
+static u8 D_801827DC[] = {14, 1, 14, 2, 14, 3, 14, 4, 14, 5, 14, 6, 0};
+static u8 D_801827EC[] = {14, 57, 14, 58, 14, 59, 14, 60, 14, 61, 14, 62, 0};
+static u8 D_801827FC[] = {14, 6, 14, 5, 14, 4, 14, 3, 14, 2, 14, 1, 0};
+static u8 D_8018280C[] = {14, 62, 14, 61, 14, 60, 14, 59, 14, 58, 14, 57, 0};
+static u8 D_8018281C[] = {26, 7, 26, 8, 2, 9, 0};
+static u8 D_80182824[] = {26, 73, 26, 74, 2, 75, 0};
+static u8 unused[] = {134, 14, 8,  30, 8,  31, 8,  32, 8,  33, 10, 34, 12,
+                      35,  14, 36, 12, 37, 10, 38, 8,  39, 8,  30, 0};
+static u8 D_80182848[] = {8, 30, 8, 31, 8, 32, 255, 0};
+static u8 D_80182850[] = {8, 86, 8, 87, 8, 88, 255, 0};
+static u8 D_80182858[] = {
+    2, 33, 3, 34, 4, 35, 20, 36, 6, 37, 4, 38, 2, 39, 255, 0};
+static u8 D_80182868[] = {
+    2, 89, 3, 90, 4, 91, 20, 92, 6, 93, 4, 94, 2, 95, 255, 0};
+static u8 D_80182878[] = {4, 32, 4, 31, 32, 30, 8, 14, 255, 0};
+static u8 D_80182884[] = {4, 88, 4, 87, 32, 86, 8, 50, 255, 0};
+static u8 D_80182890[] = {8,  14, 8,  40, 8,  41, 8,  42, 8,  43,  6,
+                          44, 8,  45, 8,  46, 8,  47, 8,  48, 255, 0};
+static u8 D_801828A8[] = {2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8,   19,
+                          8, 26, 8, 27, 8, 28, 8,  29, 8, 14, 255, 0};
+static u8 unused2[] = {4, 96, 4, 97, 4, 98, 4, 99, 4, 100, 4,   101,
+                       8, 26, 8, 27, 8, 28, 8, 29, 8, 14,  255, 0};
+static u8 D_801828D8[] = {1, 10, 1, 11, 0};
+static u8 unused3[] = {1, 12, 1, 13, 0};
+static u8 unused4[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                       19, 16, 20, 8,  19, 8,  18, 12, 14, 255, 0};
+static u8 D_80182900[] = {
+    8, 102, 8, 103, 8, 104, 16, 105, 8, 106, 8,   107, 8, 108,
+    8, 107, 8, 106, 8, 105, 8,  106, 8, 107, 56,  108, 8, 107,
+    8, 106, 8, 105, 8, 104, 8,  103, 8, 102, 255, 0};
+static u8 D_80182928[] = {
+    4, 102, 4, 103, 4, 104, 4, 105, 4, 106, 4, 107, 16,  108,
+    4, 107, 4, 106, 4, 105, 4, 104, 4, 103, 4, 102, 255, 0};
+static u8 D_80182944[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                          19, 64, 20, 8,  19, 8,  18, 12, 14, 255, 0};
+static u8 D_8018295C[] = {4, 40, 20, 42, 255, 0};
+static u8 D_80182964[] = {4, 40, 1, 14, 255, 0};
+static u8 D_8018296C[] = {
+    8, 63, 8, 64, 8, 65, 32, 66, 6, 67, 6, 68, 42, 69, 8, 64, 255, 0};
+static u8 D_80182980[] = {24, 50, 32, 88, 4, 87, 46, 86, 4, 87, 8, 88, 255, 0};
+static u8 D_80182990[] = {
+    8,  63, 8,  64, 8,  65, 32, 66, 6,  67, 6,  68, 16, 69, 12, 66,  6,
+    67, 6,  68, 16, 69, 12, 66, 6,  67, 6,  68, 64, 69, 8,  64, 255, 0};
+static u8 D_801829B4[] = {
+    24, 50, 32, 88, 4,  87, 20, 86, 4,  87, 12, 88, 4,  87,  20,
+    86, 4,  87, 12, 88, 4,  87, 52, 86, 4,  87, 8,  88, 255, 0};
+// End of animations
+static s16 D_801829D4[] = {0, 40, 48, 0};
+static s16 D_801829DC[] = {0, 40, 0, 4, 24, -4, -48, 0};
+static s32 D_801829EC[] = {FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7),
+                           FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7)};
+static s32 D_80182A04[] = {FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7),
+                           FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7)};
+// These are very close to 12/7, 6/7, 4/7, 12/7, 6/7, 4/7 but not quite.
+static s32 unused_morefixes[] = {
+    0x1B6DA, 0xDBC6, 0x9248, 0x1B6DA,
+    0xDBC6,  0x9248, FIX(4)};
+static s16 D_80182A38[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
+static u8 D_80182A48[] = {2, 0, 1, 3};
 
 static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
                           s32 yDist, u8 arg5, s16 xOfst) {
@@ -117,6 +176,52 @@ static void func_801CC90C(Entity* self) {
         }
     }
 }
+
+static s16 D_80182A4C[] = {
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -6,  12, 8,
+    8,  12, 28, 28, -31, -6,  12, 8,  8,  12, 28, 28, -31, -1,  10, 10,
+    8,  12, 28, 28, -30, -1,  10, 10, 8,  12, 28, 28, -33, -5,  12, 9,
+    8,  12, 28, 28, -33, -10, 12, 8,  8,  12, 28, 28, -32, -11, 12, 8,
+    8,  12, 28, 28, -16, -15, 28, 8,  8,  12, 28, 28, -33, -5,  12, 9,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, 0,   12, 10,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, -1,  12, 10,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, 0,   12, 9,
+    8,  12, 28, 28, -33, -1,  12, 8,  0,  16, 28, 24, -38, 11,  9,  9,
+    0,  16, 28, 24, -38, 11,  9,  9,  0,  16, 28, 24, -38, 5,   10, 7,
+    0,  16, 28, 24, -40, 2,   11, 7,  0,  16, 28, 24, -39, 4,   10, 7,
+    0,  16, 28, 24, -39, 1,   11, 7,  0,  12, 28, 28, -39, -5,  10, 8,
+    0,  12, 28, 28, -38, -8,  9,  7,  8,  12, 28, 28, -30, -14, 9,  7,
+    8,  8,  28, 24, -29, -16, 9,  7,  8,  0,  28, 24, -30, -10, 10, 8,
+    8,  0,  28, 24, -31, -10, 10, 8,  8,  12, 28, 28, -32, -4,  11, 8,
+    8,  12, 28, 28, -31, -6,  10, 8,  8,  12, 28, 28, -31, -5,  10, 9,
+    8,  12, 28, 28, -29, -4,  9,  10, 8,  12, 28, 28, -27, -3,  7,  10,
+    -3, 12, 17, 28, 0,   0,   0,  0,  -8, 12, 12, 28, 0,   0,   0,  0,
+    0,  12, 28, 28, 32,  -1,  4,  8,  0,  12, 28, 28, 35,  -1,  7,  8,
+    -8, 12, 28, 28, 31,  -5,  11, 8,  -8, 12, 28, 28, 32,  -4,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -6,  12, 9,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -16, -10, 28, 7,  8,  12, 28, 28, -16, -17, 26, 6,
+    8,  12, 28, 28, -28, -22, 22, 8,  8,  12, 28, 28, -20, -24, 8,  13,
+    8,  12, 28, 28, -19, -24, 8,  13, 8,  12, 28, 28, -18, -24, 8,  13,
+    8,  12, 28, 28, -18, -25, 8,  13};
+static s16 D_80182E1C[] = {
+    6,  -24, 4, 24, -37, 2,  10, 4, 2,  -23, 4, 24, -38, 2,   10, 4,
+    3,  -23, 4, 24, -38, 3,  10, 4, 3,  -22, 4, 24, -38, 4,   10, 4,
+    2,  -23, 4, 24, -39, 2,  10, 4, 3,  -23, 4, 24, -39, 3,   10, 4,
+    3,  -22, 4, 24, -39, 4,  10, 4, 6,  -24, 4, 24, -36, 2,   10, 4,
+    3,  -26, 4, 24, -39, 0,  10, 4, 2,  -29, 4, 24, -38, 0,   10, 4,
+    2,  -28, 4, 24, -25, -9, 10, 4, -3, -21, 4, 24, -47, 0,   17, 4,
+    -2, -21, 4, 24, -46, 0,  18, 4, -2, -21, 4, 24, -45, 0,   19, 4,
+    5,  -25, 4, 24, -36, 0,  10, 4, 5,  -25, 4, 24, -37, 0,   10, 4,
+    5,  -25, 4, 24, -36, 2,  10, 4, -1, -21, 4, 24, -44, 5,   10, 4,
+    -3, -24, 4, 24, -46, 2,  10, 4, -2, -20, 4, 24, -44, 5,   10, 4,
+    5,  -33, 4, 24, -37, -7, 10, 4, 3,  -38, 4, 24, -40, -12, 10, 4,
+    1,  -28, 4, 24, -38, 0,  10, 4, 5,  -23, 4, 24, -37, 2,   10, 4};
 
 void EntityFireWarg(Entity* self) {
     Entity* ent_s0;
@@ -778,6 +883,15 @@ void EntityUnkId30(Entity* self) {
     }
 }
 
+static s16 D_80182F9C[] = {-44, 0, -20, 12, 8, -4};
+static s16 D_80182FA8[] = {
+    16, -16, 28, -24, -16, -20, 8, -32, -24, -48, -40, -8, 24, -56, -6, -40};
+static s16 D_80182FC8[] = {
+    0, 0, 0, 0, 0, 0, -8, 4, -8, 4, -8, 4, -8, 4, -12, 4};
+static s16 D_80182FE8[] = {
+    0,  0, 0,  0, 0,  0, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4,
+    -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 8};
+
 void EntityUnkId31(Entity* self) {
     Entity* entity;
     u16* hitboxPtr;
@@ -894,22 +1008,28 @@ void EntityUnkId31(Entity* self) {
     self->hitboxHeight = *hitboxPtr++;
 }
 
+static u8 D_80183028[] = {24, 55, 56, 87, 88, 127, 56, 87, 56, 87, 56, 87};
+static s32 D_80183034[] = {FIX(-3), FIX(-5), FIX(-1), FIX(-7), FIX(4), FIX(-4)};
+static s16 D_8018304C[] = {-32, -128, 24, 0};
+static s16 D_80183054[] = {512, 22, 440, 25, 512, 22};
+static s16 D_80183060[] = {
+    0, 8, 6, 6, 8, 0, 6, -6, 0, -8, -6, -6, -8, 0, -6, 6};
+
 // some sort of explosion
 void EntityExplosion3(Entity* entity) {
     Entity* newEntity;
-    u32* ptr32;
+    s32* var_s7;
     u8* ptr;
-    Point16* point;
+    s16* point;
     Primitive* prim;
     u16 params;
-    s32 xOffset;
-    s32 yOffset;
-    s16 primIndex;
     u16 angle;
-    s16 posX;
-    s16 posY;
     u16 newX;
     u16 newY;
+    s32 primIndex;
+    s16 posX;
+    s16 posY;
+    s16 offset_var;
 
     params = entity->params;
     if (!entity->step) {
@@ -921,15 +1041,15 @@ void EntityExplosion3(Entity* entity) {
             prim = &g_PrimBuf[primIndex];
             entity->flags |= FLAG_HAS_PRIMS;
             entity->primIndex = primIndex;
-            primIndex = entity->unk5A + 3;
-            prim->tpage = primIndex >> 2;
+            offset_var = entity->unk5A + 3;
+            prim->tpage = offset_var >> 2;
             prim->clut = entity->palette + 1;
 
             ptr = &D_80183028[params * 4];
-            prim->u0 = prim->u2 = *ptr++ + ((primIndex & 1) << 7);
-            prim->u1 = prim->u3 = *ptr++ + ((primIndex & 1) << 7);
-            prim->v0 = prim->v1 = *ptr++ + ((primIndex & 2) << 6);
-            prim->v2 = prim->v3 = *ptr + ((primIndex & 2) << 6);
+            prim->u0 = prim->u2 = *ptr++ + ((offset_var & 1) << 7);
+            prim->u1 = prim->u3 = *ptr++ + ((offset_var & 1) << 7);
+            prim->v0 = prim->v1 = *ptr++ + ((offset_var & 2) << 6);
+            prim->v2 = prim->v3 = *ptr + ((offset_var & 2) << 6);
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x80;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x80;
             prim->b0 = prim->b2 = prim->b1 = prim->b3 = 0x80;
@@ -942,71 +1062,59 @@ void EntityExplosion3(Entity* entity) {
         }
 
         entity->ext.entityExplosion3.timer = 0;
-        ptr32 = &D_80183034[params * 2];
+        var_s7 = &D_80183034[params * 2];
         if (entity->facingLeft) {
-            entity->velocityX = -*ptr32++;
+            entity->velocityX = -*var_s7++;
         } else {
-            entity->velocityX = *ptr32++;
+            entity->velocityX = *var_s7++;
         }
-        entity->velocityY = *ptr32;
+        entity->velocityY = *var_s7;
     }
 
     posX = entity->posX.i.hi;
     posY = entity->posY.i.hi;
-    point = &D_80183054[params];
     prim = &g_PrimBuf[entity->primIndex];
     entity->ext.entityExplosion3.unk7E += D_8018304C[params];
-    newX = point->x;
-    newY = point->y;
-    angle = newX + entity->ext.entityExplosion3.unk7E;
-    xOffset = rcos(angle) * newY;
-    if (xOffset < 0) {
-        xOffset += 0xFFF;
-    }
-    xOffset = xOffset >> 12;
-    if (entity->facingLeft != 0) {
-        prim->x3 = posX - xOffset;
-        prim->x0 = posX + xOffset;
+    point = &D_80183054[params * 2];
+    newX = *point++;
+    newY = *point;
+    angle = entity->ext.entityExplosion3.unk7E + newX;
+    offset_var = rcos(angle) * newY / 0x1000;
+
+    if (entity->facingLeft) {
+        prim->x3 = posX - offset_var;
+        prim->x0 = posX + offset_var;
     } else {
-        prim->x0 = posX - xOffset;
-        prim->x3 = posX + xOffset;
+        prim->x0 = posX - offset_var;
+        prim->x3 = posX + offset_var;
     }
-    yOffset = rsin(angle) * newY;
-    if (yOffset < 0) {
-        yOffset += 0xFFF;
-    }
-    prim->y0 = posY - (yOffset >> 12);
-    prim->y3 = posY + (yOffset >> 12);
+    offset_var = rsin(angle) * newY / 0x1000;
+    prim->y0 = posY - offset_var;
+    prim->y3 = posY + offset_var;
 
     angle = entity->ext.entityExplosion3.unk7E - newX;
-    xOffset = rcos(angle) * newY;
-    if (xOffset < 0) {
-        xOffset += 0xFFF;
-    }
-    xOffset = xOffset >> 12;
-    if (entity->facingLeft != 0) {
-        prim->x1 = posX - xOffset;
-        prim->x2 = posX + xOffset;
+    offset_var = rcos(angle) * newY / 0x1000;
+
+    if (entity->facingLeft) {
+        prim->x1 = posX - offset_var;
+        prim->x2 = posX + offset_var;
     } else {
-        prim->x1 = posX + xOffset;
-        prim->x2 = posX - xOffset;
+        prim->x1 = posX + offset_var;
+        prim->x2 = posX - offset_var;
     }
 
-    yOffset = rsin(angle) * newY;
-    if (yOffset < 0) {
-        yOffset += 0xFFF;
-    }
-    prim->y1 = posY + (yOffset >> 12);
-    prim->y2 = posY - (yOffset >> 12);
+    offset_var = rsin(angle) * newY / 0x1000;
+    prim->y1 = posY + offset_var;
+    prim->y2 = posY - offset_var;
     FallEntity();
     MoveEntity();
     if (entity->ext.entityExplosion3.timer & 1) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
-            point = &D_80183060[(Random() & 7)];
-            newEntity->posX.i.hi += point->x;
-            newEntity->posY.i.hi += point->y;
+            point = &D_80183060[(Random() & 7) * 2];
+            newEntity->posX.i.hi += *point++;
+            newEntity->posY.i.hi += *point;
             newEntity->params = 1;
         }
     }
@@ -1280,6 +1388,9 @@ void EntityUnkId2F(Entity* self) {
         break;
     }
 }
+
+static s16 D_80183080[] = {16, -32, 0, 24, -12, 8, -20, 32, -2, 12, -29, 18, 0, -20, 2, -14};
+static s16 D_801830A0[] = {2, -2, -2, 4, -2, 2, 0, -2, 2, 0, -2, 2, -2, 0};
 
 // beams that go up when strong warg dies
 void EntityFireWargDeathBeams(Entity* self) {
