@@ -895,74 +895,74 @@ static s16 D_80182FE8[] = {
     -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 8};
 
 void EntityUnkId31(Entity* self) {
-    Entity* entity;
-    u16* hitboxPtr;
-    u16 pose;
+    Entity* explosion;
+    s16* hitboxPtr;
     u16 animCurFrame;
     s16 i;
 
-    entity = self - 2;
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(D_80180B24);
         self->zPriority++;
-        CreateEntityFromCurrentEntity(E_ID_30, self + 1);
-        (self + 1)->params = 1;
+        explosion = self + 1;
+        CreateEntityFromCurrentEntity(E_ID_30, explosion);
+        explosion->params = 1;
     }
+    explosion = self - 2;
     if (self->ext.fireWargHelper.unk7C) {
-        pose = (self->pose - 1) * 2;
-        if (entity->step_s == 1) {
-            hitboxPtr = D_80182FC8 + pose;
+        animCurFrame = (self->pose - 1) * 2;
+        if (explosion->step_s == 1) {
+            hitboxPtr = D_80182FC8 + animCurFrame;
         } else {
-            hitboxPtr = D_80182FE8 + pose;
+            hitboxPtr = D_80182FE8 + animCurFrame;
         }
 
         if (self->facingLeft) {
-            self->posX.i.hi = entity->posX.i.hi - *hitboxPtr++;
+            self->posX.i.hi = explosion->posX.i.hi - *hitboxPtr++;
         } else {
-            self->posX.i.hi = entity->posX.i.hi + *hitboxPtr++;
+            self->posX.i.hi = explosion->posX.i.hi + *hitboxPtr++;
         }
-        self->posY.i.hi = entity->posY.i.hi + *hitboxPtr++;
+        self->posY.i.hi = explosion->posY.i.hi + *hitboxPtr;
     } else {
-        self->posX.i.hi = entity->posX.i.hi;
-        self->posY.i.hi = entity->posY.i.hi;
+        self->posX.i.hi = explosion->posX.i.hi;
+        self->posY.i.hi = explosion->posY.i.hi;
     }
-    self->facingLeft = entity->facingLeft;
-    animCurFrame = entity->animCurFrame;
+    self->facingLeft = explosion->facingLeft;
+    animCurFrame = explosion->animCurFrame;
     if (self->flags & FLAG_DEAD) {
         hitboxPtr = D_80182F9C;
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION_3, entity);
-                if (self->facingLeft != 0) {
-                    entity->posX.i.hi -= *hitboxPtr++;
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (explosion != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION_3, explosion);
+                if (self->facingLeft) {
+                    explosion->posX.i.hi -= *hitboxPtr++;
                 } else {
-                    entity->posX.i.hi += *hitboxPtr++;
+                    explosion->posX.i.hi += *hitboxPtr++;
                 }
-                entity->posY.i.hi += *hitboxPtr++;
-                entity->params = i;
-                entity->facingLeft = self->facingLeft;
+                explosion->posY.i.hi += *hitboxPtr++;
+                explosion->params = i;
+                explosion->facingLeft = self->facingLeft;
             }
         }
 
         hitboxPtr = D_80182FA8;
         for (i = 0; i < 8; i++) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
-            if (!entity) {
+            if (explosion == NULL) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-            entity->params = ((self->zPriority + 1) << 8) + 1;
-            if (self->facingLeft != 0) {
-                entity->posX.i.hi -= *hitboxPtr++;
+            CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
+            explosion->params = ((self->zPriority + 1) << 8) + 1;
+            if (self->facingLeft) {
+                explosion->posX.i.hi -= *hitboxPtr++;
             } else {
-                entity->posX.i.hi += *hitboxPtr++;
+                explosion->posX.i.hi += *hitboxPtr++;
             }
-            entity->posY.i.hi += *hitboxPtr++;
+            explosion->posY.i.hi += *hitboxPtr++;
         }
 
         DestroyEntity(self);
@@ -973,16 +973,16 @@ void EntityUnkId31(Entity* self) {
     if (!self->ext.fireWargHelper.unk7C) {
         if (animCurFrame >= 86) {
             animCurFrame -= 10;
-        } else if (animCurFrame > 72) {
+        } else if (animCurFrame >= 73) {
             animCurFrame -= 3;
-        } else if (animCurFrame < 57) {
-            animCurFrame = 49;
-        } else {
+        } else if (animCurFrame >= 57) {
             animCurFrame -= 6;
+        } else {
+            animCurFrame = 49;
         }
 
         if (animCurFrame != 78) {
-            if ((entity->step == 3) && ((u8)entity->ext.timer.t != 0)) {
+            if ((explosion->step == 3) && (explosion->ext.ILLEGAL.u8[0])) {
                 self->animCurFrame = animCurFrame + 58;
             } else {
                 self->animCurFrame = animCurFrame;
@@ -992,13 +992,13 @@ void EntityUnkId31(Entity* self) {
         animCurFrame = self->animCurFrame;
     }
 
-    if (animCurFrame > 81) {
+    if (animCurFrame >= 82) {
         animCurFrame -= 62;
-    } else if (animCurFrame > 75) {
+    } else if (animCurFrame >= 76) {
         animCurFrame -= 59;
-    } else if (animCurFrame > 62) {
+    } else if (animCurFrame >= 63) {
         animCurFrame -= 56;
-    } else if (animCurFrame > 50) {
+    } else if (animCurFrame >= 51) {
         animCurFrame -= 50;
     } else {
         animCurFrame -= 49;
@@ -1007,7 +1007,7 @@ void EntityUnkId31(Entity* self) {
     self->hitboxOffX = *hitboxPtr++;
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
-    self->hitboxHeight = *hitboxPtr++;
+    self->hitboxHeight = *hitboxPtr;
 }
 
 static u8 D_80183028[] = {24, 55, 56, 87, 88, 127, 56, 87, 56, 87, 56, 87};
@@ -1128,57 +1128,52 @@ void EntityExplosion3(Entity* entity) {
 }
 
 void func_801CE740(Entity* self) {
-    Primitive* prim = &g_PrimBuf[self->primIndex];
-
-    if (prim == NULL) {
-        return;
-    }
-
-    while (prim != NULL) {
-        if (prim->p1 != 0) {
+    Primitive* prim;
+    
+    for(prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+        if (prim->p1) {
             prim->p1--;
-        } else {
-            if (prim->p2 < 8) {
-                prim->y0 = prim->y1 = prim->y1 - 12;
-                if (self->facingLeft) {
-                    prim->x1 = prim->x3 = prim->x3 + 8;
-                    prim->r0 = prim->r2 = prim->r2 - 8;
-                    prim->g0 = prim->g2 = prim->g2 - 8;
-                    prim->b0 = prim->b2 = prim->b2 - 8;
-                } else {
-                    prim->x0 = prim->x2 = prim->x2 - 8;
-                    prim->r1 = prim->r3 = prim->r3 - 8;
-                    prim->g1 = prim->g3 = prim->g3 - 8;
-                    prim->b1 = prim->b3 = prim->b3 - 8;
-                }
-            } else if (prim->p2 < 24) {
-                prim->y0 = prim->y1 = prim->y1 - 12;
-                if (self->facingLeft) {
-                    prim->x0 = prim->x2 = prim->x2 + 4;
-                    prim->x1 = prim->x3 = prim->x3 + 1;
-                } else {
-                    prim->x1 = prim->x3 = prim->x3 - 4;
-                    prim->x0 = prim->x2 = prim->x2 - 1;
-                }
-            } else if (prim->p2 < 32) {
-                prim->y0 = prim->y1 = prim->y1 + 36;
-                if (self->facingLeft != 0) {
-                    prim->x0 = prim->x2 = prim->x2 + 2;
-                    if (prim->p2 & 1) {
-                        prim->x1 = prim->x3 = prim->x3 + 1;
-                    }
-                } else {
-                    prim->x1 = prim->x3 = prim->x3 - 2;
-                    if (prim->p2 & 1) {
-                        prim->x0 = prim->x2 = prim->x2 - 1;
-                    }
+            continue;
+        }
+        if (prim->p2 < 8) {
+            prim->y0 = prim->y1 -= 12;
+            if (self->facingLeft) {
+                prim->x1 = prim->x3 += 8;
+                prim->r0 = prim->r2 -=  8;
+                prim->g0 = prim->g2 -=  8;
+                prim->b0 = prim->b2 -=  8;
+            } else {
+                prim->x0 = prim->x2 -=  8;
+                prim->r1 = prim->r3 -=  8;
+                prim->g1 = prim->g3 -=  8;
+                prim->b1 = prim->b3 -=  8;
+            }
+        } else if (prim->p2 < 24) {
+            prim->y0 = prim->y1 -=  12;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 += 4;
+                prim->x1 = prim->x3 += 1;
+            } else {
+                prim->x1 = prim->x3 -=  4;
+                prim->x0 = prim->x2 -=  1;
+            }
+        } else if (prim->p2 < 32) {
+            prim->y0 = prim->y1 += 36;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 += 2;
+                if (prim->p2 & 1) {
+                    prim->x1 = prim->x3 += 1;
                 }
             } else {
-                prim->drawMode = DRAW_HIDE;
+                prim->x1 = prim->x3 -= 2;
+                if (prim->p2 & 1) {
+                    prim->x0 = prim->x2 -=  1;
+                }
             }
-            prim->p2 += 1;
+        } else {
+            prim->drawMode = DRAW_HIDE;
         }
-        prim = prim->next;
+        prim->p2 += 1;
     }
 }
 

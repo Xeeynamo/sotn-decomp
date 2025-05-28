@@ -1018,6 +1018,7 @@ static s16 D_80183054[] = {512, 22, 440, 25, 512, 22};
 static s16 D_80183060[] = {
     0, 8, 6, 6, 8, 0, 6, -6, 0, -8, -6, -6, -8, 0, -6, 6};
 
+// some sort of explosion
 void EntityExplosion3(Entity* entity) {
     Entity* newEntity;
     s32* var_s7;
