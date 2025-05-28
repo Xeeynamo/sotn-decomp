@@ -17,11 +17,96 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7950);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7B80);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7F20);
+static s32 func_pspeu_092A7F20(s32 angle) {
+    angle %= 0x1000;
+    if (angle < 0) {
+        angle += 0x1000;
+    }
+    return angle;
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7F78);
+extern s32 D_pspeu_092E5908[0x80];
+extern s32 D_pspeu_092E5B10;
+static Entity* func_pspeu_092A7F78(Entity* self) {
+    Entity* e;
+    s32 i;
+    s32 var_s2;
+    s32 found;
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A81C0);
+    found = 0;
+    e = &g_Entities[STAGE_ENTITY_START];
+    for (i = 0; i < LEN(D_pspeu_092E5908); i++, e++) {
+        D_pspeu_092E5908[i] = 0;
+        if (!e->entityId) {
+            continue;
+        }
+        if (e->hitboxState == 0) {
+            continue;
+        }
+        if (e->flags & FLAG_UNK_00200000) {
+            continue;
+        }
+        if (e->posX.i.hi < -0x10 || e->posX.i.hi > 0x110) {
+            continue;
+        }
+        if (e->posY.i.hi > 0xF0 || e->posY.i.hi < 0) {
+            continue;
+        }
+        if (e->hitboxState & 8) {
+            continue;
+        }
+        if (e->hitPoints >= 0x7000) {
+            continue;
+        }
+        if (e->flags & FLAG_UNK_80000) {
+            found++;
+            D_pspeu_092E5908[i] = 1;
+        } else {
+            e->flags |= FLAG_UNK_80000;
+            return e;
+        }
+    }
+    if (found) {
+        var_s2 = D_pspeu_092E5B10 % LEN(D_pspeu_092E5908);
+        for (i = 0; i < LEN(D_pspeu_092E5908); i++) {
+            if (D_pspeu_092E5908[var_s2]) {
+                e = &g_Entities[var_s2 + 0x40];
+                D_pspeu_092E5B10 = (var_s2 + 1) % LEN(D_pspeu_092E5908);
+                return e;
+            }
+            var_s2 = (var_s2 + 1) % LEN(D_pspeu_092E5908);
+        }
+    }
+    return NULL;
+}
+
+static int func_pspeu_092A81C0(Entity* entity) {
+    if (entity == NULL) {
+        return 0;
+    }
+    if (entity->hitboxState == 0) {
+        return 0;
+    }
+    if (entity->posX.i.hi < -0x10) {
+        return 0;
+    }
+    if (entity->posX.i.hi > 0x110) {
+        return 0;
+    }
+    if (entity->posY.i.hi > 0xF0) {
+        return 0;
+    }
+    if (entity->posY.i.hi < 0) {
+        return 0;
+    }
+    if (entity->hitPoints >= 0x7000) {
+        return 0;
+    }
+    if (entity->hitPoints <= 0) {
+        return 0;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A82E0);
 
