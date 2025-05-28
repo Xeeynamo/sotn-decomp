@@ -1463,9 +1463,12 @@ void EntityFireWargDeathBeams(Entity* self) {
 
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                         self->posY.i.hi + 0x28;
-                    prim->b1 = prim->b3 = prim->g1 = prim->g3 = prim->r1 =
-                        prim->r3 = prim->b0 = prim->b2 = prim->g0 = prim->g2 =
-                            prim->r0 = prim->r2 = 0x40;
+                    prim->r0 = prim->r2 = 0x40;
+                    prim->g0 = prim->g2 = 0x40;
+                    prim->b0 = prim->b2 = 0x40;
+                    prim->r1 = prim->r3 = 0x40;
+                    prim->g1 = prim->g3 = 0x40;
+                    prim->b1 = prim->b3 = 0x40;
 
                     prim->priority =
                         self->zPriority +
@@ -1486,32 +1489,29 @@ void EntityFireWargDeathBeams(Entity* self) {
             self->ext.fireWargDeathBeams.unk7C--;
         }
 
-        prim = &g_PrimBuf[self->primIndex];
-        hiddenPrimCount = 0;
-
-        while (prim != NULL) {
+        for(hiddenPrimCount = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
             if (prim->drawMode != DRAW_HIDE) {
                 prim->p2++;
-                prim->x0 = prim->x2 = prim->x2 + 1;
-                prim->x1 = prim->x3 = prim->x3 - 1;
+                prim->x0 = prim->x2 += 1;
+                prim->x1 = prim->x3 -= 1;
 
                 if (prim->p2 > 8) {
-                    prim->r0 = prim->r1 = prim->r1 - 0x10;
-                    prim->g0 = prim->g1 = prim->g1 - 0x10;
-                    prim->b0 = prim->b1 = prim->b1 - 0x10;
+                    prim->r0 = prim->r1 -= 0x10;
+                    prim->g0 = prim->g1 -= 0x10;
+                    prim->b0 = prim->b1 -= 0x10;
 
                     if (prim->r2) {
-                        prim->r2 = prim->r3 = prim->r3 - 0x14;
-                        prim->g2 = prim->g3 = prim->g3 - 0x14;
-                        prim->b2 = prim->b3 = prim->b3 - 0x14;
+                        prim->r2 = prim->r3 -= 0x14;
+                        prim->g2 = prim->g3 -= 0x14;
+                        prim->b2 = prim->b3 -= 0x14;
                     }
                 } else {
-                    prim->r0 = prim->r2 = prim->r1 = prim->r3 = prim->r3 + 0x10;
-                    prim->g0 = prim->g2 = prim->g1 = prim->g3 = prim->g3 + 0x10;
-                    prim->b0 = prim->b2 = prim->b1 = prim->b3 = prim->b3 + 0x10;
+                    prim->r0 = prim->r2 = prim->r1 = prim->r3 += 0x10;
+                    prim->g0 = prim->g2 = prim->g1 = prim->g3 += 0x10;
+                    prim->b0 = prim->b2 = prim->b1 = prim->b3 += 0x10;
                 }
 
-                prim->y0 = prim->y1 = prim->y1 - prim->p1;
+                prim->y0 = prim->y1 -= prim->p1;
 
                 if (prim->p2 > 0x10) {
                     prim->drawMode = DRAW_HIDE;
@@ -1519,10 +1519,9 @@ void EntityFireWargDeathBeams(Entity* self) {
             } else {
                 hiddenPrimCount++;
             }
-            prim = prim->next;
         }
 
-        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E > 0x13) {
+        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E >= 0x14) {
             DestroyEntity(self);
             return;
         }
@@ -1530,6 +1529,8 @@ void EntityFireWargDeathBeams(Entity* self) {
     }
 }
 
+// Totally unused. Could instead be part of the main Warg file (next one on PSX)
+// but doesn't exist on PSP so we can't positively confirm which file it goes with.
 void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
                    u8 arg5, s16 xOfst) {
     s32 i;
