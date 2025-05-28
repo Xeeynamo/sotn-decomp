@@ -15,7 +15,79 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6A08);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6E50);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7560);
+extern AnimationFrame D_pspeu_092C0970[];
+void func_pspeu_092A7560(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT_CRASH;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0970);
+        self->ext.maria092A7560.timer = 0;
+        self->ext.maria092A7560.opacity = 0;
+        self->ext.maria092A7560.unk46 = g_Player.unk46;
+        self->step = 1;
+        func_pspeu_092BF8B8(2);
+        func_pspeu_092BEA38(self, 0);
+        break;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            self->step = 3;
+        }
+        break;
+    case 3:
+        self->facingLeft = PLAYER.facingLeft;
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->ext.maria092A7560.opacity += 16;
+        if (self->ext.maria092A7560.opacity >= 128) {
+            func_pspeu_092BEA38(self, 128);
+            self->ext.maria092A7560.opacity = 0;
+            self->step = 2;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A7560.opacity);
+        }
+        break;
+    case 4:
+        self->posX.i.hi += self->facingLeft ? -4 : 4;
+        self->ext.maria092A7560.opacity -= 16;
+        if (self->ext.maria092A7560.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->ext.maria092A7560.opacity = 0;
+            self->step = self->ext.maria092A7560.timer > 300 ? 5 : 3;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A7560.opacity);
+        }
+        break;
+    case 2:
+        if (self->facingLeft != PLAYER.facingLeft) {
+            self->ext.maria092A7560.opacity = 128;
+            self->step = 4;
+        } else {
+            self->facingLeft = PLAYER.facingLeft;
+            self->posX.i.hi = PLAYER.posX.i.hi;
+            self->posY.i.hi = PLAYER.posY.i.hi + 24;
+            if (self->ext.maria092A7560.timer > 300) {
+                self->ext.maria092A7560.opacity = 128;
+                self->step = 4;
+            }
+        }
+        break;
+    case 5:
+        g_Player.unk5C = 0;
+        DestroyEntity(self);
+        break;
+    }
+    self->ext.maria092A7560.timer++;
+    if (self->step != 5 && g_Player.padTapped & PAD_SQUARE) {
+        MarCreateEntFactoryFromEntity(self, _BP_HOLYWATER_GLASS, 0);
+    }
+    self->ext.maria092A7560.unk46 = g_Player.unk46;
+}
 
 extern AnimationFrame D_pspeu_092C0988[];
 void func_pspeu_092A7950(Entity* self) {
