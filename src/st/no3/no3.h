@@ -187,7 +187,6 @@ extern u16 D_80182628[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
 extern ObjInit D_80182764[];
-extern u16 D_801830A0[];
 extern u8 D_8018383C[];
 extern const u8 g_explosion2anim[];
 extern u8 g_FallingObject2Anim[];
