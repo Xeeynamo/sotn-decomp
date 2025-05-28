@@ -2193,16 +2193,23 @@ typedef struct {
 } ET_Maria092AAA38;
 
 typedef struct {
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    s16 : 16;
-    Point16 pos1;
-    Point16 pos2;
-    Point16 pos3;
-    Point16 pos4;
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 : 16;
+    /* 0x80 */ s16 defaultTargetX;
+    /* 0x82 */ s16 defaultTargetY;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 velocityX;
+    /* 0x88 */ Point16 pos1;
+    /* 0x8C */ Point16 pos2;
+    /* 0x90 */ Point16 pos3;
+    /* 0x94 */ Point16 pos4;
+    /* 0x98 */ struct Entity* target;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
 } ET_Maria092A9E88;
 
 typedef struct {
