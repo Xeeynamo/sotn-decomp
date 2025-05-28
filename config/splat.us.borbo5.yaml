@@ -29,6 +29,7 @@ options:
   disasm_unknown: true
   disassemble_all: true
   global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
 sha1: 4794abe060a76673daeb8b039d59d1077ea81f4b
 segments:
   - name: borbo5

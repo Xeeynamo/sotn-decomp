@@ -29,6 +29,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: ddd108c3a9ec564d34063e5008685a9a41f8eabd
 segments:
   - name: stlib

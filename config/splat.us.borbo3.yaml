@@ -30,6 +30,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: 8748529fc72268169d440fe0b008a5d50154c8b7
 segments:
   - name: borbo3

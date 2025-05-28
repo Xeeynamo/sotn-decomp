@@ -29,6 +29,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: 0f2ff898829ead77bb15545324c7b8958f9fb4e1
 segments:
   - name: tt_004

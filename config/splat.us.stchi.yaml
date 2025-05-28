@@ -27,6 +27,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+  ld_generate_symbol_per_data_segment: true
 sha1: 4ea14c8B54B8526ee6840b8b54658cafc0B336a2
 segments:
   - name: stchi

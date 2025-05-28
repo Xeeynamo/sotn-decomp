@@ -52,6 +52,7 @@ __asm__(".include \"macro.inc\"\n");
 
 #else // PERMUTER || VERSION_PSP
 #define INCLUDE_ASM(FOLDER, NAME)
+#define INCLUDE_RODATA(FOLDER, NAME)
 #endif
 
 #endif
