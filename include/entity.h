@@ -2213,6 +2213,23 @@ typedef struct {
 } ET_Maria092A9E88;
 
 typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+} ET_Maria092A8AE8;
+
+typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 opacity;
@@ -3302,6 +3319,7 @@ typedef union { // offset=0x7C
     ET_Maria092AAC80 maria092AAC80;
     ET_Maria092AAA38 maria092AAA38;
     ET_Maria092A9E88 maria092A9E88;
+    ET_Maria092A8AE8 maria092A8AE8;
     ET_Maria092A95A8 maria092A95A8;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;

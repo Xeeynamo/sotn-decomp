@@ -25,7 +25,188 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A81C0);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A82E0);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A8AE8);
+extern AnimationFrame D_pspeu_092C09E0[];
+extern u8 D_pspeu_092E5B08[8];
+extern s32 D_pspeu_092E5900;
+extern Point16 D_pspeu_092E5B18[];
+void func_pspeu_092A8AE8(Entity* self) {
+    s32 xStart;
+    s32 xEnd;
+    s32 yStart;
+    s32 yEnd;
+    s32 var_s6;
+    s32 var_s5;
+    s32 u;
+    s32 v;
+    s32 var_s2;
+    s32 i;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex =
+            g_api_AllocPrimitives(PRIM_GT4, LEN(D_pspeu_092E5B08));
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+        self->unk5A = 0x15;
+        self->zPriority = 0x1C0;
+        self->palette = 0x811C;
+        self->animSet = ANIMSET_OVL(21);
+        MarSetAnimation(D_pspeu_092C09E0);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 24;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A8AE8.unkB0 = 0;
+        MarSetWeaponParams(
+            self, 24, ELEMENT_HOLY | ELEMENT_THUNDER, 2, 40, 16, 1, 0);
+        for (i = 0; i < LEN(D_pspeu_092E5B08); i++) {
+            D_pspeu_092E5B08[i] = 0;
+        }
+        self->step = 1;
+        // fallthrough
+    case 1:
+        xStart = 0;
+        xEnd = 0;
+        yStart = 0;
+        yEnd = 0;
+        prim = &g_PrimBuf[self->primIndex];
+        var_s2 = D_pspeu_092E5900 - 1;
+        for (i = 0; i < LEN(D_pspeu_092E5B08); i++) {
+            prim->tpage = 5;
+            prim->clut = self->palette & 0x3FF;
+            prim->priority = self->zPriority;
+            if (var_s2 >= 7) {
+                var_s6 = D_pspeu_092E5B18[var_s2].x - g_Tilemap.scrollX.i.hi;
+                var_s5 = D_pspeu_092E5B18[var_s2].y - g_Tilemap.scrollY.i.hi;
+                var_s2 -= 7;
+                if (var_s2 < 0) {
+                    var_s2 = 0;
+                }
+                {
+                    s32 spD4 =
+                        D_pspeu_092E5B18[var_s2].x - g_Tilemap.scrollX.i.hi;
+                    s32 spD0 =
+                        D_pspeu_092E5B18[var_s2].y - g_Tilemap.scrollY.i.hi;
+                    MATRIX m;
+                    VECTOR spA0 = {0, 0, 0};
+                    VECTOR vPosEnd;
+                    VECTOR sp80;
+                    VECTOR vPosStart;
+                    VECTOR sp60;
+                    SVECTOR svPosEnd;
+                    SVECTOR sp50;
+                    SVECTOR svPosStart;
+                    SVECTOR sp40;
+                    s32 out;
+                    s32 angle;
+                    angle = func_pspeu_092A7F20(
+                        ratan2(spD0 - var_s5, spD4 - var_s6));
+                    func_89285A0(angle, &m);
+                    SetGeomOffset(var_s6, var_s5);
+                    TransMatrix(&m, &spA0);
+                    SetRotMatrix(&m);
+                    SetTransMatrix(&m);
+                    if (i == 0) {
+                        sp40.vx = -16;
+                        sp40.vy = -16;
+                        sp40.vz = 0;
+                        svPosStart.vx = 16;
+                        svPosStart.vy = -16;
+                        svPosStart.vz = 0;
+                        sp50.vx = -16;
+                        sp50.vy = 16;
+                        sp50.vz = 0;
+                        svPosEnd.vx = 16;
+                        svPosEnd.vy = 16;
+                        svPosEnd.vz = 0;
+                        func_892796C(&sp40, &sp60, &out);
+                        func_892796C(&svPosStart, &vPosStart, &out);
+                        func_892796C(&sp50, &sp80, &out);
+                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        prim->x0 = sp60.vx;
+                        prim->y0 = sp60.vy;
+                        prim->x1 = vPosStart.vx;
+                        prim->y1 = vPosStart.vy;
+                        prim->x2 = sp80.vx;
+                        prim->y2 = sp80.vy;
+                        prim->x3 = vPosEnd.vx;
+                        prim->y3 = vPosEnd.vy;
+                    } else {
+                        svPosStart.vx = 16;
+                        svPosStart.vy = -16;
+                        svPosStart.vz = 0;
+                        svPosEnd.vx = 16;
+                        svPosEnd.vy = 16;
+                        svPosEnd.vz = 0;
+                        func_892796C(&svPosStart, &vPosStart, &out);
+                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        prim->x0 = xStart;
+                        prim->y0 = yStart;
+                        prim->x1 = vPosStart.vx;
+                        prim->y1 = vPosStart.vy;
+                        prim->x2 = xEnd;
+                        prim->y2 = yEnd;
+                        prim->x3 = vPosEnd.vx;
+                        prim->y3 = vPosEnd.vy;
+                    }
+                    xStart = vPosStart.vx;
+                    yStart = vPosStart.vy;
+                    xEnd = vPosEnd.vx;
+                    yEnd = vPosEnd.vy;
+                }
+
+                if (i == 7) {
+                    u = 0xE0;
+                    v = 0x20;
+                } else if (i == 6) {
+                    u = 0xE0;
+                    v = 0;
+                } else {
+                    u = 0x80;
+                    v = 0;
+                }
+                prim->u1 = u;
+                prim->v1 = v + 0x1F;
+                prim->u0 = u + 0x1F;
+                prim->v0 = v + 0x1F;
+                prim->u3 = u;
+                prim->v3 = v;
+                prim->u2 = u + 0x1F;
+                prim->v2 = v;
+                prim->drawMode = DRAW_DEFAULT;
+                D_pspeu_092E5B08[i] += 0x10;
+                if (D_pspeu_092E5B08[i] < 0x80) {
+                    prim->drawMode |=
+                        DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+                } else {
+                    D_pspeu_092E5B08[i] = 0x80;
+                }
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = D_pspeu_092E5B08[i];
+                prim->g0 = prim->g1 = prim->g2 = prim->g3 = D_pspeu_092E5B08[i];
+                prim->b0 = prim->b1 = prim->b2 = prim->b3 = D_pspeu_092E5B08[i];
+            } else {
+                prim->drawMode = DRAW_HIDE;
+            }
+            prim = prim->next;
+        }
+        if (g_Player.unk5C != 0) {
+            return;
+        }
+        self->step = 2;
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 static int func_pspeu_092A9250() {
     switch (PLAYER.step) {
@@ -435,7 +616,7 @@ void func_pspeu_092A9E88(Entity* self) {
                 color = -0x80;
                 prim->clut = 0x11A;
                 prim->priority = self->zPriority;
-                prim->drawMode = 0;
+                prim->drawMode = DRAW_DEFAULT;
                 switch (i) {
                 case 0:
                     x = self->ext.maria092A9E88.pos1.x;
