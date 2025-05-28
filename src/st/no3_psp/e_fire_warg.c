@@ -588,7 +588,7 @@ void EntityFireWarg(Entity* self) {
             if (self->animCurFrame == 0x14) {
                 if (self->ext.fireWarg.unk80 == 0) {
                     ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (ent_s0 != NULL) { // PSP version 0x1E
+                    if (ent_s0 != NULL) {
                         CreateEntityFromCurrentEntity(
                             E_FIRE_WARG_ATTACK, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
@@ -655,7 +655,7 @@ void EntityFireWarg(Entity* self) {
                 SetSubStep(1);
                 self->ext.fireWarg.unk80++;
                 ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (ent_s0 != NULL) { // PSP version 0x23
+                if (ent_s0 != NULL) {
                     CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, ent_s0);
                     ent_s0->unk5A = self->unk5A;
                     if (self->hitEffect) {
@@ -860,7 +860,8 @@ void EntityUnkId30(Entity* self) {
             }
             hitboxPtr = &D_80182E1C[animCurFrame * 8];
         } else {
-            if (entity->params) { // this chain of comparisons is stupid
+            if (entity->params) { 
+                // this chain of comparisons is stupid
                 if (animCurFrame >= 86) {
                     animCurFrame -= 57;
                 } else if (animCurFrame >= 57) {

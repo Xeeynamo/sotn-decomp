@@ -292,7 +292,7 @@ void EntityFireWarg(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID_30, ent_s0);
         ent_s0->unk5C = self;
         if (self->params) {
-            InitializeEntity(&D_80180B30);
+            InitializeEntity(D_80180B30);
             self->animCurFrame = 0x32;
             // The self + 2 entity is an E_ID_31, or EntityUnkId31
             ent_s4 = self + 2;
@@ -303,7 +303,7 @@ void EntityFireWarg(Entity* self) {
             ent_s0->unk5C = self;
             ent_s0->unk60 = self;
         } else {
-            InitializeEntity(&D_80180B24);
+            InitializeEntity(D_80180B24);
         }
         ent_s0->unk60 = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
@@ -374,7 +374,7 @@ void EntityFireWarg(Entity* self) {
                 }
             }
 
-            if (var_s1 >= 0x79) {
+            if (var_s1 > 0x78) {
                 self->ext.fireWarg.unk7C = 0;
                 self->pose = 7 - self->pose;
                 self->ext.fireWarg.unk80 = 0x10;
@@ -588,7 +588,6 @@ void EntityFireWarg(Entity* self) {
                 if (self->ext.fireWarg.unk80 == 0) {
                     ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (ent_s0 != NULL) {
-                        // PSP version 0x1E
                         CreateEntityFromCurrentEntity(
                             E_FIRE_WARG_ATTACK, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
@@ -656,7 +655,6 @@ void EntityFireWarg(Entity* self) {
                 self->ext.fireWarg.unk80++;
                 ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (ent_s0 != NULL) {
-                    // PSP version 0x23
                     CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, ent_s0);
                     ent_s0->unk5A = self->unk5A;
                     if (self->hitEffect) {
@@ -830,15 +828,15 @@ void EntityFireWarg(Entity* self) {
 void EntityUnkId30(Entity* self) {
     Entity* entity;
     u16 animCurFrame;
-    u16* hitboxPtr;
+    s16* hitboxPtr;
 
     entity = self - 1;
-    if (self->step == 0) {
-        if (self->params != 0) {
+    if (!self->step) {
+        if (self->params) {
             InitializeEntity(D_80180B30);
             self->hitboxState = 0;
         } else {
-            if (entity->params != 0) {
+            if (entity->params) {
                 InitializeEntity(D_80180B30);
             } else {
                 InitializeEntity(D_80180B24);
@@ -852,17 +850,20 @@ void EntityUnkId30(Entity* self) {
     self->facingLeft = entity->facingLeft;
     animCurFrame = entity->animCurFrame;
 
-    if (animCurFrame != 0) {
-        if (self->params != 0) {
-            if (animCurFrame < 63) {
-                animCurFrame = 0;
-            } else {
+    if (animCurFrame) {
+        if (self->params) {
+            if (animCurFrame >= 63) {
                 animCurFrame -= 56;
+            } else {
+                animCurFrame = 0;
             }
             hitboxPtr = &D_80182E1C[animCurFrame * 8];
         } else {
-            if (entity->params != 0) {
-                if (animCurFrame >= 86 || animCurFrame >= 57) {
+            if (entity->params) { 
+                // this chain of comparisons is stupid
+                if (animCurFrame >= 86) {
+                    animCurFrame -= 57;
+                } else if (animCurFrame >= 57) {
                     animCurFrame -= 57;
                 } else {
                     animCurFrame = 13;
@@ -880,7 +881,7 @@ void EntityUnkId30(Entity* self) {
         self->hitboxOffX = *hitboxPtr++;
         self->hitboxOffY = *hitboxPtr++;
         self->hitboxWidth = *hitboxPtr++;
-        self->hitboxHeight = *hitboxPtr++;
+        self->hitboxHeight = *hitboxPtr;
     }
 }
 
