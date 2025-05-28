@@ -1504,3 +1504,27 @@ void EntityFireWargDeathBeams(Entity* self) {
         break;
     }
 }
+
+// Totally unused. Could instead be part of the main Warg file (next one on PSX)
+// but doesn't exist on PSP so we can't positively confirm which file it goes with.
+void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
+                   u8 arg5, s16 xOfst) {
+    s32 i;
+    s16 y = entity->posY.i.hi + yDist;
+    s16 x = entity->posX.i.hi + xDist;
+
+    for (i = 0; i < count; ++i) {
+        Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEnt != NULL) {
+            newEnt->entityId = E_EXPLOSION_VARIANTS;
+            newEnt->pfnUpdate = EntityExplosionVariants;
+            newEnt->params = params;
+            newEnt->posX.i.hi = x + i * xOfst;
+            newEnt->posY.i.hi = y;
+            newEnt->ext.destructAnim.index = D_801832E8[i];
+            newEnt->rotY = newEnt->rotX = D_801832D8[D_801832E8[i] + arg5];
+            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            newEnt->zPriority = entity->zPriority + 1;
+        }
+    }
+}
