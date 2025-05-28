@@ -13,7 +13,143 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6A08);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6E50);
+extern AnimationFrame D_pspeu_092C0958[];
+void func_pspeu_092A6E50(Entity* self) {
+    Collider col;
+    s32 var_s3;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0958);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = FIX(3.0);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->hitboxWidth = 18;
+        self->hitboxHeight = 30;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = -8;
+        self->ext.maria092A6E50.unkB0 = 0;
+        MarSetWeaponParams(self, 15, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        self->ext.maria092A6E50.timer = 0;
+        g_Player.unk7A = 1;
+        self->ext.maria092A6E50.nBounce = 3;
+        self->step = 2;
+        self->ext.maria092A6E50.opacity = 128;
+        break;
+    case 1:
+        self->velocityX += FIX(1.0);
+        if (self->velocityX > FIX(3.0)) {
+            self->velocityX = FIX(3.0);
+        }
+        if ((self->ext.maria092A6E50.timer % 10) == 0) {
+            g_api.PlaySfx(SFX_QUIET_STEPS);
+        }
+        self->ext.maria092A6E50.timer++;
+        func_pspeu_092A6A08(
+            self, self->facingLeft ? -self->velocityX : self->velocityX, 0,
+            &col);
+        if (col.effects & EFFECT_SOLID || self->hitFlags == 1) {
+            self->velocityX = FIX(-3.0);
+            self->velocityY = FIX(-8.0);
+            if (col.effects & EFFECT_SOLID) {
+                self->ext.maria092A6E50.nBounce = 0;
+            }
+            if (self->ext.maria092A6E50.nBounce > 0) {
+                self->ext.maria092A6E50.nBounce--;
+                self->step = 3;
+            } else {
+                self->step = 4;
+            }
+            self->ext.maria092A6E50.timer = 0;
+        } else {
+            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 1, &col, 0);
+            if (!(col.effects & EFFECT_UNK_0002)) {
+                self->velocityY = FIX(-8.0);
+                self->step = 2;
+                self->ext.maria092A6E50.timer = 0;
+            }
+        }
+        break;
+    case 2:
+    case 3:
+        if (self->step == 2) {
+            self->velocityX += FIX(1.0);
+            if (self->velocityX > FIX(3.0)) {
+                self->velocityX = FIX(3.0);
+            }
+        }
+        self->velocityY += FIX(1.0);
+        if (self->velocityY > FIX(4.0)) {
+            self->velocityY = FIX(4.0);
+        }
+        func_pspeu_092A6A08(
+            self, self->facingLeft ? -self->velocityX : self->velocityX,
+            self->velocityY, &col);
+        if (col.effects & EFFECT_UNK_0002) {
+            var_s3 = func_pspeu_092A6958(
+                self->posX.i.hi, self->posY.i.hi, self->velocityY >> 16);
+            if (var_s3 != -1) {
+                self->velocityX = FIX(3.0);
+                self->posY.i.hi = var_s3;
+                self->posY.i.lo = 0;
+                self->step = 1;
+                col.effects = EFFECT_NONE;
+                self->hitFlags = 0;
+            }
+        }
+        if ((col.effects & EFFECT_SOLID) || self->hitFlags == 1) {
+            self->velocityX = FIX(-3.0);
+            self->velocityY = FIX(-8.0);
+            if (col.effects & EFFECT_SOLID) {
+                self->ext.maria092A6E50.nBounce = 0;
+            }
+            if (self->ext.maria092A6E50.nBounce > 0) {
+                self->ext.maria092A6E50.nBounce--;
+                self->step = 3;
+            } else {
+                self->step = 4;
+            }
+        }
+        break;
+    case 4:
+        self->hitboxState = 0;
+        self->velocityY += FIX(1.0);
+        if (self->velocityY > FIX(4.0)) {
+            self->velocityY = FIX(4.0);
+        }
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.maria092A6E50.opacity -= 8;
+        if (self->ext.maria092A6E50.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->step = 5;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A6E50.opacity);
+        }
+        break;
+    case 5:
+        g_Player.unk7A = 0;
+        DestroyEntity(self);
+        break;
+    }
+    if (self->step != 5) {
+        if (self->posX.i.hi < -8 || self->posX.i.hi > 264 ||
+            self->posY.i.hi > 264) {
+            self->step = 5;
+        }
+    }
+    self->hitFlags = 0;
+}
 
 extern AnimationFrame D_pspeu_092C0970[];
 void func_pspeu_092A7560(Entity* self) {

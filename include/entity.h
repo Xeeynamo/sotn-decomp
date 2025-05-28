@@ -2294,6 +2294,26 @@ typedef struct {
     /* 0xB0 */ s16 unkB0;
 } ET_Maria092A7560;
 
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 nBounce;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 unk46; // g_Player.unk46
+    /* 0x84 */ s16 opacity;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 unkB0;
+} ET_Maria092A6E50;
+
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
 // ET_BatFam and this be ET_Bat? Seems familiars should all be labeled since
@@ -3382,6 +3402,7 @@ typedef union { // offset=0x7C
     ET_Maria092A7B80 maria092A7B80;
     ET_Maria092A82E0 maria092A82E0;
     ET_Maria092A7560 maria092A7560;
+    ET_Maria092A6E50 maria092A6E50;
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
