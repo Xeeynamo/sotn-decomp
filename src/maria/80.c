@@ -138,7 +138,7 @@ void func_pspeu_092A8AE8(Entity* self) {
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         self->unk5A = 0x15;
         self->zPriority = 0x1C0;
-        self->palette = 0x811C;
+        self->palette = PAL_WPN_DRAGON_CRASH;
         self->animSet = ANIMSET_OVL(21);
         MarSetAnimation(D_pspeu_092C09E0);
         self->facingLeft = PLAYER.facingLeft;
@@ -311,7 +311,7 @@ void func_pspeu_092A9288(Entity* self) {
         self->unk5A = 0x11;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->zPriority = PLAYER.zPriority - 8;
-        self->palette = 0x811A;
+        self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_OVL(0x14);
         MarSetAnimation(D_pspeu_092C09F8);
         self->facingLeft = 0;
@@ -373,7 +373,7 @@ void func_pspeu_092A95A8(Entity* self) {
                       FLAG_UNK_100000;
         self->unk5A = 0x11;
         self->zPriority = 0x1C0;
-        self->palette = 0x811A;
+        self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_OVL(20);
         MarSetAnimation(D_pspeu_092C0A28);
         self->facingLeft = PLAYER.facingLeft;
@@ -598,7 +598,7 @@ void func_pspeu_092A9E88(Entity* self) {
             FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x11;
         self->zPriority = 0x1C0;
-        self->palette = 0x811A;
+        self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_OVL(20);
         MarSetAnimation(D_pspeu_092C0A48);
         self->facingLeft = parent->facingLeft;
@@ -782,7 +782,7 @@ void func_pspeu_092AAA38(Entity* self) {
                       FLAG_UNK_100000;
         self->unk5A = 0x10;
         self->zPriority = PLAYER.zPriority - 8;
-        self->palette = 0x8116;
+        self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_OVL(18);
         MarSetAnimation(D_pspeu_092C0A50);
         self->facingLeft = PLAYER.facingLeft;
@@ -830,7 +830,7 @@ void func_pspeu_092AAC80(Entity* self) {
                       FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x10;
         self->zPriority = PLAYER.zPriority - 6;
-        self->palette = 0x8116;
+        self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_OVL(18);
         MarSetAnimation(D_pspeu_092C0A60);
         self->facingLeft = PLAYER.facingLeft;
@@ -953,7 +953,7 @@ void func_pspeu_092AB1C0(Entity* self) {
                       FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x10;
         self->zPriority = PLAYER.zPriority - 7;
-        self->palette = 0x8116;
+        self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_OVL(18);
         MarSetAnimation(D_pspeu_092C0A58);
         self->facingLeft = 0;

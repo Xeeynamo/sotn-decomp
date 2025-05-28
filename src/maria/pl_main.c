@@ -147,7 +147,7 @@ void MarInit(s16 initParam) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
-        e->palette = PAL_OVL(0x114);
+        e->palette = PAL_MARIA;
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
     g_Entities[1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
