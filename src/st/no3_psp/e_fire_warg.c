@@ -1475,7 +1475,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         } else {
             self->ext.fireWargDeathBeams.unk7C--;
         }
-        
+
         for(hiddenPrimCount = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
             if (prim->drawMode != DRAW_HIDE) {
                 prim->p2++;
