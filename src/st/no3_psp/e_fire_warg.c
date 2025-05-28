@@ -1124,9 +1124,196 @@ void EntityExplosion3(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", func_pspeu_0924C7A8);
+void func_801CE740(Entity* self) {
+    Primitive* prim;
+    
+    for(prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+        if (prim->p1) {
+            prim->p1--;
+            continue;
+        }
+        if (prim->p2 < 8) {
+            prim->y0 = prim->y1 -= 12;
+            if (self->facingLeft) {
+                prim->x1 = prim->x3 += 8;
+                prim->r0 = prim->r2 -=  8;
+                prim->g0 = prim->g2 -=  8;
+                prim->b0 = prim->b2 -=  8;
+            } else {
+                prim->x0 = prim->x2 -=  8;
+                prim->r1 = prim->r3 -=  8;
+                prim->g1 = prim->g3 -=  8;
+                prim->b1 = prim->b3 -=  8;
+            }
+        } else if (prim->p2 < 24) {
+            prim->y0 = prim->y1 -=  12;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 += 4;
+                prim->x1 = prim->x3 += 1;
+            } else {
+                prim->x1 = prim->x3 -=  4;
+                prim->x0 = prim->x2 -=  1;
+            }
+        } else if (prim->p2 < 32) {
+            prim->y0 = prim->y1 += 36;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 += 2;
+                if (prim->p2 & 1) {
+                    prim->x1 = prim->x3 += 1;
+                }
+            } else {
+                prim->x1 = prim->x3 -= 2;
+                if (prim->p2 & 1) {
+                    prim->x0 = prim->x2 -=  1;
+                }
+            }
+        } else {
+            prim->drawMode = DRAW_HIDE;
+        }
+        prim->p2 += 1;
+    }
+}
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", EntityFireWargWaveAttack);
+// flame-like attack on ground from Fire Warg
+void EntityFireWargWaveAttack(Entity* self) {
+    Entity* newEntity;
+    Primitive* prim;
+    u32 primIdx;
+    s32 unk5A;
+    u16 unk5APlus3;
+    u16 palette;
+    u8 p0Offset;
+
+    // These are both !FAKE; psp matches without them. ps1 needs them. I dunno.
+    // permuter found them.
+    s32 twobits;
+
+    switch (self->step) {
+    case 0:
+        newEntity = AllocEntity(self, &g_Entities[192]);
+
+        if (newEntity == NULL) {
+            DestroyEntity(self);
+            break;
+        }
+
+        PlaySfxPositional(SFX_FIREBALL_SHOT_A);
+        CreateEntityFromCurrentEntity(E_ID_2F, newEntity);
+        newEntity->facingLeft = self->facingLeft;
+        InitializeEntity(D_80180B3C);
+
+        self->ext.timer.t = 8;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 0;
+
+        primIdx = g_api.AllocPrimitives(PRIM_GT4, 6);
+
+        if (primIdx != -1) {
+            prim = &g_PrimBuf[primIdx];
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIdx;
+            unk5APlus3 = self->unk5A + 3;
+            palette = self->palette + 4;
+
+            for (p0Offset = 0; prim != NULL; p0Offset += 4, prim = prim->next) {
+                prim->tpage = unk5APlus3 >> 2;
+                prim->clut = palette;
+                prim->u1 = prim->u0 = ((unk5APlus3 & 1) << 7) + 0x21;
+                prim->u3 = prim->u2 = prim->u0 + 0x2D;
+                prim->v1 = prim->v3 = ((unk5APlus3 & 2) << 6) + 0x59;
+                prim->v0 = prim->v2 = prim->v1 + 0x26;
+
+                prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
+                prim->x1 = prim->x3 = prim->x0 + 0x20;
+
+                prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi;
+
+                prim->r0 = prim->r2 = 0x40;
+                prim->g0 = prim->g2 = 0x40;
+                prim->b0 = prim->b2 = 0x40;
+                prim->r1 = prim->r3 = 0x40;
+                prim->g1 = prim->g3 = 0x40;
+                prim->b1 = prim->b3 = 0x40;
+
+                prim->priority = self->zPriority;
+                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_ROTX |
+                                 FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+
+                prim->p1 = p0Offset;
+                prim->p2 = 0;
+            }
+        } else {
+            DestroyEntity(self);
+        }
+        break;
+    case 1:
+        func_801CE740(self);
+
+        self->posY.i.hi -= 1;
+        self->hitboxHeight += 1;
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 4;
+        } else {
+            self->posX.i.hi -= 4;
+        }
+
+        self->hitboxWidth += 4;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x14;
+            self->step += 1;
+        }
+        break;
+    case 2:
+        func_801CE740(self);
+
+        if (self->hitboxHeight < 0xC0) {
+            self->posY.i.hi -= 1;
+            self->hitboxHeight += 1;
+        }
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 2;
+        } else {
+            self->posX.i.hi -= 2;
+        }
+
+        self->hitboxWidth -= 1;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x10;
+            self->step += 1;
+        }
+        break;
+    case 3:
+        func_801CE740(self);
+
+        self->posY.i.hi += 1;
+        self->hitboxHeight -= 1;
+
+        if (self->facingLeft) {
+            self->posX.i.hi += 1;
+        } else {
+            self->posX.i.hi -= 1;
+        }
+
+        self->hitboxWidth -= 1;
+
+        if (!--self->ext.timer.t) {
+            self->ext.timer.t = 0x20;
+            self->hitboxState = 0;
+            self->step += 1;
+        }
+        break;
+    case 4:
+        func_801CE740(self);
+        if (!--self->ext.timer.t) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_fire_warg", EntityUnkId2F);
 
