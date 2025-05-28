@@ -1408,8 +1408,8 @@ void EntityFireWargDeathBeams(Entity* self) {
 
     switch (self->step) {
     case 0:
-        palette = self->palette + 4;
         temp_s1 = self->unk5A + 3;
+        palette = self->palette + 4;
         temp_s1_u16 = (u16)temp_s1;
 
         InitializeEntity(g_EInitCommon);
@@ -1423,10 +1423,10 @@ void EntityFireWargDeathBeams(Entity* self) {
             while (prim != NULL) {
                 prim->tpage = temp_s1_u16 / 4;
                 prim->clut = palette;
-                prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
-                prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
-                prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
+                prim->u1 = prim->u0 = ((temp_s1 & 1) << 7) + 0x21;
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
+                prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
+                prim->v0 = prim->v2 = prim->v1 + 0x26;
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
