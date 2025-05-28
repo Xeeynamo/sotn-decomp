@@ -1436,7 +1436,7 @@ void EntityFireWargDeathBeams(Entity* self) {
         }
         break;
     case 1:
-        if ((self->ext.fireWargDeathBeams.unk7C == 0) &&
+        if ((!self->ext.fireWargDeathBeams.unk7C) &&
             (self->ext.fireWargDeathBeams.unk7E < 0x14)) {
             for(prim = &g_PrimBuf[self->primIndex];prim != NULL; prim = prim->next) {
                 if (prim->drawMode == DRAW_HIDE) {

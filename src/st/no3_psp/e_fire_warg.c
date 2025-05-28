@@ -1459,7 +1459,6 @@ void EntityFireWargDeathBeams(Entity* self) {
                     prim->r1 = prim->r3 = 0x40;
                     prim->g1 = prim->g3 = 0x40;
                     prim->b1 = prim->b3 = 0x40;
-                            
 
                     prim->priority = self->zPriority + D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
