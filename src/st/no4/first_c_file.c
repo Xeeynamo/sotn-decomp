@@ -11,8 +11,10 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C1C94);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C1EE4);
 
+// Foreground waterfall
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C21AC);
 
+// Big waterfall
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C2474);
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C2850);
