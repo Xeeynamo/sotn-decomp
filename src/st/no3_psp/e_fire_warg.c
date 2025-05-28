@@ -20,18 +20,12 @@ static u8 D_80182878[] = {4, 32, 4, 31, 32, 30, 8, 14, 255, 0};
 static u8 D_80182884[] = {4, 88, 4, 87, 32, 86, 8, 50, 255, 0};
 static u8 D_80182890[] = {8,  14, 8,  40, 8,  41, 8,  42, 8,  43,  6,
                           44, 8,  45, 8,  46, 8,  47, 8,  48, 255, 0};
-static u8 D_801828A8[] = {
-    2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8,   19,
-    8, 26, 8, 27, 8, 28, 8,  29, 8, 14, 255, 0,
-};
+static u8 D_801828A8[] = {2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8,   19,
+                          8, 26, 8, 27, 8, 28, 8,  29, 8, 14, 255, 0};
 static u8 unused2[] = {4, 96, 4, 97, 4, 98, 4, 99, 4, 100, 4,   101,
                        8, 26, 8, 27, 8, 28, 8, 29, 8, 14,  255, 0};
-static u8 D_801828D8[] = {
-    1, 10, 1, 11, 0,
-};
-static u8 unused3[] = {
-    1, 12, 1, 13, 0,
-};
+static u8 D_801828D8[] = {1, 10, 1, 11, 0};
+static u8 unused3[] = {1, 12, 1, 13, 0};
 static u8 unused4[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
                        19, 16, 20, 8,  19, 8,  18, 12, 14, 255, 0};
 static u8 D_80182900[] = {
@@ -593,8 +587,7 @@ void EntityFireWarg(Entity* self) {
             if (self->animCurFrame == 0x14) {
                 if (self->ext.fireWarg.unk80 == 0) {
                     ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (ent_s0 != NULL) {
-                        // PSP version 0x1E
+                    if (ent_s0 != NULL) { // PSP version 0x1E
                         CreateEntityFromCurrentEntity(
                             E_FIRE_WARG_ATTACK, ent_s0);
                         ent_s0->facingLeft = self->facingLeft;
@@ -661,8 +654,7 @@ void EntityFireWarg(Entity* self) {
                 SetSubStep(1);
                 self->ext.fireWarg.unk80++;
                 ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (ent_s0 != NULL) {
-                    // PSP version 0x23
+                if (ent_s0 != NULL) { // PSP version 0x23
                     CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, ent_s0);
                     ent_s0->unk5A = self->unk5A;
                     if (self->hitEffect) {
@@ -867,8 +859,7 @@ void EntityUnkId30(Entity* self) {
             }
             hitboxPtr = &D_80182E1C[animCurFrame * 8];
         } else {
-            if (entity->params) {
-                // this chain of comparisons is stupid
+            if (entity->params) { // this chain of comparisons is stupid
                 if (animCurFrame >= 86) {
                     animCurFrame -= 57;
                 } else if (animCurFrame >= 57) {
