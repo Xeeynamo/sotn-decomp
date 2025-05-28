@@ -61,11 +61,11 @@ static s32 unused_morefixes[] = {
 static s16 D_80182A38[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
 static u8 D_80182A48[] = {2, 0, 1, 3};
 
-static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
-                          s32 yDist, u8 arg5, s16 xOfst) {
+static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
+                          s16 yDist, u8 arg5, s16 xOfst) {
     s32 i;
-    s16 y = entity->posY.i.hi + yDist;
     s16 x = entity->posX.i.hi + xDist;
+    s16 y = entity->posY.i.hi + yDist;
 
     for (i = 0; i < count; ++i) {
         Entity* newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -76,7 +76,8 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s32 xDist,
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
             newEnt->ext.destructAnim.index = D_80182A48[i];
-            newEnt->rotY = newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
+            newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
+            newEnt->rotY = newEnt->rotX;
             newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             newEnt->zPriority = entity->zPriority + 1;
         }

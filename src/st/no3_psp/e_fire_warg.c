@@ -55,9 +55,10 @@ static s32 D_801829EC[] = {FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7),
                            FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7)};
 static s32 D_80182A04[] = {FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7),
                            FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7)};
+// These are very close to 12/7, 6/7, 4/7, 12/7, 6/7, 4/7 but not quite.
 static s32 unused_morefixes[] = {
-    FIX(12.0 / 7), FIX(6.0 / 7), FIX(4.0 / 7), FIX(12.0 / 7),
-    FIX(6.0 / 7),  FIX(4.0 / 7), FIX(4)};
+    0x1B6DA, 0xDBC6, 0x9248, 0x1B6DA,
+    0xDBC6,  0x9248, FIX(4)};
 static s16 D_80182A38[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
 static u8 D_80182A48[] = {2, 0, 1, 3};
 
