@@ -6,12 +6,12 @@ static u_long* wrp_gfxbank_0[] = {
     GFX_ENTRY(0x000, 0x000, 0, 0, NULL),
     GFX_TERMINATE(),
 };
-extern u8 stage_title_jp[];
-extern u8 stage_placeholder[];
+extern u8 stage_title_wrp_jp[];
+extern u8 stage_placeholder_wrp[];
 static u_long* wrp_gfxbank_1[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x040, 128, 128, stage_title_jp),
-    GFX_ENTRY(0x100, 0x060, 128, 128, stage_placeholder),
+    GFX_ENTRY(0x100, 0x040, 128, 128, stage_title_wrp_jp),
+    GFX_ENTRY(0x100, 0x060, 128, 128, stage_placeholder_wrp),
     GFX_TERMINATE(),
 };
 
