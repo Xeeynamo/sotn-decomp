@@ -7,7 +7,6 @@
 
 #include "chi.h"
 #include "../pfn_entity_update.h"
-// func_8019FA64: CreateEntityFromLayout
 // func_8019FB28: CreateEntityWhenInVerticalRange
 // func_8019FC40: CreateEntityWhenInHorizontalRange
 // func_8019FD58: FindFirstEntityToTheRight

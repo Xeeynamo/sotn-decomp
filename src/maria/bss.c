@@ -24,8 +24,8 @@ s32 D_pspeu_092E5F28;
 s32 D_pspeu_092E5F20;
 u8 D_pspeu_092E5F18[0x08];  // TODO unknown type
 u8 D_pspeu_092E5D18[0x200]; // TODO unknown type
-u8 D_pspeu_092E5B18[0x200]; // TODO unknown type
-u8 D_pspeu_092E5B10[0x08];  // TODO unknown type
-u8 D_pspeu_092E5B08[0x08];  // TODO unknown type
+Point16 D_pspeu_092E5B18[0x80];
+u8 D_pspeu_092E5B10[0x08]; // TODO unknown type
+u8 D_pspeu_092E5B08[0x08];
 u8 D_pspeu_092E5908[0x200]; // TODO unknown type
-u8 D_pspeu_092E5900[0x08];  // TODO unknown type
+s32 D_pspeu_092E5900;

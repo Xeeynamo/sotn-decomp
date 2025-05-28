@@ -133,7 +133,6 @@ extern EInit g_EInitSkeletonApeBarrel;
 extern EInit g_EInitSkeletonApePunch;
 extern EInit g_EInitKillerFish;
 
-extern void (*g_api_func_80134678)(s32, s16);
 extern s32 D_us_80181108;
 extern s16 D_us_8018159C[];
 extern s16 D_us_801DF788;
