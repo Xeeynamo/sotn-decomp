@@ -1439,9 +1439,7 @@ void EntityFireWargDeathBeams(Entity* self) {
     case 1:
         if ((self->ext.fireWargDeathBeams.unk7C == 0) &&
             (self->ext.fireWargDeathBeams.unk7E < 0x14)) {
-            prim = &g_PrimBuf[self->primIndex];
-
-            while (prim != NULL) {
+            for(prim = &g_PrimBuf[self->primIndex];prim != NULL; prim = prim->next) {
                 if (prim->drawMode == DRAW_HIDE) {
                     if (self->ext.fireWargDeathBeams.unk7E & 1) {
                         PlaySfxPositional(SFX_EXPLODE_B);
@@ -1479,8 +1477,6 @@ void EntityFireWargDeathBeams(Entity* self) {
                     prim->p2 = 0;
                     break;
                 }
-
-                prim = prim->next;
             }
 
             self->ext.fireWargDeathBeams.unk7C = 4;
