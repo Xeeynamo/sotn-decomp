@@ -1357,7 +1357,7 @@
 | st0       | EntityDraculaRainAttack                  |      192 |         37 |        | https://decomp.me/scratch/y31mz | 0.997 |
 | no4       | func_pspeu_09249FA0                      |      193 |         24 |        | https://decomp.me/scratch/cLBEx | 0.999 |
 | dra       | 7879C.rodata                             |      194 |          0 | Yes    |                                 |       |
-| no3       | func_pspeu_0924C7A8                      |      194 |         19 |        |                                 |       |
+| no3       | func_pspeu_0924C7A8                      |      194 |         19 |        | https://decomp.me/scratch/6UFDb | 1.0   |
 | dra       | func_800FE3C4                            |      194 |         20 |        |                                 |       |
 | maria     | MarStepSlide                             |      195 |         32 |        | https://decomp.me/scratch/HWXl8 | 0.988 |
 | dra       | func_8010D59C                            |      196 |         22 |        |                                 |       |
@@ -1459,7 +1459,7 @@
 | no4       | func_pspeu_092391D8                      |      248 |         34 |        | https://decomp.me/scratch/zAICA | 0.996 |
 | lib       | EntityCandleTable                        |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                     |      250 |         34 |        |                                 |       |
-| maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        |                                 |       |
+| maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
 | no3       | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
 | dra       | PlayerStepUnmorphMist                    |      252 |         38 |        |                                 |       |
 | no3       | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
@@ -1670,7 +1670,7 @@
 | dra       | EntitySummonSpirit                       |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
 | ric       | RicEntitySubwpnAgunea                    |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric       | RicStepDeadPrologue                      |      445 |         51 | Yes    |                                 |       |
-| no3       | EntityFireWargDeathBeams                 |      448 |         35 |        |                                 |       |
+| no3       | EntityFireWargDeathBeams                 |      448 |         35 |        | https://decomp.me/scratch/SrqzA | 0.999 |
 | dra       | func_80130E94                            |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
 | maria     | MarStepJump                              |      451 |         78 |        | https://decomp.me/scratch/uZHTg | 0.995 |
 | st0       | EntityStageTitleFadeout                  |      456 |         31 | Yes    |                                 |       |
@@ -1724,7 +1724,7 @@
 | lib       | func_us_801AFE0C                         |      534 |         67 | Yes    |                                 |       |
 | dra       | MainGame                                 |      539 |         84 |        | https://decomp.me/scratch/xoBh0 | 0.985 |
 |           | SwitchModeInitialize                     |      542 |         56 |        |                                 |       |
-| maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        |                                 |       |
+| maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        | https://decomp.me/scratch/4Ptya | 0.973 |
 | ric       | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra       | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | maria     | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
@@ -1936,7 +1936,7 @@
 | ric       | RicEntitySubwpnStopwatch                 |     2016 |        158 | Yes    | https://decomp.me/scratch/kbgQU | 1.0   |
 | dra       | MenuHandle                               |     2075 |        403 | Yes    | https://decomp.me/scratch/S9Nor | 0.982 |
 | dra       | RunMainEngine                            |     2166 |        297 | Yes    |                                 |       |
-| no3       | EntityFireWarg                           |     2168 |        322 | Yes    | https://decomp.me/scratch/ljQnp | 0.76  |
+| no3       | EntityFireWarg                           |     2168 |        322 | Yes    | https://decomp.me/scratch/SrqzA | 0.999 |
 | lib       | LIB_EntityCutscene                       |     2173 |        195 | Yes    | https://decomp.me/scratch/T6hXP | 0.756 |
 | dra       | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0       | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/bgWcS | 0.92  |
