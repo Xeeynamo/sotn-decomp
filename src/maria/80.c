@@ -17,7 +17,46 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6E50);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7560);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7950);
+extern AnimationFrame D_pspeu_092C0988[];
+void func_pspeu_092A7950(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_POS_CAMERA_LOCKED;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0988);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = FIX(4);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A8AE8.unkB0 = 0;
+        MarSetWeaponParams(
+            self, 32, ELEMENT_CUT | ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
+        self->step = 1;
+        return;
+    case 1:
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        if (self->poseTimer < 0) {
+            self->step = 2;
+        }
+        if (self->posX.i.hi < -16 || self->posX.i.hi > 272) {
+            self->step = 2;
+            return;
+        }
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+}
 
 AnimationFrame D_pspeu_092C09B0[];
 void func_pspeu_092A7B80(Entity* self) {
