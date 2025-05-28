@@ -1188,10 +1188,6 @@ void EntityFireWargWaveAttack(Entity* self) {
     u16 palette;
     u8 p0Offset;
 
-    // These are both !FAKE; psp matches without them. ps1 needs them. I dunno.
-    // permuter found them.
-    s32 twobits;
-
     switch (self->step) {
     case 0:
         newEntity = AllocEntity(self, &g_Entities[192]);
@@ -1220,11 +1216,26 @@ void EntityFireWargWaveAttack(Entity* self) {
             palette = self->palette + 4;
 
             for (p0Offset = 0; prim != NULL; p0Offset += 4, prim = prim->next) {
+                #if !defined(VERSION_PSP)
+                // These are both !FAKE; psp matches without them. ps1 needs them. I dunno.
+                // permuter found them.
+                s32 twobits;
+                s32 leftside;
+                prim->tpage = unk5APlus3 >> 2;
+                prim->clut = palette;
+                leftside = ((unk5APlus3 & 1) << 7) + 0x21;
+                prim->u1 = prim->u0 = leftside;
+                prim->u3 = prim->u2 = prim->u0 + 0x2D;
+                twobits = unk5APlus3 & 2;
+                prim->v1 = prim->v3 = ((twobits) << 6) + 0x59;
+                #else
                 prim->tpage = unk5APlus3 >> 2;
                 prim->clut = palette;
                 prim->u1 = prim->u0 = ((unk5APlus3 & 1) << 7) + 0x21;
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
                 prim->v1 = prim->v3 = ((unk5APlus3 & 2) << 6) + 0x59;
+                #endif
+
                 prim->v0 = prim->v2 = prim->v1 + 0x26;
 
                 prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
