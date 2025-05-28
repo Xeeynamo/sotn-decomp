@@ -104,7 +104,8 @@ segments:
       - [0x5F730, .data, no3/e_bat]
       - [0x5F770, .data, no3/e_red_door]
       - [0x5F788, .data, no3/st_update]
-      - [0x5F7B8, data]
+      - [0x5F7B8, .data, no3_psp/e_fire_warg]
+      - [0x60010, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
