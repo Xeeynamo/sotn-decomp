@@ -1415,24 +1415,24 @@ void EntityFireWargDeathBeams(Entity* self) {
         InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
 
-        if (primIndex == -1) {
+        if (primIndex != -1) {
+            self->primIndex = primIndex;
+            self->flags |= FLAG_HAS_PRIMS;
+            prim = &g_PrimBuf[primIndex];
+
+            while (prim != NULL) {
+                prim->tpage = temp_s1_u16 / 4;
+                prim->clut = palette;
+                prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
+                prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
+                prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
+                prim->u3 = prim->u2 = prim->u0 + 0x2D;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+            }
+        } else {
             DestroyEntity(self);
             return;
-        }
-
-        self->primIndex = primIndex;
-        self->flags |= FLAG_HAS_PRIMS;
-        prim = &g_PrimBuf[primIndex];
-
-        while (prim != NULL) {
-            prim->tpage = temp_s1_u16 / 4;
-            prim->clut = palette;
-            prim->u0 = prim->u1 = ((temp_s1 & 1) << 7) + 0x21;
-            prim->v1 = prim->v3 = ((temp_s1 & 2) << 6) + 0x59;
-            prim->v0 = prim->v2 = ((temp_s1 & 2) << 6) + 0x7F;
-            prim->u3 = prim->u2 = prim->u0 + 0x2D;
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
         }
         break;
     case 1:
