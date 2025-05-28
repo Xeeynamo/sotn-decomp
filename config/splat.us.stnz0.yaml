@@ -27,6 +27,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+  ld_generate_symbol_per_data_segment: true
 sha1: b10b9c2be721cf9cbed3aa94be468ba9e23bc68b
 segments:
   - name: stnz0

@@ -29,6 +29,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: d07f054f9dc8ef639257aca01deb1f24a2811924
 segments:
   - name: stno0

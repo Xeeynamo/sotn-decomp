@@ -29,6 +29,7 @@ options:
     - .sbss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: 1dcd6b881e2c0906854c3d53839dfb4ae0d359d6
 segments:
   - name: ric

@@ -29,6 +29,7 @@ options:
   disasm_unknown: true
   disassemble_all: true
   global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
 sha1: b90a2a70ae9651ed107b306d4dcfba2311b523fc
 segments:
   - name: bobo4

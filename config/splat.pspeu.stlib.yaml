@@ -32,6 +32,7 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
 sha1: f45dd42ccb88a374491c7c38c19cc80c1cd936ad
 segments:
   - [0x0, bin, mwo_header]
