@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
 
+// Note: Two functions in this file have weird temp variables for PSX.
+// Look for the "VERSION_PSP" defines in this file to see. The PSP version
+// of both functions is simple and reasonable, but PSX has odd temps.
+// You will be the lord of this castle if you can work out the match :)
+
 static u8 D_801827DC[] = {14, 1, 14, 2, 14, 3, 14, 4, 14, 5, 14, 6, 0};
 static u8 D_801827EC[] = {14, 57, 14, 58, 14, 59, 14, 60, 14, 61, 14, 62, 0};
 static u8 D_801827FC[] = {14, 6, 14, 5, 14, 4, 14, 3, 14, 2, 14, 1, 0};
