@@ -41,17 +41,14 @@ var extensions = map[string]string{
 func (h *handler) Name() string { return "palette" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	if len(e.Args) != 2 {
-		return fmt.Errorf("must have two arguments <format> and <color_count>")
+	const format string = "png"
+	if len(e.Args) != 1 {
+		return fmt.Errorf("must specify <color_count>")
 	}
-	format := e.Args[0]
-	formatHandler, ok := formats[format]
-	if !ok {
-		return fmt.Errorf("unknown format %q, supported 'jasc', 'png'", format)
-	}
-	colorsPerPalette, err := strconv.Atoi(e.Args[1])
+	formatHandler := formats[format]
+	colorsPerPalette, err := strconv.Atoi(e.Args[0])
 	if err != nil || (colorsPerPalette != 16 && colorsPerPalette != 256) {
-		return fmt.Errorf("color count must be 16 or 256, got %q", e.Args[1])
+		return fmt.Errorf("color count must be 16 or 256, got %q", e.Args[0])
 	}
 	byteCountPerPalette := colorsPerPalette * 2
 	paletteCount := (e.End - e.Start) / byteCountPerPalette

@@ -9,7 +9,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
 	"path/filepath"
@@ -41,7 +40,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		}
 		actualStart = actualStart.Sum(4)
 	}
-	banks, _, err := ReadGraphics(r, e.RamBase, actualStart, e.SplatConfig)
+	banks, _, err := ReadGraphics(r, e.RamBase, actualStart, e.Symbol)
 	if err != nil {
 		return fmt.Errorf("failed to read graphics banks: %w", err)
 	}
@@ -116,7 +115,9 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	gfx, headerDataRange, err := ReadGraphics(r, psx.RamStageBegin, header.Graphics, &splat.Config{})
+	gfx, headerDataRange, err := ReadGraphics(r, psx.RamStageBegin, header.Graphics, func(addr psx.Addr) string {
+		return ""
+	})
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("failed to read graphics banks: %w", err)
 	}

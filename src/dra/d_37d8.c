@@ -20,11 +20,11 @@ u16 D_800A3834[] = {0x8433, 0x843A, 0x0000, 0x0000, 0x0000,
 
 u_long* D_800A3848[] = {GFX_TERMINATE()};
 
-extern u8 D_800C217C[]; // external file
-extern u8 D_800C27B0[]; // external file
-extern u8 D_800C3560[]; // external file
-extern u8 D_800C4864[]; // external file
-extern u8 D_800C4A90[]; // external file
+extern u8 text_item_up[];
+extern u8 load_room_obj[];
+extern u8 save_room_obj[];
+extern u8 load_room_tile[];
+extern u8 save_room_tile[];
 extern u16 D_800D68D4[0x10];
 extern u16 D_800D68F4[0x10];
 extern u16 D_800D6914[0x10];
@@ -70,7 +70,7 @@ u8 D_psp_0918B1A0[] = {
 
 u_long* D_800A384C[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 800, 128, 128, D_800C217C),
+    GFX_ENTRY(256, 800, 128, 128, text_item_up),
     GFX_TERMINATE(),
 };
 
@@ -102,17 +102,17 @@ u_long* D_psp_0918B890[] = {
 
 #endif
 
-u_long* D_800A3860[] = {
+u_long* g_SaveRoomGfx[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 800, 128, 128, D_800C3560),
-    GFX_ENTRY(368, 992, 80, 16, D_800C4A90),
+    GFX_ENTRY(256, 800, 128, 128, save_room_obj),
+    GFX_ENTRY(368, 992, 80, 16, save_room_tile),
     GFX_TERMINATE(),
 };
 
-u_long* D_800A3880[] = {
+u_long* g_LoadRoomGfx[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(256, 800, 128, 128, D_800C27B0),
-    GFX_ENTRY(368, 992, 80, 16, D_800C4864),
+    GFX_ENTRY(256, 800, 128, 128, load_room_obj),
+    GFX_ENTRY(368, 992, 80, 16, load_room_tile),
     GFX_TERMINATE(),
 };
 
@@ -324,19 +324,19 @@ u_long* D_800A3B4C[] = {
 #ifdef VERSION_PSP
 
 u_long** D_psp_0918BBD0[] = {
-    D_800A3848, D_800A384C, D_800A3848, D_800A3860, D_800A3880};
+    D_800A3848, D_800A384C, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};
 u_long** D_psp_0918BBE8[] = {
-    D_800A3848, D_psp_0918B890, D_800A3848, D_800A3860, D_800A3880};
+    D_800A3848, D_psp_0918B890, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};
 u_long** D_psp_0918BC00[] = {
-    D_800A3848, D_psp_0918B860, D_800A3848, D_800A3860, D_800A3880};
+    D_800A3848, D_psp_0918B860, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};
 u_long** D_psp_0918BC18[] = {
-    D_800A3848, D_psp_0918B848, D_800A3848, D_800A3860, D_800A3880};
+    D_800A3848, D_psp_0918B848, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};
 u_long** D_psp_0918BC30[] = {
-    D_800A3848, D_psp_0918B878, D_800A3848, D_800A3860, D_800A3880};
+    D_800A3848, D_psp_0918B878, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx};
 
 #else
 GfxBank** g_GfxSharedBank[] = {
-    D_800A3848, D_800A384C, D_800A3848, D_800A3860, D_800A3880,
+    D_800A3848, D_800A384C, D_800A3848, g_SaveRoomGfx, g_LoadRoomGfx,
 };
 #endif
 

@@ -22,25 +22,31 @@ files:
           - [0x1D2E8, xamusicconfig, xa_music_config]
           - [0x1F5F8, sfxconfig, sfx_config]
           - [0x20A20, skip]
-          - [0x36978, palette, D_800D68D4, png, 16]
-          - [0x36998, palette, D_800D68F4, png, 16]
-          - [0x369B8, palette, D_800D6914, png, 16]
-          - [0x369D8, palette, D_800D6934, png, 16]
-          - [0x369F8, palette, D_800D6954, png, 16]
-          - [0x36A18, palette, D_800D6974, png, 16]
-          - [0x36A38, palette, D_800D6994, png, 16]
-          - [0x36A58, palette, D_800D69B4, png, 16]
-          - [0x36A78, palette, D_800D69D4, png, 16]
-          - [0x36A98, palette, D_800D69F4, png, 16]
-          - [0x36AB8, palette, D_800D6A14, png, 16]
-          - [0x36AD8, palette, D_800D6A34, png, 16]
-          - [0x36B78, palette, D_800D6AD4, png, 16]
-          - [0x36D78, palette, D_800D6CD4, png, 16]
-          - [0x36F78, palette, D_800D6ED4, png, 16]
-          - [0x37178, palette, D_800D70D4, png, 16]
-          - [0x37378, palette, D_800D72D4, png, 16]
+          - [0x22220, cmpgfx, text_item_up, 128, 128, 4]
+          - [0x22854, cmpgfx, load_room_obj, 128, 128, 4]
+          - [0x23604, cmpgfx, save_room_obj, 128, 128, 4]
+          - [0x24908, cmpgfx, load_room_tile, 80, 16, 4]
+          - [0x24B34, cmpgfx, save_room_tile, 80, 16, 4]
+          - [0x24D90, skip]
+          - [0x36978, palette, D_800D68D4, 16]
+          - [0x36998, palette, D_800D68F4, 16]
+          - [0x369B8, palette, D_800D6914, 16]
+          - [0x369D8, palette, D_800D6934, 16]
+          - [0x369F8, palette, D_800D6954, 16]
+          - [0x36A18, palette, D_800D6974, 16]
+          - [0x36A38, palette, D_800D6994, 16]
+          - [0x36A58, palette, D_800D69B4, 16]
+          - [0x36A78, palette, D_800D69D4, 16]
+          - [0x36A98, palette, D_800D69F4, 16]
+          - [0x36AB8, palette, D_800D6A14, 16]
+          - [0x36AD8, palette, D_800D6A34, 16]
+          - [0x36B78, palette, D_800D6AD4, 16]
+          - [0x36D78, palette, D_800D6CD4, 16]
+          - [0x36F78, palette, D_800D6ED4, 16]
+          - [0x37178, palette, D_800D70D4, 16]
+          - [0x37378, palette, D_800D72D4, 16]
           - [0x38978, skip]
-          - [0x3B298, palette, D_800DB1F4, png, 16]
+          - [0x3B298, palette, D_800DB1F4, 16]
           - [0x3B458, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin
     asset_path: assets/ric
@@ -73,6 +79,20 @@ files:
           - [0x394, skip]
           - [0x1308, rooms, rooms]
           - [0x1334, skip]
+          - [0x1678, cmpgfx, stage_title_cen_jp, 128, 128, 4]
+          - [0x19BC, cmpgfx, stage_placeholder_cen, 128, 128, 4]
+          - [0x1F60, binary, D_80181F60]
+          - [0x3A60, cmpgfx, e_maria_cen_g0, 128, 128, 4, 0x69AC]
+          - [0x4B90, cmpgfx, e_maria_cen_g1, 128, 128, 4, 0x69AC]
+          - [0x5850, cmpgfx, e_elevator_cen_g, 128, 128, 4, 0x69CC]
+          - [0x65AC, palette, D_8018658C, 16]
+          - [0x66AC, palette, D_8018668C, 16] # unused
+          - [0x67AC, palette, D_8018678C, 16]
+          - [0x68AC, palette, D_8018688C, 16] # unused
+          - [0x69AC, palette, e_maria_cen_p, 16]
+          - [0x69CC, palette, e_elevator_cen_p, 16]
+          - [0x6A0C, skip] # tile data
+          - [0xC62C, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp
@@ -89,3 +109,10 @@ files:
           - [0x3E4, skip]
           - [0x11B0, rooms, rooms]
           - [0x122C, skip]
+          - [0x1424, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
+          - [0x1768, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
+          - [0x1D0C, palette, D_80181D08, 16]
+          - [0x1D2C, palette, D_80181D28, 16] # unused
+          - [0x1D6C, skip] # tile data
+          - [0x296C, skip] # tile definitions
+          - [0x6D8C, skip] # sprites
