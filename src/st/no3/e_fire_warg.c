@@ -56,8 +56,7 @@ static s32 D_80182A04[] = {FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7),
                            FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7)};
 // These are very close to 12/7, 6/7, 4/7, 12/7, 6/7, 4/7 but not quite.
 static s32 unused_morefixes[] = {
-    0x1B6DA, 0xDBC6, 0x9248, 0x1B6DA,
-    0xDBC6,  0x9248, FIX(4)};
+    0x1B6DA, 0xDBC6, 0x9248, 0x1B6DA, 0xDBC6, 0x9248, FIX(4)};
 static s16 D_80182A38[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
 static u8 D_80182A48[] = {2, 0, 1, 3};
 
@@ -859,7 +858,7 @@ void EntityUnkId30(Entity* self) {
             }
             hitboxPtr = &D_80182E1C[animCurFrame * 8];
         } else {
-            if (entity->params) { 
+            if (entity->params) {
                 // this chain of comparisons is stupid
                 if (animCurFrame >= 86) {
                     animCurFrame -= 57;
@@ -1129,8 +1128,8 @@ void EntityExplosion3(Entity* entity) {
 
 void func_801CE740(Entity* self) {
     Primitive* prim;
-    
-    for(prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+
+    for (prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
         if (prim->p1) {
             prim->p1--;
             continue;
@@ -1139,23 +1138,23 @@ void func_801CE740(Entity* self) {
             prim->y0 = prim->y1 -= 12;
             if (self->facingLeft) {
                 prim->x1 = prim->x3 += 8;
-                prim->r0 = prim->r2 -=  8;
-                prim->g0 = prim->g2 -=  8;
-                prim->b0 = prim->b2 -=  8;
+                prim->r0 = prim->r2 -= 8;
+                prim->g0 = prim->g2 -= 8;
+                prim->b0 = prim->b2 -= 8;
             } else {
-                prim->x0 = prim->x2 -=  8;
-                prim->r1 = prim->r3 -=  8;
-                prim->g1 = prim->g3 -=  8;
-                prim->b1 = prim->b3 -=  8;
+                prim->x0 = prim->x2 -= 8;
+                prim->r1 = prim->r3 -= 8;
+                prim->g1 = prim->g3 -= 8;
+                prim->b1 = prim->b3 -= 8;
             }
         } else if (prim->p2 < 24) {
-            prim->y0 = prim->y1 -=  12;
+            prim->y0 = prim->y1 -= 12;
             if (self->facingLeft) {
                 prim->x0 = prim->x2 += 4;
                 prim->x1 = prim->x3 += 1;
             } else {
-                prim->x1 = prim->x3 -=  4;
-                prim->x0 = prim->x2 -=  1;
+                prim->x1 = prim->x3 -= 4;
+                prim->x0 = prim->x2 -= 1;
             }
         } else if (prim->p2 < 32) {
             prim->y0 = prim->y1 += 36;
@@ -1167,7 +1166,7 @@ void func_801CE740(Entity* self) {
             } else {
                 prim->x1 = prim->x3 -= 2;
                 if (prim->p2 & 1) {
-                    prim->x0 = prim->x2 -=  1;
+                    prim->x0 = prim->x2 -= 1;
                 }
             }
         } else {
@@ -1215,9 +1214,9 @@ void EntityFireWargWaveAttack(Entity* self) {
             palette = self->palette + 4;
 
             for (p0Offset = 0; prim != NULL; p0Offset += 4, prim = prim->next) {
-                #if !defined(VERSION_PSP)
-                // These are both !FAKE; psp matches without them. ps1 needs them. I dunno.
-                // permuter found them.
+#if !defined(VERSION_PSP)
+                // These are both !FAKE; psp matches without them. ps1 needs
+                // them. I dunno. permuter found them.
                 s32 twobits;
                 s32 leftside;
                 prim->tpage = unk5APlus3 >> 2;
@@ -1227,13 +1226,13 @@ void EntityFireWargWaveAttack(Entity* self) {
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
                 twobits = unk5APlus3 & 2;
                 prim->v1 = prim->v3 = ((twobits) << 6) + 0x59;
-                #else
+#else
                 prim->tpage = unk5APlus3 >> 2;
                 prim->clut = palette;
                 prim->u1 = prim->u0 = ((unk5APlus3 & 1) << 7) + 0x21;
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
                 prim->v1 = prim->v3 = ((unk5APlus3 & 2) << 6) + 0x59;
-                #endif
+#endif
 
                 prim->v0 = prim->v2 = prim->v1 + 0x26;
 
@@ -1394,7 +1393,8 @@ void EntityUnkId2F(Entity* self) {
     }
 }
 
-static s16 D_80183080[] = {16, -32, 0, 24, -12, 8, -20, 32, -2, 12, -29, 18, 0, -20, 2, -14};
+static s16 D_80183080[] = {
+    16, -32, 0, 24, -12, 8, -20, 32, -2, 12, -29, 18, 0, -20, 2, -14};
 static s16 D_801830A0[] = {2, -2, -2, 4, -2, 2, 0, -2, 2, 0, -2, 2, -2, 0};
 
 // beams that go up when strong warg dies
@@ -1404,20 +1404,20 @@ void EntityFireWargDeathBeams(Entity* self) {
     u16 palette;
     s32 primIndex;
 
-    #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
     s32 temp_s1;
     u16 temp_s1_u16;
-    #else
+#else
     u16 temp_s1;
-    #endif
+#endif
 
     switch (self->step) {
     case 0:
         temp_s1 = self->unk5A + 3;
         palette = self->palette + 4;
-        #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
         temp_s1_u16 = (u16)temp_s1;
-        #endif
+#endif
 
         InitializeEntity(g_EInitCommon);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
@@ -1428,11 +1428,11 @@ void EntityFireWargDeathBeams(Entity* self) {
             self->primIndex = primIndex;
 
             while (prim != NULL) {
-                #if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP)
                 prim->tpage = temp_s1_u16 >> 2;
-                #else
+#else
                 prim->tpage = temp_s1 >> 2;
-                #endif
+#endif
                 prim->clut = palette;
                 prim->u1 = prim->u0 = ((temp_s1 & 1) << 7) + 0x21;
                 prim->u3 = prim->u2 = prim->u0 + 0x2D;
@@ -1449,21 +1449,31 @@ void EntityFireWargDeathBeams(Entity* self) {
     case 1:
         if ((!self->ext.fireWargDeathBeams.unk7C) &&
             (self->ext.fireWargDeathBeams.unk7E < 0x14)) {
-            for(prim = &g_PrimBuf[self->primIndex];prim != NULL; prim = prim->next) {
+            for (prim = &g_PrimBuf[self->primIndex]; prim != NULL;
+                 prim = prim->next) {
                 if (prim->drawMode == DRAW_HIDE) {
                     if (self->ext.fireWargDeathBeams.unk7E & 1) {
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
 
                     if (self->facingLeft) {
-                        prim->x0 = prim->x2 = self->posX.i.hi - D_80183080[self->ext.fireWargDeathBeams.unk7E & 0xF] + 0x10;
+                        prim->x0 = prim->x2 =
+                            self->posX.i.hi -
+                            D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                       0xF] +
+                            0x10;
                         prim->x1 = prim->x3 = prim->x0 - 0x20;
                     } else {
-                        prim->x0 = prim->x2 = self->posX.i.hi + D_80183080[self->ext.fireWargDeathBeams.unk7E & 0xF] - 0x10;
+                        prim->x0 = prim->x2 =
+                            self->posX.i.hi +
+                            D_80183080[self->ext.fireWargDeathBeams.unk7E &
+                                       0xF] -
+                            0x10;
                         prim->x1 = prim->x3 = prim->x0 + 0x20;
                     }
 
-                    prim->y0 = prim->y1 = prim->y2 = prim->y3 = self->posY.i.hi + 0x28;
+                    prim->y0 = prim->y1 = prim->y2 = prim->y3 =
+                        self->posY.i.hi + 0x28;
                     prim->r0 = prim->r2 = 0x40;
                     prim->g0 = prim->g2 = 0x40;
                     prim->b0 = prim->b2 = 0x40;
@@ -1471,7 +1481,9 @@ void EntityFireWargDeathBeams(Entity* self) {
                     prim->g1 = prim->g3 = 0x40;
                     prim->b1 = prim->b3 = 0x40;
 
-                    prim->priority = self->zPriority + D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
+                    prim->priority =
+                        self->zPriority +
+                        D_801830A0[self->ext.fireWargDeathBeams.unk7E & 0xF];
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
                     prim->p1 = (Random() & 3) + 0x10;
@@ -1486,7 +1498,8 @@ void EntityFireWargDeathBeams(Entity* self) {
             self->ext.fireWargDeathBeams.unk7C--;
         }
 
-        for(hiddenPrimCount = 0, prim = &g_PrimBuf[self->primIndex]; prim != NULL; prim = prim->next) {
+        for (hiddenPrimCount = 0, prim = &g_PrimBuf[self->primIndex];
+             prim != NULL; prim = prim->next) {
             if (prim->drawMode != DRAW_HIDE) {
                 prim->p2++;
                 prim->x0 = prim->x2 += 1;
@@ -1518,7 +1531,8 @@ void EntityFireWargDeathBeams(Entity* self) {
             }
         }
 
-        if (hiddenPrimCount == 4 && self->ext.fireWargDeathBeams.unk7E >= 0x14) {
+        if (hiddenPrimCount == 4 &&
+            self->ext.fireWargDeathBeams.unk7E >= 0x14) {
             DestroyEntity(self);
             return;
         }
@@ -1527,7 +1541,8 @@ void EntityFireWargDeathBeams(Entity* self) {
 }
 
 // Totally unused. Could instead be part of the main Warg file (next one on PSX)
-// but doesn't exist on PSP so we can't positively confirm which file it goes with.
+// but doesn't exist on PSP so we can't positively confirm which file it goes
+// with.
 void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
                    u8 arg5, s16 xOfst) {
     s32 i;
