@@ -154,8 +154,8 @@ segments:
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
       - [0x376D0, .rodata, e_fire_warg] # EntityFireWargWaveAttack
       - [0x376E8, .rodata, e_fire_warg] # EntityUnkId2F
-      - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
-      - [0x37704, .rodata, 4F58C] # EntityWarg
+      - [0x376FC, .rodata, e_warg] # EntityWarg RECT
+      - [0x37704, .rodata, e_warg] # EntityWarg
       - [0x37738, .rodata, e_merman2]
       - [0x3775C, .rodata, e_merman]
       - [0x37784, .rodata, e_bone_scimitar]
@@ -196,7 +196,7 @@ segments:
       - [0x4BC74, c, e_particles]
       - [0x4C4B8, c, e_room_fg]
       - [0x4C5A4, c, e_fire_warg]
-      - [0x4F58C, c]
+      - [0x4F438, c, e_warg]
       - [0x506FC, c, popup]
       - [0x50A2C, c, water_effects]
       - [0x52D40, c, e_merman2]
