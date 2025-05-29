@@ -62,7 +62,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 #include "../e_init_common.h"
-EInit g_EInitUnused = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
 EInit g_EInitElevator = {ANIMSET_OVL(11), 1, 0x48, 0x223, 5};
 
 static u8 D_80180488[] = {0x40, 0x01, 0xFF, 0x00};
