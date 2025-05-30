@@ -45,6 +45,7 @@ static TeleportCheck GetTeleportToOtherCastle(void) {
     return TELEPORT_CHECK_NONE;
 }
 
+static s16 mar_80154568[] = {0, -8, -16};
 static s16 func_80156DE4(void) {
     // Variables that change during execution
     Collider collider;
@@ -62,7 +63,7 @@ static s16 func_80156DE4(void) {
     xRight = PLAYER.posX.i.hi + 4;
     xLeft = PLAYER.posX.i.hi - 4;
 
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < LEN(mar_80154568); i++) {
         yvar = PLAYER.posY.i.hi + mar_80154568[i];
         collisions = 0;
         g_api.CheckCollision(xCenter, yvar, &collider, 0);
@@ -84,14 +85,34 @@ static s16 func_80156DE4(void) {
     return 0;
 }
 
+static u8 font_eu[] = {
+#include "gen/font_eu.h"
+};
+static u_long* g_FontImage[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x380, 128, 128, font_eu),
+    GFX_TERMINATE(),
+};
+
+static u8 hud_sp[] = {
+#include "gen/hud_sp.h"
+};
+static u8 hud_it[] = {
+#include "gen/hud_it.h"
+};
+static u8 hud_ge[] = {
+#include "gen/hud_ge.h"
+};
+static u8 hud_fr[] = {
+#include "gen/hud_fr.h"
+};
+static u_long* g_HudImage[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x100, 0x2C0, 128, 128, hud_sp),
+    GFX_TERMINATE(),
+};
+
 // Similar to of AluInit and RicInit
-extern s32 D_pspeu_092E5F20;
-extern u8 hud_fr[];
-extern u8 hud_sp[];
-extern u8 hud_ge[];
-extern u8 hud_it[];
-extern u_long* g_FontImage[];
-extern u_long* g_HudImage[];
 void MarInit(s16 initParam) {
     Entity* e;
     s16 radius;
@@ -415,8 +436,10 @@ static void CheckHighJumpInput(void) {
     }
 }
 
-extern s32 D_pspeu_092E5F20;
-extern s32 D_pspeu_092E5F28;
+static u16 mar_80154574[] = {
+    PAL_UNK_812F, PAL_UNK_812F, PAL_MARIA,    PAL_UNK_812F, PAL_UNK_812F,
+    PAL_MARIA,    PAL_UNK_812F, PAL_UNK_812F, PAL_MARIA,    PAL_UNK_812F,
+    PAL_UNK_812E, PAL_UNK_812F, PAL_UNK_812E, PAL_UNK_812F, PAL_MARIA};
 // the main difference with Richter is that every code related to how Richter
 // survives at 0hp during the prologue, it's removed.
 void MarMain(void) {

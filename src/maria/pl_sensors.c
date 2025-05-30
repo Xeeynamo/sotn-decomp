@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-u8 mar_801545B0[] = {10, 8, 8, 6, 6, 4, 4,  4,  4, 4,
-                     4,  4, 4, 4, 4, 4, -1, -1, 0, 0};
-u8 mar_801545C4[] = {4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
-u8 mar_801545D4[] = {8,  12, 16, 20, 24, 28, 32, 32,
-                     32, 32, 32, 32, 32, 32, 32, 32};
 Point16 g_MarSensorsCeiling[NUM_HORIZONTAL_SENSORS] = {
     {0, -16},
     {0, -16},

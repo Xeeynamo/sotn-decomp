@@ -374,9 +374,6 @@ enum MarSubweapons {
     NUM_WEAPONS,
 };
 
-extern u16 mar_80154574[];
-extern s16 mar_80154568[];
-
 extern DebugInfo g_MarDebug;
 extern s32 mar_80175958[32];
 extern s32 mar_801759D8[32];
