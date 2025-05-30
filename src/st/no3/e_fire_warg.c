@@ -899,7 +899,7 @@ static s16 D_80182FE8[] = {
     -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 8};
 
 void EntityUnkId31(Entity* self) {
-    Entity* explosion;
+    Entity* otherEnt;
     s16* hitboxPtr;
     u16 animCurFrame;
     s16 i;
@@ -907,66 +907,66 @@ void EntityUnkId31(Entity* self) {
     if (!self->step) {
         InitializeEntity(D_80180B24);
         self->zPriority++;
-        explosion = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_30, explosion);
-        explosion->params = 1;
+        otherEnt = self + 1;
+        CreateEntityFromCurrentEntity(E_ID_30, otherEnt);
+        otherEnt->params = 1;
     }
-    explosion = self - 2;
+    otherEnt = self - 2;
     if (self->ext.fireWargHelper.unk7C) {
         animCurFrame = (self->pose - 1) * 2;
-        if (explosion->step_s == 1) {
+        if (otherEnt->step_s == 1) {
             hitboxPtr = D_80182FC8 + animCurFrame;
         } else {
             hitboxPtr = D_80182FE8 + animCurFrame;
         }
 
         if (self->facingLeft) {
-            self->posX.i.hi = explosion->posX.i.hi - *hitboxPtr++;
+            self->posX.i.hi = otherEnt->posX.i.hi - *hitboxPtr++;
         } else {
-            self->posX.i.hi = explosion->posX.i.hi + *hitboxPtr++;
+            self->posX.i.hi = otherEnt->posX.i.hi + *hitboxPtr++;
         }
-        self->posY.i.hi = explosion->posY.i.hi + *hitboxPtr;
+        self->posY.i.hi = otherEnt->posY.i.hi + *hitboxPtr;
     } else {
-        self->posX.i.hi = explosion->posX.i.hi;
-        self->posY.i.hi = explosion->posY.i.hi;
+        self->posX.i.hi = otherEnt->posX.i.hi;
+        self->posY.i.hi = otherEnt->posY.i.hi;
     }
-    self->facingLeft = explosion->facingLeft;
-    animCurFrame = explosion->animCurFrame;
+    self->facingLeft = otherEnt->facingLeft;
+    animCurFrame = otherEnt->animCurFrame;
     if (self->flags & FLAG_DEAD) {
         hitboxPtr = D_80182F9C;
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
-            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (explosion != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION_3, explosion);
+            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (otherEnt != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION_3, otherEnt);
                 if (self->facingLeft) {
-                    explosion->posX.i.hi -= *hitboxPtr++;
+                    otherEnt->posX.i.hi -= *hitboxPtr++;
                 } else {
-                    explosion->posX.i.hi += *hitboxPtr++;
+                    otherEnt->posX.i.hi += *hitboxPtr++;
                 }
-                explosion->posY.i.hi += *hitboxPtr++;
-                explosion->params = i;
-                explosion->facingLeft = self->facingLeft;
+                otherEnt->posY.i.hi += *hitboxPtr++;
+                otherEnt->params = i;
+                otherEnt->facingLeft = self->facingLeft;
             }
         }
 
         hitboxPtr = D_80182FA8;
         for (i = 0; i < 8; i++) {
-            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
-            if (explosion == NULL) {
+            if (otherEnt == NULL) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
-            explosion->params = ((self->zPriority + 1) << 8) + 1;
+            CreateEntityFromCurrentEntity(E_EXPLOSION, otherEnt);
+            otherEnt->params = ((self->zPriority + 1) << 8) + 1;
             if (self->facingLeft) {
-                explosion->posX.i.hi -= *hitboxPtr++;
+                otherEnt->posX.i.hi -= *hitboxPtr++;
             } else {
-                explosion->posX.i.hi += *hitboxPtr++;
+                otherEnt->posX.i.hi += *hitboxPtr++;
             }
-            explosion->posY.i.hi += *hitboxPtr++;
+            otherEnt->posY.i.hi += *hitboxPtr++;
         }
 
         DestroyEntity(self);
@@ -986,7 +986,12 @@ void EntityUnkId31(Entity* self) {
         }
 
         if (animCurFrame != 78) {
-            if ((explosion->step == 3) && (explosion->ext.ILLEGAL.u8[0])) {
+            // Identifying ext here is non-trivial.
+            // If we made it here, we didn't return at the end of the FLAG_DEAD
+            // block above. So otherEnt is still set to self - 2.
+            // E_ID_31 is created by the fire warg as self + 2.
+            // So here we're pointing to the fire warg.
+            if ((otherEnt->step == 3) && (otherEnt->ext.fireWarg.unk7C)) {
                 self->animCurFrame = animCurFrame + 58;
             } else {
                 self->animCurFrame = animCurFrame;
