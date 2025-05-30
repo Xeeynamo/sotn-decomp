@@ -17,11 +17,11 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetSideToPlayer);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", MoveEntity);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FD08);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", FallEntity);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FD40);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", UnkCollisionFunc3);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_0925FFF8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", UnkCollisionFunc2);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AllocEntity);
 

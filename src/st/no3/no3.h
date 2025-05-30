@@ -128,14 +128,10 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
-extern s16 D_80182A38[];
-extern u8 D_80182A48[];
-extern u16 D_80182A4C[];
-extern u16 D_80182E1C[];
-extern u16 D_80182F9C[];
-extern u16 D_80182FA8[];
-extern u16 D_80182FC8[];
-extern u16 D_80182FE8[];
+extern s16 D_80182F9C[];
+extern s16 D_80182FA8[];
+extern s16 D_80182FC8[];
+extern s16 D_80182FE8[];
 extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitLockCamera[];
@@ -143,6 +139,7 @@ extern u16 g_EInitCommon[];
 extern u16 g_EInitStInteractable[];
 extern u16 D_80180B24[];
 extern u16 D_80180B30[];
+extern u16 D_80180B3C[];
 extern u16 g_EInitWaterObject[];
 extern u16 g_EInitWaterSplash[];
 extern u16 D_80180B6C[];
@@ -177,14 +174,6 @@ extern s32 D_801819EC[];
 extern s16 D_801836BC[];
 extern u16 D_80180B9C[];
 
-// *** EntityExplosion3 *** //
-extern u16 D_80180B3C[];
-extern u8 D_80183028[];
-extern u32 D_80183034[];
-extern u16 D_8018304C[];
-extern Point16 D_80183054[];
-extern Point16 D_80183060[];
-
 extern s16 D_801832D8[];
 extern u8 D_801832E8[];
 extern u16 D_801823F4[];
@@ -198,8 +187,6 @@ extern u16 D_80182628[];
 extern s32 D_80182638[];
 extern u8 D_8018267C[];
 extern ObjInit D_80182764[];
-extern u16 D_80183080[];
-extern u16 D_801830A0[];
 extern u8 D_8018383C[];
 extern const u8 g_explosion2anim[];
 extern u8 g_FallingObject2Anim[];
@@ -218,39 +205,6 @@ extern u8 D_80183C84[];
 extern u8 D_80183C98[];
 extern s32 D_80183CAC;
 extern s32 D_80183CBC;
-
-// *** EntityFireWarg properties START ***
-
-extern u8 D_801827DC;
-extern u8 D_801827EC;
-extern u8 D_801827FC;
-extern u8 D_8018280C;
-extern u8 D_8018281C;
-extern u8 D_80182824;
-extern u8 D_80182848;
-extern u8 D_80182850;
-extern u8 D_80182858;
-extern u8 D_80182868;
-extern u8 D_80182878;
-extern u8 D_80182884;
-extern u8 D_80182890;
-extern u8 D_801828A8;
-extern u8 D_801828D8;
-extern u8 D_80182900;
-extern u8 D_80182928;
-extern u8 D_80182944;
-extern u8 D_8018295C;
-extern u8 D_80182964;
-extern u8 D_8018296C;
-extern u8 D_80182980;
-extern u8 D_80182990;
-extern u8 D_801829B4;
-extern s32 D_801829D4;
-extern u16 D_801829DC;
-extern s32 D_801829EC[];
-extern s32 D_80182A04[];
-
-// *** EntityFireWarg properties END ***
 
 // *** EntitySoulStealOrb properties START ***
 

@@ -6,7 +6,7 @@
 void EntityRedEyeBust(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSecret);
+        InitializeEntity(g_EInitEnemy3);
         self->animCurFrame = 7;
         self->zPriority = 0x70;
         break;
@@ -251,7 +251,7 @@ void EntitySecretWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSecret);
+        InitializeEntity(g_EInitEnemy3);
         self->drawFlags = FLAG_DRAW_ROTZ;
 
         if (Random() & 1) {
