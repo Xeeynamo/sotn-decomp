@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
+extern u8 D_pspeu_092E5B08[8];
+extern s32 D_pspeu_092E5900;
+extern Point16 D_pspeu_092E5B18[];
+
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6280);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6740);
@@ -9,13 +13,317 @@ INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6A08);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6E50);
+extern AnimationFrame D_pspeu_092C0958[];
+void func_pspeu_092A6E50(Entity* self) {
+    Collider col;
+    s32 var_s3;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s2;
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7560);
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0958);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = FIX(3.0);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi;
+        self->hitboxWidth = 18;
+        self->hitboxHeight = 30;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = -8;
+        self->ext.maria092A6E50.unkB0 = 0;
+        MarSetWeaponParams(self, 15, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        self->ext.maria092A6E50.timer = 0;
+        g_Player.unk7A = 1;
+        self->ext.maria092A6E50.nBounce = 3;
+        self->step = 2;
+        self->ext.maria092A6E50.opacity = 128;
+        break;
+    case 1:
+        self->velocityX += FIX(1.0);
+        if (self->velocityX > FIX(3.0)) {
+            self->velocityX = FIX(3.0);
+        }
+        if ((self->ext.maria092A6E50.timer % 10) == 0) {
+            g_api.PlaySfx(SFX_QUIET_STEPS);
+        }
+        self->ext.maria092A6E50.timer++;
+        func_pspeu_092A6A08(
+            self, self->facingLeft ? -self->velocityX : self->velocityX, 0,
+            &col);
+        if (col.effects & EFFECT_SOLID || self->hitFlags == 1) {
+            self->velocityX = FIX(-3.0);
+            self->velocityY = FIX(-8.0);
+            if (col.effects & EFFECT_SOLID) {
+                self->ext.maria092A6E50.nBounce = 0;
+            }
+            if (self->ext.maria092A6E50.nBounce > 0) {
+                self->ext.maria092A6E50.nBounce--;
+                self->step = 3;
+            } else {
+                self->step = 4;
+            }
+            self->ext.maria092A6E50.timer = 0;
+        } else {
+            g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi + 1, &col, 0);
+            if (!(col.effects & EFFECT_UNK_0002)) {
+                self->velocityY = FIX(-8.0);
+                self->step = 2;
+                self->ext.maria092A6E50.timer = 0;
+            }
+        }
+        break;
+    case 2:
+    case 3:
+        if (self->step == 2) {
+            self->velocityX += FIX(1.0);
+            if (self->velocityX > FIX(3.0)) {
+                self->velocityX = FIX(3.0);
+            }
+        }
+        self->velocityY += FIX(1.0);
+        if (self->velocityY > FIX(4.0)) {
+            self->velocityY = FIX(4.0);
+        }
+        func_pspeu_092A6A08(
+            self, self->facingLeft ? -self->velocityX : self->velocityX,
+            self->velocityY, &col);
+        if (col.effects & EFFECT_UNK_0002) {
+            var_s3 = func_pspeu_092A6958(
+                self->posX.i.hi, self->posY.i.hi, self->velocityY >> 16);
+            if (var_s3 != -1) {
+                self->velocityX = FIX(3.0);
+                self->posY.i.hi = var_s3;
+                self->posY.i.lo = 0;
+                self->step = 1;
+                col.effects = EFFECT_NONE;
+                self->hitFlags = 0;
+            }
+        }
+        if ((col.effects & EFFECT_SOLID) || self->hitFlags == 1) {
+            self->velocityX = FIX(-3.0);
+            self->velocityY = FIX(-8.0);
+            if (col.effects & EFFECT_SOLID) {
+                self->ext.maria092A6E50.nBounce = 0;
+            }
+            if (self->ext.maria092A6E50.nBounce > 0) {
+                self->ext.maria092A6E50.nBounce--;
+                self->step = 3;
+            } else {
+                self->step = 4;
+            }
+        }
+        break;
+    case 4:
+        self->hitboxState = 0;
+        self->velocityY += FIX(1.0);
+        if (self->velocityY > FIX(4.0)) {
+            self->velocityY = FIX(4.0);
+        }
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.maria092A6E50.opacity -= 8;
+        if (self->ext.maria092A6E50.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->step = 5;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A6E50.opacity);
+        }
+        break;
+    case 5:
+        g_Player.unk7A = 0;
+        DestroyEntity(self);
+        break;
+    }
+    if (self->step != 5) {
+        if (self->posX.i.hi < -8 || self->posX.i.hi > 264 ||
+            self->posY.i.hi > 264) {
+            self->step = 5;
+        }
+    }
+    self->hitFlags = 0;
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7950);
+extern AnimationFrame D_pspeu_092C0970[];
+void func_pspeu_092A7560(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT_CRASH;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0970);
+        self->ext.maria092A7560.timer = 0;
+        self->ext.maria092A7560.opacity = 0;
+        self->ext.maria092A7560.unk46 = g_Player.unk46;
+        self->step = 1;
+        func_pspeu_092BF8B8(2);
+        func_pspeu_092BEA38(self, 0);
+        break;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            g_api.PlaySfx(SFX_VO_MAR_8F1);
+            self->step = 3;
+        }
+        break;
+    case 3:
+        self->facingLeft = PLAYER.facingLeft;
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->ext.maria092A7560.opacity += 16;
+        if (self->ext.maria092A7560.opacity >= 128) {
+            func_pspeu_092BEA38(self, 128);
+            self->ext.maria092A7560.opacity = 0;
+            self->step = 2;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A7560.opacity);
+        }
+        break;
+    case 4:
+        self->posX.i.hi += self->facingLeft ? -4 : 4;
+        self->ext.maria092A7560.opacity -= 16;
+        if (self->ext.maria092A7560.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->ext.maria092A7560.opacity = 0;
+            self->step = self->ext.maria092A7560.timer > 300 ? 5 : 3;
+        } else {
+            func_pspeu_092BEA38(self, self->ext.maria092A7560.opacity);
+        }
+        break;
+    case 2:
+        if (self->facingLeft != PLAYER.facingLeft) {
+            self->ext.maria092A7560.opacity = 128;
+            self->step = 4;
+        } else {
+            self->facingLeft = PLAYER.facingLeft;
+            self->posX.i.hi = PLAYER.posX.i.hi;
+            self->posY.i.hi = PLAYER.posY.i.hi + 24;
+            if (self->ext.maria092A7560.timer > 300) {
+                self->ext.maria092A7560.opacity = 128;
+                self->step = 4;
+            }
+        }
+        break;
+    case 5:
+        g_Player.unk5C = 0;
+        DestroyEntity(self);
+        break;
+    }
+    self->ext.maria092A7560.timer++;
+    if (self->step != 5 && g_Player.padTapped & PAD_SQUARE) {
+        MarCreateEntFactoryFromEntity(self, _BP_HOLYWATER_GLASS, 0);
+    }
+    self->ext.maria092A7560.unk46 = g_Player.unk46;
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A7B80);
+extern AnimationFrame D_pspeu_092C0988[];
+void func_pspeu_092A7950(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_POS_CAMERA_LOCKED;
+        self->unk5A = 0x14;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_CAT;
+        self->animSet = ANIMSET_OVL(19);
+        MarSetAnimation(D_pspeu_092C0988);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = FIX(4);
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi + 24;
+        self->hitboxWidth = 16;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A8AE8.unkB0 = 0;
+        MarSetWeaponParams(
+            self, 32, ELEMENT_CUT | ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
+        self->step = 1;
+        return;
+    case 1:
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        if (self->poseTimer < 0) {
+            self->step = 2;
+        }
+        if (self->posX.i.hi < -16 || self->posX.i.hi > 272) {
+            self->step = 2;
+            return;
+        }
+        break;
+    case 2:
+        DestroyEntity(self);
+        break;
+    }
+}
+
+AnimationFrame D_pspeu_092C09B0[];
+void func_pspeu_092A7B80(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->unk5A = 0x15;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DRAGON;
+        self->animSet = ANIMSET_OVL(21);
+        MarSetAnimation(D_pspeu_092C09B0);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi + (PLAYER.facingLeft ? 32 : -32);
+        self->posY.i.hi = PLAYER.posY.i.hi - 8;
+        self->ext.maria092A7B80.y = self->posY.i.hi;
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 32;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A7B80.unkB0 = 0;
+        MarSetWeaponParams(self, 42, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_Player.unk7A = 1;
+        self->ext.maria092A7B80.timer = 0;
+        self->step = 2;
+        // fallthrough
+    case 2:
+        self->ext.maria092A7B80.opacity += 16;
+        if (self->ext.maria092A7B80.opacity >= 128) {
+            func_pspeu_092BEA38(self, 128);
+            self->step = 1;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092A7B80.opacity);
+        break;
+    case 1:
+        self->velocityX += FIX(0.25);
+        if (self->velocityX > FIX(3)) {
+            self->velocityX = FIX(3);
+        }
+        self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
+        self->posY.i.hi =
+            self->ext.maria092A7B80.y +
+            -rsin(self->ext.maria092A7B80.timer << 6) * 0x18 / 0x1000;
+        if ((self->ext.maria092A7B80.timer % 60) == 0) {
+            g_api.PlaySfx(SFX_WING_FLAP_B);
+        }
+        self->ext.maria092A7B80.timer++;
+        if (self->posX.i.hi < -16 || self->posX.i.hi > 272) {
+            self->step = 3;
+            return;
+        }
+        break;
+    case 3:
+        g_Player.unk7A = 0;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 static s32 func_pspeu_092A7F20(s32 angle) {
     angle %= 0x1000;
@@ -108,12 +416,147 @@ static int func_pspeu_092A81C0(Entity* entity) {
     return 1;
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A82E0);
+extern AnimationFrame D_pspeu_092C09E0[];
+void func_pspeu_092A82E0(Entity* self) {
+    s32 x;
+    s32 y;
+    s32 angle;
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x15;
+        self->zPriority = 0x1C0;
+        self->palette = PAL_WPN_DRAGON_CRASH;
+        self->animSet = ANIMSET_OVL(21);
+        MarSetAnimation(D_pspeu_092C09E0);
+        self->facingLeft = 0;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi;
+        self->posY.i.hi = PLAYER.posY.i.hi - 32;
+        self->rotZ = 0;
+        self->ext.maria092A82E0.velocity = 1280;
+        self->hitboxWidth = 24;
+        self->hitboxHeight = 24;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 0;
+        self->ext.maria092A82E0.unkB0 = 0;
+        MarSetWeaponParams(
+            self, 24, ELEMENT_HOLY | ELEMENT_THUNDER, 2, 40, 16, 1, 0);
+        D_pspeu_092E5900 = 0;
+        self->ext.maria092A82E0.timer = 0;
+        self->step = 1;
+        func_pspeu_092BF8B8(4);
+        self->ext.maria092A82E0.opacity = 0;
+        func_pspeu_092BEA38(self, 0);
+        break;
+    case 1:
+        if (g_Player.unk5C == 1) {
+            MarCreateEntFactoryFromEntity(self, _BP_NOT_IMPLEMENTED_1, 0);
+            self->step = 2;
+            g_api.PlaySfx(SFX_VO_MAR_8F1);
+        }
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+        break;
+    case 2:
+        if (self->ext.maria092A82E0.opacity < 128) {
+            self->ext.maria092A82E0.opacity += 8;
+            func_pspeu_092BEA38(self, self->ext.maria092A82E0.opacity);
+        } else {
+            func_pspeu_092BEA38(self, 128);
+        }
+        self->drawFlags |= FLAG_DRAW_ROTZ;
+        {
+            MATRIX m;
+            VECTOR vTranslate = {0, 0, 0};
+            VECTOR vVelocity;
+            SVECTOR svVelocity;
+            s32 out;
+            if (func_pspeu_092A81C0(
+                    *(Entity**)&self->ext.maria092A82E0.target) == 0) {
+                self->ext.maria092A82E0.target = func_pspeu_092A7F78(self);
+            }
+            if (self->ext.maria092A82E0.target) {
+                x = (*(Entity**)&self->ext.maria092A82E0.target)->posX.i.hi;
+                y = (*(Entity**)&self->ext.maria092A82E0.target)->posY.i.hi;
+            } else {
+                x = PLAYER.posX.i.hi;
+                y = PLAYER.posY.i.hi;
+            }
+            self->rotZ = func_pspeu_092A7F20(self->rotZ);
+            angle = func_pspeu_092A7F20(
+                ratan2(y - self->posY.i.hi, x - self->posX.i.hi));
+            if (self->rotZ < angle) {
+                if (angle - self->rotZ < 0x800) {
+                    self->rotZ += 0x40;
+                } else {
+                    self->rotZ -= 0x40;
+                }
+            } else if (self->rotZ - angle < 0x800) {
+                self->rotZ -= 0x40;
+            } else {
+                self->rotZ += 0x40;
+            }
+            SetGeomOffset(0, 0);
+            func_89285A0(self->rotZ, &m);
+            TransMatrix(&m, &vTranslate);
+            SetRotMatrix(&m);
+            SetTransMatrix(&m);
+            svVelocity.vx = self->ext.maria092A82E0.velocity;
+            svVelocity.vy = 0;
+            svVelocity.vz = 0;
+            func_892796C(&svVelocity, &vVelocity, &out);
+            self->velocityX = vVelocity.vx << 8;
+            self->velocityY = vVelocity.vy << 8;
+            FntPrint("%08x : %08x\n", self->velocityX, self->velocityY);
+            self->posX.val += self->velocityX;
+            self->posY.val += self->velocityY;
+            if ((self->ext.maria092A82E0.timer % 120) == 0) {
+                g_api.PlaySfx(SFX_SWISHES_ECHO_REPEAT);
+            }
+            self->ext.maria092A82E0.timer++;
+            if (self->ext.maria092A82E0.timer > 300) {
+                self->step = 3;
+            }
+        }
+        break;
+    case 3:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->ext.maria092A82E0.timer++;
+        if (self->ext.maria092A82E0.timer > 300 &&
+            (self->posX.i.hi < -0x100 || self->posX.i.hi > 0x200 ||
+             self->posY.i.hi < -0x100 || self->posY.i.hi > 0x200)) {
+            self->step = 4;
+        }
+        break;
+    case 4:
+        g_Player.unk5C = 0;
+        D_pspeu_092E5900 = 0;
+        DestroyEntity(self);
+        break;
+    }
+    if (g_Player.unk5C == 1 && self->step != 4) {
+        if (D_pspeu_092E5900 == 0x80) {
+            for (i = 0; i < 0x40; i++) {
+                D_pspeu_092E5B18[i].x = D_pspeu_092E5B18[i + 0x40].x;
+                D_pspeu_092E5B18[i].y = D_pspeu_092E5B18[i + 0x40].y;
+            }
+            D_pspeu_092E5900 -= 0x40;
+        }
+        if (D_pspeu_092E5900 < 0x80) {
+            D_pspeu_092E5B18[D_pspeu_092E5900].x =
+                self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+            D_pspeu_092E5B18[D_pspeu_092E5900].y =
+                self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+            D_pspeu_092E5900++;
+        }
+    }
+}
 
 extern AnimationFrame D_pspeu_092C09E0[];
-extern u8 D_pspeu_092E5B08[8];
-extern s32 D_pspeu_092E5900;
-extern Point16 D_pspeu_092E5B18[];
 void func_pspeu_092A8AE8(Entity* self) {
     s32 xStart;
     s32 xEnd;
@@ -130,7 +573,7 @@ void func_pspeu_092A8AE8(Entity* self) {
     switch (self->step) {
     case 0:
         self->primIndex =
-            g_api_AllocPrimitives(PRIM_GT4, LEN(D_pspeu_092E5B08));
+            g_api.AllocPrimitives(PRIM_GT4, LEN(D_pspeu_092E5B08));
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -398,7 +841,7 @@ void func_pspeu_092A95A8(Entity* self) {
         break;
     case 1:
         if (g_Player.unk5C == 1) {
-            g_api_PlaySfx(SFX_VO_MAR_8F1);
+            g_api.PlaySfx(SFX_VO_MAR_8F1);
             self->step = 3;
         }
         break;
@@ -589,7 +1032,7 @@ void func_pspeu_092A9E88(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->primIndex = g_api_AllocPrimitives(PRIM_GT4, 4);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -628,7 +1071,7 @@ void func_pspeu_092A9E88(Entity* self) {
         self->ext.maria092A9E88.timer = 0;
         self->ext.maria092A9E88.velocityX = (rand() % 384) + 0x80;
         self->step = 1;
-        g_api_PlaySfx(SFX_UNK_FIRE_WHOOSH);
+        g_api.PlaySfx(SFX_UNK_FIRE_WHOOSH);
     } break;
     case 1: {
         self->ext.maria092A9E88.timer++;
@@ -861,7 +1304,7 @@ void func_pspeu_092AAC80(Entity* self) {
     case 1:
         if (g_Player.unk5C == 1) {
             g_api.PlaySfx(SFX_VO_MAR_8F1);
-            MarCreateEntFactoryFromEntity(self, 0xE, 0);
+            MarCreateEntFactoryFromEntity(self, _BP_CRASH_CROSSES_ONLY, 0);
             self->step = 3;
         }
         break;
@@ -882,7 +1325,7 @@ void func_pspeu_092AAC80(Entity* self) {
             self->drawFlags &= ~(FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
         }
         if ((self->ext.maria092AAC80.timer % 60) == 0) {
-            g_api_PlaySfx(SFX_MAGIC_NOISE_SWEEP);
+            g_api.PlaySfx(SFX_MAGIC_NOISE_SWEEP);
         }
         self->ext.maria092AAC80.timer++;
         if (self->ext.maria092AAC80.timer >= 0xFF) {
@@ -920,7 +1363,7 @@ void func_pspeu_092AAC80(Entity* self) {
             return;
         }
         if (g_Player.unk2C == 0) {
-            g_api_PlaySfx(SFX_HEALTH_PICKUP);
+            g_api.PlaySfx(SFX_HEALTH_PICKUP);
             g_Player.unk56 = 1;
             g_Player.unk58 = g_Player.unk24;
             self->step = 7;

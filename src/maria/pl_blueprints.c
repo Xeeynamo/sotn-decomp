@@ -2686,14 +2686,14 @@ void MarEntityTeleport(Entity* self) {
     }
 }
 
-void func_pspeu_092BEA38(Entity* entity, s32 setUnk6C) {
-    if (setUnk6C >= 0x80) {
+void func_pspeu_092BEA38(Entity* entity, s32 opacity) {
+    if (opacity >= 128) {
         entity->drawMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
-        entity->unk6C = 0x80;
+        entity->unk6C = 128;
     } else {
         entity->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         entity->drawFlags = FLAG_DRAW_UNK8;
-        entity->unk6C = setUnk6C;
+        entity->unk6C = opacity;
     }
 }
 
