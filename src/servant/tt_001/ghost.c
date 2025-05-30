@@ -645,8 +645,8 @@ void UpdateServantDefault(Entity* self) {
     }
 
     // opacity is used in conjunction with self->drawFlags = FLAG_DRAW_OPACITY
-    // to set the alpha/saturation.  When it's zero, it's invisible, when it's
-    // 255, it's at the full opacity of the sprite itself.
+    // to set the alpha/saturation. Zero means fully transparent. 0x80 shows
+    // the raw sprite. Values over 0x80 make it "over-bright".
     self->opacity = self->ext.ghost.opacity;
     ProcessEvent(self, 0);
     unused_1560(self);
