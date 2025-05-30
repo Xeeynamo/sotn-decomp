@@ -98,7 +98,49 @@ void func_pspeu_092A6280(Entity* self) {
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6740);
+extern AnimationFrame D_pspeu_092C0950[];
+void func_pspeu_092A6740(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x19;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DOLL;
+        self->animSet = ANIMSET_OVL(22);
+        MarSetAnimation(D_pspeu_092C0950);
+        self->ext.maria092A6740.timer = 0;
+        self->ext.maria092A6740.opacity = 0;
+        self->step = 2;
+        self->posX.val = self->ext.maria092A6740.parent->posX.val;
+        self->posY.val = self->ext.maria092A6740.parent->posY.val;
+        self->ext.maria092A6740.opacity = 64;
+        self->ext.maria092A6740.scale = 0x100;
+        self->rotX = self->ext.maria092A6740.scale;
+        self->rotY = self->ext.maria092A6740.scale;
+        func_pspeu_092BEA38(self, 64);
+        self->drawFlags |= 3;
+        return;
+    case 2:
+        self->ext.maria092A6740.timer++;
+        if (self->ext.maria092A6740.timer > 10) {
+            self->ext.maria092A6740.opacity = 128;
+            self->step = 4;
+            return;
+        }
+        self->ext.maria092A6740.opacity -= 2;
+        self->ext.maria092A6740.scale += 8;
+        func_pspeu_092BEA38(self, self->ext.maria092A6740.opacity);
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        // rotX and rotY are also used to scale horizontally and vertically
+        self->rotX = self->ext.maria092A6740.scale;
+        self->rotY = self->ext.maria092A6740.scale;
+        return;
+    case 4:
+        DestroyEntity(self);
+        return;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
 
