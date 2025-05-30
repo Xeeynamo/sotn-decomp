@@ -56,7 +56,8 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 1:
         if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
-            self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags =
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;

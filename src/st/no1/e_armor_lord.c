@@ -1023,7 +1023,8 @@ void func_us_801D348C(Entity* self) {
             self->step = 2;
             self->animCurFrame = 0x20;
             self->opacity = 0x60;
-            self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags =
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = 0x1C8;
             self->rotY = 0x1C8;
         }
@@ -1031,7 +1032,8 @@ void func_us_801D348C(Entity* self) {
             self->step = 3;
             self->animCurFrame = 0x21;
             self->opacity = 0x60;
-            self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags =
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = 0x1B8;
             self->rotY = 0x1B8;
         }

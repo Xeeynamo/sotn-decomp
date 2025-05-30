@@ -3349,8 +3349,9 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->animSet = PLAYER.animSet;
         entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
-        entity->drawFlags = PLAYER.drawFlags |
-                            (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+        entity->drawFlags =
+            PLAYER.drawFlags |
+            (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
         entity->opacity = 0x80; // a lifetime counter
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotZ = PLAYER.rotZ;

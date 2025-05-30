@@ -654,7 +654,8 @@ void EntityLargeGaibonProjectile(Entity* self) {
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
+            self->drawFlags =
+                FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
             self->rotX = 0x100;
             self->opacity = 0x80;
             self->palette = PAL_OVL(0x1F3);

@@ -644,9 +644,9 @@ void UpdateServantDefault(Entity* self) {
         self->ext.ghost.opacityAdjustmentAmount *= -1;
     }
 
-    // opacity is used in conjunction with self->drawFlags = FLAG_DRAW_OPACITY to set
-    // the alpha/saturation.  When it's zero, it's invisible, when it's 255,
-    // it's at the opacity of the sprite itself and is "bright".
+    // opacity is used in conjunction with self->drawFlags = FLAG_DRAW_OPACITY
+    // to set the alpha/saturation.  When it's zero, it's invisible, when it's
+    // 255, it's at the opacity of the sprite itself and is "bright".
     self->opacity = self->ext.ghost.opacity;
     ProcessEvent(self, 0);
     unused_1560(self);

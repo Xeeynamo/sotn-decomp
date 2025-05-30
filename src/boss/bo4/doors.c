@@ -191,8 +191,8 @@ void func_us_801B5040(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180458);
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY |
+                           FLAG_DRAW_ROTX;
         if ((self->params & 0xF) > 1) {
             self->opacity = 0x20;
         } else {

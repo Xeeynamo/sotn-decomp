@@ -459,7 +459,8 @@ static void func_ptr_80170008(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->palette;
-        self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
+        self->drawFlags =
+            self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
         self->rotZ = self->ext.weapon.parent->rotZ;
         self->opacity = 0x80;
         self->step++;

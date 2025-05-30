@@ -903,7 +903,8 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
         if (self->params) {
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
+            self->drawFlags =
+                FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
             self->rotX = 0x180;
             self->rotY = 0x180;
             self->opacity = 0x60;
