@@ -234,7 +234,7 @@ void MarStepJump(void) {
         g_Player.padPressed & PAD_DOWN && g_Player.padTapped & PAD_CROSS) {
         MarSetAnimation(D_pspeu_092C0858);
         PLAYER.step_s = 0x70;
-        MarCreateEntFactoryFromEntity(g_CurrentEntity, 5, 0);
+        MarCreateEntFactoryFromEntity(g_CurrentEntity, _BP_5, 0);
         g_Player.unk44 &= ~0x80;
         PLAYER.velocityY = 0x60000;
         if (facing) {
@@ -551,7 +551,8 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             if (damageEffect & ELEMENT_FIRE) {
                 MarCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_HIT_BY_FIRE, 1), 0);
-                MarCreateEntFactoryFromEntity(g_CurrentEntity, 9, 0);
+                MarCreateEntFactoryFromEntity(
+                    g_CurrentEntity, _BP_HOLYWATER_FLAMES, 0);
                 MarCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x43), 0);
                 g_Player.unk40 = 0x8160;
@@ -1034,7 +1035,7 @@ void MarStepSlide(void) {
         if (PLAYER.velocityX < FIX(-1)) {
             PLAYER.velocityX = FIX(-2);
         }
-        MarCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+        MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
     }
     if (MarCheckInput(CHECK_FALL | CHECK_CRASH)) {
         return;
@@ -1047,7 +1048,7 @@ void MarStepSlide(void) {
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
         if (PLAYER.pose == 2 && PLAYER.poseTimer == 1) {
-            MarCreateEntFactoryFromEntity(g_CurrentEntity, 0, 0);
+            MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         }
         if (PLAYER.poseTimer < 0) {
             MarSetCrouch(0, PLAYER.velocityX);
