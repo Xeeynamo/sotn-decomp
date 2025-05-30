@@ -73,8 +73,8 @@ u16 D_800D72D4[] = {
 #include "../dra/gen/D_800D72D4.h"
 };
 
-u8 D_800C217C[] = {
-#include "../dra/gen/D_800C217C.h"
+u8 text_item_up[] = {
+#include "../dra/gen/text_item_up.h"
 };
 
 u16 D_800DB0D4[] = {
@@ -93,24 +93,24 @@ u16 D_psp_091654C0[] = {
 #include "../dra/gen/D_psp_091654C0.h"
 };
 
-u8 D_800C27B0[] = {
-#include "../dra/gen/D_800C27B0.h"
+u8 load_room_obj[] = {
+#include "../dra/gen/load_room_obj.h"
 };
 
 u16 D_800DB0F4[] = {
 #include "../dra/gen/D_800DB0F4.h"
 };
 
-u8 D_800C4A90[] = {
-#include "../dra/gen/D_800C4A90.h"
+u8 save_room_tile[] = {
+#include "../dra/gen/save_room_tile.h"
 };
 
-u8 D_800C4864[] = {
-#include "../dra/gen/D_800C4864.h"
+u8 load_room_tile[] = {
+#include "../dra/gen/load_room_tile.h"
 };
 
-u8 D_800C3560[] = {
-#include "../dra/gen/D_800C3560.h"
+u8 save_room_obj[] = {
+#include "../dra/gen/save_room_obj.h"
 };
 
 #include "../dra/gen/D_800D34B8.h"

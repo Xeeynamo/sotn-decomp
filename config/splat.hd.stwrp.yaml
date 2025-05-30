@@ -26,6 +26,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+  ld_generate_symbol_per_data_segment: true
 sha1: 3ae1425d694b0e4d65c6bb71d5a91f1769aec30c
 segments:
   - name: stwrp
@@ -55,12 +56,7 @@ segments:
       - [0x1124, .data, e_room_fg]
       - [0x11B0, .data, gen/rooms]
       - [0x122C, .data, gen/e_layout] # layout entries data
-      - [0x1424, cmpgfx, stage_title_jp, 128, 128, 4]
-      - [0x1768, cmpgfx, stage_placeholder, 128, 128, 4]
-      - [0x1D0C, pal, D_80181D0C]
-      - [0x1D2C, pal, D_80181D2C] # unused
-      - [0x1D6C, .data, tile_data] # tile data
-      - [0x296C, .data, tile_data] # tile definitions
+      - [0x1424, .data, stage_data]
       - [0x6D8C, .data, gen/sprites]
       - [0x6E34, .rodata, warp] # warp strings
       - [0x6E74, .rodata, warp] # EntityWarpRoom

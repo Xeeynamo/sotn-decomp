@@ -297,7 +297,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/gen/rooms.c
     src/st/cen/gen/e_layout.c
     src/st/cen/cutscene_data.c
-    src/st/cen/tile_data.c
+    src/st/cen/stage_data.c
     src/st/cen/gen/sprites.c
     src/st/cen/st_debug.c
     src/st/cen/e_breakable.c
@@ -328,7 +328,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/gen/rooms.c
     src/st/nz0/gen/e_layout.c
     src/st/nz0/cutscene_data.c
-    src/st/nz0/tile_data.c
+    src/st/nz0/stage_data.c
     src/st/nz0/gen/sprites.c
     src/st/nz0/st_debug.c
     src/st/nz0/e_lock_camera.c
@@ -374,7 +374,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/e_init.c
     src/st/st0/gen/rooms.c
     src/st/st0/gen/e_layout.c
-    src/st/st0/tile_data.c
+    src/st/st0/stage_data.c
     src/st/st0/gen/sprites.c
     src/st/st0/e_lock_camera.c
     src/st/st0/2805C.c
@@ -414,7 +414,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/d_prize_drops.c
     src/st/wrp/gen/rooms.c
     src/st/wrp/gen/e_layout.c
-    src/st/wrp/tile_data.c
+    src/st/wrp/stage_data.c
     src/st/wrp/gen/sprites.c
     src/st/wrp/warp.c
     src/st/wrp/st_update.c

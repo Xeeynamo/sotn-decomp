@@ -30,6 +30,7 @@ options:
     - .bss
   ld_bss_is_noload: false
   disasm_unknown: true
+  ld_generate_symbol_per_data_segment: true
 sha1: 4cd6c07959db859f5bc19390a283f34df4bf1619
 segments:
   - name: bomar

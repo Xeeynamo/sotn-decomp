@@ -31,6 +31,7 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
 sha1: d50f2c928f7a01fb489628658f4c72a029befbd4
 segments:
   - [0x0, bin, mwo_header]
@@ -54,6 +55,8 @@ segments:
       - [0x1A200, .data, pl_header]
       - [0x1A220, .data, pl_anims]
       - [0x1A718, data] # mostly ends up in 80.c
+      - [0x1A7E8, .data, 80]
+      - [0x1A7F8, data] # mostly ends up in 80.c
       - [0x1A878, .data, d_18568]
       - [0x1EE28, .data, pl_debug]
       - [0x1EE38, .data, pl_steps]

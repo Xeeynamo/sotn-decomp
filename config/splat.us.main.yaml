@@ -26,6 +26,7 @@ options:
     - ".text"
     - ".data"
     - ".bss"
+  ld_generate_symbol_per_data_segment: true
 sha1: 54828d4e44ea9575f2a0917ff63def42a304abff
 segments:
   - [0x800, header]

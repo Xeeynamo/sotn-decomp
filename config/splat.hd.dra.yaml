@@ -25,6 +25,7 @@ options:
     - ".text"
     - ".bss"
     - ".sbss"
+  ld_generate_symbol_per_data_segment: true
 sha1: ea268a06a7eb7cd99928ba40e774577c4a1c504d
 segments:
   - name: dra
@@ -127,11 +128,11 @@ segments:
       # - [0x1D2E8, .data, sound_data] # g_XaMusicConfigs
       # - [0x1F5F8, .data, sound_data] # g_SfxData
       # - [0x20A20, .data, sound_data] # g_SfxScripts
-      - [0x22220, cmp, D_800C217C]
-      - [0x22854, cmp, D_800C27B0]
-      - [0x23604, cmp, D_800C3560]
-      - [0x24908, cmp, D_800C4864]
-      - [0x24B34, cmp, D_800C4A90]
+      - [0x22220, .data, d_24CEC] # text_item_up
+      - [0x22854, .data, d_24CEC] # load_room_obj
+      - [0x23604, .data, d_24CEC] # save_room_obj
+      - [0x24908, .data, d_24CEC] # load_room_tile
+      - [0x24B34, .data, d_24CEC] # save_room_tile
       - [0x24D90, .data, d_24CEC]
       - [0x253C8, raw, g_GfxEquipIcon]
       - [0x2F3C8, .data, d_2F324]
