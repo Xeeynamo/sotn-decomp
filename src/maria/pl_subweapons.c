@@ -105,7 +105,6 @@ void func_pspeu_092A6280(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0950[];
 void func_pspeu_092A6740(Entity* self) {
     switch (self->step) {
     case 0:
@@ -149,7 +148,7 @@ void func_pspeu_092A6740(Entity* self) {
     }
 }
 
-int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
+static int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
     Collider col;
 
     g_api.CheckCollision(x, y, &col, 0);
@@ -163,7 +162,7 @@ int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
     return y;
 }
 
-int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
+static int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
     s32 sp3C;
     s32 var_s8;
     s32 var_s7;
@@ -799,7 +798,6 @@ void func_pspeu_092A82E0(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C09E0[];
 void func_pspeu_092A8AE8(Entity* self) {
     s32 xStart;
     s32 xEnd;
@@ -1052,7 +1050,7 @@ void func_pspeu_092A9288(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A28[] = {
+AnimationFrame D_pspeu_092C0A28[] = {
     POSE(9, 3, 0), POSE(6, 4, 0), POSE(6, 5, 0), POSE(8, 6, 0),
     POSE(6, 7, 0), POSE(6, 8, 0), POSE_LOOP(0),
 };
