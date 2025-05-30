@@ -152,7 +152,7 @@ static int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
     Collider col;
 
     g_api.CheckCollision(x, y, &col, 0);
-    while (col.effects & 2) {
+    while (col.effects & EFFECT_UNK_0002) {
         if (horizPixelCount-- < 0) {
             return -1;
         }
@@ -206,7 +206,7 @@ static int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
                     if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = 2;
+                        col->effects = EFFECT_UNK_0002;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
@@ -226,7 +226,7 @@ static int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
             g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
             if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                 if (var_s3 == 0) {
-                    col->effects = 2;
+                    col->effects = EFFECT_UNK_0002;
                 }
                 entity->posX.i.hi = var_s7;
                 entity->posY.i.hi = var_s6;
@@ -234,7 +234,7 @@ static int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
                     g_api.CheckCollision(
                         entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
                     if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                        col->effects = 2;
+                        col->effects = EFFECT_UNK_0002;
                     } else {
                         col->effects = EFFECT_SOLID;
                     }
