@@ -119,8 +119,8 @@ void func_pspeu_092A6740(Entity* self) {
         self->rotX = self->ext.maria092A6740.scale;
         self->rotY = self->ext.maria092A6740.scale;
         func_pspeu_092BEA38(self, 64);
-        self->drawFlags |= 3;
-        return;
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        break;
     case 2:
         self->ext.maria092A6740.timer++;
         if (self->ext.maria092A6740.timer > 10) {
@@ -135,14 +135,26 @@ void func_pspeu_092A6740(Entity* self) {
         // rotX and rotY are also used to scale horizontally and vertically
         self->rotX = self->ext.maria092A6740.scale;
         self->rotY = self->ext.maria092A6740.scale;
-        return;
+        break;
     case 4:
         DestroyEntity(self);
-        return;
+        break;
     }
 }
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
+int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
+    Collider col;
+
+    g_api.CheckCollision(x, y, &col, 0);
+    while (col.effects & 2) {
+        if (horizPixelCount-- < 0) {
+            return -1;
+        }
+        y--;
+        g_api.CheckCollision(x, y, &col, 0);
+    }
+    return y;
+}
 
 int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
     s32 sp3C;
