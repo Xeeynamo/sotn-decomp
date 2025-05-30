@@ -1662,7 +1662,7 @@ void EntityWingSmashTrail(Entity* self) {
         self->zPriority = DOPPLEGANGER.zPriority - 2;
         self->drawFlags = DOPPLEGANGER.drawFlags |
                           (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-        self->opacity = 0x80; // a lifetime counter
+        self->opacity = 0x80;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->rotZ = DOPPLEGANGER.rotZ;
         self->facingLeft = DOPPLEGANGER.facingLeft;

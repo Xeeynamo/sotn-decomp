@@ -3352,7 +3352,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->drawFlags =
             PLAYER.drawFlags |
             (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-        entity->opacity = 0x80; // a lifetime counter
+        entity->opacity = 0x80;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotZ = PLAYER.rotZ;
         entity->facingLeft = PLAYER.facingLeft;
