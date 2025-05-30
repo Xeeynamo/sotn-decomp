@@ -144,7 +144,91 @@ void func_pspeu_092A6740(Entity* self) {
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6A08);
+int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
+    s32 sp3C;
+    s32 var_s8;
+    s32 var_s7;
+    s32 var_s6;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    s32 var_s0;
+
+    var_s3 = abs(x) >> 0x10;
+    var_s2 = abs(y) >> 0x10;
+    if (x < 0) {
+        x = -var_s3;
+    } else {
+        x = var_s3;
+    }
+    if (y < 0) {
+        y = -var_s2;
+    } else {
+        y = var_s2;
+    }
+    var_s7 = entity->posX.i.hi;
+    sp3C = var_s7;
+    var_s6 = entity->posY.i.hi;
+    var_s8 = var_s6;
+    if (var_s2 < var_s3) {
+        if (var_s3 == 0) {
+            return 0;
+        }
+        for (var_s1 = 0; var_s1 <= var_s3; var_s1++) {
+            entity->posX.i.hi = sp3C + (x < 0 ? -var_s1 : var_s1);
+            entity->posY.i.hi = var_s8 + (y * var_s1) / var_s3;
+            g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
+            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                if (var_s2 == 0) {
+                    col->effects = EFFECT_SOLID;
+                }
+                entity->posX.i.hi = var_s7;
+                entity->posY.i.hi = var_s6;
+                if (var_s1 && y > 0) {
+                    g_api.CheckCollision(
+                        entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
+                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                        col->effects = 2;
+                    } else {
+                        col->effects = EFFECT_SOLID;
+                    }
+                }
+                return 1;
+            }
+            var_s7 = entity->posX.i.hi;
+            var_s6 = entity->posY.i.hi;
+        }
+    } else {
+        if (var_s2 == 0) {
+            return 0;
+        }
+        for (var_s0 = 0; var_s0 <= var_s2; var_s0++) {
+            entity->posX.i.hi = sp3C + (x * var_s0) / var_s2;
+            entity->posY.i.hi = var_s8 + (y < 0 ? -var_s0 : var_s0);
+            g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
+            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                if (var_s3 == 0) {
+                    col->effects = 2;
+                }
+                entity->posX.i.hi = var_s7;
+                entity->posY.i.hi = var_s6;
+                if (var_s0 && y > 0) {
+                    g_api.CheckCollision(
+                        entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
+                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                        col->effects = 2;
+                    } else {
+                        col->effects = EFFECT_SOLID;
+                    }
+                }
+                return 1;
+            }
+            var_s7 = entity->posX.i.hi;
+            var_s6 = entity->posY.i.hi;
+        }
+    }
+    return 0;
+}
 
 extern AnimationFrame D_pspeu_092C0958[];
 void func_pspeu_092A6E50(Entity* self) {
