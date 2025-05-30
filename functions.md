@@ -658,7 +658,7 @@
 | dra       | func_80109328                            |       53 |          5 |        | https://decomp.me/scratch/oS04z | 0.98  |
 | dra       | func_psp_090FF3C0                        |       53 |          5 |        |                                 |       |
 | dra       | PlayerStepSwordWarp                      |       53 |          7 |        |                                 |       |
-| maria_psp | func_pspeu_092A6958                      |       53 |          7 |        |                                 |       |
+| maria_psp | func_pspeu_092A6958                      |       53 |          7 |        | https://decomp.me/scratch/J0aZt | 0.826 |
 | dra       | func_80109990                            |       53 |          8 |        | https://decomp.me/scratch/8jkIg | 1.0   |
 | maria     | MarSetStand                              |       53 |         10 |        |                                 |       |
 | dra       | MenuEquipSortDraw                        |       54 |          4 |        |                                 |       |
@@ -985,7 +985,7 @@
 | st0       | CreateEntitiesAbove                      |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | wrp       | CreateEntitiesAbove                      |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | dra       | MistFormFinished                         |       91 |         19 |        |                                 |       |
-| no3       | func_pspeu_0924D9C0                      |       92 |          9 |        |                                 |       |
+| no3       | func_pspeu_0924D9C0                      |       92 |          9 |        | https://decomp.me/scratch/M6t4H | 0.995 |
 | dra       | ExecSfx                                  |       92 |         11 |        |                                 |       |
 | chi       | EntityUnkId13                            |       92 |         11 |        |                                 |       |
 | lib       | EntityUnkId13                            |       92 |         11 |        |                                 |       |
@@ -1240,7 +1240,7 @@
 | dra       | func_psp_090F1418                        |      142 |         13 |        |                                 |       |
 | ric       | GetAguneaLightningAngle                  |      142 |         19 |        | https://decomp.me/scratch/ZAu5o | 1.0   |
 | no3       | EntityJewelSwordDoor                     |      143 |         21 |        |                                 |       |
-| maria_psp | func_pspeu_092A6740                      |      144 |         13 |        |                                 |       |
+| maria_psp | func_pspeu_092A6740                      |      144 |         13 |        | https://decomp.me/scratch/k8Oux | 0.999 |
 | dra       | AddToInventory                           |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | maria     | CheckHighJumpInput                       |      144 |         24 |        |                                 |       |
 | dra       | GetStatusAilmentTimer                    |      145 |         15 | Yes    |                                 |       |
@@ -1534,7 +1534,7 @@
 | no3       | EntityMermanRockLeftSide                 |      303 |         33 |        | https://decomp.me/scratch/njGp9 | 0.996 |
 | dra       | func_8013572C                            |      303 |         47 |        | https://decomp.me/scratch/NrPlO | 0.964 |
 | dra       | func_8012C600                            |      305 |         25 |        |                                 |       |
-| maria_psp | func_pspeu_092A6A08                      |      306 |         41 |        |                                 |       |
+| maria_psp | func_pspeu_092A6A08                      |      306 |         41 |        | https://decomp.me/scratch/fWk1M | 0.999 |
 | chi       | func_psp_0923B2F0                        |      307 |         26 |        |                                 |       |
 | lib       | func_psp_09242880                        |      307 |         26 |        |                                 |       |
 | no3       | func_pspeu_09251C70                      |      307 |         26 |        |                                 |       |
@@ -1923,7 +1923,7 @@
 | no4       | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | wrp       | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4       | func_pspeu_09239B00                      |     1639 |        210 | Yes    | https://decomp.me/scratch/s5g9m | 0.914 |
-| no3       | EntityMerman2                            |     1668 |        195 | Yes    |                                 |       |
+| no3       | EntityMerman2                            |     1668 |        195 | Yes    | https://decomp.me/scratch/54y5f | 0.746 |
 | no4       | func_pspeu_0925E548                      |     1731 |        172 | Yes    |                                 |       |
 | st0       | EntityDraculaFinalForm                   |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra       | EntityStopWatch                          |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
