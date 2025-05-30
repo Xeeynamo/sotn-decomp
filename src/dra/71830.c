@@ -1089,7 +1089,8 @@ void PlayerStepHighJump(void) {
             SetPlayerAnim(0x2D);
             PLAYER.drawFlags &=
                 (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
+                 FLAG_DRAW_ROTX);
             PLAYER.rotZ = 0;
             PLAYER.facingLeft += 1;
             PLAYER.facingLeft &= 1;
@@ -1751,7 +1752,8 @@ void PlayerStepStoned(s32 arg0) {
             PLAYER.step_s = 2;
             PLAYER.drawFlags &=
                 (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
+                 FLAG_DRAW_ROTX);
         } else {
             PLAYER.rotPivotX = 0;
             PLAYER.drawFlags |= FLAG_DRAW_ROTZ;

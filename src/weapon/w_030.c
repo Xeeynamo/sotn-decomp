@@ -721,7 +721,7 @@ void func_ptr_80170008(Entity* self) {
             }
             self->step = 3;
             self->drawFlags &= FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                               FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 |
+                               FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY |
                                FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             break;
         }

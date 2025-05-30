@@ -3349,9 +3349,10 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->animSet = PLAYER.animSet;
         entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
-        entity->drawFlags = PLAYER.drawFlags |
-                            (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-        entity->unk6C = 0x80; // a lifetime counter
+        entity->drawFlags =
+            PLAYER.drawFlags |
+            (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+        entity->opacity = 0x80;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotZ = PLAYER.rotZ;
         entity->facingLeft = PLAYER.facingLeft;
@@ -3364,10 +3365,8 @@ void EntityWingSmashTrail(Entity* entity) {
     entity->rotX -= 8;
     entity->rotY -= 8;
     entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
-    // Unclear why we count down by 5's instead of just making unk6C start
-    // smaller
-    if (entity->unk6C >= 5) {
-        entity->unk6C -= 5;
+    if (entity->opacity >= 5) {
+        entity->opacity -= 5;
     } else {
         DestroyEntity(entity);
     }

@@ -256,8 +256,8 @@ void EntityGremlinEffect(Entity* self) {
         // Glow init
         self->step = GLOW;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->unk6C = 0xC0;
-        self->drawFlags = FLAG_DRAW_UNK8;
+        self->opacity = 0xC0;
+        self->drawFlags = FLAG_DRAW_OPACITY;
         break;
 
     case GLOW:

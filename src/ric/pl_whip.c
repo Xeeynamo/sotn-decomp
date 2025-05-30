@@ -478,7 +478,7 @@ void RicEntityWhip(Entity* self) {
     if (sp4A) {
         if (psp_s4 != 7) {
             angle = (((g_GameTimer >> 2) & 7) + D_80155C98[psp_s4]) * 512;
-            self->unk6C = (rsin(angle) >> 6) + 0x80;
+            self->opacity = (rsin(angle) >> 6) + 0x80;
             self->drawFlags |= DRAW_HIDE;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }

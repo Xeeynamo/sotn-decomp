@@ -88,9 +88,9 @@ void EntityWeaponAttack(Entity* self) {
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
         if (self->pose == 5) {
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
             self->flags &= ~FLAG_POS_PLAYER_LOCKED;
-            self->drawFlags |= FLAG_DRAW_UNK8;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
             self->step++;
         }
         break;
@@ -98,8 +98,8 @@ void EntityWeaponAttack(Entity* self) {
         self->rotX += 0x10;
         self->rotY = self->rotX;
         self->rotZ += 0x40;
-        if (self->unk6C >= 5) {
-            self->unk6C += 0xFE;
+        if (self->opacity >= 5) {
+            self->opacity += 0xFE;
         }
         if (self->poseTimer < 0) {
             DestroyEntity(self);

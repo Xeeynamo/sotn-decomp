@@ -135,8 +135,8 @@ void EntitySpearGuard(Entity* self) {
         SetStep(12);
         self->hitboxState = 0;
         self->ext.spearGuard.unk7C = 0x40;
-        self->drawFlags = FLAG_DRAW_UNK8;
-        self->unk6C = 0x7F;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 0x7F;
     }
     switch (self->step) {
     case 0:
@@ -344,11 +344,11 @@ void EntitySpearGuard(Entity* self) {
 
     case 12:
         AnimateEntity(D_us_80183008, self);
-        if (self->unk6C) {
-            self->unk6C--;
+        if (self->opacity) {
+            self->opacity--;
         }
-        if (self->unk6C) {
-            self->unk6C--;
+        if (self->opacity) {
+            self->opacity--;
         }
         if (!--self->ext.spearGuard.unk7C) {
             DestroyEntity(self);

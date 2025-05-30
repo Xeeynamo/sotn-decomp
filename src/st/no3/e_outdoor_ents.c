@@ -182,7 +182,7 @@ void EntityForegroundTree(Entity* self) {
                 ent->posY.i.hi = var_s3 & 255;
                 ent->unk68 = var_s4;
                 if (self->params) {
-                    ent->unk6C = 0x60;
+                    ent->opacity = 0x60;
                 }
             } else {
                 ptrParams += 2;
@@ -204,28 +204,28 @@ void EntityForegroundTree(Entity* self) {
                 ent->posY.i.hi = var_s3 & 255;
                 ent->unk68 = var_s4;
                 if (self->params) {
-                    ent->unk6C = 0x60;
+                    ent->opacity = 0x60;
                 } else if (self->ext.utimer.t == 7) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x12;
                     ent2->posY.i.hi -= 16;
                     ent2->unk68 = var_s4;
-                    ent2->unk6C = 0x40;
+                    ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 10) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x13;
                     ent2->posY.i.hi += 48;
                     ent2->unk68 = var_s4;
-                    ent2->unk6C = 0x40;
+                    ent2->opacity = 0x40;
                 } else if (self->ext.utimer.t == 15) {
                     ent2 = AllocEntity(&g_Entities[192], &g_Entities[256]);
                     CreateEntityFromEntity(E_BACKGROUND_BLOCK, ent, ent2);
                     ent2->params = 0x14;
                     ent2->posY.i.hi += 4;
                     ent2->unk68 = var_s4;
-                    ent2->unk6C = 0x40;
+                    ent2->opacity = 0x40;
                 }
             }
             self->ext.utimer.t++;
@@ -903,15 +903,16 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 56;
         if (self->params) {
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
+            self->drawFlags =
+                FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
             self->rotX = 0x180;
             self->rotY = 0x180;
-            self->unk6C = 0x60;
+            self->opacity = 0x60;
             self->posY.i.hi = -16;
             self->zPriority = 0xC1;
         } else {
-            self->drawFlags = FLAG_DRAW_UNK8;
-            self->unk6C = 0x20;
+            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->opacity = 0x20;
             self->zPriority = 0xBF;
         }
         self->unk68 = 0x1C0;
@@ -972,8 +973,8 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         }
         animFlag = AnimateEntity(owlAnim1, self);
         MoveEntity();
-        if (self->unk6C < 0x78) {
-            self->unk6C += 2;
+        if (self->opacity < 0x78) {
+            self->opacity += 2;
         }
         if (self->posX.i.hi > 288 || self->posY.i.hi < -16) {
             DestroyEntity(self);

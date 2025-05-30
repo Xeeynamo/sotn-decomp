@@ -325,8 +325,8 @@ static s32 func_ptr_80170010(Entity* self) {
         }
         return;
     case 2:
-        PLAYER.drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ;
-        PLAYER.unk6C = (rsin(D_13F000_8017B3BC) >> 7) - 0x40;
+        PLAYER.drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ;
+        PLAYER.opacity = (rsin(D_13F000_8017B3BC) >> 7) - 0x40;
         if (!(g_Player.vram_flag & 1)) {
             PLAYER.step = Player_AxearmorJump;
             PLAYER.step_s = 0;

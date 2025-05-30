@@ -12,9 +12,9 @@ void EntityBigRedFireball(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_OVL(0x1B6);
-        self->unk6C = 0x70;
+        self->opacity = 0x70;
         self->zPriority = 192;
-        self->drawFlags |= (FLAG_DRAW_ROTZ + FLAG_DRAW_UNK8);
+        self->drawFlags |= (FLAG_DRAW_ROTZ + FLAG_DRAW_OPACITY);
         self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
 
         switch (self->ext.bigredfireball.switch_control) {

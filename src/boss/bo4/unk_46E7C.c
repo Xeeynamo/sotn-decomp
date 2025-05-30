@@ -81,7 +81,7 @@ void DopplegangerStepHighJump(void) {
             DOPPLEGANGER.step_s = 4;
             DOPPLEGANGER.drawFlags &=
                 FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
                 FLAG_DRAW_ROTX;
             DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
         }
@@ -694,7 +694,7 @@ void DopplegangerStepStone(s32 arg0) {
             DOPPLEGANGER.step_s = 2;
             DOPPLEGANGER.drawFlags &=
                 FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
                 FLAG_DRAW_ROTX;
         } else {
             DOPPLEGANGER.rotPivotX = 0;
@@ -1269,7 +1269,7 @@ void DopEntityHitByDark(Entity* self) {
             self->drawMode = DRAW_TPAGE;
         }
         D_us_801D3D9C++;
-        self->unk6C = 0xFF;
+        self->opacity = 0xFF;
         self->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         self->rotX = self->rotY = 0x40;
@@ -1281,8 +1281,8 @@ void DopEntityHitByDark(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (self->unk6C > 16) {
-            self->unk6C -= 8;
+        if (self->opacity > 16) {
+            self->opacity -= 8;
         }
         self->posY.val += self->velocityY;
         self->rotX += 8;
@@ -1660,8 +1660,8 @@ void EntityWingSmashTrail(Entity* self) {
         self->unk5A = 8;
         self->zPriority = DOPPLEGANGER.zPriority - 2;
         self->drawFlags = DOPPLEGANGER.drawFlags |
-                          (FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-        self->unk6C = 0x80; // a lifetime counter
+                          (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+        self->opacity = 0x80;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->rotZ = DOPPLEGANGER.rotZ;
         self->facingLeft = DOPPLEGANGER.facingLeft;
@@ -1674,10 +1674,8 @@ void EntityWingSmashTrail(Entity* self) {
     self->rotX -= 8;
     self->rotY -= 8;
     self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
-    // Unclear why we count down by 5's instead of just making unk6C start
-    // smaller
-    if (self->unk6C >= 5) {
-        self->unk6C -= 5;
+    if (self->opacity >= 5) {
+        self->opacity -= 5;
     } else {
         DestroyEntity(self);
     }

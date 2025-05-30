@@ -1418,9 +1418,9 @@ void func_pspeu_092AB1C0(Entity* self) {
         self->rotY = 0;
         self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->drawMode |= DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
         self->rotZ = 0;
-        self->unk6C = 0x80;
+        self->opacity = 0x80;
         self->hitboxWidth = 48;
         self->hitboxHeight = 48;
         self->hitboxOffX = 0;

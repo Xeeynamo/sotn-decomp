@@ -406,8 +406,8 @@ void func_us_801B9028(Entity* self) {
         InitializeEntity(D_us_80180A4C);
         self->animCurFrame = self->params + 1;
         self->zPriority = D_us_8018142C[self->params];
-        self->drawFlags = FLAG_DRAW_UNK8;
-        self->unk6C = D_us_80181440[self->params];
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = D_us_80181440[self->params];
         return;
     case 1:
         break;

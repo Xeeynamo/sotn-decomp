@@ -630,13 +630,13 @@ void EntityDeathScytheShadow(Entity* self) {
         self->palette = 0x2D6;
         self->unk5A = 0x44;
         if (self->params) {
-            self->drawFlags = FLAG_DRAW_UNK8;
+            self->drawFlags = FLAG_DRAW_OPACITY;
             self->ext.deathScythe.timer = 0x40;
         } else {
-            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
             self->ext.deathScythe.timer = 0x20;
         }
-        self->unk6C = 0x40;
+        self->opacity = 0x40;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
@@ -646,9 +646,9 @@ void EntityDeathScytheShadow(Entity* self) {
             break;
         }
         if (self->params) {
-            self->unk6C--;
+            self->opacity--;
         } else {
-            self->unk6C -= 2;
+            self->opacity -= 2;
         }
         break;
     }

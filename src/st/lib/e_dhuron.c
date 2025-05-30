@@ -457,9 +457,9 @@ void func_us_801CC984(Entity* self) {
         posX = tempEntity->posX.i.hi;
         self->posY.i.hi = posY + 0x18;
         self->posX.i.hi = posX;
-        self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY;
         self->rotY = 0x180;
-        self->unk6C = 0x80;
+        self->opacity = 0x80;
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->palette = PAL_OVL(0x15B);
         self->unk5A = 0x4E;
@@ -478,8 +478,8 @@ void func_us_801CC984(Entity* self) {
 
     case 4:
         self->posY.val -= FIX(0.25);
-        self->unk6C -= 8;
-        if (!self->unk6C) {
+        self->opacity -= 8;
+        if (!self->opacity) {
             DestroyEntity(self);
         }
         break;

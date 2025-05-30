@@ -78,8 +78,8 @@ void EntitySecretButton(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
-            self->unk6C = 0x60;
+            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
+            self->opacity = 0x60;
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;

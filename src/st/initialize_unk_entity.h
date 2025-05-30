@@ -6,7 +6,7 @@ static u8 g_UnkEntityAnimData[] = {
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        self->unk6C = 0xF0;
+        self->opacity = 0xF0;
         self->rotX = 0x01A0;
         self->rotY = 0x01A0;
         self->animSet = ANIMSET_DRA(8);

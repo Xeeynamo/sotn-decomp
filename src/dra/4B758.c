@@ -313,10 +313,10 @@ void RenderEntities(void) {
                 poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
-                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
+                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
-                            poly->g3 = poly->b3 = entity->unk6C;
+                            poly->g3 = poly->b3 = entity->opacity;
                     if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
@@ -483,10 +483,10 @@ void RenderEntities(void) {
                 } else {
                     setSemiTrans(poly, false);
                 }
-                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
+                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
-                            poly->g3 = poly->b3 = entity->unk6C;
+                            poly->g3 = poly->b3 = entity->opacity;
                     if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
@@ -811,10 +811,10 @@ void RenderEntitiesPSP(void) {
                 poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
-                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
+                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
-                            poly->g3 = poly->b3 = entity->unk6C;
+                            poly->g3 = poly->b3 = entity->opacity;
                     if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
@@ -987,10 +987,10 @@ void RenderEntitiesPSP(void) {
                 } else {
                     setSemiTrans(poly, false);
                 }
-                if (r->eDrawFlags & FLAG_DRAW_UNK8) {
+                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
-                            poly->g3 = poly->b3 = entity->unk6C;
+                            poly->g3 = poly->b3 = entity->opacity;
                     if (r->eDrawFlags & FLAG_DRAW_UNK10) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }

@@ -38,8 +38,8 @@ void EntityCandleTable(Entity* self) {
         }
         if (self->params & 0x100) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-            self->drawFlags = FLAG_DRAW_UNK8;
-            self->unk6C = 0xC0;
+            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->opacity = 0xC0;
         } else {
             self->zPriority += 4;
             self->hitboxWidth = 8;

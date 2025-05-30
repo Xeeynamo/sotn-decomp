@@ -373,23 +373,23 @@ void EntityWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (UnkCollisionFunc3(D_8018327C) & 1) {
-                self->drawFlags = FLAG_DRAW_UNK8;
-                self->unk6C = 0x80;
+                self->drawFlags = FLAG_DRAW_OPACITY;
+                self->opacity = 0x80;
                 SetSubStep(1);
             }
             break;
         case 1:
             AnimateEntity(D_801831A0, self);
-            self->unk6C -= 2;
-            if (self->unk6C == 0x40) {
+            self->opacity -= 2;
+            if (self->opacity == 0x40) {
                 g_api.PlaySfx(SFX_WARG_DEATH_HOWL);
             }
-            if (self->unk6C) {
+            if (self->opacity) {
                 break;
             }
 
             self->palette = 0x15F;
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
             primIndex = g_api.AllocPrimitives(4, 3);
             // That's weird, it should do == -1, right?
             if (!primIndex) {
@@ -464,8 +464,8 @@ void EntityWarg(Entity* self) {
             self->posX.i.hi = 0x40;
             self->posY.i.hi = 0x40;
             self->zPriority = 0x40;
-            self->unk6C -= 2;
-            if (!self->unk6C) {
+            self->opacity -= 2;
+            if (!self->opacity) {
                 DestroyEntity(self);
                 DestroyEntity(self + 1);
                 return;
@@ -575,10 +575,10 @@ void EntityWargExplosionPuffTransparent(Entity* entity) {
         entity->unk5A = 0x79;
         entity->palette = 0xD0;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_UNK8;
+        entity->drawFlags = FLAG_DRAW_OPACITY;
         entity->pose = 0;
         entity->poseTimer = 0;
-        entity->unk6C = 0x60;
+        entity->opacity = 0x60;
         temp_v0 = entity->params & 0xFF00;
         if (temp_v0 != 0) {
             entity->zPriority = temp_v0 >> 8;

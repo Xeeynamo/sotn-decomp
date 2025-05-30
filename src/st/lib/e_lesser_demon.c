@@ -58,8 +58,8 @@ void func_us_801BB8DC(s16* unkArg) {
         g_CurrentEntity->hitboxState = 0;
         g_CurrentEntity->zPriority -= 0x10;
         g_CurrentEntity->ext.lesserDemon.unkB2 = g_CurrentEntity->palette;
-        g_CurrentEntity->drawFlags |= FLAG_DRAW_UNK8;
-        g_CurrentEntity->unk6C = 2;
+        g_CurrentEntity->drawFlags |= FLAG_DRAW_OPACITY;
+        g_CurrentEntity->opacity = 2;
         g_CurrentEntity->step_s++;
         g_CurrentEntity->flags |= FLAG_UNK_2000;
         g_CurrentEntity->flags &= ~(FLAG_UNK_800 | FLAG_UNK_400);
@@ -76,8 +76,8 @@ void func_us_801BB8DC(s16* unkArg) {
         break;
 
     case 2:
-        g_CurrentEntity->unk6C += 4;
-        if (g_CurrentEntity->unk6C > 0xA0) {
+        g_CurrentEntity->opacity += 4;
+        if (g_CurrentEntity->opacity > 0xA0) {
             g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
             g_CurrentEntity->drawMode = DRAW_DEFAULT;
             g_CurrentEntity->ext.lesserDemon.unkB0 = 0x20;
@@ -316,16 +316,16 @@ void EntityLesserDemonSpit(Entity* self) {
     case 6:
         self->rotY -= 0x20;
         if (!AnimateEntity(D_us_80181BE8, self)) {
-            self->drawFlags |= FLAG_DRAW_UNK8;
-            self->unk6C = 0x80;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->opacity = 0x80;
             self->step++;
         }
         break;
 
     case 7:
         self->rotY -= 0x10;
-        self->unk6C -= 0x10;
-        if (!self->unk6C) {
+        self->opacity -= 0x10;
+        if (!self->opacity) {
             DestroyEntity(self);
             return;
         }
@@ -1480,9 +1480,9 @@ void EntityLesserDemon(Entity* self) {
             if (!AnimateEntity(D_us_80181BAC, self) || hit) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->drawFlags = FLAG_DRAW_UNK8;
+                self->drawFlags = FLAG_DRAW_OPACITY;
                 self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-                self->unk6C = 0x80;
+                self->opacity = 0x80;
                 self->ext.lesserDemon.unk80 = 0x40;
                 self->step_s++;
             }
@@ -1490,7 +1490,7 @@ void EntityLesserDemon(Entity* self) {
 
         case 3:
             AnimateEntity(D_us_80181BBC, self);
-            self->unk6C -= 2;
+            self->opacity -= 2;
             if (g_Timer % 5 == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {

@@ -640,8 +640,8 @@ void MarEntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
-        self->unk6C = 0x60;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
             posX += 6;
@@ -732,7 +732,7 @@ void MarEntitySmokePuff(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->unk6C -= 2;
+        self->opacity -= 2;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if (self->poseTimer < 0) {
@@ -2689,11 +2689,11 @@ void MarEntityTeleport(Entity* self) {
 void func_pspeu_092BEA38(Entity* entity, s32 opacity) {
     if (opacity >= 128) {
         entity->drawMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
-        entity->unk6C = 128;
+        entity->opacity = 128;
     } else {
         entity->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        entity->drawFlags = FLAG_DRAW_UNK8;
-        entity->unk6C = opacity;
+        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->opacity = opacity;
     }
 }
 

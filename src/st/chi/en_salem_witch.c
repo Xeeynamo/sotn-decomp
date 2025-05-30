@@ -577,12 +577,12 @@ void EntitySalemWitch(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = self->params;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->drawFlags = FLAG_DRAW_UNK8;
-        self->unk6C = ShadowDuration;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = ShadowDuration;
         // fallthrough
     case SHADOW_WAIT:
-        self->unk6C -= ShadowTickSpeed;
-        if (self->unk6C < ShadowDestroyThreshold) {
+        self->opacity -= ShadowTickSpeed;
+        if (self->opacity < ShadowDestroyThreshold) {
             DestroyEntity(self);
         }
         return;
@@ -856,8 +856,8 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         self->animSet = 5;
         self->palette = PAL_OVL(0x2EB);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C = 0x60;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
 
         PlaySfxPositional(SFX_CANDLE_HIT);
         // fallthrough
@@ -872,8 +872,8 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         self->unk5A = 0x4B;
         self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
         self->rotX = self->rotY = BurstStartRotation;
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C = 0x80;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0x80;
         self->step++;
 
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
@@ -889,7 +889,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         // fallthrough
     case BURST:
         self->rotX = self->rotY += BurstRotateSpeed;
-        self->unk6C -= 4;
+        self->opacity -= 4;
         if (AnimateEntity(&AnimFrames_TriboltBurst, self) == 0) {
             SetStep(CLEANUP);
         }
@@ -986,12 +986,12 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->drawFlags = FLAG_DRAW_ROTZ;
         self->drawFlags |= FLAG_DRAW_ROTX;
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C = 0x60;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
         self->pose = self->animCurFrame;
         // fallthrough
     case TRAIL_UPDATE:
-        self->unk6C -= 4;
+        self->opacity -= 4;
         if (AnimateEntity(&AnimFrames_TriboltTrail, self) == 0) {
             DestroyEntity(self);
         }

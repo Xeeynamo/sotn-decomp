@@ -480,8 +480,8 @@ s32 func_us_801D1DAC(void) {
         g_CurrentEntity->ext.armorLord.unk8A = 0;
         g_CurrentEntity->ext.armorLord.unk88 = 0;
         g_CurrentEntity->ext.armorLord.unk8C = 0;
-        g_CurrentEntity->drawFlags |= FLAG_DRAW_UNK8;
-        g_CurrentEntity->unk6C = 0x80;
+        g_CurrentEntity->drawFlags |= FLAG_DRAW_OPACITY;
+        g_CurrentEntity->opacity = 0x80;
         g_CurrentEntity->step_s++;
         break;
 
@@ -492,8 +492,8 @@ s32 func_us_801D1DAC(void) {
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
-        g_CurrentEntity->unk6C += 0xFE;
-        if (!g_CurrentEntity->unk6C) {
+        g_CurrentEntity->opacity += 0xFE;
+        if (!g_CurrentEntity->opacity) {
             g_CurrentEntity->animCurFrame = 0;
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             g_CurrentEntity->ext.armorLord.unk8D += 1;
@@ -1015,23 +1015,25 @@ void func_us_801D348C(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180AE8);
         self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
         self->animCurFrame = 0;
         break;
     case 1:
         if (parent->animCurFrame == 0x10 && parent->step == 6) {
             self->step = 2;
             self->animCurFrame = 0x20;
-            self->unk6C = 0x60;
-            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->opacity = 0x60;
+            self->drawFlags =
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = 0x1C8;
             self->rotY = 0x1C8;
         }
         if (parent->animCurFrame == 0x15) {
             self->step = 3;
             self->animCurFrame = 0x21;
-            self->unk6C = 0x60;
-            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->opacity = 0x60;
+            self->drawFlags =
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->rotX = 0x1B8;
             self->rotY = 0x1B8;
         }
@@ -1041,7 +1043,7 @@ void func_us_801D348C(Entity* self) {
         if (!--self->ext.armorLord.unk80) {
             self->animCurFrame = 0;
         } else {
-            self->unk6C -= 0x20;
+            self->opacity -= 0x20;
         }
         if (parent->animCurFrame != 0x10) {
             self->step = 1;
@@ -1051,7 +1053,7 @@ void func_us_801D348C(Entity* self) {
         if (!--self->ext.armorLord.unk80) {
             self->animCurFrame = 0;
         } else {
-            self->unk6C -= 0x20;
+            self->opacity -= 0x20;
         }
         if (parent->animCurFrame != 0x15) {
             self->step = 1;

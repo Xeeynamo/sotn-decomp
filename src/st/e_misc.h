@@ -67,7 +67,7 @@ void func_801966B0(u16* sensors) {
         g_CurrentEntity->hitboxState = 0;
         g_CurrentEntity->zPriority -= 0x10;
         g_CurrentEntity->drawFlags |= DRAW_HIDE;
-        g_CurrentEntity->unk6C = 0;
+        g_CurrentEntity->opacity = 0;
         g_CurrentEntity->step_s++;
         break;
     case 1:
@@ -77,8 +77,8 @@ void func_801966B0(u16* sensors) {
         }
         break;
     case 2:
-        g_CurrentEntity->unk6C += 2;
-        if (g_CurrentEntity->unk6C == 0xC0) {
+        g_CurrentEntity->opacity += 2;
+        if (g_CurrentEntity->opacity == 0xC0) {
             g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
             g_CurrentEntity->drawMode = DRAW_DEFAULT;
             g_CurrentEntity->hitEffect = g_CurrentEntity->palette;

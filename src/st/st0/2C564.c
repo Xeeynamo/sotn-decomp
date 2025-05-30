@@ -344,7 +344,7 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
             }
 
             dracula->drawFlags = DRAW_HIDE;
-            dracula->unk6C = 0;
+            dracula->opacity = 0;
             dracula->ext.dracula.unkA0 = 1;
             step++;
         }
@@ -367,9 +367,9 @@ static s32 func_801ABBBC(s32 step, Entity* dracula) {
         break;
 
     case 8:
-        dracula->unk6C += 10;
-        if (dracula->unk6C >= 0x80) {
-            dracula->unk6C = 0x80;
+        dracula->opacity += 10;
+        if (dracula->opacity >= 0x80) {
+            dracula->opacity = 0x80;
             dracula->drawFlags = FLAG_DRAW_DEFAULT;
             step++;
         }
@@ -728,8 +728,8 @@ void EntityDracula(Entity* self) {
         case 3:
             self->ext.dracula.unk94 = 0x40;
             self->ext.dracula.unk98 = 0;
-            self->unk6C = 0x80;
-            self->drawFlags |= FLAG_DRAW_UNK8;
+            self->opacity = 0x80;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
             prim = self->ext.dracula.prim;
             prim->type = PRIM_G4;
             prim->x0 = prim->x2 = self->posX.i.hi;
@@ -819,8 +819,8 @@ void EntityDracula(Entity* self) {
             prim->x0 = prim->x2 = xOffset;
             prim->x1 = prim->x3 = xOffset + 0x30;
 
-            if (self->unk6C) {
-                self->unk6C -= 8;
+            if (self->opacity) {
+                self->opacity -= 8;
             }
 
             if (self->ext.dracula.unk94 < 0xF0) {

@@ -724,8 +724,8 @@ void func_us_80192998(Entity* self) {
 
     case 1:
         if (self->step_s == 0) {
-            self->drawFlags = FLAG_DRAW_UNK8;
-            self->unk6C = 0xC0;
+            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->opacity = 0xC0;
             self->facingLeft = Random() & 1;
             self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);
             self->velocityY = FIX(-0.75);
@@ -734,7 +734,7 @@ void func_us_80192998(Entity* self) {
         }
         MoveEntity();
         self->velocityY += self->ext.e_80192998.accelY;
-        self->unk6C += 255;
+        self->opacity += 255;
         if (AnimateEntity(self->ext.e_80192998.anim, self) == 0) {
             DestroyEntity(self);
         }

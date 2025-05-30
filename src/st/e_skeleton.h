@@ -299,9 +299,9 @@ void UnusedSkeletonEntity(Entity* self) {
         InitializeEntity(g_EInitSkeleton);
         self->rotX = 0x120;
         self->rotY = 0x200;
-        self->unk6C = 0;
+        self->opacity = 0;
         self->hitboxState = 0;
-        self->drawFlags |= FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         return;
     }
 

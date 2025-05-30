@@ -450,9 +450,9 @@ static void func_ptr_80170024(Entity* self) {
         if (self->params & 0x7F00) {
             self->flags = FLAG_POS_CAMERA_LOCKED;
             self->animCurFrame = self->ext.shield.parent->animCurFrame;
-            self->drawFlags = FLAG_DRAW_UNK8;
+            self->drawFlags = FLAG_DRAW_OPACITY;
             self->drawMode = DRAW_TPAGE;
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
             self->poseTimer = 0x18;
             self->zPriority -= 2;
             self->step = 4;
@@ -619,7 +619,7 @@ static void func_ptr_80170024(Entity* self) {
         }
         break;
     case 4:
-        self->unk6C -= 2;
+        self->opacity -= 2;
         if (--self->poseTimer < 0) {
             DestroyEntity(self);
             return;
