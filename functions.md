@@ -1266,7 +1266,7 @@
 | dra       | CheckBackForwardInput                    |      152 |         23 |        |                                 |       |
 | dra       | CheckGravityBootsInput                   |      152 |         28 |        |                                 |       |
 | no3       | EntityDistantBackgroundTrees             |      153 |         14 |        | https://decomp.me/scratch/ZWE1R | 0.999 |
-| maria_psp | func_pspeu_092A7950                      |      153 |         16 |        |                                 |       |
+| maria     | func_pspeu_092A7950                      |      153 |         16 |        | https://decomp.me/scratch/Me93h | 0.997 |
 | no4       | func_pspeu_09242AD0                      |      153 |         23 |        |                                 |       |
 | dra       | func_80118970                            |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
 | dra       | UnknownEntId49                           |      154 |         11 |        |                                 |       |
@@ -1400,7 +1400,7 @@
 | no4       | func_pspeu_09241B28                      |      213 |         25 |        |                                 |       |
 | dra       | EntitySubwpnCrashCrossParticles          |      215 |         28 |        | https://decomp.me/scratch/ONw6f | 0.999 |
 | dra       | PlayerStepStuck                          |      215 |         32 |        |                                 |       |
-| no4       | func_pspeu_09240680                      |      216 |         18 |        |                                 |       |
+| no4       | func_pspeu_09240680                      |      216 |         18 |        | https://decomp.me/scratch/nz8z9 | 1.0   |
 | lib       | func_us_801B4ED4                         |      218 |         16 | Yes    |                                 |       |
 | no3       | EntityZombie                             |      218 |         39 |        |                                 |       |
 | dra       | DecompressData                           |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
@@ -1415,7 +1415,7 @@
 | chi       | EntitySalemWitchTriboltProjectile        |      222 |         24 |        |                                 |       |
 | no4       | func_pspeu_0923F860                      |      222 |         24 |        | https://decomp.me/scratch/VXxBR | 1.0   |
 | no4       | func_pspeu_092409A8                      |      222 |         25 |        |                                 |       |
-| no4       | func_pspeu_09240350                      |      223 |         22 |        |                                 |       |
+| no4       | func_pspeu_09240350                      |      223 |         22 |        | https://decomp.me/scratch/kdSl6 | 1.0   |
 | dra       | func_psp_090E4CD0                        |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | maria     | MarCheckWallRight                        |      224 |         28 |        | https://decomp.me/scratch/0FafD | 0.998 |
 | ric       | RicCheckWallRight                        |      224 |         28 |        | https://decomp.me/scratch/JM89s | 0.999 |
@@ -1459,7 +1459,7 @@
 | no4       | func_pspeu_092391D8                      |      248 |         34 |        | https://decomp.me/scratch/zAICA | 0.996 |
 | lib       | EntityCandleTable                        |      249 |         35 |        |                                 |       |
 | dra       | PlayerStepUnmorphBat                     |      250 |         34 |        |                                 |       |
-| maria_psp | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
+| maria     | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
 | no3       | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
 | dra       | PlayerStepUnmorphMist                    |      252 |         38 |        |                                 |       |
 | no3       | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
@@ -1485,7 +1485,7 @@
 | ric       | RicStepStand                             |      263 |         51 |        |                                 |       |
 | dra       | func_8010BFFC                            |      264 |         28 |        |                                 |       |
 | ric       | func_801641A0                            |      265 |         13 |        |                                 |       |
-| no4       | func_pspeu_0923FB88                      |      265 |         22 |        |                                 |       |
+| no4       | func_pspeu_0923FB88                      |      265 |         22 |        | https://decomp.me/scratch/SgBVI | 1.0   |
 | st0       | func_801A805C                            |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
 | maria     | func_pspeu_092BF950                      |      269 |         26 |        | https://decomp.me/scratch/uJ00p | 1.0   |
 | chi       | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -1505,7 +1505,7 @@
 | st0       | func_801B101C                            |      275 |         24 |        | https://decomp.me/scratch/pYyUG | 0.985 |
 | dra       | MenuHandleCursorInput                    |      275 |         39 | Yes    |                                 |       |
 | dra       | func_801042C4                            |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
-| no4       | func_pspeu_0923FF60                      |      277 |         31 |        |                                 |       |
+| no4       | func_pspeu_0923FF60                      |      277 |         31 |        | https://decomp.me/scratch/fFj3M | 0.999 |
 | no4       | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/Absyx | 0.418 |
 | dra       | func_80124164                            |      279 |         17 |        |                                 |       |
 | maria     | func_80165DD8                            |      279 |         17 |        |                                 |       |
@@ -1517,7 +1517,7 @@
 | dra       | HandleVideoPlayback                      |      285 |         37 | Yes    | https://decomp.me/scratch/kc55L | 1.0   |
 | no4       | func_pspeu_09237700                      |      285 |         47 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | lib       | func_psp_0923B010                        |      287 |         30 |        |                                 |       |
-| maria_psp | func_pspeu_092A7560                      |      287 |         32 | Yes    |                                 |       |
+| maria     | func_pspeu_092A7560                      |      287 |         32 | Yes    | https://decomp.me/scratch/L7997 | 0.997 |
 | dra       | UpdateAnim                               |      288 |         15 |        | https://decomp.me/scratch/OEQHX | 1.0   |
 | dra       | func_8010D800                            |      288 |         19 |        |                                 |       |
 | maria     | func_8015C6D4                            |      288 |         19 |        |                                 |       |
@@ -1567,7 +1567,7 @@
 | chi       | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
 | lib       | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
 | dra       | DealDamage                               |      331 |         39 |        | https://decomp.me/scratch/rZ44e | 0.999 |
-| maria_psp | func_pspeu_092A6280                      |      332 |         40 |        |                                 |       |
+| maria_psp | func_pspeu_092A6280                      |      332 |         40 |        | https://decomp.me/scratch/lu8Ps | 0.999 |
 | lib       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | no3       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | no4       | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
@@ -1699,7 +1699,7 @@
 | ric       | RicEntityCrashBibleBeam                  |      496 |         50 |        | https://decomp.me/scratch/xwy9o | 0.996 |
 | dra       | func_8010FDF8                            |      499 |        105 |        | https://decomp.me/scratch/xZcwE | 0.991 |
 | maria     | func_pspeu_092A8AE8                      |      500 |         44 |        | https://decomp.me/scratch/hIeq8 | 0.999 |
-| maria_psp | func_pspeu_092A6E50                      |      501 |         49 | Yes    |                                 |       |
+| maria     | func_pspeu_092A6E50                      |      501 |         49 | Yes    | https://decomp.me/scratch/SzuXR | 0.999 |
 | no3       | EntityDeathStolenItem                    |      502 |         28 | Yes    | https://decomp.me/scratch/EJUYk | 0.997 |
 | ric       | RicEntityFactory                         |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
 | no4       | EntitySkeletonApe                        |      507 |         90 | Yes    | https://decomp.me/scratch/jTy3E | 0.992 |
@@ -1724,7 +1724,7 @@
 | lib       | func_us_801AFE0C                         |      534 |         67 | Yes    |                                 |       |
 | dra       | MainGame                                 |      539 |         84 |        | https://decomp.me/scratch/xoBh0 | 0.985 |
 |           | SwitchModeInitialize                     |      542 |         56 |        |                                 |       |
-| maria_psp | func_pspeu_092A82E0                      |      543 |         60 |        | https://decomp.me/scratch/4Ptya | 0.973 |
+| maria     | func_pspeu_092A82E0                      |      543 |         60 |        | https://decomp.me/scratch/4Ptya | 0.973 |
 | ric       | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra       | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | maria     | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
