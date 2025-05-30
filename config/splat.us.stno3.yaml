@@ -42,7 +42,6 @@ segments:
       - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
-      - [0xAAC, data]
       - [0xBB4, .data, e_background_block]
       - [0xDA0, data]
       - [0xDC0, .data, e_lock_camera]
@@ -68,7 +67,8 @@ segments:
       - [0x25B4, .data, e_misc]
       - [0x26D0, .data, e_particles]
       - [0x2750, data]
-      - [0x3180, data]
+      - [0x27DC, .data, e_fire_warg]
+      - [0x30BC, data]
       - [0x3858, .data, water_effects]
       - [0x3914, data]
       - [0x39A0, data]
@@ -103,8 +103,8 @@ segments:
       - [0x37698, .rodata, e_fire_warg] # EntityFireWarg
       - [0x376D0, .rodata, e_fire_warg] # EntityFireWargWaveAttack
       - [0x376E8, .rodata, e_fire_warg] # EntityUnkId2F
-      - [0x376FC, .rodata, 4F58C] # EntityWarg RECT
-      - [0x37704, .rodata, 4F58C] # EntityWarg
+      - [0x376FC, .rodata, e_warg] # EntityWarg RECT
+      - [0x37704, .rodata, e_warg] # EntityWarg
       - [0x37738, .rodata, e_merman2]
       - [0x3775C, .rodata, e_merman]
       - [0x37784, .rodata, e_bone_scimitar]
@@ -145,7 +145,7 @@ segments:
       - [0x4BC74, c, e_particles]
       - [0x4C4B8, c, e_room_fg]
       - [0x4C5A4, c, e_fire_warg]
-      - [0x4F58C, c]
+      - [0x4F438, c, e_warg]
       - [0x506FC, c, popup]
       - [0x50A2C, c, water_effects]
       - [0x52D40, c, e_merman2]

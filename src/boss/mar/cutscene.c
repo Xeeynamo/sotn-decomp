@@ -574,7 +574,7 @@ void func_us_8018C90C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitMaria);
+        InitializeEntity(g_EInitSpawner);
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_RIGHT;

@@ -101,7 +101,7 @@ void func_801C4CC0(void);
 extern u16 g_EInitParticle[];
 extern u16 g_EInitInteractable[]; // Init Elevator2
 extern u16 g_EInitCommon[];
-extern u16 g_EInitSecret[];
+extern u16 g_EInitEnemy3[];
 
 // *** EntityBloodSkeleton properties START ***
 
@@ -266,4 +266,4 @@ extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 g_EInitMaria[];
+extern u16 g_EInitSpawner[];

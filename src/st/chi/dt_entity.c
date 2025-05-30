@@ -104,29 +104,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 // D_80180610
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 
-// NOTE: BEGIN ../e_init_common.h
-//       I would include ../e_init_common.h here, but the last entry in there
-//       has a different .enemyId value than is needed here
-//  D_8018061C
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0x00, 0x000, 1};
-// D_80180628
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0x00, 0x000, 2};
-// D_80180634
-EInit g_EInitMaria = {ANIMSET_DRA(0), 0, 0x00, 0x000, 4};
-// D_80180640
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0x00, 0x000, 5};
-// D_8018064C
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0x00, 0x000, 2};
-// D_80180658
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0x00, 0x000, 1};
-// D_80180664
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0x00, 0x000, 3};
-// D_80180670
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0x00, 0x000, 3};
-// D_8018067C
-EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0),
-                       5}; // ../e_init_common.h has 3 for the last value
-// NOTE: END ../e_init_common.h
+#include "../e_init_common.h"
+
+EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
 
 // D_80180688
 EInit g_EInitSalemWitch = {ANIMSET_OVL(3), 1, 72, PAL_DRA(516), 221};
