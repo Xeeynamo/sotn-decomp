@@ -54,9 +54,7 @@ segments:
       - [0x19DB8, c, ovl_load]
       - [0x1A200, .data, pl_header]
       - [0x1A220, .data, pl_anims]
-      - [0x1A718, data] # mostly ends up in 80.c
-      - [0x1A7E8, .data, 80]
-      - [0x1A7F8, data] # mostly ends up in 80.c
+      - [0x1A718, .data, 80]
       - [0x1A878, .data, d_18568]
       - [0x1EE28, .data, pl_debug]
       - [0x1EE38, .data, pl_steps]

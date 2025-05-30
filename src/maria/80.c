@@ -5,9 +5,12 @@ extern u8 D_pspeu_092E5B08[8];
 extern s32 D_pspeu_092E5900;
 extern Point16 D_pspeu_092E5B18[];
 
-extern AnimationFrame D_pspeu_092C0950[];
-extern AnimationFrame D_pspeu_092C0918[];
-extern AnimationFrame D_pspeu_092C0928[];
+AnimationFrame D_pspeu_092C0918[] = {
+    POSE(3, 7, 0), POSE(3, 8, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0928[] = {
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(1, 4, 0), POSE(1, 5, 0),
+    POSE(2, 6, 0), POSE(1, 5, 0), POSE(2, 4, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0950[] = {POSE(1, 9, 0), POSE_LOOP(0)};
 void func_pspeu_092A6280(Entity* self) {
     switch (self->step) {
     case 0:
@@ -242,7 +245,9 @@ int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
     return 0;
 }
 
-extern AnimationFrame D_pspeu_092C0958[];
+AnimationFrame D_pspeu_092C0958[] = {
+    POSE(11, 1, 0), POSE(4, 2, 0), POSE(6, 3, 0),
+    POSE(4, 4, 0),  POSE(7, 5, 0), POSE_LOOP(0)};
 void func_pspeu_092A6E50(Entity* self) {
     Collider col;
     s32 var_s3;
@@ -380,7 +385,8 @@ void func_pspeu_092A6E50(Entity* self) {
     self->hitFlags = 0;
 }
 
-extern AnimationFrame D_pspeu_092C0970[];
+AnimationFrame D_pspeu_092C0970[] = {
+    POSE(13, 6, 0), POSE(8, 7, 0), POSE(11, 8, 0), POSE(8, 7, 0), POSE_LOOP(0)};
 void func_pspeu_092A7560(Entity* self) {
     switch (self->step) {
     case 0:
@@ -454,7 +460,10 @@ void func_pspeu_092A7560(Entity* self) {
     self->ext.maria092A7560.unk46 = g_Player.unk46;
 }
 
-extern AnimationFrame D_pspeu_092C0988[];
+AnimationFrame D_pspeu_092C0988[] = {
+    POSE(1, 10, 0), POSE(1, 11, 0), POSE(1, 12, 0),
+    POSE(3, 13, 0), POSE(1, 14, 0), POSE(1, 15, 0),
+    POSE(1, 16, 0), POSE(25, 9, 0), POSE_END};
 void func_pspeu_092A7950(Entity* self) {
     switch (self->step) {
     case 0:
@@ -495,7 +504,10 @@ void func_pspeu_092A7950(Entity* self) {
     }
 }
 
-AnimationFrame D_pspeu_092C09B0[];
+AnimationFrame D_pspeu_092C09B0[] = {
+    POSE(4, 5, 0), POSE(2, 6, 0),  POSE(1, 7, 0),  POSE(1, 8, 0),
+    POSE(1, 9, 0), POSE(2, 10, 0), POSE(4, 11, 0), POSE(1, 8, 0),
+    POSE(1, 7, 0), POSE(1, 6, 0),  POSE_LOOP(0)};
 void func_pspeu_092A7B80(Entity* self) {
     switch (self->step) {
     case 0:
@@ -645,7 +657,7 @@ static int func_pspeu_092A81C0(Entity* entity) {
     return 1;
 }
 
-extern AnimationFrame D_pspeu_092C09E0[];
+AnimationFrame D_pspeu_092C09E0[] = {POSE(1, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092A82E0(Entity* self) {
     s32 x;
     s32 y;
@@ -974,7 +986,10 @@ static int func_pspeu_092A9250() {
     }
 }
 
-AnimationFrame D_pspeu_092C09F8[];
+AnimationFrame D_pspeu_092C09F8[] = {
+    POSE(3, 9, 0),  POSE(3, 10, 0), POSE(3, 11, 0), POSE(3, 12, 0),
+    POSE(3, 13, 0), POSE(3, 14, 0), POSE(3, 9, 0),  POSE(3, 10, 0),
+    POSE(3, 11, 0), POSE(3, 12, 0), POSE_LOOP(0)};
 void func_pspeu_092A9288(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1035,7 +1050,10 @@ void func_pspeu_092A9288(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A28[];
+extern AnimationFrame D_pspeu_092C0A28[] = {
+    POSE(9, 3, 0), POSE(6, 4, 0), POSE(6, 5, 0), POSE(8, 6, 0),
+    POSE(6, 7, 0), POSE(6, 8, 0), POSE_LOOP(0),
+};
 void func_pspeu_092A95A8(Entity* self) {
     s32 var_s0;
 
@@ -1233,7 +1251,7 @@ static void func_pspeu_092A9DE8(Entity* entity, s32 x, s32 y) {
     entity->ext.maria092A9E88.pos1.y = y;
 }
 
-extern AnimationFrame D_pspeu_092C0A48[];
+AnimationFrame D_pspeu_092C0A48[] = {POSE(0, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092A9E88(Entity* self) {
     s32 acceleration;
     s32 initialAcceleration;
@@ -1446,7 +1464,7 @@ void func_pspeu_092A9E88(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A50[];
+AnimationFrame D_pspeu_092C0A50[] = {POSE(1, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092AAA38(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1492,7 +1510,10 @@ void func_pspeu_092AAA38(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A60[];
+AnimationFrame D_pspeu_092C0A58[] = {POSE(1, 2, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0A60[] = {
+    POSE(19, 3, 0), POSE(19, 4, 0), POSE(19, 5, 0), POSE(19, 6, 0),
+    POSE_LOOP(0)};
 void func_pspeu_092AAC80(Entity* self) {
     s32 x;
 
@@ -1613,7 +1634,6 @@ void func_pspeu_092AAC80(Entity* self) {
     }
 }
 
-AnimationFrame D_pspeu_092C0A58[];
 void func_pspeu_092AB1C0(Entity* self) {
     Entity* entity;
     s32 x;
