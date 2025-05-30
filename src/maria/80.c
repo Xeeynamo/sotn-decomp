@@ -5,7 +5,98 @@ extern u8 D_pspeu_092E5B08[8];
 extern s32 D_pspeu_092E5900;
 extern Point16 D_pspeu_092E5B18[];
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6280);
+extern AnimationFrame D_pspeu_092C0950[];
+extern AnimationFrame D_pspeu_092C0918[];
+extern AnimationFrame D_pspeu_092C0928[];
+void func_pspeu_092A6280(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x19;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DOLL;
+        self->animSet = ANIMSET_OVL(22);
+        MarSetAnimation(D_pspeu_092C0950);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi + (self->facingLeft ? -24 : 24);
+        self->posY.i.hi = PLAYER.posY.i.hi + 0x18;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = -8;
+        self->ext.maria092A6280.unkB0 = 0;
+        MarSetWeaponParams(self, 18, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_Player.unk5C = 1;
+        self->ext.maria092A6280.timer = 0;
+        self->step = 1;
+        MarCreateEntFactoryFromEntity(self, _BP_REBOUND_STONE, 0);
+        break;
+    case 1:
+        if (self->ext.maria092A6280.timer > 10) {
+            MarSetAnimation(D_pspeu_092C0918);
+            self->step = 2;
+            self->velocityX = FIX(3.25);
+            self->ext.maria092A6280.timer = 0;
+        }
+        self->ext.maria092A6280.timer++;
+        break;
+    case 2:
+        if (self->hitboxOffX < 24) {
+            self->hitboxOffX += 2;
+        } else {
+            self->hitboxOffX = 24;
+        }
+        if ((self->hitboxWidth) < 24) {
+            self->hitboxWidth += 2;
+        } else {
+            self->hitboxWidth = 24;
+        }
+        if ((self->hitboxHeight) < 24) {
+            self->hitboxHeight += 4;
+        } else {
+            self->hitboxHeight = 24;
+        }
+        if (self->ext.maria092A6280.timer < 15) {
+            self->posX.val +=
+                self->facingLeft ? -self->velocityX : self->velocityX;
+        }
+        if (self->ext.maria092A6280.timer == 15) {
+            self->velocityX = 0;
+            MarSetAnimation(D_pspeu_092C0928);
+        }
+        if ((self->ext.maria092A6280.timer % 6) == 0) {
+            g_api_PlaySfx(SFX_WEAPON_SWISH_A);
+        }
+        self->ext.maria092A6280.timer++;
+        if (self->ext.maria092A6280.timer > 75) {
+            MarSetAnimation(D_pspeu_092C0950);
+            self->ext.maria092A6280.opacity = 128;
+            self->ext.maria092A6280.ttl = 15;
+            self->step = 3;
+            self->hitboxState = 0;
+        }
+        break;
+    case 3:
+        if (self->ext.maria092A6280.ttl > 0) {
+            self->ext.maria092A6280.ttl--;
+        } else {
+            self->ext.maria092A6280.opacity -= 8;
+        }
+        if (self->ext.maria092A6280.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->step = 4;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092A6280.opacity);
+        break;
+    case 4:
+        g_Player.unk5C = 0;
+        DestroyEntity(self);
+        break;
+    }
+}
 
 INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6740);
 
@@ -249,7 +340,7 @@ void func_pspeu_092A7950(Entity* self) {
             self, 32, ELEMENT_CUT | ELEMENT_HOLY, 2, 16, 16, 1, 0);
         g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
         self->step = 1;
-        return;
+        break;
     case 1:
         self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
         if (self->poseTimer < 0) {
