@@ -28,5 +28,5 @@ s16 g_MarSensorsWallDefault[] = {23, 16, 8, 0, -8, -8, -15};
 s16 D_pspeu_092C5198[NUM_HORIZONTAL_SENSORS] = {-4, -4, -4, -4};
 s16 D_pspeu_092C51A0[NUM_HORIZONTAL_SENSORS] = {28, 24, 24, 24};
 s16 D_pspeu_092C51A8[NUM_VERTICAL_SENSORS] = {15, 13, 11, 9, 7, -1, -3};
-// TODO move g_MarSensorsCeilingCrouch from BSS
+s16 g_MarSensorsCeilingCrouch[NUM_HORIZONTAL_SENSORS] = {0, 0, 0, 0};
 s16 g_MarSensorsWallCrouch[NUM_VERTICAL_SENSORS] = {23, 16, 8, 4, 4, 1, 1};

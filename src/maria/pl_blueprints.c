@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-#if defined(VERSION_PSP)
-extern AnimationFrame* g_MarEmptyAnimGroup[ZERO_LEN]; // BSS
-#else
-static AnimationFrame* g_MarEmptyAnimGroup[ZERO_LEN] = {};
-
-#endif
+static s32 D_80174F80[11];
+static u8 D_80174FAC;
+static u8 D_80174FB0;
+static u8 D_80174FB4;
+static u8 D_80174FB8;
+static Point16 D_80175000[32];
+static s32 D_80154F7C[16];
+static AnimationFrame g_MarEmptyAnimGroup[ZERO_LEN];
 
 static u8 D_80154674[][4] = {
     {16, 127, 63, 0},
@@ -290,7 +292,6 @@ static PfnEntityUpdate entity_functions[] = {
 STATIC_ASSERT(LEN(entity_functions) == NUM_ENTITIES, "entity array wrong size");
 
 // Corresponding DRA function is UpdatePlayerEntities
-extern AnimationFrame* g_MarEmptyAnimGroup[];
 void MarUpdatePlayerEntities(void) {
     SubweaponDef subwpn;
     s32 isPrologueTimeStopped;
@@ -315,7 +316,8 @@ void MarUpdatePlayerEntities(void) {
                          entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
                         DestroyEntity(g_CurrentEntity);
                     } else if (entity->flags & FLAG_UNK_100000) {
-                        g_api.UpdateAnim(0, g_MarEmptyAnimGroup);
+                        g_api.UpdateAnim(
+                            0, (AnimationFrame**)g_MarEmptyAnimGroup);
                     }
                 }
             }

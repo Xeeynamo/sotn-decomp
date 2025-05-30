@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-extern u8 D_pspeu_092E5B08[8];
-extern s32 D_pspeu_092E5900;
-extern Point16 D_pspeu_092E5B18[];
+static s32 D_pspeu_092E5F18;
+static s32 D_pspeu_092E5D18[0x80];
+static Point16 D_pspeu_092E5B18[0x80];
+static s32 D_pspeu_092E5B10;
+static u8 D_pspeu_092E5B08[8];
+static s32 D_pspeu_092E5908[0x80];
+static s32 D_pspeu_092E5900;
 
 AnimationFrame D_pspeu_092C0918[] = {
     POSE(3, 7, 0), POSE(3, 8, 0), POSE_LOOP(0)};
@@ -574,8 +578,6 @@ static s32 func_pspeu_092A7F20(s32 angle) {
     return angle;
 }
 
-extern s32 D_pspeu_092E5908[0x80];
-extern s32 D_pspeu_092E5B10;
 static Entity* func_pspeu_092A7F78(Entity* self) {
     Entity* e;
     s32 i;
@@ -1140,8 +1142,6 @@ static s32 func_pspeu_092A9920(s32 arg0) {
     return arg0;
 }
 
-extern s32 D_pspeu_092E5D18[0x80];
-extern s32 D_pspeu_092E5F18;
 static Entity* func_pspeu_092A9978(Entity* self) {
     Entity* e;
     s32 i;

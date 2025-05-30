@@ -5,6 +5,12 @@
 
 #include "../destroy_entity.h"
 
+s32 mar_80175958[32];
+s32 mar_801759D8[32];
+static ButtonComboState g_MarComboButtons[2];
+static s32 D_pspeu_092E5F28;
+static s32 D_pspeu_092E5F20;
+
 typedef enum {
     TELEPORT_CHECK_NONE = 0,
     TELEPORT_CHECK_TO_RTOP = 2,

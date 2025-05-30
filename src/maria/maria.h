@@ -374,12 +374,9 @@ enum MarSubweapons {
     NUM_WEAPONS,
 };
 
-extern s32 mar_8015459C;
-
 extern u16 mar_80154574[];
-
 extern s16 mar_80154568[];
-extern ButtonComboState g_MarComboButtons[2];
+
 extern DebugInfo g_MarDebug;
 extern s32 mar_80175958[32];
 extern s32 mar_801759D8[32];
