@@ -178,13 +178,13 @@ s32 func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_UNK10;
-        self->unk6C = 0x80;
+        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_UNK10;
+        self->opacity = 0x80;
         self->ext.weapon.unk7E = 0x14;
         self->step++;
     } else {
-        if (self->unk6C >= 7) {
-            self->unk6C -= 7;
+        if (self->opacity >= 7) {
+            self->opacity -= 7;
         }
 
         if (--self->ext.weapon.unk7E == 0) {

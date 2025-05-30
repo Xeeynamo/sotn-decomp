@@ -459,13 +459,13 @@ static void func_ptr_80170008(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->palette;
-        self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_UNK8;
+        self->drawFlags = self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
         self->rotZ = self->ext.weapon.parent->rotZ;
-        self->unk6C = 0x80;
+        self->opacity = 0x80;
         self->step++;
     }
-    if (self->unk6C >= 48) {
-        self->unk6C -= 8;
+    if (self->opacity >= 48) {
+        self->opacity -= 8;
         return;
     }
     DestroyEntity(self);

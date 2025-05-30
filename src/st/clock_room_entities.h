@@ -14,7 +14,7 @@ void EntityClockHands(Entity* self) {
 
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
-        handShadow->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ;
+        handShadow->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ;
         handShadow->drawMode = DRAW_TPAGE;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
@@ -49,14 +49,14 @@ void EntityBirdcageDoor(Entity* self) {
         self->zPriority = 0x3C;
         self->rotX = self->rotY = 0x100;
         self->ext.birdcage.prevState = self->ext.birdcage.state;
-        self->unk6C = 0x80;
+        self->opacity = 0x80;
         self->posX.i.hi = bird_cage_pos_x[params] - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = bird_cage_pos_y[params] - g_Tilemap.scrollY.i.hi;
         break;
 
     case 1:
         if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
-            self->drawFlags = FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;
@@ -66,7 +66,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 2:
         self->rotX = self->rotY -= 2;
-        self->unk6C += 0xFF;
+        self->opacity += 0xFF;
         if (--self->ext.birdcage.timer == 0) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0;
@@ -99,7 +99,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 5:
         self->rotX = self->rotY += 2;
-        self->unk6C += 1;
+        self->opacity += 1;
         if (--self->ext.birdcage.timer == 0) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step = 1;
@@ -163,7 +163,7 @@ void EntityStatue(Entity* self) {
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
-        entity->drawFlags = FLAG_DRAW_UNK8;
+        entity->drawFlags = FLAG_DRAW_OPACITY;
         entity->drawMode = DRAW_TPAGE;
 #ifndef STAGE_IS_NO0
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |

@@ -654,9 +654,9 @@ void EntityLargeGaibonProjectile(Entity* self) {
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_UNK8;
+            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
             self->rotX = 0x100;
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
             self->palette = PAL_OVL(0x1F3);
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->step = 2;
@@ -680,7 +680,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
         break;
 
     case 2:
-        self->unk6C += 0xFE;
+        self->opacity += 0xFE;
         self->rotX -= 4;
         if (AnimateEntity(D_80181388, self) == 0) {
             DestroyEntity(self);

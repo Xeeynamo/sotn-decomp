@@ -1118,10 +1118,10 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->unk5A = 0x57;
         entity->palette = PAL_OVL(0x285);
         entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        entity->drawFlags = FLAG_DRAW_UNK8;
-        entity->unk6C = 0x40;
+        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->opacity = 0x40;
         if (entity->params) {
-            entity->unk6C = 0x10;
+            entity->opacity = 0x10;
             entity->zPriority = 0x1FB;
             entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
         } else {

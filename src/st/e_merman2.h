@@ -295,7 +295,7 @@ void EntityMerman2(Entity* self) {
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &=
                         FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                        FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                        FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
                         FLAG_DRAW_ROTX;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                 }
@@ -472,7 +472,7 @@ void EntityMerman2(Entity* self) {
                 self->posY.i.hi -= 10;
                 self->drawFlags &=
                     FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                    FLAG_DRAW_UNK10 | FLAG_DRAW_UNK8 | FLAG_DRAW_ROTY |
+                    FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
                     FLAG_DRAW_ROTX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
@@ -818,8 +818,8 @@ void EntityHighWaterSplash(Entity* self) {
         self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         self->palette = PAL_OVL(0x18);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C = 0xA0;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0xA0;
         self->rotX = 0x100;
         self->rotY = 0x1A0;
         self->ext.mermanWaterSplash.unk84 = self->params;
@@ -870,14 +870,14 @@ void EntityDeadMerman(Entity* self) {
         self->hitboxState = 0;
         self->velocityY = FIX(0.0625);
         self->palette = self->params + 0xE;
-        self->unk6C = 0x80;
-        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->opacity = 0x80;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
         self->flags |= FLAG_UNK_2000;
         return;
     }
     MoveEntity();
     self->velocityY += FIX(0.0625);
-    self->unk6C += 0xFE;
+    self->opacity += 0xFE;
     if (--self->ext.merman.timer == 0) {
         DestroyEntity(self);
     }

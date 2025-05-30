@@ -388,7 +388,7 @@ void EntitySwordLord(Entity* self) {
                        FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->ext.et_801CF850.unk80 = D_us_80182B34[self->params];
         self->zPriority--;
-        self->unk6C = 0xA0;
+        self->opacity = 0xA0;
         break;
 
     case 8:
@@ -415,7 +415,7 @@ void EntitySwordLord(Entity* self) {
                 DestroyEntity(self);
             }
         } else if (collider.effects != EFFECT_NONE) {
-            self->drawFlags |= FLAG_DRAW_UNK8;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
             self->step++;
         }
         break;
@@ -438,8 +438,8 @@ void EntitySwordLord(Entity* self) {
                 tempEntity->posY.i.hi = posY;
             }
         }
-        self->unk6C += 0xFC;
-        if (!self->unk6C) {
+        self->opacity += 0xFC;
+        if (!self->opacity) {
             DestroyEntity(self);
         }
         break;

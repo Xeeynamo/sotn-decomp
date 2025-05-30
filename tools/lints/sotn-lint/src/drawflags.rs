@@ -12,7 +12,7 @@ lazy_static! {
         (1 << 0, "FLAG_DRAW_ROTX"),
         (1 << 1, "FLAG_DRAW_ROTY"),
         (1 << 2, "FLAG_DRAW_ROTZ"),
-        (1 << 3, "FLAG_DRAW_UNK8"),
+        (1 << 3, "FLAG_DRAW_OPACITY"),
         (1 << 4, "FLAG_DRAW_UNK10"),
         (1 << 5, "FLAG_DRAW_UNK20"),
         (1 << 6, "FLAG_DRAW_UNK40"),
@@ -110,7 +110,7 @@ mod tests {
     #[test]
     fn test_equality() {
         let input_line = "if (self->drawFlags == 8) {";
-        let expected_line = "if (self->drawFlags == FLAG_DRAW_UNK8) {";
+        let expected_line = "if (self->drawFlags == FLAG_DRAW_OPACITY) {";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -118,7 +118,7 @@ mod tests {
     #[test]
     fn test_inequality() {
         let input_line = "if (self->drawFlags != 8) {";
-        let expected_line = "if (self->drawFlags != FLAG_DRAW_UNK8) {";
+        let expected_line = "if (self->drawFlags != FLAG_DRAW_OPACITY) {";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

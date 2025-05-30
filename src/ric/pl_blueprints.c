@@ -299,7 +299,7 @@ void RicEntityHitByDark(Entity* entity) {
             entity->drawMode = DRAW_TPAGE;
         }
         D_80174FFC++;
-        entity->unk6C = 0xFF;
+        entity->opacity = 0xFF;
         entity->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         entity->rotX = entity->rotY = 0x40;
@@ -310,8 +310,8 @@ void RicEntityHitByDark(Entity* entity) {
         entity->step++;
         break;
     case 1:
-        if (entity->unk6C > 16) {
-            entity->unk6C -= 8;
+        if (entity->opacity > 16) {
+            entity->opacity -= 8;
         }
         entity->posY.val += entity->velocityY;
         entity->rotX += 8;
@@ -858,8 +858,8 @@ void RicEntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK8;
-        self->unk6C = 0x60;
+        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
             posX += 6;
@@ -950,7 +950,7 @@ void RicEntitySmokePuff(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->unk6C -= 2;
+        self->opacity -= 2;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if (self->poseTimer < 0) {

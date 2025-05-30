@@ -184,7 +184,7 @@ static void EntityWeaponAttack(Entity* self) {
                 self->animCurFrame = 0x1D;
                 self->flags &= ~(FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000);
                 self->ext.karmacoin.timer = 0xE0;
-                self->unk6C = 0x80;
+                self->opacity = 0x80;
                 g_api.func_80118C28(8);
                 g_api.PlaySfx(SFX_TRANSFORM_3X);
                 prim = &g_PrimBuf[self->primIndex];
@@ -329,10 +329,10 @@ static void EntityWeaponAttack(Entity* self) {
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         break;
     case 8:
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C--;
-        if (self->unk6C < 4) {
-            self->unk6C = 4;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity--;
+        if (self->opacity < 4) {
+            self->opacity = 4;
         }
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b1 > 8) {
@@ -349,10 +349,10 @@ static void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 9:
-        self->drawFlags |= FLAG_DRAW_UNK8;
-        self->unk6C -= 2;
-        if (self->unk6C < 4) {
-            self->unk6C = 4;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity -= 2;
+        if (self->opacity < 4) {
+            self->opacity = 4;
         }
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b1 >= 9) {

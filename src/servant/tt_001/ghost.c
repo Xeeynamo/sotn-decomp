@@ -421,7 +421,7 @@ void UpdateServantDefault(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_UNK8;
+        self->drawFlags = FLAG_DRAW_OPACITY;
         SetEntityAnimation(self, &g_DefaultGhostAnimationFrame);
         self->ext.ghost.maxAngle = 512;
         self->ext.ghost.opacity = 128;
@@ -644,10 +644,10 @@ void UpdateServantDefault(Entity* self) {
         self->ext.ghost.opacityAdjustmentAmount *= -1;
     }
 
-    // unk6C is used in conjunction with self->drawFlags = FLAG_DRAW_UNK8 to set
+    // opacity is used in conjunction with self->drawFlags = FLAG_DRAW_OPACITY to set
     // the alpha/saturation.  When it's zero, it's invisible, when it's 255,
     // it's at the opacity of the sprite itself and is "bright".
-    self->unk6C = self->ext.ghost.opacity;
+    self->opacity = self->ext.ghost.opacity;
     ProcessEvent(self, 0);
     unused_1560(self);
     g_api.UpdateAnim(NULL, g_GhostAnimationFrames);

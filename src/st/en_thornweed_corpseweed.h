@@ -162,11 +162,11 @@ void EntityThornweed(Entity* self) {
             entity = self + 1;
             entity->flags |= FLAG_DEAD;
             self->hitboxState = 0;
-            self->unk6C = DeathExplosionDelay;
-            self->drawFlags |= FLAG_DRAW_UNK8;
+            self->opacity = DeathExplosionDelay;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
             self->step_s++;
         }
-        if (!--self->unk6C) {
+        if (!--self->opacity) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);

@@ -446,4 +446,4 @@ void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 Entity* MarCreateEntFactoryFromEntity(Entity* entity, u32 arg1, s32 arg2);
 s32 func_pspeu_092BEAB0(s16);
-void func_pspeu_092BEA38(Entity* entity, s32 setUnk6C);
+void func_pspeu_092BEA38(Entity* entity, s32 opacity);

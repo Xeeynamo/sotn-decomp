@@ -192,11 +192,11 @@ void func_us_801B5040(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180458);
         self->drawFlags |=
-            FLAG_DRAW_UNK8 | FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
         if ((self->params & 0xF) > 1) {
-            self->unk6C = 0x20;
+            self->opacity = 0x20;
         } else {
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
         }
         self->rotX = D_us_801805C0[self->params & 0xF];
         self->rotY = self->rotX;
@@ -298,15 +298,15 @@ void func_us_801B5040(Entity* self) {
             }
         }
         tempEntity = self + 2;
-        if (tempEntity->unk6C < 0x80) {
-            tempEntity->unk6C++;
+        if (tempEntity->opacity < 0x80) {
+            tempEntity->opacity++;
         }
         break;
 
     case 5:
         tempEntity = self + 2;
-        if (tempEntity->unk6C < 0x80) {
-            tempEntity->unk6C += 2;
+        if (tempEntity->opacity < 0x80) {
+            tempEntity->opacity += 2;
         }
         magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
         xOffset = (rcos(self->rotZ - 0x400) * magnitude) >> 0xC;

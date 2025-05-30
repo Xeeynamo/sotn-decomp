@@ -572,7 +572,7 @@ void func_8011F074(Entity* self) {
             self->drawMode = DRAW_TPAGE;
         }
         D_8013808C++;
-        self->unk6C = 0xFF;
+        self->opacity = 0xFF;
         self->drawFlags =
             FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
         self->rotX = self->rotY = 0x40;
@@ -584,8 +584,8 @@ void func_8011F074(Entity* self) {
         self->step++;
         break;
     case 1:
-        if (self->unk6C > 16) {
-            self->unk6C -= 8;
+        if (self->opacity > 16) {
+            self->opacity -= 8;
         }
         self->posY.val += self->velocityY;
         self->rotX += 8;
@@ -2149,8 +2149,8 @@ void UnknownEntId49(Entity* self) {
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_UNK8;
-    self->unk6C = PLAYER.unk6C;
+    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_OPACITY;
+    self->opacity = PLAYER.opacity;
 
     if (abs(PLAYER.rotZ) == 0x200) {
         x_offset = -0x10;

@@ -260,7 +260,7 @@ void EntityDraculaFinalForm(Entity* self) {
         if (D_80180910 != 0) {
             self->animCurFrame = 1;
             self->hitboxState = 3;
-            self->unk6C = 0x80;
+            self->opacity = 0x80;
             self->drawFlags = FLAG_DRAW_DEFAULT;
             SetStep(2);
         }
@@ -548,9 +548,9 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->unk5A = 0x5E;
                     self->palette = PAL_OVL(0x15F);
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-                    self->drawFlags = FLAG_DRAW_UNK8;
+                    self->drawFlags = FLAG_DRAW_OPACITY;
                     self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-                    self->unk6C = 0x10;
+                    self->opacity = 0x10;
                     self->rotX = self->rotY = 0x400;
                     g_api.PlaySfx(0x880);
                     self->step_s++;
@@ -571,23 +571,23 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->animCurFrame = 1;
                     self->unk5A = 0x50;
                     self->palette = PAL_OVL(0x15F);
-                    self->drawFlags = FLAG_DRAW_UNK8;
-                    self->unk6C = 0;
+                    self->drawFlags = FLAG_DRAW_OPACITY;
+                    self->opacity = 0;
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->step_s++;
                 }
                 break;
             case 4:
-                self->unk6C += 4;
+                self->opacity += 4;
                 self->animCurFrame = entity->animCurFrame;
-                if (self->unk6C > 0x60) {
+                if (self->opacity > 0x60) {
                     self->step_s++;
                 }
                 break;
             case 5:
-                self->unk6C -= 4;
+                self->opacity -= 4;
                 self->animCurFrame = entity->animCurFrame;
-                if (!self->unk6C) {
+                if (!self->opacity) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
                     self->drawFlags = FLAG_DRAW_DEFAULT;

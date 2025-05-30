@@ -1039,7 +1039,7 @@ void func_8012F894(Entity* self) {
         if (var_s1 > 0x80) {
             var_s1 = 0x80;
         }
-        PLAYER.unk6C = self->unk6C = 0xFF - var_s1;
+        PLAYER.opacity = self->opacity = 0xFF - var_s1;
     } else {
         self->drawFlags &= ~DRAW_HIDE;
         PLAYER.drawFlags = self->drawFlags;
@@ -1496,15 +1496,15 @@ void func_80130618(Entity* self) {
     }
     self->palette = PLAYER.palette;
     self->drawMode = DRAW_DEFAULT;
-    self->drawFlags &= ~FLAG_DRAW_UNK8;
+    self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s1 > 0xA0) {
             temp_s1 = 0xA0;
         }
-        self->unk6C = 0xFF - temp_s1;
+        self->opacity = 0xFF - temp_s1;
     }
 }
 
@@ -1825,15 +1825,15 @@ void func_80130E94(Entity* self) {
     self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
     self->palette = PLAYER.palette;
     self->drawMode = DRAW_DEFAULT;
-    self->drawFlags &= ~FLAG_DRAW_UNK8;
+    self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_UNK8;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
         self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s2 > 0x80) {
             temp_s2 = 0x80;
         }
-        self->unk6C = 0xFF - temp_s2;
+        self->opacity = 0xFF - temp_s2;
     }
 }
 

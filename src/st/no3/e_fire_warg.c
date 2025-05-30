@@ -652,8 +652,8 @@ void EntityFireWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (UnkCollisionFunc3(&D_801829DC) & 1) {
-                self->drawFlags = FLAG_DRAW_UNK8;
-                self->unk6C = 0x80;
+                self->drawFlags = FLAG_DRAW_OPACITY;
+                self->opacity = 0x80;
                 self->ext.fireWarg.unk80 = 0;
                 SetSubStep(1);
                 self->ext.fireWarg.unk80++;
@@ -672,21 +672,21 @@ void EntityFireWarg(Entity* self) {
         case 1:
             AnimateEntity(&D_80182900, self);
             self->ext.fireWarg.unk80 += 1;
-            self->unk6C -= 2;
-            if (self->unk6C == 0x40) {
+            self->opacity -= 2;
+            if (self->opacity == 0x40) {
                 PlaySfxPositional(SFX_WARG_DEATH_HOWL);
             }
-            if (!self->unk6C) {
+            if (!self->opacity) {
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
                 self->palette = 0x15F;
-                self->unk6C = 0x80;
+                self->opacity = 0x80;
                 self->step_s += 1;
             }
             break;
         case 2:
             AnimateEntity(&D_80182900, self);
-            self->unk6C -= 2;
-            if (!self->unk6C) {
+            self->opacity -= 2;
+            if (!self->opacity) {
                 DestroyEntity(self);
                 DestroyEntity(self + 1);
                 return;

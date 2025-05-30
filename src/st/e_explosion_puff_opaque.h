@@ -73,8 +73,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_UNK8;
-            self->unk6C = 0x80;
+            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->opacity = 0x80;
             self->step_s++;
             break;
 
@@ -85,7 +85,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             break;
 
         case 2:
-            self->unk6C -= 4;
+            self->opacity -= 4;
             break;
         }
 

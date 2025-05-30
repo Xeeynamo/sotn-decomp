@@ -119,12 +119,12 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.timer.t = 10;
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_UNK8;
-        self->unk6C = 0x80;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 0x80;
         self->step++;
     }
-    if (self->unk6C >= 0x30) {
-        self->unk6C += 0xF8;
+    if (self->opacity >= 0x30) {
+        self->opacity += 0xF8;
     }
 
     if (--self->ext.timer.t == 0) {

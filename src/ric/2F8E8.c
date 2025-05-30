@@ -818,8 +818,8 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         entity->palette = PAL_OVL(0x19E);
         entity->anim = D_80155EA8;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_UNK8;
-        entity->unk6C = 0x60;
+        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->opacity = 0x60;
         entity->hitboxWidth = 8;
         entity->hitboxHeight = 8;
         angle = (rand() % 512) + 0x300;

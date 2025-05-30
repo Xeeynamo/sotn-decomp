@@ -153,9 +153,9 @@ void EntityFrozenShade(Entity* self) {
     if (self->step && !(self->flags & FLAG_DEAD)) {
         self->ext.frozenShade.unk7C++;
         if (self->ext.frozenShade.unk7C & 0x40) {
-            self->unk6C = (u8)(self->ext.frozenShade.unk7C & 0x3F) + 0x40;
+            self->opacity = (u8)(self->ext.frozenShade.unk7C & 0x3F) + 0x40;
         } else {
-            self->unk6C = 0x80 - (u8)(self->ext.frozenShade.unk7C & 0x3F);
+            self->opacity = 0x80 - (u8)(self->ext.frozenShade.unk7C & 0x3F);
         }
     }
     tempEntity = &PLAYER;
@@ -284,10 +284,10 @@ void EntityFrozenShade(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitFrozenShade);
-        self->unk6C = 0x40;
+        self->opacity = 0x40;
         self->palette += self->params;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_UNK8;
+        self->drawFlags = FLAG_DRAW_OPACITY;
         self->ext.frozenShade.unk7C = 0;
         if (self->posX.val < tempEntity->posX.val) {
             self->facingLeft = true;

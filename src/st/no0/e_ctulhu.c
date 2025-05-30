@@ -770,15 +770,15 @@ void EntityCtulhuIceShockwave(Entity* self) {
         }
 
         if (self->flags & FLAG_DEAD) {
-            self->drawFlags |= FLAG_DRAW_UNK8;
-            self->unk6C = 128;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->opacity = 128;
             self->hitboxState = 0;
             self->step++;
         }
         break;
     case 2:
         MoveEntity();
-        self->unk6C -= 8;
+        self->opacity -= 8;
         self->rotY += 24;
         self->velocityX -= self->velocityX / 8;
 
@@ -788,7 +788,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
             self->animCurFrame = 44;
         }
 
-        if (!self->unk6C) {
+        if (!self->opacity) {
             DestroyEntity(self);
             return;
         }
@@ -878,10 +878,10 @@ void EntityCtulhuDeath(Entity* self) {
         self->animSet = 14;
         self->unk5A = 121;
         self->palette = PAL_OVL(0x2CE);
-        self->drawFlags = FLAG_DRAW_UNK8;
-        self->unk6C = 16;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 16;
         if (self->params) {
-            self->unk6C = 16;
+            self->opacity = 16;
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         } else {
