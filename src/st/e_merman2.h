@@ -71,18 +71,15 @@ static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
 
 void EntityMerman2(Entity* self) {
+    u8 colorOffset;
+    u8 rnd;
+    s16* pos;
     s32 primIndex;
+    s32 colRes;
     Collider collider;
     Entity* newEntity;
-    Entity* newEntity2;
     Primitive* prim;
     s16 posX, posY;
-    s32 colRes;
-    s32 offset;
-    u32 colorOffset;
-    s16* pos;
-    s16 camY;
-    s32 rnd;
     s32 i;
 
     if (self->ext.merman2.ignoreCol && (self->step < MERMAN2_7)) {
@@ -93,11 +90,12 @@ void EntityMerman2(Entity* self) {
         PlaySfxPositional(0x71D);
         self->drawFlags = FLAG_DRAW_DEFAULT;
         if (self->flags & FLAG_HAS_PRIMS) {
-            g_api.FreePrimitives(self->primIndex);
+            primIndex = self->primIndex;
+            g_api.FreePrimitives(primIndex);
             self->flags &= ~FLAG_HAS_PRIMS;
         }
-        self->hitboxState = 0;
         self->flags &= ~FLAG_UNK_20000000;
+        self->hitboxState = 0;
         SetStep(MERMAN2_DYING);
     }
 
@@ -106,7 +104,7 @@ void EntityMerman2(Entity* self) {
         InitializeEntity(g_EInitWaterObject);
         self->hitboxOffY = 8;
         self->zPriority = 0xA9;
-        if (self->params != 0) {
+        if (self->params) {
             self->palette++;
         }
         self->velocityY = FIX(-1);
@@ -115,15 +113,17 @@ void EntityMerman2(Entity* self) {
     case MERMAN2_SWIMMING_UP:
         AnimateEntity(g_merman2_swim_anim, self);
         MoveEntity();
-        posY = self->posY.i.hi - 24;
-        g_api.CheckCollision(self->posX.i.hi, posY, &collider, 0);
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi;
+        posY -= 24;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (!(collider.effects & EFFECT_WATER)) {
             SetStep(MERMAN2_SWIMMING);
         }
         break;
 
     case MERMAN2_SWIMMING:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             rnd = Random() & 3;
             self->velocityX = g_merman2Swimvels[rnd].x;
             self->velocityY = g_merman2Swimvels[rnd].y;
@@ -140,14 +140,14 @@ void EntityMerman2(Entity* self) {
         if (!(collider.effects & EFFECT_WATER)) {
             self->velocityY = FIX(0.5);
         }
-        pos = g_WaterXTbl;
-        pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
-        if (pos[4] < posY) {
+        pos = g_WaterXTbl;
+        pos += (self->params & 0x100) >> 8;
+        if (posY > pos[4]) {
             self->posY.i.hi = pos[4] - g_Tilemap.scrollY.i.hi - 24;
         }
 
-        if ((u8)self->ext.merman2.timer++ > 32) {
+        if (self->ext.merman2.timer++ > 32) {
             self->ext.merman2.timer = 0;
             self->step_s = 0;
             if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
@@ -164,48 +164,44 @@ void EntityMerman2(Entity* self) {
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
-                u32 v0;
-                prim = &g_PrimBuf[primIndex];
                 self->animCurFrame = 0;
-                self->primIndex = primIndex;
-                self->ext.merman2.prim = prim;
                 self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
+                prim = &g_PrimBuf[primIndex];
+                self->ext.merman2.prim = prim;
                 prim->tpage = 0x12;
                 prim->clut = 0x28C;
                 if (self->params & 1) {
-                    prim->clut = 0x28D;
+                    prim->clut++;
                 }
                 prim->u0 = 0;
-                prim->u1 = 0x20;
-                prim->v1 = prim->v0 = 0x38;
+                prim->u1 = prim->u0 + 0x20;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
-                v0 = prim->v0 + 0x38;
-                prim->v2 = v0;
-                prim->v3 = v0;
+                prim->v0 = 0x38;
+                prim->v1 = prim->v0;
+                prim->v2 = prim->v0 + 0x38;
+                prim->v3 = prim->v2;
 
-                if (self->facingLeft != 0) {
-                    s16 posX = self->posX.i.hi;
-                    prim->x0 = posX + 15;
-                    prim->x1 = posX - 17;
-                    prim->x2 = prim->x0;
-                    prim->x3 = prim->x1;
+                // These should probably be written some other way
+                if (self->facingLeft) {
+                    prim->x0 = (self->posX.i.hi - 0x8000) - 0x7FF1;
+                    prim->x1 = prim->x0 - 0x20;
                 } else {
-                    s16 posX = self->posX.i.hi;
-                    prim->x0 = posX - 15;
-                    prim->x1 = posX + 17;
-                    prim->x2 = prim->x0;
-                    prim->x3 = prim->x1;
+                    prim->x0 = (self->posX.i.hi + 0x7FFF) + 0x7FF2;
+                    prim->x1 = prim->x0 + 0x20;
                 }
-                prim->y0 = prim->y1 = self->posY.i.hi - 17;
-
+                prim->x2 = prim->x0;
+                prim->x3 = prim->x1;
+                prim->y0 = (self->posY.i.hi + 0x7FFF) + 0x7FF0;
+                prim->y1 = prim->y0;
+                prim->y2 = prim->y0 + 0x38;
+                prim->y3 = prim->y2;
                 setRGB0(prim, 64, 64, 160);
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
 
-                *(s32*)&prim->r1 = *(s32*)&prim->r0;
-                *(s32*)&prim->r2 = *(s32*)&prim->r0;
-                *(s32*)&prim->r3 = *(s32*)&prim->r0;
-
-                prim->y3 = prim->y2 = prim->y0 + 0x38;
                 prim->priority = self->zPriority;
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             } else {
@@ -216,12 +212,14 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = g_WaterXTbl;
-            pos += (self->params >> 8) & 1;
+            posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             posY -= 24;
-            camY = g_Tilemap.scrollY.i.hi + posY;
-            if (camY < pos[3]) {
+            posY += g_Tilemap.scrollY.i.hi;
+            pos = g_WaterXTbl;
+            pos += (self->params & 0x100) >> 8;
+            
+            if (posY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
@@ -230,8 +228,8 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->rotZ = 0;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
+                self->rotZ = 0;
                 self->step_s++;
             }
             break;
@@ -241,57 +239,53 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY > ~0xBFFF) {
                 prim->drawMode = DRAW_HIDE;
                 self->animCurFrame = 18;
-                self->hitboxHeight = 8;
                 self->rotZ -= 0x80;
+                self->hitboxHeight = 8;
             } else {
-                if (self->facingLeft != 0) {
-                    s16 posX = self->posX.i.hi;
-                    prim->x0 = posX + 15;
-                    prim->x1 = posX - 17;
-                    prim->x2 = prim->x0;
-                    prim->x3 = prim->x1;
-                    prim->y1 = prim->y0 = self->posY.i.hi - 17;
-                    prim->y3 = prim->y2 = prim->y0 + 0x38;
+                // These should probably be written some other way
+                if (self->facingLeft) {
+                    prim->x0 = (self->posX.i.hi - 0x8000) - 0x7FF1;
+                    prim->x1 = prim->x0 - 0x20;
                 } else {
-                    s16 posX = self->posX.i.hi;
-                    prim->x0 = posX - 15;
-                    prim->x1 = posX + 17;
-                    prim->x2 = prim->x0;
-                    prim->x3 = prim->x1;
-                    prim->y1 = prim->y0 = self->posY.i.hi - 17;
-                    prim->y3 = prim->y2 = prim->y0 + 0x38;
+                    prim->x0 = (self->posX.i.hi + 0x7FFF) + 0x7FF2;
+                    prim->x1 = prim->x0 + 0x20;
                 }
+                prim->x2 = prim->x0;
+                prim->x3 = prim->x1;
+                prim->y0 = (self->posY.i.hi + 0x7FFF) + 0x7FF0;
+                prim->y1 = prim->y0;
+                prim->y2 = prim->y0 + 0x38;
+                prim->y3 = prim->y2;
 
-                colorOffset =
-                    (u32)(((abs(self->velocityY) >> 0xC) - 10) & 0xFF) >> 1;
+                colorOffset = (abs(self->velocityY) >> 0xC) - 10;
 
-                setRGB0(prim, 128 - colorOffset, 128 - colorOffset,
-                        colorOffset + 192);
+                setRGB0(prim, 128 - colorOffset / 2, 128 - colorOffset / 2, colorOffset /2 + 192);
 
-                *(s32*)&prim->r1 = *(s32*)&prim->r0;
-                *(s32*)&prim->r2 = *(s32*)&prim->r0;
-                *(s32*)&prim->r3 = *(s32*)&prim->r0;
+                LOW(prim->r1) = LOW(prim->r0);
+                LOW(prim->r2) = LOW(prim->r0);
+                LOW(prim->r3) = LOW(prim->r0);
             }
             if (self->velocityY < 0) {
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN2_JUMP_AIR, self, newEntity);
-                    newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
+                    newEntity->posX.i.hi += ((Random() & 3) * 4) - 6;
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }
             if (self->velocityY > 0) {
                 CheckMermanEnteringWater(0x1B);
             }
-            if (self->ext.merman2.isUnderwater == 0) {
+            if (!self->ext.merman2.isUnderwater) {
                 if (UnkCollisionFunc3(&g_merman_coll1) & 1) {
-                    g_api.FreePrimitives(self->primIndex);
-                    self->hitboxHeight = 21;
+                    primIndex = self->primIndex;
+                    g_api.FreePrimitives(primIndex);
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &=
                         FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
                         FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
                         FLAG_DRAW_ROTX;
+                    self->hitboxHeight = 21;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                 }
             } else {
@@ -315,7 +309,8 @@ void EntityMerman2(Entity* self) {
 
         case MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.merman2.timer = g_merman2_walktimers[Random() & 3];
+            rnd = Random() & 3;
+            self->ext.merman2.timer = g_merman2_walktimers[rnd];
             self->step_s++;
             break;
 
@@ -369,23 +364,21 @@ void EntityMerman2(Entity* self) {
             if (AnimateEntity(g_merman2_spitfire, self) == 0) {
                 PlaySfxPositional(SFX_FIREBALL_SHOT_C);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                i = 0;
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_MEDIUM_WATER_SPLASH, self, newEntity);
                     newEntity->posY.i.hi -= 12;
                     newEntity->facingLeft = self->facingLeft;
                 }
-                newEntity2 = g_Entities + 224;
-                for (offset = 0; i < 3; i++, offset += 8) {
-                    newEntity = AllocEntity(newEntity2, newEntity2 + 32);
+                for (i = 0; i < 3; i++) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
                         CreateEntityFromEntity(
                             E_MERMAN2_SPIT_FIRE, self, newEntity);
-                        if (self->facingLeft != 0) {
-                            newEntity->posX.i.hi += 8 + offset;
+                        if (self->facingLeft) {
+                            newEntity->posX.i.hi += (8 + i * 8);
                         } else {
-                            newEntity->posX.i.hi += -8 - offset;
+                            newEntity->posX.i.hi -= (8 + i * 8);
                         }
                         newEntity->posY.i.hi -= 12;
                         newEntity->facingLeft = self->facingLeft;
@@ -394,10 +387,10 @@ void EntityMerman2(Entity* self) {
                         }
                     }
                 }
-                self->ext.merman2.rotation = 1;
-                self->rotZ = 0;
                 self->drawFlags |= FLAG_DRAW_ROTZ;
-                if (self->facingLeft != 0) {
+                self->rotZ = 0;
+                self->ext.merman2.rotation = 1;
+                if (self->facingLeft) {
                     self->velocityX = FIX(-6);
                 } else {
                     self->velocityX = FIX(6);
@@ -409,11 +402,11 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 2:
-            if ((self->ext.merman2.rotation < 0x100) && (g_Timer & 1)) {
+            if ((self->ext.merman2.rotation < 0x100) && (g_Timer % 2)) {
                 self->ext.merman2.rotation *= 2;
             }
             if (self->velocityX != 0) {
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     self->velocityX += FIX(0.1875);
                 } else {
                     self->velocityX -= FIX(0.1875);
@@ -421,7 +414,7 @@ void EntityMerman2(Entity* self) {
             }
             posX = self->posX.i.hi;
             posY = self->posY.i.hi + 8;
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 posX -= 20;
             } else {
                 posX += 20;
@@ -434,10 +427,10 @@ void EntityMerman2(Entity* self) {
             self->velocityY -= FIX(0.125);
 
             if (UnkCollisionFunc3(&g_merman_coll1) & 1) {
-                if (self->facingLeft == 0) {
-                    self->velocityX = FIX(2.5);
+                if (self->facingLeft) {
+                    self->velocityX = FIX(-2.5);
                 } else {
-                    self->velocityX = FIX(-5.0 / 2.0);
+                    self->velocityX = FIX(2.5);
                 }
                 self->ext.merman2.rotation = 4;
                 self->posY.i.hi += 10;
@@ -450,9 +443,9 @@ void EntityMerman2(Entity* self) {
             break;
 
         case 3:
-            posY = self->posY.i.hi + 8;
             posX = self->posX.i.hi;
-            if (self->facingLeft != 0) {
+            posY = self->posY.i.hi + 8;
+            if (self->facingLeft) {
                 posX -= 20;
             } else {
                 posX += 20;
@@ -478,7 +471,7 @@ void EntityMerman2(Entity* self) {
         break;
 
     case MERMAN2_7:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             self->step_s++;
@@ -495,51 +488,48 @@ void EntityMerman2(Entity* self) {
     case MERMAN2_DYING:
         switch (self->step_s) {
         case 0:
-            self->animCurFrame = 14;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-            if (!(GetSideToPlayer() & 1)) {
-                self->velocityX = FIX(-2);
-            } else {
+            self->animCurFrame = 14;
+            if ((GetSideToPlayer() & 1)) {
                 self->velocityX = FIX(2);
+            } else {
+                self->velocityX = FIX(-2);
             }
             self->velocityY = FIX(-1);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
             if (primIndex != -1) {
-                u32 v0;
-                prim = &g_PrimBuf[primIndex];
-                self->primIndex = primIndex;
-                self->ext.merman2.prim = prim;
                 self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
+                prim = &g_PrimBuf[primIndex];
+                self->ext.merman2.prim = prim;
                 UnkPolyFunc2(prim);
                 prim->tpage = 0x12;
                 prim->clut = 0x292;
                 if (self->params & 1) {
-                    prim->clut = 0x293;
+                    prim->clut++;
                 }
-                if (self->facingLeft != 0) {
-                    u32 u1 = 0x1C8;
+                if (self->facingLeft) {
                     prim->u0 = 0xF0;
-                    prim->u1 = u1;
+                    prim->u1 = prim->u0 - 0x28;
                 } else {
                     prim->u0 = 0xC8;
-                    prim->u1 = 0xF0;
+                    prim->u1 = prim->u0 + 0x28;
                 }
-
-                prim->v0 = prim->v1 = 0;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
-                v0 = prim->v0 + 0x30;
-                prim->v2 = v0;
-                prim->v3 = v0;
+                prim->v0 = 0;
+                prim->v1 = prim->v0;
+                prim->v2 = prim->v0 + 0x30;
+                prim->v3 = prim->v2;
 
                 prim->priority = self->zPriority + 1;
                 prim->drawMode = DRAW_UNK02;
-                *(s16*)&prim->next->r2 = 0x28;
-                *(s16*)&prim->next->b2 = 0x30;
+                LOH(prim->next->r2) = 0x28;
+                LOH(prim->next->b2) = 0x30;
                 prim->next->b3 = 0x80;
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     prim->next->x1 = self->posX.i.hi - 3;
                 } else {
                     prim->next->x1 = self->posX.i.hi + 3;
@@ -551,9 +541,9 @@ void EntityMerman2(Entity* self) {
 
         case 1:
             UnkCollisionFunc3(&g_merman2_coll3);
-            prim = self->ext.merman2.prim;
             self->velocityY -= FIX(0.1875);
-            if (self->facingLeft != 0) {
+            prim = self->ext.merman2.prim;
+            if (self->facingLeft) {
                 prim->next->x1 = self->posX.i.hi - 3;
             } else {
                 prim->next->x1 = self->posX.i.hi + 3;
@@ -562,7 +552,7 @@ void EntityMerman2(Entity* self) {
             UnkPrimHelper(prim);
             if (!(g_Timer % 10)) {
                 prim->clut += 2;
-                if (prim->clut >= 0x2A0) {
+                if (prim->clut > 0x29F) {
                     prim->drawMode = DRAW_HIDE;
                     self->step_s++;
                 } else {

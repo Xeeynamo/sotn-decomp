@@ -75,16 +75,16 @@ static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
 
 void EntityMerman2(Entity* self) {
-    u8 colorOffset; //s8
-    u8 rnd; //s7
-    s16* pos; //s6
-    s32 primIndex; //s5
-    s32 colRes; //sp5c
+    u8 colorOffset;
+    u8 rnd;
+    s16* pos;
+    s32 primIndex;
+    s32 colRes;
     Collider collider;
-    Entity* newEntity; //s1
+    Entity* newEntity;
     Primitive* prim;
-    s16 posX, posY; //s4, s3
-    s32 i; //s2
+    s16 posX, posY;
+    s32 i;
 
     if (self->ext.merman2.ignoreCol && (self->step < MERMAN2_7)) {
         SetStep(MERMAN2_7);
@@ -530,8 +530,8 @@ void EntityMerman2(Entity* self) {
 
                 prim->priority = self->zPriority + 1;
                 prim->drawMode = DRAW_UNK02;
-                *(s16*)&prim->next->r2 = 0x28;
-                *(s16*)&prim->next->b2 = 0x30;
+                LOH(prim->next->r2) = 0x28;
+                LOH(prim->next->b2) = 0x30;
                 prim->next->b3 = 0x80;
                 if (self->facingLeft) {
                     prim->next->x1 = self->posX.i.hi - 3;
