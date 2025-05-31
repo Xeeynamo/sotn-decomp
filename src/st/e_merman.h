@@ -65,8 +65,7 @@ void EntityMerman(Entity* self) {
     s16 posX, posY;
     s32 colRet;
     s16* pos;
-    s16 camY;
-    s32 rnd;
+    u8 rnd;
 
     if (self->ext.merman.isUnderwater) {
         self->palette = self->ext.merman.palette;
@@ -96,13 +95,13 @@ void EntityMerman(Entity* self) {
         self->ext.merman.palette = 0x2B9;
         self->zPriority = 0xA9;
         self->velocityY = FIX(-1);
+        self->palette = self->ext.merman.palette;
         self->hitboxWidth = 5;
         self->hitboxHeight = 17;
-        self->palette = self->ext.merman.palette;
         break;
 
     case MERMAN_SWIMMING_UP:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->hitboxWidth = 18;
             self->hitboxHeight = 4;
             self->step_s++;
@@ -111,7 +110,8 @@ void EntityMerman(Entity* self) {
         MoveEntity();
 
         posX = self->posX.i.hi;
-        posY = self->posY.i.hi - 24;
+        posY = self->posY.i.hi;
+        posY -= 24;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (!(collider.effects & EFFECT_WATER)) {
             SetStep(MERMAN_SWIMMING);
@@ -119,7 +119,7 @@ void EntityMerman(Entity* self) {
         break;
 
     case MERMAN_SWIMMING:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->hitboxWidth = 5;
             self->hitboxHeight = 17;
             rnd = Random() & 3;
@@ -131,7 +131,6 @@ void EntityMerman(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
-        camY = g_Tilemap.scrollY.i.hi;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         posY -= 24;
@@ -141,13 +140,13 @@ void EntityMerman(Entity* self) {
             self->velocityY = FIX(0.5);
         }
 
-        pos = g_WaterXTbl;
-        pos += (self->params >> 8) & 1;
         posY += g_Tilemap.scrollY.i.hi;
-        if (pos[4] < posY) {
+        pos = g_WaterXTbl;
+        pos += (self->params & 0x100) >> 8;
+        if (posY > pos[4]) {
             self->posY.i.hi = pos[4] - g_Tilemap.scrollY.i.hi - 24;
         }
-        if ((u8)self->ext.merman.timer2++ > 32) {
+        if (self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
             self->step_s = 0;
             if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
@@ -166,12 +165,12 @@ void EntityMerman(Entity* self) {
 
         case MERMAN_JUMPING_UNDERWATER:
             MoveEntity();
-            pos = g_WaterXTbl;
-            pos += (self->params >> 8) & 1;
-            camY = g_Tilemap.scrollY.i.hi;
+            posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             posY -= 20;
-            posY += camY;
+            posY += g_Tilemap.scrollY.i.hi;
+            pos = g_WaterXTbl;
+            pos += (self->params & 0x100) >> 8;
             if (posY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);

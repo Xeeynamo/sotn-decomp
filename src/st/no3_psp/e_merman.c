@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-// This file is most actively being worked on. Functions are being
-// decompiled, pulled into their own files, and code-shared in sequence.
 
 #include "../no3/no3.h"
 
-extern s16 D_pspeu_09295DC8[];
+extern s16 g_WaterXTbl[];
 
 typedef enum {
     MERMAN_INIT,
@@ -146,13 +144,14 @@ void EntityMerman(Entity* self) {
         if (!(collider.effects & EFFECT_WATER)) {
             self->velocityY = FIX(0.5);
         }
+
         posY += g_Tilemap.scrollY.i.hi;
-        pos = D_pspeu_09295DC8;
+        pos = g_WaterXTbl;
         pos += (self->params & 0x100) >> 8;
         if (posY > pos[4]) {
             self->posY.i.hi = pos[4] - g_Tilemap.scrollY.i.hi - 24;
         }
-        if ((u8)self->ext.merman.timer2++ > 32) {
+        if (self->ext.merman.timer2++ > 32) {
             self->ext.merman.timer2 = 0;
             self->step_s = 0;
             if ((GetDistanceToPlayerX() >= 48) && !(Random() & 1)) {
@@ -175,7 +174,7 @@ void EntityMerman(Entity* self) {
             posY = self->posY.i.hi;
             posY -= 20;
             posY += g_Tilemap.scrollY.i.hi;
-            pos = D_pspeu_09295DC8;
+            pos = g_WaterXTbl;
             pos += (self->params & 0x100) >> 8;
             if (posY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);

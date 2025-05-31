@@ -75,7 +75,7 @@ static u8 g_merman2_spitfire[] = {24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9,
 static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
 
-extern s16 D_pspeu_09295DC8[];
+extern s16 g_WaterXTbl[];
 extern u16 g_EInitWaterObject[];
 
 void EntityMerman2(Entity* self) {
@@ -149,7 +149,7 @@ void EntityMerman2(Entity* self) {
             self->velocityY = FIX(0.5);
         }
         posY += g_Tilemap.scrollY.i.hi;
-        pos = D_pspeu_09295DC8;
+        pos = g_WaterXTbl;
         pos += (self->params & 0x100) >> 8;
         if (posY > pos[4]) {
             self->posY.i.hi = pos[4] - g_Tilemap.scrollY.i.hi - 24;
@@ -224,7 +224,7 @@ void EntityMerman2(Entity* self) {
             posY = self->posY.i.hi;
             posY -= 24;
             posY += g_Tilemap.scrollY.i.hi;
-            pos = D_pspeu_09295DC8;
+            pos = g_WaterXTbl;
             pos += (self->params & 0x100) >> 8;
             
             if (posY < pos[3]) {
