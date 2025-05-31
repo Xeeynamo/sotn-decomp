@@ -531,7 +531,7 @@ typedef struct {
     /* 0x7C */ char pad_0[0x8];
     /* 0x84 */ u8 timer;
     /* 0x85 */ char pad_85[0x1];
-    /* 0x86 */ s8 timer2;
+    /* 0x86 */ u8 timer2;
     /* 0x87 */ char pad_87[0x5];
     /* 0x8C */ u16 palette;
     /* 0x8E */ char pad_8E[0x12];
