@@ -53,7 +53,7 @@ void EntityMerman(Entity* self) {
 
     switch (self->step) {
     case MERMAN_INIT:
-        InitializeEntity(D_80180B60);
+        InitializeEntity(g_EInitMerman);
         self->ext.merman.palette = 0x2B9;
         self->zPriority = 0xA9;
         self->velocityY = FIX(-1);
@@ -435,7 +435,7 @@ void EntityMermanFireball(Entity* self) {
 // some sort of falling object
 void EntityMermanJumpAir(Entity* arg0) {
     if (arg0->step == 0) {
-        InitializeEntity(D_80180B60);
+        InitializeEntity(g_EInitMerman);
         arg0->animCurFrame = 0;
         arg0->hitboxState = 0;
         arg0->zPriority += 4;

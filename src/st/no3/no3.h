@@ -190,7 +190,7 @@ extern ObjInit D_80182764[];
 extern u8 D_8018383C[];
 extern u8 D_80183AF0[];
 extern u8 D_80183B04[];
-extern u16 D_80180B60[];
+extern u16 g_EInitMerman[];
 extern u8 D_80183C44[];
 extern u8 D_80183C60[];
 extern u8 D_80183C7C[];
