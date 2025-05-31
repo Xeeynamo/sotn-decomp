@@ -378,10 +378,6 @@ extern DebugInfo g_MarDebug;
 extern s32 mar_80175958[32];
 extern s32 mar_801759D8[32];
 
-extern u8 mar_801545B0[];
-extern u8 mar_801545C4[];
-extern u8 mar_801545D4[];
-
 extern Point16 g_MarSensorsCeiling[];
 extern Point16 g_MarSensorsFloor[];
 extern Point16 g_MarSensorsWall[];
