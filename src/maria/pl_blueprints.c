@@ -104,7 +104,8 @@ void MarSetSubweaponParams(Entity* entity) {
     func_8015F9F0(entity);
 }
 
-s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+s32 MarCheckSubweapon(
+    SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
 
     // Not an item crash. Just read the item in.
@@ -187,17 +188,17 @@ void MarEntityDummy(Entity*) {}
 
 void MarEntityFactory(Entity* self);
 void MarEntitySmokePuff(Entity* self);
-void func_pspeu_092A7B80(Entity* self);
-void func_pspeu_092A6280(Entity* self);
+void EntityMariaDragonAttack(Entity* self);
+void EntityMariaDollAttack(Entity* self);
 void MarEntityHitByCutBlood(Entity* self);
-void func_pspeu_092BF950(Entity* self);
-void func_pspeu_092AAA38(Entity* self);
-void func_pspeu_092AB1C0(Entity* self);
+void EntityMariaCrashSummon(Entity* self);
+void EntityMariaTurtleAttack(Entity* self);
+void EntityMariaTurtleCrashVortex(Entity* self);
 void func_80161C2C(Entity* self);
 void EntityMariaOwl(Entity* self);
-void func_pspeu_092AAC80(Entity* self);
-void func_pspeu_092A82E0(Entity* self);
-void func_pspeu_092A8AE8(Entity* self);
+void EntityMariaTurtleCrash(Entity* self);
+void EntityMariaDragonCrash(Entity* self);
+void EntityMariaDragonCrashBodyPart(Entity* self);
 void func_pspeu_092BEB40(Entity* self);
 void func_pspeu_092BFD30(Entity* self);
 void func_pspeu_092BFF78(Entity* self);
@@ -210,32 +211,32 @@ void func_80160F0C(Entity* self);
 void MarEntityNotImplemented4(Entity* self);
 void MarEntityPlayerBlinkWhite(Entity* self);
 void MarEntityShrinkingPowerUpRing(Entity* self);
-void func_pspeu_092A7950(Entity* self);
-void func_pspeu_092A6E50(Entity* self);
-void func_pspeu_092A7560(Entity* self);
-void func_pspeu_092A9288(Entity* self);
-void func_pspeu_092A95A8(Entity* self);
+void EntityMariaCatCrashAttack(Entity* self);
+void EntityMariaCatAttack(Entity* self);
+void EntityMariaCatCrash(Entity* self);
+void EntityMariaCardinalAttack(Entity* self);
+void EntityMariaCardinalCrash(Entity* self);
 void MarEntityHitByIce(Entity* self);
 void MarEntityHitByLightning(Entity* self);
-void func_pspeu_092A9E88(Entity* self);
-void func_pspeu_092A6740(Entity* self);
+void EntityMariaCardinalCrashFireball(Entity* self);
+void EntityMariaDollActivate(Entity* self);
 void MarEntityTeleport(Entity* self);
 static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityFactory,
     MarEntitySmokePuff,
-    func_pspeu_092A7B80,
-    func_pspeu_092A6280,
+    EntityMariaDragonAttack,
+    EntityMariaDollAttack,
     MarEntityHitByCutBlood,
-    func_pspeu_092BF950,
-    func_pspeu_092AAA38,
-    func_pspeu_092AB1C0,
+    EntityMariaCrashSummon,
+    EntityMariaTurtleAttack,
+    EntityMariaTurtleCrashVortex,
     func_80161C2C,
     EntityMariaOwl,
-    func_pspeu_092AAC80,
+    EntityMariaTurtleCrash,
     MarEntityDummy,
-    func_pspeu_092A82E0,
-    func_pspeu_092A8AE8,
+    EntityMariaDragonCrash,
+    EntityMariaDragonCrashBodyPart,
     MarEntityDummy,
     func_pspeu_092BEB40,
     func_pspeu_092BFD30,
@@ -256,14 +257,14 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityDummy,
     MarEntityShrinkingPowerUpRing,
-    func_pspeu_092A7950,
-    func_pspeu_092A6E50,
-    func_pspeu_092A7560,
-    func_pspeu_092A9288,
-    func_pspeu_092A95A8,
+    EntityMariaCatCrashAttack,
+    EntityMariaCatAttack,
+    EntityMariaCatCrash,
+    EntityMariaCardinalAttack,
+    EntityMariaCardinalCrash,
     MarEntityHitByIce,
     MarEntityHitByLightning,
-    func_pspeu_092A9E88,
+    EntityMariaCardinalCrashFireball,
     MarEntityDummy,
     MarEntityDummy,
     MarEntityDummy,
@@ -271,7 +272,7 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityDummy,
     MarEntityDummy,
     MarEntityDummy,
-    func_pspeu_092A6740,
+    EntityMariaDollActivate,
     MarEntityDummy,
     MarEntityDummy,
     MarEntityDummy,
@@ -347,7 +348,7 @@ void MarUpdatePlayerEntities(void) {
     }
     // This IF will fire if we have enough hearts to use a subweapon crash.
     // No idea what it's doing here.
-    if (func_8015FB84(&subwpn, true, false) >= 0) {
+    if (MarCheckSubweapon(&subwpn, true, false) >= 0) {
         g_Player.status |= PLAYER_STATUS_UNK200000;
     }
     if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {
@@ -574,8 +575,7 @@ void MarEntityBladeDash(Entity* self) {
                           FLAG_KEEP_ALIVE_OFFCAMERA;
             self->hitboxOffX = self->hitboxOffY = 0;
             self->hitboxWidth = self->hitboxHeight = 20;
-            // Wow! So blade dash is treated as a subweapon!
-            self->ext.subweapon.subweaponId = PL_W_BIBLE_BEAM;
+            self->ext.subweapon.subweaponId = PL_W_BLADE_DASH;
             MarSetSubweaponParams(self);
             self->step++;
         }
@@ -637,7 +637,7 @@ void MarEntitySmokePuff(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        self->animSet = 5;
+        self->animSet = ANIMSET_DRA(5);
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
@@ -1330,7 +1330,7 @@ void EntityMariaOwl(Entity* self) {
         self->unk5A = 0x18;
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_OWL;
-        self->animSet = ANIMSET_OVL(17);
+        self->animSet = ANIMSET_WPN_OWL;
         MarSetAnimation(D_pspeu_092C59E8);
         self->facingLeft = PLAYER.facingLeft;
         self->velocityX = FIX(4);
@@ -1385,6 +1385,7 @@ void EntityMariaOwl(Entity* self) {
         self->step++;
         break;
     case 5: {
+        // this last step constrants the owl to always return back to Maria
         MATRIX sp6C;
         VECTOR sp5C = {0, 0, 0};
         VECTOR sp4C;
@@ -2688,7 +2689,7 @@ void MarEntityTeleport(Entity* self) {
     }
 }
 
-void func_pspeu_092BEA38(Entity* entity, s32 opacity) {
+void SetOpacity(Entity* entity, s32 opacity) {
     if (opacity >= 128) {
         entity->drawMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
         entity->opacity = 128;
@@ -2967,7 +2968,7 @@ void func_pspeu_092BEB40(Entity* self) {
     }
 }
 
-s32 func_pspeu_092BF8B8(s32 crashId) {
+s32 SpawnCrashSummon(s32 crashId) {
     Entity* entity;
 
     entity = MarGetFreeEntity(8, 16);
@@ -2976,14 +2977,14 @@ s32 func_pspeu_092BF8B8(s32 crashId) {
         return -1;
     }
     DestroyEntity(entity);
-    entity->entityId = E_UNK_6;
+    entity->entityId = E_CRASH_SUMMON;
     entity->posX.val = PLAYER.posX.val;
     entity->posY.val = PLAYER.posY.val;
     entity->ext.mariaCrashSummon.crashId = crashId;
     return 0;
 }
 
-void func_pspeu_092BF950(Entity* self) {
+void EntityMariaCrashSummon(Entity* self) {
     s32 x;
     s32 y;
     Primitive* prim;
@@ -2999,7 +3000,7 @@ void func_pspeu_092BF950(Entity* self) {
         self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
         self->unk5A = 0x1C;
         self->zPriority = 0x1C0;
-        func_pspeu_092C0138(self->ext.mariaCrashSummon.crashId);
+        LoadCrashSummonResouces(self->ext.mariaCrashSummon.crashId);
         MarSetInvincibilityFrames(0, 999);
         self->ext.mariaCrashSummon.timer = 0x200;
         self->step = 1;

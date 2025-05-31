@@ -8,7 +8,7 @@
 #define CHECK_FALL 4
 #define CHECK_FACING 8
 #define CHECK_JUMP 0x10
-#define CHECK_20 0x20
+#define CHECK_DOUBLEJUMP 0x20
 #define CHECK_CRASH 0x40
 #define CHECK_80 0x80
 #define CHECK_GRAVITY_HIT 0x200
@@ -37,6 +37,16 @@ enum MarPalette {
     /* 0x812F */ PAL_UNK_812F,
 };
 
+enum MarAnimset {
+    ANIMSET_PL_MARIA = ANIMSET_OVL(16),
+    ANIMSET_WPN_OWL = ANIMSET_OVL(17),
+    ANIMSET_WPN_TURTLE = ANIMSET_OVL(18),
+    ANIMSET_WPN_CAT = ANIMSET_OVL(19),
+    ANIMSET_WPN_CARDINAL = ANIMSET_OVL(20),
+    ANIMSET_WPN_DRAGON = ANIMSET_OVL(21),
+    ANIMSET_WPN_DOLL = ANIMSET_OVL(22),
+};
+
 enum MarSteps {
     PL_S_STAND,
     PL_S_WALK,
@@ -57,16 +67,16 @@ enum MarSteps {
     PL_S_DEAD,
     PL_S_17, // unused
     PL_S_18,
-    PL_S_SUBWPN_19,
-    PL_S_SUBWPN_20,
-    PL_S_SUBWPN_21,
+    PL_S_CARDINAL_CRASH,
+    PL_S_CAT_CRASH,
+    PL_S_TURTLE_CRASH,
     PL_S_22, // unused
     PL_S_SLIDE,
     PL_S_BLADEDASH,
     PL_S_RUN,
     PL_S_26, // unused
-    PL_S_SUBWPN_27,
-    PL_S_SUBWPN_28,
+    PL_S_DRAGON_CRASH,
+    PL_S_CARDINAL_ATTACK,
     PL_S_29, // unused
     PL_S_30, // unused
     PL_S_31, // unused
@@ -96,72 +106,72 @@ enum MarTimers {
 enum MarEntities {
     E_NONE,
     E_FACTORY,
-    E_SMOKE_PUFF,             // MarEntitySmokePuff
-    E_UNK_3,                  // func_pspeu_092A7B80
-    E_UNK_4,                  // func_pspeu_092A6280
-    E_HIT_BY_CUT_BLOOD,       // MarEntityHitByCutBlood
-    E_UNK_6,                  // func_pspeu_092BF950
-    E_UNK_7,                  // func_pspeu_092AAA38
-    E_UNK_8,                  // func_pspeu_092AB1C0
-    E_80161C2C,               // func_80161C2C
-    E_MARIA_OWL,              // EntityMariaOwl
-    E_UNK_11,                 // func_pspeu_092AAC80
-    E_DUMMY_12,               // MarEntityDummy
-    E_UNK_13,                 // func_pspeu_092A82E0
-    E_UNK_14,                 // func_pspeu_092A8AE8
-    E_DUMMY_15,               // MarEntityDummy
-    E_UNK_16,                 // func_pspeu_092BEB40
-    E_UNK_17,                 // func_pspeu_092BFD30
-    E_UNK_18,                 // func_pspeu_092BFF78
-    E_DUMMY_19,               // MarEntityDummy
-    E_DUMMY_20,               // MarEntityDummy
-    E_DUMMY_21,               // MarEntityDummy
-    E_APPLY_MARIA_POWER_ANIM, // MarEntityApplyMariaPowerAnim
-    E_SLIDE_KICK,             // MarEntitySlideKick
-    E_BLADE_DASH,             // MarEntityBladeDash
-    E_801623E0,               // func_801623E0
-    E_80162604,               // func_80162604
-    E_DUMMY_27,               // MarEntityDummy
-    E_DUMMY_28,               // MarEntityDummy
-    E_80160F0C,               // func_80160F0C
-    E_NOT_IMPLEMENTED_4,      // MarEntityNotImplemented4
-    E_BLINK_WHITE,            // MarEntityPlayerBlinkWhite
-    E_DUMMY_32,               // MarEntityDummy
-    E_DUMMY_33,               // MarEntityDummy
-    E_SHRINKING_POWERUP_RING, // MarEntityShrinkingPowerUpRing
-    E_UNK_35,                 // func_pspeu_092A7950
-    E_UNK_36,                 // func_pspeu_092A6E50
-    E_UNK_37,                 // func_pspeu_092A7560
-    E_UNK_38,                 // func_pspeu_092A9288
-    E_UNK_39,                 // func_pspeu_092A95A8
-    E_HIT_BY_ICE,             // MarEntityHitByIce
-    E_HIT_BY_LIGHTNING,       // MarEntityHitByLightning
-    E_UNK_42,                 // func_pspeu_092A9E88
-    E_DUMMY_43,               // MarEntityDummy
-    E_DUMMY_44,               // MarEntityDummy
-    E_DUMMY_45,               // MarEntityDummy
-    E_DUMMY_46,               // MarEntityDummy
-    E_DUMMY_47,               // MarEntityDummy
-    E_DUMMY_48,               // MarEntityDummy
-    E_DUMMY_49,               // MarEntityDummy
-    E_UNK_50,                 // func_pspeu_092A6740
-    E_DUMMY_51,               // MarEntityDummy
-    E_DUMMY_52,               // MarEntityDummy
-    E_DUMMY_53,               // MarEntityDummy
-    E_DUMMY_54,               // MarEntityDummy
-    E_DUMMY_55,               // MarEntityDummy
-    E_DUMMY_56,               // MarEntityDummy
-    E_DUMMY_57,               // MarEntityDummy
-    E_DUMMY_58,               // MarEntityDummy
-    E_DUMMY_59,               // MarEntityDummy
-    E_DUMMY_60,               // MarEntityDummy
-    E_DUMMY_61,               // MarEntityDummy
-    E_DUMMY_62,               // MarEntityDummy
-    E_DUMMY_63,               // MarEntityDummy
-    E_DUMMY_64,               // MarEntityDummy
-    E_DUMMY_65,               // MarEntityDummy
-    E_TELEPORT,               // MarEntityTeleport
-    E_DUMMY_67,               // MarEntityDummy
+    E_SMOKE_PUFF,              // MarEntitySmokePuff
+    E_DRAGON_ATTACK,           // EntityMariaDragonAttack
+    E_DOLL_ATTACK,             // EntityMariaDollAttack
+    E_HIT_BY_CUT_BLOOD,        // MarEntityHitByCutBlood
+    E_CRASH_SUMMON,            // EntityMariaCrashSummon
+    E_TURTLE_ATTACK,           // EntityMariaTurtleAttack
+    E_TURTLE_CRASH_VORTEX,     // EntityMariaTurtleCrashVortex
+    E_80161C2C,                // func_80161C2C
+    E_OWL,                     // EntityMariaOwl
+    E_TURTLE_CRASH,            // EntityMariaTurtleCrash
+    E_DUMMY_12,                // MarEntityDummy
+    E_DRAGON_CRASH,            // EntityMariaDragonCrash
+    E_DRAGON_CRASH_BODY_PART,  // EntityMariaDragonCrashBodyPart
+    E_DUMMY_15,                // MarEntityDummy
+    E_UNK_16,                  // func_pspeu_092BEB40
+    E_UNK_17,                  // func_pspeu_092BFD30
+    E_UNK_18,                  // func_pspeu_092BFF78
+    E_DUMMY_19,                // MarEntityDummy
+    E_DUMMY_20,                // MarEntityDummy
+    E_DUMMY_21,                // MarEntityDummy
+    E_APPLY_MARIA_POWER_ANIM,  // MarEntityApplyMariaPowerAnim
+    E_SLIDE_KICK,              // MarEntitySlideKick
+    E_BLADE_DASH,              // MarEntityBladeDash
+    E_801623E0,                // func_801623E0
+    E_80162604,                // func_80162604
+    E_DUMMY_27,                // MarEntityDummy
+    E_DUMMY_28,                // MarEntityDummy
+    E_80160F0C,                // func_80160F0C
+    E_NOT_IMPLEMENTED_4,       // MarEntityNotImplemented4
+    E_BLINK_WHITE,             // MarEntityPlayerBlinkWhite
+    E_DUMMY_32,                // MarEntityDummy
+    E_DUMMY_33,                // MarEntityDummy
+    E_SHRINKING_POWERUP_RING,  // MarEntityShrinkingPowerUpRing
+    E_CAT_CRASH_ATTACK,        // EntityMariaCatCrashAttack
+    E_CAT_ATTACK,              // EntityMariaCatAttack
+    E_CAT_CRASH,               // EntityMariaCatCrash
+    E_CARDINAL_ATTACK,         // EntityMariaCardinalAttack
+    E_CARDINAL_CRASH,          // EntityMariaCardinalCrash
+    E_HIT_BY_ICE,              // MarEntityHitByIce
+    E_HIT_BY_LIGHTNING,        // MarEntityHitByLightning
+    E_CARDINAL_CRASH_FIREBALL, // EntityMariaCardinalCrashFireball
+    E_DUMMY_43,                // MarEntityDummy
+    E_DUMMY_44,                // MarEntityDummy
+    E_DUMMY_45,                // MarEntityDummy
+    E_DUMMY_46,                // MarEntityDummy
+    E_DUMMY_47,                // MarEntityDummy
+    E_DUMMY_48,                // MarEntityDummy
+    E_DUMMY_49,                // MarEntityDummy
+    E_DOLL_ACTIVATE,           // EntityMariaDollActivate
+    E_DUMMY_51,                // MarEntityDummy
+    E_DUMMY_52,                // MarEntityDummy
+    E_DUMMY_53,                // MarEntityDummy
+    E_DUMMY_54,                // MarEntityDummy
+    E_DUMMY_55,                // MarEntityDummy
+    E_DUMMY_56,                // MarEntityDummy
+    E_DUMMY_57,                // MarEntityDummy
+    E_DUMMY_58,                // MarEntityDummy
+    E_DUMMY_59,                // MarEntityDummy
+    E_DUMMY_60,                // MarEntityDummy
+    E_DUMMY_61,                // MarEntityDummy
+    E_DUMMY_62,                // MarEntityDummy
+    E_DUMMY_63,                // MarEntityDummy
+    E_DUMMY_64,                // MarEntityDummy
+    E_DUMMY_65,                // MarEntityDummy
+    E_TELEPORT,                // MarEntityTeleport
+    E_DUMMY_67,                // MarEntityDummy
     NUM_ENTITIES,
 };
 
@@ -169,82 +179,78 @@ enum MarEntities {
 enum MarBlueprints {
     BP_SKID_SMOKE,
     BP_SMOKE_PUFF,
-    _BP_SUBWPN_CROSS,
-    _BP_SUBWPN_CROSS_PARTICLES,
+    BP_DRAGON_ATTACK,
+    BP_DOLL_ATTACK,
     BP_EMBERS,
     _BP_5,
-    _BP_SUBWPN_HOLYWATER,
-    _BP_HOLYWATER_FIRE,
+    BP_TURTLE_ATTACK,
+    BP_DUMMY_7,
     BP_HIT_BY_FIRE,
     _BP_HOLYWATER_FLAMES,
     BP_OWL,
     BP_MULTIPLE_EMBERS,
-    _BP_HYDROSTORM,
-    _BP_CRASH_CROSS,
-    _BP_CRASH_CROSSES_ONLY,
-    _BP_NOT_IMPLEMENTED_1,
-    // 0x10
-    _BP_NOT_IMPLEMENTED_2,
-    _BP_ARM_BRANDISH_WHIP,
-    _BP_18,
-    _BP_AXE,
-    _BP_20,
-    _BP_NOT_IMPLEMENTED_3,
-    _BP_REVIVAL_COLUMN,
-    _BP_MARIA_POWERS_APPLIED,
+    BP_TURTLE_CRASH,
+    BP_DRAGON_CRASH,
+    BP_TURTLE_CRASH_VORTEX,
+    BP_DRAGON_CRASH_BODY_PART,
+    BP_DUMMY_16,
+    BP_DUMMY_17,
+    BP_DUMMY_18,
+    BP_CAT_ATTACK,
+    BP_DUMMY_20,
+    BP_DUMMY_21,
+    BP_DUMMY_22,
+    BP_DUMMY_23,
     BP_SLIDE,
-    BP_25,
+    BP_SLIDE_KICK,
     BP_BLADE_DASH,
-    _BP_BLUE_CIRCLE,
-    _BP_BLUE_SPHERE,
-    _BP_MARIA,
-    _BP_MARIA_POWERS_INVOKED,
-    _BP_31,
-    // 0x20
-    BP_NOT_IMPLEMENTED_4,
+    BP_DUMMY_27,
+    BP_DUMMY_28,
+    BP_DUMMY_29,
+    BP_DUMMY_30,
+    BP_DUMMY_31,
+    BP_DUMMY_32,
     BP_MAR_BLINK,
-    _BP_CRASH_CROSS_PARTICLES,
-    _BP_35,
-    _BP_36,
-    _BP_37,
-    _BP_38,
-    _BP_39,
-    _BP_HOLYWATER_GLASS,
-    _BP_CRASH_AXE,
-    _BP_42,
-    _BP_SUBWPN_DAGGER,
-    _BP_CRASH_DAGGER,
-    _BP_HIGH_JUMP,
+    BP_DUMMY_34,
+    BP_DUMMY_35,
+    BP_36,
+    BP_37,
+    BP_38,
+    BP_39,
+    BP_CAT_CRASH_ATTACK,
+    BP_CAT_CRASH,
+    BP_42,
+    BP_CARDINAL_ATTACK,
+    BP_CARDINAL_CRASH,
+    BP_45,
     BP_HIT_BY_CUT,
     BP_HIT_BY_ICE,
-    // 0x30
     BP_HIT_BY_THUNDER,
-    _BP_VIBHUTI,
-    _BP_REBOUND_STONE,
-    _BP_AGUNEA,
-    _BP_AGUNEA_HIT_ENEMY,
+    BP_CARDINAL_CRASH_FIREBALL,
+    BP_DOLL_ACTIVATE,
+    BP_DUMMY_51,
+    BP_DUMMY_52,
     BP_DEATH_BY_FIRE,
-    _BP_CRASH_VITHUBI,
-    _BP_VITHUBI_CRASH_CLOUD,
-    _BP_CRASH_REBOUND_STONE,
-    _BP_57,
-    _BP_CRASH_REBOUND_STONE_EXPLOSION,
-    _BP_CRASH_BIBLE,
-    _BP_CRASH_BIBLE_BEAM,
-    _BP_BIBLE,
-    _BP_BIBLE_TRAIL,
-    _BP_SUBWPN_STOPWATCH,
-    // 0x40
-    _BP_STOPWATCH_CIRCLE,
-    _BP_CRASH_STOPWATCH,
-    _BP_66,
-    _BP_CRASH_AGUNEA,
-    _BP_CRASH_AGUNEA_THUNDER,
-    _BP_CRASH_REBOUND_STONE_PARTICLES,
+    BP_DUMMY_54,
+    BP_DUMMY_55,
+    BP_DUMMY_56,
+    BP_DUMMY_57,
+    BP_DUMMY_58,
+    BP_DUMMY_59,
+    BP_DUMMY_60,
+    BP_DUMMY_61,
+    BP_DUMMY_62,
+    BP_DUMMY_63,
+    BP_DUMMY_64,
+    BP_DUMMY_65,
+    BP_DUMMY_66,
+    BP_DUMMY_67,
+    BP_DUMMY_68,
+    BP_DUMMY_69,
     BP_HIT_BY_DARK,
     BP_HIT_BY_HOLY,
-    _BP_AGUNEA_THUNDER,
-    _BP_CRASH_STOPWATCH_LIGHTNING,
+    BP_DUMMY_72,
+    BP_DUMMY_73,
     BP_SMOKE_PUFF_2,
     BP_SKID_SMOKE_2,
     BP_SKID_SMOKE_3,
@@ -339,38 +345,38 @@ enum BlueprintOrigin {
 
 // all enums with an underscore as prefix are unconfirmed
 enum MarSubweapons {
-    PL_W_NONE,
-    _PL_W_DAGGER,
-    _PL_W_AXE,
-    _PL_W_HOLYWATER,
-    _PL_W_CROSS,
-    _PL_W_BIBLE,
-    _PL_W_STOPWATCH,
-    _PL_W_REBNDSTONE,
-    _PL_W_VIBHUTI,
-    _PL_W_AGUNEA,
-    _PL_W_10,
-    _PL_W_HOLYWATER_FLAMES,
-    _PL_W_CRASH_CROSS,
-    _PL_W_CRASH_CROSS_BEAM,
-    _PL_W_WHIP,
-    _PL_W_15,
-    _PL_W_HYDROSTORM,
-    PL_W_BIBLE_BEAM,
+    PL_W_NONE, // also used for DOLL
+    PL_W_CARDINAL,
+    PL_W_CAT,
+    PL_W_TURTLE,
+    PL_W_DRAGON,
+    PL_W_DUMMY_5,  // left-over from RIC
+    PL_W_DUMMY_6,  // left-over from RIC
+    PL_W_DUMMY_7,  // left-over from RIC
+    PL_W_DUMMY_8,  // left-over from RIC
+    PL_W_DUMMY_9,  // left-over from RIC
+    PL_W_DUMMY_10, // left-over from RIC
+    PL_W_DUMMY_11, // left-over from RIC
+    PL_W_DRAGON_CRASH,
+    PL_W_DUMMY_13, // left-over from RIC
+    PL_W_DUMMY_14, // left-over from RIC
+    PL_W_DOLL,
+    PL_W_TURTLE_CRASH,
+    PL_W_BLADE_DASH,
     PL_W_KICK,
-    _PL_W_19,
-    _PL_W_20,
-    _PL_W_21,
+    PL_W_DUMMY_19, // left-over from RIC
+    PL_W_CAT_CRASH,
+    PL_W_CARDINAL_CRASH,
     PL_W_HIGHJUMP,
-    _PL_W_23,
-    _PL_W_CRASH_VIBHUTI,
-    _PL_W_CRASH_REBOUND_STONE,
-    _PL_W_CRASH_AGUNEA,
-    _PL_W_27,
-    _PL_W_28,
-    _PL_W_CRASH_REBOUND_EXPLOSION,
-    _PL_W_30,
-    _PL_W_31,
+    PL_W_DUMMY_23, // left-over from RIC
+    PL_W_DUMMY_24, // left-over from RIC
+    PL_W_DUMMY_25, // left-over from RIC
+    PL_W_DUMMY_26, // left-over from RIC
+    PL_W_DUMMY_27, // left-over from RIC
+    PL_W_DUMMY_28, // left-over from RIC
+    PL_W_DUMMY_29, // left-over from RIC
+    PL_W_DUMMY_30, // left-over from RIC
+    PL_W_DUMMY_31, // left-over from RIC
     NUM_WEAPONS,
 };
 
@@ -421,7 +427,7 @@ extern AnimationFrame mar_anim_high_jump[];
 extern AnimationFrame mar_anim_stun[];
 extern AnimationFrame D_pspeu_092C0790[];
 extern AnimationFrame mar_80155704[];
-extern AnimationFrame D_pspeu_092C07E8[];
+extern AnimationFrame anim_maria_use_crash[];
 extern AnimationFrame mar_80155544[];
 extern AnimationFrame D_pspeu_092C0858[];
 extern AnimationFrame mar_anim_press_up[];
@@ -436,4 +442,4 @@ void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS);
 Entity* MarCreateEntFactoryFromEntity(Entity* entity, u32 arg1, s32 arg2);
 s32 func_pspeu_092BEAB0(s16);
-void func_pspeu_092BEA38(Entity* entity, s32 opacity);
+void SetOpacity(Entity* entity, s32 opacity);

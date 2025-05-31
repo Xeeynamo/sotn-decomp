@@ -157,19 +157,19 @@ void MarInit(s16 initParam) {
     }
     spriteptr = g_api.o.spriteBanks;
     spriteptr += 0x10;
-    *spriteptr = (SpriteParts*)mar_801530AC;
+    *spriteptr = (SpriteParts*)mar_801530AC; // ANIMSET_PL_MARIA
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_owl_spr;
+    *spriteptr = (SpriteParts*)wpn_owl_spr; // ANIMSET_WPN_OWL
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_turtle_spr;
+    *spriteptr = (SpriteParts*)wpn_turtle_spr; // ANIMSET_WPN_TURTLE
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_cat_spr;
+    *spriteptr = (SpriteParts*)wpn_cat_spr; // ANIMSET_WPN_CAT
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_cardinal_spr;
+    *spriteptr = (SpriteParts*)wpn_cardinal_spr; // ANIMSET_WPN_CARDINAL
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_dragon_spr;
+    *spriteptr = (SpriteParts*)wpn_dragon_spr; // ANIMSET_WPN_DRAGON
     spriteptr++;
-    *spriteptr = (SpriteParts*)wpn_doll_spr;
+    *spriteptr = (SpriteParts*)wpn_doll_spr; // ANIMSET_WPN_DOLL
     for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
@@ -650,20 +650,20 @@ void MarMain(void) {
     case PL_S_18:
         func_pspeu_092B0C70();
         break;
-    case PL_S_SUBWPN_19:
-        func_pspeu_092B0CD0();
+    case PL_S_CARDINAL_CRASH:
+        MarStepCardinalCrash();
         break;
-    case PL_S_SUBWPN_20:
-        func_pspeu_092B0D20();
+    case PL_S_CAT_CRASH:
+        MarStepCatCrash();
         break;
-    case PL_S_SUBWPN_21:
-        func_pspeu_092B0D70();
+    case PL_S_TURTLE_CRASH:
+        MarStepTurtleCrash();
         break;
-    case PL_S_SUBWPN_27:
-        func_pspeu_092B0DC0();
+    case PL_S_DRAGON_CRASH:
+        MarStepDragonCrash();
         break;
-    case PL_S_SUBWPN_28:
-        func_pspeu_092B0E10();
+    case PL_S_CARDINAL_ATTACK:
+        MarStepCardinalAttack();
         break;
     case PL_S_SLIDE:
         MarStepSlide();
@@ -720,15 +720,15 @@ void MarMain(void) {
         }
         MarSetInvincibilityFrames(1, 16);
         break;
-    case PL_S_SUBWPN_19:
-    case PL_S_SUBWPN_20:
-    case PL_S_SUBWPN_21:
-    case PL_S_SUBWPN_27:
+    case PL_S_CARDINAL_CRASH:
+    case PL_S_CAT_CRASH:
+    case PL_S_TURTLE_CRASH:
+    case PL_S_DRAGON_CRASH:
     case PL_S_18:
         newStatus = 0x08000000;
         MarSetInvincibilityFrames(1, 16);
         break;
-    case PL_S_SUBWPN_28:
+    case PL_S_CARDINAL_ATTACK:
         break;
     case PL_S_SLIDE:
         newStatus = 0x20;

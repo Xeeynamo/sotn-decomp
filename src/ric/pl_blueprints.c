@@ -107,7 +107,8 @@ void RicSetSubweaponParams(Entity* entity) {
 }
 
 // We're playing as Richter and we used a subweapon (normal or crash)
-s32 func_8015FB84(SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+s32 RicCheckSubweapon(
+    SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
     SubweaponDef* subwpn;
 
     // Not an item crash. Just read the item in.
@@ -521,7 +522,7 @@ void RicUpdatePlayerEntities(void) {
     }
     // This IF will fire if we have enough hearts to use a subweapon crash.
     // No idea what it's doing here.
-    if (func_8015FB84(&subwpn, true, false) >= 0) {
+    if (RicCheckSubweapon(&subwpn, true, false) >= 0) {
         g_Player.status |= PLAYER_STATUS_UNK200000;
     }
     if (g_Player.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK80000)) {

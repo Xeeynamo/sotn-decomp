@@ -245,8 +245,9 @@ void MarStepJump(void) {
 }
 
 void MarStepFall(void) {
-    if (MarCheckInput(CHECK_GROUND | CHECK_FACING | CHECK_20 | CHECK_CRASH |
-                      CHECK_400 | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
+    if (MarCheckInput(
+            CHECK_GROUND | CHECK_FACING | CHECK_DOUBLEJUMP | CHECK_CRASH |
+            CHECK_400 | CHECK_ATTACK | CHECK_GRAVITY_FALL)) {
         return;
     }
     MarDecelerateX(FIX(1. / 16));
@@ -377,7 +378,7 @@ void MarStepCrouch(void) {
     }
 }
 
-static void func_80159BC8(void) {
+static void MarResetPose(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
@@ -444,7 +445,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     switch (PLAYER.step_s) {
     case 0:
         step_s_zero = true;
-        func_80159BC8();
+        MarResetPose();
         if (damageKind < DAMAGEKIND_16) {
             func_80159C04();
         } else {
@@ -756,7 +757,7 @@ void MarStepBossGrab(void) {
 
     switch (g_CurrentEntity->step_s) {
     case 0:
-        func_80159BC8();
+        MarResetPose();
         if (g_Player.unk62 == 0) {
             PLAYER.anim = mar_anim_stun;
             g_Player.timers[PL_T_2] = 8;
@@ -813,7 +814,7 @@ void MarStepDead(
 
     switch (PLAYER.step_s) {
     case 0:
-        func_80159BC8();
+        MarResetPose();
         func_80159C04();
         func_8015CAAC(FIX(-0.75));
         MarSetAnimation(mar_80155544);
@@ -966,7 +967,7 @@ void func_pspeu_092B0C70(void) {
     MarStepStand();
 }
 
-void func_pspeu_092B0CD0(void) {
+void MarStepCardinalCrash(void) {
     if (g_Player.unk5C != 2) {
         g_Player.unk4E = 1;
         MarSetStand(0);
@@ -974,7 +975,7 @@ void func_pspeu_092B0CD0(void) {
     }
 }
 
-void func_pspeu_092B0D20(void) {
+void MarStepCatCrash(void) {
     if (g_Player.unk5C != 2) {
         g_Player.unk4E = 1;
         MarSetStand(0);
@@ -982,7 +983,7 @@ void func_pspeu_092B0D20(void) {
     }
 }
 
-void func_pspeu_092B0D70(void) {
+void MarStepTurtleCrash(void) {
     if (g_Player.unk5C != 2) {
         g_Player.unk4E = 1;
         MarSetStand(0);
@@ -990,7 +991,7 @@ void func_pspeu_092B0D70(void) {
     }
 }
 
-void func_pspeu_092B0DC0(void) {
+void MarStepDragonCrash(void) {
     if (g_Player.unk5C != 2) {
         g_Player.unk4E = 1;
         MarSetStand(0);
@@ -998,7 +999,7 @@ void func_pspeu_092B0DC0(void) {
     }
 }
 
-void func_pspeu_092B0E10(void) {
+void MarStepCardinalAttack(void) {
     if (g_Player.unk7A == 0) {
         MarSetStand(0);
         g_Player.unk46 = 0;
