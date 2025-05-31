@@ -1,19 +1,256 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-extern u8 D_pspeu_092E5B08[8];
-extern s32 D_pspeu_092E5900;
-extern Point16 D_pspeu_092E5B18[];
+static s32 D_pspeu_092E5F18;
+static s32 D_pspeu_092E5D18[0x80];
+static Point16 D_pspeu_092E5B18[0x80];
+static s32 D_pspeu_092E5B10;
+static u8 D_pspeu_092E5B08[8];
+static s32 D_pspeu_092E5908[0x80];
+static s32 D_pspeu_092E5900;
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6280);
+AnimationFrame D_pspeu_092C0918[] = {
+    POSE(3, 7, 0), POSE(3, 8, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0928[] = {
+    POSE(2, 1, 0), POSE(2, 2, 0), POSE(2, 3, 0), POSE(1, 4, 0), POSE(1, 5, 0),
+    POSE(2, 6, 0), POSE(1, 5, 0), POSE(2, 4, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0950[] = {POSE(1, 9, 0), POSE_LOOP(0)};
+void func_pspeu_092A6280(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x19;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DOLL;
+        self->animSet = ANIMSET_OVL(22);
+        MarSetAnimation(D_pspeu_092C0950);
+        self->facingLeft = PLAYER.facingLeft;
+        self->velocityX = 0;
+        self->posX.i.hi = PLAYER.posX.i.hi + (self->facingLeft ? -24 : 24);
+        self->posY.i.hi = PLAYER.posY.i.hi + 0x18;
+        self->hitboxWidth = 0;
+        self->hitboxHeight = 0;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = -8;
+        self->ext.maria092A6280.unkB0 = 0;
+        MarSetWeaponParams(self, 18, ELEMENT_HOLY, 2, 16, 16, 1, 0);
+        g_Player.unk5C = 1;
+        self->ext.maria092A6280.timer = 0;
+        self->step = 1;
+        MarCreateEntFactoryFromEntity(self, _BP_REBOUND_STONE, 0);
+        break;
+    case 1:
+        if (self->ext.maria092A6280.timer > 10) {
+            MarSetAnimation(D_pspeu_092C0918);
+            self->step = 2;
+            self->velocityX = FIX(3.25);
+            self->ext.maria092A6280.timer = 0;
+        }
+        self->ext.maria092A6280.timer++;
+        break;
+    case 2:
+        if (self->hitboxOffX < 24) {
+            self->hitboxOffX += 2;
+        } else {
+            self->hitboxOffX = 24;
+        }
+        if ((self->hitboxWidth) < 24) {
+            self->hitboxWidth += 2;
+        } else {
+            self->hitboxWidth = 24;
+        }
+        if ((self->hitboxHeight) < 24) {
+            self->hitboxHeight += 4;
+        } else {
+            self->hitboxHeight = 24;
+        }
+        if (self->ext.maria092A6280.timer < 15) {
+            self->posX.val +=
+                self->facingLeft ? -self->velocityX : self->velocityX;
+        }
+        if (self->ext.maria092A6280.timer == 15) {
+            self->velocityX = 0;
+            MarSetAnimation(D_pspeu_092C0928);
+        }
+        if ((self->ext.maria092A6280.timer % 6) == 0) {
+            g_api.PlaySfx(SFX_WEAPON_SWISH_A);
+        }
+        self->ext.maria092A6280.timer++;
+        if (self->ext.maria092A6280.timer > 75) {
+            MarSetAnimation(D_pspeu_092C0950);
+            self->ext.maria092A6280.opacity = 128;
+            self->ext.maria092A6280.ttl = 15;
+            self->step = 3;
+            self->hitboxState = 0;
+        }
+        break;
+    case 3:
+        if (self->ext.maria092A6280.ttl > 0) {
+            self->ext.maria092A6280.ttl--;
+        } else {
+            self->ext.maria092A6280.opacity -= 8;
+        }
+        if (self->ext.maria092A6280.opacity <= 0) {
+            func_pspeu_092BEA38(self, 0);
+            self->step = 4;
+            return;
+        }
+        func_pspeu_092BEA38(self, self->ext.maria092A6280.opacity);
+        break;
+    case 4:
+        g_Player.unk5C = 0;
+        DestroyEntity(self);
+        break;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6740);
+void func_pspeu_092A6740(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
+                      FLAG_UNK_100000;
+        self->unk5A = 0x19;
+        self->zPriority = PLAYER.zPriority - 8;
+        self->palette = PAL_WPN_DOLL;
+        self->animSet = ANIMSET_OVL(22);
+        MarSetAnimation(D_pspeu_092C0950);
+        self->ext.maria092A6740.timer = 0;
+        self->ext.maria092A6740.opacity = 0;
+        self->step = 2;
+        self->posX.val = self->ext.maria092A6740.parent->posX.val;
+        self->posY.val = self->ext.maria092A6740.parent->posY.val;
+        self->ext.maria092A6740.opacity = 64;
+        self->ext.maria092A6740.scale = 0x100;
+        self->rotX = self->ext.maria092A6740.scale;
+        self->rotY = self->ext.maria092A6740.scale;
+        func_pspeu_092BEA38(self, 64);
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        break;
+    case 2:
+        self->ext.maria092A6740.timer++;
+        if (self->ext.maria092A6740.timer > 10) {
+            self->ext.maria092A6740.opacity = 128;
+            self->step = 4;
+            return;
+        }
+        self->ext.maria092A6740.opacity -= 2;
+        self->ext.maria092A6740.scale += 8;
+        func_pspeu_092BEA38(self, self->ext.maria092A6740.opacity);
+        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        // rotX and rotY are also used to scale horizontally and vertically
+        self->rotX = self->ext.maria092A6740.scale;
+        self->rotY = self->ext.maria092A6740.scale;
+        break;
+    case 4:
+        DestroyEntity(self);
+        break;
+    }
+}
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6958);
+static int func_pspeu_092A6958(s32 x, s32 y, s32 horizPixelCount) {
+    Collider col;
 
-INCLUDE_ASM("maria_psp/nonmatchings/80", func_pspeu_092A6A08);
+    g_api.CheckCollision(x, y, &col, 0);
+    while (col.effects & EFFECT_UNK_0002) {
+        if (horizPixelCount-- < 0) {
+            return -1;
+        }
+        y--;
+        g_api.CheckCollision(x, y, &col, 0);
+    }
+    return y;
+}
 
-extern AnimationFrame D_pspeu_092C0958[];
+static int func_pspeu_092A6A08(Entity* entity, s32 x, s32 y, Collider* col) {
+    s32 sp3C;
+    s32 var_s8;
+    s32 var_s7;
+    s32 var_s6;
+    s32 var_s3;
+    s32 var_s2;
+    s32 var_s1;
+    s32 var_s0;
+
+    var_s3 = abs(x) >> 0x10;
+    var_s2 = abs(y) >> 0x10;
+    if (x < 0) {
+        x = -var_s3;
+    } else {
+        x = var_s3;
+    }
+    if (y < 0) {
+        y = -var_s2;
+    } else {
+        y = var_s2;
+    }
+    var_s7 = entity->posX.i.hi;
+    sp3C = var_s7;
+    var_s6 = entity->posY.i.hi;
+    var_s8 = var_s6;
+    if (var_s2 < var_s3) {
+        if (var_s3 == 0) {
+            return 0;
+        }
+        for (var_s1 = 0; var_s1 <= var_s3; var_s1++) {
+            entity->posX.i.hi = sp3C + (x < 0 ? -var_s1 : var_s1);
+            entity->posY.i.hi = var_s8 + (y * var_s1) / var_s3;
+            g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
+            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                if (var_s2 == 0) {
+                    col->effects = EFFECT_SOLID;
+                }
+                entity->posX.i.hi = var_s7;
+                entity->posY.i.hi = var_s6;
+                if (var_s1 && y > 0) {
+                    g_api.CheckCollision(
+                        entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
+                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                        col->effects = EFFECT_UNK_0002;
+                    } else {
+                        col->effects = EFFECT_SOLID;
+                    }
+                }
+                return 1;
+            }
+            var_s7 = entity->posX.i.hi;
+            var_s6 = entity->posY.i.hi;
+        }
+    } else {
+        if (var_s2 == 0) {
+            return 0;
+        }
+        for (var_s0 = 0; var_s0 <= var_s2; var_s0++) {
+            entity->posX.i.hi = sp3C + (x * var_s0) / var_s2;
+            entity->posY.i.hi = var_s8 + (y < 0 ? -var_s0 : var_s0);
+            g_api.CheckCollision(entity->posX.i.hi, entity->posY.i.hi, col, 0);
+            if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                if (var_s3 == 0) {
+                    col->effects = EFFECT_UNK_0002;
+                }
+                entity->posX.i.hi = var_s7;
+                entity->posY.i.hi = var_s6;
+                if (var_s0 && y > 0) {
+                    g_api.CheckCollision(
+                        entity->posX.i.hi, entity->posY.i.hi + 1, col, 0);
+                    if (col->effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                        col->effects = EFFECT_UNK_0002;
+                    } else {
+                        col->effects = EFFECT_SOLID;
+                    }
+                }
+                return 1;
+            }
+            var_s7 = entity->posX.i.hi;
+            var_s6 = entity->posY.i.hi;
+        }
+    }
+    return 0;
+}
+
+AnimationFrame D_pspeu_092C0958[] = {
+    POSE(11, 1, 0), POSE(4, 2, 0), POSE(6, 3, 0),
+    POSE(4, 4, 0),  POSE(7, 5, 0), POSE_LOOP(0)};
 void func_pspeu_092A6E50(Entity* self) {
     Collider col;
     s32 var_s3;
@@ -151,7 +388,8 @@ void func_pspeu_092A6E50(Entity* self) {
     self->hitFlags = 0;
 }
 
-extern AnimationFrame D_pspeu_092C0970[];
+AnimationFrame D_pspeu_092C0970[] = {
+    POSE(13, 6, 0), POSE(8, 7, 0), POSE(11, 8, 0), POSE(8, 7, 0), POSE_LOOP(0)};
 void func_pspeu_092A7560(Entity* self) {
     switch (self->step) {
     case 0:
@@ -225,7 +463,10 @@ void func_pspeu_092A7560(Entity* self) {
     self->ext.maria092A7560.unk46 = g_Player.unk46;
 }
 
-extern AnimationFrame D_pspeu_092C0988[];
+AnimationFrame D_pspeu_092C0988[] = {
+    POSE(1, 10, 0), POSE(1, 11, 0), POSE(1, 12, 0),
+    POSE(3, 13, 0), POSE(1, 14, 0), POSE(1, 15, 0),
+    POSE(1, 16, 0), POSE(25, 9, 0), POSE_END};
 void func_pspeu_092A7950(Entity* self) {
     switch (self->step) {
     case 0:
@@ -249,7 +490,7 @@ void func_pspeu_092A7950(Entity* self) {
             self, 32, ELEMENT_CUT | ELEMENT_HOLY, 2, 16, 16, 1, 0);
         g_api.PlaySfx(SFX_ALUCARD_SWORD_SWISH);
         self->step = 1;
-        return;
+        break;
     case 1:
         self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
         if (self->poseTimer < 0) {
@@ -266,7 +507,10 @@ void func_pspeu_092A7950(Entity* self) {
     }
 }
 
-AnimationFrame D_pspeu_092C09B0[];
+AnimationFrame D_pspeu_092C09B0[] = {
+    POSE(4, 5, 0), POSE(2, 6, 0),  POSE(1, 7, 0),  POSE(1, 8, 0),
+    POSE(1, 9, 0), POSE(2, 10, 0), POSE(4, 11, 0), POSE(1, 8, 0),
+    POSE(1, 7, 0), POSE(1, 6, 0),  POSE_LOOP(0)};
 void func_pspeu_092A7B80(Entity* self) {
     switch (self->step) {
     case 0:
@@ -333,8 +577,6 @@ static s32 func_pspeu_092A7F20(s32 angle) {
     return angle;
 }
 
-extern s32 D_pspeu_092E5908[0x80];
-extern s32 D_pspeu_092E5B10;
 static Entity* func_pspeu_092A7F78(Entity* self) {
     Entity* e;
     s32 i;
@@ -416,7 +658,7 @@ static int func_pspeu_092A81C0(Entity* entity) {
     return 1;
 }
 
-extern AnimationFrame D_pspeu_092C09E0[];
+AnimationFrame D_pspeu_092C09E0[] = {POSE(1, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092A82E0(Entity* self) {
     s32 x;
     s32 y;
@@ -556,7 +798,6 @@ void func_pspeu_092A82E0(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C09E0[];
 void func_pspeu_092A8AE8(Entity* self) {
     s32 xStart;
     s32 xEnd;
@@ -745,7 +986,10 @@ static int func_pspeu_092A9250() {
     }
 }
 
-AnimationFrame D_pspeu_092C09F8[];
+AnimationFrame D_pspeu_092C09F8[] = {
+    POSE(3, 9, 0),  POSE(3, 10, 0), POSE(3, 11, 0), POSE(3, 12, 0),
+    POSE(3, 13, 0), POSE(3, 14, 0), POSE(3, 9, 0),  POSE(3, 10, 0),
+    POSE(3, 11, 0), POSE(3, 12, 0), POSE_LOOP(0)};
 void func_pspeu_092A9288(Entity* self) {
     switch (self->step) {
     case 0:
@@ -806,7 +1050,10 @@ void func_pspeu_092A9288(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A28[];
+AnimationFrame D_pspeu_092C0A28[] = {
+    POSE(9, 3, 0), POSE(6, 4, 0), POSE(6, 5, 0), POSE(8, 6, 0),
+    POSE(6, 7, 0), POSE(6, 8, 0), POSE_LOOP(0),
+};
 void func_pspeu_092A95A8(Entity* self) {
     s32 var_s0;
 
@@ -893,8 +1140,6 @@ static s32 func_pspeu_092A9920(s32 arg0) {
     return arg0;
 }
 
-extern s32 D_pspeu_092E5D18[0x80];
-extern s32 D_pspeu_092E5F18;
 static Entity* func_pspeu_092A9978(Entity* self) {
     Entity* e;
     s32 i;
@@ -1004,7 +1249,7 @@ static void func_pspeu_092A9DE8(Entity* entity, s32 x, s32 y) {
     entity->ext.maria092A9E88.pos1.y = y;
 }
 
-extern AnimationFrame D_pspeu_092C0A48[];
+AnimationFrame D_pspeu_092C0A48[] = {POSE(0, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092A9E88(Entity* self) {
     s32 acceleration;
     s32 initialAcceleration;
@@ -1217,7 +1462,7 @@ void func_pspeu_092A9E88(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A50[];
+AnimationFrame D_pspeu_092C0A50[] = {POSE(1, 1, 0), POSE_LOOP(0)};
 void func_pspeu_092AAA38(Entity* self) {
     switch (self->step) {
     case 0:
@@ -1263,7 +1508,10 @@ void func_pspeu_092AAA38(Entity* self) {
     }
 }
 
-extern AnimationFrame D_pspeu_092C0A60[];
+AnimationFrame D_pspeu_092C0A58[] = {POSE(1, 2, 0), POSE_LOOP(0)};
+AnimationFrame D_pspeu_092C0A60[] = {
+    POSE(19, 3, 0), POSE(19, 4, 0), POSE(19, 5, 0), POSE(19, 6, 0),
+    POSE_LOOP(0)};
 void func_pspeu_092AAC80(Entity* self) {
     s32 x;
 
@@ -1384,7 +1632,6 @@ void func_pspeu_092AAC80(Entity* self) {
     }
 }
 
-AnimationFrame D_pspeu_092C0A58[];
 void func_pspeu_092AB1C0(Entity* self) {
     Entity* entity;
     s32 x;

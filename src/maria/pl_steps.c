@@ -2,6 +2,21 @@
 #include "maria.h"
 #include "sfx.h"
 
+enum DeathKind {
+    DEATH_GENERIC,
+    DEATH_BY_FIRE,
+    DEATH_BY_THUNDER,
+    DEATH_BY_ICE,
+};
+
+static s32 mar_hit_stun_timer;
+DebugInfo g_MarDebug;
+static u8 dead_dissolve_bmp[0x1400];
+static s16 D_80174F68;
+static s16 D_80174F6C;
+static enum DeathKind death_kind;
+static s32 mar_8015459C;
+
 static void func_80158B04(u16 arg0) {
     s16 xMod = 3;
     if (PLAYER.facingLeft) {
@@ -409,7 +424,6 @@ static void func_80159C04(void) {
     }
 }
 
-extern s32 mar_hit_stun_timer; // TODO can we import this?
 void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     DamageParam damage;
     s32 damageResult;
@@ -786,16 +800,6 @@ void MarStepBossGrab(void) {
     }
 }
 
-enum DeathKind {
-    DEATH_GENERIC,
-    DEATH_BY_FIRE,
-    DEATH_BY_THUNDER,
-    DEATH_BY_ICE,
-};
-extern u8 dead_dissolve_bmp[0x1400];
-extern s16 D_80174F68;
-extern s16 D_80174F6C;
-extern enum DeathKind death_kind;
 static RECT D_801545A0 = {512, 256, 32, 80};
 void MarStepDead(
     s32 damageEffects, s32 damageKind, s32 prevStep, s32 prevStepS) {
