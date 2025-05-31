@@ -3,6 +3,24 @@
 #include "sfx.h"
 #include "../e_merman.h"
 
+#define XY(x, y) x, y
+static Point32 D_80183A28[] = {XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)), XY(FIX(-0.5), FIX(0.5))};
+static u8 D_80183A48[] = {0x40, 0x30, 0x50, 0x40};
+static s16 D_80183A4C[] = {XY(0, 21), XY(0, 4), XY(4, -4), XY(-8, 0)};
+static s16 D_80183A5C[] = {XY(0, 11), XY(0, 4), XY(8, -4), XY(-16, 0)};
+static s16 D_80183A6C[] = {XY(0, 24), XY(0, 4), XY(8, -4), XY(-16, 0)};
+static s16 D_80183A7C[] = {XY(0, 21), XY(8, 0)};
+static u8 D_80183A84[] = {8, 1, 8, 2, 8, 3, 8, 2, 0};
+static u8 unused_anim[] = {15, 8, 5, 9, 15, 10, 5, 9, 0};
+static u8 D_80183A9C[] = {16, 1, 8, 4, 8, 5, 8, 6, 15, 7, 8, 4, 255, 0};
+static u8 D_80183AAC[] = {3, 13, 3, 14, 3, 15, 3, 16, 3, 17, 3, 18, 3, 19, 3, 20, 0};
+static u8 D_80183AC0[] = {11, 21, 14, 13, 11, 11, 14, 13, 0};
+static u8 D_80183ACC[] = {1, 25, 1, 23, 9, 22, 4, 23, 3, 24, 8, 25, 255, 0};
+static u8 D_80183ADC[] = {1, 15, 1, 16, 1, 17, 1, 18, 1, 19, 1, 20, 1, 13, 1, 14, 0};
+static u8 D_80183AF0[] = {1, 26, 1, 27, 1, 28, 1, 29, 1, 30, 1, 31, 1, 32, 1, 33, 0};
+static u8 D_80183B04[] = {7, 34, 7, 35, 7, 36, 255, 0};
+static s32 D_80183B0C[] = {0, FIX(-5.0/8), FIX(-1.25), FIX(-5.0/8), 0, FIX(5.0/8), FIX(1.25), FIX(5.0/8), 0x0};
+
 void EntityMerman(Entity* self) {
     Entity* newEntity;
     Collider collider;
@@ -51,7 +69,7 @@ void EntityMerman(Entity* self) {
             self->hitboxHeight = 4;
             self->step_s++;
         }
-        AnimateEntity(D_801823D0, self);
+        AnimateEntity(D_80183AC0, self);
         MoveEntity();
 
         posX = self->posX.i.hi;
@@ -67,11 +85,11 @@ void EntityMerman(Entity* self) {
             self->hitboxWidth = 5;
             self->hitboxHeight = 17;
             rnd = Random() & 3;
-            self->velocityX = D_80182338[rnd].x;
-            self->velocityY = D_80182338[rnd].y;
+            self->velocityX = D_80183A28[rnd].x;
+            self->velocityY = D_80183A28[rnd].y;
             self->step_s++;
         }
-        if (AnimateEntity(D_801823D0, self) == 0) {
+        if (AnimateEntity(D_80183AC0, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         MoveEntity();
@@ -130,9 +148,9 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_JUMPING_IN_AIR:
-            AnimateEntity(D_801823BC, self);
+            AnimateEntity(D_80183AAC, self);
             if (!self->ext.merman.isUnderwater) {
-                if (UnkCollisionFunc3(&D_8018235C) & 1) {
+                if (UnkCollisionFunc3(&D_80183A4C) & 1) {
                     self->poseTimer = 0;
                     self->pose = 0;
                     self->step_s++;
@@ -155,7 +173,7 @@ void EntityMerman(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
-                    newEntity->velocityX = D_80182418[self->pose];
+                    newEntity->velocityX = D_80183B0C[self->pose - 1];
                 }
             } else {
                 self->palette = PAL_DRA(0x2B2);
@@ -166,7 +184,7 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_JUMPING_LANDING:
-            if (AnimateEntity(D_801823DC, self) != 0) {
+            if (AnimateEntity(D_80183ACC, self) != 0) {
                 break;
             }
             SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
@@ -182,13 +200,13 @@ void EntityMerman(Entity* self) {
             } else {
                 self->velocityX = FIX(0.375);
             }
-            self->ext.merman.timer2 = D_80182358[Random() & 3];
+            self->ext.merman.timer2 = D_80183A48[Random() & 3];
             self->step_s++;
             break;
 
         case MERMAN_WALKING_TOWARDS_PLAYER_WALKING:
-            AnimateEntity(D_80182394, self);
-            colRet = UnkCollisionFunc2(&D_8018238C);
+            AnimateEntity(D_80183A84, self);
+            colRet = UnkCollisionFunc2(&D_80183A7C);
             if (colRet == 0xFF) {
                 self->facingLeft ^= 1;
             }
@@ -221,7 +239,7 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_SPIT_FIRE_ATTACK:
-            if (AnimateEntity(D_801823AC, self) == 0) {
+            if (AnimateEntity(D_80183A9C, self) == 0) {
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
             if (self->pose == 4 && self->poseTimer == 0) {
@@ -244,7 +262,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_LUNGE:
         switch (self->step_s) {
         case MERMAN_LUNGE_START:
-            if (AnimateEntity(D_801823DC, self) == 0) {
+            if (AnimateEntity(D_80183ACC, self) == 0) {
                 self->step_s++;
             }
             break;
@@ -276,7 +294,7 @@ void EntityMerman(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityX = 0;
             }
-            UnkCollisionFunc5(&D_8018236C);
+            UnkCollisionFunc5(&D_80183A5C);
             if (self->facingLeft != 0) {
                 self->velocityX -= FIX(0.03125);
             } else {
@@ -286,7 +304,7 @@ void EntityMerman(Entity* self) {
                 self->velocityX = 0;
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;
-                UnkCollisionFunc3(&D_8018235C);
+                UnkCollisionFunc3(&D_80183A4C);
                 self->pose = 2;
                 self->hitboxWidth = 5;
                 self->poseTimer = 0;
@@ -300,8 +318,8 @@ void EntityMerman(Entity* self) {
             break;
 
         case MERMAN_LUNGE_STANDING:
-            UnkCollisionFunc3(&D_8018235C);
-            if (AnimateEntity(D_801823DC, self) == 0) {
+            UnkCollisionFunc3(&D_80183A4C);
+            if (AnimateEntity(D_80183ACC, self) == 0) {
                 self->velocityY = 0;
                 SetStep(MERMAN_WALKING_TOWARDS_PLAYER);
             }
@@ -335,7 +353,7 @@ void EntityMerman(Entity* self) {
             self->step_s++;
 
         case MERMAN_DYING_KNOCKEDBACK:
-            if (UnkCollisionFunc3(&D_8018237C) & 1) {
+            if (UnkCollisionFunc3(&D_80183A6C) & 1) {
                 if (!(GetSideToPlayer() & 1)) {
                     self->velocityX = FIX(-0.5);
                 } else {
@@ -346,7 +364,7 @@ void EntityMerman(Entity* self) {
             // fallthrough
 
         case MERMAN_DYING_END:
-            AnimateEntity(D_801823EC, self); // spinning
+            AnimateEntity(D_80183ADC, self); // spinning
             MoveEntity();
             self->palette = self->ext.merman.palette;
             if (!(g_Timer % 8)) {
@@ -396,7 +414,7 @@ void EntityMermanFireball(Entity* self) {
             entity->rotY = entity->rotX = 192;
         }
     } else {
-        AnimateEntity(D_80182400, self);
+        AnimateEntity(D_80183AF0, self);
         MoveEntity();
 
         if (self->rotX < 0x100) {
@@ -425,7 +443,7 @@ void func_801C8F54(Entity* self) {
     }
     MoveEntity();
     self->velocityY += FIX(0.15625);
-    if (AnimateEntity(D_80182414, self) == 0) {
+    if (AnimateEntity(D_80183B04, self) == 0) {
         DestroyEntity(self);
     }
 }
