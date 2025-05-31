@@ -391,7 +391,7 @@ void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
     if (self->step == 0) {
-        InitializeEntity(D_80180B6C);
+        InitializeEntity(g_EInitMermanFireball);
         self->hitboxWidth = 6;
         self->animCurFrame = 0;
         self->hitboxHeight = 3;

@@ -387,6 +387,7 @@ void EntityMerman(Entity* self) {
     }
 }
 
+// fireball shot by merman
 void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
