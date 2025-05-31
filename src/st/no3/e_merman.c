@@ -2,20 +2,23 @@
 #include "no3.h"
 #include "../e_merman.h"
 
-extern u8 D_80183AC0[];
-extern Point32 D_80183A28[];
-extern u8 D_80183AAC[];
-extern s16 D_80183A4C;
-extern s32 D_80183B08[];
-extern u8 D_80183ACC[]; // animation
-extern u8 D_80183A48[];
-extern u8 D_80183A84[]; // animation
-extern s16 D_80183A7C;
-extern u8 D_80183A9C[]; // animation
-extern s16 D_80183A5C;
-extern s16 D_80183A6C;
-extern u8 D_80183ADC[]; // animation
-extern s16 g_WaterXTbl[];
+#define XY(x, y) x, y
+static Point32 D_80183A28[] = {XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)), XY(FIX(-0.5), FIX(0.5))};
+static u8 D_80183A48[] = {0x40, 0x30, 0x50, 0x40};
+static s16 D_80183A4C[] = {XY(0, 21), XY(0, 4), XY(4, -4), XY(-8, 0)};
+static s16 D_80183A5C[] = {XY(0, 11), XY(0, 4), XY(8, -4), XY(-16, 0)};
+static s16 D_80183A6C[] = {XY(0, 24), XY(0, 4), XY(8, -4), XY(-16, 0)};
+static s16 D_80183A7C[] = {XY(0, 21), XY(8, 0)};
+static u8 D_80183A84[] = {8, 1, 8, 2, 8, 3, 8, 2, 0};
+static u8 unused_anim[] = {15, 8, 5, 9, 15, 10, 5, 9, 0};
+static u8 D_80183A9C[] = {16, 1, 8, 4, 8, 5, 8, 6, 15, 7, 8, 4, 255, 0};
+static u8 D_80183AAC[] = {3, 13, 3, 14, 3, 15, 3, 16, 3, 17, 3, 18, 3, 19, 3, 20, 0};
+static u8 D_80183AC0[] = {11, 21, 14, 13, 11, 11, 14, 13, 0};
+static u8 D_80183ACC[] = {1, 25, 1, 23, 9, 22, 4, 23, 3, 24, 8, 25, 255, 0};
+static u8 D_80183ADC[] = {1, 15, 1, 16, 1, 17, 1, 18, 1, 19, 1, 20, 1, 13, 1, 14, 0};
+static u8 D_80183AF0[] = {1, 26, 1, 27, 1, 28, 1, 29, 1, 30, 1, 31, 1, 32, 1, 33, 0};
+static u8 D_80183B04[] = {7, 34, 7, 35, 7, 36, 255, 0};
+static s32 D_80183B0C[] = {0, FIX(-5.0/8), FIX(-1.25), FIX(-5.0/8), 0, FIX(5.0/8), FIX(1.25), FIX(5.0/8), 0x0};
 
 void EntityMerman(Entity* self) {
     Entity* newEntity;
@@ -169,7 +172,7 @@ void EntityMerman(Entity* self) {
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_MERMAN_JUMP_AIR, self, newEntity);
                     newEntity->posX.i.hi -= 6 - ((Random() & 3) * 4);
-                    newEntity->velocityX = D_80183B08[self->pose];
+                    newEntity->velocityX = D_80183B0C[self->pose - 1];
                 }
             } else {
                 self->palette = PAL_DRA(0x2B2);
