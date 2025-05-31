@@ -74,7 +74,7 @@ void func_pspeu_092A6280(Entity* self) {
             MarSetAnimation(D_pspeu_092C0928);
         }
         if ((self->ext.maria092A6280.timer % 6) == 0) {
-            g_api_PlaySfx(SFX_WEAPON_SWISH_A);
+            g_api.PlaySfx(SFX_WEAPON_SWISH_A);
         }
         self->ext.maria092A6280.timer++;
         if (self->ext.maria092A6280.timer > 75) {
