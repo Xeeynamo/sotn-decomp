@@ -42,7 +42,7 @@ type subweaponModel struct {
 	Blueprint            string
 	HitboxState          uint16
 	HitEffect            uint16
-	CrashId              uint8
+	CrashId              string
 	Unk11                uint8
 	EntityRoomIndex      uint16
 }
@@ -86,7 +86,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[1], err)
 	}
 
-	entries, err := parse(e.Data[e.Start:e.End], elementFields, blueprintFields)
+	entries, err := parse(e.Data[e.Start:e.End], elementFields, blueprintFields, weaponFields)
 	if err != nil {
 		return fmt.Errorf("parse error: %w", err)
 	}
@@ -146,7 +146,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	sb.WriteString("// clang-format off\n")
 	for _, entry := range entries {
 		sb.WriteString(fmt.Sprintf(
-			"{%d,%d,%s,%d,%d,%d,%d,%s,%d,%d,%d,%d,%d},\n",
+			"{%d,%d,%s,%d,%d,%d,%d,%s,%d,%d,%s,%d,%d},\n",
 			entry.Attack,
 			entry.HeartCost,
 			strings.Join(append(entry.AttackElement, "0"), "|"),
@@ -185,7 +185,7 @@ func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
 	return sotn.ParseCEnum(f, enumName, 0)
 }
 
-func parse(data []byte, elements map[int]string, blueprints map[int]string) ([]subweaponModel, error) {
+func parse(data []byte, elements map[int]string, blueprints map[int]string, weapons map[int]string) ([]subweaponModel, error) {
 	count := len(data) / entrySize
 	entries := make([]subweaponRawEntry, count)
 	r := bytes.NewReader(data)
@@ -203,7 +203,6 @@ func parse(data []byte, elements map[int]string, blueprints map[int]string) ([]s
 		mappedEntries[i].Anim = entry.Anim
 		mappedEntries[i].HitboxState = entry.HitboxState
 		mappedEntries[i].HitEffect = entry.HitEffect
-		mappedEntries[i].CrashId = entry.CrashId
 		mappedEntries[i].Unk11 = entry.Unk11
 		mappedEntries[i].EntityRoomIndex = entry.EntityRoomIndex
 
@@ -212,6 +211,12 @@ func parse(data []byte, elements map[int]string, blueprints map[int]string) ([]s
 			return nil, fmt.Errorf("cannot find blueprint %d", entry.BlueprintNum)
 		}
 		mappedEntries[i].Blueprint = blueprintName
+
+		crashWeaponName, ok := weapons[int(entry.CrashId)]
+		if !ok {
+			return nil, fmt.Errorf("cannot find Crash ID %d", entry.CrashId)
+		}
+		mappedEntries[i].CrashId = crashWeaponName
 
 		for flag := 1; flag < 0x10000; flag <<= 1 {
 			if (entry.AttackElement & uint16(flag)) == 0 {
