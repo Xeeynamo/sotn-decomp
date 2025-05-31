@@ -15,7 +15,7 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityExplosionVariants);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityGreyPuff);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", func_pspeu_09258EF0);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", UnkCollisionFunc5);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_misc", EntityIntenseExplosion);
 

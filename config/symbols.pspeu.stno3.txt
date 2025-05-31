@@ -95,6 +95,7 @@ EntityUnkId13 = 0x09258930;
 EntityExplosionVariantsSpawner = 0x09258A78;
 EntityExplosionVariants = 0x09258BF8;
 EntityGreyPuff = 0x09258D70;
+UnkCollisionFunc5 = 0x09258EF0;
 EntityIntenseExplosion = 0x09259080;
 PlaySfxPositional = 0x092591F0;
 HitDetection = 0x09259348;
