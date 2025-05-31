@@ -77,10 +77,17 @@ static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
 static u8 g_MediumWaterSplashAnim[] = {2, 19, 2, 20, 2, 21, 2, 22, 0};
 static u8 g_explosion2anim[] = {7, 23, 7, 24, 7, 25, 255, 0};
+static u8 g_FallingObject2Anim[] = {9, 26, 9, 27, 9, 28, 255, 0};
+static u8 g_HighWaterSplashAnim[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 255, 0};
+static Point16 g_Merman2XY[] = {{-0x3000, -0x1}, {-0x4000, -0x6}, {-0x1000, -0x1}, {-0x8000, -0x6}, {0x4000, 0x0}, 
+{0x0, -0x5}, {0x4000, 0x0}, {0x4000, -0x6}, {0x4000, 0x0}, {0x4000, -0x6}};
+static s16 g_MermanSplashXOffset[] = {-12, -8, 10, 13, 14, 0};
+static u8 g_HighWaterSplashParams[] = {1, 3, 6, 8, 11, 13, 16};
+static s16 g_Merman2posPtr[] = {-3, 3, -3, 3, -2, 2, -2, 0};
+extern s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
 
 extern s16 D_pspeu_09295DC8[];
 extern u16 g_EInitWaterObject[];
-extern u8 g_HighWaterSplashAnim[];
 
 void EntityMerman2(Entity* self) {
     u8 colorOffset; //s8
@@ -679,11 +686,190 @@ void EntityMediumWaterSplash(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanWaterSplash);
+// Honestly probably some deep misunderstandings about the data types.
+// Way too many LOW and such.
+void EntityMermanWaterSplash(Entity* self) {
+    // Could just be 8 s16's
+    Point16 xy_arr[4];
+    Entity* newEntity;
+    Primitive* prim;
+    s32 primIndex;
+    u8 temp;
+    s32 i;
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMerman2JumpAir);
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        break;
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityHighWaterSplash);
+    case 1:
+        primIndex = g_api.AllocPrimitives(PRIM_TILE, 4);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.mermanWaterSplash.prim = prim;
+    
+            for (i = 0; prim != NULL; i++, prim = prim->next) {
+                prim->r0 = 64;
+                prim->g0 = 64;
+                prim->b0 = 160;
+                prim->u0 = 2;
+                prim->v0 = 2;
+                prim->x0 = self->posX.i.hi + g_MermanSplashXOffset[i];
+                prim->y0 = self->posY.i.hi - 12;
+                LOW(xy_arr[0]) = LOW(((Point32*)g_Merman2XY)[i].x);
+                prim->y1 = xy_arr[0].y;
+                prim->y3 = xy_arr[0].x;
+                LOW(xy_arr[1]) = LOW(((Point32*)g_Merman2XY)[i].y);
+                prim->x2 = xy_arr[1].y;
+                prim->x3 = xy_arr[1].x;
+                prim->p1 = 0;
+                prim->p3 = 1;
+                prim->p2 = i % 2;
+                prim->priority = self->zPriority + 2;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            }
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+
+        for (i = 0; i < 7; i++) {
+            newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_HIGH_WATER_SPLASH, self, newEntity);
+                newEntity->params = g_HighWaterSplashParams[i];
+                newEntity->posX.i.hi += g_Merman2posPtr[i];
+                newEntity->velocityX = g_Merman2velPtr[i];
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        self->ext.mermanWaterSplash.unk84 = 0;
+        self->ext.mermanWaterSplash.unk86 = 0;
+        self->step++;
+        break;
+        
+
+    case 2:
+        temp = false;
+        for(prim = self->ext.mermanWaterSplash.prim; prim != NULL;) {
+            if (prim->p1) {
+                prim = prim->next;
+                continue;
+            }
+            temp |= true;
+            xy_arr[2].y = prim->x0;
+            xy_arr[2].x = prim->x1;
+            xy_arr[3].y = prim->y0;
+            xy_arr[3].x = prim->y2;
+            xy_arr[0].y = prim->y1;
+            xy_arr[0].x = prim->y3;
+            xy_arr[1].y = prim->x2;
+            xy_arr[1].x = prim->x3;
+            LOW(xy_arr[2]) += LOW(xy_arr[0]);
+            LOW(xy_arr[3]) += LOW(xy_arr[1]);
+            LOW(xy_arr[1]) += 0x2000;
+            if ((LOW(xy_arr[1]) > 0) && (prim->p2) && (prim->p3)) {
+                if (xy_arr[2].y > self->posX.i.hi) {
+                    LOW(xy_arr[0]) += 0x4000;
+                } else {
+                    LOW(xy_arr[0]) -= 0x4000;
+                }
+                prim->p3 = 0;
+            }
+            if (prim->y0 & 0xFF00) {
+                prim->drawMode |= DRAW_HIDE;
+                prim->p1 = 1;
+            }
+            prim->x0 = xy_arr[2].y;
+            prim->x1 = xy_arr[2].x;
+            prim->y0 = xy_arr[3].y;
+            prim->y2 = xy_arr[3].x;
+            prim->x2 = xy_arr[1].y;
+            prim->x3 = xy_arr[1].x;
+            prim->y1 = xy_arr[0].y;
+            prim->y3 = xy_arr[0].x;
+            prim = prim->next;
+        }
+        if (!temp) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+}
+
+void EntityMerman2JumpAir(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitWaterObject);
+        self->flags |= FLAG_UNK_2000;
+        self->zPriority += 4;
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+    }
+    MoveEntity();
+    self->velocityY += FIX(0.15625);
+    if (AnimateEntity(g_FallingObject2Anim, self) == 0) {
+        DestroyEntity(self);
+    }
+}
+
+void EntityHighWaterSplash(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitParticle);
+        self->animSet = ANIMSET_DRA(2);
+        self->velocityY = FIX(-5);
+        self->palette = PAL_OVL(0x162);
+        self->drawMode = DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->palette = PAL_OVL(0x18);
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0xA0;
+        self->rotX = 0x100;
+        self->rotY = 0x1A0;
+        self->ext.mermanWaterSplash.unk84 = self->params;
+        self->ext.mermanWaterSplash.unk85 = 0x11;
+        break;
+
+    case 1:
+        self->ext.mermanWaterSplash.unk85--;
+        if (!--self->ext.mermanWaterSplash.unk84) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(g_HighWaterSplashAnim, self);
+        MoveEntity();
+        self->velocityY += FIX(0.25);
+        self->rotX += 6;
+        self->rotY -= 4;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        if (!--self->ext.mermanWaterSplash.unk85) {
+            self->velocityY = 0;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (AnimateEntity(g_HighWaterSplashAnim, self) == 0) {
+            MoveEntity();
+            self->velocityY += FIX(0.25);
+            self->rotX += 6;
+            self->rotY -= 4;
+        }
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeadMerman);
 

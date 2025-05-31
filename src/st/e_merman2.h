@@ -680,7 +680,6 @@ void EntityMediumWaterSplash(Entity* entity) {
 }
 
 void EntityMermanWaterSplash(Entity* self) {
-    Unkstruct_801C7954 sp;
     Entity* newEntity;
     Primitive* prim;
     s16 primIndex;
