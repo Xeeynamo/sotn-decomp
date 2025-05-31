@@ -74,16 +74,6 @@ static u8 g_merman2_walkanim[] = {9, 1, 9, 2, 9, 3, 9, 4, 0};
 static u8 g_merman2_spitfire[] = {24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9, 2, 8, 8, 12, 1, 13, 255, 0};
 static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
-static u8 g_MediumWaterSplashAnim[] = {2, 19, 2, 20, 2, 21, 2, 22, 0};
-static u8 g_explosion2anim[] = {7, 23, 7, 24, 7, 25, 255, 0};
-static u8 g_FallingObject2Anim[] = {9, 26, 9, 27, 9, 28, 255, 0};
-static u8 g_HighWaterSplashAnim[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 255, 0};
-static Point16 g_Merman2XY[] = {{-0x3000, -0x1}, {-0x4000, -0x6}, {-0x1000, -0x1}, {-0x8000, -0x6}, {0x4000, 0x0}, 
-{0x0, -0x5}, {0x4000, 0x0}, {0x4000, -0x6}, {0x4000, 0x0}, {0x4000, -0x6}};
-static s16 g_MermanSplashXOffset[] = {-12, -8, 10, 13, 14, 0};
-static u8 g_HighWaterSplashParams[] = {1, 3, 6, 8, 11, 13, 16};
-static s16 g_Merman2posPtr[] = {-3, 3, -3, 3, -2, 2, -2, 0};
-extern s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
 
 extern s16 D_pspeu_09295DC8[];
 extern u16 g_EInitWaterObject[];
@@ -596,6 +586,16 @@ void EntityMerman2(Entity* self) {
     }
 }
 
+static u8 g_MediumWaterSplashAnim[] = {2, 19, 2, 20, 2, 21, 2, 22, 0};
+static u8 g_explosion2anim[] = {7, 23, 7, 24, 7, 25, 255, 0};
+static u8 g_FallingObject2Anim[] = {9, 26, 9, 27, 9, 28, 255, 0};
+static u8 g_HighWaterSplashAnim[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 255, 0};
+static Point32 g_Merman2XY[] = {{-0x3000, -0x54000}, {-0x1000, -0x58000}, {0x4000, -0x50000}, {0x4000, -0x5c000}, {0x4000, -0x5c000}};
+static s16 g_MermanSplashXOffset[] = {-12, -8, 10, 13, 14, 0};
+static u8 g_HighWaterSplashParams[] = {1, 3, 6, 8, 11, 13, 16};
+static s16 g_Merman2posPtr[] = {-3, 3, -3, 3, -2, 2, -2, 0};
+extern s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
+
 void EntityMermanFireSpit(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -689,7 +689,9 @@ void EntityMediumWaterSplash(Entity* self) {
 // Way too many LOW and such.
 void EntityMermanWaterSplash(Entity* self) {
     // Could just be 8 s16's
-    Point16 xy_arr[4];
+    Point16 bro[2];
+    Point16 dude[2];
+
     Entity* newEntity;
     Primitive* prim;
     s32 primIndex;
@@ -717,12 +719,12 @@ void EntityMermanWaterSplash(Entity* self) {
                 prim->v0 = 2;
                 prim->x0 = self->posX.i.hi + g_MermanSplashXOffset[i];
                 prim->y0 = self->posY.i.hi - 12;
-                LOW(xy_arr[0]) = LOW(((Point32*)g_Merman2XY)[i].x);
-                prim->y1 = xy_arr[0].y;
-                prim->y3 = xy_arr[0].x;
-                LOW(xy_arr[1]) = LOW(((Point32*)g_Merman2XY)[i].y);
-                prim->x2 = xy_arr[1].y;
-                prim->x3 = xy_arr[1].x;
+                LOW(dude[0]) = g_Merman2XY[i].x;
+                prim->y1 = dude[0].y;
+                prim->y3 = dude[0].x;
+                LOW(dude[1]) = g_Merman2XY[i].y;
+                prim->x2 = dude[1].y;
+                prim->x3 = dude[1].x;
                 prim->p1 = 0;
                 prim->p3 = 1;
                 prim->p2 = i % 2;
@@ -750,7 +752,6 @@ void EntityMermanWaterSplash(Entity* self) {
         self->step++;
         break;
         
-
     case 2:
         temp = false;
         for(prim = self->ext.mermanWaterSplash.prim; prim != NULL;) {
@@ -759,22 +760,22 @@ void EntityMermanWaterSplash(Entity* self) {
                 continue;
             }
             temp |= true;
-            xy_arr[2].y = prim->x0;
-            xy_arr[2].x = prim->x1;
-            xy_arr[3].y = prim->y0;
-            xy_arr[3].x = prim->y2;
-            xy_arr[0].y = prim->y1;
-            xy_arr[0].x = prim->y3;
-            xy_arr[1].y = prim->x2;
-            xy_arr[1].x = prim->x3;
-            LOW(xy_arr[2]) += LOW(xy_arr[0]);
-            LOW(xy_arr[3]) += LOW(xy_arr[1]);
-            LOW(xy_arr[1]) += 0x2000;
-            if ((LOW(xy_arr[1]) > 0) && (prim->p2) && (prim->p3)) {
-                if (xy_arr[2].y > self->posX.i.hi) {
-                    LOW(xy_arr[0]) += 0x4000;
+            bro[0].y = prim->x0;
+            bro[0].x = prim->x1;
+            bro[1].y = prim->y0;
+            bro[1].x = prim->y2;
+            dude[0].y = prim->y1;
+            dude[0].x = prim->y3;
+            dude[1].y = prim->x2;
+            dude[1].x = prim->x3;
+            LOW(bro[0]) += LOW(dude[0]);
+            LOW(bro[1]) += LOW(dude[1]);
+            LOW(dude[1]) += 0x2000;
+            if ((LOW(dude[1]) > 0) && (prim->p2) && (prim->p3)) {
+                if (bro[0].y > self->posX.i.hi) {
+                    LOW(dude[0]) += 0x4000;
                 } else {
-                    LOW(xy_arr[0]) -= 0x4000;
+                    LOW(dude[0]) -= 0x4000;
                 }
                 prim->p3 = 0;
             }
@@ -782,14 +783,14 @@ void EntityMermanWaterSplash(Entity* self) {
                 prim->drawMode |= DRAW_HIDE;
                 prim->p1 = 1;
             }
-            prim->x0 = xy_arr[2].y;
-            prim->x1 = xy_arr[2].x;
-            prim->y0 = xy_arr[3].y;
-            prim->y2 = xy_arr[3].x;
-            prim->x2 = xy_arr[1].y;
-            prim->x3 = xy_arr[1].x;
-            prim->y1 = xy_arr[0].y;
-            prim->y3 = xy_arr[0].x;
+            prim->x0 = bro[0].y;
+            prim->x1 = bro[0].x;
+            prim->y0 = bro[1].y;
+            prim->y2 = bro[1].x;
+            prim->x2 = dude[1].y;
+            prim->x3 = dude[1].x;
+            prim->y1 = dude[0].y;
+            prim->y3 = dude[0].x;
             prim = prim->next;
         }
         if (!temp) {

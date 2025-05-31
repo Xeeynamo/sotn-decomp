@@ -1,4 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+/*
+ * Overlay: NP3
+ * Description: Merman Room
+ */
+
+#include "np3.h"
+#include "../e_merman2.h"
+
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 #include "sfx.h"
 #include "../e_merman.h"
@@ -200,7 +209,8 @@ void EntityMerman(Entity* self) {
             if (colRet & 0x80) {
                 self->posX.val += self->velocityX;
             }
-            if (!--self->ext.merman.timer2) {
+            self->ext.merman.timer2--;
+            if (!(self->ext.merman.timer2 & 0xFF)) {
                 if (Random() % 2) {
                     SetStep(MERMAN_SPIT_FIRE);
                 } else {
@@ -282,7 +292,8 @@ void EntityMerman(Entity* self) {
             } else {
                 self->velocityX += FIX(0.03125);
             }
-            if (!--self->ext.merman.timer2) {
+            self->ext.merman.timer2--;
+            if ((self->ext.merman.timer2 & 0xFF) == 0) {
                 self->velocityX = 0;
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;
@@ -452,3 +463,4 @@ void EntityMermanExplosion(Entity* self) {
         DestroyEntity(self);
     }
 }
+

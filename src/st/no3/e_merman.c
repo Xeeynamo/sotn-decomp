@@ -214,8 +214,7 @@ void EntityMerman(Entity* self) {
             if (colRet & 0x80) {
                 self->posX.val += self->velocityX;
             }
-            self->ext.merman.timer2--;
-            if (!(self->ext.merman.timer2 & 0xFF)) {
+            if (!--self->ext.merman.timer2) {
                 if (Random() % 2) {
                     SetStep(MERMAN_SPIT_FIRE);
                 } else {
@@ -297,8 +296,7 @@ void EntityMerman(Entity* self) {
             } else {
                 self->velocityX += FIX(0.03125);
             }
-            self->ext.merman.timer2--;
-            if ((self->ext.merman.timer2 & 0xFF) == 0) {
+            if (!--self->ext.merman.timer2) {
                 self->velocityX = 0;
                 self->velocityY = FIX(2);
                 self->posY.i.hi -= 9;

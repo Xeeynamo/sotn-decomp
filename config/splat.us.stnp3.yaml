@@ -65,9 +65,8 @@ segments:
       - [0x1F40, .data, e_misc] # EntityRelicOrb
       - [0x205C, data]
       - [0x2168, .data, water_effects]
-      - [0x2224, data]
-      - [0x22B0, data]
-      - [0x23D0, data]
+      - [0x2224, .data, e_merman2]
+      - [0x2338, data]
       - [0x2400, data]
       - [0x2440, data]
       - [0x2460, .data, e_bone_scimitar]
