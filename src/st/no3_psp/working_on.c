@@ -1373,7 +1373,32 @@ void EntityMermanJumpAir(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanExplosion);
+static s32 D_80183B30[] = {FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
+static u8 D_80183B44[] = {1, 9, 21, 43};
+static u16 D_80183B48[] = {16, 24, 42, 47};
+
+void EntityMermanExplosion(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->palette = PAL_OVL(0x2BB);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = D_80183B44[self->params];
+        self->velocityY = D_80183B30[self->params];
+        self->step++;
+        return;
+    } else {
+        self->posY.val += self->velocityY;
+        self->poseTimer++;
+    }
+
+    if (!(self->poseTimer % 2)) {
+        self->animCurFrame++;
+    }
+
+    if (self->poseTimer > D_80183B48[self->params]) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092516E8);
 
