@@ -871,7 +871,26 @@ void EntityHighWaterSplash(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityDeadMerman);
+void EntityDeadMerman(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitWaterObject);
+        self->palette = self->params + 0xE;
+        self->animCurFrame = 13;
+        self->ext.merman.timer = 0x20;
+        self->velocityY = FIX(0.0625);
+        self->hitboxState = 0;
+        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0x80;
+        self->flags |= FLAG_UNK_2000;
+        return;
+    }
+    MoveEntity();
+    self->velocityY += FIX(0.0625);
+    self->opacity -= 2;
+    if (!--self->ext.merman.timer) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMermanSpawner);
 
