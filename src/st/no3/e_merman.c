@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+
 #include "../e_merman.h"
 
 #define XY(x, y) x, y
@@ -432,25 +433,24 @@ void EntityMermanFireball(Entity* self) {
     }
 }
 
-// some sort of falling object
-void EntityMermanJumpAir(Entity* arg0) {
-    if (arg0->step == 0) {
+void EntityMermanJumpAir(Entity* self) {
+    if (self->step == 0) {
         InitializeEntity(g_EInitMerman);
-        arg0->animCurFrame = 0;
-        arg0->hitboxState = 0;
-        arg0->zPriority += 4;
-        arg0->flags |= FLAG_UNK_2000;
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
+        self->zPriority += 4;
+        self->flags |= FLAG_UNK_2000;
     }
     MoveEntity();
-    arg0->velocityY += FIX(5.0 / 32.0);
-    if (AnimateEntity(D_80183B04, arg0) == 0) {
-        DestroyEntity(arg0);
+    self->velocityY += FIX(5.0 / 32.0);
+    if (AnimateEntity(D_80183B04, self) == 0) {
+        DestroyEntity(self);
     }
 }
 
-extern u8 D_80183B44[];
-extern s32 D_80183B30[];
-extern u16 D_80183B48[];
+static s32 D_80183B30[] = {FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
+static u8 D_80183B44[] = {1, 9, 21, 43};
+static u16 D_80183B48[] = {16, 24, 42, 47};
 
 // part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {

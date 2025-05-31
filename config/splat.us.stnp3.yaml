@@ -67,7 +67,6 @@ segments:
       - [0x2168, .data, water_effects]
       - [0x2224, .data, e_merman2]
       - [0x2338, .data, e_merman]
-      - [0x2440, data]
       - [0x2460, .data, e_bone_scimitar]
       - [0x2554, .data, e_bat]
       - [0x258C, data]

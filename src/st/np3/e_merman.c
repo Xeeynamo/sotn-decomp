@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
-#include "sfx.h"
+
 #include "../e_merman.h"
 
 #define XY(x, y) x, y
@@ -433,8 +433,7 @@ void EntityMermanFireball(Entity* self) {
     }
 }
 
-// some kind of falling object
-void func_801C8F54(Entity* self) {
+void EntityMermanJumpAir(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitMerman);
         self->animCurFrame = 0;
@@ -443,19 +442,24 @@ void func_801C8F54(Entity* self) {
         self->flags |= FLAG_UNK_2000;
     }
     MoveEntity();
-    self->velocityY += FIX(0.15625);
+    self->velocityY += FIX(5.0 / 32.0);
     if (AnimateEntity(D_80183B04, self) == 0) {
         DestroyEntity(self);
     }
 }
 
+static s32 D_80183B30[] = {FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
+static u8 D_80183B44[] = {1, 9, 21, 43};
+static u16 D_80183B48[] = {16, 24, 42, 47};
+
+// part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitParticle);
         self->palette = PAL_OVL(0x2BB);
         self->animSet = ANIMSET_DRA(2);
-        self->animCurFrame = D_80182454[self->params];
-        self->velocityY = D_80182440[self->params];
+        self->animCurFrame = D_80183B44[self->params];
+        self->velocityY = D_80183B30[self->params];
         self->step++;
         return;
     } else {
@@ -467,7 +471,7 @@ void EntityMermanExplosion(Entity* self) {
         self->animCurFrame++;
     }
 
-    if (D_80182458[self->params] < self->poseTimer) {
+    if (D_80183B48[self->params] < self->poseTimer) {
         DestroyEntity(self);
     }
 }
