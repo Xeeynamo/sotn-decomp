@@ -143,7 +143,7 @@ void MarSetHighJump(void) {
     PLAYER.velocityY = FIX(-5.0);
     g_Player.high_jump_timer = 0;
     MarSetAnimation(mar_anim_high_jump);
-    func_8015CC28();
+    func_maria_8015CC28();
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
@@ -390,7 +390,7 @@ void MarSetSlide(void) {
     MarSetAnimation(mar_80155750);
     g_CurrentEntity->velocityY = 0;
     MarSetSpeedX(FIX(4.5));
-    func_8015CC28();
+    func_maria_8015CC28();
     MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SLIDE_KICK, 0);
     g_api.PlaySfx(SFX_SCRAPE_C);
     g_Player.timers[PL_T_12] = 4;
@@ -415,6 +415,6 @@ void MarSetBladeDash(void) {
     g_Player.unk46 = 5;
     g_Player.timers[PL_T_12] = 4;
     MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
-    func_8015CC28();
+    func_maria_8015CC28();
     g_api.PlaySfx(SFX_VO_MAR_ATTACK_C);
 }

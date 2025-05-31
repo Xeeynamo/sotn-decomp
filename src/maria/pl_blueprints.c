@@ -49,7 +49,7 @@ extern s32 D_80174F80[11];
 #else
 static s32 D_80174F80[11];
 #endif
-void func_8015F9F0(Entity* entity) {
+void func_maria_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
 
@@ -84,7 +84,7 @@ STATIC_PAD_BSS(3);
 static u8 D_80174FB8;
 STATIC_PAD_BSS(3);
 #endif
-void func_8015FA5C(s32 arg0) {
+void func_maria_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
     D_80174FB4 = D_80154674[arg0][2];
@@ -101,7 +101,7 @@ void MarSetSubweaponParams(Entity* entity) {
     entity->hitEffect = subwpn->hitEffect;
     entity->entityRoomIndex = subwpn->entityRoomIndex;
     entity->attack = g_api.CalcDealDamageMaria(entity->attack);
-    func_8015F9F0(entity);
+    func_maria_8015F9F0(entity);
 }
 
 s32 MarCheckSubweapon(
@@ -194,7 +194,7 @@ void MarEntityHitByCutBlood(Entity* self);
 void EntityMariaCrashSummon(Entity* self);
 void EntityMariaTurtleAttack(Entity* self);
 void EntityMariaTurtleCrashVortex(Entity* self);
-void func_80161C2C(Entity* self);
+void func_maria_80161C2C(Entity* self);
 void EntityMariaOwl(Entity* self);
 void EntityMariaTurtleCrash(Entity* self);
 void EntityMariaDragonCrash(Entity* self);
@@ -205,9 +205,9 @@ void func_pspeu_092BFF78(Entity* self);
 void MarEntityApplyMariaPowerAnim(Entity* self);
 void MarEntitySlideKick(Entity* self);
 void MarEntityBladeDash(Entity* self);
-void func_801623E0(Entity* self);
-void func_80162604(Entity* self);
-void func_80160F0C(Entity* self);
+void func_maria_801623E0(Entity* self);
+void func_maria_80162604(Entity* self);
+void func_maria_80160F0C(Entity* self);
 void MarEntityNotImplemented4(Entity* self);
 void MarEntityPlayerBlinkWhite(Entity* self);
 void MarEntityShrinkingPowerUpRing(Entity* self);
@@ -231,7 +231,7 @@ static PfnEntityUpdate entity_functions[] = {
     EntityMariaCrashSummon,
     EntityMariaTurtleAttack,
     EntityMariaTurtleCrashVortex,
-    func_80161C2C,
+    func_maria_80161C2C,
     EntityMariaOwl,
     EntityMariaTurtleCrash,
     MarEntityDummy,
@@ -247,11 +247,11 @@ static PfnEntityUpdate entity_functions[] = {
     MarEntityApplyMariaPowerAnim,
     MarEntitySlideKick,
     MarEntityBladeDash,
-    func_801623E0,
-    func_80162604,
+    func_maria_801623E0,
+    func_maria_80162604,
     MarEntityDummy,
     MarEntityDummy,
-    func_80160F0C,
+    func_maria_80160F0C,
     MarEntityNotImplemented4,
     MarEntityPlayerBlinkWhite,
     MarEntityDummy,
@@ -585,7 +585,7 @@ void MarEntityBladeDash(Entity* self) {
     }
 }
 
-void func_80160F0C(Entity* self) {
+void func_maria_80160F0C(Entity* self) {
     if (PLAYER.step != PL_S_HIGHJUMP) {
         DestroyEntity(self);
         return;
@@ -1019,7 +1019,7 @@ static AnimationFrame anim_80154E04[] = {
     POSE(2, 13, 0), POSE(2, 14, 0), POSE(2, 15, 0), POSE(2, 16, 0),
     POSE(2, 17, 0), POSE(2, 18, 0), POSE(3, 19, 0), POSE(4, 20, 0),
     POSE_END};
-void func_80161C2C(Entity* self) {
+void func_maria_80161C2C(Entity* self) {
     s16 paramsHi;
     s16 paramsLo;
 
@@ -1183,7 +1183,7 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
         posY - (((rsin(0xE00) >> 4) * self->ext.ricMariaPower.size) >> 8);
 }
 
-void func_801623E0(Entity* self) {
+void func_maria_801623E0(Entity* self) {
     Primitive* prim;
 
     self->posX.val = g_Entities->posX.val;
@@ -1232,7 +1232,7 @@ void func_801623E0(Entity* self) {
     prim->clut = (g_Timer & 1) + 0x13E;
 }
 
-void func_80162604(Entity* self) {
+void func_maria_80162604(Entity* self) {
     Primitive* prim;
 
     self->posX.val = PLAYER.posX.val;
@@ -1304,7 +1304,7 @@ void MarSetWeaponParams(Entity* entity, s32 attack, s32 attackElement,
     entity->hitEffect = hitEffect;
     entity->entityRoomIndex = entityRoomIndex;
     entity->attack = g_api.CalcDealDamageMaria(entity->attack);
-    func_8015F9F0(entity);
+    func_maria_8015F9F0(entity);
 }
 
 static s32 NormalizeAngle(s32 angle) {
@@ -1447,7 +1447,7 @@ void EntityMariaOwl(Entity* self) {
 }
 
 // same as DRA/func_8011BD48
-bool func_80162E9C(Entity* entity) {
+bool func_maria_80162E9C(Entity* entity) {
     Entity* e;
     s32 i;
     s16 objId;
@@ -1555,7 +1555,7 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
     dataPtr = D_80154FBC[upperParams & 0x3F];
     switch (self->step) {
     case 0:
-        if (func_80162E9C(self) != 0) {
+        if (func_maria_80162E9C(self) != 0) {
             DestroyEntity(self);
             return;
         }
@@ -3061,7 +3061,7 @@ void func_pspeu_092BFD30(Entity* self) {
         self->stunFrames = 16;
         self->hitEffect = 1;
         self->entityRoomIndex = 0;
-        func_8015F9F0(self);
+        func_maria_8015F9F0(self);
         self->hitboxOffX = 9;
         self->hitboxOffY = 21;
         self->hitboxWidth = 4;

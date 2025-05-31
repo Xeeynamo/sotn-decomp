@@ -506,7 +506,7 @@ void MarMain(void) {
             // removed compared to RIC, as Maria does not have a prologue
             break;
         case PL_T_AFTERIMAGE_DISABLE:
-            DisableAfterImage(0, 0);
+            MarDisableAfterImage(0, 0);
             break;
         }
         if (--g_Player.timers[i] != 0) {
@@ -538,7 +538,7 @@ void MarMain(void) {
             }
             break;
         case PL_T_AFTERIMAGE_DISABLE:
-            func_8015CC28();
+            func_maria_8015CC28();
             break;
         }
     }
@@ -764,7 +764,7 @@ void MarMain(void) {
         PLAYER.palette = PAL_MARIA;
     }
     if (newStatus & NO_AFTERIMAGE) {
-        DisableAfterImage(1, 4);
+        MarDisableAfterImage(1, 4);
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
@@ -790,7 +790,7 @@ void MarMain(void) {
     if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
-    func_8015C4AC();
+    func_maria_8015C4AC();
     if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -827,7 +827,7 @@ void MarMain(void) {
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }
     g_CurrentEntity->nFramesInvincibility = 0;
-    func_8015C6D4();
+    func_maria_8015C6D4();
 
     // this block is new to maria and it is related to the support for
     // the two subweapons

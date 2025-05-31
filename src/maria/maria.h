@@ -113,7 +113,7 @@ enum MarEntities {
     E_CRASH_SUMMON,            // EntityMariaCrashSummon
     E_TURTLE_ATTACK,           // EntityMariaTurtleAttack
     E_TURTLE_CRASH_VORTEX,     // EntityMariaTurtleCrashVortex
-    E_80161C2C,                // func_80161C2C
+    E_80161C2C,                // func_maria_80161C2C
     E_OWL,                     // EntityMariaOwl
     E_TURTLE_CRASH,            // EntityMariaTurtleCrash
     E_DUMMY_12,                // MarEntityDummy
@@ -129,11 +129,11 @@ enum MarEntities {
     E_APPLY_MARIA_POWER_ANIM,  // MarEntityApplyMariaPowerAnim
     E_SLIDE_KICK,              // MarEntitySlideKick
     E_BLADE_DASH,              // MarEntityBladeDash
-    E_801623E0,                // func_801623E0
-    E_80162604,                // func_80162604
+    E_801623E0,                // func_maria_801623E0
+    E_80162604,                // func_maria_80162604
     E_DUMMY_27,                // MarEntityDummy
     E_DUMMY_28,                // MarEntityDummy
-    E_80160F0C,                // func_80160F0C
+    E_80160F0C,                // func_maria_80160F0C
     E_NOT_IMPLEMENTED_4,       // MarEntityNotImplemented4
     E_BLINK_WHITE,             // MarEntityPlayerBlinkWhite
     E_DUMMY_32,                // MarEntityDummy

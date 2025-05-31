@@ -84,7 +84,7 @@ void MarStepStand(void) {
             }
             break;
         case 64:
-            DisableAfterImage(1, 1);
+            MarDisableAfterImage(1, 1);
             if (MarCheckFacing()) {
                 MarSetWalk(0);
             } else if (PLAYER.poseTimer < 0) {
@@ -93,7 +93,7 @@ void MarStepStand(void) {
             }
             break;
         case 66:
-            DisableAfterImage(1, 1);
+            MarDisableAfterImage(1, 1);
             if (MarCheckFacing()) {
                 MarSetWalk(0);
             } else if (PLAYER.poseTimer < 0) {
@@ -171,7 +171,7 @@ void MarStepJump(void) {
         }
         break;
     case 0x40:
-        DisableAfterImage(1, 1);
+        MarDisableAfterImage(1, 1);
         if (PLAYER.pose < 3) {
             facing = MarCheckFacing();
             if (facing) {
@@ -196,7 +196,7 @@ void MarStepJump(void) {
         }
         break;
     case 0x42:
-        DisableAfterImage(1, 1);
+        MarDisableAfterImage(1, 1);
         if (PLAYER.pose < 3) {
             facing = MarCheckFacing();
             if (facing) {
@@ -352,7 +352,7 @@ void MarStepCrouch(void) {
         }
         break;
     case 0x40:
-        DisableAfterImage(1, 1);
+        MarDisableAfterImage(1, 1);
         if (PLAYER.pose < 3) {
             facing = MarCheckFacing();
             if (!(g_Player.padPressed & PAD_DOWN) && !g_Player.unk72) {
@@ -368,7 +368,7 @@ void MarStepCrouch(void) {
         }
         break;
     case 0x41:
-        DisableAfterImage(1, 1);
+        MarDisableAfterImage(1, 1);
         if (!(g_Player.padPressed & PAD_SQUARE)) {
             g_Player.unk46 = 0;
             PLAYER.step_s = 0;
@@ -455,7 +455,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_HIT_BY_THUNDER, 0);
             PLAYER.velocityY = FIX(-4);
-            func_8015CAAC(FIX(-1.25));
+            func_maria_8015CAAC(FIX(-1.25));
             PLAYER.step_s = 1;
             PLAYER.anim = mar_801556C4;
             g_Player.unk40 = PAL_MARIA;
@@ -477,7 +477,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 case PL_S_STAND:
                 case PL_S_WALK:
                     PLAYER.velocityY = 0;
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 6;
                     PLAYER.anim = mar_anim_stun;
                     g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
@@ -486,7 +486,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     break;
                 case PL_S_CROUCH:
                     PLAYER.velocityY = 0;
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 7;
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
@@ -496,7 +496,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 case PL_S_JUMP:
                 case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
                     g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
@@ -508,7 +508,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 g_Player.damageTaken = PLAYER.hitPoints;
                 PLAYER.posY.val -= 1;
                 PLAYER.velocityY = FIX(-0.5);
-                func_8015CAAC(FIX(-8));
+                func_maria_8015CAAC(FIX(-8));
                 PLAYER.step_s = 2;
                 PLAYER.anim = mar_anim_stun;
                 g_Player.timers[PL_T_2] = 0x200;
@@ -522,14 +522,14 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 case PL_S_STAND:
                 case PL_S_WALK:
                     PLAYER.velocityY = FIX(-4);
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = mar_anim_stun;
                     g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
                     break;
                 case PL_S_CROUCH:
                     PLAYER.velocityY = 0;
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 7;
                     PLAYER.anim = mar_80155704;
                     MarCreateEntFactoryFromEntity(
@@ -539,7 +539,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 case PL_S_JUMP:
                 case PL_S_FALL:
                     PLAYER.velocityY = FIX(-3);
-                    func_8015CAAC(FIX(-1.25));
+                    func_maria_8015CAAC(FIX(-1.25));
                     PLAYER.step_s = 1;
                     PLAYER.anim = D_pspeu_092C0790;
                     g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
@@ -652,7 +652,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             if (i == NUM_VERTICAL_SENSORS * 2) {
             block_6dc:
                 PLAYER.velocityY = FIX(-4);
-                func_8015CAAC(FIX(-1.25));
+                func_maria_8015CAAC(FIX(-1.25));
                 xShift = -3;
                 if (PLAYER.velocityX != 0) {
                     xShift = -xShift;
@@ -816,21 +816,21 @@ void MarStepDead(
     case 0:
         MarResetPose();
         func_80159C04();
-        func_8015CAAC(FIX(-0.75));
+        func_maria_8015CAAC(FIX(-0.75));
         MarSetAnimation(mar_80155544);
         PLAYER.velocityY = FIX(-1.625);
         g_api.PlaySfx(SFX_VO_MAR_DEATH);
         if (damageEffects & ELEMENT_FIRE) {
-            func_8015FA5C(0);
+            func_maria_8015FA5C(0);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x48), 0);
-            // RIC blueprint 53 has child 9, func_80161C2C
+            // RIC blueprint 53 has child 9, func_maria_80161C2C
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_DEATH_BY_FIRE, 2), 0);
             death_kind = DEATH_BY_FIRE;
         } else if (damageEffects & ELEMENT_THUNDER) {
-            func_8015FA5C(2);
+            func_maria_8015FA5C(2);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x4C), 0);
@@ -841,7 +841,7 @@ void MarStepDead(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_THUNDER, 2), 0);
             death_kind = DEATH_BY_THUNDER;
         } else if (damageEffects & ELEMENT_ICE) {
-            func_8015FA5C(3);
+            func_maria_8015FA5C(3);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x4D), 0);
@@ -852,7 +852,7 @@ void MarStepDead(
             death_kind = DEATH_BY_ICE;
             PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
-            func_8015FA5C(1);
+            func_maria_8015FA5C(1);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x4A), 0);
