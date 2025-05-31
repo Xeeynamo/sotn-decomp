@@ -2,8 +2,6 @@
 
 #include "../no3/no3.h"
 
-extern s16 g_WaterXTbl[];
-
 typedef enum {
     MERMAN_INIT,
     MERMAN_SWIMMING_UP,
@@ -430,6 +428,7 @@ void EntityMerman(Entity* self) {
     }
 }
 
+// fireball shot by merman
 void EntityMermanFireball(Entity* self) {
     Entity* entity;
 
@@ -497,6 +496,7 @@ static s32 D_80183B30[] = {FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
 static u8 D_80183B44[] = {1, 9, 21, 43};
 static u16 D_80183B48[] = {16, 24, 42, 47};
 
+// part of explosion when merman dies
 void EntityMermanExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
