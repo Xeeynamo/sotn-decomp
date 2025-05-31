@@ -1399,7 +1399,3 @@ void EntityMermanExplosion(Entity* self) {
         DestroyEntity(self);
     }
 }
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092516E8);
-
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_09251C70);
