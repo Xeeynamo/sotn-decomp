@@ -71,7 +71,6 @@ segments:
       - [0x30BC, data]
       - [0x3858, .data, water_effects]
       - [0x3914, data]
-      - [0x39A0, data]
       - [0x3AC0, data]
       - [0x3AF0, data]
       - [0x3B30, data]

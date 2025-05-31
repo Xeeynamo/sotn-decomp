@@ -90,6 +90,7 @@ segments:
       - [0x5E580, .data, no3/e_background_bushes_trees]
       - [0x5E630, .data, no3/e_jewel_sword_puzzle]
       - [0x5E740, data]
+      - [0x5E748, .data, no3_psp/water_data]
       - [0x5E778, .data, no3/e_death_sky_swirl]
       - [0x5E7C0, .data, no3/e_sky_entities]
       - [0x5E7E0, .data, no3/e_trapdoor]
@@ -106,7 +107,8 @@ segments:
       - [0x5F770, .data, no3/e_red_door]
       - [0x5F788, .data, no3/st_update]
       - [0x5F7B8, .data, no3/e_fire_warg]
-      - [0x60050, data]
+      - [0x60050, .data, no3_psp/working_on]
+      - [0x600F0, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]

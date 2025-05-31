@@ -542,7 +542,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ char pad_0[0x6];
-    /* 0x86 */ s8 timer;
+    /* 0x86 */ u8 timer;
     /* 0x87 */ char pad_87[0x5];
     /* 0x8C */ s16 rotation;
     /* 0x8E */ char pad_8E[0x12];
