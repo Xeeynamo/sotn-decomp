@@ -1,6 +1,35 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-extern u16 g_EInitCommon[];
+// Detects if the merman is splashing into water.
+// If so, creates a splash effect, and sets merman underwater to true.
+bool CheckMermanEnteringWater(s16 yOffset) {
+    Collider collider;
+    Entity* newEntity;
+    s32 res = false;
+
+    s16 x = g_CurrentEntity->posX.i.hi;
+    s16 y = g_CurrentEntity->posY.i.hi + yOffset;
+    g_api.CheckCollision(x, y, &collider, 0);
+
+    if (!(collider.effects & EFFECT_SOLID)) {
+        res = true;
+    }
+
+    if (collider.effects & EFFECT_WATER) {
+        if (!g_CurrentEntity->ext.merman.isUnderwater) {
+            newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(
+                    E_MERMAN_WATER_SPLASH, g_CurrentEntity, newEntity);
+                newEntity->posY.i.hi += yOffset;
+                newEntity->zPriority = g_CurrentEntity->zPriority;
+            }
+            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
+            g_CurrentEntity->ext.merman.isUnderwater = true;
+        }
+    }
+    return res;
+}
 
 typedef enum {
     MERMAN2_INIT,
@@ -30,37 +59,6 @@ typedef enum {
     MERMAN2_SPIT_FIRE_ATTACK,
 } Merman2SpitFireSubSteps;
 
-// Detects if the merman is splashing into water.
-// If so, creates a splash effect, and sets merman underwater to true.
-bool CheckMermanEnteringWater(s16 yOffset) {
-    Collider collider;
-    Entity* newEntity;
-    s32 res = false;
-
-    s16 x = g_CurrentEntity->posX.i.hi;
-    s16 y = g_CurrentEntity->posY.i.hi + yOffset;
-    g_api.CheckCollision(x, y, &collider, 0);
-
-    if (!(collider.effects & EFFECT_SOLID)) {
-        res = true;
-    }
-
-    if (collider.effects & EFFECT_WATER) {
-        if (!g_CurrentEntity->ext.merman.isUnderwater) {
-            newEntity = AllocEntity(g_Entities + 232, g_Entities + 256);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_MERMAN_WATER_SPLASH, g_CurrentEntity, newEntity);
-                newEntity->posY.i.hi += yOffset;
-                newEntity->zPriority = g_CurrentEntity->zPriority;
-            }
-            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
-            g_CurrentEntity->ext.merman.isUnderwater = true;
-        }
-    }
-    return res;
-}
-
 #define XY(x, y) x, y
 static Point32 g_merman2Swimvels[] = {XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)), XY(FIX(-0.5), FIX(0.5))};
 static u8 g_merman2_walktimers[] = {0x40, 0x30, 0x50, 0x40};
@@ -71,11 +69,6 @@ static u8 g_merman2_walkanim[] = {9, 1, 9, 2, 9, 3, 9, 4, 0};
 static u8 g_merman2_spitfire[] = {24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9, 2, 8, 8, 12, 1, 13, 255, 0};
 static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
-
-extern u16 g_EInitWaterObject[];
-extern s16 g_WaterXTbl[];           // pos TBL
-extern u8 g_MediumWaterSplashAnim[];
-extern u8 g_HighWaterSplashAnim[];
 
 void EntityMerman2(Entity* self) {
     s32 primIndex;

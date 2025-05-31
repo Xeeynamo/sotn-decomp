@@ -6,7 +6,6 @@
 
 // Detects if the merman is splashing into water.
 // If so, creates a splash effect, and sets merman underwater to true.
-
 bool CheckMermanEnteringWater(s16 yOffset) {
     Collider collider;
     Entity* newEntity;
@@ -48,16 +47,16 @@ typedef enum {
 } Merman2Steps;
 
 typedef enum {
-    MERMAN2_WALKING_TO_PLAYER_SETUP,
-    MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER,
-    MERMAN2_WALKING_TO_PLAYER_WALKING,
-} Merman2WalkingToPlayerSubSteps;
-
-typedef enum {
     MERMAN2_JUMPING_SETUP,
     MERMAN2_JUMPING_UNDERWATER,
     MERMAN2_JUMPING_IN_AIR,
 } Merman2JumpingSubSteps;
+
+typedef enum {
+    MERMAN2_WALKING_TO_PLAYER_SETUP,
+    MERMAN2_WALKING_TO_PLAYER_FACE_PLAYER,
+    MERMAN2_WALKING_TO_PLAYER_WALKING,
+} Merman2WalkingToPlayerSubSteps;
 
 typedef enum {
     MERMAN2_SPIT_FIRE_FACE_PLAYER,
@@ -74,9 +73,6 @@ static u8 g_merman2_walkanim[] = {9, 1, 9, 2, 9, 3, 9, 4, 0};
 static u8 g_merman2_spitfire[] = {24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9, 2, 8, 8, 12, 1, 13, 255, 0};
 static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
-
-extern s16 g_WaterXTbl[];
-extern u16 g_EInitWaterObject[];
 
 void EntityMerman2(Entity* self) {
     u8 colorOffset; //s8
