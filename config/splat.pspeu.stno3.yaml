@@ -74,7 +74,7 @@ segments:
       - [0x11840, c, no3/st_update]
       - [0x11D78, c, no3/e_fire_warg]
       - [0x16340, c, no3_psp/e_mermen]
-      - [0x18B40, c, no3_psp/e_merman]
+      - [0x18B40, c, no3/e_merman]
       - [0x1A068, c, no3_psp/e_particles]
       - [0x1F830, c, no3_psp/e_misc]
       - [0x21CC8, c, no3_psp/collision]
