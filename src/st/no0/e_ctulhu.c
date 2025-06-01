@@ -280,7 +280,7 @@ void EntityCtulhu(Entity* self) {
                         newEntity->posX.i.hi -= 0x10;
                     }
                     newEntity->posY.i.hi -= 0x16;
-                    newEntity->rotZ = angle;
+                    newEntity->rotate = angle;
                     newEntity->zPriority = self->zPriority + 1;
                 }
             }
@@ -304,7 +304,7 @@ void EntityCtulhu(Entity* self) {
                         newEntity->posX.i.hi -= 0x10;
                     }
                     newEntity->posY.i.hi -= 0x14;
-                    newEntity->rotZ = triple_fireball_rot_z[i];
+                    newEntity->rotate = triple_fireball_rot_z[i];
                 }
             }
         }
@@ -597,19 +597,19 @@ void EntityCtulhuFireball(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
     s32 primIndex;
-    s16 rotZ;
+    s16 rotate;
 
     if (!self->step) {
         InitializeEntity(g_EInitCtulhuFireball);
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        rotZ = self->rotZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        rotate = self->rotate;
         if (self->facingLeft) {
-            rotZ = -rotZ;
+            rotate = -rotate;
         } else {
-            rotZ = rotZ + 0x800;
+            rotate = rotate + 0x800;
         }
-        self->velocityX = rcos(rotZ) * 48;
-        self->velocityY = rsin(rotZ) * 48;
+        self->velocityX = rcos(rotate) * 48;
+        self->velocityY = rsin(rotate) * 48;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -675,8 +675,8 @@ void EntityCtulhuIceShockwave(Entity* self) {
         self->animCurFrame = 44;
         self->hitboxOffX = 7;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTY;
-        self->rotY = 256;
+        self->drawFlags = FLAG_DRAW_SCALEY;
+        self->scaleY = 256;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 128);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -703,9 +703,9 @@ void EntityCtulhuIceShockwave(Entity* self) {
         MoveEntity();
 
         if (g_Timer & 1) {
-            self->rotY = 264;
+            self->scaleY = 264;
         } else {
-            self->rotY = 248;
+            self->scaleY = 248;
         }
 
         if (self->ext.ctulhu.shockwavePrim == NULL) {
@@ -779,7 +779,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
     case 2:
         MoveEntity();
         self->opacity -= 8;
-        self->rotY += 24;
+        self->scaleY += 24;
         self->velocityX -= self->velocityX / 8;
 
         if (g_Timer & 1) {

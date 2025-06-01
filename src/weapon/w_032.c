@@ -75,7 +75,7 @@ void EntityWeaponAttack(Entity* self) {
             self->hitboxState = 4;
         }
         self->drawFlags = PLAYER.drawFlags;
-        self->rotY = PLAYER.rotY;
+        self->scaleY = PLAYER.scaleY;
         self->rotPivotY = PLAYER.rotPivotY;
     }
 }

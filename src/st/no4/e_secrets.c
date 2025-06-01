@@ -227,7 +227,7 @@ void EntityBreakableWallDebris(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->animSet = ANIMSET_OVL(1);
         if (Random() & 1) {
             self->animCurFrame = 0x26;
@@ -240,9 +240,9 @@ void EntityBreakableWallDebris(Entity* self) {
         // fallthrough
     case 1:
         MoveEntity();
-        self->rotZ += 0x20;
+        self->rotate += 0x20;
         if (self->params) {
-            self->rotZ += 0x20;
+            self->rotate += 0x20;
         }
         self->velocityY += FIX(0.125);
         posX = self->posX.i.hi;

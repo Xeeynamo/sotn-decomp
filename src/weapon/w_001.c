@@ -168,7 +168,7 @@ void EntityWeaponAttack(Entity* self) {
         newX = PLAYER.posX.i.hi + xOffset;
         newY = PLAYER.posY.i.hi + yOffset;
 
-        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
             newY -= 3;
         }
 
@@ -329,13 +329,13 @@ s32 func_ptr_80170004(Entity* self) {
 #ifdef VERSION_PSP
     xOffset = PLAYER.posX.i.hi + xOffset;
     yOffset = PLAYER.posY.i.hi + yOffset;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         yOffset -= 3;
     }
 #else
     posX = xOffset + PLAYER.posX.i.hi;
     posY = yOffset + PLAYER.posY.i.hi;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         posY -= 3;
     }
 #endif
@@ -408,12 +408,12 @@ static void func_ptr_80170008(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posX.val += self->velocityX * 6;
         self->posY.i.hi -= 0xD;
-        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
             self->posY.i.hi -= 0x3;
         }
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotY = 0x60;
-        self->rotX = 0x60;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleY = 0x60;
+        self->scaleX = 0x60;
         self->ext.factory.unkAE = self->ext.factory.parent->ext.factory.unkAE;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.factory.parent->enemyId;
@@ -429,13 +429,13 @@ static void func_ptr_80170008(Entity* self) {
             return;
         }
         self->posX.val += self->velocityX;
-        self->rotX += 0x10;
-        self->rotY += 0x10;
-        if (self->rotY >= 0x101) {
-            self->rotY = 0x100;
+        self->scaleX += 0x10;
+        self->scaleY += 0x10;
+        if (self->scaleY >= 0x101) {
+            self->scaleY = 0x100;
         }
-        if (self->rotX >= 0x181) {
-            self->rotX = 0x180;
+        if (self->scaleX >= 0x181) {
+            self->scaleX = 0x180;
         }
         break;
     }

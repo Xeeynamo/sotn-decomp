@@ -321,21 +321,21 @@ s32 func_ptr_80170004(Entity* self) {
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_123000_8017A4A4;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotX = self->rotY = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleX = self->scaleY = 0;
         self->step++;
         break;
     case 1:
-        self->rotX += 4;
-        if (self->rotX >= 0x100) {
-            self->rotX = 0x100;
+        self->scaleX += 4;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = 0x100;
             self->ext.weapon.equipId =
                 self->ext.weapon.parent->ext.weapon.equipId;
             SetWeaponProperties(self, 0);
             self->ext.weapon.lifetime = 8;
             self->step++;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         break;
     case 2:
         if (--self->ext.weapon.lifetime == 0) {

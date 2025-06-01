@@ -137,7 +137,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -189,8 +189,8 @@ static s32 func_ptr_80170004(Entity* self) {
         self->ext.sword.unk84 = 0x200;
         self->velocityY = FIX(-0.25);
         self->ext.sword.unk86 = FIX(1.0 / 64);
-        self->rotZ = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->rotate = 0;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 9;
@@ -199,7 +199,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotZ += 0x200;
+        self->rotate += 0x200;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityX += self->ext.sword.unk7C;
@@ -212,7 +212,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 2:
-        self->rotZ += 0x200;
+        self->rotate += 0x200;
         var_s1 = self->ext.sword.unk84;
         self->ext.sword.unk84 += 0x10;
         xDist = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);

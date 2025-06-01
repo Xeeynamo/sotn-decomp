@@ -132,7 +132,7 @@ static void EntityWeaponAttack(Entity* self) {
 
     D_107000_8017BBE4 = PLAYER.pose;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 

@@ -88,29 +88,29 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.lifetime--;
         if ((self->ext.weapon.lifetime) == 0) {
-            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotY = 256;
-            self->rotX = 256;
+            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleY = 256;
+            self->scaleX = 256;
             self->ext.weapon.lifetime = 14;
             self->step++;
         }
         break;
     // squish and explode
     case 3:
-        self->rotX -= 32;
-        if (self->rotY < 1024) {
-            self->rotY += 192;
+        self->scaleX -= 32;
+        if (self->scaleY < 1024) {
+            self->scaleY += 192;
         }
-        if (self->rotX == 64) {
+        if (self->scaleX == 64) {
             self->rotPivotX = 1;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 12), 0);
         }
-        if (self->rotX == 32) {
+        if (self->scaleX == 32) {
             self->palette = PAL_OVL(0x15F);
         }
-        if (self->rotX <= 0) {
-            self->rotX = 6;
+        if (self->scaleX <= 0) {
+            self->scaleX = 6;
         }
 
         self->ext.weapon.lifetime--;
@@ -151,9 +151,9 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->anim = D_82000_8017A724;
-        self->rotX = self->rotY = 256;
+        self->scaleX = self->scaleY = 256;
 
         angle = rand();
         self->velocityX = rcos(angle) << 7;
@@ -176,10 +176,10 @@ s32 func_ptr_80170004(Entity* self) {
         break;
 
     case 2:
-        if (self->rotX < 512) {
-            self->rotX += 16;
+        if (self->scaleX < 512) {
+            self->scaleX += 16;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         break;

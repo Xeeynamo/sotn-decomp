@@ -349,8 +349,8 @@ void func_us_801BCB34(Entity* self) {
                                 E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi -= 0x18;
-                            tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
-                            tempEntity->rotZ = 0x400 - (i << 0xA);
+                            tempEntity->drawFlags |= FLAG_DRAW_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
                             tempEntity->params = 0x10;
                         }
                     }
@@ -448,8 +448,8 @@ void func_us_801BCB34(Entity* self) {
                                 E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
-                            tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
-                            tempEntity->rotZ = 0x400 - (i << 0xA);
+                            tempEntity->drawFlags |= FLAG_DRAW_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
                             tempEntity->params = 0x10;
                         }
                     }
@@ -488,8 +488,8 @@ void func_us_801BCB34(Entity* self) {
                                 E_INTENSE_EXPLOSION, self, tempEntity);
                             tempEntity->posX.i.hi += (i * 8) - 8;
                             tempEntity->posY.i.hi += 0x24;
-                            tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
-                            tempEntity->rotZ = 0x400 - (i << 0xA);
+                            tempEntity->drawFlags |= FLAG_DRAW_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
                             tempEntity->params = 0x10;
                         }
                     }

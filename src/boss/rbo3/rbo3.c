@@ -152,7 +152,7 @@ extern s32 D_us_80180728;
 
 void EntityMedusa(Entity* self) {
     Entity* entity;
-    s16 rotZ;
+    s16 rotate;
     s32 x;
     s32 i;
     s32 velocityX;
@@ -289,9 +289,9 @@ void EntityMedusa(Entity* self) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(UNK_ENTITY_26, self, entity);
-                    entity->rotZ = i * 1024 - 512;
+                    entity->rotate = i * 1024 - 512;
                     if (!self->facingLeft) {
-                        entity->rotZ = (i * 1024) + 1536;
+                        entity->rotate = (i * 1024) + 1536;
                     }
                     entity->posY.i.hi -= 16;
                     entity->zPriority = self->zPriority - 2;
@@ -568,7 +568,7 @@ void func_us_801923DC(Entity* self) {
             offsets += 2;
         }
 
-        angle = self->rotZ;
+        angle = self->rotate;
         self->velocityX = rcos(angle) * 160;
         self->velocityY = rsin(angle) * 160;
         self->ext.factory.unk82 = angle;

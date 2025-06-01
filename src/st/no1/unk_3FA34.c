@@ -8,15 +8,16 @@ void func_us_801BFA34(Entity* self) {
         self->animSet = 2;
         self->animCurFrame = 9;
         self->drawMode = DRAW_TPAGE;
-        self->rotX = 64;
-        self->rotY = 64;
-        self->rotZ = -0x400;
+        self->scaleX = 64;
+        self->scaleY = 64;
+        self->rotate = -0x400;
         self->velocityX = FIX(-5.0 / 4.0);
         self->zPriority += 8;
-        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags |=
+            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
     } else {
-        self->rotX += 4;
-        self->rotY += 14;
+        self->scaleX += 4;
+        self->scaleY += 14;
         self->poseTimer++;
         self->posX.val += self->velocityX;
 

@@ -43,10 +43,10 @@ void DopplegangerStepHighJump(void) {
             func_us_801C648C(3);
             if (g_Dop.unk4A > 4) {
                 DOPPLEGANGER.step_s = 2;
-                DOPPLEGANGER.rotZ = 0x800;
+                DOPPLEGANGER.rotate = 0x800;
                 DOPPLEGANGER.rotPivotX = 0;
                 DOPPLEGANGER.rotPivotY = 2;
-                DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTZ;
+                DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
                 DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
                 SetDopplegangerAnim(0x2B);
             } else {
@@ -72,17 +72,17 @@ void DopplegangerStepHighJump(void) {
         break;
 
     case 2:
-        DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTZ;
+        DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
         DOPPLEGANGER.rotPivotX = 0;
         DOPPLEGANGER.rotPivotY = 2;
         if (g_Dop.unk4A > 56) {
             SetDopplegangerAnim(0x2D);
-            DOPPLEGANGER.rotZ = 0;
+            DOPPLEGANGER.rotate = 0;
             DOPPLEGANGER.step_s = 4;
             DOPPLEGANGER.drawFlags &=
                 FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                FLAG_DRAW_ROTX;
+                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                FLAG_DRAW_SCALEX;
             DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
         }
         break;
@@ -118,14 +118,15 @@ s32 func_80113E68(void) {
 
 void func_us_801C68CC(void) {
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-    DOPPLEGANGER.drawFlags &= FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                              FLAG_DRAW_UNK10 | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+    DOPPLEGANGER.drawFlags &=
+        FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
+        FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
     DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.pose = 0;
     DOPPLEGANGER.drawMode = DRAW_DEFAULT;
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
-    DOPPLEGANGER.rotZ = 0;
+    DOPPLEGANGER.rotate = 0;
     if (g_Entities[STAGE_ENTITY_START + 16].entityId == E_MIST) {
         func_8010FAF4();
     }
@@ -293,16 +294,16 @@ bool BatFormFinished(void) {
 }
 
 void func_8011690C(s16 arg0) {
-    if (DOPPLEGANGER.rotZ < arg0) {
-        DOPPLEGANGER.rotZ += 16;
-        if (arg0 < DOPPLEGANGER.rotZ) {
-            DOPPLEGANGER.rotZ = arg0;
+    if (DOPPLEGANGER.rotate < arg0) {
+        DOPPLEGANGER.rotate += 16;
+        if (arg0 < DOPPLEGANGER.rotate) {
+            DOPPLEGANGER.rotate = arg0;
         }
     }
-    if (arg0 < DOPPLEGANGER.rotZ) {
-        DOPPLEGANGER.rotZ -= 16;
-        if (DOPPLEGANGER.rotZ < arg0) {
-            DOPPLEGANGER.rotZ = arg0;
+    if (arg0 < DOPPLEGANGER.rotate) {
+        DOPPLEGANGER.rotate -= 16;
+        if (DOPPLEGANGER.rotate < arg0) {
+            DOPPLEGANGER.rotate = arg0;
         }
     }
 }
@@ -328,7 +329,7 @@ void DopplegangerStepUnmorphBat(void) {
     s32 count;
     u8 _pad[40]; // must be between 33 & 40
 
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTZ;
+    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
     DecelerateX(FIX(1.0 / 8.0));
     if (g_Dop.vram_flag & 3) {
         DOPPLEGANGER.velocityY = 0;
@@ -360,7 +361,7 @@ void DopplegangerStepUnmorphBat(void) {
         if (count == 8) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(1);
             DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
-            DOPPLEGANGER.rotZ = 0;
+            DOPPLEGANGER.rotate = 0;
             g_Dop.unk66 = 1;
             DOPPLEGANGER.step_s = 1;
             D_us_80183B98[1] = 0x5F;
@@ -694,13 +695,13 @@ void DopplegangerStepStone(s32 arg0) {
             DOPPLEGANGER.step_s = 2;
             DOPPLEGANGER.drawFlags &=
                 FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                FLAG_DRAW_ROTX;
+                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                FLAG_DRAW_SCALEX;
         } else {
             DOPPLEGANGER.rotPivotX = 0;
-            DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTZ;
-            DOPPLEGANGER.rotZ = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
-            if (DOPPLEGANGER.rotZ == 0) {
+            DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+            DOPPLEGANGER.rotate = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
+            if (DOPPLEGANGER.rotate == 0) {
                 DOPPLEGANGER.rotPivotY = 24;
             } else {
                 DOPPLEGANGER.rotPivotY = 20;
@@ -1132,7 +1133,7 @@ void EntitySmokePuff(Entity* self) {
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_OVL(0x195);
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
         posX = D_us_80181804[paramsLo];
         if (paramsHi == 0) {
@@ -1181,8 +1182,8 @@ void EntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_80181898[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotX = D_us_80181828[1] + 0x40;
-            self->rotY = self->rotX;
+            self->scaleX = D_us_80181828[1] + 0x40;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -1202,8 +1203,8 @@ void EntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 DOPPLEGANGER.posY.i.hi + g_DopSensorsWall[D_us_801818A8[i]].y;
             self->velocityY = D_us_80181810[paramsLo];
-            self->rotX = D_us_80181828[paramsLo] + 0x20;
-            self->rotY = self->rotX;
+            self->scaleX = D_us_80181828[paramsLo] + 0x20;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -1223,17 +1224,17 @@ void EntitySmokePuff(Entity* self) {
         }
         self->posX.i.hi += posX;
         self->posY.i.hi += 0x18;
-        self->rotX = D_us_80181828[paramsLo] + 0x40;
+        self->scaleX = D_us_80181828[paramsLo] + 0x40;
         self->velocityY = D_us_80181810[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
             SetSpeedX(-0x3000);
-            self->rotX = D_us_80181828[1] + 0x40;
+            self->scaleX = D_us_80181828[1] + 0x40;
         }
         if (paramsHi == 5) {
             self->velocityY = D_us_80181810[4 - paramsLo * 2];
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (paramsHi == 10) {
             self->posY.i.hi -= 6;
         }
@@ -1268,9 +1269,9 @@ void DopEntityHitByDark(Entity* self) {
         }
         D_us_801D3374++;
         self->opacity = 0xFF;
-        self->drawFlags =
-            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        self->rotX = self->rotY = 0x40;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
+                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->scaleX = self->scaleY = 0x40;
         self->anim = D_us_801818B4;
 
         self->posY.i.hi += ((rand() % 35) - 15);
@@ -1283,8 +1284,8 @@ void DopEntityHitByDark(Entity* self) {
             self->opacity -= 8;
         }
         self->posY.val += self->velocityY;
-        self->rotX += 8;
-        self->rotY += 8;
+        self->scaleX += 8;
+        self->scaleY += 8;
         if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
@@ -1360,9 +1361,9 @@ void EntityDopplegangerOutline(Entity* self) {
     height = spriteY - one;
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
-    self->rotZ = DOPPLEGANGER.rotZ;
+    self->rotate = DOPPLEGANGER.rotate;
     self->drawFlags =
-        DOPPLEGANGER.drawFlags | (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+        DOPPLEGANGER.drawFlags | (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
     primData = D_us_80181C00[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -1395,24 +1396,30 @@ void EntityDopplegangerOutline(Entity* self) {
         case 20: // Sword Warp Spell (#1)
         case 22: // Soul Steal
             self->ext.playerOutline.brightness = 0x80;
-            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX =
+                DOPPLEGANGER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY =
+                DOPPLEGANGER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = DOPPLEGANGER.rotPivotY;
             self->rotPivotX = DOPPLEGANGER.rotPivotX;
             self->ext.playerOutline.timer = 8;
             break;
         case 2: // Agunea
             self->ext.playerOutline.brightness = 0xC0;
-            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX =
+                DOPPLEGANGER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY =
+                DOPPLEGANGER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = DOPPLEGANGER.rotPivotY;
             self->rotPivotX = DOPPLEGANGER.rotPivotX;
             self->ext.playerOutline.timer = 8;
             break;
         case 1: // Curse attack
             self->ext.playerOutline.brightness = 0x100;
-            self->rotX = DOPPLEGANGER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = DOPPLEGANGER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX =
+                DOPPLEGANGER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY =
+                DOPPLEGANGER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = DOPPLEGANGER.rotPivotY;
             self->rotPivotX = DOPPLEGANGER.rotPivotX;
             self->ext.playerOutline.timer = 8;
@@ -1428,8 +1435,8 @@ void EntityDopplegangerOutline(Entity* self) {
         case 19:
         case 21: // Sword Warp Spell (#2)
             self->ext.playerOutline.brightness = 0x80;
-            self->rotX = DOPPLEGANGER.rotX + 0x60;
-            self->rotY = DOPPLEGANGER.rotY + 0x60;
+            self->scaleX = DOPPLEGANGER.scaleX + 0x60;
+            self->scaleY = DOPPLEGANGER.scaleY + 0x60;
             self->rotPivotY = DOPPLEGANGER.rotPivotY;
             self->rotPivotX = DOPPLEGANGER.rotPivotX;
             self->ext.playerOutline.timer = 8;
@@ -1485,8 +1492,8 @@ void EntityDopplegangerOutline(Entity* self) {
         case 18:
         case 20: // Sword Warp Spell (#1)
         case 22: // Soul Steal
-            self->rotX += 8;
-            self->rotY += 8;
+            self->scaleX += 8;
+            self->scaleY += 8;
             self->ext.playerOutline.brightness -= 5;
             if (self->ext.playerOutline.brightness < 0) {
                 DestroyEntity(self);
@@ -1494,8 +1501,8 @@ void EntityDopplegangerOutline(Entity* self) {
             }
             break;
         case 1: // Curse attack, grows slower and dims faster
-            self->rotX += 2;
-            self->rotY += 2;
+            self->scaleX += 2;
+            self->scaleY += 2;
             self->ext.playerOutline.brightness -= 16;
             if (self->ext.playerOutline.brightness < 0) {
                 DestroyEntity(self);
@@ -1512,10 +1519,10 @@ void EntityDopplegangerOutline(Entity* self) {
         case 21: // Sword Warp Spell (#2)
             // Shrinks inward, and when at size 0x100, holds there for 8 frames
             // in step 3
-            self->rotX -= 8;
-            self->rotY -= 8;
-            if (self->rotX <= 0x100) {
-                self->rotY = self->rotX = 0x100;
+            self->scaleX -= 8;
+            self->scaleY -= 8;
+            if (self->scaleX <= 0x100) {
+                self->scaleY = self->scaleX = 0x100;
                 self->ext.playerOutline.timer = 8;
                 self->step++;
             }
@@ -1660,20 +1667,21 @@ void EntityWingSmashTrail(Entity* self) {
         self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
         self->unk5A = 8;
         self->zPriority = DOPPLEGANGER.zPriority - 2;
-        self->drawFlags = DOPPLEGANGER.drawFlags |
-                          (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+        self->drawFlags =
+            DOPPLEGANGER.drawFlags |
+            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
         self->opacity = 0x80;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->rotZ = DOPPLEGANGER.rotZ;
+        self->rotate = DOPPLEGANGER.rotate;
         self->facingLeft = DOPPLEGANGER.facingLeft;
         self->palette = PAL_OVL(0x202);
-        self->rotX = self->rotY = 0x100;
+        self->scaleX = self->scaleY = 0x100;
         self->step++;
         return;
     }
     // This actually makes the wing smashes shrink over time, not rotate.
-    self->rotX -= 8;
-    self->rotY -= 8;
+    self->scaleX -= 8;
+    self->scaleY -= 8;
     self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
     if (self->opacity >= 5) {
         self->opacity -= 5;
@@ -1695,9 +1703,9 @@ void func_8011EDA8(Entity* self) {
     switch (self->step) {
     case 0:
         if (paramsHi == 1) {
-            self->rotX = 0xC0;
-            self->rotY = 0xC0;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->scaleX = 0xC0;
+            self->scaleY = 0xC0;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_us_80181E04;
         }
@@ -1705,9 +1713,9 @@ void func_8011EDA8(Entity* self) {
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (paramsLo & 3) {
                 self->anim = D_us_80181DC8;
-                self->rotX = 0x120;
-                self->rotY = 0x120;
-                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->scaleX = 0x120;
+                self->scaleY = 0x120;
+                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -1737,8 +1745,8 @@ void func_8011EDA8(Entity* self) {
         break;
 
     case 1:
-        self->rotX -= 4;
-        self->rotY -= 4;
+        self->scaleX -= 4;
+        self->scaleY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
@@ -1956,15 +1964,15 @@ void EntityHitByIce(Entity* self) {
         }
         if (DOPPLEGANGER.velocityY != 0) {
             if (DOPPLEGANGER.facingLeft) {
-                self->rotZ = 0x100;
+                self->rotate = 0x100;
             } else {
-                self->rotZ = -0x100;
+                self->rotate = -0x100;
             }
         } else {
             if (DOPPLEGANGER.velocityX > 0) {
-                self->rotZ = 0x80;
+                self->rotate = 0x80;
             } else {
-                self->rotZ = 0xF80;
+                self->rotate = 0xF80;
             }
         }
         self->step++;
@@ -2004,7 +2012,7 @@ void EntityHitByIce(Entity* self) {
         if (prim->u0 < 2) {
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x0 = selfX + xShift;
@@ -2013,7 +2021,7 @@ void EntityHitByIce(Entity* self) {
             offset = D_us_80181E84[i * 3 + 1];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x1 = selfX + xShift;
@@ -2022,7 +2030,7 @@ void EntityHitByIce(Entity* self) {
             offset = D_us_80181E84[i * 3 + 2];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x2 = prim->x3 = selfX + xShift;

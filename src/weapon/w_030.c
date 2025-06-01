@@ -71,7 +71,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -720,9 +720,10 @@ void func_ptr_80170008(Entity* self) {
                 return;
             }
             self->step = 3;
-            self->drawFlags &= FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                               FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY |
-                               FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags &=
+                FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
+                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY |
+                FLAG_DRAW_SCALEX;
             break;
         }
         break;
@@ -869,7 +870,7 @@ void func_ptr_8017000C(Entity* self) {
                 (rcos(self->ext.weapon.unk80) * self->ext.weapon.unk9A) >> 5;
             temp_lo = rsin(self->ext.weapon.unk80) * self->ext.weapon.unk9A;
             self->ext.weapon.unk98 += 0x18;
-            self->rotZ = -self->ext.weapon.unk80 + 0x800;
+            self->rotate = -self->ext.weapon.unk80 + 0x800;
             self->velocityY = -(temp_lo >> 5);
         }
         if (self->hitFlags != 0) {
@@ -888,7 +889,7 @@ void func_ptr_8017000C(Entity* self) {
         return;
     case 3:
         self->ext.weapon.unk80 += 0x100;
-        self->rotZ = -self->ext.weapon.unk80 + 0x800;
+        self->rotate = -self->ext.weapon.unk80 + 0x800;
         if (--self->ext.weapon.lifetime == 0) {
             self->ext.weapon_030.other = g_api.func_80118970();
             self->ext.weapon.unk98 = 0x20;
@@ -912,8 +913,9 @@ s32 func_ptr_80170010(Entity* self) {
     case 0:
         self->animSet = 9;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
-        self->rotX = self->rotY = 0x20;
+        self->drawFlags =
+            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+        self->scaleX = self->scaleY = 0x20;
         self->anim = D_D6000_8017A514;
         if ((u8)self->params != 0) {
             self->anim = D_D6000_8017A548;
@@ -942,12 +944,12 @@ s32 func_ptr_80170010(Entity* self) {
                 self->ext.weapon.vol = 0x7F;
             }
         }
-        self->rotZ += 0x100;
-        self->rotX += 2;
-        if (self->rotX > 0x100) {
-            self->rotX = 0x100;
+        self->rotate += 0x100;
+        self->scaleX += 2;
+        if (self->scaleX > 0x100) {
+            self->scaleX = 0x100;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (self->ext.weapon.parent->pose == 0x20 && self->poseTimer == 1) {
             g_api.PlaySfx(SFX_EXPLODE_SMALL);
             if ((u8)self->params != 0) {
@@ -962,7 +964,7 @@ s32 func_ptr_80170010(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         if (!(g_GameTimer & 3)) {
-            self->rotZ += 0x400;
+            self->rotate += 0x400;
         }
         if (!(g_GameTimer & 1) && (rand() & 1)) {
             g_api.CreateEntFactoryFromEntity(self, FACTORY(0x24, 1), 0);
@@ -972,9 +974,9 @@ s32 func_ptr_80170010(Entity* self) {
         }
         break;
     case 3:
-        self->rotX -= 16;
-        self->rotY = self->rotX;
-        if (self->rotX < 0x40) {
+        self->scaleX -= 16;
+        self->scaleY = self->scaleX;
+        if (self->scaleX < 0x40) {
             self->hitboxState = 0;
             self->animSet = 0;
             self->ext.weapon.lifetime = 0x80;
@@ -989,7 +991,7 @@ s32 func_ptr_80170010(Entity* self) {
         break;
     }
 
-    hitboxSize = (self->rotX >> 0x6) * 3;
+    hitboxSize = (self->scaleX >> 0x6) * 3;
     self->hitboxWidth = hitboxSize;
     self->hitboxHeight = hitboxSize;
 }

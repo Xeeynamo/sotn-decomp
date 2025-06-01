@@ -243,7 +243,7 @@ void EntityWeaponAttack(Entity* self) {
         g_api.CreateEntFactoryFromEntity(self, hand + temp, 0);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -278,8 +278,8 @@ static void func_ptr_80170004(Entity* self) {
                 self->velocityY = FIX(2.75);
                 SetSpeedX(FIX(3.75));
             }
-            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = self->rotY = 0x10;
+            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = self->scaleY = 0x10;
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->hitboxWidth = self->hitboxHeight = 9;
             self->attack = 1;
@@ -304,19 +304,19 @@ static void func_ptr_80170004(Entity* self) {
         DecelerateY(FIX(7.0 / 32));
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (self->rotX < 0x100) {
-            self->rotX += 0x10;
-            self->rotY += 0x10;
+        if (self->scaleX < 0x100) {
+            self->scaleX += 0x10;
+            self->scaleY += 0x10;
         }
-        if ((self->velocityX == 0) && (self->rotX >= 0x100)) {
+        if ((self->velocityX == 0) && (self->scaleX >= 0x100)) {
             self->ext.weapon.unk7E = 0x200;
             self->step++;
         }
         break;
     case 3:
-        self->rotX -= 0xC;
-        self->rotY -= 0xC;
-        if (self->rotX < 0x10) {
+        self->scaleX -= 0xC;
+        self->scaleY -= 0xC;
+        if (self->scaleX < 0x10) {
             DestroyEntity(self);
             return;
         }

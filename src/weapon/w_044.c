@@ -235,19 +235,19 @@ void EntityWeaponAttack(Entity* self) {
         break;
     case 3:
         if (--self->ext.weapon.lifetime == 0) {
-            self->rotX = 0;
-            self->rotY = 0x80;
+            self->scaleX = 0;
+            self->scaleY = 0x80;
             self->ext.weapon.unk7E = 0xA;
             self->step++;
         }
         break;
     case 4:
         doLastblock = true;
-        self->rotX += self->ext.weapon.unk7E;
+        self->scaleX += self->ext.weapon.unk7E;
         self->ext.weapon.unk7E += 2;
-        if (self->rotX > 0x200) {
-            self->rotY--;
-            if (self->rotX > 0x380) {
+        if (self->scaleX > 0x200) {
+            self->scaleY--;
+            if (self->scaleX > 0x380) {
                 g_Status.hearts += 500;
                 if (g_Status.hearts >= g_Status.heartsMax) {
                     g_Status.hearts = g_Status.heartsMax;
@@ -259,11 +259,11 @@ void EntityWeaponAttack(Entity* self) {
         break;
     case 5:
         doLastblock = true;
-        self->rotX += self->ext.weapon.unk7E;
+        self->scaleX += self->ext.weapon.unk7E;
         self->ext.weapon.unk7E += 2;
-        self->rotY--;
-        if (self->rotY < 0) {
-            self->rotY = 0;
+        self->scaleY--;
+        if (self->scaleY < 0) {
+            self->scaleY = 0;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -320,17 +320,21 @@ void EntityWeaponAttack(Entity* self) {
     sine = 0x80;
     lastBlockYShift = 0x68;
     if (doLastblock) {
-        prim->x0 = +(((rcos(0x600) >> 8) * self->rotX) >> 8) + sine;
-        prim->y0 = -(((rsin(0x600) >> 8) * self->rotX) >> 8) + lastBlockYShift;
-        prim->x1 = +(((rcos(0x200) >> 8) * self->rotX) >> 8) + sine;
-        prim->y1 = -(((rsin(0x200) >> 8) * self->rotX) >> 8) + lastBlockYShift;
-        prim->x2 = +(((rcos(0xA00) >> 8) * self->rotX) >> 8) + sine;
-        prim->y2 = -(((rsin(0xA00) >> 8) * self->rotX) >> 8) + lastBlockYShift;
-        prim->x3 = +(((rcos(0xE00) >> 8) * self->rotX) >> 8) + sine;
-        prim->y3 = -(((rsin(0xE00) >> 8) * self->rotX) >> 8) + lastBlockYShift;
+        prim->x0 = +(((rcos(0x600) >> 8) * self->scaleX) >> 8) + sine;
+        prim->y0 =
+            -(((rsin(0x600) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x1 = +(((rcos(0x200) >> 8) * self->scaleX) >> 8) + sine;
+        prim->y1 =
+            -(((rsin(0x200) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x2 = +(((rcos(0xA00) >> 8) * self->scaleX) >> 8) + sine;
+        prim->y2 =
+            -(((rsin(0xA00) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
+        prim->x3 = +(((rcos(0xE00) >> 8) * self->scaleX) >> 8) + sine;
+        prim->y3 =
+            -(((rsin(0xE00) >> 8) * self->scaleX) >> 8) + lastBlockYShift;
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-                self->rotY;
+                self->scaleY;
         prim->drawMode &= ~DRAW_HIDE;
     }
 }

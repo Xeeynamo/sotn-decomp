@@ -732,8 +732,8 @@ void func_us_801B9BE4(Entity* self) {
             self->hitboxWidth = 6;
             self->hitboxHeight = 0x12;
             self->hitboxOffY = -4;
-            self->drawFlags = FLAG_DRAW_ROTZ;
-            self->rotZ = -0x80;
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->rotate = -0x80;
             self->animCurFrame = 0x1D;
             self->step = 1;
             if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
@@ -746,10 +746,10 @@ void func_us_801B9BE4(Entity* self) {
         break;
 
     case 1:
-        self->hitboxOffX = -((rsin(self->rotZ) * 32) >> 0xC);
-        self->hitboxOffY = ((rcos(self->rotZ) * 32) >> 0xC);
-        xOffset = ((rsin(self->rotZ) * 18) >> 0xC);
-        yOffset = -((rcos(self->rotZ) * 18) >> 0xC);
+        self->hitboxOffX = -((rsin(self->rotate) * 32) >> 0xC);
+        self->hitboxOffY = ((rcos(self->rotate) * 32) >> 0xC);
+        xOffset = ((rsin(self->rotate) * 18) >> 0xC);
+        yOffset = -((rcos(self->rotate) * 18) >> 0xC);
         tempEntity = self - 1;
         tempEntity->posX.i.hi = self->posX.i.hi + xOffset;
         tempEntity->posY.i.hi = self->posY.i.hi + yOffset;
@@ -763,11 +763,11 @@ void func_us_801B9BE4(Entity* self) {
             break;
 
         case 1:
-            self->rotZ += 4;
+            self->rotate += 4;
             if (!--self->ext.et_801B9BE4.unk80) {
                 self->step_s--;
             }
-            if (self->rotZ >= 0x20) {
+            if (self->rotate >= 0x20) {
                 self->hitboxState = 0;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -789,9 +789,9 @@ void func_us_801B9BE4(Entity* self) {
         break;
 
     case 2:
-        self->rotZ = 0x20;
-        xOffset = ((rsin(self->rotZ) * 18) >> 0xC);
-        yOffset = -((rcos(self->rotZ) * 18) >> 0xC);
+        self->rotate = 0x20;
+        xOffset = ((rsin(self->rotate) * 18) >> 0xC);
+        yOffset = -((rcos(self->rotate) * 18) >> 0xC);
         tempEntity = self - 1;
         tempEntity->posX.i.hi = self->posX.i.hi + xOffset;
         tempEntity->posY.i.hi = self->posY.i.hi + yOffset;
@@ -857,18 +857,18 @@ void func_us_801BA034(Entity* self) {
                 CreateEntityFromEntity(6, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
-                entity->rotZ = -0x300;
+                entity->rotate = -0x300;
                 entity->posX.i.hi -= 11;
-                entity->drawFlags |= FLAG_DRAW_ROTZ;
+                entity->drawFlags |= FLAG_DRAW_ROTATE;
             }
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(6, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
-                entity->rotZ = 0x300;
+                entity->rotate = 0x300;
                 entity->posX.i.hi += 11;
-                entity->drawFlags |= FLAG_DRAW_ROTZ;
+                entity->drawFlags |= FLAG_DRAW_ROTATE;
             }
         }
         break;
@@ -1357,7 +1357,7 @@ void func_us_801BA290(Entity* self) {
                         }
                         tempEntity->posX.i.hi = D_us_80181474[rnd][0];
                         tempEntity->posY.i.hi = D_us_80181474[rnd][1];
-                        tempEntity->rotX = D_us_80181474[rnd][2];
+                        tempEntity->scaleX = D_us_80181474[rnd][2];
                     }
                 }
             }
@@ -1537,10 +1537,10 @@ void func_us_801BB4C0(Entity* self) {
         InitializeEntity(D_us_80180A34);
         self->zPriority = 0x49;
         self->animCurFrame = 0;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotY = self->rotX;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleY = self->scaleX;
         self->ext.fish.timer = D_us_801814F8[Random() & 7];
-        if (self->rotX < 0x100) {
+        if (self->scaleX < 0x100) {
             self->zPriority -= 4;
         }
         break;

@@ -126,7 +126,7 @@ void EntityFallingStairs(Entity* self) {
         self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
         InitializeEntity(g_EInitSecret);
 
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->animCurFrame = 0;
 
         // Change tileset to show UNfallen stairs
@@ -229,7 +229,7 @@ void EntityFallingStairs(Entity* self) {
         switch (self->step_s) {
         case ROTATE_CLOCKWISE:
             MoveEntity();
-            self->rotZ += 0x12;
+            self->rotate += 0x12;
             self->velocityY += FIX(0.25);
             scrolledY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (self->ext.prim != NULL) {
@@ -285,13 +285,13 @@ void EntityFallingStairs(Entity* self) {
             break;
 
         case ROTATE_COUNTER_CLOCKWISE:
-            self->rotZ -= self->ext.fallingStairs.rotateAccel;
+            self->rotate -= self->ext.fallingStairs.rotateAccel;
             self->ext.fallingStairs.rotateAccel += 1;
 
             xPos = 0x74 - g_Tilemap.scrollX.i.hi;
             yPos = 0x2C0 - g_Tilemap.scrollY.i.hi;
-            if (self->rotZ < 0) {
-                self->rotZ = 0; // Don't over-rotate
+            if (self->rotate < 0) {
+                self->rotate = 0; // Don't over-rotate
                 g_api.PlaySfx(SFX_EXPLODE_B);
                 g_api.func_80102CD8(1);
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -330,7 +330,7 @@ void EntityFallingStairs(Entity* self) {
         player = &PLAYER;
         xPos = selfPosX - player->posX.i.hi;
         if (xPos < 0x80U) {
-            yPos = (selfPosY + ((xPos * rsin(0x100 - self->rotZ)) >> 0xC)) -
+            yPos = (selfPosY + ((xPos * rsin(0x100 - self->rotate)) >> 0xC)) -
                    (player->posY.i.hi + 0x18);
             if (yPos <= 0) {
                 player->posY.i.hi += yPos + 1;
@@ -412,7 +412,7 @@ void EntityFallingStep(Entity* self) {
         }
         InitializeEntity(g_EInitSecret);
         self->animCurFrame = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         g_Tilemap.fg[TilePos] = TileInitVal;
         // Fallthrough
     case WAIT_FOR_TRIGGER:
@@ -466,7 +466,7 @@ void EntityFallingStep(Entity* self) {
 
     case FALLING:
         MoveEntity();
-        self->rotZ -= 0x20;
+        self->rotate -= 0x20;
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 9;

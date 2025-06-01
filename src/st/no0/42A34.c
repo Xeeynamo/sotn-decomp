@@ -21,14 +21,14 @@ void func_us_801C2A34(Entity* self) {
         self->zPriority = 0x50;
         self->unk5A = 0;
         self->palette = 0;
-        self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
+        self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
     }
     angle = rsin((((g_Timer % 120) << 0xC) + 0x3C) / 120);
     if (!angle) {
         g_api.PlaySfx(SFX_LOW_CLOCK_TICK);
     }
-    self->rotZ = (angle >> 6) + (angle >> 7);
+    self->rotate = (angle >> 6) + (angle >> 7);
 }
 
 void func_us_801C2B24(Entity* self) {

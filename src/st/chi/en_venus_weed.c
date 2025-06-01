@@ -643,8 +643,8 @@ void EntityVenusWeed(Entity* self) {
 
     // Update wiggle
     if (self->ext.venusWeed.wiggleT) {
-        rot = self->rotZ;
-        self->rotZ += WiggleLeavesSpeed;
+        rot = self->rotate;
+        self->rotate += WiggleLeavesSpeed;
         x = rcos(rot) * 3 >> 0xC;
         y = rsin(rot) * 3 >> 0xC;
         prim = self->ext.prim;
@@ -757,14 +757,14 @@ void EntityVenusWeedFlower(Entity* self) {
         self->hitboxWidth = HitboxWidth;
         self->hitboxHeight = HitboxHeight;
         self->animCurFrame = AnimFrameInit;
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = 0;
         self->hitboxState = 0;
         break;
 
     case GROW:
-        self->rotX = self->rotY += GrowSpeed;
-        if (self->rotX >= GrowLimit) {
+        self->scaleX = self->scaleY += GrowSpeed;
+        if (self->scaleX >= GrowLimit) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->hitboxState = 3;
 
@@ -968,7 +968,7 @@ void EntityVenusWeedFlower(Entity* self) {
                     entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (entity != NULL) {
                         CreateEntityFromEntity(E_VENUS_WEED_DART, self, entity);
-                        entity->rotZ = rot;
+                        entity->rotate = rot;
                         entity->params = i;
                         entity->posX.i.hi = x;
                         entity->posY.i.hi -= DartsLaunchPosOffsetY;
@@ -1184,8 +1184,8 @@ void EntityVenusWeedDart(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitVenusWeedDart);
         self->animCurFrame = AnimFrameIndexInit;
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        rot = self->rotZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        rot = self->rotate;
         self->hitboxOffX = (rcos(rot) * 6) >> 0xC;
         self->hitboxOffY = (rsin(rot) * 6) >> 0xC;
         self->ext.venusWeedDart.nextPosDeltaX = rcos(rot) << 3 >> 0xC;
@@ -1195,7 +1195,7 @@ void EntityVenusWeedDart(Entity* self) {
     case FLY:
         MoveEntity();
 
-        rot = self->rotZ;
+        rot = self->rotate;
         speed = self->ext.venusWeedDart.speed;
         self->velocityX = (speed * rcos(rot)) >> 0xC;
         self->velocityY = (speed * rsin(rot)) >> 0xC;

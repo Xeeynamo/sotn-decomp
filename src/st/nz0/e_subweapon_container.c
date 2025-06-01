@@ -126,7 +126,7 @@ void EntitySubWeaponContainer(Entity* self) {
                 rndPosY = -(Random() & 0x3F) - 16;
                 newEntity->posX.i.hi += rndPosX;
                 newEntity->posY.i.hi += rndPosY;
-                newEntity->rotZ = ratan2(rndPosY, rndPosX);
+                newEntity->rotate = ratan2(rndPosY, rndPosX);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
@@ -175,7 +175,7 @@ void EntitySubWpnContGlass(Entity* self) {
         InitializeEntity(g_EInitSubwpnClochePieces);
         self->animCurFrame = self->params;
         self->palette += self->ext.subwpnContGlass.palette;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->velocityX = self->ext.subwpnContGlass.velX * 0x1000;
         self->velocityX -= (Random() * 0x100) + FIX(-0.5);
         self->velocityY -= (Random() & 0x1F) * 0x1000;
@@ -187,15 +187,15 @@ void EntitySubWpnContGlass(Entity* self) {
 
         if (self->velocityX != 0) {
             if (self->facingLeft) {
-                self->rotZ += 0x10;
+                self->rotate += 0x10;
             } else {
-                self->rotZ -= 0x10;
+                self->rotate -= 0x10;
             }
         } else {
             if (self->facingLeft) {
-                self->rotZ -= 0x10;
+                self->rotate -= 0x10;
             } else {
-                self->rotZ += 0x10;
+                self->rotate += 0x10;
             }
         }
         break;
@@ -212,8 +212,8 @@ void func_801C7654(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = PAL_OVL(0x16D);
         entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->velocityX = rcos(entity->rotZ) * 0x10;
-        entity->velocityY = rsin(entity->rotZ) * 0x10;
+        entity->velocityX = rcos(entity->rotate) * 0x10;
+        entity->velocityY = rsin(entity->rotate) * 0x10;
         break;
 
     case 1:
@@ -225,8 +225,8 @@ void func_801C7654(Entity* entity) {
             entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            entity->drawFlags = FLAG_DRAW_ROTY;
-            entity->rotY = 0x100;
+            entity->drawFlags = FLAG_DRAW_SCALEY;
+            entity->scaleY = 0x100;
             entity->velocityY = FIX(0.25);
             entity->velocityX *= 8;
             entity->step++;
@@ -235,8 +235,8 @@ void func_801C7654(Entity* entity) {
 
     case 2:
         MoveEntity();
-        entity->rotY -= 8;
-        if (!(entity->rotY << 0x10)) {
+        entity->scaleY -= 8;
+        if (!(entity->scaleY << 0x10)) {
             DestroyEntity(entity);
         }
         break;
@@ -250,9 +250,9 @@ void func_801C77B8(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitSubwpnClochePieces);
-        entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        entity->rotY = 0x100;
-        entity->rotX = 0x100;
+        entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        entity->scaleY = 0x100;
+        entity->scaleX = 0x100;
         entity->velocityX = 0;
         entity->animCurFrame = entity->params + 8;
         entity->velocityY = D_80182600[entity->params];
@@ -260,10 +260,10 @@ void func_801C77B8(Entity* entity) {
 
     case 1:
         MoveEntity();
-        temp_v1_2 = entity->rotY - 8;
+        temp_v1_2 = entity->scaleY - 8;
         entity->velocityY -= 0x400;
-        entity->rotY = temp_v1_2;
-        entity->rotX = temp_v1_2;
+        entity->scaleY = temp_v1_2;
+        entity->scaleX = temp_v1_2;
 
         if ((temp_v1_2 << 0x10) == 0) {
             DestroyEntity(entity);
@@ -284,8 +284,8 @@ void func_801C7884(Entity* entity) {
         MoveEntity();
         AnimateEntity(g_SubweaponAnimPrizeDrop[params], entity);
 
-        entity->velocityY = rsin(entity->rotZ) * 2;
-        entity->rotZ += 0x20;
+        entity->velocityY = rsin(entity->rotate) * 2;
+        entity->rotate += 0x20;
 
         if (entity[-1].step != 1) {
             entity->entityId = E_PRIZE_DROP;

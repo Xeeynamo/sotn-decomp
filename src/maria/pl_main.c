@@ -134,8 +134,8 @@ void MarInit(s16 initParam) {
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
     PLAYER.palette = PAL_MARIA;
-    PLAYER.rotY = 0x100;
-    PLAYER.rotX = 0x100;
+    PLAYER.scaleY = 0x100;
+    PLAYER.scaleX = 0x100;
     PLAYER.hitboxOffX = 0;
     PLAYER.hitboxOffY = 0;
     PLAYER.rotPivotY = 0x18;

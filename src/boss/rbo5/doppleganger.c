@@ -27,8 +27,8 @@ void func_us_801C096C(void) {
     }
 
     DOPPLEGANGER.palette = PAL_OVL(0x200);
-    DOPPLEGANGER.rotX = 0x100;
-    DOPPLEGANGER.rotY = 0x100;
+    DOPPLEGANGER.scaleX = 0x100;
+    DOPPLEGANGER.scaleY = 0x100;
     DOPPLEGANGER.drawMode = DRAW_DEFAULT;
     DOPPLEGANGER.flags =
         FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
@@ -244,8 +244,8 @@ void EntityDoppleganger40(void) {
                     D_us_801D3FEC = 12;
                 }
                 g_api.PlaySfx(SFX_TRANSFORM_LOW);
-                if (DOPPLEGANGER.rotZ == FIX(1.0 / 32.0)) {
-                    DOPPLEGANGER.rotZ = 0;
+                if (DOPPLEGANGER.rotate == FIX(1.0 / 32.0)) {
+                    DOPPLEGANGER.rotate = 0;
                     DOPPLEGANGER.animCurFrame = 0x9D;
                     DOPPLEGANGER.facingLeft++;
                     DOPPLEGANGER.facingLeft &= 1;
@@ -262,8 +262,8 @@ void EntityDoppleganger40(void) {
                  DOPPLEGANGER.step == Dop_Jump ||
                  DOPPLEGANGER.step == Dop_HighJump ||
                  DOPPLEGANGER.step == Dop_MorphBat)) {
-                if (DOPPLEGANGER.rotZ == FIX(1.0 / 32.0)) {
-                    DOPPLEGANGER.rotZ = 0;
+                if (DOPPLEGANGER.rotate == FIX(1.0 / 32.0)) {
+                    DOPPLEGANGER.rotate = 0;
                     DOPPLEGANGER.animCurFrame = 0x9D;
                     DOPPLEGANGER.facingLeft++;
                     DOPPLEGANGER.facingLeft &= 1;

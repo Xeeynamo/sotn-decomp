@@ -208,11 +208,11 @@ static s32 D_80175888;
 void RicEntitySubwpnCross(Entity* self) {
     s16 playerHitboxX;
     s16 playerHitboxY;
-    s16 rotZ;
+    s16 rotate;
     s16* psp_s1;
     s32 xAccel;
 
-    rotZ = self->rotZ;
+    rotate = self->rotate;
     switch (self->step) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
@@ -228,8 +228,8 @@ void RicEntitySubwpnCross(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         RicSetSpeedX(FIX(3.5625));
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->rotZ = 0xC00;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->rotate = 0xC00;
         self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
         RicSetSubweaponParams(self);
         self->hitboxWidth = 8;
@@ -246,7 +246,7 @@ void RicEntitySubwpnCross(Entity* self) {
         // First phase. We spin at 0x80 angle units per frame.
         // Velocity gets decremented by 1/16 per frame until we slow
         // down to less than 0.75.
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         self->posX.val += self->velocityX;
         if (self->facingLeft) {
             xAccel = FIX(-1.0 / 16);
@@ -261,7 +261,7 @@ void RicEntitySubwpnCross(Entity* self) {
     case 3:
         // Second phase. Once we are slow, we spin twice as fast, and then
         // wait until our speed gets higher once again (turned around).
-        self->rotZ -= 0x100;
+        self->rotate -= 0x100;
         self->posX.val += self->velocityX;
         if (self->facingLeft) {
             xAccel = FIX(-1.0 / 16);
@@ -306,7 +306,7 @@ void RicEntitySubwpnCross(Entity* self) {
             return;
         }
         // Otherwise, we keep trucking. spin at the slower rate again.
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         self->posX.val += self->velocityX;
         break;
     case 7:
@@ -357,7 +357,7 @@ void RicEntitySubwpnCross(Entity* self) {
     *psp_s1 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     self->ext.crossBoomerang.unk80++;
     self->ext.crossBoomerang.unk80 &= 0x3F;
-    rotZ ^= self->rotZ;
+    rotate ^= self->rotate;
     g_Player.timers[PL_T_3] = 2;
 }
 
@@ -423,19 +423,19 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->drawMode = DRAW_TPAGE;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->rotZ = 0xC00;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->rotate = 0xC00;
         self->step++;
         break;
     case 1:
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         if (self->ext.crossBoomerang.parent->step == 7) {
             self->step++;
             self->ext.crossBoomerang.timer = (self->params + 1) * 4;
         }
         break;
     case 2:
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         if (--self->ext.crossBoomerang.timer == 0) {
             DestroyEntity(self);
             return;

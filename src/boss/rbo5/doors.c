@@ -203,19 +203,19 @@ void func_us_801B3B0C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_8018046C);
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY |
-                           FLAG_DRAW_ROTX;
+        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
+                           FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         if ((self->params & 0xF) > 1) {
             self->opacity = 0x20;
         } else {
             self->opacity = 0x80;
         }
-        self->rotX = D_us_801805D8[self->params & 0xF];
-        self->rotY = self->rotX;
+        self->scaleX = D_us_801805D8[self->params & 0xF];
+        self->scaleY = self->scaleX;
         if ((self->params & 0xF) % 2) {
-            self->rotZ = -0x400;
+            self->rotate = -0x400;
         } else {
-            self->rotZ = 0;
+            self->rotate = 0;
         }
         self->zPriority = (0x40 - self->params) & 0xF;
         if (self->params & 0x100) {
@@ -283,8 +283,8 @@ void func_us_801B3B0C(Entity* self) {
 
     case 4:
         magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
-        xOffset = (rcos(self->rotZ - 0x400) * magnitude) >> 0xC;
-        yOffset = (rsin(self->rotZ - 0x400) * magnitude) >> 0xC;
+        xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
+        yOffset = (rsin(self->rotate - 0x400) * magnitude) >> 0xC;
         prim = self->ext.et_801BDA0C.unk7C;
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
@@ -321,8 +321,8 @@ void func_us_801B3B0C(Entity* self) {
             tempEntity->opacity += 2;
         }
         magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
-        xOffset = (rcos(self->rotZ - 0x400) * magnitude) >> 0xC;
-        yOffset = (rsin(self->rotZ - 0x400) * magnitude) >> 0xC;
+        xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
+        yOffset = (rsin(self->rotate - 0x400) * magnitude) >> 0xC;
         prim = self->ext.et_801BDA0C.unk7C;
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
@@ -331,7 +331,7 @@ void func_us_801B3B0C(Entity* self) {
         } else {
             AnimateEntity(D_us_801805F4, self);
         }
-        self->rotZ += D_us_801805CC[self->params & 0xF];
+        self->rotate += D_us_801805CC[self->params & 0xF];
         if (self->params & 0x100) {
             self->ext.et_801BDA0C.unk88 -= D_us_801805C0[self->params & 0xF];
         } else {
@@ -355,8 +355,8 @@ void func_us_801B40A8(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_8018046C);
-        self->rotZ = -0x400;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->rotate = -0x400;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         if (self->params & 1) {
             self->animCurFrame = 0x64;
             self->velocityX = FIX(-0.5);
@@ -404,8 +404,8 @@ extern s16 D_us_80180658[];
 
 void func_us_801B4A30(Entity* self) {
     s32 primIndex;
-    s16 rotZ;
-    s16 rotY;
+    s16 rotate;
+    s16 scaleY;
     long p, flag;
     SVECTOR p0, p1, p2, p3;
     u8 pad[4];
@@ -489,11 +489,11 @@ void func_us_801B4A30(Entity* self) {
         SetGeomScreen(0x100);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         for (i = 0; i < 8; i++) {
-            rotY = 0x280;
-            rotZ = *zPointer;
+            scaleY = 0x280;
+            rotate = *zPointer;
             RotMatrix(&rot, &m);
-            RotMatrixY(rotY, &m);
-            RotMatrixZ(rotZ, &m);
+            RotMatrixY(scaleY, &m);
+            RotMatrixZ(rotate, &m);
             trans.vx = 0;
             trans.vy = 0;
             trans.vz = 0x140;

@@ -590,18 +590,18 @@ void RicEntitySubwpnKnife(Entity* self) {
             angle2 = 0xD2;
             angle3 = 0x800 + 0xD2;
             angle4 = -0xD2;
-            self->rotZ -= 0x80;
+            self->rotate -= 0x80;
         } else {
             angle2 = 0x800 - 0xD2;
             angle1 = 0xD2;
             angle4 = 0x800 + 0xD2;
             angle3 = -0xD2;
-            self->rotZ += 0x80;
+            self->rotate += 0x80;
         }
-        angle1 += self->rotZ;
-        angle2 += self->rotZ;
-        angle3 += self->rotZ;
-        angle4 += self->rotZ;
+        angle1 += self->rotate;
+        angle2 += self->rotate;
+        angle3 += self->rotate;
+        angle4 += self->rotate;
         // offsetX is not used at all down here, but this block is needed.
         // It doesn't show up in the asm at all, but moves everything else into
         // alignment. Yet another lesson from PSP.

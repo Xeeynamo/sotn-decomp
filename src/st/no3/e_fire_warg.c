@@ -80,9 +80,9 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
             newEnt->ext.destructAnim.index = D_80182A48[i];
-            newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
-            newEnt->rotY = newEnt->rotX;
-            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            newEnt->scaleX = D_80182A38[D_80182A48[i] + arg5];
+            newEnt->scaleY = newEnt->scaleX;
+            newEnt->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }
@@ -1260,8 +1260,8 @@ void EntityFireWargWaveAttack(Entity* self) {
                 prim->b1 = prim->b3 = 0x40;
 
                 prim->priority = self->zPriority;
-                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_ROTX |
-                                 FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_SCALEX |
+                                 FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
 
                 prim->p1 = p0Offset;
                 prim->p2 = 0;

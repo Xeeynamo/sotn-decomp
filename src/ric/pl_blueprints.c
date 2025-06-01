@@ -301,9 +301,9 @@ void RicEntityHitByDark(Entity* entity) {
         }
         D_80174FFC++;
         entity->opacity = 0xFF;
-        entity->drawFlags =
-            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        entity->rotX = entity->rotY = 0x40;
+        entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
+                            FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        entity->scaleX = entity->scaleY = 0x40;
         entity->anim = anim_smoke_dark;
         entity->posY.i.hi += (rand() % 35) - 15;
         entity->posX.i.hi += (rand() % 20) - 10;
@@ -315,8 +315,8 @@ void RicEntityHitByDark(Entity* entity) {
             entity->opacity -= 8;
         }
         entity->posY.val += entity->velocityY;
-        entity->rotX += 8;
-        entity->rotY += 8;
+        entity->scaleX += 8;
+        entity->scaleY += 8;
         if (entity->poseTimer < 0) {
             DestroyEntity(entity);
         }
@@ -859,7 +859,8 @@ void RicEntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
+        self->drawFlags =
+            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -893,8 +894,8 @@ void RicEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_RicSensorsWall[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotX = rot_x_80154C74[1] + 0x40;
-            self->rotY = self->rotX;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -914,8 +915,8 @@ void RicEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_RicSensorsWall[sensors2_80154CF4[i]].y;
             self->velocityY = velocity_x_80154C5C[paramsLo];
-            self->rotX = rot_x_80154C74[paramsLo] + 0x20;
-            self->rotY = self->rotX;
+            self->scaleX = rot_x_80154C74[paramsLo] + 0x20;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -929,12 +930,12 @@ void RicEntitySmokePuff(Entity* self) {
         }
         self->posX.i.hi += posX;
         self->posY.i.hi += 0x18;
-        self->rotX = rot_x_80154C74[paramsLo] + 0x40;
+        self->scaleX = rot_x_80154C74[paramsLo] + 0x40;
         self->velocityY = velocity_x_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
             RicSetSpeedX(-0x3000);
-            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
             self->velocityY = velocity_x_80154C5C[4 - paramsLo * 2];
@@ -942,9 +943,9 @@ void RicEntitySmokePuff(Entity* self) {
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
             RicSetSpeedX(-0x3000);
-            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (paramsHi == 10) {
             self->posY.i.hi -= 6;
         }
@@ -1245,18 +1246,18 @@ void func_80161C2C(Entity* self) {
     switch (self->step) {
     case 0:
         if (paramsHi == 1) {
-            self->rotX = 0xC0;
-            self->rotY = 0xC0;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->scaleX = 0xC0;
+            self->scaleY = 0xC0;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
         if (paramsHi == 0 || paramsHi == 2) {
             if (paramsLo & 3) {
                 self->anim = anim_80154DC8;
-                self->rotX = 0x120;
-                self->rotY = 0x120;
-                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->scaleX = 0x120;
+                self->scaleY = 0x120;
+                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -1282,8 +1283,8 @@ void func_80161C2C(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotX -= 4;
-        self->rotY -= 4;
+        self->scaleX -= 4;
+        self->scaleY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
@@ -1581,8 +1582,8 @@ void RicEntityMariaPowers(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (--self->ext.et_80162870.unk82 == 0) {
-            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = self->rotY = 0x100;
+            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = self->scaleY = 0x100;
             self->ext.et_80162870.unk82 = 0x10;
             self->step++;
             prim = &g_PrimBuf[self->primIndex];
@@ -1590,7 +1591,7 @@ void RicEntityMariaPowers(Entity* self) {
         }
         break;
     case 2:
-        self->rotX = self->rotY = self->ext.et_80162870.unk82 * 0x10;
+        self->scaleX = self->scaleY = self->ext.et_80162870.unk82 * 0x10;
         if (--self->ext.et_80162870.unk82 == 0) {
             self->animCurFrame = 0;
             g_api.PlaySfx(SFX_MAGIC_SWITCH);
@@ -1800,10 +1801,10 @@ void RicEntityPlayerBlinkWhite(Entity* self) {
     xPivot = sp44[0] + plSprite[2];
     yPivot = sp44[1] + plSprite[3];
 
-    self->rotZ = PLAYER.rotZ;
+    self->rotate = PLAYER.rotate;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotX = PLAYER.rotX;
-    self->rotY = PLAYER.rotY;
+    self->scaleX = PLAYER.scaleX;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
     self->rotPivotX = PLAYER.rotPivotX;
     upperParams = (self->params & 0x7F00) >> 8;
@@ -2420,22 +2421,22 @@ void RicEntityHitByIce(Entity* self) {
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft) {
-                self->rotZ = 0x100;
+                self->rotate = 0x100;
             } else {
-                self->rotZ = -0x100;
+                self->rotate = -0x100;
             }
         } else {
             if (PLAYER.velocityX > 0) {
-                self->rotZ = 0x80;
+                self->rotate = 0x80;
             } else {
-                self->rotZ = 0xF80;
+                self->rotate = 0xF80;
             }
         }
         if (PLAYER.step == PL_S_DEAD) {
             if (PLAYER.facingLeft) {
-                self->rotZ = 0x180;
+                self->rotate = 0x180;
             } else {
-                self->rotZ = -0x180;
+                self->rotate = -0x180;
             }
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x3C;
@@ -2450,23 +2451,23 @@ void RicEntityHitByIce(Entity* self) {
         if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x280;
+                    self->rotate = 0x280;
                 } else {
-                    self->rotZ = -0x280;
+                    self->rotate = -0x280;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x380;
+                    self->rotate = 0x380;
                 } else {
-                    self->rotZ = -0x380;
+                    self->rotate = -0x380;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x180;
+                    self->rotate = 0x180;
                 } else {
-                    self->rotZ = -0x180;
+                    self->rotate = -0x180;
                 }
             }
         }
@@ -2499,7 +2500,7 @@ void RicEntityHitByIce(Entity* self) {
         pos = D_80155244[i * 3];
         if (prim->u0 < 2) {
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x0 = x + deltaX;
@@ -2507,7 +2508,7 @@ void RicEntityHitByIce(Entity* self) {
 
             pos = D_80155244[i * 3 + 1];
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x1 = x + deltaX;
@@ -2515,7 +2516,7 @@ void RicEntityHitByIce(Entity* self) {
 
             pos = D_80155244[i * 3 + 2];
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x2 = prim->x3 = x + deltaX;

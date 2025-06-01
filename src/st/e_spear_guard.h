@@ -416,8 +416,8 @@ void EntityThrownSpear(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitThrownSpear);
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->rotZ = 0;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->rotate = 0;
         break;
 
     case 1:
@@ -444,9 +444,9 @@ void EntityThrownSpear(Entity* self) {
 
     case 3:
         self->velocityY += FIX(1.0 / 64);
-        self->rotZ = ratan2(-self->velocityY, self->velocityX) & 0xFFFF;
+        self->rotate = ratan2(-self->velocityY, self->velocityX) & 0xFFFF;
         if (!self->facingLeft) {
-            self->rotZ = 0x800 - self->rotZ;
+            self->rotate = 0x800 - self->rotate;
         }
         MoveEntity();
         break;

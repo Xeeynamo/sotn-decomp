@@ -172,7 +172,7 @@ typedef struct Entity {
     /* 0x16 */ s16 hitboxOffY;
     /* 0x18 */ u16 facingLeft;
     /* 0x1A */ char pad_1A[0x4];
-    /* 0x1E */ s16 rotZ;
+    /* 0x1E */ s16 rotate;
     /* 0x20 */ s16 unk1A;
     /* 0x22 */ s16 unk1C;
     /* 0x24 */ s16 ghidra_pad_24;

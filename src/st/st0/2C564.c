@@ -402,8 +402,8 @@ static s32 func_801AC458(s16 arg0) {
     case 0:
         e = g_CurrentEntity;
         ret = 1;
-        e[1].drawFlags = FLAG_DRAW_ROTY;
-        e[1].rotY = 0x600;
+        e[1].drawFlags = FLAG_DRAW_SCALEY;
+        e[1].scaleY = 0x600;
         e[1].pose = 0;
         e[1].poseTimer = 0;
         e[1].step = 2;
@@ -1009,7 +1009,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitDraculaMeteorball);
-        entity->drawFlags |= FLAG_DRAW_ROTZ;
+        entity->drawFlags |= FLAG_DRAW_ROTATE;
         entity->hitboxState = 0;
         break;
     case 1:
@@ -1021,7 +1021,7 @@ void EntityDraculaMeteorball(Entity* entity) {
     case 2:
         AnimateEntity(D_80180990, entity);
         MoveEntity();
-        entity->rotZ += 4;
+        entity->rotate += 4;
 
         if (entity->params) {
             speedX = 0xE00;
@@ -1083,7 +1083,7 @@ void EntityDraculaGlass(Entity* entity) {
         InitializeEntity(g_EInitDraculaFireball);
         entity->animCurFrame = 0x59;
         entity->hitboxState = 0;
-        entity->drawFlags = FLAG_DRAW_ROTZ;
+        entity->drawFlags = FLAG_DRAW_ROTATE;
         entity->velocityX = FIX(-1);
         entity->velocityY = 0;
         if (entity->params) {
@@ -1096,7 +1096,7 @@ void EntityDraculaGlass(Entity* entity) {
         }
     case 1:
         MoveEntity();
-        entity->rotZ += 0x20;
+        entity->rotate += 0x20;
         entity->velocityY += FIX(0.125);
         if (entity->posY.i.hi > 204) {
             g_api.PlaySfx(SFX_DRA_GLASS_BREAK); // "What is a man?!"

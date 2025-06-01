@@ -98,11 +98,11 @@ void EntityCastleDoor(Entity* self) {
         }
 #if defined(STAGE_IS_NO3)
         if (g_CastleFlags[PROLOGUE_COMPLETE]) {
-            self->ext.castleDoor.rotZ = 0;
+            self->ext.castleDoor.rotate = 0;
             self->step = 5;
         }
 #else
-        self->ext.castleDoor.rotZ = 0;
+        self->ext.castleDoor.rotate = 0;
         tilePos = 0x445;
         for (i = 0; i < 8; i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
@@ -116,16 +116,16 @@ void EntityCastleDoor(Entity* self) {
         for (i = 0; i < 8; tilePos += 0x20, i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesOpen[i];
         }
-        self->ext.castleDoor.rotZ = -0x380;
+        self->ext.castleDoor.rotate = -0x380;
         self->ext.castleDoor.timer = 32;
         self->step = 4;
         g_CastleFlags[PROLOGUE_COMPLETE] = 1;
         break;
 
     case 2:
-        self->ext.castleDoor.rotZ -= 8;
-        if (self->ext.castleDoor.rotZ < -0x380) {
-            self->ext.castleDoor.rotZ = -0x380;
+        self->ext.castleDoor.rotate -= 8;
+        if (self->ext.castleDoor.rotate < -0x380) {
+            self->ext.castleDoor.rotate = -0x380;
             self->ext.castleDoor.timer = 128;
             self->step++;
         }
@@ -138,9 +138,9 @@ void EntityCastleDoor(Entity* self) {
         break;
 
     case 4:
-        self->ext.castleDoor.rotZ += 0x10;
-        if (self->ext.castleDoor.rotZ > 0) {
-            self->ext.castleDoor.rotZ = 0;
+        self->ext.castleDoor.rotate += 0x10;
+        if (self->ext.castleDoor.rotate > 0) {
+            self->ext.castleDoor.rotate = 0;
             self->step += 2;
             g_api.PlaySfx(SFX_START_SLAM_B);
             tilePos = 0x445;
@@ -164,7 +164,7 @@ void EntityCastleDoor(Entity* self) {
     selfY = self->posY.i.hi;
     SetGeomOffset(selfX, selfY);
     sVec1.vx = 0;
-    sVec1.vy = self->ext.castleDoor.rotZ;
+    sVec1.vy = self->ext.castleDoor.rotate;
     sVec1.vz = 0;
     RotMatrix(&sVec2, &mtx1);
     RotMatrixY(sVec1.vy, &mtx1);

@@ -15,7 +15,7 @@ void func_us_801CE2E0(Entity* self) {
 
     if (self->step != 0) {
         UnkAnimFunc(anim_unk, self, 5);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         player = &PLAYER;
         if (self->ext.et_801CE2E0.unk88 & 0x40) {
             self->velocityY = FIX(-0.5);

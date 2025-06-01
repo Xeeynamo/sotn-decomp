@@ -42,7 +42,7 @@ static ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {0x8001, 193, 0, 0, 0x0, 0x8, 0, 0, anim15}};
 
 // params: Index of ObjInit to use
-//         (== 1) Use a different hardcoded rotY and rotX value
+//         (== 1) Use a different hardcoded scaleY and scaleX value
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {

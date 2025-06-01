@@ -58,11 +58,11 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         if (((self->params >> 8) & 0x7F) == 1) {
-            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (((self->params >> 8) & 0x7F) == 3) {
             self->palette = PAL_OVL(0x160);
-            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (!((self->params >> 8) & 0x7F)) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_A);
@@ -77,7 +77,7 @@ void EntityWeaponAttack(Entity* self) {
         break;
 
     case 1:
-        self->rotZ = self->rotZ + 256;
+        self->rotate = self->rotate + 256;
         self->posX.val += self->velocityX;
 
         if ((((self->params >> 8) & 0x7F) == 2) &&
@@ -415,8 +415,8 @@ s32 func_ptr_80170010(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (params >= 0x10) {
             rotation = D_6D000_8017A78C[params];
-            self->rotY = rotation;
-            self->rotX = rotation;
+            self->scaleY = rotation;
+            self->scaleX = rotation;
         } else {
             self->zPriority = PLAYER.zPriority + 2;
             if (g_Player.padPressed & PAD_DOWN) {

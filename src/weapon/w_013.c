@@ -133,7 +133,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         self->drawFlags |= DRAW_COLORS;
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(1.0 / 16);
@@ -160,7 +160,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->ext.heavenSword.unk7E++;
         return;
     case 3:
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
         var_s1 = self->ext.heavenSword.unk84;
         self->ext.heavenSword.unk84 += 0x20;
         xVar = abs((PLAYER.posX.i.hi + PLAYER.hitboxOffX) - self->posX.i.hi);
@@ -231,7 +231,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
         self->drawFlags =
             self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
-        self->rotZ = self->ext.weapon.parent->rotZ;
+        self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
         self->step++;
     }
@@ -264,7 +264,7 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
             self->posY.i.hi -= 8;
@@ -293,7 +293,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         return;
     case 1:
-        self->rotZ += 0x100;
+        self->rotate += 0x100;
         angle = self->ext.heavenSword.angle;
         self->ext.heavenSword.angle += -0x20;
         self->ext.heavenSword2.unk84 += 0x10;
@@ -353,8 +353,8 @@ static void func_ptr_80170008(Entity* self) {
         }
         if (self->ext.heavenSword.unk82 == 0x34) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-            self->rotX = self->rotY = 0x100;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->scaleX = self->scaleY = 0x100;
             self->palette = PAL_OVL(0x15F);
             self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
             if (self->primIndex != -1) {
@@ -398,9 +398,9 @@ static void func_ptr_80170008(Entity* self) {
                 prim->g0 = prim->g1;
             }
         }
-        self->rotX += 0x80;
-        self->rotY = 0x20;
-        if (self->rotX >= 0x700) {
+        self->scaleX += 0x80;
+        self->scaleY = 0x20;
+        if (self->scaleX >= 0x700) {
             self->animCurFrame = 0;
         }
         if (self->posX.i.hi >= 0x101) {
@@ -438,7 +438,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         self->palette = self->ext.weapon.parent->palette + (self->params >> 8);
         self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_BLINK;
-        self->rotZ = self->ext.weapon.parent->rotZ;
+        self->rotate = self->ext.weapon.parent->rotate;
         self->ext.weapon.childPalette =
             self->ext.weapon.parent->ext.weapon.childPalette;
         self->ext.weapon.unk8A = self->ext.weapon.parent->ext.weapon.unk8A;
@@ -452,7 +452,7 @@ static void func_ptr_8017000C(Entity* self) {
         break;
     case 2:
         if (--self->ext.weapon.unk80 == 0) {
-            self->rotZ = 0;
+            self->rotate = 0;
             angle = ratan2(-(self->ext.weapon.unk8A - self->posY.i.hi),
                            self->ext.weapon.childPalette - self->posX.i.hi);
             self->velocityX = rcos(angle) * 0x100;

@@ -471,7 +471,7 @@ void EntitySlograSpear(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->drawFlags = FLAG_DRAW_ROTATE;
             self->hitboxState = 0;
             if (self->facingLeft != 0) {
                 self->velocityX = FIX(-2.25);
@@ -486,8 +486,8 @@ void EntitySlograSpear(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.15625);
-            self->rotZ += 0x80;
-            if (!(self->rotZ & 0xFFF)) {
+            self->rotate += 0x80;
+            if (!(self->rotate & 0xFFF)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
             }
         }

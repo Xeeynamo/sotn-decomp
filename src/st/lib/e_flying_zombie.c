@@ -306,7 +306,7 @@ void EntityFlyingZombie1(Entity* self) {
             dx = self->posX.val - tempEntity->posX.val;
             dy = self->posY.val - tempEntity->posY.val;
             angle = ratan2(dx, -dy);
-            self->rotZ = angle;
+            self->rotate = angle;
             self->velocityX = rsin(angle) * 40;
             self->velocityY = rcos(angle) * -40;
             self->ext.flyingZombie.unk7C = 2;
@@ -328,8 +328,8 @@ void EntityFlyingZombie1(Entity* self) {
                     if (tempEntity != NULL) {
                         CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                         tempEntity->params = 1;
-                        tempEntity->drawFlags = FLAG_DRAW_ROTZ;
-                        tempEntity->rotZ = self->rotZ;
+                        tempEntity->drawFlags = FLAG_DRAW_ROTATE;
+                        tempEntity->rotate = self->rotate;
                     }
                     self->ext.flyingZombie.unk7C = 6;
                 }

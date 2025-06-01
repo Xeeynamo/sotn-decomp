@@ -127,17 +127,17 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_11C000_8017A724;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotY = 0;
-        self->rotX = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleY = 0;
+        self->scaleX = 0;
         self->rotPivotY = 0x16;
         self->posY.i.hi -= 0x16;
         self->step++;
         break;
     case 1:
-        self->rotX += 4;
-        if (self->rotX >= 0x100) {
-            self->rotX = 0x100;
+        self->scaleX += 4;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = 0x100;
             self->anim = D_11C000_8017A748;
             self->pose = 0;
             self->poseTimer = 0;
@@ -146,7 +146,7 @@ s32 func_ptr_80170004(Entity* self) {
             SetWeaponProperties(self, 0);
             self->step++;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         break;
     case 2:
         if (self->poseTimer == 1) {
@@ -167,18 +167,18 @@ s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 3:
-        if (self->rotX == 0x40) {
+        if (self->scaleX == 0x40) {
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(70, 0), 0);
         }
         if (self->pose >= 5) {
-            self->rotX -= 4;
+            self->scaleX -= 4;
         }
-        if (self->rotX < 0) {
+        if (self->scaleX < 0) {
             DestroyEntity(self);
             return;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         break;
     }
     g_api.UpdateAnim(D_11C000_8017A844, NULL);

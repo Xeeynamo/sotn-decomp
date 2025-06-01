@@ -58,20 +58,20 @@ void EntityCavernDoorLever(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = 18;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
-        self->rotZ = -0x200;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->rotate = -0x200;
         platform = self + 1;
         CreateEntityFromEntity(E_ID(CAVERN_DOOR_PLATFORM), self, platform);
         if (g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
-            self->rotZ = 0;
+            self->rotate = 0;
         }
 
     case 1:
         platform = self + 1;
         if (platform->ext.cavernDoor.collision) {
-            self->rotZ += 4;
-            if (self->rotZ > 0) {
-                self->rotZ = 0;
+            self->rotate += 4;
+            if (self->rotate > 0) {
+                self->rotate = 0;
                 if (!g_CastleFlags[NO4_TO_NP3_SHORTCUT]) {
                     g_api.PlaySfx(SFX_LEVER_METAL_BANG);
                 }
@@ -85,8 +85,8 @@ void EntityCavernDoorLever(Entity* self) {
     platform = self + 1;
     posX = self->posX.val;
     posY = self->posY.val;
-    posX += rcos(self->rotZ) * 0x28 << 4;
-    posY += rsin(self->rotZ) * 0x28 << 4;
+    posX += rcos(self->rotate) * 0x28 << 4;
+    posY += rsin(self->rotate) * 0x28 << 4;
     platform->posX.val = posX;
     platform->posY.val = posY;
 }
@@ -234,8 +234,8 @@ void EntityCavernDoor(Entity* self) {
         entity->posX.i.hi += -8 + (Random() & 15);
         entity->zPriority = self->zPriority + 2;
         entity->params = 0x10;
-        entity->drawFlags |= (FLAG_DRAW_ROTX + FLAG_DRAW_ROTY);
-        entity->rotX = entity->rotY = 192;
+        entity->drawFlags |= (FLAG_DRAW_SCALEX + FLAG_DRAW_SCALEY);
+        entity->scaleX = entity->scaleY = 192;
         break;
     }
 

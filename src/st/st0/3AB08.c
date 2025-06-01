@@ -845,8 +845,8 @@ void EntityCutscenePhotograph(Entity* self) {
         g_GpuBuffers[0].draw.clip.h = 0xF0;
         g_GpuBuffers[1].draw.clip.y = 0;
         g_GpuBuffers[1].draw.clip.h = 0xF0;
-        self->rotZ = 0;
-        self->rotX = 0x100;
+        self->rotate = 0;
+        self->scaleX = 0x100;
         self->ext.cutscenePhoto.cameraDistance = 0;
         self->ext.cutscenePhoto.rotationTimer = 0x20;
 
@@ -865,7 +865,7 @@ void EntityCutscenePhotograph(Entity* self) {
         SetGeomOffset(0x80, 0x80);
         rotVector.vx = 0;
         rotVector.vy = 0;
-        rotVector.vz = self->rotZ;
+        rotVector.vz = self->rotate;
         RotMatrix(&rotVector, &m);
         SetRotMatrix(&m);
         transVector.vx = 0;
@@ -882,7 +882,7 @@ void EntityCutscenePhotograph(Entity* self) {
         gte_stsxy((long*)&prim->x3);
 
         if (!self->ext.cutscenePhoto.rotationTimer) {
-            self->rotZ += 2;
+            self->rotate += 2;
             self->ext.cutscenePhoto.cameraDistance += 8;
         } else {
             self->ext.cutscenePhoto.rotationTimer--;

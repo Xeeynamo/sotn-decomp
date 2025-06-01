@@ -56,9 +56,9 @@ void func_us_801CF4A8(Entity* self) {
         }
 
         if (self->ext.diplocephalus.unk9E % 2) {
-            self->rotZ += 0x100;
+            self->rotate += 0x100;
         } else {
-            self->rotZ -= 0x100;
+            self->rotate -= 0x100;
         }
 
         if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
@@ -202,7 +202,7 @@ void func_us_801CF910(Entity* self) {
 
         break;
     case 6:
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->hitboxState = 0;
         self->velocityY =
             D_us_80181CE8[self->params][self->ext.diplocephalusUnk.unk9E + 3] -
@@ -225,9 +225,9 @@ void func_us_801CF910(Entity* self) {
         }
 
         if (self->ext.diplocephalusUnk.unk9E % 2) {
-            self->rotZ += 0x100;
+            self->rotate += 0x100;
         } else {
-            self->rotZ -= 0x100;
+            self->rotate -= 0x100;
         }
 
         if (UnkCollisionFunc3(D_us_80181D64) & 1) {

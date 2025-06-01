@@ -1082,7 +1082,7 @@ void func_us_801D44A0(Entity* self) {
     sp6B = (SVECTOR){.vx = 0, .vy = 20, .vz = 0};
     tempEntity = self - 3;
     self->facingLeft = tempEntity->facingLeft;
-    self->rotZ = (self->ext.plateLordUnknown.unkB0 - 0x800) / 2;
+    self->rotate = (self->ext.plateLordUnknown.unkB0 - 0x800) / 2;
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitPlateLord);
@@ -1092,7 +1092,7 @@ void func_us_801D44A0(Entity* self) {
         self->zPriority = 0xB1;
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0xC;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
 
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 2);
         if (primIndex == -1) {
@@ -1147,11 +1147,11 @@ void func_us_801D44A0(Entity* self) {
     tempEntity = self + 4;
     func_801CD78C((Point32*)&self->posX, 8, self->ext.plateLordUnknown.unk98,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnknown.unk98 - 0x200;
+    tempEntity->rotate = self->ext.plateLordUnknown.unk98 - 0x200;
     tempEntity = self + 5;
     func_801CD78C((Point32*)&self->posX, 0x12, self->ext.plateLordUnknown.unk98,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnknown.unk98 - 0x200;
+    tempEntity->rotate = self->ext.plateLordUnknown.unk98 - 0x200;
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
 
@@ -1221,7 +1221,7 @@ void func_us_801D44A0(Entity* self) {
     tempEntity = self + 2;
     func_801CD78C(&sp20, 0x1A, self->ext.plateLordUnknown.unk80,
                   (Point32*)&tempEntity->posX);
-    tempEntity->rotZ = self->ext.plateLordUnknown.unk80 - 0x600;
+    tempEntity->rotate = self->ext.plateLordUnknown.unk80 - 0x600;
     var_s3 = self->ext.plateLordUnknown.unk80;
     if (self->step == 9) {
         posX = rcos(self->ext.plateLordUnknown.unk82) * 0xD0;
@@ -1275,13 +1275,13 @@ void func_us_801D4AA4(Entity* self) {
             self->animCurFrame = 9;
             self->zPriority = 0xAD;
             self->step = 3;
-            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
             break;
         case 3:
             self->animCurFrame = 0xA;
             self->zPriority = 0xAE;
             self->step = 4;
-            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
             break;
         }
         break;

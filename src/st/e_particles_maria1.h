@@ -58,8 +58,8 @@ void func_psp_0923AD68(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 0x10;
+        if (self->scaleX < 0x100) {
+            self->scaleX = self->scaleY += 0x10;
         }
         if (self->ext.soulStealOrb.unk7E < 0x200) {
             self->ext.soulStealOrb.unk7E += 4;

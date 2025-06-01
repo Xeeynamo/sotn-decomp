@@ -547,7 +547,7 @@ void func_8012E7A4(void) {
     PLAYER.step_s = 8;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
     D_80138430 = 0x800;
-    PLAYER.rotZ = 0;
+    PLAYER.rotate = 0;
     g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
     D_8013842C = 0;
     PLAYER.velocityX = 0;
@@ -619,7 +619,7 @@ void PlayerStepUnmorphWolf(void) {
         if (else_cycles == 4) {
             PLAYER.animSet = 1;
             PLAYER.unk5A = 0;
-            PLAYER.drawFlags = PLAYER.rotZ = 0;
+            PLAYER.drawFlags = PLAYER.rotate = 0;
             SetPlayerAnim(0xCA);
             g_Player.unk66 = 1;
             if (g_Player.unk68) {
@@ -1301,7 +1301,7 @@ void func_80130264(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->rotPivotX = 0;
         self->rotPivotY = 9;
         LOH(self->hitboxOffX) = -4;
@@ -1316,12 +1316,12 @@ void func_80130264(Entity* self) {
     self->facingLeft = PLAYER.facingLeft;
     self->posX.val = g_Entities->posX.val;
     self->posY.val = PLAYER.posY.val;
-    self->rotZ = 0x800 - D_80138430;
+    self->rotate = 0x800 - D_80138430;
 
     switch (PLAYER.step_s) {
     case 1:
         if (D_800B0914 == 1) {
-            self->rotZ -= 0x180;
+            self->rotate -= 0x180;
         }
         break;
     case 2:
@@ -1338,12 +1338,12 @@ void func_80130264(Entity* self) {
         case 3:
             var_v1 = D_800B0A5C[PLAYER.pose];
             self->posY.i.hi += var_v1;
-            self->rotZ -= var_v1 << 5;
+            self->rotate -= var_v1 << 5;
             break;
         case 2:
             var_v1 = D_800B0A6C[PLAYER.pose];
             self->posY.i.hi += var_v1;
-            self->rotZ -= var_v1 << 5;
+            self->rotate -= var_v1 << 5;
             break;
         case 4:
             var_v1 = D_800B0A7C[PLAYER.pose];
@@ -1413,7 +1413,7 @@ void func_80130618(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->rotPivotX = 1;
         self->rotPivotY = 8;
         self->step++;
@@ -1424,12 +1424,12 @@ void func_80130618(Entity* self) {
     self->facingLeft = PLAYER.facingLeft;
     self->posX.val = g_Entities[UNK_ENTITY_11].posX.val;
     self->posY.val = g_Entities[UNK_ENTITY_11].posY.val;
-    self->rotZ = 0x800 - (((D_80138430 - 0x800) / 2) + 0x800);
+    self->rotate = 0x800 - (((D_80138430 - 0x800) / 2) + 0x800);
 
     switch (PLAYER.step_s) {
     case 1:
         if (D_800B0914 == 1) {
-            self->rotZ -= 0x100;
+            self->rotate -= 0x100;
             self->posY.i.hi += 8;
         }
         if (D_80138430 < 0x601) {
@@ -1484,7 +1484,7 @@ void func_80130618(Entity* self) {
     case 4:
         if (D_800B0914 == 0) {
             self->posY.i.hi++;
-            self->rotZ -= 0x180;
+            self->rotate -= 0x180;
         }
         break;
     case 5:
@@ -1707,7 +1707,7 @@ void func_80130E94(Entity* self) {
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         D_8013844C = 0;
         self->ext.timer.t = 0x20;
-        self->rotZ = D_80138430;
+        self->rotate = D_80138430;
         self->step++;
     }
     otherEnt = self;
@@ -1810,16 +1810,16 @@ void func_80130E94(Entity* self) {
             D_80138430 + var_s0 + (((rsin(var_s3) >> 8) * var_s1) >> 4);
     }
     var_s8 = (D_80138450 - D_80138430) * D_800B0B20[params] / 256 + D_80138430;
-    if (var_s8 < self->rotZ) {
-        self->rotZ -= self->ext.timer.t;
+    if (var_s8 < self->rotate) {
+        self->rotate -= self->ext.timer.t;
     }
-    if (self->rotZ < var_s8) {
-        self->rotZ += self->ext.timer.t;
+    if (self->rotate < var_s8) {
+        self->rotate += self->ext.timer.t;
     }
     if (!PLAYER.facingLeft) {
-        var_s3 = self->rotZ;
+        var_s3 = self->rotate;
     } else {
-        var_s3 = 0x800 - self->rotZ;
+        var_s3 = 0x800 - self->rotate;
     }
     self->posX.val = var_s4 + rcos(var_s3) * var_s7 * 0x10;
     self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
@@ -1850,7 +1850,7 @@ void func_8013136C(Entity* self) {
         self->palette = PLAYER.palette;
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->rotPivotX = -8;
         self->step++;
     }
@@ -1866,7 +1866,7 @@ void func_8013136C(Entity* self) {
         self->posX.i.hi -= 8;
     }
     self->posY.i.hi += 3;
-    self->rotZ = g_Entities[UNK_ENTITY_12].rotZ;
+    self->rotate = g_Entities[UNK_ENTITY_12].rotate;
     switch (PLAYER.step_s) {
     case 1:
         if (D_800B0914 == 1) {

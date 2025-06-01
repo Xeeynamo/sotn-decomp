@@ -445,26 +445,26 @@ void EntityMermanFireball(Entity* self) {
             self->velocityX = FIX(-1.5);
         }
 
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = 0x80;
-        self->rotY = 0x80;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = 0x80;
+        self->scaleY = 0x80;
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_GREY_PUFF, self, entity);
             entity->ext.destructAnim.index = 4;
-            entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             entity->zPriority = self->zPriority + 8;
-            entity->rotX = 192;
-            entity->rotY = 192;
+            entity->scaleX = 192;
+            entity->scaleY = 192;
         }
     } else {
         AnimateEntity(anim7, self);
         MoveEntity();
 
-        if (self->rotX < 0x100) {
-            self->rotX += 8;
-            self->rotY = self->rotX;
+        if (self->scaleX < 0x100) {
+            self->scaleX += 8;
+            self->scaleY = self->scaleX;
         }
 
         if (self->flags & FLAG_DEAD) {

@@ -258,7 +258,7 @@ static void EntityWeaponAttack(Entity* self) {
         if (!temp) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_A);
         }
-        self->rotZ = temp_s3->unk4;
+        self->rotate = temp_s3->unk4;
         self->ext.timer.t = temp_s3->unk3;
         self->ext.weapon.unk7E = 0;
         g_Player.timers[9] = 4;
@@ -292,7 +292,7 @@ static void EntityWeaponAttack(Entity* self) {
     temp_s5 = self->ext.timer.t;
     baseX = PLAYER.posX.i.hi + self->ext.weapon.unk82;
     baseY = PLAYER.posY.i.hi + self->ext.weapon.unk80;
-    angle = self->rotZ;
+    angle = self->rotate;
 
     angle += 0x600;
     if (self->facingLeft) {

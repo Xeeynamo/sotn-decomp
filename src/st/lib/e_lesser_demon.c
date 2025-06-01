@@ -207,9 +207,9 @@ void EntityLesserDemonSpit(Entity* self) {
         InitializeEntity(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotX = 0x180;
-        self->rotY = 0x180;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleX = 0x180;
+        self->scaleY = 0x180;
         break;
 
     case 1:
@@ -228,8 +228,8 @@ void EntityLesserDemonSpit(Entity* self) {
         if (CheckColliderOffsets(D_us_80181AEC, 0)) {
             self->pose = 0;
             self->poseTimer = 0;
-            self->rotX = 0x140;
-            self->rotY = 0x200;
+            self->scaleX = 0x140;
+            self->scaleY = 0x200;
             self->hitboxWidth = 8;
             self->hitboxHeight = 8;
             self->step++;
@@ -314,7 +314,7 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 6:
-        self->rotY -= 0x20;
+        self->scaleY -= 0x20;
         if (!AnimateEntity(D_us_80181BE8, self)) {
             self->drawFlags |= FLAG_DRAW_OPACITY;
             self->opacity = 0x80;
@@ -323,7 +323,7 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 7:
-        self->rotY -= 0x10;
+        self->scaleY -= 0x10;
         self->opacity -= 0x10;
         if (!self->opacity) {
             DestroyEntity(self);
@@ -595,8 +595,8 @@ void func_us_801BCC10(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180980);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        self->drawFlags = FLAG_DRAW_ROTX;
-        self->rotX = 0x180;
+        self->drawFlags = FLAG_DRAW_SCALEX;
+        self->scaleX = 0x180;
         if (self->facingLeft) {
             self->velocityX = FIX(5.0);
         } else {

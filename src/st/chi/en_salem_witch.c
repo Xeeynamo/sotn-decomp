@@ -870,8 +870,8 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
     case SPAWN_PROJECTILES:
         self->animSet = ANIMSET_OVL(6);
         self->unk5A = 0x4B;
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = BurstStartRotation;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = BurstStartRotation;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x80;
         self->step++;
@@ -888,7 +888,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         }
         // fallthrough
     case BURST:
-        self->rotX = self->rotY += BurstRotateSpeed;
+        self->scaleX = self->scaleY += BurstRotateSpeed;
         self->opacity -= 4;
         if (AnimateEntity(&AnimFrames_TriboltBurst, self) == 0) {
             SetStep(CLEANUP);
@@ -937,14 +937,14 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
     switch (self->step) {
     case INIT:
         InitializeEntity(g_EInitSalemWitchTribolt);
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->drawFlags |= FLAG_DRAW_ROTX;
-        self->rotX = 0x80;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags |= FLAG_DRAW_SCALEX;
+        self->scaleX = 0x80;
         launchDir = self->params - 1;
         entity = &PLAYER;
         rotSansSpin = GetAngleBetweenEntities(self, entity);
         rotSansSpin += (launchDir << 9);
-        self->rotZ = rotSansSpin + SpinSpeed;
+        self->rotate = rotSansSpin + SpinSpeed;
         self->ext.salemWitchTribolt.timer = 0x40;
         // fallthrough
     case UPDATE:
@@ -955,10 +955,10 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         launchDir = self->params - 1;
         if (self->ext.salemWitchTribolt.timer) {
             self->ext.salemWitchTribolt.timer--;
-            self->rotZ -= (launchDir * RotateSpeed);
-            rotSansSpin = self->rotZ - SpinSpeed;
+            self->rotate -= (launchDir * RotateSpeed);
+            rotSansSpin = self->rotate - SpinSpeed;
         } else {
-            rotSansSpin = (self->rotZ + (launchDir << 9)) - SpinSpeed;
+            rotSansSpin = (self->rotate + (launchDir << 9)) - SpinSpeed;
         }
         self->velocityX = rcos(rotSansSpin) * LinearSpeed;
         self->velocityY = rsin(rotSansSpin) * LinearSpeed;
@@ -970,8 +970,8 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
                 CreateEntityFromEntity(
                     E_SALEM_WITCH_TRIBOLT_PROJECTILE, self, entity);
                 entity->animSet = self->animSet;
-                entity->rotZ = self->rotZ;
-                entity->rotX = self->rotX;
+                entity->rotate = self->rotate;
+                entity->scaleX = self->scaleX;
                 entity->params = self->animCurFrame;
                 entity->zPriority = self->zPriority + 1;
                 entity->step = TRAIL_INIT;
@@ -984,8 +984,8 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = self->params;
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->drawFlags |= FLAG_DRAW_ROTX;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags |= FLAG_DRAW_SCALEX;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         self->pose = self->animCurFrame;
