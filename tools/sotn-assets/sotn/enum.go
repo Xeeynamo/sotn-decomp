@@ -26,6 +26,7 @@ func removeComments(line string) string {
 }
 
 func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
+	nameSet := make(map[string]int)
 	enumMap := make(map[int]string, min)
 	for i := 0; i < min; i++ {
 		enumMap[i] = fmt.Sprintf("0x%02X", i)
@@ -33,10 +34,13 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 	scanner := bufio.NewScanner(r)
 	startRegex := regexp.MustCompile(fmt.Sprintf(`enum\s+%s\s*{`, name))
 	currentValue := 0
+	nLine := 0
 	for scanner.Scan() {
+		nLine++
 		line := removeComments(scanner.Text())
 		if startRegex.MatchString(line) {
 			for scanner.Scan() {
+				nLine++
 				line := removeComments(scanner.Text())
 				line = strings.TrimRight(line, ",")
 				if strings.Contains(line, "}") {
@@ -61,6 +65,10 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 					}
 					currentValue = value
 				}
+				if nLineDup, ok := nameSet[name]; ok {
+					return nil, fmt.Errorf("duplicate enum field %s at line %d, already found at line %d", name, nLine, nLineDup)
+				}
+				nameSet[name] = nLine
 				enumMap[currentValue] = name
 				currentValue++
 			}
