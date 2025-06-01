@@ -933,7 +933,7 @@
 | no4    | func_pspeu_09242D08                      |       81 |          5 |        |                                 |       |
 | dra    | func_80102D70                            |       81 |         11 | Yes    |                                 |       |
 | ric    | 319C4.rodata                             |       82 |          0 | Yes    |                                 |       |
-| no3    | EntityWargExplosionPuffTransparent       |       82 |          8 |        |                                 |       |
+| no3    | EntityWargExplosionPuffTransparent       |       82 |          8 |        | https://decomp.me/scratch/IxuOy | 0.999 |
 | no4    | func_pspeu_09238CF0                      |       82 |          8 |        | https://decomp.me/scratch/qonr5 | 1.0   |
 | dra    | func_psp_090F76D0                        |       82 |          9 |        |                                 |       |
 | lib    | EntitySkeletonPieces                     |       82 |          9 |        | https://decomp.me/scratch/aD6la | 0.999 |
@@ -1133,7 +1133,7 @@
 | dra    | func_800F24F4                            |      109 |         19 |        |                                 |       |
 | no3    | func_801CC5A4                            |      110 |          5 |        |                                 |       |
 | no4    | func_pspeu_09242940                      |      111 |         14 |        |                                 |       |
-| no3    | func_pspeu_09252CD8                      |      111 |         19 |        |                                 |       |
+| no3    | func_pspeu_09252CD8                      |      111 |         19 |        | https://decomp.me/scratch/j3OH6 | 0.999 |
 | chi    | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | lib    | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | no3    | InitializeEntity                         |      112 |          2 |        |                                 |       |
@@ -1913,7 +1913,7 @@
 | lib    | EntityCorpseweed                         |     1267 |        134 | Yes    | https://decomp.me/scratch/ZHUBn | 0.999 |
 | st0    | ST0_HitDetection                         |     1332 |        147 |        |                                 |       |
 | dra    | AlucardHandleDamage                      |     1338 |        206 | Yes    |                                 |       |
-| no3    | EntityWarg                               |     1392 |        193 | Yes    |                                 |       |
+| no3    | EntityWarg                               |     1392 |        193 | Yes    | https://decomp.me/scratch/IxuOy | 0.999 |
 | st0    | EntityDracula                            |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra    | func_8010EDB8                            |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
 | dra    | RenderEntitiesPSP                        |     1538 |        105 |        |                                 |       |
