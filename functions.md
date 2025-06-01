@@ -689,9 +689,9 @@
 | no3    | EntityBackgroundCastleWall               |       56 |          8 |        |                                 |       |
 | lib    | func_us_801B4010                         |       57 |          1 |        |                                 |       |
 | lib    | func_us_801B4080                         |       57 |          1 |        |                                 |       |
-| lib    | CutsceneUnk4                             |       57 |          2 |        |                                 |       |
-| no4    | CutsceneUnk4                             |       57 |          2 |        |                                 |       |
-| st0    | CutsceneUnk4                             |       57 |          2 |        |                                 |       |
+| lib    | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/ZPQ9p | 0.624 |
+| no4    | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/ZPQ9p | 0.624 |
+| st0    | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/ZPQ9p | 0.624 |
 | maria  | DisableAfterImage                        |       57 |          5 |        |                                 |       |
 | ric    | DisableAfterImage                        |       57 |          5 |        |                                 |       |
 | dra    | func_8011203C                            |       57 |          9 |        | https://decomp.me/scratch/yEXZW | 0.99  |
