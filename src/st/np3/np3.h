@@ -133,7 +133,7 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 
-extern s16 g_WaterXTbl[];           // pos TBL
+extern s16 g_WaterXTbl[]; // pos TBL
 
 // *** EntitySlogra properties START ***
 

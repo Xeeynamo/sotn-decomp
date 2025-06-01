@@ -530,10 +530,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ char pad_0[0x8];
     /* 0x84 */ u8 timer;
-    /* 0x85 */ u8: 8;
+    /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 timer2;
-    /* 0x87 */ u8: 8;
-    /* 0x88 */ s32: 32;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ s32 : 32;
     /* 0x8C */ u16 palette;
     /* 0x8E */ char pad_8E[0x12];
     /* 0xA0 */ u8 isUnderwater;

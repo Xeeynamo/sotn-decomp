@@ -60,13 +60,16 @@ typedef enum {
 } Merman2SpitFireSubSteps;
 
 #define XY(x, y) x, y
-static Point32 g_merman2Swimvels[] = {XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)), XY(FIX(-0.5), FIX(0.5))};
+static Point32 g_merman2Swimvels[] = {
+    XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)),
+    XY(FIX(-0.5), FIX(0.5))};
 static u8 g_merman2_walktimers[] = {0x40, 0x30, 0x50, 0x40};
 static s16 g_merman_coll1[] = {XY(0, 27), XY(0, 4), XY(4, -4), XY(-8, 0)};
 static s16 g_merman2_coll3[] = {XY(0, 22), XY(0, 4), XY(8, -4), XY(-16, 0)};
 static s16 g_merman_coll2[] = {XY(0, 27), XY(8, 0)};
 static u8 g_merman2_walkanim[] = {9, 1, 9, 2, 9, 3, 9, 4, 0};
-static u8 g_merman2_spitfire[] = {24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9, 2, 8, 8, 12, 1, 13, 255, 0};
+static u8 g_merman2_spitfire[] = {
+    24, 5, 2, 8, 2, 9, 5, 10, 11, 11, 5, 10, 2, 9, 2, 8, 8, 12, 1, 13, 255, 0};
 static u8 g_merman_walkanim_init[] = {24, 7, 7, 6, 16, 5, 255, 0};
 static u8 g_merman2_swim_anim[] = {11, 15, 11, 16, 0};
 
@@ -218,7 +221,7 @@ void EntityMerman2(Entity* self) {
             posY += g_Tilemap.scrollY.i.hi;
             pos = g_WaterXTbl;
             pos += (self->params & 0x100) >> 8;
-            
+
             if (posY < pos[3]) {
                 g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
@@ -259,7 +262,8 @@ void EntityMerman2(Entity* self) {
 
                 colorOffset = (abs(self->velocityY) >> 0xC) - 10;
 
-                setRGB0(prim, 128 - colorOffset / 2, 128 - colorOffset / 2, colorOffset /2 + 192);
+                setRGB0(prim, 128 - colorOffset / 2, 128 - colorOffset / 2,
+                        colorOffset / 2 + 192);
 
                 LOW(prim->r1) = LOW(prim->r0);
                 LOW(prim->r2) = LOW(prim->r0);
@@ -330,11 +334,11 @@ void EntityMerman2(Entity* self) {
                 self->posX.val += self->velocityX;
             }
 
-            if ((self->params & 1)){
+            if (self->params & 1) {
                 self->velocityX *= 2;
             }
-            if(!(self->params & 1)) {
-                if ((self->posX.i.hi & 0xFF00)) {
+            if (!(self->params & 1)) {
+                if (self->posX.i.hi & 0xFF00) {
                     break;
                 }
                 if (!--self->ext.merman2.timer) {
@@ -344,12 +348,10 @@ void EntityMerman2(Entity* self) {
                         self->step_s--;
                     }
                 }
-                
             }
             if (CheckMermanEnteringWater(0x1B)) {
                 self->ext.merman2.ignoreCol = 1;
             }
-            
         }
         break;
 
@@ -491,7 +493,7 @@ void EntityMerman2(Entity* self) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
             self->animCurFrame = 14;
-            if ((GetSideToPlayer() & 1)) {
+            if (GetSideToPlayer() & 1) {
                 self->velocityX = FIX(2);
             } else {
                 self->velocityX = FIX(-2);
@@ -581,12 +583,19 @@ void EntityMerman2(Entity* self) {
 static u8 g_MediumWaterSplashAnim[] = {2, 19, 2, 20, 2, 21, 2, 22, 0};
 static u8 g_explosion2anim[] = {7, 23, 7, 24, 7, 25, 255, 0};
 static u8 g_FallingObject2Anim[] = {9, 26, 9, 27, 9, 28, 255, 0};
-static u8 g_HighWaterSplashAnim[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 255, 0};
-static Point32 g_Merman2XY[] = {{-0x3000, -0x54000}, {-0x1000, -0x58000}, {0x4000, -0x50000}, {0x4000, -0x5c000}, {0x4000, -0x5c000}};
+static u8 g_HighWaterSplashAnim[] = {
+    4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 255, 0};
+static Point32 g_Merman2XY[] = {
+    {-0x3000, -0x54000},
+    {-0x1000, -0x58000},
+    {0x4000, -0x50000},
+    {0x4000, -0x5c000},
+    {0x4000, -0x5c000}};
 static s16 g_MermanSplashXOffset[] = {-12, -8, 10, 13, 14, 0};
 static u8 g_HighWaterSplashParams[] = {1, 3, 6, 8, 11, 13, 16};
 static s16 g_Merman2posPtr[] = {-3, 3, -3, 3, -2, 2, -2, 0};
-static s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
+static s32 g_Merman2velPtr[] = {
+    -0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
 
 void EntityMermanFireSpit(Entity* self) {
     Primitive* prim;
@@ -615,7 +624,7 @@ void EntityMermanFireSpit(Entity* self) {
                 prim->v1 = prim->v0;
                 prim->v2 = 0x20;
                 prim->v3 = prim->v2;
-                
+
                 LOH(prim->next->r2) = 0x40;
                 LOH(prim->next->b2) = 0x40;
                 LOH(prim->next->u1) = 0;
@@ -702,7 +711,7 @@ void EntityMermanWaterSplash(Entity* self) {
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.mermanWaterSplash.prim = prim;
-    
+
             for (i = 0; prim != NULL; i++, prim = prim->next) {
                 prim->r0 = 64;
                 prim->g0 = 64;
@@ -743,10 +752,10 @@ void EntityMermanWaterSplash(Entity* self) {
         self->ext.mermanWaterSplash.unk86 = 0;
         self->step++;
         break;
-        
+
     case 2:
         temp = false;
-        for(prim = self->ext.mermanWaterSplash.prim; prim != NULL;) {
+        for (prim = self->ext.mermanWaterSplash.prim; prim != NULL;) {
             if (prim->p1) {
                 prim = prim->next;
                 continue;

@@ -42,7 +42,9 @@ typedef enum {
 } MermanDyingSubSteps;
 
 #define XY(x, y) x, y
-static Point32 swimVelocities[] = {XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)), XY(FIX(-0.5), FIX(0.5))};
+static Point32 swimVelocities[] = {
+    XY(FIX(0.5), FIX(-0.5)), XY(FIX(-0.5), FIX(-0.5)), XY(FIX(0.5), FIX(0.5)),
+    XY(FIX(-0.5), FIX(0.5))};
 static u8 walkDurations[] = {0x40, 0x30, 0x50, 0x40};
 static s16 sensors1[] = {XY(0, 21), XY(0, 4), XY(4, -4), XY(-8, 0)};
 static s16 sensors2[] = {XY(0, 11), XY(0, 4), XY(8, -4), XY(-16, 0)};
@@ -57,7 +59,9 @@ static u8 anim5[] = {1, 25, 1, 23, 9, 22, 4, 23, 3, 24, 8, 25, 255, 0};
 static u8 anim6[] = {1, 15, 1, 16, 1, 17, 1, 18, 1, 19, 1, 20, 1, 13, 1, 14, 0};
 static u8 anim7[] = {1, 26, 1, 27, 1, 28, 1, 29, 1, 30, 1, 31, 1, 32, 1, 33, 0};
 static u8 anim8[] = {7, 34, 7, 35, 7, 36, 255, 0};
-static s32 jumpAirXVels[] = {0, FIX(-5.0/8), FIX(-1.25), FIX(-5.0/8), 0, FIX(5.0/8), FIX(1.25), FIX(5.0/8), 0x0};
+static s32 jumpAirXVels[] = {
+    0,         FIX(-5.0 / 8), FIX(-1.25), FIX(-5.0 / 8), 0, FIX(5.0 / 8),
+    FIX(1.25), FIX(5.0 / 8),  0x0};
 
 void EntityMerman(Entity* self) {
     Entity* newEntity;
@@ -489,7 +493,8 @@ void EntityMermanJumpAir(Entity* self) {
     }
 }
 
-static s32 explosionYVels[] = {FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
+static s32 explosionYVels[] = {
+    FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
 static u8 explosionFrames[] = {1, 9, 21, 43};
 static u16 explosionDurations[] = {16, 24, 42, 47};
 
