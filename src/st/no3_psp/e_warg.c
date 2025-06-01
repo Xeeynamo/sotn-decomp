@@ -409,8 +409,11 @@ void EntityWarg(Entity* self) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
-                // Is this divide?
+                #ifdef VERSION_PSP
                 otherEnt->params = (((g_unkGraphicsStruct.g_zEntityCenter - 8) - (Random() & 7)) << 8) + 1;
+                #else
+                otherEnt->params = ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8) << 8) + 1;
+                #endif
                 otherEnt->posX.i.hi =
                     self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
                 otherEnt->posY.i.hi =
