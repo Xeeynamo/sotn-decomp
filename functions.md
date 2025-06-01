@@ -175,8 +175,8 @@
 | lib    | SetSubStep                               |       21 |          1 |        |                                 |       |
 | lib    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
-| no3    | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no3    | SetSubStep                               |       21 |          1 |        |                                 |       |
+| no3    | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no4    | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | no4    | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -213,6 +213,7 @@
 | dra    | func_800E493C                            |       23 |          4 |        |                                 |       |
 | dra    | 63C08.rodata                             |       24 |          0 | Yes    |                                 |       |
 | ric    | pl_subweapon_cross.rodata                |       24 |          0 | Yes    |                                 |       |
+| no3    | e_warg.rodata                            |       24 |          0 | Yes    |                                 |       |
 | no4    | e_spear_guard.rodata                     |       24 |          0 | Yes    |                                 |       |
 | st0    | 3AB08.rodata                             |       24 |          0 | Yes    |                                 |       |
 | dra    | ResetPendingGfxLoad                      |       24 |          2 |        |                                 |       |
@@ -287,6 +288,7 @@
 | maria  | pl_steps.rodata                          |       28 |          0 | Yes    |                                 |       |
 | lib    | e_lesser_demon.rodata                    |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                          |       28 |          0 | Yes    |                                 |       |
+| no3    | working_on.rodata                        |       28 |          0 | Yes    |                                 |       |
 | no4    | e_frozen_shade.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                         |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                        |       28 |          0 | Yes    |                                 |       |
@@ -412,7 +414,7 @@
 | dra    | func_psp_090F2178                        |       37 |          2 |        |                                 |       |
 | chi    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | lib    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
-| no3    | func_pspeu_092603F0                      |       37 |          2 |        |                                 |       |
+| no3    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | no4    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | st0    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | wrp    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
@@ -565,7 +567,6 @@
 | st0    | func_pspeu_09242F68                      |       45 |          7 |        | https://decomp.me/scratch/Gk1fz | 1.0   |
 | maria  | pl_main.rodata                           |       46 |          0 | Yes    |                                 |       |
 | ric    | pl_main.rodata                           |       46 |          0 | Yes    |                                 |       |
-| no3    | e_particles.rodata                       |       46 |          0 | Yes    |                                 |       |
 | dra    | MenuDrawTime                             |       46 |          3 |        |                                 |       |
 | dra    | func_psp_090DFBD0                        |       46 |          4 |        | https://decomp.me/scratch/1KfmL | 0.999 |
 | chi    | CollectHeart                             |       46 |          4 |        | https://decomp.me/scratch/EdcwN | 0.977 |
@@ -835,8 +836,8 @@
 | lib    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | lib    | func_us_801B0FBC                         |       71 |          7 |        |                                 |       |
-| no3    | func_pspeu_09255068                      |       71 |          7 |        |                                 |       |
 | no3    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
+| no3    | func_pspeu_09255068                      |       71 |          7 |        |                                 |       |
 | no4    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | no4    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | st0    | GetNormalizedAngle                       |       71 |          7 |        |                                 |       |
@@ -861,7 +862,7 @@
 | lib    | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no3    | EntityDeadMerman                         |       73 |          7 |        |                                 |       |
 | no3    | func_pspeu_09239020                      |       73 |          7 |        | https://decomp.me/scratch/MS6uL | 1.0   |
-| no3    | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
+| no3    | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | no4    | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | wrp    | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
 | lib    | func_psp_0926ADD8                        |       73 |          8 |        | https://decomp.me/scratch/sz59k | 1.0   |
