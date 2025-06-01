@@ -69,7 +69,6 @@ segments:
       - [0x2750, data]
       - [0x27DC, .data, e_fire_warg]
       - [0x30BC, .data, e_warg]
-      - [0x32EC, data]
       - [0x3858, .data, water_effects]
       - [0x3914, .data, e_merman2]
       - [0x3A28, .data, e_merman]
