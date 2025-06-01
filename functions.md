@@ -201,9 +201,9 @@
 | dra    | func_80111938                            |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090F5B10                        |       23 |          1 |        | https://decomp.me/scratch/55U3O | 0.759 |
 | maria  | MarDebugEnter                            |       23 |          1 |        |                                 |       |
-| maria  | func_80159BC8                            |       23 |          1 |        |                                 |       |
+| maria  | MarResetPose                             |       23 |          1 |        |                                 |       |
 | ric    | RicDebugEnter                            |       23 |          1 |        |                                 |       |
-| ric    | func_80159BC8                            |       23 |          1 |        |                                 |       |
+| ric    | MarResetPose                             |       23 |          1 |        |                                 |       |
 | dra    | func_psp_090ECF20                        |       23 |          2 |        |                                 |       |
 | st0    | func_801B0180                            |       23 |          2 |        |                                 |       |
 | dra    | func_psp_090E4C90                        |       23 |          3 |        |                                 |       |
