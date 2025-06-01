@@ -586,7 +586,7 @@ static Point32 g_Merman2XY[] = {{-0x3000, -0x54000}, {-0x1000, -0x58000}, {0x400
 static s16 g_MermanSplashXOffset[] = {-12, -8, 10, 13, 14, 0};
 static u8 g_HighWaterSplashParams[] = {1, 3, 6, 8, 11, 13, 16};
 static s16 g_Merman2posPtr[] = {-3, 3, -3, 3, -2, 2, -2, 0};
-extern s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
+static s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x1000, 0x0};
 
 void EntityMermanFireSpit(Entity* self) {
     Primitive* prim;
