@@ -133,38 +133,7 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 
-// *** Merman properties START ***
-
-extern s16 g_WaterXTbl[];           // pos TBL
-extern Point32 g_merman2Swimvels[]; // accel_x TBL
-extern u8 g_merman2_walktimers[];   // timers
-extern s32 g_merman_coll1;          // Collision data
-extern s32 g_merman2_coll3;         // Collision data
-extern u16 g_merman_coll2;          // Collision data
-extern u8 g_merman2_walkanim[];     // Animation
-extern u8 g_merman2_spitfire[];     // Animation
-extern u8 g_merman_walkanim_init[]; // Animation
-extern u8 g_merman2_swim_anim[];    // Animation
-extern Point32 g_Merman2XY[];
-extern u16 g_MermanSplashXOffset[];
-extern u8 g_HighWaterSplashParams[];
-extern u16 g_Merman2posPtr[];
-extern s32 g_Merman2velPtr[];
-extern Point32 D_80182338[];
-extern u8 D_80182358[];
-extern s16 D_8018235C;
-extern s16 D_8018236C;
-extern s16 D_8018237C;
-extern s16 D_8018238C;
-extern u8 D_80182394[]; // animation
-extern u8 D_801823AC[]; // animation
-extern u8 D_801823BC[]; // animation
-extern u8 D_801823D0[]; // animation
-extern u8 D_801823DC[]; // animation
-extern u8 D_801823EC[]; // animation
-extern s32 D_80182418[];
-
-// *** EntityMerman properties END ***
+extern s16 g_WaterXTbl[]; // pos TBL
 
 // *** EntitySlogra properties START ***
 
@@ -204,8 +173,6 @@ extern s8 c_HeartPrizes[];
 extern s32 D_80181E80[];
 extern const u8* D_80181F2C[];
 extern u8 D_80182008[];
-extern const u8 g_explosion2anim[];
-extern u8 g_FallingObject2Anim[];
 extern u8 D_80182400[];
 extern u8 D_80182414[];
 extern s32 D_80182440[];

@@ -59,7 +59,7 @@ void EntityDeadMerman(Entity* self);
 void EntityMerman2JumpAir(Entity* self);
 void EntityMerman(Entity* self);
 void EntityMermanFireball(Entity* self);
-void func_801C8F54(Entity* self);
+void EntityMermanJumpAir(Entity* self);
 void EntityMermanExplosion(Entity* self);
 void EntityMermanSpawner(Entity* self);
 void EntityBoneScimitar(Entity* self);
@@ -152,7 +152,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMerman2JumpAir,
     EntityMerman,
     EntityMermanFireball,
-    func_801C8F54,
+    EntityMermanJumpAir,
     EntityMermanExplosion,
     EntityMermanSpawner,
     EntityBoneScimitar,

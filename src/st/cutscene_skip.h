@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern s32 g_SkipCutscene;
 extern Dialogue g_Dialogue;
 
 void CutsceneSkip(Entity* self) {
