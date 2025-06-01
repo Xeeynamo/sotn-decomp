@@ -97,6 +97,7 @@
 | no3    | jtbl_pspeu_09298E68                      |       16 |          0 | Yes    |                                 |       |
 | no4    | e_fishhead.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no4    | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
+| no4    | unk_5EE8.rodata                          |       16 |          0 | Yes    |                                 |       |
 | st0    | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | wrp    | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dra    | IncrementRingBufferPos                   |       16 |          1 |        |                                 |       |
@@ -436,6 +437,7 @@
 | no4    | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | st0    | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp    | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
+| no4    | unk_2108.rodata                          |       38 |          0 | Yes    |                                 |       |
 | dra    | DestroyEntity                            |       38 |          3 |        |                                 |       |
 | dra    | func_800EDB08                            |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
 | dra    | GetEquipmentName                         |       38 |          4 |        |                                 |       |
@@ -600,7 +602,6 @@
 | st0    | func_801B0280                            |       47 |          6 |        |                                 |       |
 | dra    | LoadVabData                              |       47 |          9 |        |                                 |       |
 | maria  | pl_subweapons.rodata                     |       48 |          0 | Yes    |                                 |       |
-| no4    | unk_2108.rodata                          |       48 |          0 | Yes    |                                 |       |
 | wrp    | warp.rodata                              |       48 |          0 | Yes    |                                 |       |
 | dra    | func_psp_090EBE50                        |       48 |          4 |        |                                 |       |
 | dra    | func_8012F83C                            |       49 |          4 |        |                                 |       |
