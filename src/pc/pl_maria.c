@@ -2,6 +2,8 @@
 #include <game.h>
 #include "../../maria/maria.h"
 
+// To use Maria as a playable character, add -DUSE_PLAYER_MARIA=1 in cmake
+
 void MAR_Load();
 void InitPlayerMaria(void) {
     g_CurrentEntity = &PLAYER;

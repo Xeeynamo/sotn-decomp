@@ -407,9 +407,11 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             case PLAYER_RICHTER:
                 InitPlayerRic();
                 break;
+#ifdef USE_PLAYER_MARIA
             case PLAYER_MARIA:
                 InitPlayerMaria();
                 return;
+#endif
             }
             sim.path = "BIN/RIC.BIN";
             sim.kind = 99;

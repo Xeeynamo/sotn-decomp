@@ -40,7 +40,6 @@ set(SOURCE_FILES_PC
     src/pc/sim_pc.c
     src/pc/pl_arc.c
     src/pc/pl_ric.c
-    src/pc/pl_maria.c
     src/pc/servant_pc.c
     src/pc/stages/stage_loader.c
     src/pc/stages/stage_dummy.c
@@ -488,7 +487,6 @@ set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WE
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_MARIA}
     ${SOURCE_FILES_PC}
     ${SOURCE_FILES_PSX_SDK}
     ${SOURCE_FILES_MOCK_SDK}
@@ -503,6 +501,12 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_TT_001}
     ${SOURCE_FILES_TT_002}
 )
+if (USE_PLAYER_MARIA)
+    add_compile_definitions(USE_PLAYER_MARIA)
+    list(APPEND SOURCE_FILES_CORE
+            ${SOURCE_FILES_MARIA}
+            src/pc/pl_maria.c)
+endif()
 
 add_library(core ${SOURCE_FILES_CORE})
 
