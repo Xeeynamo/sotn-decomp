@@ -2217,7 +2217,7 @@ typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 y;
     /* 0x80 */ s16 opacity;
-    /* 0x82 */ s16 velocity : 16;
+    /* 0x82 */ s16 velocity;
     /* 0x84 */ struct Entity* target;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
