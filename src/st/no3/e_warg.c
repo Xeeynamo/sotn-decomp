@@ -8,29 +8,48 @@ static u8 anim_unused1[] = {14, 57, 14, 58, 14, 59, 14, 60, 14, 61, 14, 62, 0};
 static u8 D_801830DC[] = {14, 6, 14, 5, 14, 4, 14, 3, 14, 2, 14, 1, 0};
 static u8 anim_unused2[] = {14, 62, 14, 61, 14, 60, 14, 59, 14, 58, 14, 57, 0};
 static u8 D_801830FC[] = {26, 7, 26, 8, 2, 9, 0};
-static u8 anim_unused3[] = {26, 73, 26, 74, 2, 75, 0, 0, 8, 30, 8, 31, 8, 32, 255, 0};
-static u8 anim_unused4[] = {2, 33, 3, 34, 4, 35, 20, 36, 6, 37, 4, 38, 2, 39, 255, 0};
+static u8 anim_unused3[] = {
+    26, 73, 26, 74, 2, 75, 0, 0, 8, 30, 8, 31, 8, 32, 255, 0};
+static u8 anim_unused4[] = {
+    2, 33, 3, 34, 4, 35, 20, 36, 6, 37, 4, 38, 2, 39, 255, 0};
 static u8 anim_unused5[] = {4, 32, 4, 31, 32, 30, 8, 14, 255, 0};
-static u8 D_80183130[] = {8, 14, 8, 40, 8, 41, 8, 42, 8, 43, 6, 44, 8, 45, 8, 46, 8, 47, 8, 48, 255, 0};
-static u8 D_80183148[] = {2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8, 19, 8, 26, 8, 27, 8, 28, 8, 29, 8, 14, 255, 0};
-static u8 anim_unused6[] = {4, 96, 4, 97, 4, 98, 4, 99, 4, 100, 4, 101, 8, 26, 8, 27, 8, 28, 8, 29, 8, 14, 255, 0};
+static u8 D_80183130[] = {8,  14, 8,  40, 8,  41, 8,  42, 8,  43,  6,
+                          44, 8,  45, 8,  46, 8,  47, 8,  48, 255, 0};
+static u8 D_80183148[] = {2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8,   19,
+                          8, 26, 8, 27, 8, 28, 8,  29, 8, 14, 255, 0};
+static u8 anim_unused6[] = {4, 96, 4, 97, 4, 98, 4, 99, 4, 100, 4,   101,
+                            8, 26, 8, 27, 8, 28, 8, 29, 8, 14,  255, 0};
 static u8 D_80183178[] = {1, 10, 1, 11, 0};
 static u8 D_80183180[] = {1, 12, 1, 13, 0};
-static u8 anim_unused7[] = {4, 15, 4, 16, 16, 17, 8, 14, 8, 18, 8, 19, 16, 20, 8, 19, 8, 18, 12, 14, 255, 0};
-static u8 D_801831A0[] = {8, 102, 8, 103, 8, 104, 16, 105, 8, 106, 8, 107, 8, 108, 8, 107, 8, 106, 8, 105, 8, 106, 8, 107, 56, 108, 8, 107, 8, 106, 8, 105, 8, 104, 8, 103, 8, 102, 255, 0};
-static u8 anim_unused8[] = {4, 102, 4, 103, 4, 104, 4, 105, 4, 106, 4, 107, 16, 108, 4, 107, 4, 106, 4, 105, 4, 104, 4, 103, 4, 102, 255, 0};
-static u8 anim_unused9[] = {4, 15, 4, 16, 16, 17, 8, 14, 8, 18, 8, 19, 64, 20, 8, 19, 8, 18, 12, 14, 255, 0};
+static u8 anim_unused7[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                            19, 16, 20, 8,  19, 8,  18, 12, 14, 255, 0};
+static u8 D_801831A0[] = {
+    8, 102, 8, 103, 8, 104, 16, 105, 8, 106, 8,   107, 8, 108,
+    8, 107, 8, 106, 8, 105, 8,  106, 8, 107, 56,  108, 8, 107,
+    8, 106, 8, 105, 8, 104, 8,  103, 8, 102, 255, 0};
+static u8 anim_unused8[] = {
+    4, 102, 4, 103, 4, 104, 4, 105, 4, 106, 4, 107, 16,  108,
+    4, 107, 4, 106, 4, 105, 4, 104, 4, 103, 4, 102, 255, 0};
+static u8 anim_unused9[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                            19, 64, 20, 8,  19, 8,  18, 12, 14, 255, 0};
 static u8 D_801831FC[] = {4, 40, 20, 42, 255, 0};
 static u8 D_80183204[] = {4, 40, 1, 14, 255, 0};
-static u8 anim_unused10[] = {8, 63, 8, 64, 8, 65, 32, 66, 6, 67, 6, 68, 42, 69, 8, 64, 255, 0};
-static u8 anim_unused11[] = {24, 50, 32, 88, 4, 87, 46, 86, 4, 87, 8, 88, 255, 0};
-static u8 anim_unused12[] = {8, 63, 8, 64, 8, 65, 32, 66, 6, 67, 6, 68, 16, 69, 12, 66, 6, 67, 6, 68, 16, 69, 12, 66, 6, 67, 6, 68, 64, 69, 8, 64, 255, 0};
-static u8 anim_unused13[] = {24, 50, 32, 88, 4, 87, 20, 86, 4, 87, 12, 88, 4, 87, 20, 86, 4, 87, 12, 88, 4, 87, 52, 86, 4, 87, 8, 88, 255, 0};
+static u8 anim_unused10[] = {
+    8, 63, 8, 64, 8, 65, 32, 66, 6, 67, 6, 68, 42, 69, 8, 64, 255, 0};
+static u8 anim_unused11[] = {
+    24, 50, 32, 88, 4, 87, 46, 86, 4, 87, 8, 88, 255, 0};
+static u8 anim_unused12[] = {
+    8,  63, 8,  64, 8,  65, 32, 66, 6,  67, 6,  68, 16, 69, 12, 66,  6,
+    67, 6,  68, 16, 69, 12, 66, 6,  67, 6,  68, 64, 69, 8,  64, 255, 0};
+static u8 anim_unused13[] = {
+    24, 50, 32, 88, 4,  87, 20, 86, 4,  87, 12, 88, 4,  87,  20,
+    86, 4,  87, 12, 88, 4,  87, 52, 86, 4,  87, 8,  88, 255, 0};
 // For UnkCollisionFunc functions
 static s16 D_80183274[] = {0, 40, 48, 0};
 static u16 D_8018327C[] = {0, 40, 0, 4, 24, -4, -48, 0};
 // Lookup tables
-static u32 D_8018328C[] = {FIX(6.0/7), FIX(3.0/7), FIX(2.0/7), FIX(6.0/7), FIX(3.0/7), FIX(2.0/7)};
+static u32 D_8018328C[] = {FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7),
+                           FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7)};
 static u32 D_801832A4[] = {FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7),
                            FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7)};
 // These are very close to 12/7, 6/7, 4/7, 12/7, 6/7, 4/7 but not quite.
@@ -410,13 +429,19 @@ void EntityWarg(Entity* self) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
-                // These are the same code, but compiler instruction reordering is messing it up.
-                // There's almost certainly a single solution, but I can't find it.
-                #ifdef VERSION_PSP
-                otherEnt->params = ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7)) << 8) + 1;
-                #else
-                otherEnt->params = ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8) << 8) + 1;
-                #endif
+// These are the same code, but compiler instruction reordering is messing it
+// up. There's almost certainly a single solution, but I can't find it.
+#ifdef VERSION_PSP
+                otherEnt->params =
+                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
+                     << 8) +
+                    1;
+#else
+                otherEnt->params =
+                    ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
+                     << 8) +
+                    1;
+#endif
                 otherEnt->posX.i.hi =
                     self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
                 otherEnt->posY.i.hi =
@@ -616,10 +641,9 @@ void EntityUnkId4B(Entity* self) {
 
         } else {
             if (previous->params) {
-                if (lastAnimFrame >= 86){
+                if (lastAnimFrame >= 86) {
                     lastAnimFrame -= 57;
-                }
-                else if (lastAnimFrame >= 57) {
+                } else if (lastAnimFrame >= 57) {
                     lastAnimFrame -= 57;
                 } else {
                     lastAnimFrame = 13;
@@ -640,7 +664,8 @@ void EntityUnkId4B(Entity* self) {
     }
 }
 
-static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
+static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
+                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
 // A single "puff" of the warg explosion animation, transparent
 void EntityWargExplosionPuffTransparent(Entity* self) {
 
