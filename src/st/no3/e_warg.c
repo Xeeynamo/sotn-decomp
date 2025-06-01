@@ -72,30 +72,37 @@ static void func_801CF58C(Entity* self) {
 }
 
 static void func_801CF5E0(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
     s16 temp_v0;
 
-    if (self->facingLeft == GetSideToPlayer()) {
+    // I think this could be a mistake. The == gets
+    // evaluated before the & 1. In other places they use
+    // GetSideToPlayer() & 1 but I think if they wanted to
+    // do that here they should have put it in parentheses.
+    // Makes no difference to ultimate behavior, but does mean
+    // we get some weird bonus insructions (xor, sltiu) on PSP.
+    if (self->facingLeft == GetSideToPlayer() & 1) {
         SetStep(5);
         return;
     }
 
-    if (self->ext.warg.unk86 == 0) {
+    if (!self->ext.warg.unk86) {
         func_801CF58C(self);
         return;
     }
 
-    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - g_Tilemap.scrollX.i.hi;
+    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - tilemap->scrollX.i.hi;
 
     if (temp_v0 > 16) {
         SetStep(3);
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->ext.warg.unk7C = 0;
         } else {
             self->ext.warg.unk7C = 1;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->ext.warg.unk7C = 1;
         } else {
             self->ext.warg.unk7C = 0;
@@ -108,7 +115,6 @@ static void func_801CF5E0(Entity* self) {
     self->ext.warg.unk82 = 32;
 }
 
-// duplicate of func_801CC90C
 static void func_801CF6D8(Entity* self) {
     u16 xDist = GetDistanceToPlayerX();
 
@@ -166,8 +172,8 @@ void EntityWarg(Entity* self) {
     u16 switchTemp;
     u8 animResult;
     s16 xVar;
-    s32 primIndex;
     EnemyDef* enemy;
+    s32 primIndex;
     DRAWENV drawEnv;
     RECT rect = {0, 0x100, 0x80, 0x80};
 

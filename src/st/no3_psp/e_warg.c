@@ -70,7 +70,6 @@ static void func_801CF58C(Entity* self) {
     self->ext.warg.unk80 = 0x20;
 }
 
-// func_801CF5E0
 static void func_801CF5E0(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
     s16 temp_v0;
