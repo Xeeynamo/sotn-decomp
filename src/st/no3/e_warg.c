@@ -2,6 +2,63 @@
 #include "no3.h"
 #include "sfx.h"
 
+// Animations
+static u8 D_801830BC[] = {14, 1, 14, 2, 14, 3, 14, 4, 14, 5, 14, 6, 0};
+static u8 anim_unused1[] = {14, 57, 14, 58, 14, 59, 14, 60, 14, 61, 14, 62, 0};
+static u8 D_801830DC[] = {14, 6, 14, 5, 14, 4, 14, 3, 14, 2, 14, 1, 0};
+static u8 anim_unused2[] = {14, 62, 14, 61, 14, 60, 14, 59, 14, 58, 14, 57, 0};
+static u8 D_801830FC[] = {26, 7, 26, 8, 2, 9, 0};
+static u8 anim_unused3[] = {
+    26, 73, 26, 74, 2, 75, 0, 0, 8, 30, 8, 31, 8, 32, 255, 0};
+static u8 anim_unused4[] = {
+    2, 33, 3, 34, 4, 35, 20, 36, 6, 37, 4, 38, 2, 39, 255, 0};
+static u8 anim_unused5[] = {4, 32, 4, 31, 32, 30, 8, 14, 255, 0};
+static u8 D_80183130[] = {8,  14, 8,  40, 8,  41, 8,  42, 8,  43,  6,
+                          44, 8,  45, 8,  46, 8,  47, 8,  48, 255, 0};
+static u8 D_80183148[] = {2, 14, 2, 15, 2, 16, 12, 17, 8, 18, 8,   19,
+                          8, 26, 8, 27, 8, 28, 8,  29, 8, 14, 255, 0};
+static u8 anim_unused6[] = {4, 96, 4, 97, 4, 98, 4, 99, 4, 100, 4,   101,
+                            8, 26, 8, 27, 8, 28, 8, 29, 8, 14,  255, 0};
+static u8 D_80183178[] = {1, 10, 1, 11, 0};
+static u8 D_80183180[] = {1, 12, 1, 13, 0};
+static u8 anim_unused7[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                            19, 16, 20, 8,  19, 8,  18, 12, 14, 255, 0};
+static u8 D_801831A0[] = {
+    8, 102, 8, 103, 8, 104, 16, 105, 8, 106, 8,   107, 8, 108,
+    8, 107, 8, 106, 8, 105, 8,  106, 8, 107, 56,  108, 8, 107,
+    8, 106, 8, 105, 8, 104, 8,  103, 8, 102, 255, 0};
+static u8 anim_unused8[] = {
+    4, 102, 4, 103, 4, 104, 4, 105, 4, 106, 4, 107, 16,  108,
+    4, 107, 4, 106, 4, 105, 4, 104, 4, 103, 4, 102, 255, 0};
+static u8 anim_unused9[] = {4,  15, 4,  16, 16, 17, 8,  14, 8,  18,  8,
+                            19, 64, 20, 8,  19, 8,  18, 12, 14, 255, 0};
+static u8 D_801831FC[] = {4, 40, 20, 42, 255, 0};
+static u8 D_80183204[] = {4, 40, 1, 14, 255, 0};
+static u8 anim_unused10[] = {
+    8, 63, 8, 64, 8, 65, 32, 66, 6, 67, 6, 68, 42, 69, 8, 64, 255, 0};
+static u8 anim_unused11[] = {
+    24, 50, 32, 88, 4, 87, 46, 86, 4, 87, 8, 88, 255, 0};
+static u8 anim_unused12[] = {
+    8,  63, 8,  64, 8,  65, 32, 66, 6,  67, 6,  68, 16, 69, 12, 66,  6,
+    67, 6,  68, 16, 69, 12, 66, 6,  67, 6,  68, 64, 69, 8,  64, 255, 0};
+static u8 anim_unused13[] = {
+    24, 50, 32, 88, 4,  87, 20, 86, 4,  87, 12, 88, 4,  87,  20,
+    86, 4,  87, 12, 88, 4,  87, 52, 86, 4,  87, 8,  88, 255, 0};
+// For UnkCollisionFunc functions
+static s16 D_80183274[] = {0, 40, 48, 0};
+static u16 D_8018327C[] = {0, 40, 0, 4, 24, -4, -48, 0};
+// Lookup tables
+static u32 D_8018328C[] = {FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7),
+                           FIX(6.0 / 7), FIX(3.0 / 7), FIX(2.0 / 7)};
+static u32 D_801832A4[] = {FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7),
+                           FIX(2.0 / 7), FIX(3.0 / 7), FIX(6.0 / 7)};
+// These are very close to 12/7, 6/7, 4/7, 12/7, 6/7, 4/7 but not quite.
+static s32 unused_morefixes[] = {
+    0x1B6DA, 0xDBC6, 0x9248, 0x1B6DA, 0xDBC6, 0x9248, FIX(4)};
+
+static s16 D_801832D8[] = {0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70};
+static u8 D_801832E8[] = {2, 0, 1, 3};
+
 // Unused.
 void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
                    u8 arg5, s16 xOfst) {
@@ -34,30 +91,37 @@ static void func_801CF58C(Entity* self) {
 }
 
 static void func_801CF5E0(Entity* self) {
+    Tilemap* tilemap = &g_Tilemap;
     s16 temp_v0;
 
-    if (self->facingLeft == GetSideToPlayer()) {
+    // I think this could be a mistake. The == gets
+    // evaluated before the & 1. In other places they use
+    // GetSideToPlayer() & 1 but I think if they wanted to
+    // do that here they should have put it in parentheses.
+    // Makes no difference to ultimate behavior, but does mean
+    // we get some weird bonus insructions (xor, sltiu) on PSP.
+    if (self->facingLeft == GetSideToPlayer() & 1) {
         SetStep(5);
         return;
     }
 
-    if (self->ext.warg.unk86 == 0) {
+    if (!self->ext.warg.unk86) {
         func_801CF58C(self);
         return;
     }
 
-    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - g_Tilemap.scrollX.i.hi;
+    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - tilemap->scrollX.i.hi;
 
     if (temp_v0 > 16) {
         SetStep(3);
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->ext.warg.unk7C = 0;
         } else {
             self->ext.warg.unk7C = 1;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->ext.warg.unk7C = 1;
         } else {
             self->ext.warg.unk7C = 0;
@@ -70,7 +134,6 @@ static void func_801CF5E0(Entity* self) {
     self->ext.warg.unk82 = 32;
 }
 
-// duplicate of func_801CC90C
 static void func_801CF6D8(Entity* self) {
     u16 xDist = GetDistanceToPlayerX();
 
@@ -86,26 +149,38 @@ static void func_801CF6D8(Entity* self) {
     }
 }
 
-// Init
-extern u16 D_80180B9C[];
-// Animations
-extern u8 D_801830BC[];
-extern u8 D_801830DC[];
-extern u8 D_801830FC[];
-extern u8 D_80183130[];
-extern u8 D_80183148[];
-extern u8 D_80183178[];
-extern u8 D_80183180[];
-extern u8 D_801831A0[];
-extern u8 D_801831FC[];
-extern u8 D_80183204[];
-// For UnkCollisionFunc functions
-extern s16 D_80183274[];
-extern u16 D_8018327C[];
-// Lookup tables
-extern u32 D_8018328C[];
-extern u32 D_801832A4[];
-extern u16 D_801832EC[];
+static s16 D_801832EC[] = {
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -6,  12, 8,
+    8,  12, 28, 28, -31, -6,  12, 8,  8,  12, 28, 28, -31, -1,  10, 10,
+    8,  12, 28, 28, -30, -1,  10, 10, 8,  12, 28, 28, -33, -5,  12, 9,
+    8,  12, 28, 28, -33, -10, 12, 8,  8,  12, 28, 28, -32, -11, 12, 8,
+    8,  12, 28, 28, -16, -15, 28, 8,  8,  12, 28, 28, -33, -5,  12, 9,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, 0,   12, 10,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, -1,  12, 10,
+    8,  12, 28, 28, -33, -1,  12, 10, 8,  12, 28, 28, -33, 0,   12, 9,
+    8,  12, 28, 28, -33, -1,  12, 8,  0,  16, 28, 24, -38, 11,  9,  9,
+    0,  16, 28, 24, -38, 11,  9,  9,  0,  16, 28, 24, -38, 5,   10, 7,
+    0,  16, 28, 24, -40, 2,   11, 7,  0,  16, 28, 24, -39, 4,   10, 7,
+    0,  16, 28, 24, -39, 1,   11, 7,  0,  12, 28, 28, -39, -5,  10, 8,
+    0,  12, 28, 28, -38, -8,  9,  7,  8,  12, 28, 28, -30, -14, 9,  7,
+    8,  8,  28, 24, -29, -16, 9,  7,  8,  0,  28, 24, -30, -10, 10, 8,
+    8,  0,  28, 24, -31, -10, 10, 8,  8,  12, 28, 28, -32, -4,  11, 8,
+    8,  12, 28, 28, -31, -6,  10, 8,  8,  12, 28, 28, -31, -5,  10, 9,
+    8,  12, 28, 28, -29, -4,  9,  10, 8,  12, 28, 28, -27, -3,  7,  10,
+    -3, 12, 17, 28, 0,   0,   0,  0,  -8, 12, 12, 28, 0,   0,   0,  0,
+    0,  12, 28, 28, 32,  -1,  4,  8,  0,  12, 28, 28, 35,  -1,  7,  8,
+    -8, 12, 28, 28, 31,  -5,  11, 8,  -8, 12, 28, 28, 32,  -4,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -6,  12, 9,
+    8,  12, 28, 28, -33, -5,  12, 8,  8,  12, 28, 28, -33, -5,  12, 8,
+    8,  12, 28, 28, -16, -10, 28, 7,  8,  12, 28, 28, -16, -17, 26, 6,
+    8,  12, 28, 28, -28, -22, 22, 8,  8,  12, 28, 28, -20, -24, 8,  13,
+    8,  12, 28, 28, -19, -24, 8,  13, 8,  12, 28, 28, -18, -24, 8,  13,
+    8,  12, 28, 28, -18, -25, 8,  13};
 
 void EntityWarg(Entity* self) {
     DR_ENV* dr_env;
@@ -116,8 +191,8 @@ void EntityWarg(Entity* self) {
     u16 switchTemp;
     u8 animResult;
     s16 xVar;
-    s32 primIndex;
     EnemyDef* enemy;
+    s32 primIndex;
     DRAWENV drawEnv;
     RECT rect = {0, 0x100, 0x80, 0x80};
 
@@ -296,7 +371,8 @@ void EntityWarg(Entity* self) {
             self->ext.warg.unk82 -= 1;
             break;
         }
-        if (!(self->facingLeft ^ GetSideToPlayer())) {
+        // Same weird issue with GetSideToPlayer in func_801CF5E0
+        if (self->facingLeft == GetSideToPlayer() & 1) {
             SetStep(5);
             break;
         }
@@ -353,11 +429,19 @@ void EntityWarg(Entity* self) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
-                // Is this divide?
+// These are the same code, but compiler instruction reordering is messing it
+// up. There's almost certainly a single solution, but I can't find it.
+#ifdef VERSION_PSP
+                otherEnt->params =
+                    ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
+                     << 8) +
+                    1;
+#else
                 otherEnt->params =
                     ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
                      << 8) +
                     1;
+#endif
                 otherEnt->posX.i.hi =
                     self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
                 otherEnt->posY.i.hi =
@@ -504,7 +588,20 @@ void EntityWarg(Entity* self) {
     }
 }
 
-// func_psp_09254348
+static s16 D_801836BC[] = {
+    6,  -24, 4, 24, -37, 2,  10, 4, 2,  -23, 4, 24, -38, 2,   10, 4,
+    3,  -23, 4, 24, -38, 3,  10, 4, 3,  -22, 4, 24, -38, 4,   10, 4,
+    2,  -23, 4, 24, -39, 2,  10, 4, 3,  -23, 4, 24, -39, 3,   10, 4,
+    3,  -22, 4, 24, -39, 4,  10, 4, 6,  -24, 4, 24, -36, 2,   10, 4,
+    3,  -26, 4, 24, -39, 0,  10, 4, 2,  -29, 4, 24, -38, 0,   10, 4,
+    2,  -28, 4, 24, -25, -9, 10, 4, -3, -21, 4, 24, -47, 0,   17, 4,
+    -2, -21, 4, 24, -46, 0,  18, 4, -2, -21, 4, 24, -45, 0,   19, 4,
+    5,  -25, 4, 24, -36, 0,  10, 4, 5,  -25, 4, 24, -37, 0,   10, 4,
+    5,  -25, 4, 24, -36, 2,  10, 4, -1, -21, 4, 24, -44, 5,   10, 4,
+    -3, -24, 4, 24, -46, 2,  10, 4, -2, -20, 4, 24, -44, 5,   10, 4,
+    5,  -33, 4, 24, -37, -7, 10, 4, 3,  -38, 4, 24, -40, -12, 10, 4,
+    1,  -28, 4, 24, -38, 0,  10, 4, 5,  -23, 4, 24, -37, 2,   10, 4};
+
 void EntityUnkId4B(Entity* self) {
     u16 lastAnimFrame;
     Entity* previous;
@@ -544,7 +641,9 @@ void EntityUnkId4B(Entity* self) {
 
         } else {
             if (previous->params) {
-                if (lastAnimFrame >= 86 || lastAnimFrame >= 57) {
+                if (lastAnimFrame >= 86) {
+                    lastAnimFrame -= 57;
+                } else if (lastAnimFrame >= 57) {
                     lastAnimFrame -= 57;
                 } else {
                     lastAnimFrame = 13;
@@ -565,29 +664,29 @@ void EntityUnkId4B(Entity* self) {
     }
 }
 
+static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,   7,
+                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
 // A single "puff" of the warg explosion animation, transparent
-void EntityWargExplosionPuffTransparent(Entity* entity) {
-    u32 temp_v0;
+void EntityWargExplosionPuffTransparent(Entity* self) {
 
-    if (entity->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        entity->animSet = ANIMSET_DRA(14);
-        entity->unk5A = 0x79;
-        entity->palette = 0xD0;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
-        entity->pose = 0;
-        entity->poseTimer = 0;
-        entity->opacity = 0x60;
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0 != 0) {
-            entity->zPriority = temp_v0 >> 8;
+        self->pose = 0;
+        self->poseTimer = 0;
+        self->animSet = ANIMSET_DRA(14);
+        self->unk5A = 0x79;
+        self->palette = 0xD0;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
         }
-        entity->velocityY += 0xFFFF0000;
+        self->velocityY += FIX(-1);
         return;
     }
-    entity->posY.val += entity->velocityY;
-    if (AnimateEntity(D_8018383C, entity) == 0) {
-        DestroyEntity(entity);
+    self->posY.val += self->velocityY;
+    if (AnimateEntity(D_8018383C, self) == 0) {
+        DestroyEntity(self);
     }
 }
