@@ -163,18 +163,18 @@ static s16 D_801832EC[] = {
     8,  12, 28, 28, -18, -25, 8,  13};
 
 void EntityWarg(Entity* self) {
-    DR_ENV* dr_env; //s7 good
-    Tilemap* gTilemap; //s4 good
-    Entity* otherEnt; //s1 good
-    Primitive* prim; //s0 good
-    s16* hitboxPtr; //s6 good
-    u16 switchTemp; //s2 good
-    u8 animResult; //s3 good
-    s16 xVar; //s5 good
-    EnemyDef* enemy; //sp7c good
-    s32 primIndex; //s8 good
-    DRAWENV drawEnv; //sp38 good
-    RECT rect = {0, 0x100, 0x80, 0x80}; //sp30 good
+    DR_ENV* dr_env;
+    Tilemap* gTilemap;
+    Entity* otherEnt;
+    Primitive* prim;
+    s16* hitboxPtr;
+    u16 switchTemp;
+    u8 animResult;
+    s16 xVar;
+    EnemyDef* enemy;
+    s32 primIndex;
+    DRAWENV drawEnv;
+    RECT rect = {0, 0x100, 0x80, 0x80};
 
     gTilemap = &g_Tilemap;
     switchTemp = self->step;

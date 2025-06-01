@@ -352,7 +352,8 @@ void EntityWarg(Entity* self) {
             self->ext.warg.unk82 -= 1;
             break;
         }
-        if (!(self->facingLeft ^ GetSideToPlayer())) {
+        // Same weird issue with GetSideToPlayer in func_801CF5E0
+        if (self->facingLeft == GetSideToPlayer() & 1) {
             SetStep(5);
             break;
         }
@@ -613,7 +614,10 @@ void EntityUnkId4B(Entity* self) {
 
         } else {
             if (previous->params) {
-                if (lastAnimFrame >= 86 || lastAnimFrame >= 57) {
+                if (lastAnimFrame >= 86){
+                    lastAnimFrame -= 57;
+                }
+                else if (lastAnimFrame >= 57) {
                     lastAnimFrame -= 57;
                 } else {
                     lastAnimFrame = 13;
@@ -636,28 +640,26 @@ void EntityUnkId4B(Entity* self) {
 
 static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
 // A single "puff" of the warg explosion animation, transparent
-void EntityWargExplosionPuffTransparent(Entity* entity) {
-    u32 temp_v0;
+void EntityWargExplosionPuffTransparent(Entity* self) {
 
-    if (entity->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        entity->animSet = ANIMSET_DRA(14);
-        entity->unk5A = 0x79;
-        entity->palette = 0xD0;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
-        entity->pose = 0;
-        entity->poseTimer = 0;
-        entity->opacity = 0x60;
-        temp_v0 = entity->params & 0xFF00;
-        if (temp_v0 != 0) {
-            entity->zPriority = temp_v0 >> 8;
+        self->pose = 0;
+        self->poseTimer = 0;
+        self->animSet = ANIMSET_DRA(14);
+        self->unk5A = 0x79;
+        self->palette = 0xD0;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
         }
-        entity->velocityY += 0xFFFF0000;
+        self->velocityY += FIX(-1);
         return;
     }
-    entity->posY.val += entity->velocityY;
-    if (AnimateEntity(D_8018383C, entity) == 0) {
-        DestroyEntity(entity);
+    self->posY.val += self->velocityY;
+    if (AnimateEntity(D_8018383C, self) == 0) {
+        DestroyEntity(self);
     }
 }
