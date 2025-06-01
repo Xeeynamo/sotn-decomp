@@ -3248,6 +3248,13 @@ typedef struct {
     /* 0x90 */ u16 unk90;
 } ET_WaterAlcove;
 
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 clut;
+} ET_801C12B0;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3522,6 +3529,7 @@ typedef union { // offset=0x7C
     ET_KillerFish killerFish;
     ET_801C801C et_801C801C;
     ET_WaterAlcove et_waterAlcove;
+    ET_801C12B0 et_801C12B0;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
