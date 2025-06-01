@@ -157,7 +157,7 @@ void MarInit(s16 initParam) {
     }
     spriteptr = g_api.o.spriteBanks;
     spriteptr += 0x10;
-    *spriteptr = (SpriteParts*)mar_801530AC; // ANIMSET_PL_MARIA
+    *spriteptr = (SpriteParts*)maria_spr; // ANIMSET_PL_MARIA
     spriteptr++;
     *spriteptr = (SpriteParts*)wpn_owl_spr; // ANIMSET_WPN_OWL
     spriteptr++;

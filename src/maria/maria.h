@@ -398,7 +398,7 @@ extern s16 D_pspeu_092C51A8[NUM_VERTICAL_SENSORS];   // unknown wall sensors
 extern s16 g_MarSensorsCeilingCrouch[];
 extern s16 g_MarSensorsWallCrouch[];
 
-extern s16* mar_801530AC[];
+extern s16* maria_spr[];
 extern s16* wpn_owl_spr[];
 extern s16* wpn_turtle_spr[];
 extern s16* wpn_cat_spr[];

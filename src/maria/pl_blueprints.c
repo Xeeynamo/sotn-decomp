@@ -1530,7 +1530,7 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     self->posX.i.hi = PLAYER.posX.i.hi;
     self->facingLeft = PLAYER.facingLeft;
-    sp44 = mar_801530AC[PLAYER.animCurFrame & 0x7FFF];
+    sp44 = maria_spr[PLAYER.animCurFrame & 0x7FFF];
     plSpriteIndex = *sp44++;
     plSpriteIndex &= 0x7FFF;
     selfX = self->posX.i.hi;
