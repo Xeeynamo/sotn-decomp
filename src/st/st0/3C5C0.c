@@ -125,7 +125,7 @@ void func_801BC5C0(Entity* self) {
         for (i = 0; i < 4; i++, ptr_sp60++, ptr_sp58++) {
             *ptr_sp60 = ptr_sp58->pad;
         }
-        self->rotX = 0x400;
+        self->scaleX = 0x400;
         self->velocityX = 0;
         self->velocityY = 0;
         self->ext.et_801BC5C0.unkA0 = 0;
@@ -147,7 +147,7 @@ void func_801BC5C0(Entity* self) {
         }
         // Fallthrough!
     case 2:
-        self->rotZ += 8;
+        self->rotate += 8;
         self->ext.et_801BC5C0.unkA4 += 0x18;
         self->ext.et_801BC5C0.unkA6 += 0x50;
         m = (MATRIX*)SP(offsetof(ST0_SCRATCHPAD, m));
@@ -163,12 +163,12 @@ void func_801BC5C0(Entity* self) {
         SetFogNear(0x180, 0x100);
         vec->vx = self->ext.et_801BC5C0.unkA4;
         vec->vy = self->ext.et_801BC5C0.unkA6;
-        vec->vz = self->rotZ;
+        vec->vz = self->rotate;
         RotMatrix(vec, m);
         SetRotMatrix(m);
         sp38.vx = 0;
         sp38.vy = 0;
-        sp38.vz = self->rotX + 0x100;
+        sp38.vz = self->scaleX + 0x100;
 
         sp64 = sp38.vz >> 2;
         gte_ldtr(0, 0, sp38.vz);
@@ -208,9 +208,9 @@ void func_801BC5C0(Entity* self) {
             prim = prim->next;
         }
 
-        self->rotX -= 8;
-        if (self->rotX < 0x80) {
-            self->rotX = 0x80;
+        self->scaleX -= 8;
+        if (self->scaleX < 0x80) {
+            self->scaleX = 0x80;
             if (self->ext.et_801BC5C0.unk9E) {
                 if (!--self->ext.et_801BC5C0.unk9E) {
                     SetStep(3);

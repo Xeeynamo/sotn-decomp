@@ -492,9 +492,9 @@ void func_8011EDA8(Entity* self) {
     switch (self->step) {
     case 0:
         if (paramsHi == 1) {
-            self->rotX = 0xC0;
-            self->rotY = 0xC0;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->scaleX = 0xC0;
+            self->scaleY = 0xC0;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_800ADC10;
         }
@@ -502,9 +502,9 @@ void func_8011EDA8(Entity* self) {
         if ((paramsHi == 0) || (paramsHi == 2)) {
             if (paramsLo & 3) {
                 self->anim = D_800ADBD4;
-                self->rotX = 0x120;
-                self->rotY = 0x120;
-                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->scaleX = 0x120;
+                self->scaleY = 0x120;
+                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -534,8 +534,8 @@ void func_8011EDA8(Entity* self) {
         break;
 
     case 1:
-        self->rotX -= 4;
-        self->rotY -= 4;
+        self->scaleX -= 4;
+        self->scaleY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
@@ -573,9 +573,9 @@ void func_8011F074(Entity* self) {
         }
         D_8013808C++;
         self->opacity = 0xFF;
-        self->drawFlags =
-            FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
-        self->rotX = self->rotY = 0x40;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
+                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->scaleX = self->scaleY = 0x40;
         self->anim = D_800ADC44;
 
         self->posY.i.hi += ((rand() % 35) - 15);
@@ -588,8 +588,8 @@ void func_8011F074(Entity* self) {
             self->opacity -= 8;
         }
         self->posY.val += self->velocityY;
-        self->rotX += 8;
-        self->rotY += 8;
+        self->scaleX += 8;
+        self->scaleY += 8;
         if (self->poseTimer < 0) {
             DestroyEntity(self);
         }
@@ -791,15 +791,15 @@ void EntityHitByIce(Entity* self) {
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft) {
-                self->rotZ = 0x100;
+                self->rotate = 0x100;
             } else {
-                self->rotZ = -0x100;
+                self->rotate = -0x100;
             }
         } else {
             if (PLAYER.velocityX > 0) {
-                self->rotZ = 0x80;
+                self->rotate = 0x80;
             } else {
-                self->rotZ = 0xF80;
+                self->rotate = 0xF80;
             }
         }
         PlaySfx(SFX_MAGIC_SWITCH);
@@ -840,7 +840,7 @@ void EntityHitByIce(Entity* self) {
         if (prim->u0 < 2) {
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x0 = selfX + xShift;
@@ -849,7 +849,7 @@ void EntityHitByIce(Entity* self) {
             offset = D_800ADCC8[i * 3 + 1];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x1 = selfX + xShift;
@@ -858,7 +858,7 @@ void EntityHitByIce(Entity* self) {
             offset = D_800ADCC8[i * 3 + 2];
             size = SquareRoot12(
                 ((offset->x * offset->x) + (offset->y * offset->y)) << 0xC);
-            angle = self->rotZ + ratan2(offset->y, offset->x);
+            angle = self->rotate + ratan2(offset->y, offset->x);
             xShift = (((rcos(angle) >> 4) * size) + 0x80000) >> 0x14;
             yShift = (((rsin(angle) >> 4) * size) + 0x80000) >> 0x14;
             prim->x2 = prim->x3 = selfX + xShift;
@@ -2152,7 +2152,7 @@ void UnknownEntId49(Entity* self) {
     self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_OPACITY;
     self->opacity = PLAYER.opacity;
 
-    if (abs(PLAYER.rotZ) == 0x200) {
+    if (abs(PLAYER.rotate) == 0x200) {
         x_offset = -0x10;
         if (PLAYER.entityRoomIndex) {
             x_offset = -x_offset;

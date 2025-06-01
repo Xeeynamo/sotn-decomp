@@ -41,8 +41,9 @@ void EntityDiplocephalusFireball(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDiplocephalusFireball);
-        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotX = self->rotY = 0x60;
+        self->drawFlags |=
+            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleX = self->scaleY = 0x60;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
         if (primIndex == -1) {
@@ -79,12 +80,12 @@ void EntityDiplocephalusFireball(Entity* self) {
     case 1:
         MoveEntity();
         AnimateEntity(D_us_80181E3C, self);
-        self->rotZ += 64;
-        self->rotX += 16;
-        if (self->rotX > 256) {
-            self->rotX = 256;
+        self->rotate += 64;
+        self->scaleX += 16;
+        if (self->scaleX > 256) {
+            self->scaleX = 256;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         MoveEntity();
         self->velocityX -= self->velocityX / 8;
         if (abs(self->velocityX) < FIX(0.25)) {
@@ -212,7 +213,7 @@ void EntityDiplocephalusTail(Entity* self) {
     case 0:
         InitializeEntity(g_EInitDiplocephalusTail);
         self->hitboxState = 1;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->ext.diplocephalusUnk.unk84 = 0;
         self->ext.diplocephalusUnk.unk9C = 0;
         self->ext.diplocephalusUnk.unk9D = 0;
@@ -243,7 +244,7 @@ void EntityDiplocephalusTail(Entity* self) {
             tempEntity->palette = self->palette;
             tempEntity->ext.diplocephalusUnk.parent =
                 self->ext.diplocephalusUnk.parent;
-            tempEntity->drawFlags = FLAG_DRAW_ROTZ;
+            tempEntity->drawFlags = FLAG_DRAW_ROTATE;
             tempEntity2 = tempEntity;
             tempEntity->unk60 = tempEntity + 1;
         }
@@ -354,7 +355,7 @@ void EntityDiplocephalusTail(Entity* self) {
             tempEntity->ext.diplocephalusUnk.unk90->posY.val =
                 tempEntity->posY.val - yOffset;
             i++;
-            tempEntity->rotZ = -tempEntity->ext.diplocephalusUnk.unk84;
+            tempEntity->rotate = -tempEntity->ext.diplocephalusUnk.unk84;
             tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
         }
         i = 0;
@@ -372,7 +373,7 @@ void EntityDiplocephalusTail(Entity* self) {
             tempEntity->ext.diplocephalusUnk.unk90->posY.val =
                 tempEntity->posY.val - yOffset;
             i++;
-            tempEntity->rotZ = -tempEntity->ext.diplocephalusUnk.unk84;
+            tempEntity->rotate = -tempEntity->ext.diplocephalusUnk.unk84;
             tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
         }
         self->ext.diplocephalusUnk.entity->posX.i.hi += 1;

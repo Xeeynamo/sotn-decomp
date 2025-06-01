@@ -351,8 +351,8 @@ void EntityDeath(Entity* self) {
     case 1:
         if (AnimateEntity(deathAnim14, self) == 0) {
             SetStep(2);
-            self->drawFlags = FLAG_DRAW_ROTZ;
-            self->rotZ = 0x1000;
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->rotate = 0x1000;
             self->posY.i.hi += 16;
             self->animCurFrame = 0x3A;
             self->ext.death.posX = self->posX.i.hi;
@@ -361,23 +361,23 @@ void EntityDeath(Entity* self) {
         break;
 
     case 2:
-        self->rotZ -= 0x40;
-        if (!self->rotZ) {
+        self->rotate -= 0x40;
+        if (!self->rotate) {
             SetStep(3);
             self->drawFlags = FLAG_DRAW_DEFAULT;
         }
 
         self->posX.i.hi =
-            self->ext.death.posX + (0x1000 - self->rotZ) * 0x1D / 0x1000;
+            self->ext.death.posX + (0x1000 - self->rotate) * 0x1D / 0x1000;
         self->posY.i.hi =
-            self->ext.death.posY - (0x1000 - self->rotZ) * 0x28 / 0x1000;
+            self->ext.death.posY - (0x1000 - self->rotate) * 0x28 / 0x1000;
 
-        if (!(self->rotZ & 0x70)) {
+        if (!(self->rotate & 0x70)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != 0) {
                 CreateEntityFromCurrentEntity(
                     E_ID(DEATH_SCYTHE_SHADOW), newEntity);
-                newEntity->rotZ = self->rotZ;
+                newEntity->rotate = self->rotate;
                 newEntity->animCurFrame = 0x3A;
             }
         }
@@ -633,7 +633,7 @@ void EntityDeathScytheShadow(Entity* self) {
             self->drawFlags = FLAG_DRAW_OPACITY;
             self->ext.deathScythe.timer = 0x40;
         } else {
-            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
+            self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
             self->ext.deathScythe.timer = 0x20;
         }
         self->opacity = 0x40;

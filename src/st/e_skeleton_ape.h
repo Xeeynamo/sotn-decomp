@@ -273,14 +273,14 @@ void EntitySkeletonApeBarrel(Entity* self) {
             self->ext.skeletonApe.unk84 = 0;
         }
         self->step++;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         break;
 
     case 3:
         AnimateEntity(D_us_80183324, self);
-        self->rotZ -= 64;
+        self->rotate -= 64;
         velocityY = self->velocityY;
         if (UnkCollisionFunc3(D_us_8018332C) & 1) {
             if (velocityY > 0) {

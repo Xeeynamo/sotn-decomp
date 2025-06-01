@@ -35,7 +35,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->animCurFrame = 14;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -80,7 +80,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->ext.weapon.unk7E += 8;
         }
         fakePrim = (FakePrim*)&g_PrimBuf[self->primIndex];
-        self->rotZ += abs(self->ext.weapon.unk82);
+        self->rotate += abs(self->ext.weapon.unk82);
         self->ext.weapon.unk80 += self->ext.weapon.unk82;
         fakePrim->posX.i.hi = fakePrim->x0;
         fakePrim->posY.i.hi = fakePrim->y0;
@@ -118,9 +118,9 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
-        self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
+        self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
         self->drawMode = DRAW_TPAGE;
-        self->rotZ = self->ext.weapon.parent->rotZ;
+        self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
         self->step++;
     }
@@ -171,7 +171,7 @@ void func_ptr_80170008(Entity* self) {
         self->ext.weapon_016.unk80 = 0x48;
         self->ext.weapon_016.unk7E = 0xA;
         self->ext.weapon_016.unk84 = 0;
-        self->rotZ = 0x400;
+        self->rotate = 0x400;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 0xC;
@@ -185,7 +185,7 @@ void func_ptr_80170008(Entity* self) {
         break;
     case 1:
         self->ext.weapon_016.unk7C += self->ext.weapon_016.unk7E;
-        self->rotZ -= 0x100;
+        self->rotate -= 0x100;
         angle = self->ext.weapon_016.unk7C;
         self->velocityX = rcos(angle) * self->ext.weapon_016.unk80;
         self->velocityY = -rsin(angle) * self->ext.weapon_016.unk80;
@@ -269,7 +269,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->posY.val += self->velocityY;
         break;
     }
-    self->rotZ = ratan2(self->velocityY, abs(self->velocityX));
+    self->rotate = ratan2(self->velocityY, abs(self->velocityX));
 }
 
 extern AnimationFrame D_74000_8017A5B0[];

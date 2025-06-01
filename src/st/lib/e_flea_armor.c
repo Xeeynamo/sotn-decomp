@@ -188,7 +188,7 @@ void EntityFleaArmor(Entity* self) {
         }
 
         if (entity != NULL) {
-            entity->drawFlags |= FLAG_DRAW_ROTZ;
+            entity->drawFlags |= FLAG_DRAW_ROTATE;
         }
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -209,7 +209,7 @@ void EntityFleaArmor(Entity* self) {
 
     case 9:
         MoveEntity();
-        self->rotZ += 256;
+        self->rotate += 256;
         self->velocityY += FIX(0.25);
         break;
 

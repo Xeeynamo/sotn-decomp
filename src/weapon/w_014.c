@@ -66,15 +66,15 @@ void EntityWeaponAttack(Entity* self) {
         DestroyEntityWeapon(true);
         self->hitboxHeight = 4;
         self->hitboxWidth = 4;
-        self->rotZ = -0x700;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->rotate = -0x700;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
 
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++) {
             prim->r0 = 0;
             prim->g0 = 0x10;
             if (i == 0) {
-                angle = self->rotZ;
+                angle = self->rotate;
                 prim->x0 = self->posX.i.hi + (((rcos(angle) >> 4) * 47) >> 8);
                 if (self->facingLeft) {
                     prim->x0 =
@@ -112,9 +112,9 @@ void EntityWeaponAttack(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotZ += 0x70;
-        if (self->rotZ > 0) {
-            self->rotZ = 0;
+        self->rotate += 0x70;
+        if (self->rotate > 0) {
+            self->rotate = 0;
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -128,7 +128,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 2:
-        self->drawFlags &= ~FLAG_DRAW_ROTZ;
+        self->drawFlags &= ~FLAG_DRAW_ROTATE;
         self->posX.val += self->velocityX;
         if (--self->ext.weapon.lifetime == 0) {
             self->step++;
@@ -150,11 +150,11 @@ void EntityWeaponAttack(Entity* self) {
         self->posX.val += (rcos(angle) << 5) * 5;
         self->posY.val -= (rsin(angle) << 5) * 5;
         if (self->facingLeft) {
-            self->rotZ = angle;
+            self->rotate = angle;
         } else {
-            self->rotZ = 0x800 - angle;
+            self->rotate = 0x800 - angle;
         }
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         break;
     }
 
@@ -167,7 +167,7 @@ void EntityWeaponAttack(Entity* self) {
             prim->y2 = yPreviousB;
         }
         if (prim->r0 == 0 && i == self->ext.weapon_014.unk9C - 1) {
-            angle = self->rotZ;
+            angle = self->rotate;
             prim->x1 = self->posX.i.hi + (((rcos(angle) >> 4) * 47) >> 8);
             if (self->facingLeft) {
                 prim->x1 = self->posX.i.hi - (((rcos(angle) >> 4) * 47) >> 8);
@@ -244,8 +244,8 @@ s32 func_ptr_80170004(Entity* self) {
         self->step++;
     }
 
-    if (self->ext.weapon.parent->drawFlags & FLAG_DRAW_ROTZ) {
-        angle = self->ext.weapon.parent->rotZ;
+    if (self->ext.weapon.parent->drawFlags & FLAG_DRAW_ROTATE) {
+        angle = self->ext.weapon.parent->rotate;
     }
     if (self->facingLeft) {
         angle = 0x800 - angle;

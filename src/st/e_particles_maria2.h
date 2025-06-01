@@ -38,8 +38,8 @@ void func_psp_0923B2F0(Entity* self) {
         }
         if (abs(pl->posX.i.hi - self->posX.i.hi) >= 8 ||
             abs(pl->posY.i.hi - self->posY.i.hi) >= 8) {
-            if (self->rotX < 0x100) {
-                self->rotX = self->rotY += 0x10;
+            if (self->scaleX < 0x100) {
+                self->scaleX = self->scaleY += 0x10;
             }
             if (self->ext.soulStealOrb.unk7E < 0x200) {
                 self->ext.soulStealOrb.unk7E += 4;

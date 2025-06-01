@@ -294,8 +294,8 @@ void EntityCorpseweed(Entity* self) {
         self->animCurFrame = AnimFrameInit;
         self->hitboxOffX = 2;
         self->hitboxOffY = 9;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = 0;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = 0;
         self->hitboxState = 0;
         self->ext.corpseweed.bobbingAngle = 8;
 
@@ -324,7 +324,7 @@ void EntityCorpseweed(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority - 1;
-        prim->drawMode = FLAG_DRAW_ROTY;
+        prim->drawMode = FLAG_DRAW_SCALEY;
 
         // Stalk primitive
         prim = prim->next;
@@ -348,7 +348,7 @@ void EntityCorpseweed(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = self->zPriority - 2;
-        prim->drawMode = FLAG_DRAW_ROTY;
+        prim->drawMode = FLAG_DRAW_SCALEY;
         prim = prim->next;
         // Fallthrough
     case GROW_LEAVES:
@@ -489,8 +489,8 @@ void EntityCorpseweed(Entity* self) {
 
     case GROW_TO_IDLE:
         self->animCurFrame = AnimFrameIdle;
-        if (self->rotX < 0x100) {
-            self->rotX = self->rotY += 8;
+        if (self->scaleX < 0x100) {
+            self->scaleX = self->scaleY += 8;
         } else {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             SetStep(IDLE);
@@ -562,7 +562,7 @@ void EntityCorpseweed(Entity* self) {
             self->ext.corpseweed.leavesDoneGrowing = false;
             self->ext.corpseweed.stalkDoneGrowing = false;
             self->hitboxState = 0;
-            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->drawFlags = FLAG_DRAW_ROTATE;
             // Need a no-op self access here for PSP match
             self->step_s;
             self->step_s++;
@@ -570,7 +570,7 @@ void EntityCorpseweed(Entity* self) {
         case DEATH_DROP_HEAD:
             MoveEntity();
             self->velocityY += DeathHeadFallAccel;
-            self->rotZ += DeathHeadRotateSpeed;
+            self->rotate += DeathHeadRotateSpeed;
 
             // Wait until head hits the ground
             x = self->posX.i.hi;

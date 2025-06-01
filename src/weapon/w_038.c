@@ -61,7 +61,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 
     if (animIndex != 0 && PLAYER.pose == 4 && PLAYER.poseTimer == 1) {
@@ -148,7 +148,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     newX = PLAYER.posX.i.hi + xOffset;
     newY = PLAYER.posY.i.hi + yOffset;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         newY -= 3;
     }
 

@@ -642,7 +642,8 @@ void MarEntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
+        self->drawFlags =
+            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -676,8 +677,8 @@ void MarEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_MarSensorsWall[sensors1_80154CE4[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotX = rot_x_80154C74[1] + 0x40;
-            self->rotY = self->rotX;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -697,8 +698,8 @@ void MarEntitySmokePuff(Entity* self) {
             self->posY.i.hi =
                 PLAYER.posY.i.hi + g_MarSensorsWall[sensors2_80154CF4[i]].y;
             self->velocityY = velocity_x_80154C5C[paramsLo];
-            self->rotX = rot_x_80154C74[paramsLo] + 0x20;
-            self->rotY = self->rotX;
+            self->scaleX = rot_x_80154C74[paramsLo] + 0x20;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -712,12 +713,12 @@ void MarEntitySmokePuff(Entity* self) {
         }
         self->posX.i.hi += posX;
         self->posY.i.hi += 0x18;
-        self->rotX = rot_x_80154C74[paramsLo] + 0x40;
+        self->scaleX = rot_x_80154C74[paramsLo] + 0x40;
         self->velocityY = velocity_x_80154C5C[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
             MarSetSpeedX(-0x3000);
-            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
         }
         if (paramsHi == 5) {
             self->velocityY = velocity_x_80154C5C[4 - paramsLo * 2];
@@ -725,9 +726,9 @@ void MarEntitySmokePuff(Entity* self) {
         if (paramsHi == 2) {
             self->velocityY = FIX(-0.5);
             MarSetSpeedX(-0x3000);
-            self->rotX = rot_x_80154C74[1] + 0x40;
+            self->scaleX = rot_x_80154C74[1] + 0x40;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (paramsHi == 10) {
             self->posY.i.hi -= 6;
         }
@@ -1028,18 +1029,18 @@ void func_maria_80161C2C(Entity* self) {
     switch (self->step) {
     case 0:
         if (paramsHi == 1) {
-            self->rotX = 0xC0;
-            self->rotY = 0xC0;
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            self->scaleX = 0xC0;
+            self->scaleY = 0xC0;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
         if (paramsHi == 0 || paramsHi == 2) {
             if (paramsLo & 3) {
                 self->anim = anim_80154DC8;
-                self->rotX = 0x120;
-                self->rotY = 0x120;
-                self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+                self->scaleX = 0x120;
+                self->scaleY = 0x120;
+                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -1065,8 +1066,8 @@ void func_maria_80161C2C(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotX -= 4;
-        self->rotY -= 4;
+        self->scaleX -= 4;
+        self->scaleY -= 4;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
@@ -1545,10 +1546,10 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
     xPivot = sp44[0] + plSprite[2];
     yPivot = sp44[1] + plSprite[3];
 
-    self->rotZ = PLAYER.rotZ;
+    self->rotate = PLAYER.rotate;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotX = PLAYER.rotX;
-    self->rotY = PLAYER.rotY;
+    self->scaleX = PLAYER.scaleX;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
     self->rotPivotX = PLAYER.rotPivotX;
     upperParams = (self->params & 0x7F00) >> 8;
@@ -2107,22 +2108,22 @@ void MarEntityHitByIce(Entity* self) {
         }
         if (PLAYER.velocityY != 0) {
             if (PLAYER.facingLeft) {
-                self->rotZ = 0x100;
+                self->rotate = 0x100;
             } else {
-                self->rotZ = -0x100;
+                self->rotate = -0x100;
             }
         } else {
             if (PLAYER.velocityX > 0) {
-                self->rotZ = 0x80;
+                self->rotate = 0x80;
             } else {
-                self->rotZ = 0xF80;
+                self->rotate = 0xF80;
             }
         }
         if (PLAYER.step == PL_S_DEAD) {
             if (PLAYER.facingLeft) {
-                self->rotZ = 0x180;
+                self->rotate = 0x180;
             } else {
-                self->rotZ = -0x180;
+                self->rotate = -0x180;
             }
             self->ext.hitbyice.unk80 = 1;
             self->ext.hitbyice.unk82 = 0x3C;
@@ -2137,23 +2138,23 @@ void MarEntityHitByIce(Entity* self) {
         if (PLAYER.step == PL_S_DEAD) {
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x21) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x280;
+                    self->rotate = 0x280;
                 } else {
-                    self->rotZ = -0x280;
+                    self->rotate = -0x280;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x22) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x380;
+                    self->rotate = 0x380;
                 } else {
-                    self->rotZ = -0x380;
+                    self->rotate = -0x380;
                 }
             }
             if ((PLAYER.animCurFrame & 0x7FFF) == 0x20) {
                 if (PLAYER.facingLeft) {
-                    self->rotZ = 0x180;
+                    self->rotate = 0x180;
                 } else {
-                    self->rotZ = -0x180;
+                    self->rotate = -0x180;
                 }
             }
         }
@@ -2186,7 +2187,7 @@ void MarEntityHitByIce(Entity* self) {
         pos = D_80155244[i * 3];
         if (prim->u0 < 2) {
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x0 = x + deltaX;
@@ -2194,7 +2195,7 @@ void MarEntityHitByIce(Entity* self) {
 
             pos = D_80155244[i * 3 + 1];
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x1 = x + deltaX;
@@ -2202,7 +2203,7 @@ void MarEntityHitByIce(Entity* self) {
 
             pos = D_80155244[i * 3 + 2];
             distance = SquareRoot12((pos->x * pos->x + pos->y * pos->y) << 0xC);
-            angle = self->rotZ + ratan2(pos->y, pos->x);
+            angle = self->rotate + ratan2(pos->y, pos->x);
             deltaX = (((rcos(angle) >> 4) * distance) + 0x80000) >> 0x14;
             deltaY = (((rsin(angle) >> 4) * distance) + 0x80000) >> 0x14;
             prim->x2 = prim->x3 = x + deltaX;

@@ -382,7 +382,7 @@ static void MarResetPose(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
 }
 
 static void func_80159C04(void) {

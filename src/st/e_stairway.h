@@ -163,8 +163,9 @@ void EntityFallingRock(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
-        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotX = self->rotY = 0x60;
+        self->drawFlags |=
+            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleX = self->scaleY = 0x60;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;
         self->velocityX = rnd * rcos(rndAngle);
@@ -177,7 +178,7 @@ void EntityFallingRock(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        self->rotZ -= 0x20;
+        self->rotate -= 0x20;
         x = self->posX.i.hi;
         y = self->posY.i.hi + 8;
         g_api.CheckCollision(x, y, &collider, 0);

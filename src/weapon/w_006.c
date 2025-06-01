@@ -63,7 +63,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -91,7 +91,7 @@ static void func_ptr_80170004(Entity* self) {
         self->animCurFrame = 0x42;
         self->zPriority = PLAYER.zPriority - 2;
         self->drawFlags = DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        self->rotX = self->rotY = 0x40;
+        self->scaleX = self->scaleY = 0x40;
         self->ext.weapon_006.velocityZ = 0x40;
 
         SetSpeedX(rand() - FIX(4));
@@ -105,7 +105,7 @@ static void func_ptr_80170004(Entity* self) {
             (rand() & 0x1FFF) + D_2E000_8017ABF0[(u8)self->params];
         self->ext.weapon_006.accelerationY = -(self->velocityY >> 4);
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_20000;
-        self->rotZ = rand();
+        self->rotate = rand();
 
         if (!(self->params & ~0x8000)) {
             g_api.PlaySfx(SFX_VO_ALU_ATTACK_A);
@@ -119,8 +119,8 @@ static void func_ptr_80170004(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         DecelerateX(FIX(5.0 / 32));
-        self->rotX++;
-        self->rotY = self->rotX;
+        self->scaleX++;
+        self->scaleY = self->scaleX;
         if (self->velocityX == 0) {
             self->zPriority = PLAYER.zPriority + 2;
             self->ext.weapon_006.lifetime = 0x18;
@@ -135,7 +135,7 @@ static void func_ptr_80170004(Entity* self) {
         }
         break;
     case 3:
-        self->rotX += 2;
+        self->scaleX += 2;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityX += self->ext.weapon_006.accelerationX;
@@ -153,8 +153,8 @@ static void func_ptr_80170004(Entity* self) {
     }
 
     if (self->step != 4) {
-        self->rotY = self->rotX;
-        self->rotZ = self->rotZ + self->ext.weapon_006.velocityZ;
+        self->scaleY = self->scaleX;
+        self->rotate = self->rotate + self->ext.weapon_006.velocityZ;
         data = D_2E000_8017ABD4[(self->ext.weapon_006.unk7C >> 1) % 14];
         if (self->params & 0x8000) {
             self->palette = data + 0x12E;
@@ -162,7 +162,7 @@ static void func_ptr_80170004(Entity* self) {
             self->palette = data + 0x116;
         }
         self->ext.weapon_006.unk7C++;
-        hitboxSize = (self->rotX * 3) >> 5;
+        hitboxSize = (self->scaleX * 3) >> 5;
         self->hitboxWidth = hitboxSize;
         self->hitboxHeight = hitboxSize;
         if (self->hitFlags != 0) {

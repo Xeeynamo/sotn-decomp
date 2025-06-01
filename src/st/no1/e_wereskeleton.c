@@ -255,7 +255,7 @@ void EntityWereskeleton(Entity* self) {
                 tempEntity->velocityY = D_us_80182950[i].y;
                 tempEntity->step = 13;
                 if (tempEntity->animCurFrame == 0x28) {
-                    tempEntity->drawFlags |= FLAG_DRAW_ROTZ;
+                    tempEntity->drawFlags |= FLAG_DRAW_ROTATE;
                     tempEntity->velocityY -= FIX(2);
                 }
             }
@@ -301,7 +301,7 @@ void EntityWereskeleton(Entity* self) {
     case 13:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         if (self->ext.wereskeleton.unk7C++ > 4) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

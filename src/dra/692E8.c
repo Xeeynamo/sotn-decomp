@@ -136,8 +136,8 @@ void func_801092E8(s32 arg0) {
 void func_80109328(void) {
     g_Player.unk66 = 0;
 
-    if (PLAYER.rotZ == 0x800 && PLAYER.step == Player_HighJump) {
-        PLAYER.rotZ = 0;
+    if (PLAYER.rotate == 0x800 && PLAYER.step == Player_HighJump) {
+        PLAYER.rotate = 0;
         PLAYER.animCurFrame = 0x9D;
         PLAYER.facingLeft += 1;
         PLAYER.facingLeft &= 1;
@@ -224,7 +224,7 @@ void AluInit() {
     PLAYER.facingLeft = 0;
     PLAYER.palette = 0x8100;
 
-    PLAYER.rotY = PLAYER.rotX = 0x100;
+    PLAYER.scaleY = PLAYER.scaleX = 0x100;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
     memset_ptr = (s32*)&g_Player;
@@ -536,10 +536,10 @@ void func_8010A234(s32 arg0) {
         PLAYER.palette = 0x8100;
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
-        PLAYER.rotZ = 0;
+        PLAYER.rotate = 0;
         PLAYER.drawFlags &=
             (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 | FLAG_BLINK |
-             FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+             FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
@@ -1440,9 +1440,9 @@ block_160:
             !(g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10 |
                                  PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD |
                                  PLAYER_STATUS_AXEARMOR)) &&
-            !(PLAYER.drawFlags & (FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ))) {
-            PLAYER.drawFlags |= FLAG_DRAW_ROTY;
-            PLAYER.rotY = 0x110;
+            !(PLAYER.drawFlags & (FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE))) {
+            PLAYER.drawFlags |= FLAG_DRAW_SCALEY;
+            PLAYER.scaleY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }
         func_8010D59C();

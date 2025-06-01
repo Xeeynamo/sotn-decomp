@@ -290,13 +290,13 @@ static s32 func_ptr_80170010(Entity* self) {
         g_CurrentEntity->palette = 0x110;
         g_CurrentEntity->unk5A = 0x64;
     }
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     switch (PLAYER.step_s) {
     case 0:
         if (PLAYER.entityRoomIndex == PLAYER.facingLeft) {
-            PLAYER.rotZ = -0x200;
+            PLAYER.rotate = -0x200;
         } else {
-            PLAYER.rotZ = 0x200;
+            PLAYER.rotate = 0x200;
         }
         PLAYER.rotPivotY = 0x14;
         PLAYER.step_s++;
@@ -311,9 +311,9 @@ static s32 func_ptr_80170010(Entity* self) {
         }
         if (g_Player.vram_flag & 1) {
             if (PLAYER.entityRoomIndex == PLAYER.facingLeft) {
-                PLAYER.rotZ = -0x380;
+                PLAYER.rotate = -0x380;
             } else {
-                PLAYER.rotZ = 0x380;
+                PLAYER.rotate = 0x380;
             }
             PLAYER.step_s = 2;
             PLAYER.velocityY = 0;
@@ -325,7 +325,7 @@ static s32 func_ptr_80170010(Entity* self) {
         }
         return;
     case 2:
-        PLAYER.drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ;
+        PLAYER.drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
         PLAYER.opacity = (rsin(D_13F000_8017B3BC) >> 7) - 0x40;
         if (!(g_Player.vram_flag & 1)) {
             PLAYER.step = Player_AxearmorJump;
@@ -334,16 +334,16 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.ext.player.anim = 0xD0;
             PLAYER.pose = 0;
             PLAYER.poseTimer = 0;
-            PLAYER.rotZ = 0;
+            PLAYER.rotate = 0;
             PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
             return;
         }
         DecelerateX(FIX(16.0 / 128));
         if (D_13F000_8017B3B8 == 5) {
             if (PLAYER.entityRoomIndex == PLAYER.facingLeft) {
-                PLAYER.rotZ = -0x200;
+                PLAYER.rotate = -0x200;
             } else {
-                PLAYER.rotZ = 0x200;
+                PLAYER.rotate = 0x200;
             }
         }
         if (!--D_13F000_8017B3B8) {
@@ -353,7 +353,7 @@ static s32 func_ptr_80170010(Entity* self) {
             PLAYER.ext.player.anim = 0xCF;
             PLAYER.pose = 0;
             PLAYER.poseTimer = 0;
-            PLAYER.rotZ = 0;
+            PLAYER.rotate = 0;
             PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
         }
         break;

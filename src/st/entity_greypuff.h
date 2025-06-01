@@ -3,7 +3,7 @@ extern s16 greyPuff_rot[];
 extern s32 greyPuff_yVel[];
 
 // looks like a particle of dust fading away
-// params: Index of rotX and velocityY to use
+// params: Index of scaleX and velocityY to use
 void EntityGreyPuff(Entity* self) {
     if (!self->step) {
         self->flags =
@@ -12,9 +12,9 @@ void EntityGreyPuff(Entity* self) {
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = greyPuff_rot[self->params];
-        self->rotY = self->rotX;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = greyPuff_rot[self->params];
+        self->scaleY = self->scaleX;
         self->velocityY = greyPuff_yVel[self->params];
         self->step++;
     } else {

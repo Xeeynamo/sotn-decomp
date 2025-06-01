@@ -657,7 +657,7 @@ void EntityCastleBridge(Entity* self) {
             prim = prim->next;
         }
 
-        self->rotZ = 0;
+        self->rotate = 0;
         break;
     case 1:
         if (tilemap->scrollX.i.hi > 3904) {
@@ -667,14 +667,14 @@ void EntityCastleBridge(Entity* self) {
         break;
     case 2:
 
-        if (self->rotZ < 1024) {
-            self->rotZ += 4;
+        if (self->rotate < 1024) {
+            self->rotate += 4;
         }
 
         player = &PLAYER;
-        sinZ = rsin(self->rotZ); // the result is a signed(?) fixed point 12 bit
-                                 // fractional number where 4096 == 1.0
-        cosZ = rcos(self->rotZ);
+        sinZ = rsin(self->rotate); // the result is a signed(?) fixed point 12
+                                   // bit fractional number where 4096 == 1.0
+        cosZ = rcos(self->rotate);
 
         // the operation (sinZ * 12) >> 12 gives an integer between -12 and 12
         // based on the y coordinate of the rotated vector i am guessing that
@@ -723,7 +723,7 @@ void EntityCastleBridge(Entity* self) {
     matrix->m[0][1] = matrix->m[0][2] = matrix->m[1][0] = matrix->m[1][2] =
         matrix->m[2][0] = matrix->m[2][1] = 0;
 
-    matrix = RotMatrixZ(self->rotZ, matrix);
+    matrix = RotMatrixZ(self->rotate, matrix);
     SetRotMatrix(matrix);
     positionsPtr = g_EntityCastleBridgeVecXY1;
     xOffset = 4563 - tilemap->scrollX.i.hi;
@@ -904,9 +904,9 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
         self->animCurFrame = 56;
         if (self->params) {
             self->drawFlags =
-                FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_OPACITY;
-            self->rotX = 0x180;
-            self->rotY = 0x180;
+                FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
+            self->scaleX = 0x180;
+            self->scaleY = 0x180;
             self->opacity = 0x60;
             self->posY.i.hi = -16;
             self->zPriority = 0xC1;

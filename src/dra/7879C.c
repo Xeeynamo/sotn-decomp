@@ -2155,7 +2155,7 @@ void EntitySmokePuff(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = PAL_OVL(0x195);
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
         posX = D_800AD54C[paramsLo];
         if (paramsHi == 0) {
@@ -2202,8 +2202,8 @@ void EntitySmokePuff(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5E0[i]].x;
             self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5E0[i]].y;
             self->velocityY = FIX(-0.25);
-            self->rotX = D_800AD570[1] + 0x40;
-            self->rotY = self->rotX;
+            self->scaleX = D_800AD570[1] + 0x40;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -2221,8 +2221,8 @@ void EntitySmokePuff(Entity* self) {
             self->posX.i.hi = PLAYER.posX.i.hi + g_SensorsWall[D_800AD5F0[i]].x;
             self->posY.i.hi = PLAYER.posY.i.hi + g_SensorsWall[D_800AD5F0[i]].y;
             self->velocityY = D_800AD558[paramsLo];
-            self->rotX = D_800AD570[paramsLo] + 0x20;
-            self->rotY = self->rotX;
+            self->scaleX = D_800AD570[paramsLo] + 0x20;
+            self->scaleY = self->scaleX;
             self->step++;
             return;
         }
@@ -2242,17 +2242,17 @@ void EntitySmokePuff(Entity* self) {
         }
         self->posX.i.hi += posX;
         self->posY.i.hi += 0x18;
-        self->rotX = D_800AD570[paramsLo] + 0x40;
+        self->scaleX = D_800AD570[paramsLo] + 0x40;
         self->velocityY = D_800AD558[paramsLo];
         if (paramsHi == 1) {
             self->velocityY = FIX(-0.25);
             SetSpeedX(-0x3000);
-            self->rotX = D_800AD570[1] + 0x40;
+            self->scaleX = D_800AD570[1] + 0x40;
         }
         if (paramsHi == 5) {
             self->velocityY = D_800AD558[4 - paramsLo * 2];
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (paramsHi == 10) {
             self->posY.i.hi -= 6;
         }
@@ -2292,8 +2292,8 @@ void EntityUnkId24(Entity* self) {
         // Silly, this should just be an "else"
         if (upperparams) {
             self->posY.i.hi += rand() % 24 - 12;
-            self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = self->rotY = 0x80;
+            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = self->scaleY = 0x80;
             self->palette = PAL_OVL(0x170);
         }
         self->step++;
@@ -2486,10 +2486,10 @@ void EntityPlayerBlinkWhite(Entity* self) {
     }
 #endif
 
-    self->rotZ = PLAYER.rotZ;
+    self->rotate = PLAYER.rotate;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotX = PLAYER.rotX;
-    self->rotY = PLAYER.rotY;
+    self->scaleX = PLAYER.scaleX;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
     self->rotPivotX = PLAYER.rotPivotX;
 block_748:
@@ -2922,7 +2922,7 @@ block_748:
             prim->v2 = prim->v3 = var_s6 + var_s5 * (var_s1 + 1) / 8;
         }
         if (self->drawFlags &
-            (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
+            (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
             func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
                           self->drawFlags, prim, self->facingLeft);
         }
@@ -3045,8 +3045,8 @@ void EntityPlayerOutline(Entity* self) {
     height = spriteY - one;
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
-    self->rotZ = PLAYER.rotZ;
-    self->drawFlags |= (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+    self->rotate = PLAYER.rotate;
+    self->drawFlags |= (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -3082,24 +3082,24 @@ void EntityPlayerOutline(Entity* self) {
         case 22: // Soul Steal
         case 23: // Sword Brothers
             self->ext.playerOutline.brightness = 0x80;
-            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX = PLAYER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY = PLAYER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = PLAYER.rotPivotY;
             self->rotPivotX = PLAYER.rotPivotX;
             self->ext.playerOutline.timer = 8;
             break;
         case 2: // Agunea
             self->ext.playerOutline.brightness = 0xC0;
-            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX = PLAYER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY = PLAYER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = PLAYER.rotPivotY;
             self->rotPivotX = PLAYER.rotPivotX;
             self->ext.playerOutline.timer = 8;
             break;
         case 1: // Curse attack
             self->ext.playerOutline.brightness = 0x100;
-            self->rotX = PLAYER.rotX; // Player rotX is (always?) 0x100
-            self->rotY = PLAYER.rotY; // Player rotY is (always?) 0x100
+            self->scaleX = PLAYER.scaleX; // Player scaleX is (always?) 0x100
+            self->scaleY = PLAYER.scaleY; // Player scaleY is (always?) 0x100
             self->rotPivotY = PLAYER.rotPivotY;
             self->rotPivotX = PLAYER.rotPivotX;
             self->ext.playerOutline.timer = 8;
@@ -3115,8 +3115,8 @@ void EntityPlayerOutline(Entity* self) {
         case 19:
         case 21: // Sword Warp Spell (#2)
             self->ext.playerOutline.brightness = 0x80;
-            self->rotX = PLAYER.rotX + 0x60;
-            self->rotY = PLAYER.rotY + 0x60;
+            self->scaleX = PLAYER.scaleX + 0x60;
+            self->scaleY = PLAYER.scaleY + 0x60;
             self->rotPivotY = PLAYER.rotPivotY;
             self->rotPivotX = PLAYER.rotPivotX;
             self->ext.playerOutline.timer = 8;
@@ -3174,8 +3174,8 @@ void EntityPlayerOutline(Entity* self) {
         case 20: // Sword Warp Spell (#1)
         case 22: // Soul Steal
         case 23: // Sword Brothers
-            self->rotX += 8;
-            self->rotY += 8;
+            self->scaleX += 8;
+            self->scaleY += 8;
             self->ext.playerOutline.brightness -= 5;
             if (self->ext.playerOutline.brightness < 0) {
                 DestroyEntity(self);
@@ -3183,8 +3183,8 @@ void EntityPlayerOutline(Entity* self) {
             }
             break;
         case 1: // Curse attack, grows slower and dims faster
-            self->rotX += 2;
-            self->rotY += 2;
+            self->scaleX += 2;
+            self->scaleY += 2;
             self->ext.playerOutline.brightness -= 16;
             if (self->ext.playerOutline.brightness < 0) {
                 DestroyEntity(self);
@@ -3201,10 +3201,10 @@ void EntityPlayerOutline(Entity* self) {
         case 21: // Sword Warp Spell (#2)
             // Shrinks inward, and when at size 0x100, holds there for 8 frames
             // in step 3
-            self->rotX -= 8;
-            self->rotY -= 8;
-            if (self->rotX <= 0x100) {
-                self->rotY = self->rotX = 0x100;
+            self->scaleX -= 8;
+            self->scaleY -= 8;
+            if (self->scaleX <= 0x100) {
+                self->scaleY = self->scaleX = 0x100;
                 self->ext.playerOutline.timer = 8;
                 self->step++;
             }
@@ -3351,19 +3351,19 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags =
             PLAYER.drawFlags |
-            (FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
+            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
         entity->opacity = 0x80;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        entity->rotZ = PLAYER.rotZ;
+        entity->rotate = PLAYER.rotate;
         entity->facingLeft = PLAYER.facingLeft;
         entity->palette = PAL_OVL(0x102);
-        entity->rotX = entity->rotY = 0x100;
+        entity->scaleX = entity->scaleY = 0x100;
         entity->step++;
         return;
     }
     // This actually makes the wing smashes shrink over time, not rotate.
-    entity->rotX -= 8;
-    entity->rotY -= 8;
+    entity->scaleX -= 8;
+    entity->scaleY -= 8;
     entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
     if (entity->opacity >= 5) {
         entity->opacity -= 5;

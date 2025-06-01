@@ -157,18 +157,18 @@ void EntitySubwpnKnife(Entity* self) {
             angle2 = 0xD2;
             angle3 = 0x800 + 0xD2;
             angle4 = -0xD2;
-            self->rotZ -= 0x80;
+            self->rotate -= 0x80;
         } else {
             angle2 = 0x800 - 0xD2;
             angle1 = 0xD2;
             angle4 = 0x800 + 0xD2;
             angle3 = -0xD2;
-            self->rotZ += 0x80;
+            self->rotate += 0x80;
         }
-        angle1 += self->rotZ;
-        angle2 += self->rotZ;
-        angle3 += self->rotZ;
-        angle4 += self->rotZ;
+        angle1 += self->rotate;
+        angle2 += self->rotate;
+        angle3 += self->rotate;
+        angle4 += self->rotate;
         if (self->facingLeft) {
             offsetX = -offsetX;
         }
@@ -1252,8 +1252,8 @@ void EntityBatFireball(Entity* self) {
         // Initial fireball size is 0x40 by 0x40
         self->posX.val += self->velocityX * 2;
         self->posY.i.hi -= 4;
-        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotX = self->rotY = 0x40;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleX = self->scaleY = 0x40;
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
         self->hitboxHeight = 8;
@@ -1269,13 +1269,13 @@ void EntityBatFireball(Entity* self) {
         self->posX.val += self->velocityX;
         // Much like the wing smash, these rot values are actually the size.
         // After shooting, the fireballs grow until they are 0x100 in size
-        self->rotX += 0x10;
-        self->rotY += 0x10;
-        if (self->rotY > 0x100) {
-            self->rotY = 0x100;
+        self->scaleX += 0x10;
+        self->scaleY += 0x10;
+        if (self->scaleY > 0x100) {
+            self->scaleY = 0x100;
         }
-        if (self->rotX > 0x180) {
-            self->rotX = 0x180;
+        if (self->scaleX > 0x180) {
+            self->scaleX = 0x180;
         }
     }
 }
@@ -1295,8 +1295,8 @@ void EntityHellfireBigFireball(Entity* entity) {
         } else {
             entity->posY.i.hi -= 4;
         }
-        entity->drawFlags |= FLAG_DRAW_ROTZ;
-        entity->rotZ = 0;
+        entity->drawFlags |= FLAG_DRAW_ROTATE;
+        entity->rotate = 0;
         entity->animSet = ANIMSET_DRA(9);
         entity->anim = D_800B07C8;
         entity->zPriority = PLAYER.zPriority + 2;
@@ -1311,7 +1311,7 @@ void EntityHellfireBigFireball(Entity* entity) {
     case 1:
         if (entity->pose >= 23) {
             if (!(g_GameTimer & 3)) {
-                entity->rotZ += 0x400;
+                entity->rotate += 0x400;
             }
             if (entity->velocityX < 0) {
                 entity->velocityX -= FIX(0.09375);
@@ -2311,7 +2311,7 @@ void func_80129864(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
             FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
         } else {
@@ -2408,9 +2408,9 @@ void func_80129864(Entity* self) {
     self->posY.val += self->velocityY;
 
     if (self->facingLeft) {
-        self->rotZ = self->ext.et_80129864.unk80;
+        self->rotate = self->ext.et_80129864.unk80;
     } else {
-        self->rotZ = 0x800 - self->ext.et_80129864.unk80;
+        self->rotate = 0x800 - self->ext.et_80129864.unk80;
     }
 
     prim = &g_PrimBuf[self->primIndex];

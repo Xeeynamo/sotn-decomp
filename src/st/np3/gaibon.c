@@ -293,10 +293,10 @@ void EntityGaibon(Entity* self) {
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
-                        other->rotZ = 0x220;
+                        other->rotate = 0x220;
                     } else {
                         other->posX.i.hi -= 12;
-                        other->rotZ = 0x5E0;
+                        other->rotate = 0x5E0;
                     }
                     other->zPriority = (self->zPriority + 1);
                 }
@@ -396,10 +396,10 @@ void EntityGaibon(Entity* self) {
                     other->posY.i.hi -= 6;
                     if (self->facingLeft) {
                         other->posX.i.hi += 16;
-                        other->rotZ = 0;
+                        other->rotate = 0;
                     } else {
                         other->posX.i.hi -= 16;
-                        other->rotZ = 0x800;
+                        other->rotate = 0x800;
                     }
                     other->zPriority = self->zPriority + 1;
                 }
@@ -427,11 +427,11 @@ void EntityGaibon(Entity* self) {
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
-                        other->rotZ = 0x220;
+                        other->rotate = 0x220;
 
                     } else {
                         other->posX.i.hi -= 12;
-                        other->rotZ = 0x5E0;
+                        other->rotate = 0x5E0;
                     }
                     other->zPriority = self->zPriority + 1;
                 }
@@ -717,12 +717,12 @@ void EntitySmallGaibonProjectile(Entity* self) {
         InitializeEntity(g_EInitGaibonProjectileNP3);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
-        self->rotX = 0xC0;
-        self->velocityX = (rcos(self->rotZ) * 0x28000) >> 0xC;
-        self->velocityY = (rsin(self->rotZ) * 0x28000) >> 0xC;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
+        self->scaleX = 0xC0;
+        self->velocityX = (rcos(self->rotate) * 0x28000) >> 0xC;
+        self->velocityY = (rsin(self->rotate) * 0x28000) >> 0xC;
         self->palette = PAL_OVL(0x1B6);
-        self->rotZ -= 0x400;
+        self->rotate -= 0x400;
 
     case 1:
         MoveEntity();
@@ -748,17 +748,17 @@ void EntityLargeGaibonProjectile(Entity* self) {
         InitializeEntity(g_EInitGaibonLargeProjectileNP3);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
-            self->drawFlags = FLAG_DRAW_ROTZ;
-            self->velocityX = (rcos(self->rotZ) * 0x38000) >> 0xC;
-            self->velocityY = (rsin(self->rotZ) * 0x38000) >> 0xC;
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->velocityX = (rcos(self->rotate) * 0x38000) >> 0xC;
+            self->velocityY = (rsin(self->rotate) * 0x38000) >> 0xC;
             self->palette = PAL_OVL(0x1B6);
-            self->rotZ -= 0x400;
+            self->rotate -= 0x400;
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
             self->drawFlags =
-                FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
-            self->rotX = 0x100;
+                FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+            self->scaleX = 0x100;
             self->opacity = 0x80;
             self->palette = PAL_OVL(0x1F3);
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -776,7 +776,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
                 newEntity->params = 1;
-                newEntity->rotZ = self->rotZ;
+                newEntity->rotate = self->rotate;
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
@@ -784,7 +784,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 2:
         self->opacity += 0xFE;
-        self->rotX -= 4;
+        self->scaleX -= 4;
         if (AnimateEntity(D_801815FC, self) == 0) {
             DestroyEntity(self);
         }

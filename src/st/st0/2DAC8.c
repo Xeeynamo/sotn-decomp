@@ -416,9 +416,9 @@ void EntityDraculaFinalForm(Entity* self) {
                 CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, entity);
                 entity->posX.i.hi += xShift;
                 entity->posY.i.hi += yShift;
-                entity->rotZ = *temp_s1;
+                entity->rotate = *temp_s1;
                 if (self->facingLeft) {
-                    entity->rotZ = (0x800 - entity->rotZ);
+                    entity->rotate = (0x800 - entity->rotate);
                 }
             }
             self->ext.dracFinalForm.unk84++;
@@ -549,17 +549,17 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->palette = PAL_OVL(0x15F);
                     self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
                     self->drawFlags = FLAG_DRAW_OPACITY;
-                    self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+                    self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
                     self->opacity = 0x10;
-                    self->rotX = self->rotY = 0x400;
+                    self->scaleX = self->scaleY = 0x400;
                     g_api.PlaySfx(0x880);
                     self->step_s++;
                 }
                 break;
             case 2:
-                self->rotY -= 0x18;
-                self->rotX = self->rotY;
-                if (self->rotY < 0x100) {
+                self->scaleY -= 0x18;
+                self->scaleX = self->scaleY;
+                if (self->scaleY < 0x100) {
                     self->animCurFrame = 0;
                     self->drawMode = DRAW_DEFAULT;
                     self->drawFlags = FLAG_DRAW_DEFAULT;
@@ -818,11 +818,12 @@ void EntityDraculaMegaFireball(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (!self->params) {
-            self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = self->rotY = 0x80;
-            angle = self->rotZ;
-            self->rotZ = 0x1C0;
-            self->rotZ -= angle;
+            self->drawFlags |=
+                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = self->scaleY = 0x80;
+            angle = self->rotate;
+            self->rotate = 0x1C0;
+            self->rotate -= angle;
             if (self->facingLeft) {
                 self->velocityX = rcos(angle) * 0x60;
             } else {
@@ -842,8 +843,8 @@ void EntityDraculaMegaFireball(Entity* self) {
         return;
     }
 
-    if (self->rotX < 0x100) {
-        self->rotX = self->rotY += 0x10;
+    if (self->scaleX < 0x100) {
+        self->scaleX = self->scaleY += 0x10;
     }
 
     AnimateEntity(anim_80180BB8, self);

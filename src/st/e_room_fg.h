@@ -18,7 +18,7 @@ static ObjInit eRoomForegroundInit[] = {
 extern u16 g_EInitCommon[];
 
 // params: Which foreground ObjInit to use
-//         (> 4) These entries use an alternate hardcoded drawFlags and rotZ
+//         (> 4) These entries use an alternate hardcoded drawFlags and rotate
 void EntityRoomForeground(Entity* entity) {
     ObjInit* objInit = &eRoomForegroundInit[entity->params];
 
@@ -35,7 +35,7 @@ void EntityRoomForeground(Entity* entity) {
         }
         if (entity->params > 4) {
             entity->drawFlags |= DRAW_COLORS;
-            entity->rotZ = 0x800;
+            entity->rotate = 0x800;
         }
     }
     AnimateEntity(objInit->animFrames, entity);

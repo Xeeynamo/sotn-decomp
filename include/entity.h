@@ -785,7 +785,7 @@ typedef struct ET_CastleDoor {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[0x2];
-    /* 0x84 */ s16 rotZ;
+    /* 0x84 */ s16 rotate;
 } ET_CastleDoor;
 
 typedef struct {
@@ -849,7 +849,7 @@ typedef struct {
     /* 0x8D */ u8 unk8D;
     /* 0x8E */ u8 unk8E;
     /* 0x8E */ char pad_8E[13];
-    /* 0x9C */ s16 rotZ;
+    /* 0x9C */ s16 rotate;
     /* 0x9E */ s16 unk9E;
     /* 0xA0 */ struct Entity* parent;
     /* 0xA4 */ s16 unkA4;

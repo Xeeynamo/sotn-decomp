@@ -36,12 +36,12 @@ void EntityBreakableWallDebris(Entity* self) {
     case INIT:
         InitializeEntity(&g_EInitSecret);
         animCurFrame = self->params;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->zPriority = 0x69;
         self->animCurFrame = animCurFrame;
-        if (self->rotZ & 1) {
+        if (self->rotate & 1) {
             self->facingLeft = true;
-            self->rotZ &= 0xFFF0;
+            self->rotate &= 0xFFF0;
         }
 
         velX = (Random() & 0xF) << 0xC;
@@ -70,7 +70,7 @@ void EntityBreakableWallDebris(Entity* self) {
         return;
 
     case MOVEMENT:
-        self->rotZ += self->ext.breakableWallDebris.rotSpeed;
+        self->rotate += self->ext.breakableWallDebris.rotSpeed;
 
         MoveEntity();
 
@@ -249,7 +249,7 @@ void EntityBreakableWall(Entity* self) {
             entity->params = *pSrcTile++;
             entity->posX.i.hi += *pSrcTile++;
             entity->posY.i.hi += *pSrcTile++;
-            entity->rotZ = *pSrcTile++;
+            entity->rotate = *pSrcTile++;
         }
         return;
 

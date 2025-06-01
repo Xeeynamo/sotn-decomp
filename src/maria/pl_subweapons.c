@@ -122,10 +122,10 @@ void EntityMariaDollActivate(Entity* self) {
         self->posY.val = self->ext.mariaDoll.parent->posY.val;
         self->ext.mariaDoll.opacity = 64;
         self->ext.mariaDoll.scale = 0x100;
-        self->rotX = self->ext.mariaDoll.scale;
-        self->rotY = self->ext.mariaDoll.scale;
+        self->scaleX = self->ext.mariaDoll.scale;
+        self->scaleY = self->ext.mariaDoll.scale;
         SetOpacity(self, 64);
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         break;
     case 2:
         self->ext.mariaDoll.timer++;
@@ -137,10 +137,10 @@ void EntityMariaDollActivate(Entity* self) {
         self->ext.mariaDoll.opacity -= 2;
         self->ext.mariaDoll.scale += 8;
         SetOpacity(self, self->ext.mariaDoll.opacity);
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        // rotX and rotY are also used to scale horizontally and vertically
-        self->rotX = self->ext.mariaDoll.scale;
-        self->rotY = self->ext.mariaDoll.scale;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        // scaleX and scaleY are also used to scale horizontally and vertically
+        self->scaleX = self->ext.mariaDoll.scale;
+        self->scaleY = self->ext.mariaDoll.scale;
         break;
     case 4:
         DestroyEntity(self);
@@ -681,7 +681,7 @@ void EntityMariaDragonCrash(Entity* self) {
         self->velocityX = 0;
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi - 32;
-        self->rotZ = 0;
+        self->rotate = 0;
         self->ext.mariaDragon.velocity = 1280;
         self->hitboxWidth = 24;
         self->hitboxHeight = 24;
@@ -703,7 +703,7 @@ void EntityMariaDragonCrash(Entity* self) {
             self->step = 2;
             g_api.PlaySfx(SFX_VO_MAR_8F1);
         }
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         break;
     case 2:
         if (self->ext.mariaDragon.opacity < 128) {
@@ -712,7 +712,7 @@ void EntityMariaDragonCrash(Entity* self) {
         } else {
             SetOpacity(self, 128);
         }
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         {
             MATRIX m;
             VECTOR vTranslate = {0, 0, 0};
@@ -729,22 +729,22 @@ void EntityMariaDragonCrash(Entity* self) {
                 x = PLAYER.posX.i.hi;
                 y = PLAYER.posY.i.hi;
             }
-            self->rotZ = NormalizeAngle(self->rotZ);
+            self->rotate = NormalizeAngle(self->rotate);
             angle = NormalizeAngle(
                 ratan2(y - self->posY.i.hi, x - self->posX.i.hi));
-            if (self->rotZ < angle) {
-                if (angle - self->rotZ < 0x800) {
-                    self->rotZ += 0x40;
+            if (self->rotate < angle) {
+                if (angle - self->rotate < 0x800) {
+                    self->rotate += 0x40;
                 } else {
-                    self->rotZ -= 0x40;
+                    self->rotate -= 0x40;
                 }
-            } else if (self->rotZ - angle < 0x800) {
-                self->rotZ -= 0x40;
+            } else if (self->rotate - angle < 0x800) {
+                self->rotate -= 0x40;
             } else {
-                self->rotZ += 0x40;
+                self->rotate += 0x40;
             }
             SetGeomOffset(0, 0);
-            func_89285A0(self->rotZ, &m);
+            func_89285A0(self->rotate, &m);
             TransMatrix(&m, &vTranslate);
             SetRotMatrix(&m);
             SetTransMatrix(&m);
@@ -1007,9 +1007,9 @@ void EntityMariaCardinalAttack(Entity* self) {
         self->velocityX = 0;
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 0x18 + GetFireWingsPivotY();
-        self->rotX = 0;
-        self->rotY = 0;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->scaleX = 0;
+        self->scaleY = 0;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->hitboxWidth = 48;
         self->hitboxHeight = 40;
         self->hitboxOffX = 0;
@@ -1026,9 +1026,9 @@ void EntityMariaCardinalAttack(Entity* self) {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 0x18 + GetFireWingsPivotY();
         self->hitboxOffY = -20;
-        self->rotX += 16;
-        self->rotY += 16;
-        if (self->rotX == 256) {
+        self->scaleX += 16;
+        self->scaleY += 16;
+        if (self->scaleX == 256) {
             self->step++;
         }
         break;
@@ -1445,7 +1445,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->u3 = 0xA7;
                     prim->v3 = 0x47;
                     prim->tpage = 0x24;
-                    prim->drawMode |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTZ;
+                    prim->drawMode |= FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
                     if (i == 1) {
                         color = -0x80;
                     } else if (i == 2) {
@@ -1542,9 +1542,9 @@ void EntityMariaTurtleCrash(Entity* self) {
         }
         self->posX.i.hi = PLAYER.posX.i.hi + x;
         self->posY.i.hi = PLAYER.posY.i.hi - 16;
-        self->rotX = 0;
-        self->rotY = 0;
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->scaleX = 0;
+        self->scaleY = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         g_Player.unk28 = NULL;
 #if defined(VERSION_PC)
         g_Player.unk20 = (signed long long)self;
@@ -1576,11 +1576,11 @@ void EntityMariaTurtleCrash(Entity* self) {
         SetOpacity(self, self->ext.mariaTurtleCrash.timer2);
         break;
     case 2:
-        if (self->rotX < 256) {
-            self->rotX += 16;
-            self->rotY += 16;
+        if (self->scaleX < 256) {
+            self->scaleX += 16;
+            self->scaleY += 16;
         } else {
-            self->drawFlags &= ~(FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+            self->drawFlags &= ~(FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
         }
         if ((self->ext.mariaTurtleCrash.timer % 60) == 0) {
             g_api.PlaySfx(SFX_MAGIC_NOISE_SWEEP);
@@ -1591,11 +1591,12 @@ void EntityMariaTurtleCrash(Entity* self) {
         }
         break;
     case 5:
-        if (self->rotX > 0x80) {
-            self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
-            self->rotX -= 0x20;
-            self->rotY -= 0x20;
-            self->rotZ += 0xF78;
+        if (self->scaleX > 0x80) {
+            self->drawFlags |=
+                FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+            self->scaleX -= 0x20;
+            self->scaleY -= 0x20;
+            self->rotate += 0xF78;
             return;
         }
         self->ext.mariaTurtleCrash.timer2 = 0x80;
@@ -1605,14 +1606,16 @@ void EntityMariaTurtleCrash(Entity* self) {
         self->ext.mariaTurtleCrash.timer2 -= 0x10;
         if (self->ext.mariaTurtleCrash.timer2 <= 0) {
             SetOpacity(self, 0);
-            self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            self->drawFlags |=
+                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->step = 6;
             func_pspeu_092BFEB0(g_Player.unk20);
             g_Player.unk2C = 0xB4;
             return;
         }
         SetOpacity(self, self->ext.mariaTurtleCrash.timer2);
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+        self->drawFlags |=
+            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
         break;
     case 6:
         if (g_Player.unk28 == NULL) {
@@ -1671,12 +1674,12 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
             self->posX.i.hi = entity->posX.i.hi;
             self->posY.i.hi = entity->posY.i.hi;
         }
-        self->rotX = 0;
-        self->rotY = 0;
-        self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->scaleX = 0;
+        self->scaleY = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->drawMode |= DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_ROTZ | FLAG_DRAW_OPACITY;
-        self->rotZ = 0;
+        self->drawFlags |= FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+        self->rotate = 0;
         self->opacity = 0x80;
         self->hitboxWidth = 48;
         self->hitboxHeight = 48;
@@ -1689,15 +1692,16 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         self->hitboxState = 0;
         self->ext.mariaTurtleVortex.timer = 0;
         self->step = 1;
-        self->rotZ += 0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
+        self->rotate +=
+            0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
         return;
     case 1:
-        if (self->rotX < 256) {
-            self->rotX += 16;
-            self->rotY += 16;
+        if (self->scaleX < 256) {
+            self->scaleX += 16;
+            self->scaleY += 16;
         } else {
             self->hitboxState = self->ext.mariaTurtleVortex.hitboxState;
-            self->drawFlags &= ~(FLAG_DRAW_ROTX | FLAG_DRAW_ROTY);
+            self->drawFlags &= ~(FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
         }
         self->ext.mariaTurtleVortex.timer++;
         if (self->ext.mariaTurtleVortex.timer >= 240) {
@@ -1707,7 +1711,8 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         if (self->ext.mariaTurtleVortex.timer % 8 == 0) {
             self->ext.mariaTurtleVortex.rotation -= 5;
         }
-        self->rotZ += 0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
+        self->rotate +=
+            0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
         return;
     case 2:
         if (self->ext.mariaTurtleVortex.rotation >= 65) {
@@ -1715,17 +1720,19 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         } else {
             self->step = 3;
         }
-        self->rotZ += 0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
+        self->rotate +=
+            0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
         return;
     case 3:
-        if (self->rotX > 0) {
-            self->rotX -= 8;
-            self->rotY -= 8;
-            self->drawFlags |= FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        if (self->scaleX > 0) {
+            self->scaleX -= 8;
+            self->scaleY -= 8;
+            self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         } else {
             self->step = 4;
         }
-        self->rotZ += 0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
+        self->rotate +=
+            0x1000 - (0x1000 / self->ext.mariaTurtleVortex.rotation);
         return;
     case 4:
         DestroyEntity(self);

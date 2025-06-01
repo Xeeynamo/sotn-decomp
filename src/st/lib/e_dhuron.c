@@ -4,7 +4,7 @@
 typedef struct {
     s32 velocityX;
     s32 velocityY;
-    s16 rotZ;
+    s16 rotate;
     s16 unkA;
 } dhuronUnkStruct;
 
@@ -273,7 +273,7 @@ void func_us_801CC7BC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801808B4);
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->animCurFrame = self->params + 0x1B;
         self->zPriority += self->params;
         ptr = &D_us_80182A64[self->params];
@@ -290,7 +290,7 @@ void func_us_801CC7BC(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(2.5 / 16);
         ptr = &D_us_80182A64[self->params];
-        self->rotZ += ptr->rotZ;
+        self->rotate += ptr->rotate;
         if (!--self->ext.dhuron.unk84) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step = 0;
@@ -457,8 +457,8 @@ void func_us_801CC984(Entity* self) {
         posX = tempEntity->posX.i.hi;
         self->posY.i.hi = posY + 0x18;
         self->posX.i.hi = posX;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY;
-        self->rotY = 0x180;
+        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY;
+        self->scaleY = 0x180;
         self->opacity = 0x80;
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->palette = PAL_OVL(0x15B);

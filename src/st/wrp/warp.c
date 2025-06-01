@@ -330,8 +330,8 @@ void EntityWarpSmallRocks(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitSmallRocks);
-        entity->drawFlags = FLAG_DRAW_ROTZ;
-        entity->rotZ = Random() * 0x10;
+        entity->drawFlags = FLAG_DRAW_ROTATE;
+        entity->rotate = Random() * 0x10;
         entity->animCurFrame = (Random() % 5) + 1;
         if (D_80180648) {
             entity->posY.i.hi = (Random() & 0x1F) + 0x90;
@@ -352,8 +352,8 @@ void EntityWarpSmallRocks(Entity* entity) {
             MoveEntity();
             entity->velocityY += FIX(0.25);
             if (entity->velocityY > FIX(-1.0f)) {
-                entity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-                entity->rotX = entity->rotY = 0x100;
+                entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                entity->scaleX = entity->scaleY = 0x100;
                 entity->step++;
             }
         }
@@ -371,13 +371,13 @@ void EntityWarpSmallRocks(Entity* entity) {
         if (rotation > 0x100) {
             rotation = 0x100;
         }
-        entity->rotX = entity->rotY = rotation;
+        entity->scaleX = entity->scaleY = rotation;
         if (rotation < 8) {
             DestroyEntity(entity);
         }
         break;
     case 4:
-        angle = entity->rotZ += 0x20;
+        angle = entity->rotate += 0x20;
         entity->velocityY = rsin(angle) * 4;
         if (D_80180648 == 0) {
             entity->ext.warpRoom.unk88 = 0x10;

@@ -75,8 +75,8 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
             newEnt->ext.destructAnim.index = D_801832E8[i];
-            newEnt->rotY = newEnt->rotX = D_801832D8[D_801832E8[i] + arg5];
-            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            newEnt->scaleY = newEnt->scaleX = D_801832D8[D_801832E8[i] + arg5];
+            newEnt->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }

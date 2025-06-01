@@ -325,8 +325,8 @@ void EntityGremlinFire(Entity* self) {
         MoveEntity();
 
         // Bounce up and down slightly
-        self->velocityY = rcos(self->rotZ);
-        self->rotZ += BounceSpeed;
+        self->velocityY = rcos(self->rotate);
+        self->rotate += BounceSpeed;
         if (!--self->ext.gremlinFire.timer) {
             self->hitboxState = 0;
             SetStep(DEATH);
@@ -336,17 +336,17 @@ void EntityGremlinFire(Entity* self) {
     case DEATH:
         switch (self->step_s) {
         case DEATH_INIT:
-            self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-            self->rotX = 0x100;
-            self->rotY = 0x100;
+            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->scaleX = 0x100;
+            self->scaleY = 0x100;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
             // fallthrough
         case DEATH_SHRINK:
             AnimateEntity(&AnimFrames_FireIdle, self);
-            self->rotX -= 8;
-            self->rotY -= 6;
-            if (!self->rotX) {
+            self->scaleX -= 8;
+            self->scaleY -= 6;
+            if (!self->scaleX) {
                 DestroyEntity(self);
             }
             break;

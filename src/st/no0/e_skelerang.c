@@ -292,7 +292,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     switch (self->step) {
     case BOOMERANG_INIT:
         InitializeEntity(g_EInitSkelerangBoomerang);
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->animCurFrame = 0;
         self->hitboxState = 0;
         break;
@@ -313,7 +313,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     case BOOMERANG_FLY:
         self->hitboxState = 1;
         MoveEntity();
-        self->rotZ += 256;
+        self->rotate += 256;
         if (!self->ext.skelerang.unk84) {
             self->step_s = 1;
         } else {
@@ -339,7 +339,7 @@ void EntitySkelerangBoomerang(Entity* self) {
         break;
     case BOOMERANG_IN_HAND:
         self->hitboxState = 0;
-        self->rotZ = 512;
+        self->rotate = 512;
         break;
     case BOOMERANG_DESTROY:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);

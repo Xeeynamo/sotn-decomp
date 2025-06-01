@@ -346,7 +346,7 @@ static void EntityWeaponAttack(Entity* self) {
         return;
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
     if (subType != 0) {
         func_169000_8017B1DC(subType - 1);
@@ -410,7 +410,7 @@ s32 func_ptr_80170004(Entity* self) {
         g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x3E, 0), 0);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
     if (subType != 0 && (PLAYER.pose != 4 || color_step == 0)) {
         func_169000_8017B1DC(subType - 1);
@@ -467,7 +467,7 @@ static void func_ptr_80170008(Entity* self) {
         prim->b0 = prim->b2 = 0;
         prim->tpage = 0x19;
         prim->priority = PLAYER.zPriority + 4;
-        prim->drawMode = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+        prim->drawMode = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
         prim->drawMode |= FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         prim->drawMode |= FLAG_DRAW_UNK100;
         if (color == 3) {
@@ -493,7 +493,7 @@ static void func_ptr_80170008(Entity* self) {
         self->ext.weapon.unk80 = -18;
         self->posX.i.hi += self->ext.weapon.unk82;
         self->posY.i.hi += self->ext.weapon.unk80;
-        self->rotZ = anim->rotation;
+        self->rotate = anim->rotation;
         self->ext.timer.t = anim->timer;
         self->ext.weapon.unk7E = 0;
         SetSpeedX((rand() * 2) + FIX(6));
@@ -517,7 +517,7 @@ static void func_ptr_80170008(Entity* self) {
     x = self->posX.i.hi;
     y = self->posY.i.hi;
     t = self->ext.timer.t;
-    rot = self->rotZ;
+    rot = self->rotate;
 
     rot += 0x600;
     if (self->facingLeft) {

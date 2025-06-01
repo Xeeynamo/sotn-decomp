@@ -1948,7 +1948,7 @@ INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5268);
 
 extern s16 D_us_801815DC[]; // animCurFrame
 extern u16 D_us_801815EC[]; // facingLeft
-extern s16 D_us_801815FC[]; // rotZ
+extern s16 D_us_801815FC[]; // rotate
 extern s32 D_us_8018160C[]; // velocityY
 
 void func_us_801C542C(Entity* self) {
@@ -1959,14 +1959,14 @@ void func_us_801C542C(Entity* self) {
         self->animCurFrame = D_us_801815DC[params];
         self->facingLeft = D_us_801815EC[params];
         self->velocityY = D_us_8018160C[params];
-        self->drawFlags = FLAG_DRAW_ROTZ;
-        self->rotZ = false;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->rotate = false;
     }
     if (F(self->velocityY).i.hi < 8) {
         F(self->velocityY).val += FIX(0.25);
     }
     MoveEntity();
-    self->rotZ += D_us_801815FC[params];
+    self->rotate += D_us_801815FC[params];
 }
 
 extern s16 D_us_8018162C[];
@@ -2108,12 +2108,12 @@ void func_us_801C6CEC(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
     }
     self->posX.i.hi = prev->posX.i.hi;
-    self->rotZ = prev->rotZ;
+    self->rotate = prev->rotate;
     if (self->facingLeft != 0) {
         self->posX.i.hi += 4;
     } else {

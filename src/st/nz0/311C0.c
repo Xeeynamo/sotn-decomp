@@ -252,7 +252,7 @@ void EntitySecretWallDebris(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitEnemy3);
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
 
         if (Random() & 1) {
             self->animCurFrame = 1;
@@ -276,9 +276,9 @@ void EntitySecretWallDebris(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotZ += 0x20;
+        self->rotate += 0x20;
         if (self->params != 0) {
-            self->rotZ += 0x20;
+            self->rotate += 0x20;
         }
 
         self->velocityY += FIX(0.125);

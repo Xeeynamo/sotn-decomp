@@ -376,7 +376,7 @@ void EntityBoneArcherArrow(Entity* self) {
         }
         if (self->params) {
             self->hitboxState = 0;
-            self->drawFlags |= FLAG_DRAW_ROTZ;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
             self->animCurFrame += self->params;
             if (self->params == 1) {
                 self->velocityX = FIX(-0.5);
@@ -433,9 +433,9 @@ void EntityBoneArcherArrow(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.125);
         if (self->params == 1) {
-            self->rotZ -= 0x20;
+            self->rotate -= 0x20;
         } else {
-            self->rotZ += 0x20;
+            self->rotate += 0x20;
         }
         break;
     }

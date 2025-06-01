@@ -157,17 +157,17 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_12A000_8017A604;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotY = 0;
-        self->rotX = 0;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleY = 0;
+        self->scaleX = 0;
         self->rotPivotY = 0x14;
         self->posY.i.hi -= 0x14;
         self->step++;
         break;
     case 1:
-        self->rotX += 4;
-        if (self->rotX >= 0x100) {
-            self->rotX = 0x100;
+        self->scaleX += 4;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = 0x100;
             self->anim = D_12A000_8017A620;
             self->pose = 0;
             self->poseTimer = 0;
@@ -176,7 +176,7 @@ s32 func_ptr_80170004(Entity* self) {
             SetWeaponProperties(self, 0);
             self->step++;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         break;
     case 2:
         if (self->poseTimer == 1) {
@@ -197,18 +197,18 @@ s32 func_ptr_80170004(Entity* self) {
         }
         break;
     case 3:
-        if (self->rotX == 0x40) {
+        if (self->scaleX == 0x40) {
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(70, 0), 0);
         }
         if (self->pose != 0) {
-            self->rotX -= 4;
+            self->scaleX -= 4;
         }
-        if (self->rotX < 0) {
+        if (self->scaleX < 0) {
             DestroyEntity(self);
             return;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         break;
     }
     g_api.UpdateAnim(D_12A000_8017A6DC, NULL);
@@ -231,7 +231,7 @@ static void func_ptr_80170008(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->posY.i.hi -= 0x10;
         if (self->facingLeft == 0) {
@@ -250,7 +250,7 @@ static void func_ptr_80170008(Entity* self) {
         self->step++;
         break;
     case 1:
-        self->rotZ -= 0x60;
+        self->rotate -= 0x60;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->velocityY += FIX(0.15625);

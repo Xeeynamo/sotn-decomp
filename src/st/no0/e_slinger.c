@@ -199,7 +199,7 @@ void EntitySlinger(Entity* self) {
 void EntitySlingerPieces(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
-            self->rotZ += anim_bone_rot[self->params];
+            self->rotate += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -213,7 +213,7 @@ void EntitySlingerPieces(Entity* self) {
     }
 
     InitializeEntity(g_EInitSlingerPieces);
-    self->drawFlags = FLAG_DRAW_ROTZ;
+    self->drawFlags = FLAG_DRAW_ROTATE;
     self->animCurFrame = self->params + 15;
 
     if (self->facingLeft) {
@@ -227,7 +227,7 @@ void EntitySlingerRib(Entity* self) {
             EntityExplosionSpawn(0, 0);
             return;
         }
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         MoveEntity(0);
         if (self->posY.i.hi > 0xF0) {
             DestroyEntity(self);
@@ -238,6 +238,6 @@ void EntitySlingerRib(Entity* self) {
         GetDistanceToPlayerX();
         self->velocityX = self->facingLeft ? FIX(1.75) : FIX(-1.75);
         self->velocityY = 0;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
     }
 }
