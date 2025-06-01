@@ -133,24 +133,7 @@ extern u16 D_80181180[];
 extern u16 D_801811AA[];
 extern u16 D_801811E6[];
 
-// *** Merman properties START ***
-
 extern s16 g_WaterXTbl[];           // pos TBL
-extern Point32 D_80182338[];
-extern u8 D_80182358[];
-extern s16 D_8018235C;
-extern s16 D_8018236C;
-extern s16 D_8018237C;
-extern s16 D_8018238C;
-extern u8 D_80182394[]; // animation
-extern u8 D_801823AC[]; // animation
-extern u8 D_801823BC[]; // animation
-extern u8 D_801823D0[]; // animation
-extern u8 D_801823DC[]; // animation
-extern u8 D_801823EC[]; // animation
-extern s32 D_80182418[];
-
-// *** EntityMerman properties END ***
 
 // *** EntitySlogra properties START ***
 
