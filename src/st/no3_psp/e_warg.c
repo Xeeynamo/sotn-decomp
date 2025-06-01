@@ -55,7 +55,21 @@ static void func_pspeu_09252CD8(Entity* self) {
     self->ext.warg.unk82 = 32;
 }
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_warg", func_pspeu_09252E60);
+// func_801CF6D8
+static void func_pspeu_09252E60(Entity* self) {
+    u16 xDist = GetDistanceToPlayerX();
+
+    if (self->ext.warg.unk86) {
+        if (xDist < 0x60) {
+            self->ext.warg.unk86 -= 2;
+            if (self->ext.warg.unk86 < 0) {
+                self->ext.warg.unk86 = 0;
+            }
+        } else {
+            self->ext.warg.unk86--;
+        }
+    }
+}
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_warg", EntityWarg);
 
