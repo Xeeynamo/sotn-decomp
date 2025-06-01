@@ -590,47 +590,51 @@ extern s32 g_Merman2velPtr[] = {-0x3000, 0x3000, -0x2000, 0x2000, -0x1000, 0x100
 
 void EntityMermanFireSpit(Entity* self) {
     Primitive* prim;
-    s16 primIndex;
+    s32 primIndex;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitWaterObject);
+        self->zPriority += 4;
         self->animCurFrame = 0;
         self->hitboxState = 0;
-        self->zPriority += 4;
-        if (self->params != 0) {
+        if (self->params) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
-            if (primIndex == -1) {
+            if (primIndex != -1) {
+                self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
+                prim = &g_PrimBuf[primIndex];
+                self->ext.EntityMermanFireSpit.prim = prim;
+                UnkPolyFunc2(prim);
+                prim->tpage = 0x1A;
+                prim->clut = 0x1FF;
+                prim->u0 = 0;
+                prim->u1 = 0x20;
+                prim->u2 = prim->u0;
+                prim->u3 = prim->u1;
+                prim->v0 = 0;
+                prim->v1 = prim->v0;
+                prim->v2 = 0x20;
+                prim->v3 = prim->v2;
+                
+                LOH(prim->next->r2) = 0x40;
+                LOH(prim->next->b2) = 0x40;
+                LOH(prim->next->u1) = 0;
+                prim->next->b3 = 0x60;
+                prim->next->x1 = self->posX.i.hi;
+                prim->next->y0 = self->posY.i.hi;
+                prim->priority = self->zPriority - 4;
+                prim->drawMode = DRAW_COLORS | DRAW_UNK02;
+            } else {
                 DestroyEntity(self);
                 return;
             }
-            prim = &g_PrimBuf[primIndex];
-            self->primIndex = primIndex;
-            self->ext.EntityMermanFireSpit.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
-            UnkPolyFunc2(prim);
-            prim->u0 = 0;
-            prim->u1 = 0x20;
-            prim->tpage = 0x1A;
-            prim->clut = 0x1FF;
-            prim->v3 = prim->v2 = 0x20;
-            prim->v1 = prim->v0 = 0;
-            prim->u2 = prim->u0;
-            prim->u3 = prim->u1;
-            LOH(prim->next->r2) = 0x40;
-            LOH(prim->next->b2) = 0x40;
-            LOH(prim->next->u1) = 0;
-            prim->next->b3 = 0x60;
-            prim->next->x1 = self->posX.i.hi;
-            prim->next->y0 = self->posY.i.hi;
-            prim->priority = self->zPriority - 4;
-            prim->drawMode = DRAW_COLORS | DRAW_UNK02;
         }
     }
 
-    if (self->params != 0) {
+    if (self->params) {
         prim = self->ext.EntityMermanFireSpit.prim;
         UnkPrimHelper(prim);
-        prim->next->b3 += 252;
+        prim->next->b3 -= 4;
         LOH(prim->next->u1) -= 128;
         if (prim->next->b3 < 16) {
             prim->drawMode = DRAW_HIDE;
@@ -648,28 +652,28 @@ void EntityMermanFireSpit(Entity* self) {
 }
 
 // medium sized water splash used with merman
-void EntityMediumWaterSplash(Entity* entity) {
+void EntityMediumWaterSplash(Entity* self) {
     Entity* newEntity;
 
-    if (entity->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitWaterSplash);
-        entity->animCurFrame = 0;
-        if (entity->facingLeft != 0) {
-            entity->velocityX = FIX(2);
+        self->animCurFrame = 0;
+        if (self->facingLeft) {
+            self->velocityX = FIX(2);
             return;
         }
-        entity->velocityX = FIX(-2);
+        self->velocityX = FIX(-2);
         return;
     }
-    AnimateEntity(g_MediumWaterSplashAnim, entity);
+    AnimateEntity(g_MediumWaterSplashAnim, self);
     MoveEntity();
-    if (entity->flags & FLAG_DEAD) {
+    if (self->flags & FLAG_DEAD) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, entity, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0;
         }
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 }
 
@@ -679,7 +683,6 @@ void EntityMermanWaterSplash(Entity* self) {
     // Could just be 8 s16's
     Point16 bro[2];
     Point16 dude[2];
-
 
     Entity* newEntity;
     Primitive* prim;
@@ -791,12 +794,12 @@ void EntityMermanWaterSplash(Entity* self) {
 }
 
 void EntityMerman2JumpAir(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitWaterObject);
-        self->animCurFrame = 0;
-        self->hitboxState = 0;
         self->flags |= FLAG_UNK_2000;
         self->zPriority += 4;
+        self->animCurFrame = 0;
+        self->hitboxState = 0;
     }
     MoveEntity();
     self->velocityY += FIX(0.15625);
@@ -861,22 +864,22 @@ void EntityHighWaterSplash(Entity* self) {
 }
 
 void EntityDeadMerman(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitWaterObject);
+        self->palette = self->params + 0xE;
         self->animCurFrame = 13;
         self->ext.merman.timer = 0x20;
-        self->hitboxState = 0;
         self->velocityY = FIX(0.0625);
-        self->palette = self->params + 0xE;
-        self->opacity = 0x80;
+        self->hitboxState = 0;
         self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->opacity = 0x80;
         self->flags |= FLAG_UNK_2000;
         return;
     }
     MoveEntity();
     self->velocityY += FIX(0.0625);
-    self->opacity += 0xFE;
-    if (--self->ext.merman.timer == 0) {
+    self->opacity -= 2;
+    if (!--self->ext.merman.timer) {
         DestroyEntity(self);
     }
 }
