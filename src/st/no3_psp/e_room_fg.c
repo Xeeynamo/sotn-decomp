@@ -27,9 +27,9 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", AllocEntity);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", UnkEntityFunc0);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_092603F0);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetAngleBetweenEntities);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", func_pspeu_09260470);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", GetNormalizedAngle);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_room_fg", SetStep);
 

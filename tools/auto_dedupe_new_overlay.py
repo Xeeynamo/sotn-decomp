@@ -24,7 +24,7 @@ file_start_funcs = {
     "BlitChar": ["blit_char"],
     "EntityRelicOrb": ["e_misc", "PlaySfxPositional"],
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
-    "EntitySoulStealOrb": ["e_particles"],
+    "EntitySoulStealOrb": ["e_particles", "EntityEnemyBlood"],
     "PrizeDropFall": ["e_collect"],
     "EntityRoomForeground": ["e_room_fg"],
     "BottomCornerText": ["popup", "BottomCornerText"],
