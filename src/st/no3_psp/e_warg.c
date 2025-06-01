@@ -635,7 +635,28 @@ void EntityUnkId4B(Entity* self) {
     }
 }
 
-// clumsy thing, linter splits the line which breaks INCLUDE_ASM
-// clang-format off
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/e_warg", EntityWargExplosionPuffTransparent);
-// clang-format on
+static u8 D_8018383C[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, 255, 0};
+// A single "puff" of the warg explosion animation, transparent
+void EntityWargExplosionPuffTransparent(Entity* self) {
+
+    if (!self->step) {
+        InitializeEntity(g_EInitParticle);
+        self->pose = 0;
+        self->poseTimer = 0;
+        self->animSet = ANIMSET_DRA(14);
+        self->unk5A = 0x79;
+        self->palette = 0xD0;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->opacity = 0x60;
+        if (self->params & 0xFF00) {
+            self->zPriority = (self->params & 0xFF00) >> 8;
+        }
+        self->velocityY += FIX(-1);
+        return;
+    }
+    self->posY.val += self->velocityY;
+    if (AnimateEntity(D_8018383C, self) == 0) {
+        DestroyEntity(self);
+    }
+}
