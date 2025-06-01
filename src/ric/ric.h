@@ -8,21 +8,24 @@
 
 #define GAME_OVER 0x80000
 
-#define CHECK_GROUND 1
-#define CHECK_FALL 4
-#define CHECK_FACING 8
-#define CHECK_JUMP 0x10
-#define CHECK_CRASH 0x40
-#define CHECK_80 0x80
-#define CHECK_GRAVITY_HIT 0x200
-#define CHECK_ATTACK 0x1000
-#define CHECK_CROUCH 0x2000
-#define CHECK_GRAVITY_FALL 0x8000
-#define CHECK_GRAVITY_JUMP 0x10000
-#define CHECK_GROUND_AFTER_HIT 0x20000
-#define CHECK_SLIDE 0x40000
+enum RicInputChecks {
+    CHECK_GROUND = 1,
+    CHECK_FALL = 4,
+    CHECK_FACING = 8,
+    CHECK_JUMP = 0x10,
+    CHECK_CRASH = 0x40,
+    CHECK_80 = 0x80,
+    CHECK_GRAVITY_HIT = 0x200,
+    CHECK_ATTACK = 0x1000,
+    CHECK_CROUCH = 0x2000,
+    CHECK_GRAVITY_FALL = 0x8000,
+    CHECK_GRAVITY_JUMP = 0x10000,
+    CHECK_GROUND_AFTER_HIT = 0x20000,
+    CHECK_SLIDE = 0x40000,
+};
 
-// Richter mostly uses the same steps as Alucard, or uses unused Alucard steps.
+// Richter mostly uses the same steps as Alucard, or uses unused Alucard
+// steps.
 // There are a couple steps that mean one thing for Alucard, and another for
 // Richter. This enum handles Richter's version of the ones that overlap.
 enum RicSteps {
@@ -282,7 +285,8 @@ enum BlueprintKind {
     // Exclusive to young Maria during the prologue, entity slot 48
     B_CUTSCENE_MARIA,
 
-    // Used by subweapon crashes that use a lot of particiles that deal damage
+    // Used by subweapon crashes that use a lot of particiles that deal
+    // damage
     B_WEAPON_CHILDREN,
 
     B_KIND_7, // unused
@@ -298,8 +302,10 @@ enum BlueprintOrigin {
     // Entity remains attached to the player.
     B_ORIGIN_FOLLOW_PLAYER,
 
-    // The player moves when getting hit with a velocity that corresponds to the
-    // severity of the attack received, and we want tjhe effect to follow the
+    // The player moves when getting hit with a velocity that corresponds to
+    // the
+    // severity of the attack received, and we want tjhe effect to follow
+    // the
     // player when moving during that phase.
     B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_HIT,
 
@@ -309,10 +315,14 @@ enum BlueprintOrigin {
     B_ORIGIN_5, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
     B_ORIGIN_6, // unused, same behaviour as B_ORIGIN_FOLLOW_CAMERA
 
-    // Useful when the player is about to use a subweapon: once the command is
-    // issued, there is a fraction of delay until the subweapon is spawned to
-    // allow the attack to be synchronized with the animaiton. If the player is
-    // hit during that fraction, the spawning of the subweapon is effectively
+    // Useful when the player is about to use a subweapon: once the command
+    // is
+    // issued, there is a fraction of delay until the subweapon is spawned
+    // to
+    // allow the attack to be synchronized with the animaiton. If the player
+    // is
+    // hit during that fraction, the spawning of the subweapon is
+    // effectively
     // canceled.
     B_ORIGIN_FOLLOW_PLAYER_WHILE_PLAYER_IS_NOT_HIT,
 
