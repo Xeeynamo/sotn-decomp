@@ -436,7 +436,12 @@ def get_elf_symbols(elf_file_name) -> dict:
             continue
         if kind == "A":
             continue
-        symbols[name] = int(off, base=16)
+        if name.endswith("_data__s"):
+            continue
+        if name.endswith("_c"):
+            continue
+        offset = int(off, base=16)
+        symbols[offset] = name
     return symbols
 
 
@@ -451,8 +456,8 @@ def print_elf_symbols(file, elf_file_name, no_default):
         stdout_raw, stderr_raw = p.communicate()
         output = stdout_raw.decode("utf-8").splitlines()
     symbols = get_elf_symbols(elf_file_name)
-    sorted_symbols = sorted(symbols.items(), key=lambda item: item[1])
-    for name, offset in sorted_symbols:
+    sorted_symbols = sorted(symbols.items(), key=lambda item: item[0])
+    for offset, name in sorted_symbols:
         if no_default and (name.startswith("func_") or name.startswith("D_")):
             continue
         print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
