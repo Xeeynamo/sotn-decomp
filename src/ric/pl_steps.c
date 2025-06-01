@@ -436,7 +436,7 @@ void RicStepCrouch(void) {
     }
 }
 
-static void func_80159BC8(void) {
+static void RicResetPose(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
@@ -504,7 +504,7 @@ void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     switch (PLAYER.step_s) {
     case 0:
         step_s_zero = true;
-        func_80159BC8();
+        RicResetPose();
         if (damageKind < DAMAGEKIND_16) {
             func_80159C04();
         } else {
@@ -832,7 +832,7 @@ void RicStepBossGrab(void) {
 
     switch (g_CurrentEntity->step_s) {
     case 0:
-        func_80159BC8();
+        RicResetPose();
         if (g_Player.unk62 == 0) {
             PLAYER.anim = ric_anim_stun;
             g_Player.timers[PL_T_2] = 8;
@@ -909,7 +909,7 @@ void RicStepDead(
 
     switch (PLAYER.step_s) {
     case 0:
-        func_80159BC8();
+        RicResetPose();
         func_80159C04();
         func_8015CAAC(FIX(-0.75));
         RicSetAnimation(D_80155544);

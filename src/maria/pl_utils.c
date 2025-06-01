@@ -4,7 +4,7 @@
 // Same function in DRA is func_8010D59C
 static u8 mar_801545B0[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, -1, -1, 0, 0};
-void func_8015C4AC(void) {
+void func_maria_8015C4AC(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -63,7 +63,7 @@ static u8 mar_801545C4[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 static u8 mar_801545D4[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
-void func_8015C6D4(void) {
+void func_maria_8015C6D4(void) {
     byte pad[0x28];
     Primitive* prim;
     PlayerDraw* draw;
@@ -188,7 +188,7 @@ void MarSetSpeedX(s32 speed) {
 }
 
 // different the RIC counterpart
-int func_8015CAAC(s32 speed) {
+int func_maria_8015CAAC(s32 speed) {
     if (PLAYER.entityRoomIndex == 1)
         speed = -speed;
     PLAYER.velocityX = speed;
@@ -205,7 +205,7 @@ void MarSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
     }
 }
 
-void DisableAfterImage(s32 resetAnims, s32 arg1) {
+void MarDisableAfterImage(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
 #if defined(VERSION_US)
@@ -229,7 +229,7 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
     }
 }
 
-void func_8015CC28(void) {
+void func_maria_8015CC28(void) {
     g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
         g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
             g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =

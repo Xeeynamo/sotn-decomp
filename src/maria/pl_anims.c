@@ -86,7 +86,7 @@ AnimationFrame mar_80155704[] = {
     POSE(2, 85, 2),  POSE(2, 86, 2), POSE(2, 87, 2), POSE(2, 88, 2),
     POSE(2, 89, 2),  POSE(2, 88, 2), POSE(2, 89, 2), POSE(4, 109, 2),
     POSE(4, 110, 2), POSE(5, 6, 2),  POSE_END};
-AnimationFrame D_pspeu_092C07E8[] = {
+AnimationFrame anim_maria_use_crash[] = {
     POSE(2, 63, 1), POSE(2, 64, 1), POSE(2, 65, 1),  POSE(2, 66, 1),
     POSE(2, 90, 1), POSE(2, 91, 1), POSE(2, 90, 1),  POSE(2, 91, 1),
     POSE(3, 90, 1), POSE(3, 91, 1), POSE(3, 112, 1), POSE(20, 112, 1),

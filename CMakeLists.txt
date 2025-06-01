@@ -251,6 +251,22 @@ set(SOURCE_FILES_RIC
     src/ric/pl_anims.c
 )
 
+SET(SOURCE_FILES_MARIA
+    src/maria/pl_header.c
+    src/maria/pl_anims.c
+    src/maria/pl_subweapons.c
+    src/maria/pl_main.c
+    src/maria/pl_debug.c
+    src/maria/pl_steps.c
+    src/maria/pl_setstep.c
+    src/maria/pl_utils.c
+    src/maria/pl_sensors.c
+    src/maria/pl_collision.c
+    src/maria/pl_blueprints.c
+    src/maria/spritebank0.c
+    src/maria/ovl_load.c
+)
+
 set(SOURCE_FILES_TT_000
     src/servant/tt_000/bat.c
     src/servant/tt_000/servant_clutdata.c
@@ -485,6 +501,12 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_TT_001}
     ${SOURCE_FILES_TT_002}
 )
+if (USE_PLAYER_MARIA)
+    add_compile_definitions(USE_PLAYER_MARIA)
+    list(APPEND SOURCE_FILES_CORE
+            ${SOURCE_FILES_MARIA}
+            src/pc/pl_maria.c)
+endif()
 
 add_library(core ${SOURCE_FILES_CORE})
 

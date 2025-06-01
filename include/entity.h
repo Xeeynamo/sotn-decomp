@@ -2146,24 +2146,6 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 : 16;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 unkB0;
-} ET_Maria092A9288;
-
-typedef struct {
-    /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 hitboxState;
     /* 0x84 */ s16 rotation;
@@ -2178,7 +2160,7 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092AB1C0;
+} ET_MariaTurtleVortex;
 
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -2186,12 +2168,12 @@ typedef struct {
     /* 0x80 */ s16 timer2;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 timer3;
-} ET_Maria092AAC80;
+} ET_MariaTurtleCrash;
 
 typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 x;
-} ET_Maria092AAA38;
+} ET_MariaTurtleAttack;
 
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -2211,37 +2193,13 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092A9E88;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 unkB0;
-} ET_Maria092A8AE8;
+} ET_MariaCardinalCrash;
 
 typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 opacity;
     /* 0x82 */ s16 nSpawn;
-} ET_Maria092A95A8;
-
-typedef struct {
-    /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 y;
-    /* 0x80 */ s16 opacity;
-    /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
@@ -2254,13 +2212,13 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092A7B80;
+} ET_MariaCardinal;
 
 typedef struct {
     /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
+    /* 0x7E */ s16 y;
     /* 0x80 */ s16 opacity;
-    /* 0x82 */ s16 velocity : 16;
+    /* 0x82 */ s16 velocity;
     /* 0x84 */ struct Entity* target;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ s32 : 32;
@@ -2273,27 +2231,7 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092A82E0;
-
-typedef struct {
-    /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 unk46; // g_Player.unk46
-    /* 0x84 */ s16 opacity;
-    /* 0x86 */ s16 : 16;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 unkB0;
-} ET_Maria092A7560;
+} ET_MariaDragon;
 
 typedef struct {
     /* 0x7C */ s16 timer;
@@ -2313,29 +2251,12 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092A6E50;
+} ET_MariaCat;
 
 typedef struct {
-    /* 0x7C */ s16 timer;
-    /* 0x7E */ s16 : 16;
-    /* 0x80 */ s16 opacity;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s16 : 16;
-    /* 0x86 */ s16 ttl;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 unkB0;
-} ET_Maria092A6280;
-
-typedef struct {
+#ifdef PLATFORM_64BIT
+    s32 _align_parent[1];
+#endif
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 opacity;
@@ -2353,7 +2274,7 @@ typedef struct {
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ s32 : 32;
     /* 0xB0 */ s16 unkB0;
-} ET_Maria092A6740;
+} ET_MariaDoll;
 
 // This is the Bat enemy, seen in the Entrance and elsewhere.
 // ET_Bat is already taken by the familiar. Perhaps that should be
@@ -3438,21 +3359,19 @@ typedef union { // offset=0x7C
     ET_ExpandingCircle circleExpand;
     ET_RicMariaPower ricMariaPower;
     ET_RicMaria ricMaria;
+
+    // MARIA overlay
     ET_Maria092BEB40 maria092BEB40;
     ET_MariaOwl mariaOwl;
-    ET_Maria092A9288 maria092A9288;
-    ET_Maria092AB1C0 maria092AB1C0;
-    ET_Maria092AAC80 maria092AAC80;
-    ET_Maria092AAA38 maria092AAA38;
-    ET_Maria092A9E88 maria092A9E88;
-    ET_Maria092A8AE8 maria092A8AE8;
-    ET_Maria092A95A8 maria092A95A8;
-    ET_Maria092A7B80 maria092A7B80;
-    ET_Maria092A82E0 maria092A82E0;
-    ET_Maria092A7560 maria092A7560;
-    ET_Maria092A6E50 maria092A6E50;
-    ET_Maria092A6280 maria092A6280;
-    ET_Maria092A6740 maria092A6740;
+    ET_MariaTurtleVortex mariaTurtleVortex;
+    ET_MariaTurtleCrash mariaTurtleCrash;
+    ET_MariaTurtleAttack mariaTurtleAttack;
+    ET_MariaCardinalCrash mariaCardinalCrash;
+    ET_MariaCardinal mariaCardinal;
+    ET_MariaDragon mariaDragon;
+    ET_MariaCat mariaCat;
+    ET_MariaDoll mariaDoll;
+
     ET_BatEnemy batEnemy;
     ET_801BC5C0 et_801BC5C0;
     ET_CutscenePhotograph cutscenePhoto;
@@ -3578,6 +3497,7 @@ SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
 SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
+SYNC_FIELD(ET_EntFactory, ET_MariaDoll, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
 SYNC_FIELD(ET_Subweapon, ET_SubwpnAxe, subweaponId);

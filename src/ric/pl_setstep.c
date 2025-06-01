@@ -200,7 +200,7 @@ s32 RicDoSubweapon() {
         return 1;
     }
 
-    subweaponId = func_8015FB84(&subweapon, false, false);
+    subweaponId = RicCheckSubweapon(&subweapon, false, false);
     if (subweaponId <= 0) {
         return 1;
     }
@@ -211,7 +211,7 @@ s32 RicDoSubweapon() {
     if (RicCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
         return 2;
     }
-    subweaponId = func_8015FB84(&subweapon, false, true);
+    subweaponId = RicCheckSubweapon(&subweapon, false, true);
     if (subweaponId <= 0) {
         return 3;
     }
@@ -324,7 +324,7 @@ bool RicDoCrash(void) {
     Entity* subWpnEnt;
     s16 subWpnID;
 
-    subWpnID = func_8015FB84(&subWpn, true, false);
+    subWpnID = RicCheckSubweapon(&subWpn, true, false);
     if (subWpnID < 0) {
         return 0;
     }
@@ -351,7 +351,7 @@ bool RicDoCrash(void) {
     if (subWpnEnt == NULL) {
         return 0;
     }
-    subWpnID = func_8015FB84(&subWpn, true, true);
+    subWpnID = RicCheckSubweapon(&subWpn, true, true);
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
     PLAYER.velocityY = 0;

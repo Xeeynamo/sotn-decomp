@@ -106,7 +106,7 @@ void MarSetJump(s32 setunk44Flag) {
     }
 }
 
-void func_pspeu_092B2040(void) {
+void MarSetDoubleJump(void) {
     g_Player.unk44 |= 0x21;
     MarSetAnimation(D_pspeu_092C05A0);
     MarSetStep(PL_S_JUMP);
@@ -143,7 +143,7 @@ void MarSetHighJump(void) {
     PLAYER.velocityY = FIX(-5.0);
     g_Player.high_jump_timer = 0;
     MarSetAnimation(mar_anim_high_jump);
-    func_8015CC28();
+    func_maria_8015CC28();
     if (g_Player.unk72) {
         PLAYER.velocityY = 0;
     }
@@ -261,7 +261,7 @@ s32 MarDoSubweapon(void) {
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
-    subweaponId = func_8015FB84(&subweapon, false, false);
+    subweaponId = MarCheckSubweapon(&subweapon, false, false);
     if (subweaponId <= 0) {
         return 1;
     }
@@ -272,14 +272,14 @@ s32 MarDoSubweapon(void) {
     if (MarCheckSubwpnChainLimit(subweaponId, chainLimit) < 0) {
         return 2;
     }
-    subweaponId = func_8015FB84(&subweapon, false, true);
+    subweaponId = MarCheckSubweapon(&subweapon, false, true);
     if (subweaponId <= 0) {
         return 3;
     }
     if (g_Player.unk72) {
         return 5;
     }
-    if (subweaponId == _PL_W_DAGGER &&
+    if (subweaponId == PL_W_CARDINAL &&
         (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP ||
          PLAYER.velocityX || PLAYER.velocityY)) {
         return 0;
@@ -291,10 +291,10 @@ s32 MarDoSubweapon(void) {
     case PL_S_STAND:
     case PL_S_WALK:
     case PL_S_CROUCH:
-        if (subweaponId == _PL_W_DAGGER) {
+        if (subweaponId == PL_W_CARDINAL) {
             g_Player.unk7A = 2;
             MarSetAnimation(D_pspeu_092C0878);
-            PLAYER.step = PL_S_SUBWPN_28;
+            PLAYER.step = PL_S_CARDINAL_ATTACK;
         } else {
             g_Player.unk7A = 3;
             MarSetAnimation(mar_80155588);
@@ -318,7 +318,7 @@ bool MarDoCrash(void) {
     if (g_Player.unk5C) {
         return 0;
     }
-    subWpnID = func_8015FB84(&subWpn, true, false);
+    subWpnID = MarCheckSubweapon(&subWpn, true, false);
     if (subWpnID < 0) {
         return 0;
     }
@@ -333,14 +333,14 @@ bool MarDoCrash(void) {
     if (subWpnEnt == NULL) {
         return 0;
     }
-    subWpnID = func_8015FB84(&subWpn, true, true);
+    subWpnID = MarCheckSubweapon(&subWpn, true, true);
     g_Player.unk4A = subWpnID;
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     switch (subWpnID) {
-    case 0:
+    case PL_W_NONE:
         if (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP) {
             MarSetAnimation(mar_801555C8);
         } else if (PLAYER.step == PL_S_STAND || PLAYER.step == PL_S_WALK) {
@@ -351,31 +351,31 @@ bool MarDoCrash(void) {
         g_api.PlaySfx(SFX_VO_MAR_8EC);
         g_Player.unk46 = 0;
         break;
-    case 1:
+    case PL_W_CARDINAL:
         g_Player.unk5C = 2;
-        MarSetStep(PL_S_SUBWPN_19);
-        MarSetAnimation(D_pspeu_092C07E8);
+        MarSetStep(PL_S_CARDINAL_CRASH);
+        MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
         g_api.PlaySfx(SFX_VO_MAR_8EF);
         break;
-    case 2:
+    case PL_W_CAT:
         g_Player.unk5C = 2;
-        MarSetStep(PL_S_SUBWPN_20);
-        MarSetAnimation(D_pspeu_092C07E8);
+        MarSetStep(PL_S_CAT_CRASH);
+        MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
         g_api.PlaySfx(SFX_VO_MAR_8EE);
         break;
-    case 3:
+    case PL_W_TURTLE:
         g_Player.unk5C = 2;
-        MarSetStep(PL_S_SUBWPN_21);
-        MarSetAnimation(D_pspeu_092C07E8);
+        MarSetStep(PL_S_TURTLE_CRASH);
+        MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
         g_api.PlaySfx(SFX_VO_MAR_8ED);
         break;
-    case 4:
+    case PL_W_DRAGON:
         g_Player.unk5C = 2;
-        MarSetStep(PL_S_SUBWPN_27);
-        MarSetAnimation(D_pspeu_092C07E8);
+        MarSetStep(PL_S_DRAGON_CRASH);
+        MarSetAnimation(anim_maria_use_crash);
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
         g_api.PlaySfx(SFX_VO_MAR_8F0);
         break;
@@ -390,8 +390,8 @@ void MarSetSlide(void) {
     MarSetAnimation(mar_80155750);
     g_CurrentEntity->velocityY = 0;
     MarSetSpeedX(FIX(4.5));
-    func_8015CC28();
-    MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_25, 0);
+    func_maria_8015CC28();
+    MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SLIDE_KICK, 0);
     g_api.PlaySfx(SFX_SCRAPE_C);
     g_Player.timers[PL_T_12] = 4;
 }
@@ -415,6 +415,6 @@ void MarSetBladeDash(void) {
     g_Player.unk46 = 5;
     g_Player.timers[PL_T_12] = 4;
     MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLADE_DASH, 0);
-    func_8015CC28();
+    func_maria_8015CC28();
     g_api.PlaySfx(SFX_VO_MAR_ATTACK_C);
 }

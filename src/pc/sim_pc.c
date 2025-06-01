@@ -214,6 +214,7 @@ void InitStageWRP(Overlay* o);
 void InitStageSEL(Overlay* o);
 void InitPlayerArc(const struct FileUseContent* file);
 void InitPlayerRic(void);
+void InitPlayerMaria(void);
 void func_80131EBC(const char* str, s16 arg1);
 s32 LoadFileSimToMem(SimKind kind) {
     u16* clutAddr;
@@ -331,7 +332,14 @@ bool LoadFilePc(const struct FileUseContent* file) {
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         break;
     case 99:
-        InitPlayerArc(file);
+        switch (g_PlayableCharacter) {
+        case PLAYER_ALUCARD:
+        case PLAYER_RICHTER:
+            // Both Richter and Alucard sprites needs to be loaded straight
+            // from the PSX binary file
+            InitPlayerArc(file);
+            break;
+        }
         break;
     default:
         g_SimFile = sim;
@@ -395,7 +403,16 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             sim.kind = 99;
             break;
         case 5:
-            InitPlayerRic();
+            switch (g_PlayableCharacter) {
+            case PLAYER_RICHTER:
+                InitPlayerRic();
+                break;
+#ifdef USE_PLAYER_MARIA
+            case PLAYER_MARIA:
+                InitPlayerMaria();
+                return;
+#endif
+            }
             sim.path = "BIN/RIC.BIN";
             sim.kind = 99;
             break;

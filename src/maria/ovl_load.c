@@ -170,21 +170,21 @@ void MarLoadPalettes(void) {
     LoadPatchedPalette(PAL_CRASH, crash_cat_pal);
 }
 
-void func_pspeu_092C0138(s32 crashId) {
+void LoadCrashSummonResouces(s32 crashId) {
     switch (crashId) {
-    case 1:
+    case PL_W_CARDINAL:
         crash_img[3] = (u_long*)crash_cardinal_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_cardinal_pal);
         break;
-    case 2:
+    case PL_W_CAT:
         crash_img[3] = (u_long*)crash_cat_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_cat_pal);
         break;
-    case 3:
+    case PL_W_TURTLE:
         crash_img[3] = (u_long*)crash_turtle_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_turtle_pal);
         break;
-    case 4:
+    case PL_W_DRAGON:
         crash_img[3] = (u_long*)crash_dragon_gfx;
         LoadPatchedPalette(PAL_CRASH, crash_dragon_pal);
         break;

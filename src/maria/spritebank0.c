@@ -124,7 +124,7 @@ static s16 D_pspeu_092C6430[4];
 static s16 D_pspeu_092C6438[4];
 static s16 D_pspeu_092C6440[4];
 static s16 D_pspeu_092C6448[4];
-s16* mar_801530AC[] = {
+s16* maria_spr[] = {
     NULL,
     D_pspeu_092C6078,
     D_pspeu_092C6080,

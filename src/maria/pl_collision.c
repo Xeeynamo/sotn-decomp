@@ -150,9 +150,9 @@ bool MarCheckInput(s32 checks) {
         MarDoAttack()) {
         return true;
     }
-    if (checks & CHECK_20 && g_Player.padTapped & PAD_CROSS &&
+    if (checks & CHECK_DOUBLEJUMP && g_Player.padTapped & PAD_CROSS &&
         !(g_Player.unk44 & 1)) {
-        func_pspeu_092B2040();
+        MarSetDoubleJump();
         return 1;
     }
     if (checks & CHECK_CROUCH && (g_Player.padPressed & PAD_DOWN)) {
