@@ -2,9 +2,9 @@
 #include "../dai/dai.h"
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_misc", EntityUnkId13);
-
+// clang-format off
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_misc", EntityExplosionVariantsSpawner);
-
+// clang-format on
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_misc", EntityExplosionVariants);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_misc", EntityGreyPuff);

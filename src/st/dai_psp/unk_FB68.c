@@ -14,9 +14,9 @@ INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", func_pspeu_09248CC0);
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", func_pspeu_09248DD0);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", func_pspeu_092497D8);
-
+// clang-format off
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", EntityFishheadFireBreath);
-
+// clang-format on
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", func_pspeu_0924A3D8);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_FB68", func_pspeu_0924A618);
