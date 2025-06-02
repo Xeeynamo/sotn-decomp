@@ -418,7 +418,7 @@ void EntitySpellbook(Entity* self) {
                     dx = self->ext.spellbookMagicTome.unk84;
                     dy = self->ext.spellbookMagicTome.unk86;
                     angle = ratan2(dy, dx);
-                    tempEntity->rotZ = angle;
+                    tempEntity->rotate = angle;
                     tempEntity->zPriority = self->ext.spellbookMagicTome.unk88;
                     dx = (Random() & 0x1F) - 0x10;
                     tempEntity->posX.i.hi += (dx * rcos(angle + 0x400)) >> 0xC;
@@ -500,16 +500,16 @@ void EntitySpellbook(Entity* self) {
 }
 
 void func_us_801D2CE0(Entity* self) {
-    s16 rotZ;
+    s16 rotate;
 
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180908);
         self->animCurFrame = (Random() & 0xF) + 1;
-        rotZ = self->rotZ;
-        rotZ += Random() * 2 - 0x100;
-        self->velocityX = rcos(rotZ) << 5;
-        self->velocityY = rsin(rotZ) << 5;
+        rotate = self->rotate;
+        rotate += Random() * 2 - 0x100;
+        self->velocityX = rcos(rotate) << 5;
+        self->velocityY = rsin(rotate) << 5;
         break;
 
     case 1:
@@ -716,7 +716,7 @@ void EntityMagicTome(Entity* self) {
                     dx = self->ext.spellbookMagicTome.unk84;
                     dy = self->ext.spellbookMagicTome.unk86;
                     angle = ratan2(dy, dx);
-                    tempEntity->rotZ = angle;
+                    tempEntity->rotate = angle;
                     tempEntity->zPriority = self->ext.spellbookMagicTome.unk88;
                     dx = (Random() & 0x1F) - 0x10;
                     tempEntity->posX.i.hi += (dx * rcos(angle + 0x400)) >> 0xC;
@@ -748,7 +748,7 @@ void EntityMagicTome(Entity* self) {
 void func_us_801D35B8(Entity* self) {
     Entity* tempEntity;
     s32 x, y;
-    s16 rotZ;
+    s16 rotate;
     s32 temp_s5;
     unkBookStruct* ptr;
 
@@ -780,27 +780,28 @@ void func_us_801D35B8(Entity* self) {
             y = tempEntity->ext.spellbookMagicTome.unk86;
             self->posX.i.hi = tempEntity->posX.i.hi + x / 2;
             self->posY.i.hi = tempEntity->posY.i.hi + y / 2;
-            rotZ = ratan2(y, x);
+            rotate = ratan2(y, x);
             self->animCurFrame = ptr->unkC;
-            self->rotZ = rotZ + ptr->unk4;
+            self->rotate = rotate + ptr->unk4;
             self->zPriority = tempEntity->ext.spellbookMagicTome.unk88;
-            self->drawFlags = FLAG_DRAW_ROTZ | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = self->rotY = 0;
+            self->drawFlags =
+                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = self->scaleY = 0;
             self->step_s++;
             /* fallthrough */
         case 1:
             tempEntity = self - 1;
             self->zPriority = tempEntity->ext.spellbookMagicTome.unk88;
-            self->rotX = self->rotY += 8;
-            if (self->rotX >= 0x120) {
+            self->scaleX = self->scaleY += 8;
+            if (self->scaleX >= 0x120) {
                 self->step_s = 2;
             }
-            if (self->rotX > 0x80) {
+            if (self->scaleX > 0x80) {
                 self->hitboxState = 1;
-                rotZ = self->rotZ - ptr->unk6;
+                rotate = self->rotate - ptr->unk6;
                 temp_s5 = ptr->unk8;
-                x = (temp_s5 * self->rotX * rcos(rotZ)) >> 0x14;
-                y = (temp_s5 * self->rotX * rsin(rotZ)) >> 0x14;
+                x = (temp_s5 * self->scaleX * rcos(rotate)) >> 0x14;
+                y = (temp_s5 * self->scaleX * rsin(rotate)) >> 0x14;
                 self->hitboxOffX = x;
                 self->hitboxOffY = y;
             }
@@ -813,12 +814,12 @@ void func_us_801D35B8(Entity* self) {
 
         case 2:
             self->hitboxState = 0;
-            self->rotX = self->rotY -= 4;
+            self->scaleX = self->scaleY -= 4;
             tempEntity = self - 1;
             if (tempEntity->flags & FLAG_DEAD) {
-                self->rotX = self->rotY -= 16;
+                self->scaleX = self->scaleY -= 16;
             }
-            if (self->rotX & 0xF000) {
+            if (self->scaleX & 0xF000) {
                 self->animCurFrame = 0;
                 self->ext.spellbookMagicTome.unk94 = 0;
                 SetStep(1);

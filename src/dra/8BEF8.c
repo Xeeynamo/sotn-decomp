@@ -138,7 +138,7 @@ void EntityBatEcho(Entity* self) {
         var_s5 = posX + 16;
     }
 
-    temp_unk7E = PLAYER.rotZ;
+    temp_unk7E = PLAYER.rotate;
     temp_s7 = (((rsin(temp_unk7E) >> 4) * 0xA) >> 8) - 6;
     temp_s7 = posY + temp_s7;
     temp_unk7E = self->ext.batEcho.unk7E;

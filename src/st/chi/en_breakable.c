@@ -147,7 +147,7 @@ void EntityBreakableDebris(Entity* self) {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->hitboxState = 0;
         self->zPriority = 0x70;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->animCurFrame = self->params + 28;
         facing = GetSideToPlayer() & 1;
 
@@ -210,7 +210,7 @@ void EntityBreakableDebris(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotZ += self->ext.breakableDebris.angle;
+        self->rotate += self->ext.breakableDebris.angle;
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 6;

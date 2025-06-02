@@ -57,9 +57,9 @@ void EntityHammer(Entity* self) {
         /* fallthrough */
     case 3:
         func_801CE228();
-        (self + 4)->ext.GH_Props.rotZ = 0x100;
-        (self + 5)->ext.GH_Props.rotZ = 0x680;
-        (self + 15)->ext.GH_Props.rotZ = 0x2C0;
+        (self + 4)->ext.GH_Props.rotate = 0x100;
+        (self + 5)->ext.GH_Props.rotate = 0x680;
+        (self + 15)->ext.GH_Props.rotate = 0x2C0;
         func_801CE1E8(5);
     case 5:
         if (self->ext.GH_Props.unk84 == 1) {
@@ -351,7 +351,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         self->drawFlags |= DRAW_COLORS;
         break;
     case 1:
-        self->rotZ = self->ext.GH_Props.rotZ;
+        self->rotate = self->ext.GH_Props.rotate;
         break;
     case 24:
         switch (self->step_s) {
@@ -368,7 +368,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotZ += self->ext.GH_Props.unkA6;
+            self->rotate += self->ext.GH_Props.unkA6;
             if (--self->ext.GH_Props.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
@@ -392,14 +392,14 @@ void EntityGurkhaBodyParts(Entity* self) {
         parent = self->ext.GH_Props.parent;
         unk88 = parent->ext.GH_Props.unk88;
         if (unk88 == 2) {
-            self->ext.GH_Props.rotZ = 0x200;
+            self->ext.GH_Props.rotate = 0x200;
         } else if (unk88 == 4) {
-            self->ext.GH_Props.rotZ = -0x200;
+            self->ext.GH_Props.rotate = -0x200;
         } else if (unk88 == 1) {
-            self->ext.GH_Props.rotZ = 0;
+            self->ext.GH_Props.rotate = 0;
         }
         if (self->ext.GH_Props.unk8D != 0) {
-            angle = self->rotZ;
+            angle = self->rotate;
             self->hitboxOffX = (-(rsin(angle) * 8) >> 0xC);
             self->hitboxOffY = (u32)rcos(angle) / 512;
             self->attack = g_api.enemyDefs[192].attack;
@@ -414,7 +414,7 @@ void EntityGurkhaBodyParts(Entity* self) {
     case 5:
     case 11:
         parent = self->ext.GH_Props.parent;
-        parent->ext.GH_Props.rotZ = self->ext.GH_Props.rotZ;
+        parent->ext.GH_Props.rotate = self->ext.GH_Props.rotate;
         break;
     }
 }

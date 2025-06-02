@@ -82,7 +82,7 @@ void EntityWeaponAttack(Entity* self) {
     }
     D_154000_8017C3B4 = PLAYER.pose;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -161,7 +161,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     self->facingLeft = PLAYER.facingLeft;
 
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         if (params < 16) {
             self->posY.i.hi -= 3;
             newYPos -= 3;
@@ -299,7 +299,7 @@ void func_ptr_80170008(Entity* self) {
 
     self->posX.i.hi = xOffset + PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi - 26;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         self->posY.i.hi -= 5;
     }
 

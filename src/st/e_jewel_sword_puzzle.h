@@ -288,14 +288,14 @@ void EntityFallingRock2(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->zPriority = 0x9F;
         break;
 
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotZ -= 0x20;
+        self->rotate -= 0x20;
         collX = self->posX.i.hi;
         collY = self->posY.i.hi;
         collY += rockYOffsets[animFrame];

@@ -301,7 +301,7 @@ void EntityBoneScimitar(Entity* self) {
 void EntityBoneScimitarParts(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer & 0xFF) {
-            self->rotZ += anim_bone_rot[self->params];
+            self->rotate += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -313,7 +313,7 @@ void EntityBoneScimitarParts(Entity* self) {
         return;
     }
     InitializeEntity(g_EInitScimitarParts);
-    self->drawFlags = FLAG_DRAW_ROTZ;
+    self->drawFlags = FLAG_DRAW_ROTATE;
     self->animCurFrame = (self->params & 0xFF) + 16;
 
     if (self->facingLeft != 0) {

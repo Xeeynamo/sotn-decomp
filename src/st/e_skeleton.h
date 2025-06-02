@@ -234,7 +234,7 @@ void EntitySkeleton(Entity* self) {
 void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
-            self->rotZ += anim_bone_rot[self->params];
+            self->rotate += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -249,7 +249,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
 
     InitializeEntity(g_EInitSkeletonPieces);
     self->animCurFrame = self->params + 15;
-    self->drawFlags = FLAG_DRAW_ROTZ;
+    self->drawFlags = FLAG_DRAW_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
@@ -266,7 +266,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
             return;
         }
 
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         self->velocityY += 0x2400;
         MoveEntity();
 
@@ -288,7 +288,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 
         self->velocityX = velocityX;
         self->velocityY = FIX(-4.5);
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
     }
 }
 
@@ -297,11 +297,12 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 void UnusedSkeletonEntity(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitSkeleton);
-        self->rotX = 0x120;
-        self->rotY = 0x200;
+        self->scaleX = 0x120;
+        self->scaleY = 0x200;
         self->opacity = 0;
         self->hitboxState = 0;
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags |=
+            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         return;
     }
 

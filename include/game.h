@@ -303,9 +303,9 @@ typedef enum {
 // Flags for entity->drawFlags
 typedef enum {
     FLAG_DRAW_DEFAULT = 0x00,
-    FLAG_DRAW_ROTX = 0x01,
-    FLAG_DRAW_ROTY = 0x02,
-    FLAG_DRAW_ROTZ = 0x04,
+    FLAG_DRAW_SCALEX = 0x01,
+    FLAG_DRAW_SCALEY = 0x02,
+    FLAG_DRAW_ROTATE = 0x04,
     FLAG_DRAW_OPACITY = 0x08,
     FLAG_DRAW_UNK10 = 0x10,
     FLAG_DRAW_UNK20 = 0x20,
@@ -817,9 +817,9 @@ typedef struct Entity {
     /* 0x16 */ u16 palette;
     /* 0x18 */ u8 drawMode;
     /* 0x19 */ u8 drawFlags;
-    /* 0x1A */ s16 rotX;
-    /* 0x1C */ s16 rotY;
-    /* 0x1E */ s16 rotZ;
+    /* 0x1A */ s16 scaleX; // 0x100 = 1.0
+    /* 0x1C */ s16 scaleY; // 0x100 = 1.0
+    /* 0x1E */ s16 rotate; // 0x1000 = 360 degrees
     /* 0x20 */ s16 rotPivotX;
     /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;

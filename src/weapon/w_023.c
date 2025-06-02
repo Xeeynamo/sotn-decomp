@@ -146,11 +146,11 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= FLAG_BLINK;
         }
@@ -164,7 +164,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.PlayAnimation(&D_A5000_8017AAD8, &D_A5000_8017AB20);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -225,9 +225,9 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
 
-        self->rotX = self->rotY = 0;
+        self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = 0x19F;
         prim->tpage = 0x19;
@@ -285,13 +285,13 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->rotX += 12;
-        self->rotY = self->rotX;
+        self->scaleX += 12;
+        self->scaleY = self->scaleX;
 
-        self->ext.shield.unk82 = self->rotX * 0x28 / 256;
-        if (self->rotX >= 0x100) {
+        self->ext.shield.unk82 = self->scaleX * 0x28 / 256;
+        if (self->scaleX >= 0x100) {
             self->ext.shield.unk82 = 0x28;
-            self->rotY = self->rotX = 0x100;
+            self->scaleY = self->scaleX = 0x100;
             self->ext.shield.unk80 = 8;
             self->step++;
         }
@@ -309,11 +309,11 @@ static void EntityWeaponShieldSpell(Entity* self) {
         } else {
             prim->priority = self->zPriority - 2;
         }
-        self->rotX -= 0x10;
-        if (self->rotX <= 0) {
-            self->rotX = 0;
+        self->scaleX -= 0x10;
+        if (self->scaleX <= 0) {
+            self->scaleX = 0;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (--self->ext.shield.unk80 == 0) {
             self->animCurFrame = 0;
             prim = prim->next;
@@ -330,19 +330,19 @@ static void EntityWeaponShieldSpell(Entity* self) {
         break;
     case 4:
         self->ext.shield.unk82 += 8;
-        self->rotX += 12;
-        if (self->rotX >= 0x100) {
-            self->rotX = 0x100;
+        self->scaleX += 12;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = 0x100;
         }
-        self->ext.shield.unk84 = self->rotX * 36 / 256;
-        self->ext.shield.unk86 = self->rotX * 64 / 256;
+        self->ext.shield.unk84 = self->scaleX * 36 / 256;
+        self->ext.shield.unk86 = self->scaleX * 64 / 256;
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b3 > 8) {
             prim->b3 -= 4;
         }
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
-        if (self->rotX == 0x100) {
+        if (self->scaleX == 0x100) {
             prim->b3 = 6;
             prim = &g_PrimBuf[self->primIndex];
             prim->drawMode |= DRAW_HIDE;
@@ -599,9 +599,9 @@ static void func_ptr_80170028(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->anim = D_A5000_8017AB58;
         self->flags |= (FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000);
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
 
-        self->rotX = self->rotY = 0;
+        self->scaleX = self->scaleY = 0;
         self->posY.i.hi += 40;
         self->velocityY = FIX(-1.5);
         self->ext.weapon.unk7E = 0;
@@ -636,7 +636,8 @@ static void func_ptr_80170028(Entity* self) {
         } else {
             self->zPriority = 0x1BC;
         }
-        self->rotX = self->rotY = -(rsin(self->ext.weapon.unk7E) >> 5) + 0xC0;
+        self->scaleX = self->scaleY =
+            -(rsin(self->ext.weapon.unk7E) >> 5) + 0xC0;
         break;
     }
 }

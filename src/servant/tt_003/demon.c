@@ -1512,8 +1512,8 @@ void func_us_801765A0(Entity* self) {
         self->anim = &D_us_80171CD8;
         self->pose = 0;
         self->poseTimer = 0;
-        self->drawFlags |= FLAG_DRAW_ROTY;
-        self->rotY = 0xC0;
+        self->drawFlags |= FLAG_DRAW_SCALEY;
+        self->scaleY = 0xC0;
 
         // velocityX = 0xC0;
         if (self->facingLeft != 0) {

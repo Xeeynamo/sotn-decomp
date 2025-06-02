@@ -481,8 +481,8 @@ void EntityBlade(Entity* self) {
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
                 (self + 15)->ext.GH_Props.unk8C = 1;
-                (self + 15)->ext.GH_Props.rotZ = 0x400;
-                (self + 15)->rotZ = 0x400;
+                (self + 15)->ext.GH_Props.rotate = 0x400;
+                (self + 15)->rotate = 0x400;
                 self->ext.GH_Props.unk80 = 0x20;
                 self->step_s++;
             }
@@ -541,7 +541,7 @@ void EntityBladeSword(Entity* self) {
         InitializeEntity(g_EInitGurkhaBlade);
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
         if (primIndex == -1) {
             self->ext.et_801D1BB8.prim = NULL;
@@ -573,7 +573,7 @@ void EntityBladeSword(Entity* self) {
         }
 
     case 1:
-        self->rotZ = self->ext.et_801D1BB8.unk9C;
+        self->rotate = self->ext.et_801D1BB8.unk9C;
         break;
 
     case 24:
@@ -591,7 +591,7 @@ void EntityBladeSword(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
     }
 
-    angle = self->rotZ;
+    angle = self->rotate;
     self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
     self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
 
@@ -613,7 +613,7 @@ void EntityBladeSword(Entity* self) {
         }
     }
 
-    angle = self->rotZ;
+    angle = self->rotate;
     if (self->facingLeft != 0) {
         angle = -angle;
     }

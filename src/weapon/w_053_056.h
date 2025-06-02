@@ -7,7 +7,7 @@ typedef struct {
     /* 0x2 */ s16 vFlag;
     /* 0x4 */ s16 clutFlag;
     /* 0x6 */ s16 lifetime;
-    /* 0x8 */ s16 rotZ;
+    /* 0x8 */ s16 rotate;
     /* 0xA */ u8 r;
     /* 0xB */ u8 g;
     /* 0xC */ u8 b;

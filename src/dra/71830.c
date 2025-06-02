@@ -1052,8 +1052,8 @@ void PlayerStepHighJump(void) {
             func_801139CC(3);
             if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
-                PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
-                PLAYER.rotZ = 0x800;
+                PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+                PLAYER.rotate = 0x800;
                 PLAYER.rotPivotX = 0;
                 PLAYER.rotPivotY = 2;
                 PLAYER.facingLeft += 1;
@@ -1082,16 +1082,16 @@ void PlayerStepHighJump(void) {
         break;
 
     case 2:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A > 0x38) {
             SetPlayerAnim(0x2D);
             PLAYER.drawFlags &=
                 (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                 FLAG_DRAW_ROTX);
-            PLAYER.rotZ = 0;
+                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                 FLAG_DRAW_SCALEX);
+            PLAYER.rotate = 0;
             PLAYER.facingLeft += 1;
             PLAYER.facingLeft &= 1;
             PLAYER.step_s = 4;
@@ -1163,8 +1163,8 @@ void func_80113EE0(void) {
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                         FLAG_BLINK | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);
-    PLAYER.rotZ = 0;
+                         FLAG_BLINK | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+    PLAYER.rotate = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_MIST) {
         func_8010FAF4();
@@ -1540,8 +1540,8 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.velocityY = 0;
         g_Player.timers[8] = 48;
         PlaySfx(SFX_STOMP_HARD_B);
-        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
-        PLAYER.rotZ = 0x400;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.rotate = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
         SetPlayerAnim(0x2C);
@@ -1583,10 +1583,10 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.poseTimer = PLAYER.pose = 0;
         break;
     case 14:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
+        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
         if (g_Player.timers[8] <= 0) {
-            PLAYER.drawFlags &= ~FLAG_DRAW_ROTZ;
-            PLAYER.rotZ = 0x800;
+            PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
+            PLAYER.rotate = 0x800;
             PLAYER.velocityX = -(PLAYER.velocityX / 2);
             PLAYER.velocityY = 0;
             SetPlayerAnim(0x1C);
@@ -1752,13 +1752,13 @@ void PlayerStepStoned(s32 arg0) {
             PLAYER.step_s = 2;
             PLAYER.drawFlags &=
                 (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                 FLAG_DRAW_ROTX);
+                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                 FLAG_DRAW_SCALEX);
         } else {
             PLAYER.rotPivotX = 0;
-            PLAYER.drawFlags |= FLAG_DRAW_ROTZ;
-            PLAYER.rotZ = D_800ACF94[PLAYER.poseTimer] >> 4;
-            if (PLAYER.rotZ) {
+            PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+            PLAYER.rotate = D_800ACF94[PLAYER.poseTimer] >> 4;
+            if (PLAYER.rotate) {
                 PLAYER.rotPivotY = 0x14;
             } else {
                 PLAYER.rotPivotY = 0x18;
@@ -1816,7 +1816,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         PLAYER.velocityY = FIX(-3.25);
         func_8010E3B8(FIX(-1.25));
         PLAYER.ext.player.anim = 0xC0;
-        PLAYER.rotZ = 0;
+        PLAYER.rotate = 0;
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
         if (damage->effects & ELEMENT_FIRE) {
@@ -1955,11 +1955,11 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     DecelerateX(FIX(1.0 / 64));
     if (PLAYER.pose >= 15) {
         if ((PLAYER.pose == 22) && (PLAYER.poseTimer == 1)) {
-            PLAYER.rotZ -= 0x100;
+            PLAYER.rotate -= 0x100;
         }
-        PLAYER.rotZ -= 6;
-        if (PLAYER.rotZ < -0x280) {
-            PLAYER.rotZ = -0x280;
+        PLAYER.rotate -= 6;
+        if (PLAYER.rotate < -0x280) {
+            PLAYER.rotate = -0x280;
         }
     }
     if (nullifyVelY && (g_Player.unk72)) {
@@ -1968,7 +1968,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
 }
 
 void PlayerStepUnk17(void) {
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     PLAYER.velocityY = 0;
     PLAYER.velocityX = 0;
     PLAYER.poseTimer = 4;
@@ -2095,7 +2095,7 @@ void PlayerStepKillWater(void) {
     bool var_s2;
 
     var_s2 = false;
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     plDraw = g_PlayerDraw;
     if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
@@ -2114,7 +2114,7 @@ void PlayerStepKillWater(void) {
         PLAYER.velocityY = FIX(-1.625);
         PLAYER.ext.player.anim = 0xC1;
         PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        PLAYER.rotZ = 0x200;
+        PLAYER.rotate = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(
             g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x59), 0);
@@ -2347,16 +2347,16 @@ bool BatFormFinished(void) {
 }
 
 static void func_8011690C(s16 arg0) {
-    if (PLAYER.rotZ < arg0) {
-        PLAYER.rotZ += 16;
-        if (PLAYER.rotZ > arg0) {
-            PLAYER.rotZ = arg0;
+    if (PLAYER.rotate < arg0) {
+        PLAYER.rotate += 16;
+        if (PLAYER.rotate > arg0) {
+            PLAYER.rotate = arg0;
         }
     }
-    if (PLAYER.rotZ > arg0) {
-        PLAYER.rotZ -= 16;
-        if (PLAYER.rotZ < arg0) {
-            PLAYER.rotZ = arg0;
+    if (PLAYER.rotate > arg0) {
+        PLAYER.rotate -= 16;
+        if (PLAYER.rotate < arg0) {
+            PLAYER.rotate = arg0;
         }
     }
 }
@@ -2494,7 +2494,7 @@ void ControlBatForm(void) {
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Player.padPressed & PAD_CROSS;
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     PLAYER.rotPivotY = 0;
 
 #if defined(VERSION_HD)
@@ -2533,7 +2533,7 @@ void ControlBatForm(void) {
     switch (PLAYER.step_s) {
     case 0:
         g_WingSmashButtonCounter = 0;
-        PLAYER.rotZ = 0;
+        PLAYER.rotate = 0;
         g_Player.unk44 = g_Player.unk46 = g_Player.unk48 = 0;
         if (g_Entities[16].entityId == 0x22) {
             PLAYER.unk5A = 0;
@@ -2850,7 +2850,7 @@ void PlayerStepUnmorphBat(void) {
     s32 i;
     s32 else_cycles;
 
-    PLAYER.drawFlags = FLAG_DRAW_ROTZ;
+    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     DecelerateX(0x2000);
     if (g_Player.vram_flag & 3) {
         PLAYER.velocityY = 0;
@@ -2894,7 +2894,7 @@ void PlayerStepUnmorphBat(void) {
         }
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
-            PLAYER.drawFlags = PLAYER.rotZ = 0;
+            PLAYER.drawFlags = PLAYER.rotate = 0;
             g_Player.unk66 = 1;
             if (g_Player.unk68) {
                 PLAYER.step_s = 2;
@@ -2948,7 +2948,7 @@ void PlayerStepStuck(void) {
     if ((g_Player.vram_flag & 0x41) == 0x41) {
         collisionCount++;
     }
-    PLAYER.rotZ = 0;
+    PLAYER.rotate = 0;
     CheckMoveDirection();
     if (collisionCount == 0) {
         func_8010E7AC();

@@ -231,8 +231,8 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->drawFlags |= FLAG_DRAW_ROTZ;
-                self->rotZ = 0;
+                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->rotate = 0;
                 self->step_s++;
             }
             break;
@@ -242,7 +242,7 @@ void EntityMerman2(Entity* self) {
             if (self->velocityY > ~0xBFFF) {
                 prim->drawMode = DRAW_HIDE;
                 self->animCurFrame = 18;
-                self->rotZ -= 0x80;
+                self->rotate -= 0x80;
                 self->hitboxHeight = 8;
             } else {
                 // These should probably be written some other way
@@ -287,8 +287,8 @@ void EntityMerman2(Entity* self) {
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &=
                         FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                        FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                        FLAG_DRAW_ROTX;
+                        FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                        FLAG_DRAW_SCALEX;
                     self->hitboxHeight = 21;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                 }
@@ -389,8 +389,8 @@ void EntityMerman2(Entity* self) {
                         }
                     }
                 }
-                self->drawFlags |= FLAG_DRAW_ROTZ;
-                self->rotZ = 0;
+                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->rotate = 0;
                 self->ext.merman2.rotation = 1;
                 if (self->facingLeft) {
                     self->velocityX = FIX(-6);
@@ -425,7 +425,7 @@ void EntityMerman2(Entity* self) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityX = 0;
             }
-            self->rotZ += self->ext.merman2.rotation;
+            self->rotate += self->ext.merman2.rotation;
             self->velocityY -= FIX(0.125);
 
             if (UnkCollisionFunc3(&g_merman_coll1) & 1) {
@@ -457,13 +457,13 @@ void EntityMerman2(Entity* self) {
                 self->velocityX = 0;
             }
             MoveEntity();
-            self->rotZ += 0xC0;
-            if (self->rotZ > 0x1000) {
+            self->rotate += 0xC0;
+            if (self->rotate > 0x1000) {
                 self->posY.i.hi -= 10;
                 self->drawFlags &=
                     FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                    FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY |
-                    FLAG_DRAW_ROTX;
+                    FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
+                    FLAG_DRAW_SCALEX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
             if (CheckMermanEnteringWater(0x1B)) {
@@ -825,13 +825,13 @@ void EntityHighWaterSplash(Entity* self) {
         self->velocityY = FIX(-5);
         self->palette = PAL_OVL(0x162);
         self->drawMode = DRAW_TPAGE;
-        self->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->palette = PAL_OVL(0x18);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0xA0;
-        self->rotX = 0x100;
-        self->rotY = 0x1A0;
+        self->scaleX = 0x100;
+        self->scaleY = 0x1A0;
         self->ext.mermanWaterSplash.unk84 = self->params;
         self->ext.mermanWaterSplash.unk85 = 0x11;
         break;
@@ -847,8 +847,8 @@ void EntityHighWaterSplash(Entity* self) {
         AnimateEntity(g_HighWaterSplashAnim, self);
         MoveEntity();
         self->velocityY += FIX(0.25);
-        self->rotX += 6;
-        self->rotY -= 4;
+        self->scaleX += 6;
+        self->scaleY -= 4;
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);
         }
@@ -862,8 +862,8 @@ void EntityHighWaterSplash(Entity* self) {
         if (AnimateEntity(g_HighWaterSplashAnim, self) == 0) {
             MoveEntity();
             self->velocityY += FIX(0.25);
-            self->rotX += 6;
-            self->rotY -= 4;
+            self->scaleX += 6;
+            self->scaleY -= 4;
         }
         if (self->posY.i.hi > 256) {
             DestroyEntity(self);

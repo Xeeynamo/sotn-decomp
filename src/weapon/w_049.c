@@ -80,7 +80,7 @@ void EntityWeaponAttack(Entity* self) {
     }
     D_15B000_8017C8CC = PLAYER.pose;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -134,7 +134,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     baseX = offsetX + PLAYER.posX.i.hi;
     baseY = PLAYER.posY.i.hi - 0x1A;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         baseY = PLAYER.posY.i.hi - 0x1F;
     }
 
@@ -146,9 +146,9 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = 1;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->ext.weapon.unk80 = params * 512;
-        self->rotZ = self->ext.weapon.unk80 - FIX(1.0 / 64);
+        self->rotate = self->ext.weapon.unk80 - FIX(1.0 / 64);
         self->attack = self->ext.weapon.parent->attack;
         self->attackElement = self->ext.weapon.parent->attackElement;
         self->hitboxState = self->ext.weapon.parent->hitboxState;
@@ -190,8 +190,8 @@ s32 func_ptr_80170004(Entity* self) {
     self->posX.i.hi = baseX + (((rcos(angle) >> 4) * magnitude) >> 8);
     self->posY.i.hi = baseY - (((rsin(angle) >> 4) * magnitude) >> 8);
     if (rotate != 0) {
-        self->rotZ = ratan2(-(s16)(self->posY.i.hi - initialY),
-                            (s16)(self->posX.i.hi - initialX));
+        self->rotate = ratan2(-(s16)(self->posY.i.hi - initialY),
+                              (s16)(self->posX.i.hi - initialX));
     }
 }
 
@@ -219,7 +219,7 @@ void func_ptr_80170008(Entity* self) {
 
     self->posX.i.hi = xOffset + PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi - 26;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         self->posY.i.hi -= 5;
     }
 
@@ -360,10 +360,10 @@ void func_ptr_8017000C(Entity* self) {
             self->animSet += 2;
         }
         self->anim = D_15B000_8017B0D4;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = 0x80;
-        self->rotY = 0x80;
-        self->rotX = self->rotY = (rand() & 0x3F) | 0x80;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = 0x80;
+        self->scaleY = 0x80;
+        self->scaleX = self->scaleY = (rand() & 0x3F) | 0x80;
         self->zPriority = PLAYER.zPriority + (rand() & 1) * 4;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -372,7 +372,7 @@ void func_ptr_8017000C(Entity* self) {
         }
 
         self->velocityY = -FIX(0.5);
-        if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
             if (PLAYER.ext.player.anim >= 0x43 &&
                 PLAYER.ext.player.anim < 0x45) {
                 self->posY.i.hi -= 1;
@@ -418,7 +418,7 @@ s32 func_ptr_80170010(Entity* self) {
 
     baseX = offsetX + PLAYER.posX.i.hi;
     baseY = PLAYER.posY.i.hi - 0x1A;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         baseY = PLAYER.posY.i.hi - 0x1F;
     }
 
@@ -478,8 +478,8 @@ static s32 func_ptr_80170014(Entity* self) {
         self->anim = D_15B000_8017B10C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = 0x100;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = 0x100;
         self->drawMode = DRAW_TPAGE | 0x20;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);

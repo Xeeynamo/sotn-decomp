@@ -5,7 +5,7 @@ extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
 
 // params: Index of ObjInit to use
-//         (== 1) Use a different hardcoded rotY and rotX value
+//         (== 1) Use a different hardcoded scaleY and scaleX value
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
@@ -25,7 +25,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         }
 
         if (self->params == 1) {
-            self->rotX = self->rotY = 0x0200;
+            self->scaleX = self->scaleY = 0x0200;
         }
     }
     AnimateEntity(objInit->animFrames, self);

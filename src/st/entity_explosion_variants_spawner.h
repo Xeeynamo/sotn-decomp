@@ -27,9 +27,9 @@ void EntityExplosionVariantsSpawner(
             newEntity->posX.i.hi = newX + i * xGap;
             newEntity->posY.i.hi = newY;
             newEntity->ext.destructAnim.index = i + index;
-            newEntity->rotX = explosionVariantSizes[i + index];
-            newEntity->rotY = newEntity->rotX;
-            newEntity->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+            newEntity->scaleX = explosionVariantSizes[i + index];
+            newEntity->scaleY = newEntity->scaleX;
+            newEntity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             newEntity->zPriority = self->zPriority + 1;
         }
     }

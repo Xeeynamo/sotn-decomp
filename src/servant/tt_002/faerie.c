@@ -1875,7 +1875,7 @@ void UpdateSubEntityUseLifeApple(Entity* arg0) {
         currentPrim->priority = 0x1C0;
         currentPrim->drawMode =
             FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-            FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
 
         currentPrim = currentPrim->next;
 
@@ -1884,7 +1884,7 @@ void UpdateSubEntityUseLifeApple(Entity* arg0) {
         currentPrim->priority = 0x1C0;
         currentPrim->drawMode =
             FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-            FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
 
         for (i = 0; i < 8; i++) {
             currentPrim = currentPrim->next;
@@ -1898,7 +1898,7 @@ void UpdateSubEntityUseLifeApple(Entity* arg0) {
             currentPrim->priority = 0x1C0;
             currentPrim->drawMode =
                 FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-                FLAG_DRAW_ROTZ | FLAG_DRAW_ROTX;
+                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
         }
         arg0->ext.faerieLifeApple.primX = 0x10;
         arg0->ext.faerieLifeApple.primY = 0;

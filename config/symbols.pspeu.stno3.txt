@@ -85,6 +85,7 @@ EntityEnemyBlood = 0x09252660;
 EntityWarg = 0x09252EF8;
 EntityUnkId4B = 0x09254348;
 EntityWargExplosionPuffTransparent = 0x092545B8;
+BlitChar = 0x092547B8;
 EntityPrizeDrop = 0x09255540;
 EntityExplosion = 0x09256358;
 EntityEquipItemDrop = 0x09256658;

@@ -149,11 +149,11 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         if (--self->ext.weapon.lifetime < 16) {
             self->drawFlags |= FLAG_BLINK;
         }
@@ -167,7 +167,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.PlayAnimation(D_C1000_8017AC0C, D_C1000_8017AC54);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -218,8 +218,8 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = 0x1B6;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = 0;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = 0;
         prim->clut = 0x19F;
         prim->tpage = 0x19;
         prim->u0 = prim->u2 = 0x80;
@@ -245,12 +245,12 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->rotX += 12;
-        self->rotY = self->rotX;
-        self->ext.shield.unk82 = self->rotX * 40 / 256;
-        if (self->rotX >= 0x100) {
+        self->scaleX += 12;
+        self->scaleY = self->scaleX;
+        self->ext.shield.unk82 = self->scaleX * 40 / 256;
+        if (self->scaleX >= 0x100) {
             self->ext.shield.unk82 = 0x28;
-            self->rotY = self->rotX = 0x100;
+            self->scaleY = self->scaleX = 0x100;
             self->ext.shield.unk80 = 8;
             self->anim = D_C1000_8017AC8C;
             self->poseTimer = 0;
@@ -299,9 +299,9 @@ static void EntityWeaponShieldSpell(Entity* self) {
         }
         break;
     case 5:
-        self->rotX -= 12;
-        self->rotY = self->rotX;
-        if (self->rotX < 0) {
+        self->scaleX -= 12;
+        self->scaleY = self->scaleX;
+        if (self->scaleX < 0) {
             DestroyEntity(self);
             return;
         }

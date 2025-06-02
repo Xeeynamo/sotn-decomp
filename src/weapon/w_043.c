@@ -89,11 +89,11 @@ void EntityWeaponAttack(Entity* self) {
         flag = 1;
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 
     modifierY = 0;
-    if (PLAYER.drawFlags & FLAG_DRAW_ROTY) {
+    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
         modifierY = -3;
         if (PLAYER.ext.player.anim >= 0x43 && PLAYER.ext.player.anim < 0x45) {
             modifierY = -1;
@@ -202,7 +202,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -244,7 +244,7 @@ static void func_ptr_80170008(Entity* self) {
         }
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 

@@ -17,8 +17,8 @@ void EntityRoomForeground(Entity* entity) {
             entity->flags = objInit->flags;
         }
         if (entity->params >= 5) {
-            entity->rotZ = 0x800;
-            entity->drawFlags |= FLAG_DRAW_ROTZ;
+            entity->rotate = 0x800;
+            entity->drawFlags |= FLAG_DRAW_ROTATE;
         }
     }
     AnimateEntity(objInit->animFrames, entity);

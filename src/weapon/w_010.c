@@ -160,11 +160,11 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= FLAG_BLINK;
         }
@@ -178,7 +178,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.PlayAnimation(&D_4A000_8017AB20, &D_4A000_8017AB68);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -264,8 +264,8 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
-        self->rotX = self->rotY = 0;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = 0x19F;
         prim->tpage = 0x19;
@@ -336,13 +336,13 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->rotX += 12;
-        self->rotY = self->rotX;
+        self->scaleX += 12;
+        self->scaleY = self->scaleX;
 
-        self->ext.shield.unk82 = self->rotX * 0x28 / 256;
-        if (self->rotX >= 0x100) {
+        self->ext.shield.unk82 = self->scaleX * 0x28 / 256;
+        if (self->scaleX >= 0x100) {
             self->ext.shield.unk82 = 0x28;
-            self->rotY = self->rotX = 0x100;
+            self->scaleY = self->scaleX = 0x100;
             self->ext.shield.unk80 = 8;
             self->step++;
         }
@@ -360,11 +360,11 @@ void EntityWeaponShieldSpell(Entity* self) {
         } else {
             prim->priority = self->zPriority - 2;
         }
-        self->rotX -= 0x10;
-        if (self->rotX <= 0) {
-            self->rotX = 0;
+        self->scaleX -= 0x10;
+        if (self->scaleX <= 0) {
+            self->scaleX = 0;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (--self->ext.shield.unk80 == 0) {
             self->animCurFrame = 0;
             prim = prim->next;
@@ -569,11 +569,11 @@ void func_ptr_80170024(Entity* self) {
         if (!((self->facingLeft ^ upperParams) & 1)) {
             self->ext.shield.unk9E = -0x100;
             self->ext.shield.unk9C = 0x800;
-            self->rotZ = 0x200;
+            self->rotate = 0x200;
         } else {
             self->ext.shield.unk9E = 0x100;
             self->ext.shield.unk9C = 0;
-            self->rotZ = 0x600;
+            self->rotate = 0x600;
         }
         self->ext.shield.unkAE = self->ext.shield.parent->ext.shield.unkAE;
         SetWeaponProperties(self, 0);
@@ -597,7 +597,7 @@ void func_ptr_80170024(Entity* self) {
             if (self->ext.shield.unk9A < 0x280) {
                 self->ext.shield.unk9A += 0x18;
             }
-            self->rotZ += self->ext.shield.unk9E * 7 / 4;
+            self->rotate += self->ext.shield.unk9E * 7 / 4;
             // Not really sure how this block works. xShift is probably a fake
             // variable reuse.
             xShift = self->ext.shield.unk9C;
@@ -626,16 +626,16 @@ void func_ptr_80170024(Entity* self) {
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
     prim = (Primitive*)fakePrim->next;
-    angle = self->rotZ + 0x787;
+    angle = self->rotate + 0x787;
     prim->x0 = left = selfX + (((rcos(angle) >> 4) * 0x42) >> 8);
     prim->y0 = top = selfY - (((rsin(angle) >> 4) * 0x42) >> 8);
-    angle = self->rotZ + 0x79;
+    angle = self->rotate + 0x79;
     prim->x1 = right = selfX + (((rcos(angle) >> 4) * 0x42) >> 8);
     prim->y1 = bottom = selfY - (((rsin(angle) >> 4) * 0x42) >> 8);
-    angle = self->rotZ + 0x879;
+    angle = self->rotate + 0x879;
     prim->x2 = left2 = selfX + (((rcos(angle) >> 4) * 0x42) >> 8);
     prim->y2 = top2 = selfY - (((rsin(angle) >> 4) * 0x42) >> 8);
-    angle = self->rotZ + 0xF87;
+    angle = self->rotate + 0xF87;
     prim->x3 = right2 = selfX + (((rcos(angle) >> 4) * 0x42) >> 8);
     prim->y3 = bottom2 = selfY - (((rsin(angle) >> 4) * 0x42) >> 8);
     prim = prim->next;

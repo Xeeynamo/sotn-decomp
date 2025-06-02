@@ -19,28 +19,28 @@ void func_800EB758(
     }
     py = pivotY + e->rotPivotY;
 
-    if (flags & FLAG_DRAW_ROTX) {
+    if (flags & FLAG_DRAW_SCALEX) {
         dx = p->x0 - px;
-        dx = (e->rotX * dx + 0x80000000) >> 8;
+        dx = (e->scaleX * dx + 0x80000000) >> 8;
         p->x0 = p->x2 = dx + px;
         dx = p->x1 - px;
-        dx = (e->rotX * dx + 0x80000000) >> 8;
+        dx = (e->scaleX * dx + 0x80000000) >> 8;
         p->x1 = p->x3 = dx + px;
     }
-    if (flags & FLAG_DRAW_ROTY) {
+    if (flags & FLAG_DRAW_SCALEY) {
         dy = p->y0 - py;
-        dy = (e->rotY * dy + 0x80000000) >> 8;
+        dy = (e->scaleY * dy + 0x80000000) >> 8;
         p->y0 = p->y1 = dy + py;
         dy = p->y2 - py;
-        dy = (e->rotY * dy + 0x80000000) >> 8;
+        dy = (e->scaleY * dy + 0x80000000) >> 8;
         p->y2 = p->y3 = dy + py;
     }
-    if (flags & FLAG_DRAW_ROTZ) {
+    if (flags & FLAG_DRAW_ROTATE) {
 #ifdef VERSION_PSP
-        if (e->rotZ == 0x800) {
+        if (e->rotate == 0x800) {
             dx2 = p->x1 - p->x0;
             dy2 = p->y2 - p->y0;
-            rot = e->rotZ;
+            rot = e->rotate;
             dx = p->x3 - px;
             dy = p->y3 - py;
             distance = SquareRoot12((dx * dx + dy * dy) << 0xC);
@@ -60,9 +60,9 @@ void func_800EB758(
 #endif
 
         if (flipX) {
-            rot = -e->rotZ;
+            rot = -e->rotate;
         } else {
-            rot = e->rotZ;
+            rot = e->rotate;
         }
 
         dx = p->x0 - px;
@@ -400,7 +400,7 @@ void RenderEntities(void) {
                     poly->y3 = polyY + r->h;
                 }
                 if (r->eDrawFlags &
-                    (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
+                    (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
                     func_800EB758(
                         r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
@@ -898,8 +898,8 @@ void RenderEntitiesPSP(void) {
                     poly->y3 = polyY + r->h;
                 }
                 if (r->eDrawFlags &
-                    (FLAG_DRAW_ROTX | FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ)) {
-                    if ((animFrameFlags & 2) == 0 && entity->rotZ == 0x800) {
+                    (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
+                    if ((animFrameFlags & 2) == 0 && entity->rotate == 0x800) {
                         poly->x0++;
                         poly->x1++;
                         poly->x2++;

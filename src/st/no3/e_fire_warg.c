@@ -80,9 +80,9 @@ static void func_801CC5A4(Entity* entity, u8 count, u8 params, s16 xDist,
             newEnt->posX.i.hi = x + i * xOfst;
             newEnt->posY.i.hi = y;
             newEnt->ext.destructAnim.index = D_80182A48[i];
-            newEnt->rotX = D_80182A38[D_80182A48[i] + arg5];
-            newEnt->rotY = newEnt->rotX;
-            newEnt->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+            newEnt->scaleX = D_80182A38[D_80182A48[i] + arg5];
+            newEnt->scaleY = newEnt->scaleX;
+            newEnt->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }
@@ -214,19 +214,6 @@ static s16 D_80182A4C[] = {
     8,  12, 28, 28, -28, -22, 22, 8,  8,  12, 28, 28, -20, -24, 8,  13,
     8,  12, 28, 28, -19, -24, 8,  13, 8,  12, 28, 28, -18, -24, 8,  13,
     8,  12, 28, 28, -18, -25, 8,  13};
-static s16 D_80182E1C[] = {
-    6,  -24, 4, 24, -37, 2,  10, 4, 2,  -23, 4, 24, -38, 2,   10, 4,
-    3,  -23, 4, 24, -38, 3,  10, 4, 3,  -22, 4, 24, -38, 4,   10, 4,
-    2,  -23, 4, 24, -39, 2,  10, 4, 3,  -23, 4, 24, -39, 3,   10, 4,
-    3,  -22, 4, 24, -39, 4,  10, 4, 6,  -24, 4, 24, -36, 2,   10, 4,
-    3,  -26, 4, 24, -39, 0,  10, 4, 2,  -29, 4, 24, -38, 0,   10, 4,
-    2,  -28, 4, 24, -25, -9, 10, 4, -3, -21, 4, 24, -47, 0,   17, 4,
-    -2, -21, 4, 24, -46, 0,  18, 4, -2, -21, 4, 24, -45, 0,   19, 4,
-    5,  -25, 4, 24, -36, 0,  10, 4, 5,  -25, 4, 24, -37, 0,   10, 4,
-    5,  -25, 4, 24, -36, 2,  10, 4, -1, -21, 4, 24, -44, 5,   10, 4,
-    -3, -24, 4, 24, -46, 2,  10, 4, -2, -20, 4, 24, -44, 5,   10, 4,
-    5,  -33, 4, 24, -37, -7, 10, 4, 3,  -38, 4, 24, -40, -12, 10, 4,
-    1,  -28, 4, 24, -38, 0,  10, 4, 5,  -23, 4, 24, -37, 2,   10, 4};
 
 void EntityFireWarg(Entity* self) {
     Entity* ent_s0;
@@ -829,6 +816,20 @@ void EntityFireWarg(Entity* self) {
     }
 }
 
+static s16 D_80182E1C[] = {
+    6,  -24, 4, 24, -37, 2,  10, 4, 2,  -23, 4, 24, -38, 2,   10, 4,
+    3,  -23, 4, 24, -38, 3,  10, 4, 3,  -22, 4, 24, -38, 4,   10, 4,
+    2,  -23, 4, 24, -39, 2,  10, 4, 3,  -23, 4, 24, -39, 3,   10, 4,
+    3,  -22, 4, 24, -39, 4,  10, 4, 6,  -24, 4, 24, -36, 2,   10, 4,
+    3,  -26, 4, 24, -39, 0,  10, 4, 2,  -29, 4, 24, -38, 0,   10, 4,
+    2,  -28, 4, 24, -25, -9, 10, 4, -3, -21, 4, 24, -47, 0,   17, 4,
+    -2, -21, 4, 24, -46, 0,  18, 4, -2, -21, 4, 24, -45, 0,   19, 4,
+    5,  -25, 4, 24, -36, 0,  10, 4, 5,  -25, 4, 24, -37, 0,   10, 4,
+    5,  -25, 4, 24, -36, 2,  10, 4, -1, -21, 4, 24, -44, 5,   10, 4,
+    -3, -24, 4, 24, -46, 2,  10, 4, -2, -20, 4, 24, -44, 5,   10, 4,
+    5,  -33, 4, 24, -37, -7, 10, 4, 3,  -38, 4, 24, -40, -12, 10, 4,
+    1,  -28, 4, 24, -38, 0,  10, 4, 5,  -23, 4, 24, -37, 2,   10, 4};
+
 void EntityUnkId30(Entity* self) {
     Entity* entity;
     u16 animCurFrame;
@@ -1259,8 +1260,8 @@ void EntityFireWargWaveAttack(Entity* self) {
                 prim->b1 = prim->b3 = 0x40;
 
                 prim->priority = self->zPriority;
-                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_ROTX |
-                                 FLAG_DRAW_ROTY | FLAG_DRAW_ROTZ;
+                prim->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | FLAG_DRAW_SCALEX |
+                                 FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
 
                 prim->p1 = p0Offset;
                 prim->p2 = 0;

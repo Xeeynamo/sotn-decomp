@@ -1024,18 +1024,18 @@ void func_us_801D348C(Entity* self) {
             self->animCurFrame = 0x20;
             self->opacity = 0x60;
             self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = 0x1C8;
-            self->rotY = 0x1C8;
+                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = 0x1C8;
+            self->scaleY = 0x1C8;
         }
         if (parent->animCurFrame == 0x15) {
             self->step = 3;
             self->animCurFrame = 0x21;
             self->opacity = 0x60;
             self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-            self->rotX = 0x1B8;
-            self->rotY = 0x1B8;
+                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->scaleX = 0x1B8;
+            self->scaleY = 0x1B8;
         }
         self->ext.armorLord.unk80 = 3;
         break;

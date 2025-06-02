@@ -1,7 +1,7 @@
 use lazy_static::lazy_static;
 
-use crate::line_transformer::LineTransformer;
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
+use crate::line_transformer::LineTransformer;
 
 pub struct DrawFlagsTransformer {
     transformer: BitFlagLineTransformer<u16>,
@@ -9,9 +9,9 @@ pub struct DrawFlagsTransformer {
 
 lazy_static! {
     static ref DRAW_FLAGS: [(u16, &'static str); 9] = [
-        (1 << 0, "FLAG_DRAW_ROTX"),
-        (1 << 1, "FLAG_DRAW_ROTY"),
-        (1 << 2, "FLAG_DRAW_ROTZ"),
+        (1 << 0, "FLAG_DRAW_SCALEX"),
+        (1 << 1, "FLAG_DRAW_SCALEY"),
+        (1 << 2, "FLAG_DRAW_ROTATE"),
         (1 << 3, "FLAG_DRAW_OPACITY"),
         (1 << 4, "FLAG_DRAW_UNK10"),
         (1 << 5, "FLAG_DRAW_UNK20"),
@@ -25,7 +25,10 @@ impl DrawFlagsTransformer {
     pub fn new() -> Self {
         Self {
             transformer: BitFlagLineTransformer::<u16>::new(
-                "drawFlags", "FLAG_DRAW_DEFAULT", &DRAW_FLAGS.iter().collect()),
+                "drawFlags",
+                "FLAG_DRAW_DEFAULT",
+                &DRAW_FLAGS.iter().collect(),
+            ),
         }
     }
 }
@@ -46,7 +49,7 @@ mod tests {
     #[test]
     fn test_draw_flags_hex() {
         let input_line = "self->drawFlags = 0x3;";
-        let expected_line = "self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;";
+        let expected_line = "self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -54,7 +57,7 @@ mod tests {
     #[test]
     fn test_draw_flags_decimal() {
         let input_line = "self->drawFlags = 3;";
-        let expected_line = "self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;";
+        let expected_line = "self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -77,8 +80,8 @@ mod tests {
 
     #[test]
     fn test_draw_flags_flags() {
-        let input_line = "self->drawFlags = FLAG_DRAW_ROTX;";
-        let expected_line = "self->drawFlags = FLAG_DRAW_ROTX;";
+        let input_line = "self->drawFlags = FLAG_DRAW_SCALEX;";
+        let expected_line = "self->drawFlags = FLAG_DRAW_SCALEX;";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -102,7 +105,7 @@ mod tests {
     #[test]
     fn test_draw_flags_clear_many() {
         let input_line = "self->drawFlags &= 0xFFFC;";
-        let expected_line = "self->drawFlags &= ~(FLAG_DRAW_ROTY | FLAG_DRAW_ROTX);";
+        let expected_line = "self->drawFlags &= ~(FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);";
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

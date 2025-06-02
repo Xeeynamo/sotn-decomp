@@ -275,14 +275,14 @@ void EntityOuijaTableComponent(Entity* self) {
             self->hitboxState = 0;
             self->velocityX = 0;
             self->velocityY = 0;
-            self->drawFlags = FLAG_DRAW_ROTZ;
+            self->drawFlags = FLAG_DRAW_ROTATE;
             self->step_s++;
             // fallthrough
 
         case OUIJA_COMPONENT_FALL_TO_FLOOR:
             // When hit, components rotate and fall to floor
             // After hitting the floor, begin death timer
-            self->rotZ += 64;
+            self->rotate += 64;
             if (UnkCollisionFunc3(sensors_ground_components) & 1) {
                 self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->animCurFrame++;

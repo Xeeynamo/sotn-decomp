@@ -244,7 +244,7 @@ void func_us_801D542C(Entity* self) {
         InitializeEntity(g_EInitPlateLord);
         self->animCurFrame = 7;
         self->zPriority = 0xB4;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xA);
         if (primIndex == -1) {
             DestroyEntity(self);

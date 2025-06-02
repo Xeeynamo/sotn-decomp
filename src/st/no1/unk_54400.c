@@ -33,10 +33,10 @@ void func_us_801D4558(Entity* self) {
         InitializeEntity(D_us_80180B18);
         self->ext.et_801D4558.unk80 = self->hitboxState;
         self->hitboxState = 0;
-        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
-        self->rotX = 0;
-        self->rotY = 0;
+        self->scaleX = 0;
+        self->scaleY = 0;
         self->ext.et_801D4558.unk7D = 0;
         self->drawMode = DRAW_TPAGE;
         break;
@@ -53,8 +53,8 @@ void func_us_801D4558(Entity* self) {
     case 2:
         AnimateEntity(D_us_801831E0, self);
         self->ext.et_801D4558.unk7C++;
-        self->rotX += 8;
-        self->rotY += 8;
+        self->scaleX += 8;
+        self->scaleY += 8;
         if (self->ext.et_801D4558.unk7C == 0x20) {
             self->hitboxState = 2;
             self->drawFlags = FLAG_DRAW_DEFAULT;

@@ -78,7 +78,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -173,7 +173,7 @@ s32 func_ptr_80170004(Entity* self) {
             if ((params & 3) == 0) {
                 g_api.PlaySfx(SFX_WEAPON_SWISH_C);
             }
-            self->rotZ = config->rotZ;
+            self->rotate = config->rotate;
             self->ext.weapon.lifetime = config->lifetime;
             self->ext.weapon.unk7E = 0;
             self->step++;
@@ -222,7 +222,7 @@ s32 func_ptr_80170004(Entity* self) {
     y = self->posY.i.hi;
 
     lifetime = self->ext.weapon.lifetime;
-    angle = self->rotZ;
+    angle = self->rotate;
     // this may seem silly, however the right shift
     // for assigning `prim->y`_X_ on PSX uses `srav`
     // and this ensures 8 gets put into a register.
@@ -319,7 +319,7 @@ static void func_ptr_80170008(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -398,7 +398,7 @@ void func_ptr_8017000C(Entity* self) {
                 g_api.PlaySfx(SFX_WEAPON_SWISH_C);
             }
 
-            self->rotZ = config->rotZ;
+            self->rotate = config->rotate;
             self->ext.weapon.lifetime = config->lifetime;
             self->ext.weapon.unk7E = 0;
             self->step++;
@@ -436,7 +436,7 @@ void func_ptr_8017000C(Entity* self) {
     y = self->posY.i.hi;
 
     lifetime = self->ext.weapon.lifetime;
-    angle = self->rotZ;
+    angle = self->rotate;
     // this may seem silly, however the right shift
     // for assigning `prim->y`_X_ on PSX uses `srav`
     // and this ensures 8 gets put into a register.

@@ -7,8 +7,8 @@ void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->opacity = 0xF0;
-        self->rotX = 0x01A0;
-        self->rotY = 0x01A0;
+        self->scaleX = 0x01A0;
+        self->scaleY = 0x01A0;
         self->animSet = ANIMSET_DRA(8);
         self->animCurFrame = 1;
         self->zPriority += 16;

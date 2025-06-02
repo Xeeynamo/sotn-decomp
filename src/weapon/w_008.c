@@ -129,11 +129,11 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTZ;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
         if (--self->ext.timer.t < 0x10) {
             self->drawFlags |= FLAG_BLINK;
         }
@@ -147,7 +147,7 @@ static void EntityWeaponAttack(Entity* self) {
         g_api.PlayAnimation(&D_3C000_8017A9F8, &D_3C000_8017AA40);
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -208,9 +208,9 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
 
-        self->rotX = self->rotY = 0;
+        self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
         prim->clut = 0x19F;
         prim->tpage = 0x19;
@@ -268,13 +268,13 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
         self->velocityY -= FIX(20.0 / 128);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->rotX += 12;
-        self->rotY = self->rotX;
+        self->scaleX += 12;
+        self->scaleY = self->scaleX;
 
-        self->ext.shield.unk82 = self->rotX * 0x28 / 256;
-        if (self->rotX >= 0x100) {
+        self->ext.shield.unk82 = self->scaleX * 0x28 / 256;
+        if (self->scaleX >= 0x100) {
             self->ext.shield.unk82 = 0x28;
-            self->rotY = self->rotX = 0x100;
+            self->scaleY = self->scaleX = 0x100;
             self->ext.shield.unk80 = 8;
             self->step++;
         }
@@ -292,11 +292,11 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
         } else {
             prim->priority = self->zPriority - 2;
         }
-        self->rotX -= 0x10;
-        if (self->rotX <= 0) {
-            self->rotX = 0;
+        self->scaleX -= 0x10;
+        if (self->scaleX <= 0) {
+            self->scaleX = 0;
         }
-        self->rotY = self->rotX;
+        self->scaleY = self->scaleX;
         if (--self->ext.shield.unk80 == 0) {
             self->animCurFrame = 0;
             prim = prim->next;
@@ -313,12 +313,12 @@ static s32 EntityWeaponShieldSpell(Entity* self) {
         break;
     case 4:
         self->ext.shield.unk82 += 8;
-        self->rotX += 16;
-        if (self->rotX >= 0x100) {
-            self->rotX = 0x100;
+        self->scaleX += 16;
+        if (self->scaleX >= 0x100) {
+            self->scaleX = 0x100;
         }
-        self->ext.shield.unk84 = self->rotX * 36 / 256;
-        self->ext.shield.unk86 = self->rotX * 28 / 256;
+        self->ext.shield.unk84 = self->scaleX * 36 / 256;
+        self->ext.shield.unk86 = self->scaleX * 28 / 256;
         prim = &g_PrimBuf[self->primIndex];
         if (prim->b3 > 8) {
             prim->b3 -= 4;

@@ -14,7 +14,7 @@ void EntityBigRedFireball(Entity* self) {
         self->palette = PAL_OVL(0x1B6);
         self->opacity = 0x70;
         self->zPriority = 192;
-        self->drawFlags |= (FLAG_DRAW_ROTZ + FLAG_DRAW_OPACITY);
+        self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
         self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
 
         switch (self->ext.bigredfireball.switch_control) {
@@ -31,7 +31,7 @@ void EntityBigRedFireball(Entity* self) {
             break;
         }
 
-        self->rotZ = self->ext.bigredfireball.angle &= 0xFFF;
+        self->rotate = self->ext.bigredfireball.angle &= 0xFFF;
         speedTemp = self->ext.bigredfireball.speed * 320 / 24; // = 13.333
         self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
         self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));

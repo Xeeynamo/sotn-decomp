@@ -19,7 +19,7 @@ void UnusedCENEntity(Entity* self) {
     case 0:
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = 0xB0;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->animCurFrame = self->params + 28;
         facing = GetSideToPlayer() & 1;
 
@@ -78,7 +78,7 @@ void UnusedCENEntity(Entity* self) {
 
     case 1:
         MoveEntity();
-        self->rotZ += self->ext.unusedCENEnt.angle;
+        self->rotate += self->ext.unusedCENEnt.angle;
         self->velocityY += FIX(0.25);
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 6, &collider, 0);

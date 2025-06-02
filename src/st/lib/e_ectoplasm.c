@@ -39,14 +39,14 @@ Entity* func_us_801CCED0(u32 arg0) {
 void func_us_801CCF6C(Entity* self) {
     Entity* tempEntity;
     s32 i;
-    s32 rotZ;
+    s32 rotate;
 
     s32 params = self->params;
     if (self->step == 0) {
         InitializeEntity(g_EInitInteractable);
-        self->rotX = D_us_80182AE0[params][0] & 0xFF;
-        self->rotY = D_us_80182AE0[params][1] & 0xFF;
-        self->rotZ = D_us_80182AE0[params][2] & 0x7F;
+        self->scaleX = D_us_80182AE0[params][0] & 0xFF;
+        self->scaleY = D_us_80182AE0[params][1] & 0xFF;
+        self->rotate = D_us_80182AE0[params][2] & 0x7F;
         self->rotPivotX = D_us_80182AE0[params][3] & 0x7F;
         if (D_us_80182AE0[params][3] & 0x80) {
             self->attackElement = self->rotPivotX;
@@ -87,8 +87,8 @@ void func_us_801CCF6C(Entity* self) {
         self->attackElement = self->rotPivotX;
     }
 
-    rotZ = self->rotZ;
-    for (i = 0; i < rotZ; i++) {
+    rotate = self->rotate;
+    for (i = 0; i < rotate; i++) {
         if (self->hitPoints == 0) {
             tempEntity = g_api.GetFreeEntity(0xA0, 0xC0);
         }
@@ -102,8 +102,8 @@ void func_us_801CCF6C(Entity* self) {
             return;
         }
         DestroyEntity(tempEntity);
-        tempEntity->entityId = self->rotX;
-        if (self->rotX == 0) {
+        tempEntity->entityId = self->scaleX;
+        if (self->scaleX == 0) {
             while (true) {
                 i++;
             }
@@ -120,7 +120,7 @@ void func_us_801CCF6C(Entity* self) {
             tempEntity->params += i;
         }
         self->rotPivotY++;
-        if (self->rotPivotY == self->rotY) {
+        if (self->rotPivotY == self->scaleY) {
             DestroyEntity(self);
             return;
         }
@@ -171,9 +171,9 @@ void func_us_801CD318(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        self->drawFlags = FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-        self->rotY = 0x100;
-        self->rotX = 0x100;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->scaleY = 0x100;
+        self->scaleX = 0x100;
         prim = &g_PrimBuf[self->primIndex];
         prim->x0 = self->posX.i.hi;
         prim->y0 = self->posY.i.hi;
@@ -241,12 +241,12 @@ void func_us_801CD318(Entity* self) {
 
     case 3:
         angle = self->ext.ectoplasm.unk90 & 0x7FF;
-        self->rotY = (rsin(angle) >> 4) + 0x100;
-        self->rotX = 0x100 - (rsin(angle) >> 6);
+        self->scaleY = (rsin(angle) >> 4) + 0x100;
+        self->scaleX = 0x100 - (rsin(angle) >> 6);
         self->ext.ectoplasm.unk90 += 0x80;
         if (self->ext.ectoplasm.unk90 == 0x1000) {
-            self->rotY = 0x100;
-            self->rotX = 0x100;
+            self->scaleY = 0x100;
+            self->scaleX = 0x100;
             self->step = self->step_s;
             self->ext.ectoplasm.unk92 = -self->ext.ectoplasm.unk92 * 2;
         }
@@ -257,8 +257,8 @@ void func_us_801CD318(Entity* self) {
             PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
         }
         angle = self->ext.ectoplasm.unk90 & 0x7FF;
-        self->rotY = self->ext.ectoplasm.unk96 + (rsin(angle) >> 4);
-        self->rotX = self->ext.ectoplasm.unk96 - (rsin(angle) >> 6);
+        self->scaleY = self->ext.ectoplasm.unk96 + (rsin(angle) >> 4);
+        self->scaleX = self->ext.ectoplasm.unk96 - (rsin(angle) >> 6);
         self->ext.ectoplasm.unk90 += 0x80;
         self->posY.val += self->velocityY;
         self->velocityY += 0x400;

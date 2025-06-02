@@ -60,7 +60,7 @@ void EntityWeaponAttack(Entity* self) {
         return;
     }
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
@@ -79,7 +79,7 @@ s32 func_ptr_80170004(Entity* self) {
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 
     params = (self->params >> 4) & 0x7f0;

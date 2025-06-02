@@ -126,7 +126,7 @@ void EntityWeaponAttack(Entity* self) {
     }
 
     self->drawFlags = PLAYER.drawFlags;
-    self->rotY = PLAYER.rotY;
+    self->scaleY = PLAYER.scaleY;
     self->rotPivotY = PLAYER.rotPivotY;
 
     if (self->animCurFrame != 0xD && self->animCurFrame != 0x22 &&

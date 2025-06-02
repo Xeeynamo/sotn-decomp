@@ -10,11 +10,11 @@ void EntityClockHands(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
-        self->drawFlags = FLAG_DRAW_ROTZ;
+        self->drawFlags = FLAG_DRAW_ROTATE;
 
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
-        handShadow->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTZ;
+        handShadow->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
         handShadow->drawMode = DRAW_TPAGE;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
@@ -24,12 +24,12 @@ void EntityClockHands(Entity* self) {
         handShadow->posY.i.hi += 4;
     }
 
-    self->rotZ = (self->ext.clockRoom.hand * 0x1000) / 3600;
+    self->rotate = (self->ext.clockRoom.hand * 0x1000) / 3600;
     if (params != 0) {
-        self->rotZ += 0x400;
+        self->rotate += 0x400;
     }
 
-    handShadow->rotZ = self->rotZ &= 0xFFF;
+    handShadow->rotate = self->rotate &= 0xFFF;
 }
 
 extern u16 anim_bird_cage[];
@@ -47,7 +47,7 @@ void EntityBirdcageDoor(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
         self->zPriority = 0x3C;
-        self->rotX = self->rotY = 0x100;
+        self->scaleX = self->scaleY = 0x100;
         self->ext.birdcage.prevState = self->ext.birdcage.state;
         self->opacity = 0x80;
         self->posX.i.hi = bird_cage_pos_x[params] - g_Tilemap.scrollX.i.hi;
@@ -57,7 +57,7 @@ void EntityBirdcageDoor(Entity* self) {
     case 1:
         if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
             self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
+                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;
@@ -66,7 +66,7 @@ void EntityBirdcageDoor(Entity* self) {
         break;
 
     case 2:
-        self->rotX = self->rotY -= 2;
+        self->scaleX = self->scaleY -= 2;
         self->opacity += 0xFF;
         if (--self->ext.birdcage.timer == 0) {
             self->ext.birdcage.timer = 64;
@@ -99,7 +99,7 @@ void EntityBirdcageDoor(Entity* self) {
         break;
 
     case 5:
-        self->rotX = self->rotY += 2;
+        self->scaleX = self->scaleY += 2;
         self->opacity += 1;
         if (--self->ext.birdcage.timer == 0) {
             self->drawFlags = FLAG_DRAW_DEFAULT;

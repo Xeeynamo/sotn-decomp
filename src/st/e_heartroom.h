@@ -132,8 +132,8 @@ void EntityHeartRoomGoldDoor(Entity* self) {
                     newEntity->posY.i.hi = 188;
                     newEntity->posX.i.hi += -8 + (Random() & 15);
                     newEntity->params = 0x10;
-                    newEntity->drawFlags |= FLAG_DRAW_ROTY | FLAG_DRAW_ROTX;
-                    newEntity->rotX = newEntity->rotY = 192;
+                    newEntity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+                    newEntity->scaleX = newEntity->scaleY = 192;
                 }
             }
         }

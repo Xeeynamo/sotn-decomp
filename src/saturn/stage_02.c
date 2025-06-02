@@ -349,12 +349,12 @@ void EntityAxeKnightRotateAxe(Entity* self) {
         self->unk0->unk8 -= 0x80;
     }
     if (self->params != 0) {
-        self->rotZ += 0x80;
+        self->rotate += 0x80;
     } else {
-        self->rotZ -= 0x80;
+        self->rotate -= 0x80;
     }
 
-    self->rotZ &= 0xFFF;
+    self->rotate &= 0xFFF;
 }
 
 INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EACC0, func_060EACC0);

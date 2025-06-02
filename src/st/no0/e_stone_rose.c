@@ -46,13 +46,13 @@ void func_us_801D7DAC(Entity* self) {
     Entity* newEntity;
     s32 params;
     s32 i;
-    s32 rotZ;
+    s32 rotate;
 
     params = self->params;
     if (self->step == 0) {
-        self->rotX = D_us_80182268[params][0] & 0xFF;
-        self->rotY = D_us_80182268[params][1] & 0xFF;
-        self->rotZ = D_us_80182268[params][2] & 0x7F;
+        self->scaleX = D_us_80182268[params][0] & 0xFF;
+        self->scaleY = D_us_80182268[params][1] & 0xFF;
+        self->rotate = D_us_80182268[params][2] & 0x7F;
         self->rotPivotX = D_us_80182268[params][3] & 0x7F;
         if (D_us_80182268[params][3] & 0x80) {
             self->attackElement = self->rotPivotX;
@@ -92,8 +92,8 @@ void func_us_801D7DAC(Entity* self) {
         }
         self->attackElement = self->rotPivotX;
     }
-    rotZ = self->rotZ;
-    for (i = 0; i < rotZ; i++) {
+    rotate = self->rotate;
+    for (i = 0; i < rotate; i++) {
         if (self->hitPoints == 0) {
             newEntity = g_api.GetFreeEntity(0xA0, 0xC0);
         }
@@ -107,8 +107,8 @@ void func_us_801D7DAC(Entity* self) {
             return;
         }
         DestroyEntity(newEntity);
-        newEntity->entityId = self->rotX;
-        if (self->rotX == 0) {
+        newEntity->entityId = self->scaleX;
+        if (self->scaleX == 0) {
             while (true) {
                 i++;
             }
@@ -125,7 +125,7 @@ void func_us_801D7DAC(Entity* self) {
             newEntity->params += i;
         }
         self->rotPivotY++;
-        if (self->rotPivotY == self->rotY) {
+        if (self->rotPivotY == self->scaleY) {
             DestroyEntity(self);
             return;
         }
@@ -192,7 +192,7 @@ void func_us_801D8150(Entity* self) {
                 self->poseTimer = 0;
                 self->anim = D_us_801822B4;
                 self->step = 3;
-                self->drawFlags |= FLAG_DRAW_ROTZ;
+                self->drawFlags |= FLAG_DRAW_ROTATE;
             }
         }
     }
@@ -206,7 +206,7 @@ void func_us_801D8150(Entity* self) {
                 entity->facingLeft = self->facingLeft;
             }
         }
-        self->drawFlags = FLAG_DRAW_ROTX | FLAG_DRAW_ROTY;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         InitializeEntity(g_EInitStoneRose);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -277,9 +277,9 @@ void func_us_801D8150(Entity* self) {
     case 3:
         self->ext.stoneRose.unk7E += 0x100;
         self->ext.stoneRose.unk90 += 0x180;
-        self->rotZ = rsin(self->ext.stoneRose.unk90) >> 3;
+        self->rotate = rsin(self->ext.stoneRose.unk90) >> 3;
         if (self->ext.stoneRose.unk90 >= 0x6000) {
-            self->drawFlags &= ~FLAG_DRAW_ROTZ;
+            self->drawFlags &= ~FLAG_DRAW_ROTATE;
         }
         g_api.UpdateAnim(NULL, NULL);
         if (self->poseTimer < 0) {
@@ -458,7 +458,7 @@ void func_us_801D8150(Entity* self) {
     }
     i += 0x100;
 
-    self->rotY = self->rotX = i;
+    self->scaleY = self->scaleX = i;
     if ((params != 0) && (self->step < 8)) {
         self--;
         posX = self->posX.val;
@@ -538,8 +538,8 @@ void func_us_801D8DF0(Entity* self) {
     }
     self->velocityY += FIX(1.5 / 16);
     zRotation = (ratan2(-self->velocityY, self->velocityX) + 0x600) & 0xFFF;
-    self->drawFlags = FLAG_DRAW_ROTZ;
-    self->rotZ = zRotation;
+    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->rotate = zRotation;
 }
 
 // Seed entity
