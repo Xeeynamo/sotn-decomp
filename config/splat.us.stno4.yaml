@@ -50,7 +50,7 @@ segments:
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
       - [0x1974, .data, e_killer_fish]
-      - [0x19D0, data, cutscene]
+      - [0x19D0, .data, cutscene]
       - [0x19D4, .data, st_update]
       - [0x1A20, .data, collision]
       - [0x1DE0, .data, e_red_door]
