@@ -777,7 +777,7 @@ void InitStatsAndGear(bool isDeathTakingItems);
 
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
-s32 func_800FD6C4(s32 equipTypeFilter);
+s32 func_800FD6C4(EquipKind equipTypeFilter);
 u8* GetEquipOrder(EquipKind kind);
 u8* GetEquipCount(EquipKind kind);
 const char* GetEquipmentName(EquipKind kind, s32 equipId);

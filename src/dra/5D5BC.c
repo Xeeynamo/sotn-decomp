@@ -60,7 +60,7 @@ ItemCategory GetEquipItemCategory(s32 equipId) {
     return g_EquipDefs[g_Status.equipment[equipId]].itemCategory;
 }
 
-s32 func_800FD6C4(s32 equipTypeFilter) {
+s32 func_800FD6C4(EquipKind equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
     s32 i;

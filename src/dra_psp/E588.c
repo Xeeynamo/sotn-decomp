@@ -5,7 +5,7 @@
 #include "servant.h" // for InitializeMode enum
 
 typedef struct EquipMenuHelper {
-    s32 equipTypeFilter;
+    EquipKind equipTypeFilter;
     s32 index;
     s32 isAccessory;
 } EquipMenuHelper;
@@ -35,7 +35,7 @@ extern u8 D_psp_0914A248[];
 extern u8 D_psp_09149FB0[];
 extern s32 D_psp_091CDD40;
 extern u_long* D_psp_0914A388[];
-extern s32 D_801375CC;
+extern EquipKind D_801375CC;
 extern s32 D_801375D4;
 extern s32 D_psp_091CE1E0;
 extern s32 D_psp_091CDF14;
@@ -44,8 +44,7 @@ extern s32 D_psp_091CDE30[];
 extern s32 D_psp_091CDDC0[];
 extern s32 g_IsSelectingEquipment;
 extern s32 D_80137608;
-extern s32 D_80137844[];
-extern s32 D_80137848[];
+extern s32 D_80137844[2];
 extern s32 D_psp_091CDDB8;
 extern s32 D_psp_091CDDB0;
 extern s32 D_psp_091CDDA8;
@@ -54,6 +53,9 @@ extern s32 D_801375E0[NUM_FAMILIARS + 1];
 extern s32 g_IsCloakColorUnlocked;
 extern s32 g_IsCloakLiningUnlocked;
 extern s32 D_801375DC;
+extern s32 g_EquipOrderType;
+extern s32 D_psp_091CE170;
+extern s32* D_801375D8;
 
 extern char** D_800A2D48;
 extern char** D_800A2D68;
@@ -1433,7 +1435,56 @@ void MenuSystemDraw(MenuContext* ctx) {
     MenuDrawStr(g_MenuStr[strIdx], 0x20, 0x70, ctx);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F84CC);
+void func_800F84CC(void) {
+    Primitive* prim;
+    s32 i;
+    s32 primIndex;
+
+    for (i = 0; i < NUM_MENU; i++) {
+        D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
+        prim = &g_PrimBuf[D_801377FC[i]];
+        prim->drawMode = DRAW_HIDE;
+    }
+
+    D_psp_091CDF14 = func_800EDD9C(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_psp_091CDF14];
+    SetPrimRect(prim, 20, 195, 42, 28);
+    prim->u0 = 113;
+    prim->v0 = 177;
+    prim->u1 = 127;
+    prim->v1 = 177;
+    prim->u2 = 113;
+    prim->v2 = 191;
+    prim->u3 = 127;
+    prim->v3 = 191;
+    prim->tpage = 0x1A;
+    prim->clut = 0x1EF;
+    prim->priority = 0x40;
+    prim->drawMode = DRAW_MENU | DRAW_HIDE;
+
+    D_psp_091CDF18 = func_800EDD9C(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_psp_091CDF18];
+    for (i = 0; prim; i++) {
+        prim->x0 = prim->x2 = 7;
+        prim->x1 = prim->x3 = prim->x0 + 16;
+        prim->v0 = prim->v1 = 48;
+        prim->v2 = prim->v3 = prim->v0 + 16;
+        if (i == 0) {
+            prim->y0 = prim->y1 = 124;
+            prim->u0 = prim->u2 = 80;
+        } else {
+            prim->y0 = prim->y1 = 174;
+            prim->u0 = prim->u2 = 96;
+        }
+        prim->y2 = prim->y3 = prim->y0 + 0x10;
+        prim->u1 = prim->u3 = prim->u0 + 0x10;
+        func_80107250(prim, 64);
+        prim->tpage = 0x1A;
+        prim->priority = 0x40;
+        prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+    }
+}
 
 void func_800F86E4(void) {
     s32 i;
@@ -1470,16 +1521,131 @@ void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
     D_psp_091CE1E0 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipSortDraw);
+void MenuEquipSortDraw(MenuContext* ctx) {
+    s32 i;
+    s32 y;
+
+    for (i = 0, y = 0; i < 11; i++) {
+        MenuDrawStr(D_800A2D68[g_Settings.equipOrderTypes[i] + 7],
+                    ctx->cursorX + 4, ctx->cursorY + 6 + y, ctx);
+        y += 16;
+    }
+    func_800F5E68(ctx, g_EquipOrderType, ctx->cursorX + 2, ctx->cursorY + 4,
+                  0x48, 16, 0, true);
+}
 
 void func_800F892C(s32 index, s32 x, s32 y, MenuContext* ctx) {
     MenuDrawImg(ctx, x, y, 16, 16, (index & 7) * 16,
                 ((index & 0xF8) * 2) | 0x80, index + 0x1D0, 0x1A, 1, 0);
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F8990);
+void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
+    const s32 Cols = 2;
+    const s32 Width = 168;
+    const s32 Height = 12;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuDrawLine);
+    u8* equipOrder;
+    u8* equipsAmount;
+    s32 itemsPerPage;
+    s32 totalItemCount;
+    s32 curX, curY;
+    s32 i;
+    s32 myX, myY;
+    const char* equipName;
+    s32 itemIndex;
+    s32 icon;
+    s32 palette;
+    u8 equipId;
+
+    DrawSync(0);
+    equipOrder = GetEquipOrder(D_801375CC);
+    equipsAmount = GetEquipCount(D_801375CC);
+    totalItemCount = func_800FD6C4(D_801375CC);
+    curX = curY = 0;
+    itemsPerPage = (ctx->cursorH / Height + 1) * Cols;
+    for (i = 0; i < itemsPerPage; i++) {
+        itemIndex = i + -ctx->h / Height * Cols;
+        if (itemIndex >= totalItemCount) {
+            break;
+        }
+
+        myX = 40 + x + (itemIndex & 1) * Width;
+        myY = 4 + y + (itemIndex / 2) * Height;
+        if (g_IsSelectingEquipment && itemIndex == D_psp_091CE170) {
+            curX = myX + 1;
+            curY = myY - 2;
+        }
+
+        equipId = equipOrder[D_801375D8[itemIndex]];
+        if (equipsAmount[equipId] == 0) {
+            continue;
+        }
+
+        equipName = GetEquipmentName(D_801375CC, equipId);
+        if (D_801375CC == EQUIP_HAND) {
+            icon = g_EquipDefs[equipId].icon;
+            palette = g_EquipDefs[equipId].iconPalette;
+        } else {
+            icon = g_AccessoryDefs[equipId].icon;
+            palette = g_AccessoryDefs[equipId].iconPalette;
+        }
+
+        LoadEquipIcon(icon, palette, i);
+        func_800F892C(i, myX - 16, myY - 4, ctx);
+        MenuDrawStr(equipName, myX, myY, ctx);
+
+        if (D_801375CC == EQUIP_HAND && equipId != ITEM_EMPTY_HAND ||
+            D_801375CC != EQUIP_HAND && equipId != ITEM_EMPTY_HEAD &&
+                equipId != ITEM_NO_ARMOR && equipId != ITEM_NO_CAPE &&
+                equipId != ITEM_NO_ACCESSORY) {
+            MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
+        }
+    }
+    if (g_IsSelectingEquipment) {
+        func_psp_090ECF20(ctx, curX, curY);
+    }
+}
+
+void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
+    s32 z;
+    u8 color;
+
+    OT_TYPE* ot = g_CurrentBuffer->ot;
+    LINE_G2* line = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
+
+    if (isColorStatic) {
+        z = g_MenuData.menus[isColorStatic - 1].otIdx + 4;
+    } else {
+        z = 0x80;
+    }
+
+    SetSemiTrans(line, 0);
+    SetShadeTex(line, 1);
+
+    if (g_Timer & 0x20) {
+        color = g_Timer & 0x1F;
+    } else {
+        color = 0x1F - (g_Timer & 0x1F);
+    }
+    color = (color * 4) + 0x80;
+
+    if (isColorStatic) {
+        color = 0xFF;
+    }
+
+    line->r0 = color;
+    line->g0 = color;
+    line->b0 = color;
+    line->r1 = color;
+    line->g1 = color;
+    line->b1 = color;
+    line->x0 = x0;
+    line->y0 = y0;
+    line->x1 = x1;
+    line->y1 = y1;
+    AddPrim(&ot[z], line);
+    g_GpuUsage.line++;
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", DrawConsumableCount);
 
@@ -1737,7 +1903,37 @@ void func_800F9690(void) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F96F4);
+void func_800F96F4(void) {
+    Primitive* prim;
+    s32 temp_a2;
+
+    temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
+    prim = &g_PrimBuf[D_psp_091CDF18];
+
+    if (D_80137844[0] && temp_a2) {
+        prim->drawMode = DRAW_MENU;
+        if (D_80137844[0] == 1) {
+            prim->clut = 0x188;
+        } else {
+            D_80137844[0] -= 1;
+            prim->clut = 0x181;
+        }
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+    prim = prim->next;
+    if (D_80137844[1] && temp_a2) {
+        prim->drawMode = DRAW_MENU;
+        if (D_80137844[1] == 1) {
+            prim->clut = 0x188;
+        } else {
+            D_80137844[1] -= 1;
+            prim->clut = 0x181;
+        }
+    } else {
+        prim->drawMode = DRAW_HIDE;
+    }
+}
 
 static void func_800F97DC(void) {
     D_8013794C = g_Pix[0];
@@ -1745,7 +1941,24 @@ static void func_800F97DC(void) {
     D_80137954 = 0;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F9808);
+void func_800F9808(s32 arg0) {
+    s32 temp_s0;
+    s32 i;
+    u_long* oldPos;
+
+    temp_s0 = 0;
+    if (arg0 == 2) {
+        temp_s0 = 0x20;
+    }
+    arg0 = func_800F548C(arg0);
+    oldPos = (u_long*)D_8013794C;
+
+    for (i = 0; i < (temp_s0 + 0x100) * 16 / 2; i++) {
+        *D_8013794C++ = 0;
+    }
+
+    LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 0x100, 16);
+}
 
 void func_800F98AC(const char* str, u32 arg1) {
     u8 type;
@@ -2097,7 +2310,50 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1418);
+void func_psp_090F1418(s32 cursorIndex, s32 arg1, s32 arg2) {
+    s32 limit;
+    s32 x0, y0;
+    s32 a, b; // quotient and remainder of cursorIndex / 2
+
+    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
+
+    if (menu->unk1C) {
+        return;
+    }
+    a = cursorIndex & 1;
+    b = cursorIndex / 2;
+    x0 = (a * 0xA8) + 0x34;
+    limit = -(menu->unk16 / 12);
+    if (b < limit) {
+        // Below some limit
+        menu->unk16 += 12;
+        y0 = menu->cursorY + 1;
+    } else if (b >= limit + menu->cursorH / 12) {
+        // Beyond that limit, on the other side
+        menu->unk16 -= 12;
+        y0 = menu->cursorY + 1 + (menu->cursorH / 12 - 1) * 12;
+    } else {
+        // Somewhere in between
+        y0 = menu->cursorY + (b - limit) * 12 + 1;
+    }
+
+    if (D_801375CC == EQUIP_HAND) {
+        g_MenuNavigation.scrollEquipType[EQUIP_HAND] = menu->unk16;
+    } else {
+        g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4] = menu->unk16;
+    }
+    if (arg2) {
+        if (!arg1) {
+            MenuDrawLine(x0, y0, x0 + 0x70, y0, 0);
+            MenuDrawLine(x0, y0, x0, y0 + 0xB, 0);
+            MenuDrawLine(x0 + 0x70, y0, x0 + 0x70, y0 + 0xB, 0);
+            MenuDrawLine(x0, y0 + 0xB, x0 + 0x70, y0 + 0xB, 0);
+        } else {
+            MenuDrawLine(x0, y0, x0 + 0x70, y0 + 0xB, 0);
+            MenuDrawLine(x0, y0 + 0xB, x0 + 0x70, y0, 0);
+        }
+    }
+}
 
 INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipHandlePageScroll);
 
@@ -2131,7 +2387,7 @@ void func_800FAC0C(s32 menuDialogue) {
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
-    D_80137848[0] = 0;
+    D_80137844[1] = 0;
 }
 
 void func_800FAC48(void) {
@@ -2214,7 +2470,6 @@ s32 D_800A2DEC[] = {
 };
 
 extern u32 D_801375D0;
-extern s32* D_801375D8;
 
 extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
@@ -2282,7 +2537,6 @@ INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
 
 extern s32 g_ServantPrevious;
 extern s32 D_80137958;
-extern s32 g_EquipOrderType;
 extern bool D_psp_091CDD48;
 extern s32 g_UserLanguage;
 
@@ -2953,7 +3207,7 @@ block_4:
         if (var_s1 != g_MenuNavigation.cursorEquip) {
             func_800FADC0();
         }
-        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
+        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == EQUIP_HAND) {
             PlaySfx(SFX_UI_CONFIRM);
             MenuShow(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP_SORT;
@@ -2964,8 +3218,8 @@ block_4:
             MenuHide(MENU_DG_INFO_BAR);
             MenuShow(MENU_DG_MAIN);
             MenuShow(MENU_DG_BG);
-            *D_80137844 = 0;
-            *D_80137848 = 0;
+            D_80137844[0] = 0;
+            D_80137844[1] = 0;
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
