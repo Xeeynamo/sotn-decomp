@@ -133,7 +133,7 @@ u8 GetEquipItemCategory(s32 equipId) {
 
 // SAT: func_0606F378
 // a little different from PSX version
-s32 func_800FD6C4(s32 equipTypeFilter) {
+s32 func_800FD6C4(EquipKind equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
     s32 i;

@@ -5,7 +5,7 @@
 #include "servant.h" // for InitializeMode enum
 
 typedef struct EquipMenuHelper {
-    s32 equipTypeFilter;
+    EquipKind equipTypeFilter;
     s32 index;
     s32 isAccessory;
 } EquipMenuHelper;
@@ -35,7 +35,7 @@ extern u8 D_psp_0914A248[];
 extern u8 D_psp_09149FB0[];
 extern s32 D_psp_091CDD40;
 extern u_long* D_psp_0914A388[];
-extern s32 D_801375CC;
+extern EquipKind D_801375CC;
 extern s32 D_801375D4;
 extern s32 D_psp_091CE1E0;
 extern s32 D_psp_091CDF14;
@@ -1582,7 +1582,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         }
 
         equipName = GetEquipmentName(D_801375CC, equipId);
-        if (D_801375CC == 0) {
+        if (D_801375CC == EQUIP_HAND) {
             icon = g_EquipDefs[equipId].icon;
             palette = g_EquipDefs[equipId].iconPalette;
         } else {
@@ -1594,9 +1594,10 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F892C(i, myX - 16, myY - 4, ctx);
         MenuDrawStr(equipName, myX, myY, ctx);
 
-        if (D_801375CC == 0 && equipId != 0 ||
-            D_801375CC != 0 && equipId != 0x1A && equipId != 0 &&
-                equipId != 0x30 && equipId != 0x39) {
+        if (D_801375CC == EQUIP_HAND && equipId != ITEM_EMPTY_HAND ||
+            D_801375CC != EQUIP_HAND && equipId != ITEM_EMPTY_HEAD &&
+                equipId != ITEM_NO_ARMOR && equipId != ITEM_NO_CAPE &&
+                equipId != ITEM_NO_ACCESSORY) {
             MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
@@ -2336,7 +2337,7 @@ void func_psp_090F1418(s32 cursorIndex, s32 arg1, s32 arg2) {
         y0 = menu->cursorY + (b - limit) * 12 + 1;
     }
 
-    if (D_801375CC == 0) {
+    if (D_801375CC == EQUIP_HAND) {
         g_MenuNavigation.scrollEquipType[EQUIP_HAND] = menu->unk16;
     } else {
         g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4] = menu->unk16;
@@ -3206,7 +3207,7 @@ block_4:
         if (var_s1 != g_MenuNavigation.cursorEquip) {
             func_800FADC0();
         }
-        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
+        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == EQUIP_HAND) {
             PlaySfx(SFX_UI_CONFIRM);
             MenuShow(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP_SORT;

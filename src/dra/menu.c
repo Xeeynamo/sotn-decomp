@@ -6,7 +6,7 @@
 #include "sfx.h"
 
 typedef struct EquipMenuHelper {
-    s32 equipTypeFilter;
+    EquipKind equipTypeFilter;
     s32 index;
     s32 isAccessory;
 } EquipMenuHelper;
@@ -1777,9 +1777,10 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
         func_800F892C(i, myX - 16, myY - 4, ctx);
         MenuDrawStr(equipName, myX, myY, ctx);
 
-        if (D_801375CC == EQUIP_HAND && equipId != 0 ||
-            D_801375CC != 0 && equipId != 0x1A && equipId != 0 &&
-                equipId != 0x30 && equipId != 0x39) {
+        if (D_801375CC == EQUIP_HAND && equipId != ITEM_EMPTY_HAND ||
+            D_801375CC != EQUIP_HAND && equipId != ITEM_EMPTY_HEAD &&
+                equipId != ITEM_NO_ARMOR && equipId != ITEM_NO_CAPE &&
+                equipId != ITEM_NO_ACCESSORY) {
             MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
@@ -2599,10 +2600,10 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
 
 void MenuEquipHandlePageScroll(s32 arg0) {
     const int ItemsPerPage = 12;
-    const int Unk16 = 72;
     s32 nItems;
     s32 limit;
     s32* cursorIndex;
+
     MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
     if (D_801375CC == EQUIP_HAND) {
@@ -2617,7 +2618,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
         if (g_pads[0].repeat & PAD_L1) {
             if (*cursorIndex >= ItemsPerPage) {
                 *cursorIndex -= ItemsPerPage;
-                menu->unk16 += Unk16;
+                menu->unk16 += 0x48;
                 if (menu->unk16 > 0) {
                     menu->unk16 = 0;
                 }
@@ -2632,10 +2633,9 @@ void MenuEquipHandlePageScroll(s32 arg0) {
         if (g_pads[0].repeat & PAD_R1) {
             if (*cursorIndex < nItems - ItemsPerPage) {
                 *cursorIndex += ItemsPerPage;
-                limit = -(((nItems - 1) / 2 - 5) * ItemsPerPage);
-                menu->unk16 -= Unk16;
-                if (menu->unk16 < limit) {
-                    menu->unk16 = limit;
+                menu->unk16 -= 0x48;
+                if (menu->unk16 < ((nItems - 1) / 2 - 5) * -ItemsPerPage) {
+                    menu->unk16 = ((nItems - 1) / 2 - 5) * -ItemsPerPage;
                 }
                 if (D_80137844[1] != 0) {
                     D_80137844[1] = 5;
@@ -2643,7 +2643,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
             } else {
                 *cursorIndex = nItems - 1;
                 if (nItems > ItemsPerPage) {
-                    menu->unk16 = -((*cursorIndex / 2 - 5) * ItemsPerPage);
+                    menu->unk16 = ((nItems - 1) / 2 - 5) * -ItemsPerPage;
                 }
             }
         }
@@ -2654,28 +2654,23 @@ void MenuEquipHandlePageScroll(s32 arg0) {
 // If you use both attack buttons at once, see if something special
 // happens. Applies to Shield Rod + Shield, or dual Heaven Swords
 void CheckWeaponCombo(void) {
-    s32 weapon0;
-    s32 weapon1;
-    s32 combo1;
-    s32 combo2;
-    s32 comboBits;
     s32 i;
-    s32 oddComboCheck;
 
-    weapon0 = g_Status.equipment[LEFT_HAND_SLOT];
-    weapon1 = g_Status.equipment[RIGHT_HAND_SLOT];
+    u32 handFlag = 0x80000000; // right hand
+    u32 combo = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboSub &
+                g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboMain;
 
-    combo1 = g_EquipDefs[weapon0].comboSub & g_EquipDefs[weapon1].comboMain;
-    oddComboCheck = 0x80000000;
-    oddComboCheck &= -(combo1 == 0);
+    if (combo != 0) {
+        handFlag = 0;
+    }
 
-    combo2 = g_EquipDefs[weapon0].comboMain & g_EquipDefs[weapon1].comboSub;
-    comboBits = combo1 | combo2;
+    combo |= g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboMain &
+             g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboSub;
 
-    if (comboBits != 0) {
+    if (combo != 0) {
         for (i = 0xAA; i < 0xD9; i++) {
-            if (comboBits & g_EquipDefs[i].comboSub) {
-                D_8013AEE4 = oddComboCheck + i;
+            if (combo & g_EquipDefs[i].comboSub) {
+                D_8013AEE4 = handFlag + i;
                 return;
             }
         }
@@ -2704,8 +2699,10 @@ bool LoadWeaponPrg(s32 equipIndex) {
         g_CdStep = CdStep_LoadInit;
         g_LoadFile = CdFile_Weapon0 + equipIndex;
     } else {
-        if (LoadFileSim(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0 ||
-            LoadFileSim(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
+        if (LoadFileSim(weaponId, SimFileType_Weapon0Prg + equipIndex) < 0) {
+            return 0;
+        }
+        if (LoadFileSim(weaponId, SimFileType_Weapon0Chr + equipIndex) < 0) {
             return 0;
         }
     }
@@ -2718,12 +2715,11 @@ void InitWeapon(s32 itemSlot) {
     // It will be called twice, with LEFT_HAND_SLOT and then RIGHT_HAND_SLOT
 
     void (*loadWeaponPalette)(u8 clutIndex);
-    s32 equipId;
+    s32 i;
     Entity* entity;
     u16 entityId;
-    s32 i;
 
-    equipId = g_Status.equipment[itemSlot];
+    u32 equipId = g_Status.equipment[itemSlot];
 
     // Having the Axe Lord Armor equipped will not load any normal weapon
     if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
@@ -2765,11 +2761,12 @@ void InitWeapon(s32 itemSlot) {
 
 void func_800FAB1C(void) {
     const int START = 4;
-    Entity* entity;
     s32 i;
+    Entity* entity;
 
-    for (entity = g_Entities + START, i = START; i < 64; i++) {
-        if (entity->entityId >= 208 && entity->entityId < 224) {
+    entity = g_Entities + START;
+    for (i = START; i < 64; i++) {
+        if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
             DestroyEntity(entity);
         }
         entity++;
