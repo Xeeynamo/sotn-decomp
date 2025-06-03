@@ -88,5 +88,5 @@ segments:
       - [0x5F858, .rodata, dai_psp/e_cutscene]
       - [0x5F910, .rodata, dai_psp/unk_1F270]
       - [0x5F980, .bss, dai/create_entity]
-      - [0x5F9A0, bss, 5F998]
+      - [0x5F9A0, bss, 5F9A0]
   - [0x60280]
