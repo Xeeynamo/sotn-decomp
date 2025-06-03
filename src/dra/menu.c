@@ -139,8 +139,7 @@ extern MenuData g_MenuData;
 extern s32 D_801377FC[NUM_MENU];
 extern s32 D_8013783C;
 extern s32 D_80137840;
-extern s32 D_80137844[1];
-extern s32 D_80137848[1];
+extern s32 D_80137844[2];
 #if defined(VERSION_US)
 extern s32 D_8013784C;
 #endif
@@ -1627,9 +1626,9 @@ void func_800F84CC(void) {
     prim = &g_PrimBuf[D_80137840];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;
-        prim->x1 = prim->x3 = 23;
+        prim->x1 = prim->x3 = prim->x0 + 16;
         prim->v0 = prim->v1 = 48;
-        prim->v2 = prim->v3 = 64;
+        prim->v2 = prim->v3 = prim->v0 + 16;
         if (i == 0) {
             prim->y0 = prim->y1 = 124;
             prim->u0 = prim->u2 = 80;
@@ -1728,47 +1727,45 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     const s32 Width = 168;
     const s32 Height = 12;
 
-    u8* sp20;
+    u8* equipOrder;
+    u8* equipsAmount;
     s32 itemsPerPage;
-    s32 totalItemCount;
-    s32 curX;
-    s32 curY;
-    s32 myX;
-    s32 myY;
-    s32 itemIndex;
+    s32 nItems;
+    s32 curX, curY;
     s32 i;
-    s8* strEquipName;
+    s32 myX, myY;
+    const char* equipName;
+    s32 itemIndex;
     u16 icon;
     u16 palette;
     u8 equipId;
-    u8* equipsAmount;
-    s32 idx;
 
-    sp20 = GetEquipOrder(D_801375CC);
+    equipOrder = GetEquipOrder(D_801375CC);
     equipsAmount = GetEquipCount(D_801375CC);
-    totalItemCount = func_800FD6C4(D_801375CC);
+    nItems = func_800FD6C4(D_801375CC);
     curX = 0;
     curY = 0;
-    itemsPerPage = Cols + ctx->cursorH / Height * Cols;
+    itemsPerPage = (ctx->cursorH / Height + 1) * Cols;
     for (i = 0; i < itemsPerPage; i++) {
         itemIndex = i + -ctx->h / Height * Cols;
-        if (itemIndex >= totalItemCount) {
+        if (itemIndex >= nItems) {
             break;
         }
 
         myX = 40 + x + (itemIndex & 1) * Width;
-        myY = 4 + y + itemIndex / 2 * Height;
+        myY = 4 + y + (itemIndex / 2) * Height;
         if (g_IsSelectingEquipment && itemIndex == g_EquipmentCursor) {
             curX = myX + 1;
             curY = myY - 2;
         }
 
-        equipId = sp20[D_801375D8[itemIndex]];
-        if (equipsAmount[equipId] == 0)
+        equipId = equipOrder[D_801375D8[itemIndex]];
+        if (equipsAmount[equipId] == 0) {
             continue;
+        }
 
-        strEquipName = GetEquipmentName(D_801375CC, equipId);
-        if (D_801375CC == 0) {
+        equipName = GetEquipmentName(D_801375CC, equipId);
+        if (D_801375CC == EQUIP_HAND) {
             icon = g_EquipDefs[equipId].icon;
             palette = g_EquipDefs[equipId].iconPalette;
         } else {
@@ -1778,9 +1775,9 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
 
         LoadEquipIcon(icon, palette, i);
         func_800F892C(i, myX - 16, myY - 4, ctx);
-        MenuDrawStr(strEquipName, myX, myY, ctx);
+        MenuDrawStr(equipName, myX, myY, ctx);
 
-        if (D_801375CC == 0 && equipId != 0 ||
+        if (D_801375CC == EQUIP_HAND && equipId != 0 ||
             D_801375CC != 0 && equipId != 0x1A && equipId != 0 &&
                 equipId != 0x30 && equipId != 0x39) {
             MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
@@ -1813,8 +1810,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     } else {
         color = 0x1F - (g_Timer & 0x1F);
     }
-    color *= 4;
-    color -= 0x80;
+    color = (color * 4) + 0x80;
 
     if (isColorStatic) {
         color = 0xFF;
@@ -2117,47 +2113,35 @@ void func_800F9690(void) {
     }
 }
 
-void func_800F96F4(void) { // !Fake:
-    s32 new_var2;
+void func_800F96F4(void) {
     Primitive* prim;
     s32 temp_a2;
-    s32* temp;
-    s32* new_var;
 
-    new_var = D_80137848;
-    prim = &g_PrimBuf[D_80137840];
     temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
-    temp = D_80137844;
-
-    if ((D_80137844[0] != 0) && (temp_a2 != 0)) {
-        (&g_PrimBuf[D_80137840])->drawMode = DRAW_MENU;
+    prim = &g_PrimBuf[D_80137840];
+    if (D_80137844[0] && temp_a2) {
+        prim->drawMode = DRAW_MENU;
         if (D_80137844[0] == 1) {
-            (&g_PrimBuf[D_80137840])->clut = 0x188;
+            prim->clut = 0x188;
         } else {
             D_80137844[0] -= 1;
-            (&g_PrimBuf[D_80137840])->clut = 0x181;
+            prim->clut = 0x181;
         }
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-
     prim = prim->next;
-    temp = new_var;
-
-    if (((*temp) != 0) && (temp_a2 != 0)) {
+    if (D_80137844[1] && temp_a2) {
         prim->drawMode = DRAW_MENU;
-        new_var2 = *temp;
-        if (new_var2 == 1) {
-            do {
-                prim->clut = 0x188;
-            } while (0);
-            return;
+        if (D_80137844[1] == 1) {
+            prim->clut = 0x188;
+        } else {
+            D_80137844[1] -= 1;
+            prim->clut = 0x181;
         }
-        *temp -= 1;
-        prim->clut = 0x181;
-        return;
+    } else {
+        prim->drawMode = DRAW_HIDE;
     }
-    prim->drawMode = DRAW_HIDE;
 }
 
 void func_800F97DC(void) {
@@ -2166,20 +2150,23 @@ void func_800F97DC(void) {
     D_80137954 = 0;
 }
 
-void func_800F9808(u32 arg0) {
+void func_800F9808(s32 arg0) {
     s32 temp_s0;
     s32 i;
-    u8* oldPos;
+    u_long* oldPos;
 
-    temp_s0 = (arg0 == 2) ? 32 : 0;
+    temp_s0 = 0;
+    if (arg0 == 2) {
+        temp_s0 = 0x20;
+    }
     arg0 = func_800F548C(arg0);
-    oldPos = D_8013794C;
+    oldPos = (u_long*)D_8013794C;
 
-    for (i = 0; i < ((temp_s0 + 0x100) * 8); i++) {
+    for (i = 0; i < (temp_s0 + 0x100) * 16 / 2; i++) {
         *D_8013794C++ = 0;
     }
 
-    LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 256, 16);
+    LoadTPage(oldPos, 0, 0, 0x180, arg0, temp_s0 + 0x100, 16);
 }
 
 void func_800F98AC(const char* str, u32 arg1) {
@@ -2567,50 +2554,45 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
 
 void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 limit;
-    s32 top_offset;
-    s32 arg0_lowbit;
-    s32 left;
-    s32 top;
-    s32 half_arg0;
+    s32 x0, y0;
+    s32 a, b; // quotient and remainder of cursorIndex / 2
+
     MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
-    if (menu->unk1C != 0) {
+    if (menu->unk1C) {
         return;
     }
-    arg0_lowbit = cursorIndex & 1;
-    half_arg0 = (cursorIndex / 2);
-
-    left = (arg0_lowbit * 0xA8) + 0x28;
+    a = cursorIndex & 1;
+    b = cursorIndex / 2;
+    x0 = (a * 0xA8) + 0x28;
     limit = -(menu->unk16 / 12);
-
-    // Below some limit
-    if (half_arg0 < limit) {
+    if (b < limit) {
+        // Below some limit
         menu->unk16 += 12;
-        top = menu->cursorY + 1;
+        y0 = menu->cursorY + 1;
+    } else if (b >= limit + menu->cursorH / 12) {
         // Beyond that limit, on the other side
-    } else if (half_arg0 >= (limit + menu->cursorH / 12)) {
         menu->unk16 -= 12;
-        top_offset = (menu->cursorH / 12 - 1) * 12 + 1;
-        top = menu->cursorY + top_offset;
-        // Somewhere in between
+        y0 = menu->cursorY + 1 + (menu->cursorH / 12 - 1) * 12;
     } else {
-        top = ((half_arg0 - limit) * 12) + menu->cursorY + 1;
+        // Somewhere in between
+        y0 = (b - limit) * 12 + menu->cursorY + 1;
     }
 
-    if (D_801375CC == 0) {
+    if (D_801375CC == EQUIP_HAND) {
         g_MenuNavigation.scrollEquipType[EQUIP_HAND] = menu->unk16;
     } else {
         g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4] = menu->unk16;
     }
-    if (arg2 != 0) {
-        if (arg1 == 0) {
-            MenuDrawLine(left, top, left + 0x70, top, 0);
-            MenuDrawLine(left, top, left, top + 0xB, 0);
-            MenuDrawLine(left + 0x70, top, left + 0x70, top + 0xB, 0);
-            MenuDrawLine(left, top + 0xB, left + 0x70, top + 0xB, 0);
+    if (arg2) {
+        if (!arg1) {
+            MenuDrawLine(x0, y0, x0 + 0x70, y0, 0);
+            MenuDrawLine(x0, y0, x0, y0 + 0xB, 0);
+            MenuDrawLine(x0 + 0x70, y0, x0 + 0x70, y0 + 0xB, 0);
+            MenuDrawLine(x0, y0 + 0xB, x0 + 0x70, y0 + 0xB, 0);
         } else {
-            MenuDrawLine(left, top, left + 0x70, top + 0xB, 0);
-            MenuDrawLine(left, top + 0xB, left + 0x70, top, 0);
+            MenuDrawLine(x0, y0, x0 + 0x70, y0 + 0xB, 0);
+            MenuDrawLine(x0, y0 + 0xB, x0 + 0x70, y0, 0);
         }
     }
 }
@@ -2623,7 +2605,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     s32* cursorIndex;
     MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
-    if (D_801375CC == 0) {
+    if (D_801375CC == EQUIP_HAND) {
         cursorIndex = &g_MenuNavigation.cursorEquipType[EQUIP_HAND];
     } else {
         cursorIndex =
@@ -2639,8 +2621,8 @@ void MenuEquipHandlePageScroll(s32 arg0) {
                 if (menu->unk16 > 0) {
                     menu->unk16 = 0;
                 }
-                if (*D_80137844 != 0) {
-                    *D_80137844 = 5;
+                if (D_80137844[0] != 0) {
+                    D_80137844[0] = 5;
                 }
             } else {
                 *cursorIndex = 0;
@@ -2655,8 +2637,8 @@ void MenuEquipHandlePageScroll(s32 arg0) {
                 if (menu->unk16 < limit) {
                     menu->unk16 = limit;
                 }
-                if (*D_80137848 != 0) {
-                    *D_80137848 = 5;
+                if (D_80137844[1] != 0) {
+                    D_80137844[1] = 5;
                 }
             } else {
                 *cursorIndex = nItems - 1;
@@ -2814,7 +2796,7 @@ void func_800FAC0C(s32 menuDialogue) {
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
-    D_80137848[0] = 0;
+    D_80137844[1] = 0;
 }
 
 void func_800FAC48(void) {
@@ -2912,26 +2894,26 @@ void func_800FAF44(s32 isAccessory) {
 }
 
 void func_800FB004(void) {
-    s32 temp_a1 = func_800FD6C4(D_801375CC);
+    s32 nItems = func_800FD6C4(D_801375CC);
     s32 temp_v0;
 
     if (((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h) / 12) != 0) {
-        if (*D_80137844 == 0) {
-            *D_80137844 = 1;
+        if (D_80137844[0] == 0) {
+            D_80137844[0] = 1;
         }
     } else {
-        *D_80137844 = 0;
+        D_80137844[0] = 0;
     }
 
     temp_v0 = -g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
               g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH;
 
-    if ((temp_v0 / 12) < (temp_a1 / 2)) {
-        if (D_80137848[0] == 0) {
-            D_80137848[0] = 1;
+    if ((temp_v0 / 12) < (nItems / 2)) {
+        if (D_80137844[1] == 0) {
+            D_80137844[1] = 1;
         }
     } else {
-        D_80137848[0] = 0;
+        D_80137844[1] = 0;
     }
 }
 
@@ -3183,22 +3165,22 @@ block_5b0:
     func_800FA3C4(nav->cursorMain, var_s6, 1);
     if ((-g_MenuData.menus[3].h) / 12) {
         if (g_pads[0].repeat & PAD_L1) {
-            *D_80137844 = 5;
-        } else if (*D_80137844 == 0) {
-            *D_80137844 = 1;
+            D_80137844[0] = 5;
+        } else if (D_80137844[0] == 0) {
+            D_80137844[0] = 1;
         }
     } else {
-        *D_80137844 = 0;
+        D_80137844[0] = 0;
     }
     if ((-g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH) / 12 <
         (nItems + 1) / 2) {
         if (g_pads[0].repeat & PAD_R1) {
-            *D_80137848 = 5;
-        } else if (*D_80137848 == 0) {
-            *D_80137848 = 1;
+            D_80137844[1] = 5;
+        } else if (D_80137844[1] == 0) {
+            D_80137844[1] = 1;
         }
     } else {
-        *D_80137848 = 0;
+        D_80137844[1] = 0;
     }
 
     if (func_800FACB8()) {
@@ -3913,7 +3895,7 @@ block_4:
         if (var_s1 != g_MenuNavigation.cursorEquip) {
             func_800FADC0();
         }
-        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == 0) {
+        if (g_pads[0].tapped & PAD_MENU_SORT && D_801375CC == EQUIP_HAND) {
             PlaySfx(SFX_UI_CONFIRM);
             MenuShow(MENU_DG_EQUIP_SORT);
             g_MenuStep = MENU_STEP_EQUIP_SORT;
@@ -3924,8 +3906,8 @@ block_4:
             MenuHide(MENU_DG_INFO_BAR);
             MenuShow(MENU_DG_MAIN);
             MenuShow(MENU_DG_BG);
-            *D_80137844 = 0;
-            *D_80137848 = 0;
+            D_80137844[0] = 0;
+            D_80137844[1] = 0;
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
