@@ -1436,7 +1436,8 @@ block_160:
     g_Player.unk7A = 0;
     func_801093C4();
     if (!(g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40))) {
-        if ((CheckEquipmentItemCount(0x58U, 4U) != 0) &&
+        if ((CheckEquipmentItemCount(ITEM_SECRET_BOOTS, EQUIP_ACCESSORY) !=
+             0) &&
             !(g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10 |
                                  PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD |
                                  PLAYER_STATUS_AXEARMOR)) &&
