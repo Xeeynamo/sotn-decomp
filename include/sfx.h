@@ -650,7 +650,7 @@ enum Sfx {
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
 
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+    // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
     /* 0x8E7 */ SFX_VO_MAR_ATTACK_C,
     /* 0x8E8 */ SFX_VO_MAR_8E8,
@@ -667,7 +667,6 @@ enum Sfx {
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,
     /* 0x8F5 */ SFX_VO_MAR_DEATH,
-#endif
 };
 
 #endif
