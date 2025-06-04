@@ -96,6 +96,15 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 #endif
 };
 
+static s16 D_80180EB8[] = {-6, 4, 0, -8};
+#if !defined(VERSION_BETA) && STAGE != STAGE_ST0
+// Note that this array is in data. MAD/ST0 have it in rodata.
+s8 c_HeartPrizes[] = {1, 5};
+#endif
+
+// from another file
+extern u16 g_EInitObtainable[];
+
 #include "../prize_drop_fall.h"
 
 #include "../prize_drop_fall2.h"
