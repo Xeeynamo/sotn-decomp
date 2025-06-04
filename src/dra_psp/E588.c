@@ -114,7 +114,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
 
     for (i = 0; i < BUTTON_COUNT; i++) {
         if (buf[i] == 0) {
-            //g_Settings.buttonConfig[7] = i;
+            // g_Settings.buttonConfig[7] = i;
             break;
         }
     }
@@ -2481,12 +2481,12 @@ s32 func_psp_090F1968(s32 equipIndex) {
     if (!func_8932D34()) {
         return 0;
     }
-    if (func_psp_090FAB30(
-            g_EquippedWeaponIds[equipIndex], SimFileType_Weapon0Prg + equipIndex, 1) < 0) {
+    if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
+                          SimFileType_Weapon0Prg + equipIndex, 1) < 0) {
         return 0;
     }
-    if (func_psp_090FAB30(
-            g_EquippedWeaponIds[equipIndex], SimFileType_Weapon0Chr + equipIndex, 1) < 0) {
+    if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
+                          SimFileType_Weapon0Chr + equipIndex, 1) < 0) {
         return 0;
     }
     return 1;
