@@ -247,7 +247,7 @@ class AnimationShower:
 
 def main(overlay, src_file):
     anims = load_anims(src_file)
-    while(True):
+    while True:
         print("Loaded animations:")
         for i, it in enumerate(anims.items()):
             print(f" [{i}]: {it}")

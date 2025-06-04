@@ -38,26 +38,35 @@ import time
 # Take a 5-5-5 encoded array and convert to RGB image.
 # See PSYQ SDK document LIBOVR46.PDF, figure 8-3.
 def convert_rgb555(in_array):
-    out_array = []
-    for in_row in in_array:
-        out_row = []
-        for i in range(0, len(in_row), 2):
-            two_bytes = in_row[i : i + 2]
-            two_bytes = two_bytes[::-1]
-            bits = int.from_bytes(two_bytes, "big")
-            s = bits >> 15  # semi transparent flag
-            b = bits >> 10 & 0b11111  # bits 14-10
-            g = (bits >> 5) & 0b11111  # bits 9-5
-            r = bits & 0b11111  # bits 4-0
-            # Transform 5-bit to 8-bit color
-            r = round(r / 31 * 255)
-            g = round(g / 31 * 255)
-            b = round(b / 31 * 255)
-            a = 255 if (r or g or b) else 0
-            pixel = [r, g, b, a]
-            out_row.append(pixel)
-        out_array.append(out_row)
-    return np.array(out_array, dtype="uint8")
+    # Ensure the input is a NumPy array of bytes
+    in_array = np.array(in_array, dtype="uint8")
+
+    # Convert pairs of bytes into a single uint16 interpretation for each pixel
+    # Reshape the input to have pairs of bytes (dims: [rows, cols], shape in bytes: (rows, 2*cols))
+    in_array = in_array.reshape(in_array.shape[0], -1, 2)
+
+    # Interpret these as uint16 by shifting and combining bytes correctly
+    # in_array[..., 0] corresponds to the lower byte, and in_array[..., 1] to the higher byte
+    bits = (in_array[..., 1].astype(np.uint16) << 8) | in_array[..., 0].astype(
+        np.uint16
+    )
+
+    # Extract bit components
+    s = bits >> 15
+    b = (bits >> 10) & 0b11111
+    g = (bits >> 5) & 0b11111
+    r = bits & 0b11111
+
+    # Transform 5-bit to 8-bit color using vectorized operations
+    r = np.round(r / 31 * 255).astype(np.uint8)
+    g = np.round(g / 31 * 255).astype(np.uint8)
+    b = np.round(b / 31 * 255).astype(np.uint8)
+    a = np.where(r | g | b, 255, 0).astype(np.uint8)
+
+    # Stack the channels to form RGBA data
+    out_array = np.stack((r, g, b, a), axis=-1)
+
+    return out_array
 
 
 # Once we have a tpage and a clut, apply that clut to color the tpage.
@@ -161,6 +170,7 @@ class textureDisplayer:
     def __init__(self, vram_dump):
         self.rawvram = vram_dump
         self.colored = convert_rgb555(vram_dump)
+
     def get_image(self, tpage, clut, x, y, w, h):
         return get_tpage_selection(self.rawvram, self.colored, tpage, clut, x, y, w, h)
 
