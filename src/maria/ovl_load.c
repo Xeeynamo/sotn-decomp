@@ -199,8 +199,10 @@ void MarLoadGraphics(void) {
 
 extern PlayerOvl MARIA_player;
 void MARIA_Load(void) {
+#if defined(VERSION_PSP) || defined(VERSION_PC)
     memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
+#endif
     func_91040A0(wpn_owl_img);
     func_91040A0(wpn_turtle_img);
     func_91040A0(wpn_cat_img);
