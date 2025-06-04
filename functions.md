@@ -451,7 +451,7 @@
 | dra    | func_800F6568                            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EAFA8                        |       37 |          3 |        |                                 |       |
 | dra    | GetSaveIcon                              |       37 |          3 |        |                                 |       |
-| dra    | func_800F82F4                            |       37 |          3 |        |                                 |       |
+| dra    | func_800F82F4                            |       37 |          3 |        | https://decomp.me/scratch/BJeMN | 0.604 |
 | maria  | func_pspeu_092BEA38                      |       37 |          3 |        |                                 |       |
 | dai    | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
 | no4    | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
