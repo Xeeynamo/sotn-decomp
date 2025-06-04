@@ -161,7 +161,6 @@ class textureDisplayer:
     def __init__(self, vram_dump):
         self.rawvram = vram_dump
         self.colored = convert_rgb555(vram_dump)
-
     def get_image(self, tpage, clut, x, y, w, h):
         return get_tpage_selection(self.rawvram, self.colored, tpage, clut, x, y, w, h)
 

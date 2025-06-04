@@ -247,25 +247,26 @@ class AnimationShower:
 
 def main(overlay, src_file):
     anims = load_anims(src_file)
-    print("Loaded animations:")
-    for i, it in enumerate(anims.items()):
-        print(f" [{i}]: {it}")
-    anim_idx = int(input("Select number above: "))
-    active_anim = list(anims.items())[anim_idx]
-    # To render an animation, we need to know the entity's animation set.
-    # That comes from InitializeEntity. Get the entity's initializer.
-    initializer = get_initializer_for_ent(active_anim[0], src_file, overlay)
-    anim_num, initframe, unk5A, palette, enemyNum = initializer
-    print(anim_num, palette)
+    while(True):
+        print("Loaded animations:")
+        for i, it in enumerate(anims.items()):
+            print(f" [{i}]: {it}")
+        anim_idx = int(input("Select number above: "))
+        active_anim = list(anims.items())[anim_idx]
+        # To render an animation, we need to know the entity's animation set.
+        # That comes from InitializeEntity. Get the entity's initializer.
+        initializer = get_initializer_for_ent(active_anim[0], src_file, overlay)
+        anim_num, initframe, unk5A, palette, enemyNum = initializer
+        print(anim_num, palette)
 
-    shower = AnimationShower(anim_num, overlay, palette=palette, unk5A=unk5A)
-    fig, ax = plt.subplots()
-    ax.set_xlim(0, 256)
-    ax.set_ylim(0, 256)
-    ax.set_title(f"Displaying {overlay} animation {active_anim[0]} from {src_file}")
-    plt.gca().invert_yaxis()
-    shower.play_anim(active_anim[1], fig, ax)
-    plt.show()
+        shower = AnimationShower(anim_num, overlay, palette=palette, unk5A=unk5A)
+        fig, ax = plt.subplots()
+        ax.set_xlim(0, 256)
+        ax.set_ylim(0, 256)
+        ax.set_title(f"Displaying {overlay} animation {active_anim[0]} from {src_file}")
+        plt.gca().invert_yaxis()
+        shower.play_anim(active_anim[1], fig, ax)
+        plt.show()
 
 
 parser = argparse.ArgumentParser(description="Renders in-game animations from ANIMSET")
