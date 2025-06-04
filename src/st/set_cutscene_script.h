@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+#if defined(VERSION_PC)
+#define NUM_CUTSCENE_PRIM 8
+#else
+#define NUM_CUTSCENE_PRIM 7
+#endif
+
 static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
 
-    g_Dialogue.primIndex[2] = g_api.AllocPrimitives(PRIM_SPRT,
-#if defined(VERSION_PC)
-                                                    8
-#else
-                                                    7
-#endif
-    );
+    g_Dialogue.primIndex[2] =
+        g_api.AllocPrimitives(PRIM_SPRT, NUM_CUTSCENE_PRIM);
 
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
