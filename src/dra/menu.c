@@ -626,10 +626,10 @@ void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
         clut = 0x15D;
     }
 #endif
-    if (ctx) {
-        otIdx = ctx->otIdx + 2;
-    } else {
+    if (ctx == NULL) {
         otIdx = 0x1FF;
+    } else {
+        otIdx = ctx->otIdx + 2;
     }
     SetSemiTrans(sp, 0);
     SetShadeTex(sp, disableTexShade);
