@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
+// ** How to calculate self->unk5A
+// GFX_ENTRY(Y, X, ...
+// where Y and X are variables for the python script below
+// def calc_tpage(y, x):
+//     return (y // 0x100) * 0x40 + ((y & 0x80) // 0x40) + \
+//            ((x & 0x20) // 0x20) + ((x // 0x20) * 2)
+
 static s32 D_pspeu_092E5F18;
 static s32 D_pspeu_092E5D18[0x80];
 static Point16 D_pspeu_092E5B18[0x80];
@@ -20,7 +27,11 @@ void EntityMariaDollAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x19;
+#else
+        self->unk5A = 0x67;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DOLL;
         self->animSet = ANIMSET_WPN_DOLL;
@@ -110,7 +121,11 @@ void EntityMariaDollActivate(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x19;
+#else
+        self->unk5A = 0x67;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DOLL;
         self->animSet = ANIMSET_WPN_DOLL;
@@ -263,7 +278,11 @@ void EntityMariaCatAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT;
         self->animSet = ANIMSET_WPN_CAT;
@@ -396,7 +415,11 @@ void EntityMariaCatCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT_CRASH;
         self->animSet = ANIMSET_WPN_CAT;
@@ -475,7 +498,11 @@ void EntityMariaCatCrashAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT;
         self->animSet = ANIMSET_WPN_CAT;
@@ -518,7 +545,11 @@ void EntityMariaDragonAttack(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DRAGON;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -672,7 +703,11 @@ void EntityMariaDragonCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_DRAGON_CRASH;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -822,7 +857,11 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_DRAGON_CRASH;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -997,7 +1036,11 @@ void EntityMariaCardinalAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CARDINAL;
@@ -1062,7 +1105,11 @@ void EntityMariaCardinalCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_WPN_CARDINAL;
@@ -1292,7 +1339,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
         }
         self->flags =
             FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_WPN_CARDINAL;
@@ -1477,7 +1528,11 @@ void EntityMariaTurtleAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;
@@ -1529,7 +1584,11 @@ void EntityMariaTurtleCrash(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 6;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;
@@ -1654,7 +1713,11 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 7;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;

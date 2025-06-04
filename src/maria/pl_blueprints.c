@@ -1308,7 +1308,11 @@ void EntityMariaOwl(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x18;
+#else
+        self->unk5A = 0x66;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_OWL;
         self->animSet = ANIMSET_WPN_OWL;
@@ -2969,7 +2973,11 @@ void EntityMariaCrashSummon(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
+#ifdef VERSION_PSP
         self->unk5A = 0x1C;
+#else
+        self->unk5A = 0x6A;
+#endif
         self->zPriority = 0x1C0;
         LoadCrashSummonResouces(self->ext.mariaCrashSummon.crashId);
         MarSetInvincibilityFrames(0, 999);
