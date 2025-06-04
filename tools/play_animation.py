@@ -117,6 +117,9 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
             if "ANIMSET_OVL" in initSet[0]:
                 arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
                 initSet[0] = hex(0x8000 | int(arg, 0))
+            if "ANIMSET_DRA" in initSet[0]:
+                arg = re.findall(r"(?<=\()[^\)]*", initSet[0])[0]
+                initSet[0] = arg
             return [int(x, 0) for x in initSet]
 
 
