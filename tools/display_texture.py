@@ -32,6 +32,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 import urllib.request
+import time
 
 
 # Take a 5-5-5 encoded array and convert to RGB image.
@@ -62,24 +63,19 @@ def convert_rgb555(in_array):
 # Once we have a tpage and a clut, apply that clut to color the tpage.
 def color_tpage(tpage, clut):
     height, width = tpage.shape
-    image = []
-    for y in range(height):
-        img_row = []
-        for x in range(width):
-            # Load one byte from the tpage.
-            px = tpage[y][x]
-            # The byte encodes two pixels in its upper and lower halfs.
-            # Extract each half.
-            px1 = px & 0b1111
-            px2 = px >> 4
-            # Individually, use the clut as a lookup table to get the real color.
-            color1 = clut[px1]
-            color2 = clut[px2]
-            # Put each of those two rows into the image.
-            img_row.append(color1)
-            img_row.append(color2)
-        image.append(img_row)
-    return np.array(image)
+
+    # Preallocate the output image array
+    image = np.empty((height, width * 2, 4), dtype=np.uint8)
+
+    # Vectorized operations to extract and map pixels
+    px1 = tpage & 0b1111
+    px2 = tpage >> 4
+
+    # Use clut as a lookup table to get the real colors in a vectorized manner
+    image[:, 0::2, :] = clut[px1]
+    image[:, 1::2, :] = clut[px2]
+
+    return image
 
 
 # Experimentally determined. For a tpage from 0x00 to 0x1F, get that tpage
