@@ -363,7 +363,7 @@
 | dra    | func_800F9690                            |       32 |          4 |        |                                 |       |
 | maria  | MarGetPlayerSensor                       |       33 |          1 |        |                                 |       |
 | ric    | RicGetPlayerSensor                       |       33 |          1 |        |                                 |       |
-| no4    | func_pspeu_0925E2C8                      |       33 |          1 |        |                                 |       |
+| no4    | CutsceneUnk1                             |       33 |          1 |        |                                 |       |
 | dra    | func_8010ED54                            |       33 |          4 |        |                                 |       |
 | dra    | PerformSwordBrothers                     |       33 |          5 |        |                                 |       |
 | dra    | func_8010E42C                            |       33 |          5 |        |                                 |       |
@@ -802,7 +802,7 @@
 | dra    | func_800F1954                            |       67 |         10 |        |                                 |       |
 | lib    | SkeletonAttackCheck                      |       67 |         10 |        |                                 |       |
 | maria  | func_pspeu_092C0040                      |       67 |         12 |        |                                 |       |
-| no4    | unk_26740.rodata                         |       68 |          0 | Yes    |                                 |       |
+| no4    | cutscene.rodata                          |       68 |          0 | Yes    |                                 |       |
 | dra    | SetRoomBackgroundLayer                   |       68 |          2 |        |                                 |       |
 | dra    | SortTimeAttackEntries                    |       68 |          5 |        |                                 |       |
 | no3    | NO3_EntityBackgroundBlock                |       68 |          5 |        |                                 |       |
@@ -1300,7 +1300,7 @@
 | ric    | RicEntityVibhutiCrashCloud               |      163 |         18 |        |                                 |       |
 | no3    | EntityUnkId30                            |      163 |         22 |        | https://decomp.me/scratch/gBfQF | 0.999 |
 | maria  | func_pspeu_092A7F78                      |      163 |         26 |        | https://decomp.me/scratch/6rxn3 | 0.999 |
-| dra    | DrawHud                                  |      164 |         14 |        |                                 |       |
+| dra    | DrawHud                                  |      164 |         14 |        | https://decomp.me/scratch/SakIE | 0.993 |
 | dra    | PlayerStepBossGrab                       |      164 |         24 |        |                                 |       |
 | maria  | MarStepRun                               |      164 |         28 |        | https://decomp.me/scratch/PO6Cz | 0.99  |
 | chi    | CHI_EntityLockCamera                     |      165 |         18 |        |                                 |       |
@@ -1527,7 +1527,7 @@
 | ric    | func_8015C6D4                            |      288 |         19 |        |                                 |       |
 | no3    | EntityMermanRockRightSide                |      288 |         30 |        | https://decomp.me/scratch/m1vzB | 0.997 |
 | lib    | func_psp_09238EC8                        |      290 |         42 |        | https://decomp.me/scratch/9ZS8x | 0.999 |
-| dra    | DrawHudSubweapon2                        |      292 |         59 |        |                                 |       |
+| dra    | DrawHudSubweapon2                        |      292 |         59 |        | https://decomp.me/scratch/SakIE | 0.993 |
 |        | ProcessEvent                             |      293 |         42 |        |                                 |       |
 | no4    | func_pspeu_09241410                      |      294 |         16 |        | https://decomp.me/scratch/gOOwB | 0.999 |
 | lib    | EntityBreakable                          |      294 |         47 |        | https://decomp.me/scratch/SjwKz | 0.998 |
@@ -1731,7 +1731,7 @@
 | ric    | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra    | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | maria  | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
-| dra    | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/93GG5 | 0.982 |
+| dra    | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/vfYTj | 0.993 |
 | dra    | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_us_801B7DF8                         |      556 |         54 |        |                                 |       |
 | dra    | EntityFactory                            |      557 |         48 | Yes    |                                 |       |
@@ -1857,7 +1857,7 @@
 | dra    | EntityNumberMovesToHpMeter               |      930 |         70 | Yes    | https://decomp.me/scratch/BBczf | 1.0   |
 | maria  | MarEntityShrinkingPowerUpRing            |      931 |         62 |        |                                 |       |
 | ric    | RicEntityShrinkingPowerUpRing            |      931 |         62 |        | https://decomp.me/scratch/O6Eko | 0.999 |
-| dra    | DrawHudSubweapon                         |      934 |         73 |        |                                 |       |
+| dra    | DrawHudSubweapon                         |      934 |         73 |        | https://decomp.me/scratch/SakIE | 0.993 |
 | maria  | func_pspeu_092BEB40                      |      944 |         70 | Yes    | https://decomp.me/scratch/ADRXc | 1.0   |
 |        | UpdateBatBlueTrailEntities               |      963 |         44 |        |                                 |       |
 | lib    | func_psp_09239650                        |      965 |        124 | Yes    | https://decomp.me/scratch/znDuM | 0.995 |
@@ -1927,7 +1927,7 @@
 | wrp    | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | func_pspeu_09239B00                      |     1639 |        210 | Yes    | https://decomp.me/scratch/s5g9m | 0.914 |
 | no3    | EntityMerman2                            |     1668 |        195 | Yes    | https://decomp.me/scratch/54y5f | 0.998 |
-| no4    | func_pspeu_0925E548                      |     1731 |        172 | Yes    | https://decomp.me/scratch/gh6po | 0.551 |
+| no4    | NO4_EntityCutscene                       |     1731 |        172 | Yes    |                                 |       |
 | st0    | EntityDraculaFinalForm                   |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra    | EntityStopWatch                          |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric    | RicEntityWhip                            |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
