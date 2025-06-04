@@ -232,7 +232,6 @@ class AnimationShower:
 
     def play_anim(self, animation_bytes, mpl_fig, mpl_ax):
         print("Playing animation:", animation_bytes)
-        mpl_ax.clear()
         images = []
         for i in range(0, len(animation_bytes), 2):
             if animation_bytes[i] == 0 or animation_bytes[i] == 255:
@@ -263,7 +262,7 @@ def main(overlay, src_file):
     fig, ax = plt.subplots()
     ax.set_xlim(0, 256)
     ax.set_ylim(0, 256)
-    plt.title(f"Displaying {overlay} animation {active_anim[0]} from {src_file}")
+    ax.set_title(f"Displaying {overlay} animation {active_anim[0]} from {src_file}")
     plt.gca().invert_yaxis()
     shower.play_anim(active_anim[1], fig, ax)
     plt.show()
