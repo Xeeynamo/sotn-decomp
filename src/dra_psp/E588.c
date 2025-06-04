@@ -10,6 +10,7 @@ typedef struct EquipMenuHelper {
     s32 isAccessory;
 } EquipMenuHelper;
 
+// Struct for table of values to intitialize MenuContext structs
 typedef struct {
     /* 0x00 */ s16 cursorX;
     /* 0x02 */ s16 cursorY;
@@ -25,6 +26,7 @@ extern u8* D_8013794C;
 extern s32 D_80137950;
 extern s32 D_80137954;
 extern s32 D_801377FC[NUM_MENU];
+extern s32 D_8013AEE4;
 extern s16 g_RelicMenuFadeTimer;
 extern s32 g_StatBuffTimers[16];
 extern MenuData g_MenuData;
@@ -35,7 +37,7 @@ extern u8 D_psp_0914A248[];
 extern u8 D_psp_09149FB0[];
 extern s32 D_psp_091CDD40;
 extern u_long* D_psp_0914A388[];
-extern EquipKind D_801375CC;
+extern s32 D_801375CC;
 extern s32 D_801375D4;
 extern s32 D_psp_091CE1E0;
 extern s32 D_psp_091CDF14;
@@ -56,6 +58,23 @@ extern s32 D_801375DC;
 extern s32 g_EquipOrderType;
 extern s32 D_psp_091CE170;
 extern s32* D_801375D8;
+extern s32 D_psp_091CDD70[];
+extern s32 g_ServantPrevious;
+extern s32 D_80137958;
+extern bool D_psp_091CDD48;
+extern s32 g_UserLanguage;
+extern s32 D_psp_091CDD50;
+extern u8 D_psp_091CE13A;
+extern s32 D_psp_091F35F8; // g_Pix[3];
+
+extern u32 D_801375D0;
+extern u32 D_psp_08B42050; // psp cross button
+extern u32 D_psp_08B42054; // psp triangle button
+
+extern const char* D_800A2D10[];
+extern const char* D_800A2D14[];
+extern const char* D_800A2D18[];
+extern const char* D_800A2D58[];
 
 extern char** D_800A2D48;
 extern char** D_800A2D68;
@@ -80,34 +99,34 @@ void func_psp_090EAFA8(void) {
 }
 
 bool CheckIfAllButtonsAreAssigned(void) {
-    s32 buf[8];
+    s32 buf[BUTTON_COUNT];
     s32 i;
     s32 bitMask_Assigned;
-    s32* miscPtr;
+    s32* buttonConfig;
 
-    for (i = 1; i < 8; i++) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
         buf[i] = 0;
     }
 
     for (i = 0; i < 7; i++) {
-        buf[g_Settings.buttonConfig[i] + 1] = 1;
+        buf[g_Settings.buttonConfig[i]] = 1;
     }
 
-    // What is the purpose of this loop?
-    for (i = 0, miscPtr = &buf[1]; i < 7; miscPtr++, i++) {
-        if (*miscPtr == 0) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
+        if (buf[i] == 0) {
+            // g_Settings.buttonConfig[7] = i;
             break;
         }
     }
 
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
         g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
     }
 
     bitMask_Assigned = 0;
-    miscPtr = g_Settings.buttonConfig;
-    for (i = 1; i < 8; i++) {
-        bitMask_Assigned |= 1 << *miscPtr++;
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < BUTTON_COUNT; i++) {
+        bitMask_Assigned |= 1 << *buttonConfig++;
     }
 
     return bitMask_Assigned == 0x7F;
@@ -166,13 +185,13 @@ void func_800F4994(void) {
         }
     }
 
-    if (g_StatBuffTimers[4]) {
+    if (g_StatBuffTimers[SBT_STR]) {
         g_Status.statsEquip[STAT_STR] += 20;
     }
-    if (g_StatBuffTimers[3]) {
+    if (g_StatBuffTimers[SBT_INT]) {
         g_Status.statsEquip[STAT_INT] += 20;
     }
-    if (g_StatBuffTimers[2]) {
+    if (g_StatBuffTimers[SBT_LCK]) {
         g_Status.statsEquip[STAT_LCK] += 20;
     }
     if (g_Status.relics[RELIC_RIB_OF_VLAD] & RELIC_FLAG_ACTIVE) {
@@ -257,7 +276,7 @@ s32 CalcAttack(u32 equipId, u32 otherEquipId) {
     if (equipId == ITEM_SWORD_FAMILIAR) {
         totalAttack += g_Status.statsFamiliars[FAM_STATS_SWORD].level;
     }
-    if (g_StatBuffTimers[1]) {
+    if (g_StatBuffTimers[SBT_ATK]) {
         totalAttack += 20;
     }
     if (totalAttack < 0) {
@@ -385,7 +404,7 @@ u8 func_800F548C(u8 arg0) {
     if (arg0 & 0x80) {
         return func_800F548C((arg0 & 0x7F) + 3);
     }
-    return arg0 << 4;
+    return arg0 * 16;
 }
 
 static u32 IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* ctx) {
@@ -487,8 +506,8 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* ctx) {
 }
 
 bool ScissorSprite(SPRT* sprite, MenuContext* ctx) {
-    s32 scissorY;
     s32 scissorX;
+    s32 scissorY;
     s32 spriteX;
     s32 spriteY;
     s32 diff;
@@ -1364,7 +1383,7 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
     s32 strId;
 
     MenuDrawStr(D_800A2D68[26], 120, 40, ctx);
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < NUM_FAMILIARS; i++) {
         if (!D_801375E0[i]) {
             continue;
         }
@@ -1547,7 +1566,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     u8* equipOrder;
     u8* equipsAmount;
     s32 itemsPerPage;
-    s32 totalItemCount;
+    s32 nItems;
     s32 curX, curY;
     s32 i;
     s32 myX, myY;
@@ -1560,12 +1579,12 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     DrawSync(0);
     equipOrder = GetEquipOrder(D_801375CC);
     equipsAmount = GetEquipCount(D_801375CC);
-    totalItemCount = func_800FD6C4(D_801375CC);
+    nItems = func_800FD6C4(D_801375CC);
     curX = curY = 0;
     itemsPerPage = (ctx->cursorH / Height + 1) * Cols;
     for (i = 0; i < itemsPerPage; i++) {
         itemIndex = i + -ctx->h / Height * Cols;
-        if (itemIndex >= totalItemCount) {
+        if (itemIndex >= nItems) {
             break;
         }
 
@@ -1601,6 +1620,7 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
             MenuDrawInt(equipsAmount[equipId], myX + 128, myY, ctx);
         }
     }
+
     if (g_IsSelectingEquipment) {
         func_psp_090ECF20(ctx, curX, curY);
     }
@@ -2289,7 +2309,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
                     g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
-                    limit = (((nOptions - 1) / 2) - 5) * -ItemsPerPage;
+                    limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
                         limit) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
@@ -2298,13 +2318,14 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
                     *nav = nOptions - 1;
                     if (nOptions > ItemsPerPage) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
-                            (((nOptions - 1) / 2) - 5) * -ItemsPerPage;
+                            ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     }
                 }
             }
         }
         break;
     }
+
     if (prevCursor != *nav) {
         PlaySfx(SFX_UI_MOVE);
     }
@@ -2355,24 +2376,191 @@ void func_psp_090F1418(s32 cursorIndex, s32 arg1, s32 arg2) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", MenuEquipHandlePageScroll);
+void MenuEquipHandlePageScroll(s32 arg0) {
+    const int ItemsPerPage = 12;
+    s16 limit;
+    s32 nItems;
+    s32* cursorIndex;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", CheckWeaponCombo);
+    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F18B0);
+    if (D_801375CC == EQUIP_HAND) {
+        cursorIndex = &g_MenuNavigation.cursorEquipType[EQUIP_HAND];
+    } else {
+        cursorIndex =
+            &(g_MenuNavigation.cursorEquipType + EQUIP_HEAD)[D_801375D4];
+    }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1968);
+    nItems = func_800FD6C4(D_801375CC);
+    if (arg0 != 0) {
+        if (g_pads[0].repeat & PAD_L1) {
+            if (*cursorIndex >= ItemsPerPage) {
+                *cursorIndex -= ItemsPerPage;
+                menu->unk16 += 0x48;
+                if (menu->unk16 > 0) {
+                    menu->unk16 = 0;
+                }
+                if (D_80137844[0] != 0) {
+                    D_80137844[0] = 5;
+                }
+            } else {
+                *cursorIndex = 0;
+                menu->unk16 = 0;
+            }
+        }
+        if (g_pads[0].repeat & PAD_R1) {
+            if (*cursorIndex < nItems - ItemsPerPage) {
+                *cursorIndex += ItemsPerPage;
+                menu->unk16 -= 0x48;
+                if (menu->unk16 < ((nItems - 1) / 2 - 5) * -ItemsPerPage) {
+                    menu->unk16 = ((nItems - 1) / 2 - 5) * -ItemsPerPage;
+                }
+                if (D_80137844[1] != 0) {
+                    D_80137844[1] = 5;
+                }
+            } else {
+                *cursorIndex = nItems - 1;
+                if (nItems > ItemsPerPage) {
+                    menu->unk16 = ((nItems - 1) / 2 - 5) * -ItemsPerPage;
+                }
+            }
+        }
+    }
+    func_psp_090F1418(*cursorIndex, 0, 0);
+}
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", InitWeapon);
+// If you use both attack buttons at once, see if something special
+// happens. Applies to Shield Rod + Shield, or dual Heaven Swords
+void CheckWeaponCombo(void) {
+    s32 i;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAB1C);
+    u32 handFlag = 0x80000000; // right hand
+    u32 combo = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboSub &
+                g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboMain;
+
+    if (combo != 0) {
+        handFlag = 0;
+    }
+
+    combo |= g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboMain &
+             g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboSub;
+
+    if (combo != 0) {
+        for (i = 0xAA; i < 0xD9; i++) {
+            if (combo & g_EquipDefs[i].comboSub) {
+                D_8013AEE4 = handFlag + i;
+                return;
+            }
+        }
+    }
+    D_8013AEE4 = 0;
+}
+
+bool func_psp_090F18B0(s32 equipIndex) {
+    s32 equipId;
+    s32 weaponId;
+
+    D_psp_091CDD70[equipIndex] = 0;
+    equipId = g_Status.equipment[equipIndex];
+    if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+        equipId = 0xD8;
+    }
+    weaponId = g_EquipDefs[equipId].weaponId;
+    if (weaponId != 0xFF) {
+        func_8932CEC(equipIndex, weaponId);
+        D_psp_091CDD70[equipIndex] = 1;
+        g_EquippedWeaponIds[equipIndex] = weaponId;
+    }
+    return 1;
+}
+
+s32 func_psp_090F1968(s32 equipIndex) {
+    if (D_psp_091CDD70[equipIndex] == 0) {
+        return 1;
+    }
+    if (!func_8932D34()) {
+        return 0;
+    }
+    if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
+                          SimFileType_Weapon0Prg + equipIndex, 1) < 0) {
+        return 0;
+    }
+    if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
+                          SimFileType_Weapon0Chr + equipIndex, 1) < 0) {
+        return 0;
+    }
+    return 1;
+}
+
+void InitWeapon(s32 itemSlot) {
+    // Called twice every time the in-game menu is closed.
+    // It will be called twice, with LEFT_HAND_SLOT and then RIGHT_HAND_SLOT
+
+    void (*loadWeaponPalette)(s32);
+    s32 i;
+    Entity* entity;
+    u16 entityId;
+
+    u32 equipId = g_Status.equipment[itemSlot];
+
+    // Having the Axe Lord Armor equipped will not load any normal weapon
+    if (g_Status.equipment[ARMOR_SLOT] == ITEM_AXE_LORD_ARMOR) {
+        equipId = 0xD8;
+    }
+
+    // Do not re-load the same weapon
+    if (equipId == g_PrevEquippedWeapons[itemSlot]) {
+        return;
+    }
+
+    // Assign the right palette to the weapon graphics
+    if (itemSlot != LEFT_HAND_SLOT) {
+        loadWeaponPalette = D_8017D000.LoadWeaponPalette;
+    } else {
+        loadWeaponPalette = D_8017A000.LoadWeaponPalette;
+    }
+    loadWeaponPalette(g_EquipDefs[equipId].palette);
+
+    // Destroy any entity spawned by the previously equipped weapon.
+    // 0xE0-0xEF: weapon0 (left hand) entities
+    // 0xF0-0xFF: weapon1 (right hand) entities
+    entity = g_Entities;
+    for (i = 0; i < STAGE_ENTITY_START; i++) {
+        entityId = entity->entityId;
+        if (entityId >= itemSlot * 0x10 + WEAPON_0_START &&
+            entityId <= itemSlot * 0x10 + WEAPON_0_END) {
+            DestroyEntity(entity);
+        }
+        if (entityId >= WEAPON_0_START + 8 && entityId < WEAPON_0_START + 14) {
+            DestroyEntity(entity);
+        }
+        if (entityId >= WEAPON_1_START + 8 && entityId < WEAPON_1_START + 14) {
+            DestroyEntity(entity);
+        }
+        entity++;
+    }
+}
+
+void func_800FAB1C(void) {
+    const int START = 4;
+    s32 i;
+    Entity* entity;
+
+    entity = g_Entities + START;
+    for (i = START; i < 64; i++) {
+        if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+            DestroyEntity(entity);
+        }
+        entity++;
+    }
+}
 
 void MenuHide(s32 menuDialogue) {
     g_MenuData.menus[menuDialogue].unk1C = 1;
     g_MenuData.menus[menuDialogue].unk1D = 0;
 }
 
-void MenuShow(s32 menuDialogue) {
+static void MenuShow(s32 menuDialogue) {
     g_MenuData.menus[menuDialogue].unk1C = 3;
     g_MenuData.menus[menuDialogue].unk1D = 0;
 }
@@ -2397,7 +2585,23 @@ void func_800FAC48(void) {
 
 void func_800FAC98(void) { func_800F9808(2); }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F1CE8);
+bool func_psp_090F1CE8(void) {
+    if (g_pads[0].tapped & PAD_R2) {
+        g_MenuNavigation.cursorEquip++;
+        if (g_MenuNavigation.cursorEquip == 7) {
+            g_MenuNavigation.cursorEquip = 0;
+        }
+        return true;
+    }
+    if (g_pads[0].tapped & PAD_L2) {
+        g_MenuNavigation.cursorEquip--;
+        if (g_MenuNavigation.cursorEquip == -1) {
+            g_MenuNavigation.cursorEquip = 6;
+        }
+        return true;
+    }
+    return false;
+}
 
 void func_800FAD34(const char* str, u8 count, u16 equipIcon, u16 palette) {
     D_80137608 = 0;
@@ -2439,9 +2643,54 @@ void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
     g_MenuStep++;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FAF44);
+void func_800FAF44(bool isAccessory) {
+    s32 i;
+    s32* ptr;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB004);
+    D_801375D8 = &D_psp_091F35F8;
+    ptr = &D_psp_091F35F8;
+
+    if (!isAccessory) {
+        for (i = 0; i < 169; i++) {
+            *ptr++ = i;
+        }
+        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                g_MenuNavigation.scrollEquipType[EQUIP_HAND];
+    } else {
+        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4];
+        for (i = 0; i < 90; i++) {
+            if (g_AccessoryDefs[i].equipType == D_801375D4) {
+                *ptr++ = i;
+            }
+        }
+    }
+}
+
+void func_800FB004(void) {
+    s32 nItems = func_800FD6C4(D_801375CC);
+
+    if (-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
+        if (D_80137844[0] == 0) {
+            D_80137844[0] = 1;
+        }
+    } else {
+        D_80137844[0] = 0;
+    }
+
+    if ((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+            12 <
+        nItems / 2) {
+        if (D_80137844[1] == 0) {
+            D_80137844[1] = 1;
+        }
+    } else {
+        D_80137844[1] = 0;
+    }
+}
 
 EquipMenuHelper g_EquipMenuHelper[] = {
     {EQUIP_HAND, 0, false},     // LEFT_HAND_SLOT
@@ -2455,24 +2704,37 @@ EquipMenuHelper g_EquipMenuHelper[] = {
 
 void func_800FB0FC(void) {
     EquipMenuHelper* helper = &g_EquipMenuHelper[g_MenuNavigation.cursorEquip];
+
     D_801375CC = helper->equipTypeFilter;
     D_801375D4 = helper->index;
     func_800FAF44(helper->isAccessory);
     func_800FB004();
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F2178);
+void func_psp_090F2178(s32 arg0, s32 arg1, EquipKind equipType) {
+    u8 swap;
+    u8* equipOrder;
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_psp_090F21F8);
+    equipOrder = GetEquipOrder(equipType);
+    swap = equipOrder[D_801375D8[arg0]];
+    equipOrder[D_801375D8[arg0]] = equipOrder[D_801375D8[arg1]];
+    equipOrder[D_801375D8[arg1]] = swap;
+}
+
+bool func_psp_090F21F8(s32 arg0) {
+    if (D_801375CC == EQUIP_HAND) {
+        if (arg0 == 0) {
+            return true;
+        }
+    } else if (arg0 == 0x1A || arg0 == 0 || arg0 == 0x30 || arg0 == 0x39) {
+        return true;
+    }
+    return false;
+}
 
 s32 D_800A2DEC[] = {
     0x1A, 0x00, 0x30, 0x39, 0x39,
 };
-
-extern u32 D_801375D0;
-
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
 
 #define PAD_MENU_SELECT_ALT (D_psp_08B42050)
 #define PAD_MENU_SELECT (PAD_MENU_SELECT_ALT | PAD_SQUARE)
@@ -2493,7 +2755,7 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
     {0, 24, 360, 170, 0x20},   // MENU_DG_SETTINGS
     {168, 120, 144, 64, 0x30}, // MENU_DG_CLOAK_COLOR
     {148, 44, 200, 112, 0x30}, // MENU_DG_CFG_BUTTONS
-    {172, 44, 89, 32, 0x30},   // MENU_DG_CLOAK_LINING 6db90
+    {172, 44, 89, 32, 0x30},   // MENU_DG_CLOAK_LINING
     {172, 112, 57, 32, 0x30},  // MENU_DG_CFG_SOUND
     {172, 76, 124, 40, 0x30},  // MENU_DG_WINDOW_COLORS
     {12, 32, 340, 153, 0x30},  // MENU_DG_TIME_ATTACK
@@ -2533,20 +2795,43 @@ void func_800FB9BC(void) {
             YScrollPerElement;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FBAC4);
+void func_800FBAC4(void) {
+    s32 i, j;
+    s32* ptr;
 
-extern s32 g_ServantPrevious;
-extern s32 D_80137958;
-extern bool D_psp_091CDD48;
-extern s32 g_UserLanguage;
+    for (i = g_EquipOrderType; i > 0; i--) {
+        // j is used as a temp to swap these two variables.
+        j = g_Settings.equipOrderTypes[i];
+        g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
+        g_Settings.equipOrderTypes[i - 1] = j;
+    }
+    g_EquipOrderType = 0;
+    ptr = D_801375D8;
+    *ptr++ = 0;
+    for (i = 0; i < ITEM_END; i++) {
+        s32 importantcategory = g_Settings.equipOrderTypes[i];
+        for (j = 0; j < NUM_HAND_ITEMS; j++) {
+            s32 order = g_Status.equipHandOrder[j];
+            if (g_Status.equipHandCount[order] != 0 && order != 0 &&
+                g_EquipDefs[order].itemCategory == importantcategory) {
+                *ptr++ = order;
+            }
+        }
+    }
+    for (j = 0; j < NUM_HAND_ITEMS; j++) {
+        s32 order = g_Status.equipHandOrder[j];
+        if (g_Status.equipHandCount[order] == 0) {
+            *ptr++ = order;
+        }
+    }
 
-extern const char* D_800A2D10[];
-extern const char* D_800A2D14[];
-extern const char* D_800A2D18[];
-extern const char* D_800A2D58[];
+    ptr = D_801375D8;
+    for (i = 0; i < NUM_HAND_ITEMS; i++) {
+        g_Status.equipHandOrder[i] = *ptr++;
+    }
+}
 
 void MenuHandle(void) {
-    s32 temp_s1;
     s32 i;
     s32 id;
     s32 var_s1;
@@ -2742,7 +3027,7 @@ block_4:
         if (g_IsUsingCd) {
             break;
         }
-        if (CdSoundCommandQueueEmpty() == false) {
+        if (!CdSoundCommandQueueEmpty()) {
             break;
         }
         D_80097910 = D_80137958;
@@ -2760,7 +3045,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_13:
-        if (func_80133950() == false) {
+        if (!func_80133950()) {
             break;
         }
         func_801027C4(2);
@@ -2911,13 +3196,13 @@ block_4:
         DrawSync(0);
         func_800F9808(2);
         i = g_MenuNavigation.cursorSettings + 1;
-        if (i == 2 && g_IsCloakLiningUnlocked == false) {
+        if (i == 2 && !g_IsCloakLiningUnlocked) {
             i = 0;
         }
-        if (i == 3 && g_IsCloakColorUnlocked == false) {
+        if (i == 3 && !g_IsCloakColorUnlocked) {
             i = 0;
         }
-        if (i == 5 && g_IsTimeAttackUnlocked == false) {
+        if (i == 5 && !g_IsTimeAttackUnlocked) {
             i = 0;
         }
         ShowText(D_800A2D48[i], 2);
@@ -2956,7 +3241,6 @@ block_4:
                     g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
                 }
             }
-
             if (g_MenuStep != MENU_STEP_SYSTEM) {
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
@@ -3084,19 +3368,20 @@ block_4:
                 }
 
                 if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
-                    i = ITEM_SWORD_FAMILIAR;
                     g_Servant = g_RelicDefs[id].unk0C;
                     func_8932E78(g_Servant - 1);
                     if (g_Servant == FAM_ACTIVE_SWORD) {
-                        if (g_Status.equipment[LEFT_HAND_SLOT] == i) {
+                        if (g_Status.equipment[LEFT_HAND_SLOT] ==
+                            ITEM_SWORD_FAMILIAR) {
                             g_Status.equipment[LEFT_HAND_SLOT] =
                                 ITEM_EMPTY_HAND;
-                            AddToInventory(i, 0);
+                            AddToInventory(ITEM_SWORD_FAMILIAR, 0);
                         }
-                        if (g_Status.equipment[RIGHT_HAND_SLOT] == i) {
+                        if (g_Status.equipment[RIGHT_HAND_SLOT] ==
+                            ITEM_SWORD_FAMILIAR) {
                             g_Status.equipment[RIGHT_HAND_SLOT] =
                                 ITEM_EMPTY_HAND;
-                            AddToInventory(i, 0);
+                            AddToInventory(ITEM_SWORD_FAMILIAR, 0);
                         }
                     }
                 } else {
@@ -3124,8 +3409,8 @@ block_4:
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         }
-
         break;
+
     case MENU_STEP_SPELL_INIT:
         MenuShow(MENU_DG_INFO_BAR);
         MenuShow(MENU_DG_SPELLS);
@@ -3134,7 +3419,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_SPELL:
-        temp_s1 = g_MenuNavigation.cursorSpells;
+        var_s1 = g_MenuNavigation.cursorSpells;
         MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC, 3);
         if (1) {
             func_800F9808(2);
@@ -3254,7 +3539,7 @@ block_4:
             &g_MenuNavigation.cursorEquipType[0],
             g_Status.equipHandCount[equipId], g_EquipDefs[equipId].description,
             g_EquipDefs[equipId].icon, g_EquipDefs[equipId].iconPalette);
-        func_800FAF44(0);
+        func_800FAF44(false);
     case MENU_STEP_EQUIP_HAND:
         if (g_MenuNavigation.cursorEquip == LEFT_HAND_SLOT) {
             D_801375D0 = LEFT_HAND_SLOT;
@@ -3284,7 +3569,7 @@ block_4:
             g_Status.equipBodyCount[equipId],
             g_AccessoryDefs[equipId].description, g_AccessoryDefs[equipId].icon,
             g_AccessoryDefs[equipId].iconPalette);
-        func_800FAF44(1);
+        func_800FAF44(true);
     case MENU_STEP_EQUIP_ACC:
         isSecondAccessory = g_MenuNavigation.cursorEquip;
         isSecondAccessory = (isSecondAccessory == ACCESSORY_2_SLOT);
@@ -3313,4 +3598,126 @@ block_4:
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", DrawHudSubweapon2);
+void DrawHudSubweapon2(void) {
+    D_80137614 = 1;
+    func_800F97DC();
+    func_psp_090EAFA8();
+    DrawHudSubweapon();
+    switch (g_MenuStep) {
+    case MENU_STEP_INIT:
+        func_800F84CC();
+        func_800F98AC(*D_800A2D58, 0x101);
+        func_800FB9BC();
+        D_psp_091CDD50 = 0;
+        g_MenuNavigation.cursorMain = 0;
+        MenuShow(MENU_PSP_EXTRA_2);
+        g_MenuStep++;
+        break;
+
+    case MENU_STEP_FADE_FROM_GAME:
+        if (g_pads[0].tapped & (PAD_MENU_BACK | 8)) {
+            PlaySfx(SFX_UI_ERROR);
+            g_MenuStep = 0x62;
+        } else {
+            MenuHandleCursorInput(&g_MenuNavigation.cursorMain, 3, 0);
+            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+                switch (g_MenuNavigation.cursorMain) {
+                case 0:
+                    PlaySfx(SFX_UI_ERROR);
+                    g_MenuStep = 0x62;
+                    break;
+
+                case 1:
+                    if (D_8006C378 >= 0) {
+                        PlaySfx(SFX_UI_CONFIRM);
+                        MenuShow(MENU_PSP_EXTRA_3);
+                        D_psp_091CDD40 = 1;
+                        g_MenuStep = MENU_STEP_EXIT_10;
+                    }
+                    break;
+
+                case 2:
+                    PlaySfx(SFX_UI_CONFIRM);
+                    MenuShow(MENU_PSP_EXTRA_3);
+                    D_psp_091CDD40 = 1;
+                    g_MenuStep = 0x14;
+                    break;
+                }
+            }
+        }
+        break;
+
+    case MENU_STEP_EXIT_10:
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            PlaySfx(SFX_UI_ERROR);
+            MenuHide(MENU_PSP_EXTRA_3);
+            g_MenuStep = MENU_STEP_FADE_FROM_GAME;
+        } else {
+            MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
+            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+                if (D_psp_091CDD40 == 0) {
+                    PlaySfx(SFX_UI_CONFIRM);
+                    func_psp_090DFC80();
+                    MenuHide(MENU_PSP_EXTRA_3);
+                    D_psp_091CDD50 = 1;
+                    g_MenuStep = 0x62;
+                } else {
+                    PlaySfx(SFX_UI_ERROR);
+                    MenuHide(MENU_PSP_EXTRA_3);
+                    g_MenuStep = MENU_STEP_FADE_FROM_GAME;
+                }
+            }
+        }
+        break;
+
+    case 0x14:
+        if (g_pads[0].tapped & PAD_MENU_BACK) {
+            PlaySfx(SFX_UI_ERROR);
+            MenuHide(MENU_PSP_EXTRA_3);
+            g_MenuStep = MENU_STEP_FADE_FROM_GAME;
+        } else {
+            MenuHandleCursorInput(&D_psp_091CDD40, 2, 0);
+            if (g_pads[0].tapped & PAD_MENU_SELECT) {
+                if (D_psp_091CDD40 == 0) {
+                    PlaySfx(SFX_UI_CONFIRM);
+                    MenuHide(MENU_PSP_EXTRA_3);
+                    D_psp_091CDD50 = 1;
+                    g_MenuStep = 0x62;
+                } else {
+                    PlaySfx(SFX_UI_ERROR);
+                    MenuHide(MENU_PSP_EXTRA_3);
+                    g_MenuStep = MENU_STEP_FADE_FROM_GAME;
+                }
+            }
+        }
+        break;
+
+    case 0x62:
+        MenuHide(MENU_PSP_EXTRA_2);
+        g_MenuStep++;
+        break;
+
+    case 0x63:
+        if (D_psp_091CE13A == 2) {
+            g_MenuStep++;
+        }
+        break;
+
+    case 0x64:
+        if (D_psp_091CDD50 != 0) {
+            SetGameState(3);
+            g_GameStep = 0x63;
+            PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
+            PlaySfx(SET_KEY_ON_20_21);
+            PlaySfx(SET_KEY_ON_22_23);
+        }
+        D_800974A4 = 0;
+        g_GameEngineStep = Engine_Normal;
+        g_MenuStep++;
+        break;
+
+    case 0x65:
+        break;
+    }
+    MenuDraw();
+}

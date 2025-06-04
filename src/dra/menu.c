@@ -3,7 +3,6 @@
 #include "dra_bss.h"
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
-#include "sfx.h"
 
 typedef struct EquipMenuHelper {
     EquipKind equipTypeFilter;
@@ -15,11 +14,10 @@ typedef struct EquipMenuHelper {
 typedef struct {
     /* 0x00 */ s16 cursorX;
     /* 0x02 */ s16 cursorY;
-    /* 0x04 */ s16 cursorW;
-    /* 0x06 */ s16 cursorH;
-    /* 0x08 */ s16 otIdx;
-    /* 0x0A */ s16 padding;
-} MenuContextInit; // size = 0x1C
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
 
 #if defined(VERSION_US)
 #define ShowText(str, id) func_800F99B8(str, id, 0);
@@ -122,7 +120,7 @@ u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
 
 // BSS
-extern EquipKind D_801375CC;
+extern s32 D_801375CC;
 extern s32 D_801375D0;
 extern s32 D_801375D4;
 extern s32* D_801375D8;
@@ -162,10 +160,10 @@ u16* func_80106A28(u32 arg0, u16 kind);
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[BUTTON_COUNT];
     s32 i;
-    s32 var_a1;
+    s32 bitMask_Assigned;
     s32* buttonConfig;
 
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
         buf[i] = 0;
     }
 
@@ -173,24 +171,24 @@ bool CheckIfAllButtonsAreAssigned(void) {
         buf[g_Settings.buttonConfig[i]] = 1;
     }
 
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
         if (buf[i] == 0) {
             g_Settings.buttonConfig[7] = i;
             break;
         }
     }
 
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < BUTTON_COUNT; i++) {
         g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
     }
 
-    var_a1 = 0;
+    bitMask_Assigned = 0;
     buttonConfig = g_Settings.buttonConfig;
-    for (i = 0; i < 8; i++) {
-        var_a1 |= 1 << *buttonConfig++;
+    for (i = 0; i < BUTTON_COUNT; i++) {
+        bitMask_Assigned |= 1 << *buttonConfig++;
     }
 
-    return var_a1 == 0xFF;
+    return bitMask_Assigned == 0xFF;
 }
 
 bool IsAlucart(void) {
@@ -204,9 +202,9 @@ bool IsAlucart(void) {
 void func_800F4994(void) {
     s32* statsPtr;
     s32 correctStonesEquipped;
-    s32 statBonus;
-    u32 hourOfDay;
+    s32 hourOfDay;
     s32 i, j;
+    s32 statBonus;
 
     statsPtr = g_Status.statsEquip;
     for (i = 0; i < 4; i++) {
@@ -463,13 +461,13 @@ void func_800F53D4(s32 tpage, s32 otIdx) {
 }
 
 u8 func_800F548C(u8 arg0) {
-    u16 temp = arg0;
-
-    if (arg0 & 0x80) {
-        arg0 &= 0x7F;
-        return func_800F548C(arg0 + 3);
+    if (arg0 & 0x100) {
+        return func_800F548C(arg0 & 0xFF);
     }
-    return temp << 4;
+    if (arg0 & 0x80) {
+        return func_800F548C((arg0 & 0x7F) + 3);
+    }
+    return arg0 * 16;
 }
 
 static u32 IsOutsideDrawArea(s32 x0, s32 x1, s32 y0, s32 y1, MenuContext* ctx) {
@@ -496,13 +494,13 @@ bool ScissorPolyG4(POLY_G4* poly, MenuContext* ctx) {
     if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, ctx))
         return true;
 
-    if (poly->x0 < ctx->unk1.x) {
+    if (ctx->unk1.x > poly->x0) {
         diff = ctx->unk1.x - poly->x0;
         poly->x0 += diff;
         poly->x2 += diff;
     }
 
-    if (poly->y0 < ctx->unk1.y) {
+    if (ctx->unk1.y > poly->y0) {
         diff = ctx->unk1.y - poly->y0;
         poly->y0 += diff;
         poly->y1 += diff;
@@ -533,7 +531,7 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* ctx) {
     if (IsOutsideDrawArea(poly->x0, poly->x1, poly->y0, poly->y2, ctx))
         return true;
 
-    if (poly->x0 < ctx->unk1.x) {
+    if (ctx->unk1.x > poly->x0) {
         diff = ctx->unk1.x - poly->x0;
         poly->x0 += diff;
         poly->x2 += diff;
@@ -541,7 +539,7 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* ctx) {
         poly->u2 += diff;
     }
 
-    if (poly->y0 < ctx->unk1.y) {
+    if (ctx->unk1.y > poly->y0) {
         diff = ctx->unk1.y - poly->y0;
         poly->y0 += diff;
         poly->y1 += diff;
@@ -571,8 +569,8 @@ bool ScissorPolyGT4(POLY_GT4* poly, MenuContext* ctx) {
 }
 
 bool ScissorSprite(SPRT* sprite, MenuContext* ctx) {
-    s32 scissorY;
     s32 scissorX;
+    s32 scissorY;
     s32 spriteX;
     s32 spriteY;
     s32 diff;
@@ -707,7 +705,6 @@ void MenuDrawRect(MenuContext* ctx, s32 posX, s32 posY, s32 width, s32 height,
     OT_TYPE* ot = g_CurrentBuffer->ot;
     POLY_G4* poly = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     s32 otIdx = ctx->otIdx + 1;
-    u32 temp;
 
     setSemiTrans(poly, 0);
     setShadeTex(poly, 0);
@@ -750,9 +747,9 @@ void func_800F5E68(MenuContext* ctx, s32 cursorIdx, s32 x, s32 y, s32 w, s32 h,
 void DrawRelicsMenu(MenuContext* ctx) {
     s32 ctx_h;
     s32 switchFadeLevel;
-    s32 spriteY;
-    s32 spriteX;
     s32 i;
+    s32 spriteX;
+    s32 spriteY;
     s32 var_s3;
     s32 u_OnOff;
     u8* relic;
@@ -786,7 +783,7 @@ void DrawRelicsMenu(MenuContext* ctx) {
             if ((i & 2) == 0) {
                 MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
-                    func_800F548C(i / 4 - 0x80), 0x1A1, 6, 1, 0, 0);
+                    func_800F548C(i / 4 + 0x80), 0x1A1, 6, 1, 0, 0);
             } else {
                 MenuDrawSprite(
                     ctx, spriteX + 0x38, spriteY, 0x78, 0x10, (i & 1) * 0x78,
@@ -814,13 +811,13 @@ void DrawRelicsMenu(MenuContext* ctx) {
                 switchFadeLevel = 6 - ((g_RelicMenuFadeTimer - 0x24) / 6);
             }
         }
-        MenuDrawSprite(ctx, spriteX | 8, spriteY, 0x2F, 0xF, u_OnOff, 0x70,
+        MenuDrawSprite(ctx, spriteX + 8, spriteY, 0x2F, 0xF, u_OnOff, 0x70,
                        switchFadeLevel + 0x1C8, 0x1F,
                        INDEXER == g_MenuNavigation.cursorRelic, 0x40, 0);
     }
     spriteY = (g_MenuNavigation.cursorRelic / 2) * 0x13 + 0x22 + ctx_h;
-    MenuDrawRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) | 8,
-                 spriteY - 0x1, 0xA8, 0x12, 0x60, 0, 0);
+    MenuDrawRect(ctx, ((g_MenuNavigation.cursorRelic & 1) * 0xB0) + 8,
+                 spriteY - 1, 0xA8, 0x12, 0x60, 0, 0);
 #undef INDEXER
 }
 
@@ -948,7 +945,7 @@ void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx) {
 #endif
 
     D_80137614 = 0;
-    while (1) {
+    while (true) {
         xcopy = x;
         ycopy = y;
         ch = *str++;
@@ -1057,7 +1054,7 @@ void MenuWindowColorsDraw(MenuContext* ctx) {
 #endif
     s32 i;
 
-    for (i = 0; i < LEN(g_ChRgb); i++) {
+    for (i = 0; i < 3; i++) {
         s32 y = 80 + i * 12;
         MenuDrawChar(g_ChRgb[i], x + 32, y, ctx);
         MenuDrawInt(g_Settings.windowColors[i], x + 72, y, ctx);
@@ -1870,25 +1867,23 @@ void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
 void MenuDraw(void) {
     u8 padding[32];
     s32 x, y;
+    Primitive* prim;
     Accessory* acc;
     Equipment* equip;
     MenuContext* menu;
-    Primitive* prim;
     s16 swap;
-    s32 ch;
     s32 cy;
     s32 cx;
-    s32 cw;
     s16 r0, g0, b0;
     s16 r1, g1, b1;
     s32 var_a1;
     s32 cursorXMovement;
     s32 equipIndex;
+    s32 cw;
+    s32 ch;
     s32 flag;
     s32 i, j;
     s32 new_var2;
-    s32 stuff;
-    s32 stuffed;
 
     for (i = 0; i < NUM_MENU; i++) {
         prim = &g_PrimBuf[D_801377FC[i]];
@@ -1973,15 +1968,15 @@ void MenuDraw(void) {
             b0 = 0;
         }
         r1 = g_Settings.windowColors[0] * 8 + 0x20;
-        if (r1 >= 0x100) {
+        if (r1 > 0xFF) {
             r1 = 0xFF;
         }
         g1 = g_Settings.windowColors[1] * 8 + 0x20;
-        if (g1 >= 0x100) {
+        if (g1 > 0xFF) {
             g1 = 0xFF;
         }
         b1 = g_Settings.windowColors[2] * 8 + 0x20;
-        if (b1 >= 0x100) {
+        if (b1 > 0xFF) {
             b1 = 0xFF;
         }
         if (g_StageId >= STAGE_RNO0 && g_StageId < STAGE_MAD) {
@@ -1998,12 +1993,15 @@ void MenuDraw(void) {
         prim->r0 = r0;
         prim->g0 = g0;
         prim->b0 = b0;
+
         prim->r1 = r0;
         prim->g1 = g0;
         prim->b1 = b0;
+
         prim->r2 = r1;
         prim->g2 = g1;
         prim->b2 = b1;
+
         prim->r3 = r1;
         prim->g3 = g1;
         prim->b3 = b1;
@@ -2120,6 +2118,7 @@ void func_800F96F4(void) {
 
     temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
     prim = &g_PrimBuf[D_80137840];
+
     if (D_80137844[0] && temp_a2) {
         prim->drawMode = DRAW_MENU;
         if (D_80137844[0] == 1) {
@@ -2145,7 +2144,7 @@ void func_800F96F4(void) {
     }
 }
 
-void func_800F97DC(void) {
+static void func_800F97DC(void) {
     D_8013794C = g_Pix[0];
     D_80137950 = 0x180;
     D_80137954 = 0;
@@ -2467,7 +2466,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
         break;
     case 4:
         if (g_pads[0].repeat & PAD_LEFT) {
-            if (*nav != 0) {
+            if (*nav) {
                 *nav -= 1;
             }
         }
@@ -2501,7 +2500,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
         if (g_pads[0].repeat & PAD_DOWN) {
             if (*nav == nOptions - 2) {
                 if (*nav & 1) {
-                    *nav = nOptions - 1;
+                    *nav += 1;
                 }
             }
             if (*nav < nOptions - 2) {
@@ -2530,8 +2529,8 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
             if (g_pads[0].repeat & PAD_R1) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
-                    limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
+                    limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
                         limit) {
                         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
@@ -2600,8 +2599,8 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
 
 void MenuEquipHandlePageScroll(s32 arg0) {
     const int ItemsPerPage = 12;
+    s16 limit;
     s32 nItems;
-    s32 limit;
     s32* cursorIndex;
 
     MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
@@ -2714,7 +2713,7 @@ void InitWeapon(s32 itemSlot) {
     // Called twice every time the in-game menu is closed.
     // It will be called twice, with LEFT_HAND_SLOT and then RIGHT_HAND_SLOT
 
-    void (*loadWeaponPalette)(u8 clutIndex);
+    void (*loadWeaponPalette)(s32);
     s32 i;
     Entity* entity;
     u16 entityId;
@@ -2778,7 +2777,7 @@ void MenuHide(s32 menuDialogue) {
     g_MenuData.menus[menuDialogue].unk1D = 0;
 }
 
-void MenuShow(s32 menuDialogue) {
+static void MenuShow(s32 menuDialogue) {
     g_MenuData.menus[menuDialogue].unk1C = 3;
     g_MenuData.menus[menuDialogue].unk1D = 0;
 }
@@ -2861,19 +2860,17 @@ void func_800FAEC4(s32* cursor, u8 count, const char* str, u16 icon, u16 pal) {
     g_MenuStep++;
 }
 
-void func_800FAF44(s32 isAccessory) {
+void func_800FAF44(bool isAccessory) {
     s32 i;
-    s32* var_a1;
+    s32* ptr;
 
     D_801375D8 = g_Pix[3];
-    var_a1 = g_Pix[3];
+    ptr = g_Pix[3];
 
-    if (isAccessory == 0) {
+    if (!isAccessory) {
         for (i = 0; i < 169; i++) {
-            *var_a1 = i;
-            var_a1++;
+            *ptr++ = i;
         }
-
         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
             g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                 g_MenuNavigation.scrollEquipType[EQUIP_HAND];
@@ -2883,8 +2880,7 @@ void func_800FAF44(s32 isAccessory) {
                 g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4];
         for (i = 0; i < 90; i++) {
             if (g_AccessoryDefs[i].equipType == D_801375D4) {
-                *var_a1 = i;
-                var_a1++;
+                *ptr++ = i;
             }
         }
     }
@@ -2892,9 +2888,8 @@ void func_800FAF44(s32 isAccessory) {
 
 void func_800FB004(void) {
     s32 nItems = func_800FD6C4(D_801375CC);
-    s32 temp_v0;
 
-    if (((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h) / 12) != 0) {
+    if (-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
         if (D_80137844[0] == 0) {
             D_80137844[0] = 1;
         }
@@ -2902,10 +2897,10 @@ void func_800FB004(void) {
         D_80137844[0] = 0;
     }
 
-    temp_v0 = -g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
-              g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH;
-
-    if ((temp_v0 / 12) < (nItems / 2)) {
+    if ((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+            12 <
+        nItems / 2) {
         if (D_80137844[1] == 0) {
             D_80137844[1] = 1;
         }
@@ -2933,7 +2928,7 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
+void func_800FB160(s32 arg0, s32 arg1, EquipKind equipType) {
     u8 swap;
     u8* equipOrder;
 
@@ -2951,7 +2946,6 @@ bool func_800FB1EC(s32 arg0) {
     } else if (arg0 == 0x1A || arg0 == 0 || arg0 == 0x30 || arg0 == 0x39) {
         return true;
     }
-
     return false;
 }
 
@@ -3020,9 +3014,6 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     u16 otherItemId;
     u16 yetAnotherId;
 
-    s32 temp_psp_a1;
-    s32 temp_psp_a2;
-
     nItems = func_800FD6C4(D_801375CC);
     prevCursor = nav->cursorMain;
     MenuHandleCursorInput(nav, nItems, 2);
@@ -3038,45 +3029,27 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     if (D_801375CC == EQUIP_HAND) {
         yetAnotherId = g_Status.equipment[1 - D_801375D0];
         if (count[itemId] > 0) {
-            if (g_EquipDefs[otherItemId].itemCategory == 5) {
+            if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
                 g_Status.equipment[1 - D_801375D0] = 0;
             }
-            if (g_EquipDefs[itemId].itemCategory == 5) {
+            if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND) {
                 g_Status.equipment[1 - D_801375D0] = itemId;
             }
-        } else if (g_EquipDefs[otherItemId].itemCategory == 5) {
+        } else if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
             g_Status.equipment[1 - D_801375D0] = 0;
         }
     }
-    var_s6 = 0;
     func_800F53A4();
-
-    if ((g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10)) |
-        (PLAYER.step == Player_UnmorphWolf) | (PLAYER.step == Player_BossGrab) |
-        (g_Player.unk60)) {
-        if (itemId == ITEM_AXE_LORD_ARMOR) {
-            if (D_801375CC == EQUIP_ARMOR) {
-                if (count[ITEM_AXE_LORD_ARMOR] != 0) {
-                    var_s6 = 1;
-                }
-            }
-        }
-    }
-
-    temp_psp_a2 = 0;
-    if (D_801375CC == EQUIP_HAND && count[itemId] > 0) {
-        if (itemId == ITEM_LIFE_APPLE || itemId == ITEM_HAMMER) {
-            temp_psp_a1 = 1;
-        } else {
-            temp_psp_a1 = 0;
-        }
-        if (temp_psp_a1) {
-            temp_psp_a2 = 1;
-        }
-    }
-    var_s6 |= temp_psp_a2;
+    var_s6 =
+        (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10) |
+         PLAYER.step == Player_UnmorphWolf | PLAYER.step == Player_BossGrab |
+         g_Player.unk60) &&
+        itemId == ITEM_AXE_LORD_ARMOR && D_801375CC == EQUIP_ARMOR &&
+        count[itemId] != 0;
+    var_s6 |= D_801375CC == EQUIP_HAND && count[itemId] > 0 &&
+              (itemId == ITEM_LIFE_APPLE || itemId == ITEM_HAMMER);
     D_80137948 = 0;
-    if (var_s6 == 0) {
+    if (!var_s6) {
         D_80137948 = 1;
         func_800F7244();
     }
@@ -3086,57 +3059,58 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     }
     func_800F53A4();
     if (g_pads[0].tapped & PAD_MENU_SORT) {
-        if (g_IsSelectingEquipment == 0) {
-            if (func_800FB1EC(itemId) == false) {
+        if (!g_IsSelectingEquipment) {
+            if (!func_800FB1EC(itemId)) {
                 g_EquipmentCursor = nav->cursorMain;
                 g_IsSelectingEquipment++;
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
                 PlaySfx(SFX_UI_ERROR);
             }
-        } else if (func_800FB1EC(itemId) != false) {
-            PlaySfx(SFX_UI_ERROR);
         } else {
-            goto block_36;
+            if (!func_800FB1EC(itemId)) {
+                func_800FB160(g_EquipmentCursor, nav->cursorMain, D_801375CC);
+                ret = 2;
+                g_IsSelectingEquipment = 0;
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
         }
     } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
-        if (g_IsSelectingEquipment != 0) {
-            do {
-                if (func_800FB1EC(itemId) == false) {
-                block_36:
-                    func_800FB160(
-                        g_EquipmentCursor, nav->cursorMain, D_801375CC);
-                    ret = 2;
-                    g_IsSelectingEquipment = 0;
-                    PlaySfx(SFX_UI_CONFIRM);
-                } else {
-                    PlaySfx(SFX_UI_ERROR);
-                }
-            } while (0);
-        } else if (var_s6 != 0) {
+        if (g_IsSelectingEquipment) {
+            if (!func_800FB1EC(itemId)) {
+                func_800FB160(g_EquipmentCursor, nav->cursorMain, D_801375CC);
+                ret = 2;
+                g_IsSelectingEquipment = 0;
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
+        } else if (var_s6) {
             PlaySfx(SFX_UI_ERROR);
         } else {
             PlaySfx(SFX_UI_CONFIRM);
             if (count[itemId] > 0) {
                 var_s4 = 1;
                 *selected = itemId;
-                if (func_800FB1EC(itemId) == false) {
+                if (!func_800FB1EC(itemId)) {
                     count[itemId]--;
                 }
-                if (D_801375CC == EQUIP_HAND && itemId == ITEM_SWORD_FAMILIAR &&
-                    (LOW(g_Status.relics[RELIC_FAERIE_CARD]) & 0x30000) ==
-                        0x30000) {
-                    g_Status.relics[RELIC_SWORD_CARD] = 1;
-                    g_Servant = 0;
+                if (D_801375CC == EQUIP_HAND && itemId == ITEM_SWORD_FAMILIAR) {
+                    if (g_Status.relics[RELIC_SWORD_CARD] & RELIC_FLAG_FOUND &&
+                        g_Status.relics[RELIC_SWORD_CARD] & RELIC_FLAG_ACTIVE) {
+                        g_Status.relics[RELIC_SWORD_CARD] = RELIC_FLAG_FOUND;
+                        g_Servant = 0;
+                    }
                 }
             } else {
                 var_s4 = 0;
                 if (D_801375CC == EQUIP_HAND) {
-                    ret = 2;
-                    if (*selected != 0) {
-                        *selected = 0;
-                    } else {
+                    if (*selected == 0) {
                         goto block_5b0;
+                    } else {
+                        *selected = 0;
                     }
                 } else {
                     *selected = D_800A2DEC[D_801375D4];
@@ -3144,23 +3118,24 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
             }
             AddToInventory(otherItemId, D_801375CC);
             if (D_801375CC == EQUIP_HAND) {
-                if (g_EquipDefs[otherItemId].itemCategory == 5) {
+                if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
                     g_Status.equipment[1 - D_801375D0] = 0;
                 }
-                if (g_EquipDefs[itemId].itemCategory == 5 && var_s4 != 0) {
+                if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND &&
+                    var_s4) {
                     if (g_EquipDefs[yetAnotherId].itemCategory !=
-                        g_EquipDefs[itemId].itemCategory) {
+                        ITEM_TWOHAND) {
                         AddToInventory(yetAnotherId, D_801375CC);
                     }
                     g_Status.equipment[1 - D_801375D0] = itemId;
                 }
             }
+        block_5b0:
             ret = 2;
         }
     }
-block_5b0:
     func_800FA3C4(nav->cursorMain, var_s6, 1);
-    if ((-g_MenuData.menus[3].h) / 12) {
+    if (-g_MenuData.menus[3].h / 12) {
         if (g_pads[0].repeat & PAD_L1) {
             D_80137844[0] = 5;
         } else if (D_80137844[0] == 0) {
@@ -3185,7 +3160,7 @@ block_5b0:
     }
 
     if (g_pads[0].tapped & PAD_MENU_BACK) {
-        if (g_IsSelectingEquipment == 0) {
+        if (!g_IsSelectingEquipment) {
             func_800FAE98();
             return 0;
         } else {
@@ -3227,15 +3202,13 @@ void func_800FB9BC(void) {
     }
     g_MenuData.menus[MENU_DG_RELICS].h =
         g_MenuData.menus[MENU_DG_RELICS].unk16 =
-            -((g_MenuNavigation.cursorRelic / ItemsPerRow) * VertScrollWindow) /
+            ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
             YScrollPerElement;
 }
 
 void func_800FBAC4(void) {
-    s32 i;
-    s32 j;
-    s32* var_a1;
-    s32 importantcategory;
+    s32 i, j;
+    s32* ptr;
 
     for (i = g_EquipOrderType; i > 0; i--) {
         // j is used as a temp to swap these two variables.
@@ -3243,40 +3216,36 @@ void func_800FBAC4(void) {
         g_Settings.equipOrderTypes[i] = g_Settings.equipOrderTypes[i - 1];
         g_Settings.equipOrderTypes[i - 1] = j;
     }
-
     g_EquipOrderType = 0;
-    var_a1 = D_801375D8;
-    *var_a1++ = 0;
+    ptr = D_801375D8;
+    *ptr++ = 0;
     for (i = 0; i < ITEM_END; i++) {
-        importantcategory = g_Settings.equipOrderTypes[i];
+        s32 importantcategory = g_Settings.equipOrderTypes[i];
         for (j = 0; j < NUM_HAND_ITEMS; j++) {
-            if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] != 0 &&
-                g_Status.equipHandOrder[j] != 0 &&
-                g_EquipDefs[g_Status.equipHandOrder[j]].itemCategory ==
-                    importantcategory) {
-                *var_a1++ = g_Status.equipHandOrder[j];
+            s32 order = g_Status.equipHandOrder[j];
+            if (g_Status.equipHandCount[order] != 0 && order != 0 &&
+                g_EquipDefs[order].itemCategory == importantcategory) {
+                *ptr++ = order;
             }
         }
     }
-
     for (j = 0; j < NUM_HAND_ITEMS; j++) {
-        if (g_Status.equipHandCount[g_Status.equipHandOrder[j]] == 0) {
-            *var_a1++ = g_Status.equipHandOrder[j];
+        s32 order = g_Status.equipHandOrder[j];
+        if (g_Status.equipHandCount[order] == 0) {
+            *ptr++ = order;
         }
     }
 
-    var_a1 = D_801375D8;
+    ptr = D_801375D8;
     for (i = 0; i < NUM_HAND_ITEMS; i++) {
-        g_Status.equipHandOrder[i] = *var_a1++;
+        g_Status.equipHandOrder[i] = *ptr++;
     }
 }
 
 void MenuHandle(void) {
-    s32 temp_s1;
-    s32 var_a0;
+    s32 i;
     s32 id;
     s32 var_s1;
-    s32 i;
     u8 equipId;
     s32 isSecondAccessory;
 
@@ -3392,63 +3361,55 @@ block_4:
         if (func_800EB720()) {
             break;
         }
-        if (LoadWeaponPrg(LEFT_HAND_SLOT) == false) {
+        if (!LoadWeaponPrg(LEFT_HAND_SLOT)) {
             break;
         }
-        if (g_UseDisk) {
-            g_MenuStep++;
-            break;
+        if (!g_UseDisk) {
+            InitWeapon(LEFT_HAND_SLOT);
         }
-        InitWeapon(LEFT_HAND_SLOT);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_7:
-        if (!g_UseDisk) {
-            g_MenuStep++;
-            break;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            InitWeapon(LEFT_HAND_SLOT);
         }
-        if (g_IsUsingCd) {
-            break;
-        }
-        InitWeapon(LEFT_HAND_SLOT);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_8:
-        if (LoadWeaponPrg(RIGHT_HAND_SLOT) == false) {
+        if (!LoadWeaponPrg(RIGHT_HAND_SLOT)) {
             break;
         }
-        if (g_UseDisk) {
-            g_MenuStep++;
-            break;
+        if (!g_UseDisk) {
+            InitWeapon(RIGHT_HAND_SLOT);
         }
-        InitWeapon(RIGHT_HAND_SLOT);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_9:
-        if (!g_UseDisk) {
-            g_MenuStep++;
-            break;
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
+            }
+            InitWeapon(RIGHT_HAND_SLOT);
         }
-        if (g_IsUsingCd) {
-            break;
-        }
-        InitWeapon(RIGHT_HAND_SLOT);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_10:
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
             func_800FAB1C();
         }
-        if (g_Servant == FAM_ACTIVE_NONE) {
-            g_MenuStep += 2;
-        } else if (g_Servant == g_ServantLoaded) {
-            if (g_Servant != g_ServantPrevious) {
-                if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
-                    g_Status.statsFamiliars[g_Servant - 1].unk8++;
+        if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
+            if (g_Servant != FAM_ACTIVE_NONE) {
+                if (g_Servant != g_ServantPrevious) {
+                    if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+                        g_Status.statsFamiliars[g_Servant - 1].unk8++;
+                    }
+                    InitializeServant(MENU_SWITCH_SERVANT);
+                } else {
+                    InitializeServant(MENU_SAME_SERVANT);
                 }
-                InitializeServant(MENU_SWITCH_SERVANT);
-            } else {
-                InitializeServant(MENU_SAME_SERVANT);
             }
             g_MenuStep += 2;
         } else {
@@ -3461,25 +3422,25 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_11:
-        if (!g_UseDisk || !g_IsUsingCd) {
-            if (!g_UseDisk) {
-                func_800E6250();
-                InitializeServant(MENU_SWITCH_SERVANT);
-            } else if (!g_IsUsingCd) {
-                InitializeServant(MENU_SWITCH_SERVANT);
+        if (g_UseDisk) {
+            if (g_IsUsingCd) {
+                break;
             }
-            g_ServantLoaded = g_Servant;
-            if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
-                g_Status.statsFamiliars[g_Servant - 1].unk8++;
-            }
-            g_MenuStep++;
+        } else {
+            func_800E6250();
         }
+        InitializeServant(MENU_SWITCH_SERVANT);
+        g_ServantLoaded = g_Servant;
+        if (g_Status.statsFamiliars[g_Servant - 1].unk8 < 9999) {
+            g_Status.statsFamiliars[g_Servant - 1].unk8++;
+        }
+        g_MenuStep++;
         break;
     case MENU_STEP_EXIT_12:
         if (g_IsUsingCd) {
             break;
         }
-        if (CdSoundCommandQueueEmpty() == false) {
+        if (!CdSoundCommandQueueEmpty()) {
             break;
         }
         D_80097910 = D_80137958;
@@ -3495,7 +3456,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_13:
-        if (func_80133950() == false) {
+        if (!func_80133950()) {
             break;
         }
         func_801027C4(2);
@@ -3577,13 +3538,13 @@ block_4:
         MenuHandleCursorInput(&g_MenuNavigation.cursorSettings, 6, 0);
         func_800F9808(2);
         i = g_MenuNavigation.cursorSettings + 1;
-        if (i == 2 && g_IsCloakLiningUnlocked == false) {
+        if (i == 2 && !g_IsCloakLiningUnlocked) {
             i = 0;
         }
-        if (i == 3 && g_IsCloakColorUnlocked == false) {
+        if (i == 3 && !g_IsCloakColorUnlocked) {
             i = 0;
         }
-        if (i == 6 && g_IsTimeAttackUnlocked == false) {
+        if (i == 6 && !g_IsTimeAttackUnlocked) {
             i = 0;
         }
         ShowText(D_800A2D48[i], 2);
@@ -3627,10 +3588,10 @@ block_4:
                 }
                 break;
             }
-            if (g_MenuStep == MENU_STEP_SYSTEM) {
-                PlaySfx(SFX_UI_ERROR);
-            } else {
+            if (g_MenuStep != MENU_STEP_SYSTEM) {
                 PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
             }
         }
         break;
@@ -3749,29 +3710,30 @@ block_4:
             PlaySfx(SFX_UI_CONFIRM);
             g_Status.relics[id] = g_Status.relics[id] ^ 2;
             if (g_RelicDefs[id].unk0C > 0) {
-                for (var_a0 = 0; var_a0 < NUM_RELICS; var_a0++) {
-                    if (var_a0 == id) {
+                for (i = 0; i < NUM_RELICS; i++) {
+                    if (i == id) {
                         continue;
                     }
-                    if (g_RelicDefs[var_a0].unk0C <= 0) {
+                    if (g_RelicDefs[i].unk0C <= 0) {
                         continue;
                     }
-                    g_Status.relics[var_a0] &= ~RELIC_FLAG_ACTIVE;
+                    g_Status.relics[i] &= ~RELIC_FLAG_ACTIVE;
                 }
 
                 if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
-                    var_a0 = ITEM_SWORD_FAMILIAR;
                     g_Servant = g_RelicDefs[id].unk0C;
                     if (g_Servant == FAM_ACTIVE_SWORD) {
-                        if (g_Status.equipment[LEFT_HAND_SLOT] == var_a0) {
+                        if (g_Status.equipment[LEFT_HAND_SLOT] ==
+                            ITEM_SWORD_FAMILIAR) {
                             g_Status.equipment[LEFT_HAND_SLOT] =
                                 ITEM_EMPTY_HAND;
-                            AddToInventory(var_a0, 0);
+                            AddToInventory(ITEM_SWORD_FAMILIAR, 0);
                         }
-                        if (g_Status.equipment[RIGHT_HAND_SLOT] == var_a0) {
+                        if (g_Status.equipment[RIGHT_HAND_SLOT] ==
+                            ITEM_SWORD_FAMILIAR) {
                             g_Status.equipment[RIGHT_HAND_SLOT] =
                                 ITEM_EMPTY_HAND;
-                            AddToInventory(var_a0, 0);
+                            AddToInventory(ITEM_SWORD_FAMILIAR, 0);
                         }
                     }
                 } else {
@@ -3799,8 +3761,8 @@ block_4:
             D_80137608 = 0;
             g_MenuStep = MENU_STEP_OPENED;
         }
-
         break;
+
     case MENU_STEP_SPELL_INIT:
         MenuShow(MENU_DG_INFO_BAR);
         MenuShow(MENU_DG_SPELLS);
@@ -3815,10 +3777,10 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_SPELL:
-        temp_s1 = g_MenuNavigation.cursorSpells;
+        var_s1 = g_MenuNavigation.cursorSpells;
         MenuHandleCursorInput(&g_MenuNavigation.cursorSpells, D_801375DC, 3);
 #if defined(VERSION_US)
-        if (temp_s1 != g_MenuNavigation.cursorSpells) {
+        if (var_s1 != g_MenuNavigation.cursorSpells) {
 #elif defined(VERSION_HD)
         if (1) {
 #endif
@@ -3939,7 +3901,7 @@ block_4:
             &g_MenuNavigation.cursorEquipType[0],
             g_Status.equipHandCount[equipId], g_EquipDefs[equipId].description,
             g_EquipDefs[equipId].icon, g_EquipDefs[equipId].iconPalette);
-        func_800FAF44(0);
+        func_800FAF44(false);
     case MENU_STEP_EQUIP_HAND:
         if (g_MenuNavigation.cursorEquip == LEFT_HAND_SLOT) {
             D_801375D0 = LEFT_HAND_SLOT;
@@ -3969,7 +3931,7 @@ block_4:
             g_Status.equipBodyCount[equipId],
             g_AccessoryDefs[equipId].description, g_AccessoryDefs[equipId].icon,
             g_AccessoryDefs[equipId].iconPalette);
-        func_800FAF44(1);
+        func_800FAF44(true);
     case MENU_STEP_EQUIP_ACC:
         isSecondAccessory = g_MenuNavigation.cursorEquip == ACCESSORY_2_SLOT;
         i = func_800FB23C(
@@ -3989,8 +3951,8 @@ block_4:
         }
         break;
     }
-    if (g_MenuStep >= MENU_STEP_OPENED ||
-        g_MenuStep >= MENU_STEP_EXIT_BEGIN && g_MenuStep < MENU_STEP_EXIT_5) {
+    if (g_MenuStep >= MENU_STEP_OPENED || g_MenuStep == MENU_STEP_EXIT_BEGIN ||
+        g_MenuStep == MENU_STEP_EXIT_4) {
         MenuDraw();
         func_800F9690();
         func_800F96F4();
