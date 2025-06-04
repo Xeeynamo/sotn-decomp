@@ -235,18 +235,25 @@ class AnimationShower:
 
     def play_anim(self, animation_bytes, mpl_fig, mpl_ax):
         print("Playing animation:", animation_bytes)
-        images = []
+        pictures = []
         for i in range(0, len(animation_bytes), 2):
             if animation_bytes[i] == 0 or animation_bytes[i] == 255:
                 continue
             duration, anim_idx = animation_bytes[i : i + 2]
             picture = self.render_frame(anim_idx)
             for _ in range(duration):
-                images.append([mpl_ax.imshow(picture)])
+                pictures.append(picture)
         self.activeAnimation = animation.ArtistAnimation(
-            mpl_fig, images, interval=17, blit=True
+            mpl_fig, [[mpl_ax.imshow(p)] for p in pictures], interval=17, blit=True
         )
+        return pictures
 
+# Does not work very well, but leaving it here for future improvement
+def save_as_gif(frames):
+    print("Saving GIF not yet implemented, Python support is poor for transparent images")
+    print("Feel free to uncomment the below and see what you get")
+    print(len(frames))
+    #frames[0].save("Testgif.gif", save_all = True, append_images = frames[1:], duration=40, loop=0, transparency=0)
 
 def main(overlay, src_file):
     anims = load_anims(src_file)
@@ -266,9 +273,13 @@ def main(overlay, src_file):
         fig, ax = plt.subplots()
         ax.set_xlim(0, 256)
         ax.set_ylim(0, 256)
+        plt.subplots_adjust(bottom=0.15)
         ax.set_title(f"Displaying {overlay} animation {active_anim[0]} from {src_file}")
         plt.gca().invert_yaxis()
-        shower.play_anim(active_anim[1], fig, ax)
+        animframes = shower.play_anim(active_anim[1], fig, ax)
+
+        export_button = Button(plt.axes([0.1, 0.025, 0.3, 0.1], facecolor="k"), "Export GIF")
+        export_button.on_clicked(lambda event: save_as_gif(animframes))
         plt.show()
 
 
