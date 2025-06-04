@@ -1105,7 +1105,7 @@ void MenuTimeAttackDraw(MenuContext* ctx) {
     s32 cursorY;
 
     for (i = 0; i < 12; i++) {
-        entryIdx = i + g_MenuNavigation.cursorTimeAttack;
+        entryIdx = g_MenuNavigation.cursorTimeAttack + i;
         cursorX = ctx->cursorX + 8;
         cursorY = ctx->cursorY + 8 + i * 12;
         MenuDrawInt(entryIdx + 1, cursorX + 8, cursorY, ctx);
@@ -1245,14 +1245,14 @@ void MenuStatChangesDraw(void) {
         for (i = 0; i < 4; i++) {
             ycoord = 0x22 + i * 10;
             // Name of the stat
-            MenuDrawStr(g_MenuStr[1 + i], xcoord, ycoord, ctx);
+            MenuDrawStr(g_MenuStr[i + 1], xcoord, ycoord, ctx);
             // Current value for the stat
             MenuDrawInt(g_Status.statsBase[i] + g_Status.statsEquip[i],
                         xcoord + 0x2C, ycoord, ctx);
             // Indication of change
-            arrow = StatChangeArrow(
-                (g_Status.statsBase[i] + g_Status.statsEquip[i]),
-                g_NewPlayerStatsTotal[i]);
+            arrow =
+                StatChangeArrow(g_Status.statsBase[i] + g_Status.statsEquip[i],
+                                g_NewPlayerStatsTotal[i]);
             MenuDrawChar(arrow, xcoord + 0x34, ycoord, ctx);
             // Final value for the stat
             MenuDrawInt(g_NewPlayerStatsTotal[i], xcoord + 0x4C, ycoord, ctx);
@@ -1410,7 +1410,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
         spell ^= 0x80;
         comboPointer = g_SpellDefs[spell].combo;
         charNum = 0;
-        yCoord = 64 + i * 16;
+        yCoord = i * 0x10 + 0x40;
         // Count up how many characters are in the combo
         while (*comboPointer != 0) {
             comboPointer++;
@@ -1459,7 +1459,8 @@ void MenuSpellsDraw(MenuContext* ctx) {
         } else {
             MenuDrawChar(CH('?'), startXCoord, yCoord, ctx);
             MenuDrawChar(CH('+'), startXCoord + 8, yCoord, ctx);
-            MenuDrawStr(g_SpellDefs[6].combo, startXCoord + 16, yCoord, ctx);
+            MenuDrawStr(
+                g_SpellDefs[spell].combo, startXCoord + 16, yCoord, ctx);
             MenuDrawChar(
                 CH('+'), startXCoord + 16 + (charNum * 8), yCoord, ctx);
             MenuDrawChar(
@@ -1470,8 +1471,8 @@ void MenuSpellsDraw(MenuContext* ctx) {
     }
     for (i = 0; i < 8; i++) {
         if (g_Status.spells[i] & 0x80) {
-            MenuDrawImg(ctx, 0x1C, 0x3C + 0x10 * i, 0xF0, 0x10U, 0,
-                        func_800F548C(-0x80 + i) & 0xFF, 0x1A1, 6, true, 0);
+            MenuDrawImg(ctx, 0x1C, i * 0x10 + 0x3C, 0xF0, 0x10, 0,
+                        func_800F548C(i + 0x80), 0x1A1, 6, true, 0);
         }
     }
 #if defined(VERSION_US)
@@ -1733,15 +1734,14 @@ void func_800F8990(MenuContext* ctx, s32 x, s32 y) {
     s32 myX, myY;
     const char* equipName;
     s32 itemIndex;
-    u16 icon;
-    u16 palette;
+    s32 icon;
+    s32 palette;
     u8 equipId;
 
     equipOrder = GetEquipOrder(D_801375CC);
     equipsAmount = GetEquipCount(D_801375CC);
     nItems = func_800FD6C4(D_801375CC);
-    curX = 0;
-    curY = 0;
+    curX = curY = 0;
     itemsPerPage = (ctx->cursorH / Height + 1) * Cols;
     for (i = 0; i < itemsPerPage; i++) {
         itemIndex = i + -ctx->h / Height * Cols;
@@ -2044,12 +2044,12 @@ void MenuDraw(void) {
             }
 
             for (j = 0; j < 7; j++) {
-                if (j >= 0 && j < 2 && flag) {
+                if ((j == 0 || j == 1) && flag) {
                     if (j == 0) {
-                        func_800F892C(0x10, 0x5E, 0x20, menu);
+                        func_800F892C(j + 0x10, 0x5E, 0x20 + j * 13, menu);
                     }
                 } else {
-                    func_800F892C(j + 0x10, 0x5E, 0x1a + j * 13, menu);
+                    func_800F892C(j + 0x10, 0x5E, 0x1A + j * 13, menu);
                 }
             }
             func_800F6618(i, g_MenuStep != 0x40);
@@ -2207,15 +2207,13 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     const u16 DOUBLE_SPACE = 0x8140;
     const u16 RIGHT_DOUBLE_QUOTATION_MARK = 0x8168;
 
-    const int FontWidth = 12;
-    const int FontHeight = 16;
-    const int FontStride = FontWidth / 2;
+    const s32 FontWidth = 12;
+    const s32 FontHeight = 16;
 
     s32 var_a0;
     u8* var_a2;
     s32 var_a3;
-    u8 var_s0;
-    u8* var_s1;
+    u8 ch;
     s32 var_s2;
     s32 var_s3;
     s32 var_s4;
@@ -2225,7 +2223,6 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     s32 j;
     u8* dest_addr;
 
-    var_s1 = str;
     var_s5 = arg1;
     if (arg2 == 0) {
         var_s4 = 0x90;
@@ -2235,8 +2232,11 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     for (i = 0; i < var_s4 * FontHeight; i++) {
         D_8013794C[i] = 0;
     }
-    var_s6 = ((u32)var_s5 >> 2) & 0x40;
     var_s3 = 0;
+    var_s6 = 0;
+    if (var_s5 & 0x100) {
+        var_s6 = 0x40;
+    }
     if (var_s5 & 0x200) {
         var_s6 += 0x20;
         var_s5 &= ~0x200;
@@ -2246,36 +2246,36 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
     NOT_IMPLEMENTED;
     return;
 #endif
-    while (*var_s1 != 0) {
+    while (*str != 0) {
         var_s2 = 0;
-        var_s0 = *var_s1++;
-        if ('a' <= var_s0 && var_s0 <= 'z') {
-            var_a0 = var_s0 + 0x8220;
-        } else if ('A' <= var_s0 && var_s0 <= 'Z') {
-            var_a0 = var_s0 + 0x821F;
-        } else if (var_s0 == ' ') {
+        ch = *str++;
+        if ('a' <= ch && ch <= 'z') {
+            var_a0 = ch + 0x8220;
+        } else if ('A' <= ch && ch <= 'Z') {
+            var_a0 = ch + 0x821F;
+        } else if (ch == ' ') {
             var_a0 = DOUBLE_SPACE;
             var_s2 = 2;
         } else {
             // load var_a0 as a big-endian value corresponding with shift-jis
-            var_a0 = (var_s0 << 8);
-            var_a0 += *var_s1++;
+            var_a0 = ch << 8;
+            var_a0 += *str++;
             if (var_a0 == RIGHT_DOUBLE_QUOTATION_MARK) {
-                var_s1 += 2;
+                str += 2;
             }
             if (var_a0 == DOUBLE_SPACE) {
-                var_s0 = ' ';
+                ch = ' ';
                 var_s2 = 2;
             }
         }
         var_a2 = func_80106A28(var_a0, 0);
         while (1) {
-            if (var_s0 == ' ') {
+            if (ch == ' ') {
                 break;
             }
             for (i = 0; i < FontHeight; i++) {
                 // probably fake, i think var_a2 is a 2d array like [6][??]
-                if (var_a2[i * FontStride] != 0) {
+                if (var_a2[i * FontWidth / 2] != 0) {
                     break;
                 }
             }
@@ -2283,7 +2283,7 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
                 break;
             }
             for (i = 0; i < FontHeight; i++) {
-                dest_addr = &var_a2[i * FontStride];
+                dest_addr = &var_a2[i * FontWidth / 2];
                 // Effectively shift everything down an index
                 for (j = 0; j < 5; j++) {
                     dest_addr[0] = dest_addr[1];
@@ -2294,26 +2294,26 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
             }
         }
         for (i = 0, var_a3 = 0; i < FontHeight; i++) {
-            for (j = 0; j < FontStride; j++) {
+            for (j = 0; j < FontWidth / 2; j++) {
                 // similar to above comment, this could be var_a2[i][j]
-                if ((var_a2[i * FontStride + j] != 0) && (var_a3 < j)) {
+                if ((var_a2[i * FontWidth / 2 + j] != 0) && (var_a3 < j)) {
                     var_a3 = j;
                 }
             }
         }
         for (i = 0; i < FontHeight; i++) {
-            if (var_a2[i * FontStride + var_a3] & 0xF0) {
+            if (var_a2[i * FontWidth / 2 + var_a3] & 0xF0) {
                 break;
             }
         }
         if (i != FontHeight) {
             var_a3 += 1;
         }
-        if (var_a3 < FontStride) {
+        if (var_a3 < FontWidth / 2) {
             var_a3 += 1;
         }
         for (i = 0; i < FontHeight; i++) {
-            dest_addr = &D_8013794C[var_s3 + var_s4 * i];
+            dest_addr = &D_8013794C[i * var_s4 + var_s3];
             *dest_addr++ = *var_a2++;
             *dest_addr++ = *var_a2++;
             *dest_addr++ = *var_a2++;
@@ -2327,9 +2327,9 @@ void func_800F99B8(const char* str, s32 arg1, bool arg2) {
         }
     }
 
-    LoadTPage((PixPattern*)D_8013794C, 0, 0, var_s6 + D_80137950,
-              var_s5 + D_80137954, var_s4 * 2, 0x10);
-    D_8013794C += var_s4 * 0x10;
+    LoadTPage((u_long*)D_8013794C, 0, 0, D_80137950 + var_s6,
+              D_80137954 + var_s5, var_s4 * 2, 0x10);
+    D_8013794C += var_s4 * FontHeight;
 }
 #endif
 
@@ -2383,9 +2383,10 @@ void func_800F9E18(s32 arg0) {
     for (i = nHalfScreenSize; i < nItems; i++, nHalfScreenSize++) {
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize % ItemsPerRow) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 128, true);
+            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 0x80, true);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 259, true);
+            func_800F99B8(
+                buffer, (nHalfScreenSize / ItemsPerRow) + 0x103, true);
         }
 
         strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
@@ -3686,10 +3687,10 @@ block_4:
     case MENU_STEP_RELIC:
 #if defined(VERSION_US)
         g_MenuData.menus[5].unk16 =
-            (-((g_MenuNavigation.cursorRelic / 2) * 0x78)) / 14;
+            ((g_MenuNavigation.cursorRelic / 2) * -120) / 14;
 #elif defined(VERSION_HD)
         g_MenuData.menus[5].unk16 =
-            (-((g_MenuNavigation.cursorRelic / 2) * 0x8C)) / 15;
+            ((g_MenuNavigation.cursorRelic / 2) * -140) / 15;
 #endif
         var_s1 = g_MenuNavigation.cursorRelic;
 #if defined(VERSION_US)
