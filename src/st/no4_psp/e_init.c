@@ -75,7 +75,7 @@ void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
 void EntityBoneArcherArrow(Entity* self);
 void func_pspeu_0923D180(Entity* self);
-void func_pspeu_0925E548(Entity* self);
+void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_pspeu_09242200(Entity* self);
 void EntityBreakableWall(Entity* self);
 void EntityBreakableWallDebris(Entity* self);
@@ -173,7 +173,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4B */ EntityBoneArcher,
     /* 0x4C */ EntityBoneArcherArrow,
     /* 0x4D */ func_pspeu_0923D180,
-    /* 0x4E */ func_pspeu_0925E548,
+    /* 0x4E */ OVL_EXPORT(EntityCutscene),
     /* 0x4F */ func_pspeu_09242200,
     /* 0x50 */ EntityBreakableWall,
     /* 0x51 */ EntityBreakableWallDebris,
