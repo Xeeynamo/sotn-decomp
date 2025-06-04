@@ -248,12 +248,16 @@ class AnimationShower:
         )
         return pictures
 
+
 # Does not work very well, but leaving it here for future improvement
 def save_as_gif(frames):
-    print("Saving GIF not yet implemented, Python support is poor for transparent images")
+    print(
+        "Saving GIF not yet implemented, Python support is poor for transparent images"
+    )
     print("Feel free to uncomment the below and see what you get")
     print(len(frames))
-    #frames[0].save("Testgif.gif", save_all = True, append_images = frames[1:], duration=40, loop=0, transparency=0)
+    # frames[0].save("Testgif.gif", save_all = True, append_images = frames[1:], duration=40, loop=0, transparency=0)
+
 
 def main(overlay, src_file):
     anims = load_anims(src_file)
@@ -278,7 +282,9 @@ def main(overlay, src_file):
         plt.gca().invert_yaxis()
         animframes = shower.play_anim(active_anim[1], fig, ax)
 
-        export_button = Button(plt.axes([0.1, 0.025, 0.3, 0.1], facecolor="k"), "Export GIF")
+        export_button = Button(
+            plt.axes([0.1, 0.025, 0.3, 0.1], facecolor="k"), "Export GIF"
+        )
         export_button.on_clicked(lambda event: save_as_gif(animframes))
         plt.show()
 
