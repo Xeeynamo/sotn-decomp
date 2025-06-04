@@ -392,11 +392,9 @@ static void func_80159C04(void) {
     s16 var_s1;
 
     entity = PLAYER.unkB8;
-#if defined(VERSION_PSP)
     if (!entity) {
         return;
     }
-#endif
     if (entity->facingLeft) {
         var_s3 = -entity->hitboxOffX;
     } else {
