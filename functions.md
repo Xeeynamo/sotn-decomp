@@ -451,7 +451,7 @@
 | dra    | func_800F6568                            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EAFA8                        |       37 |          3 |        |                                 |       |
 | dra    | GetSaveIcon                              |       37 |          3 |        |                                 |       |
-| dra    | func_800F82F4                            |       37 |          3 |        | https://decomp.me/scratch/BJeMN | 0.604 |
+| dra    | func_800F82F4                            |       37 |          3 |        | https://decomp.me/scratch/BJeMN | 0.772 |
 | maria  | func_pspeu_092BEA38                      |       37 |          3 |        |                                 |       |
 | dai    | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
 | no4    | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
@@ -1890,7 +1890,7 @@
 | ric    | RicEntitySubwpnHolyWater                 |      544 |         53 | Yes    | https://decomp.me/scratch/7wrXp | 0.999 |
 | dra    | ExecSoundCommands                        |      546 |        139 |        | https://decomp.me/scratch/CirCq | 0.979 |
 | maria  | func_pspeu_092B92F0                      |      550 |         56 | Yes    | https://decomp.me/scratch/PMkg0 | 0.998 |
-| dra    | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/vfYTj | 0.993 |
+| dra    | func_800FB23C                            |      554 |         79 |        | https://decomp.me/scratch/vfYTj | 0.996 |
 | dra    | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib    | func_us_801B7DF8                         |      556 |         54 |        |                                 |       |
 | dra    | EntityFactory                            |      557 |         48 | Yes    |                                 |       |
