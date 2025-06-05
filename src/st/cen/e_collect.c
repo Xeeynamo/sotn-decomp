@@ -3,7 +3,8 @@
 
 #if !defined(VERSION_HD)
 
-#include "../e_collect.h"
+// TODO: fix?
+#include "../e_collect.c"
 
 #else
 
