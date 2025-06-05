@@ -305,6 +305,10 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/cutscene.c
 )
 
+set(SOURCE_FILES_STAGE_SHARED
+    src/st/e_collect.c
+)
+
 set(SOURCE_FILES_STAGE_CEN
     src/pc/stages/stage_cen.c
     src/st/cen/header.c
@@ -326,7 +330,6 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/create_entity.c
     src/st/cen/e_red_door.c
     src/st/cen/st_common.c
-    src/st/cen/e_collect.c
     src/st/cen/blit_char.c
     src/st/cen/e_misc.c
     src/st/cen/e_stage_name.c
@@ -364,7 +367,6 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/create_entity.c
     src/st/nz0/e_red_door.c
     src/st/nz0/st_common.c
-    src/st/nz0/e_collect.c
     src/st/nz0/blit_char.c
     src/st/nz0/e_misc.c
     src/st/nz0/e_particles.c
@@ -438,7 +440,6 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/create_entity.c
     src/st/wrp/e_red_door.c
     src/st/wrp/st_common.c
-    src/st/wrp/e_collect.c
     src/st/wrp/blit_char.c
     src/st/wrp/e_misc.c
     src/st/wrp/e_stage_name.c
@@ -492,6 +493,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_MOCK_SDK}
     ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
+    ${SOURCE_FILES_STAGE_SHARED}
     ${SOURCE_FILES_STAGE_CEN}
     ${SOURCE_FILES_STAGE_NZ0}
     ${SOURCE_FILES_STAGE_ST0}
