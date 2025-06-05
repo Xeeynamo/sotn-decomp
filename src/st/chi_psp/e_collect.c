@@ -102,7 +102,7 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 #endif
 };
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
 static u16 maria_subweapons_idx[] = {1, 2, 4, 3, 0, 0, 0, 0, 0};
 static u16 maria_subweapons_id[] = {19, 14, 15, 17, 16};
 static u8 D_psp_09246398[] = {

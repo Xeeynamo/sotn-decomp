@@ -74,7 +74,7 @@ static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 // Gold appears up here on PSX, down lower on VERSION_PSP
-#if !defined(VERSION_PSP)
+#if !defined(VERSION_PSP) || (STAGE == STAGE_ST0)
 #if STAGE != STAGE_ST0
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
@@ -101,7 +101,7 @@ u8* g_SubweaponAnimPrizeDrop[] = {
 #endif
 };
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
 static u16 maria_subweapons_idx[] = {1, 2, 4, 3, 0, 0, 0, 0, 0};
 static u16 maria_subweapons_id[] = {19, 14, 15, 17, 16};
 static u8 D_psp_09246398[] = {
