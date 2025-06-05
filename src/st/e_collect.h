@@ -74,16 +74,16 @@ static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 // Gold appears up here on PSX, down lower on VERSION_PSP
-#if !defined(VERSION_PSP) || (STAGE == STAGE_ST0)
-#if STAGE != STAGE_ST0
+#if !defined(VERSION_PSP) && (STAGE != STAGE_ST0)
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
-#else
-static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
+
+#if STAGE == STAGE_ST0
+static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
 // 1D18
@@ -189,7 +189,11 @@ void func_801937BC(void) {}
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
+#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
+#include "collect_subweapon_psp.h"
+#else
 #include "collect_subweapon.h"
+#endif
 
 #if STAGE != STAGE_ST0
 #include "collect_heart_vessel.h"
@@ -216,13 +220,17 @@ Entity* func_801939C4(void) {
 
 #include "entity_prize_drop.h"
 
-extern u16 g_EInitParticle[];
-
 #include "entity_explosion.h"
 
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+
+// PSP requiring static on this likely means we need
+// to redo some file splits.
+#ifdef VERSION_PSP
+static
+#endif
 #include "blink_item.h"
 #else
 static Point16 g_collectVelocity[] = {
@@ -252,6 +260,9 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 }
 #endif
 
+#ifdef VERSION_PSP
+char* obtainedStr;
+#endif
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "entity_equip_item_drop.h"

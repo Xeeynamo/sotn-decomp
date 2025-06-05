@@ -77,16 +77,16 @@ static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
 // Gold appears up here on PSX, down lower on VERSION_PSP
-#if !defined(VERSION_PSP)
-#if STAGE != STAGE_ST0
+#if !defined(VERSION_PSP) && (STAGE != STAGE_ST0)
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
-#else
-static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
+
+#if STAGE == STAGE_ST0
+static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
 #endif
 
 u8* g_SubweaponAnimPrizeDrop[] = {
@@ -219,12 +219,47 @@ Entity* func_801939C4(void) {
 
 #include "../entity_explosion.h"
 
-// BlinkItem must be declared static for EntityEquipItemDrop /
-// EntityRelicOrb below to match.
-static
-#include "../blink_item.h"
+// Weird difference here. These functions are not related.
+// But MAD has one and not the other.
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0)
 
-    char* obtainedStr;
+// PSP requiring static on this likely means we need
+// to redo some file splits.
+#ifdef VERSION_PSP
+static
+#endif
+#include "../blink_item.h"
+#else
+static Point16 g_collectVelocity[] = {
+    {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
+    {0x0020, 0xFB60}, {0xFFC0, 0xFCC0}, {0x0090, 0xFC40}, {0xFFA0, 0xFC30},
+};
+// Also, this function is never called.
+void Unreferenced_MAD_ST0_func(Entity* self) {
+    if (self->step != 0) {
+        if (self->posY.i.hi >= 0xF1) {
+            DestroyEntity(self);
+            return;
+        }
+        FallEntity();
+        MoveEntity();
+        return;
+    }
+
+    InitializeEntity(OVL_EXPORT(EInitBreakable));
+    self->animCurFrame = self->ext.unusedMadST0.animframe;
+    self->velocityX = g_collectVelocity[self->ext.unusedMadST0.velIndex].x;
+    self->velocityY = g_collectVelocity[self->ext.unusedMadST0.velIndex].y;
+
+    if (self->params != 0) {
+        self->zPriority -= 1;
+    }
+}
+#endif
+
+#ifdef VERSION_PSP
+char* obtainedStr;
+#endif
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "../entity_equip_item_drop.h"

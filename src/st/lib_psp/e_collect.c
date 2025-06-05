@@ -137,7 +137,10 @@ static u8* g_ExplosionAnimations[] = {
 static
 #include "../blink_item.h"
 
-    char* obtainedStr;
+#ifdef VERSION_PSP
+char* obtainedStr;
+#endif
+
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "../entity_equip_item_drop.h"
