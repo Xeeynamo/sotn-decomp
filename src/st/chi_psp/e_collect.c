@@ -75,13 +75,34 @@ static u8 D_80180DD0[] = {0x01, 0x8F, 0x00, 0x00};
 static s8 unusedStuff[] = {-4, -4, 4, -4, -4, 4, 4, 4, 0x80, 0x00};
 static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
-static u8* g_SubweaponAnimPrizeDrop[] = {
-    D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8, D_80180CDC,
-    D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC, D_80180CF0, D_80180CF4,
-    D_80180D08, D_80180D18, D_80180D58, D_80180D44, D_80180D1C, D_80180D30,
-    D_80180D6C, D_80180D80, D_80180D94, D_80180DA8, D_80180DBC, D_80180DD0,
+
+// Gold appears up here on PSX, down lower on VERSION_PSP
+#if !defined(VERSION_PSP)
+#if STAGE != STAGE_ST0
+const char* g_goldCollectTexts[] = {
+    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
+    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+};
+static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
+#else
+static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
+#endif
+#endif
+
+u8* g_SubweaponAnimPrizeDrop[] = {
+    D_80180C94, D_80180C98, D_80180CC4, D_80180CD4, D_80180CD8,
+    D_80180CDC, D_80180CE0, D_80180CE4, D_80180CE8, D_80180CEC,
+    D_80180CF0, D_80180CF4, D_80180D08, D_80180D18,
+#if STAGE != STAGE_ST0
+    D_80180D58, D_80180D44, D_80180D1C, D_80180D30, D_80180D6C,
+    D_80180D80, D_80180D94, D_80180DA8, D_80180DBC, D_80180DD0,
+#else
+    D_80180D1C, D_80180D1C, D_80180D1C, D_80180D30, D_80180D1C,
+    D_80180D1C, D_80180D1C, D_80180D1C, D_80180D1C,
+#endif
 };
 
+#ifdef VERSION_PSP
 static u16 maria_subweapons_idx[] = {1, 2, 4, 3, 0, 0, 0, 0, 0};
 static u16 maria_subweapons_id[] = {19, 14, 15, 17, 16};
 static u8 D_psp_09246398[] = {
@@ -104,14 +125,32 @@ static u8* g_MariaSubweaponAnimPrizeDrop[] = {
     D_80180C94,     D_80180C94,     D_80180C94,     D_80180DD0,
 };
 
-static const char* g_goldCollectTexts[] = {
+#if STAGE != STAGE_ST0
+const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
     _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 };
-
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
+#else
+static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
+#endif
+
+#endif
+
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
-static s8 c_HeartPrizes[] = {1, 5};
+#if !defined(VERSION_BETA) && STAGE != STAGE_ST0
+// Note that this array is in data. MAD/ST0 have it in rodata.
+s8 c_HeartPrizes[] = {1, 5};
+#endif
+
+// from another file
+extern u16 g_EInitObtainable[];
+
+#include "../prize_drop_fall.h"
+
+#include "../prize_drop_fall2.h"
+
+#include "../collect_heart.h"
 
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
@@ -144,21 +183,37 @@ static u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-#include "../prize_drop_fall.h"
-
-#include "../prize_drop_fall2.h"
-
-#include "../collect_heart.h"
-
 #include "../collect_gold.h"
+
+#if defined VERSION_BETA || STAGE == STAGE_ST0
+void func_801937BC(void) {}
+void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
+#endif
 
 #include "../collect_subweapon_psp.h"
 
+#if STAGE != STAGE_ST0
 #include "../collect_heart_vessel.h"
 
-#include "../collect_life_vessel.h"
+static void CollectLifeVessel(void) {
+    g_api.PlaySfx(SFX_HEART_PICKUP);
+    g_api.func_800FE044(LIFE_VESSEL_INCREASE, 0x8000);
+    DestroyEntity(g_CurrentEntity);
+}
+#endif
 
+// MAD doesn't take an argument, others do
+#if defined VERSION_BETA || (STAGE == STAGE_ST0 && !defined(VERSION_PSP))
+static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
+// Extra unused function, putting it in this same if-block.
+Entity* func_801939C4(void) {
+    g_CurrentEntity->step = 3;
+    g_CurrentEntity->params = 4;
+    return g_CurrentEntity;
+}
+#else 
 #include "../collect_dummy.h"
+#endif
 
 #include "../entity_prize_drop.h"
 

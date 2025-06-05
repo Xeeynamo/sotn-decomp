@@ -73,6 +73,8 @@ static s8 unusedStuff[] = {-4, -4, 4, -4, -4, 4, 4, 4, 0x80, 0x00};
 static u16 aluric_subweapons_idx[] = {1, 2, 4, 3, 6, 5, 7, 8, 9};
 static u16 aluric_subweapons_id[] = {0, 14, 15, 17, 16, 19, 18, 20, 21, 22};
 
+// Gold appears up here on PSX, down lower on VERSION_PSP
+#if !defined(VERSION_PSP)
 #if STAGE != STAGE_ST0
 const char* g_goldCollectTexts[] = {
     _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
@@ -81,6 +83,7 @@ const char* g_goldCollectTexts[] = {
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
+#endif
 #endif
 
 // 1D18
@@ -97,6 +100,41 @@ u8* g_SubweaponAnimPrizeDrop[] = {
     D_80180D1C, D_80180D1C, D_80180D1C, D_80180D1C,
 #endif
 };
+
+#ifdef VERSION_PSP
+static u16 maria_subweapons_idx[] = {1, 2, 4, 3, 0, 0, 0, 0, 0};
+static u16 maria_subweapons_id[] = {19, 14, 15, 17, 16};
+static u8 D_psp_09246398[] = {
+    0x05, 0xA1, 0x05, 0xA2, 0x05, 0xA3, 0x05, 0xA4, 0x05,
+    0xA5, 0x05, 0xA6, 0x05, 0xA7, 0x05, 0xA8, 0x00};
+static u8 D_psp_092463B0[] = {
+    0x05, 0xA9, 0x05, 0xAA, 0x05, 0xAB, 0x05, 0xAC, 0x05,
+    0xAD, 0x05, 0xAE, 0x05, 0xAF, 0x05, 0xB0, 0x00};
+static u8 D_psp_092463C8[] = {
+    0x05, 0xB1, 0x05, 0xB2, 0x05, 0xB3, 0x05, 0xB4, 0x05,
+    0xB5, 0x05, 0xB6, 0x05, 0xB7, 0x05, 0xB8, 0x00};
+static u8 D_psp_092463E0[] = {
+    0x05, 0xB9, 0x05, 0xBA, 0x05, 0xBB, 0x05, 0xBC, 0x05,
+    0xBD, 0x05, 0xBE, 0x05, 0xBF, 0x05, 0xC0, 0x00};
+static u8* g_MariaSubweaponAnimPrizeDrop[] = {
+    D_80180C94,     D_80180C98,     D_80180CC4,     D_80180CD4, D_80180CD8,
+    D_80180CDC,     D_80180CE0,     D_80180CE4,     D_80180CE8, D_80180CEC,
+    D_80180CF0,     D_80180CF4,     D_80180D08,     D_80180D18, D_psp_09246398,
+    D_psp_092463B0, D_psp_092463E0, D_psp_092463C8, D_80180C94, D_80180D80,
+    D_80180C94,     D_80180C94,     D_80180C94,     D_80180DD0,
+};
+
+#if STAGE != STAGE_ST0
+const char* g_goldCollectTexts[] = {
+    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
+    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+};
+static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
+#else
+static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
+#endif
+
+#endif
 
 static s16 D_80180EB8[] = {-6, 4, 0, -8};
 #if !defined(VERSION_BETA) && STAGE != STAGE_ST0
