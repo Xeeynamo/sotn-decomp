@@ -1,7 +1,3 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-#include "../chi/chi.h"
-
 //
 // Section Sizes:
 //
@@ -148,11 +144,11 @@ s8 c_HeartPrizes[] = {1, 5};
 // from another file
 extern u16 g_EInitObtainable[];
 
-#include "../prize_drop_fall.h"
+#include "prize_drop_fall.h"
 
-#include "../prize_drop_fall2.h"
+#include "prize_drop_fall2.h"
 
-#include "../collect_heart.h"
+#include "collect_heart.h"
 
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
@@ -185,17 +181,17 @@ static u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-#include "../collect_gold.h"
+#include "collect_gold.h"
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 void func_801937BC(void) {}
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
-#include "../collect_subweapon_psp.h"
+#include "collect_subweapon_psp.h"
 
 #if STAGE != STAGE_ST0
-#include "../collect_heart_vessel.h"
+#include "collect_heart_vessel.h"
 
 static void CollectLifeVessel(void) {
     g_api.PlaySfx(SFX_HEART_PICKUP);
@@ -214,12 +210,12 @@ Entity* func_801939C4(void) {
     return g_CurrentEntity;
 }
 #else 
-#include "../collect_dummy.h"
+#include "collect_dummy.h"
 #endif
 
-#include "../entity_prize_drop.h"
+#include "entity_prize_drop.h"
 
-#include "../entity_explosion.h"
+#include "entity_explosion.h"
 
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
@@ -230,7 +226,7 @@ Entity* func_801939C4(void) {
 #ifdef VERSION_PSP
 static
 #endif
-#include "../blink_item.h"
+#include "blink_item.h"
 #else
 static Point16 g_collectVelocity[] = {
     {0x0160, 0xFD20}, {0xFE80, 0xFC90}, {0x00E0, 0xFC20}, {0xFF40, 0xFD30},
@@ -264,6 +260,6 @@ char* obtainedStr;
 #endif
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
-#include "../entity_equip_item_drop.h"
+#include "entity_equip_item_drop.h"
 
-#include "../entity_relic_orb.h"
+#include "entity_relic_orb.h"
