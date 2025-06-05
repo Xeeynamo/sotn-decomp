@@ -57,7 +57,7 @@ segments:
       - [0x9A8, .data, collision]
       - [0xD68, .data, e_red_door]
       - [0xD80, .data, st_common]
-      - [0xF80, .data, e_collect]
+      - [0xF80, .data, ../e_collect]
       - [0x1270, .data, e_misc]
       - [0x12D4, .data, e_misc]
       - [0x138C, data]
@@ -80,7 +80,7 @@ segments:
       - [0x118F8, .rodata, 161DC] # EntityUnkId23
       - [0x11910, .rodata, 1697C] # EntityFadeToWhite
       - [0x1193C, .rodata, e_red_door] # EntityRedDoor
-      - [0x119C4, .rodata, e_collect]
+      - [0x119C4, .rodata, ../e_collect]
       - [0x119DC, .rodata, e_misc]
       - [0x11A14, .rodata, e_misc]
       - [0x11A28, .rodata, e_stage_name]
@@ -97,7 +97,7 @@ segments:
       - [0x18B80, c, create_entity]
       - [0x196F8, c, e_red_door]
       - [0x1A3A8, c, st_common]
-      - [0x1B858, c, e_collect]
+      - [0x1B858, c, ../e_collect]
       - [0x1CDC4, c, blit_char]
       - [0x1D074, c, e_misc]
       - [0x20564, c, e_stage_name]
@@ -108,5 +108,5 @@ segments:
       - [0x22848, c]
       - [0x23264, .bss, create_entity]
       - [0x232CA, .bss, bss]
-      - [0x23FB6, .bss, e_collect]
+      - [0x23FB6, .bss, ../e_collect]
   - [0x23FCC]

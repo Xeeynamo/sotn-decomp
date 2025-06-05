@@ -63,7 +63,7 @@ segments:
       - [0x1CEC, .data, collision]
       - [0x20AC, .data, e_red_door]
       - [0x20C4, .data, st_common]
-      - [0x22C4, .data, e_collect]
+      - [0x22C4, .data, ../e_collect]
       - [0x25B4, .data, e_misc]
       - [0x26D0, .data, e_particles]
       - [0x2750, data]
@@ -91,9 +91,9 @@ segments:
       - [0x37514, .rodata, e_death] # EntityDeath
       - [0x37564, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x37578, .rodata, e_red_door] # EntityRedDoor
-      - [0x37590, .rodata, e_collect] # CollectGold text
-      - [0x375E0, .rodata, e_collect] # EntityPrizeDrop
-      - [0x37600, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x37590, .rodata, ../e_collect] # CollectGold text
+      - [0x375E0, .rodata, ../e_collect] # EntityPrizeDrop
+      - [0x37600, .rodata, ../e_collect] # EntityEquipItemDrop
       - [0x37618, .rodata, e_misc]
       - [0x37650, .rodata, e_misc]
       - [0x37664, .rodata, e_stage_name] # EntityStageNamePopup
@@ -135,7 +135,7 @@ segments:
       - [0x4343C, c, create_entity]
       - [0x43FB4, c, e_red_door]
       - [0x44C64, c, st_common]
-      - [0x46114, c, e_collect]
+      - [0x46114, c, ../e_collect]
       - [0x47680, c, blit_char]
       - [0x47930, c, e_misc]
       - [0x4AE20, c, e_stage_name]
@@ -153,5 +153,5 @@ segments:
       - [0x56880, c, prim_helpers]
       - [0x570B0, .bss, create_entity]
       - [0x57120, .bss, cutscene]
-      - [0x57DD8, .bss, e_collect]
+      - [0x57DD8, .bss, ../e_collect]
   - [0x57E18]

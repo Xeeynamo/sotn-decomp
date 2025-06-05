@@ -52,7 +52,7 @@ segments:
       - [0x7E4, .data, collision]
       - [0xBA4, .data, e_red_door]
       - [0xBBC, .data, st_common]
-      - [0xDBC, .data, e_collect]
+      - [0xDBC, .data, ../e_collect]
       - [0x10AC, .data, e_misc]
       - [0x1110, .data, e_misc]
       - [0x11C8, .data, e_particles]
@@ -65,8 +65,8 @@ segments:
       - [0xD414, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
-      - [0xD540, .rodata, e_collect] # EntityPrizeDrop
-      - [0xD560, .rodata, e_collect] # EntityEquipItemDrop
+      - [0xD540, .rodata, ../e_collect] # EntityPrizeDrop
+      - [0xD560, .rodata, ../e_collect] # EntityEquipItemDrop
       - [0xD578, .rodata, e_misc]
       - [0xD5B0, .rodata, e_misc]
       - [0xD5C4, .rodata, e_stage_name] # EntityStageNamePopup
@@ -81,7 +81,7 @@ segments:
       - [0x12A3C, c, create_entity]
       - [0x135B4, c, e_red_door]
       - [0x14264, c, st_common]
-      - [0x15714, c, e_collect]
+      - [0x15714, c, ../e_collect]
       - [0x16C80, c, blit_char]
       - [0x16F30, c, e_misc]
       - [0x1A420, c, e_stage_name]
@@ -92,5 +92,5 @@ segments:
       - [0x1C704, .bss, header]
       - [0x1C764, .bss, create_entity]
       - [0x1C774, .bss, bss]
-      - [0x1C7C0, .bss, e_collect]
+      - [0x1C7C0, .bss, ../e_collect]
   - [0x1D46C]

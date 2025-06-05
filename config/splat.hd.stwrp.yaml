@@ -50,7 +50,7 @@ segments:
       - [0x6BC, .data, collision]
       - [0xA7C, .data, e_red_door]
       - [0xA94, .data, st_common]
-      - [0xC94, .data, e_collect]
+      - [0xC94, .data, ../e_collect]
       - [0xF84, .data, e_misc]
       - [0xFE8, .data, e_particles]
       - [0x1124, .data, e_room_fg]
@@ -62,9 +62,9 @@ segments:
       - [0x6E74, .rodata, warp] # EntityWarpRoom
       - [0x6E94, .rodata, warp] # EntityWarpSmallRocks
       - [0x6EAC, .rodata, e_red_door] # EntityRedDoor
-      - [0x6EC4, .rodata, e_collect] # CollectGold strings
-      - [0x6F14, .rodata, e_collect] # EntityPrizeDrop
-      - [0x6F34, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x6EC4, .rodata, ../e_collect] # CollectGold strings
+      - [0x6F14, .rodata, ../e_collect] # EntityPrizeDrop
+      - [0x6F34, .rodata, ../e_collect] # EntityEquipItemDrop
       - [0x6F4C, .rodata, e_misc] # EntityRelicOrb
       - [0x6F84, .rodata, e_misc] # EntityMessageBox
       - [0x6F98, .rodata, e_stage_name] # EntityStageNamePopup
@@ -77,7 +77,7 @@ segments:
       - [0x9DAC, c, create_entity]
       - [0xA924, c, e_red_door]
       - [0xB5D4, c, st_common]
-      - [0xCA84, c, e_collect]
+      - [0xCA84, c, ../e_collect]
       - [0xDFF4, c, e_misc]
       - [0x1155C, c, e_stage_name]
       - [0x11C84, c, e_particles]
@@ -86,5 +86,5 @@ segments:
       - [0x1298C, c, prim_helpers]
       - [0x131BC, .bss, create_entity]
       - [0x131CC, .bss, bss]
-      - [0x13E44, .bss, e_collect]
+      - [0x13E44, .bss, ../e_collect]
   - [0x13E84]

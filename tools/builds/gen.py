@@ -82,7 +82,7 @@ def get_cc_flags_for_exceptional_files(version: str, file_name: str):
 def add_c_psx(
     nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = os.path.normpath(f"build/{ver}/{file_name}.o")
     if output in entries:
         return
     entries[output] = {}
@@ -117,7 +117,7 @@ def add_c_psx(
 
 
 def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+    output = os.path.normpath(f"build/{ver}/{file_name}.o")
     if output in entries:
         return
     entries[output] = {}
@@ -141,7 +141,7 @@ def add_copy_psx(
     out_file_name: str,
     ld_script_path: str,
 ):
-    output = f"build/{version}/{out_file_name}.o"
+    output = os.path.normpath(f"build/{version}/{out_file_name}.o")
     if output in entries:
         return
     entries[output] = {}
@@ -165,8 +165,8 @@ def add_memcard_img_psx(
     out_file_name: str,
     ld_script_path: str,
 ):
-    output_gfx = f"build/{version}/{out_file_name}.png"
-    output_pal = f"build/{version}/{out_file_name}.pal"
+    output_gfx = os.path.normpath(f"build/{version}/{out_file_name}.png")
+    output_pal = os.path.normpath(f"build/{version}/{out_file_name}.pal")
     if output_gfx in entries:
         return
     if output_pal in entries:
@@ -206,7 +206,7 @@ def add_memcard_img_psx(
 def add_c_psp(
     nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = os.path.normpath(f"build/{ver}/{file_name}.o")
     if output in entries:
         return
     entries[output] = {}
@@ -238,7 +238,7 @@ def add_c_psp(
 
 
 def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+    output = os.path.normpath(f"build/{ver}/{file_name}.o")
     if output in entries:
         return
     entries[output] = {}
