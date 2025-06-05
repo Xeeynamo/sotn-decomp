@@ -51,7 +51,7 @@ segments:
       - [0x77C, .data, collision]
       - [0xB3C, .data, e_red_door] # e_red_door
       - [0xB54, .data, st_common] # st_common
-      - [0xD54, .data, e_collect] # e_collect
+      - [0xD54, .data, ../../st/e_collect] # e_collect
       - [0x1044, .data, e_misc]
       - [0x1160, .data, e_particles]
       - [0x11E0, .data, e_room_fg]
@@ -65,7 +65,7 @@ segments:
       - [0x10E80, .rodata, rbo3]
       - [0x10F0C, .rodata, 12D64]
       - [0x10F3C, .rodata, e_red_door]
-      - [0x10F54, .rodata, e_collect]
+      - [0x10F54, .rodata, ../../st/e_collect]
       - [0x10FDC, .rodata, e_misc]
       - [0x11028, .rodata, e_stage_name]
       - [0x1105C, .rodata, prim_helpers]
@@ -79,7 +79,7 @@ segments:
       - [0x14d88, c, create_entity]
       - [0x15900, c, e_red_door]
       - [0x165b0, c, st_common]
-      - [0x17A60, c, e_collect]
+      - [0x17A60, c, ../../st/e_collect]
       - [0x18FCC, c, blit_char]
       - [0x1927c, c, e_misc]
       - [0x1c760, c, e_stage_name]
@@ -91,5 +91,5 @@ segments:
       - [0x1F2F8, c, e_clouds]
       - [0x1F978, .bss, create_entity]
       - [0x1F988, bss]
-      - [0x205F0, .bss, e_collect]
+      - [0x205F0, .bss, ../../st/e_collect]
   - [0x20630]
