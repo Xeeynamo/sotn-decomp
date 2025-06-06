@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
-#if !defined(VERSION_HD)
-
-// TODO: fix?
-#include "../e_collect.c"
-
-#else
-
 #include "../prize_drop_fall.h"
 
 #include "../prize_drop_fall2.h"
@@ -25,7 +18,7 @@ extern u16 aluric_subweapons_id[];
 
 #include "../collect_life_vessel.h"
 
-#include "../collect_dummy.h"
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 INCLUDE_RODATA("st/cen/nonmatchings/e_collect", D_hd_8018D4F8);
 
@@ -56,5 +49,3 @@ extern u8* g_SubweaponAnimPrizeDrop[];
 #include "../blink_item.h"
 
 #include "../entity_equip_item_drop.h"
-
-#endif
