@@ -108,6 +108,7 @@ void CollectDummy2(void) { DestroyEntity(g_CurrentEntity); }
 
 #include "../collect_subweapon.h"
 
+#if !defined(VERSION_PSP)
 static void CollectDummy(void) { DestroyEntity(g_CurrentEntity); }
 // Extra unused function, putting it in this same if-block.
 Entity* func_801939C4(void) {
@@ -115,6 +116,11 @@ Entity* func_801939C4(void) {
     g_CurrentEntity->params = 4;
     return g_CurrentEntity;
 }
+#else
+
+// PSP is more in-line with the classic e_collect.c from other stages
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
+#endif
 
 #include "../entity_prize_drop.h"
 

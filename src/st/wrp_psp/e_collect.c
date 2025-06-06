@@ -123,7 +123,7 @@ static u8* g_ExplosionAnimations[] = {
 
 #include "../collect_life_vessel.h"
 
-#include "../collect_dummy.h"
+static void CollectDummy(u16 id) { DestroyEntity(g_CurrentEntity); }
 
 #include "../entity_prize_drop.h"
 #include "../entity_explosion.h"
