@@ -679,10 +679,7 @@ void MarMain(void) {
         break;
     }
     g_Player.unk08 = g_Player.status;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
-    // uninitialized on PSX, it was a coincidence it worked
     newStatus = 0;
-#endif
     switch (PLAYER.step) {
     case PL_S_STAND:
         newStatus = NO_AFTERIMAGE;
