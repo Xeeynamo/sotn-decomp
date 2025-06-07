@@ -1375,7 +1375,7 @@ void EntityMariaOwl(Entity* self) {
         VECTOR sp5C = {0, 0, 0};
         VECTOR sp4C;
         SVECTOR sp44;
-        s32 sp40;
+        long sp40;
         s32 x;
         s32 y;
         s32 var_s0;
@@ -1415,7 +1415,7 @@ void EntityMariaOwl(Entity* self) {
         sp44.vx = self->ext.mariaOwl.velocityX;
         sp44.vy = 0;
         sp44.vz = 0;
-        func_892796C(&sp44, &sp4C, &sp40);
+        RotTrans(&sp44, &sp4C, &sp40);
         self->velocityX = sp4C.vx << 8;
         self->velocityY = sp4C.vy << 8;
         self->posX.val += self->velocityX;

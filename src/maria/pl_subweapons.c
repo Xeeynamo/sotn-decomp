@@ -753,7 +753,7 @@ void EntityMariaDragonCrash(Entity* self) {
             VECTOR vTranslate = {0, 0, 0};
             VECTOR vVelocity;
             SVECTOR svVelocity;
-            s32 out;
+            long out;
             if (!IsTargetValid(self->ext.mariaDragon.target)) {
                 self->ext.mariaDragon.target = FindTarget(self);
             }
@@ -786,7 +786,7 @@ void EntityMariaDragonCrash(Entity* self) {
             svVelocity.vx = self->ext.mariaDragon.velocity;
             svVelocity.vy = 0;
             svVelocity.vz = 0;
-            func_892796C(&svVelocity, &vVelocity, &out);
+            RotTrans(&svVelocity, &vVelocity, &out);
             self->velocityX = vVelocity.vx << 8;
             self->velocityY = vVelocity.vy << 8;
             FntPrint("%08x : %08x\n", self->velocityX, self->velocityY);
@@ -915,7 +915,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     SVECTOR sp50;
                     SVECTOR svPosStart;
                     SVECTOR sp40;
-                    s32 out;
+                    long out;
                     s32 angle;
                     angle =
                         NormalizeAngle(ratan2(spD0 - var_s5, spD4 - var_s6));
@@ -937,10 +937,10 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         svPosEnd.vx = 16;
                         svPosEnd.vy = 16;
                         svPosEnd.vz = 0;
-                        func_892796C(&sp40, &sp60, &out);
-                        func_892796C(&svPosStart, &vPosStart, &out);
-                        func_892796C(&sp50, &sp80, &out);
-                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        RotTrans(&sp40, &sp60, &out);
+                        RotTrans(&svPosStart, &vPosStart, &out);
+                        RotTrans(&sp50, &sp80, &out);
+                        RotTrans(&svPosEnd, &vPosEnd, &out);
                         prim->x0 = sp60.vx;
                         prim->y0 = sp60.vy;
                         prim->x1 = vPosStart.vx;
@@ -956,8 +956,8 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         svPosEnd.vx = 16;
                         svPosEnd.vy = 16;
                         svPosEnd.vz = 0;
-                        func_892796C(&svPosStart, &vPosStart, &out);
-                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        RotTrans(&svPosStart, &vPosStart, &out);
+                        RotTrans(&svPosEnd, &vPosEnd, &out);
                         prim->x0 = xStart;
                         prim->y0 = yStart;
                         prim->x1 = vPosStart.vx;
@@ -1385,7 +1385,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             VECTOR vTransform = {0, 0, 0};
             VECTOR vVelocity;
             SVECTOR svVelocity;
-            s32 sp48;
+            long sp48;
             if (self->ext.mariaCardinalCrash.timer < 35) {
                 if (IsTargetValid2(self->ext.mariaCardinalCrash.target) == 0) {
                     self->ext.mariaCardinalCrash.target = FindTarget2(self);
@@ -1433,7 +1433,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             svVelocity.vx = self->ext.mariaCardinalCrash.velocityX;
             svVelocity.vy = 0;
             svVelocity.vz = 0;
-            func_892796C(&svVelocity, &vVelocity, &sp48);
+            RotTrans(&svVelocity, &vVelocity, &sp48);
             self->velocityX = vVelocity.vx << 8;
             self->velocityY = vVelocity.vy << 8;
             self->posX.val += self->velocityX;

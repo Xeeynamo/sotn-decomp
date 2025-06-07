@@ -104,7 +104,7 @@ static u_long* wpn_owl_img[] = {
 #ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x180, 128, 128, wpn_owl_gfx),
 #else
-    GFX_ENTRY(0x180, 0x240, 128, 128, wpn_owl_gfx), // CONFIRMED!
+    GFX_ENTRY(0x180, 0x240, 128, 128, wpn_owl_gfx),
 #endif
     GFX_TERMINATE(),
 };
