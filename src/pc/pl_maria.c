@@ -60,13 +60,6 @@ void func_89285A0(s32 angle, MATRIX* out) {
     out->t[0] = 0;
 }
 
-void func_892796C(SVECTOR* in, VECTOR* out, s32* unk) {
-    out->vx = in->vx;
-    out->vy = in->vy;
-    out->vz = in->vz;
-    *unk = 0;
-}
-
 s16 func_90E0E30(PrimitiveType kind, s32 count) {
     return g_api.AllocPrimitives(kind, count);
 }
