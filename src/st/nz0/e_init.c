@@ -74,7 +74,7 @@ void EntityLargeGaibonProjectile(Entity*);
 void EntityElevator(Entity*);
 void func_801B6DE4(Entity*);
 void EntityLifeUpSpawn(Entity*);
-void EntityMagicallySealedDoor(Entity*);
+void EntitySealedDoor(Entity*);
 void NZ0_EntityCutscene(Entity*);
 void EntityMariaNZ0(Entity*);
 void func_801B8E0C(Entity*);
@@ -153,7 +153,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityElevator,
     func_801B6DE4,
     EntityLifeUpSpawn,
-    EntityMagicallySealedDoor,
+    EntitySealedDoor,
     OVL_EXPORT(EntityCutscene),
     EntityMariaNZ0,
     func_801B8E0C,
