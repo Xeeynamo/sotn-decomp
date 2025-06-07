@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_maria_mwo_header_bin_start);
-EXTERN(MAR_Load)
+EXTERN(MARIA_Load)

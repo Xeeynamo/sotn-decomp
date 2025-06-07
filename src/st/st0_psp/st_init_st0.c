@@ -71,7 +71,7 @@ void InitEntityIds(void) {
     E_ID(DRACULA_UNK2E) = 0x2E; // EntityDraculaFinalForm
 }
 
-void func_pspeu_09246B10(void) {
+void OVL_EXPORT(Load)(void) {
     InitEntityIds();
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = &D_8D2DF54;

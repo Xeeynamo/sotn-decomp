@@ -70,7 +70,7 @@ void InitEntityIds(void) {
     E_ID(ID_2D) = 0x2D;
 }
 
-void func_psp_092447C0(void) {
+void OVL_EXPORT(Load)(void) {
     InitEntityIds();
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = &D_8D2DFF4;
