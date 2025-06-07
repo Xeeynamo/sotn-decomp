@@ -198,7 +198,7 @@ void MarLoadGraphics(void) {
 }
 
 extern PlayerOvl MARIA_player;
-void MAR_Load(void) {
+void MARIA_Load(void) {
     memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
     func_91040A0(wpn_owl_img);

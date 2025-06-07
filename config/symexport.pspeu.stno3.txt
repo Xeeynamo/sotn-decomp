@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_st_no3_mwo_header_bin_start);
-EXTERN(func_pspeu_09238360);
+EXTERN(NO3_Load);

@@ -1,6 +1,6 @@
 D_80097450 = 0x091CE650;
 GetLangAt = 0x09237B20;
-func_psp_09254120 = 0x09237FB0;
+NO4_Load = 0x09237FB0;
 EntityBreakable = 0x09238118;
 NO4_EntityBackgroundBlock = 0x09238520;
 NO4_EntityLockCamera = 0x09238600;

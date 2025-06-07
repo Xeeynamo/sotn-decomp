@@ -25,7 +25,7 @@ void InitEntityIds(void) {
     E_ID(SMALL_ROCKS) = 0x17;
 }
 
-void func_psp_092447C0(void) {
+void OVL_EXPORT(Load)(void) {
     InitEntityIds();
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = &D_8D2DE7C;
