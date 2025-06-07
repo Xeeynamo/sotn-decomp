@@ -67,7 +67,7 @@ void func_us_801D64A0(Entity* self);
 void func_us_801D6FC8(Entity* self);
 void func_us_801D70A0(Entity* self);
 void func_us_801D3BD4(Entity* self);
-void EntityMagicallySealedDoor(Entity* self);
+void EntitySealedDoor(Entity* self);
 void func_801A8328(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_801C5920(Entity* self);
@@ -141,7 +141,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D6FC8,
     func_us_801D70A0,
     func_us_801D3BD4,
-    EntityMagicallySealedDoor,
+    EntitySealedDoor,
     func_801A8328,
     OVL_EXPORT(EntityCutscene),
     func_us_801C5920,

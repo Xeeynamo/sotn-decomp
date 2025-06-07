@@ -71,7 +71,7 @@ enum DaiEntities {
     E_UNK_40,              // func_us_801D6FC8,
     E_UNK_41,              // func_us_801D70A0,
     E_UNK_42,              // func_us_801D3BD4,
-    E_SEALED_DOOR,         // EntityMagicallySealedDoor,
+    E_SEALED_DOOR,         // EntitySealedDoor,
     E_UNK_44,              // func_801A8328,
     E_CUTSCENE,            // DAI_EntityCutscene,
     E_UNK_46,              // func_us_801C5920,

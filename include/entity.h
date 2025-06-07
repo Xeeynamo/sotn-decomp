@@ -86,7 +86,7 @@ typedef struct {
     /* 0x86 */ s16 unk86;
     /* 0x88 */ u8 sideToPlayer;
     /* 0x89 */ u8 showedMessage;
-} ET_MagicallySealedDoor; // Blue door that displays "Magically Sealed" prompt
+} ET_SealedDoor; // Blue door that displays "Magically Sealed" prompt
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
@@ -3210,7 +3210,7 @@ typedef union { // offset=0x7C
     ET_NumericDamage ndmg;
     ET_RelicOrb relicOrb;
     ET_RedDoor redDoor;
-    ET_MagicallySealedDoor magicallySealedDoor;
+    ET_SealedDoor sealedDoor;
     ET_StagePopup stpopup;
     ET_StagePopupJP stpopupj;
     ET_MessageBox messageBox;

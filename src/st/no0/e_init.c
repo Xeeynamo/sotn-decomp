@@ -81,7 +81,7 @@ void EntitySkeleton(Entity*);
 void EntitySkeletonThrownBone(Entity*);
 void EntitySkeletonPieces(Entity*);
 void EntityDummy(Entity*);
-void EntityMagicallySealedDoor(Entity*);
+void EntitySealedDoor(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
@@ -164,7 +164,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkeletonThrownBone,
     EntitySkeletonPieces,
     EntityDummy,
-    EntityMagicallySealedDoor};
+    EntitySealedDoor};
 
 EInit OVL_EXPORT(
     EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
