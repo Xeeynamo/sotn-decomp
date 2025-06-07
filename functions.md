@@ -417,7 +417,7 @@
 | dra    | func_800F18C4                            |       35 |          4 |        |                                 |       |
 | dra    | func_800F27F4                            |       35 |          4 |        |                                 |       |
 | dra    | func_psp_090FFAB8                        |       35 |          4 |        |                                 |       |
-| chi    | func_psp_092447C0                        |       35 |          4 |        |                                 |       |
+| chi    | CHI_Load                                 |       35 |          4 |        |                                 |       |
 | st0    | func_pspeu_09246B10                      |       35 |          4 |        |                                 |       |
 | wrp    | func_psp_092447C0                        |       35 |          4 |        |                                 |       |
 | dra    | func_80111CC0                            |       35 |          5 |        |                                 |       |
@@ -1095,7 +1095,7 @@
 | lib    | func_psp_0924C6C0                        |       94 |          8 |        |                                 |       |
 | chi    | func_pspeu_092469A0                      |       95 |          1 |        | https://decomp.me/scratch/DhW59 | 0.859 |
 | lib    | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
-| no4    | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
+| no4    | NO4_Load                                 |       95 |          8 |        |                                 |       |
 | maria  | MarEntitySlideKick                       |       95 |          9 |        |                                 |       |
 | ric    | RicEntitySlideKick                       |       95 |          9 |        |                                 |       |
 | lib    | func_us_801B3FB4                         |       95 |          9 |        |                                 |       |
@@ -1194,7 +1194,7 @@
 | no3    | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | no3    | EntityWeightsSwitch                      |      104 |         11 |        |                                 |       |
 | wrp    | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
-| maria  | MAR_Load                                 |      104 |         12 |        |                                 |       |
+| maria  | MARIA_Load                               |      104 |         12 |        |                                 |       |
 | dra    | CdSoundCommand8                          |      104 |         14 |        | https://decomp.me/scratch/hmJYM | 0.978 |
 | dra    | SetRoomForegroundLayer                   |      105 |          2 |        |                                 |       |
 | chi    | EntityGreyPuff                           |      105 |          8 |        |                                 |       |
