@@ -124,10 +124,7 @@ static u8* g_MariaSubweaponAnimPrizeDrop[] = {
 };
 
 #if STAGE != STAGE_ST0
-const char* g_goldCollectTexts[] = {
-    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
-    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
-};
+const char* g_goldCollectTexts[] = {GOLD_COLLECT_TEXT};
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};

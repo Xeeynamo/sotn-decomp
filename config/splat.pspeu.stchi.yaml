@@ -51,7 +51,7 @@ segments:
       - [0x6F30, c, chi/st_update]
       - [0x7468, c, chi/en_particles]
       - [0x89F8, c, chi/ut_blit_char]
-      - [0x9088, c, chi_psp/e_collect]
+      - [0x9088, c, chi/en_collect]
       - [0xC300, c, chi_psp/e_misc]
       - [0xD350, c, chi/st_collision]
       - [0xF528, c, chi/en_popup]
@@ -73,7 +73,7 @@ segments:
       - [0x18C38, .data, chi/en_red_door]
       - [0x18C50, .data, chi/st_update]
       - [0x18C80, .data, chi/en_particles]
-      - [0x18D00, .data, chi_psp/e_collect]
+      - [0x18D00, .data, chi/en_collect]
       - [0x19248, .data, chi_psp/e_misc]
       - [0x19298, .data, chi/st_collision]
       - [0x19670, .data, chi/en_room_foreground]
@@ -90,13 +90,13 @@ segments:
       - [0x341E8, data]
       - [0x34300, .rodata, chi/en_venus_weed]
       - [0x34368, .rodata, chi/en_red_door]
-      - [0x34380, .rodata, chi_psp/e_collect]
+      - [0x34380, .rodata, chi/en_collect]
       - [0x343E0, .rodata, chi/en_thornweed_corpseweed]
       - [0x34420, .rodata, chi/en_debug_cerberus_gate]
       - [0x34438, .rodata, chi_psp/en_stage_name]
       - [0x34450, .rodata, chi_psp/en_breakable_wall]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
-      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi_psp/e_collect}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi/en_collect}
       - {start: 0x34480, type: .bss, vram: 0x0926BB68, name: chi/ut_blit_char}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
       - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
