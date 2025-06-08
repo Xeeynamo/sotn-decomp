@@ -254,7 +254,23 @@ static u8* g_ExplosionAnimations[] = {
     D_80180ED8, g_bigRedFireballAnim, D_80180F08, D_80180F38, D_80180F6C,
 };
 
-#include "collect_gold.h"
+void CollectGold(u16 goldSize) {
+    g_api.PlaySfx(SFX_GOLD_PICKUP);
+    goldSize -= 2;
+    g_Status.gold += c_GoldPrizes[goldSize];
+    if (g_Status.gold > MAX_GOLD) {
+        g_Status.gold = MAX_GOLD;
+    }
+#if STAGE != STAGE_ST0
+    if (g_unkGraphicsStruct.BottomCornerTextTimer) {
+        g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
+    }
+
+    BottomCornerText(g_goldCollectTexts[goldSize], 1);
+    DestroyEntity(g_CurrentEntity);
+#endif
+}
 
 #if defined VERSION_BETA || STAGE == STAGE_ST0
 void func_801937BC(void) {}
