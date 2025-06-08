@@ -278,3 +278,14 @@ u16 g_ItemIconSlots[ICON_SLOT_NUM];
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) || defined(VERSION_HD))
 #include "blit_char.h"
 #endif
+
+#include "entity_relic_orb.h"
+
+#if STAGE != STAGE_ST0
+#include "entity_heart_drop.h"
+
+#if !defined(VERSION_BETA)
+#include "entity_message_box.h"
+#endif
+
+#endif

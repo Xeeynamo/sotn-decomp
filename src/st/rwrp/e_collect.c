@@ -2,4 +2,4 @@
 #include "rwrp.h"
 
 #define HEART_DROP_CASTLE_FLAG 0x2F8
-#include "../e_misc.h"
+#include "../e_collect.h"
