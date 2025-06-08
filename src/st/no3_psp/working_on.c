@@ -26,3 +26,9 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityExplosion);
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", func_pspeu_092564C0);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityEquipItemDrop);
+
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityRelicOrb);
+
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityHeartDrop);
+
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/working_on", EntityMessageBox);
