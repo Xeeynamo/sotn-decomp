@@ -44,3 +44,5 @@ INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityExplosion);
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", BlinkItem);
 
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityEquipItemDrop);
+
+INCLUDE_ASM("st/dai/nonmatchings/e_collect", BlitChar);

@@ -10,6 +10,10 @@
 #include <stage.h>
 #include "sfx.h"
 
+#if defined(VERISON_PSP)
+#include "blit_char_psp.h"
+#endif
+
 #if STAGE == STAGE_ST0
 static u8 D_80180C94[] = {
     0x02, 0x1A, 0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E,
@@ -270,3 +274,7 @@ char* obtainedStr;
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "entity_equip_item_drop.h"
+
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP))
+#include "blit_char.h"
+#endif

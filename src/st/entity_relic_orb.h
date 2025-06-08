@@ -62,7 +62,7 @@ void EntityRelicOrb(Entity* self) {
     u8* var_v0_5;
     u16 var_s2;
 #if defined(VERSION_PSP)
-    const char sp34[0x100];
+    char sp34[0x100];
 #endif
 
 // The unk7C variable matches different other variables

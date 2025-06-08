@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../lib/lib.h"
 
+#include "../blit_char_psp.h"
+
 static u8 D_80180C94[] = {0x01, 0x0E, 0x00};
 static u8 D_80180C98[] = {
     0x02, 0x03, 0x06, 0x04, 0x05, 0x05, 0x05, 0x06, 0x04, 0x07, 0x03,
@@ -146,3 +148,8 @@ u16 g_ItemIconSlots[ICON_SLOT_NUM];
 #include "../entity_equip_item_drop.h"
 
 #include "../entity_relic_orb.h"
+
+#define HEART_DROP_CASTLE_FLAG 0x70
+#include "../entity_heart_drop.h"
+
+#include "../entity_message_box.h"

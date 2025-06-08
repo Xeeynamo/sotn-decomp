@@ -79,7 +79,6 @@ segments:
       - [0xC8D0, c, rwrp/e_red_door]
       - [0xD580, c, wrp/st_common]
       - [0xEA30, c, wrp/e_collect]
-      - [0xff9c, c, wrp/blit_char]
       - [0x1024C, c, rwrp/e_misc]
       - [0x1373C, c, wrp/e_stage_name]
       - [0x14590, c, wrp/e_particles]

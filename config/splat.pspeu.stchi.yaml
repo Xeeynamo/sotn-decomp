@@ -50,7 +50,6 @@ segments:
       - [0x5C28, c, chi/en_red_door]
       - [0x6F30, c, chi/st_update]
       - [0x7468, c, chi/en_particles]
-      - [0x89F8, c, chi/ut_blit_char]
       - [0x9088, c, chi/en_collect]
       - [0xC300, c, chi_psp/e_misc]
       - [0xD350, c, chi/st_collision]
@@ -97,7 +96,7 @@ segments:
       - [0x34450, .rodata, chi_psp/en_breakable_wall]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
       - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi/en_collect}
-      - {start: 0x34480, type: .bss, vram: 0x0926BB68, name: chi/ut_blit_char}
+      - {start: 0x34480, type: .bss, vram: 0x0926BB68, name: chi/en_collect}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
       - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
       - {start: 0x34480, type: .bss, vram: 0x0926BC78, name: chi/st_debug}
