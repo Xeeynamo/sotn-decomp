@@ -190,7 +190,11 @@ void func_801937BC(void) {}
 void UnusedDestroyCurrentEntity(void) { DestroyEntity(g_CurrentEntity); }
 #endif
 
+#if defined(VERSION_PSP) && (STAGE != STAGE_ST0)
 #include "collect_subweapon_psp.h"
+#else
+#include "collect_subweapon.h"
+#endif
 
 #if STAGE != STAGE_ST0
 #include "collect_heart_vessel.h"

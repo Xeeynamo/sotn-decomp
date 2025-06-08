@@ -10,7 +10,7 @@
 #include <stage.h>
 #include "sfx.h"
 
-#if defined(VERISON_PSP)
+#if defined(VERSION_PSP)
 #include "blit_char_psp.h"
 #endif
 
@@ -129,14 +129,7 @@ static u8* g_MariaSubweaponAnimPrizeDrop[] = {
 };
 
 #if STAGE != STAGE_ST0
-#ifndef GOLD_COLLECT_TEXT
-const char* g_goldCollectTexts[] = {
-    _S("$1"),   _S("$25"),  _S("$50"),   _S("$100"),  _S("$250"),
-    _S("$400"), _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
-};
-#else
 const char* g_goldCollectTexts[] = {GOLD_COLLECT_TEXT};
-#endif
 static u32 c_GoldPrizes[] = {1, 25, 50, 100, 250, 400, 700, 1000, 2000, 5000};
 #else
 static u32 c_GoldPrizes[] = {1, 5, 10, 20, 40, 70, 100, 200, 400, 1000};
@@ -233,12 +226,7 @@ Entity* func_801939C4(void) {
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
-
-// PSP requiring static on this likely means we need
-// to redo some file splits.
-#ifdef VERSION_PSP
 static
-#endif
 #include "blink_item.h"
 #else
 static Point16 g_collectVelocity[] = {
