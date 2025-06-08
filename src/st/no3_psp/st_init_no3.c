@@ -196,7 +196,7 @@ void InitEntityIds(void) {
     E_ID(EXPLODE_PUFF_OPAQUE) = 0x62;
 }
 
-void func_pspeu_09238360(void) {
+void OVL_EXPORT(Load)(void) {
     OVL_EXPORT(cutscene_data) = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);

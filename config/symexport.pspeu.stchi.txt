@@ -1,2 +1,2 @@
 EXTERN(_binary_assets_st_chi_mwo_header_bin_start);
-EXTERN(func_psp_092447C0);
+EXTERN(CHI_Load);

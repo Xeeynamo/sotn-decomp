@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-test: 
+  build-and-test:
     strategy:
       matrix:
         version: ["us", "hd", "pspeu"]
@@ -152,8 +152,8 @@ jobs:
             find ./build -type f -name "*.ld" -delete
       - name: Generate duplicates report
         run: |
-          make force_symbols
           make build || true
+          make force_symbols
           .venv/bin/python3 tools/function_finder/fix_matchings.py
           cd tools/dups
           cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt

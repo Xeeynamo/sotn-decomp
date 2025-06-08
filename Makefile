@@ -269,6 +269,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stdai.elf > config/symbols.us.stdai.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
 	# note the lack of `version` for mad
@@ -455,7 +456,7 @@ $(GO):
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
 	cd tools/sotn-disk; $(GO) install
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
-	$(GO) build -C tools/sotn-assets -o ../../$@ . 
+	$(GO) build -C tools/sotn-assets -o ../../$@ .
 
 build/$(VERSION)/src/%.o: src/%
 	ninja $@
