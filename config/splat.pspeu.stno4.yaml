@@ -118,5 +118,6 @@ segments:
       - [0x68FC0, bss, 68FC0]
       - [0x68FD0, .bss, no4/create_entity]
       - [0x68FF0, bss, 68FF0]
+      - [0x69038, .bss, no4_psp/e_collect] #BlitChar
       - [0x69050, bss, 69050]
   - [0x69600]
