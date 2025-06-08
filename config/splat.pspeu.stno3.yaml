@@ -133,5 +133,6 @@ segments:
       - [0x621F0, .bss, no3/e_lock_camera]
       - [0x621F8, .bss, no3/create_entity]
       - [0x62218, bss, 62218]
+      - [0x62260, .bss, no3_psp/working_on] # BlitChar
       - [0x62278, bss, 62278]
   - [0x62280]
