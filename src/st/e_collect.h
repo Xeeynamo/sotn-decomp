@@ -146,11 +146,82 @@ s8 c_HeartPrizes[] = {1, 5};
 // from another file
 extern u16 g_EInitObtainable[];
 
-#include "prize_drop_fall.h"
+static void PrizeDropFall(void) {
+    if (g_CurrentEntity->velocityY >= 0) {
+        g_CurrentEntity->ext.equipItemDrop.fallSpeed +=
+            g_CurrentEntity->ext.equipItemDrop.gravity;
+        g_CurrentEntity->velocityX =
+            g_CurrentEntity->ext.equipItemDrop.fallSpeed;
+        if (g_CurrentEntity->velocityX == FIX(1) ||
+            g_CurrentEntity->velocityX == FIX(-1)) {
+            g_CurrentEntity->ext.equipItemDrop.gravity =
+                -g_CurrentEntity->ext.equipItemDrop.gravity;
+        }
+    }
 
-#include "prize_drop_fall2.h"
+    if (g_CurrentEntity->velocityY < FIX(0.25)) {
+        g_CurrentEntity->velocityY += FIX(0.125);
+    }
+}
 
-#include "collect_heart.h"
+static void PrizeDropFall2(u16 arg0) {
+    Collider collider;
+
+    if (g_CurrentEntity->velocityX < 0) {
+        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                             g_CurrentEntity->posY.i.hi - 7, &collider, 0);
+        if (collider.effects & EFFECT_NOTHROUGH) {
+            g_CurrentEntity->velocityY = 0;
+        }
+    }
+
+    g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
+                         g_CurrentEntity->posY.i.hi + 7, &collider, 0);
+
+    if (arg0) {
+        if (!(collider.effects & EFFECT_NOTHROUGH)) {
+            MoveEntity();
+            FallEntity();
+            return;
+        }
+
+        g_CurrentEntity->velocityX = 0;
+        g_CurrentEntity->velocityY = 0;
+
+        if (collider.effects & EFFECT_QUICKSAND) {
+            g_CurrentEntity->posY.val += FIX(0.125);
+            return;
+        }
+
+        g_CurrentEntity->posY.i.hi += collider.unk18;
+        return;
+    }
+
+    if (!(collider.effects & EFFECT_NOTHROUGH)) {
+        MoveEntity();
+        PrizeDropFall();
+    }
+}
+
+// This function is messy, maybe there's a better way.
+void CollectHeart(u16 arg0) {
+#if defined VERSION_BETA || STAGE == STAGE_ST0
+    s8 heartPrizes[2] = {0x01, 0x05};
+    s8 mad_unknown[2] = {0x01, 0x02};
+#else
+#define heartPrizes c_HeartPrizes
+#endif
+
+    g_api.PlaySfx(SFX_HEART_PICKUP);
+    g_Status.hearts += heartPrizes[arg0];
+
+    if (g_Status.hearts > g_Status.heartsMax) {
+        g_Status.hearts = g_Status.heartsMax;
+    }
+
+    DestroyEntity(g_CurrentEntity);
+}
+
 
 static s32 g_ExplosionYVelocities[] = {
     FIX(-1.0), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3.0)};
