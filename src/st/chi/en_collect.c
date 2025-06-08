@@ -9,10 +9,6 @@
         _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
 #include "../e_collect_psp.h"
 
-#include "../entity_heart_drop.h"
-
-#include "../entity_message_box.h"
-
 #else
 #include "../e_collect.h"
 #endif

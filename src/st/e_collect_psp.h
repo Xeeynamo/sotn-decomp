@@ -260,3 +260,7 @@ u16 g_ItemIconSlots[ICON_SLOT_NUM];
 #include "entity_equip_item_drop.h"
 
 #include "entity_relic_orb.h"
+
+#include "entity_heart_drop.h"
+
+#include "entity_message_box.h"
