@@ -32,3 +32,7 @@ INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", BlinkItem);
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityEquipItemDrop);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityRelicOrb);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityHeartDrop);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityMessageBox);
