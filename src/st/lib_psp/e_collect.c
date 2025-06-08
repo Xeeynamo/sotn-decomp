@@ -140,7 +140,7 @@ static
 #include "../blink_item.h"
 
 #ifdef VERSION_PSP
-char* obtainedStr;
+    char* obtainedStr;
 #endif
 
 u16 g_ItemIconSlots[ICON_SLOT_NUM];

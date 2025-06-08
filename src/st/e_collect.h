@@ -269,13 +269,14 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 #endif
 
 #ifdef VERSION_PSP
-char* obtainedStr;
+    char* obtainedStr;
 #endif
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 #include "entity_equip_item_drop.h"
 
-#if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) || defined(VERSION_HD))
+#if !(defined VERSION_BETA || STAGE == STAGE_ST0 || defined(VERSION_PSP) ||    \
+      defined(VERSION_HD))
 #include "blit_char.h"
 #endif
 

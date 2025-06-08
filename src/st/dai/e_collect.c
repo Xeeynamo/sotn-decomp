@@ -54,5 +54,3 @@ INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityRelicOrb);
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityHeartDrop);
 
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityMessageBox);
-
-

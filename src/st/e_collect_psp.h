@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // Section Sizes:
 //
@@ -210,7 +211,7 @@ Entity* func_801939C4(void) {
     g_CurrentEntity->params = 4;
     return g_CurrentEntity;
 }
-#else 
+#else
 #include "collect_dummy.h"
 #endif
 
@@ -252,7 +253,7 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 #endif
 
 #ifdef VERSION_PSP
-char* obtainedStr;
+    char* obtainedStr;
 #endif
 u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
