@@ -221,6 +221,7 @@ Entity* func_801939C4(void) {
 // Weird difference here. These functions are not related.
 // But MAD has one and not the other.
 #if !(defined VERSION_BETA || STAGE == STAGE_ST0)
+static
 #include "blink_item.h"
 #else
 static Point16 g_collectVelocity[] = {
