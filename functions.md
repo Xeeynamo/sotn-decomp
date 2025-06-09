@@ -92,8 +92,8 @@
 | chi    | en_debug_cerberus_gate.rodata            |       16 |          0 | Yes    |                                 |       |
 | chi    | en_red_door.rodata                       |       16 |          0 | Yes    |                                 |       |
 | chi    | en_stage_name.rodata                     |       16 |          0 | Yes    |                                 |       |
-| dai    | e_magically_sealed_door.rodata           |       16 |          0 | Yes    |                                 |       |
 | dai    | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
+| dai    | e_sealed_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | dai    | unk_143F0.rodata                         |       16 |          0 | Yes    |                                 |       |
 | lib    | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no3    | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
@@ -695,8 +695,8 @@
 | maria  | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric    | GetLang                                  |       51 |         10 |        |                                 |       |
 | dai    | GetLang_09253A70                         |       51 |         10 |        |                                 |       |
-| dai    | GetLang_09245408                         |       51 |         10 |        |                                 |       |
 | dai    | GetLang_09246968                         |       51 |         10 |        |                                 |       |
+| dai    | GetLang_09245408                         |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0924B2E0                        |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib    | GetLang                                  |       51 |         10 |        |                                 |       |
 | lib    | func_psp_0925D430                        |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
@@ -846,8 +846,8 @@
 | wrp    | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra    | MenuWindowColorsDraw                     |       66 |          6 |        | https://decomp.me/scratch/LCKtX | 0.992 |
 | chi    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
-| dai    | MagicallySealedDoorIsNearPlayer          |       66 |          7 |        |                                 |       |
 | dai    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
+| dai    | SealedDoorIsNearPlayer                   |       66 |          7 |        |                                 |       |
 | lib    | func_psp_0923E498                        |       66 |          7 |        |                                 |       |
 | no3    | func_pspeu_09247BB8                      |       66 |          7 |        |                                 |       |
 | no4    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
@@ -872,7 +872,7 @@
 | dra    | SetRoomBackgroundLayer                   |       68 |          2 |        |                                 |       |
 | dra    | SortTimeAttackEntries                    |       68 |          5 |        |                                 |       |
 | no3    | NO3_EntityBackgroundBlock                |       68 |          5 |        |                                 |       |
-| no4    | func_pspeu_0923B288                      |       68 |          5 |        |                                 |       |
+| no4    | func_pspeu_0923B288                      |       68 |          5 |        | https://decomp.me/scratch/zkHDD | 1.0   |
 | dra    | DecrementStatBuffTimers                  |       68 |          6 | Yes    | https://decomp.me/scratch/vEngY | 1.0   |
 | maria  | MarCreateEntFactoryFromEntity            |       68 |          6 |        |                                 |       |
 | ric    | RicCreateEntFactoryFromEntity            |       68 |          6 |        |                                 |       |
@@ -1032,7 +1032,7 @@
 | dra    | DrawSecretPassageOnMap                   |       85 |         12 |        |                                 |       |
 | ric    | pl_blueprints.rodata                     |       86 |          0 | Yes    |                                 |       |
 | no3    | EntityTilemapShufflerUnused              |       86 |          6 |        |                                 |       |
-| no4    | func_pspeu_09239788                      |       86 |          8 |        |                                 |       |
+| no4    | func_pspeu_09239788                      |       86 |          8 |        | https://decomp.me/scratch/tyxF7 | 0.995 |
 | dra    | PlaySeq                                  |       86 |          9 |        |                                 |       |
 | dra    | func_80113D7C                            |       86 |         11 |        |                                 |       |
 | dra    | DoCdCommand                              |       86 |         12 |        |                                 |       |
@@ -1402,7 +1402,7 @@
 | dra    | AddCdSoundCommand                        |      158 |         10 |        |                                 |       |
 | chi    | EntitySalemWitchTriboltLaunch            |      158 |         24 |        |                                 |       |
 | no3    | EntityFoliageMaker                       |      159 |         16 |        |                                 |       |
-| no4    | func_pspeu_092398B8                      |      159 |         18 |        |                                 |       |
+| no4    | func_pspeu_092398B8                      |      159 |         18 |        | https://decomp.me/scratch/QOqDy | 0.999 |
 | dra    | func_8012CCE4                            |      159 |         21 |        |                                 |       |
 | dra    | LoadSaveData                             |      160 |         10 |        | https://decomp.me/scratch/2xNYK | 0.889 |
 | ric    | RicEntitySubwpnCrossTrail                |      160 |         11 |        | https://decomp.me/scratch/98zwV | 0.998 |
@@ -1838,7 +1838,7 @@
 | ric    | RicEntitySubwpnHolyWaterBreakGlass       |      461 |         29 |        |                                 |       |
 | dra    | func_801309B4                            |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra    | ControlMistForm                          |      466 |         93 |        |                                 |       |
-| dai    | func_pspeu_092497D8                      |      467 |         49 |        |                                 |       |
+| dai    | func_pspeu_092497D8                      |      467 |         49 |        | https://decomp.me/scratch/8a5E9 | 0.261 |
 | ric    | RicStepJump                              |      469 |         84 |        |                                 |       |
 | dra    | func_800F0CD8                            |      473 |         40 |        | https://decomp.me/scratch/5y14u | 0.954 |
 | lib    | LIB_EntityLockCamera                     |      473 |         53 |        |                                 |       |
@@ -1846,7 +1846,7 @@
 | dra    | StoreSaveData                            |      481 |         49 |        | https://decomp.me/scratch/XT9jU | 0.997 |
 | dra    | EntitySubwpnBible                        |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra    | PlayerStepStoned                         |      482 |         75 |        |                                 |       |
-| no4    | func_pspeu_0923B378                      |      485 |         30 |        |                                 |       |
+| no4    | func_pspeu_0923B378                      |      485 |         30 |        | https://decomp.me/scratch/xBGnL | 0.998 |
 | maria  | MarEntitySmokePuff                       |      487 |         42 |        |                                 |       |
 | ric    | RicEntitySmokePuff                       |      487 |         42 |        | https://decomp.me/scratch/zTa6L | 0.995 |
 | maria  | MarEntityFactory                         |      489 |         37 | Yes    | https://decomp.me/scratch/37DOG | 0.998 |
@@ -2088,7 +2088,7 @@
 | lib    | EntityCorpseweed                         |     1267 |        134 | Yes    | https://decomp.me/scratch/ZHUBn | 0.999 |
 | st0    | ST0_HitDetection                         |     1332 |        147 |        |                                 |       |
 | dra    | AlucardHandleDamage                      |     1338 |        206 | Yes    |                                 |       |
-| dai    | EntityMagicallySealedDoor                |     1360 |        119 | Yes    |                                 |       |
+| dai    | EntitySealedDoor                         |     1360 |        119 | Yes    |                                 |       |
 | no3    | EntityWarg                               |     1392 |        193 | Yes    | https://decomp.me/scratch/IxuOy | 0.999 |
 | st0    | EntityDracula                            |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra    | func_8010EDB8                            |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
@@ -2102,7 +2102,7 @@
 | no3    | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | no4    | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
 | wrp    | HitDetection                             |     1627 |        196 |        | https://decomp.me/scratch/tzf7K | 0.997 |
-| no4    | func_pspeu_09239B00                      |     1639 |        210 | Yes    | https://decomp.me/scratch/s5g9m | 0.914 |
+| no4    | func_pspeu_09239B00                      |     1639 |        210 | Yes    | https://decomp.me/scratch/2QiaV | 0.998 |
 | no3    | EntityMerman2                            |     1668 |        195 | Yes    | https://decomp.me/scratch/54y5f | 0.998 |
 | no4    | NO4_EntityCutscene                       |     1731 |        172 | Yes    | https://decomp.me/scratch/gh6po | 0.551 |
 | st0    | EntityDraculaFinalForm                   |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
