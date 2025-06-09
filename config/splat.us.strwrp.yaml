@@ -43,7 +43,7 @@ segments:
       - [0x1B8, .data, rwrp/header] # graphics banks
       - [0x23C, .data, rwrp/gen/e_laydef] # layout entries header
       - [0x3E4, .data, rwrp/e_init]
-      - [0x528, .data, rwrp/e_background_block]
+      - [0x528, .data, rwrp/e_room_bg]
       - [0x5A8, .data, rwrp/e_breakable]
       - [0x608, .data, rwrp/d_prize_drops]
       - [0x648, .data, rwrp/warp]
@@ -70,7 +70,7 @@ segments:
       - [0x8DA0, .rodata, rwrp/e_misc] # EntityMessageBox
       - [0x8DB4, .rodata, wrp/e_stage_name] # EntityStageNamePopup
       - [0x8DE8, .rodata, wrp/prim_helpers]
-      - [0x8DF0, c, rwrp/e_background_block]
+      - [0x8DF0, c, rwrp/e_room_bg]
       - [0x8ED0, c, rwrp/e_lock_camera]
       - [0x908C, c, rwrp/e_breakable]
       - [0x91C0, c, rwrp/warp]

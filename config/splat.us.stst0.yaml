@@ -96,7 +96,7 @@ segments:
       - [0x27D30, .rodata, 3C5C0] # "d_step" string
       - [0x27D3C, .rodata, prim_helpers]
       - [0x27D44, .rodata, 3D8F0]
-      - [0x27D64, c, e_background_block]
+      - [0x27D64, c, e_room_bg]
       - [0x27E2C, c, e_lock_camera]
       - [0x2805C, c]
       - [0x28984, c, cutscene]

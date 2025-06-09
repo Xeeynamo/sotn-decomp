@@ -43,7 +43,7 @@ segments:
       - [0x128, .data, header] # graphics banks
       - [0x220, .data, gen/e_laydef] # layout entries header
       - [0x3C8, data]
-      - [0x580, .data, e_background_block]
+      - [0x580, .data, e_room_bg]
       - [0x600, data]
       - [0x630, data]
       - [0x640, data]
@@ -85,7 +85,7 @@ segments:
       - [0x11A14, .rodata, e_misc]
       - [0x11A28, .rodata, e_stage_name]
       - [0x11A5C, .rodata, prim_helpers]
-      - [0x11A64, c, e_background_block]
+      - [0x11A64, c, e_room_bg]
       - [0x11B44, c, e_lock_camera]
       - [0x11D00, c, e_breakable]
       - [0x11E34, c]

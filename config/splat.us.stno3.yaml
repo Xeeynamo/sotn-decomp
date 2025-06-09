@@ -42,7 +42,7 @@ segments:
       - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
-      - [0xBB4, .data, e_background_block]
+      - [0xBB4, .data, e_room_bg]
       - [0xDA0, data]
       - [0xDC0, .data, e_lock_camera]
       - [0xE40, .data, e_breakable]
@@ -108,7 +108,7 @@ segments:
       - [0x377A4, .rodata, e_bat] # EntityBat
       - [0x377B8, .rodata, 564B0] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
-      - [0x377D4, c, e_background_block]
+      - [0x377D4, c, e_room_bg]
       - [0x378A8, c, e_lock_camera]
       - [0x37A64, c, e_breakable]
       - [0x37B98, c, e_unkId16]

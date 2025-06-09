@@ -64,7 +64,7 @@ segments:
       - [0x144C0, c, chi_psp/st_init_chi]
       - [0x146A0, c, chi/en_breakable]
       - [0x14F50, c, chi_psp/en_stage_name]
-      - [0x15E08, c, chi/e_background_block]
+      - [0x15E08, c, chi/e_room_bg]
       - [0x15F18, c, chi/e_lock_camera]
       - [0x16178, c, chi/en_falling_stairs]
       - [0x17440, c, chi/en_demon_switch_wall]
@@ -85,7 +85,7 @@ segments:
       - [0x1D630, data]
       - [0x1D6D0, .data, chi/en_breakable]
       - [0x1D758, data]
-      - [0x340C0, .data, chi/e_background_block]
+      - [0x340C0, .data, chi/e_room_bg]
       - [0x34138, .data, chi/en_falling_stairs]
       - [0x341B8, .data, chi/en_demon_switch_wall]
       - [0x341E8, data]
@@ -101,5 +101,5 @@ segments:
       - {start: 0x34480, type: .bss, vram: 0x0926BB68, name: chi/ut_blit_char}
       - {start: 0x34480, type: bss, vram: 0x0926BB80, name: bss1}
       - {start: 0x34480, type: .bss, vram: 0x0926BB90, name: chi_psp/st_init_chi}
-      - {start: 0x34480, type: .bss, vram: 0x0926BC78, name: chi/e_background_block}
+      - {start: 0x34480, type: .bss, vram: 0x0926BC78, name: chi/e_room_bg}
   - [0x34480]

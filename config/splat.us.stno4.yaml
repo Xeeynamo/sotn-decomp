@@ -42,7 +42,7 @@ segments:
       - [0x0, data]
       - [0xA0C, .data, e_init]
       - [0xCF4, data]
-      - [0xD5C, .data, e_background_block]
+      - [0xD5C, .data, e_room_bg]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
       - [0xF18, data]
@@ -86,7 +86,7 @@ segments:
       - [0x40CEC, .rodata, e_bone_archer]
       - [0x40CF8, .rodata, e_skeleton_ape]
       - [0x40D3C, .rodata, prim_helpers]
-      - [0x40D44, c, e_background_block]
+      - [0x40D44, c, e_room_bg]
       - [0x40E0C, c, e_lock_camera]
       - [0x40FC8, c, e_breakable]
       - [0x412B0, c, first_c_file]

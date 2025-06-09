@@ -104,7 +104,7 @@ segments:
       - [0x30900, .rodata, e_stage_name]
       - [0x30934, .rodata, prim_helpers]
       - [0x3093C, .rodata, e_life_up]
-      - [0x30958, c, e_background_block]
+      - [0x30958, c, e_room_bg]
       - [0x30A20, c, e_lock_camera]
       - [0x30EEC, c, e_breakable]
       - [0x311C0, c]

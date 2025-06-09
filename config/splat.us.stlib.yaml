@@ -105,7 +105,7 @@ segments:
       - [0x2DDA4, .rodata, prim_helpers]
       - [0x2DDAC, .rodata, e_spellbook_magic_tome]
       - [0x2DEB4, .rodata, e_life_up]
-      - [0x2DED0, c, e_background_block]
+      - [0x2DED0, c, e_room_bg]
       - [0x2DF98, c, e_lock_camera]
       - [0x2E4BC, c, e_breakable]
       - [0x2E8E8, c, first_c_file]
