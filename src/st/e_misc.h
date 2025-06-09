@@ -29,11 +29,96 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
     return ret;
 }
 
-#include "entity_unkId13.h"
+extern u16 g_EInitUnkId13[];
 
-#include "entity_explosion_variants_spawner.h"
+// EntityParticleTrail as a possible name here?
+// params: The E_EXPLOSION params to use for the trail
+void EntityUnkId13(Entity* self) {
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitUnkId13);
+        self->ext.ent13.parentId = self->ext.ent13.parent->entityId;
+    case 1:
+        if (self->ext.ent13.fiveFrameCounter++ > 4) {
+            Entity* newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
+                newEntity->entityId = E_EXPLOSION;
+                newEntity->pfnUpdate = EntityExplosion;
+                newEntity->params = self->params;
+            }
+            self->ext.ent13.fiveFrameCounter = 0;
+        }
+        // We just follow the location of our parent
+        self->posX.i.hi = self->ext.ent13.parent->posX.i.hi;
+        self->posY.i.hi = self->ext.ent13.parent->posY.i.hi;
+        // Tests if the parent's ID is different from what it was when we were
+        // created. I suspect this is to check for the parent being destroyed.
+        if (self->ext.ent13.parent->entityId != self->ext.ent13.parentId) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
-#include "entity_greypuff_spawner.h"
+
+static s16 explosionVariantSizes[] = {
+    /* FE8 */ 0x0010,
+    /* FEA */ 0x0020,
+    /* FEC */ 0x0030,
+    /* FEE */ 0x0040,
+    /* FF0 */ 0x0050,
+    /* FF2 */ 0x0060,
+    /* FF4 */ 0x0070,
+    /* FF6 */ 0x0000,
+};
+extern void EntityExplosionVariants(Entity* entity);
+void EntityExplosionVariantsSpawner(
+    Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
+    Entity* newEntity;
+    s32 i;
+    s16 newX = self->posX.i.hi + x;
+    s16 newY = self->posY.i.hi + y;
+
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            newEntity->entityId = E_EXPLOSION_VARIANTS;
+            newEntity->pfnUpdate = EntityExplosionVariants;
+            newEntity->params = params;
+            newEntity->posX.i.hi = newX + i * xGap;
+            newEntity->posY.i.hi = newY;
+            newEntity->ext.destructAnim.index = i + index;
+            newEntity->scaleX = explosionVariantSizes[i + index];
+            newEntity->scaleY = newEntity->scaleX;
+            newEntity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
+
+extern void EntityGreyPuff(Entity* entity);
+
+void EntityGreyPuffSpawner(
+    Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
+    Entity* newEntity;
+    s32 i;
+    s16 newX = self->posX.i.hi + x;
+    s16 newY = self->posY.i.hi + y;
+
+    for (i = 0; i < count; i++) {
+        newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (newEntity != NULL) {
+            newEntity->entityId = E_GREY_PUFF;
+            newEntity->pfnUpdate = EntityGreyPuff;
+            newEntity->posX.i.hi = newX + i * xGap;
+            newEntity->posY.i.hi = newY;
+            newEntity->params = i;
+            newEntity->zPriority = self->zPriority + 1;
+        }
+    }
+}
+
 
 // NOTE: This entity data is slightly out of order.
 // Grey puff data comes before explosion variants data,
