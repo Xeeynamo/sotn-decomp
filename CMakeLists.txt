@@ -377,7 +377,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_spittle_bone.c
     src/st/nz0/e_subweapon_container.c
     src/st/nz0/e_blood_skeleton.c
-    src/st/nz0/e_magically_sealed_door.c
+    src/st/nz0/e_sealed_door.c
     src/st/nz0/e_stage_name.c
     src/st/nz0/prim_helpers.c
     src/st/nz0/e_life_up.c
