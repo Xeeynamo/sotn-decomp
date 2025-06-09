@@ -148,3 +148,52 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C5B88,
     EntityMistDoor,
 };
+
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_DRA(0), 0};
+
+#include "../e_init_common.h"
+
+// Looks to be unused
+EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_DRA(512), 3};
+EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
+EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_DRA(201), 5};
+// Looks to be unused
+EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(202), 5};
+EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_DRA(201), 101};
+EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(533), 180};
+EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 181};
+EInit D_us_801809F8 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 183};
+EInit D_us_80180A04 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 2};
+EInit D_us_80180A10 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 184};
+EInit D_us_80180A1C = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 185};
+EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_DRA(554), 118};
+EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 119};
+EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_DRA(555), 128};
+EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_DRA(555), 3};
+EInit D_us_80180A58 = {ANIMSET_OVL(9), 0, 74, PAL_DRA(556), 64};
+EInit D_us_80180A64 = {ANIMSET_OVL(10), 0, 79, PAL_DRA(559), 114};
+EInit D_us_80180A70 = {ANIMSET_OVL(10), 0, 79, PAL_DRA(559), 115};
+EInit D_us_80180A7C = {ANIMSET_OVL(11), 1, 72, PAL_DRA(512), 11};
+EInit D_us_80180A88 = {ANIMSET_OVL(11), 43, 72, PAL_DRA(512), 12};
+EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_DRA(562), 227};
+EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_DRA(564), 136};
+EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_DRA(564), 2};
+EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_DRA(565), 137};
+
+static u8 AnimFrames_80180AC4[] = {0x40, 0x01, 0xFF, 0x00};
+
+ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {{
+    .animSet = ANIMSET_DRA(6),
+    .zPriority = 0x1FA,
+    .unk5A = 0,
+    .palette = PAL_DRA(0),
+    .drawFlags = DRAW_DEFAULT,
+    .drawMode = DRAW_TPAGE,
+    .animFrames = &AnimFrames_80180AC4,
+}};
+
+u16 OVL_EXPORT(RedDoorTiles)[][8] = {
+    {0x04B3, 0x04B3, 0x04B3, 0x04B3, 0x0000, 0x0000, 0x0000, 0x0000},
+    {0x000D, 0x000E, 0x000F, 0x000E, 0x01F0, 0x01F6, 0x020E, 0x01F6},
+    {0x000A, 0x000B, 0x000C, 0x000B, 0x0086, 0x0088, 0x00A1, 0x0088},
+};
