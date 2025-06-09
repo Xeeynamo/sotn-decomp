@@ -78,7 +78,7 @@ segments:
       - [0x1D9E8, c, lib_psp/unk_1D9E8]
       - [0x1E6F8, c, lib/e_lesser_demon]
       - [0x231B0, c, lib_psp/cutscene]
-      - [0x25CD0, c, lib/st_debug]
+      - [0x25CD0, c, lib/e_background_block]
       - [0x25DB0, c, lib_psp/e_shop]
       - [0x35798, c, lib/e_lock_camera]
       - [0x35F60, c, lib/unk_3B200]

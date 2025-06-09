@@ -59,7 +59,8 @@ segments:
       - [0xC9A0, c, wrp/prim_helpers]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
       - [0xD1B8, c, wrp/e_breakable]
-      - [0xD338, c, wrp/st_debug]
+      - [0xD338, c, wrp/e_background_block]
+      - [0xD448, c, wrp/e_lock_camera]
       - [0xD6A8, c, wrp/warp]
       - [0xEA00, .data, wrp/e_red_door]
       - [0xEA18, .data, wrp/st_update]
@@ -85,8 +86,8 @@ segments:
       - [0x10AC0, data] # tile data
       - [0x10EC0, data] # tile definitions
       - [0x142E0, .data, wrp_psp/header]
-      - [0x14320, .data, wrp_psp/st_debug_data]
-      - [0x14360, .data, wrp/st_debug]
+      - [0x14320, .data, wrp_psp/e_background_block_data]
+      - [0x14360, .data, wrp/e_background_block]
       - [0x14430, .data, wrp/warp]
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp_psp/e_collect]
@@ -99,6 +100,6 @@ segments:
       - {start: 0x14580, type: .bss, vram: 0x0924BCC8, name: wrp/e_breakable}
       - {start: 0x14580, type: .bss, vram: 0x0924BCD0, name: wrp_psp/tile_data}
       - {start: 0x14580, type: .bss, vram: 0x0924CCD0, name: wrp_psp/d_prize_drops}
-      - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/st_debug}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/e_background_block}
       - {start: 0x14580, type: .bss, vram: 0x0924CCE0, name: wrp/warp}
   - [0x14580]
