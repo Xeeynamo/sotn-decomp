@@ -9,4 +9,6 @@
 
 #include "../doppleganger.h"
 
+extern EInit g_EInitParticle;
+
 #endif // RBO5_H

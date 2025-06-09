@@ -29,6 +29,7 @@ typedef enum {
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitCommon;
+extern EInit g_EInitParticle;
 
 extern s8 c_HeartPrizes[];
 
