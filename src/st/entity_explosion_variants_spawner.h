@@ -10,7 +10,7 @@ static s16 explosionVariantSizes[] = {
     /* FF4 */ 0x0070,
     /* FF6 */ 0x0000,
 };
-
+extern void EntityExplosionVariants(Entity* entity);
 void EntityExplosionVariantsSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
     Entity* newEntity;

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern void EntityGreyPuff(Entity* entity);
+
 void EntityGreyPuffSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
     Entity* newEntity;
