@@ -10,14 +10,20 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {{
     .palette = PAL_DRA(0),
     .drawFlags = DRAW_DEFAULT,
     .drawMode = DRAW_TPAGE,
+#ifdef VERSION_PSP
+    .animFrames = AnimFrames_80180AC4,
+#else
     .animFrames = &AnimFrames_80180AC4,
+#endif
 }};
 
+#ifndef VERSION_PSP
 u16 OVL_EXPORT(RedDoorTiles)[][8] = {
     {0x04B3, 0x04B3, 0x04B3, 0x04B3, 0x0000, 0x0000, 0x0000, 0x0000},
     {0x000D, 0x000E, 0x000F, 0x000E, 0x01F0, 0x01F6, 0x020E, 0x01F6},
     {0x000A, 0x000B, 0x000C, 0x000B, 0x0086, 0x0088, 0x00A1, 0x0088},
 };
+#endif
 
 extern u16 g_EInitCommon[];
 
