@@ -43,7 +43,7 @@ segments:
       - [0x0, .data, header]
       - [0x2C, data] # DAI_spriteBanks
       - [0x818, .data, e_init]
-      - [0xB0C, .data, st_debug]
+      - [0xAC4, .data, st_debug]
       - [0xB8C, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
