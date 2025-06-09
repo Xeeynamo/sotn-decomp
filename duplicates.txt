@@ -395,19 +395,19 @@
 | 1.00 | true     | func_801996F8                       | asm/us/st/dre/matchings/e_red_door/func_801996F8.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/lib/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | func_801910A8                       | asm/us/st/mad/matchings/e_red_door/func_801910A8.s 
-| 1.00 | true     | func_us_801DD2B0                    | asm/us/st/no0/matchings/e_magically_sealed_door/func_us_801DD2B0.s 
 | 1.00 | true     | func_us_801C5EF0                    | asm/us/st/no0/matchings/e_red_door/func_us_801C5EF0.s 
+| 1.00 | true     | func_us_801DD2B0                    | asm/us/st/no0/matchings/e_sealed_door/func_us_801DD2B0.s 
 | 1.00 | true     | func_us_801B4E6C                    | asm/us/st/no1/matchings/e_red_door/func_us_801B4E6C.s 
 | 1.00 | true     | func_801C3FB4                       | asm/us/st/no3/matchings/e_red_door/func_801C3FB4.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/no4/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | func_801BB824                       | asm/us/st/np3/matchings/e_red_door/func_801BB824.s 
-| 1.00 | true     | func_801C7CF0                       | asm/us/st/nz0/matchings/e_magically_sealed_door/func_801C7CF0.s 
 | 1.00 | true     | func_801BBC3C                       | asm/us/st/nz0/matchings/e_red_door/func_801BBC3C.s 
+| 1.00 | true     | func_801C7CF0                       | asm/us/st/nz0/matchings/e_sealed_door/func_801C7CF0.s 
 | 1.00 | true     | func_8018C8D0                       | asm/us/st/rwrp/matchings/rwrp/e_red_door/func_8018C8D0.s 
 | 1.00 | true     | func_801B3C58                       | asm/us/st/st0/matchings/e_red_door/func_801B3C58.s 
 | 1.00 | true     | func_8018A950                       | asm/us/st/wrp/matchings/e_red_door/func_8018A950.s 
-| 1.00 | false    | MagicallySealedDoorIsNearPlayer     | asm/us/st/dai/nonmatchings/e_magically_sealed_door/MagicallySealedDoorIsNearPlayer.s 
 | 1.00 | false    | EntityIsNearPlayer                  | asm/us/st/dai/nonmatchings/e_red_door/EntityIsNearPlayer.s 
+| 1.00 | false    | SealedDoorIsNearPlayer              | asm/us/st/dai/nonmatchings/e_sealed_door/SealedDoorIsNearPlayer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectDummy                        | asm/us/boss/bo4/matchings/e_collect/CollectDummy.s 
 | 1.00 | true     | func_us_80191D80                    | asm/us/boss/mar/matchings/e_collect/func_us_80191D80.s 
@@ -2858,9 +2858,9 @@
 | 0.96 | true     | func_us_801CB8A0                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CB8A0.s 
 | 1.00 | true     | func_801C4D18                       | asm/us/st/nz0/matchings/e_axe_knight/func_801C4D18.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801DD328                    | asm/us/st/no0/matchings/e_magically_sealed_door/func_us_801DD328.s 
-| 1.00 | true     | func_801C7D68                       | asm/us/st/nz0/matchings/e_magically_sealed_door/func_801C7D68.s 
-| 1.00 | false    | EntityMagicallySealedDoor           | asm/us/st/dai/nonmatchings/e_magically_sealed_door/EntityMagicallySealedDoor.s 
+| 1.00 | true     | func_us_801DD328                    | asm/us/st/no0/matchings/e_sealed_door/func_us_801DD328.s 
+| 1.00 | true     | func_801C7D68                       | asm/us/st/nz0/matchings/e_sealed_door/func_801C7D68.s 
+| 1.00 | false    | EntitySealedDoor                    | asm/us/st/dai/nonmatchings/e_sealed_door/EntitySealedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801B6198                    | asm/us/st/no1/matchings/unk_35E20/func_us_801B6198.s 
 | 1.00 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
