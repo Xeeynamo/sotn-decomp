@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-bool UnkCollisionFunc5(Point16* unk) {
+bool UnkCollisionFunc5(s16* pointXY) {
     Collider collider;
 
     FallEntity();
@@ -9,8 +9,8 @@ bool UnkCollisionFunc5(Point16* unk) {
     if (g_CurrentEntity->velocityY >= 0) {
         s16 posX = g_CurrentEntity->posX.i.hi;
         s16 posY = g_CurrentEntity->posY.i.hi;
-        posX += unk->x;
-        posY += unk->y;
+        posX += *pointXY++;
+        posY += *pointXY++;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             g_CurrentEntity->posY.i.hi += collider.unk18;
