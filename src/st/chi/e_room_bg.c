@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 /*
- * File: st_debug.c
+ * File: e_room_bg.c
  * Overlay: CHI
  * Description: STAGE - Background Block
  */
