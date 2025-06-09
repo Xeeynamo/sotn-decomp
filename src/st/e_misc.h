@@ -61,7 +61,6 @@ void EntityUnkId13(Entity* self) {
     }
 }
 
-
 static s16 explosionVariantSizes[] = {
     /* FE8 */ 0x0010,
     /* FEA */ 0x0020,
@@ -118,7 +117,6 @@ void EntityGreyPuffSpawner(
         }
     }
 }
-
 
 // NOTE: This entity data is slightly out of order.
 // Grey puff data comes before explosion variants data,
@@ -526,7 +524,6 @@ void EntityIntenseExplosion(Entity* self) {
     }
 }
 
-
 static u8 g_UnkEntityAnimData[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
 };
@@ -555,7 +552,6 @@ void InitializeUnkEntity(Entity* self) {
         }
     }
 }
-
 
 #if defined(VERSION_BETA)
 void func_801966B0(u16* sensors) {
@@ -642,7 +638,6 @@ void MakeExplosions(void) {
     }
 }
 
-
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.
@@ -692,7 +687,6 @@ void EntityBigRedFireball(Entity* self) {
         DestroyEntity(self);
     }
 }
-
 
 #if !defined(STAGE_IS_NO0)
 // 0------1------2
