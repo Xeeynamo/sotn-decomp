@@ -46,7 +46,7 @@ enum DaiEntities {
     E_UNK_27,              // func_us_801D1204,
     E_UNK_28,              // func_us_801D1C24,
     E_UNK_29,              // func_us_801D1D00,
-    E_UNK_2A,              // func_us_801D2908,
+    E_UNK_2A,              // EntityFishheadFireBreath,
     E_UNK_2B,              // func_us_801D2CFC,
     E_UNK_2C,              // func_us_801D2444,
     E_UNK_2D,              // func_us_801C3644,
