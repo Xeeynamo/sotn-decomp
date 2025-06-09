@@ -150,7 +150,6 @@
 | ric    | pl_setstep.rodata                        |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata                   |       20 |          0 | Yes    |                                 |       |
-| no3    | e_misc.rodata                            |       20 |          0 | Yes    |                                 |       |
 | dra    | DestroyPrimitive                         |       20 |          2 |        |                                 |       |
 | dra    | func_800FD664                            |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra    | func_psp_091007E0                        |       20 |          2 |        |                                 |       |
@@ -176,8 +175,8 @@
 | dra    | IsMemcardBlockUsed                       |       21 |          1 |        |                                 |       |
 | maria  | MarSetAnimation                          |       21 |          1 |        |                                 |       |
 | ric    | RicSetAnimation                          |       21 |          1 |        |                                 |       |
-| chi    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | chi    | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
+| chi    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | chi    | SetSubStep                               |       21 |          1 |        |                                 |       |
 | dai    | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | dai    | SetSubStep                               |       21 |          1 |        |                                 |       |
@@ -307,7 +306,6 @@
 | maria  | pl_steps.rodata                          |       28 |          0 | Yes    |                                 |       |
 | lib    | e_lesser_demon.rodata                    |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                          |       28 |          0 | Yes    |                                 |       |
-| no3    | working_on.rodata                        |       28 |          0 | Yes    |                                 |       |
 | no4    | e_frozen_shade.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                         |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                        |       28 |          0 | Yes    |                                 |       |
@@ -549,10 +547,11 @@
 | dra    | SetStageDisplayBuffer                    |       41 |          6 |        |                                 |       |
 | dra    | func_800E4970                            |       41 |         15 |        |                                 |       |
 |        | bat.rodata                               |       42 |          0 | Yes    |                                 |       |
-| chi    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
+| chi    | en_collect.rodata                        |       42 |          0 | Yes    |                                 |       |
 | dai    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | dai    | unk_1F270.rodata                         |       42 |          0 | Yes    |                                 |       |
 | lib    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
+| no3    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no4    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | wrp    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | dra    | MenuDrawInt                              |       42 |          3 |        |                                 |       |
@@ -799,13 +798,13 @@
 | chi    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | dai    | DAI_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | dai    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
-| lib    | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
+| lib    | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib    | func_us_801B7C94                         |       62 |          5 |        |                                 |       |
-| no3    | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | no3    | func_pspeu_09254D70                      |       62 |          5 |        |                                 |       |
-| no4    | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
+| no3    | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | no4    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
+| no4    | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | st0    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | st0    | ST0_EntityBackgroundBlock                |       62 |          5 |        | https://decomp.me/scratch/WQI2Y | 0.998 |
 | wrp    | PrizeDropFall                            |       62 |          5 |        |                                 |       |
@@ -900,20 +899,20 @@
 | no3    | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | dra    | PlaySfxVolPan                            |       71 |          7 |        |                                 |       |
 | dra    | func_800F96F4                            |       71 |          7 |        |                                 |       |
-| chi    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | chi    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
+| chi    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | dai    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | dai    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
-| lib    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
+| lib    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | lib    | func_us_801B0FBC                         |       71 |          7 |        |                                 |       |
-| no3    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | no3    | func_pspeu_09255068                      |       71 |          7 |        |                                 |       |
-| no4    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
+| no3    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | no4    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
+| no4    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | st0    | GetNormalizedAngle                       |       71 |          7 |        |                                 |       |
-| wrp    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | wrp    | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
+| wrp    | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
 | dra    | func_800FDD44                            |       71 |          8 |        |                                 |       |
 | dai    | func_us_801BEDD8                         |       71 |          9 |        |                                 |       |
 | lib    | func_psp_09254CD0                        |       71 |          9 |        |                                 |       |
@@ -1261,7 +1260,7 @@
 | lib    | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
 | no3    | func_pspeu_09245B78                      |      113 |         13 |        |                                 |       |
 | no3    | func_pspeu_09245D10                      |      113 |         13 |        |                                 |       |
-| no3    | func_pspeu_09260928                      |      113 |         13 |        |                                 |       |
+| no3    | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
 | no4    | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
 | no4    | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
 | no4    | CheckFieldCollision                      |      113 |         13 |        |                                 |       |
@@ -1792,7 +1791,7 @@
 | chi    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | dai    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | lib    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
-| no3    | func_pspeu_0925F1C8                      |      406 |         25 |        |                                 |       |
+| no3    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | no4    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | st0    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
 | wrp    | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
