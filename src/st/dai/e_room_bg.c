@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "bo4.h"
+#include "dai.h"
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
 
-// params: Index of ObjInit to use
-//         (== 1) Use a different hardcoded scaleY and scaleX value
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
+#ifdef VERSION_PSP
+        self->unk5A = LOHU(objInit->facingLeft);
+#else
         self->unk5A = LOH(objInit->facingLeft);
+#endif
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
@@ -22,5 +24,3 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     }
     AnimateEntity(objInit->animFrames, self);
 }
-
-#include "../../st/entity_lock_camera.h"
