@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../chi/chi.h"
 
-#define HEART_DROP_CASTLE_FLAG 0xB0
-
-#include "../entity_heart_drop.h"
-
-#include "../entity_message_box.h"
-
 #include "../entity_unkId13.h"
 
 // NOTE: This entity data is slightly out of order.
