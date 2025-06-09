@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "np3.h"
+#include "bo4.h"
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
@@ -12,8 +12,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = objInit->animSet;
         self->zPriority = objInit->zPriority;
-        self->facingLeft = objInit->facingLeft;
-        self->unk5A = objInit->unk5A;
+        self->unk5A = LOH(objInit->facingLeft);
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
         self->drawMode = objInit->drawMode;
@@ -23,5 +22,3 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     }
     AnimateEntity(objInit->animFrames, self);
 }
-
-#include "../entity_lock_camera.h"

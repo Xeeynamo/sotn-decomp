@@ -46,7 +46,7 @@ segments:
       - [0xF4, .data, header] # graphics banks
       - [0x168, .data, gen/e_laydef] # layout entries header
       - [0x310, .data, e_init]
-      - [0x4E8, .data, st_debug]
+      - [0x4E8, .data, e_background_block]
       - [0x568, .data, e_breakable]
       - [0x5D4, data]
       - [0x680, .data, cutscene]
@@ -88,7 +88,8 @@ segments:
       - [0xABD0, .rodata, clock_room]
       - [0xABE8, .rodata, prim_helpers]
       - [0xABF0, .rodata, e_life_up]
-      - [0xAC0C, c, st_debug]
+      - [0xAC0C, c, e_background_block]
+      - [0xACD4, c, e_lock_camera]
       - [0xAE90, c, e_breakable]
       - [0xAFC4, c, cutscene]
       - [0xCA94, c]

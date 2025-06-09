@@ -43,7 +43,7 @@ segments:
       - [0x558, .data, header] # graphics banks
       - [0x728, .data, gen/e_laydef] # layout entries header
       - [0x8D0, .data, e_init]
-      - [0xD98, .data, st_debug]
+      - [0xD98, .data, e_background_block]
       - [0xE18, .data, e_breakable]
       - [0xE78, .data, e_background_lightning]
       - [0xF0C, .data, e_castle_door]
@@ -113,7 +113,8 @@ segments:
       - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
       - [0x323E4, .rodata, blade] # EntityBlade
       - [0x32464, .rodata, prim_helpers]
-      - [0x3246C, c, st_debug]
+      - [0x3246C, c, e_background_block]
+      - [0x32540, c, e_lock_camera]
       - [0x326FC, c, e_breakable]
       - [0x32830, c, e_unkId16]
       - [0x328E4, c, e_background_lightning]

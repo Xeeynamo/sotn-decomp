@@ -44,7 +44,7 @@ segments:
       - [0x2C, data] # DAI_spriteBanks
       #- [0x818, .data, e_init]
       #- [0xAC4, data]
-      - [0xB0C, .data, st_debug]
+      - [0xB0C, .data, e_background_block]
       - [0xB8C, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
@@ -66,7 +66,8 @@ segments:
       - [0x4023C, .rodata, unk_550E4]
       - [0x402D0, .rodata, e_magically_sealed_door]
       - [0x402E8, .rodata, unk_59168]
-      - [0x402F0, c, st_debug]
+      - [0x402F0, c, e_background_block]
+      - [0x403B8, c, e_lock_camera]
       - [0x40574, c, e_breakable]
       - [0x408AC, c, unk_408AC]
       - [0x43F48, c, e_cutscene]
