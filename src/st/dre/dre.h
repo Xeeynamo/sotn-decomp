@@ -96,7 +96,6 @@ extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
 extern u8 D_801807F8[][4];
 extern u8 D_80180830[];
-extern s16 D_80180D80[];
 extern u16 g_EInitParticle[];
 extern u16 g_EInitCommon[];
 extern u16 D_801804F4[];

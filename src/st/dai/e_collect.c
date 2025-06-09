@@ -44,3 +44,13 @@ INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityExplosion);
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", BlinkItem);
 
 INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityEquipItemDrop);
+
+INCLUDE_ASM("st/dai/nonmatchings/e_collect", BlitChar);
+
+INCLUDE_RODATA("st/dai/nonmatchings/e_collect", D_us_801C0080);
+
+INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityRelicOrb);
+
+INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityHeartDrop);
+
+INCLUDE_ASM("st/dai/nonmatchings/e_collect", EntityMessageBox);

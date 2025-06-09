@@ -24,4 +24,6 @@ extern s32 D_pspeu_0926BC98;
 #define E_ID(ID_1D) D_pspeu_0926BC98
 #endif
 
+extern EInit g_EInitParticle;
+
 #endif // BO4_H
