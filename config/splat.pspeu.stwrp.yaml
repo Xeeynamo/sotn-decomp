@@ -49,8 +49,7 @@ segments:
       - [0x1EA8, c, wrp/e_red_door]
       - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp/e_particles]
-      - [0x4C78, c, wrp/blit_char]
-      - [0x5308, c, wrp_psp/e_collect]
+      - [0x5308, c, wrp/e_collect]
       - [0x8580, c, wrp_psp/e_misc]
       - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
@@ -65,7 +64,7 @@ segments:
       - [0xEA00, .data, wrp/e_red_door]
       - [0xEA18, .data, wrp/st_update]
       - [0xEA48, .data, wrp/e_particles]
-      - [0xEAC8, .data, wrp_psp/e_collect]
+      - [0xEAC8, .data, wrp/e_collect]
       - [0xF010, .data, wrp_psp/e_misc]
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
@@ -90,11 +89,11 @@ segments:
       - [0x14360, .data, wrp/e_room_bg]
       - [0x14430, .data, wrp/warp]
       - [0x14480, .rodata, wrp/e_red_door]
-      - [0x14498, .rodata, wrp_psp/e_collect]
+      - [0x14498, .rodata, wrp/e_collect]
       - [0x144F8, .rodata, wrp/warp]
       - {start: 0x14580, type: .bss, vram: 0x0924BC00, name: wrp/create_entity}
-      - {start: 0x14580, type: .bss, vram: 0x0924BC20, name: wrp_psp/e_collect}
-      - {start: 0x14580, type: .bss, vram: 0x0924BC68, name: wrp/blit_char}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC20, name: wrp/e_collect}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC68, name: wrp/e_collect}
       - {start: 0x14580, type: .bss, vram: 0x0924BC80, name: wrp_psp/layers}
       - {start: 0x14580, type: .bss, vram: 0x0924BC90, name: wrp_psp/st_init_wrp}
       - {start: 0x14580, type: .bss, vram: 0x0924BCC8, name: wrp/e_breakable}

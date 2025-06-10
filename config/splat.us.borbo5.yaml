@@ -80,7 +80,6 @@ segments:
       - [0x38058, c, e_red_door]
       - [0x38D08, c, st_common]
       - [0x3A1B8, c, e_collect]
-      - [0x3B724, c, blit_char]
       - [0x3B9D4, c, e_misc]
       - [0x3EEB8, c, e_stage_name]
       - [0x3FD0C, c, e_particles]

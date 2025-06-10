@@ -148,7 +148,6 @@ extern u16 D_80180BA8[];
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
-extern u16 D_80180DD0[];
 extern SVECTOR* D_8018110C;
 extern u16 D_80181120[];
 extern u16 D_80181130[8];

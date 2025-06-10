@@ -88,7 +88,6 @@ segments:
       - [0x39124, c, e_red_door]
       - [0x39DD4, c, st_common]
       - [0x3B284, c, e_collect]
-      - [0x3C7F0, c, blit_char]
       - [0x3CAA0, c, e_misc]
       - [0x3FF84, c, e_stage_name]
       - [0x40DD8, c, e_particles]

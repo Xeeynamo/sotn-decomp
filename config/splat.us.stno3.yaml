@@ -136,7 +136,6 @@ segments:
       - [0x43FB4, c, e_red_door]
       - [0x44C64, c, st_common]
       - [0x46114, c, e_collect]
-      - [0x47680, c, blit_char]
       - [0x47930, c, e_misc]
       - [0x4AE20, c, e_stage_name]
       - [0x4BC74, c, e_particles]

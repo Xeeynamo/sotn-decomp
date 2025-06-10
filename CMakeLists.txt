@@ -328,7 +328,6 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/e_red_door.c
     src/st/cen/st_common.c
     src/st/cen/e_collect.c
-    src/st/cen/blit_char.c
     src/st/cen/e_misc.c
     src/st/cen/e_stage_name.c
     src/st/cen/e_particles.c
@@ -366,7 +365,6 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_red_door.c
     src/st/nz0/st_common.c
     src/st/nz0/e_collect.c
-    src/st/nz0/blit_char.c
     src/st/nz0/e_misc.c
     src/st/nz0/e_particles.c
     src/st/nz0/e_room_fg.c
@@ -378,7 +376,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_spittle_bone.c
     src/st/nz0/e_subweapon_container.c
     src/st/nz0/e_blood_skeleton.c
-    src/st/nz0/e_magically_sealed_door.c
+    src/st/nz0/e_sealed_door.c
     src/st/nz0/e_stage_name.c
     src/st/nz0/prim_helpers.c
     src/st/nz0/e_life_up.c
@@ -441,7 +439,6 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/e_red_door.c
     src/st/wrp/st_common.c
     src/st/wrp/e_collect.c
-    src/st/wrp/blit_char.c
     src/st/wrp/e_misc.c
     src/st/wrp/e_stage_name.c
     src/st/wrp/e_particles.c

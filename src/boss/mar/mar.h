@@ -45,5 +45,6 @@ typedef enum Statues {
 extern u16 g_EInitCommon[];
 extern u16 g_Statues[];
 extern u16 g_EInitSpawner[];
+extern EInit g_EInitParticle;
 
 #endif

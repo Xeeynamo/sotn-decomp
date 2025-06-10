@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dai/dai.h"
 
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", func_psp_0923C2F8);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", func_psp_0923C390);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", BlitChar);
+
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", PrizeDropFall);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", PrizeDropFall2);
@@ -26,3 +32,7 @@ INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", BlinkItem);
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityEquipItemDrop);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityRelicOrb);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityHeartDrop);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/e_collect", EntityMessageBox);

@@ -99,7 +99,6 @@ segments:
       - [0xF6D8, c, e_red_door]
       - [0x10388, c, st_common]
       - [0x11838, c, e_collect]
-      - [0x12DA4, c, blit_char]
       - [0x13054, c, e_misc]
       - [0x16538, c, e_stage_name]
       - [0x1738C, c, e_particles]
