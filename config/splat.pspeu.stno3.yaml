@@ -79,7 +79,8 @@ segments:
       - [0x1D6F0, c, no3/e_collect]
       - [0x212B0, c, no3/e_misc]
       - [0x21CC8, c, no3/collision]
-      - [0x23EA0, c, no3_psp/working_on]
+      - [0x23EA0, c, no3/e_bone_scimitar]
+      - [0x24AD8, c, no3_psp/working_on]
       - [0x28140, c, no3_psp/e_room_fg]
       - [0x2A680, data]
       - [0x33BE0, .data, no3_psp/e_init]
@@ -135,5 +136,5 @@ segments:
       - [0x621F0, .bss, no3/e_lock_camera]
       - [0x621F8, .bss, no3/create_entity]
       - [0x62218, .bss, no3/e_collect] # BlitChar
-      - [0x62278, bss, 62278]
+      - [0x62278, .bss, no3/e_bone_scimitar] # spawn_special
   - [0x62280]

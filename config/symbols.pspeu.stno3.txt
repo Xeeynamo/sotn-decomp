@@ -129,6 +129,7 @@ SetStep = 0x09260568;
 SetSubStep = 0x092605B8;
 InitializeEntity = 0x092605F8;
 EntityDummy = 0x092607A0;
+UnkCollisionFunc = 0x092607D8;
 CheckFieldCollision = 0x09260928;
 GetPlayerCollisionWith = 0x09260AB8;
 ReplaceBreakableWithItemDrop = 0x09260F90;
