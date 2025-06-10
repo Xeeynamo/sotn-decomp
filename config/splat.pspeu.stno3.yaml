@@ -78,7 +78,7 @@ segments:
       - [0x1B5F8, c, no3/e_warg]
       - [0x1D6F0, c, no3/e_collect]
       - [0x212B0, c, no3/e_misc]
-      - [0x21CC8, c, no3_psp/collision]
+      - [0x21CC8, c, no3/collision]
       - [0x23EA0, c, no3_psp/working_on]
       - [0x28140, c, no3_psp/e_room_fg]
       - [0x2A680, data]
@@ -115,7 +115,8 @@ segments:
       - [0x60338, .data, no3/e_warg]
       - [0x60998, .data, no3/e_collect]
       - [0x60EE0, .data, no3/e_misc]
-      - [0x60F40, data]
+      - [0x60F40, .data, no3/collision]
+      - [0x61318, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
