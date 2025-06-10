@@ -85,6 +85,7 @@ files:
           - [0x927C8, spriteset, D_800D2CF8]
           - [0x92B30, spriteset, D_800D56AC]
           - [0x92D20, spriteset, D_800D3428]
+          - [0x92DB8, skip]
           - [0x939AC, rawgfx, D_800C4CEC, 16, 16, 4]
           - [0x93A30, skip]
           - [0x93A34, rawgfx, D_800C4D70, 16, 16, 4]
