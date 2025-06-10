@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "rbo5.h"
+#include "rbo3.h"
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
@@ -22,5 +22,3 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     }
     AnimateEntity(objInit->animFrames, self);
 }
-
-#include "../../st/entity_lock_camera.h"
