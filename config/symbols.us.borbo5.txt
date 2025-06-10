@@ -132,7 +132,6 @@ EntityRoomForeground = 0x801C0550;
 BottomCornerText = 0x801C063C;
 RBO5_CheckStageCollision = 0x801C0C00;
 EntityDoppleganger40 = 0x801C11D4;
-MemCardSetPort = 0x801C1DB0;
 RBO5_CheckFloor = 0x801C2EC0;
 RBO5_CheckCeiling = 0x801C34EC;
 RBO5_CheckWallRight = 0x801C3AC8;

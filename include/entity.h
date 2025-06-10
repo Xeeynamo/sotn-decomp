@@ -412,7 +412,7 @@ typedef struct PACKED {
 } ET_DarkShield;
 
 typedef struct {
-    /* 0x7D */ u8 unk7C;
+    /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unk80;
