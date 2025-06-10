@@ -683,7 +683,6 @@ extern const char D_800DB524[];
 extern const char a0104x04x;
 extern const char a2304x04x;
 extern const char aBlue;
-extern u8 g_GfxEquipIcon[];
 extern const char aDr03x;
 extern const char aEff03x;
 extern const char aEnv03x;

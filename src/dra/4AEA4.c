@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+extern u8 g_GfxEquipIcon[];
 extern u16 g_PalEquipIcon[];
 extern GfxBank* D_psp_0918BBD0[];
 extern GfxBank* D_psp_0918BBE8[];
