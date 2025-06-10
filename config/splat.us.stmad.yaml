@@ -43,7 +43,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0xB8, data]
-      - [0x5B4, .data, st_debug]
+      - [0x5B4, .data, e_room_bg]
       - [0x634, data]
       - [0x694, .data, st_update]
       - [0x6DC, .data, collision]
@@ -89,7 +89,8 @@ segments:
       - [0xD8AC, .rodata, 17B94]
       - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
-      - [0xE5AC, c, st_debug]
+      - [0xE5AC, c, e_room_bg]
+      - [0xE674, c, e_lock_camera]
       - [0xE830, c, e_breakable]
       - [0xE964, c, st_update]
       - [0xEDB8, c, collision]
