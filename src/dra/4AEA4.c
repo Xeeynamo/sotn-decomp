@@ -315,7 +315,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     s32 x, y;
 
     if (D_801374F8[index] != equipIcon) {
-        LoadTPage((u_long*)g_GfxEquipIcon[equipIcon], 0, 0,
+        LoadTPage((u_long*)&g_GfxEquipIcon[equipIcon * (16 * 16 / 2)], 0, 0,
                   ((index & 7) * 4) + 0x280, (index / 8) * 0x10 + 0x180, 16,
                   16);
     }
