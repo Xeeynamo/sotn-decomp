@@ -50,7 +50,7 @@ segments:
       - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp/e_particles]
       - [0x5308, c, wrp/e_collect]
-      - [0x8580, c, wrp_psp/e_misc]
+      - [0x8580, c, wrp/e_misc]
       - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
       - [0xBDA0, c, wrp/e_room_fg]
@@ -65,7 +65,7 @@ segments:
       - [0xEA18, .data, wrp/st_update]
       - [0xEA48, .data, wrp/e_particles]
       - [0xEAC8, .data, wrp/e_collect]
-      - [0xF010, .data, wrp_psp/e_misc]
+      - [0xF010, .data, wrp/e_misc]
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
       - [0xF4D8, data] # WRP_spriteBanks

@@ -592,4 +592,162 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B5070);
+#ifdef VERSION_PSP
+extern s32 D_us_801805B0;
+#else
+extern u16 D_us_801805B0;
+#endif
+extern u8 D_us_8018068C[8];
+extern EInit g_EInitCommon;
+
+void func_us_801B5070(Entity* self) {
+    Entity* entity;
+    u16 params;
+    u16 temp_s1;
+    s16 offsetY;
+
+    params = self->params;
+    temp_s1 = (D_us_801805B0 & (1 << params));
+    params <<= 1;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(15);
+        self->animCurFrame = 0x25;
+        self->facingLeft = D_us_8018068C[params >> 1];
+        self->zPriority = 0x9E;
+        if (temp_s1) {
+            func_us_801B5004((Tilemap*)self, params + 1);
+            self->step = 4;
+            break;
+        }
+        func_us_801B5004((Tilemap*)self, params);
+        self->posY.i.hi -= 0x48;
+        break;
+    case 1:
+        if (temp_s1) {
+            self->step++;
+            self->velocityY = FIX(4.0);
+        }
+        break;
+    case 2:
+        if (self->facingLeft) {
+            self->posX.i.hi += 8;
+        } else {
+            self->posX.i.hi -= 8;
+        }
+        GetPlayerCollisionWith(self, 0x10U, 0x20U, 0xBU);
+        if (self->facingLeft) {
+            self->posX.i.hi -= 8;
+        } else {
+            self->posX.i.hi += 8;
+        }
+        MoveEntity();
+        offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (offsetY < 128) {
+            break;
+        }
+        g_api.PlaySfxVolPan(SFX_EXPLODE_B, 0x7F, -6);
+        func_us_801B5004((Tilemap*)self, params + 1);
+        self->velocityY = FIX(-1.0);
+        self->step++;
+        break;
+    case 3:
+        self->velocityY += FIX(1.0 / 8);
+        MoveEntity();
+        offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (offsetY >= 128) {
+            self->posY.i.hi = 128 - g_Tilemap.scrollY.i.hi;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (self->params != 1) {
+            self->step++;
+        }
+        D_80097928 = 1;
+        D_80097910 = 0x31D;
+        self->step++;
+        break;
+    case 5:
+        if (self->params != 1) {
+            self->step++;
+        } else {
+            if (g_api.func_80131F68() == false) {
+                D_80097928 = 0;
+                g_api.PlaySfx(D_80097910);
+                self->step++;
+            }
+        }
+        break;
+    case 6:
+        if (D_us_801805B8 & 2) {
+            if (self->params != 1) {
+                self->step++;
+            } else {
+                g_api.TimeAttackController(
+                    TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
+                    TIMEATTACK_SET_RECORD);
+                self->step++;
+            }
+        }
+        break;
+    case 7:
+        if (D_us_801805B8 & 4) {
+            if (self->params != 1) {
+                self->step++;
+            } else {
+                g_api.PlaySfx(SET_UNK_92);
+                self->step++;
+            }
+        }
+        break;
+    case 8:
+        if (self->params != 1) {
+            self->step++;
+        } else {
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_ID(ID_1D), self, entity);
+                entity->posX.i.hi = 0x80;
+                entity->posY.i.hi = 0x70;
+                entity->params = 4;
+                self->step++;
+            }
+        }
+        break;
+    case 9:
+        self->step++;
+        LOW(D_us_801805B0) = 0;
+        break;
+    case 10:
+        if (!temp_s1) {
+            self->step++;
+            self->velocityY = FIX(-1);
+            // n.b.! first arg should be a Tilemap*
+            func_us_801B5004((Tilemap*)self, params);
+        }
+        break;
+    case 11:
+        if (self->facingLeft) {
+            self->posX.i.hi += 8;
+        } else {
+            self->posX.i.hi -= 8;
+        }
+        GetPlayerCollisionWith(self, 0x10U, 0x20U, 0xB);
+        if (self->facingLeft) {
+            self->posX.i.hi -= 8;
+        } else {
+            self->posX.i.hi += 8;
+        }
+        MoveEntity();
+        offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        if (offsetY < 57) {
+            self->step++;
+        }
+        break;
+    case 12:
+        break;
+    }
+}

@@ -76,7 +76,7 @@ segments:
       #- [0x2B910, .data, dai/e_init]
       - [0x5ED00, .data, dai_psp/header]
       - [0x5ED30, data]
-      - [0x5F178, .data, dai/e_room_bg]
+      - [0x5F158, .data, dai/e_room_bg]
       - [0x5F1F0, data]
       - [0x5F680, .rodata, dai_psp/unk_1360]
       - [0x5F6E0, .rodata, dai_psp/e_red_door]

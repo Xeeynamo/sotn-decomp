@@ -272,7 +272,183 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", DopplegangerStepKill);
+extern s32 D_us_801805B8;
+extern s32 D_us_801D3308;
+extern s32 D_us_801D330C;
+extern s32 D_us_801D3310;
+extern s32 D_us_801D3314;
+extern u_long D_us_801D37EC[];
+extern RECT D_us_80182064;
+
+void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
+    s32 i;
+    s32 j;
+    Entity* ent;
+    u8* s2;
+    u8* data;
+    PlayerDraw* plDraw;
+
+    DOPPLEGANGER.drawFlags = DRAW_COLORS;
+    plDraw = &g_PlayerDraw[8];
+
+    switch (DOPPLEGANGER.step_s) {
+    case 0:
+        DOPPLEGANGER.velocityY = 0;
+        DOPPLEGANGER.velocityX = 0;
+        if (dopStep == Dop_StatusStone) {
+            ent = &DOPPLEGANGER + 16;
+            for (j = 16; j < 64; j++, ent++) {
+                // Entity 32 appears to be EntityDopplegangerDissolves
+                if (ent->entityId == 32) {
+                    g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                    DOPPLEGANGER.step_s = 16;
+                    return;
+                }
+            }
+        }
+        g_api.PlaySfx(SFX_BO4_UNK_7E6);
+        func_us_801C68CC();
+        func_us_801C6950();
+        DOPPLEGANGER.velocityY = FIX(-3.25);
+        func_8010E3B8(FIX(-1.25));
+        DOPPLEGANGER.ext.player.anim = 0xC0;
+        DOPPLEGANGER.rotate = 0;
+        DOPPLEGANGER.rotPivotY = 0;
+        DOPPLEGANGER.rotPivotX = 0;
+        if (damage->effects & ELEMENT_FIRE) {
+            func_80118C28(3);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x4F), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_51, 2), 0);
+            D_us_801D3310 = 1;
+        } else if (damage->effects & ELEMENT_THUNDER) {
+            func_80118C28(9);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x59), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_45, 1), 0);
+            D_us_801D3310 = 2;
+        } else if (damage->effects & ELEMENT_ICE) {
+            func_80118C28(10);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5A), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, BP_HIT_BY_ICE, 0);
+            D_us_801D3310 = 3;
+            DOPPLEGANGER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        } else {
+            func_80118C28(1);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x53), 0);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_49, 5), 0);
+            D_us_801D3310 = 0;
+        }
+        plDraw->r0 = plDraw->g0 = plDraw->b0 = plDraw->r1 = plDraw->g1 =
+            plDraw->b1 = plDraw->r2 = plDraw->g2 = plDraw->b2 = plDraw->r3 =
+                plDraw->g3 = plDraw->b3 = 0x80;
+        plDraw->enableColorBlend = 1;
+        DOPPLEGANGER.step_s++;
+        break;
+    case 1:
+        if (D_us_801D3310 == 0) {
+            if (plDraw->r0 < 248) {
+                plDraw->r0++;
+            }
+            if (plDraw->b0 >= 9) {
+                plDraw->b0--;
+            }
+
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0;
+            plDraw->g0 = plDraw->g1 = plDraw->b1 = plDraw->g2 = plDraw->b2 =
+                plDraw->g3 = plDraw->b3 = plDraw->b0;
+        }
+        if (D_us_801D3310 == 1 || D_us_801D3310 == 2) {
+            if (plDraw->b0 > 8) {
+                plDraw->b0--;
+            }
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->r0 = plDraw->g0 =
+                plDraw->g1 = plDraw->b1 = plDraw->g2 = plDraw->b2 = plDraw->g3 =
+                    plDraw->b3 = plDraw->b0;
+        }
+        if (D_us_801D3310 == 3) {
+            if (plDraw->r0 < 248) {
+                plDraw->r0--;
+            }
+            plDraw->r3 = plDraw->r2 = plDraw->r1 = plDraw->g3 = plDraw->g2 =
+                plDraw->g1 = plDraw->g0 = plDraw->r0;
+            if (plDraw->b0 < 248) {
+                plDraw->b0++;
+            }
+            plDraw->b3 = plDraw->b2 = plDraw->b1 = plDraw->b0;
+        }
+        DOPPLEGANGER.velocityY += FIX(11.0 / 128);
+        if (DOPPLEGANGER.velocityY > FIX(1.0 / 4)) {
+            DOPPLEGANGER.velocityY = FIX(1.0 / 16);
+        }
+        if (DOPPLEGANGER.poseTimer < 0) {
+            StoreImage(&D_us_80182064, (u_long*)&D_us_801D37EC);
+            D_us_801D3308 = 0;
+            D_us_801D330C = 0x40;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+    case 2:
+        for (i = 0; i < 4; i++) {
+            s2 = data = (u8*)&D_us_801D37EC[0];
+            s2 += ((D_us_801D3308 >> 1) & 7);
+            s2 += ((D_us_801D3308 & 0xFF) >> 4) << 5;
+            for (j = 0; j < 16; j++) {
+                if (D_us_801D3308 & 1) {
+                    *(s2 + ((j & 3) * 8) + ((j >> 2) * 0x200)) &= 0xF0;
+                } else {
+                    *(s2 + ((j & 3) * 8) + ((j >> 2) * 0x200)) &= 0x0F;
+                }
+            }
+            D_us_801D3308 += 0x23;
+            D_us_801D3308 &= 0xFF;
+        }
+        LoadImage(&D_us_80182064, (u_long*)data);
+        if (--D_us_801D330C == 0) {
+            DOPPLEGANGER.velocityY = 0;
+            plDraw->enableColorBlend = 0;
+            g_CurrentEntity->step_s = 0x80;
+        }
+        break;
+    case 16:
+        D_us_801D3314 = 0x50;
+        DOPPLEGANGER.step_s++;
+        break;
+    case 17:
+        g_Dop.unk5E = 5;
+        if (D_us_801D3314 % 16 == 7) {
+            g_Dop.padTapped = PAD_UP;
+            g_api.PlaySfx(SFX_STONE_MOVE_B);
+        }
+        if (--D_us_801D3314 == 0) {
+            SetDopplegangerAnim(0x3E);
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_16, 3), 0);
+            DOPPLEGANGER.step_s++;
+        }
+        break;
+    case 18:
+        if (DOPPLEGANGER.poseTimer < 0) {
+            plDraw->enableColorBlend = 0;
+            g_CurrentEntity->step_s = 0x80;
+        }
+        break;
+    case 0x80:
+        D_us_801805B8 |= 4;
+        break;
+    }
+    DecelerateX(FIX(1.0 / 64));
+    if (DOPPLEGANGER.pose >= 15) {
+        if ((DOPPLEGANGER.pose == 22) && (DOPPLEGANGER.poseTimer == 1)) {
+            DOPPLEGANGER.rotate -= 0x100;
+        }
+        DOPPLEGANGER.rotate -= 6;
+        if (DOPPLEGANGER.rotate < -0x280) {
+            DOPPLEGANGER.rotate = -0x280;
+        }
+    }
+}
 
 extern PlayerState g_Dop;
 extern s16 D_us_80183B98[];
