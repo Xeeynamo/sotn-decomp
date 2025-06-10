@@ -25,4 +25,4 @@ INCLUDE_ASM("st/no3_psp/psp/no3_psp/collision", EntitySmallWaterDrop);
 
 INCLUDE_ASM("st/no3_psp/psp/no3_psp/collision", EntityWaterDrop);
 
-INCLUDE_ASM("st/no3_psp/psp/no3_psp/collision", func_pspeu_0925F1C8);
+INCLUDE_ASM("st/no3_psp/psp/no3_psp/collision", BottomCornerText);

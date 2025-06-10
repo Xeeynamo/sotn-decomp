@@ -1,16 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#include "entity_relic_orb.h"
-
-#if STAGE != STAGE_ST0
-#include "entity_heart_drop.h"
-
-#if !defined(VERSION_BETA)
-#include "entity_message_box.h"
-#endif
-
-#endif
-
 #include "check_coll_offsets.h"
 
 #include "entity_unkId13.h"
