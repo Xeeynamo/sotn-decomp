@@ -52,6 +52,7 @@ extern u_long* D_800A3BB8[];
 FactoryBlueprint g_FactoryBlueprints[0xC0] = {0};
 u8 g_BmpCastleMap[0x20000];
 
+extern u8 g_GfxEquipIcon[320][16 * 16 / 2];
 extern u16 g_PalEquipIcon[320 * 16];
 
 // list of exposed API

@@ -42,7 +42,7 @@ segments:
       - [0x1B8, .data, header] # graphics banks
       - [0x23C, .data, gen/e_laydef] # layout entries header
       - [0x3E4, .data, e_init]
-      - [0x528, .data, st_debug]
+      - [0x528, .data, e_room_bg]
       - [0x5A8, .data, e_breakable]
       - [0x608, .data, d_prize_drops]
       - [0x648, .data, warp]
@@ -69,7 +69,8 @@ segments:
       - [0x6F84, .rodata, e_misc] # EntityMessageBox
       - [0x6F98, .rodata, e_stage_name] # EntityStageNamePopup
       - [0x6FAC, .rodata, prim_helpers]
-      - [0x6FB4, c, st_debug]
+      - [0x6FB4, c, e_room_bg]
+      - [0x7094, c, e_lock_camera]
       - [0x7250, c, e_breakable]
       - [0x7384, c, warp]
       - [0x81BC, c, st_update]

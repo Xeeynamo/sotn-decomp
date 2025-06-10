@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+extern u8 g_GfxEquipIcon[];
 extern u16 g_PalEquipIcon[];
 extern GfxBank* D_psp_0918BBD0[];
 extern GfxBank* D_psp_0918BBE8[];
@@ -315,7 +316,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
     s32 x, y;
 
     if (D_801374F8[index] != equipIcon) {
-        LoadTPage((u_long*)g_GfxEquipIcon[equipIcon], 0, 0,
+        LoadTPage((u_long*)&g_GfxEquipIcon[equipIcon * (16 * 16 / 2)], 0, 0,
                   ((index & 7) * 4) + 0x280, (index / 8) * 0x10 + 0x180, 16,
                   16);
     }

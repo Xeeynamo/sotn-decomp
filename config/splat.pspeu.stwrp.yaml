@@ -49,7 +49,7 @@ segments:
       - [0x31B0, c, wrp/st_update]
       - [0x36E8, c, wrp/e_particles]
       - [0x5308, c, wrp/e_collect]
-      - [0x8580, c, wrp_psp/e_misc]
+      - [0x8580, c, wrp/e_misc]
       - [0x95D0, c, wrp/collision]
       - [0xB7A8, c, wrp/popup]
       - [0xBDA0, c, wrp/e_room_fg]
@@ -57,13 +57,14 @@ segments:
       - [0xC9A0, c, wrp/prim_helpers]
       - [0xD0E0, c, wrp_psp/st_init_wrp]
       - [0xD1B8, c, wrp/e_breakable]
-      - [0xD338, c, wrp/st_debug]
+      - [0xD338, c, wrp/e_room_bg]
+      - [0xD448, c, wrp/e_lock_camera]
       - [0xD6A8, c, wrp/warp]
       - [0xEA00, .data, wrp/e_red_door]
       - [0xEA18, .data, wrp/st_update]
       - [0xEA48, .data, wrp/e_particles]
       - [0xEAC8, .data, wrp/e_collect]
-      - [0xF010, .data, wrp_psp/e_misc]
+      - [0xF010, .data, wrp/e_misc]
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
       - [0xF4D8, data] # WRP_spriteBanks
@@ -83,8 +84,8 @@ segments:
       - [0x10AC0, data] # tile data
       - [0x10EC0, data] # tile definitions
       - [0x142E0, .data, wrp_psp/header]
-      - [0x14320, .data, wrp_psp/st_debug_data]
-      - [0x14360, .data, wrp/st_debug]
+      - [0x14320, .data, wrp_psp/e_room_bg_data]
+      - [0x14360, .data, wrp/e_room_bg]
       - [0x14430, .data, wrp/warp]
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp/e_collect]
@@ -97,6 +98,6 @@ segments:
       - {start: 0x14580, type: .bss, vram: 0x0924BCC8, name: wrp/e_breakable}
       - {start: 0x14580, type: .bss, vram: 0x0924BCD0, name: wrp_psp/tile_data}
       - {start: 0x14580, type: .bss, vram: 0x0924CCD0, name: wrp_psp/d_prize_drops}
-      - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/st_debug}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/e_room_bg}
       - {start: 0x14580, type: .bss, vram: 0x0924CCE0, name: wrp/warp}
   - [0x14580]
