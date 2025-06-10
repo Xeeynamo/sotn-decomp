@@ -1969,7 +1969,7 @@
 | ric    | RicEntityTeleport                        |      700 |         78 |        | https://decomp.me/scratch/zdUhe | 0.959 |
 | chi    | EntityVenusWeedFlower                    |      702 |        106 | Yes    |                                 |       |
 | st0    | func_801B1298                            |      705 |         69 |        | https://decomp.me/scratch/6QrSP | 0.987 |
-| no3    | EntityBoneScimitar                       |      709 |         98 | Yes    |                                 |       |
+| no3    | EntityBoneScimitar                       |      709 |         98 | Yes    | https://decomp.me/scratch/adyRN | 0.826 |
 | lib    | func_us_801B5068                         |      711 |         73 | Yes    |                                 |       |
 | dra    | HandleGameOver                           |      723 |        139 |        | https://decomp.me/scratch/ULCNQ | 1.0   |
 | dra    | EntitySubwpnReboundStone                 |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
