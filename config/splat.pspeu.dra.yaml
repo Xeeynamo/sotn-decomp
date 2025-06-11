@@ -19,7 +19,6 @@ options:
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
   symbol_name_format: psp_$VRAM
-  nonmatchings_path: psp
   disassemble_all: true
   section_order:
     - .text
@@ -51,7 +50,7 @@ segments:
       - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
       - [0xA710, c, dra/5087C] # O4
-      - [0xE588, c, dra_psp/E588]
+      - [0xE588, c, dra_psp/menu]
       - [0x186E8, c, dra_psp/186E8]
       - [0x199E8, c, dra/game_handlers] # O4
       - [0x1DDC0, c, dra_psp/1DDC0] # O4
@@ -92,8 +91,7 @@ segments:
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, .data, dra/5087C]
-      - [0x6B420, .data, dra_psp/d_6B420]
-      - [0x6DA20, .data, dra_psp/E588]
+      - [0x6B420, .data, dra_psp/menu]
       - [0x6DCA8, data]
       - [0x6DDE8, .data, dra_psp/186E8]
       - [0x6F948, .data, dra/game_handlers]
@@ -137,7 +135,7 @@ segments:
       - [0xEE3C0, .rodata, dra/628AC]
       - [0xEE3E8, .rodata, dra/628AC]
       - [0xEE408, .rodata, dra/5087C]
-      - [0xEE4C8, .rodata, dra_psp/E588]
+      - [0xEE4C8, .rodata, dra_psp/menu]
       - [0xEE570, .rodata, dra/game_handlers]
       - [0xEE628, .rodata, dra_psp/1DDC0]
       - [0xEE680, .rodata, dra/5D5BC]
@@ -154,12 +152,14 @@ segments:
       - {start: 0xEED80, type: bss, vram: 0x091CB700, name: bss1}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xEED80, type: bss, vram: 0x091CDC60, name: bss2}
+      - {start: 0xEED80, type: .bss, vram: 0x091CDD40, name: dra_psp/menu}
+      - {start: 0xEED80, type: bss, vram: 0x091CE1E8, name: bss3}
       - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
-      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss3}
+      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss4}
       - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}
-      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss4}
+      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss5}
       - {start: 0xEED80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
-      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss5}
+      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss6}
       - {start: 0xEED80, type: .bss, vram: 0x09236830, name: dra_psp/63C08}
-      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss6}
+      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss7}
   - [0xEED80]
