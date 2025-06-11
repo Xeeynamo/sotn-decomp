@@ -85,7 +85,7 @@ segments:
       - [0x28140, c, no3/e_room_fg]
       - [0x28258, c, no3/st_common]
       - [0x29A08, c, no3/prim_helpers]
-      - [0x2A198, c, no3_psp/working_on]
+      - [0x2A198, c, no3/e_zombie]
       - [0x2A680, data]
       - [0x33BE0, .data, no3_psp/e_init]
       - [0x33D40, .data, no3_psp/st_init_no3]

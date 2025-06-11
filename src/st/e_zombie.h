@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no3.h"
-#include "sfx.h"
+
+static u8 anim1[] = {8, 1, 8, 2, 0};
+static u8 anim2[] = {6, 3, 6, 4, 6, 5, 6, 6, 6, 7, 6, 8, 6, 9, 6, 10, 15, 1, 255, 0};
+static u8 anim3[] = {4, 1, 4, 10, 4, 9, 4, 8, 4, 7, 4, 6, 4, 5, 4, 4, 3, 3, 255, 0};
+static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
+static s16 sensors2[] = {0, 20, 12, 0};
 
 void EntityZombie(Entity* self) {
     Entity* newEntity;
@@ -14,8 +18,8 @@ void EntityZombie(Entity* self) {
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLODE_PUFF_OPAQUE, self, newEntity);
             newEntity->zPriority = self->zPriority + 1;
-            newEntity->params = 3;
             newEntity->posY.i.hi += 12;
+            newEntity->params = 3;
         }
         DestroyEntity(self);
         return;
@@ -23,10 +27,10 @@ void EntityZombie(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180BA8);
+        InitializeEntity(g_EInitZombie);
         self->hitboxWidth = 8;
-        self->hitboxOffY = 0x10;
         self->hitboxHeight = 0;
+        self->hitboxOffY = 0x10;
         self->zPriority += 4;
         if (g_Timer & 1) {
             self->palette++;
@@ -38,26 +42,26 @@ void EntityZombie(Entity* self) {
         break;
 
     case 1:
-        if (UnkCollisionFunc3(&D_80183CAC) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
         break;
 
     case 2:
-        if (AnimateEntity(D_80183C84, self) == 0) {
+        if (AnimateEntity(anim2, self) == 0) {
             SetStep(3);
         }
-        if (self->poseTimer == 0) {
+        if (!self->poseTimer) {
             self->hitboxOffY -= 2;
             self->hitboxHeight += 2;
         }
         break;
 
     case 3:
-        AnimateEntity(D_80183C7C, self);
-        temp_a0 = UnkCollisionFunc2(&D_80183CBC);
-        if (self->facingLeft != 0) {
+        AnimateEntity(anim1, self);
+        temp_a0 = UnkCollisionFunc2(sensors2);
+        if (self->facingLeft) {
             self->velocityX = FIX(0.5);
         } else {
             self->velocityX = FIX(-0.5);
@@ -70,13 +74,12 @@ void EntityZombie(Entity* self) {
         break;
 
     case 4:
-        if (AnimateEntity(D_80183C98, self) == 0) {
+        if (AnimateEntity(anim3, self) == 0) {
             DestroyEntity(self);
         }
         break;
     }
 }
-
 /*
  * An invisible entity that is responsible for spawning the "floor
  * zombies" that come up from the ground and swarm the player.
@@ -85,38 +88,37 @@ void EntityZombie(Entity* self) {
  * The exact position a zombie is spawned in is also randomized.
  */
 void EntityZombieSpawner(Entity* self) {
-    s32 distCameraEntity;
+    s32 temp;
     Entity* newEntity;
-    s32 rnd;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitSpawner);
-        self->ext.zombieSpawner.spawnDelay = 1;
         self->flags &= FLAG_UNK_2000;
+        self->ext.zombieSpawner.spawnDelay = 1;
     }
 
     if (g_CastleFlags[CASTLE_TURNED_ON]) {
         self->posX.i.hi = 128;
-        if (--self->ext.zombieSpawner.spawnDelay == 0) {
+        if (!--self->ext.zombieSpawner.spawnDelay) {
             newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
-                rnd = (Random() & 0x3F) + 96;
+                temp = (Random() & 0x3F) + 96;
 
                 if (self->ext.zombieSpawner.spawnSide != 0) {
-                    newEntity->posX.i.hi += rnd;
+                    newEntity->posX.i.hi += temp;
                 } else {
-                    newEntity->posX.i.hi -= rnd;
+                    newEntity->posX.i.hi -= temp;
                 }
                 newEntity->posY.i.hi -= 48;
                 self->ext.zombieSpawner.spawnSide ^= 1;
 
                 // Zombies are prevented from spawning too close to the
                 // edges of the room.
-                distCameraEntity =
+                temp =
                     g_Tilemap.scrollX.i.hi + newEntity->posX.i.hi;
-                if ((distCameraEntity < (g_Tilemap.x + 128)) ||
-                    ((g_Tilemap.width - 128) < distCameraEntity)) {
+                if ((temp < (g_Tilemap.x + 128)) ||
+                    ((g_Tilemap.width - 128) < temp)) {
                     DestroyEntity(newEntity);
                 }
             }

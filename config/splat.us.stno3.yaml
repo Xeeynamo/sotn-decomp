@@ -74,7 +74,7 @@ segments:
       - [0x3A28, .data, e_merman]
       - [0x3B50, .data, e_bone_scimitar]
       - [0x3C44, .data, e_bat]
-      - [0x3C7C, data]
+      - [0x3C7C, .data, e_zombie]
       - [0x3CC4, .data, gen/rooms]
       - [0x3DC8, .data, gen/e_layout] # layout entries data
       - [0x4CE0, .data, cutscene_data]
@@ -106,7 +106,7 @@ segments:
       - [0x3775C, .rodata, e_merman]
       - [0x37784, .rodata, e_bone_scimitar]
       - [0x377A4, .rodata, e_bat] # EntityBat
-      - [0x377B8, .rodata, 564B0] # EntityZombie
+      - [0x377B8, .rodata, e_zombie] # EntityZombie
       - [0x377CC, .rodata, prim_helpers]
       - [0x377D4, c, e_room_bg]
       - [0x378A8, c, e_lock_camera]
@@ -148,7 +148,7 @@ segments:
       - [0x54B20, c, e_merman]
       - [0x559d0, c, e_bone_scimitar]
       - [0x56264, c, e_bat]
-      - [0x564B0, c]
+      - [0x564B0, c, e_zombie]
       - [0x56880, c, prim_helpers]
       - [0x570B0, .bss, create_entity]
       - [0x57120, .bss, cutscene]

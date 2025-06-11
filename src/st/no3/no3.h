@@ -144,7 +144,7 @@ extern u16 g_EInitWaterObject[];
 extern u16 g_EInitWaterSplash[];
 extern u16 g_EInitMermanFireball[];
 extern u16 g_EInitBat[];
-extern u16 D_80180BA8[];
+extern u16 g_EInitZombie[];
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
