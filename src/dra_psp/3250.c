@@ -149,7 +149,7 @@ u16 func_800EA720(u16 target, u16 col) {
     return col;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/3250", func_800EA7CC);
+INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/3250", func_800EA7CC);
 
 s32 func_800EAD0C(void) { // the return type is needed for matching
     func_800EA5E4(4);
