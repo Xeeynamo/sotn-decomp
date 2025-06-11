@@ -154,15 +154,11 @@ EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_DRA(0), 0};
 #include "../e_init_common.h"
 
 // Unused, not in psp
-#ifndef VERSION_PSP
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_DRA(512), 3};
-#endif
 EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
 EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_DRA(201), 5};
 // Unused, not in psp
-#ifndef VERSION_PSP
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(202), 5};
-#endif
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_DRA(201), 101};
 EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(533), 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 181};
