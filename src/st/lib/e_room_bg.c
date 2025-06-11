@@ -3,18 +3,18 @@
 
 extern u16 g_EInitCommon[];
 
-static u8 AnimFrames_09298898[] = {0x40, 0x01, 0xFF, 0x00};
-static u8 AnimFrames_092988A0[] = {0x40, 0x01, 0xFF, 0x00};
-static u8 AnimFrames_092988A8[] = {0x40, 0x19, 0xFF, 0x00};
-static u8 AnimFrames_092988B0[] = {
+static u8 AnimFrames_801809F8[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 AnimFrames_801809FC[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 AnimFrames_80180A00[] = {0x40, 0x19, 0xFF, 0x00};
+static u8 AnimFrames_80180A04[] = {
     0x04, 0x1A, 0x04, 0x1B, 0x04, 0x1C, 0x04, 0x1D, 0x04, 0x1E, 0x00, 0x00,
 };
-static u8 AnimFrames_092988C0[] = {
+static u8 AnimFrames_80180A10[] = {
     0x03, 0x1F, 0x03, 0x20, 0x03, 0x21, 0x03, 0x20, 0x00, 0x00, 0x00, 0x00,
 };
-static u8 AnimFrames_092988D0[] = {0x40, 0x22, 0xFF, 0x00};
-static u8 AnimFrames_092988D8[] = {0x40, 0x13, 0xFF, 0x00};
-static u8 AnimFrames_092988E0[] = {0x40, 0x14, 0xFF, 0x00};
+static u8 AnimFrames_80180A1C[] = {0x40, 0x22, 0xFF, 0x00};
+static u8 AnimFrames_80180A20[] = {0x40, 0x13, 0xFF, 0x00};
+static u8 AnimFrames_80180A24[] = {0x40, 0x14, 0xFF, 0x00};
 ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {
         .animSet = ANIMSET_DRA(6),
@@ -25,7 +25,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_TPAGE,
         .flags = 0,
-        .animFrames = AnimFrames_09298898,
+        .animFrames = AnimFrames_801809F8,
     },
     {
         .animSet = ANIMSET_OVL(11),
@@ -36,7 +36,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_DEFAULT,
         .flags = 0,
-        .animFrames = AnimFrames_092988A0,
+        .animFrames = AnimFrames_801809FC,
     },
     {
         .animSet = ANIMSET_OVL(11),
@@ -47,7 +47,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_DEFAULT,
         .flags = 0,
-        .animFrames = AnimFrames_092988A8,
+        .animFrames = AnimFrames_80180A00,
     },
     {
         .animSet = ANIMSET_OVL(11),
@@ -58,7 +58,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
         .flags = 0,
-        .animFrames = AnimFrames_092988B0,
+        .animFrames = AnimFrames_80180A04,
     },
     {
         .animSet = ANIMSET_OVL(11),
@@ -69,7 +69,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
         .flags = 0,
-        .animFrames = AnimFrames_092988C0,
+        .animFrames = AnimFrames_80180A10,
     },
     {
         .animSet = ANIMSET_OVL(11),
@@ -80,7 +80,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
         .flags = 0,
-        .animFrames = AnimFrames_092988D0,
+        .animFrames = AnimFrames_80180A1C,
     },
     {
         .animSet = ANIMSET_OVL(1),
@@ -91,7 +91,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_DEFAULT,
         .flags = 0,
-        .animFrames = AnimFrames_092988D8,
+        .animFrames = AnimFrames_80180A20,
     },
     {
         .animSet = ANIMSET_OVL(1),
@@ -102,7 +102,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = FLAG_DRAW_DEFAULT,
         .drawMode = DRAW_DEFAULT,
         .flags = 0,
-        .animFrames = AnimFrames_092988E0,
+        .animFrames = AnimFrames_80180A24,
     }};
 
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {

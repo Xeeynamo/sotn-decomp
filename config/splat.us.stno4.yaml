@@ -43,7 +43,7 @@ segments:
       - [0xA0C, .data, e_init]
       - [0xCF4, .data, e_room_bg]
       - [0xD2C, .data, e_red_door]
-      - [0xD5C, .data, e_room_bg]
+      - [0xD5C, .data, e_lock_camera]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
       - [0xF18, data]
