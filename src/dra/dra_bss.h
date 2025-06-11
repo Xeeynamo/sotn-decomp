@@ -112,7 +112,6 @@ extern u32 g_DebugCurPal;
 extern s16 D_8013901C;
 extern u8 g_MuteCd;
 extern s8 g_SfxScriptDistanceCopy[4];
-extern s32 g_PrevEquippedWeapons[2];
 extern s16 g_CurrentXaSoundId;
 extern s16 g_SeqVolume1;
 extern u8 D_801390A0;
