@@ -90,4 +90,4 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../cutscene_skip.h"
 
-INCLUDE_ASM("st/lib_psp/psp/lib_psp/cutscene", LIB_EntityCutscene);
+INCLUDE_ASM("st/lib_psp/nonmatchings/lib_psp/cutscene", LIB_EntityCutscene);

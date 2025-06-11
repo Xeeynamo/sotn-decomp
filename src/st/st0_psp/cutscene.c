@@ -100,4 +100,4 @@ s32 D_pspeu_09253F40[] = {0x100, 0};
 
 #include "../cutscene_run.h"
 
-INCLUDE_ASM("st/st0_psp/psp/st0_psp/cutscene", ST0_EntityCutscene);
+INCLUDE_ASM("st/st0_psp/nonmatchings/st0_psp/cutscene", ST0_EntityCutscene);
