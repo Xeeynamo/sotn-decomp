@@ -66,7 +66,7 @@ segments:
       - [0x22C4, .data, e_collect]
       - [0x25B4, .data, e_misc]
       - [0x26D0, .data, e_particles]
-      - [0x2750, data]
+      - [0x2750, .data, e_room_fg]
       - [0x27DC, .data, e_fire_warg]
       - [0x30BC, .data, e_warg]
       - [0x3858, .data, water_effects]
