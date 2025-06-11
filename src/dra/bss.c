@@ -92,10 +92,8 @@ s32 g_IsSelectingEquipment;
 s32 g_EquipmentCursor;
 s32 D_80137614;
 s32 g_EquipOrderType;
-MenuData g_MenuData;
-s32 D_801377FC[NUM_MENU];
-s32 D_8013783C;
-s32 D_80137840;
+MenuContext g_Menus[NUM_MENU];
+s32 D_801377FC[NUM_MENU + 2];
 s32 D_80137844[2];
 #if defined(VERSION_US)
 s32 D_8013784C;
