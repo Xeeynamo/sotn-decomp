@@ -25,6 +25,43 @@ typedef struct {
 #define ShowText(str, id) func_800F98AC(str, id);
 #endif
 
+u16* func_80106A28(u32 arg0, u16 kind);
+
+// BSS
+extern s32 D_801375CC;
+extern s32 D_801375D0;
+extern s32 D_801375D4;
+extern s32* D_801375D8;
+extern s32 D_801375DC;
+extern s32 D_801375E0[NUM_FAMILIARS + 1];
+extern s32 g_IsCloakLiningUnlocked;
+extern s32 g_IsCloakColorUnlocked;
+extern s32 D_80137608;
+extern s32 g_IsSelectingEquipment;
+extern s32 g_EquipmentCursor;
+extern s32 D_80137614;
+extern s32 g_EquipOrderType;
+extern MenuContext g_Menus[NUM_MENU];
+extern s32 D_801377FC[NUM_MENU + 2];
+extern s32 D_80137844[2];
+#if defined(VERSION_US)
+extern s32 D_8013784C;
+#endif
+extern s16 g_RelicMenuFadeTimer;
+extern s32 g_PrevEquippedWeapons[2];
+extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+extern s32 g_NewPlayerStatsTotal[];
+extern s32 D_80137948;
+extern s8* D_8013794C; // Pointer to texture pattern
+extern s32 D_80137950;
+extern s32 D_80137954;
+extern s32 D_80137958;
+extern s32 g_ServantPrevious;
+
 const char* D_800A2D48[] = {
 #if defined(VERSION_US)
     "？？？？？",
@@ -106,44 +143,6 @@ static const char* D_800A2D68[] = {
     _S2_HD("使い魔一覧"), // D_800A2D84
 };
 #endif
-
-// BSS
-extern s32 D_801375CC;
-extern s32 D_801375D0;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern s32 D_801375DC;
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 g_IsCloakColorUnlocked;
-extern s32 D_80137608;
-extern s32 g_IsSelectingEquipment;
-extern s32 g_EquipmentCursor;
-extern s32 D_80137614;
-extern s32 g_EquipOrderType;
-extern MenuData g_MenuData;
-extern s32 D_801377FC[NUM_MENU];
-extern s32 D_8013783C;
-extern s32 D_80137840;
-extern s32 D_80137844[2];
-#if defined(VERSION_US)
-extern s32 D_8013784C;
-#endif
-extern s16 g_RelicMenuFadeTimer;
-extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
-extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 D_80137948;
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_80137958;
-extern s32 g_ServantPrevious;
-
-u16* func_80106A28(u32 arg0, u16 kind);
 
 bool CheckIfAllButtonsAreAssigned(void) {
     s32 buf[BUTTON_COUNT];
@@ -643,7 +642,7 @@ void MenuDrawSprite(
     u32 polyColorIntensity;
     s32 temp;
 
-    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         otIdx--;
     }
 
@@ -861,7 +860,7 @@ void func_800F6568(MenuContext* ctx) {
 // Draw equip menu cursor
 void func_800F6618(s32 menuDialogue, s32 bColorMode) {
     s32 r;
-    MenuContext* context = &g_MenuData.menus[menuDialogue];
+    MenuContext* context = &g_Menus[menuDialogue];
 
     if (bColorMode) {
         r = 0x80;
@@ -985,7 +984,7 @@ void MenuJosephsCloakDraw(MenuContext* ctx) {
     s32 x_RGB;
     const char** exteriorInterior;
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_SETTINGS];
+    MenuContext* menu = &g_Menus[MENU_DG_SETTINGS];
 #if defined(VERSION_US)
     s32 x_Start = 0xB0;
     s32 number_spacing = 0x28;
@@ -1196,8 +1195,8 @@ void MenuStatChangesDraw(void) {
     MenuContext* ctx;
     char arrow;
 
-    if (!g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
-        ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
+    if (!g_Menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
+        ctx = &g_Menus[MENU_DG_EQUIP_OVERVIEW];
         // Print the destination value for the square attack item
         MenuDrawInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
         // Show arrow icon for increasing, decreasing, or staying the same
@@ -1241,7 +1240,7 @@ void MenuDrawStats(s32 menuDialogue) {
     s32 temp_y;
     s32 phi_a0_5;
 
-    ctx = &g_MenuData.menus[menuDialogue];
+    ctx = &g_Menus[menuDialogue];
     func_800F53A4();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
@@ -1300,7 +1299,7 @@ void MenuDrawStats(s32 menuDialogue) {
         MenuDrawTime(g_Status.timerSeconds, 312, 192, ctx, 2);
     }
 
-    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         x = 248;
         y = 88;
     } else {
@@ -1329,7 +1328,7 @@ void MenuDrawStats(s32 menuDialogue) {
     MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
     func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
     MenuDrawInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
-    if (ctx == (&g_MenuData.menus[MENU_DG_BG])) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         x = 32;
         y = 120;
     } else {
@@ -1577,8 +1576,8 @@ void func_800F84CC(void) {
         prim->drawMode = DRAW_HIDE;
     }
 
-    D_8013783C = func_800EDD9C(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_8013783C];
+    D_801377FC[NUM_MENU + 0] = func_800EDD9C(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
     SetPrimRect(prim, 20, 195, 42, 28);
     prim->u0 = 113;
     prim->v0 = 177;
@@ -1593,8 +1592,8 @@ void func_800F84CC(void) {
     prim->priority = 0x40;
     prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
-    D_80137840 = func_800EDD9C(PRIM_GT4, 2);
-    prim = &g_PrimBuf[D_80137840];
+    D_801377FC[NUM_MENU + 1] = func_800EDD9C(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;
         prim->x1 = prim->x3 = prim->x0 + 16;
@@ -1624,8 +1623,8 @@ void func_800F86E4(void) {
         FreePrimitives(D_801377FC[i]);
     }
 
-    FreePrimitives(D_8013783C);
-    FreePrimitives(D_80137840);
+    FreePrimitives(D_801377FC[NUM_MENU + 0]);
+    FreePrimitives(D_801377FC[NUM_MENU + 1]);
 }
 
 #if defined(VERSION_US)
@@ -1759,7 +1758,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     LINE_G2* line = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
 
     if (isColorStatic) {
-        z = g_MenuData.menus[isColorStatic - 1].otIdx + 4;
+        z = g_Menus[isColorStatic - 1].otIdx + 4;
     } else {
         z = 0x80;
     }
@@ -1854,7 +1853,7 @@ void MenuDraw(void) {
 
     for (i = 0; i < NUM_MENU; i++) {
         prim = &g_PrimBuf[D_801377FC[i]];
-        menu = &g_MenuData.menus[i];
+        menu = &g_Menus[i];
         if (menu->unk1C == 2) {
             prim->drawMode = DRAW_HIDE;
             continue;
@@ -2067,14 +2066,14 @@ void MenuDraw(void) {
 }
 
 void func_800F9690(void) {
-    Primitive* prim = &g_PrimBuf[D_8013783C];
+    Primitive* prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
 
     if (D_80137608 != 0) {
         prim->drawMode = DRAW_MENU;
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-    if (g_MenuData.menus[MENU_DG_INFO_BAR].unk1C != 0) {
+    if (g_Menus[MENU_DG_INFO_BAR].unk1C != 0) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -2083,8 +2082,8 @@ void func_800F96F4(void) {
     Primitive* prim;
     s32 temp_a2;
 
-    temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
-    prim = &g_PrimBuf[D_80137840];
+    temp_a2 = g_Menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
 
     if (D_80137844[0] && temp_a2) {
         prim->drawMode = DRAW_MENU;
@@ -2485,28 +2484,27 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
-                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
+                    if (g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                     }
                 } else {
                     *nav = 0;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                 }
             }
             if (g_pads[0].repeat & PAD_R1) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
-                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
-                        limit) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
+                    if (g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 < limit) {
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
                     }
                 } else {
                     *nav = nOptions - 1;
                     if (nOptions > ItemsPerPage) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                             ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     }
                 }
@@ -2525,7 +2523,7 @@ void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 x0, y0;
     s32 a, b; // quotient and remainder of cursorIndex / 2
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
+    MenuContext* menu = &g_Menus[MENU_DG_EQUIP_SELECTOR];
 
     if (menu->unk1C) {
         return;
@@ -2571,7 +2569,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     s32 nItems;
     s32* cursorIndex;
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
+    MenuContext* menu = &g_Menus[MENU_DG_EQUIP_SELECTOR];
 
     if (D_801375CC == EQUIP_HAND) {
         cursorIndex = &g_MenuNavigation.cursorEquipType[EQUIP_HAND];
@@ -2741,22 +2739,18 @@ void func_800FAB1C(void) {
 }
 
 void MenuHide(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 1;
-    g_MenuData.menus[menuDialogue].unk1D = 0;
+    g_Menus[menuDialogue].unk1C = 1;
+    g_Menus[menuDialogue].unk1D = 0;
 }
 
 static void MenuShow(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 3;
-    g_MenuData.menus[menuDialogue].unk1D = 0;
+    g_Menus[menuDialogue].unk1C = 3;
+    g_Menus[menuDialogue].unk1D = 0;
 }
 
-void func_800FABEC(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 0;
-}
+void func_800FABEC(s32 menuDialogue) { g_Menus[menuDialogue].unk1C = 0; }
 
-void func_800FAC0C(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 2;
-}
+void func_800FAC0C(s32 menuDialogue) { g_Menus[menuDialogue].unk1C = 2; }
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
@@ -2839,12 +2833,12 @@ void func_800FAF44(bool isAccessory) {
         for (i = 0; i < 169; i++) {
             *ptr++ = i;
         }
-        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+        g_Menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                 g_MenuNavigation.scrollEquipType[EQUIP_HAND];
     } else {
-        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+        g_Menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                 g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4];
         for (i = 0; i < 90; i++) {
             if (g_AccessoryDefs[i].equipType == D_801375D4) {
@@ -2857,7 +2851,7 @@ void func_800FAF44(bool isAccessory) {
 void func_800FB004(void) {
     s32 nItems = func_800FD6C4(D_801375CC);
 
-    if (-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
+    if (-g_Menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
         if (D_80137844[0] == 0) {
             D_80137844[0] = 1;
         }
@@ -2865,8 +2859,8 @@ void func_800FB004(void) {
         D_80137844[0] = 0;
     }
 
-    if ((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
-         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+    if ((-g_Menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_Menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
             12 <
         nItems / 2) {
         if (D_80137844[1] == 0) {
@@ -3103,7 +3097,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
         }
     }
     func_800FA3C4(nav->cursorMain, var_s6, 1);
-    if (-g_MenuData.menus[3].h / 12) {
+    if (-g_Menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
         if (g_pads[0].repeat & PAD_L1) {
             D_80137844[0] = 5;
         } else if (D_80137844[0] == 0) {
@@ -3112,7 +3106,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     } else {
         D_80137844[0] = 0;
     }
-    if ((-g_MenuData.menus[3].h + g_MenuData.menus[3].cursorH) / 12 <
+    if ((-g_Menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_Menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+            12 <
         (nItems + 1) / 2) {
         if (g_pads[0].repeat & PAD_R1) {
             D_80137844[1] = 5;
@@ -3155,7 +3151,7 @@ void func_800FB9BC(void) {
     s32 i;
     MenuContext* context;
 
-    context = g_MenuData.menus;
+    context = g_Menus;
     for (i = 0; i < NUM_MENU; i++, context++) {
         context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
         context->cursorY = context->unk1.y = g_MenuInit[i].cursorY;
@@ -3168,10 +3164,9 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    g_MenuData.menus[MENU_DG_RELICS].h =
-        g_MenuData.menus[MENU_DG_RELICS].unk16 =
-            ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
-            YScrollPerElement;
+    g_Menus[MENU_DG_RELICS].h = g_Menus[MENU_DG_RELICS].unk16 =
+        ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
+        YScrollPerElement;
 }
 
 void func_800FBAC4(void) {
@@ -3653,10 +3648,10 @@ block_4:
         break;
     case MENU_STEP_RELIC:
 #if defined(VERSION_US)
-        g_MenuData.menus[5].unk16 =
+        g_Menus[MENU_DG_RELICS].unk16 =
             ((g_MenuNavigation.cursorRelic / 2) * -120) / 14;
 #elif defined(VERSION_HD)
-        g_MenuData.menus[5].unk16 =
+        g_Menus[MENU_DG_RELICS].unk16 =
             ((g_MenuNavigation.cursorRelic / 2) * -140) / 15;
 #endif
         var_s1 = g_MenuNavigation.cursorRelic;
@@ -3855,7 +3850,7 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
             PlaySfx(SFX_UI_CONFIRM);
             func_800FBAC4();
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
             g_MenuNavigation.cursorEquipType[0] = 0;
             func_800FB0FC();
         } else if (g_pads[0].tapped & PAD_MENU_BACK) {
