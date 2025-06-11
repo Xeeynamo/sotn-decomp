@@ -19,7 +19,6 @@ options:
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
   symbol_name_format: us_$VRAM
-  nonmatchings_path: nonmatchings
   disassemble_all: true
   section_order:
     - .data

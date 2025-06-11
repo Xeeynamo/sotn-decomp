@@ -1601,7 +1601,7 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/menu", func_800F82F4);
+INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/menu", func_800F82F4);
 
 void MenuSystemDraw(MenuContext* ctx) {
     const int Width = 128;
@@ -1834,7 +1834,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     g_GpuUsage.line++;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/menu", DrawConsumableCount);
+INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/menu", DrawConsumableCount);
 
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
@@ -2926,7 +2926,7 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/menu", func_800FB23C);
+INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/menu", func_800FB23C);
 
 void func_800FB9BC(void) {
     const int ItemsPerRow = 2;
