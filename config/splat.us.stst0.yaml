@@ -43,6 +43,8 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, gen/e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
+      - [0x634, .data, e_room_bg]
+      - [0x64C, .data, e_red_door]
       - [0x65C, .data, e_lock_camera]
       - [0x674, .data, 2805C] # func_801A805C
       - [0x784, .data, cutscene]
@@ -55,7 +57,7 @@ segments:
       - [0x1568, .data, prologue_scroll]
       - [0x15CC, .data, st_update]
       - [0x1618, .data, collision]
-      - [0x1978, .data, e_red_door]
+      - [0x1978, .data, e_red_door_uv]
       - [0x1990, .data, st_common]
       - [0x1B90, .data, e_collect]
       - [0x1E3C, .data, e_collect] # g_collectVelocity

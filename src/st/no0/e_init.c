@@ -17,7 +17,7 @@ void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
-void EntityStageDecoration(Entity*);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void EntityLockCamera(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
@@ -100,7 +100,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMessageBox,
     EntityDummy,
     EntityDummy,
-    EntityStageDecoration,
+    OVL_EXPORT(EntityBackgroundBlock),
     EntityLockCamera,
     EntityUnkId13,
     EntityExplosionVariants,
@@ -210,12 +210,3 @@ EInit g_EInitFleaMan = {ANIMSET_OVL(0x0F), 0x00, 0x53, 0x204, 0x028};
 EInit g_EInitSkeleton = {ANIMSET_OVL(0x18), 0x01, 0x50, 0x207, 0x04B};
 EInit g_EInitSkeletonPieces = {ANIMSET_OVL(0x18), 0x00, 0x50, 0x207, 0x002};
 EInit g_EInitSkeletonBone = {ANIMSET_OVL(0x18), 0x15, 0x50, 0x207, 0x04C};
-
-// Owned by EntityRedDoor to animate the tiles behind the door itself.
-// There is a loop in EntityRedDoor that forces to write those tiles
-// at every frame based on the door state to create the animation.
-u16 OVL_EXPORT(RedDoorTiles)[][8] = {
-    0x0597, 0x0597, 0x0597, 0x0597, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0597, 0x0597, 0x06F3, 0x06F4, 0x0000, 0x0000, 0x031B, 0x031C,
-    0x06F5, 0x06F6, 0x06F7, 0x06F8, 0x06F2, 0x045E, 0x047B, 0x047E,
-};

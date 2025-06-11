@@ -87,7 +87,7 @@ segments:
       - [0x36AA0, .data, lib/e_life_up]
       - [0x36AF0, data, e_stage_name]
       - [0x37788, .data, lib/e_dhuron]
-      - [0x37918, .data, lib/e_red_door]
+      - [0x37918, .data, lib/e_red_door_uv] # RedDoorUV
       - [0x37930, .data, lib/st_update]
       - [0x37960, .data, lib/e_flying_zombie]
       - [0x37A40, .data, lib/e_ectoplasm]
@@ -105,6 +105,7 @@ segments:
       - [0x38BA8, .data, lib/en_thornweed_corpseweed]
       - [0x38C78, .data, lib/e_library_bg]
       - [0x38D38, data]
+      - [0x3E888, .data, lib/e_red_door] # RedDoorTiles
       - [0x3E898, .data, lib/e_init]
       - [0x3EC28, data] # g_gen_rooms.c
       - [0x3ECB0, .data, lib_psp/cutscene_data]
@@ -115,7 +116,7 @@ segments:
       - [0x60C70, .data, lib/e_lesser_demon]
       - [0x60E50, .data, lib_psp/cutscene]
       - [0x61158, data, cutscene] # LIB_EntityCutscene data
-      - [0x61218, data]
+      - [0x61218, .data, lib/e_room_bg]
       - [0x61308, .data, lib_psp/e_shop]
       - [0x6D6D0, .data, lib/e_lock_camera]
       - [0x6D748, data]

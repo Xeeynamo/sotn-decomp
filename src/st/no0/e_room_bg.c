@@ -93,7 +93,7 @@ static u8* animations[] = {
     red_moveable_floor,  red_moveable_floor,
     window_highlight_3};
 
-void EntityStageDecoration(Entity* self) {
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     u16 params = self->params;
 
     if (self->step == 0) {

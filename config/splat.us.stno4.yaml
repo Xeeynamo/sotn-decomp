@@ -41,7 +41,8 @@ segments:
     subsegments:
       - [0x0, data]
       - [0xA0C, .data, e_init]
-      - [0xCF4, data]
+      - [0xCF4, .data, e_room_bg]
+      - [0xD2C, .data, e_red_door]
       - [0xD5C, .data, e_room_bg]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
@@ -53,7 +54,7 @@ segments:
       - [0x19D0, .data, cutscene]
       - [0x19D4, .data, st_update]
       - [0x1A20, .data, collision]
-      - [0x1DE0, .data, e_red_door]
+      - [0x1DE0, .data, e_red_door_uv]
       - [0x1DF8, .data, st_common]
       - [0x1FF8, .data, e_collect]
       - [0x234C, .data, e_misc]

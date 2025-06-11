@@ -43,7 +43,8 @@ segments:
       - [0x8C, data]
       - [0x520, .data, gen/e_laydef] # layout entries header
       - [0x6C8, .data, e_init]
-      - [0x9F8, data]
+      - [0x9F8, .data, e_room_bg]
+      - [0xAC8, .data, e_red_door]
       - [0xAD8, .data, e_lock_camera]
       - [0xB58, .data, e_breakable]
       - [0xC48, data]
@@ -56,7 +57,7 @@ segments:
       - [0x1C48, .data, e_chair]
       - [0x1C5C, .data, st_update]
       - [0x1CA8, .data, collision]
-      - [0x2068, .data, e_red_door]
+      - [0x2068, .data, e_red_door_uv]
       - [0x2080, .data, e_room_fg]
       - [0x210C, .data, st_common]
       - [0x230C, .data, e_misc]

@@ -43,7 +43,9 @@ segments:
       - [0x298, .data, dt_header] # Gfx banks
       - [0x3B4, .data, gen/e_laydef]  # layout entities header
       - [0x55C, .data, dt_entity]
-      - [0x798, .data, e_room_bg]
+      - [0x730, .data, e_room_bg]
+      - [0x768, .data, en_red_door]
+      - [0x798, .data, e_lock_camera]
       - [0x818, .data, en_breakable]
       - [0x89C, .data, en_demon_switch_wall]
       - [0x8CC, .data, en_breakable_wall]
@@ -51,7 +53,7 @@ segments:
       - [0x9E4, .data, dt_prize_drops]
       - [0xA00, .data, st_update]
       - [0xA4C, .data, st_collision]
-      - [0xE0C, .data, en_red_door]
+      - [0xE0C, .data, e_red_door_uv]
       - [0xE24, .data, ut_common]
       - [0x1024, .data, en_collect]
       - [0x1314, .data, en_misc]

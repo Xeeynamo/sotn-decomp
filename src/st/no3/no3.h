@@ -145,7 +145,6 @@ extern u16 g_EInitWaterSplash[];
 extern u16 g_EInitMermanFireball[];
 extern u16 g_EInitBat[];
 extern u16 D_80180BA8[];
-extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u8 D_80180DC0[];
 extern u8 D_80180DC8[];
 extern SVECTOR* D_8018110C;

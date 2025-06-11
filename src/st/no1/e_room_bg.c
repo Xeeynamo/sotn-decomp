@@ -14,8 +14,7 @@ u8 D_us_80180B88[] = {0x40, 0x58, 0xFF, 0x00};
 u8 D_us_80180B8C[] = {0x40, 0x59, 0xFF, 0x00};
 u8 D_us_80180B90[] = {0x04, 0x1E, 0xFF, 0x00};
 
-static ObjInit envTileInit[] = {
-
+static ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     // Life/heart max up text
     {.animSet = ANIMSET_DRA(6),
      .zPriority = 0x1FA,
@@ -129,7 +128,8 @@ static ObjInit envTileInit[] = {
     // mist door
     {.animSet = ANIMSET_OVL(4),
      .zPriority = 0x064,
-     .unk5A = 0x4A,
+     .facingLeft = 0x4A,
+     .unk5A = 0,
      .palette = 0x207,
      .drawFlags = FLAG_DRAW_DEFAULT,
      .drawMode = DRAW_DEFAULT,
@@ -137,22 +137,26 @@ static ObjInit envTileInit[] = {
      .animFrames = D_us_80180B90},
 };
 
-void EntityEnvTile(Entity* self) {
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
+    ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
+
     Primitive* prim;
     s32 primIndex;
-    ObjInit* ptr;
 
-    ptr = &envTileInit[self->params];
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        self->animSet = ptr->animSet;
-        self->zPriority = ptr->zPriority;
-        self->unk5A = ptr->unk5A;
-        self->palette = ptr->palette;
-        self->drawFlags = ptr->drawFlags;
-        self->drawMode = ptr->drawMode;
-        if (ptr->flags != 0) {
-            self->flags = ptr->flags;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+#ifdef VERSION_PSP
+        self->unk5A = LOHU(objInit->facingLeft);
+#else
+        self->unk5A = LOH(objInit->facingLeft);
+#endif
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
+        if (objInit->flags) {
+            self->flags = objInit->flags;
         }
         if (self->params == 6) {
             primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
@@ -172,6 +176,6 @@ void EntityEnvTile(Entity* self) {
             prim->drawMode = DRAW_UNK02;
         }
     }
-    AnimateEntity(ptr->animFrames, self);
+    AnimateEntity(objInit->animFrames, self);
     FntPrint("pri:%x\n", self->zPriority);
 }
