@@ -47,6 +47,7 @@ static s16 g_SineTable[] = {
 
 #include "../destroy_entity.h"
 
+#ifndef HARD_LINK
 void DestroyEntitiesFromIndex(s16 index) {
     Entity* entity = &g_Entities[index];
 
@@ -55,6 +56,7 @@ void DestroyEntitiesFromIndex(s16 index) {
         entity++;
     }
 }
+#endif
 
 void PreventEntityFromRespawning(Entity* entity) {
     if (entity->entityRoomIndex) {
