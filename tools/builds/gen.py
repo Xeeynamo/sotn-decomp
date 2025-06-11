@@ -11,7 +11,7 @@ entries = dict()
 
 psp_o4_files = [
     "3250.c",
-    "E588.c",
+    "menu.c",
     "186E8.c",
     "1DDC0.c",
     "23138.c",

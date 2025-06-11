@@ -32,54 +32,59 @@ import matplotlib.pyplot as plt
 import numpy as np
 import argparse
 import urllib.request
+import time
 
 
 # Take a 5-5-5 encoded array and convert to RGB image.
 # See PSYQ SDK document LIBOVR46.PDF, figure 8-3.
 def convert_rgb555(in_array):
-    out_array = []
-    for in_row in in_array:
-        out_row = []
-        for i in range(0, len(in_row), 2):
-            two_bytes = in_row[i : i + 2]
-            two_bytes = two_bytes[::-1]
-            bits = int.from_bytes(two_bytes, "big")
-            s = bits >> 15  # semi transparent flag
-            b = bits >> 10 & 0b11111  # bits 14-10
-            g = (bits >> 5) & 0b11111  # bits 9-5
-            r = bits & 0b11111  # bits 4-0
-            # Transform 5-bit to 8-bit color
-            r = round(r / 31 * 255)
-            g = round(g / 31 * 255)
-            b = round(b / 31 * 255)
-            a = 255 if (r or g or b) else 0
-            pixel = [r, g, b, a]
-            out_row.append(pixel)
-        out_array.append(out_row)
-    return np.array(out_array, dtype="uint8")
+    # Ensure the input is a NumPy array of bytes
+    in_array = np.array(in_array, dtype="uint8")
+
+    # Convert pairs of bytes into a single uint16 interpretation for each pixel
+    # Reshape the input to have pairs of bytes (dims: [rows, cols], shape in bytes: (rows, 2*cols))
+    in_array = in_array.reshape(in_array.shape[0], -1, 2)
+
+    # Interpret these as uint16 by shifting and combining bytes correctly
+    # in_array[..., 0] corresponds to the lower byte, and in_array[..., 1] to the higher byte
+    bits = (in_array[..., 1].astype(np.uint16) << 8) | in_array[..., 0].astype(
+        np.uint16
+    )
+
+    # Extract bit components
+    s = bits >> 15
+    b = (bits >> 10) & 0b11111
+    g = (bits >> 5) & 0b11111
+    r = bits & 0b11111
+
+    # Transform 5-bit to 8-bit color using vectorized operations
+    r = np.round(r / 31 * 255).astype(np.uint8)
+    g = np.round(g / 31 * 255).astype(np.uint8)
+    b = np.round(b / 31 * 255).astype(np.uint8)
+    a = np.where(r | g | b, 255, 0).astype(np.uint8)
+
+    # Stack the channels to form RGBA data
+    out_array = np.stack((r, g, b, a), axis=-1)
+
+    return out_array
 
 
 # Once we have a tpage and a clut, apply that clut to color the tpage.
 def color_tpage(tpage, clut):
     height, width = tpage.shape
-    image = []
-    for y in range(height):
-        img_row = []
-        for x in range(width):
-            # Load one byte from the tpage.
-            px = tpage[y][x]
-            # The byte encodes two pixels in its upper and lower halfs.
-            # Extract each half.
-            px1 = px & 0b1111
-            px2 = px >> 4
-            # Individually, use the clut as a lookup table to get the real color.
-            color1 = clut[px1]
-            color2 = clut[px2]
-            # Put each of those two rows into the image.
-            img_row.append(color1)
-            img_row.append(color2)
-        image.append(img_row)
-    return np.array(image)
+
+    # Preallocate the output image array
+    image = np.empty((height, width * 2, 4), dtype=np.uint8)
+
+    # Vectorized operations to extract and map pixels
+    px1 = tpage & 0b1111
+    px2 = tpage >> 4
+
+    # Use clut as a lookup table to get the real colors in a vectorized manner
+    image[:, 0::2, :] = clut[px1]
+    image[:, 1::2, :] = clut[px2]
+
+    return image
 
 
 # Experimentally determined. For a tpage from 0x00 to 0x1F, get that tpage
