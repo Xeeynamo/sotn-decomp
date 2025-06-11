@@ -464,10 +464,6 @@ typedef struct {
 } NowLoadingModel; // size=0x36
 
 typedef struct {
-    /* 8013761C */ MenuContext menus[NUM_MENU]; // 761C, 763A, 7658, 7676
-} MenuData;
-
-typedef struct {
     s32 x;
     s32 y;
     s32 w;

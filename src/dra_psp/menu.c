@@ -22,74 +22,251 @@ typedef struct {
 #define ShowText(str, id) func_800F99B8(str, id, false);
 
 void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
-extern s32 D_80137614;
-extern s32 D_80137948;
-extern u8* D_8013794C;
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_801377FC[NUM_MENU];
-extern s32 D_8013AEE4;
-extern s16 g_RelicMenuFadeTimer;
-extern s32 g_StatBuffTimers[16];
-extern MenuData g_MenuData;
-extern char* g_ChRgb;
-extern u8 D_psp_0914A0D0[];
-extern u8 D_psp_09149E90[];
-extern u8 D_psp_0914A248[];
-extern u8 D_psp_09149FB0[];
-extern s32 D_psp_091CDD40;
-extern u_long* D_psp_0914A388[];
-extern s32 D_801375CC;
-extern s32 D_801375D4;
-extern s32 D_8013784C;
-extern s32 D_8013783C;
-extern s32 D_80137840;
-extern s32 g_TimeAttackEntryTimes[];
-extern s32 c_strTimeAttackEntry[];
-extern s32 g_IsSelectingEquipment;
-extern s32 D_80137608;
-extern s32 D_80137844[2];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 g_IsCloakColorUnlocked;
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 D_801375DC;
-extern s32 g_EquipOrderType;
-extern s32 g_EquipmentCursor;
-extern s32* D_801375D8;
-extern s32 D_psp_091CDD70[];
-extern s32 g_ServantPrevious;
-extern s32 D_80137958;
-extern bool D_psp_091CDD48;
-extern s32 g_UserLanguage;
-extern s32 D_psp_091CDD50;
-extern u8 D_psp_091CE13A;
-extern s32 D_psp_091F35F8; // g_Pix[3];
 
-extern u32 D_801375D0;
+extern s32 D_8013AEE4;
+extern s32 g_StatBuffTimers[16];
+extern s32 g_UserLanguage;
+extern s32 D_psp_091F35F8; // g_Pix[3];
 extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 
-extern const char* D_800A2D10[];
-extern const char* D_800A2D14[];
-extern const char* D_800A2D18[];
-extern const char* D_800A2D58[];
+// BSS
+s32 D_8013784C;
+s32 D_801375CC;
+u32 D_801375D0;
+s32 D_801375D4;
+s32* D_801375D8;
+s32 D_801375DC;
+s32 D_801375E0[NUM_FAMILIARS + 1];
+s32 g_IsCloakLiningUnlocked;
+s32 g_IsCloakColorUnlocked;
+s32 D_80137608;
+s32 g_IsSelectingEquipment;
+s32 g_EquipmentCursor;
+s32 D_80137614;
+s32 g_EquipOrderType;
+MenuContext g_Menus[NUM_MENU];
+s32 D_801377FC[NUM_MENU + 2];
+s32 D_80137844[2];
+char** D_800A2D68;
+char** D_800A2D48;
+s16 g_RelicMenuFadeTimer;
+char* g_ChRgb;
+s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+s32 g_NewAttackRightHand;
+s32 g_NewAttackLeftHand;
+s32 g_NewDefenseEquip;
+s32 g_NewPlayerStatsTotal[4];
+s32 D_80137948;
+u8* D_8013794C;
+s32 D_80137950;
+s32 D_80137954;
+s32 D_psp_091CDD70[2];
+s32 g_PrevEquippedWeapons[2];
+s32 D_80137958;
+s32 g_ServantPrevious;
+s32 D_psp_091CDD50;
+bool D_psp_091CDD48;
+s32 D_psp_091CDD40;
 
-extern char** D_800A2D48;
-extern char** D_800A2D68;
-extern char* D_psp_09147FD8[];
-extern char* D_psp_09148200[];
-extern char* D_psp_091483F8[];
-extern char* D_psp_09148600[];
-extern char* D_psp_091487C0[];
-extern char* D_psp_091488D0[];
-extern char* D_psp_091489A0[];
-extern char* D_psp_09148A70[];
-extern char* D_psp_09148B48[];
-extern char* D_psp_09148BF8[];
+char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+
+char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+
+char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+
+char* D_800A2D58[] = {"再開中断終了決定戻る　　　　　　"};
+
+char* D_psp_09147FD8[] = {
+    _S("ATT"),
+    _S("DEF"),
+    _S("Special Moves List"),
+    _S("Equip"),
+    _S("Spells"),
+    _S("Relics"),
+    _S("System"),
+    _S("S.sword"),
+    _S("Sword"),
+    _S("Throw 1"),
+    _S("Fist"),
+    _S("Club"),
+    _S("Two-hand"),
+    _S("Food"),
+    _S("Bomb"),
+    _S("Throw 2"),
+    _S("Shield"),
+    _S("Medicine"),
+    _S("Right hand"),
+    _S("Left hand"),
+    _S("Head"),
+    _S("Body"),
+    _S("Cloak"),
+    _S("Other"),
+    _S("Other"),
+    _S("Familiars"),
+    _S("Familiar List"),
+    _S("Resume"),
+    _S("Quicksave"),
+    _S("Quit"),
+    _S("Decide          "),
+    _S("Cancel          ")};
+
+char* D_psp_09148200[] = {
+    _S("ATQ"),
+    _S("DEF"),
+    _S("Lista mov especiales"),
+    _S("Equipar"),
+    _S("Hechizos"),
+    _S("Reliquias"),
+    _S("Sistema"),
+    _S("E. cort."),
+    _S("Espadas"),
+    _S("Arroj. 1"),
+    _S("Puños"),
+    _S("Palos"),
+    _S("Dos man."),
+    _S("Comida"),
+    _S("Bombas"),
+    _S("Arroj. 2"),
+    _S("Escudos"),
+    _S("Medic."),
+    _S("Mano dcha."),
+    _S("Mano izq."),
+    _S("Cabeza"),
+    _S("Cuerpo"),
+    _S("Capa"),
+    _S("Otros"),
+    _S("Otros"),
+    _S("Familiares"),
+    _S("Lista de familiares"),
+    _S("Continuar"),
+    _S("G. rápido"),
+    _S("Salir"),
+    _S("Decidir          "),
+    _S("Anular          ")};
+
+char* D_psp_091483F8[] = {
+    _S("ATT"),        _S("DIF"),       _S("Lista mosse speciali"),
+    _S("Equipag."),   _S("Incantes,"), _S("Reliquie"),
+    _S("Sistema"),    _S("Spada S."),  _S("Spada"),
+    _S("Lancio 1"),   _S("Pugno"),     _S("Mazza"),
+    _S("A 2 mani"),   _S("Cibo"),      _S("Bomba"),
+    _S("Lancio 2"),   _S("Scudo"),     _S("Medicina"),
+    _S("Mano dest."), _S("Mano sin."), _S("Testa"),
+    _S("Corpo"),      _S("Mantello"),  _S("Altro"),
+    _S("Altro"),      _S("Famigli"),   _S("Elenco famigli"),
+    _S("Riprendi"),   _S("Sal. Rap."), _S("Esci"),
+    _S("Decidi"),     _S("Annulla")};
+
+char* D_psp_09148600[] = {
+    _S("ATT"),       _S("DEF"),       _S("Liste coups spéciaux"),
+    _S("Equipem."),  _S("Sorts"),     _S("Reliques"),
+    _S("Système"),   _S("Epée cte"),  _S("Epée"),
+    _S("Jet 1"),     _S("Poing"),     _S("Bâton"),
+    _S("2 mains"),   _S("Nourrit."),  _S("Bombe"),
+    _S("Jet 2"),     _S("Bouclier"),  _S("Médicam."),
+    _S("Main drte"), _S("Main gche"), _S("Tête"),
+    _S("Corps"),     _S("Cape"),      _S("Autre"),
+    _S("Autre"),     _S("Familiers"), _S("Liste des familiers"),
+    _S("Reprendre"), _S("Svg rpde"),  _S("Quitter"),
+    _S("Décider"),   _S("Annuler")};
+
+char* D_psp_091487C0[] = {
+    _S("ANG"),       _S("DEF"),        _S("Liste coups spéciaux"),
+    _S("Rüsten"),    _S("Zauber"),     _S("Relikte"),
+    _S("System"),    _S("Kurz"),       _S("Schwert"),
+    _S("Wurf 1"),    _S("Faust"),      _S("Stumpf"),
+    _S("2-Händer"),  _S("Nahrung"),    _S("Explosiv"),
+    _S("Wurf 2"),    _S("Schild"),     _S("Tränke"),
+    _S("Re. Hand"),  _S("Linke Hand"), _S("Kopf"),
+    _S("Körper"),    _S("Mantel"),     _S("Sonstiges"),
+    _S("Sonstiges"), _S("Intimi"),     _S("Liste der Intimi"),
+    _S("Weiter"),    _S("Quicksave"),  _S("Beenden"),
+    _S("Entsch."),   _S("Abbruch")};
+
+char* D_psp_091488D0[] = {
+    "？？？？？",
+    "Button set-up",
+    "Select front／back of reversible cloak",
+    "Custom cloak settings",
+    "Window color settings",
+    "Time from game start",
+};
+
+char* D_psp_091489A0[] = {
+    "？？？？？",
+    _SE("Configuración de los botones"),
+    "Elige el anverso/reverso de la capa",
+    _SE("Configuración personalizada de la capa"),
+    "Ajustes del color de la ventana",
+    "Tiempo desde el comienzo del juego",
+};
+
+char* D_psp_09148A70[] = {
+    "？？？？？",
+    "Impostazione dei tasti",
+    "Seleziona lato mantello double-face",
+    "Impostazioni personalizzate mantello",
+    "Impostazioni del colore della finestra",
+    "Tempo trascorso da inizio partita",
+};
+
+char* D_psp_09148B48[] = {
+    "？？？？？",
+    "Configuration des touches",
+    _SE("Sélec. ext./int. de la cape réversible"),
+    _SE("Paramètres de la cape personnalisée"),
+    _SE("Paramètres de couleur de la fenêtre"),
+    _SE("Temps depuis le début de la partie"),
+};
+
+char* D_psp_09148BF8[] = {
+    "？？？？？",
+    _SE("Tastenbelegung ändern"),
+    _SE("Mantelfarben (innen/außen) ändern"),
+    "Eigene Manteleinstellungen",
+    _SE("Einstellungen für Fensterfarbe"),
+    "Zeit seit Spielbeginn",
+};
+
+u8 D_psp_09148C10[] = {
+#include "../dra/gen/D_psp_09148C10.h"
+};
+
+u8 D_psp_091490B0[] = {
+#include "../dra/gen/D_psp_091490B0.h"
+};
+
+u8 D_psp_09149550[] = {
+#include "../dra/gen/D_psp_09149550.h"
+};
+
+u8 D_psp_091499F0[] = {
+#include "../dra/gen/D_psp_091499F0.h"
+};
+
+u8 D_psp_09149E90[] = {
+#include "../dra/gen/D_psp_09149E90.h"
+};
+
+u8 D_psp_09149FB0[] = {
+#include "../dra/gen/D_psp_09149FB0.h"
+};
+
+u8 D_psp_0914A0D0[] = {
+#include "../dra/gen/D_psp_0914A0D0.h"
+};
+
+u8 D_psp_0914A248[] = {
+#include "../dra/gen/D_psp_0914A248.h"
+};
+
+u_long* D_psp_0914A388[] = {
+    (u_long*)GFX_BANK_COMPRESSED,
+    GFX_ENTRY(0x170, 0x3C0, 96, 16, D_psp_09149E90),
+    GFX_TERMINATE(),
+};
 
 #include "../get_lang.h"
 
@@ -592,7 +769,7 @@ void MenuDrawSprite(
     u32 polyColorIntensity;
     s32 temp;
 
-    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         otIdx--;
     }
 
@@ -798,7 +975,7 @@ void func_800F6568(MenuContext* ctx) {
 // Draw equip menu cursor
 void func_800F6618(s32 menuDialogue, s32 bColorMode) {
     s32 r;
-    MenuContext* context = &g_MenuData.menus[menuDialogue];
+    MenuContext* context = &g_Menus[menuDialogue];
 
     if (bColorMode) {
         r = 0x80;
@@ -904,7 +1081,7 @@ char rgb_ge[] = {CH('R'), CH('G'), CH('B')};
 void MenuJosephsCloakDraw(MenuContext* ctx) {
     s32 i;
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_SETTINGS];
+    MenuContext* menu = &g_Menus[MENU_DG_SETTINGS];
     g_ChRgb = GetLang(rgb_en, rgb_fr, rgb_sp, rgb_ge, rgb_it);
     // 3 iterations, each iteration does Exterior and Lining for one letter
     for (i = 0; i < 3; i++) {
@@ -1100,8 +1277,8 @@ void MenuStatChangesDraw(void) {
     MenuContext* ctx;
     char arrow;
 
-    if (!g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
-        ctx = &g_MenuData.menus[MENU_DG_EQUIP_OVERVIEW];
+    if (!g_Menus[MENU_DG_EQUIP_SELECTOR].unk1C && D_80137948) {
+        ctx = &g_Menus[MENU_DG_EQUIP_OVERVIEW];
         // Print the destination value for the square attack item
         MenuDrawInt(g_NewAttackRightHand, 0x154, 0x50, ctx);
         // Show arrow icon for increasing, decreasing, or staying the same
@@ -1145,7 +1322,7 @@ void MenuDrawStats(s32 menuDialogue) {
     s32 temp_y;
     s32 phi_a0_5;
 
-    ctx = &g_MenuData.menus[menuDialogue];
+    ctx = &g_Menus[menuDialogue];
     func_800F53A4();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
@@ -1204,7 +1381,7 @@ void MenuDrawStats(s32 menuDialogue) {
         MenuDrawTime(g_Status.timerSeconds, 348, 192, ctx, 2);
     }
 
-    if (ctx == &g_MenuData.menus[MENU_DG_BG]) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         x = 248;
         y = 88;
     } else {
@@ -1239,7 +1416,7 @@ void MenuDrawStats(s32 menuDialogue) {
     MenuDrawInt(g_Status.attackHands[1], x + 76, y + 10, ctx);
     func_800F66BC(D_800A2D68[1], x, y + 20, ctx, 1);
     MenuDrawInt(g_Status.defenseEquip, x + 76, y + 26, ctx);
-    if (ctx == (&g_MenuData.menus[MENU_DG_BG])) {
+    if (ctx == &g_Menus[MENU_DG_BG]) {
         x = 32;
         y = 120;
     } else {
@@ -1374,7 +1551,7 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
 
     MenuDrawStr(D_800A2D68[26], 120, 40, ctx);
     for (i = 0; i < NUM_FAMILIARS; i++) {
-        if (!D_801375E0[i]) {
+        if (D_801375E0[i] == 0) {
             continue;
         }
         x = ((i & 1) * 172) + 48;
@@ -1424,7 +1601,7 @@ void MenuFamiliarsDraw(MenuContext* ctx) {
     }
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800F82F4);
+INCLUDE_ASM("dra_psp/psp/dra_psp/menu", func_800F82F4);
 
 void MenuSystemDraw(MenuContext* ctx) {
     const int Width = 128;
@@ -1456,8 +1633,8 @@ void func_800F84CC(void) {
         prim->drawMode = DRAW_HIDE;
     }
 
-    D_8013783C = func_800EDD9C(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_8013783C];
+    D_801377FC[NUM_MENU + 0] = func_800EDD9C(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
     SetPrimRect(prim, 20, 195, 42, 28);
     prim->u0 = 113;
     prim->v0 = 177;
@@ -1472,8 +1649,8 @@ void func_800F84CC(void) {
     prim->priority = 0x40;
     prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
-    D_80137840 = func_800EDD9C(PRIM_GT4, 2);
-    prim = &g_PrimBuf[D_80137840];
+    D_801377FC[NUM_MENU + 1] = func_800EDD9C(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;
         prim->x1 = prim->x3 = prim->x0 + 16;
@@ -1503,8 +1680,8 @@ void func_800F86E4(void) {
         FreePrimitives(D_801377FC[i]);
     }
 
-    FreePrimitives(D_8013783C);
-    FreePrimitives(D_80137840);
+    FreePrimitives(D_801377FC[NUM_MENU + 0]);
+    FreePrimitives(D_801377FC[NUM_MENU + 1]);
 }
 
 void func_800F8754(MenuContext* ctx, s32 x, s32 y) {
@@ -1624,7 +1801,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     LINE_G2* line = &g_CurrentBuffer->lineG2[g_GpuUsage.line];
 
     if (isColorStatic) {
-        z = g_MenuData.menus[isColorStatic - 1].otIdx + 4;
+        z = g_Menus[isColorStatic - 1].otIdx + 4;
     } else {
         z = 0x80;
     }
@@ -1657,7 +1834,7 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     g_GpuUsage.line++;
 }
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", DrawConsumableCount);
+INCLUDE_ASM("dra_psp/psp/dra_psp/menu", DrawConsumableCount);
 
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
@@ -1684,7 +1861,7 @@ void MenuDraw(void) {
 
     for (i = 0; i < NUM_MENU; i++) {
         prim = &g_PrimBuf[D_801377FC[i]];
-        menu = &g_MenuData.menus[i];
+        menu = &g_Menus[i];
         if (menu->unk1C == 2) {
             prim->drawMode = DRAW_HIDE;
             continue;
@@ -1901,14 +2078,14 @@ void MenuDraw(void) {
 }
 
 void func_800F9690(void) {
-    Primitive* prim = &g_PrimBuf[D_8013783C];
+    Primitive* prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
 
     if (D_80137608 != 0) {
         prim->drawMode = DRAW_MENU;
     } else {
         prim->drawMode = DRAW_HIDE;
     }
-    if (g_MenuData.menus[MENU_DG_INFO_BAR].unk1C != 0) {
+    if (g_Menus[MENU_DG_INFO_BAR].unk1C != 0) {
         prim->drawMode = DRAW_HIDE;
     }
 }
@@ -1917,8 +2094,8 @@ void func_800F96F4(void) {
     Primitive* prim;
     s32 temp_a2;
 
-    temp_a2 = g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
-    prim = &g_PrimBuf[D_80137840];
+    temp_a2 = g_Menus[MENU_DG_EQUIP_SELECTOR].unk1C == 0;
+    prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
 
     if (D_80137844[0] && temp_a2) {
         prim->drawMode = DRAW_MENU;
@@ -2285,28 +2462,27 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
             if (g_pads[0].repeat & PAD_L1) {
                 if (*nav >= ItemsPerPage) {
                     *nav -= ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
-                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 += 0x48;
+                    if (g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 > 0) {
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                     }
                 } else {
                     *nav = 0;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
                 }
             }
             if (g_pads[0].repeat & PAD_R1) {
                 if (*nav < nOptions - ItemsPerPage) {
                     *nav += ItemsPerPage;
-                    g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
+                    g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 -= 0x48;
                     limit = ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
-                    if (g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 <
-                        limit) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
+                    if (g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 < limit) {
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = limit;
                     }
                 } else {
                     *nav = nOptions - 1;
                     if (nOptions > ItemsPerPage) {
-                        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+                        g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                             ((nOptions - 1) / 2 - 5) * -ItemsPerPage;
                     }
                 }
@@ -2325,7 +2501,7 @@ void func_psp_090F1418(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 x0, y0;
     s32 a, b; // quotient and remainder of cursorIndex / 2
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
+    MenuContext* menu = &g_Menus[MENU_DG_EQUIP_SELECTOR];
 
     if (menu->unk1C) {
         return;
@@ -2371,7 +2547,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     s32 nItems;
     s32* cursorIndex;
 
-    MenuContext* menu = &g_MenuData.menus[MENU_DG_EQUIP_SELECTOR];
+    MenuContext* menu = &g_Menus[MENU_DG_EQUIP_SELECTOR];
 
     if (D_801375CC == EQUIP_HAND) {
         cursorIndex = &g_MenuNavigation.cursorEquipType[EQUIP_HAND];
@@ -2546,22 +2722,18 @@ void func_800FAB1C(void) {
 }
 
 void MenuHide(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 1;
-    g_MenuData.menus[menuDialogue].unk1D = 0;
+    g_Menus[menuDialogue].unk1C = 1;
+    g_Menus[menuDialogue].unk1D = 0;
 }
 
 static void MenuShow(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 3;
-    g_MenuData.menus[menuDialogue].unk1D = 0;
+    g_Menus[menuDialogue].unk1C = 3;
+    g_Menus[menuDialogue].unk1D = 0;
 }
 
-void func_800FABEC(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 0;
-}
+void func_800FABEC(s32 menuDialogue) { g_Menus[menuDialogue].unk1C = 0; }
 
-void func_800FAC0C(s32 menuDialogue) {
-    g_MenuData.menus[menuDialogue].unk1C = 2;
-}
+void func_800FAC0C(s32 menuDialogue) { g_Menus[menuDialogue].unk1C = 2; }
 
 void func_800FAC30(void) {
     D_80137844[0] = 0;
@@ -2644,12 +2816,12 @@ void func_800FAF44(bool isAccessory) {
         for (i = 0; i < 169; i++) {
             *ptr++ = i;
         }
-        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+        g_Menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                 g_MenuNavigation.scrollEquipType[EQUIP_HAND];
     } else {
-        g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h =
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 =
+        g_Menus[MENU_DG_EQUIP_SELECTOR].h =
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 =
                 g_MenuNavigation.scrollEquipType[EQUIP_HEAD + D_801375D4];
         for (i = 0; i < 90; i++) {
             if (g_AccessoryDefs[i].equipType == D_801375D4) {
@@ -2662,7 +2834,7 @@ void func_800FAF44(bool isAccessory) {
 void func_800FB004(void) {
     s32 nItems = func_800FD6C4(D_801375CC);
 
-    if (-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
+    if (-g_Menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
         if (D_80137844[0] == 0) {
             D_80137844[0] = 1;
         }
@@ -2670,8 +2842,8 @@ void func_800FB004(void) {
         D_80137844[0] = 0;
     }
 
-    if ((-g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].h +
-         g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+    if ((-g_Menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_Menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
             12 <
         nItems / 2) {
         if (D_80137844[1] == 0) {
@@ -2754,7 +2926,7 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
-INCLUDE_ASM("dra_psp/psp/dra_psp/E588", func_800FB23C);
+INCLUDE_ASM("dra_psp/psp/dra_psp/menu", func_800FB23C);
 
 void func_800FB9BC(void) {
     const int ItemsPerRow = 2;
@@ -2765,7 +2937,7 @@ void func_800FB9BC(void) {
     s32 i;
     MenuContext* context;
 
-    context = g_MenuData.menus;
+    context = g_Menus;
     for (i = 0; i < NUM_MENU; i++, context++) {
         context->cursorX = context->unk1.x = g_MenuInit[i].cursorX;
         context->cursorX += 12;
@@ -2779,10 +2951,9 @@ void func_800FB9BC(void) {
         context->otIdx = g_MenuInit[i].otIdx;
         context->unk1C = 2;
     }
-    g_MenuData.menus[MENU_DG_RELICS].h =
-        g_MenuData.menus[MENU_DG_RELICS].unk16 =
-            ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
-            YScrollPerElement;
+    g_Menus[MENU_DG_RELICS].h = g_Menus[MENU_DG_RELICS].unk16 =
+        ((g_MenuNavigation.cursorRelic / ItemsPerRow) * -VertScrollWindow) /
+        YScrollPerElement;
 }
 
 void func_800FBAC4(void) {
@@ -3333,7 +3504,7 @@ block_4:
         g_MenuStep++;
         break;
     case MENU_STEP_RELIC:
-        g_MenuData.menus[5].unk16 =
+        g_Menus[MENU_DG_RELICS].unk16 =
             ((g_MenuNavigation.cursorRelic / 2) * -140) / 15;
         var_s1 = g_MenuNavigation.cursorRelic;
         MenuHandleCursorInput(
@@ -3512,7 +3683,7 @@ block_4:
         if (g_pads[0].tapped & PAD_MENU_SELECT_ALT) {
             PlaySfx(SFX_UI_CONFIRM);
             func_800FBAC4();
-            g_MenuData.menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
+            g_Menus[MENU_DG_EQUIP_SELECTOR].unk16 = 0;
             g_MenuNavigation.cursorEquipType[0] = 0;
             func_800FB0FC();
         } else if (g_pads[0].tapped & PAD_MENU_BACK) {
@@ -3685,7 +3856,7 @@ void DrawHudSubweapon2(void) {
         break;
 
     case 0x63:
-        if (D_psp_091CE13A == 2) {
+        if (g_Menus[MENU_PSP_EXTRA_2].unk1C == 2) {
             g_MenuStep++;
         }
         break;
