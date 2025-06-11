@@ -167,7 +167,7 @@ typedef union {
 } PrimBuf;
 
 typedef struct {
-    u_long* ot;
+    OT_TYPE* ot;
     POLY_GT4* gt4;
     POLY_G4* g4;
     POLY_GT3* gt3;
@@ -177,13 +177,6 @@ typedef struct {
     SPRT* sprt;
     DR_ENV* env;
 } PrimitivesRenderer;
-
-#ifndef VERSION_PSP
-#define OT_MULT 1
-#endif
-#ifdef VERSION_PSP
-#define OT_MULT 3
-#endif
 
 void RenderPrimitives(void) {
 #ifdef VERSION_PSP
@@ -216,7 +209,7 @@ void RenderPrimitives(void) {
     s16 drawOfs;
     DR_ENV* env;
 
-    r->ot = (u_long*)&g_CurrentBuffer->ot[0];
+    r->ot = &g_CurrentBuffer->ot[0];
     r->gt4 = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->g4 = &g_CurrentBuffer->polyG4[g_GpuUsage.g4];
     r->gt3 = &g_CurrentBuffer->polyGT3[g_GpuUsage.gt3];
@@ -239,7 +232,7 @@ void RenderPrimitives(void) {
             r->tile->y0 = 0;
             r->tile->w = DISP_STAGE_W;
             r->tile->h = DISP_STAGE_H;
-            addPrim(r->ot, r->tile);
+            addPrim(&r->ot[0], r->tile);
             g_GpuUsage.tile++;
             D_8003C0EC[3]--;
         }
@@ -276,7 +269,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                    addPrim(&r->ot[prim->priority], r->dr);
                     r->dr++;
                     g_GpuUsage.drawModes++;
                 }
@@ -307,7 +300,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->tile);
+                    addPrim(&r->ot[prim->priority], r->tile);
                     r->tile++;
                     g_GpuUsage.tile++;
                     if (!(primType & 0x10) &&
@@ -320,7 +313,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -355,7 +348,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->g2);
+                    addPrim(&r->ot[prim->priority], r->g2);
                     r->g2++;
                     g_GpuUsage.line++;
                     if ((primType & 0x10) == 0 &&
@@ -368,7 +361,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -417,7 +410,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->g4);
+                    addPrim(&r->ot[prim->priority], r->g4);
                     r->g4++;
                     g_GpuUsage.g4++;
                     if ((primType & 0x10) == 0 &&
@@ -430,7 +423,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -490,7 +483,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->gt4);
+                    addPrim(&r->ot[prim->priority], r->gt4);
                     r->gt4++;
                     g_GpuUsage.gt4++;
                     if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
@@ -500,7 +493,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -552,7 +545,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->gt3);
+                    addPrim(&r->ot[prim->priority], r->gt3);
                     r->gt3++;
                     g_GpuUsage.gt3++;
                     if (dtd && g_GpuUsage.drawModes < MAX_DRAW_MODES) {
@@ -562,7 +555,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -595,7 +588,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->sprt);
+                    addPrim(&r->ot[prim->priority], r->sprt);
                     r->sprt++;
                     g_GpuUsage.sp++;
                     if ((primType & 0x10) == 0 &&
@@ -609,7 +602,7 @@ void RenderPrimitives(void) {
                             prim->priority = 0x1FF;
                         }
 #endif
-                        addPrim(&r->ot[prim->priority * OT_MULT], r->dr);
+                        addPrim(&r->ot[prim->priority], r->dr);
                         r->dr++;
                         g_GpuUsage.drawModes++;
                     }
@@ -647,7 +640,7 @@ void RenderPrimitives(void) {
                         prim->priority = 0x1FF;
                     }
 #endif
-                    addPrim(&r->ot[prim->priority * OT_MULT], r->env);
+                    addPrim(&r->ot[prim->priority], r->env);
                     r->env++;
                     g_GpuUsage.env++;
                 }
