@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 static u8 anim1[] = {8, 1, 8, 2, 0};
-static u8 anim2[] = {6, 3, 6, 4, 6, 5, 6, 6, 6, 7, 6, 8, 6, 9, 6, 10, 15, 1, 255, 0};
-static u8 anim3[] = {4, 1, 4, 10, 4, 9, 4, 8, 4, 7, 4, 6, 4, 5, 4, 4, 3, 3, 255, 0};
+static u8 anim2[] = {6, 3, 6, 4, 6, 5,  6,  6, 6,   7,
+                     6, 8, 6, 9, 6, 10, 15, 1, 255, 0};
+static u8 anim3[] = {4, 1, 4, 10, 4, 9, 4, 8, 4,   7,
+                     4, 6, 4, 5,  4, 4, 3, 3, 255, 0};
 static s16 sensors1[] = {0, 20, 0, 4, 8, -4, -16, 0};
 static s16 sensors2[] = {0, 20, 12, 0};
 
@@ -115,8 +117,7 @@ void EntityZombieSpawner(Entity* self) {
 
                 // Zombies are prevented from spawning too close to the
                 // edges of the room.
-                temp =
-                    g_Tilemap.scrollX.i.hi + newEntity->posX.i.hi;
+                temp = g_Tilemap.scrollX.i.hi + newEntity->posX.i.hi;
                 if ((temp < (g_Tilemap.x + 128)) ||
                     ((g_Tilemap.width - 128) < temp)) {
                     DestroyEntity(newEntity);
