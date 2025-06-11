@@ -173,7 +173,8 @@ void EntityBoneScimitar(Entity* self) {
         if (!tempByte) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
             tempByte = ++self->ext.skeleton.attackTimerIndex & 3;
-            self->ext.skeleton.attackTimer = attack_timer_cycles[self->params & 1][tempByte];
+            self->ext.skeleton.attackTimer =
+                attack_timer_cycles[self->params & 1][tempByte];
             if (self->params) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
@@ -219,7 +220,7 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_SPECIAL:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         UnkCollisionFunc2(sensors_special);
-        if(self->velocityX < 0){
+        if (self->velocityX < 0) {
             leftTemp = 1;
         } else {
             leftTemp = 0;
@@ -288,7 +289,7 @@ void EntityBoneScimitar(Entity* self) {
         if (self->params) {
             newEntity = self + 1;
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
-            if (self->params & 1){
+            if (self->params & 1) {
                 newEntity->params = ITEM_SHORT_SWORD;
             } else {
                 newEntity->params = ITEM_RED_RUST;
