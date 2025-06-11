@@ -10,10 +10,10 @@
 | dra    | DebugUpdate                              |        7 |          1 |        |                                 |       |
 | dra    | LoadFileSim                              |        7 |          1 |        |                                 |       |
 | dra    | SetReverbDepth                           |        7 |          1 |        |                                 |       |
+| dra    | SetupEvents                              |        7 |          1 |        |                                 |       |
 | dra    | MenuSoundConfigDraw                      |        7 |          1 |        |                                 |       |
 | dra    | func_800F66BC                            |        7 |          1 |        |                                 |       |
 | dra    | func_psp_090F1CE0                        |        7 |          1 |        |                                 |       |
-| dra    | SetupEvents                              |        7 |          1 |        |                                 |       |
 |        | unused_339C                              |        7 |          1 |        |                                 |       |
 |        | unused_33A4                              |        7 |          1 |        |                                 |       |
 |        | unused_33AC                              |        7 |          1 |        |                                 |       |
@@ -54,9 +54,9 @@
 | dra    | MuteCd                                   |       11 |          1 |        |                                 |       |
 | dra    | func_80133950                            |       11 |          1 |        |                                 |       |
 | dra    | func_psp_09141860                        |       11 |          1 |        |                                 |       |
-| dra    | func_800FAC30                            |       11 |          1 |        |                                 |       |
 | dra    | MemcardClose                             |       11 |          1 |        |                                 |       |
 | dra    | MemcardInfoInit                          |       11 |          1 |        |                                 |       |
+| dra    | func_800FAC30                            |       11 |          1 |        |                                 |       |
 | lib    | func_psp_09264E08                        |       11 |          1 |        |                                 |       |
 | no3    | jtbl_pspeu_09298DF0                      |       12 |          0 | Yes    |                                 |       |
 | dra    | func_800EB4F8                            |       13 |          1 |        |                                 |       |
@@ -130,9 +130,9 @@
 | dra    | SetGPUBuffRGB                            |       19 |          1 |        |                                 |       |
 | dra    | SetGPUBuffRGBZero                        |       19 |          1 |        |                                 |       |
 | dra    | func_800EA5AC                            |       19 |          1 |        | https://decomp.me/scratch/u3J6A | 0.069 |
+| dra    | func_801083BC                            |       19 |          1 |        |                                 |       |
 | dra    | MenuHide                                 |       19 |          1 |        |                                 |       |
 | dra    | MenuShow                                 |       19 |          1 |        |                                 |       |
-| dra    | func_801083BC                            |       19 |          1 |        |                                 |       |
 | maria  | func_8015CC28                            |       19 |          1 |        |                                 |       |
 | ric    | func_8015CC28                            |       19 |          1 |        |                                 |       |
 | dai    | SetCutsceneEnd                           |       19 |          1 |        |                                 |       |
@@ -446,9 +446,9 @@
 | wrp    | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
 | dra    | CastSpell                                |       37 |          3 |        |                                 |       |
 | dra    | DestroyEntitiesFromIndex                 |       37 |          3 |        |                                 |       |
+| dra    | GetSaveIcon                              |       37 |          3 |        |                                 |       |
 | dra    | func_800F6568                            |       37 |          3 |        |                                 |       |
 | dra    | func_psp_090EAFA8                        |       37 |          3 |        |                                 |       |
-| dra    | GetSaveIcon                              |       37 |          3 |        |                                 |       |
 | dra    | func_800F82F4                            |       37 |          3 |        | https://decomp.me/scratch/BJeMN | 0.772 |
 | maria  | func_pspeu_092BEA38                      |       37 |          3 |        |                                 |       |
 | dai    | CutsceneUnk3                             |       37 |          3 |        |                                 |       |
@@ -554,8 +554,8 @@
 | no3    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no4    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | wrp    | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
-| dra    | MenuDrawInt                              |       42 |          3 |        |                                 |       |
 | dra    | MemcardParse                             |       42 |          3 |        | https://decomp.me/scratch/wkv7d | 1.0   |
+| dra    | MenuDrawInt                              |       42 |          3 |        |                                 |       |
 | dra    | func_80102628                            |       42 |          4 |        |                                 |       |
 | maria  | func_pspeu_092BFFB8                      |       42 |          5 |        |                                 |       |
 | chi    | FindFirstEntityBelow                     |       42 |          5 |        |                                 |       |
@@ -826,7 +826,7 @@
 | dra    | func_800EDB58                            |       63 |          8 |        | https://decomp.me/scratch/jGDjr | 0.72  |
 | no4    | EntityFishheadFireball                   |       63 |         10 |        |                                 |       |
 |        | ServantUnk0                              |       63 |         12 |        |                                 |       |
-| dra    | E588.rodata                              |       64 |          0 | Yes    |                                 |       |
+| dra    | menu.rodata                              |       64 |          0 | Yes    |                                 |       |
 | dai    | e_cutscene.rodata                        |       64 |          0 | Yes    |                                 |       |
 | lib    | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | no3    | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
