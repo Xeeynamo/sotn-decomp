@@ -61,7 +61,7 @@ segments:
       - [0xD338, c, wrp/e_room_bg]
       - [0xD448, c, wrp/e_lock_camera]
       - [0xD6A8, c, wrp/warp]
-      - [0xEA00, .data, wrp/e_red_door_uv]
+      - [0xEA00, .data, wrp/e_red_door]
       - [0xEA18, .data, wrp/st_update]
       - [0xEA48, .data, wrp/e_particles]
       - [0xEAC8, .data, wrp/e_collect]
@@ -72,7 +72,7 @@ segments:
       - [0xF5F8, data] # WRP_gen_rooms.c_layers
       - [0xF700, data] # WRP_cluts
       - [0xF708, .data, wrp_psp/graphics_banks]
-      - [0xF790, .data, wrp/e_red_door]
+      - [0xF790, .data, wrp/e_red_door_tiles]
       - [0xF7B0, .data, wrp_psp/e_init]
       - [0xF8A0, data] # WRP_gen_rooms.c
       - [0xF920, .data, wrp/e_breakable]

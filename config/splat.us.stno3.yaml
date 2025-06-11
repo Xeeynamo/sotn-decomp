@@ -43,7 +43,7 @@ segments:
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xBB4, .data, e_room_bg]
-      - [0xDA0, .data, e_red_door]
+      - [0xDA0, .data, e_red_door_tiles]
       - [0xDC0, .data, e_lock_camera]
       - [0xE40, .data, e_breakable]
       - [0xEA0, .data, e_background_lightning]
@@ -61,7 +61,7 @@ segments:
       - [0x1C8C, .data, d_prize_drops]
       - [0x1CA0, .data, st_update]
       - [0x1CEC, .data, collision]
-      - [0x20AC, .data, e_red_door_uv]
+      - [0x20AC, .data, e_red_door]
       - [0x20C4, .data, st_common]
       - [0x22C4, .data, e_collect]
       - [0x25B4, .data, e_misc]

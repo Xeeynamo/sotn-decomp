@@ -325,7 +325,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/st_update.c
     src/st/cen/collision.c
     src/st/cen/create_entity.c
-    src/st/cen/e_red_door_uv.c
+    src/st/cen/e_red_door_tiles.c
     src/st/cen/e_red_door.c
     src/st/cen/st_common.c
     src/st/cen/e_collect.c
@@ -363,7 +363,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/st_update.c
     src/st/nz0/collision.c
     src/st/nz0/create_entity.c
-    src/st/cen/e_red_door_uv.c
+    src/st/nz0/e_red_door_tiles.c
     src/st/nz0/e_red_door.c
     src/st/nz0/st_common.c
     src/st/nz0/e_collect.c
@@ -407,7 +407,7 @@ set (SOURCE_FILES_STAGE_ST0
     src/st/st0/st_update.c
     src/st/st0/collision.c
     src/st/st0/create_entity.c
-    src/st/cen/e_red_door_uv.c
+    src/st/st0/e_red_door_tiles.c
     src/st/st0/e_red_door.c
     src/st/st0/st_common.c
     src/st/st0/e_collect.c
@@ -439,7 +439,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/st_update.c
     src/st/wrp/collision.c
     src/st/wrp/create_entity.c
-    src/st/cen/e_red_door_uv.c
+    src/st/wrp/e_red_door_tiles.c
     src/st/wrp/e_red_door.c
     src/st/wrp/st_common.c
     src/st/wrp/e_collect.c
