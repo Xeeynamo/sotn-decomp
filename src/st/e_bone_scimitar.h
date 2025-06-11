@@ -40,9 +40,9 @@ static u8 anim_jump[] = {
     0x01, 0x01, 0x04, 0x0E, 0x04, 0x0F, 0x01, 0x01, 0xFF, 0x00};
 static u8 anim_land[] = {
     0x01, 0x01, 0x04, 0x0E, 0x06, 0x0F, 0x04, 0x0E, 0x01, 0x01, 0xFF, 0x00};
-static s16 anim_bone_rot[] = {
+static u16 anim_bone_rot[] = {
     0x0100, 0x0080, 0x0048, 0x0020, 0x0040, 0x0010, 0x0018, 0x0000};
-static s8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14};
+static u8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14};
 static s32 dead_parts_velocity_x[] = {
     FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
 static s32 dead_parts_velocity_y[] = {
@@ -59,15 +59,15 @@ static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 static void BoneScimitarAttackCheck(void) {
     s32 temp = UnkCollisionFunc2(sensors_special);
-    s16 temp2 = UnkCollisionFunc(sensor_move, 3);
+    u16 temp2 = UnkCollisionFunc(sensor_move, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
-    if ((g_CurrentEntity->ext.skeleton.attackTimer) == 0) {
+    if (!g_CurrentEntity->ext.skeleton.attackTimer) {
         if (GetDistanceToPlayerX() < 64) {
-            if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
+            if (g_CurrentEntity->facingLeft ^ GetSideToPlayer() & 1) {
                 SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
@@ -304,7 +304,7 @@ void EntityBoneScimitar(Entity* self) {
 // Bone parts that rotate and fall down when killed
 void EntityBoneScimitarParts(Entity* self) {
     if (self->step) {
-        if (--self->ext.skeleton.explosionTimer & 0xFF) {
+        if (--self->ext.skeleton.explosionTimer) {
             self->rotate += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
@@ -317,14 +317,14 @@ void EntityBoneScimitarParts(Entity* self) {
         return;
     }
     InitializeEntity(g_EInitScimitarParts);
-    self->drawFlags = FLAG_DRAW_ROTATE;
     self->animCurFrame = (self->params & 0xFF) + 16;
+    self->drawFlags = FLAG_DRAW_ROTATE;
 
-    if (self->facingLeft != 0) {
+    if (self->facingLeft) {
         self->velocityX = -self->velocityX;
     }
 
     if (self->params & 0xF00) {
-        self->palette += self->params / 256;
+        self->palette += self->params >> 8;
     }
 }

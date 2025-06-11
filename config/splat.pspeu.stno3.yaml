@@ -117,7 +117,8 @@ segments:
       - [0x60998, .data, no3/e_collect]
       - [0x60EE0, .data, no3/e_misc]
       - [0x60F40, .data, no3/collision]
-      - [0x61318, data]
+      - [0x61318, .data, no3/e_bone_scimitar]
+      - [0x61420, data]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
