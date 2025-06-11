@@ -496,10 +496,51 @@ void EntityDoppleganger40(void) {
     FntPrint("noroi:%02x\n", g_Dop.timers[1]);
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", MemCardSetPort);
+extern s32 D_us_801D32F4;
+extern s32 D_us_801D32F8;
+
+void func_us_801C1DB0(s32 arg0) {
+    D_us_801D32F4 = arg0;
+    D_us_801D32F8 = 0;
+}
 
 INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C1DC8);
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C2D90);
+extern EInit D_us_80180424;
+
+void func_us_801C2D90(Entity* self) {
+    Entity* entity;
+    s32 i;
+
+    g_Dop.unk6A = DOPPLEGANGER.hitPoints;
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180424);
+        if (PLAYER.posX.i.hi > 0x80) {
+            DOPPLEGANGER.posX.i.hi = 0x10;
+        } else {
+            DOPPLEGANGER.posX.i.hi = 0xF0;
+        }
+        func_us_801C096C();
+        entity = &g_Entities[68];
+        for (i = 68; i < 144; i++, entity++) {
+            DestroyEntity(entity);
+        }
+        g_Dop.unk6C = DOPPLEGANGER.hitPoints;
+        g_Dop.unk6A = DOPPLEGANGER.hitPoints;
+        g_Dop.unk6E = DOPPLEGANGER.hitPoints;
+        g_Dop.unk70 = DOPPLEGANGER.hitboxState;
+        if (PLAYER.posX.i.hi > 0x80) {
+            func_us_801C1DB0(0x12);
+        } else {
+            func_us_801C1DB0(0x14);
+        }
+        func_us_801C4954(1, 0x30);
+    } else {
+        func_us_801C1DC8();
+        EntityDoppleganger40();
+        func_us_801C9624();
+    }
+    g_Dop.unk6C = g_Dop.unk6A;
+}
 
 #include "../dop_collision.h"
