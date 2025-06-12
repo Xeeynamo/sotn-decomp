@@ -307,7 +307,8 @@ void LoadPendingGfx(void) {
 }
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
-    LoadTPage((u_long*)pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
+    LoadTPage(
+        (u_long*)((s32*)pix + 1), bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
