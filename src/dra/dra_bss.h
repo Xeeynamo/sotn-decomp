@@ -1,12 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-// BSS shared
-extern s32 g_MemcardRetryCount;
-extern s32 g_MemcardFd;
-
 // BSS PC shared
-extern SimFile* g_SimFile;
 extern s16 D_80136460[VSYNC_UNK_LEN];
 extern s16 D_80136C60[VSYNC_UNK_LEN];
 extern u8* g_DemoPtr;

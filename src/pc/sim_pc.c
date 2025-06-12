@@ -10,6 +10,8 @@
 #include "weapon_pc.h"
 #include "servant_pc.h"
 
+extern SimFile* g_SimFile;
+
 s32 g_SimVabId = 0;
 
 SimFile D_800A024C[] = {

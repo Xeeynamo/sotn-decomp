@@ -3,7 +3,7 @@
 
 // BSS
 // This could have been BUTTON_COUNT * PAD_COUNT but nope, 16 on psp
-extern u8 g_PadsRepeatTimer[16];
+u8 g_PadsRepeatTimer[16];
 
 static void ResetPadsRepeat(void) {
     u8* ptr;

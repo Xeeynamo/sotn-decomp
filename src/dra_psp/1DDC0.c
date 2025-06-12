@@ -4,26 +4,12 @@
 #include "lba.h"
 
 extern u_long D_8D6DC40;
-extern s32 D_psp_091CE360;
-extern s32 D_psp_091CE368;
-extern s32 D_psp_091CE370;
-extern u_long* D_psp_091CE378;
-extern u_long* clutAddr;
 extern s32 D_8B42064;
 extern char* D_psp_08B42060;
-extern s32 g_SimVabId;
-extern SimFile D_80136450;
 extern u8 g_ServantDesc;
 extern s32 g_UserLanguage;
 
-void func_psp_090FA740(void) {
-    D_psp_091CE368++;
-    D_psp_091CE370 = (D_psp_091CE368 >> 2) & 0x1F;
-    func_psp_09144C80();
-    if (D_psp_091CE360 == 0) {
-        D_psp_091CE360 = 0;
-    }
-}
+s32 g_SimVabId = 0;
 
 SimFile D_800A024C[] = {
     {
@@ -136,7 +122,7 @@ SimFile D_800A024C[] = {
     },
 };
 
-SimFile D_psp_091600A0[] = {
+SimFile D_800A036C[] = {
     {
         "sound/data/sd_alk.vh;1",
         aPbav_0,
@@ -271,7 +257,7 @@ SimFile D_psp_091600A0[] = {
     },
 };
 
-SimFile D_psp_09160240[] = {
+SimFile D_800A04AC[] = {
     {
         "sound/data/sd_eve1.seq;1",
         aPqes_1,
@@ -440,6 +426,24 @@ u16 D_800A04CC[] = {
     0x0000, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
 };
+
+// BSS
+SimFile* g_SimFile;
+SimFile D_80136450;
+u_long* clutAddr;
+u_long* D_psp_091CE378;
+s32 D_psp_091CE370;
+s32 D_psp_091CE368;
+s32 D_psp_091CE360;
+
+void func_psp_090FA740(void) {
+    D_psp_091CE368++;
+    D_psp_091CE370 = (D_psp_091CE368 >> 2) & 0x1F;
+    func_psp_09144C80();
+    if (D_psp_091CE360 == 0) {
+        D_psp_091CE360 = 0;
+    }
+}
 
 void LoadStageTileset(u8* pTilesetData, s32 y) {
     RECT rect;
@@ -720,7 +724,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         if (fileId & 0x8000) {
             if (!D_8B42064) {
                 var_a0 = fileId & 0x7FFF;
-                g_SimFile = &D_psp_091600A0[var_a0];
+                g_SimFile = &D_800A036C[var_a0];
             } else {
                 var_a0 = fileId & 0x7FFF;
                 g_SimFile = &D_psp_09160430[var_a0];
@@ -766,7 +770,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     if (type == SimFileType_Vb) {
         if (fileId & 0x8000) {
             if (!D_8B42064) {
-                g_SimFile = &D_psp_091600A0[fileId & 0x7FFF];
+                g_SimFile = &D_800A036C[fileId & 0x7FFF];
             } else {
                 g_SimFile = &D_psp_09160430[fileId & 0x7FFF];
             }
@@ -785,7 +789,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Seq) {
         if (!D_8B42064) {
-            g_SimFile = &D_psp_09160240[fileId];
+            g_SimFile = &D_800A04AC[fileId];
         } else {
             g_SimFile = &D_psp_091605D0[fileId];
         }

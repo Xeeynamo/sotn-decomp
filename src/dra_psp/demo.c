@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
 
-// BSS
 extern s32 D_8C630D4;
 extern s32 D_psp_08C630DC;
-extern s32 g_DemoKeyIdx;
 
+// BSS
 static u8* g_DemoPtr = DEMO_KEY_PTR;
+s32 g_DemoKeyIdx;
+
 static u8 D_800A243C[] = {
     STAGE_ST0,       STAGE_BO0,      STAGE_BO4,      STAGE_BO1,  STAGE_BO2,
     STAGE_BO3,       STAGE_NZ0_DEMO, STAGE_BO5,      STAGE_RBO1, STAGE_DRE,

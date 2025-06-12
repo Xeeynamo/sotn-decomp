@@ -6,73 +6,7 @@
 
 #define padding static
 
-// 42398.c
-s32 g_DebugFreeze;
-s32 g_DebugHitboxViewMode;
-u32 D_801362B4;
-s32 D_801362B8;
-s32 D_801362BC;
-s32 g_DebugPalIdx;
-DebugColorChannel g_DebugColorChannel;
-u32 D_801362C8;
-OT_TYPE* g_CurrentOT;
-s32 D_801362D0;
-s32 D_801362D4;
-s32 g_DebugIsRecordingVideo;
-GpuUsage g_GpuMaxUsage;
-s32 g_DebugWaitInfoTimer;
-s32 g_DebugRecordVideoFid;
-s16 D_80136308[128];
-#if defined(VERSION_US)
-s32 g_softResetTimer;
-#endif
-
-// play.c
-s32 D_8013640C;
-s32 D_80136410;
-
-// loading.c
-NowLoadingModel g_NowLoadingModel;
-
-// 47BB8.c
-SimFile* g_SimFile;
-SimFile D_80136450;
-s16 D_80136460[VSYNC_UNK_LEN];
-s16 D_80136C60[VSYNC_UNK_LEN];
-
-// pads.c
-u8 g_PadsRepeatTimer[BUTTON_COUNT * PAD_COUNT];
-
-// save_mgr.c
-s32 g_MemcardRetryCount;
-s32 g_MemcardFd;
-
-// 4A538.c
-u16 D_80137478[ICON_SLOT_NUM];
-u16 D_801374B8[ICON_SLOT_NUM];
-u16 D_801374F8[ICON_SLOT_NUM];
-u16 D_80137538[ICON_SLOT_NUM];
-u8* g_DecSrcPtr;
-u8* g_DecDstPtr;
-s32 g_DecReadNibbleFlag;
-s32 g_DecWriteNibbleFlag;
-padding s32 D_80137588;
-padding s32 D_8013758C;
-
-// demo.c
-u8* g_DemoPtr;
-s32 g_DemoKeyIdx;
-
 // 5087C.c
-bool D_80137598;
-s32 D_8013759C;
-s32 D_801375A0;
-s32 D_801375A4;
-s32 D_801375A8;
-s32 D_801375AC;
-s32 D_801375B0;
-s32 D_801375B4;
-s32 D_801375B8;
 RoomLoadDefHolder D_801375BC; // fake struct?
 s32 D_801375C0;
 s32 D_801375C4;
