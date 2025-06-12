@@ -1,4 +1,3 @@
-D_80097450 = 0x091CE650;
 GetLangAt = 0x09237B20;
 NO4_Load = 0x09237FB0;
 EntityBreakable = 0x09238118;
