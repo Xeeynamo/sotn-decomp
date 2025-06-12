@@ -185,8 +185,8 @@
 | lib    | SetSubStep                               |       21 |          1 |        |                                 |       |
 | lib    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3    | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
-| no3    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3    | SetSubStep                               |       21 |          1 |        |                                 |       |
+| no3    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no4    | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | no4    | SetSubStep                               |       21 |          1 |        |                                 |       |
 | no4    | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
@@ -306,6 +306,7 @@
 | maria  | pl_steps.rodata                          |       28 |          0 | Yes    |                                 |       |
 | lib    | e_lesser_demon.rodata                    |       28 |          0 | Yes    |                                 |       |
 | lib    | e_mudman.rodata                          |       28 |          0 | Yes    |                                 |       |
+| no3    | jtbl_pspeu_09298F28                      |       28 |          0 | Yes    |                                 |       |
 | no4    | e_frozen_shade.rodata                    |       28 |          0 | Yes    |                                 |       |
 | st0    | e_collect.rodata                         |       28 |          0 | Yes    |                                 |       |
 | st0    | title_card.rodata                        |       28 |          0 | Yes    |                                 |       |
@@ -375,7 +376,7 @@
 | dra    | IsAlucart                                |       31 |          7 |        |                                 |       |
 | dra    | 5D5BC.rodata                             |       32 |          0 | Yes    |                                 |       |
 | dra    | 1DDC0.rodata                             |       32 |          0 | Yes    |                                 |       |
-| no3    | collision.rodata                         |       32 |          0 | Yes    |                                 |       |
+| no3    | popup.rodata                             |       32 |          0 | Yes    |                                 |       |
 | dra    | func_80102D08                            |       32 |          2 |        |                                 |       |
 | dra    | func_800EB6B4                            |       32 |          3 |        |                                 |       |
 | dra    | func_8010E940                            |       32 |          3 |        | https://decomp.me/scratch/CuZlD | 0.977 |
@@ -518,7 +519,7 @@
 | chi    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | dai    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | lib    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
-| no3    | func_pspeu_0925F970                      |       40 |          2 |        |                                 |       |
+| no3    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | no4    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | st0    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
 | wrp    | PreventEntityFromRespawning              |       40 |          2 |        | https://decomp.me/scratch/xBRKv | 0.997 |
@@ -657,8 +658,8 @@
 | chi    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | dai    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | lib    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
-| no3    | func_pspeu_09238360                      |       49 |          5 |        | https://decomp.me/scratch/C3ATv | 0.98  |
 | no3    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
+| no3    | func_pspeu_09238360                      |       49 |          5 |        | https://decomp.me/scratch/C3ATv | 0.98  |
 | no4    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | st0    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
 | wrp    | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
@@ -1105,7 +1106,7 @@
 | dra    | func_80123A60                            |       96 |         11 |        | https://decomp.me/scratch/Lfdzl | 0.994 |
 | dai    | UnkCollisionFunc                         |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
 | lib    | UnkCollisionFunc                         |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
-| no3    | func_pspeu_092607D8                      |       96 |         11 |        |                                 |       |
+| no3    | UnkCollisionFunc                         |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
 | no4    | UnkCollisionFunc                         |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
 | chi    | CreateEntitiesToTheLeft                  |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | dai    | CreateEntitiesToTheLeft                  |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
@@ -1949,6 +1950,7 @@
 | ric    | RicEntityHitByLightning                  |      670 |         62 |        | https://decomp.me/scratch/ApHAl | 0.998 |
 | dra    | PlayerStepKill                           |      672 |         81 |        | https://decomp.me/scratch/zQLmL | 0.989 |
 | ric    | func_8016F198                            |      675 |         75 |        | https://decomp.me/scratch/jH0M7 | 1.0   |
+| no3    | EntityBoneScimitar                       |      678 |         98 | Yes    | https://decomp.me/scratch/adyRN | 0.983 |
 | chi    | EntityDamageDisplay                      |      682 |         51 |        |                                 |       |
 | dai    | EntityDamageDisplay                      |      682 |         51 |        |                                 |       |
 | lib    | EntityDamageDisplay                      |      682 |         51 |        |                                 |       |
@@ -1969,7 +1971,6 @@
 | ric    | RicEntityTeleport                        |      700 |         78 |        | https://decomp.me/scratch/zdUhe | 0.959 |
 | chi    | EntityVenusWeedFlower                    |      702 |        106 | Yes    |                                 |       |
 | st0    | func_801B1298                            |      705 |         69 |        | https://decomp.me/scratch/6QrSP | 0.987 |
-| no3    | EntityBoneScimitar                       |      709 |         98 | Yes    | https://decomp.me/scratch/adyRN | 0.983 |
 | lib    | func_us_801B5068                         |      711 |         73 | Yes    |                                 |       |
 | dra    | HandleGameOver                           |      723 |        139 |        | https://decomp.me/scratch/ULCNQ | 1.0   |
 | dra    | EntitySubwpnReboundStone                 |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
