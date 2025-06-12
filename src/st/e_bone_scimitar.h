@@ -40,9 +40,9 @@ static u8 anim_jump[] = {
     0x01, 0x01, 0x04, 0x0E, 0x04, 0x0F, 0x01, 0x01, 0xFF, 0x00};
 static u8 anim_land[] = {
     0x01, 0x01, 0x04, 0x0E, 0x06, 0x0F, 0x04, 0x0E, 0x01, 0x01, 0xFF, 0x00};
-static s16 anim_bone_rot[] = {
+static u16 anim_bone_rot[] = {
     0x0100, 0x0080, 0x0048, 0x0020, 0x0040, 0x0010, 0x0018, 0x0000};
-static s8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14};
+static u8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14};
 static s32 dead_parts_velocity_x[] = {
     FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
 static s32 dead_parts_velocity_y[] = {
@@ -59,15 +59,15 @@ static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
 
 static void BoneScimitarAttackCheck(void) {
     s32 temp = UnkCollisionFunc2(sensors_special);
-    s16 temp2 = UnkCollisionFunc(sensor_move, 3);
+    u16 temp2 = UnkCollisionFunc(sensor_move, 3);
 
     if ((temp == 128) || (temp2 & 2)) {
         SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
-    if ((g_CurrentEntity->ext.skeleton.attackTimer) == 0) {
+    if (!g_CurrentEntity->ext.skeleton.attackTimer) {
         if (GetDistanceToPlayerX() < 64) {
-            if (g_CurrentEntity->facingLeft != (GetSideToPlayer() & 1)) {
+            if (g_CurrentEntity->facingLeft ^ GetSideToPlayer() & 1) {
                 SetStep(BONE_SCIMITAR_ATTACK);
             }
         }
@@ -78,7 +78,9 @@ static void BoneScimitarAttackCheck(void) {
 
 void EntityBoneScimitar(Entity* self) {
     Entity* newEntity;
-    u8 animStatus;
+    bool leftTemp;
+    u8 tempByte;
+    s16 xPos;
     s32 i;
 
     if (self->flags & FLAG_DEAD) {
@@ -88,13 +90,13 @@ void EntityBoneScimitar(Entity* self) {
     switch (self->step) {
     case BONE_SCIMITAR_INIT:
         InitializeEntity(g_EInitBoneScimitar);
-        if (self->params != 0) {
+        if (self->params) {
             self->palette += self->params;
             self->flags &= ~(FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                              FLAG_DESTROY_IF_OUT_OF_CAMERA | 0xC00);
             self->ext.skeleton.initialX =
                 g_Tilemap.scrollX.i.hi + self->posX.i.hi;
-            if (self->params & spawn_special) {
+            if (spawn_special & self->params) {
                 DestroyEntity(self);
                 return;
             }
@@ -108,7 +110,7 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_IDLE:
         if (UnkCollisionFunc3(sensors_ground) != 0) {
             self->step++;
-            if (self->params != 0) {
+            if (self->params) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
@@ -120,10 +122,10 @@ void EntityBoneScimitar(Entity* self) {
         }
         self->ext.skeleton.facingLeft = self->facingLeft;
 
-        if (self->ext.skeleton.facingLeft == 0) {
-            self->velocityX = FIX(-0.5);
-        } else {
+        if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
+        } else {
+            self->velocityX = FIX(-0.5);
         }
 
         if (GetDistanceToPlayerX() < 76) {
@@ -138,10 +140,10 @@ void EntityBoneScimitar(Entity* self) {
         }
         self->ext.skeleton.facingLeft = self->facingLeft ^ 1;
 
-        if (self->ext.skeleton.facingLeft == 0) {
-            self->velocityX = FIX(-0.5);
-        } else {
+        if (self->ext.skeleton.facingLeft) {
             self->velocityX = FIX(0.5);
+        } else {
+            self->velocityX = FIX(-0.5);
         }
 
         if (GetDistanceToPlayerX() > 92) {
@@ -151,7 +153,7 @@ void EntityBoneScimitar(Entity* self) {
         break;
 
     case BONE_SCIMITAR_ATTACK:
-        animStatus = AnimateEntity(anim_swing_sword, self);
+        tempByte = AnimateEntity(anim_swing_sword, self);
         if (self->animCurFrame == 12) {
             self->hitboxWidth = 20;
             self->hitboxHeight = 17;
@@ -164,17 +166,16 @@ void EntityBoneScimitar(Entity* self) {
             self->hitboxOffY = 0;
         }
 
-        if (self->pose == 7 && self->poseTimer == 0) {
+        if (self->pose == 7 && !self->poseTimer) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
         }
 
-        if (animStatus == 0) {
+        if (!tempByte) {
             SetStep(BONE_SCIMITAR_WALK_AWAY_FROM_PLAYER);
-            self->ext.skeleton.attackTimerIndex++;
+            tempByte = ++self->ext.skeleton.attackTimerIndex & 3;
             self->ext.skeleton.attackTimer =
-                attack_timer_cycles[self->params % 2]
-                                   [self->ext.skeleton.attackTimerIndex & 3];
-            if (self->params != 0) {
+                attack_timer_cycles[self->params & 1][tempByte];
+            if (self->params) {
                 SetStep(BONE_SCIMITAR_SPECIAL);
             }
         }
@@ -184,19 +185,15 @@ void EntityBoneScimitar(Entity* self) {
         switch (self->step_s) {
         case BONE_SCIMITAR_JUMPING:
             if (!(AnimateEntity(anim_jump, self) & 1)) {
-                u8 facing_ = self->ext.skeleton.facingLeft;
-                s32 facing;
+                tempByte = self->ext.skeleton.facingLeft;
 
-                if (Random() % 4) {
-                    facing = facing_;
-                } else {
-                    facing_ ^= 1;
-                    facing = facing_;
+                if ((Random() & 3) == 0) {
+                    tempByte ^= 1;
                 }
-                if (facing == 0) {
-                    self->velocityX = FIX(-2);
-                } else {
+                if (tempByte) {
                     self->velocityX = FIX(2);
+                } else {
+                    self->velocityX = FIX(-2);
                 }
 
                 self->velocityY = FIX(-3);
@@ -223,7 +220,13 @@ void EntityBoneScimitar(Entity* self) {
     case BONE_SCIMITAR_SPECIAL:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         UnkCollisionFunc2(sensors_special);
-        if (((((u32)self->velocityX) >> 0x1F) ^ self->facingLeft) != 0) {
+        if (self->velocityX < 0) {
+            leftTemp = 1;
+        } else {
+            leftTemp = 0;
+        }
+        leftTemp ^= self->facingLeft;
+        if (leftTemp) {
             AnimateEntity(anim_walk, self);
         } else {
             AnimateEntity(anim_walk_backwards, self);
@@ -232,22 +235,24 @@ void EntityBoneScimitar(Entity* self) {
         switch (self->step_s) {
         case BONE_SCIMITAR_WALK_RIGHT:
             self->velocityX = FIX(0.5);
-            if (((s16)((g_Tilemap.scrollX.i.hi + self->posX.i.hi) -
-                       self->ext.skeleton.initialX)) > 32) {
+            xPos = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            xPos = xPos - self->ext.skeleton.initialX;
+            if (xPos > 32) {
                 self->step_s++;
             }
             break;
 
         case BONE_SCIMITAR_WALK_LEFT:
             self->velocityX = FIX(-0.5);
-            if (((s16)((g_Tilemap.scrollX.i.hi + self->posX.i.hi) -
-                       self->ext.skeleton.initialX)) < -32) {
+            xPos = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+            xPos = xPos - self->ext.skeleton.initialX;
+            if (xPos < -32) {
                 self->step_s--;
             }
             break;
         }
 
-        if (self->ext.skeleton.attackTimer != 0) { // Attack delay counter
+        if (self->ext.skeleton.attackTimer) { // Attack delay counter
             self->ext.skeleton.attackTimer--;
             return;
         }
@@ -269,7 +274,7 @@ void EntityBoneScimitar(Entity* self) {
             newEntity->params = i;
             newEntity->ext.skeleton.explosionTimer = dead_parts_selector[i];
 
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 newEntity->posX.i.hi -= dead_parts_pos_x[i];
             } else {
                 newEntity->posX.i.hi += dead_parts_pos_x[i];
@@ -280,14 +285,14 @@ void EntityBoneScimitar(Entity* self) {
             newEntity->params |= self->params << 8;
         }
 
-        newEntity = &self[1];
         // If he's one of the special ones from entrance (first visit)
-        if (self->params != 0) {
+        if (self->params) {
+            newEntity = self + 1;
             CreateEntityFromEntity(E_EQUIP_ITEM_DROP, self, newEntity);
-            if (!(self->params & 1)) {
-                self[1].params = ITEM_RED_RUST;
+            if (self->params & 1) {
+                newEntity->params = ITEM_SHORT_SWORD;
             } else {
-                self[1].params = ITEM_SHORT_SWORD;
+                newEntity->params = ITEM_RED_RUST;
             }
             newEntity->params |= 0x8000;
             spawn_special |= self->params;
@@ -300,7 +305,7 @@ void EntityBoneScimitar(Entity* self) {
 // Bone parts that rotate and fall down when killed
 void EntityBoneScimitarParts(Entity* self) {
     if (self->step) {
-        if (--self->ext.skeleton.explosionTimer & 0xFF) {
+        if (--self->ext.skeleton.explosionTimer) {
             self->rotate += anim_bone_rot[self->params];
             FallEntity();
             MoveEntity();
@@ -313,14 +318,14 @@ void EntityBoneScimitarParts(Entity* self) {
         return;
     }
     InitializeEntity(g_EInitScimitarParts);
-    self->drawFlags = FLAG_DRAW_ROTATE;
     self->animCurFrame = (self->params & 0xFF) + 16;
+    self->drawFlags = FLAG_DRAW_ROTATE;
 
-    if (self->facingLeft != 0) {
+    if (self->facingLeft) {
         self->velocityX = -self->velocityX;
     }
 
     if (self->params & 0xF00) {
-        self->palette += self->params / 256;
+        self->palette += self->params >> 8;
     }
 }
