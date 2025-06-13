@@ -65,6 +65,7 @@ segments:
       - [0xD414, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
+      - [0xD4F0, .rodata, e_collect]
       - [0xD540, .rodata, e_collect] # EntityPrizeDrop
       - [0xD560, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD578, .rodata, e_misc]
