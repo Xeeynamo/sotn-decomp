@@ -315,6 +315,7 @@ set(SOURCE_FILES_STAGE_CEN
     src/st/cen/cutscene_data.c
     src/st/cen/stage_data.c
     src/st/cen/gen/sprites.c
+    src/st/cen/background_block_init.c
     src/st/cen/e_room_bg.c
     src/st/cen/e_lock_camera.c
     src/st/cen/e_breakable.c
@@ -347,6 +348,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/cutscene_data.c
     src/st/nz0/stage_data.c
     src/st/nz0/gen/sprites.c
+    src/st/nz0/background_block_init.c
     src/st/nz0/e_room_bg.c
     src/st/nz0/e_lock_camera.c
     src/st/nz0/e_breakable.c
@@ -427,6 +429,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/header.c
     src/st/wrp/gen/e_laydef.c
     src/st/wrp/e_init.c
+    src/st/wrp/background_block_init.c
     src/st/wrp/e_room_bg.c
     src/st/wrp/e_lock_camera.c
     src/st/wrp/e_breakable.c
