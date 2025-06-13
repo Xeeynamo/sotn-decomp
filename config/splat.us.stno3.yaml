@@ -42,7 +42,7 @@ segments:
       - [0x5A4, .data, header] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
-      - [0xBB4, .data, e_room_bg]
+      - [0xBB4, .data, background_block_init]
       - [0xDA0, .data, e_red_door_tiles]
       - [0xDC0, .data, e_lock_camera]
       - [0xE40, .data, e_breakable]

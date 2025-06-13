@@ -43,7 +43,7 @@ segments:
       - [0x47C, .data, header] # graphics banks
       - [0x8EC, .data, gen/e_laydef] # layout entries header
       - [0xA94, .data, e_init]
-      - [0xD54, .data, e_room_bg]
+      - [0xD54, .data, background_block_init]
       - [0xD8C, .data, e_red_door_tiles]
       - [0xDBC, .data, e_lock_camera]
       - [0xDE4, .data, e_breakable]

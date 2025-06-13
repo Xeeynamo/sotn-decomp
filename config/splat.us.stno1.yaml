@@ -43,7 +43,7 @@ segments:
       - [0x2C, data]
       - [0x618, .data, gen/e_laydef]
       - [0x7C0, .data, e_init]
-      - [0xB60, .data, e_room_bg]
+      - [0xB60, .data, background_block_init]
       - [0xC84, .data, e_red_door]
       - [0xC9C, .data, e_red_door_tiles]
       - [0xCFC, .data, e_lock_camera]

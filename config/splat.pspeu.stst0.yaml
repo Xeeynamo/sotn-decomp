@@ -88,7 +88,7 @@ segments:
       - [0x25898, data, st_init_st0]
       - [0x419E0, .data, st0/2805C]
       - [0x41B28, data]
-      - [0x41B68, .data, st0/e_room_bg]
+      - [0x41B68, .data, st0/background_block_init]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
       - [0x41BF0, .data, st0/e_lock_camera]
       - [0x41C08, .data, st0/e_red_door]

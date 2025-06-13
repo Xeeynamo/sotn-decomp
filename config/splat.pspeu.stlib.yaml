@@ -115,7 +115,7 @@ segments:
       - [0x60C70, .data, lib/e_lesser_demon]
       - [0x60E50, .data, lib_psp/cutscene]
       - [0x61158, data, cutscene] # LIB_EntityCutscene data
-      - [0x61218, .data, lib/e_room_bg]
+      - [0x61218, .data, lib/background_block_init]
       - [0x61308, .data, lib_psp/e_shop]
       - [0x6D6D0, .data, lib/e_lock_camera]
       - [0x6D748, data]

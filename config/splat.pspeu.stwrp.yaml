@@ -85,7 +85,7 @@ segments:
       - [0x10AC0, data] # tile data
       - [0x10EC0, data] # tile definitions
       - [0x142E0, .data, wrp_psp/header]
-      - [0x14320, .data, wrp/e_room_bg]
+      - [0x14320, .data, wrp/background_block_init]
       - [0x14360, .data, wrp/e_lock_camera]
       - [0x143D8, data]
       - [0x14430, .data, wrp/warp]

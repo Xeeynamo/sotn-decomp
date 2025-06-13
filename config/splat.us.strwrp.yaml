@@ -43,7 +43,7 @@ segments:
       - [0x1B8, .data, rwrp/header] # graphics banks
       - [0x23C, .data, rwrp/gen/e_laydef] # layout entries header
       - [0x3E4, .data, rwrp/e_init]
-      - [0x4D0, .data, rwrp/e_room_bg]
+      - [0x4D0, .data, rwrp/background_block_init]
       - [0x508, .data, rwrp/e_red_door_tiles]
       - [0x528, .data, rwrp/e_lock_camera]
       - [0x5A8, .data, rwrp/e_breakable]

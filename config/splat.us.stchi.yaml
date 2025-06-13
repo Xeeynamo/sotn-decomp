@@ -43,7 +43,7 @@ segments:
       - [0x298, .data, dt_header] # Gfx banks
       - [0x3B4, .data, gen/e_laydef]  # layout entities header
       - [0x55C, .data, dt_entity]
-      - [0x730, .data, e_room_bg]
+      - [0x730, .data, background_block_init]
       - [0x768, .data, e_red_door_tiles]
       - [0x798, .data, e_lock_camera]
       - [0x818, .data, en_breakable]

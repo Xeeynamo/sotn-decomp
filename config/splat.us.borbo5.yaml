@@ -41,7 +41,7 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x2C, data]
-      - [0x478, .data, e_room_bg]
+      - [0x478, .data, background_block_init]
       - [0x4B0, .data, e_red_door_tiles]
       - [0x4D0, .data, e_lock_camera]
       - [0x550, .data, e_breakable]
