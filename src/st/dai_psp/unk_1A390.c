@@ -3,22 +3,22 @@
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_801A8328);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09251DF0);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C0BA4);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09252448);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C34FC);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801BEDD8);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_092526B8);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C3164);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09252A80);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C1EE4);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09252CA8);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C2068);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09252F48);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C220C);
 
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09253138);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_092531D8);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C5920);
 
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_pspeu_09253518);
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_1A390", func_us_801C5B88);
