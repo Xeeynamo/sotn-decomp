@@ -41,10 +41,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	}
 	var palette []color.RGBA
 	if len(e.Args) == 4 {
-		str := e.Args[3]
-		if len(str) > 2 {
-			str = str[2:]
-		}
 		palOffset, err := util.ParseCNumber(e.Args[3])
 		if err != nil {
 			return err

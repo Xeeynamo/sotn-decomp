@@ -52,10 +52,8 @@ func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, err
 
 	var entityIDStr string
 	id := int(bs[4])
-	// Try to load the proper enum
 	entityIDStr = entityIDs[id]
-	// If enum unknown or flags are set, override, don't use enums
-	if entityIDStr == "" || bs[5] != 0 {
+	if entityIDStr == "" {
 		entityIDStr = fmt.Sprintf("0x%02X", id)
 	}
 
@@ -191,16 +189,8 @@ func buildEntityLayouts(fileName string, outputDir string) error {
 			}
 			sb.WriteString(fmt.Sprintf("//%d\n", nWritten)) //label each block with offsets
 			for _, e := range entries {
-				var entityIDStr string
-				if int(e.Flags) != 0 {
-					// This will only ever be 0xA001.
-					id, _ := strconv.ParseInt(strings.Replace(e.ID, "0x", "", -1), 16, 16)
-					entityIDStr = fmt.Sprintf("0x%04X", (int(e.Flags)<<8)|int(id))
-				} else {
-					entityIDStr = e.ID
-				}
-				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s, 0x%04X, 0x%04X,\n",
-					uint16(e.X), uint16(e.Y), entityIDStr, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
+				sb.WriteString(fmt.Sprintf("    0x%04X, 0x%04X, %s | 0x%04X, 0x%04X, 0x%04X,\n",
+					uint16(e.X), uint16(e.Y), e.ID, int(e.Flags)<<8, int(e.Slot)|(int(e.SpawnID)<<8), e.Params))
 			}
 			nWritten += len(entries)
 		}

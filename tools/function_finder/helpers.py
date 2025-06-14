@@ -18,7 +18,7 @@ zip_cache = {}
 def get_asm(slug):
     if slug in zip_cache:
         return zip_cache[slug]
-    url = f"https://decomp.me/api/scratch/{slug}/export"
+    url = f"https://decomp.me/api/scratch/{slug}/export?target_only=1"
     response = requests.get(url)
     if response.status_code == 200:
         with zipfile.ZipFile(BytesIO(response.content)) as the_zip:
@@ -58,7 +58,7 @@ def fetch_all_results(url):
 
 def find_scratches(name, platform, local_asm=None, use_local=False):
     results = fetch_all_results(
-        f"https://decomp.me/api/scratch?search={name}&page_size=100"
+        f"https://decomp.me/api/scratch?platform={platform}&search={name}&page_size=100"
     )
 
     best_result = None
@@ -68,8 +68,6 @@ def find_scratches(name, platform, local_asm=None, use_local=False):
         if not "name" in result:
             continue
         if not result["name"].startswith(name):
-            continue
-        if result["platform"] != platform:
             continue
 
         if use_local:

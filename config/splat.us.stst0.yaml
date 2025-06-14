@@ -43,6 +43,8 @@ segments:
       - [0x1A4, .data, header] # graphics banks
       - [0x314, .data, gen/e_laydef] # layout entries header
       - [0x4BC, .data, e_init]
+      - [0x634, .data, background_block_init]
+      - [0x64C, .data, e_red_door_tiles]
       - [0x65C, .data, e_lock_camera]
       - [0x674, .data, 2805C] # func_801A805C
       - [0x784, .data, cutscene]

@@ -119,7 +119,6 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 				if entry.Name == "" {
 					entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
 				}
-				entry.Name += ".gfxbin"
 			}
 			bank.Entries = append(bank.Entries, entry)
 		}
