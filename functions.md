@@ -1838,7 +1838,7 @@
 | ric    | RicEntitySubwpnHolyWaterBreakGlass       |      461 |         29 |        |                                 |       |
 | dra    | func_801309B4                            |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra    | ControlMistForm                          |      466 |         93 |        |                                 |       |
-| dai    | func_pspeu_092497D8                      |      467 |         49 |        | https://decomp.me/scratch/8a5E9 | 0.261 |
+| dai    | func_pspeu_092497D8                      |      467 |         49 |        | https://decomp.me/scratch/8a5E9 | 0.85  |
 | ric    | RicStepJump                              |      469 |         84 |        |                                 |       |
 | dra    | func_800F0CD8                            |      473 |         40 |        | https://decomp.me/scratch/5y14u | 0.954 |
 | lib    | LIB_EntityLockCamera                     |      473 |         53 |        |                                 |       |
