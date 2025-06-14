@@ -51,12 +51,9 @@ class SotnFunction(object):
     @property
     def overlay(self) -> str:
         """Attempts to infer the overlay from the asm file path or returns None if one is not found.
-        The '_psp' extension will be included if the version is psp"""
-        nonmatchings_dir = (
-            "f_nonmat"
-            if args.version == "saturn"
-            else "psp" if "psp" in args.version else "nonmatchings"
-        )
+        The '_psp' extension will be included if the version is psp because this value is later used
+        for identifying the correct overlay asm path"""
+        nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "nonmatchings"
         if not self._overlay:
             nonmatching_index = next(
                 (
@@ -74,7 +71,7 @@ class SotnFunction(object):
     @property
     def asm_differ_command(self) -> str:
         """Constructs the command string the user can enter to run asm-differ against the overlay this function resides in"""
-        return f"{Path(sys.executable).name} {self.root.joinpath("tools/asm-differ/diff.py").relative_to(Path.cwd())} -mwo --overlay {self.overlay} {self.name}"
+        return f"{Path(sys.executable).name} {self.root.joinpath("tools/asm-differ/diff.py").relative_to(Path.cwd())} -mwo --overlay {self.overlay.replace("_psp", "")} {self.name}"
 
     @property
     def context(self):
@@ -194,11 +191,7 @@ def get_function_path(asm_dir: Path, args: argparse.Namespace) -> Optional[Path]
     """Uses the version asm directory and the passed args to find any files matching the function name."""
     file_name = f"{args.function.replace("func_0", "f") if args.version == "saturn" else args.function}.s"
     matchings_dir = "f_match" if args.version == "saturn" else "matchings"
-    nonmatchings_dir = (
-        "f_nonmat"
-        if args.version == "saturn"
-        else "psp" if "psp" in args.version else "nonmatchings"
-    )
+    nonmatchings_dir = "f_nonmat" if args.version == "saturn" else "nonmatchings"
 
     candidates = tuple(file for file in asm_dir.rglob(file_name))
     matching = tuple(c for c in candidates if matchings_dir in c.parts)
