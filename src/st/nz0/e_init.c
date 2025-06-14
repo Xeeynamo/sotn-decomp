@@ -185,37 +185,3 @@ EInit g_EInitSlograProjectile = {0x800D, 0x0000, 0x0048, 0x0227, 0x00F5};
 EInit g_EInitGaibon = {0x800E, 0x0000, 0x004C, 0x022A, 0x00FE};
 EInit g_EInitGaibonProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x00FF};
 EInit g_EInitGaibonLargeProjectile = {0x0000, 0x0000, 0x0000, 0x0000, 0x0100};
-
-static u32 D_80180D54[] = {0x00000B10};
-static u32 D_80180D58[] = {0x0D080C08, 0x0F080E08, 0x00001008};
-
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
-    {
-        .animSet = 0x8001,
-        .zPriority = 0x0069,
-        .unk5A = 0,
-        .palette = PAL_DRA(0),
-        .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_DEFAULT,
-        .flags = 0,
-        .animFrames = D_80180D54,
-    },
-    {
-        .animSet = 0x8001,
-        .zPriority = 0x0069,
-        .unk5A = 0,
-        .palette = PAL_DRA(0),
-        .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
-        .flags = 0,
-        .animFrames = D_80180D58,
-    }};
-
-// Owned by EntityRedDoor to animate the tiles behind the door itself.
-// There is a loop in EntityRedDoor that forces to write those tiles
-// at every frame based on the door state to create the animation.
-u16 OVL_EXPORT(RedDoorTiles)[][8] = {
-    0x0761, 0x0769, 0x0771, 0x0779, 0x0130, 0x0138, 0x01C0, 0x01C5,
-    0x0763, 0x076B, 0x0773, 0x077B, 0x0175, 0x017A, 0x0200, 0x0203,
-    0x0762, 0x076A, 0x0772, 0x077A, 0x0000, 0x0000, 0x0000, 0x0000,
-};

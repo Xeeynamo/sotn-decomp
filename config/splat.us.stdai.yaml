@@ -42,8 +42,12 @@ segments:
       - [0x0, .data, header]
       - [0x2C, data] # DAI_spriteBanks
       - [0x818, .data, e_init]
-      - [0xAC4, .data, e_room_bg]
+      - [0xAC4, .data, background_block_init]
+      - [0xADC, .data, e_red_door_tiles]
+      - [0xB0C, .data, e_lock_camera]
       - [0xB8C, data]
+      - [0x145C, .data, e_red_door]
+      - [0x1474, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
       #- [0x3FEA8, .rodata, unk_408AC] # Splat suggested

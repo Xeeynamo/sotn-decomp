@@ -92,22 +92,3 @@ EInit D_us_801804A4 = {ANIMSET_DRA(0), 0x0000, 0x0000, PAL_DRA(0), 0x0171};
 // These two appear unused
 EInit D_us_801804B0 = {ANIMSET_OVL(1), 0x0000, 0x0000, PAL_DRA(0), 0x0005};
 EInit D_us_801804BC = {ANIMSET_OVL(2), 0x0000, 0x0000, PAL_DRA(0), 0x0005};
-
-static u8 anim_frames[] = {0x40, 0x01, 0xFF, 0x00};
-ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
-    {.animSet = ANIMSET_DRA(6),
-     .zPriority = 0x01FA,
-     .facingLeft = 0,
-     .unk5A = 0,
-     .palette = PAL_DRA(0),
-     .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = DRAW_TPAGE,
-     .flags = 0,
-     .animFrames = anim_frames},
-};
-
-u16 OVL_EXPORT(RedDoorTiles)[][8] = {
-    {0x04B3, 0x04B3, 0x04B3, 0x04B3, 0x0000, 0x0000, 0x0000, 0x0000},
-    {0x000E, 0x000F, 0x000E, 0x000D, 0x01F6, 0x020E, 0x01F6, 0x01F0},
-    {0x000B, 0x000C, 0x000B, 0x000A, 0x0088, 0x00A1, 0x0088, 0x0086},
-};

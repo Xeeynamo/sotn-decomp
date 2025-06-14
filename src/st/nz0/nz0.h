@@ -170,7 +170,6 @@ extern u16 g_EInitGaibon[];
 
 extern u16 g_EInitGaibonProjectile[];
 extern u16 g_EInitGaibonLargeProjectile[];
-extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern s32 D_80180E04[];
 extern u8 D_80180E24[];
 extern u8 D_80180E2C[];
