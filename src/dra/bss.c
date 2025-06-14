@@ -8,8 +8,7 @@
 
 // 5087C.c
 RoomLoadDefHolder D_801375BC; // fake struct?
-s32 D_801375C0;
-s32 D_801375C4;
+Point32 D_801375C0;
 s32 D_801375C8;
 
 // menu.c
