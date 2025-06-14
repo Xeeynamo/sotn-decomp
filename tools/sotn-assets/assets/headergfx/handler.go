@@ -1,4 +1,4 @@
-package rawgfx
+package headergfx
 
 import (
 	"bytes"
@@ -10,7 +10,6 @@ import (
 	"image/png"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -18,30 +17,20 @@ type handler struct{}
 
 var Handler = &handler{}
 
-func (h *handler) Name() string { return "rawgfx" }
+func (h *handler) Name() string { return "headergfx" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	if e.Start == e.End {
-		return fmt.Errorf("a compressed image cannot be 0 bytes long")
+	if e.Start+4 > e.End {
+		return fmt.Errorf("the image data is too short")
 	}
-	if len(e.Args) < 3 || len(e.Args) > 4 {
-		return fmt.Errorf("invalid arguments, expected <width> <height> <bpp> <palette>")
-	}
-	width, err := strconv.Atoi(e.Args[0])
-	if err != nil {
-		return fmt.Errorf("width value %v is not a number", e.Args[0])
-	}
-	height, err := strconv.Atoi(e.Args[1])
-	if err != nil {
-		return fmt.Errorf("height value %v is not a number", e.Args[1])
-	}
-	bpp, err := strconv.Atoi(e.Args[2])
-	if err != nil {
-		return fmt.Errorf("bpp value %v is not a number", e.Args[2])
-	}
+	header := e.Data[e.Start : e.Start+4]
+	dec := e.Data[e.Start+4 : e.End]
+	const bpp = 4
+	width := int(header[0])
+	height := int(header[1])
 	var palette []color.RGBA
-	if len(e.Args) == 4 {
-		palOffset, err := util.ParseCNumber(e.Args[3])
+	if len(e.Args) == 1 {
+		palOffset, err := util.ParseCNumber(e.Args[0])
 		if err != nil {
 			return err
 		}
@@ -53,7 +42,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	} else {
 		palette = util.MakeGreyPalette(bpp)
 	}
-	dec := e.Data[e.Start:e.End]
 	bitmap, err := util.MakeBitmap(dec, bpp)
 	if err != nil {
 		return fmt.Errorf("error generating image: %v", err)
@@ -84,20 +72,14 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if !ok {
 		return fmt.Errorf("image %s is not paletted", inFileName)
 	}
-	bpp, err := strconv.Atoi(e.Args[2])
-	if err != nil {
-		return fmt.Errorf("bpp value %v is not a number", e.Args[2])
+	width, height := palettedImg.Rect.Max.X, palettedImg.Rect.Max.Y
+	if width >= 256 || height >= 256 {
+		return fmt.Errorf("image size %dx%d exceeds the limit of 255x255", width, height)
 	}
-	data := palettedImg.Pix
-	switch bpp {
-	case 4:
-		data = util.Make4bppFromBitmap(data)
-	case 8:
-	default:
-		return fmt.Errorf("bpp value %v is not supported", bpp)
-	}
+	data := util.Make4bppFromBitmap(palettedImg.Pix)
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
+	util.WriteBytesAsHex(&sb, []byte{byte(width), byte(height), 0, 0})
 	util.WriteBytesAsHex(&sb, data)
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
