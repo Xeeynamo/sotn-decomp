@@ -16,24 +16,6 @@ void func_90E4C18() {}
 void func_90E4C68() {}
 void func_9101FC8() {}
 
-void LoadPendingGfx();
-void ResetPendingGfxLoad();
-void func_91040A0(u_long** bank) {
-    GfxBank* gfxBank = (GfxBank*)bank;
-    for (int i = 0; i < LEN(g_GfxLoad); i++) {
-        GfxLoad* gfxLoad = &g_GfxLoad[i];
-        if (gfxLoad->kind == GFX_BANK_NONE) {
-            gfxLoad->kind = gfxBank->kind;
-            gfxLoad->unk6 = 0;
-            gfxLoad->unk8 = 0;
-            gfxLoad->next = gfxBank->entries;
-            return;
-        }
-    }
-    LoadPendingGfx();
-    ResetPendingGfxLoad();
-}
-
 void func_892667C(s32 paletteID, u16* paletteData) {
     int x = (paletteID & 15) * 16;
     int y = (paletteID >> 4) & 15;

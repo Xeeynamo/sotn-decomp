@@ -204,10 +204,10 @@ void MarInit(s16 initParam) {
     // ifdef'fed for the same reason in RicInit
     D_pspeu_092E5F20 = 30;
 
-    func_91040A0(g_FontImage);
+    LoadGfxBankAsync(g_FontImage);
     g_HudImage[3] = (u_long*)GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
     if (g_HudImage[3]) {
-        func_91040A0(g_HudImage);
+        LoadGfxBankAsync(g_HudImage);
     }
 #endif
     func_90E4C68();
