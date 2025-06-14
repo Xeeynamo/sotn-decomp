@@ -158,7 +158,7 @@ static u_long* crash_img[] = {
 #ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x1C0, 128, 128, crash_turtle_gfx),
 #else
-    GFX_ENTRY(0x180, 0x280, 128, 128, crash_turtle_gfx),
+    GFX_ENTRY(0x100, 0x300, 128, 128, crash_turtle_gfx),
 #endif
     GFX_TERMINATE(),
 };

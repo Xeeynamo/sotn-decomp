@@ -2976,8 +2976,9 @@ void EntityMariaCrashSummon(Entity* self) {
 #ifdef VERSION_PSP
         self->unk5A = 0x1C;
 #else
-        self->unk5A = 0x6A;
+        self->unk5A = 0x70;
 #endif
+
         self->zPriority = 0x1C0;
         LoadCrashSummonResouces(self->ext.mariaCrashSummon.crashId);
         MarSetInvincibilityFrames(0, 999);
@@ -2988,7 +2989,11 @@ void EntityMariaCrashSummon(Entity* self) {
         self->ext.mariaCrashSummon.timer -= 0x10;
         if (self->ext.mariaCrashSummon.timer > 0) {
             prim = &g_PrimBuf[self->primIndex];
+#ifdef VERSION_PSP
             prim->tpage = 7;
+#else
+            prim->tpage = 0x1C;
+#endif
             prim->clut = 0x11E;
             prim->priority = 0x1C0;
             x = (self->ext.mariaCrashSummon.timer * 128) / 256;
