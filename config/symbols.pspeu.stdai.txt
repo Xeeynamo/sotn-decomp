@@ -109,6 +109,7 @@ CutsceneRun = 0x09254220;
 DAI_EntityCutscene = 0x092545E0;
 DAI_EntityBackgroundBlock = 0x092565B0;
 DAI_EntityLockCamera = 0x09256690;
+g_eRedDoorUV = 0x0925BC30;
 g_goldCollectTexts = 0x0925C0C8;
 g_SineTable = 0x0925CD40;
 DAI_spriteBanks = 0x09262948;

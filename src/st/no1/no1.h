@@ -10,7 +10,7 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 typedef enum EntityIDs {
-    // /* 0x00 */ E_NONE,
+    /* 0x00 */ E_NONE,
     // /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION = 0x02,
     /* 0x03 */ E_PRIZE_DROP = 0x03,

@@ -46,7 +46,9 @@ segments:
       # - [0x118, data, header] # graphics banks
       # - [0x188, data, e_laydef]
       - [0x32C, data, e_init]
-      - [0x4BC, .data, e_room_bg]
+      - [0x464, .data, background_block_init]
+      - [0x49C, .data, e_red_door_tiles]
+      - [0x4BC, .data, e_lock_camera]
       - [0x53C, .data, e_breakable]
       - [0x5A0, .data, doors]
       - [0x5EC, data, doors]

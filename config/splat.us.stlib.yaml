@@ -43,7 +43,8 @@ segments:
       - [0x8C, data]
       - [0x520, .data, gen/e_laydef] # layout entries header
       - [0x6C8, .data, e_init]
-      - [0x9F8, data]
+      - [0x9F8, .data, background_block_init]
+      - [0xAC8, .data, e_red_door_tiles]
       - [0xAD8, .data, e_lock_camera]
       - [0xB58, .data, e_breakable]
       - [0xC48, data]
