@@ -267,10 +267,10 @@ RECT D_800A0500 = {112, 32, 128, 1};
 RECT D_800A0508 = {368, 32, 128, 1};
 
 // BSS
-extern SimFile* g_SimFile;
-extern SimFile D_80136450;
-extern s16 D_80136460[VSYNC_UNK_LEN];
-extern s16 D_80136C60[VSYNC_UNK_LEN];
+SimFile* g_SimFile;
+SimFile D_80136450;
+s16 D_80136460[VSYNC_UNK_LEN];
+s16 D_80136C60[VSYNC_UNK_LEN];
 
 void VSyncHandler(void) {
     RECT* rect;

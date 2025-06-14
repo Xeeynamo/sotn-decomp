@@ -1,11 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern s32 D_8013759C;
-extern s32 D_801375A0;
-extern s32 D_801375A8;
-extern s32 D_801375AC;
-extern s32 D_801375B0;
-extern s32 D_801375B4;
-extern s32 D_801375B8;
 extern RoomLoadDefHolder D_801375BC;
 
 extern bool D_8C630C8;

@@ -74,6 +74,7 @@ segments:
       - [0x1B200, .data, st0/prologue_scroll]
       - [0x1B268, data, header]
       - [0x1B538, data, e_init]
+      - [0x1B6F0, .data, st0/e_red_door_tiles]
       - [0x1B700, .data, st0_psp/cutscene_data]
       - [0x1C500, .data, st0_psp/cutscene]
       - [0x1C8C8, .data, st0/2A8DC]
@@ -87,6 +88,7 @@ segments:
       - [0x25898, data, st_init_st0]
       - [0x419E0, .data, st0/2805C]
       - [0x41B28, data]
+      - [0x41B68, .data, st0/background_block_init]
       - [0x41B88, .data, st0/2A218] # EntityCutscene
       - [0x41BF0, .data, st0/e_lock_camera]
       - [0x41C08, .data, st0/e_red_door]

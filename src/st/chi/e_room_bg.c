@@ -7,13 +7,10 @@
 
 #include "chi.h"
 
-// ?: BackgroundBlockInit
-// func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
 extern u16 g_EInitCommon[];
 
-// params: Index of ObjInit to use
-//         (== 1) Use a different hardcoded scaleY and scaleX value
+// func_8019B3FC: [E_BACKGROUND_BLOCK] EntityBackgroundBlock
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
     if (!self->step) {

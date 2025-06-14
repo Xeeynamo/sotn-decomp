@@ -41,8 +41,9 @@ segments:
     subsegments:
       - [0x0, data]
       - [0xA0C, .data, e_init]
-      - [0xCF4, data]
-      - [0xD5C, .data, e_room_bg]
+      - [0xCF4, .data, background_block_init]
+      - [0xD2C, .data, e_red_door_tiles]
+      - [0xD5C, .data, e_lock_camera]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
       - [0xF18, data]

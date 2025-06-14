@@ -4,6 +4,22 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
+extern RoomLoadDefHolder D_801375BC;
+extern s32 D_801375C0;
+extern s32 D_801375C4;
+extern s32 D_801375C8;
+
+// BSS
+bool D_80137598;
+s32 D_8013759C;
+s32 D_801375A0;
+s32 D_801375A4;
+s32 D_801375A8;
+s32 D_801375AC;
+s32 D_801375B0;
+s32 D_801375B4;
+s32 D_801375B8;
+
 RoomTeleport D_800A245C[] = {
     {496, 392, 0x00A0, STAGE_NO0, STAGE_NZ0},
     {240, 648, 0x0000, STAGE_NO0, STAGE_NO2},
@@ -248,8 +264,6 @@ void func_800F0940(void) {
     }
 }
 
-extern RoomLoadDefHolder D_801375BC;
-
 s32 SetNextRoomToLoad(u32 x, u32 y) {
     s32 res;
     RoomHeader* room;
@@ -300,11 +314,6 @@ s32 SetNextRoomToLoad(u32 x, u32 y) {
         return 1;
     }
 }
-
-extern s32 D_801375A4;
-extern s32 D_801375C0;
-extern s32 D_801375C4;
-extern s32 D_801375C8;
 
 s32 func_800F0CD8(s32 arg0) {
     s32 var_s0;
@@ -991,8 +1000,6 @@ void func_800F2288(s32 arg0) {
         }
     }
 }
-
-extern bool D_80137598;
 
 void func_800F2404(s32 arg0) {
     s32 i;

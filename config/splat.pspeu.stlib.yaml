@@ -104,6 +104,7 @@ segments:
       - [0x38BA8, .data, lib/en_thornweed_corpseweed]
       - [0x38C78, .data, lib/e_library_bg]
       - [0x38D38, data]
+      - [0x3E888, .data, lib/e_red_door_tiles]
       - [0x3E898, .data, lib/e_init]
       - [0x3EC28, data] # g_gen_rooms.c
       - [0x3ECB0, .data, lib_psp/cutscene_data]
@@ -114,7 +115,7 @@ segments:
       - [0x60C70, .data, lib/e_lesser_demon]
       - [0x60E50, .data, lib_psp/cutscene]
       - [0x61158, data, cutscene] # LIB_EntityCutscene data
-      - [0x61218, data]
+      - [0x61218, .data, lib/background_block_init]
       - [0x61308, .data, lib_psp/e_shop]
       - [0x6D6D0, .data, lib/e_lock_camera]
       - [0x6D748, data]
