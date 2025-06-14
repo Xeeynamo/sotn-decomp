@@ -1485,7 +1485,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x7F;
                     prim->u3 = 0xCF;
                     prim->v3 = 0x7F;
-                    prim->tpage = 4;
+#ifdef VERSION_PSP
+                    prim->tpage = 0x4;
+#else
+                    prim->tpage = 0x19;
+#endif
                 } else {
                     prim->u0 = 0x98;
                     prim->v0 = 0x38;
@@ -1495,7 +1499,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x47;
                     prim->u3 = 0xA7;
                     prim->v3 = 0x47;
+#ifdef VERSION_PSP
                     prim->tpage = 0x24;
+#else
+                    prim->tpage = 0x39;
+#endif
                     prim->drawMode |= FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
                     if (i == 1) {
                         color = -0x80;
