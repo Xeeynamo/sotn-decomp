@@ -84,9 +84,9 @@ void LoadGfxAsync(s32 gfxId) {
     }
 }
 
-#ifdef VERSION_PSP
-s32 func_psp_091040A0(GfxBank* gfxBank) {
-    GfxLoad* ptr;
+#if defined(VERSION_PSP) || defined(VERSION_PC)
+s32 LoadGfxBankAsync(GfxBank* gfxBank) {
+    GfxLoad* gfxLoad;
     s32 i;
 
     if (gfxBank->kind == GFX_BANK_NONE) {
@@ -96,15 +96,15 @@ s32 func_psp_091040A0(GfxBank* gfxBank) {
         return -1;
     }
     for (i = 0; i < LEN(g_GfxLoad); i++) {
-        ptr = &g_GfxLoad[i];
-        if (ptr->kind == GFX_BANK_NONE) {
-            ptr->kind = gfxBank->kind;
-            ptr->unk6 = 0;
-            ptr->unk8 = 0;
-            ptr->next = gfxBank->entries;
+        gfxLoad = &g_GfxLoad[i];
+        if (gfxLoad->kind == GFX_BANK_NONE) {
+            gfxLoad->kind = gfxBank->kind;
+            gfxLoad->unk6 = 0;
+            gfxLoad->unk8 = 0;
+            gfxLoad->next = gfxBank->entries;
             return i;
         }
-        ptr++;
+        gfxLoad++;
     }
     return -1;
 }
