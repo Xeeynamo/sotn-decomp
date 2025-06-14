@@ -2,8 +2,8 @@
 #include "dra.h"
 
 // BSS
-extern s32 g_DemoKeyIdx;
-extern u8* g_DemoPtr;
+u8* g_DemoPtr;
+s32 g_DemoKeyIdx;
 
 static u8 D_800A243C[] = {
     STAGE_ST0,       STAGE_BO0,      STAGE_BO4,      STAGE_BO1,  STAGE_BO2,

@@ -13,40 +13,28 @@
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
 // BSS
-extern s32 g_DebugFreeze;
-extern s32 g_DebugHitboxViewMode;
-extern u32 D_801362B4;
-extern s32 D_801362B8;
-extern s32 D_801362BC;
-extern s32 g_DebugPalIdx;
-extern DebugColorChannel g_DebugColorChannel;
-extern u32 D_801362C8;
-extern OT_TYPE* g_CurrentOT;
-extern s32 D_801362D0;
-extern s32 D_801362D4;
-extern s32 g_DebugIsRecordingVideo;
-extern GpuUsage g_GpuMaxUsage;
-extern s32 g_DebugWaitInfoTimer;
-extern s32 g_DebugRecordVideoFid;
-extern s16 D_80136308[128];
+s32 g_DebugFreeze;
+s32 g_DebugHitboxViewMode;
+u32 D_801362B4;
+s32 D_801362B8;
+s32 D_801362BC;
+s32 g_DebugPalIdx;
+DebugColorChannel g_DebugColorChannel;
+u32 D_801362C8;
+OT_TYPE* g_CurrentOT;
+s32 D_801362D0;
+s32 D_801362D4;
+s32 g_DebugIsRecordingVideo;
+GpuUsage g_GpuMaxUsage;
+s32 g_DebugWaitInfoTimer;
+s32 g_DebugRecordVideoFid;
+s16 D_80136308[128];
 #if defined(VERSION_US)
-extern s32 g_softResetTimer;
+s32 g_softResetTimer;
 #endif
 
-s32 LoadVabData(void);
-void func_800E385C(OT_TYPE* ot);
-void UpdateGame(void);
 void VSyncHandler(void);
-void SetupEvents(void);
-void func_800EA7CC(void);
-void LoadPendingGfx(void);
-void RenderEntities(void);
-void InitRenderer(void);
-void RenderTilemap(void);
-void RenderPrimitives(void);
-void DrawEntitiesHitbox(s32 drawMode);
-void UpdateCd(void);
-void SoundInit(void);
+void SsVabClose(short vab_id);
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
@@ -254,6 +242,7 @@ void DebugCaptureVideo(void) {
 const char* D_800A0144[] = {
     "normal", "dark", "light", "reverse", "pale",
 };
+
 void func_800E2B00(void) {
     DR_MODE* drMode;
     SPRT* sprite;
@@ -627,7 +616,6 @@ void PrintHBlankInfo(void) {
     }
 }
 
-void SsVabClose(short vab_id);
 #define LOAD_VAB(vab_id, name, addr, data, dataLen)                            \
     SsVabClose(vab_id);                                                        \
     while (SsVabTransCompleted(SS_IMEDIATE) != 1)                              \
@@ -751,6 +739,7 @@ void func_800E385C(OT_TYPE* ot) {
 
 u32 D_800A0158 = 0;
 s32 D_800A015C = 0;
+
 void func_800E38CC(void) {
     if (D_800A015C != 0) {
         if (D_800A0158 >= 0x24) {
