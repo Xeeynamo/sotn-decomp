@@ -5,7 +5,7 @@ BUILD_DIR = build/$(VERSION)
 TARGET = $(BUILD_DIR)/maria.elf
 
 CC = mipsel-linux-gnu-gcc
-CFLAGS = -mno-abicalls -G0 -fno-pic -Og -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/maria -msoft-float -march=3000
+CFLAGS = -mno-abicalls -G0 -fno-pic -Os -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/maria -msoft-float -march=3000
 CFLAGS += -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm
 LDFLAGS = -nostdlib -Wl,-Map=$(BUILD_DIR)/maria.map -T symexport.txt -T $(ROOT_DIR)/player.ld -T $(ROOT_DIR)/config/undefined_syms.$(VERSION).txt -T $(BUILD_DIR)/symbols.txt
 
