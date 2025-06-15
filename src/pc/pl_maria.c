@@ -16,24 +16,6 @@ void func_90E4C18() {}
 void func_90E4C68() {}
 void func_9101FC8() {}
 
-void LoadPendingGfx();
-void ResetPendingGfxLoad();
-void func_91040A0(u_long** bank) {
-    GfxBank* gfxBank = (GfxBank*)bank;
-    for (int i = 0; i < LEN(g_GfxLoad); i++) {
-        GfxLoad* gfxLoad = &g_GfxLoad[i];
-        if (gfxLoad->kind == GFX_BANK_NONE) {
-            gfxLoad->kind = gfxBank->kind;
-            gfxLoad->unk6 = 0;
-            gfxLoad->unk8 = 0;
-            gfxLoad->next = gfxBank->entries;
-            return;
-        }
-    }
-    LoadPendingGfx();
-    ResetPendingGfxLoad();
-}
-
 void func_892667C(s32 paletteID, u16* paletteData) {
     int x = (paletteID & 15) * 16;
     int y = (paletteID >> 4) & 15;
@@ -58,13 +40,6 @@ void func_89285A0(s32 angle, MATRIX* out) {
     out->t[2] = 0;
     out->t[1] = 0;
     out->t[0] = 0;
-}
-
-void func_892796C(SVECTOR* in, VECTOR* out, s32* unk) {
-    out->vx = in->vx;
-    out->vy = in->vy;
-    out->vz = in->vz;
-    *unk = 0;
 }
 
 s16 func_90E0E30(PrimitiveType kind, s32 count) {

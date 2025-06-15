@@ -27,6 +27,7 @@ typedef struct {
 MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2);
 MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 void SetGeomOffset(long ofx, long ofy);
+void RotTrans(SVECTOR* v0, VECTOR* v1, long* flag);
 long RotTransPers(SVECTOR*, long*, long*, long*);
 void SetGeomScreen(long h);
 void SetRotMatrix(MATRIX* m);

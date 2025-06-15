@@ -62,7 +62,9 @@ static u8 wpn_dragon_gfx[] = {
 #include "gen/wpn_dragon_gfx.h"
 };
 
+#ifdef VERSION_PSP
 #include "gen/maria.h"
+#endif
 
 static u8 items_gfx[] = {
 #include "gen/items_gfx.h"
@@ -101,37 +103,65 @@ static u16 crash_cardinal_pal[] = {
 // clang-format
 static u_long* wpn_owl_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x180, 128, 128, wpn_owl_gfx),
+#else
+    GFX_ENTRY(0x180, 0x240, 128, 128, wpn_owl_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* wpn_turtle_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x100, 128, 128, wpn_turtle_gfx),
+#else
+    GFX_ENTRY(0x100, 0x2E0, 128, 128, wpn_turtle_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* wpn_cat_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x140, 128, 128, wpn_cat_gfx),
+#else
+    GFX_ENTRY(0x180, 0x2C0, 128, 128, wpn_cat_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* wpn_cardinal_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x120, 128, 128, wpn_cardinal_gfx),
+#else
+    GFX_ENTRY(0x100, 0x260, 128, 128, wpn_cardinal_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* wpn_dragon_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x160, 128, 128, wpn_dragon_gfx),
+#else
+    GFX_ENTRY(0x100, 0x240, 128, 128, wpn_dragon_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* wpn_doll_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x1A0, 128, 128, wpn_doll_gfx),
+#else
+    GFX_ENTRY(0x180, 0x260, 128, 128, wpn_doll_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* crash_img[] = {
     (u_long*)GFX_BANK_COMPRESSED,
+#ifdef VERSION_PSP
     GFX_ENTRY(0x000, 0x1C0, 128, 128, crash_turtle_gfx),
+#else
+    GFX_ENTRY(0x100, 0x300, 128, 128, crash_turtle_gfx),
+#endif
     GFX_TERMINATE(),
 };
 static u_long* hud_img[] = {
@@ -189,24 +219,26 @@ void LoadCrashSummonResouces(s32 crashId) {
         LoadPatchedPalette(PAL_CRASH, crash_dragon_pal);
         break;
     }
-    func_91040A0(crash_img);
+    LoadGfxBankAsync(crash_img);
 }
 
 void MarLoadGraphics(void) {
-    func_91040A0(hud_img);
-    func_91040A0(items_img);
+    LoadGfxBankAsync(hud_img);
+    LoadGfxBankAsync(items_img);
 }
 
 extern PlayerOvl MARIA_player;
 void MARIA_Load(void) {
+#if defined(VERSION_PSP) || defined(VERSION_PC)
     memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
-    func_91040A0(wpn_owl_img);
-    func_91040A0(wpn_turtle_img);
-    func_91040A0(wpn_cat_img);
-    func_91040A0(wpn_cardinal_img);
-    func_91040A0(wpn_dragon_img);
-    func_91040A0(wpn_doll_img);
+#endif
+    LoadGfxBankAsync(wpn_owl_img);
+    LoadGfxBankAsync(wpn_turtle_img);
+    LoadGfxBankAsync(wpn_cat_img);
+    LoadGfxBankAsync(wpn_cardinal_img);
+    LoadGfxBankAsync(wpn_dragon_img);
+    LoadGfxBankAsync(wpn_doll_img);
 
     if (((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx == -48) {
         ((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx--;
