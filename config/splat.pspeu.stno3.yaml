@@ -104,7 +104,7 @@ segments:
       - [0x5E7C0, .data, no3/e_sky_entities]
       - [0x5E7E0, .data, no3/e_trapdoor]
       - [0x5E7F0, .data, no3/e_explosion_puff_opaque]
-      - [0x5E860, data]
+      - [0x5E860, .data, no3/d_prize_drops]
       - [0x5E878, .data, no3/e_outdoor_ents]
       - [0x5EEF8, .data, no3/e_death]
       - [0x5F020, .data, no3/e_shutting_window]
