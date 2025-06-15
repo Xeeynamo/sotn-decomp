@@ -93,6 +93,7 @@ segments:
       - [0x33EA8, data]
       - [0x33FB0, .data, no3_psp/cutscene_data]
       - [0x347E0, data]
+      - [0x5E400, .data, no3/header]
       - [0x5E430, .data, no3/e_castle_door]
       - [0x5E530, .data, no3/e_cavern_door]
       - [0x5E540, .data, no3/e_transparent_water]
