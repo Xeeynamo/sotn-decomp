@@ -62,7 +62,9 @@ static u8 wpn_dragon_gfx[] = {
 #include "gen/wpn_dragon_gfx.h"
 };
 
+#ifdef VERSION_PSP
 #include "gen/maria.h"
+#endif
 
 static u8 items_gfx[] = {
 #include "gen/items_gfx.h"
