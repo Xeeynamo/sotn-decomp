@@ -13,7 +13,7 @@ INCLUDE_ASM("st/dai/nonmatchings/unk_51010", func_us_801D1D00);
 
 INCLUDE_ASM("st/dai/nonmatchings/unk_51010", func_us_801D2444);
 
-INCLUDE_ASM("st/dai/nonmatchings/unk_51010", func_us_801D2908);
+INCLUDE_ASM("st/dai/nonmatchings/unk_51010", EntityFishheadFireBreath);
 
 INCLUDE_ASM("st/dai/nonmatchings/unk_51010", func_us_801D2CFC);
 

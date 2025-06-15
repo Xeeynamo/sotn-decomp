@@ -42,7 +42,7 @@ void func_us_801C1E18(Entity* self);
 void func_us_801D1204(Entity* self);
 void func_us_801D1C24(Entity* self);
 void func_us_801D1D00(Entity* self);
-void func_us_801D2908(Entity* self);
+void EntityFishheadFireBreath(Entity* self);
 void func_us_801D2CFC(Entity* self);
 void func_us_801D2444(Entity* self);
 void func_us_801C3644(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D1204,
     func_us_801D1C24,
     func_us_801D1D00,
-    func_us_801D2908,
+    EntityFishheadFireBreath,
     func_us_801D2CFC,
     func_us_801D2444,
     func_us_801C3644,
@@ -153,11 +153,11 @@ EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_DRA(0), 0};
 
 #include "../e_init_common.h"
 
-// Looks to be unused
+// Unused, not in psp
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_DRA(512), 3};
 EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
 EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_DRA(201), 5};
-// Looks to be unused
+// Unused, not in psp
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(202), 5};
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_DRA(201), 101};
 EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(533), 180};
