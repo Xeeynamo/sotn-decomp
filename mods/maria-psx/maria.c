@@ -40,8 +40,8 @@ static SubwpnIconParams* SearchRichterSubwpnIconsDef(s32* ptr) {
     return NULL;
 }
 static void PatchHudSubweaponUV() {
-    // offset from build/us/dra.map
-    s32* DefaultOffset = (s32*)0x800A3010;
+    // offset of g_ricSubwpnIcons, from build/us/dra.map
+    s32* DefaultOffset = (s32*)0x800A3014;
     SubwpnIconParams* params = SearchRichterSubwpnIconsDef(DefaultOffset);
     if (!params) {
         // failed to patch, silently fail and continue instead of crashing
