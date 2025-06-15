@@ -125,7 +125,7 @@ segments:
       - [0x61318, .data, no3/e_bone_scimitar]
       - [0x61420, .data, no3/water_effects]
       - [0x614D0, .data, no3/e_room_fg]
-      - [0x61570, data]
+      - [0x61570, .data, no3/e_zombie]
       - [0x61600, .rodata, no3/e_castle_door]
       - [0x61618, .rodata, no3/e_outdoor_ents] # EntityPushAlucard
       - [0x61630, .rodata, no3/e_death]
