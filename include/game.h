@@ -1302,6 +1302,26 @@ typedef struct {
     /* 8003C79C */ void (*UpdateStageEntities)(void);
 } AbbreviatedOverlay;
 
+/*
+ * A second type of abbreviated overlay which allows
+ * two spritebanks and provides no cutscene handler.
+ */
+typedef struct {
+    /* 8003C774 */ void (*Update)(void);
+    /* 8003C778 */ void (*HitDetection)(void);
+    /* 8003C77C */ void (*UpdateRoomPosition)(void);
+    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* rooms;
+    /* 8003C788 */ SpriteParts** spriteBanks;
+    /* 8003C78C */ u_long** cluts;
+    /* 8003C790 */ void* objLayoutHorizontal;
+    /* 8003C794 */ RoomDef* tileLayers;
+    /* 8003C798 */ GfxBank** gfxBanks;
+    /* 8003C79C */ void (*UpdateStageEntities)(void);
+    /* 8003C7A0 */ u8** unk2C; // sprite bank 1
+    /* 8003C7A4 */ u8** unk30; // sprite bank 2
+} AbbreviatedOverlay2;
+
 typedef enum {
     EFFECT_NONE = 0,
     EFFECT_SOLID = 1 << 0,
