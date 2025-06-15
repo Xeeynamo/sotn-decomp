@@ -4,10 +4,10 @@
 
 // To use Maria as a playable character, add -DUSE_PLAYER_MARIA=1 in cmake
 
-void MAR_Load();
+void MARIA_Load();
 void InitPlayerMaria(void) {
     g_CurrentEntity = &PLAYER;
-    MAR_Load();
+    MARIA_Load();
 }
 
 int func_8919BA8() { return 0; }

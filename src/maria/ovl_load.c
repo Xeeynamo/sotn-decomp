@@ -62,7 +62,7 @@ static u8 wpn_dragon_gfx[] = {
 #include "gen/wpn_dragon_gfx.h"
 };
 
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_PC)
 #include "gen/maria.h"
 #endif
 
