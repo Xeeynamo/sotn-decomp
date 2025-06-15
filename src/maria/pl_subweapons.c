@@ -890,7 +890,11 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         var_s2 = D_pspeu_092E5900 - 1;
         for (i = 0; i < LEN(D_pspeu_092E5B08); i++) {
+#ifdef VERSION_PSP
             prim->tpage = 5;
+#else
+            prim->tpage = 0x13;
+#endif
             prim->clut = self->palette & 0x3FF;
             prim->priority = self->zPriority;
             if (var_s2 >= 7) {
