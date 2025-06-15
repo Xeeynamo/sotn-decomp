@@ -1,3 +1,7 @@
+BO4_spriteBanks = 0x80180034;
+BO4_cluts = 0x801800E0;
+BO4_rooms_layers = 0x80180110;
+BO4_gfxBanks = 0x80180138;
 BO4_pStObjLayoutHorizontal = 0x80180188;
 BO4_pStObjLayoutVertical = 0x8018025C;
 BO4_EntityUpdates = 0x80180330;
