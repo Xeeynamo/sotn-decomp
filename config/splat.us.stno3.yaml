@@ -53,7 +53,7 @@ segments:
       - [0x124C, .data, e_jewel_sword_puzzle]
       - [0x1358, .data, e_death_sky_swirl]
       - [0x1390, .data, e_sky_entities]
-      - [0x13A8, data]
+      - [0x13A8, .data, d_water_data]
       - [0x13DC, .data, e_outdoor_ents]
       - [0x1A28, .data, cutscene]
       - [0x1AD4, .data, e_death]
