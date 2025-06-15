@@ -18,6 +18,7 @@ options:
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
   asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
   symbol_name_format: us_$VRAM
   section_order:
     - .data
@@ -39,13 +40,13 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data, header]
-      # - [0x2C, data, header] # sprite_banks
-      # - [0x94, data, header] # pallet_def
-      # - [0xF0, data, header] # layers
-      # - [0x118, data, header] # graphics banks
-      # - [0x188, data, e_laydef]
-      - [0x32C, data, e_init]
+      - [0x0, .data, header]
+      #- [0x34, data, header] # sprite_banks
+      #- [0x94, data, header] # pallet_def
+      #- [0xF0, data, header] # layers
+      #  [0x118, data, header] # graphics banks
+      - [0x188, .data, gen/e_laydef]
+      - [0x330, data, e_init]
       - [0x464, .data, background_block_init]
       - [0x49C, .data, e_red_door_tiles]
       - [0x4BC, .data, e_lock_camera]
@@ -62,12 +63,18 @@ segments:
       - [0xFA4, .data, e_misc]
       - [0x10C0, .data, e_particles]
       - [0x1140, .data, e_room_fg]
-      - [0x11CC, data, rooms]
+      - [0x11CC, .data, gen/rooms]
       - [0x11E8, data, doppleganger]
       - [0x12E4, .data, dop_anim]
       - [0x1318, data]
       - [0x4290, .data, e_life_up]
-      - [0x42E4, data]
+      - [0x42E4, .data, gen/e_layout]
+      - [0x435C, data]
+      - [0x2BEA0, cmp, D_801ABEA0]
+      - [0x2C180, cmp, D_801AC180]
+      - [0x2C288, pal, D_us_801AC288]
+      - [0x2C668, .data, tile_data]
+      - [0x30A78, data]
       - [0x340E4, .rodata, doors]
       - [0x34188, .rodata, unk_365FC]
       - [0x341A8, .rodata, e_red_door]

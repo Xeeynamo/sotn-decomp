@@ -573,6 +573,22 @@ files:
           - [0x1308, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+  - target: disks/us/BOSS/BO4/BO4.BIN
+    asset_path: assets/boss/bo4
+    src_path: src/boss/bo4
+    splat_config_path: config/splat.us.bobo4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          #- [0x34, sprite_banks, sprite_banks]
+          #- [0x94, paldef, palette_def]
+          - [0xF0, layers, layers]
+          - [0x118, gfx_banks, graphics_banks]
+          - [0x188, layout, entity_layouts]
+          - [0x330, skip]
+          - [0x11CC, rooms, rooms]
+          - [0x11E8, skip]
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
