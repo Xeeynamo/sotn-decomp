@@ -42,8 +42,10 @@ segments:
       - [0xE8, .data, header] # layers
       - [0x128, .data, header] # graphics banks
       - [0x220, .data, gen/e_laydef] # layout entries header
-      - [0x3C8, data]
-      - [0x580, .data, e_room_bg]
+      - [0x3C8, data] # e_init
+      - [0x518, .data, background_block_init]
+      - [0x550, .data, e_red_door_tiles]
+      - [0x580, .data, e_lock_camera]
       - [0x600, data]
       - [0x630, data]
       - [0x640, data]

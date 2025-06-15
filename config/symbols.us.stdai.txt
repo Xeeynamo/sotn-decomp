@@ -17,6 +17,7 @@ g_EInitDamageNum = 0x80180998;
 DAI_BackgroundBlockInit = 0x80180AC8;
 DAI_RedDoorTiles = 0x80180ADC;
 UNK_Invincibility0 = 0x80181070;
+g_eRedDoorUV = 0x8018145C;
 g_SineTable = 0x80181474;
 g_goldCollectTexts = 0x801817E8;
 DAI_rooms = 0x80182358;

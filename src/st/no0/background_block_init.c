@@ -23,12 +23,11 @@
 // 17: red moveable floor (facing left)
 // 18: tall rectangular window highlight 3 (facing left)
 
-static u16 animset[] = {
-    ANIMSET_DRA(6), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
-    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
-    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
-    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
-    ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1)};
+u16 animset[] = {ANIMSET_DRA(6), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
+                 ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
+                 ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
+                 ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1),
+                 ANIMSET_OVL(1), ANIMSET_OVL(1), ANIMSET_OVL(1)};
 
 static u8 angel_statue_left[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 anim_2[] = {0x40, 0x06, 0xFF, 0x00};
@@ -44,20 +43,19 @@ static u8 window_highlight_3[] = {0x04, 0x27, 0x00, 0x00};
 static u8 window_highlight_4[] = {0x04, 0x28, 0x00, 0x00};
 static u8 red_moveable_floor[] = {0x04, 0x2A, 0x00, 0x00};
 
-static u16 zPriority[] = {
-    0x1FA, 0x040, 0x06A, 0x06A, 0x03F, 0x080, 0x080, 0x080, 0x080, 0x080,
-    0x080, 0x080, 0x080, 0x080, 0x080, 0x080, 0x09E, 0x09E, 0x080};
+u16 zPriority[] = {0x1FA, 0x040, 0x06A, 0x06A, 0x03F, 0x080, 0x080,
+                   0x080, 0x080, 0x080, 0x080, 0x080, 0x080, 0x080,
+                   0x080, 0x080, 0x09E, 0x09E, 0x080};
 
-static u16 unk5A[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static u16 palette[] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static u16 drawFlags[] = {
+u16 unk5A[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u16 palette[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u16 drawFlags[] = {
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT,
     FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT, FLAG_DRAW_DEFAULT};
-static u16 drawMode[] = {
+u16 drawMode[] = {
     DRAW_TPAGE,
     DRAW_DEFAULT,
     DRAW_DEFAULT,
@@ -77,11 +75,11 @@ static u16 drawMode[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT,
     DRAW_TPAGE};
-static s32 flags[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-static u32 facingLeft[] = {
-    false, false, false, false, false, false, false, false, false, false,
-    false, false, true,  true,  true,  true,  false, true,  true};
-static u8* animations[] = {
+s32 flags[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u32 facingLeft[] = {false, false, false, false, false, false, false,
+                    false, false, false, false, false, true,  true,
+                    true,  true,  false, true,  true};
+u8* animations[] = {
     angel_statue_left,   anim_2,
     angel_statue_left_2, angel_statue_right,
     lamp_brasier,        clock_face_1,
@@ -92,26 +90,3 @@ static u8* animations[] = {
     window_highlight_2,  window_highlight_4,
     red_moveable_floor,  red_moveable_floor,
     window_highlight_3};
-
-void EntityStageDecoration(Entity* self) {
-    u16 params = self->params;
-
-    if (self->step == 0) {
-        InitializeEntity(g_EInitCommon);
-
-        self->animSet = animset[params];
-        self->zPriority = zPriority[params];
-        self->unk5A = unk5A[params];
-        self->palette = palette[params];
-        self->drawFlags = drawFlags[params];
-        self->drawMode = drawMode[params];
-
-        if (flags[params] != 0) {
-            self->flags = flags[params];
-        }
-
-        self->facingLeft = facingLeft[params];
-    }
-
-    AnimateEntity(animations[params], self);
-}

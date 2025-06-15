@@ -153,6 +153,7 @@ func_us_801C3ED8 = 0x09258AF0;
 func_us_801D97D0 = 0x09259450;
 func_us_801D9F5C = 0x09259CA0;
 EntityClouds = 0x0925A688;
+g_eRedDoorUV = 0x0925BC30;
 g_goldCollectTexts = 0x0925C0C8;
 g_SineTable = 0x0925CD40;
 DAI_spriteBanks = 0x09262948;

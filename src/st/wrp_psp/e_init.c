@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
 
-u16 OVL_EXPORT(RedDoorTiles)[][8] = {
-    {0x1D, 0x25, 0x75, 0x7D, 0xC6, 0xC7, 0xC8, 0xC9},
-    {0x1F, 0x27, 0x77, 0x7F, 0xCA, 0xCB, 0xCC, 0xCD},
-};
-
 void OVL_EXPORT(EntityRedDoor)(Entity*);
 void EntityDamageDisplay(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);

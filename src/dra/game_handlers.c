@@ -3,9 +3,12 @@
 #include "dra_bss.h"
 #include "servant.h"
 
-#ifdef VERSION_PSP
+// BSS
+s32 D_8013640C;
+s32 D_80136410;
+NowLoadingModel g_NowLoadingModel;
+
 #include "../get_lang.h"
-#endif
 
 // Function used in a good number of places throughout
 #ifdef VERSION_PSP
@@ -114,10 +117,6 @@ void func_800E414C(void) {
 }
 
 void ClearBackbuffer(void) { ClearImage(&g_Vram.D_800ACDA0, 0, 0, 0); }
-
-// BSS
-extern s32 D_8013640C;
-extern s32 D_80136410;
 
 void HandleTitle(void) {
     void (*callback)();
@@ -1086,9 +1085,6 @@ void HandleGameOver(void) {
 }
 
 static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
-
-// BSS
-extern NowLoadingModel g_NowLoadingModel;
 
 #ifdef VERSION_PSP
 void func_8932CEC(bool, s8);

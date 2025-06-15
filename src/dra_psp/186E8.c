@@ -4,7 +4,88 @@
 
 #include "../get_lang.h"
 
-extern s32 g_DebugWaitInfoTimer;
+extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
+
+extern s32 D_psp_08B42060;
+extern s32 D_psp_091CE1E8;
+extern s32 g_UserLanguage;
+
+extern u8 D_psp_09192EB0;
+extern u8 D_psp_091A4CE8;
+extern u8 D_psp_09197640;
+extern u8 D_psp_091A04E0;
+extern u8 D_psp_0919BE58;
+
+extern u8 D_psp_091A8798;
+extern u8 D_psp_091AED90;
+extern u8 D_psp_091AA130;
+extern u8 D_psp_091AD410;
+extern u8 D_psp_091ABB00;
+
+extern u8 D_psp_091B00F0;
+extern u8 D_psp_091C1690;
+extern u8 D_psp_091B4660;
+extern u8 D_psp_091BD110;
+extern u8 D_psp_091B8BB0;
+
+extern u8 D_psp_091C59C0;
+extern u8 D_psp_091C7080;
+extern u8 D_psp_091C5F58;
+extern u8 D_psp_091C6AF0;
+extern u8 D_psp_091C6550;
+
+extern u8 D_psp_091C7398;
+extern u8 D_psp_091C85F8;
+extern u8 D_psp_091C7828;
+extern u8 D_psp_091C8158;
+extern u8 D_psp_091C7CD8;
+
+extern u8 D_psp_091C8E40;
+extern u8 D_psp_091CAB00;
+extern u8 D_psp_091C9560;
+extern u8 D_psp_091CA398;
+extern u8 D_psp_091C9C90;
+
+extern char* D_psp_091CE248;
+extern char* D_psp_091CE240;
+extern char* D_psp_091CE238;
+extern char* D_psp_091CE230;
+extern char* D_psp_091CE228;
+extern char* D_psp_091CE220;
+extern char* D_psp_091CE218;
+extern char* D_psp_091CE210;
+extern char* D_psp_091CE208;
+extern char* D_psp_091CE200;
+extern char* D_psp_091CE1F8;
+extern char* D_psp_091CE1F0;
+
+extern EnemyDef* D_psp_091CF7CC;
+extern Equipment* D_psp_091CF7F4;
+extern Accessory* D_psp_091CF7F8;
+extern RelicDesc* D_psp_091CF814;
+
+extern s32 D_psp_091FC4A0;
+extern s32 D_psp_091CE1E8;
+extern s32 D_psp_091FC3F8;
+extern s32 D_psp_091FC400;
+extern s32 D_psp_091FC408;
+extern s32 D_psp_091FC410;
+extern s32 g_DebugEnabled2;
+
+// BSS
+s32 g_DebugFreeze;
+s32 g_DebugHitboxViewMode;
+u32 D_801362B4;
+s32 D_801362B8;
+s32 D_801362BC;
+s32 g_DebugPalIdx;
+DebugColorChannel g_DebugColorChannel;
+u32 D_801362C8;
+OT_TYPE* g_CurrentOT;
+s32 D_psp_091CE2A0;
+s32 g_DebugIsRecordingVideo;
+GpuUsage g_GpuMaxUsage;
+s32 g_DebugWaitInfoTimer;
 
 void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
@@ -214,6 +295,7 @@ void DebugCaptureVideo(void) {
 const char* D_800A0144[] = {
     "normal", "dark", "light", "reverse", "pale",
 };
+
 void func_800E2B00(void) {
     DR_MODE* drMode;
     SPRT* sprite;
@@ -338,8 +420,6 @@ void DebugEditColorChannel(s32 colorAdd) {
 
 s32 DebugUpdate() { return 1; }
 
-extern s32 D_psp_08B42060;
-
 s32 LoadVabData(void) {
     char sp10[0x100];
 
@@ -362,6 +442,7 @@ void SetGPUBuffRGBZero(void) {
     g_GpuBuffers[1].draw.g0 = 0;
     g_GpuBuffers[1].draw.b0 = 0;
 }
+
 void SetGPUBuffRGB(u8 arg0) {
     g_GpuBuffers[0].draw.r0 = arg0;
     g_GpuBuffers[0].draw.g0 = arg0;
@@ -407,7 +488,6 @@ void SetMenuDisplayBuffer(void) {
     g_GpuBuffers[0].draw.dtd = g_GpuBuffers[1].draw.dtd = 1;
 }
 
-extern s32 D_psp_091CE1E8;
 void VSyncHandler(void) {
     if (D_psp_091CE1E8 != 0) {
         func_891AEC8();
@@ -421,57 +501,6 @@ void func_psp_090F5520(void) {
         func_8939EB8(1);
     }
 }
-
-extern s32 g_UserLanguage;
-
-extern u8 D_psp_09192EB0;
-extern u8 D_psp_091A4CE8;
-extern u8 D_psp_09197640;
-extern u8 D_psp_091A04E0;
-extern u8 D_psp_0919BE58;
-
-extern u8 D_psp_091A8798;
-extern u8 D_psp_091AED90;
-extern u8 D_psp_091AA130;
-extern u8 D_psp_091AD410;
-extern u8 D_psp_091ABB00;
-
-extern u8 D_psp_091B00F0;
-extern u8 D_psp_091C1690;
-extern u8 D_psp_091B4660;
-extern u8 D_psp_091BD110;
-extern u8 D_psp_091B8BB0;
-
-extern u8 D_psp_091C59C0;
-extern u8 D_psp_091C7080;
-extern u8 D_psp_091C5F58;
-extern u8 D_psp_091C6AF0;
-extern u8 D_psp_091C6550;
-
-extern u8 D_psp_091C7398;
-extern u8 D_psp_091C85F8;
-extern u8 D_psp_091C7828;
-extern u8 D_psp_091C8158;
-extern u8 D_psp_091C7CD8;
-
-extern u8 D_psp_091C8E40;
-extern u8 D_psp_091CAB00;
-extern u8 D_psp_091C9560;
-extern u8 D_psp_091CA398;
-extern u8 D_psp_091C9C90;
-
-extern char* D_psp_091CE248;
-extern char* D_psp_091CE240;
-extern char* D_psp_091CE238;
-extern char* D_psp_091CE230;
-extern char* D_psp_091CE228;
-extern char* D_psp_091CE220;
-extern char* D_psp_091CE218;
-extern char* D_psp_091CE210;
-extern char* D_psp_091CE208;
-extern char* D_psp_091CE200;
-extern char* D_psp_091CE1F8;
-extern char* D_psp_091CE1F0;
 
 char* D_psp_0914A918[] = {
     _S("Marble"),
@@ -1379,39 +1408,12 @@ void func_psp_090F5560(void) {
 
 // No idea what's going on here, none of these seem to be touched
 // outside of this function? Maybe some fake syms. Weird.
-extern EnemyDef* D_psp_091CF7CC;
-extern Equipment* D_psp_091CF7F4;
-extern Accessory* D_psp_091CF7F8;
-extern RelicDesc* D_psp_091CF814;
 void func_psp_090F5B10(void) {
     D_psp_091CF7F4 = g_EquipDefs;
     D_psp_091CF7F8 = g_AccessoryDefs;
     D_psp_091CF7CC = g_EnemyDefs;
     D_psp_091CF814 = g_RelicDefs;
 }
-
-extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
-extern GpuUsage g_GpuMaxUsage;
-extern s32 g_DebugFreeze;
-extern s32 g_DebugHitboxViewMode;
-extern u32 D_801362B4;
-extern s32 D_801362B8;
-extern s32 D_801362BC;
-extern s32 g_DebugPalIdx;
-extern DebugColorChannel g_DebugColorChannel;
-extern u32 D_801362C8;
-extern s32 g_DebugIsRecordingVideo;
-extern OT_TYPE* g_CurrentOT;
-
-extern s32 D_psp_091FC4A0;
-extern s32 D_psp_091CE1E8;
-extern s32 D_psp_091CE2A0;
-extern s32 D_psp_091FC3F8;
-extern s32 D_psp_091FC400;
-extern s32 D_psp_091FC408;
-extern s32 D_psp_091FC410;
-
-extern s32 g_DebugEnabled2;
 
 #if defined(VERSION_PC)
 #define IS_QUIT_REQUESTED                                                      \

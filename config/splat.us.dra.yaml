@@ -282,7 +282,15 @@ segments:
       - [0x8C600, c, 8C600]
       - [0x8D3E8, c, 8D3E8]
       - [0x91EBC, c, sound]
-      - [0x962AC, .bss, bss]
+      - [0x962AC, .bss, 42398]
+      - [0x9640C, .bss, game_handlers]
+      - [0x9644C, .bss, 47BB8]
+      - [0x97460, .bss, pads]
+      - [0x97470, .bss, save_mgr]
+      - [0x97478, .bss, 4AEA4]
+      - [0x97590, .bss, demo]
+      - [0x97598, .bss, 5087C]
+      - [0x975BC, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B6A0

@@ -18,90 +18,46 @@ u8 save_room_tile[] = {
 };
 
 u8 D_800C4CEC[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4CEC.h"
 };
 
 u8 D_800C4D70[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4D70.h"
 };
 
 u8 D_800C4DF4[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4DF4.h"
 };
 
 u8 D_800C4E78[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4E78.h"
 };
 
 u8 D_800C4EFC[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4EFC.h"
 };
 
 u8 D_800C4F80[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C4F80.h"
 };
 
 u8 D_800C5004[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C5004.h"
 };
 
 u8 D_800C5088[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C5088.h"
 };
 
 u8 D_800C510C[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C510C.h"
 };
 
 u8 D_800C5190[] = {
-    16,
-    16,
-    0,
-    0,
 #include "../dra/gen/D_800C5190.h"
 };
 
 u8 D_800C5214[] = {
-    8,
-    56,
-    0,
-    0,
 #include "../dra/gen/D_800C5214.h"
 };
 

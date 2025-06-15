@@ -43,7 +43,9 @@ segments:
       - [0x134, .data, header] # graphics banks
       - [0x1EC, .data, gen/e_laydef] # layout entries header
       - [0x394, .data, e_init]
-      - [0x4D4, .data, e_room_bg]
+      - [0x47C, .data, background_block_init]
+      - [0x4A4, .data, e_red_door_tiles]
+      - [0x4D4, .data, e_lock_camera]
       - [0x554, .data, e_breakable]
       - [0x5D8, .data, d_prize_drops]
       - [0x5D8, .data, cutscene]
@@ -65,6 +67,7 @@ segments:
       - [0xD414, .rodata, cutscene]
       - [0xD4B0, .rodata, F890]
       - [0xD4D8, .rodata, e_red_door] # EntityRedDoor
+      - [0xD4F0, .rodata, e_collect]
       - [0xD540, .rodata, e_collect] # EntityPrizeDrop
       - [0xD560, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD578, .rodata, e_misc]

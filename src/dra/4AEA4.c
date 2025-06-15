@@ -12,14 +12,15 @@ extern GfxBank* D_psp_0918BC30[];
 extern u16 D_psp_091654C0[];
 
 // BSS
-extern u16 D_80137478[ICON_SLOT_NUM];
-extern u16 D_801374B8[ICON_SLOT_NUM];
-extern u16 D_801374F8[ICON_SLOT_NUM];
-extern u16 D_80137538[ICON_SLOT_NUM];
-extern u8* g_DecSrcPtr;
-extern u8* g_DecDstPtr;
-extern bool g_DecReadNibbleFlag;
-extern bool g_DecWriteNibbleFlag;
+u16 D_80137478[ICON_SLOT_NUM];
+u16 D_801374B8[ICON_SLOT_NUM];
+u16 D_801374F8[ICON_SLOT_NUM];
+u16 D_80137538[ICON_SLOT_NUM];
+u8* g_DecSrcPtr;
+u8* g_DecDstPtr;
+bool g_DecReadNibbleFlag;
+bool g_DecWriteNibbleFlag;
+STATIC_PAD_BSS(8);
 
 #include "../get_lang.h"
 
@@ -307,7 +308,8 @@ void LoadPendingGfx(void) {
 }
 
 void func_800EB4F8(PixPattern* pix, s32 bitDepth, s32 x, s32 y) {
-    LoadTPage((u_long*)pix + 1, bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
+    LoadTPage(
+        (u_long*)((s32*)pix + 1), bitDepth, 0, x, y, (int)pix->w, (int)pix->h);
 }
 
 void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {

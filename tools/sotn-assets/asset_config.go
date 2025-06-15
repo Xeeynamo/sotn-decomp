@@ -8,6 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cmpgfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/cutscene"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/gfxbanks"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/headergfx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layer"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/layout"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/paldef"
@@ -56,6 +57,7 @@ var handlers = func() map[string]assets.Handler {
 		cmpgfx.Handler,
 		cutscene.Handler,
 		gfxbanks.Handler,
+		headergfx.Handler,
 		layer.Handler,
 		layout.Handler,
 		paldef.Handler,

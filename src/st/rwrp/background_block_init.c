@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../wrp/wrp.h"
+#include "rwrp.h"
 
 static u8 D_801804D0[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 D_801804D4[] = {0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00};
+
 ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {
         .animSet = 0x0006,
