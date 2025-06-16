@@ -253,8 +253,8 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		sb.WriteString(fmt.Sprintf("extern TileDefinition %s[];\n", symbol))
 	}
 
-	sb.WriteString("LayerDef layer_empty = { NULL, NULL, 0, 0, 0 };\n")
-	sb.WriteString("LayerDef layers[] = {\n")
+	sb.WriteString("static LayerDef layer_empty = { NULL, NULL, 0, 0, 0 };\n")
+	sb.WriteString("static LayerDef layers[] = {\n")
 	for _, l := range layers[1:] {
 		sb.WriteString(fmt.Sprintf("    { %s, %s, {%d, %d, %d, %d, 0x%02X}, 0x%02X, 0x%04X},\n",
 			makeSymbolFromFileName(l["data"].(string)),
