@@ -1,4 +1,4 @@
-#include <game.h>
+#include <maria.h>
 
 // copied from src/dra/5F60C.c
 typedef struct {
@@ -12,11 +12,16 @@ typedef struct {
     s32 clut;
 } SubwpnIconParams;
 static SubwpnIconParams D_psp_09147418[] = {
-    {0x00C, 0x007, 0x00F, 0x017, 0x0D0, 0x0C0, 0x01E, 0x17F},
-    {0x005, 0x009, 0x01F, 0x017, 0x0E0, 0x0B0, 0x01E, 0x17F},
-    {0x005, 0x009, 0x01F, 0x017, 0x0E0, 0x0C8, 0x01E, 0x17F},
-    {0x004, 0x000, 0x01F, 0x01F, 0x0E0, 0x0E0, 0x01E, 0x17F},
-    {0x00C, 0x009, 0x010, 0x017, 0x098, 0x0D8, 0x01E, 0x17F}};
+    {0x05, 0x09, 0x1F, 0x17, 0xE0, 0xB0, 0x01E, 0x17F}, // CAT
+    {0x0C, 0x07, 0x0F, 0x17, 0xD0, 0xC0, 0x01E, 0x17F}, // CARDINAL
+    {0x05, 0x09, 0x1F, 0x17, 0xE0, 0xC8, 0x01E, 0x17F}, // TURTLE
+    {0x0C, 0x09, 0x10, 0x17, 0x98, 0xD8, 0x01E, 0x17F}, // DOLL (dummy)
+    {0x0C, 0x09, 0x10, 0x17, 0x98, 0xD8, 0x01E, 0x17F}, // DOLL
+    {0x0C, 0x09, 0x10, 0x17, 0x98, 0xD8, 0x01E, 0x17F}, // DOLL (dummy)
+    {0x0C, 0x09, 0x10, 0x17, 0x98, 0xD8, 0x01E, 0x17F}, // DOLL (dummy)
+    {0x04, 0x00, 0x1F, 0x1F, 0xE0, 0xE0, 0x01E, 0x17F}, // DRAGON
+    {0x0C, 0x09, 0x10, 0x17, 0x98, 0xD8, 0x01E, 0x17F}, // DOLL (dummy)
+};
 static s32 _hud_search_pattern[] = {
     0x009, 0x00F, 0x018, 0x010, 0x0A8, 0x0C0, 0x01E, 0x17F};
 static bool DoesRichterHudMatch(s32* ptr) {
@@ -49,6 +54,64 @@ static void PatchHudSubweaponUV() {
     }
     // Patch Richter subweapon UVs and replace them with those from Maria
     memcpy(params, D_psp_09147418, sizeof(D_psp_09147418));
+}
+
+// On MARIA overlay, PL_W_NONE is used for the Doll Crash. We need to convert it
+// back and forth to make it work in the overlay and in the HUD managed by DRA.
+// * Bible -> Doll
+// * Knife -> Cat
+// * Vithubi -> Dragon
+// * Axe -> Bird
+// * Water -> Turtle
+static int equipped_subweapon;
+static inline void ConvertSubweaponRicToMaria() {
+    switch (g_Status.subWeapon) {
+    case SUBWPN_NONE:
+        g_Status.subWeapon = PL_W_NONE;
+        break;
+    case SUBWPN_DAGGER:
+        g_Status.subWeapon = PL_W_CAT;
+        break;
+    case SUBWPN_AXE:
+        g_Status.subWeapon = PL_W_CARDINAL;
+        break;
+    case SUBWPN_HOLYWATER:
+        g_Status.subWeapon = PL_W_TURTLE;
+        break;
+    case SUBWPN_BIBLE:
+        g_Status.subWeapon = PL_W_NONE;
+        break;
+    case SUBWPN_VIBHUTI:
+        g_Status.subWeapon = PL_W_DRAGON;
+        break;
+    default:
+        // Re-use previous subweapon, and increase heart count by 1
+        g_Status.subWeapon = equipped_subweapon;
+        if (g_Status.hearts < g_Status.heartsMax) {
+            g_Status.hearts++;
+        }
+        break;
+    }
+    equipped_subweapon = g_Status.subWeapon;
+}
+static inline void ConvertSubweaponMariaToRic() {
+    switch (g_Status.subWeapon) {
+    case PL_W_NONE:
+        g_Status.subWeapon = SUBWPN_BIBLE;
+        break;
+    case PL_W_CAT:
+        g_Status.subWeapon = SUBWPN_DAGGER;
+        break;
+    case PL_W_CARDINAL:
+        g_Status.subWeapon = SUBWPN_AXE;
+        break;
+    case PL_W_TURTLE:
+        g_Status.subWeapon = SUBWPN_HOLYWATER;
+        break;
+    case PL_W_DRAGON:
+        g_Status.subWeapon = SUBWPN_VIBHUTI;
+        break;
+    }
 }
 
 int func_8919BA8() { return 0; }
@@ -115,7 +178,7 @@ s16 func_90E0E30(PrimitiveType kind, s32 count) {
 
 void MARIA_Load();
 void MarInit(s16 initParam);
-void MarPsxInit(u16 initParam) {
+static void MarPsxInit(u16 initParam) {
     static int isInitialized = 0;
     if (!isInitialized) {
         MARIA_Load();
@@ -130,18 +193,10 @@ void MarPsxInit(u16 initParam) {
 }
 
 void MarMain(void);
-void MarPsxMain() {
-    // on PSP, subWeapon==0 falls to the subweapon Doll. But on PSX the HUD will
-    // show no icon. We need to tell to PSX DRA to show Doll on the HUD as
-    // subWeapon=5, but tell to MARIA overlay that subWeapon=5 is actually Doll
-    if (g_Status.subWeapon >= 5) {
-        g_Status.subWeapon = 0;
-    }
+static void MarPsxMain() {
+    ConvertSubweaponRicToMaria();
     MarMain();
-    if (g_Status.subWeapon == 0) {
-        // Force to show Doll on the HUD
-        g_Status.subWeapon = 5;
-    }
+    ConvertSubweaponMariaToRic();
 }
 
 #include "gen/maria.h"
