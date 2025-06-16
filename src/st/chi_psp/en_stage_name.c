@@ -16,7 +16,7 @@ extern u8* D_psp_092560C0[];
 
 void func_psp_0923C0C0(void) {
     D_psp_092560B4 = D_psp_092560C0[g_UserLanguage - 1];
-    LoadGfxBankAsync(D_psp_092560A8);
+    func_91040A0(D_psp_092560A8);
 }
 
 // clang-format off

@@ -174,10 +174,10 @@ void RicInit(s16 initParam) {
     // or after loading a save. Not sure if a bugfix or QOL.
     D_pspeu_092D7A68 = 30;
 
-    LoadGfxBankAsync(g_FontImage);
+    func_91040A0(g_FontImage);
     g_HudImage[3] = (u_long*)GetLang(NULL, hud_fr, hud_sp, hud_ge, hud_it);
     if (g_HudImage[3]) {
-        LoadGfxBankAsync(g_HudImage);
+        func_91040A0(g_HudImage);
     }
 #endif
 }

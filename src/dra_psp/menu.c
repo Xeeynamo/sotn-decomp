@@ -2340,7 +2340,7 @@ void func_800F9E18(s32 arg0) {
     D_psp_0914A388[3] = GetLang(
         NULL, D_psp_0914A0D0, D_psp_09149E90, D_psp_0914A248, D_psp_09149FB0);
     if (D_psp_0914A388[3] != NULL) {
-        LoadGfxBankAsync(D_psp_0914A388);
+        func_psp_091040A0(D_psp_0914A388);
     }
 
     for (nHalfScreenSize = i; i < nItems; i++, nHalfScreenSize++) {

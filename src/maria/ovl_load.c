@@ -219,12 +219,12 @@ void LoadCrashSummonResouces(s32 crashId) {
         LoadPatchedPalette(PAL_CRASH, crash_dragon_pal);
         break;
     }
-    LoadGfxBankAsync(crash_img);
+    func_91040A0(crash_img);
 }
 
 void MarLoadGraphics(void) {
-    LoadGfxBankAsync(hud_img);
-    LoadGfxBankAsync(items_img);
+    func_91040A0(hud_img);
+    func_91040A0(items_img);
 }
 
 extern PlayerOvl MARIA_player;
@@ -233,12 +233,12 @@ void MARIA_Load(void) {
     memcpy(&g_PlOvl, &MARIA_player, sizeof(PlayerOvl));
     memcpy(&g_PlOvlSpritesheet, maria_sprites, sizeof(maria_sprites));
 #endif
-    LoadGfxBankAsync(wpn_owl_img);
-    LoadGfxBankAsync(wpn_turtle_img);
-    LoadGfxBankAsync(wpn_cat_img);
-    LoadGfxBankAsync(wpn_cardinal_img);
-    LoadGfxBankAsync(wpn_dragon_img);
-    LoadGfxBankAsync(wpn_doll_img);
+    func_91040A0(wpn_owl_img);
+    func_91040A0(wpn_turtle_img);
+    func_91040A0(wpn_cat_img);
+    func_91040A0(wpn_cardinal_img);
+    func_91040A0(wpn_dragon_img);
+    func_91040A0(wpn_doll_img);
 
     if (((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx == -48) {
         ((SpriteParts*)wpn_cat_spr_6)->parts[6].offsetx--;

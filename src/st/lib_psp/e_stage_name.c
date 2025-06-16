@@ -16,7 +16,7 @@ extern u8* D_psp_0926EDF0[];
 
 void func_psp_0923C0C0(void) {
     D_psp_0926EDE4 = D_psp_0926EDF0[g_UserLanguage - 1];
-    LoadGfxBankAsync(D_psp_0926EDD8);
+    func_91040A0(D_psp_0926EDD8);
 }
 
 #include "../entity_stage_name_popup_jp.h"

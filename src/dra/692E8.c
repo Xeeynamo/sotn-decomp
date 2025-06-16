@@ -310,14 +310,14 @@ void AluInit() {
         }
     }
 #ifdef VERSION_PSP
-    LoadGfxBankAsync(g_FontImage);
+    func_psp_091040A0(g_FontImage);
     D_psp_09183150[3] = GetLang(D_psp_0917DCA8, D_psp_09180EC0, D_psp_0917ED60,
                                 D_psp_09182028, D_psp_0917FF10);
-    LoadGfxBankAsync(D_psp_09183150);
+    func_psp_091040A0(D_psp_09183150);
     D_psp_09183168[3] = GetLang(
         NULL, D_psp_09149550, D_psp_09148C10, D_psp_091499F0, D_psp_091490B0);
     if (D_psp_09183168[3] != NULL) {
-        LoadGfxBankAsync(D_psp_09183168);
+        func_psp_091040A0(D_psp_09183168);
     }
 #endif
 }

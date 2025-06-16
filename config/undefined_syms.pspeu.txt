@@ -1,5 +1,4 @@
 abs                 = 0x08906AF0;
-LoadGfxBankAsync    = 0x091040A0;
 D_psp_09186EF8      = 0x09186EF8;
 D_psp_09186F10      = 0x09186F10;
 D_psp_09187040      = 0x09187040;

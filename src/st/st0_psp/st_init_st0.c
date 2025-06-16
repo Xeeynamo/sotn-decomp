@@ -86,8 +86,8 @@ extern u_long* D_pspeu_0925D690[];
 extern u_long* D_pspeu_0925D6A8[];
 
 void func_pspeu_09246B88(void) {
-    LoadGfxBankAsync(D_pspeu_0925D660);
-    LoadGfxBankAsync(D_pspeu_0925D678);
-    LoadGfxBankAsync(D_pspeu_0925D690);
-    LoadGfxBankAsync(D_pspeu_0925D6A8);
+    func_91040A0(D_pspeu_0925D660);
+    func_91040A0(D_pspeu_0925D678);
+    func_91040A0(D_pspeu_0925D690);
+    func_91040A0(D_pspeu_0925D6A8);
 }
