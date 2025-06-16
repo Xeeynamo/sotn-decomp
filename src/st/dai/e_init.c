@@ -42,7 +42,7 @@ void func_us_801C1E18(Entity* self);
 void func_us_801D1204(Entity* self);
 void func_us_801D1C24(Entity* self);
 void func_us_801D1D00(Entity* self);
-void EntityFishheadFireBreath(Entity* self);
+void EntityBonePillarFireBreath(Entity* self);
 void func_us_801D2CFC(Entity* self);
 void func_us_801D2444(Entity* self);
 void func_us_801C3644(Entity* self);
@@ -116,7 +116,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D1204,
     func_us_801D1C24,
     func_us_801D1D00,
-    EntityFishheadFireBreath,
+    EntityBonePillarFireBreath,
     func_us_801D2CFC,
     func_us_801D2444,
     func_us_801C3644,

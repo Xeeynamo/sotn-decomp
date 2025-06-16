@@ -57,8 +57,8 @@ segments:
       - [0x3FFF8, .rodata, e_collect]
       - [0x400CC, .rodata, e_stage_name]
       - [0x40100, .rodata, unk_51010]
-      #- [0x4014C, .rodata, unk_51010] # Splat suggested
-      #- [0x40160, .rodata, unk_51010] # Splat suggested
+      - [0x4013C, .rodata, e_bone_pillar]
+      - [0x40160, .rodata, unk_52EA4]
       - [0x4018C, .rodata, e_bat]
       - [0x401A0, .rodata, unk_53FD8]
       - [0x401D0, .rodata, e_skelerang]
@@ -83,6 +83,8 @@ segments:
       - [0x50BF4, c, e_room_fg]
       - [0x50CE0, c, popup]
       - [0x51010, c, unk_51010]
+      - [0x51D00, c, e_bone_pillar]
+      - [0x52EA4, c, unk_52EA4]
       - [0x53D8C, c, e_bat]
       - [0x53FD8, c, unk_53FD8]
       - [0x5468C, c, e_skelerang]

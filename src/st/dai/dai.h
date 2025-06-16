@@ -79,3 +79,37 @@ enum DaiEntities {
     E_MIST_DOOR,           // EntityMistDoor,
     NUM_ENTITIES,
 };
+
+extern EInit g_EInitBreakable;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+// extern EInit g_EInitDamageNum;
+// extern EInit g_EInit_801809A4;
+extern EInit D_us_801809B0;
+extern EInit D_us_801809BC;
+// extern EInit g_EInit_801809C8;
+extern EInit D_us_801809D4;
+extern EInit D_us_801809E0;
+extern EInit D_us_801809EC;
+extern EInit D_us_801809F8; // e_bone_pillar
+extern EInit D_us_80180A04; // e_bone_pillar
+extern EInit D_us_80180A10; // e_bone_pillar
+extern EInit D_us_80180A1C; // e_bone_pillar
+extern EInit D_us_80180A28;
+extern EInit D_us_80180A34;
+extern EInit D_us_80180A40;
+extern EInit D_us_80180A4C;
+extern EInit D_us_80180A58;
+extern EInit D_us_80180A64;
+extern EInit D_us_80180A70;
+extern EInit D_us_80180A7C;
+extern EInit D_us_80180A88;
+extern EInit D_us_80180A94;
+extern EInit D_us_80180AA0;
+extern EInit D_us_80180AAC;
+extern EInit D_us_80180AB8;
