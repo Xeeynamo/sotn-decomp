@@ -587,15 +587,18 @@ void PrintGpuInfo(void) {
             break;
         }
 
-        if (g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
+        if (g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] &
+            0x8000) {
             FntPrint("  half on\n");
         } else {
             FntPrint("  half off\n");
         };
 
         r = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
-        g = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
-        b = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
+        g = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 &
+            0x1F;
+        b = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 &
+            0x1F;
         FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
     } else {
         FntPrint("01:%04x,%04x\n", D_8006C384.x, D_8006C384.y);
