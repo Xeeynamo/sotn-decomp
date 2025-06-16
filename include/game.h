@@ -100,6 +100,19 @@ typedef enum {
 #define E_ID(name) E_##name
 #endif
 
+// These are used for RGB5551
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+#define ALPHA_MASK 0x8000
+#define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+#define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+#define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
+
+#define GET_RED(x) (((x) >> 0) & 0x1F)
+#define GET_GREEN(x) (((x) >> 5) & 0x1F)
+#define GET_BLUE(x) (((x) >> 10) & 0x1F)
+
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)

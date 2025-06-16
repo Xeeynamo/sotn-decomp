@@ -169,13 +169,13 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
             if (j == 0) {
                 buf[0] = *palA;
             } else {
-                t = palA[j] & 0x8000;
-                tempR = (palA[j] & 0x1F);
+                t = palA[j] & ALPHA_MASK;
+                tempR = GET_RED(palA[j]);
                 r = (tempR * (4096 - factor)) + (arg4[0] * factor);
-                tempG = (palA[j] >> 5) & 0x1F;
+                tempG = GET_GREEN(palA[j]);
                 tempR = r >> 12;
                 g = (tempG * (4096 - factor)) + (arg4[1] * factor);
-                tempB = (palA[j] >> 10) & 0x1F;
+                tempB = GET_BLUE(palA[j]);
                 tempG = g >> 12;
                 b = (tempB * (4096 - factor)) + (arg4[2] * factor);
                 tempB = b >> 12;
