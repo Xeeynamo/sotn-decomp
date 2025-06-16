@@ -342,7 +342,7 @@ void func_800E2B00(void) {
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
-    palette = &g_Clut[0][g_DebugCurPal * 16];
+    palette = &g_Clut[0][g_DebugCurPal * COLORS_PER_PAL];
     curTile = tile;
     g_GpuUsage.drawModes++;
     while (i < 0x10) {

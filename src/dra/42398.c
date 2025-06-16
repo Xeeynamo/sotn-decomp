@@ -289,7 +289,7 @@ void func_800E2B00(void) {
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
-    palette = &g_Clut[0][g_DebugCurPal * 16];
+    palette = &g_Clut[0][g_DebugCurPal * COLORS_PER_PAL];
     curTile = tile;
     g_GpuUsage.drawModes++;
     while (i < 0x10) {
@@ -450,7 +450,8 @@ s32 DebugUpdate(void) {
                 }
                 if (g_pads[1].pressed & PAD_R2 &&
                     g_pads[1].tapped & PAD_SQUARE) {
-                    g_Clut[0][g_DebugCurPal * 0x10 + g_DebugPalIdx] ^= 0x8000;
+                    g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] ^=
+                        0x8000;
                 }
             } else {
                 // tileset viewer debug cont

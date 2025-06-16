@@ -325,7 +325,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            g_Clut[1][index * 0x10 + i + 0xD00] =
+            g_Clut[1][index * COLORS_PER_PAL + i + 0xD00] =
                 g_PalEquipIcon[palette * 0x10 + i];
         }
 #ifdef VERSION_PSP
