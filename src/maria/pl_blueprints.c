@@ -164,8 +164,7 @@ static s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     return ret;
 }
 
-void MarEntityDummy(Entity*) {}
-
+void MarEntityDummy(Entity* self) {}
 void MarEntityFactory(Entity* self);
 void MarEntitySmokePuff(Entity* self);
 void EntityMariaDragonAttack(Entity* self);
